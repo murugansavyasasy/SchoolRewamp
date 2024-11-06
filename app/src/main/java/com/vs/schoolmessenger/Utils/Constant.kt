@@ -9,6 +9,8 @@ object Constant {
     var isShimmerViewShow = true
     var isShimmerViewDisable = false
 
+    var isShimmerViewDisablenew = false  // added by murugan
+
 
     fun setGridViewHeight(gridView: GridView, columns: Int) {
         val adapter = gridView.adapter ?: return  // Check if adapter is not null
