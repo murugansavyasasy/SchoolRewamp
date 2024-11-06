@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary_light">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/lmgIntroduction"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginLeft="@dimen/twenty"
+            android:layout_marginRight="@dimen/twenty"
+            android:src="@drawable/introduction_study"></ImageView>
+
+        <TextView
+            android:id="@+id/lblIntroTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lmgIntroduction"
+            android:layout_marginLeft="@dimen/twenty_five"
+            android:layout_marginTop="@dimen/fifty"
+            android:layout_marginRight="@dimen/twenty"
+            android:text="14 - Day Money"
+            android:textColor="@color/black"
+            android:textSize="@dimen/twenty_sp"
+            android:textStyle="bold">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/lblIntroTitleTwo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblIntroTitle"
+            android:layout_marginLeft="@dimen/thirty"
+            android:layout_marginTop="@dimen/five"
+            android:layout_marginRight="@dimen/twenty"
+            android:text="Back Guarantee."
+            android:textColor="@color/black"
+            android:textSize="@dimen/twenty_sp"
+            android:textStyle="bold">
+
+        </TextView>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/rlaNextAndSkip"
+            android:layout_below="@+id/lblIntroTitleTwo">
+
+            <TextView
+                android:id="@+id/lblIntroContent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/thirty"
+                android:layout_marginTop="@dimen/thirty"
+                android:layout_marginRight="@dimen/twenty"
+                android:text="@string/Introduction"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen_sp"></TextView>
+
+        </androidx.core.widget.NestedScrollView>
+
+
+        <RelativeLayout
+            android:id="@+id/rlaNextAndSkip"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true">
+
+            <TextView
+                android:id="@+id/btnPrevious"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/thirty"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="@dimen/thirty"
+                android:gravity="center"
+                android:text="Previous"
+                android:textColor="@color/black"
+                android:visibility="gone"></TextView>
+
+
+            <TextView
+                android:id="@+id/btnNext"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/thirty"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginRight="@dimen/thirty"
+                android:gravity="center"
+                android:text="Next >"
+                android:textColor="@color/black"></TextView>
+
+            <TextView
+                android:id="@+id/btnSkip"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/thirty"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginRight="@dimen/thirty"
+                android:gravity="center"
+                android:text="Skip"
+                android:textColor="@color/black"></TextView>
+
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+    <!---->
+</RelativeLayout>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/rlaStaffDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
+        android:layout_marginBottom="@dimen/ten"
+        android:background="@drawable/rect_shadow_white"
+        android:padding="@dimen/twenty_five">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardImage"
+            android:layout_width="@dimen/seventy"
+            android:layout_height="@dimen/seventy"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            app:cardCornerRadius="@dimen/ten"
+            app:cardElevation="@dimen/five"
+            tools:ignore="MissingConstraints">
+
+            <ImageView
+                android:id="@+id/imgSchool"
+                android:layout_width="@dimen/seventy"
+                android:layout_height="@dimen/seventy"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:scaleType="centerCrop"
+                android:src="@drawable/splash_icon1" />
+
+        </androidx.cardview.widget.CardView>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/ten"
+            android:layout_toRightOf="@+id/cardImage">
+
+            <TextView
+                android:id="@+id/lblStaffName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sathish"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen_sp"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/lblSchoolName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblStaffName"
+                android:text="Savyasasy software solutions"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen_sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/lblRole"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblSchoolName"
+                android:text="Principal"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp" />
+
+            <TextView
+                android:id="@+id/lblSchoolAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblRole"
+                android:text="7/4 ,Palat Sangaran street,Mahalingapuram, Chennai - 600043"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/thirteen_sp" />
+
+
+        </RelativeLayout>
+
+        <!--        <ImageView-->
+        <!--            android:id="@+id/imgArrow"-->
+        <!--            android:layout_width="@dimen/fifteen"-->
+        <!--            android:layout_height="@dimen/fifteen"-->
+        <!--            android:layout_alignParentRight="true"-->
+        <!--            android:layout_centerVertical="true"-->
+        <!--            android:scaleType="centerCrop"-->
+        <!--            android:src="@drawable/ic_right_arrow" />-->
+
+    </RelativeLayout>
+
+    <CheckBox
+        android:id="@+id/terms_checkbox"
+        style="@style/CustomCheckbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginRight="@dimen/five"
+        android:padding="@dimen/five"
+        android:textColor="@color/black"
+        android:textSize="@dimen/thirteen_sp" />
+
+</RelativeLayout>

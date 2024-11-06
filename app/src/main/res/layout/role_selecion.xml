@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imgTeaching"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:src="@drawable/teaching">
+
+        </ImageView>
+
+        <TextView
+            android:id="@+id/lblChooseRole"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imgTeaching"
+            android:gravity="center"
+            android:text="Choose your role"
+            android:textColor="@color/black"
+            android:textSize="@dimen/fifteen_sp"
+            android:textStyle="bold">
+
+        </TextView>
+
+
+        <TextView
+            android:id="@+id/lblLoginTeacherOrParent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblChooseRole"
+            android:layout_marginTop="@dimen/ten"
+            android:gravity="center"
+            android:text="Login as a teacher or parent"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp">
+
+        </TextView>
+
+
+        <LinearLayout
+            android:id="@+id/lnrParent"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblLoginTeacherOrParent"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/fifteen"
+            android:background="@drawable/bg_light_blue">
+
+            <TextView
+                android:id="@+id/lblTeacher"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/bg_blue"
+                android:gravity="center"
+                android:padding="@dimen/ten"
+                android:text="Teacher"
+                android:textColor="@color/white"
+                android:textSize="@dimen/thirteen_sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/lblParent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="@dimen/ten"
+                android:text="Parent"
+                android:textColor="@color/dark_blue"
+                android:textSize="@dimen/thirteen_sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViews"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/lnrParent"
+            android:layout_marginTop="@dimen/ten"
+            tools:listitem="@layout/school_details_list_item" />
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/btnGo"
+        android:layout_width="@dimen/eighty"
+        android:layout_height="@dimen/thirty_five"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="@dimen/twenty_five"
+        android:layout_marginBottom="@dimen/twenty_five"
+        android:background="@drawable/bg_blue"
+        android:gravity="center"
+        android:padding="@dimen/ten"
+        android:text="NEXT"
+        android:textColor="@color/white"
+        android:textSize="@dimen/thirteen_sp"
+        android:textStyle="bold" />
+
+
+    <!-- OLD  -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/twenty"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RelativeLayout
+            android:id="@+id/rytHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/lblSelection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="Choose Your Role"
+                android:textColor="@color/black"
+                android:textSize="@dimen/twenty"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/imgLogo"
+                android:layout_width="@dimen/fifty"
+                android:layout_height="@dimen/fifty"
+                android:layout_below="@+id/lblSelection"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/fifteen"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/school_chimes_logo" />
+
+
+            <View
+                android:id="@+id/vw"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/imgLogo"
+                android:layout_marginHorizontal="@dimen/thirty"
+                android:layout_marginTop="@dimen/fifteen"
+                android:background="@color/grey" />
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/vw"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/twenty">
+
+
+                <TextView
+                    android:id="@+id/btnLoginAsSchool"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rect_btn_orange"
+                    android:gravity="center"
+                    android:paddingHorizontal="@dimen/ten"
+                    android:paddingVertical="@dimen/ten"
+                    android:text="Login as principal"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/thirteen_sp" />
+
+                <TextView
+                    android:id="@+id/btnLoginAsChild"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/ten"
+                    android:layout_toRightOf="@+id/btnLoginAsSchool"
+                    android:background="@drawable/rect_btn_orange"
+                    android:gravity="center"
+                    android:paddingHorizontal="@dimen/ten"
+                    android:paddingVertical="@dimen/ten"
+                    android:text="Login as Parent"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/thirteen_sp" />
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+        <!--        <androidx.recyclerview.widget.RecyclerView-->
+        <!--            android:id="@+id/recyclerViews"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            android:layout_below="@+id/rytHeader"-->
+        <!--            tools:listitem="@layout/school_details_list_item" />-->
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

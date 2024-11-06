@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+
+<!--    <color name="colorPrimary">#22c9cc</color>-->
+    <color name="colorPrimary">#0e4275</color>
+    <color name="colorPrimaryDark">#0e4275</color>
+    <color name="colorAccent">#FF6200EE</color>
+    <color name="colorPrimary_light">#0F536A</color>
+
+    <color name="primary">#8ec5d6</color>
+    <color name="primary_light">#a6d1df</color>
+    <color name="light_sky_blue">#c7eaff</color>
+    <color name="light_gray">#616159</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="light_white">#f8f8f8</color>
+    <color name="mild_grey0">#f4f3f0</color>
+    <color name="mild_grey1">#cccccc</color>
+    <color name="mild_grey2">#c9c9c9</color>
+    <color name="mild_grey3">#ededf7</color>
+
+    <color name="grey">#ACACBA</color>
+    <color name="light_blue_color">#f0f4f9</color>
+
+
+
+    <color name="navi_blue0">#0e4275</color>
+    <color name="navi_blue1">#005cc6</color>
+    <color name="navi_blue2">#1582ff</color>
+
+
+    <color name="sky_blue_light">#d4e7eb</color>
+    <color name="sky_blue0">#4eb7f1</color>
+    <color name="sky_blue1">#98d2de</color>
+    <color name="sky_blue2">#C8E2F4</color>
+    <color name="light_blue">#F4F8FE</color>
+    <color name="dark_blue">#162053</color>
+    <color name="yellow">#fcd246</color>
+    <color name="light_yellow">#f4d382</color>
+    <color name="light_orange0">#d3603b</color>
+    <color name="light_orange1">#ffd8b9</color>
+    <color name="orange">#e9a243</color>
+    <color name="dark_orange">#e26b26</color>
+    <color name="green">#22b34d</color>
+    <color name="light_green">#92b879</color>
+    <color name="light_green1">#cdffab</color>
+    <color name="light_green2">#ccf4e6</color>
+    <color name="light_green3">#204e5e</color>
+    <color name="light_pink">#ffd6f2</color>
+    <color name="pink">#ed5b96</color>
+    <color name="purble">#c489d7</color>
+    <color name="light_purble">#ece4f4</color>
+    <color name="red">#E43C2F</color>
+    <color name="dashboar_bg">#f2f4fb</color>
+
+    <color name="mild0">#f6f3ff</color>
+    <color name="mild1">#f1f8ff</color>
+    <color name="mild2">#fff1fd</color>
+    <color name="mild3">#fff5ee</color>
+    <color name="mild4">#f4f5f9</color>
+    <color name="navi_blue3">#0153e1</color>
+    <color name="navi_blue4">#c7eaff</color>
+    <color name="system_blue">#9DD6FD</color>
+    <color name="light_violet">#E3F1FB</color>
+    <color name="card_blue">#EEE9F3</color>
+    <color name="light_blue_1">#5DCBF5</color>
+
+    <color name="light_orange">#F8ECE5</color>
+    <color name="light_orange_1">#FB975C</color>
+    <color name="light_green_bg">#D9FBF7</color>
+    <color name="light_green_bg1">#3FCCBB</color>
+    <color name="light_violet_bg1">#B58EF3</color>
+
+
+</resources>

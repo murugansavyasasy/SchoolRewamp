@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <!-- Header -->
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primary_light"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/fifteen">
+
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginEnd="@dimen/ten"
+            android:src="@drawable/arrow_back_black"></ImageView>
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="FAQ"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/fifteen_sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- FAQ List -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/header"
+        android:padding="@dimen/fifteen">
+
+        <LinearLayout
+            android:id="@+id/faq_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- FAQ Item 1 -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/eight"
+                app:cardCornerRadius="@dimen/eight"
+                app:cardElevation="@dimen/five">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/fifteen">
+
+                    <RelativeLayout
+                        android:id="@+id/faq_question_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/question1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toLeftOf="@+id/arrow_icon_1"
+                            android:text="What is the school admission process?"
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/thirteen_sp"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:id="@+id/arrow_icon_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:src="@drawable/ic_arrow_down" />
+                    </RelativeLayout>
+
+                    <EditText
+                        android:id="@+id/answer1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/eight"
+                        android:background="@android:color/transparent"
+                        android:hint="The admission process includes submitting documents and an entrance exam."
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="@dimen/thirteen_sp"
+                        android:visibility="gone"
+
+                        />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <!-- FAQ Item 2 -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/eight"
+                app:cardCornerRadius="@dimen/eight"
+                app:cardElevation="@dimen/five">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/fifteen">
+
+                    <RelativeLayout
+                        android:id="@+id/faq_question_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/question2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toLeftOf="@+id/arrow_icon_2"
+                            android:text="How can I contact the school administration?"
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/thirteen_sp"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:id="@+id/arrow_icon_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/ic_arrow_down" />
+                    </RelativeLayout>
+
+                    <EditText
+                        android:id="@+id/answer2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/eight"
+                        android:background="@android:color/transparent"
+                        android:hint="You can contact the school via email or phone. Our contact details are available on the official website."
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="@dimen/thirteen_sp"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- FAQ Item 3 -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/eight"
+                app:cardCornerRadius="@dimen/eight"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/fifteen">
+
+                    <RelativeLayout
+                        android:id="@+id/faq_question_3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/question3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toLeftOf="@+id/arrow_icon_3"
+                            android:text="What are the school timings?"
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/thirteen_sp"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:id="@+id/arrow_icon_3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/ic_arrow_down" />
+                    </RelativeLayout>
+
+                    <EditText
+                        android:id="@+id/answer3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/eight"
+                        android:background="@android:color/transparent"
+                        android:hint="The school operates from 8:00 AM to 3:30 PM, Monday through Friday."
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="@dimen/thirteen_sp"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- FAQ Item 4 -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/eight"
+                app:cardCornerRadius="@dimen/eight"
+                app:cardElevation="@dimen/five">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/fifteen">
+
+                    <RelativeLayout
+                        android:id="@+id/faq_question_4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/question4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toLeftOf="@+id/arrow_icon_4"
+                            android:text="Does the school offer transportation services?"
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/thirteen_sp"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:id="@+id/arrow_icon_4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/ic_arrow_down" />
+                    </RelativeLayout>
+
+                    <EditText
+                        android:id="@+id/answer4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/eight"
+                        android:background="@android:color/transparent"
+                        android:hint="Yes, the school provides bus transportation for students across various routes."
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="@dimen/thirteen_sp"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- FAQ Item 5 -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/eight"
+                app:cardCornerRadius="@dimen/eight"
+                app:cardElevation="@dimen/five">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/fifteen">
+
+                    <RelativeLayout
+                        android:id="@+id/faq_question_5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/question5"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toLeftOf="@+id/arrow_icon_5"
+                            android:text="What extracurricular activities are available?"
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/thirteen_sp"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:id="@+id/arrow_icon_5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/ic_arrow_down" />
+                    </RelativeLayout>
+
+                    <EditText
+                        android:id="@+id/answer5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/eight"
+                        android:background="@android:color/transparent"
+                        android:hint="We offer sports, music, drama, and various clubs like science and robotics."
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="@dimen/thirteen_sp"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/btnSubmit"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/fourty_five"
+                android:layout_marginHorizontal="@dimen/twenty"
+                android:layout_marginTop="@dimen/fifty"
+                android:layout_marginBottom="@dimen/fifty"
+                android:background="@drawable/rect_btn_orange"
+                android:gravity="center"
+                android:text="Submit"
+                android:textColor="@color/white"
+                android:textSize="@dimen/thirteen_sp" />
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

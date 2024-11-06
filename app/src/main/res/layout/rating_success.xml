@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/thumbs_up"
+        android:layout_width="@dimen/hundred"
+        android:layout_height="@dimen/hundred"
+        android:layout_marginLeft="@dimen/thirty"
+        android:layout_marginTop="@dimen/hundred"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/thumbs_up" />
+
+    <TextView
+        android:id="@+id/lblThankyou"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/thumbs_up"
+        android:layout_marginLeft="@dimen/thirty"
+        android:layout_marginTop="@dimen/ten"
+        android:text="Thank You."
+        android:textColor="@color/black"
+        android:textSize="@dimen/thirty_sp"
+        android:textStyle="bold">
+
+    </TextView>
+
+
+    <TextView
+        android:id="@+id/lblSuccessContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lblThankyou"
+        android:layout_marginLeft="@dimen/thirty"
+        android:layout_marginTop="@dimen/ten"
+        android:text="@string/thank_you_message"
+        android:textColor="@color/black"
+        android:textSize="@dimen/thirteen_sp">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/btnBackHome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lblSuccessContent"
+        android:layout_marginLeft="@dimen/thirty"
+        android:layout_marginTop="@dimen/twenty_five"
+        android:text="Back to home  &lt;&lt;"
+        android:textColor="@color/red"
+        android:textSize="@dimen/thirteen_sp">
+
+    </TextView>
+
+</RelativeLayout>

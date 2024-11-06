@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <ScrollView
+        android:id="@+id/scrollingView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imgIllustrate"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/two_hundred"
+                android:layout_marginTop="@dimen/thirty"
+                android:src="@drawable/password_illustrate"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <RelativeLayout
+                android:id="@+id/rytMobileNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/twenty"
+                app:layout_constraintTop_toBottomOf="@+id/imgIllustrate">
+
+                <TextView
+                    android:id="@+id/lblMobile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Mobile Number"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/fifteen_sp" />
+
+                <RelativeLayout
+                    android:id="@+id/rytMobile"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/fourty_five"
+                    android:layout_below="@+id/lblMobile"
+                    android:layout_marginTop="@dimen/ten">
+
+                    <ImageView
+                        android:id="@+id/imgMobile"
+                        android:layout_width="@dimen/twenty_five"
+                        android:layout_height="@dimen/twenty_five"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/mobile" />
+
+                    <View
+                        android:id="@+id/vwMobile"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginVertical="@dimen/ten"
+                        android:layout_marginLeft="@dimen/ten"
+                        android:layout_toRightOf="@+id/imgMobile"
+                        android:background="@color/mild_grey1" />
+
+                    <EditText
+                        android:id="@+id/txtMobileNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_toRightOf="@+id/vwMobile"
+                        android:hint="Mobile"
+                        android:inputType="number"
+                        android:maxLength="10"
+                        android:paddingHorizontal="@dimen/ten"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/grey"
+                        android:textSize="@dimen/thirteen_sp" />
+
+                </RelativeLayout>
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/rytPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/twenty"
+                app:layout_constraintTop_toBottomOf="@+id/rytMobileNumber">
+
+                <TextView
+                    android:id="@+id/lblPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Password"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/fifteen_sp" />
+
+                <RelativeLayout
+                    android:id="@+id/rytPass"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/fourty_five"
+                    android:layout_below="@+id/lblPassword"
+                    android:layout_marginTop="@dimen/ten">
+
+                    <ImageView
+                        android:id="@+id/imgPassword"
+                        android:layout_width="@dimen/twenty_five"
+                        android:layout_height="@dimen/twenty_five"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/lock_open" />
+
+                    <View
+                        android:id="@+id/vwPassword"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginVertical="@dimen/ten"
+                        android:layout_marginLeft="@dimen/ten"
+                        android:layout_toRightOf="@+id/imgPassword"
+                        android:background="@color/mild_grey1" />
+
+                    <EditText
+                        android:id="@+id/txtPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_toRightOf="@+id/vwPassword"
+                        android:hint="Password"
+                        android:inputType="textPassword"
+                        android:paddingHorizontal="@dimen/ten"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/grey"
+                        android:textSize="@dimen/thirteen_sp" />
+
+                    <ImageView
+                        android:id="@+id/imgHide"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/password_hide" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/lblForgetPassword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rytPass"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="@dimen/twenty"
+                    android:text="Forgot Password ?"
+                    android:textColor="@color/light_orange0"
+                    android:textSize="@dimen/fifteen_sp" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/btnLoginContinue"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/fourty_five"
+                android:layout_marginHorizontal="@dimen/twenty"
+                android:layout_marginTop="@dimen/fifty"
+                android:layout_marginBottom="@dimen/fifty"
+                android:background="@drawable/rect_btn_orange"
+                android:gravity="center"
+                android:text="Continue"
+                android:textColor="@color/white"
+                android:textSize="@dimen/thirteen_sp"
+                app:layout_constraintTop_toBottomOf="@+id/rytPassword" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

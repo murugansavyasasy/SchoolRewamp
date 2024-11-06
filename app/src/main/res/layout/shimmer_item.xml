@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/ten"
+        android:id="@+id/shimmer_view_container"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Simulated loading of a title -->
+            <View
+                android:layout_width="@dimen/hundred"
+                android:layout_height="@dimen/twenty"
+                android:background="@android:color/darker_gray" />
+
+            <!-- Simulated loading of a subtitle -->
+            <View
+                android:layout_width="@dimen/fifty"
+                android:layout_height="@dimen/twenty"
+                android:background="@android:color/darker_gray"
+                android:layout_marginTop="@dimen/ten"/>
+
+        </LinearLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/mild4">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <RelativeLayout
+            android:id="@+id/rlaLblSettings"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="@color/primary_light"
+            android:paddingBottom="@dimen/thirty">
+
+            <ImageView
+                android:id="@+id/imgBack"
+                android:layout_width="@dimen/thirty"
+                android:layout_height="@dimen/thirty"
+                android:layout_marginLeft="@dimen/thirty"
+                android:layout_marginTop="@dimen/thirty"
+                android:src="@drawable/arrow_back_black"
+                android:visibility="gone"></ImageView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imgBack"
+                android:layout_marginLeft="@dimen/thirty"
+                android:layout_marginTop="@dimen/fifty"
+                android:text="Settings"
+                android:textColor="@color/black"
+                android:textSize="@dimen/twenty_five_sp"
+                android:textStyle="bold">
+
+            </TextView>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/lblGeneral"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rlaLblSettings"
+            android:layout_marginLeft="@dimen/twenty"
+            android:layout_marginTop="@dimen/twenty"
+            android:text="GENERAL"
+            android:textSize="@dimen/fifteen_sp">
+
+        </TextView>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/lblGeneral"
+            android:layout_marginTop="@dimen/ten">
+
+            <LinearLayout
+                android:id="@+id/lnrNotification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/thirty"
+                android:layout_marginTop="@dimen/twenty"
+                android:layout_marginRight="@dimen/thirty"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <ImageView
+                    android:layout_width="@dimen/thirty"
+                    android:layout_height="@dimen/thirty"
+                    android:layout_weight="0.1"
+                    android:src="@drawable/notification_icon"></ImageView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/thirty"
+                    android:layout_weight="0.8"
+                    android:text="Notifications"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:textStyle="bold">
+
+                </TextView>
+
+                <ImageView
+                    android:layout_width="@dimen/twenty_five_sp"
+                    android:layout_height="@dimen/twenty_five_sp"
+                    android:layout_weight="0.1"
+                    android:src="@drawable/arrow_right_gray">
+
+                </ImageView>
+            </LinearLayout>
+
+            <View
+                android:id="@+id/isViewNotification"
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_below="@+id/lnrNotification"
+                android:layout_marginLeft="@dimen/thirty"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginRight="@dimen/thirty"
+                android:background="@color/light_gray">
+
+            </View>
+
+            <LinearLayout
+                android:id="@+id/lnrFaq"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/isViewNotification"
+                android:layout_marginLeft="@dimen/thirty"
+                android:layout_marginTop="@dimen/twenty"
+                android:layout_marginRight="@dimen/thirty"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <ImageView
+                    android:layout_width="@dimen/thirty"
+                    android:layout_height="@dimen/thirty"
+                    android:layout_weight="0.1"
+                    android:src="@drawable/faq_icon"></ImageView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/thirty"
+                    android:layout_weight="0.8"
+                    android:text="FAQ"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:textStyle="bold">
+
+                </TextView>
+
+                <ImageView
+                    android:layout_width="@dimen/twenty_five_sp"
+                    android:layout_height="@dimen/twenty_five_sp"
+                    android:layout_weight="0.1"
+                    android:src="@drawable/arrow_right_gray">
+
+                </ImageView>
+            </LinearLayout>
+
+            <View
+                android:id="@+id/isViewFaq"
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_below="@+id/lnrFaq"
+                android:layout_marginLeft="@dimen/thirty"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginRight="@dimen/thirty"
+                android:background="@color/light_gray">
+
+            </View>
+
+            <LinearLayout
+                android:id="@+id/lnrContactUs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/isViewFaq"
+                android:layout_marginLeft="@dimen/thirty"
+                android:layout_marginTop="@dimen/twenty"
+                android:layout_marginRight="@dimen/thirty"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <ImageView
+                    android:layout_width="@dimen/thirty"
+                    android:layout_height="@dimen/thirty"
+                    android:layout_weight="0.1"
+                    android:src="@drawable/contact_us_icon"></ImageView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/thirty"
+                    android:layout_weight="0.8"
+                    android:text="Contact Us"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:textStyle="bold">
+
+                </TextView>
+
+                <ImageView
+                    android:layout_width="@dimen/twenty_five_sp"
+                    android:layout_height="@dimen/twenty_five_sp"
+                    android:layout_weight="0.1"
+                    android:src="@drawable/arrow_right_gray">
+
+                </ImageView>
+            </LinearLayout>
+
+            <View
+                android:id="@+id/isViewContactUs"
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_below="@+id/lnrContactUs"
+                android:layout_marginLeft="@dimen/thirty"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginRight="@dimen/thirty"
+                android:background="@color/light_gray">
+
+            </View>
+
+            <LinearLayout
+                android:id="@+id/lnrTermsConditions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/isViewContactUs"
+                android:layout_marginLeft="@dimen/thirty"
+                android:layout_marginTop="@dimen/twenty"
+                android:layout_marginRight="@dimen/thirty"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <ImageView
+                    android:layout_width="@dimen/twenty_five"
+                    android:layout_height="@dimen/twenty_five"
+                    android:layout_weight="0.1"
+                    android:src="@drawable/terms_conditions_icon"></ImageView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/thirty"
+                    android:layout_weight="0.8"
+                    android:text="Terms and conditions"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:textStyle="bold">
+
+                </TextView>
+
+                <ImageView
+                    android:layout_width="@dimen/twenty_five_sp"
+                    android:layout_height="@dimen/twenty_five_sp"
+                    android:layout_weight="0.1"
+                    android:src="@drawable/arrow_right_gray">
+
+                </ImageView>
+            </LinearLayout>
+
+            <View
+                android:id="@+id/isViewTeamsCondition"
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_below="@+id/lnrTermsConditions"
+                android:layout_marginLeft="@dimen/thirty"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginRight="@dimen/thirty"
+                android:background="@color/light_gray">
+
+            </View>
+
+
+            <TextView
+                android:id="@+id/lblFeedBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/isViewTeamsCondition"
+                android:layout_marginLeft="@dimen/twenty"
+                android:layout_marginTop="@dimen/twenty"
+                android:text="FEEDBACK"
+                android:textSize="@dimen/fifteen_sp">
+
+            </TextView>
+
+
+            <LinearLayout
+                android:id="@+id/lnrReportBug"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblFeedBack"
+                android:layout_marginLeft="@dimen/thirty"
+                android:layout_marginTop="@dimen/twenty"
+                android:layout_marginRight="@dimen/thirty"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <ImageView
+                    android:layout_width="@dimen/thirty"
+                    android:layout_height="@dimen/thirty"
+                    android:layout_weight="0.1"
+                    android:src="@drawable/report_bug_icon"></ImageView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/thirty"
+                    android:layout_weight="0.8"
+                    android:text="Report a bug"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:textStyle="bold">
+
+                </TextView>
+
+                <ImageView
+                    android:layout_width="@dimen/twenty_five_sp"
+                    android:layout_height="@dimen/twenty_five_sp"
+                    android:layout_weight="0.1"
+                    android:src="@drawable/arrow_right_gray">
+
+                </ImageView>
+            </LinearLayout>
+
+            <View
+                android:id="@+id/isViewReportBug"
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_below="@+id/lnrReportBug"
+                android:layout_marginLeft="@dimen/thirty"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginRight="@dimen/thirty"
+                android:background="@color/light_gray"></View>
+
+            <LinearLayout
+                android:id="@+id/lnrFeedBack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/isViewReportBug"
+                android:layout_marginLeft="@dimen/thirty"
+                android:layout_marginTop="@dimen/twenty"
+                android:layout_marginRight="@dimen/thirty"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <ImageView
+                    android:layout_width="@dimen/thirty"
+                    android:layout_height="@dimen/thirty"
+                    android:layout_weight="0.1"
+                    android:src="@drawable/send_feedback_icon"></ImageView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/thirty"
+                    android:layout_weight="0.8"
+                    android:text="Send Feedback"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:textStyle="bold">
+
+                </TextView>
+
+                <ImageView
+                    android:layout_width="@dimen/twenty_five_sp"
+                    android:layout_height="@dimen/twenty_five_sp"
+                    android:layout_weight="0.1"
+                    android:src="@drawable/arrow_right_gray">
+
+                </ImageView>
+            </LinearLayout>
+
+            <View
+                android:id="@+id/isViewFeedBack"
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_below="@+id/lnrFeedBack"
+                android:layout_marginLeft="@dimen/thirty"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginRight="@dimen/thirty"
+                android:background="@color/light_gray"></View>
+
+
+            <LinearLayout
+                android:id="@+id/lnrLogout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/isViewFeedBack"
+                android:layout_marginLeft="@dimen/thirty"
+                android:layout_marginTop="@dimen/twenty"
+                android:layout_marginRight="@dimen/thirty"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <ImageView
+                    android:layout_width="@dimen/thirty"
+                    android:layout_height="@dimen/thirty"
+                    android:layout_weight="0.1"
+                    android:src="@drawable/logout"></ImageView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/thirty"
+                    android:layout_weight="0.8"
+                    android:text="Logout"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:textStyle="bold">
+
+                </TextView>
+
+                <ImageView
+                    android:layout_width="@dimen/twenty_five_sp"
+                    android:layout_height="@dimen/twenty_five_sp"
+                    android:layout_weight="0.1"
+                    android:src="@drawable/arrow_right_gray">
+
+                </ImageView>
+            </LinearLayout>
+
+            <View
+                android:id="@+id/isViewLogout"
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_below="@+id/lnrFeedBack"
+                android:layout_marginLeft="@dimen/twenty"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginRight="@dimen/twenty"
+                android:background="@color/light_gray"></View>
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</androidx.core.widget.NestedScrollView>

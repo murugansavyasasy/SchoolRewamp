@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerInParent="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/two_sixty"
+        android:layout_centerInParent="true">
+
+        <RelativeLayout
+            android:id="@+id/rlaLogoutPopup"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/two_hundred"
+            android:layout_marginLeft="@dimen/fifty"
+            android:layout_marginTop="@dimen/twenty_five"
+            android:layout_marginRight="@dimen/fifty"
+            android:background="@drawable/rect_shadow_white"
+            android:padding="@dimen/ten">
+
+            <ImageView
+                android:id="@+id/imgLogout"
+                android:layout_width="@dimen/seventy"
+                android:layout_height="@dimen/seventy"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/logout_icon"></ImageView>
+
+            <TextView
+                android:id="@+id/lblLogoutContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imgLogout"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/twenty_five"
+                android:text="Are you sure want to logout ?"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen_sp"
+                android:textStyle="bold"></TextView>
+
+            <TextView
+                android:id="@+id/btnCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblLogoutContent"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="@dimen/twenty_four"
+                android:layout_marginRight="@dimen/seventy_five"
+                android:text="Cancel"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp">
+
+            </TextView>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlaLogout"
+            android:layout_width="@dimen/ninety"
+            android:layout_height="@dimen/fourty"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="@dimen/twenty_five"
+            android:layout_marginBottom="@dimen/fifty"
+            android:background="@drawable/rect_shadow_red"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/lblLogout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Logout"
+                android:textColor="@color/white"
+                android:textSize="@dimen/thirteen_sp"
+                android:textStyle="bold">
+
+            </TextView>
+
+
+            <ImageView
+                android:layout_width="@dimen/twenty"
+                android:layout_height="@dimen/twenty"
+                android:layout_marginLeft="@dimen/ten"
+                android:layout_toRightOf="@+id/lblLogout"
+                android:src="@drawable/ic_right_arrow">
+
+            </ImageView>
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+</RelativeLayout>

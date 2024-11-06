@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/mild0">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <RelativeLayout
+            android:id="@+id/rlaLblReportBug"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/primary_light"
+            android:padding="@dimen/ten">
+
+            <ImageView
+                android:id="@+id/imgBack"
+                android:layout_width="@dimen/thirty"
+                android:layout_height="@dimen/thirty"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/ten"
+                android:layout_marginBottom="@dimen/ten"
+                android:src="@drawable/arrow_back_black"></ImageView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/fifteen"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_toRightOf="@+id/imgBack"
+                android:text="Report a bug"
+                android:textColor="@color/black"
+                android:textSize="@dimen/twenty_sp"
+                android:textStyle="bold">
+
+            </TextView>
+
+            <RelativeLayout
+                android:id="@+id/lblSendBug"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="@dimen/five"
+                android:layout_marginRight="@dimen/twenty"
+                android:gravity="center"
+                android:padding="@dimen/thirteen">
+
+                <TextView
+                    android:id="@+id/lblSend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Send"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:textStyle="bold"
+                    android:visibility="gone">
+
+                </TextView>
+
+                <ImageView
+                    android:layout_width="@dimen/twenty"
+                    android:layout_height="@dimen/twenty"
+                    android:layout_toRightOf="@+id/lblSend"
+                    android:src="@drawable/send_feedback_icon">
+
+                </ImageView>
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+
+        <Spinner
+            android:id="@+id/isMenuSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rlaLblReportBug"
+            android:layout_margin="@dimen/ten"
+            android:layout_marginTop="@dimen/ten"
+            android:background="@drawable/bg_white_box"></Spinner>
+
+
+        <EditText
+            android:id="@+id/edtReportBug"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/two_hundred"
+            android:layout_below="@+id/isMenuSpinner"
+            android:layout_marginLeft="@dimen/twenty"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginRight="@dimen/twenty"
+            android:background="@drawable/bg_edittext"
+            android:gravity="top"
+            android:hint="Enter the bug..."
+            android:padding="10dp"
+            android:textSize="@dimen/thirteen_sp">
+
+        </EditText>
+
+        <RelativeLayout
+            android:id="@+id/rlaPickImage"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/sixty"
+            android:layout_below="@+id/edtReportBug"
+            android:layout_marginLeft="@dimen/twenty"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginRight="@dimen/twenty"
+            android:background="@drawable/bg_dot_line"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/imgUpload"
+                android:layout_width="@dimen/thirty"
+                android:layout_height="@dimen/thirty"
+                android:layout_centerVertical="true"
+                android:src="@drawable/upload"></ImageView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/ten"
+                android:layout_toRightOf="@+id/imgUpload"
+                android:text="Attachment"
+                android:textSize="@dimen/thirteen_sp"
+                android:textStyle="bold">
+
+            </TextView>
+
+        </RelativeLayout>
+
+        <GridView
+            android:id="@+id/imgPreview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/rlaPickImage"
+            android:layout_marginTop="@dimen/ten"
+            android:numColumns="2"
+            android:padding="@dimen/ten"
+            android:stretchMode="columnWidth">
+
+        </GridView>
+    </RelativeLayout>
+</androidx.core.widget.NestedScrollView>
+

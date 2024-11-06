@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <!-- Solid color with transparency (50% transparent) -->
+    <solid android:color="#80d3603b"/> <!-- 80 is the alpha value for transparency -->
+
+    <!-- Optional: set corner radius to make the rectangle's edges rounded -->
+    <corners android:radius="10dp"/>
+
+    <!-- Optional: set stroke for the rectangle -->
+
+</shape>

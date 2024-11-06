@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints">
+
+        <RelativeLayout
+            android:id="@+id/rytHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten"
+            android:padding="@dimen/ten">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imgSchoolLogo"
+                android:layout_width="@dimen/fourty"
+                android:layout_height="@dimen/fourty"
+                android:layout_centerVertical="true"
+                android:src="@drawable/splash_icon6"
+                app:civ_border_color="@color/colorPrimary"
+                app:civ_border_width="1dp" />
+
+            <RelativeLayout
+                android:id="@+id/rytSchoolDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/ten"
+                android:layout_toLeftOf="@+id/imgSearchClick"
+                android:layout_toRightOf="@+id/imgSchoolLogo">
+
+                <TextView
+                    android:id="@+id/lblSchoolName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Savyasasy schools"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/fifteen_sp" />
+
+                <TextView
+                    android:id="@+id/lblSchoolAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lblSchoolName"
+                    android:text="Savyasasy schools, Chennai - 600043"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/thirteen_sp" />
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/imgSearchClick"
+                android:layout_width="@dimen/thirty"
+                android:layout_height="@dimen/thirty"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/ten"
+                android:layout_toLeftOf="@+id/imgNotification"
+                android:src="@drawable/search_icon">
+
+            </ImageView>
+
+            <TextView
+                android:id="@+id/lblNotificationCount"
+                android:layout_width="@dimen/twenty_five"
+                android:layout_height="@dimen/twenty_five"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="@dimen/five"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/bg_red_small_size"
+                android:elevation="@dimen/ten"
+                android:gravity="center"
+                android:text="5"
+                android:textColor="@color/white"
+                android:textSize="@dimen/thirteen_sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/imgNotification"
+                android:layout_width="@dimen/thirty"
+                android:layout_height="@dimen/thirty"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/ten"
+                android:src="@drawable/ic_notification" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rytSearch"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/fourty_five"
+            android:layout_below="@id/rytHeader"
+            android:layout_margin="@dimen/ten"
+            android:background="@drawable/rect_white"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/imgSearch"
+                android:layout_width="@dimen/thirty"
+                android:layout_height="@dimen/thirty"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/ten"
+                android:src="@drawable/ic_search" />
+
+            <EditText
+                android:id="@+id/txtSearchMenu"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@id/imgSearch"
+                android:background="@android:color/transparent"
+                android:hint="Search"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlaPieChartCount"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="@dimen/five"
+            android:layout_marginRight="@dimen/five"
+            android:background="@drawable/rect_shadow_white"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rytSearch"
+            android:visibility="gone">
+
+            <com.vs.schoolmessenger.Utils.PieChartView
+                android:id="@+id/customPieChart"
+                android:layout_width="@dimen/one_fifty"
+                android:layout_height="@dimen/one_fifty"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/ten"
+                android:layout_marginRight="@dimen/ten" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_toLeftOf="@+id/customPieChart">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="center_vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/ten"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="School Strength"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/fifteen_sp"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/ten"
+                            android:gravity="center_vertical"
+                            android:weightSum="1">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.5"
+                                android:text="Total Strength"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/thirteen_sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/lblTotalStrength"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.5"
+                                android:layout_marginLeft="@dimen/ten"
+                                android:text="10,000"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/thirteen_sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/ten"
+                            android:gravity="center_vertical"
+                            android:weightSum="1">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.5"
+                                android:text="Sfaff's count"
+                                android:textColor="@color/light_orange0"
+                                android:textSize="@dimen/thirteen_sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/lblTeachersCount"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.5"
+                                android:layout_marginLeft="@dimen/ten"
+                                android:text="20,000 - 20%"
+                                android:textColor="@color/light_orange0"
+                                android:textSize="@dimen/thirteen_sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/ten"
+                            android:gravity="center_vertical"
+                            android:weightSum="1">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.5"
+                                android:text="Boy's count"
+                                android:textColor="@color/light_green_bg1"
+                                android:textSize="@dimen/thirteen_sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/lblBoysCount"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.5"
+                                android:text="45,000 - 45%"
+                                android:layout_marginLeft="@dimen/ten"
+                                android:textColor="@color/light_green_bg1"
+                                android:textSize="@dimen/thirteen_sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/ten"
+                            android:gravity="center_vertical"
+                            android:weightSum="1">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.5"
+                                android:text="Girl's count"
+                                android:textColor="@color/yellow"
+                                android:textSize="@dimen/thirteen_sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/lblGirlsCount"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.5"
+                                android:text="35,000 - 30%"
+                                android:layout_marginLeft="@dimen/ten"
+                                android:textColor="@color/yellow"
+                                android:textSize="@dimen/thirteen_sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rlaPieChartCount"
+            android:layout_marginTop="@dimen/ten"
+            tools:listitem="@layout/menu_item_card" />
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

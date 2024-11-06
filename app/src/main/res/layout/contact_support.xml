@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/mild4">
+
+    <RelativeLayout
+        android:id="@+id/rlaLblContactSupport"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primary_light"
+        android:paddingBottom="@dimen/thirty">
+
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/twenty"
+            android:layout_marginEnd="@dimen/ten"
+            android:src="@drawable/arrow_back_black"></ImageView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fifteen"
+            android:layout_toRightOf="@+id/imgBack"
+            android:text="Contact Support"
+            android:layout_marginTop="@dimen/twenty"
+            android:textColor="@color/black"
+            android:textSize="@dimen/twenty_sp"
+            android:textStyle="bold">
+
+        </TextView>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlyPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rlaLblContactSupport"
+        android:layout_marginLeft="@dimen/ten"
+        android:paddingVertical="@dimen/fifteen"
+        android:layout_marginTop="@dimen/twenty_five"
+        android:layout_marginRight="@dimen/twenty"
+        android:background="@drawable/rect_shadow_white">
+
+
+        <ImageView
+            android:id="@+id/imgPhoneCall"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/ten"
+            android:src="@drawable/phone_icon">
+
+        </ImageView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/imgPhoneCall"
+            android:gravity="center"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/ten"
+                android:text="Our 24*7 Customer Service."
+                android:textSize="@dimen/fifteen_sp"
+                android:layout_marginRight="@dimen/ten"
+                android:textColor="@color/black">
+
+            </TextView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/ten"
+                android:layout_marginTop="@dimen/five"
+                android:text="6382677672"
+                android:textSize="@dimen/thirteen_sp"
+                android:layout_marginRight="@dimen/ten"
+                android:textColor="@color/navi_blue1"
+                android:textStyle="bold">
+
+            </TextView>
+
+        </LinearLayout>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rlyPhone"
+        android:layout_marginLeft="@dimen/ten"
+        android:layout_marginTop="@dimen/ten"
+        android:paddingVertical="@dimen/fifteen"
+        android:layout_marginRight="@dimen/twenty"
+        android:background="@drawable/rect_shadow_white">
+
+
+        <ImageView
+            android:id="@+id/imgMail"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/ten"
+            android:src="@drawable/mail_icon">
+
+        </ImageView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/imgMail"
+            android:gravity="center"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/ten"
+                android:layout_marginRight="@dimen/ten"
+                android:textSize="@dimen/fifteen_sp"
+                android:text="Write us at."
+                android:textColor="@color/black">
+
+            </TextView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/ten"
+                android:layout_marginTop="@dimen/five"
+                android:textSize="@dimen/thirteen_sp"
+                android:text="sathishkumar@voicesnap.com"
+                android:layout_marginRight="@dimen/ten"
+                android:textColor="@color/navi_blue1"
+                android:textStyle="bold">
+
+            </TextView>
+
+        </LinearLayout>
+    </RelativeLayout>
+
+
+</RelativeLayout>

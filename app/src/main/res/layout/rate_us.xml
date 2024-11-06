@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/constHeader"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imgback"
+                android:layout_width="@dimen/thirty"
+                android:layout_height="@dimen/thirty"
+                android:layout_marginLeft="@dimen/ten"
+                android:layout_marginTop="@dimen/twenty"
+                android:src="@drawable/arrow_back_black">
+
+            </ImageView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/twenty_five"
+                android:text="Rate us"
+                android:textColor="@color/black"
+                android:textSize="@dimen/eighteen_sp"
+                android:textStyle="bold">
+
+            </TextView>
+
+            <ImageView
+                android:id="@+id/imgFeedBack"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/two_hundred"
+                android:layout_marginTop="@dimen/hundred"
+                android:src="@drawable/rate_us"
+                android:visibility="visible">
+
+            </ImageView>
+
+
+            <TextView
+                android:id="@+id/lblTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imgFeedBack"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/fifty"
+                android:gravity="center"
+                android:text="How satisfied are you with the School Chimes?"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"
+                android:textStyle="bold"
+                android:visibility="visible"></TextView>
+
+            <RatingBar
+                android:id="@+id/ratingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblTitle"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:stepSize="1"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/lblMayBeLater"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ratingBar"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/thirty"
+                android:layout_marginTop="@dimen/thirty"
+                android:layout_marginEnd="@dimen/thirty"
+                android:layout_marginBottom="@dimen/thirty"
+                android:background="@drawable/bg_outline_blue"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Maybe later"
+                android:textColor="@color/orange"
+                android:textSize="@dimen/thirteen_sp"
+                android:textStyle="bold"
+                android:visibility="visible"></TextView>
+
+
+            <LinearLayout
+                android:id="@+id/lnrRatingContent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/ratingBar"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+
+                <TextView
+                    android:id="@+id/lblContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/fifteen"
+                    android:layout_marginTop="@dimen/five"
+                    android:layout_marginRight="@dimen/fifteen"
+                    android:gravity="center"
+                    android:textColor="@color/orange"
+                    android:textStyle="bold">
+
+                </TextView>
+
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/fifteen"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_marginRight="@dimen/fifteen"
+                    android:background="@color/grey"></View>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/consRatingType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/lblAppUi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/twenty"
+                        android:layout_marginTop="@dimen/twenty"
+                        android:background="@drawable/bg_outline_light_blue"
+                        android:padding="10dp"
+                        android:text="App UI interface"
+                        android:textColor="@color/navi_blue1"
+                        android:textSize="@dimen/thirteen_sp"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/lblWatchUi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/twenty"
+                        android:layout_marginTop="@dimen/twenty"
+                        android:background="@drawable/bg_outline_light_blue"
+                        android:padding="10dp"
+                        android:text="Watch UI "
+                        android:textColor="@color/navi_blue1"
+                        android:textSize="@dimen/thirteen_sp"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toRightOf="@+id/lblAppUi"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/lbPricing"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/twenty"
+                        android:layout_marginTop="@dimen/twenty"
+                        android:layout_marginRight="@dimen/twenty"
+                        android:background="@drawable/bg_outline_light_blue"
+                        android:padding="10dp"
+
+                        android:text="Pricing "
+                        android:textColor="@color/navi_blue1"
+                        android:textSize="@dimen/thirteen_sp"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toRightOf="@+id/lblWatchUi"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <TextView
+                        android:id="@+id/lblConnection"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/twenty"
+                        android:layout_marginTop="@dimen/twenty"
+                        android:background="@drawable/bg_outline_light_blue"
+                        android:padding="10dp"
+
+                        android:text="Connection Stability"
+                        android:textColor="@color/navi_blue1"
+                        android:textSize="@dimen/thirteen_sp"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/lblAppUi">
+
+                    </TextView>
+
+
+                    <TextView
+                        android:id="@+id/lblPairing"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/twenty"
+                        android:layout_marginTop="@dimen/twenty"
+                        android:background="@drawable/bg_outline_light_blue"
+                        android:padding="10dp"
+
+                        android:text="Pairing Experience"
+                        android:textColor="@color/navi_blue1"
+                        android:textSize="@dimen/thirteen_sp"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toRightOf="@+id/lblConnection"
+                        app:layout_constraintTop_toBottomOf="@+id/lblAppUi"></TextView>
+
+                    <TextView
+                        android:id="@+id/lblWatchFaces"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/twenty_five"
+                        android:layout_marginTop="@dimen/twenty"
+                        android:background="@drawable/bg_outline_light_blue"
+                        android:padding="10dp"
+
+                        android:text="Watch faces"
+                        android:textColor="@color/navi_blue1"
+                        android:textSize="@dimen/thirteen_sp"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/lblConnection">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/lblWatchHardware"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/twenty_five"
+                        android:layout_marginTop="@dimen/twenty"
+                        android:background="@drawable/bg_outline_light_blue"
+                        android:padding="10dp"
+
+                        android:text="Watch Hardware"
+                        android:textColor="@color/navi_blue1"
+                        android:textSize="@dimen/thirteen_sp"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toRightOf="@+id/lblWatchFaces"
+                        app:layout_constraintTop_toBottomOf="@+id/lblConnection">
+
+                    </TextView>
+
+
+                    <TextView
+                        android:id="@+id/lblAlumniAssistance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/twenty_five"
+                        android:layout_marginTop="@dimen/twenty"
+                        android:background="@drawable/bg_outline_light_blue"
+                        android:padding="10dp"
+
+                        android:text="Alumni Assistance"
+                        android:textColor="@color/navi_blue1"
+                        android:textSize="@dimen/thirteen_sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/lblWatchFaces">
+
+                    </TextView>
+
+
+                    <TextView
+                        android:id="@+id/lblLoginuser"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/ten"
+                        android:layout_marginTop="@dimen/twenty"
+                        android:background="@drawable/bg_outline_light_blue"
+                        android:padding="10dp"
+                        android:text="User Login"
+                        android:textColor="@color/navi_blue1"
+                        android:textSize="@dimen/thirteen_sp"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toRightOf="@+id/lblAlumniAssistance"
+                        app:layout_constraintTop_toBottomOf="@+id/lblWatchFaces">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/lblRegistration"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/twenty_five"
+                        android:layout_marginTop="@dimen/twenty"
+                        android:layout_marginRight="@dimen/five"
+                        android:background="@drawable/bg_outline_light_blue"
+                        android:padding="10dp"
+                        android:text="Registration"
+                        android:textColor="@color/navi_blue1"
+                        android:textSize="@dimen/thirteen_sp"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/lblAlumniAssistance">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/lblOthers"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/ten"
+                        android:layout_marginTop="@dimen/twenty"
+                        android:layout_marginRight="@dimen/five"
+                        android:background="@drawable/bg_outline_light_blue"
+                        android:padding="10dp"
+                        android:text="Others"
+                        android:textColor="@color/navi_blue1"
+                        android:textSize="@dimen/thirteen_sp"
+                        android:textStyle="bold"
+                        android:visibility="gone"
+                        app:layout_constraintLeft_toRightOf="@+id/lblRegistration"
+                        app:layout_constraintTop_toBottomOf="@+id/lblAlumniAssistance">
+
+                    </TextView>
+
+                    <View
+                        android:id="@+id/view1"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="@dimen/fifteen"
+                        android:layout_marginTop="@dimen/fifteen"
+                        android:layout_marginRight="@dimen/fifteen"
+                        android:background="@color/grey"
+                        app:layout_constraintTop_toBottomOf="@+id/lblRegistration">
+
+                    </View>
+
+
+                    <TextView
+                        android:id="@+id/lblEdtTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/twenty"
+                        android:layout_marginTop="@dimen/twenty"
+                        android:text="Any other suggestions? (optional)"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/fifteen_sp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/view1"></TextView>
+
+
+                    <EditText
+                        android:id="@+id/edtSuggestions"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:layout_marginLeft="@dimen/twenty"
+                        android:layout_marginTop="@dimen/ten"
+                        android:layout_marginRight="@dimen/fifteen"
+                        android:background="@drawable/bg_edittext"
+                        android:gravity="top|left"
+                        android:maxLength="300"
+                        android:paddingLeft="@dimen/five"
+                        android:paddingTop="@dimen/five"
+                        android:scrollbars="vertical"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/fifteen"
+                        app:layout_constraintTop_toBottomOf="@+id/lblEdtTitle"></EditText>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <Button
+                    android:id="@+id/btnsubmit"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/fourty_five"
+                    android:layout_margin="@dimen/fifteen"
+                    android:background="@drawable/rect_btn_orange"
+                    android:enabled="false"
+                    android:text="Submit"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/thirteen_sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"></Button>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</RelativeLayout>
+
+
+

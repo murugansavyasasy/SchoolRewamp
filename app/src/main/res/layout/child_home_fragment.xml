@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <RelativeLayout
+                android:id="@+id/rytHeader"
+                android:padding="@dimen/ten"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_alignParentLeft="true"
+                    android:id="@+id/imgSchoolLogo"
+                    android:layout_centerVertical="true"
+                    android:layout_width="@dimen/fourty"
+                    android:layout_height="@dimen/fourty"
+                    android:src="@drawable/splash_icon2"/>
+
+
+                <RelativeLayout
+                    android:layout_toLeftOf="@+id/imgNotification"
+                    android:layout_toRightOf="@+id/imgSchoolLogo"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/ten"
+                    android:id="@+id/rytSchoolDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/lblSchoolName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Savyasasy schools"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/fifteen_sp"/>
+
+                    <TextView
+                        android:id="@+id/lblSchoolAddress"
+                        android:layout_below="@+id/lblSchoolName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Savyasasy schools,Chennai - 600043"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/thirteen_sp"/>
+
+                </RelativeLayout>
+
+
+                <ImageView
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/imgNotification"
+                    android:layout_centerVertical="true"
+                    android:layout_width="@dimen/thirty"
+                    android:layout_height="@dimen/thirty"
+                    android:src="@drawable/ic_notification"/>
+
+            </RelativeLayout>
+
+
+
+            <RelativeLayout
+                android:id="@+id/rytSearch"
+                android:layout_below="@+id/rytHeader"
+                android:layout_width="match_parent"
+                android:layout_margin="@dimen/ten"
+                android:background="@drawable/rect_white"
+                android:layout_height="@dimen/fourty_five">
+
+
+                <ImageView
+                    android:id="@+id/imgSearch"
+                    android:layout_marginLeft="@dimen/ten"
+                    android:layout_width="@dimen/thirty"
+                    android:layout_height="@dimen/thirty"
+                    android:src="@drawable/ic_search"
+                    android:layout_centerVertical="true"/>
+
+                <EditText
+                    android:layout_toRightOf="@+id/imgSearch"
+                    android:background="@android:color/transparent"
+                    android:hint="Search"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:textColor="@color/black"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            </RelativeLayout>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_below="@+id/rytSearch"
+                android:id="@+id/recyclerViewMenu"
+                tools:listitem="@layout/menu_item_card"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+
+        </RelativeLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+

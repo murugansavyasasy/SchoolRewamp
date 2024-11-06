@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary_light">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ten"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <TextView
+            android:id="@+id/lblCountryTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/twenty"
+            android:text="Choose your country"
+            android:textColor="@color/black"
+            android:textSize="@dimen/twenty_sp"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/lblContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/twenty"
+            android:layout_marginTop="@dimen/thirteen"
+            android:lineSpacingExtra="@dimen/five"
+            android:text="Using SVG images in Android Studio is a great way to ensure your app's graphics are scalable and high quality on all devices. Android supports SVG images through the Vector Drawable format. Here's a step-by-step guide on how to use SVG images in your Android project:"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp"
+            app:layout_constraintTop_toBottomOf="@+id/lblCountryTitle" />
+
+
+        <ImageView
+            android:id="@+id/imgCountry"
+            android:layout_width="@dimen/twenty"
+            android:layout_height="@dimen/twenty"
+            android:layout_marginLeft="@dimen/twenty"
+            android:layout_marginTop="@dimen/twenty"
+            android:src="@drawable/flag_india"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lblContent"></ImageView>
+
+
+        <TextView
+            android:id="@+id/lblCountry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/twenty"
+            android:layout_marginTop="@dimen/twenty"
+            android:text="India"
+            android:textColor="@color/black"
+            app:layout_constraintLeft_toRightOf="@+id/imgCountry"
+            app:layout_constraintTop_toBottomOf="@+id/lblContent"></TextView>
+
+        <View
+            android:id="@+id/vw"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="@dimen/twenty"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginRight="@dimen/twenty"
+            android:background="@color/white"
+            app:layout_constraintTop_toBottomOf="@+id/lblCountry" />
+
+
+        <TextView
+            android:id="@+id/terms_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/twenty"
+            android:padding="@dimen/ten"
+            android:text="Here are the terms and conditions >>"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/vw" />
+
+        <CheckBox
+            android:id="@+id/terms_checkbox"
+            style="@style/CustomCheckbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten"
+            android:padding="@dimen/five"
+            android:text="I agree to the Terms and Conditions"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/terms_text"
+            tools:ignore="MissingConstraints" />
+
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/btnArrowNext"
+            android:layout_width="@dimen/hundred"
+            android:layout_height="@dimen/hundred"
+            android:layout_centerInParent="true"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/terms_checkbox"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/arrow_country_check" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="-60dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <RelativeLayout
+            android:id="@+id/rytShape1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/twenty"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="-20dp"
+                android:layout_weight="1"
+                android:background="@drawable/country_shape_one"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/twenty"
+                    android:gravity="center"
+                    android:text="India"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/twele_sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="@dimen/twenty"
+                android:layout_marginTop="-30dp"
+                android:layout_weight="1"
+                android:background="@drawable/country_shape_four"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Thailand"
+                    android:textColor="@color/white"
+
+                    android:textSize="@dimen/twele_sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="@dimen/twenty"
+                android:layout_marginRight="-20dp"
+                android:layout_weight="1"
+                android:background="@drawable/country_shape_two"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="@dimen/ten"
+                    android:gravity="center"
+                    android:text="USA"
+                    android:textColor="@color/white"
+
+                    android:textSize="@dimen/twele_sp" />
+
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rytShape2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-40dp"
+            app:layout_constraintTop_toBottomOf="@+id/rytShape1">
+
+            <LinearLayout
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="-60dp"
+                android:layout_weight="1"
+                android:background="@drawable/country_shape_five"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="China"
+                    android:textColor="@color/white"
+
+                    android:textSize="@dimen/twele_sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="@dimen/twenty"
+                android:layout_marginTop="30dp"
+                android:layout_weight="1"
+                android:background="@drawable/country_shape_three"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Singapore"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/twele_sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="@dimen/twenty"
+                android:layout_marginRight="-60dp"
+                android:layout_weight="1"
+                android:background="@drawable/country_shape_six"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Canada"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/twele_sp" />
+
+            </LinearLayout>
+        </RelativeLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

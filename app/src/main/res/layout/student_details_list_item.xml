@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/rlaStudent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/thirty"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginRight="@dimen/thirty"
+        android:background="@drawable/rect_shadow_white"
+        >
+
+        <RelativeLayout
+            android:id="@+id/rlaStudentDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/imgStudentProfile"
+                android:layout_width="@dimen/hundred"
+                android:layout_height="@dimen/hundred"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/ten"
+                android:scaleType="centerCrop"
+                android:src="@drawable/man_icon"
+                app:shapeAppearanceOverlay="@style/Circular">
+
+            </com.google.android.material.imageview.ShapeableImageView>
+
+            <TextView
+                android:id="@+id/lblRegisterNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imgStudentProfile"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/ten"
+                android:gravity="center"
+                android:text="Register No : 1470000"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen_sp"
+                android:textStyle="bold">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/lblName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblRegisterNumber"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/ten"
+                android:gravity="center"
+                android:text="Sathish"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"></TextView>
+
+            <TextView
+                android:id="@+id/lblClass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblName"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/ten"
+                android:gravity="center"
+                android:text="IIX - A"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp">
+
+            </TextView>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlaSchoolName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rlaStudentDetails"
+            android:background="@color/system_blue">
+
+            <ImageView
+                android:id="@+id/imgSchool"
+                android:layout_width="@dimen/fifty"
+                android:layout_height="@dimen/fifty"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/ten"
+                android:layout_marginBottom="@dimen/ten"
+                android:padding="@dimen/five"
+                android:src="@drawable/splash_icon2">
+
+            </ImageView>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/imgSchool">
+
+                <TextView
+                    android:id="@+id/lblSchoolName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/ten"
+                    android:gravity="start"
+                    android:text="Kodaikanal International School"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp"
+
+                    >
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/lblSchoolPlace"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lblSchoolName"
+                    android:layout_marginRight="@dimen/ten"
+                    android:gravity="start"
+                    android:text="Kodaikanal"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp"
+
+                    >
+
+                </TextView>
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+</RelativeLayout>
