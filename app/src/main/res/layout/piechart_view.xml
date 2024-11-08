@@ -1,0 +1,165 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rlaPieChartCount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rytSearch"
+        android:layout_marginLeft="@dimen/five"
+        android:layout_marginRight="@dimen/five"
+        android:layout_marginTop="@dimen/five"
+        android:background="@drawable/rect_shadow_white">
+
+        <com.vs.schoolmessenger.Utils.PieChartView
+            android:id="@+id/customPieChart"
+            android:layout_width="@dimen/one_fifty"
+            android:layout_height="@dimen/one_fifty"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/ten"
+            android:layout_marginRight="@dimen/ten" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/ten"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_toLeftOf="@+id/customPieChart">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:gravity="center_vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/ten"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="School Strength"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/fifteen_sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ten"
+                        android:gravity="center_vertical"
+                        android:weightSum="1">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:text="Total Strength"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/thirteen_sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/lblTotalStrength"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/ten"
+                            android:layout_weight="0.5"
+                            android:text="10,000"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/thirteen_sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ten"
+                        android:gravity="center_vertical"
+                        android:weightSum="1">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:text="Sfaff's count"
+                            android:textColor="@color/light_orange0"
+                            android:textSize="@dimen/thirteen_sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/lblTeachersCount"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/ten"
+                            android:layout_weight="0.5"
+                            android:text="20,000 - 20%"
+                            android:textColor="@color/light_orange0"
+                            android:textSize="@dimen/thirteen_sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ten"
+                        android:gravity="center_vertical"
+                        android:weightSum="1">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:text="Boy's count"
+                            android:textColor="@color/light_green_bg1"
+                            android:textSize="@dimen/thirteen_sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/lblBoysCount"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/ten"
+                            android:layout_weight="0.5"
+                            android:text="45,000 - 45%"
+                            android:textColor="@color/light_green_bg1"
+                            android:textSize="@dimen/thirteen_sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ten"
+                        android:gravity="center_vertical"
+                        android:weightSum="1">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:text="Girl's count"
+                            android:textColor="@color/yellow"
+                            android:textSize="@dimen/thirteen_sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/lblGirlsCount"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/ten"
+                            android:layout_weight="0.5"
+                            android:text="35,000 - 30%"
+                            android:textColor="@color/yellow"
+                            android:textSize="@dimen/thirteen_sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+
+</LinearLayout>

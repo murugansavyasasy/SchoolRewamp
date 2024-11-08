@@ -174,7 +174,6 @@
                         android:layout_marginRight="@dimen/twenty"
                         android:background="@drawable/bg_outline_light_blue"
                         android:padding="10dp"
-
                         android:text="Pricing "
                         android:textColor="@color/navi_blue1"
                         android:textSize="@dimen/thirteen_sp"

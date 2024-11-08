@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/ten"
+        android:background="@drawable/rect_shadow_violet"
+        android:padding="@dimen/ten">
+
+        <TextView
+            android:id="@+id/lblTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/ten"
+            android:layout_toLeftOf="@+id/lblTime"
+            android:text="Images"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp"
+            android:textStyle="bold">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/lblContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblTitle"
+            android:layout_marginTop="@dimen/five"
+            android:text="Function Images"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/lblTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="May 22, 2024"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp">
+
+        </TextView>
+
+        <LinearLayout
+            android:id="@+id/lnrAttachment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblContent"
+            android:layout_marginTop="@dimen/twenty"
+            android:background="@drawable/bg_blue"
+            android:gravity="center"
+            android:layout_marginBottom="@dimen/five"
+            android:orientation="horizontal"
+            android:padding="@dimen/five">
+
+            <ImageView
+                android:layout_width="@dimen/twenty"
+                android:layout_height="@dimen/twenty"
+                android:layout_marginLeft="@dimen/five"
+                android:src="@drawable/attachment_icon"></ImageView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="@dimen/ten"
+                android:text="Attachment"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"
+                android:textStyle="bold">
+
+            </TextView>
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>
