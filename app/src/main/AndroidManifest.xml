@@ -39,6 +39,7 @@
 
         <activity
             android:name=".Dashboard.School.Dashboard"
+
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/AppTheme">
@@ -152,5 +153,4 @@
 
 
     </application>
-
 </manifest>
