@@ -138,7 +138,7 @@
                 android:layout_marginLeft="@dimen/ten"
                 android:layout_marginTop="@dimen/five"
                 android:textSize="@dimen/thirteen_sp"
-                android:text="sathishkumar@voicesnap.com"
+                android:text="support@savyasasy.com"
                 android:layout_marginRight="@dimen/ten"
                 android:textColor="@color/navi_blue1"
                 android:textStyle="bold">
