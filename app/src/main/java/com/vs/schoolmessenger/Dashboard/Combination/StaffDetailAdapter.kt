@@ -94,13 +94,9 @@ class StaffDetailAdapter(private val itemList: List<StaffDetailData>, val contex
                         R.drawable.school_building_4
                     )
                 )
-
                 holder.binding.rlaStaffDetails.setPadding(50, 50, 50, 50)
             }
         }
-
-
-
 
         holder.binding.lblSchoolName.text = item.schoolName
         holder.binding.lblRole.text = item.role
