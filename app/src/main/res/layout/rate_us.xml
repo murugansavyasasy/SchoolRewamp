@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/twenty_five"
-                android:text="Rate us"
+                android:text="@string/lblRateus"
                 android:textColor="@color/black"
                 android:textSize="@dimen/eighteen_sp"
                 android:textStyle="bold">
@@ -56,7 +56,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/fifty"
                 android:gravity="center"
-                android:text="How satisfied are you with the School Chimes?"
+                android:text="@string/lblHowsatisfied"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
                 android:textStyle="bold"
@@ -87,7 +87,7 @@
                 android:background="@drawable/bg_outline_blue"
                 android:gravity="center"
                 android:padding="8dp"
-                android:text="Maybe later"
+                android:text="@string/lblMaybelater"
                 android:textColor="@color/orange"
                 android:textSize="@dimen/thirteen_sp"
                 android:textStyle="bold"
@@ -139,7 +139,7 @@
                         android:layout_marginTop="@dimen/twenty"
                         android:background="@drawable/bg_outline_light_blue"
                         android:padding="10dp"
-                        android:text="App UI interface"
+                        android:text="@string/lblAppinterface"
                         android:textColor="@color/navi_blue1"
                         android:textSize="@dimen/thirteen_sp"
                         android:textStyle="bold"
@@ -156,7 +156,7 @@
                         android:layout_marginTop="@dimen/twenty"
                         android:background="@drawable/bg_outline_light_blue"
                         android:padding="10dp"
-                        android:text="Watch UI "
+                        android:text="@string/lblWatchUI"
                         android:textColor="@color/navi_blue1"
                         android:textSize="@dimen/thirteen_sp"
                         android:textStyle="bold"
@@ -174,7 +174,7 @@
                         android:layout_marginRight="@dimen/twenty"
                         android:background="@drawable/bg_outline_light_blue"
                         android:padding="10dp"
-                        android:text="Pricing "
+                        android:text="@string/lblPricing"
                         android:textColor="@color/navi_blue1"
                         android:textSize="@dimen/thirteen_sp"
                         android:textStyle="bold"
@@ -190,8 +190,7 @@
                         android:layout_marginTop="@dimen/twenty"
                         android:background="@drawable/bg_outline_light_blue"
                         android:padding="10dp"
-
-                        android:text="Connection Stability"
+                        android:text="@string/lblConnectionStability"
                         android:textColor="@color/navi_blue1"
                         android:textSize="@dimen/thirteen_sp"
                         android:textStyle="bold"
@@ -209,8 +208,7 @@
                         android:layout_marginTop="@dimen/twenty"
                         android:background="@drawable/bg_outline_light_blue"
                         android:padding="10dp"
-
-                        android:text="Pairing Experience"
+                        android:text="@string/lblPairingExperience"
                         android:textColor="@color/navi_blue1"
                         android:textSize="@dimen/thirteen_sp"
                         android:textStyle="bold"
@@ -225,8 +223,7 @@
                         android:layout_marginTop="@dimen/twenty"
                         android:background="@drawable/bg_outline_light_blue"
                         android:padding="10dp"
-
-                        android:text="Watch faces"
+                        android:text="@string/lblWatchfaces"
                         android:textColor="@color/navi_blue1"
                         android:textSize="@dimen/thirteen_sp"
                         android:textStyle="bold"
@@ -243,8 +240,7 @@
                         android:layout_marginTop="@dimen/twenty"
                         android:background="@drawable/bg_outline_light_blue"
                         android:padding="10dp"
-
-                        android:text="Watch Hardware"
+                        android:text="@string/lblWatchHardware"
                         android:textColor="@color/navi_blue1"
                         android:textSize="@dimen/thirteen_sp"
                         android:textStyle="bold"
@@ -262,8 +258,7 @@
                         android:layout_marginTop="@dimen/twenty"
                         android:background="@drawable/bg_outline_light_blue"
                         android:padding="10dp"
-
-                        android:text="Alumni Assistance"
+                        android:text="@string/lblSchoolAssistance"
                         android:textColor="@color/navi_blue1"
                         android:textSize="@dimen/thirteen_sp"
                         android:textStyle="bold"
@@ -281,7 +276,7 @@
                         android:layout_marginTop="@dimen/twenty"
                         android:background="@drawable/bg_outline_light_blue"
                         android:padding="10dp"
-                        android:text="User Login"
+                        android:text="@string/lblUserLogin"
                         android:textColor="@color/navi_blue1"
                         android:textSize="@dimen/thirteen_sp"
                         android:textStyle="bold"
@@ -299,7 +294,7 @@
                         android:layout_marginRight="@dimen/five"
                         android:background="@drawable/bg_outline_light_blue"
                         android:padding="10dp"
-                        android:text="Registration"
+                        android:text="@string/lblRegistration"
                         android:textColor="@color/navi_blue1"
                         android:textSize="@dimen/thirteen_sp"
                         android:textStyle="bold"
@@ -317,7 +312,7 @@
                         android:layout_marginRight="@dimen/five"
                         android:background="@drawable/bg_outline_light_blue"
                         android:padding="10dp"
-                        android:text="Others"
+                        android:text="@string/lblOthers"
                         android:textColor="@color/navi_blue1"
                         android:textSize="@dimen/thirteen_sp"
                         android:textStyle="bold"
@@ -346,7 +341,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/twenty"
                         android:layout_marginTop="@dimen/twenty"
-                        android:text="Any other suggestions? (optional)"
+                        android:text="@string/lblAnyothersuggestions"
                         android:textColor="@color/black"
                         android:textSize="@dimen/fifteen_sp"
                         app:layout_constraintLeft_toLeftOf="parent"
@@ -379,18 +374,15 @@
                     android:layout_margin="@dimen/fifteen"
                     android:background="@drawable/rect_btn_orange"
                     android:enabled="false"
-                    android:text="Submit"
+                    android:text="@string/lblSubmit"
                     android:textColor="@color/white"
                     android:textSize="@dimen/thirteen_sp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"></Button>
 
             </LinearLayout>
-
         </RelativeLayout>
-
     </androidx.core.widget.NestedScrollView>
-
 </RelativeLayout>
 
 

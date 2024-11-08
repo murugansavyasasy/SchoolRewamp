@@ -34,7 +34,6 @@ class AutoScrolling : BaseActivity<AutoScrollingBinding>(), View.OnClickListener
         setupToolbar()
 
         getListUrls()
-
         layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.rcvBanner.layoutManager = layoutManager
         val bannerAdapter = PieChartAdapter(this, urls)

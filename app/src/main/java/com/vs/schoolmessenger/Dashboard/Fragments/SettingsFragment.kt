@@ -1,12 +1,16 @@
 package com.vs.schoolmessenger.Dashboard.Fragments
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.PopupWindow
+import android.widget.RadioGroup
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -18,6 +22,7 @@ import com.vs.schoolmessenger.Dashboard.Settings.Notification.Notification
 import com.vs.schoolmessenger.Dashboard.Settings.RateUs.RateUs
 import com.vs.schoolmessenger.Dashboard.Settings.ReportTheBug.ReportTheBug
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.ChangeLanguage
 import com.vs.schoolmessenger.databinding.SettingsFragmentBinding
 
 class SettingsFragment : Fragment(), View.OnClickListener {
@@ -35,9 +40,9 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         binding.lnrFeedBack.setOnClickListener(this)
         binding.lnrFaq.setOnClickListener(this)
         binding.lnrLogout.setOnClickListener(this)
+        binding.lnrLanguage.setOnClickListener(this)
         return binding.root
     }
-
 
     override fun onClick(p0: View?) {
         when (p0?.id) {
@@ -66,6 +71,11 @@ class SettingsFragment : Fragment(), View.OnClickListener {
             R.id.lnrFaq -> {
                 startActivity(Intent(requireActivity(), Faq::class.java))
             }
+
+            R.id.lnrLanguage -> {
+                showLanguageSelectorDialog()
+            }
+
 
             R.id.lnrLogout -> {
                 isShowLogoutPopup()
@@ -119,4 +129,56 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         window.clearFlags(android.view.WindowManager.LayoutParams.FLAG_DIM_BEHIND)
         window.attributes = layoutParams
     }
+
+
+    private fun showLanguageSelectorDialog() {
+        // Inflate the custom dialog layout
+        val dialogView =
+            LayoutInflater.from(requireActivity()).inflate(R.layout.dialog_language_selector, null)
+
+        // Create the AlertDialog
+        val alertDialog = AlertDialog.Builder(requireActivity())
+            .setTitle("Select Language")
+            .setView(dialogView)
+            .setCancelable(true)
+            .create()
+
+        // Get references to the radio group and button
+        val radioGroup: RadioGroup = dialogView.findViewById(R.id.radio_language_group)
+        val applyButton: Button = dialogView.findViewById(R.id.btn_apply_language)
+
+        // Apply button click listener
+        applyButton.setOnClickListener {
+            // Get the selected radio button ID
+            val selectedRadioButtonId = radioGroup.checkedRadioButtonId
+            val selectedLanguage = when (selectedRadioButtonId) {
+                R.id.radio_english -> "en"
+                R.id.radio_thai -> "th"
+                R.id.radio_hindi -> "hi"
+                else -> "en"
+            }
+
+            // Apply the selected language
+            Log.d("selectedLanguage",selectedLanguage)
+            setAppLocale(selectedLanguage)
+
+            // Dismiss the dialog
+            alertDialog.dismiss()
+        }
+
+        // Show the dialog
+        alertDialog.show()
+    }
+
+    private fun setAppLocale(languageCode: String) {
+        // Set the selected language
+        val context = ChangeLanguage.setLocale(requireContext(), languageCode)
+        val resources = context!!.resources
+        val configuration = resources.configuration
+        resources.updateConfiguration(configuration, resources.displayMetrics)
+
+        // Recreate the parent activity from the fragment
+        activity?.recreate() // Calls recreate on the parent Activity
+    }
+
 }

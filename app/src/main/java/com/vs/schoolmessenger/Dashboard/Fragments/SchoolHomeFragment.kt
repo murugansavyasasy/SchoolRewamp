@@ -78,7 +78,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener {
         // Pie chart scrolling
 
         getListUrls()
-
         layoutManager =
             LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
         binding.rcyAutoScrolling.layoutManager = layoutManager

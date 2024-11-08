@@ -85,7 +85,7 @@
                 <EditText
                     android:layout_toRightOf="@+id/imgSearch"
                     android:background="@android:color/transparent"
-                    android:hint="Search"
+                    android:hint="@string/lblSearch"
                     android:textSize="@dimen/thirteen_sp"
                     android:textColor="@color/black"
                     android:layout_width="match_parent"

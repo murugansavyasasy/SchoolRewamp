@@ -45,7 +45,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="School Strength"
+                        android:text="@string/lblSchoolStrength"
                         android:textColor="@color/black"
                         android:textSize="@dimen/fifteen_sp"
                         android:textStyle="bold" />
@@ -61,7 +61,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.5"
-                            android:text="Total Strength"
+                            android:text="@string/lblTotalStrength"
                             android:textColor="@color/black"
                             android:textSize="@dimen/thirteen_sp"
                             android:textStyle="bold" />
@@ -88,7 +88,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.5"
-                            android:text="Sfaff's count"
+                            android:text="@string/lblSfaffcount"
                             android:textColor="@color/light_orange0"
                             android:textSize="@dimen/thirteen_sp"
                             android:textStyle="bold" />
@@ -115,7 +115,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.5"
-                            android:text="Boy's count"
+                            android:text="@string/lblBoycount"
                             android:textColor="@color/light_green_bg1"
                             android:textSize="@dimen/thirteen_sp"
                             android:textStyle="bold" />
@@ -143,7 +143,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.5"
-                            android:text="Girl's count"
+                            android:text="@string/lblGirlcount"
                             android:textColor="@color/yellow"
                             android:textSize="@dimen/thirteen_sp"
                             android:textStyle="bold" />
@@ -162,5 +162,4 @@
             </LinearLayout>
         </RelativeLayout>
     </RelativeLayout>
-
 </LinearLayout>

@@ -36,7 +36,7 @@
                     android:id="@+id/lblMobile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Mobile Number"
+                    android:text="@string/lblMobileNumber"
                     android:textColor="@color/black"
                     android:textSize="@dimen/fifteen_sp" />
 
@@ -68,7 +68,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_toRightOf="@+id/vwMobile"
-                        android:hint="Mobile"
+                        android:hint="@string/lblMobileNumber"
                         android:inputType="number"
                         android:maxLength="10"
                         android:paddingHorizontal="@dimen/ten"
@@ -91,7 +91,7 @@
                     android:id="@+id/lblPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Password"
+                    android:text="@string/lblPassword"
                     android:textColor="@color/black"
                     android:textSize="@dimen/fifteen_sp" />
 
@@ -123,7 +123,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_toRightOf="@+id/vwPassword"
-                        android:hint="Password"
+                        android:hint="@string/lblPassword"
                         android:inputType="textPassword"
                         android:paddingHorizontal="@dimen/ten"
                         android:textColor="@color/black"
@@ -146,7 +146,7 @@
                     android:layout_below="@+id/rytPass"
                     android:layout_centerInParent="true"
                     android:layout_marginTop="@dimen/twenty"
-                    android:text="Forgot Password ?"
+                    android:text="@string/lblForgotPassword"
                     android:textColor="@color/light_orange0"
                     android:textSize="@dimen/fifteen_sp" />
 
@@ -161,7 +161,7 @@
                 android:layout_marginBottom="@dimen/fifty"
                 android:background="@drawable/rect_btn_orange"
                 android:gravity="center"
-                android:text="Continue"
+                android:text="@string/lblContinue"
                 android:textColor="@color/white"
                 android:textSize="@dimen/thirteen_sp"
                 app:layout_constraintTop_toBottomOf="@+id/rytPassword" />

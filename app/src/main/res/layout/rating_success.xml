@@ -23,7 +23,7 @@
         android:layout_below="@+id/thumbs_up"
         android:layout_marginLeft="@dimen/thirty"
         android:layout_marginTop="@dimen/ten"
-        android:text="Thank You."
+        android:text="@string/lblThankYou"
         android:textColor="@color/black"
         android:textSize="@dimen/thirty_sp"
         android:textStyle="bold">
@@ -51,7 +51,7 @@
         android:layout_below="@+id/lblSuccessContent"
         android:layout_marginLeft="@dimen/thirty"
         android:layout_marginTop="@dimen/twenty_five"
-        android:text="Back to home  &lt;&lt;"
+        android:text="@string/lblBackhome"
         android:textColor="@color/red"
         android:textSize="@dimen/thirteen_sp">
 

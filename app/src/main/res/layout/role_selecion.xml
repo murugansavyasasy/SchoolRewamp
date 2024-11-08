@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/imgTeaching"
             android:gravity="center"
-            android:text="Choose your role"
+            android:text="@string/lblChooseyourrole"
             android:textColor="@color/black"
             android:textSize="@dimen/fifteen_sp"
             android:textStyle="bold">
@@ -39,7 +39,7 @@
             android:layout_below="@+id/lblChooseRole"
             android:layout_marginTop="@dimen/ten"
             android:gravity="center"
-            android:text="Login as a teacher or parent"
+            android:text="@string/lblLoginteacherparent"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp">
 
@@ -63,7 +63,7 @@
                 android:background="@drawable/bg_blue"
                 android:gravity="center"
                 android:padding="@dimen/ten"
-                android:text="Teacher"
+                android:text="@string/lblTeacher"
                 android:textColor="@color/white"
                 android:textSize="@dimen/thirteen_sp"
                 android:textStyle="bold" />
@@ -75,7 +75,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:padding="@dimen/ten"
-                android:text="Parent"
+                android:text="@string/lblParent"
                 android:textColor="@color/dark_blue"
                 android:textSize="@dimen/thirteen_sp"
                 android:textStyle="bold" />
@@ -104,7 +104,7 @@
         android:background="@drawable/bg_blue"
         android:gravity="center"
         android:padding="@dimen/ten"
-        android:text="NEXT"
+        android:text="@string/lblNext"
         android:textColor="@color/white"
         android:textSize="@dimen/thirteen_sp"
         android:textStyle="bold" />

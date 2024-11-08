@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">School Chimes</string>
 
+    <string name="app_name">School Chimes</string>
     <string name="isPasswordMisMatching">Password is mismatching</string>
     <string name="SuccessfullyPasswordCreation">Successfully creation your password</string>
     <string name="EnterTheNewPassword">Enter the new password</string>
@@ -14,8 +14,6 @@
     <string name="EnterTheBug">Enter the bug.</string>
     <string name="Introduction2">Welcome to our school based application, designed to enhance communication and engagement among students, parents, and educators. This platform aims to streamline the exchange of important information, facilitate academic collaboration, and foster a supportive learning environment. With features such as real-time notifications, event calendars, and resource sharing, our application empowers users to stay informed and connected. Whether you are a student looking to track assignments, a parent wanting to monitor your child progress, or a teacher seeking to share updates and resources, our application provides a comprehensive solution to meet your educational needs.</string>
     <string name="thank_you_message">We really appreciate your feedback and support. It helps us improve the app and serve you better!</string>
-
-
     <string name="limit_exceeded">You Can select %d image only</string>
     <string name="error_null_cursor">Oops, something went wrong!</string>
     <string name="permission_info">App requires permission to Storage to view images.</string>
@@ -28,5 +26,79 @@
     <string name="image_view">Tap to select images</string>
     <string name="add">ADD</string>
     <string name="lb_please_allow_gallery_permission">please allow gallery permission</string>
+    <string name="lblGENERAL">GENERAL</string>
+    <string name="lblNotifications">Notifications</string>
+    <string name="lblFAQ">FAQ</string>
+    <string name="lblContact">Contact Us</string>
+    <string name="lblTermsCondition">Terms and conditions</string>
+    <string name="lblChangeLanguage">Change Language</string>
+    <string name="lblFEEDBACK">FEEDBACK</string>
+    <string name="lblReportbug">Report a bug</string>
+    <string name="lblSendFeedback">Send Feedback</string>
+    <string name="lblLogout">Logout</string>
+    <string name="lblSearch">Search</string>
+    <string name="lblProfile">Profile</string>
+    <string name="lblContactdetails">Contact details</string>
+    <string name="lblAboutstudent">About student</string>
+    <string name="lblFamilyDetails">Family Details</string>
+    <string name="lblChoosecountry">Choose your country</string>
+    <string name="lblHerearetermsandconditions">Here are the terms and conditions >></string>
+    <string name="lblIagreetotheTermsandConditions">I agree to the Terms and Conditions</string>
+    <string name="lblIndia">India</string>
+    <string name="lblThailand">Thailand</string>
+    <string name="lblUSA">USA</string>
+    <string name="lblChina">China</string>
+    <string name="lblSingapore">Singapore</string>
+    <string name="lblCanada">Canada</string>
+    <string name="lblCreateNewPassword">Create New Password</string>
+    <string name="lblCreatePassword">Create Password</string>
+    <string name="lblConfirmPassword">Confirm Password</string>
+    <string name="lblPrevious">Previous</string>
+    <string name="lblSkip">Skip</string>
+    <string name="lblNext">Next ></string>
+    <string name="lblMobileNumber">Mobile Number</string>
+    <string name="lblMobile">Mobile</string>
+    <string name="lblPassword">Password</string>
+    <string name="lblForgotPassword">Forgot Password ?</string>
+    <string name="lblContinue">Continue</string>
+    <string name="lblVerificationcode">Verification code has been sent to your registered Email/Mobile Number</string>
+    <string name="lblDidntreceive">Didn\'t receive a verification code ?</string>
+    <string name="lblValidate">Validate</string>
+    <string name="lblChooseyourrole">Choose your role</string>
+    <string name="lblLoginteacherparent">Login as a teacher or parent</string>
+    <string name="lblTeacher">Teacher</string>
+    <string name="lblParent">Parent</string>
+    <string name="lblHome">Home</string>
+    <string name="lblHelp">Help</string>
+    <string name="lblSchoolStrength">School Strength</string>
+    <string name="lblTotalStrength">Total Strength</string>
+    <string name="lblSfaffcount">Sfaff\'s count</string>
+    <string name="lblBoycount">Boy\'s count</string>
+    <string name="lblGirlcount">Girl\'s count</string>
+    <string name="lblAttachment">Attachment</string>
+    <string name="lblContactSupport">Contact Support</string>
+    <string name="lblOurCustomerService">Our 24*7 Customer Service.</string>
+    <string name="lblWriteus">Write us at.</string>
+    <string name="lblSubmit">Submit</string>
+    <string name="lblRateus">Rate us</string>
+    <string name="lblHowsatisfied">How satisfied are you with the School Chimes?</string>
+    <string name="lblMaybelater">Maybe later</string>
+    <string name="lblAppinterface">App UI interface</string>
+    <string name="lblWatchUI">Watch UI</string>
+    <string name="lblPricing">Pricing</string>
+    <string name="lblConnectionStability">Connection Stability</string>
+    <string name="lblPairingExperience">Pairing Experience</string>
+    <string name="lblWatchfaces">Watch faces</string>
+    <string name="lblWatchHardware">Watch Hardware</string>
+    <string name="lblSchoolAssistance">School Assistance</string>
+    <string name="lblUserLogin">User Login</string>
+    <string name="lblRegistration">Registration</string>
+    <string name="lblOthers">Others</string>
+    <string name="lblAnyothersuggestions">Any other suggestions? (optional)</string>
+    <string name="lblThankYou">Thank You.</string>
+    <string name="lblBackhome">Back to home  &lt;&lt;</string>
+    <string name="lblEntertheBug">Enter the bug...</string>
+    <string name="lblCountryNotes">Using SVG images in Android Studio is a great way to ensure your app\'s graphics are scalable and high quality on all devices. Android supports SVG images through the Vector Drawable format. Here\'s a step-by-step guide on how to use SVG images in your Android project:</string>
+
 
 </resources>

@@ -32,7 +32,7 @@
                 android:id="@+id/lblEnter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Verification code has been sent to your registered Email/Mobile Number"
+                android:text="@string/lblVerificationcode"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp" />
@@ -126,7 +126,7 @@
                 android:layout_below="@+id/lnrEditBox"
                 android:layout_centerVertical="true"
                 android:layout_marginTop="@dimen/fourty"
-                android:text="Didn't receive a verification code ?"
+                android:text="@string/lblDidntreceive"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp" />
 
@@ -172,7 +172,7 @@
                 android:layout_marginBottom="@dimen/fifty"
                 android:background="@drawable/rect_btn_orange"
                 android:gravity="center"
-                android:text="Validate"
+                android:text="@string/lblValidate"
                 android:textColor="@color/white"
                 android:textSize="@dimen/thirteen_sp" />
 

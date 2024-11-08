@@ -30,7 +30,7 @@
             android:layout_marginLeft="@dimen/ten"
             android:layout_marginTop="@dimen/twenty"
             android:layout_toRightOf="@+id/imgBack"
-            android:text="Notifications"
+            android:text="@string/lblNotifications"
             android:textColor="@color/black"
             android:textSize="@dimen/twenty"
             android:textStyle="bold">
@@ -61,7 +61,7 @@
             android:layout_height="match_parent"
             android:layout_toRightOf="@+id/imgSearch"
             android:background="@android:color/transparent"
-            android:hint="Search"
+            android:hint="@string/lblSearch"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp" />
 

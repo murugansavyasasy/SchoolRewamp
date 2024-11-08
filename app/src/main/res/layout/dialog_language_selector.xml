@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Language"
+        android:textSize="18sp"
+        android:paddingBottom="16dp"
+        android:textAlignment="center" />
+
+    <RadioGroup
+        android:id="@+id/radio_language_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/radio_english"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="English"
+            android:checked="true" />
+
+        <RadioButton
+            android:id="@+id/radio_thai"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ไทย" />
+
+        <RadioButton
+            android:id="@+id/radio_hindi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="हिन्दी" />
+
+        <!-- Add more languages as needed -->
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btn_apply_language"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Apply"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="center" />
+</LinearLayout>

@@ -36,7 +36,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Profile"
+            android:text="@string/lblProfile"
             android:textColor="@color/black"
             android:textSize="@dimen/fifteen_sp"
             android:textStyle="bold" />
@@ -183,7 +183,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Contact details"
+                            android:text="@string/lblContactdetails"
                             android:textColor="@color/black"
                             android:textSize="@dimen/fifteen_sp"
                             android:textStyle="bold" />
@@ -268,7 +268,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="About student"
+                            android:text="@string/lblAboutstudent"
                             android:textColor="@color/black"
                             android:textSize="@dimen/fifteen_sp"
                             android:textStyle="bold" />
@@ -378,7 +378,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Family Details"
+                                android:text="@string/lblFamilyDetails"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/fifteen_sp"
                                 android:textStyle="bold" />

@@ -81,7 +81,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginLeft="@dimen/thirty"
                 android:gravity="center"
-                android:text="Previous"
+                android:text="@string/lblPrevious"
                 android:textColor="@color/black"
                 android:visibility="gone"></TextView>
 
@@ -94,7 +94,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginRight="@dimen/thirty"
                 android:gravity="center"
-                android:text="Next >"
+                android:text="@string/lblNext"
                 android:textColor="@color/black"></TextView>
 
             <TextView
@@ -105,13 +105,9 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginRight="@dimen/thirty"
                 android:gravity="center"
-                android:text="Skip"
+                android:text="@string/lblSkip"
                 android:textColor="@color/black"></TextView>
 
-
         </RelativeLayout>
-
-
     </RelativeLayout>
-    <!---->
 </RelativeLayout>

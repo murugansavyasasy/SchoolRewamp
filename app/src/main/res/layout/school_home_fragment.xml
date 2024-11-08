@@ -49,7 +49,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/lblSchoolName"
                     android:text="Savyasasy schools, Chennai - 600043"
-                    android:textColor="@color/grey"
+                    android:textColor="@color/light_gray"
                     android:textSize="@dimen/thirteen_sp" />
             </RelativeLayout>
 
@@ -86,7 +86,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/ten"
-                android:src="@drawable/ic_notification" />
+                android:src="@drawable/notification_icon" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -112,7 +112,7 @@
                 android:layout_height="match_parent"
                 android:layout_toRightOf="@id/imgSearch"
                 android:background="@android:color/transparent"
-                android:hint="Search"
+                android:hint="@string/lblSearch"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp" />
         </RelativeLayout>

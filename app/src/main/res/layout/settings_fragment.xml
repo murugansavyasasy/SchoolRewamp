@@ -31,7 +31,7 @@
                 android:layout_below="@+id/imgBack"
                 android:layout_marginLeft="@dimen/thirty"
                 android:layout_marginTop="@dimen/fifty"
-                android:text="Settings"
+                android:text="@string/permission_settings"
                 android:textColor="@color/black"
                 android:textSize="@dimen/twenty_five_sp"
                 android:textStyle="bold">
@@ -46,7 +46,7 @@
             android:layout_below="@+id/rlaLblSettings"
             android:layout_marginLeft="@dimen/twenty"
             android:layout_marginTop="@dimen/twenty"
-            android:text="GENERAL"
+            android:text="@string/lblGENERAL"
             android:textSize="@dimen/fifteen_sp">
 
         </TextView>
@@ -80,7 +80,7 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="@dimen/thirty"
                     android:layout_weight="0.8"
-                    android:text="Notifications"
+                    android:text="@string/lblNotifications"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
                     android:textStyle="bold">
@@ -104,7 +104,7 @@
                 android:layout_marginLeft="@dimen/thirty"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginRight="@dimen/thirty"
-                android:background="@color/light_gray">
+                android:background="@color/grey">
 
             </View>
 
@@ -132,7 +132,7 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="@dimen/thirty"
                     android:layout_weight="0.8"
-                    android:text="FAQ"
+                    android:text="@string/lblFAQ"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
                     android:textStyle="bold">
@@ -156,7 +156,7 @@
                 android:layout_marginLeft="@dimen/thirty"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginRight="@dimen/thirty"
-                android:background="@color/light_gray">
+                android:background="@color/grey">
 
             </View>
 
@@ -184,7 +184,7 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="@dimen/thirty"
                     android:layout_weight="0.8"
-                    android:text="Contact Us"
+                    android:text="@string/lblContact"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
                     android:textStyle="bold">
@@ -208,7 +208,7 @@
                 android:layout_marginLeft="@dimen/thirty"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginRight="@dimen/thirty"
-                android:background="@color/light_gray">
+                android:background="@color/grey">
 
             </View>
 
@@ -236,7 +236,7 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="@dimen/thirty"
                     android:layout_weight="0.8"
-                    android:text="Terms and conditions"
+                    android:text="@string/lblTermsCondition"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
                     android:textStyle="bold">
@@ -253,14 +253,68 @@
             </LinearLayout>
 
             <View
-                android:id="@+id/isViewTeamsCondition"
+                android:id="@+id/isViewTermsConditions"
                 android:layout_width="match_parent"
                 android:layout_height="0.1dp"
                 android:layout_below="@+id/lnrTermsConditions"
                 android:layout_marginLeft="@dimen/thirty"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginRight="@dimen/thirty"
-                android:background="@color/light_gray">
+                android:background="@color/grey">
+
+            </View>
+
+
+            <LinearLayout
+                android:id="@+id/lnrLanguage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/isViewTermsConditions"
+                android:layout_marginLeft="@dimen/thirty"
+                android:layout_marginTop="@dimen/twenty"
+                android:layout_marginRight="@dimen/thirty"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <ImageView
+                    android:layout_width="@dimen/twenty_five"
+                    android:layout_height="@dimen/twenty_five"
+                    android:layout_weight="0.1"
+                    android:src="@drawable/terms_conditions_icon"></ImageView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/thirty"
+                    android:layout_weight="0.8"
+                    android:text="@string/lblChangeLanguage"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:textStyle="bold">
+
+                </TextView>
+
+                <ImageView
+                    android:layout_width="@dimen/twenty_five_sp"
+                    android:layout_height="@dimen/twenty_five_sp"
+                    android:layout_weight="0.1"
+                    android:src="@drawable/arrow_right_gray">
+
+                </ImageView>
+            </LinearLayout>
+
+
+            <View
+                android:id="@+id/isViewLanguage"
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_below="@+id/lnrLanguage"
+                android:layout_marginLeft="@dimen/thirty"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginRight="@dimen/thirty"
+                android:background="@color/grey">
 
             </View>
 
@@ -269,10 +323,10 @@
                 android:id="@+id/lblFeedBack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/isViewTeamsCondition"
+                android:layout_below="@+id/isViewLanguage"
                 android:layout_marginLeft="@dimen/twenty"
                 android:layout_marginTop="@dimen/twenty"
-                android:text="FEEDBACK"
+                android:text="@string/lblFEEDBACK"
                 android:textSize="@dimen/fifteen_sp">
 
             </TextView>
@@ -302,7 +356,7 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="@dimen/thirty"
                     android:layout_weight="0.8"
-                    android:text="Report a bug"
+                    android:text="@string/lblReportbug"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
                     android:textStyle="bold">
@@ -326,7 +380,7 @@
                 android:layout_marginLeft="@dimen/thirty"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginRight="@dimen/thirty"
-                android:background="@color/light_gray"></View>
+                android:background="@color/grey"></View>
 
             <LinearLayout
                 android:id="@+id/lnrFeedBack"
@@ -352,7 +406,7 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="@dimen/thirty"
                     android:layout_weight="0.8"
-                    android:text="Send Feedback"
+                    android:text="@string/lblSendFeedback"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
                     android:textStyle="bold">
@@ -376,7 +430,7 @@
                 android:layout_marginLeft="@dimen/thirty"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginRight="@dimen/thirty"
-                android:background="@color/light_gray"></View>
+                android:background="@color/grey"></View>
 
 
             <LinearLayout
@@ -403,7 +457,7 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="@dimen/thirty"
                     android:layout_weight="0.8"
-                    android:text="Logout"
+                    android:text="@string/lblLogout"
                     android:textColor="@color/red"
                     android:textSize="@dimen/thirteen_sp"
                     android:textStyle="bold">
@@ -427,7 +481,7 @@
                 android:layout_marginLeft="@dimen/twenty"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginRight="@dimen/twenty"
-                android:background="@color/light_gray"></View>
+                android:background="@color/grey"></View>
 
 
         </RelativeLayout>

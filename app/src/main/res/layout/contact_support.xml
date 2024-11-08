@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/fifteen"
             android:layout_toRightOf="@+id/imgBack"
-            android:text="Contact Support"
+            android:text="@string/lblContactSupport"
             android:layout_marginTop="@dimen/twenty"
             android:textColor="@color/black"
             android:textSize="@dimen/twenty_sp"
@@ -68,7 +68,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/ten"
-                android:text="Our 24*7 Customer Service."
+                android:text="@string/lblOurCustomerService"
                 android:textSize="@dimen/fifteen_sp"
                 android:layout_marginRight="@dimen/ten"
                 android:textColor="@color/black">
@@ -127,7 +127,7 @@
                 android:layout_marginLeft="@dimen/ten"
                 android:layout_marginRight="@dimen/ten"
                 android:textSize="@dimen/fifteen_sp"
-                android:text="Write us at."
+                android:text="@string/lblWriteus"
                 android:textColor="@color/black">
 
             </TextView>
@@ -138,7 +138,7 @@
                 android:layout_marginLeft="@dimen/ten"
                 android:layout_marginTop="@dimen/five"
                 android:textSize="@dimen/thirteen_sp"
-                android:text="sathishkumar@voicesnap.com"
+                android:text="support@savyasasy.com"
                 android:layout_marginRight="@dimen/ten"
                 android:textColor="@color/navi_blue1"
                 android:textStyle="bold">

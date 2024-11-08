@@ -39,7 +39,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Home"
+                android:text="@string/lblHome"
                 android:textColor="@color/black"
                 android:textSize="@dimen/twele_sp" />
         </LinearLayout>
@@ -63,7 +63,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Help"
+                android:text="@string/lblHelp"
                 android:textColor="@color/black"
                 android:textSize="@dimen/twele_sp" />
         </LinearLayout>
@@ -86,7 +86,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="settings"
+                android:text="@string/permission_settings"
                 android:textColor="@color/black"
                 android:textSize="@dimen/twele_sp" />
         </LinearLayout>
@@ -111,7 +111,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Profile"
+                android:text="@string/lblProfile"
                 android:textColor="@color/black"
                 android:textSize="@dimen/twele_sp" />
         </LinearLayout>
