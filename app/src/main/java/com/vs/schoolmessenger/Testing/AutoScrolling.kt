@@ -22,7 +22,6 @@ class AutoScrolling : BaseActivity<AutoScrollingBinding>(), View.OnClickListener
     }
 
     var isFirstTime = true
-
     private lateinit var layoutManager: LinearLayoutManager
     private var urls: List<Int> = listOf()
     private var timer: Timer? = null
@@ -77,7 +76,7 @@ class AutoScrolling : BaseActivity<AutoScrollingBinding>(), View.OnClickListener
         })
 
         // Delay the auto-scroll for better user experience (start scrolling after 2 seconds)
-        handler.postDelayed({ runAutoScrollBanner() }, 2000)
+        handler.postDelayed({ runAutoScrollBanner() }, 4000)
     }
 
     override fun onResume() {
@@ -114,8 +113,7 @@ class AutoScrolling : BaseActivity<AutoScrollingBinding>(), View.OnClickListener
                     }
                 }
             }
-            // Auto-scroll every 2 seconds after the initial delay
-            timer?.schedule(timerTask, 2000, 2000)
+            timer?.schedule(timerTask, 4000, 4000)
         }
     }
 

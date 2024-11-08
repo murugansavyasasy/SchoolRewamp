@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/ten"
-        android:background="@drawable/rect_shadow_violet"
+        android:background="@drawable/rect_shadow_green"
         android:padding="@dimen/ten">
 
         <TextView
@@ -47,7 +47,7 @@
 
         </TextView>
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/lnrAttachment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -56,26 +56,28 @@
             android:background="@drawable/bg_blue"
             android:gravity="center"
             android:layout_marginBottom="@dimen/five"
-            android:orientation="horizontal"
             android:padding="@dimen/five">
 
             <ImageView
+                android:id="@+id/imgAttachment"
                 android:layout_width="@dimen/twenty"
                 android:layout_height="@dimen/twenty"
+                android:gravity="center"
                 android:layout_marginLeft="@dimen/five"
                 android:src="@drawable/attachment_icon"></ImageView>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
                 android:layout_marginLeft="@dimen/ten"
                 android:text="Attachment"
-                android:textColor="@color/black"
+                android:layout_toRightOf="@+id/imgAttachment"
+                android:gravity="center"
+                android:textColor="@color/white"
                 android:textSize="@dimen/thirteen_sp"
                 android:textStyle="bold">
 
             </TextView>
-        </LinearLayout>
+        </RelativeLayout>
     </RelativeLayout>
 </LinearLayout>

@@ -39,19 +39,19 @@ class PieChartAdapter (private val context: Context, private val item: List<Int>
         } else if (holder is BannerViewHolder) {
             val url = item[position % item.size]
             holder.bind(url)
+
         }
     }
 
     override fun getItemCount(): Int = item.size
 
     inner class BannerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-//        private val imgBanner: ImageView = itemView.findViewById(R.id.imgBanner)
         private val lblTitle: TextView = itemView.findViewById(R.id.lblTitle)
         private val lblContent: TextView = itemView.findViewById(R.id.lblContent)
         private val lblTime: TextView = itemView.findViewById(R.id.lblTime)
 
         fun bind(url: Int) {
-//            Glide.with(context).load(url).centerCrop().into(imgBanner)
+           // Glide.with(context).load(url).centerCrop().into(imgBanner)
         }
     }
 
