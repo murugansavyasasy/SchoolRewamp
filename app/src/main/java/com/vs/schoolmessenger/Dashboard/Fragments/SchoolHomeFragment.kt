@@ -59,24 +59,25 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener {
         binding.imgSearchClick.setOnClickListener(this)
         // Sample data
         items = listOf(
-            GridItem(R.drawable.splash_icon1, "Text Message"),
-            GridItem(R.drawable.splash_icon2, "Voice Message"),
-            GridItem(R.drawable.splash_icon3, "Images"),
-            GridItem(R.drawable.splash_icon4, "Circulars"),
-            GridItem(R.drawable.splash_icon5, "Notice Board"),
-            GridItem(R.drawable.splash_icon6, "Assignment"),
-            GridItem(R.drawable.splash_icon7, "Communication"),
-            GridItem(R.drawable.splash_icon8, "Biometric"),
-            GridItem(R.drawable.splash_icon1, "Exams"),
-            GridItem(R.drawable.splash_icon2, "Homework"),
-            GridItem(R.drawable.splash_icon3, "Attendance"),
-            GridItem(R.drawable.splash_icon4, "Time table"),
-            GridItem(R.drawable.splash_icon5, "Events")
+            GridItem(R.drawable.communication, "Communication"),  //Text,voice,Image ,Pdf , video
+            GridItem(R.drawable.image, "Image/Pdf"),
+            GridItem(R.drawable.video, "Video Upload"),
+            GridItem(R.drawable.pdf, "Circulars"),
+            GridItem(R.drawable.homework, "Homework"),
+            GridItem(R.drawable.exam, "Schedule Exam/Test"),
+            GridItem(R.drawable.noticeboard, "Notice Board"),
+            GridItem(R.drawable.attendance, "Attendance Marking"),
+            GridItem(R.drawable.messages, "Messages from management"),
+            GridItem(R.drawable.leave, "Leave Requests"),
+            GridItem(R.drawable.assignment, "Assignment"),
+            GridItem(R.drawable.chats, "Interaction with student"),
+            GridItem(R.drawable.online_meeting, "Online Meeting"),
+            GridItem(R.drawable.splash_icon5, "Lesson Plan"),
+            GridItem(R.drawable.meeting, "PTM"),
+            GridItem(R.drawable.biometric_attendance, "Mark your attendance")
         )
 
-
         // Pie chart scrolling
-
         getListUrls()
         layoutManager =
             LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)

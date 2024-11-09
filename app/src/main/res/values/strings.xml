@@ -31,7 +31,8 @@
     <string name="lblFAQ">FAQ</string>
     <string name="lblContact">Contact Us</string>
     <string name="lblTermsCondition">Terms and conditions</string>
-    <string name="lblChangeLanguage">Change Language</string>
+    <string name="lblChangeLanguage">App Language</string>
+    <string name="change_password">Change Password</string>
     <string name="lblFEEDBACK">FEEDBACK</string>
     <string name="lblReportbug">Report a bug</string>
     <string name="lblSendFeedback">Send Feedback</string>

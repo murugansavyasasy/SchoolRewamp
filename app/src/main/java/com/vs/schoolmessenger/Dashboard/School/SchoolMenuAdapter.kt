@@ -41,40 +41,40 @@ class SchoolMenuAdapter(private val itemList: List<GridItem>?, private val isLoa
             // Bind actual data when loading is complete
             holder.bind(itemList!![position])
 
-            when (isPosition) {
-                0 -> {
-                    holder.itemView.background = ContextCompat.getDrawable(
-                        holder.itemView.context,
-                        R.drawable.rect_shadow_violet
-                    )
-                    isPosition = 1
-                }
-
-                1 -> {
-                    holder.itemView.background = ContextCompat.getDrawable(
-                        holder.itemView.context,
-                        R.drawable.rect_shadow_blue
-                    )
-                    isPosition = 2
-                }
-
-                2 -> {
-                    holder.itemView.background = ContextCompat.getDrawable(
-                        holder.itemView.context,
-                        R.drawable.rect_shadow_green
-                    )
-                    isPosition = 3
-                }
-
-                3 -> {
-                    holder.itemView.background =
-                        ContextCompat.getDrawable(
-                            holder.itemView.context,
-                            R.drawable.rect_shadow_light_sky_blue
-                        )
-                    isPosition = 0
-                }
-            }
+//            when (isPosition) {
+//                0 -> {
+//                    holder.itemView.background = ContextCompat.getDrawable(
+//                        holder.itemView.context,
+//                        R.drawable.rect_shadow_violet
+//                    )
+//                    isPosition = 1
+//                }
+//
+//                1 -> {
+//                    holder.itemView.background = ContextCompat.getDrawable(
+//                        holder.itemView.context,
+//                        R.drawable.rect_shadow_blue
+//                    )
+//                    isPosition = 2
+//                }
+//
+//                2 -> {
+//                    holder.itemView.background = ContextCompat.getDrawable(
+//                        holder.itemView.context,
+//                        R.drawable.rect_shadow_green
+//                    )
+//                    isPosition = 3
+//                }
+//
+//                3 -> {
+//                    holder.itemView.background =
+//                        ContextCompat.getDrawable(
+//                            holder.itemView.context,
+//                            R.drawable.rect_shadow_light_sky_blue
+//                        )
+//                    isPosition = 0
+//                }
+//            }
         }
     }
 

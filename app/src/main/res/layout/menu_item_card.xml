@@ -4,14 +4,12 @@
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/ten">
 
-<!--    <RelativeLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:background="@drawable/rect_white"-->
-<!--        android:layout_height="@dimen/hundred">-->
-
     <RelativeLayout
         android:layout_width="match_parent"
+        android:background="@drawable/rect_white"
         android:layout_height="@dimen/hundred">
+
+
 
         <ImageView
             android:layout_marginTop="@dimen/fifteen"

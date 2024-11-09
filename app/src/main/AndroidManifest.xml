@@ -38,12 +38,7 @@
         </provider>
 
         <activity
-<<<<<<< HEAD
             android:name=".Dashboard.School.Dashboard"
-=======
-
-            android:name=".Dashboard.Combination.RoleSelection"
->>>>>>> dd1f4d5c1cc0d1d48207d8612a4389892babca1e
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/AppTheme">
