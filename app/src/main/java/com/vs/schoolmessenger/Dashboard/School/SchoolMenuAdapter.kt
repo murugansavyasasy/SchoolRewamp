@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.Dashboard.Model.GridItem
@@ -16,8 +15,6 @@ class SchoolMenuAdapter(private val itemList: List<GridItem>?, private val isLoa
 
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
-    private var isPosition = 0
-
 
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
@@ -40,41 +37,6 @@ class SchoolMenuAdapter(private val itemList: List<GridItem>?, private val isLoa
         if (holder is DataViewHolder) {
             // Bind actual data when loading is complete
             holder.bind(itemList!![position])
-
-            when (isPosition) {
-                0 -> {
-                    holder.itemView.background = ContextCompat.getDrawable(
-                        holder.itemView.context,
-                        R.drawable.rect_shadow_violet
-                    )
-                    isPosition = 1
-                }
-
-                1 -> {
-                    holder.itemView.background = ContextCompat.getDrawable(
-                        holder.itemView.context,
-                        R.drawable.rect_shadow_blue
-                    )
-                    isPosition = 2
-                }
-
-                2 -> {
-                    holder.itemView.background = ContextCompat.getDrawable(
-                        holder.itemView.context,
-                        R.drawable.rect_shadow_green
-                    )
-                    isPosition = 3
-                }
-
-                3 -> {
-                    holder.itemView.background =
-                        ContextCompat.getDrawable(
-                            holder.itemView.context,
-                            R.drawable.rect_shadow_light_sky_blue
-                        )
-                    isPosition = 0
-                }
-            }
         }
     }
 

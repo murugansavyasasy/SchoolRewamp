@@ -157,16 +157,9 @@ class SettingsFragment : Fragment(), View.OnClickListener {
                 R.id.radio_hindi -> "hi"
                 else -> "en"
             }
-
-            // Apply the selected language
-            Log.d("selectedLanguage",selectedLanguage)
             setAppLocale(selectedLanguage)
-
-            // Dismiss the dialog
             alertDialog.dismiss()
         }
-
-        // Show the dialog
         alertDialog.show()
     }
 

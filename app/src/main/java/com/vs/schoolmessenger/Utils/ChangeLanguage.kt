@@ -54,4 +54,5 @@ object ChangeLanguage {
         resources.updateConfiguration(configuration, resources.displayMetrics)
         return context
     }
+
 }
