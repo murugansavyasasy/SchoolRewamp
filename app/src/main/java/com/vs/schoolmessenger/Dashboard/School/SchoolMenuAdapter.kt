@@ -37,6 +37,7 @@ class SchoolMenuAdapter(private val itemList: List<GridItem>?, private val isLoa
         if (holder is DataViewHolder) {
             // Bind actual data when loading is complete
             holder.bind(itemList!![position])
+
         }
     }
 
