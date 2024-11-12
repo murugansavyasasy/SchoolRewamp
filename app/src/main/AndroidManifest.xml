@@ -39,6 +39,7 @@
 
         <activity
             android:name=".Dashboard.School.Dashboard"
+
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/AppTheme">
@@ -132,6 +133,7 @@
             android:name=".AlbumImage.HelperActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+
         <activity
             android:name=".Dashboard.Settings.RateUs.RatingSuccess"
             android:screenOrientation="portrait"

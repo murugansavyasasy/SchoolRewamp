@@ -3,17 +3,18 @@ package com.vs.schoolmessenger.Dashboard.Fragments
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.PopupWindow
+import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.vs.schoolmessenger.Auth.CreateResetChangePassword.PasswordGeneration
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.Login
 import com.vs.schoolmessenger.Auth.TermsConditions.TermsAndConditions
 import com.vs.schoolmessenger.Dashboard.Settings.ContactUs.ContactUs
@@ -23,6 +24,7 @@ import com.vs.schoolmessenger.Dashboard.Settings.RateUs.RateUs
 import com.vs.schoolmessenger.Dashboard.Settings.ReportTheBug.ReportTheBug
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.ChangeLanguage
+import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SettingsFragmentBinding
 
 class SettingsFragment : Fragment(), View.OnClickListener {
@@ -41,6 +43,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         binding.lnrFaq.setOnClickListener(this)
         binding.lnrLogout.setOnClickListener(this)
         binding.lnrLanguage.setOnClickListener(this)
+        binding.lnrChangePassword.setOnClickListener(this)
         return binding.root
     }
 
@@ -76,6 +79,9 @@ class SettingsFragment : Fragment(), View.OnClickListener {
                 showLanguageSelectorDialog()
             }
 
+            R.id.lnrChangePassword -> {
+                startActivity(Intent(requireActivity(), PasswordGeneration::class.java))
+            }
 
             R.id.lnrLogout -> {
                 isShowLogoutPopup()
@@ -132,6 +138,10 @@ class SettingsFragment : Fragment(), View.OnClickListener {
 
 
     private fun showLanguageSelectorDialog() {
+
+        val isAppLanguage = SharedPreference.getLanguage(requireActivity())
+
+
         // Inflate the custom dialog layout
         val dialogView =
             LayoutInflater.from(requireActivity()).inflate(R.layout.dialog_language_selector, null)
@@ -146,6 +156,20 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         // Get references to the radio group and button
         val radioGroup: RadioGroup = dialogView.findViewById(R.id.radio_language_group)
         val applyButton: Button = dialogView.findViewById(R.id.btn_apply_language)
+        val isEnglish: RadioButton = dialogView.findViewById(R.id.radio_english)
+        val isTamil: RadioButton = dialogView.findViewById(R.id.radio_tamil)
+        val isThai: RadioButton = dialogView.findViewById(R.id.radio_thai)
+        val isHindi: RadioButton = dialogView.findViewById(R.id.radio_hindi)
+
+        if (isAppLanguage.equals("ta")) {
+            isTamil.isChecked = true
+        } else if (isAppLanguage.equals("th")) {
+            isThai.isChecked = true
+        } else if (isAppLanguage.equals("hi")) {
+            isHindi.isChecked = true
+        } else if (isAppLanguage.equals("isLanguage")) {
+            isEnglish.isChecked = true
+        }
 
         // Apply button click listener
         applyButton.setOnClickListener {
@@ -153,6 +177,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
             val selectedRadioButtonId = radioGroup.checkedRadioButtonId
             val selectedLanguage = when (selectedRadioButtonId) {
                 R.id.radio_english -> "en"
+                R.id.radio_tamil -> "ta"
                 R.id.radio_thai -> "th"
                 R.id.radio_hindi -> "hi"
                 else -> "en"
@@ -169,6 +194,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         val resources = context!!.resources
         val configuration = resources.configuration
         resources.updateConfiguration(configuration, resources.displayMetrics)
+        SharedPreference.putLanguage(requireActivity(), languageCode)
 
         // Recreate the parent activity from the fragment
         activity?.recreate() // Calls recreate on the parent Activity

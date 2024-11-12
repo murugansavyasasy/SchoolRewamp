@@ -25,6 +25,7 @@ import com.vs.schoolmessenger.Dashboard.Settings.Notification.Notification
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.SchoolHomeFragmentBinding
+import java.util.Locale
 import java.util.Timer
 import java.util.TimerTask
 
@@ -159,28 +160,30 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener {
         // Simulate loading data with a delay (e.g., fetch from server or database)
         binding.recyclerViewMenu.postDelayed({
             // Once data is loaded, stop shimmer and pass the actual data
-            val adapter = SchoolMenuAdapter(items, Constant.isShimmerViewDisable)
+            val isAdapter = SchoolMenuAdapter(items, Constant.isShimmerViewDisable)
             // Set GridLayoutManager (2 columns in this case)
             binding.recyclerViewMenu.layoutManager = GridLayoutManager(requireActivity(), 3)
-            binding.recyclerViewMenu.adapter = adapter
+            binding.recyclerViewMenu.adapter = isAdapter
         }, 500) // Simulate 2 seconds loading time
 
         return binding.root
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun filter(text: String) {
         isMenuItems.clear()
         if (text.isEmpty()) {
             isMenuItems.addAll(items)  // If search is empty, show all items
         } else {
             for (item in items) {
-                if (item.title.toLowerCase().contains(text.toLowerCase())) {
+                if (item.title.toLowerCase(Locale.ROOT).contains(text.toLowerCase(Locale.ROOT))) {
                     isMenuItems.add(item)  // Add the matching GridItem to filteredList
                 }
             }
         }
         isMenuAdapter.notifyDataSetChanged()
     }
+
 
     override fun onClick(p0: View?) {
         when (p0?.id) {
@@ -201,6 +204,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener {
             }
         }
     }
+
 
     override fun onResume() {
         super.onResume()

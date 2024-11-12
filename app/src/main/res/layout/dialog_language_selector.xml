@@ -27,6 +27,13 @@
             android:checked="true" />
 
         <RadioButton
+            android:id="@+id/radio_tamil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="தமிழ்" />
+
+
+        <RadioButton
             android:id="@+id/radio_thai"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
