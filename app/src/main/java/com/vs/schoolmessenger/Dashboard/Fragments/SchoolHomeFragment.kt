@@ -23,7 +23,9 @@ import com.vs.schoolmessenger.Dashboard.School.PieChartAdapter
 import com.vs.schoolmessenger.Dashboard.School.SchoolMenuAdapter
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.Notification
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.ChangeLanguage
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SchoolHomeFragmentBinding
 import java.util.Locale
 import java.util.Timer
@@ -54,6 +56,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
 
         binding = SchoolHomeFragmentBinding.inflate(layoutInflater)
         binding.imgNotification.setOnClickListener(this)
@@ -168,6 +171,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener {
 
         return binding.root
     }
+
 
     @SuppressLint("NotifyDataSetChanged")
     private fun filter(text: String) {

@@ -1,18 +1,19 @@
 package com.vs.schoolmessenger.Dashboard.Fragments
 
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import android.widget.CheckBox
+import android.widget.ImageView
 import android.widget.PopupWindow
-import android.widget.RadioButton
-import android.widget.RadioGroup
 import android.widget.RelativeLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.vs.schoolmessenger.Auth.CreateResetChangePassword.PasswordGeneration
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.Login
@@ -28,7 +29,27 @@ import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SettingsFragmentBinding
 
 class SettingsFragment : Fragment(), View.OnClickListener {
-    private lateinit var binding: SettingsFragmentBinding // Automatically generated binding class
+
+
+    override fun onAttach(context: Context) {
+        val savedLanguage = ChangeLanguage.getPersistedLanguage(context)
+        val newContext = ChangeLanguage.setLocale(context, savedLanguage)
+        super.onAttach(newContext ?: context)
+    }
+
+    private lateinit var binding: SettingsFragmentBinding
+    private var isSelectedLanguage = ""
+    private lateinit var imgClose: ImageView
+    private lateinit var imgTamil: ImageView
+    private lateinit var imgEnglish: ImageView
+    private lateinit var imgThai: ImageView
+    private lateinit var imgHindi: ImageView
+    private lateinit var chEnglish: CheckBox
+    private lateinit var chTamil: CheckBox
+    private lateinit var chThai: CheckBox
+    private lateinit var chHindi: CheckBox
+    private lateinit var btnConfirm: TextView
+    private var isChecking = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -140,64 +161,110 @@ class SettingsFragment : Fragment(), View.OnClickListener {
     private fun showLanguageSelectorDialog() {
 
         val isAppLanguage = SharedPreference.getLanguage(requireActivity())
-
-
-        // Inflate the custom dialog layout
         val dialogView =
             LayoutInflater.from(requireActivity()).inflate(R.layout.dialog_language_selector, null)
-
-        // Create the AlertDialog
         val alertDialog = AlertDialog.Builder(requireActivity())
-            .setTitle("Select Language")
             .setView(dialogView)
             .setCancelable(true)
             .create()
 
-        // Get references to the radio group and button
-        val radioGroup: RadioGroup = dialogView.findViewById(R.id.radio_language_group)
-        val applyButton: Button = dialogView.findViewById(R.id.btn_apply_language)
-        val isEnglish: RadioButton = dialogView.findViewById(R.id.radio_english)
-        val isTamil: RadioButton = dialogView.findViewById(R.id.radio_tamil)
-        val isThai: RadioButton = dialogView.findViewById(R.id.radio_thai)
-        val isHindi: RadioButton = dialogView.findViewById(R.id.radio_hindi)
+        imgClose = dialogView.findViewById(R.id.imgClose)
+        chEnglish = dialogView.findViewById(R.id.chEnglish)
+        chTamil = dialogView.findViewById(R.id.chTamil)
+        chThai = dialogView.findViewById(R.id.chThai)
+        chHindi = dialogView.findViewById(R.id.chHindi)
+        btnConfirm = dialogView.findViewById(R.id.btnConfirm)
+        imgTamil = dialogView.findViewById(R.id.imgTamil)
+        imgEnglish = dialogView.findViewById(R.id.imgEnglish)
+        imgThai = dialogView.findViewById(R.id.imgThai)
+        imgHindi = dialogView.findViewById(R.id.imgHindi)
 
-        if (isAppLanguage.equals("ta")) {
-            isTamil.isChecked = true
-        } else if (isAppLanguage.equals("th")) {
-            isThai.isChecked = true
-        } else if (isAppLanguage.equals("hi")) {
-            isHindi.isChecked = true
-        } else if (isAppLanguage.equals("isLanguage")) {
-            isEnglish.isChecked = true
+        isRemoveCheckBox()
+        chEnglish.setOnCheckedChangeListener { _, isChecked ->
+            isRemoveCheckBox()
+            if (isChecked) {
+                isChecking = true
+                isSelectedLanguage = "en"
+                chEnglish.isChecked = true
+                btnConfirm.text = "Confirm"
+            } else {
+                isChecking = false
+            }
         }
 
-        // Apply button click listener
-        applyButton.setOnClickListener {
-            // Get the selected radio button ID
-            val selectedRadioButtonId = radioGroup.checkedRadioButtonId
-            val selectedLanguage = when (selectedRadioButtonId) {
-                R.id.radio_english -> "en"
-                R.id.radio_tamil -> "ta"
-                R.id.radio_thai -> "th"
-                R.id.radio_hindi -> "hi"
-                else -> "en"
+        chTamil.setOnCheckedChangeListener { _, isChecked ->
+            isRemoveCheckBox()
+            if (isChecked) {
+                isChecking = true
+                isSelectedLanguage = "ta"
+                chTamil.isChecked = true
+                btnConfirm.text = "உறுதி"
+            } else {
+                isChecking = false
             }
-            setAppLocale(selectedLanguage)
+        }
+
+        chThai.setOnCheckedChangeListener { _, isChecked ->
+            isRemoveCheckBox()
+            if (isChecked) {
+                isChecking = true
+                isSelectedLanguage = "th"
+                chThai.isChecked = true
+                btnConfirm.text = "ยืนยัน"
+            } else {
+                isChecking = false
+            }
+        }
+
+        chHindi.setOnCheckedChangeListener { _, isChecked ->
+            isRemoveCheckBox()
+            if (isChecked) {
+                isChecking = true
+                isSelectedLanguage = "hi"
+                chHindi.isChecked = true
+                btnConfirm.text = "पुष्टि करना"
+            } else {
+                isChecking = false
+            }
+        }
+
+        if (isAppLanguage.equals("ta")) {
+            chTamil.isChecked = true
+        } else if (isAppLanguage.equals("th")) {
+            chThai.isChecked = true
+        } else if (isAppLanguage.equals("hi")) {
+            chHindi.isChecked = true
+        } else if (isAppLanguage.equals("en")) {
+            chEnglish.isChecked = true
+        }
+
+        btnConfirm.setOnClickListener {
+            if (isChecking) {
+                isChecking = false
+                SharedPreference.putLanguage(requireActivity(), isSelectedLanguage)
+                refreshFragment()
+                alertDialog.dismiss()
+            } else {
+                Toast.makeText(requireActivity(), "Select the language", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        imgClose.setOnClickListener {
+            isChecking = false
             alertDialog.dismiss()
         }
         alertDialog.show()
     }
 
-    private fun setAppLocale(languageCode: String) {
-        // Set the selected language
-        val context = ChangeLanguage.setLocale(requireContext(), languageCode)
-        val resources = context!!.resources
-        val configuration = resources.configuration
-        resources.updateConfiguration(configuration, resources.displayMetrics)
-        SharedPreference.putLanguage(requireActivity(), languageCode)
-
-        // Recreate the parent activity from the fragment
-        activity?.recreate() // Calls recreate on the parent Activity
+    private fun isRemoveCheckBox() {
+        chEnglish.isChecked = false
+        chTamil.isChecked = false
+        chThai.isChecked = false
+        chHindi.isChecked = false
     }
 
+    private fun refreshFragment() {
+        ChangeLanguage.setLocale(requireContext(), isSelectedLanguage)
+        requireActivity().recreate()
+    }
 }

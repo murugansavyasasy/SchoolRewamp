@@ -1,13 +1,23 @@
 package com.vs.schoolmessenger.Dashboard.School
 
+import android.content.Context
 import android.os.Build
 import android.view.View
 import android.view.WindowManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.ChangeLanguage
 import com.vs.schoolmessenger.databinding.SchoolDashboardBinding
 
 class Dashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickListener {
+
+
+    override fun attachBaseContext(newBase: Context) {
+        val savedLanguage = ChangeLanguage.getPersistedLanguage(newBase)
+        val context = ChangeLanguage.setLocale(newBase, savedLanguage)
+        super.attachBaseContext(context)
+    }
+
 
     override fun getViewBinding(): SchoolDashboardBinding {
         return SchoolDashboardBinding.inflate(layoutInflater)

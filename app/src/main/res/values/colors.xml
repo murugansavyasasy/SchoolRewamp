@@ -80,4 +80,11 @@
     <color name="light_violet_bg1">#B58EF3</color>
 
 
+    <color name="light_bg_blue">#CFE8F6</color>
+    <color name="light_bg_orange">#FAECE0</color>
+    <color name="light_bg_green">#BAE4DC</color>
+    <color name="light_bg_purple">#ECE0F8</color>
+
+
+
 </resources>

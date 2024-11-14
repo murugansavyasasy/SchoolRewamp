@@ -16,6 +16,7 @@ object SharedPreference {
     }
 
     fun getLanguage(activity: Context): String? {
-        return activity.getSharedPreferences(SH_PREF, Context.MODE_PRIVATE).getString(isLanguage, "")
+        return activity.getSharedPreferences(SH_PREF, Context.MODE_PRIVATE)
+            .getString(isLanguage,"")
     }
 }
