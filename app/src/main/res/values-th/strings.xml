@@ -109,4 +109,8 @@
     <string name="lblTamil1">தமிழ்</string>
     <string name="lblThai1">แบบไทย</string>
     <string name="lblHindi1">हिंदी</string>
+    <string name="VideoURLnotfound">ไม่พบ URL ของวิดีโอ</string>
+    <string name="Video">วีดีโอ</string>
+    <string name="SeeMore">ดูเพิ่มเติม</string>
+    <string name="SeeLess">เห็นน้อยลง</string>
 </resources>

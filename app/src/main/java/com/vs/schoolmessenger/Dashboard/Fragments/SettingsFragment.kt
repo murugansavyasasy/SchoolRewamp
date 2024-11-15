@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -160,7 +161,6 @@ class SettingsFragment : Fragment(), View.OnClickListener {
 
     private fun showLanguageSelectorDialog() {
 
-        val isAppLanguage = SharedPreference.getLanguage(requireActivity())
         val dialogView =
             LayoutInflater.from(requireActivity()).inflate(R.layout.dialog_language_selector, null)
         val alertDialog = AlertDialog.Builder(requireActivity())
@@ -187,6 +187,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
                 isSelectedLanguage = "en"
                 chEnglish.isChecked = true
                 btnConfirm.text = "Confirm"
+                isSelectedImageSetting(imgEnglish)
             } else {
                 isChecking = false
             }
@@ -199,6 +200,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
                 isSelectedLanguage = "ta"
                 chTamil.isChecked = true
                 btnConfirm.text = "உறுதி"
+                isSelectedImageSetting(imgTamil)
             } else {
                 isChecking = false
             }
@@ -211,6 +213,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
                 isSelectedLanguage = "th"
                 chThai.isChecked = true
                 btnConfirm.text = "ยืนยัน"
+                isSelectedImageSetting(imgThai)
             } else {
                 isChecking = false
             }
@@ -223,11 +226,14 @@ class SettingsFragment : Fragment(), View.OnClickListener {
                 isSelectedLanguage = "hi"
                 chHindi.isChecked = true
                 btnConfirm.text = "पुष्टि करना"
+                isSelectedImageSetting(imgHindi)
             } else {
                 isChecking = false
             }
         }
 
+        val isAppLanguage = SharedPreference.getLanguage(requireActivity())
+        Log.d("isAppLanguage", isAppLanguage.toString())
         if (isAppLanguage.equals("ta")) {
             chTamil.isChecked = true
         } else if (isAppLanguage.equals("th")) {
@@ -245,7 +251,8 @@ class SettingsFragment : Fragment(), View.OnClickListener {
                 refreshFragment()
                 alertDialog.dismiss()
             } else {
-                Toast.makeText(requireActivity(), "Select the language", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireActivity(), R.string.lblSelectlanguage, Toast.LENGTH_SHORT)
+                    .show()
             }
         }
 
@@ -254,6 +261,20 @@ class SettingsFragment : Fragment(), View.OnClickListener {
             alertDialog.dismiss()
         }
         alertDialog.show()
+    }
+
+    private fun isSelectedImageSetting(isSelectedImage: ImageView) {
+        imgTamil.setImageResource(R.drawable.ta_language_gray)
+        imgEnglish.setImageResource(R.drawable.en_language_gray)
+        imgThai.setImageResource(R.drawable.th_language_gray)
+        imgHindi.setImageResource(R.drawable.hi_language_gray)
+
+        when (isSelectedImage) {
+            imgTamil -> imgTamil.setImageResource(R.drawable.ta_language_orange)
+            imgEnglish -> imgEnglish.setImageResource(R.drawable.en_language_orange)
+            imgThai -> imgThai.setImageResource(R.drawable.th_language_orange)
+            imgHindi -> imgHindi.setImageResource(R.drawable.hi_language_orange)
+        }
     }
 
     private fun isRemoveCheckBox() {

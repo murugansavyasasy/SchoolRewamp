@@ -23,9 +23,7 @@ import com.vs.schoolmessenger.Dashboard.School.PieChartAdapter
 import com.vs.schoolmessenger.Dashboard.School.SchoolMenuAdapter
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.Notification
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.Utils.ChangeLanguage
 import com.vs.schoolmessenger.Utils.Constant
-import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SchoolHomeFragmentBinding
 import java.util.Locale
 import java.util.Timer
@@ -156,14 +154,15 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener {
             }
         })
 
-        val adapter = SchoolMenuAdapter(null, Constant.isShimmerViewShow)
+        val adapter = SchoolMenuAdapter(requireActivity(), null, Constant.isShimmerViewShow)
         binding.recyclerViewMenu.layoutManager = GridLayoutManager(requireContext(), 3)
         binding.recyclerViewMenu.adapter = adapter
 
         // Simulate loading data with a delay (e.g., fetch from server or database)
         binding.recyclerViewMenu.postDelayed({
             // Once data is loaded, stop shimmer and pass the actual data
-            val isAdapter = SchoolMenuAdapter(items, Constant.isShimmerViewDisable)
+            val isAdapter =
+                SchoolMenuAdapter(requireActivity(), items, Constant.isShimmerViewDisable)
             // Set GridLayoutManager (2 columns in this case)
             binding.recyclerViewMenu.layoutManager = GridLayoutManager(requireActivity(), 3)
             binding.recyclerViewMenu.adapter = isAdapter
@@ -187,7 +186,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener {
         }
         isMenuAdapter.notifyDataSetChanged()
     }
-
 
     override fun onClick(p0: View?) {
         when (p0?.id) {

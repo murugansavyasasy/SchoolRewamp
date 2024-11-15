@@ -5,6 +5,7 @@
     android:layout_margin="@dimen/ten">
 
     <RelativeLayout
+        android:id="@+id/rlaMenu"
         android:layout_width="match_parent"
         android:background="@drawable/rect_white"
         android:layout_height="@dimen/hundred">
