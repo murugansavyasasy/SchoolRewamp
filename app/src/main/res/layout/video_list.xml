@@ -13,7 +13,7 @@
             android:id="@+id/lblDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_toLeftOf="@+id/imgNew"
             android:layout_marginEnd="@dimen/thirty"
             android:padding="@dimen/five"
             android:text="Sun 22 Mar,2020"
@@ -21,6 +21,16 @@
             android:textSize="@dimen/thirteen_sp">
 
         </TextView>
+
+        <ImageView
+            android:id="@+id/imgNew"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="@dimen/twenty"
+            android:src="@drawable/new_icon">
+
+        </ImageView>
 
         <RelativeLayout
             android:id="@+id/rlaVimeoThumbnail"

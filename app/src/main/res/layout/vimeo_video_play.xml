@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black">
+    >
 
     <RelativeLayout
         android:id="@+id/rlaTVideoTitle"
@@ -11,25 +11,40 @@
         android:layout_marginTop="@dimen/twenty">
 
         <ImageView
-            android:id="@+id/imgClose"
+            android:id="@+id/imgBack"
             android:layout_width="@dimen/thirty"
             android:layout_height="@dimen/thirty"
             android:layout_marginStart="@dimen/twenty"
-            android:src="@drawable/arrow_back_white">
+            android:src="@drawable/arrow_back_black">
 
         </ImageView>
 
         <TextView
             android:id="@+id/lblVideoTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:layout_toLeftOf="@+id/imgDownload"
+            android:layout_toRightOf="@+id/imgBack"
+            android:layout_marginStart="@dimen/twenty"
+            android:layout_marginEnd="@dimen/twenty"
             android:layout_centerHorizontal="true"
             android:text=""
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textStyle="bold">
 
         </TextView>
+
+        <ImageView
+            android:id="@+id/imgDownload"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
+            android:layout_marginEnd="@dimen/twenty"
+            android:src="@drawable/download_icon"
+            android:layout_alignParentRight="true"
+            >
+
+        </ImageView>
 
     </RelativeLayout>
 
