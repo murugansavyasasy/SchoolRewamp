@@ -113,5 +113,7 @@
     <string name="Video">வீடியோ</string>
     <string name="SeeMore">மேலும் பார்க்கவும்</string>
     <string name="SeeLess">குறைவாக பார்க்கவும்</string>
+    <string name="LogOut">நீங்கள் நிச்சயமாக வெளியேற விரும்புகிறீர்களா?</string>
+    <string name="Cancel">ரத்து செய்</string>
 
 </resources>

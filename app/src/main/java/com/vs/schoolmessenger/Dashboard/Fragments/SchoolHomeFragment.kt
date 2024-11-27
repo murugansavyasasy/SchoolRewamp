@@ -155,7 +155,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener {
         })
 
         val adapter = SchoolMenuAdapter(requireActivity(), null, Constant.isShimmerViewShow)
-        binding.recyclerViewMenu.layoutManager = GridLayoutManager(requireContext(), 3)
+        binding.recyclerViewMenu.layoutManager = GridLayoutManager(requireContext(), 4)
         binding.recyclerViewMenu.adapter = adapter
 
         // Simulate loading data with a delay (e.g., fetch from server or database)
@@ -164,7 +164,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener {
             val isAdapter =
                 SchoolMenuAdapter(requireActivity(), items, Constant.isShimmerViewDisable)
             // Set GridLayoutManager (2 columns in this case)
-            binding.recyclerViewMenu.layoutManager = GridLayoutManager(requireActivity(), 3)
+            binding.recyclerViewMenu.layoutManager = GridLayoutManager(requireActivity(), 4)
             binding.recyclerViewMenu.adapter = isAdapter
         }, 500) // Simulate 2 seconds loading time
 

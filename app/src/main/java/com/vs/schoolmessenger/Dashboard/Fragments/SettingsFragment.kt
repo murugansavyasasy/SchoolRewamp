@@ -186,7 +186,6 @@ class SettingsFragment : Fragment(), View.OnClickListener {
                 isChecking = true
                 isSelectedLanguage = "en"
                 chEnglish.isChecked = true
-                btnConfirm.text = "Confirm"
                 isSelectedImageSetting(imgEnglish)
             } else {
                 isChecking = false
@@ -199,7 +198,6 @@ class SettingsFragment : Fragment(), View.OnClickListener {
                 isChecking = true
                 isSelectedLanguage = "ta"
                 chTamil.isChecked = true
-                btnConfirm.text = "உறுதி"
                 isSelectedImageSetting(imgTamil)
             } else {
                 isChecking = false
@@ -212,7 +210,6 @@ class SettingsFragment : Fragment(), View.OnClickListener {
                 isChecking = true
                 isSelectedLanguage = "th"
                 chThai.isChecked = true
-                btnConfirm.text = "ยืนยัน"
                 isSelectedImageSetting(imgThai)
             } else {
                 isChecking = false
@@ -225,15 +222,17 @@ class SettingsFragment : Fragment(), View.OnClickListener {
                 isChecking = true
                 isSelectedLanguage = "hi"
                 chHindi.isChecked = true
-                btnConfirm.text = "पुष्टि करना"
                 isSelectedImageSetting(imgHindi)
             } else {
                 isChecking = false
             }
         }
 
-        val isAppLanguage = SharedPreference.getLanguage(requireActivity())
+        var isAppLanguage = SharedPreference.getLanguage(requireActivity())
         Log.d("isAppLanguage", isAppLanguage.toString())
+        if (isAppLanguage.equals("")) {
+            isAppLanguage = "en"
+        }
         if (isAppLanguage.equals("ta")) {
             chTamil.isChecked = true
         } else if (isAppLanguage.equals("th")) {
