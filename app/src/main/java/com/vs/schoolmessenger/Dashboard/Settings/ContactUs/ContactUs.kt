@@ -11,12 +11,10 @@ class ContactUs : BaseActivity<ContactSupportBinding>(), View.OnClickListener {
         return ContactSupportBinding.inflate(layoutInflater)
     }
 
-
     override fun setupViews() {
         super.setupViews()
         setupToolbar()
         binding.imgBack.setOnClickListener(this)
-
     }
 
     override fun onClick(p0: View?) {

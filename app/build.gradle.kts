@@ -2,7 +2,6 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
 }
-
 android {
     namespace = "com.vs.schoolmessenger"
     compileSdk = 34
@@ -60,6 +59,9 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
+    implementation("androidx.camera:camera-lifecycle:1.4.0")
+    implementation("com.google.mlkit:vision-common:17.3.0")
+    implementation("com.google.android.gms:play-services-mlkit-face-detection:17.1.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
@@ -93,5 +95,6 @@ dependencies {
 
     //Load Image
     implementation("com.squareup.picasso:picasso:2.8")
-    
+
+
 }
