@@ -18,7 +18,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.vs.schoolmessenger.Dashboard.Fragments.HelpFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.ProfileFragment
-import com.vs.schoolmessenger.Dashboard.Fragments.SchoolHomeFragment
+import com.vs.schoolmessenger.Dashboard.Fragments.HomeFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.SettingsFragment
 import com.vs.schoolmessenger.R
 
@@ -92,11 +92,11 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         val nav_profile = binding.root.findViewById<LinearLayout>(nav_profile)
 
 
-        loadFragment(SchoolHomeFragment())
+        loadFragment(HomeFragment())
         updateNavBar(icon_home)
 
         nav_home.setOnClickListener {
-            loadFragment(SchoolHomeFragment())
+            loadFragment(HomeFragment())
             updateNavBar(icon_home)
         }
         nav_help.setOnClickListener {

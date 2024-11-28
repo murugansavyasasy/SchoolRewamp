@@ -30,10 +30,9 @@ import java.util.Timer
 import java.util.TimerTask
 
 
-class SchoolHomeFragment : Fragment(), View.OnClickListener {
+class HomeFragment : Fragment(), View.OnClickListener {
 
     private lateinit var binding: SchoolHomeFragmentBinding // Automatically generated binding class
-
     lateinit var isMenuAdapter: SchoolMenuAdapter
     private lateinit var items: List<GridItem>
     private var isMenuItems: MutableList<GridItem> = mutableListOf()
