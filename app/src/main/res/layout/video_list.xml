@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/ten">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rect_shadow_white">
+
+        <TextView
+            android:id="@+id/lblDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/imgNew"
+            android:layout_marginEnd="@dimen/thirty"
+            android:padding="@dimen/five"
+            android:text="Sun 22 Mar,2020"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp">
+
+        </TextView>
+
+        <ImageView
+            android:id="@+id/imgNew"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="@dimen/twenty"
+            android:src="@drawable/new_icon">
+
+        </ImageView>
+
+        <RelativeLayout
+            android:id="@+id/rlaVimeoThumbnail"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_below="@+id/lblDate">
+
+            <ImageView
+                android:id="@+id/imgVimeoThumbnail"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:scaleType="centerCrop"></ImageView>
+
+            <ImageView
+                android:id="@+id/imgVideoPlay"
+                android:layout_width="@dimen/thirty"
+                android:layout_height="@dimen/thirty"
+                android:layout_centerInParent="true"
+                android:src="@drawable/video_play"
+                android:visibility="gone">
+
+            </ImageView>
+
+            <ProgressBar
+                android:id="@+id/customProgressBar"
+                style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large"
+                android:layout_width="@dimen/fifty"
+                android:layout_height="@dimen/fifty"
+                android:layout_centerInParent="true" />
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/lblTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rlaVimeoThumbnail"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/five"
+            android:text=""
+            android:textColor="@color/black"
+            android:textSize="@dimen/fifteen_sp" />
+
+        <TextView
+            android:id="@+id/lblVideoContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblTitle"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/five"
+            android:layout_marginEnd="@dimen/ten"
+            android:lineSpacingExtra="@dimen/five"
+            android:paddingBottom="@dimen/twenty"
+            android:text=""
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp" />
+
+        <TextView
+            android:id="@+id/tvSeeMore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblVideoContent"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginBottom="@dimen/ten"
+            android:text="@string/SeeMore"
+            android:textColor="@android:color/holo_blue_dark"
+            android:visibility="gone" />
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

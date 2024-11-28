@@ -55,6 +55,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View {
 
+
         binding = SchoolHomeFragmentBinding.inflate(layoutInflater)
         binding.imgNotification.setOnClickListener(this)
         binding.imgSearchClick.setOnClickListener(this)
@@ -153,21 +154,23 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener {
             }
         })
 
-        val adapter = SchoolMenuAdapter(null, Constant.isShimmerViewShow)
-        binding.recyclerViewMenu.layoutManager = GridLayoutManager(requireContext(), 3)
+        val adapter = SchoolMenuAdapter(requireActivity(), null, Constant.isShimmerViewShow)
+        binding.recyclerViewMenu.layoutManager = GridLayoutManager(requireContext(), 4)
         binding.recyclerViewMenu.adapter = adapter
 
         // Simulate loading data with a delay (e.g., fetch from server or database)
         binding.recyclerViewMenu.postDelayed({
             // Once data is loaded, stop shimmer and pass the actual data
-            val isAdapter = SchoolMenuAdapter(items, Constant.isShimmerViewDisable)
+            val isAdapter =
+                SchoolMenuAdapter(requireActivity(), items, Constant.isShimmerViewDisable)
             // Set GridLayoutManager (2 columns in this case)
-            binding.recyclerViewMenu.layoutManager = GridLayoutManager(requireActivity(), 3)
+            binding.recyclerViewMenu.layoutManager = GridLayoutManager(requireActivity(), 4)
             binding.recyclerViewMenu.adapter = isAdapter
         }, 500) // Simulate 2 seconds loading time
 
         return binding.root
     }
+
 
     @SuppressLint("NotifyDataSetChanged")
     private fun filter(text: String) {
@@ -183,7 +186,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener {
         }
         isMenuAdapter.notifyDataSetChanged()
     }
-
 
     override fun onClick(p0: View?) {
         when (p0?.id) {

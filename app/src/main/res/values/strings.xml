@@ -99,6 +99,22 @@
     <string name="lblThankYou">Thank You.</string>
     <string name="lblBackhome">Back to home  &lt;&lt;</string>
     <string name="lblEntertheBug">Enter the bug...</string>
+    <string name="lblConfirm">Confirm</string>
+    <string name="lblThai">Thai</string>
+    <string name="lblHindi">Hindi</string>
+    <string name="lblTamil">Tamil</string>
+    <string name="lblEnglish">English</string>
+    <string name="lblSelectlanguage">Select language</string>
+    <string name="lblTamil1">தமிழ்</string>
+    <string name="lblThai1">แบบไทย</string>
+    <string name="lblHindi1">हिंदी</string>
+    <string name="VideoURLnotfound">Video URL not found</string>
+    <string name="Video">Video</string>
+    <string name="SeeMore">See more</string>
+    <string name="SeeLess">See less</string>
+    <string name="LogOut">Are you sure want to logout ?</string>
+    <string name="Cancel">Cancel</string>
+
     <string name="lblCountryNotes">Using SVG images in Android Studio is a great way to ensure your app\'s graphics are scalable and high quality on all devices. Android supports SVG images through the Vector Drawable format. Here\'s a step-by-step guide on how to use SVG images in your Android project:</string>
 
 

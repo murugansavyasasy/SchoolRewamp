@@ -39,19 +39,25 @@ class StudentDetailAdapter(private val itemList: List<StudentDetailsData>, val c
 //                    )
 //                )
 
+//                holder.binding.rlaStudent.setBackgroundDrawable(
+//                    ContextCompat.getDrawable(
+//                        context,
+//                        R.drawable.rect_shadow_light_sky_blue
+//                    )
+//                )
                 holder.binding.rlaStudent.setBackgroundDrawable(
                     ContextCompat.getDrawable(
                         context,
-                        R.drawable.rect_shadow_light_sky_blue
-                    )
-                )
-                holder.binding.rlaSchoolName.setBackgroundColor(
-                    ContextCompat.getColor(
-                        context,
-                        R.color.light_orange_1
+                        R.drawable.bg_blue_gradient
                     )
                 )
 
+                holder.binding.rlaSchoolName.setBackgroundColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.light_bg_blue
+                    )
+                )
             }
 
             1 -> {
@@ -63,17 +69,23 @@ class StudentDetailAdapter(private val itemList: List<StudentDetailsData>, val c
 //                    )
 //                )
 
+//                holder.binding.rlaStudent.setBackgroundDrawable(
+//                    ContextCompat.getDrawable(
+//                        context,
+//                        R.drawable.rect_shadow_violet
+//                    )
+//                )
                 holder.binding.rlaStudent.setBackgroundDrawable(
                     ContextCompat.getDrawable(
                         context,
-                        R.drawable.rect_shadow_violet
+                        R.drawable.bg_purple_gradient
                     )
                 )
 
                 holder.binding.rlaSchoolName.setBackgroundColor(
                     ContextCompat.getColor(
                         context,
-                        R.color.light_blue_1
+                        R.color.light_bg_purple
                     )
                 )
             }
@@ -87,16 +99,23 @@ class StudentDetailAdapter(private val itemList: List<StudentDetailsData>, val c
 //                    )
 //                )
 
+//                holder.binding.rlaStudent.setBackgroundDrawable(
+//                    ContextCompat.getDrawable(
+//                        context,
+//                        R.drawable.rect_shadow_green
+//                    )
+//                )
+
                 holder.binding.rlaStudent.setBackgroundDrawable(
                     ContextCompat.getDrawable(
                         context,
-                        R.drawable.rect_shadow_green
+                        R.drawable.bg_orange_gradient
                     )
                 )
                 holder.binding.rlaSchoolName.setBackgroundColor(
                     ContextCompat.getColor(
                         context,
-                        R.color.light_green_bg1
+                        R.color.light_bg_orange
                     )
                 )
             }
@@ -110,16 +129,23 @@ class StudentDetailAdapter(private val itemList: List<StudentDetailsData>, val c
 //                    )
 //                )
 
+//                holder.binding.rlaStudent.setBackgroundDrawable(
+//                    ContextCompat.getDrawable(
+//                        context,
+//                        R.drawable.rect_shadow_blue
+//                    )
+//                )
+
                 holder.binding.rlaStudent.setBackgroundDrawable(
                     ContextCompat.getDrawable(
                         context,
-                        R.drawable.rect_shadow_blue
+                        R.drawable.bg_green_gradient
                     )
                 )
                 holder.binding.rlaSchoolName.setBackgroundColor(
                     ContextCompat.getColor(
                         context,
-                        R.color.light_violet_bg1
+                        R.color.light_bg_green
                     )
                 )
             }

@@ -27,10 +27,17 @@ class StaffDetailAdapter(private val itemList: List<StaffDetailData>, val contex
         when (position) {
 
             0 -> {
+//                holder.binding.rlaStaffDetails.setBackgroundDrawable(
+//                    ContextCompat.getDrawable(
+//                        context,
+//                        R.drawable.rect_shadow_light_sky_blue
+//                    )
+//                )
+
                 holder.binding.rlaStaffDetails.setBackgroundDrawable(
                     ContextCompat.getDrawable(
                         context,
-                        R.drawable.rect_shadow_light_sky_blue
+                        R.drawable.bg_blue_gradient
                     )
                 )
 
@@ -45,12 +52,19 @@ class StaffDetailAdapter(private val itemList: List<StaffDetailData>, val contex
             }
 
             1 -> {
+//                holder.binding.rlaStaffDetails.setBackgroundDrawable(
+//                    ContextCompat.getDrawable(
+//                        context,
+//                        R.drawable.rect_shadow_violet
+//                    )
+//                )
                 holder.binding.rlaStaffDetails.setBackgroundDrawable(
                     ContextCompat.getDrawable(
                         context,
-                        R.drawable.rect_shadow_violet
+                        R.drawable.bg_purple_gradient
                     )
                 )
+
 
                 holder.binding.imgSchool.setImageDrawable(
                     ContextCompat.getDrawable(
@@ -63,12 +77,19 @@ class StaffDetailAdapter(private val itemList: List<StaffDetailData>, val contex
             }
 
             2 -> {
+//                holder.binding.rlaStaffDetails.setBackgroundDrawable(
+//                    ContextCompat.getDrawable(
+//                        context,
+//                        R.drawable.rect_shadow_green
+//                    )
+//                )
                 holder.binding.rlaStaffDetails.setBackgroundDrawable(
                     ContextCompat.getDrawable(
                         context,
-                        R.drawable.rect_shadow_green
+                        R.drawable.bg_green_gradient
                     )
                 )
+
 
                 holder.binding.imgSchool.setImageDrawable(
                     ContextCompat.getDrawable(
@@ -81,12 +102,19 @@ class StaffDetailAdapter(private val itemList: List<StaffDetailData>, val contex
             }
 
             3 -> {
+//                holder.binding.rlaStaffDetails.setBackgroundDrawable(
+//                    ContextCompat.getDrawable(
+//                        context,
+//                        R.drawable.rect_shadow_blue
+//                    )
+//                )
                 holder.binding.rlaStaffDetails.setBackgroundDrawable(
                     ContextCompat.getDrawable(
                         context,
-                        R.drawable.rect_shadow_blue
+                        R.drawable.bg_orange_gradient
                     )
                 )
+
 
                 holder.binding.imgSchool.setImageDrawable(
                     ContextCompat.getDrawable(

@@ -5,32 +5,31 @@
     android:layout_margin="@dimen/ten">
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:background="@drawable/rect_white"
-        android:layout_height="@dimen/hundred">
-
-
+        android:id="@+id/rlaMenu"
+        android:layout_width="@dimen/sixty"
+        android:background="@drawable/school_menu_gradient_rect"
+        android:layout_height="@dimen/sixty">
 
         <ImageView
-            android:layout_marginTop="@dimen/fifteen"
             android:id="@+id/imgMenu"
             android:layout_width="@dimen/thirty"
             android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
             android:layout_height="@dimen/thirty"
             android:src="@drawable/splash_icon7"/>
 
-        <TextView
-            android:id="@+id/lblMenuName"
-            android:layout_below="@+id/imgMenu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/ten"
-            android:text="Text Message"
-            android:textAlignment="center"
-            android:layout_centerHorizontal="true"
-            android:textSize="@dimen/twele_sp"
-            android:textColor="@color/black"/>
-
         </RelativeLayout>
+
+    <TextView
+        android:id="@+id/lblMenuName"
+        android:layout_below="@+id/rlaMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ten"
+        android:text="Text Message"
+        android:textAlignment="center"
+        android:layout_centerHorizontal="true"
+        android:textSize="@dimen/ten_sp"
+        android:textColor="@color/black"/>
 
 </RelativeLayout>

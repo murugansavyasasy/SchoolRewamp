@@ -64,6 +64,7 @@ class Notification : BaseActivity<NotificationBinding>(), View.OnClickListener {
         })
 
         isNotificationItems.addAll(items)
+
         isNotificationAdapter = NotificationAdapter(isNotificationItems)
         binding.rcyNotification.layoutManager = LinearLayoutManager(this)
         binding.rcyNotification.adapter = isNotificationAdapter

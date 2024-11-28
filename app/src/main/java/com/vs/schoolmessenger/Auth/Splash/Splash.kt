@@ -1,14 +1,16 @@
 package com.vs.schoolmessenger.Auth.Splash
+import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.Introduction.Introduction
-import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.Login
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.databinding.OtpScreenBinding
+import com.vs.schoolmessenger.Utils.ChangeLanguage
+import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SplashBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -18,13 +20,18 @@ import kotlinx.coroutines.withContext
 
 class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
 
+    override fun attachBaseContext(newBase: Context) {
+        val savedLanguage = ChangeLanguage.getPersistedLanguage(newBase)
+        val context = ChangeLanguage.setLocale(newBase, savedLanguage)
+        super.attachBaseContext(context)
+    }
+
     override fun getViewBinding(): SplashBinding {
         return SplashBinding.inflate(layoutInflater)
     }
 
     override fun setupViews() {
         super.setupViews()
-        // Access a specific view using its ID
 
         isToolBarTheme()
         GlobalScope.launch {
@@ -37,7 +44,7 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
         }
     }
 
-    private fun isToolBarTheme(){
+    private fun isToolBarTheme() {
         if (Build.VERSION.SDK_INT >= 21) {
             val window = this.window
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)

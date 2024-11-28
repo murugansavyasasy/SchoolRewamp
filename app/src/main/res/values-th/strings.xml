@@ -100,4 +100,19 @@
     <string name="lblCountryNotes">กลับไปที่หน้าหลัก &lt;&lt;</string>
     <string name="lblBackhome">กรุณากรอกข้อผิดพลาด...</string>
     <string name="lblEntertheBug">การใช้รูปภาพ SVG ใน Android Studio เป็นวิธีที่ดีเพื่อให้แน่ใจว่ากราฟิกของแอปของคุณจะปรับขนาดและคุณภาพสูงในทุกอุปกรณ์ Android รองรับรูปภาพ SVG ผ่านรูปแบบ Vector Drawable นี่คือคำแนะนำทีละขั้นตอนในการใช้รูปภาพ SVG ในโครงการ Android ของคุณ:</string>
+    <string name="lblConfirm">ยืนยัน</string>
+    <string name="lblThai">Thai</string>
+    <string name="lblHindi">Hindi</string>
+    <string name="lblTamil">Tamil</string>
+    <string name="lblEnglish">English</string>
+    <string name="lblSelectlanguage">เลือกภาษา</string>
+    <string name="lblTamil1">தமிழ்</string>
+    <string name="lblThai1">แบบไทย</string>
+    <string name="lblHindi1">हिंदी</string>
+    <string name="VideoURLnotfound">ไม่พบ URL ของวิดีโอ</string>
+    <string name="Video">วีดีโอ</string>
+    <string name="SeeMore">ดูเพิ่มเติม</string>
+    <string name="SeeLess">เห็นน้อยลง</string>
+    <string name="LogOut">คุณแน่ใจหรือไม่ว่าต้องการออกจากระบบ?</string>
+    <string name="Cancel">ยกเลิก</string>
 </resources>

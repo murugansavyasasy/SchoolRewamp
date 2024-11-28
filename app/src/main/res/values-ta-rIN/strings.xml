@@ -100,5 +100,20 @@
     <string name="lblBackhome">முகப்பிற்கு திரும்பவும் &lt;&lt;</string>
     <string name="lblEntertheBug">பிழையை உள்ளிடவும்...</string>
     <string name="lblCountryNotes">Android Studio-வில் SVG படங்களைப் பயன்படுத்துவது உங்கள் பயன்பாட்டின் கிராஃபிக்ஸ் அனைத்து சாதனங்களிலும் அளவீட்டிற்குரியதாகவும் உயர் தரமாகவும் இருக்க ஒரு சிறந்த வழியாகும். Android வேர்க்கெடDrawable வடிவமைப்பின் மூலம் SVG படங்களை ஆதரிக்கிறது.</string>
+    <string name="lblConfirm">உறுதிப்படுத்தவும்</string>
+    <string name="lblThai">Thai</string>
+    <string name="lblHindi">Hindi</string>
+    <string name="lblTamil">Tamil</string>
+    <string name="lblEnglish">English</string>
+    <string name="lblSelectlanguage">மொழி தேர்வு செய்யவும்</string>
+    <string name="lblTamil1">தமிழ்</string>
+    <string name="lblThai1">แบบไทย</string>
+    <string name="lblHindi1">हिंदी</string>
+    <string name="VideoURLnotfound">வீடியோ URL கிடைக்கவில்லை</string>
+    <string name="Video">வீடியோ</string>
+    <string name="SeeMore">மேலும் பார்க்கவும்</string>
+    <string name="SeeLess">குறைவாக பார்க்கவும்</string>
+    <string name="LogOut">நீங்கள் நிச்சயமாக வெளியேற விரும்புகிறீர்களா?</string>
+    <string name="Cancel">ரத்து செய்</string>
 
 </resources>
