@@ -87,11 +87,9 @@ class SettingsFragment : Fragment(), View.OnClickListener {
                 startActivity(Intent(requireActivity(), ReportTheBug::class.java))
             }
 
-
             R.id.lnrFeedBack -> {
                 startActivity(Intent(requireActivity(), RateUs::class.java))
             }
-
 
             R.id.lnrFaq -> {
                 startActivity(Intent(requireActivity(), Faq::class.java))
