@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         tools:ignore="MissingConstraints">
 
+
         <RelativeLayout
             android:id="@+id/rytHeader"
             android:layout_marginTop="@dimen/ten"
@@ -18,6 +19,7 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:padding="@dimen/ten">
+
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imgSchoolLogo"

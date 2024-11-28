@@ -108,6 +108,7 @@
         android:layout_marginTop="@dimen/ten"
         android:layout_marginRight="@dimen/five"
         android:padding="@dimen/five"
+        android:visibility="gone"
         android:textColor="@color/black"
         android:textSize="@dimen/thirteen_sp" />
 

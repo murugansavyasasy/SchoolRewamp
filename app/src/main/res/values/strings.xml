@@ -56,7 +56,7 @@
     <string name="lblConfirmPassword">Confirm Password</string>
     <string name="lblPrevious">Previous</string>
     <string name="lblSkip">Skip</string>
-    <string name="lblNext">Next ></string>
+    <string name="lblNext">Proceed ></string>
     <string name="lblMobileNumber">Mobile Number</string>
     <string name="lblMobile">Mobile</string>
     <string name="lblPassword">Password</string>

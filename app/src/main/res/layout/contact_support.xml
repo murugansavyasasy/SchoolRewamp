@@ -88,7 +88,6 @@
                 android:textStyle="bold">
 
             </TextView>
-
         </LinearLayout>
     </RelativeLayout>
 
@@ -119,7 +118,6 @@
             android:layout_toRightOf="@+id/imgMail"
             android:gravity="center"
             android:orientation="vertical">
-
 
             <TextView
                 android:layout_width="match_parent"

@@ -58,6 +58,11 @@ class HomeFragment : Fragment(), View.OnClickListener {
         binding = SchoolHomeFragmentBinding.inflate(layoutInflater)
         binding.imgNotification.setOnClickListener(this)
         binding.imgSearchClick.setOnClickListener(this)
+
+        // Sample waveform data
+        val waveformData = intArrayOf(10, 30, 50, 70, 50, 30, 10, 40, 60, 80, 60, 40, 20)
+
+        binding.waveformSeekBar.setWaveform(waveformData)
         // Sample data
         items = listOf(
             GridItem(R.drawable.communication, "Communication"),  //Text,voice,Image ,Pdf , video

@@ -1,7 +1,4 @@
 package com.vs.schoolmessenger.Dashboard.Settings.ContactUs
-
-import android.content.Intent
-import android.net.Uri
 import android.view.View
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
@@ -29,11 +26,9 @@ class ContactUs : BaseActivity<ContactSupportBinding>(), View.OnClickListener {
             }
             R.id.rytPhone -> {
                 Constant.redirectToDialPad(this,binding.lblContactNo.text.toString())
-
             }
             R.id.rytMail -> {
                 Constant.redirectToMail(this,binding.lblContacttMail.text.toString())
-
             }
         }
     }
