@@ -23,7 +23,7 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
         binding.btnArrowNext.setOnClickListener(this)
         setupToolbar()
 
-        binding.termsText.setOnClickListener {
+        binding.lblTermsConditions.setOnClickListener {
             startActivity(Intent(this, TermsAndConditions::class.java))
         }
 

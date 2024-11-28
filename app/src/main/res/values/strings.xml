@@ -44,12 +44,12 @@
     <string name="lblFamilyDetails">Family Details</string>
     <string name="lblChoosecountry">Choose your country</string>
     <string name="lblHerearetermsandconditions">Here are the terms and conditions >></string>
-    <string name="lblIagreetotheTermsandConditions">I agree to the Terms and Conditions</string>
+    <string name="lblIagreetotheTermsandConditions">I agree to the Terms and Conditions></string>
     <string name="lblIndia">India</string>
     <string name="lblThailand">Thailand</string>
     <string name="lblUSA">USA</string>
-    <string name="lblChina">China</string>
-    <string name="lblSingapore">Singapore</string>
+    <string name="lblChina">Indonesia</string>
+    <string name="lblSingapore">Uganda</string>
     <string name="lblCanada">Canada</string>
     <string name="lblCreateNewPassword">Create New Password</string>
     <string name="lblCreatePassword">Create Password</string>
