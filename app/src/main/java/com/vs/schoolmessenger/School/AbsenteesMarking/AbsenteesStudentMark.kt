@@ -1,9 +1,10 @@
 package com.vs.schoolmessenger.School.AbsenteesMarking
 
+import android.util.Log
 import android.view.View
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.AbsenteesStudentMarkingBinding
 
@@ -19,8 +20,10 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(), Abs
 
     override fun setupViews() {
         super.setupViews()
-        isToolBarWhiteTheme()
+        setupToolbar()
 
+
+        binding.imgBack.setOnClickListener(this)
 
         studentsList = listOf(
             StudentData(
@@ -81,10 +84,16 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(), Abs
     }
 
     override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.imgBack -> {
+                onBackPressed()
+            }
+        }
 
     }
 
     override fun onItemClick(data: StudentData) {
-        TODO("Not yet implemented")
+        Log.d("SelectedData",data.Name)
+
     }
 }

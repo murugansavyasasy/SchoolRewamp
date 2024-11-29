@@ -40,7 +40,7 @@ class AbsenteesMarkAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
             // Bind actual data when loading is complete
-            holder.bind(itemList!![position],position)
+            holder.bind(itemList!![position],position,listener)
 
         }
     }
@@ -56,21 +56,20 @@ class AbsenteesMarkAdapter(
         private val lnrPresent: LinearLayout = itemView.findViewById(R.id.lnrPresent)
         private val lnrAbsent: RelativeLayout = itemView.findViewById(R.id.lnrAbsent)
 
-        fun bind(data: StudentData,position: Int) {
+        fun bind(data: StudentData, position: Int, listener: AbsenteesClickListener) {
             lblName.text = data.Name
             lblRollNo.text = data.RollNo
 
-            if(position == 3 || position == 6){
+            lnrPresent.setOnClickListener {
                 lnrAbsent.visibility = View.VISIBLE
                 lnrPresent.visibility = View.GONE
+                listener.onItemClick(data)
             }
-            else{
+
+            lnrAbsent.setOnClickListener{
                 lnrAbsent.visibility = View.GONE
                 lnrPresent.visibility = View.VISIBLE
-            }
-
-            lnrPresent.setOnClickListener {
-
+                listener.onItemClick(data)
             }
         }
     }
