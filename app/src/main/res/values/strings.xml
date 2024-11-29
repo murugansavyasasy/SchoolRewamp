@@ -44,19 +44,19 @@
     <string name="lblFamilyDetails">Family Details</string>
     <string name="lblChoosecountry">Choose your country</string>
     <string name="lblHerearetermsandconditions">Here are the terms and conditions >></string>
-    <string name="lblIagreetotheTermsandConditions">I agree to the Terms and Conditions</string>
+    <string name="lblIagreetotheTermsandConditions">I agree to the Terms and Conditions></string>
     <string name="lblIndia">India</string>
     <string name="lblThailand">Thailand</string>
     <string name="lblUSA">USA</string>
-    <string name="lblChina">China</string>
-    <string name="lblSingapore">Singapore</string>
+    <string name="lblChina">Indonesia</string>
+    <string name="lblSingapore">Uganda</string>
     <string name="lblCanada">Canada</string>
     <string name="lblCreateNewPassword">Create New Password</string>
     <string name="lblCreatePassword">Create Password</string>
     <string name="lblConfirmPassword">Confirm Password</string>
     <string name="lblPrevious">Previous</string>
     <string name="lblSkip">Skip</string>
-    <string name="lblNext">Next ></string>
+    <string name="lblNext">Proceed ></string>
     <string name="lblMobileNumber">Mobile Number</string>
     <string name="lblMobile">Mobile</string>
     <string name="lblPassword">Password</string>
@@ -114,7 +114,6 @@
     <string name="SeeLess">See less</string>
     <string name="LogOut">Are you sure want to logout ?</string>
     <string name="Cancel">Cancel</string>
-
     <string name="lblCountryNotes">Using SVG images in Android Studio is a great way to ensure your app\'s graphics are scalable and high quality on all devices. Android supports SVG images through the Vector Drawable format. Here\'s a step-by-step guide on how to use SVG images in your Android project:</string>
 
 

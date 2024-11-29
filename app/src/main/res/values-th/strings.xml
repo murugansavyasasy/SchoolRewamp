@@ -56,7 +56,7 @@
     <string name="lblConfirmPassword">ยืนยันรหัสผ่าน</string>
     <string name="lblPrevious">ก่อนหน้า</string>
     <string name="lblSkip">ข้าม</string>
-    <string name="lblNext">ถัดไป &gt;</string>
+    <string name="lblNext">" ดำเนินการ >"</string>
     <string name="lblMobileNumber">หมายเลขโทรศัพท์มือถือ</string>
     <string name="lblMobile">มือถือ</string>
     <string name="lblPassword">รหัสผ่าน</string>

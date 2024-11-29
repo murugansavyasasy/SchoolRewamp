@@ -1,7 +1,12 @@
 package com.vs.schoolmessenger.Utils
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.view.View
 import android.widget.GridView
+import android.widget.Toast
+import com.vs.schoolmessenger.Dashboard.Settings.ContactUs.ContactUs
 
 object Constant {
 
@@ -39,4 +44,26 @@ object Constant {
         gridView.requestLayout()  // Request layout update
     }
 
+    fun redirectToDialPad(context: Context, contactNo: String){
+        val intent = Intent(Intent.ACTION_DIAL)
+        intent.data = Uri.parse("tel:"+contactNo) // Replace with the phone number
+        context.startActivity(intent)
+    }
+
+    fun redirectToMail(context: Context, mail: String){
+        val intent = Intent(Intent.ACTION_SENDTO).apply {
+            data = Uri.parse("mailto:") // Ensures only email apps handle this
+            putExtra(Intent.EXTRA_EMAIL, arrayOf(mail)) // Recipient email address
+            putExtra(Intent.EXTRA_SUBJECT, "") // Subject
+            putExtra(Intent.EXTRA_TEXT, "") // Email body
+        }
+// Verify that there is an email app to handle the intent
+        val emailApps = context.packageManager.queryIntentActivities(intent, 0)
+        if (emailApps.isNotEmpty()) {
+            context.startActivity(intent)
+        } else {
+            context.startActivity(intent)
+        //   Toast.makeText(context, "No email app found", Toast.LENGTH_SHORT).show()
+        }
+    }
 }

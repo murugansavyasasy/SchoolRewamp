@@ -17,8 +17,8 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.vs.schoolmessenger.Dashboard.Fragments.HelpFragment
+import com.vs.schoolmessenger.Dashboard.Fragments.HomeFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.ProfileFragment
-import com.vs.schoolmessenger.Dashboard.Fragments.SchoolHomeFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.SettingsFragment
 import com.vs.schoolmessenger.R
 
@@ -36,13 +36,31 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         // Common setup for all activities
         // setupToolbar()
         setupViews()
-
-
+      //  applyCustomFontToViews()
     }
 
     open fun setupViews() {
         // Optionally overridden in child activities to perform actions on views
     }
+
+//    private fun applyCustomFontToViews() {
+//        val customFont: Typeface? = ResourcesCompat.getFont(this, R.font.poppins_regular)
+//        customFont?.let { font ->
+//            // Apply the font to all TextViews in the root view
+//            val rootView = window.decorView.findViewById<ViewGroup>(android.R.id.content)
+//            setFontRecursively(rootView, font)
+//        }
+//    }
+//
+//    private fun setFontRecursively(viewGroup: ViewGroup, font: Typeface) {
+//        for (i in 0 until viewGroup.childCount) {
+//            val child = viewGroup.getChildAt(i)
+//            when (child) {
+//                is TextView -> child.typeface = font
+//                is ViewGroup -> setFontRecursively(child, font)
+//            }
+//        }
+//    }
 
     fun isToolBarWhiteTheme() {
         if (Build.VERSION.SDK_INT >= 21) {
@@ -53,6 +71,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
             window.navigationBarColor = this.resources.getColor(R.color.white)
         }
     }
+
     fun isToolBarBlackTheme() {
         if (Build.VERSION.SDK_INT >= 21) {
             val window = this.window
@@ -75,7 +94,6 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
             window.statusBarColor = this.resources.getColor(R.color.primary_light)
             window.navigationBarColor = this.resources.getColor(R.color.primary_light)
         }
-        // Toolbar setup or any common UI setup code
     }
 
 
@@ -92,11 +110,11 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         val nav_profile = binding.root.findViewById<LinearLayout>(nav_profile)
 
 
-        loadFragment(SchoolHomeFragment())
+        loadFragment(HomeFragment())
         updateNavBar(icon_home)
 
         nav_home.setOnClickListener {
-            loadFragment(SchoolHomeFragment())
+            loadFragment(HomeFragment())
             updateNavBar(icon_home)
         }
         nav_help.setOnClickListener {

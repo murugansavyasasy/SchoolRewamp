@@ -6,16 +6,20 @@
     android:layout_height="match_parent">
 
     <RelativeLayout
+        android:background="@color/light_blue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:ignore="MissingConstraints">
 
+
         <RelativeLayout
             android:id="@+id/rytHeader"
+            android:layout_marginTop="@dimen/ten"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/ten"
+            android:background="@color/white"
             android:padding="@dimen/ten">
+
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imgSchoolLogo"
@@ -59,6 +63,7 @@
                 android:layout_height="@dimen/thirty"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/ten"
+                android:visibility="gone"
                 android:layout_toLeftOf="@+id/imgNotification"
                 android:src="@drawable/search_icon">
 
@@ -92,11 +97,11 @@
         <RelativeLayout
             android:id="@+id/rytSearch"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/fourty_five"
+            android:layout_height="@dimen/thirty_five"
             android:layout_below="@id/rytHeader"
             android:layout_margin="@dimen/ten"
-            android:background="@drawable/rect_white"
-            android:visibility="gone">
+            android:background="@drawable/rect_grey"
+            android:visibility="visible">
 
             <ImageView
                 android:id="@+id/imgSearch"
@@ -124,11 +129,12 @@
             android:layout_marginRight="@dimen/five"
             android:layout_height="wrap_content"
             android:layout_below="@id/rytSearch"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcyAutoScrolling"
                 android:layout_width="match_parent"
+                android:visibility="gone"
                 android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>
 
             <LinearLayout
@@ -143,11 +149,22 @@
 
 
         <androidx.recyclerview.widget.RecyclerView
+            android:layout_height="match_parent"
+            android:layout_above="@+id/imgAdd"
             android:id="@+id/recyclerViewMenu"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:background="@color/white"
             android:layout_below="@id/rlaPieChartCount"
-            android:layout_marginTop="@dimen/ten"
             tools:listitem="@layout/menu_item_card" />
+
+        <ImageView
+            android:id="@+id/imgAdd"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/eighty"
+            android:layout_alignParentBottom="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/schoolad" />
     </RelativeLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

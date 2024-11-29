@@ -35,7 +35,7 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/rlyPhone"
+        android:id="@+id/rytPhone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rlaLblContactSupport"
@@ -76,6 +76,7 @@
             </TextView>
 
             <TextView
+                android:id="@+id/lblContactNo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/ten"
@@ -87,22 +88,20 @@
                 android:textStyle="bold">
 
             </TextView>
-
         </LinearLayout>
     </RelativeLayout>
 
 
     <RelativeLayout
+        android:id="@+id/rytMail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rlyPhone"
+        android:layout_below="@+id/rytPhone"
         android:layout_marginLeft="@dimen/ten"
         android:layout_marginTop="@dimen/ten"
         android:paddingVertical="@dimen/fifteen"
         android:layout_marginRight="@dimen/twenty"
         android:background="@drawable/rect_shadow_white">
-
-
         <ImageView
             android:id="@+id/imgMail"
             android:layout_width="@dimen/thirty"
@@ -120,7 +119,6 @@
             android:gravity="center"
             android:orientation="vertical">
 
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -133,6 +131,7 @@
             </TextView>
 
             <TextView
+                android:id="@+id/lblContacttMail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/ten"
@@ -147,6 +146,16 @@
 
         </LinearLayout>
     </RelativeLayout>
+
+    <ImageView
+        android:layout_below="@+id/rytMail"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.6"
+        android:scaleType="centerCrop"
+        android:layout_marginBottom="-20dp"
+        android:src="@drawable/contact_us_bg"/>
 
 
 </RelativeLayout>

@@ -31,7 +31,6 @@ import com.vs.schoolmessenger.databinding.SettingsFragmentBinding
 
 class SettingsFragment : Fragment(), View.OnClickListener {
 
-
     override fun onAttach(context: Context) {
         val savedLanguage = ChangeLanguage.getPersistedLanguage(context)
         val newContext = ChangeLanguage.setLocale(context, savedLanguage)

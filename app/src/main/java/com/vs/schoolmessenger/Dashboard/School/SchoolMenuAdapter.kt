@@ -11,7 +11,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.Dashboard.Model.GridItem
-import com.vs.schoolmessenger.Dashboard.Settings.ContactUs.ContactUs
 import com.vs.schoolmessenger.Parent.Video.ParentVideo
 import com.vs.schoolmessenger.R
 
@@ -61,7 +60,9 @@ class SchoolMenuAdapter(
             lblMenuName.text = data.title
 
             rlaMenu.setOnClickListener {
-                if (data.title.equals("Video Upload")) {
+                if (data.title == "Video Upload") {
+                    context.startActivity(Intent(context, ParentVideo::class.java))
+                } else if (data.title == "") {
                     context.startActivity(Intent(context, ParentVideo::class.java))
                 }
             }

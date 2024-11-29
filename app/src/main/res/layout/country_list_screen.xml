@@ -66,37 +66,56 @@
             android:layout_marginLeft="@dimen/twenty"
             android:layout_marginTop="@dimen/ten"
             android:layout_marginRight="@dimen/twenty"
-            android:background="@color/white"
+            android:background="@color/black"
             app:layout_constraintTop_toBottomOf="@+id/lblCountry" />
 
 
-        <TextView
-            android:id="@+id/terms_text"
+
+        <RelativeLayout
+            android:id="@+id/rytTerms"
+            android:padding="@dimen/five"
+            android:layout_marginTop="@dimen/twenty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/twenty"
-            android:padding="@dimen/ten"
-            android:text="@string/lblHerearetermsandconditions"
-            android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/vw" />
+            app:layout_constraintTop_toBottomOf="@+id/vw">
 
         <CheckBox
             android:id="@+id/terms_checkbox"
             style="@style/CustomCheckbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/ten"
-            android:padding="@dimen/five"
-            android:text="@string/lblIagreetotheTermsandConditions"
-            android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/terms_text"
+            android:layout_centerVertical="true"
             tools:ignore="MissingConstraints" />
 
+
+            <LinearLayout
+                android:layout_toRightOf="@+id/terms_checkbox"
+                android:id="@+id/lblTermsConditions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_toRightOf="@+id/terms_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/ten"
+                    android:text="@string/lblIagreetotheTermsandConditions"
+                    android:textColor="@color/navi_blue3"
+                    android:textSize="@dimen/thirteen_sp"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginLeft="@dimen/ten"
+                    android:background="@color/navi_blue3" />
+            </LinearLayout>
+
+        </RelativeLayout>
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/btnArrowNext"
@@ -105,7 +124,7 @@
             android:layout_centerInParent="true"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/terms_checkbox"
+            app:layout_constraintTop_toBottomOf="@+id/rytTerms"
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
             app:lottie_rawRes="@raw/arrow_country_check" />
@@ -211,7 +230,6 @@
                     android:gravity="center"
                     android:text="@string/lblChina"
                     android:textColor="@color/white"
-
                     android:textSize="@dimen/twele_sp" />
 
             </LinearLayout>
