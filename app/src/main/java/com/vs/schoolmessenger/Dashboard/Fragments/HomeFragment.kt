@@ -1,5 +1,4 @@
 package com.vs.schoolmessenger.Dashboard.Fragments
-
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
@@ -53,7 +52,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
 
         binding = SchoolHomeFragmentBinding.inflate(layoutInflater)
         binding.imgNotification.setOnClickListener(this)

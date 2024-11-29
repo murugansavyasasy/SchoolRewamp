@@ -115,4 +115,7 @@
     <string name="SeeLess">कम देखें</string>
     <string name="LogOut">क्या आप वाकई लॉगआउट करना चाहते हैं?</string>
     <string name="Cancel">रद्द करना</string>
+    <string name="roll_no">रोल नं</string>
+    <string name="status">स्थिति</string>
+    <string name="name">" नाम"</string>
 </resources>

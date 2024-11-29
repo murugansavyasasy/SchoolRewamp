@@ -171,10 +171,17 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
 
         <activity
+<<<<<<< HEAD
             android:name=".Dashboard.School.Dashboard"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+=======
+            android:name=".School.AbsenteesMarking.AbsenteesStudentMark"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+
+>>>>>>> 31c8e55aa6cb9fb1d63f458f1b77596204735041
 
 
     </application>
