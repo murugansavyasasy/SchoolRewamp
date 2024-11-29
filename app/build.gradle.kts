@@ -97,6 +97,11 @@ dependencies {
     implementation("com.squareup.picasso:picasso:2.8")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 
+    implementation  ("com.github.massoudss:waveformSeekBar:5.0.2")
+    // Amplitude will allow you to call setSampleFrom() with files, URLs, Uri and resources
+    // Important: Only works with api level 21 and higher
+    implementation ("com.github.lincollincol:amplituda:2.2.2") // or newer version
+
 
 
 }
