@@ -12,6 +12,7 @@ import com.vs.schoolmessenger.databinding.ParentSideVideoBinding
 
 class ParentVideo : BaseActivity<ParentSideVideoBinding>(), VideoOnItemClickListener,
     View.OnClickListener {
+
     private lateinit var items: List<VideoData>
     private lateinit var isVideoListAdapter: VideoListAdapter
     private var isVideoData: MutableList<VideoData> = mutableListOf()
@@ -23,7 +24,6 @@ class ParentVideo : BaseActivity<ParentSideVideoBinding>(), VideoOnItemClickList
     override fun setupViews() {
         super.setupViews()
         isToolBarWhiteTheme()
-
         binding.imgBack.setOnClickListener(this)
 
         items = listOf(
@@ -60,7 +60,6 @@ class ParentVideo : BaseActivity<ParentSideVideoBinding>(), VideoOnItemClickList
         )
 
         isVideoData.addAll(items)
-
 
         binding.txtVideoMenu.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
