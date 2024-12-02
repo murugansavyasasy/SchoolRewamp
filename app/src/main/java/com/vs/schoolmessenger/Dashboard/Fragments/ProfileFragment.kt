@@ -19,8 +19,8 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         return binding.root
     }
 
-    override fun onClick(p0: View?) {
-        when (p0?.id) {
+    override fun onClick(v: View?) {
+        when (v?.id) {
 
         }
     }

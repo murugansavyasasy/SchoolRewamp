@@ -1,5 +1,4 @@
 package com.vs.schoolmessenger.Auth.Base
-
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.AnimatorSet
@@ -21,7 +20,6 @@ import com.vs.schoolmessenger.Dashboard.Fragments.HomeFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.ProfileFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.SettingsFragment
 import com.vs.schoolmessenger.R
-
 
 abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
@@ -82,8 +80,6 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         }
     }
 
-
-
     // Example: Setup common toolbar
     protected open fun setupToolbar() {
 
@@ -133,10 +129,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         // Perform actions on the view
     }
 
-
     private fun updateNavBar(selectedItemId: Int) {
-
-
 //        // Reset all icons
         findViewById<ImageView>(R.id.icon_home).setColorFilter(
             ContextCompat.getColor(

@@ -65,6 +65,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
             GridItem(R.drawable.pdf, "Circulars"),
             GridItem(R.drawable.homework, "Homework"),
             GridItem(R.drawable.exam, "Schedule Exam/Test"),
+            GridItem(R.drawable.chats, "Event"),
             GridItem(R.drawable.noticeboard, "Notice Board"),
             GridItem(R.drawable.attendance, "Attendance Marking"),
             GridItem(R.drawable.messages, "Messages from management"),

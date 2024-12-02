@@ -14,7 +14,12 @@ import com.vs.schoolmessenger.Dashboard.Model.GridItem
 import com.vs.schoolmessenger.Parent.Video.ParentVideo
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesStudentMark
+<<<<<<< HEAD
 import com.vs.schoolmessenger.School.Communication.CommunicationSchool
+=======
+import com.vs.schoolmessenger.School.Event.CreateEvent
+import com.vs.schoolmessenger.School.NoticeBoard.CreateNoticeBoard
+>>>>>>> 37df7f6acae52a899e7c70d80193ab245df8f298
 
 class SchoolMenuAdapter(
     private var context: Context, private val itemList: List<GridItem>?,
@@ -73,6 +78,16 @@ class SchoolMenuAdapter(
                         context.startActivity(Intent(context, AbsenteesStudentMark::class.java))
                     }
                 }
+
+                else if (data.title.equals("Event")) {
+                    context.startActivity(Intent(context, CreateEvent::class.java))
+                }
+
+                else if (data.title.equals("Notice Board")) {
+                    context.startActivity(Intent(context, CreateNoticeBoard::class.java))
+                }
+
+
             }
         }
     }

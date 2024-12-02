@@ -1,5 +1,4 @@
 package com.vs.schoolmessenger.School.AbsenteesMarking
-
 import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,15 +20,15 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(), Abs
     override fun setupViews() {
         super.setupViews()
         setupToolbar()
-
-
         binding.imgBack.setOnClickListener(this)
 
         studentsList = listOf(
+
             StudentData(
                 "Murugan", "76979871",
                 "Present"
             ),
+
             StudentData(
                 "Sathish", "22439234",
                 "Present"
@@ -37,18 +36,15 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(), Abs
             StudentData(
                 "Saran Raj", "259411563",
                 "Present"
-
             ),
             StudentData(
                 "Chanthru", "216098214",
                 "Present"
-
             ),
             StudentData(
                 "Ramesh", "90509568",
                 "Present"
             ),
-
             StudentData(
                 "Lakshmanan Narayanan", "90509568",
                 "Present"
