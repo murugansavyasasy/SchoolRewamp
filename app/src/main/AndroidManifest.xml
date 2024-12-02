@@ -167,24 +167,19 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
 
-        <activity
-<<<<<<< HEAD
-            android:name=".School.AbsenteesMarking.AbsenteesStudentMark"
-=======
-
-            android:name=".Dashboard.School.Dashboard"
->>>>>>> 37df7f6acae52a899e7c70d80193ab245df8f298
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+<!--        <activity-->
+<!--            android:name=".Dashboard.School.Dashboard"-->
+<!--            android:screenOrientation="portrait"-->
+<!--            android:theme="@style/AppTheme"-->
+<!--            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />-->
 
         <activity
-<<<<<<< HEAD
+
             android:name=".School.Communication.CommunicationSchool"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize"></activity>
 
-=======
+        <activity
             android:name=".School.AbsenteesMarking.AbsenteesStudentMark"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize"></activity>
@@ -200,6 +195,5 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize"></activity>
 
->>>>>>> 37df7f6acae52a899e7c70d80193ab245df8f298
     </application>
 </manifest>
