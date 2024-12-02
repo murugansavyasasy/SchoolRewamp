@@ -32,7 +32,6 @@ class AutoScrolling : BaseActivity<AutoScrollingBinding>(), View.OnClickListener
     override fun setupViews() {
         super.setupViews()
         setupToolbar()
-
         getListUrls()
         layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.rcvBanner.layoutManager = layoutManager

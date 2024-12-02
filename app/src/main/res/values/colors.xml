@@ -80,12 +80,15 @@
     <color name="light_green_bg">#D9FBF7</color>
     <color name="light_green_bg1">#3FCCBB</color>
     <color name="light_violet_bg1">#B58EF3</color>
+    <color name="light_dark_blue">#7ac6dc</color>
 
 
     <color name="light_bg_blue">#CFE8F6</color>
     <color name="light_bg_orange">#FAECE0</color>
     <color name="light_bg_green">#BAE4DC</color>
     <color name="light_bg_purple">#ECE0F8</color>
+    <color name="light_gray_">#747e85</color>
+    <color name="light_green_">#a6dadf</color>
 
 
 

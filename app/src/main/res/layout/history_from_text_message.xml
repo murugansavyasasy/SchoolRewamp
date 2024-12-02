@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/twenty"
+        android:layout_marginTop="@dimen/five"
+        android:layout_marginEnd="@dimen/twenty"
+        android:background="@drawable/rect_shadow_white">
+
+        <TextView
+            android:id="@+id/lblTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/fifteen"
+            android:layout_marginEnd="@dimen/ten"
+            android:layout_toStartOf="@+id/lblDate"
+            android:text="Friday Leave"
+            android:textColor="@color/black"
+            android:textSize="@dimen/fifteen_sp"
+            android:textStyle="bold"></TextView>
+
+        <TextView
+            android:id="@+id/lblDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/fifteen"
+            android:layout_marginEnd="@dimen/ten"
+            android:text="01 Apr 2024"
+            android:textColor="@color/black"
+            android:textSize="@dimen/fifteen_sp"></TextView>
+
+
+        <TextView
+            android:id="@+id/lblContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblTitle"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/fifteen"
+            android:layout_marginEnd="@dimen/ten"
+            android:text="Dear (Recipient's Name), I am writing to request leave from school for (number of days) days, starting from (start date) to (end date). The reason for my leave is (briefly state the reason, e.g., a family function, medical treatment, personal reasons)."
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp"></TextView>
+
+        <TextView
+            android:id="@+id/lblSeeMore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblContent"
+            android:layout_marginStart="@dimen/ten"
+            android:paddingBottom="@dimen/ten"
+            android:text="See More"
+            android:textColor="@color/navi_blue2"
+            android:textSize="@dimen/thirteen_sp">
+
+        </TextView>
+
+    </RelativeLayout>
+</RelativeLayout>

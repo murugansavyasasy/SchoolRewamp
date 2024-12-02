@@ -14,6 +14,7 @@ import com.vs.schoolmessenger.Dashboard.Model.GridItem
 import com.vs.schoolmessenger.Parent.Video.ParentVideo
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesStudentMark
+import com.vs.schoolmessenger.School.Communication.CommunicationSchool
 
 class SchoolMenuAdapter(
     private var context: Context, private val itemList: List<GridItem>?,
@@ -61,13 +62,16 @@ class SchoolMenuAdapter(
             lblMenuName.text = data.title
 
             rlaMenu.setOnClickListener {
-                if (data.title == "Video Upload") {
-                    context.startActivity(Intent(context, ParentVideo::class.java))
-                } else if (data.title == "") {
-                    context.startActivity(Intent(context, ParentVideo::class.java))
-                }
-                else if (data.title.equals("Attendance Marking")) {
-                    context.startActivity(Intent(context, AbsenteesStudentMark::class.java))
+                when (data.title) {
+                    "Video Upload" -> {
+                        context.startActivity(Intent(context, ParentVideo::class.java))
+                    }
+                    "Communication" -> {
+                        context.startActivity(Intent(context, CommunicationSchool::class.java))
+                    }
+                    "Attendance Marking" -> {
+                        context.startActivity(Intent(context, AbsenteesStudentMark::class.java))
+                    }
                 }
             }
         }

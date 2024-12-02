@@ -1,74 +1,609 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent">
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
+        android:layout_height="match_parent">
 
         <RelativeLayout
-            android:id="@+id/rlaLbCommunication"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/eighty"
-            android:background="@color/primary_light"
-            android:paddingBottom="@dimen/thirty">
+            android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/imgBack"
-                android:layout_width="@dimen/thirty"
-                android:layout_height="@dimen/thirty"
-                android:layout_marginStart="@dimen/thirty"
-                android:layout_marginTop="@dimen/twenty"
-                android:src="@drawable/arrow_back_black"></ImageView>
+            <RelativeLayout
+                android:id="@+id/rlaLbCommunication"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/eighty"
+                android:background="@color/primary_light"
+                android:paddingBottom="@dimen/thirty">
 
-            <TextView
-                android:layout_width="wrap_content"
+                <ImageView
+                    android:id="@+id/imgBack"
+                    android:layout_width="@dimen/thirty"
+                    android:layout_height="@dimen/thirty"
+                    android:layout_marginStart="@dimen/thirty"
+                    android:layout_marginTop="@dimen/twenty"
+                    android:src="@drawable/arrow_back_black"></ImageView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="@dimen/thirty"
+                    android:layout_marginTop="@dimen/twenty"
+                    android:text="Communication"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/twenty"
+                    android:textStyle="bold">
+
+                </TextView>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/lnrCommunicationIcon"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginStart="@dimen/thirty"
-                android:layout_marginTop="@dimen/twenty"
-                android:text="Communication"
-                android:textColor="@color/black"
-                android:textSize="@dimen/twenty"
-                android:textStyle="bold">
+                android:layout_below="@+id/rlaLbCommunication"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/ten"
+                android:orientation="horizontal"
+                android:weightSum="3">
 
-            </TextView>
-        </RelativeLayout>
 
-        <LinearLayout
-            android:id="@+id/lnrCommunicationIcon"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/rlaLbCommunication"
-            android:orientation="horizontal"
-            android:weightSum="3">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/rect_sky_blue_shadow">
+
+                    <ImageView
+                        android:id="@+id/imgVoiceMessage"
+                        android:layout_width="@dimen/fifty"
+                        android:layout_height="@dimen/fifty"
+                        android:layout_centerHorizontal="true"
+                        android:paddingTop="@dimen/ten"
+                        android:src="@drawable/mic_icon">
+
+                    </ImageView>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/imgVoiceMessage"
+                        android:layout_marginTop="@dimen/five"
+                        android:gravity="center"
+                        android:paddingStart="@dimen/five"
+                        android:paddingEnd="@dimen/five"
+                        android:paddingBottom="@dimen/ten"
+                        android:text="Voice Message"
+                        android:textColor="@color/white">
+
+                    </TextView>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/rect_sky_blue_shadow">
+
+                    <ImageView
+                        android:id="@+id/imgScheduleCall"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/fifty"
+                        android:paddingTop="@dimen/ten"
+                        android:src="@drawable/call_schedule_icon">
+
+                    </ImageView>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/imgScheduleCall"
+                        android:layout_marginTop="@dimen/five"
+                        android:gravity="center"
+                        android:paddingStart="@dimen/five"
+                        android:paddingEnd="@dimen/five"
+                        android:paddingBottom="@dimen/ten"
+                        android:text="Schedule Call"
+                        android:textColor="@color/white">
+
+                    </TextView>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/rect_sky_blue_shadow">
+
+                    <ImageView
+                        android:id="@+id/imgTextMessage"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/fifty"
+                        android:paddingTop="@dimen/ten"
+                        android:src="@drawable/text_icon">
+
+                    </ImageView>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/imgTextMessage"
+                        android:layout_marginTop="@dimen/five"
+                        android:gravity="center"
+                        android:paddingStart="@dimen/five"
+                        android:paddingEnd="@dimen/five"
+                        android:paddingBottom="@dimen/ten"
+                        android:text="Text Message"
+                        android:textColor="@color/white">
+
+                    </TextView>
+                </RelativeLayout>
+            </LinearLayout>
 
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lnrCommunicationIcon"
+                android:layout_marginTop="@dimen/twenty">
 
-                <ImageView
+                <RelativeLayout
+                    android:id="@+id/rlaScheduleCall"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/seventy">
+                    android:layout_height="wrap_content">
 
-                </ImageView>
+                    <LinearLayout
+                        android:id="@+id/lnrFromTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
 
-                <TextView
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="@dimen/twenty"
+                            android:layout_weight="0.4"
+                            android:text="From Time"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/fifteen_sp"
+                            android:textStyle="bold">
+
+                        </TextView>
+
+                        <TextView
+                            android:layout_width="@dimen/twenty"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text=" :  "
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/thirteen_sp"
+                            android:textStyle="bold">
+
+                        </TextView>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="0.6"
+                            android:background="@drawable/rect_white_light_radious"
+                            android:gravity="center"
+                            android:padding="@dimen/five">
+
+                            <TextView
+                                android:id="@+id/lblStartTime"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="01:20 AM"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/thirteen_sp"></TextView>
+
+                            <ImageView
+                                android:layout_width="@dimen/twenty"
+                                android:layout_height="@dimen/twenty"
+                                android:layout_toEndOf="@+id/lblStartTime"
+                                android:src="@drawable/ic_arrow_down">
+
+                            </ImageView>
+                        </RelativeLayout>
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/lnrToTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/lnrFromTime"
+                        android:layout_marginTop="@dimen/ten"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="@dimen/twenty"
+                            android:layout_weight="0.4"
+                            android:text="To Time"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/fifteen_sp"
+                            android:textStyle="bold">
+
+                        </TextView>
+
+                        <TextView
+                            android:layout_width="@dimen/twenty"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text=" :  "
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/thirteen_sp"
+                            android:textStyle="bold">
+
+                        </TextView>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="0.6"
+                            android:background="@drawable/rect_white_light_radious"
+                            android:gravity="center"
+                            android:padding="@dimen/five">
+
+                            <TextView
+                                android:id="@+id/lblEndTime"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="05:20 PM"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/thirteen_sp">
+
+                            </TextView>
+
+                            <ImageView
+                                android:layout_width="@dimen/twenty"
+                                android:layout_height="@dimen/twenty"
+                                android:layout_toEndOf="@+id/lblEndTime"
+                                android:src="@drawable/ic_arrow_down">
+
+                            </ImageView>
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/lnrScheduleCall"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/lnrToTime"
+                        android:layout_marginTop="@dimen/ten"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="@dimen/twenty"
+                            android:layout_weight="0.4"
+                            android:text="Schedule Call"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/fifteen_sp"
+                            android:textStyle="bold">
+
+                        </TextView>
+
+                        <TextView
+                            android:layout_width="@dimen/twenty"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text=" :  "
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/thirteen_sp"
+                            android:textStyle="bold">
+
+                        </TextView>
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/twenty"
+                            android:layout_gravity="right"
+                            android:layout_weight="0.8"
+                            android:src="@drawable/calender_icon"></ImageView>
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <GridView
+                    android:id="@+id/gridViewScheduleCall"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Voice Message">
+                    android:layout_below="@+id/rlaScheduleCall"
+                    android:layout_marginTop="@dimen/ten"
+                    android:numColumns="3"
+                    tools:listitem="@layout/schedule_call_date_data">
 
-                </TextView>
+                </GridView>
 
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/gridViewScheduleCall">
+
+
+                    <TextView
+                        android:id="@+id/lblBackToVoiceMessage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/ten"
+                        android:layout_marginTop="@dimen/twenty"
+                        android:layout_marginEnd="@dimen/five"
+                        android:text="Back to voice message"
+                        android:textColor="@color/navi_blue2"
+                        android:textSize="@dimen/fifteen_sp"
+                        android:textStyle="bold"
+                        android:visibility="gone">
+
+                    </TextView>
+
+                    <ImageView
+                        android:id="@+id/imgRightArrow1"
+                        android:layout_width="@dimen/twenty"
+                        android:layout_height="@dimen/twenty"
+                        android:layout_marginTop="@dimen/twenty"
+                        android:layout_marginEnd="@dimen/ten"
+                        android:layout_toEndOf="@+id/lblBackToVoiceMessage"
+                        android:src="@drawable/right_arrow_round"
+                        android:visibility="gone"></ImageView>
+
+                    <TextView
+                        android:id="@+id/lblHistoryList"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/twenty"
+                        android:layout_marginEnd="@dimen/five"
+                        android:layout_toStartOf="@+id/imgRightArrow"
+                        android:text="Do you want send from history ?"
+                        android:textColor="@color/navi_blue2"
+                        android:textSize="@dimen/fifteen_sp"
+                        android:textStyle="bold">
+
+                    </TextView>
+
+                    <ImageView
+                        android:id="@+id/imgRightArrow"
+                        android:layout_width="@dimen/twenty"
+                        android:layout_height="@dimen/twenty"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="@dimen/twenty"
+                        android:layout_marginEnd="@dimen/ten"
+                        android:src="@drawable/right_arrow_round">
+
+                    </ImageView>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rcyHistoryDataVoiceAndText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/imgRightArrow"
+                        android:layout_marginTop="@dimen/ten"
+                        android:visibility="gone"
+                        tools:listitem="@layout/history_from_text_message"></androidx.recyclerview.widget.RecyclerView>
+
+
+                    <Switch
+                        android:id="@+id/SwitchEmergencyVoice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/lblHistoryList"
+                        android:layout_marginStart="@dimen/ten"
+                        android:layout_marginTop="@dimen/twenty">
+
+                    </Switch>
+
+                    <TextView
+                        android:id="@+id/lblEmergencyVoice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/lblHistoryList"
+                        android:layout_marginTop="@dimen/twenty_five"
+                        android:layout_marginEnd="@dimen/ten"
+                        android:layout_toEndOf="@+id/SwitchEmergencyVoice"
+                        android:text="Do you want send from history ?"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/thirteen_sp"></TextView>
+
+
+                    <ImageView
+                        android:id="@+id/imgVoiceRecord"
+                        android:layout_width="@dimen/eighty"
+                        android:layout_height="@dimen/eighty"
+                        android:layout_below="@+id/lblEmergencyVoice"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/twenty_five"
+                        android:src="@drawable/record_icon"></ImageView>
+
+                    <TextView
+                        android:id="@+id/lblDurationOfVoice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/imgVoiceRecord"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/ten"
+                        android:text="00:00 / 00:00"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/thirteen_sp"
+                        android:textStyle="bold">
+
+                    </TextView>
+
+
+                    <RelativeLayout
+                        android:id="@+id/rlaAddLocalFile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/lblDurationOfVoice"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerInParent="true"
+                        android:layout_marginEnd="@dimen/ten"
+                        android:background="@drawable/rect_light_blue_light_radious"
+                        android:padding="@dimen/ten">
+
+                        <ImageView
+                            android:id="@+id/imgAddFile"
+                            android:layout_width="@dimen/fifteen"
+                            android:layout_height="@dimen/fifteen"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="@dimen/five"
+                            android:src="@drawable/add_icon"></ImageView>
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_toEndOf="@+id/imgAddFile"
+                            android:text="Add file"
+                            android:textColor="@color/light_gray_"
+                            android:textSize="@dimen/thirteen_sp"></TextView>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rlaSeekBarAndTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/rlaAddLocalFile">
+
+                        <ImageView
+                            android:layout_width="@dimen/twenty_five"
+                            android:layout_height="@dimen/twenty_five"
+                            android:layout_marginStart="@dimen/thirteen"
+                            android:layout_marginTop="@dimen/three"
+                            android:elevation="10dp"
+                            android:src="@drawable/close_red_color">
+
+                        </ImageView>
+
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/twenty"
+                            android:layout_marginTop="@dimen/ten"
+                            android:layout_marginEnd="@dimen/twenty"
+                            android:background="@drawable/rect_shadow_white"
+                            android:padding="@dimen/ten">
+
+                            <ImageView
+                                android:id="@+id/imgVoicePlay"
+                                android:layout_width="@dimen/fourty_five"
+                                android:layout_height="@dimen/fourty_five"
+                                android:layout_centerVertical="true"
+                                android:src="@drawable/video_play">
+
+                            </ImageView>
+
+                            <SeekBar
+                                android:id="@+id/seekBarVoice"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_toEndOf="@+id/imgVoicePlay"></SeekBar>
+
+                            <TextView
+                                android:id="@+id/lblStartDuration"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/seekBarVoice"
+                                android:layout_marginStart="@dimen/ten"
+                                android:layout_marginTop="@dimen/fifteen"
+                                android:layout_toEndOf="@+id/imgVoicePlay"
+                                android:text="01:39"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/thirteen_sp"></TextView>
+
+                            <TextView
+                                android:id="@+id/lblEndDuration"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/seekBarVoice"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginStart="@dimen/ten"
+                                android:layout_marginTop="@dimen/fifteen"
+                                android:text="07:50"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/thirteen_sp"></TextView>
+
+                        </RelativeLayout>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rlaTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/rlaSeekBarAndTitle"
+                        android:layout_marginStart="@dimen/twenty"
+                        android:layout_marginTop="@dimen/twenty"
+                        android:layout_marginEnd="@dimen/twenty"
+
+                        >
+
+                        <TextView
+                            android:id="@+id/lblTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Title"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/fifteen_sp"
+                            android:textStyle="bold"></TextView>
+
+                        <EditText
+                            android:id="@+id/edtTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/lblTitle"></EditText>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rlaSendVoice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/rlaTitle"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="@dimen/thirty_five"
+                        android:layout_marginEnd="@dimen/twenty"
+                        android:background="@drawable/rect_blue_light_radious"
+                        android:padding="@dimen/ten">
+
+                        <ImageView
+                            android:id="@+id/imgSend"
+                            android:layout_width="@dimen/twenty"
+                            android:layout_height="@dimen/twenty"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="@dimen/five"
+                            android:src="@drawable/send_icon_white"></ImageView>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_marginStart="@dimen/five"
+                            android:layout_toEndOf="@+id/imgSend"
+                            android:text="Send"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/fifteen_sp"></TextView>
+                    </RelativeLayout>
+                </RelativeLayout>
             </RelativeLayout>
-
-        </LinearLayout>
-
-
-    </RelativeLayout>
-
-
+        </RelativeLayout>
+    </ScrollView>
 </RelativeLayout>

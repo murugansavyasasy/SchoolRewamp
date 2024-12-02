@@ -1,0 +1,25 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="16dp"
+    android:height="16dp"
+    android:viewportWidth="16"
+    android:viewportHeight="16">
+
+  <!-- Outer Circle (Blue Background) -->
+  <path
+      android:fillColor="#a6dadf"
+  android:pathData="M8,0C3.582,0 0,3.582 0,8s3.582,8 8,8 8,-3.582 8,-8S12.418,0 8,0z" />
+
+  <!-- Inner Icon (Black, Scaled Down) -->
+  <group
+      android:scaleX="0.7"
+      android:scaleY="0.7"
+      android:translateX="2.4"
+      android:translateY="2.4">
+    <path
+        android:fillColor="#fff"
+        android:pathData="M5,2v3h1V4a1,1 0,0 1,1 -1h2v9a1,1 0,0 1,-1 1H7v1h6v-1h-1a1,1 0,0 1,-1 -1V3h2a1,1 0,0 1,1 1v1h1V2H5z" />
+    <path
+        android:fillColor="#fff"
+        android:pathData="M5,8h2v1h1V7H1v2h1V8h2v5H3v1h3v-1H5z" />
+  </group>
+</vector>

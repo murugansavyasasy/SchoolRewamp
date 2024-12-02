@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/twenty"
+        android:layout_marginTop="@dimen/five"
+        android:layout_marginEnd="@dimen/twenty"
+        android:background="@drawable/rect_shadow_white">
+
+        <TextView
+            android:id="@+id/lblTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/fifteen"
+            android:layout_marginEnd="@dimen/ten"
+            android:layout_toStartOf="@+id/lblDate"
+            android:text="Function Call"
+            android:textColor="@color/black"
+            android:textSize="@dimen/fifteen_sp"
+            android:textStyle="bold"></TextView>
+
+        <TextView
+            android:id="@+id/lblDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/fifteen"
+            android:layout_marginEnd="@dimen/ten"
+            android:text="01 Apr 2024"
+            android:textColor="@color/black"
+            android:textSize="@dimen/fifteen_sp"></TextView>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_below="@+id/lblTitle"
+                android:padding="@dimen/ten">
+
+                <ImageView
+                    android:id="@+id/imgVoicePlay"
+                    android:layout_width="@dimen/fourty_five"
+                    android:layout_height="@dimen/fourty_five"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/video_play">
+
+                </ImageView>
+
+                <SeekBar
+                    android:id="@+id/seekBarVoice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/imgVoicePlay"></SeekBar>
+
+                <TextView
+                    android:id="@+id/lblStartDuration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/seekBarVoice"
+                    android:layout_marginStart="@dimen/ten"
+                    android:layout_marginTop="@dimen/fifteen"
+                    android:layout_toEndOf="@+id/imgVoicePlay"
+                    android:text="01:39"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp"></TextView>
+
+                <TextView
+                    android:id="@+id/lblEndDuration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/seekBarVoice"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginStart="@dimen/ten"
+                    android:layout_marginTop="@dimen/fifteen"
+                    android:text="07:50"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp"></TextView>
+
+            </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

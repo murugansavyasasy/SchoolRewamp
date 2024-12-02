@@ -17,18 +17,19 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- Simulated loading of a title -->
-            <View
-                android:layout_width="@dimen/hundred"
-                android:layout_height="@dimen/twenty"
-                android:background="@android:color/darker_gray" />
-
             <!-- Simulated loading of a subtitle -->
             <View
                 android:layout_width="@dimen/fifty"
-                android:layout_height="@dimen/twenty"
+                android:layout_height="@dimen/fifty"
                 android:background="@android:color/darker_gray"
-                android:layout_marginTop="@dimen/ten"/>
+               />
+
+            <!-- Simulated loading of a title -->
+            <View
+                android:layout_width="@dimen/eighty"
+                android:layout_height="@dimen/twenty"
+                android:layout_marginTop="@dimen/five"
+                android:background="@android:color/darker_gray" />
 
         </LinearLayout>
 

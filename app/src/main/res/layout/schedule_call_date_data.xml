@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:layout_width="@dimen/twenty_five"
+        android:layout_height="@dimen/twenty_five"
+        android:layout_marginStart="@dimen/five"
+        android:layout_marginTop="@dimen/three"
+        android:elevation="10dp"
+        android:src="@drawable/close_red_color">
+
+    </ImageView>
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginEnd="@dimen/fifteen"
+        android:layout_marginTop="@dimen/ten"
+        android:background="@drawable/rect_shadow_white">
+
+        <TextView
+            android:id="@+id/lblScheduleDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="@dimen/twenty"
+            android:paddingStart="@dimen/ten"
+            android:paddingTop="@dimen/ten"
+            android:paddingEnd="@dimen/ten"
+            android:paddingBottom="@dimen/ten"
+            android:text="01 Apr 2004"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp"></TextView>
+    </RelativeLayout>
+</RelativeLayout>
