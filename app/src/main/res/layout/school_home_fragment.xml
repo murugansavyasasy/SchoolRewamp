@@ -147,23 +147,22 @@
 
 
         <androidx.recyclerview.widget.RecyclerView
-            android:background="@color/white"
+            android:layout_height="match_parent"
             android:layout_above="@+id/imgAdd"
             android:id="@+id/recyclerViewMenu"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:background="@color/white"
             android:layout_below="@id/rlaPieChartCount"
             tools:listitem="@layout/menu_item_card" />
 
         <ImageView
             android:id="@+id/imgAdd"
-            android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
             android:layout_height="@dimen/eighty"
+            android:layout_alignParentBottom="true"
             android:scaleType="centerCrop"
-            android:src="@drawable/schoolad"/>
+            android:src="@drawable/schoolad" />
     </RelativeLayout>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

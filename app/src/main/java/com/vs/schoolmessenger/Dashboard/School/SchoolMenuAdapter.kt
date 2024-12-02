@@ -63,7 +63,9 @@ class SchoolMenuAdapter(
             lblMenuName.text = data.title
 
             rlaMenu.setOnClickListener {
-                if (data.title.equals("Video Upload")) {
+                if (data.title == "Video Upload") {
+                    context.startActivity(Intent(context, ParentVideo::class.java))
+                } else if (data.title == "") {
                     context.startActivity(Intent(context, ParentVideo::class.java))
                 }
                 else if (data.title.equals("Attendance Marking")) {

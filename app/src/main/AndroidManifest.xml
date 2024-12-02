@@ -42,7 +42,7 @@
         </provider>
 
         <activity
-            android:name=".Dashboard.School.Dashboard"
+            android:name=".School.Communication.CommunicationSchool"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/AppTheme">
@@ -171,6 +171,13 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
 
         <activity
+
+            android:name=".Dashboard.School.Dashboard"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+
+        <activity
             android:name=".School.AbsenteesMarking.AbsenteesStudentMark"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize"></activity>
@@ -185,8 +192,6 @@
             android:name=".School.NoticeBoard.CreateNoticeBoard"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize"></activity>
-
-
 
     </application>
 </manifest>
