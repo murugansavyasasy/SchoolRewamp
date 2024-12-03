@@ -195,5 +195,10 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize"></activity>
 
+        <activity
+            android:name=".Utils.ImageViewActivity"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+
     </application>
 </manifest>

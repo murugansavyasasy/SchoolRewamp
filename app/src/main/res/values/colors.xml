@@ -14,7 +14,8 @@
     <color name="colorPrimary_light">#0F536A</color>
 
     <color name="primary">#8ec5d6</color>
-    <color name="primary_light">#a6d1df</color>
+    <color name="primary_light">#A6DADF</color>
+
     <color name="light_sky_blue">#c7eaff</color>
     <color name="light_gray">#616159</color>
 
@@ -86,7 +87,7 @@
     <color name="light_bg_green">#BAE4DC</color>
     <color name="light_bg_purple">#ECE0F8</color>
     <color name="light_gray_">#747e85</color>
-    <color name="light_green_">#a6dadf</color>
+    <color name="light_green_">#A6DADF</color>
 
 
 

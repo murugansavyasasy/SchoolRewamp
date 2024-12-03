@@ -16,7 +16,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         setupToolbar()
         binding.lblHistoryList.paintFlags = binding.lblHistoryList.paintFlags or Paint.UNDERLINE_TEXT_FLAG
         binding.lblBackToVoiceMessage.paintFlags = binding.lblBackToVoiceMessage.paintFlags or Paint.UNDERLINE_TEXT_FLAG
-
     }
 
     override fun onClick(p0: View?) {

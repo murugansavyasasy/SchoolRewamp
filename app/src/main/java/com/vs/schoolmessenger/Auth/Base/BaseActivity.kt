@@ -182,13 +182,8 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
                 )
 
 
-                if (Build.VERSION.SDK_INT >= 21) {
-                    val window = this.window
-                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-                    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-                    window.statusBarColor = this.resources.getColor(R.color.mild4)
-                    window.navigationBarColor = this.resources.getColor(R.color.mild4)
-                }
+                setupToolbar()
+
 
             }
 
@@ -204,7 +199,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
                     R.color.sky_blue0,
                     R.color.sky_blue2
                 )
-                isToolBarWhiteTheme()
+                setupToolbar()
             }
 
             R.id.icon_profile -> {

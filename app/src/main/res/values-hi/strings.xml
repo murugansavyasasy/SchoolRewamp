@@ -33,6 +33,7 @@
     <string name="lblTermsCondition">नियम और शर्तें</string>
     <string name="lblChangeLanguage">ऐप की भाषा</string>
     <string name="change_password">पासवर्ड बदलें</string>
+    <string name="save_contact_to_avoid">" स्पैम कॉल से बचने के लिए संपर्क सहेजें"</string>
     <string name="lblFEEDBACK">प्रतिक्रिया</string>
     <string name="lblReportbug">बग की रिपोर्ट करें</string>
     <string name="lblSendFeedback">प्रतिक्रिया भेजें</string>

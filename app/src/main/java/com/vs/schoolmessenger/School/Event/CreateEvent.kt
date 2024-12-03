@@ -3,6 +3,7 @@ package com.vs.schoolmessenger.School.Event
 import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.databinding.CreateEventBinding
@@ -20,6 +21,14 @@ class CreateEvent : BaseActivity<CreateEventBinding>(),
         binding.imgBack.setOnClickListener(this)
         binding.btnCreate.setOnClickListener(this)
         binding.btnHistory.setOnClickListener(this)
+
+        Glide.with(this)
+            .load("https://s3.ap-south-1.amazonaws.com/schoolchimes-files-india/27-11-2024/File_vc_-5346401391795845263.png")
+            .into(binding.imgPick1)
+
+        Glide.with(this)
+            .load("https://s3.ap-south-1.amazonaws.com/schoolchimes-files-india/27-11-2024/File_vc_-5346401391801142838.png")
+            .into(binding.imgPick2)
     }
 
     override fun onClick(v: View?) {
@@ -29,14 +38,12 @@ class CreateEvent : BaseActivity<CreateEventBinding>(),
             }
             R.id.btnCreate -> {
                 isBackRoundChange(binding.btnCreate)
-
                 binding.rytHistory.visibility = View.GONE
                 binding.eventCreate.visibility = View.VISIBLE
 
             }
             R.id.btnHistory -> {
                 isBackRoundChange(binding.btnHistory)
-
                 binding.rytHistory.visibility = View.VISIBLE
                 binding.eventCreate.visibility = View.GONE
             }

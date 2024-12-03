@@ -29,6 +29,8 @@
     <dimen name="ninety">90dp</dimen>
     <dimen name="hundred">100dp</dimen>
     <dimen name="one_twenty">120dp</dimen>
+    <dimen name="one_thirty">130dp</dimen>
+    <dimen name="one_fourty">140dp</dimen>
     <dimen name="hundred_thirty">120dp</dimen>
     <dimen name="one_fifty">150dp</dimen>
     <dimen name="two_hundred">200dp</dimen>

@@ -16,4 +16,12 @@
         <item name="cornerSize">50%</item>
     </style>
 
+    <style name="IndicatorStyle">
+        <item name="ci_width">8dp</item>
+        <item name="ci_height">8dp</item>
+        <item name="ci_margin">6dp</item>
+        <item name="ci_drawable">@drawable/indicator_active</item>
+        <item name="ci_drawable_unselected">@drawable/indicator_inactive</item>
+    </style>
+
 </resources>

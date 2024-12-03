@@ -33,6 +33,7 @@
     <string name="lblTermsCondition">நிபந்தனைகள் மற்றும் விதிமுறைகள்</string>
     <string name="lblChangeLanguage">பயன்பாட்டு மொழி</string>
     <string name="change_password">கடவுச்சொல்லை மாற்றவும்</string>
+    <string name="save_contact_to_avoid">ஸ்பேம் அழைப்புகளைத் தவிர்க்க தொடர்பைச் சேமிக்கவும்</string>
     <string name="lblFEEDBACK">கருத்து</string>
     <string name="lblReportbug">ஒரு பிழையைப் புகாரளிக்கவும்</string>
     <string name="lblSendFeedback">கருத்துக்களை அனுப்பவும்</string>
