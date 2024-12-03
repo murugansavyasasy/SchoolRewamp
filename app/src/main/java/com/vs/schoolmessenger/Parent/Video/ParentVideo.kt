@@ -23,7 +23,7 @@ class ParentVideo : BaseActivity<ParentSideVideoBinding>(), VideoOnItemClickList
 
     override fun setupViews() {
         super.setupViews()
-        isToolBarWhiteTheme()
+        setupToolbar()
         binding.imgBack.setOnClickListener(this)
 
         items = listOf(

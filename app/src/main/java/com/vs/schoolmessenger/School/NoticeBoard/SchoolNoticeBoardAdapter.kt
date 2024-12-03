@@ -32,7 +32,8 @@ class SchoolNoticeBoardAdapter(
             val view =
                 LayoutInflater.from(parent.context).inflate(R.layout.shimmer_view_small_list, parent, false)
             ShimmerViewHolder(view)
-        } else {
+        }
+        else {
             val view =
                 LayoutInflater.from(parent.context).inflate(R.layout.noticeboard_list_item, parent, false)
             DataViewHolder(view, context) // Pass context to DataViewHolder

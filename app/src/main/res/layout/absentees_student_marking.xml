@@ -5,12 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent">
-
 
         <RelativeLayout
             android:id="@+id/rytHeader"
@@ -35,7 +33,7 @@
                 android:layout_toStartOf="@dimen/fifteen"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_toEndOf="@+id/imgBack"
-                android:text=""
+                android:text="Attendance Mark"
                 android:textColor="@color/black"
                 android:textSize="@dimen/twenty_sp"
                 android:textStyle="bold">
