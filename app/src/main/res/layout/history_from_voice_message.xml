@@ -17,73 +17,117 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/fifteen"
+            android:layout_marginTop="@dimen/ten"
             android:layout_marginEnd="@dimen/ten"
             android:layout_toStartOf="@+id/lblDate"
             android:text="Function Call"
             android:textColor="@color/black"
-            android:textSize="@dimen/fifteen_sp"
-            android:textStyle="bold"></TextView>
+            android:textSize="@dimen/thirteen_sp"></TextView>
 
         <TextView
             android:id="@+id/lblDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="@dimen/fifteen"
+            android:layout_marginTop="@dimen/ten"
             android:layout_marginEnd="@dimen/ten"
             android:text="01 Apr 2024"
+            android:textStyle="bold"
             android:textColor="@color/black"
             android:textSize="@dimen/fifteen_sp"></TextView>
 
 
-            <RelativeLayout
+        <RelativeLayout
+            android:id="@+id/rlaVoiceHistory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblTitle"
+            android:layout_marginStart="@dimen/twenty"
+            android:layout_marginTop="@dimen/five"
+            android:layout_marginEnd="@dimen/twenty"
+            android:padding="@dimen/five">
+
+            <ImageView
+                android:id="@+id/imgVoicePlay"
+                android:layout_width="@dimen/fourty_five"
+                android:layout_height="@dimen/fourty_five"
+                android:layout_centerVertical="true"
+                android:src="@drawable/video_play"></ImageView>
+
+            <SeekBar
+                android:id="@+id/seekBarVoice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/ten"
-                android:layout_below="@+id/lblTitle"
-                android:padding="@dimen/ten">
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/imgVoicePlay"></SeekBar>
 
-                <ImageView
-                    android:id="@+id/imgVoicePlay"
-                    android:layout_width="@dimen/fourty_five"
-                    android:layout_height="@dimen/fourty_five"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/video_play">
+            <TextView
+                android:id="@+id/lblStartDuration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/seekBarVoice"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/fifteen"
+                android:layout_toEndOf="@+id/imgVoicePlay"
+                android:text="01:39"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"></TextView>
 
-                </ImageView>
+            <TextView
+                android:id="@+id/lblEndDuration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/seekBarVoice"
+                android:layout_marginTop="@dimen/fifteen"
+                android:layout_toEndOf="@+id/lblStartDuration"
+                android:text=" / 07:50"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"></TextView>
 
-                <SeekBar
-                    android:id="@+id/seekBarVoice"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/imgVoicePlay"></SeekBar>
+            <TextView
+                android:id="@+id/lblTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/seekBarVoice"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="@dimen/fifteen"
+                android:layout_marginEnd="@dimen/ten"
+                android:text="07:50 AM"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"></TextView>
 
-                <TextView
-                    android:id="@+id/lblStartDuration"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/seekBarVoice"
-                    android:layout_marginStart="@dimen/ten"
-                    android:layout_marginTop="@dimen/fifteen"
-                    android:layout_toEndOf="@+id/imgVoicePlay"
-                    android:text="01:39"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"></TextView>
+        </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/lblEndDuration"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/seekBarVoice"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginStart="@dimen/ten"
-                    android:layout_marginTop="@dimen/fifteen"
-                    android:text="07:50"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"></TextView>
+        <RelativeLayout
+            android:id="@+id/rlaSendVoice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rlaVoiceHistory"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="@dimen/ten"
+            android:layout_marginBottom="@dimen/ten"
+            android:background="@drawable/rect_blue_and_green_small_radious"
+            android:padding="@dimen/ten">
 
-            </RelativeLayout>
+            <ImageView
+                android:id="@+id/imgSend"
+                android:layout_width="@dimen/twenty"
+                android:layout_height="@dimen/twenty"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/five"
+                android:src="@drawable/send_icon_white"></ImageView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="@dimen/five"
+                android:layout_toEndOf="@+id/imgSend"
+                android:text="Send"
+                android:textColor="@color/white"
+                android:textSize="@dimen/fifteen_sp"></TextView>
+        </RelativeLayout>
+
+
     </RelativeLayout>
 </RelativeLayout>

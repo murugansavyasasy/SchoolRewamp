@@ -4,22 +4,31 @@ import android.animation.AnimatorListenerAdapter
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
+import android.app.Dialog
+import android.content.Context
 import android.graphics.PorterDuff
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.os.Bundle
+import android.view.View
+import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.vs.schoolmessenger.Dashboard.Fragments.HelpFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.HomeFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.ProfileFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.SettingsFragment
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.TimePickerAdapter
+import java.util.Calendar
 
 abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
@@ -316,5 +325,69 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     }
 
 
-// Any other common functionality can be added here
+    fun showSpinnerTimePicker(
+        context: Context,
+        onTimeSelected: (hour: Int, minute: Int, isAm: Boolean) -> Unit
+    ) {
+        val dialog = Dialog(context)
+        dialog.setContentView(R.layout.custom_time_picker)
+
+        // Ensure the dialog can handle large content
+        dialog.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+
+        val hourRecyclerView = dialog.findViewById<RecyclerView>(R.id.hourSpinner)
+        val minuteRecyclerView = dialog.findViewById<RecyclerView>(R.id.minuteSpinner)
+        val ampmRecyclerView = dialog.findViewById<RecyclerView>(R.id.ampmSpinner)
+
+        val hours = (1..12).map { it.toString() }
+        val minutes = (0..59).map { it.toString().padStart(2, '0') }
+        val ampm = listOf("AM", "PM")
+
+        // Get the current time
+        val calendar = Calendar.getInstance()
+        var selectedHour = calendar.get(Calendar.HOUR) // 12-hour format
+        var selectedMinute = calendar.get(Calendar.MINUTE)
+        var isAm = calendar.get(Calendar.AM_PM) == Calendar.AM
+
+        // Adjust the selected hour for 1-12 format
+        if (selectedHour == 0) {
+            selectedHour = 12 // Convert 0 hour to 12 for 12-hour format
+        }
+
+        // Set up adapters with selected positions
+        hourRecyclerView.layoutManager = LinearLayoutManager(context)
+        hourRecyclerView.adapter = TimePickerAdapter(hours, { hourIndex ->
+            selectedHour = hourIndex + 1 // Pass index directly (0-based to 1-12)
+        }, selectedHour - 1) // Pass current hour index (1-12) adjusted for 0-based index
+
+        minuteRecyclerView.layoutManager = LinearLayoutManager(context)
+        minuteRecyclerView.adapter = TimePickerAdapter(minutes, { minuteIndex ->
+            selectedMinute = minuteIndex // Pass selected minute directly
+        }, selectedMinute) // Pass current minute index
+
+        ampmRecyclerView.layoutManager = LinearLayoutManager(context)
+        ampmRecyclerView.adapter = TimePickerAdapter(ampm, { isAmIndex ->
+            isAm = isAmIndex == 0 // 0 for AM, 1 for PM
+        }, if (isAm) 0 else 1) // Set AM/PM position based on current time
+        ampmRecyclerView.visibility = View.VISIBLE // Optional for 12-hour format
+
+        // Scroll to the current time in the RecyclerViews
+        hourRecyclerView.scrollToPosition(selectedHour - 1) // 0-index for RecyclerView
+        minuteRecyclerView.scrollToPosition(selectedMinute) // 0-index for RecyclerView
+
+        // Handle buttons
+        dialog.findViewById<RelativeLayout>(R.id.btnCancel).setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.findViewById<RelativeLayout>(R.id.btnConfirm).setOnClickListener {
+            onTimeSelected(selectedHour, selectedMinute, isAm)
+            dialog.dismiss()
+        }
+
+        dialog.show()
+    }
 }

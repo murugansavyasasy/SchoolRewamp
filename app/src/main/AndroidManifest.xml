@@ -91,7 +91,6 @@
 
         <activity
             android:name=".Auth.Splash.Splash"
-
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize"></activity>
         <activity
@@ -167,17 +166,11 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
 
-<!--        <activity-->
-<!--            android:name=".Dashboard.School.Dashboard"-->
-<!--            android:screenOrientation="portrait"-->
-<!--            android:theme="@style/AppTheme"-->
-<!--            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />-->
-
         <activity
 
             android:name=".School.Communication.CommunicationSchool"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustResize"></activity>
 
         <activity
             android:name=".School.AbsenteesMarking.AbsenteesStudentMark"
