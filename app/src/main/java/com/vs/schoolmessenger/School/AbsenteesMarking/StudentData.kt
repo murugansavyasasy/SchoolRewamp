@@ -4,5 +4,4 @@ class StudentData (
     val Name: String,
     var RollNo: String,
     val Status: String
-
 )

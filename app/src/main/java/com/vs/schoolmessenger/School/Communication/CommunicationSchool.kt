@@ -20,6 +20,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     override fun setupViews() {
         super.setupViews()
         setupToolbar()
+<<<<<<< HEAD
         binding.lblHistoryList.paintFlags =
             binding.lblHistoryList.paintFlags or Paint.UNDERLINE_TEXT_FLAG
         binding.lblBackToVoiceMessage.paintFlags =
@@ -29,6 +30,10 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         binding.rlaTextMessage.setOnClickListener(this)
         binding.rlaFromTime.setOnClickListener(this)
 
+=======
+        binding.lblHistoryList.paintFlags = binding.lblHistoryList.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+        binding.lblBackToVoiceMessage.paintFlags = binding.lblBackToVoiceMessage.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+>>>>>>> 51a0b7afc1a68b06e4e131784c791ed3cd4248eb
     }
 
     override fun onClick(p0: View?) {

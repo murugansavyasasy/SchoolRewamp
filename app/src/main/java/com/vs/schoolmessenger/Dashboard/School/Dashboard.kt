@@ -31,9 +31,11 @@ class Dashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickListener {
             val window = this.window
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-            window.statusBarColor = this.resources.getColor(R.color.mild4)
-            window.navigationBarColor = this.resources.getColor(R.color.mild4)
+            window.statusBarColor = this.resources.getColor(R.color.primary_light)
+            window.navigationBarColor = this.resources.getColor(R.color.primary_light)
         }
+
+        //setupToolbar()
 
         accessChildView(
             binding,

@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:text="@string/lblProfile"
             android:textColor="@color/black"
-            android:textSize="@dimen/fifteen_sp"
+            android:textSize="@dimen/twenty_sp"
             android:textStyle="bold" />
 
         <Space
@@ -155,6 +155,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Standard : IIX"
+                            android:textColor="@color/black"
                             android:textSize="@dimen/thirteen_sp"
                             android:textStyle="bold" />
 
@@ -163,6 +164,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/ten"
+                            android:textColor="@color/black"
                             android:text="Section : A"
                             android:textSize="@dimen/thirteen_sp" />
                     </LinearLayout>
@@ -298,6 +300,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/twenty"
                                 android:text="O+"
+                                android:textColor="@color/black"
                                 android:textSize="@dimen/thirteen_sp" />
                         </LinearLayout>
 
@@ -319,6 +322,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/twenty"
+                                android:textColor="@color/black"
                                 android:text="Kodaikanal, Dindigul (D.T), Pin code : 624103"
                                 android:textSize="@dimen/thirteen_sp" />
                         </LinearLayout>
@@ -342,6 +346,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/twenty"
                                 android:text="Hostel"
+                                android:textColor="@color/black"
                                 android:textSize="@dimen/thirteen_sp" />
                         </LinearLayout>
                     </LinearLayout>
@@ -403,6 +408,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="0.5"
                                     android:text="Ganesan"
+                                    android:textColor="@color/light_gray"
                                     android:textSize="@dimen/thirteen_sp" />
                             </LinearLayout>
 
@@ -434,6 +440,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="0.5"
                                     android:text="Saraswathi"
+                                    android:textColor="@color/light_gray"
                                     android:textSize="@dimen/thirteen_sp" />
                             </LinearLayout>
 
@@ -464,6 +471,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="0.5"
+                                    android:textColor="@color/light_gray"
                                     android:text="Farmer"
                                     android:textSize="@dimen/thirteen_sp" />
                             </LinearLayout>
@@ -495,6 +503,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="0.5"
+                                    android:textColor="@color/light_gray"
                                     android:text="Farmer"
                                     android:textSize="@dimen/thirteen_sp" />
                             </LinearLayout>
@@ -526,6 +535,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="0.5"
+                                    android:textColor="@color/light_gray"
                                     android:text="6382677672"
                                     android:textSize="@dimen/thirteen_sp" />
                             </LinearLayout>

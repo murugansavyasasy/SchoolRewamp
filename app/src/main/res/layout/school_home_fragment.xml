@@ -72,7 +72,6 @@
                 android:layout_width="@dimen/twenty_five"
                 android:layout_height="@dimen/twenty_five"
                 android:layout_alignParentEnd="true"
-                android:layout_marginTop="@dimen/five"
                 android:layout_marginEnd="5dp"
                 android:background="@drawable/bg_red_small_size"
                 android:elevation="@dimen/ten"

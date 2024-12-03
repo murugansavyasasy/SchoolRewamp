@@ -33,6 +33,7 @@
     <string name="lblTermsCondition">ข้อกำหนดและเงื่อนไข</string>
     <string name="lblChangeLanguage">เปลี่ยนภาษา</string>
     <string name="change_password">เปลี่ยนรหัสผ่าน</string>
+    <string name="save_contact_to_avoid">บันทึกผู้ติดต่อเพื่อหลีกเลี่ยงการโทรสแปม</string>
     <string name="lblFEEDBACK">ข้อเสนอแนะ</string>
     <string name="lblReportbug">รายงานข้อผิดพลาด</string>
     <string name="lblSendFeedback">ส่งข้อเสนอแนะ</string>
