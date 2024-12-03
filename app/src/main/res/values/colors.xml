@@ -87,12 +87,10 @@
     <color name="light_bg_green">#BAE4DC</color>
     <color name="light_bg_purple">#ECE0F8</color>
     <color name="light_gray_">#747e85</color>
-<<<<<<< HEAD
     <color name="light_green_">#a6dadf</color>
     <color name="dark_blue_and_green_">#00c7be</color>
-=======
-    <color name="light_green_">#A6DADF</color>
->>>>>>> 51a0b7afc1a68b06e4e131784c791ed3cd4248eb
+
+<!--    <color name="light_green_">#A6DADF</color>-->
 
 
 
