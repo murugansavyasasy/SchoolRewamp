@@ -37,6 +37,8 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),NoticeClickLi
             .load("https://s3.ap-south-1.amazonaws.com/schoolchimes-files-india/27-11-2024/File_vc_-5346401391801142838.png")
             .into(binding.imgPick2)
 
+        Constant.editTextCounter(this,binding.txtDesc,500,binding.lbTextCount)
+
     }
 
     override fun onClick(v: View?) {

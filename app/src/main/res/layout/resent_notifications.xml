@@ -6,14 +6,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/ten"
+        android:layout_marginHorizontal="@dimen/ten"
         android:layout_marginTop="@dimen/ten">
 
         <RelativeLayout
             android:id="@+id/fab"
+            android:layout_marginEnd="@dimen/fifteen"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/fourty"
             android:background="@drawable/rect_shadow_white"
             android:paddingTop="@dimen/ten"
             android:paddingBottom="@dimen/ten">
@@ -81,7 +81,6 @@
             android:layout_height="@dimen/thirty"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/twenty_five"
             android:elevation="@dimen/ten"
             android:src="@drawable/text_notification">
 

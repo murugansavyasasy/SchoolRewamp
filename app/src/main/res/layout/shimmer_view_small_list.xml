@@ -28,7 +28,7 @@
                 android:layout_width="@dimen/one_fifty"
                 android:layout_height="@dimen/twenty"
                 android:background="@android:color/darker_gray"
-                android:layout_marginTop="@dimen/ten"/>
+                android:layout_marginTop="@dimen/twenty_five"/>
 
         </LinearLayout>
 

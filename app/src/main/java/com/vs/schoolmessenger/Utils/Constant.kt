@@ -3,8 +3,12 @@ package com.vs.schoolmessenger.Utils
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
+import android.widget.EditText
 import android.widget.GridView
+import android.widget.TextView
 import android.widget.Toast
 import com.vs.schoolmessenger.Dashboard.Settings.ContactUs.ContactUs
 
@@ -65,5 +69,28 @@ object Constant {
             context.startActivity(intent)
         //   Toast.makeText(context, "No email app found", Toast.LENGTH_SHORT).show()
         }
+    }
+
+
+    fun editTextCounter(context: Context,editText : EditText ,maxLength : Int,counterLabel : TextView){
+
+        editText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(charSequence: CharSequence?, start: Int, count: Int, after: Int) {
+                // You can add logic here if needed
+            }
+
+            override fun onTextChanged(charSequence: CharSequence?, start: Int, before: Int, count: Int) {
+                // You can add logic here if needed
+            }
+
+            override fun afterTextChanged(editable: Editable?) {
+                counterLabel.setText(editable!!.length.toString() + " of "+ maxLength.toString())
+                if (editable != null && editable.length > maxLength) {
+                    // Restrict to the max length by trimming the input
+                    editable.delete(maxLength, editable.length)
+                    // Optionally, show a Toast or error message
+                }
+            }
+        })
     }
 }

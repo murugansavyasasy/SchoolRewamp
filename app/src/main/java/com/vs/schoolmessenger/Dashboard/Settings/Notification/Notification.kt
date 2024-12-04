@@ -1,11 +1,11 @@
 package com.vs.schoolmessenger.Dashboard.Settings.Notification
-
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.NotificationBinding
 
 class Notification : BaseActivity<NotificationBinding>(), View.OnClickListener {
@@ -65,10 +65,18 @@ class Notification : BaseActivity<NotificationBinding>(), View.OnClickListener {
 
         isNotificationItems.addAll(items)
 
-        isNotificationAdapter = NotificationAdapter(isNotificationItems)
+        isNotificationAdapter = NotificationAdapter(null, this, Constant.isShimmerViewShow)
         binding.rcyNotification.layoutManager = LinearLayoutManager(this)
         binding.rcyNotification.adapter = isNotificationAdapter
 
+        // Simulate loading data with a delay (e.g., fetch from server or database)
+        binding.rcyNotification.postDelayed({
+            // Once data is loaded, stop shimmer and pass the actual data
+            isNotificationAdapter =
+                NotificationAdapter(isNotificationItems, this, Constant.isShimmerViewDisable)
+            // Set GridLayoutManager (2 columns in this case)
+            binding.rcyNotification.adapter = isNotificationAdapter
+        }, 500) // Simulate 2 seconds loading time
 
     }
 
