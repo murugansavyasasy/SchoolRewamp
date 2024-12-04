@@ -150,6 +150,7 @@
                 android:layout_marginTop="@dimen/fifteen"
                 android:background="@drawable/bg_edittext_view_line"
                 android:hint="eg.Result announcement"
+                android:paddingBottom="@dimen/ten"
                 android:inputType="text"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp" />
@@ -572,7 +573,7 @@
                     <TextView
                         android:id="@+id/btnNext"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/fourty_five"
+                        android:layout_height="@dimen/fourty"
                         android:layout_below="@+id/rytEnd"
                         android:layout_marginTop="@dimen/thirty"
                         android:background="@drawable/rect_btn_orange"

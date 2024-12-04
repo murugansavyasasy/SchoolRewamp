@@ -189,6 +189,11 @@
             android:windowSoftInputMode="adjustPan|adjustResize"></activity>
 
         <activity
+            android:name=".School.Video.CreateVideo"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+
+        <activity
             android:name=".Utils.ImageViewActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize"></activity>

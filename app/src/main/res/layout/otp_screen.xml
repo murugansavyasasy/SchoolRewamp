@@ -166,7 +166,7 @@
             <TextView
                 android:id="@+id/btnNext"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/fourty_five"
+                android:layout_height="@dimen/fourty"
                 android:layout_below="@+id/lblDidNot"
                 android:layout_marginTop="@dimen/fourty"
                 android:layout_marginBottom="@dimen/fifty"
