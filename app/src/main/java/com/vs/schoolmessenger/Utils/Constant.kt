@@ -8,6 +8,8 @@ import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import android.widget.EditText
 import android.widget.GridView
 import android.widget.TextView
@@ -51,13 +53,13 @@ object Constant {
         gridView.requestLayout()  // Request layout update
     }
 
-    fun redirectToDialPad(context: Context, contactNo: String){
+    fun redirectToDialPad(context: Context, contactNo: String) {
         val intent = Intent(Intent.ACTION_DIAL)
-        intent.data = Uri.parse("tel:"+contactNo) // Replace with the phone number
+        intent.data = Uri.parse("tel:" + contactNo) // Replace with the phone number
         context.startActivity(intent)
     }
 
-    fun redirectToMail(context: Context, mail: String){
+    fun redirectToMail(context: Context, mail: String) {
         val intent = Intent(Intent.ACTION_SENDTO).apply {
             data = Uri.parse("mailto:") // Ensures only email apps handle this
             putExtra(Intent.EXTRA_EMAIL, arrayOf(mail)) // Recipient email address
@@ -70,24 +72,38 @@ object Constant {
             context.startActivity(intent)
         } else {
             context.startActivity(intent)
-        //   Toast.makeText(context, "No email app found", Toast.LENGTH_SHORT).show()
+            //   Toast.makeText(context, "No email app found", Toast.LENGTH_SHORT).show()
         }
     }
 
-
-    fun editTextCounter(context: Context,editText : EditText ,maxLength : Int,counterLabel : TextView){
+    fun editTextCounter(
+        context: Context,
+        editText: EditText,
+        maxLength: Int,
+        counterLabel: TextView
+    ) {
 
         editText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(charSequence: CharSequence?, start: Int, count: Int, after: Int) {
+            override fun beforeTextChanged(
+                charSequence: CharSequence?,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {
                 // You can add logic here if needed
             }
 
-            override fun onTextChanged(charSequence: CharSequence?, start: Int, before: Int, count: Int) {
+            override fun onTextChanged(
+                charSequence: CharSequence?,
+                start: Int,
+                before: Int,
+                count: Int
+            ) {
                 // You can add logic here if needed
             }
 
             override fun afterTextChanged(editable: Editable?) {
-                counterLabel.setText(editable!!.length.toString() + " of "+ maxLength.toString())
+                counterLabel.setText(editable!!.length.toString() + " of " + maxLength.toString())
                 if (editable != null && editable.length > maxLength) {
                     // Restrict to the max length by trimming the input
                     editable.delete(maxLength, editable.length)
@@ -97,14 +113,22 @@ object Constant {
         })
     }
 
-
-    fun executeAfterDelay( task: () -> Unit) {
+    fun executeAfterDelay(task: () -> Unit) {
         handler.postDelayed({
             task()
         }, delayTime.toLong())
     }
 
-    fun stopDelay(){
+    fun stopDelay() {
         handler.removeCallbacksAndMessages(null)
+    }
+
+    fun loadWebView(context: Context, webView: WebView, url: String) {
+        webView.settings.javaScriptEnabled = true
+        webView.settings.setSupportZoom(true)
+        webView.settings.builtInZoomControls = true
+        webView.settings.displayZoomControls = false
+        webView.webViewClient = WebViewClient()
+        webView.loadUrl(url)
     }
 }
