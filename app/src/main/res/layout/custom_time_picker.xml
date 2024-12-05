@@ -3,7 +3,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/rect_white_light_radious">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -16,14 +16,52 @@
             android:layout_gravity="center"
             android:paddingBottom="@dimen/eight"
             android:text="Select Time"
+            android:layout_centerHorizontal="true"
             android:textColor="@color/dark_blue_and_green_"
             android:textSize="@dimen/fifteen_sp"
             android:textStyle="bold" />
 
+
         <LinearLayout
+            android:id="@+id/lnrTimeTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvTitle"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.7"
+                android:gravity="center"
+                android:text="Hour"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/fifteen_sp"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.6"
+                android:gravity="center"
+                android:text="Minute"
+                android:textSize="@dimen/fifteen_sp"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/lnrTimePicking"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_below="@+id/lnrTimeTitle"
             android:orientation="horizontal">
 
             <androidx.recyclerview.widget.RecyclerView
@@ -49,15 +87,16 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/ampmSpinner"
-                android:layout_width="@dimen/hundred"
+                android:layout_width="@dimen/fifty"
                 android:layout_height="@dimen/one_fifty"
-                android:visibility="gone" />
+                android:visibility="visible" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="end"
+            android:layout_below="@+id/lnrTimePicking"
             android:orientation="horizontal"
             android:paddingTop="@dimen/fifteen">
 
@@ -108,5 +147,5 @@
 
 
         </LinearLayout>
-    </LinearLayout>
+    </RelativeLayout>
 </ScrollView>

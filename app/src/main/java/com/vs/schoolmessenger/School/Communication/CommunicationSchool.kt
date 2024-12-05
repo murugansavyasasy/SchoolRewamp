@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.School.Communication
 
 import android.graphics.Paint
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.RelativeLayout
@@ -25,10 +26,13 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             binding.lblHistoryList.paintFlags or Paint.UNDERLINE_TEXT_FLAG
         binding.lblBackToVoiceMessage.paintFlags =
             binding.lblBackToVoiceMessage.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+        binding.lblBackToVoiceMessage.paintFlags =
+            binding.lblBackToVoiceMessage.paintFlags or Paint.UNDERLINE_TEXT_FLAG
         binding.rlaVoiceMessage.setOnClickListener(this)
         binding.rlaScheduleCall.setOnClickListener(this)
         binding.rlaTextMessage.setOnClickListener(this)
         binding.rlaFromTime.setOnClickListener(this)
+        binding.rlaToTime.setOnClickListener(this)
 
     }
 
@@ -63,6 +67,23 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     val amPm = if (isAm) "AM" else "PM"
                     Toast.makeText(this, "Selected Time: $hour:$minute $amPm", Toast.LENGTH_SHORT)
                         .show()
+                    binding.lblStartTime.text = "$hour:$minute $amPm"
+                }
+            }
+
+            R.id.rlaToTime -> {
+                showSpinnerTimePicker(this) { hour, minute, isAm ->
+                    val amPm = if (isAm) "AM" else "PM"
+                    Toast.makeText(this, "Selected Time: $hour:$minute $amPm", Toast.LENGTH_SHORT)
+                        .show()
+                    Log.d(
+                        "validateTimeWithAmPmLegacy",
+                        validateTimeWithAmPmLegacy(
+                            binding.lblStartTime.text.toString(),
+                            "$hour:$minute $amPm"
+                        )
+                    )
+                    binding.lblEndTime.text = "$hour:$minute $amPm"
                 }
             }
         }

@@ -6,6 +6,7 @@ import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.app.Dialog
 import android.content.Context
+import android.graphics.Paint
 import android.graphics.PorterDuff
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
@@ -16,6 +17,7 @@ import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -28,6 +30,7 @@ import com.vs.schoolmessenger.Dashboard.Fragments.ProfileFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.SettingsFragment
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.TimePickerAdapter
+import java.text.SimpleDateFormat
 import java.util.Calendar
 
 abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
@@ -336,6 +339,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         val hourRecyclerView = dialog.findViewById<RecyclerView>(R.id.hourSpinner)
         val minuteRecyclerView = dialog.findViewById<RecyclerView>(R.id.minuteSpinner)
         val ampmRecyclerView = dialog.findViewById<RecyclerView>(R.id.ampmSpinner)
+        val tvTitle = dialog.findViewById<TextView>(R.id.tvTitle)
 
         val hours = (1..12).map { it.toString() }
         val minutes = (0..59).map { it.toString().padStart(2, '0') }
@@ -346,6 +350,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         var selectedHour = calendar.get(Calendar.HOUR) // 12-hour format
         var selectedMinute = calendar.get(Calendar.MINUTE)
         var isAm = calendar.get(Calendar.AM_PM) == Calendar.AM
+        tvTitle.paintFlags = tvTitle.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
         // Adjust the selected hour for 1-12 format
         if (selectedHour == 0) {
@@ -384,5 +389,25 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         }
 
         dialog.show()
+    }
+
+    fun validateTimeWithAmPmLegacy(fromTime: String, toTime: String): String {
+        val timeFormat = SimpleDateFormat("hh:mm a") // 12-hour format with AM/PM
+        val fromDate = timeFormat.parse(fromTime)
+        val toDate = timeFormat.parse(toTime)
+
+        return when {
+            fromDate == toDate -> {
+                "The 'to time' is equal to the 'from time'. Please select a valid time."
+            }
+
+            toDate!!.before(fromDate) -> {
+                "The 'to time' is before the 'from time'. Please select a valid time."
+            }
+
+            else -> {
+                "The 'to time' is valid."
+            }
+        }
     }
 }
