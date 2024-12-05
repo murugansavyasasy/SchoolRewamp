@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkAdapter
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesStudentMark
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ImageViewActivity
@@ -39,6 +40,17 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),NoticeClickLi
 
         Constant.editTextCounter(this,binding.txtDesc,500,binding.lbTextCount)
 
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+    }
+
+
+    override fun onPause() {
+        super.onPause()
+        Constant.stopDelay()
     }
 
     override fun onClick(v: View?) {
@@ -105,14 +117,14 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),NoticeClickLi
         binding.recycleStudents.layoutManager = LinearLayoutManager(this)
         binding.recycleStudents.adapter = mAdapter
 
-        // Simulate loading data with a delay (e.g., fetch from server or database)
-        binding.recycleStudents.postDelayed({
+        Constant.executeAfterDelay {
             // Once data is loaded, stop shimmer and pass the actual data
             mAdapter =
                 SchoolNoticeBoardAdapter(noticeBoardList, this, this, Constant.isShimmerViewDisable)
             // Set GridLayoutManager (2 columns in this case)
             binding.recycleStudents.adapter = mAdapter
-        }, 500) // Simulate 2 seconds loading time
+        }
+
     }
 
     private fun isBackRoundChange(isClickingId: TextView) {

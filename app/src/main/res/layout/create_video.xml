@@ -115,7 +115,9 @@
                     android:layout_marginTop="@dimen/thirty"
                     android:background="@drawable/bg_stroke_rect_black"
                     android:paddingHorizontal="@dimen/ten"
-                    android:paddingVertical="@dimen/twenty">
+                    android:paddingTop="@dimen/twenty"
+                    android:paddingBottom="@dimen/twenty"
+                   >
 
                     <EditText
                         android:id="@+id/txtDesc"

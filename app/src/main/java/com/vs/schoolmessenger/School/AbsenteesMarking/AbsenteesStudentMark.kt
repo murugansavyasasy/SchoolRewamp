@@ -3,6 +3,7 @@ import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Dashboard.Settings.Notification.NotificationAdapter
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.AbsenteesStudentMarkingBinding
@@ -63,20 +64,26 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(), Abs
             )
         )
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+
         mAdapter = AbsenteesMarkAdapter(null, this, this, Constant.isShimmerViewShow)
         binding.recycleStudents.layoutManager = LinearLayoutManager(this)
         binding.recycleStudents.adapter = mAdapter
-
-        // Simulate loading data with a delay (e.g., fetch from server or database)
-        binding.recycleStudents.postDelayed({
-            // Once data is loaded, stop shimmer and pass the actual data
+        Constant.executeAfterDelay {
             mAdapter =
                 AbsenteesMarkAdapter(studentsList, this, this, Constant.isShimmerViewDisable)
             // Set GridLayoutManager (2 columns in this case)
             binding.recycleStudents.adapter = mAdapter
-        }, 500) // Simulate 2 seconds loading time
+        }
+    }
 
 
+    override fun onPause() {
+        super.onPause()
+        Constant.stopDelay()
     }
 
     override fun onClick(v: View?) {

@@ -3,6 +3,8 @@ package com.vs.schoolmessenger.Utils
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -17,9 +19,10 @@ object Constant {
     var isOtpRedirection = 1
     var isShimmerViewShow = true
     var isShimmerViewDisable = false
-
     var isShimmerViewDisablenew = false  // added by murugan
     var isShimmerView = false  // added by murugan to development branch
+    var handler = Handler(Looper.getMainLooper())
+    val delayTime = 1500
 
 
     fun setGridViewHeight(gridView: GridView, columns: Int) {
@@ -92,5 +95,16 @@ object Constant {
                 }
             }
         })
+    }
+
+
+    fun executeAfterDelay( task: () -> Unit) {
+        handler.postDelayed({
+            task()
+        }, delayTime.toLong())
+    }
+
+    fun stopDelay(){
+        handler.removeCallbacksAndMessages(null)
     }
 }
