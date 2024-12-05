@@ -17,6 +17,7 @@ import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesStudentMark
 import com.vs.schoolmessenger.School.Communication.CommunicationSchool
 import com.vs.schoolmessenger.School.Event.CreateEvent
 import com.vs.schoolmessenger.School.NoticeBoard.CreateNoticeBoard
+import com.vs.schoolmessenger.School.Video.CreateVideo
 
 class SchoolMenuAdapter(
     private var context: Context, private val itemList: List<GridItem>?,
@@ -66,7 +67,7 @@ class SchoolMenuAdapter(
             rlaMenu.setOnClickListener {
                 when (data.title) {
                     "Video Upload" -> {
-                        context.startActivity(Intent(context, ParentVideo::class.java))
+                        context.startActivity(Intent(context, CreateVideo::class.java))
                     }
                     "Communication" -> {
                         context.startActivity(Intent(context, CommunicationSchool::class.java))

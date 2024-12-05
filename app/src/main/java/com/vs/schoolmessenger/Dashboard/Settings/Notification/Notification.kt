@@ -1,11 +1,11 @@
 package com.vs.schoolmessenger.Dashboard.Settings.Notification
-
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.NotificationBinding
 
 class Notification : BaseActivity<NotificationBinding>(), View.OnClickListener {
@@ -64,12 +64,26 @@ class Notification : BaseActivity<NotificationBinding>(), View.OnClickListener {
         })
 
         isNotificationItems.addAll(items)
+    }
 
-        isNotificationAdapter = NotificationAdapter(isNotificationItems)
+    override fun onResume() {
+        super.onResume()
+
+        isNotificationAdapter = NotificationAdapter(null, this, Constant.isShimmerViewShow)
         binding.rcyNotification.layoutManager = LinearLayoutManager(this)
         binding.rcyNotification.adapter = isNotificationAdapter
+        Constant.executeAfterDelay {
+            isNotificationAdapter =
+                NotificationAdapter(isNotificationItems, this, Constant.isShimmerViewDisable)
+            // Set GridLayoutManager (2 columns in this case)
+            binding.rcyNotification.adapter = isNotificationAdapter
+        }
+    }
 
 
+    override fun onPause() {
+        super.onPause()
+        Constant.stopDelay()
     }
 
     override fun onClick(p0: View?) {

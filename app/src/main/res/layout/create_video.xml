@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:id="@+id/rytHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primary_light"
+        android:paddingVertical="@dimen/twenty"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
+            android:src="@drawable/arrow_back_black" />
+
+        <TextView
+            android:id="@+id/lblCreateEvent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_toEndOf="@+id/imgBack"
+            android:text="Upload Video"
+            android:textColor="@color/black"
+            android:textSize="@dimen/twenty"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        app:layout_constraintTop_toBottomOf="@+id/rytHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ScrollView
+            android:id="@+id/noticeboardCreate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="@dimen/ten"
+            android:scrollbars="none">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <RelativeLayout
+                    android:id="@+id/rytVideoUpload"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/two_hundred"
+                    android:layout_margin="@dimen/thirty"
+                    android:background="@drawable/rect_grey"
+                    android:orientation="vertical">
+
+
+                    <ImageView
+                        android:id="@+id/imgVideo"
+                        android:layout_width="@dimen/sixty"
+                        android:layout_height="@dimen/sixty"
+                        android:layout_centerVertical="true"
+                        android:layout_centerHorizontal="true"
+                        android:src="@drawable/video_editing"/>
+
+                    <TextView
+                        android:layout_below="@+id/imgVideo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="@dimen/ten"
+                        android:layout_centerHorizontal="true"
+                        android:text="Click to choose video from file"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/fifteen_sp"/>
+
+                </RelativeLayout>
+
+
+                <TextView
+                    android:id="@+id/btnChange"
+                    android:layout_below="@+id/rytVideoUpload"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/fourty"
+                    android:text="Change Video"
+                    android:gravity="center"
+                    android:layout_centerHorizontal="true"
+                    android:paddingHorizontal="@dimen/thirty"
+                    android:background="@drawable/rect_btn_orange"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/thirteen_sp"/>
+
+                <EditText
+                    android:id="@+id/txtTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/btnChange"
+                    android:layout_marginTop="@dimen/thirty"
+                    android:background="@drawable/bg_edittext_view_line"
+                    android:hint="Enter video title"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:paddingBottom="@dimen/ten"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp" />
+
+                <RelativeLayout
+                    android:id="@+id/rytDesc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtTitle"
+                    android:layout_marginTop="@dimen/thirty"
+                    android:background="@drawable/bg_stroke_rect_black"
+                    android:paddingHorizontal="@dimen/ten"
+                    android:paddingTop="@dimen/twenty"
+                    android:paddingBottom="@dimen/twenty"
+                   >
+
+                    <EditText
+                        android:id="@+id/txtDesc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:hint="Description"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/thirteen_sp" />
+
+                    <TextView
+                        android:id="@+id/lbTextCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txtDesc"
+                        android:layout_alignParentEnd="true"
+                        android:text="0 of 500"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/thirteen_sp"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/btnNext"
+                    android:layout_below="@+id/rytDesc"
+                    android:layout_marginTop="@dimen/thirty"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/fourty"
+                    android:text="Send"
+                    android:gravity="center"
+                    android:layout_centerHorizontal="true"
+                    android:paddingHorizontal="@dimen/thirty"
+                    android:background="@drawable/rect_btn_orange"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/thirteen_sp"/>
+
+
+
+            </RelativeLayout>
+        </ScrollView>
+
+    </RelativeLayout>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

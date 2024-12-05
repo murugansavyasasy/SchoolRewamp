@@ -1,11 +1,11 @@
 package com.vs.schoolmessenger.School.Event
-
 import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.CreateEventBinding
 
 class CreateEvent : BaseActivity<CreateEventBinding>(),
@@ -29,6 +29,9 @@ class CreateEvent : BaseActivity<CreateEventBinding>(),
         Glide.with(this)
             .load("https://s3.ap-south-1.amazonaws.com/schoolchimes-files-india/27-11-2024/File_vc_-5346401391801142838.png")
             .into(binding.imgPick2)
+
+        Constant.editTextCounter(this,binding.txtDesc,500,binding.lbTextCount)
+
     }
 
     override fun onClick(v: View?) {

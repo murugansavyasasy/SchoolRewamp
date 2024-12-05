@@ -6,6 +6,7 @@ import android.os.Handler
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -153,20 +154,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
             }
         })
 
-        val adapter = SchoolMenuAdapter(requireActivity(), null, Constant.isShimmerViewShow)
-        binding.recyclerViewMenu.layoutManager = GridLayoutManager(requireContext(), 4)
-        binding.recyclerViewMenu.adapter = adapter
-
-        // Simulate loading data with a delay (e.g., fetch from server or database)
-        binding.recyclerViewMenu.postDelayed({
-            // Once data is loaded, stop shimmer and pass the actual data
-            val isAdapter =
-                SchoolMenuAdapter(requireActivity(), items, Constant.isShimmerViewDisable)
-            // Set GridLayoutManager (2 columns in this case)
-            binding.recyclerViewMenu.layoutManager = GridLayoutManager(requireActivity(), 4)
-            binding.recyclerViewMenu.adapter = isAdapter
-        }, 500) // Simulate 2 seconds loading time
-
         return binding.root
     }
 
@@ -206,15 +193,30 @@ class HomeFragment : Fragment(), View.OnClickListener {
         }
     }
 
-
     override fun onResume() {
         super.onResume()
         runAutoScrollBanner()
+
+        val adapter = SchoolMenuAdapter(requireActivity(), null, Constant.isShimmerViewShow)
+        binding.recyclerViewMenu.layoutManager = GridLayoutManager(requireContext(), 4)
+        binding.recyclerViewMenu.adapter = adapter
+        Constant.executeAfterDelay(){
+            val isAdapter =
+                SchoolMenuAdapter(requireActivity(), items, Constant.isShimmerViewDisable)
+            // Set GridLayoutManager (2 columns in this case)
+            binding.recyclerViewMenu.layoutManager = GridLayoutManager(requireActivity(), 4)
+            binding.recyclerViewMenu.adapter = isAdapter
+        }
+
+        Log.d("Status","onResume")
     }
 
     override fun onPause() {
         super.onPause()
         stopAutoScrollBanner()
+        Constant.stopDelay()
+        Log.d("Status","onPause")
+
     }
 
     private fun stopAutoScrollBanner() {

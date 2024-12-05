@@ -41,10 +41,10 @@
     <RelativeLayout
         android:id="@+id/rytSearch"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/fourty_five"
+        android:layout_height="@dimen/thirty_five"
         android:layout_below="@+id/rlaLblNotification"
         android:layout_margin="@dimen/ten"
-        android:background="@drawable/rect_white">
+        android:background="@drawable/rect_grey">
 
 
         <ImageView
