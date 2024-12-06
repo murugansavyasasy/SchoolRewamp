@@ -13,8 +13,6 @@ import android.webkit.WebViewClient
 import android.widget.EditText
 import android.widget.GridView
 import android.widget.TextView
-import android.widget.Toast
-import com.vs.schoolmessenger.Dashboard.Settings.ContactUs.ContactUs
 
 object Constant {
 

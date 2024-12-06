@@ -1,78 +1,86 @@
 package com.vs.schoolmessenger.Utils
-
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
-import android.view.MotionEvent
+import android.util.Log
 import android.view.View
-import kotlin.math.min
+import androidx.core.content.ContextCompat
+import com.vs.schoolmessenger.R
 
-class WaveSeekBar @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
-) : View(context, attrs, defStyleAttr) {
+class WaveSeekBar(context: Context, attrs: AttributeSet) : View(context, attrs) {
+    private var waveHeights: FloatArray = FloatArray(0)
+    private val playedPaint = Paint() // Paint for the played wave
+    private val unplayedPaint = Paint() // Paint for the unplayed wave
+    private val circlePaint = Paint() // Paint for the circular indicator
+    private var progress: Float = 0f // Seek bar progress (0.0 to 1.0)
+    private var circleRadius = 15f // Radius of the circle indicator
 
-    private val wavePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.BLUE
-        style = Paint.Style.FILL
+
+    init {
+        // Set played wave color from resources
+        playedPaint.isAntiAlias = true
+        playedPaint.color = ContextCompat.getColor(context, R.color.light_green_bg1)
+        playedPaint.style = Paint.Style.FILL // Fill style for played wave
+
+        // Set unplayed wave color from resources
+        unplayedPaint.isAntiAlias = true
+        unplayedPaint.color = ContextCompat.getColor(context, R.color.grey)
+        unplayedPaint.style = Paint.Style.FILL // Fill style for unplayed wave
+
+        // Set circle indicator color from resources
+        circlePaint.isAntiAlias = true
+        circlePaint.color = ContextCompat.getColor(context, R.color.colorPrimary)
+        circlePaint.style = Paint.Style.FILL // Fill style for the circle
     }
 
-    private val progressPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.RED
-        style = Paint.Style.FILL
+
+    // Set wave heights for drawing
+    fun setWaveHeights(heights: FloatArray) {
+        waveHeights = heights
+        invalidate() // Redraw the view
     }
 
-    private val thumbPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.WHITE
-        style = Paint.Style.FILL
+    // Get current progress
+    fun getProgress(): Float {
+        return progress
     }
 
-    private var progress: Float = 0.5f // Default progress (50%)
+    fun setProgress(newProgress: Float) {
+        progress = newProgress.coerceIn(0f, 1f) // Clamp progress between 0 and 1
+        invalidate() // Redraw the view to reflect the new progress
+        Log.d("WaveSeekBar", "Progress set to $progress")
+    }
 
-    var maxProgress: Int = 100
-        set(value) {
-            field = value
-            invalidate()
-        }
 
-    var onProgressChangeListener: ((progress: Int) -> Unit)? = null
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
+        if (waveHeights.isEmpty()) {
+            Log.d("WaveSeekBar", "No wave heights to draw.")
+            return
+        }
+
         val width = width.toFloat()
         val height = height.toFloat()
-        val waveHeight = height / 4
+        val centerY = height / 2
+        val step = width / (waveHeights.size - 1)
+        val progressIndex = (progress * (waveHeights.size - 1)).toInt()
 
-        // Draw wave background
-        for (i in 0 until width.toInt() step 30) {
-            val waveY = height / 2 + waveHeight * Math.sin((i + progress * width) * 0.1).toFloat()
-            canvas.drawCircle(i.toFloat(), waveY, 15f, wavePaint)
+        for (i in waveHeights.indices) {
+            val x = i * step
+            val waveHeight = waveHeights[i]
+            val top = centerY - waveHeight / 2
+            val bottom = centerY + waveHeight / 2
+            val paint = if (i <= progressIndex) playedPaint else unplayedPaint
+            canvas.drawRect(x, top, x + step, bottom, paint)
         }
 
-        // Draw progress
-        val progressWidth = progress * width
-        canvas.drawRect(0f, 0f, progressWidth, height, progressPaint)
-
-        // Draw thumb
-        val thumbX = progressWidth
-        val thumbY = height / 2
-        canvas.drawCircle(thumbX, thumbY, 20f, thumbPaint)
+        // Draw progress indicator as a circle
+        val progressX = progress * width
+        canvas.drawCircle(progressX, centerY, circleRadius, circlePaint) // Draw the circle indicator
+        Log.d("WaveSeekBar", "Waveform drawn with progress: $progress")
     }
 
-    override fun onTouchEvent(event: MotionEvent): Boolean {
-        when (event.action) {
-            MotionEvent.ACTION_DOWN, MotionEvent.ACTION_MOVE -> {
-                val x = event.x
-                progress = min(1f, maxOf(0f, x / width))
-                onProgressChangeListener?.invoke((progress * maxProgress).toInt())
-                invalidate()
-                return true
-            }
-        }
-        return super.onTouchEvent(event)
-    }
 }

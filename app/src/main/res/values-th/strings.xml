@@ -119,4 +119,6 @@
     <string name="roll_no">หมายเลขม้วน</string>
     <string name="status">" สถานะ"</string>
     <string name="name">ชื่อ</string>
+    <string name="Communication">การสื่อสาร</string>
+    <string name="VoiceMessage">ข้อความเสียง</string>
 </resources>
