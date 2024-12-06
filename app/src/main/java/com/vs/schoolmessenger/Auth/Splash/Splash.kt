@@ -2,15 +2,12 @@ package com.vs.schoolmessenger.Auth.Splash
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
-import com.vs.schoolmessenger.Auth.Introduction.Introduction
+import com.vs.schoolmessenger.Dashboard.School.Dashboard
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.ChangeLanguage
-import com.vs.schoolmessenger.Utils.Constant
-import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SplashBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -32,12 +29,11 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
 
     override fun setupViews() {
         super.setupViews()
-
         isToolBarTheme()
         GlobalScope.launch {
             delay(2000) // 3-second delay
             withContext(Dispatchers.Main) {
-                val intent = Intent(this@Splash, Introduction::class.java)
+                val intent = Intent(this@Splash, Dashboard::class.java)
                 startActivity(intent)
                 finish() // Close the current activity
             }

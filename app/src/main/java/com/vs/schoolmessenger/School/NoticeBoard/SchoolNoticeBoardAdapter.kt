@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.Utils.ImageSliderAdapter
+import com.vs.schoolmessenger.CommonScreens.ImageSliderAdapter
 import me.relex.circleindicator.CircleIndicator
 
 class SchoolNoticeBoardAdapter(

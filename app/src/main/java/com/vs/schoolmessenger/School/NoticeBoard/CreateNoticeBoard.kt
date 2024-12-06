@@ -1,5 +1,4 @@
 package com.vs.schoolmessenger.School.NoticeBoard
-import android.content.Intent
 import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -7,10 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkAdapter
-import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesStudentMark
 import com.vs.schoolmessenger.Utils.Constant
-import com.vs.schoolmessenger.Utils.ImageViewActivity
 import com.vs.schoolmessenger.databinding.CreateNoticeBoardBinding
 
 class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),NoticeClickListener,

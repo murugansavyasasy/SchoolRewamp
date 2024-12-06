@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.Utils
+package com.vs.schoolmessenger.CommonScreens
 
 import android.view.View
 import com.vs.schoolmessenger.Auth.Base.BaseActivity

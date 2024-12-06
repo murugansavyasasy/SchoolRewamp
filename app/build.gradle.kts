@@ -102,12 +102,8 @@ dependencies {
     // Important: Only works with api level 21 and higher
     implementation ("com.github.lincollincol:amplituda:2.2.2") // or newer version
 
-
     //Viewpager Implementation
     implementation ("androidx.viewpager2:viewpager2:1.0.0")
-
-
-
     //CircleIndicator
     implementation ("me.relex:circleindicator:2.1.6")
 }

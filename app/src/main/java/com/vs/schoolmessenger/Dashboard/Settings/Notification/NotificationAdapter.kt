@@ -4,19 +4,11 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager.widget.ViewPager
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.NoticeBoard.NoticeClickListener
-import com.vs.schoolmessenger.School.NoticeBoard.NoticeData
-import com.vs.schoolmessenger.School.NoticeBoard.SchoolNoticeBoardAdapter.DataViewHolder
-import com.vs.schoolmessenger.School.NoticeBoard.SchoolNoticeBoardAdapter.ShimmerViewHolder
-import com.vs.schoolmessenger.Utils.ImageSliderAdapter
 import de.hdodenhof.circleimageview.CircleImageView
-import me.relex.circleindicator.CircleIndicator
 
 class NotificationAdapter(
     private var itemList: List<NotificationDataClass>?,

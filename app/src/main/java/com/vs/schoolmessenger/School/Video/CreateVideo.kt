@@ -16,6 +16,11 @@ class CreateVideo  : BaseActivity<CreateVideoBinding>(),
         setupToolbar()
         binding.imgBack.setOnClickListener(this)
 
+//        // Example waveform data (you can generate or fetch actual audio waveform data)
+//        val waveformData = IntArray(100) { (5..20).random() }
+//        binding.waveformSeekBar.setSampleFrom(waveformData)
+//        binding.waveformSeekBar.progress = 50F // Sets progress to 50%
+
     }
 
     override fun onClick(v: View?) {
@@ -23,7 +28,6 @@ class CreateVideo  : BaseActivity<CreateVideoBinding>(),
             R.id.imgBack -> {
                 onBackPressed()
             }
-
         }
     }
 

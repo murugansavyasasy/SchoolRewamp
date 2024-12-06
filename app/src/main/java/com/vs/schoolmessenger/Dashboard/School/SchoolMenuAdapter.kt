@@ -10,6 +10,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
+import com.vs.schoolmessenger.CommonScreens.SchoolList
 import com.vs.schoolmessenger.Dashboard.Model.GridItem
 import com.vs.schoolmessenger.Parent.Video.ParentVideo
 import com.vs.schoolmessenger.R
@@ -80,6 +81,10 @@ class SchoolMenuAdapter(
                     }
                     "Notice Board" -> {
                         context.startActivity(Intent(context, CreateNoticeBoard::class.java))
+                    }
+
+                    "Assignment" -> {
+                        context.startActivity(Intent(context, SchoolList::class.java))
                     }
 
 

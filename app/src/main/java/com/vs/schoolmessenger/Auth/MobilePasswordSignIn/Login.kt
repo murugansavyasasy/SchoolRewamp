@@ -13,8 +13,6 @@ import com.vs.schoolmessenger.databinding.LoginBinding
 class Login : BaseActivity<LoginBinding>(), View.OnClickListener {
 
     private var isPasswordVisible = false
-
-
     override fun getViewBinding(): LoginBinding {
         return LoginBinding.inflate(layoutInflater)
     }
@@ -22,7 +20,6 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener {
     override fun setupViews() {
         super.setupViews()
         // Access a specific view using its ID
-
         binding.imgHide.setOnClickListener(this)
         binding.btnLoginContinue.setOnClickListener(this)
         binding.lblForgetPassword.setOnClickListener(this)

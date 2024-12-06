@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/mild4">
+
+    <RelativeLayout
+        android:id="@+id/rytHeader"
+        android:paddingVertical="@dimen/twenty"
+        android:background="@color/primary_light"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
+            android:src="@drawable/arrow_back_black"/>
+        <TextView
+            android:id="@+id/lblCreateEvent"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_toEndOf="@+id/imgBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="School List"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="@dimen/twenty"/>
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_marginTop="@dimen/eighty"
+        app:layout_constraintTop_toBottomOf="@+id/rytHeader"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:padding="@dimen/ten"
+            android:id="@+id/recycleSchools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/schools_list_item"/>
+
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

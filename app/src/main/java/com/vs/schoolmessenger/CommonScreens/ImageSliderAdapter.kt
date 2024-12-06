@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.Utils
+package com.vs.schoolmessenger.CommonScreens
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
