@@ -119,6 +119,8 @@
     <string name="roll_no">Roll No</string>
     <string name="status">Status</string>
     <string name="name">Name</string>
+    <string name="Communication">Communication</string>
+    <string name="VoiceMessage">Voice Message</string>
 
 
 </resources>

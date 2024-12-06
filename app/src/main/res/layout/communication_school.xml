@@ -33,7 +33,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginStart="@dimen/thirty"
                     android:layout_marginTop="@dimen/twenty"
-                    android:text="Communication"
+                    android:text="@string/Communication"
                     android:textColor="@color/black"
                     android:textSize="@dimen/twenty"
                     android:textStyle="bold">
@@ -80,7 +80,7 @@
                         android:paddingStart="@dimen/five"
                         android:paddingEnd="@dimen/five"
                         android:paddingBottom="@dimen/ten"
-                        android:text="Voice Message"
+                        android:text="@string/VoiceMessage"
                         android:textColor="@color/white">
 
                     </TextView>
@@ -407,15 +407,13 @@
                         tools:listitem="@layout/history_from_text_message"></androidx.recyclerview.widget.RecyclerView>
 
 
-                    <Switch
+                    <com.vs.schoolmessenger.Utils.CustomSwitch
                         android:id="@+id/SwitchEmergencyVoice"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/twenty_five"
+                        android:layout_height="@dimen/twenty_five"
                         android:layout_below="@+id/lblHistoryList"
                         android:layout_marginStart="@dimen/ten"
-                        android:layout_marginTop="@dimen/twenty">
-
-                    </Switch>
+                        android:layout_marginTop="@dimen/twenty" />
 
                     <TextView
                         android:id="@+id/lblEmergencyVoice"
@@ -424,8 +422,9 @@
                         android:layout_below="@+id/lblHistoryList"
                         android:layout_marginTop="@dimen/twenty_five"
                         android:layout_marginEnd="@dimen/ten"
+                        android:layout_marginStart="@dimen/ten"
                         android:layout_toEndOf="@+id/SwitchEmergencyVoice"
-                        android:text="Do you want send from history ?"
+                        android:text="If you want to send emergency voice ? "
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp"></TextView>
 
@@ -503,7 +502,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/twenty"
-                            android:layout_marginTop="@dimen/ten"
                             android:layout_marginEnd="@dimen/twenty"
                             android:background="@drawable/rect_shadow_white"
                             android:padding="@dimen/ten">
@@ -513,26 +511,37 @@
                                 android:layout_width="@dimen/fourty_five"
                                 android:layout_height="@dimen/fourty_five"
                                 android:layout_centerVertical="true"
-                                android:src="@drawable/video_play">
+                                android:src="@drawable/play_icon_voice">
 
                             </ImageView>
 
-                            <SeekBar
-                                android:id="@+id/seekBarVoice"
+                            <!--                            <SeekBar-->
+                            <!--                                android:id="@+id/seekBarVoice"-->
+                            <!--                                android:layout_width="match_parent"-->
+                            <!--                                android:layout_height="wrap_content"-->
+                            <!--                                android:layout_centerVertical="true"-->
+                            <!--                                android:layout_toEndOf="@+id/imgVoicePlay"></SeekBar>-->
+
+                            <com.vs.schoolmessenger.Utils.WaveSeekBar
+                                android:id="@+id/waveSeekBar"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="@dimen/thirty"
                                 android:layout_centerVertical="true"
-                                android:layout_toEndOf="@+id/imgVoicePlay"></SeekBar>
+                                android:layout_centerInParent="true"
+                                android:layout_marginStart="@dimen/ten"
+                                android:layout_marginEnd="@dimen/ten"
+                                android:layout_toEndOf="@+id/imgVoicePlay" />
 
                             <TextView
                                 android:id="@+id/lblStartDuration"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@+id/seekBarVoice"
+                                android:layout_below="@+id/waveSeekBar"
                                 android:layout_marginStart="@dimen/ten"
-                                android:layout_marginTop="@dimen/fifteen"
+                                android:layout_marginTop="@dimen/fourty"
                                 android:layout_toEndOf="@+id/imgVoicePlay"
                                 android:text="01:39"
+                                android:paddingBottom="@dimen/ten"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/thirteen_sp"></TextView>
 
@@ -540,10 +549,10 @@
                                 android:id="@+id/lblEndDuration"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@+id/seekBarVoice"
+                                android:layout_below="@+id/waveSeekBar"
                                 android:layout_alignParentRight="true"
                                 android:layout_marginStart="@dimen/ten"
-                                android:layout_marginTop="@dimen/fifteen"
+                                android:layout_marginTop="@dimen/fourty"
                                 android:text="07:50"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/thirteen_sp"></TextView>

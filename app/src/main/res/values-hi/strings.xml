@@ -119,4 +119,6 @@
     <string name="roll_no">रोल नं</string>
     <string name="status">स्थिति</string>
     <string name="name">" नाम"</string>
+    <string name="Communication">संचार</string>
+    <string name="VoiceMessage">स्वर संदेश</string>
 </resources>

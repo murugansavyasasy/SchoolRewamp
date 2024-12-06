@@ -12,12 +12,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.EditText
 import android.widget.GridView
-<<<<<<< HEAD
-=======
 import android.widget.TextView
-import android.widget.Toast
-import com.vs.schoolmessenger.Dashboard.Settings.ContactUs.ContactUs
->>>>>>> 9c31df49d0225f269dc7a41d48a0f0343baa17ef
 
 object Constant {
 
