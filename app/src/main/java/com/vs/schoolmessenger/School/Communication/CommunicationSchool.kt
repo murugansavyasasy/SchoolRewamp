@@ -5,11 +5,9 @@ import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.graphics.Paint
 import android.media.MediaPlayer
-import android.media.MediaRecorder
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageView
 import android.widget.RelativeLayout
@@ -20,12 +18,11 @@ import androidx.core.content.ContextCompat
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.CustomSwitch
+import com.vs.schoolmessenger.Utils.SeekBarOnProgressChanged
 import com.vs.schoolmessenger.Utils.WaveExtractor
-import com.vs.schoolmessenger.Utils.WaveSeekBar
+import com.vs.schoolmessenger.Utils.WaveformSeekBar
 import com.vs.schoolmessenger.databinding.CommunicationSchoolBinding
-import java.io.File
-import java.io.FileOutputStream
-import java.net.URL
+import java.util.Random
 
 class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnClickListener {
 
@@ -34,36 +31,40 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     }
 
     private var isPlayingVoice = false // Track the playback state
-    private lateinit var waveSeekBar: WaveSeekBar
-    private var mediaPlayer: MediaPlayer? = null
-    private val handler = Handler(Looper.getMainLooper())
     private val audioUrl = "http://vs5.voicesnapforschools.com/nodejs/voice/VS_1718181818812.wav"
-    private lateinit var audioPath: String
     private var lastPosition: Int = 0 // Variable to hold the last playback position
-
-
-    //Recording
-    private lateinit var mediaRecorder: MediaRecorder
-    private lateinit var audioFile: File
-    private var isRecording = false
     private val REQUEST_RECORD_AUDIO_PERMISSION = 200
-    private val permissions =
-        arrayOf(Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-    private var recordingStartTime: Long = 0
-    private val recordingHandler = Handler(Looper.getMainLooper())
-    private val MAX_RECORDING_DURATION = 180000 // 3 minutes in milliseconds
+    private val permissions = arrayOf(
+        Manifest.permission.RECORD_AUDIO,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE
+    )
+    private lateinit var mediaPlayer: MediaPlayer
+    private var isPrepared = false
+
+    private val handler = Handler(Looper.getMainLooper())
+    private val progressUpdater = object : Runnable {
+        override fun run() {
+            if (isPrepared && mediaPlayer.isPlaying) {
+                val progress = mediaPlayer.currentPosition.toFloat() / mediaPlayer.duration
+                binding.waveformSeekBar.progress = progress // Ensure this updates correctly
+                handler.postDelayed(this, 100) // Update every 100ms
+            }
+        }
+    }
+
 
     @SuppressLint("ClickableViewAccessibility")
     override fun setupViews() {
         super.setupViews()
         setupToolbar()
-
+        loadWaveform()
         // Underline text for labels
         binding.lblHistoryList.paintFlags =
             binding.lblHistoryList.paintFlags or Paint.UNDERLINE_TEXT_FLAG
         binding.lblBackToVoiceMessage.paintFlags =
             binding.lblBackToVoiceMessage.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
+        // Set up listeners for UI elements
         binding.rlaVoiceMessage.setOnClickListener(this)
         binding.rlaScheduleCall.setOnClickListener(this)
         binding.rlaTextMessage.setOnClickListener(this)
@@ -79,216 +80,121 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             Toast.makeText(this, "Switch is $state", Toast.LENGTH_SHORT).show()
         }
 
-        waveSeekBar = findViewById(R.id.waveSeekBar)
-        audioPath = File(cacheDir, "audio.wav").absolutePath
-
-        ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION)
-
-
-        // Download and extract audio
-        downloadAudio(audioUrl, audioPath) {
-            val waveExtractor = WaveExtractor()
-            val waveHeights = waveExtractor.extractWaveHeights(audioPath, 100)
-            waveSeekBar.setWaveHeights(waveHeights)
-            Log.d("CommunicationSchool", "Audio wave heights loaded successfully.")
+        checkPermissions()
+        binding.waveformSeekBar.apply {
+            progress = 0f // Start with zero progress
+            waveProgressColor = ContextCompat.getColor(this@CommunicationSchool, R.color.light_green_bg1)
+            sample = getDummyWaveSample() // Initial setup
         }
 
-        waveSeekBar.setOnTouchListener { _, event ->
-            if (event.action == MotionEvent.ACTION_MOVE || event.action == MotionEvent.ACTION_UP) {
-                val width = waveSeekBar.width.toFloat()
-                val progress = event.x / width
-                waveSeekBar.setProgress(progress)
-
-                mediaPlayer?.let {
-                    val newPosition = (progress * it.duration).toInt()
-                    it.seekTo(newPosition)
-                    if (!it.isPlaying) it.start()
+        binding.waveformSeekBar.onProgressChanged = object : SeekBarOnProgressChanged {
+            override fun onProgressChanged(
+                waveformSeekBar: WaveformSeekBar,
+                progress: Float,
+                fromUser: Boolean
+            ) {
+                if (fromUser && isPrepared) {
+                    val seekPosition = (mediaPlayer.duration * progress).toInt()
+                    mediaPlayer.seekTo(seekPosition)
                 }
-                Log.d("CommunicationSchool", "Seek bar touched, progress: $progress")
+                binding.waveformSeekBar.invalidate() // Force redraw for user-driven updates
             }
-            true
-        }
-
-        if (lastPosition > 0) {
-            mediaPlayer?.seekTo(lastPosition)
-            mediaPlayer?.start()
-            isPlayingVoice = true
-            binding.imgVoicePlay.setImageDrawable(
-                ContextCompat.getDrawable(
-                    this,
-                    R.drawable.play_icon_voice
-                )
-            ) // Change icon to pause
-        }
-
-        if (isPlayingVoice) {
-            waveSeekBar.setProgress(lastPosition.toFloat() / mediaPlayer!!.duration) // Set the initial progress
         }
     }
 
-    private fun downloadAudio(url: String, outputPath: String, onComplete: () -> Unit) {
+    private fun loadWaveform() {
         Thread {
-            try {
-                val input = URL(url).openStream()
-                val output = FileOutputStream(outputPath)
-                input.copyTo(output)
-                output.close()
-                input.close()
-                runOnUiThread { onComplete() }
-                Log.d("CommunicationSchool", "Audio downloaded successfully to $outputPath")
-            } catch (e: Exception) {
-                e.printStackTrace()
-                Log.e("CommunicationSchool", "Failed to download audio: ${e.message}")
-                runOnUiThread {
-                    Toast.makeText(this, "Failed to download audio", Toast.LENGTH_SHORT).show()
-                }
+            val waveExtractor = WaveExtractor()
+            val waveformSamples =
+                waveExtractor.extractWaveHeights(audioUrl, 50) // Extract wave data
+            runOnUiThread {
+                binding.waveformSeekBar.sample =
+                    waveformSamples.map { it.toInt() }.toIntArray() // Set waveform samples
             }
         }.start()
     }
 
-    private fun initializeMediaPlayer() {
+
+    private fun initializeMediaPlayer(audioUrl: String) {
         mediaPlayer = MediaPlayer().apply {
-            try {
-                setDataSource(audioPath) // Ensure you are using the correct audio file path
-                prepareAsync()
-                setOnPreparedListener { mp ->
-                    // If there was a previous position, seek to it before starting
-                    if (lastPosition > 0) {
-                        mp.seekTo(lastPosition)
-                    }
-                    mp.start() // Start playback
-                    isPlayingVoice = true
-                    updateSeekBar() // Start updating the seek bar
-                    Log.d("CommunicationSchool", "MediaPlayer started.")
-                }
-                setOnCompletionListener {
-                    Log.d(
-                        "CommunicationSchool",
-                        "Playback completed - entering completion listener."
-                    )
-                    lastPosition = 0 // Reset position on completion
-                    isPlayingVoice = false
-
-                    // Reset the wave seek bar to the beginning
-                    waveSeekBar.setProgress(0f) // Set seek bar to the start
-                    waveSeekBar.invalidate() // Force redraw to update UI
-
-                    // Change icon back to play
-                    binding.imgVoicePlay.setImageDrawable(
-                        ContextCompat.getDrawable(
-                            this@CommunicationSchool,
-                            R.drawable.play_icon_voice
-                        )
-                    )
-
-                    // Stop any seek bar updates
-                    handler.removeCallbacksAndMessages(null)
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
+            setDataSource(audioUrl)
+            prepareAsync() // Prepare asynchronously
+            setOnPreparedListener {
+                isPrepared = true
+                binding.waveformSeekBar.maxProgress = 1f // Set the max for normalized progress
+                binding.waveformSeekBar.progress = 0f // Reset progress to 0
+                loadWaveform() // Load waveform samples
+                startAudioProgressUpdate() // Start updating progress
+                start() // Start playback
             }
-        }
-    }
-
-
-    private fun togglePlayback() {
-        mediaPlayer?.let { mp ->
-            if (mp.isPlaying) {
-                // Pause playback
-                mp.pause()
-                isPlayingVoice = false
+            setOnCompletionListener {
+                stopAudioProgressUpdate()
+                lastPosition = 0 // Reset last position on completion
+                binding.waveformSeekBar.progress = 0f // Reset seek bar on completion
+                isPlayingVoice = false // Update playback state
                 binding.imgVoicePlay.setImageDrawable(
                     ContextCompat.getDrawable(
-                        this,
+                        this@CommunicationSchool,
                         R.drawable.play_icon_voice
                     )
-                )
-            } else {
-                // Start or resume playback
-                mp.start()
-                isPlayingVoice = true
-                binding.imgVoicePlay.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        this,
-                        R.drawable.pause_icon
-                    )
-                )
-                updateSeekBar() // Ensure seek bar updates continue
-            }
-        } ?: run {
-            // If media player is null, initialize and start playback
-            initializeMediaPlayer()
-            setupWaveSeekBar()
-            isPlayingVoice = true
-            binding.imgVoicePlay.setImageDrawable(
-                ContextCompat.getDrawable(
-                    this,
-                    R.drawable.pause_icon
-                )
-            )
-        }
-    }
-
-    private fun updateSeekBar() {
-        mediaPlayer?.let { mp ->
-            if (mp.isPlaying) {
-                val currentPosition = mp.currentPosition
-                lastPosition = currentPosition // Store the current position
-                if (mp.duration > 0) {
-                    val progress = currentPosition.toFloat() / mp.duration
-                    waveSeekBar.setProgress(progress) // Update the seek bar based on current position
-                }
-                // Schedule the next update
-                handler.postDelayed({ updateSeekBar() }, 100)
-            } else {
-                handler.removeCallbacksAndMessages(null) // Stop seek bar updates
+                ) // Change icon to play
             }
         }
     }
 
-    private fun setupWaveSeekBar() {
-        // Assume you have a method to extract wave heights from audio
-        val waveExtractor = WaveExtractor() // Replace with your actual wave extractor
-        val waveHeights = waveExtractor.extractWaveHeights(
-            audioUrl,
-            100
-        ) // Adjust the number of samples as needed
-        waveSeekBar.setWaveHeights(waveHeights)
+    private fun startAudioProgressUpdate() {
+        handler.post(progressUpdater)
+        binding.waveformSeekBar.invalidate() // Force redraw
     }
 
+    private fun stopAudioProgressUpdate() {
+        handler.removeCallbacks(progressUpdater)
+        binding.waveformSeekBar.progress = 0f // Reset progress
+        binding.imgVoicePlay.setImageDrawable(
+            ContextCompat.getDrawable(this, R.drawable.play_icon_voice)
+        )
+    }
+
+
+    private fun checkPermissions() {
+        if (!hasPermissions()) {
+            ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION)
+        }
+    }
+
+    private fun hasPermissions(): Boolean {
+        return permissions.all { permission ->
+            ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
+        }
+    }
+
+    private fun getDummyWaveSample(): IntArray {
+        return IntArray(50) { Random().nextInt(50) }
+    }
 
     override fun onResume() {
         super.onResume()
-        mediaPlayer?.let {
-            if (!it.isPlaying) {
-                it.seekTo(lastPosition) // Seek to the last position
-            }
-        }
     }
 
     override fun onPause() {
         super.onPause()
-        if (mediaPlayer?.isPlaying == true) {
-            lastPosition = mediaPlayer!!.currentPosition // Save the current position
-            mediaPlayer?.pause() // Pause playback
-            isPlayingVoice = false
-            binding.imgVoicePlay.setImageDrawable(
-                ContextCompat.getDrawable(
-                    this,
-                    R.drawable.play_icon_voice
+        mediaPlayer.let {
+            if (it.isPlaying) {
+                lastPosition = it.currentPosition
+                it.pause()
+                isPlayingVoice = false
+                binding.imgVoicePlay.setImageDrawable(
+                    ContextCompat.getDrawable(this, R.drawable.play_icon_voice)
                 )
-            ) // Change icon to play
+            }
         }
     }
 
-
     override fun onDestroy() {
         super.onDestroy()
-        mediaPlayer?.release()
-        mediaPlayer = null
-        mediaRecorder.release()
+        mediaPlayer.release()
+        stopAudioProgressUpdate()
     }
-
 
     override fun onClick(p0: View?) {
         when (p0?.id) {
@@ -332,134 +238,45 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
 
             R.id.imgVoicePlay -> {
-                togglePlayback()
-            }
-
-            R.id.imgVoiceRecord -> {
-                if (isRecording) {
-                    stopRecording()
+                if (isPlayingVoice) {
+                    // Pause the media player
+                    mediaPlayer.pause()
+                    lastPosition = mediaPlayer.currentPosition // Save current position
+                    isPlayingVoice = false
+                    binding.imgVoicePlay.setImageDrawable(
+                        ContextCompat.getDrawable(
+                            this,
+                            R.drawable.play_icon_voice
+                        )
+                    ) // Change icon to play
                 } else {
-                    startRecording()
-                }
-            }
-        }
-    }
-
-    private fun loadAudioFromFile() {
-        val audioFilePath =
-            "/storage/emulated/0/Android/data/com.vs.schoolmessenger/cache/recorded_audio.3gp"
-        val audioFile = File(audioFilePath)
-
-        if (audioFile.exists()) {
-            mediaPlayer = MediaPlayer().apply {
-                try {
-                    setDataSource(audioFilePath) // Set the path to the audio file
-                    prepareAsync() // Prepare the MediaPlayer asynchronously
-                    setOnPreparedListener {
-                        start() // Start playback when ready
-                        binding.imgVoiceRecord.setImageDrawable(
+                    // If the media player is not initialized, initialize it
+                    if (!isPrepared) {
+                        binding.imgVoicePlay.setImageDrawable(
                             ContextCompat.getDrawable(
-                                this@CommunicationSchool,
+                                this,
                                 R.drawable.pause_icon
                             )
-                        )
-                        Log.d("CommunicationSchool", "Audio playback started.")
-                    }
-                    setOnCompletionListener {
-                        Log.d("CommunicationSchool", "Playback completed.")
-                        // Reset or update UI as necessary
-                        binding.imgVoiceRecord.setImageDrawable(
+                        ) // Change icon to pause
+                        initializeMediaPlayer(audioUrl) // Prepare the media player for the first time
+                    } else {
+                        mediaPlayer.seekTo(lastPosition) // Seek to last position
+                        mediaPlayer.start() // Start playing
+                        isPlayingVoice = true
+                        binding.imgVoicePlay.setImageDrawable(
                             ContextCompat.getDrawable(
-                                this@CommunicationSchool,
-                                R.drawable.play_icon_voice
+                                this,
+                                R.drawable.pause_icon
                             )
-                        )
+                        ) // Change icon to pause
+                        startAudioProgressUpdate() // Start updating progress again
                     }
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                    Log.e("CommunicationSchool", "Error initializing MediaPlayer: ${e.message}")
                 }
             }
-        } else {
-            Toast.makeText(this, "Audio file does not exist!", Toast.LENGTH_SHORT).show()
-            Log.e("CommunicationSchool", "Audio file not found at: $audioFilePath")
-        }
-    }
 
 
-    private fun updateRecordingDuration() {
-        recordingHandler.postDelayed({
-            if (isRecording) {
-                val elapsedTime = System.currentTimeMillis() - recordingStartTime
-                if (elapsedTime < MAX_RECORDING_DURATION) {
-                    // Format elapsed time to mm:ss
-                    val seconds = (elapsedTime / 1000).toInt()
-                    val minutes = seconds / 60
-                    val remainingSeconds = seconds % 60
-                    binding.lblDurationOfVoice.text =
-                        String.format("%02d:%02d / 03:00", minutes, remainingSeconds)
+            R.id.imgVoiceRecord -> {
 
-                    // Schedule the next update
-                    updateRecordingDuration()
-                } else {
-                    // Stop recording if maximum duration is reached
-                    stopRecording()
-                    Toast.makeText(this, "Maximum recording duration reached.", Toast.LENGTH_SHORT)
-                        .show()
-                }
-            }
-        }, 1000) // Update every second
-    }
-
-
-    private fun startRecording() {
-        binding.imgVoiceRecord.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.record))
-
-        audioFile = File(externalCacheDir, "recorded_audio.3gp")
-
-        mediaRecorder = MediaRecorder().apply {
-            setAudioSource(MediaRecorder.AudioSource.MIC)
-            setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
-            setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
-            setOutputFile(audioFile.absolutePath)
-            prepare()
-            start()
-        }
-
-        recordingStartTime = System.currentTimeMillis()
-        updateRecordingDuration()
-
-        isRecording = true
-    }
-
-    private fun stopRecording() {
-        binding.imgVoiceRecord.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.voice))
-        mediaRecorder.apply {
-            stop()
-            release()
-        }
-        isRecording = false
-
-        // Print the recording file URL
-        val recordedAudioUrl = audioFile.absolutePath
-        Log.d("Recording", "Recorded audio file URL: $recordedAudioUrl")
-        recordingHandler.removeCallbacksAndMessages(null)
-        // Optionally, display the URL in a Toast
-        Toast.makeText(this, "Recorded audio file URL: $recordedAudioUrl", Toast.LENGTH_LONG).show()
-        loadAudioFromFile()
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when (requestCode) {
-            REQUEST_RECORD_AUDIO_PERMISSION -> {
-                if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                    finish()
-                }
             }
         }
     }
