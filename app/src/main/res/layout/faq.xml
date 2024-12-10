@@ -312,6 +312,7 @@
                 android:layout_marginBottom="@dimen/fifty"
                 android:background="@drawable/rect_btn_orange"
                 android:gravity="center"
+                android:visibility="gone"
                 android:text="@string/lblSubmit"
                 android:textColor="@color/white"
                 android:textSize="@dimen/thirteen_sp" />
