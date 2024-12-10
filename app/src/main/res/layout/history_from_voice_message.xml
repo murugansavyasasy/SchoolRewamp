@@ -44,13 +44,12 @@
             android:layout_marginStart="@dimen/twenty"
             android:layout_marginEnd="@dimen/twenty"
             android:layout_below="@+id/lblTitle"
-            android:padding="@dimen/ten">
+           >
 
             <ImageView
                 android:id="@+id/imgVoicePlay"
                 android:layout_width="@dimen/fourty_five"
                 android:layout_height="@dimen/fourty_five"
-                android:layout_centerVertical="true"
                 android:src="@drawable/play_icon_voice">
 
             </ImageView>
@@ -59,7 +58,7 @@
                 android:id="@+id/waveformSeekBar"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/thirty"
-                android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/seven"
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginEnd="@dimen/ten"
                 android:layout_toEndOf="@+id/imgVoicePlay" />
@@ -68,11 +67,11 @@
                 android:id="@+id/lblStartDuration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/waveformSeekBar"
+                android:layout_below="@+id/imgVoicePlay"
+                android:layout_marginTop="@dimen/seven"
                 android:layout_marginStart="@dimen/ten"
                 android:layout_toEndOf="@+id/imgVoicePlay"
-                android:text="01:39"
-                android:paddingBottom="@dimen/ten"
+                android:text="00:00"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"></TextView>
 
@@ -80,10 +79,11 @@
                 android:id="@+id/lblEndDuration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/waveformSeekBar"
+                android:layout_below="@+id/imgVoicePlay"
                 android:layout_alignParentRight="true"
                 android:layout_marginStart="@dimen/ten"
-                android:text="07:50"
+                android:layout_marginTop="@dimen/seven"
+                android:text="00:00"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"></TextView>
 
@@ -96,14 +96,13 @@
             android:layout_below="@+id/rlaVoiceHistory"
             android:layout_alignParentRight="true"
             android:layout_marginEnd="@dimen/ten"
-            android:layout_marginBottom="@dimen/ten"
             android:background="@drawable/rect_blue_and_green_small_radious"
             android:padding="@dimen/ten">
 
             <ImageView
                 android:id="@+id/imgSend"
-                android:layout_width="@dimen/twenty"
-                android:layout_height="@dimen/twenty"
+                android:layout_width="@dimen/fifteen"
+                android:layout_height="@dimen/fifteen"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/five"
                 android:src="@drawable/send_icon_white"></ImageView>
@@ -116,7 +115,7 @@
                 android:layout_toEndOf="@+id/imgSend"
                 android:text="Send"
                 android:textColor="@color/white"
-                android:textSize="@dimen/fifteen_sp"></TextView>
+                android:textSize="@dimen/thirteen_sp"></TextView>
         </RelativeLayout>
 
 

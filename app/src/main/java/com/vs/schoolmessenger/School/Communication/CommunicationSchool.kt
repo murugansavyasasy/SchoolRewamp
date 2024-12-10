@@ -43,7 +43,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     )
     private lateinit var mediaPlayer: MediaPlayer
     private var isPrepared = false
-
     lateinit var mAdapter: VoiceHistoryAdapter
     private lateinit var isVoiceHistoryData: List<VoiceHistoryData>
 
@@ -79,6 +78,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         binding.imgVoicePlay.setOnClickListener(this)
         binding.imgVoiceRecord.setOnClickListener(this)
         binding.lblHistoryList.setOnClickListener(this)
+        binding.rlaBackRecord.setOnClickListener(this)
+        binding.imgBack.setOnClickListener(this)
 
         val customSwitch: CustomSwitch = findViewById(R.id.SwitchEmergencyVoice)
         customSwitch.setOnClickListener {
@@ -123,7 +124,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     }
 
 
-    private fun initializeMediaPlayer(audioUrl: String) {
+    private fun initializeMediaPlayer() {
         mediaPlayer = MediaPlayer().apply {
             setDataSource(audioUrl)
             prepareAsync() // Prepare asynchronously
@@ -186,6 +187,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
     override fun onPause() {
         super.onPause()
+
         mediaPlayer.let {
             if (it.isPlaying) {
                 lastPosition = it.currentPosition
@@ -207,6 +209,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     override fun onClick(p0: View?) {
         when (p0?.id) {
             R.id.rlaVoiceMessage -> {
+                binding.rlaScheduleCallPickDate.visibility=View.GONE
                 isChangeBackRoundCommunicationType(
                     binding.rlaVoiceMessage,
                     binding.imgVoiceMessage,
@@ -214,6 +217,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 )
             }
             R.id.rlaScheduleCall -> {
+                binding.rlaScheduleCallPickDate.visibility=View.VISIBLE
                 isChangeBackRoundCommunicationType(
                     binding.rlaScheduleCall,
                     binding.imgScheduleCall,
@@ -221,6 +225,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 )
             }
             R.id.rlaTextMessage -> {
+                binding.rlaScheduleCallPickDate.visibility=View.GONE
                 isChangeBackRoundCommunicationType(
                     binding.rlaTextMessage,
                     binding.imgTextMessage,
@@ -246,7 +251,40 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
 
             R.id.imgVoicePlay -> {
-                isPlayingVoice(audioUrl)
+                if (isPlayingVoice) {
+                    // Pause the media player
+                    mediaPlayer.pause()
+                    lastPosition = mediaPlayer.currentPosition // Save current position
+                    isPlayingVoice = false
+                    binding.imgVoicePlay.setImageDrawable(
+                        ContextCompat.getDrawable(
+                            this,
+                            R.drawable.play_icon_voice
+                        )
+                    ) // Change icon to play
+                } else {
+                    // If the media player is not initialized, initialize it
+                    if (!isPrepared) {
+                        binding.imgVoicePlay.setImageDrawable(
+                            ContextCompat.getDrawable(
+                                this,
+                                R.drawable.pause_icon
+                            )
+                        ) // Change icon to pause
+                        initializeMediaPlayer() // Prepare the media player for the first time
+                    } else {
+                        mediaPlayer.seekTo(lastPosition) // Seek to last position
+                        mediaPlayer.start() // Start playing
+                        isPlayingVoice = true
+                        binding.imgVoicePlay.setImageDrawable(
+                            ContextCompat.getDrawable(
+                                this,
+                                R.drawable.pause_icon
+                            )
+                        ) // Change icon to pause
+                        startAudioProgressUpdate() // Start updating progress again
+                    }
+                }
             }
 
 
@@ -254,9 +292,24 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
             }
 
+            R.id.imgBack -> {
+                onBackPressed()
+            }
+
+            R.id.rlaBackRecord -> {
+
+                binding.rcyHistoryDataVoiceAndText.visibility = View.GONE
+                binding.rlaScheduleCallPickDate.visibility = View.GONE
+                binding.rlaBackRecord.visibility = View.GONE
+                binding.gridViewScheduleCall.visibility = View.VISIBLE
+                binding.rlaRecordVoice.visibility = View.VISIBLE
+
+            }
+
             R.id.lblHistoryList -> {
                 binding.rcyHistoryDataVoiceAndText.visibility = View.VISIBLE
-                binding.rlaScheduleCallPickDate.visibility = View.GONE
+                binding.rlaScheduleCallPickDate.visibility = View.VISIBLE
+                binding.rlaBackRecord.visibility = View.VISIBLE
                 binding.gridViewScheduleCall.visibility = View.GONE
                 binding.rlaRecordVoice.visibility = View.GONE
                 loadData()
@@ -385,6 +438,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
         mAdapter = VoiceHistoryAdapter(null, this, this, Constant.isShimmerViewShow)
         binding.rcyHistoryDataVoiceAndText.layoutManager = LinearLayoutManager(this)
+        binding.rcyHistoryDataVoiceAndText.isNestedScrollingEnabled = false;
         binding.rcyHistoryDataVoiceAndText.adapter = mAdapter
 
         Constant.executeAfterDelay {
@@ -397,44 +451,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     }
 
     override fun onItemClick(data: VoiceHistoryData, holder: VoiceHistoryAdapter.DataViewHolder) {
-        isPlayingVoice(data.url)
-    }
 
-
-    private fun isPlayingVoice(audioUrl: String) {
-        if (isPlayingVoice) {
-            // Pause the media player
-            mediaPlayer.pause()
-            lastPosition = mediaPlayer.currentPosition // Save current position
-            isPlayingVoice = false
-            binding.imgVoicePlay.setImageDrawable(
-                ContextCompat.getDrawable(
-                    this,
-                    R.drawable.play_icon_voice
-                )
-            ) // Change icon to play
-        } else {
-            // If the media player is not initialized, initialize it
-            if (!isPrepared) {
-                binding.imgVoicePlay.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        this,
-                        R.drawable.pause_icon
-                    )
-                ) // Change icon to pause
-                initializeMediaPlayer(audioUrl) // Prepare the media player for the first time
-            } else {
-                mediaPlayer.seekTo(lastPosition) // Seek to last position
-                mediaPlayer.start() // Start playing
-                isPlayingVoice = true
-                binding.imgVoicePlay.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        this,
-                        R.drawable.pause_icon
-                    )
-                ) // Change icon to pause
-                startAudioProgressUpdate() // Start updating progress again
-            }
-        }
     }
 }

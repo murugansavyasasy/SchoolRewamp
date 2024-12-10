@@ -163,6 +163,7 @@
                 <RelativeLayout
                     android:id="@+id/rlaScheduleCallPickDate"
                     android:layout_width="match_parent"
+                    android:visibility="gone"
                     android:layout_height="wrap_content">
 
                     <LinearLayout
@@ -334,7 +335,7 @@
                     android:id="@+id/gridViewScheduleCall"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/rlaScheduleCallPickDate"
+                    android:layout_below="@+id/rlaBackRecord"
                     android:layout_marginTop="@dimen/ten"
                     android:numColumns="3"
                     tools:listitem="@layout/schedule_call_date_data">
@@ -351,12 +352,12 @@
                     tools:listitem="@layout/history_from_text_message"></androidx.recyclerview.widget.RecyclerView>
 
                 <RelativeLayout
-                    android:id="@+id/rlaRecordVoice"
+                    android:id="@+id/rlaBackRecord"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="visible"
-                    android:layout_below="@+id/gridViewScheduleCall">
-
+                    android:layout_below="@+id/rlaScheduleCallPickDate"
+                    android:layout_marginTop="@dimen/five"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/lblBackToVoiceMessage"
@@ -368,8 +369,7 @@
                         android:text="Back to voice message"
                         android:textColor="@color/navi_blue2"
                         android:textSize="@dimen/fifteen_sp"
-                        android:textStyle="bold"
-                        android:visibility="gone">
+                        android:textStyle="bold">
 
                     </TextView>
 
@@ -380,8 +380,17 @@
                         android:layout_marginTop="@dimen/twenty"
                         android:layout_marginEnd="@dimen/ten"
                         android:layout_toEndOf="@+id/lblBackToVoiceMessage"
-                        android:src="@drawable/right_arrow_round"
-                        android:visibility="gone"></ImageView>
+                        android:src="@drawable/right_arrow_round"></ImageView>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlaRecordVoice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/gridViewScheduleCall"
+                    android:visibility="visible">
+
 
                     <TextView
                         android:id="@+id/lblHistoryList"
@@ -494,7 +503,6 @@
                             android:layout_width="@dimen/twenty_five"
                             android:layout_height="@dimen/twenty_five"
                             android:layout_marginStart="@dimen/thirteen"
-                            android:layout_marginTop="@dimen/three"
                             android:elevation="10dp"
                             android:src="@drawable/close_red_color">
                         </ImageView>
@@ -504,14 +512,15 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/twenty"
                             android:layout_marginEnd="@dimen/twenty"
-                            android:background="@drawable/rect_shadow_white"
-                            android:padding="@dimen/ten">
+                            android:layout_marginTop="@dimen/ten"
+                            android:background="@drawable/rect_shadow_white">
 
                             <ImageView
                                 android:id="@+id/imgVoicePlay"
                                 android:layout_width="@dimen/fourty_five"
                                 android:layout_height="@dimen/fourty_five"
-                                android:layout_centerVertical="true"
+                                android:layout_marginStart="@dimen/five"
+                                android:layout_marginTop="@dimen/ten"
                                 android:src="@drawable/play_icon_voice">
 
                             </ImageView>
@@ -520,7 +529,7 @@
                                 android:id="@+id/waveformSeekBar"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/thirty"
-                                android:layout_centerInParent="true"
+                                android:layout_marginTop="@dimen/eighteen"
                                 android:layout_marginStart="@dimen/ten"
                                 android:layout_marginEnd="@dimen/ten"
                                 android:layout_toEndOf="@+id/imgVoicePlay" />
@@ -529,12 +538,11 @@
                                 android:id="@+id/lblStartDuration"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@+id/waveformSeekBar"
+                                android:layout_below="@+id/imgVoicePlay"
                                 android:layout_marginStart="@dimen/ten"
-                                android:layout_marginTop="@dimen/fourty"
                                 android:layout_toEndOf="@+id/imgVoicePlay"
-                                android:text="01:39"
-                                android:paddingBottom="@dimen/ten"
+                                android:layout_marginBottom="@dimen/five"
+                                android:text="00:00"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/thirteen_sp"></TextView>
 
@@ -542,11 +550,10 @@
                                 android:id="@+id/lblEndDuration"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@+id/waveformSeekBar"
+                                android:layout_below="@+id/imgVoicePlay"
                                 android:layout_alignParentRight="true"
-                                android:layout_marginStart="@dimen/ten"
-                                android:layout_marginTop="@dimen/fourty"
-                                android:text="07:50"
+                                android:layout_marginEnd="@dimen/ten"
+                                android:text="00:00"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/thirteen_sp"></TextView>
 
@@ -571,6 +578,7 @@
                             android:text="Title"
                             android:textColor="@color/black"
                             android:textSize="@dimen/fifteen_sp"
+                            android:visibility="gone"
                             android:textStyle="bold"></TextView>
 
                         <EditText
@@ -578,6 +586,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textSize="@dimen/thirteen_sp"
+                            android:hint="Enter the title here "
                             android:layout_below="@+id/lblTitle"></EditText>
 
                     </RelativeLayout>
