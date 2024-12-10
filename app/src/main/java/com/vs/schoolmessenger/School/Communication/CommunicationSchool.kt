@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.graphics.Paint
 import android.media.MediaPlayer
+import android.media.MediaRecorder
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
@@ -24,6 +25,7 @@ import com.vs.schoolmessenger.Utils.SeekBarOnProgressChanged
 import com.vs.schoolmessenger.Utils.WaveExtractor
 import com.vs.schoolmessenger.Utils.WaveformSeekBar
 import com.vs.schoolmessenger.databinding.CommunicationSchoolBinding
+import java.io.IOException
 import java.util.Random
 
 class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnClickListener,
@@ -33,18 +35,21 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         return CommunicationSchoolBinding.inflate(layoutInflater)
     }
 
+    private var mediaRecorder: MediaRecorder? = null
+    private var isRecording = false
+    private var audioFilePath: String? = null
+
+
     private var isPlayingVoice = false // Track the playback state
-    private val audioUrl = "http://vs5.voicesnapforschools.com/nodejs/voice/VS_1718181818812.wav"
+//    private val audioUrl = "http://vs5.voicesnapforschools.com/nodejs/voice/VS_1718181818812.wav"
     private var lastPosition: Int = 0 // Variable to hold the last playback position
-    private val REQUEST_RECORD_AUDIO_PERMISSION = 200
-    private val permissions = arrayOf(
-        Manifest.permission.RECORD_AUDIO,
-        Manifest.permission.WRITE_EXTERNAL_STORAGE
-    )
+    private val PERMISSIONS_REQUEST_CODE = 200
+
     private lateinit var mediaPlayer: MediaPlayer
     private var isPrepared = false
     lateinit var mAdapter: VoiceHistoryAdapter
     private lateinit var isVoiceHistoryData: List<VoiceHistoryData>
+    private val MAX_RECORDING_TIME = 180
 
     private val handler = Handler(Looper.getMainLooper())
     private val progressUpdater = object : Runnable {
@@ -56,6 +61,10 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
         }
     }
+
+    private var recordingTime = 0 // Recording time in seconds
+    private lateinit var recordingHandler: Handler
+    private lateinit var recordingRunnable: Runnable
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -81,14 +90,15 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         binding.rlaBackRecord.setOnClickListener(this)
         binding.imgBack.setOnClickListener(this)
 
+        checkAndRequestPermissions()
+        audioFilePath = "${externalCacheDir?.absolutePath}/audiorecord.3gp"
+
         val customSwitch: CustomSwitch = findViewById(R.id.SwitchEmergencyVoice)
         customSwitch.setOnClickListener {
             val state = if (customSwitch.isChecked()) "ON" else "OFF"
-            Log.d("CommunicationSchool", "Switch state: $state")
             Toast.makeText(this, "Switch is $state", Toast.LENGTH_SHORT).show()
         }
 
-        checkPermissions()
 
         binding.waveformSeekBar.apply {
             progress = 0f // Start with zero progress
@@ -109,13 +119,92 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 binding.waveformSeekBar.invalidate() // Force redraw for user-driven updates
             }
         }
+
+        // Initialize handler for updating recording time
+        recordingHandler = Handler()
+        recordingRunnable = Runnable {
+            if (isRecording) {
+                recordingTime++
+                binding.lblDurationOfVoice.text = String.format(
+                    "%02d:%02d" + " / 03:00",
+                    recordingTime / 60,
+                    recordingTime % 60
+                )
+
+                if (recordingTime >= MAX_RECORDING_TIME) {
+                    stopRecording()
+                } else {
+                    recordingHandler.postDelayed(recordingRunnable, 1000) // Update every second
+                }
+            }
+        }
+    }
+
+
+    private fun startRecording() {
+        if (checkAndRequestPermissions()) {
+            mediaRecorder = MediaRecorder().apply {
+                setAudioSource(MediaRecorder.AudioSource.MIC)
+                setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
+                setOutputFile(audioFilePath)
+                setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
+
+                try {
+
+                    binding.imgVoiceRecord.setImageDrawable(
+                        ContextCompat.getDrawable(
+                            this@CommunicationSchool,
+                            R.drawable.record_voice
+                        )
+                    )
+                    prepare()
+                    start()
+                    isRecording = true
+                    recordingTime = 0 // Reset recording time
+                    recordingHandler.post(recordingRunnable) // Start updating time
+                    Toast.makeText(
+                        this@CommunicationSchool,
+                        "Recording started",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                    Toast.makeText(this@CommunicationSchool, "Recording failed", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+        } else {
+            checkAndRequestPermissions()
+        }
+    }
+
+    private fun stopRecording() {
+        mediaRecorder?.apply {
+
+            binding.imgVoiceRecord.setImageDrawable(
+                ContextCompat.getDrawable(
+                    this@CommunicationSchool,
+                    R.drawable.record_icon
+                )
+            )
+
+            stop()
+            release()
+            mediaRecorder = null
+            isRecording = false
+            recordingHandler.removeCallbacks(recordingRunnable) // Stop updating time
+            Toast.makeText(this@CommunicationSchool, "Recording stopped", Toast.LENGTH_SHORT).show()
+            Log.d("RecordingFilePath", "Recording stopped. File Path: $audioFilePath") // Print the file path when recording stops
+            binding.rlaSeekBarAndTitle.visibility=View.VISIBLE
+
+        }
     }
 
     private fun loadWaveform() {
         Thread {
             val waveExtractor = WaveExtractor()
             val waveformSamples =
-                waveExtractor.extractWaveHeights(audioUrl, 50) // Extract wave data
+                waveExtractor.extractWaveHeights(audioFilePath!!, 50) // Extract wave data
             runOnUiThread {
                 binding.waveformSeekBar.sample =
                     waveformSamples.map { it.toInt() }.toIntArray() // Set waveform samples
@@ -126,7 +215,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
     private fun initializeMediaPlayer() {
         mediaPlayer = MediaPlayer().apply {
-            setDataSource(audioUrl)
+            setDataSource(audioFilePath)
             prepareAsync() // Prepare asynchronously
             setOnPreparedListener {
                 isPrepared = true
@@ -164,19 +253,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         )
     }
 
-
-    private fun checkPermissions() {
-        if (!hasPermissions()) {
-            ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION)
-        }
-    }
-
-    private fun hasPermissions(): Boolean {
-        return permissions.all { permission ->
-            ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
-        }
-    }
-
     private fun getDummyWaveSample(): IntArray {
         return IntArray(50) { Random().nextInt(50) }
     }
@@ -187,22 +263,25 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
     override fun onPause() {
         super.onPause()
-
-        mediaPlayer.let {
-            if (it.isPlaying) {
-                lastPosition = it.currentPosition
-                it.pause()
-                isPlayingVoice = false
-                binding.imgVoicePlay.setImageDrawable(
-                    ContextCompat.getDrawable(this, R.drawable.play_icon_voice)
+        if (::mediaPlayer.isInitialized && mediaPlayer.isPlaying) {
+            lastPosition = mediaPlayer.currentPosition // Save the current position
+            mediaPlayer.pause() // Pause playback
+            isPlayingVoice = false
+            binding.imgVoicePlay.setImageDrawable(
+                ContextCompat.getDrawable(
+                    this,
+                    R.drawable.play_icon_voice
                 )
-            }
+            )
         }
     }
 
+
     override fun onDestroy() {
         super.onDestroy()
+        mediaRecorder?.release()
         mediaPlayer.release()
+        recordingHandler.removeCallbacks(recordingRunnable)
         stopAudioProgressUpdate()
     }
 
@@ -287,9 +366,12 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 }
             }
 
-
             R.id.imgVoiceRecord -> {
-
+                if (!isRecording) {
+                    startRecording()
+                } else {
+                    stopRecording()
+                }
             }
 
             R.id.imgBack -> {
@@ -447,6 +529,67 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 VoiceHistoryAdapter(isVoiceHistoryData, this, this, Constant.isShimmerViewDisable)
             // Set GridLayoutManager (2 columns in this case)
             binding.rcyHistoryDataVoiceAndText.adapter = mAdapter
+        }
+    }
+
+    private fun checkAndRequestPermissions(): Boolean {
+        val requiredPermissions = mutableListOf<String>()
+
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.RECORD_AUDIO
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            requiredPermissions.add(Manifest.permission.RECORD_AUDIO)
+        }
+
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            requiredPermissions.add(Manifest.permission.READ_EXTERNAL_STORAGE)
+        }
+
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            requiredPermissions.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        }
+
+        return if (requiredPermissions.isNotEmpty()) {
+            ActivityCompat.requestPermissions(
+                this,
+                requiredPermissions.toTypedArray(),
+                PERMISSIONS_REQUEST_CODE
+            )
+            false
+        } else {
+            true
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == PERMISSIONS_REQUEST_CODE) {
+            val deniedPermissions = permissions.zip(grantResults.toTypedArray())
+                .filter { it.second != PackageManager.PERMISSION_GRANTED }
+                .map { it.first }
+
+            if (deniedPermissions.isNotEmpty()) {
+                // Inform the user that permissions were denied and are necessary.
+                Toast.makeText(
+                    this,
+                    "Required permissions denied: $deniedPermissions",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
         }
     }
 

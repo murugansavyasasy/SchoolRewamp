@@ -4,7 +4,6 @@ import android.content.Context
 import android.media.MediaPlayer
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -199,10 +198,12 @@ class VoiceHistoryAdapter(
             return String.format("%02d:%02d", minutes, seconds)
         }
 
-        fun stopAudioPlayback() {
+        private fun stopAudioPlayback() {
             if (::mediaPlayer.isInitialized) {
-                mediaPlayer.stop() // Stop playback
-                mediaPlayer.reset() // Reset media player
+                if (mediaPlayer.isPlaying) {
+                    mediaPlayer.stop() // Stop playback
+                    mediaPlayer.reset() // Reset media player
+                }
                 isPlayingVoice = false
                 lastPosition = 0 // Reset last position on stop
                 waveformSeekBar.progress = 0f // Reset seek bar on stop

@@ -497,6 +497,7 @@
                         android:id="@+id/rlaSeekBarAndTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:visibility="gone"
                         android:layout_below="@+id/rlaAddLocalFile">
 
                         <ImageView
@@ -567,6 +568,7 @@
                         android:layout_below="@+id/rlaSeekBarAndTitle"
                         android:layout_marginStart="@dimen/twenty"
                         android:layout_marginTop="@dimen/twenty"
+                        android:visibility="gone"
                         android:layout_marginEnd="@dimen/twenty"
 
                         >
