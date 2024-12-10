@@ -13,16 +13,16 @@
 
         <RelativeLayout
             android:id="@+id/rytHeader"
-            android:layout_marginTop="@dimen/ten"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:padding="@dimen/ten">
+            android:background="@drawable/bg_rect_gradient_home"
+            android:paddingHorizontal="@dimen/ten"
+            android:paddingVertical="@dimen/twenty">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imgSchoolLogo"
-                android:layout_width="@dimen/fourty"
-                android:layout_height="@dimen/fourty"
+                android:layout_width="@dimen/fifty"
+                android:layout_height="@dimen/fifty"
                 android:layout_centerVertical="true"
                 android:src="@drawable/splash_icon6"
                 app:civ_border_color="@color/colorPrimary"
@@ -41,8 +41,9 @@
                     android:id="@+id/lblSchoolName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Savyasasy schools"
+                    android:text="Savyasasy software solutions pvt Ltd.,"
                     android:textColor="@color/black"
+                    android:textStyle="bold"
                     android:textSize="@dimen/fifteen_sp" />
 
                 <TextView
@@ -50,7 +51,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/lblSchoolName"
-                    android:text="Savyasasy schools, Chennai - 600043"
+                    android:text="Savyasasy schools, Chennai  600043"
                     android:textColor="@color/light_gray"
                     android:textSize="@dimen/thirteen_sp" />
             </RelativeLayout>
@@ -62,33 +63,44 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/ten"
                 android:visibility="gone"
-                android:layout_toStartOf="@+id/imgNotification"
+                android:layout_toStartOf="@+id/rytImageNotification"
                 android:src="@drawable/search_icon">
 
             </ImageView>
+
+            <FrameLayout
+                android:id="@+id/rytImageNotification"
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/lblNotificationCount"
                 android:layout_width="@dimen/twenty_five"
                 android:layout_height="@dimen/twenty_five"
-                android:layout_alignParentEnd="true"
                 android:layout_marginEnd="5dp"
                 android:background="@drawable/bg_red_small_size"
                 android:elevation="@dimen/ten"
                 android:gravity="center"
+                android:layout_marginStart="@dimen/ten"
                 android:text="5"
                 android:textColor="@color/white"
                 android:textSize="@dimen/thirteen_sp"
                 android:textStyle="bold" />
 
             <ImageView
+                android:layout_marginTop="@dimen/ten"
                 android:id="@+id/imgNotification"
                 android:layout_width="@dimen/thirty"
                 android:layout_height="@dimen/thirty"
-                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/ten"
                 android:src="@drawable/notification_icon" />
+
+            </FrameLayout>
+
+
+
         </RelativeLayout>
 
         <RelativeLayout

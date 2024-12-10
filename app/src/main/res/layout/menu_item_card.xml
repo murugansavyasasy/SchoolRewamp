@@ -12,10 +12,10 @@
 
         <ImageView
             android:id="@+id/imgMenu"
-            android:layout_width="@dimen/thirty"
+            android:layout_width="@dimen/twenty_five"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:layout_height="@dimen/thirty"
+            android:layout_height="@dimen/twenty_five"
             android:src="@drawable/splash_icon7"/>
 
         </RelativeLayout>
