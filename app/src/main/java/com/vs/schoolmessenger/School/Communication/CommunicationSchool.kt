@@ -15,8 +15,10 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.CustomSwitch
 import com.vs.schoolmessenger.Utils.SeekBarOnProgressChanged
 import com.vs.schoolmessenger.Utils.WaveExtractor
@@ -24,7 +26,8 @@ import com.vs.schoolmessenger.Utils.WaveformSeekBar
 import com.vs.schoolmessenger.databinding.CommunicationSchoolBinding
 import java.util.Random
 
-class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnClickListener {
+class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnClickListener,
+    VoiceHistoryClickListener {
 
     override fun getViewBinding(): CommunicationSchoolBinding {
         return CommunicationSchoolBinding.inflate(layoutInflater)
@@ -40,6 +43,9 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     )
     private lateinit var mediaPlayer: MediaPlayer
     private var isPrepared = false
+
+    lateinit var mAdapter: VoiceHistoryAdapter
+    private lateinit var isVoiceHistoryData: List<VoiceHistoryData>
 
     private val handler = Handler(Looper.getMainLooper())
     private val progressUpdater = object : Runnable {
@@ -72,6 +78,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         binding.rlaToTime.setOnClickListener(this)
         binding.imgVoicePlay.setOnClickListener(this)
         binding.imgVoiceRecord.setOnClickListener(this)
+        binding.lblHistoryList.setOnClickListener(this)
 
         val customSwitch: CustomSwitch = findViewById(R.id.SwitchEmergencyVoice)
         customSwitch.setOnClickListener {
@@ -81,6 +88,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         }
 
         checkPermissions()
+
         binding.waveformSeekBar.apply {
             progress = 0f // Start with zero progress
             waveProgressColor = ContextCompat.getColor(this@CommunicationSchool, R.color.light_green_bg1)
@@ -238,45 +246,20 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
 
             R.id.imgVoicePlay -> {
-                if (isPlayingVoice) {
-                    // Pause the media player
-                    mediaPlayer.pause()
-                    lastPosition = mediaPlayer.currentPosition // Save current position
-                    isPlayingVoice = false
-                    binding.imgVoicePlay.setImageDrawable(
-                        ContextCompat.getDrawable(
-                            this,
-                            R.drawable.play_icon_voice
-                        )
-                    ) // Change icon to play
-                } else {
-                    // If the media player is not initialized, initialize it
-                    if (!isPrepared) {
-                        binding.imgVoicePlay.setImageDrawable(
-                            ContextCompat.getDrawable(
-                                this,
-                                R.drawable.pause_icon
-                            )
-                        ) // Change icon to pause
-                        initializeMediaPlayer(audioUrl) // Prepare the media player for the first time
-                    } else {
-                        mediaPlayer.seekTo(lastPosition) // Seek to last position
-                        mediaPlayer.start() // Start playing
-                        isPlayingVoice = true
-                        binding.imgVoicePlay.setImageDrawable(
-                            ContextCompat.getDrawable(
-                                this,
-                                R.drawable.pause_icon
-                            )
-                        ) // Change icon to pause
-                        startAudioProgressUpdate() // Start updating progress again
-                    }
-                }
+                isPlayingVoice(audioUrl)
             }
 
 
             R.id.imgVoiceRecord -> {
 
+            }
+
+            R.id.lblHistoryList -> {
+                binding.rcyHistoryDataVoiceAndText.visibility = View.VISIBLE
+                binding.rlaScheduleCallPickDate.visibility = View.GONE
+                binding.gridViewScheduleCall.visibility = View.GONE
+                binding.rlaRecordVoice.visibility = View.GONE
+                loadData()
             }
         }
     }
@@ -299,6 +282,27 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         binding.lblTextMessage.setTextColor(ContextCompat.getColor(this, R.color.black))
         lblTypeCommunication.setTextColor(ContextCompat.getColor(this, R.color.white))
 
+        binding.imgVoiceMessage.setImageDrawable(
+            ContextCompat.getDrawable(
+                this,
+                R.drawable.mic_icon_black
+            )
+        )
+
+        binding.imgScheduleCall.setImageDrawable(
+            ContextCompat.getDrawable(
+                this,
+                R.drawable.call_schedule_icon_black
+            )
+        )
+
+        binding.imgTextMessage.setImageDrawable(
+            ContextCompat.getDrawable(
+                this,
+                R.drawable.text_icon_black
+            )
+        )
+
         // Update icons based on selection
         when (imgTypeCommunication) {
             binding.imgVoiceMessage -> {
@@ -317,6 +321,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     )
                 )
             }
+
             binding.imgTextMessage -> {
                 binding.imgTextMessage.setImageDrawable(
                     ContextCompat.getDrawable(
@@ -324,6 +329,111 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                         R.drawable.text_icon
                     )
                 )
+            }
+        }
+    }
+
+
+    private fun loadData() {
+        isVoiceHistoryData = listOf(
+            VoiceHistoryData(
+                "Annual Day celebrations",
+                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
+                "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+            ),
+            VoiceHistoryData(
+                "Parent Meeting",
+                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
+                "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
+            ),
+            VoiceHistoryData(
+                "Normal Day",
+                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
+                "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
+            ),
+            VoiceHistoryData(
+                "Day",
+                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
+                "https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_700KB.mp3"
+            ),
+            VoiceHistoryData(
+                "Monday",
+                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
+                "https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_1MG.mp3"
+            ),
+            VoiceHistoryData(
+                "Nothing",
+                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
+                "https://www2.cs.uic.edu/~i101/SoundFiles/BabyElephantWalk60.wav"
+            ),
+            VoiceHistoryData(
+                "Value Education",
+                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
+                "https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3"
+            ),
+            VoiceHistoryData(
+                "Environmental Science",
+                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
+                "https://filesamples.com/samples/audio/mp3/sample4.mp3"
+            ),
+            VoiceHistoryData(
+                "Okay okay",
+                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
+                "https://ia800304.us.archive.org/8/items/testmp3testfile/mpthreetest.mp3"
+            )
+        )
+
+        mAdapter = VoiceHistoryAdapter(null, this, this, Constant.isShimmerViewShow)
+        binding.rcyHistoryDataVoiceAndText.layoutManager = LinearLayoutManager(this)
+        binding.rcyHistoryDataVoiceAndText.adapter = mAdapter
+
+        Constant.executeAfterDelay {
+            // Once data is loaded, stop shimmer and pass the actual data
+            mAdapter =
+                VoiceHistoryAdapter(isVoiceHistoryData, this, this, Constant.isShimmerViewDisable)
+            // Set GridLayoutManager (2 columns in this case)
+            binding.rcyHistoryDataVoiceAndText.adapter = mAdapter
+        }
+    }
+
+    override fun onItemClick(data: VoiceHistoryData, holder: VoiceHistoryAdapter.DataViewHolder) {
+        isPlayingVoice(data.url)
+    }
+
+
+    private fun isPlayingVoice(audioUrl: String) {
+        if (isPlayingVoice) {
+            // Pause the media player
+            mediaPlayer.pause()
+            lastPosition = mediaPlayer.currentPosition // Save current position
+            isPlayingVoice = false
+            binding.imgVoicePlay.setImageDrawable(
+                ContextCompat.getDrawable(
+                    this,
+                    R.drawable.play_icon_voice
+                )
+            ) // Change icon to play
+        } else {
+            // If the media player is not initialized, initialize it
+            if (!isPrepared) {
+                binding.imgVoicePlay.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        this,
+                        R.drawable.pause_icon
+                    )
+                ) // Change icon to pause
+                initializeMediaPlayer(audioUrl) // Prepare the media player for the first time
+            } else {
+                mediaPlayer.seekTo(lastPosition) // Seek to last position
+                mediaPlayer.start() // Start playing
+                isPlayingVoice = true
+                binding.imgVoicePlay.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        this,
+                        R.drawable.pause_icon
+                    )
+                ) // Change icon to pause
+                startAudioProgressUpdate() // Start updating progress again
             }
         }
     }
