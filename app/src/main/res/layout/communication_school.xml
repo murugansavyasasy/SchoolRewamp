@@ -515,18 +515,10 @@
 
                             </ImageView>
 
-                            <!--                            <SeekBar-->
-                            <!--                                android:id="@+id/seekBarVoice"-->
-                            <!--                                android:layout_width="match_parent"-->
-                            <!--                                android:layout_height="wrap_content"-->
-                            <!--                                android:layout_centerVertical="true"-->
-                            <!--                                android:layout_toEndOf="@+id/imgVoicePlay"></SeekBar>-->
-
-                            <com.vs.schoolmessenger.Utils.WaveSeekBar
-                                android:id="@+id/waveSeekBar"
+                            <com.vs.schoolmessenger.Utils.WaveformSeekBar
+                                android:id="@+id/waveformSeekBar"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/thirty"
-                                android:layout_centerVertical="true"
                                 android:layout_centerInParent="true"
                                 android:layout_marginStart="@dimen/ten"
                                 android:layout_marginEnd="@dimen/ten"
@@ -536,7 +528,7 @@
                                 android:id="@+id/lblStartDuration"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@+id/waveSeekBar"
+                                android:layout_below="@+id/waveformSeekBar"
                                 android:layout_marginStart="@dimen/ten"
                                 android:layout_marginTop="@dimen/fourty"
                                 android:layout_toEndOf="@+id/imgVoicePlay"
@@ -549,7 +541,7 @@
                                 android:id="@+id/lblEndDuration"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@+id/waveSeekBar"
+                                android:layout_below="@+id/waveformSeekBar"
                                 android:layout_alignParentRight="true"
                                 android:layout_marginStart="@dimen/ten"
                                 android:layout_marginTop="@dimen/fourty"
