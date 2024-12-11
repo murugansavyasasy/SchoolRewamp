@@ -1,21 +1,17 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="26dp"
-    android:height="26dp"
-    android:viewportWidth="26"
-    android:viewportHeight="26">
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24"
+    android:tint="@color/navi_blue2">
 
-  <!-- Outer Circle (White Background) -->
+  <!-- Outer Circle -->
   <path
       android:fillColor="@color/navi_blue2"
-  android:pathData="M13,0C5.826,0 0,5.826 0,13s5.826,13 13,13 13,-5.826 13,-13S20.174,0 13,0z"/>
+      android:pathData="M12,20c-4.41,0 -8,-3.59 -8,-8s3.59,-8 8,-8s8,3.59 8,8S16.41,20 12,20M12,22c5.52,0 10,-4.48 10,-10c0,-5.52 -4.48,-10 -10,-10C6.48,2 2,6.48 2,12C2,17.52 6.48,22 12,22z" />
 
-  <!-- Inner Circle (Blue Color) -->
-  <path
-      android:fillColor="@color/white"
-      android:pathData="M13,1c6.633,0 12,5.367 12,12s-5.367,12 -12,12S1,19.633 1,13 6.367,1 13,1z"/>
-
-  <!-- Inner Icon -->
+  <!-- Right Arrow -->
   <path
       android:fillColor="@color/navi_blue2"
-      android:pathData="M14.545,7.998L14.545,8a0.5,0.5 0,0 0,-0.05 0,0.5 0.5,0 0,0 -0.468,0.498l-0.007,2.242 -0.006,0.264L6.5,11.004a0.5,0.5 0,0 0,-0.5 0.5L6,14.5a0.5,0.5 0,0 0,0.5 0.498h7.506l0.002,0.252L14,17.498a0.5,0.5 0,0 0,0.836 0.373l5,-4.514a0.5,0.5 0,0 0,0 -0.742l-4.973,-4.488a0.5,0.5 0,0 0,-0.318 -0.129zM15.023,9.621 L18.753,12.988 15.003,16.373 15.008,15.252a0.5,0.5 0,0 0,0 -0.012L15,14.496a0.5,0.5 0,0 0,-0.5 -0.496L7,14v-1.994h7.498a0.5,0.5 0,0 0,0.5 -0.486l0.022,-0.754a0.5,0.5 0,0 0,0 -0.016l0.003,-1.129z"/>
+      android:pathData="M12,16l4-4l-4-4v3H8v2h4v3z" />
 </vector>

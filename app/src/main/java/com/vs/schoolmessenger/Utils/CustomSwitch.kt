@@ -23,7 +23,7 @@ class CustomSwitch @JvmOverloads constructor(
 
     // Colors from resources
     private val activeColor = ContextCompat.getColor(context, R.color.light_dark_blue)
-    private val inactiveColor = ContextCompat.getColor(context, R.color.grey)
+    private val inactiveColor = ContextCompat.getColor(context, R.color.grey_mild)
 
     init {
         circlePaint.color = ContextCompat.getColor(context, R.color.white)

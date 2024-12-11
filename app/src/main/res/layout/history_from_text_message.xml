@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
 
     <RelativeLayout
@@ -43,6 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/lblTitle"
             android:layout_marginStart="@dimen/ten"
+            android:maxLines="3"
             android:layout_marginTop="@dimen/fifteen"
             android:layout_marginEnd="@dimen/ten"
             android:text="Dear (Recipient's Name), I am writing to request leave from school for (number of days) days, starting from (start date) to (end date). The reason for my leave is (briefly state the reason, e.g., a family function, medical treatment, personal reasons)."
@@ -61,6 +62,37 @@
             android:textSize="@dimen/thirteen_sp">
 
         </TextView>
+
+
+        <RelativeLayout
+            android:id="@+id/rlaSelectText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblSeeMore"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="@dimen/ten"
+            android:background="@drawable/rect_blue_and_green_small_radious"
+            android:padding="@dimen/ten">
+
+            <ImageView
+                android:id="@+id/imgSend"
+                android:layout_width="@dimen/fifteen"
+                android:layout_height="@dimen/fifteen"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/five"
+                android:src="@drawable/send_icon_white"></ImageView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="@dimen/five"
+                android:layout_toEndOf="@+id/imgSend"
+                android:text="Select"
+                android:textColor="@color/white"
+                android:textSize="@dimen/thirteen_sp"></TextView>
+        </RelativeLayout>
+
 
     </RelativeLayout>
 </RelativeLayout>

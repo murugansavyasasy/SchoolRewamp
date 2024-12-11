@@ -79,6 +79,7 @@
                         android:gravity="center"
                         android:paddingStart="@dimen/five"
                         android:paddingEnd="@dimen/five"
+                        android:textStyle="bold"
                         android:paddingBottom="@dimen/ten"
                         android:text="@string/VoiceMessage"
                         android:textColor="@color/white">
@@ -112,6 +113,7 @@
                         android:gravity="center"
                         android:paddingStart="@dimen/five"
                         android:paddingEnd="@dimen/five"
+                        android:textStyle="bold"
                         android:paddingBottom="@dimen/ten"
                         android:text="Schedule Call"
                         android:textColor="@color/black">
@@ -144,6 +146,7 @@
                         android:layout_marginTop="@dimen/five"
                         android:gravity="center"
                         android:paddingStart="@dimen/five"
+                        android:textStyle="bold"
                         android:paddingEnd="@dimen/five"
                         android:paddingBottom="@dimen/ten"
                         android:text="Text Message"
@@ -219,7 +222,7 @@
                                 android:layout_width="@dimen/twenty"
                                 android:layout_height="@dimen/twenty"
                                 android:layout_toEndOf="@+id/lblStartTime"
-                                android:src="@drawable/ic_arrow_down">
+                                android:src="@drawable/ic_down_arrow">
 
                             </ImageView>
                         </RelativeLayout>
@@ -283,7 +286,7 @@
                                 android:layout_width="@dimen/twenty"
                                 android:layout_height="@dimen/twenty"
                                 android:layout_toEndOf="@+id/lblEndTime"
-                                android:src="@drawable/ic_arrow_down">
+                                android:src="@drawable/ic_down_arrow">
 
                             </ImageView>
                         </RelativeLayout>
@@ -366,10 +369,9 @@
                         android:layout_marginStart="@dimen/ten"
                         android:layout_marginTop="@dimen/twenty"
                         android:layout_marginEnd="@dimen/five"
-                        android:text="Back to voice message"
+                        android:text="Back to voice record"
                         android:textColor="@color/navi_blue2"
-                        android:textSize="@dimen/fifteen_sp"
-                        android:textStyle="bold">
+                        android:textSize="@dimen/fifteen_sp">
 
                     </TextView>
 
@@ -384,25 +386,23 @@
 
                 </RelativeLayout>
 
-                <RelativeLayout
-                    android:id="@+id/rlaRecordVoice"
+                <LinearLayout
+                    android:id="@+id/lnrHistoryList"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/gridViewScheduleCall"
-                    android:visibility="visible">
-
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="@dimen/twenty"
+                    android:layout_marginEnd="@dimen/five"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/lblHistoryList"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/twenty"
-                        android:layout_marginEnd="@dimen/five"
-                        android:layout_toStartOf="@+id/imgRightArrow"
                         android:text="Do you want send from history ?"
                         android:textColor="@color/navi_blue2"
-                        android:textSize="@dimen/fifteen_sp"
-                        android:textStyle="bold">
+                        android:textSize="@dimen/fifteen_sp">
 
                     </TextView>
 
@@ -410,18 +410,86 @@
                         android:id="@+id/imgRightArrow"
                         android:layout_width="@dimen/twenty"
                         android:layout_height="@dimen/twenty"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginTop="@dimen/twenty"
                         android:layout_marginEnd="@dimen/ten"
                         android:src="@drawable/right_arrow_round">
 
                     </ImageView>
 
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/rlaMessageFromText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lnrHistoryList"
+                    android:layout_marginTop="@dimen/twenty"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/ten"
+                        android:layout_marginTop="@dimen/ten"
+                        android:text="Title"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/fifteen_sp"
+                        android:textStyle="bold">
+
+                    </TextView>
+
+                    <EditText
+                        android:id="@+id/edtTitleTextMessage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/ten"
+                        android:layout_marginEnd="@dimen/ten">
+
+                    </EditText>
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/ten"
+                        android:layout_marginTop="@dimen/ten"
+                        android:text="Content"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/fifteen_sp"
+                        android:textStyle="bold">
+
+                    </TextView>
+
+                    <EditText
+                        android:id="@+id/edtContentTextMessage"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/two_hundred"
+                        android:layout_marginStart="@dimen/ten"
+                        android:layout_marginTop="@dimen/ten"
+                        android:layout_marginEnd="@dimen/ten"
+                        android:background="@drawable/bg_outline_black"
+                        android:gravity="start"
+                        android:hint="Java is a multi-platform, object-oriented, and network-centric language that can be used as a platform in itself. It is a fast, secure, reliable programming language for coding everything from mobile apps and enterprise software to big data applications and server-side technologies."
+                        android:padding="@dimen/ten"
+                        android:textSize="@dimen/thirteen_sp"></EditText>
+
+
+                </LinearLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/rlaRecordVoice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lnrHistoryList"
+                    android:visibility="visible">
+
                     <com.vs.schoolmessenger.Utils.CustomSwitch
                         android:id="@+id/SwitchEmergencyVoice"
-                        android:layout_width="@dimen/twenty_five"
-                        android:layout_height="@dimen/twenty_five"
-                        android:layout_below="@+id/lblHistoryList"
+                        android:layout_width="@dimen/thirty"
+                        android:layout_height="@dimen/thirty"
                         android:layout_marginStart="@dimen/ten"
                         android:layout_marginTop="@dimen/twenty" />
 
@@ -429,12 +497,11 @@
                         android:id="@+id/lblEmergencyVoice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/lblHistoryList"
                         android:layout_marginTop="@dimen/twenty_five"
                         android:layout_marginEnd="@dimen/ten"
                         android:layout_marginStart="@dimen/ten"
                         android:layout_toEndOf="@+id/SwitchEmergencyVoice"
-                        android:text="If you want to send emergency voice ? "
+                        android:text="Emergency voice messages"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp"></TextView>
 
@@ -446,7 +513,7 @@
                         android:layout_below="@+id/lblEmergencyVoice"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="@dimen/twenty_five"
-                        android:src="@drawable/record_icon"></ImageView>
+                        android:src="@drawable/record_voice_icon"></ImageView>
 
                     <TextView
                         android:id="@+id/lblDurationOfVoice"
@@ -455,7 +522,7 @@
                         android:layout_below="@+id/imgVoiceRecord"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="@dimen/ten"
-                        android:text="00:00 / 00:00"
+                        android:text="00:00 / 03:00"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp"
                         android:textStyle="bold">
@@ -505,8 +572,7 @@
                             android:layout_height="@dimen/twenty_five"
                             android:layout_marginStart="@dimen/thirteen"
                             android:elevation="10dp"
-                            android:src="@drawable/close_red_color">
-                        </ImageView>
+                            android:src="@drawable/close_red_color"></ImageView>
 
                         <RelativeLayout
                             android:layout_width="match_parent"

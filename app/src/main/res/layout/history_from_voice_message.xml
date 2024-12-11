@@ -42,6 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/twenty"
+            android:layout_marginTop="@dimen/five"
             android:layout_marginEnd="@dimen/twenty"
             android:layout_below="@+id/lblTitle"
            >
@@ -50,7 +51,7 @@
                 android:id="@+id/imgVoicePlay"
                 android:layout_width="@dimen/fourty_five"
                 android:layout_height="@dimen/fourty_five"
-                android:src="@drawable/play_icon_voice">
+                android:src="@drawable/video_play">
 
             </ImageView>
 
@@ -76,14 +77,41 @@
                 android:textSize="@dimen/thirteen_sp"></TextView>
 
             <TextView
+                android:id="@+id/lblSlash"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imgVoicePlay"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/seven"
+                android:text=" / "
+                android:layout_toEndOf="@+id/lblStartDuration"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"></TextView>
+
+
+            <TextView
                 android:id="@+id/lblEndDuration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/imgVoicePlay"
-                android:layout_alignParentRight="true"
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginTop="@dimen/seven"
                 android:text="00:00"
+                android:layout_toEndOf="@+id/lblSlash"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"></TextView>
+
+
+
+            <TextView
+                android:id="@+id/lblTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imgVoicePlay"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/seven"
+                android:layout_alignParentRight="true"
+                android:text="10:56 AM"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"></TextView>
 
