@@ -5,6 +5,7 @@ import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.app.Dialog
+import android.app.TimePickerDialog
 import android.content.Context
 import android.graphics.Paint
 import android.graphics.PorterDuff
@@ -30,6 +31,7 @@ import com.vs.schoolmessenger.Dashboard.Fragments.ProfileFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.SettingsFragment
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.TimePickerAdapter
+import com.vs.schoolmessenger.Utils.TimeSelectedListener
 import java.text.SimpleDateFormat
 import java.util.Calendar
 
@@ -321,6 +323,30 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     protected fun hideLoadingDialog() {
         // Code to hide loading dialog
     }
+
+
+
+        fun showTimePickerDialog(context:Context,listener:TimeSelectedListener) {
+            // Get current time
+            val calendar = Calendar.getInstance()
+            val hour = calendar.get(Calendar.HOUR_OF_DAY)
+            val minute = calendar.get(Calendar.MINUTE)
+
+            // Create and show TimePickerDialog
+            val timePickerDialog = TimePickerDialog(
+                context,
+                { _, selectedHour, selectedMinute ->
+                    val amPm = if (selectedHour < 12) "AM" else "PM"
+                    val hourIn12Format = if (selectedHour == 0) 12 else if (selectedHour > 12) selectedHour - 12 else selectedHour
+                    listener.onTimeSelected(hourIn12Format, selectedMinute, amPm)
+                },
+                hour,
+                minute,
+                false // Use 12-hour format
+            )
+            timePickerDialog.show()
+        }
+
 
 
     fun showSpinnerTimePicker(

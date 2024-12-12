@@ -23,13 +23,14 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.CustomSwitch
+import com.vs.schoolmessenger.Utils.TimeSelectedListener
 import com.vs.schoolmessenger.databinding.CommunicationSchoolBinding
 import java.io.IOException
 import java.util.Random
 import kotlin.math.max
 
 class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnClickListener,
-    VoiceHistoryClickListener, TextHistoryClickListener {
+    VoiceHistoryClickListener, TextHistoryClickListener, TimeSelectedListener {
 
     override fun getViewBinding(): CommunicationSchoolBinding {
         return CommunicationSchoolBinding.inflate(layoutInflater)
@@ -44,8 +45,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     private val PERMISSIONS_REQUEST_CODE = 200
     var mediaPlayer: MediaPlayer? = null
     private var isPrepared = false
-    lateinit var mAdapter: VoiceHistoryAdapter
-    lateinit var mTextAdapter: TextHistoryAdapter
+     var mAdapter: VoiceHistoryAdapter?=null
+     var mTextAdapter: TextHistoryAdapter?=null
     private lateinit var isVoiceHistoryData: List<VoiceHistoryData>
     private lateinit var isTextHistoryData: List<TextHistoryData>
     private val MAX_RECORDING_TIME = 180
@@ -240,10 +241,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         )
     }
 
-    private fun getDummyWaveSample(): IntArray {
-        return IntArray(50) { Random().nextInt(50) }
-    }
-
     override fun onResume() {
         super.onResume()
         if (checkAndRequestPermissions()) {
@@ -254,28 +251,11 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         // Consider restoring playback or UI state if necessary
     }
 
-    private fun showPermissionRationale() {
-        AlertDialog.Builder(this)
-            .setTitle("Permissions Required")
-            .setMessage("This app requires audio and storage permissions to function properly. Please grant them.")
-            .setPositiveButton("OK") { _, _ ->
-                checkAndRequestPermissions() // Retry permission request
-            }
-            .setNegativeButton("Cancel") { _, _ ->
-                Toast.makeText(
-                    this,
-                    "Permissions are necessary for the app to function.",
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-            .show()
-    }
-
 
     override fun onPause() {
         super.onPause()
-        if (::mAdapter.isInitialized) {
-            mAdapter.releaseMediaPlayer()
+        if (mAdapter != null) {
+            mAdapter!!.releaseMediaPlayer()
         }
 
 
@@ -304,7 +284,9 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         when (p0?.id) {
             R.id.rlaVoiceMessage -> {
                 isClickType = 1
-                mAdapter.releaseMediaPlayer()
+                if (mAdapter != null) {
+                    mAdapter!!.releaseMediaPlayer()
+                }
                 binding.lblBackToVoiceMessage.text = "Back to voice message"
 
                 binding.rlaBackRecord.visibility = View.GONE
@@ -320,9 +302,12 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     binding.lblVoiceMessage
                 )
             }
+
             R.id.rlaScheduleCall -> {
                 isClickType = 2
-                mAdapter.releaseMediaPlayer()
+                if (mAdapter != null) {
+                    mAdapter!!.releaseMediaPlayer()
+                }
                 binding.lblBackToVoiceMessage.text = "Back to voice message"
 
                 binding.rlaBackRecord.visibility = View.GONE
@@ -337,9 +322,12 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     binding.lblScheduleCall
                 )
             }
+
             R.id.rlaTextMessage -> {
                 isClickType = 3
-                mAdapter.releaseMediaPlayer()
+                if (mAdapter != null) {
+                    mAdapter!!.releaseMediaPlayer()
+                }
                 binding.lblBackToVoiceMessage.text = "Back to text message"
                 binding.rlaBackRecord.visibility = View.GONE
                 binding.lnrHistoryList.visibility = View.VISIBLE
@@ -353,13 +341,18 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     binding.lblTextMessage
                 )
             }
+
             R.id.rlaFromTime -> {
-                showSpinnerTimePicker(this) { hour, minute, isAm ->
-                    val amPm = if (isAm) "AM" else "PM"
-                    Toast.makeText(this, "Selected Time: $hour:$minute $amPm", Toast.LENGTH_SHORT)
-                        .show()
-                    binding.lblStartTime.text = "$hour:$minute $amPm"
-                }
+//                showSpinnerTimePicker(this) { hour, minute, isAm ->
+//                    val amPm = if (isAm) "AM" else "PM"
+//                    Toast.makeText(this, "Selected Time: $hour:$minute $amPm", Toast.LENGTH_SHORT)
+//                        .show()
+//                    binding.lblStartTime.text = "$hour:$minute $amPm"
+
+                    showTimePickerDialog(this,this)
+
+
+             //   }
             }
 
             R.id.rlaToTime -> {
@@ -432,7 +425,9 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
 
             R.id.rlaBackRecord -> {
-                mAdapter.releaseMediaPlayer()
+                if (mAdapter != null) {
+                    mAdapter!!.releaseMediaPlayer()
+                }
                 Log.d("isClickType", isClickType.toString())
                 when (isClickType) {
                     1 -> {
@@ -541,6 +536,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     )
                 )
             }
+
             binding.imgScheduleCall -> {
                 binding.imgScheduleCall.setImageDrawable(
                     ContextCompat.getDrawable(
@@ -692,21 +688,37 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         val requiredPermissions = mutableListOf<String>()
 
         // Check each permission and add to the list if not granted
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.RECORD_AUDIO
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
             requiredPermissions.add(Manifest.permission.RECORD_AUDIO)
         }
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
             requiredPermissions.add(Manifest.permission.READ_EXTERNAL_STORAGE)
         }
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
             requiredPermissions.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
         }
 
         // Request permissions if needed
         return if (requiredPermissions.isNotEmpty()) {
-            ActivityCompat.requestPermissions(this, requiredPermissions.toTypedArray(), PERMISSIONS_REQUEST_CODE)
+            ActivityCompat.requestPermissions(
+                this,
+                requiredPermissions.toTypedArray(),
+                PERMISSIONS_REQUEST_CODE
+            )
             false // Indicate that permissions are not yet granted
         } else {
             true // All required permissions are already granted
@@ -732,10 +744,18 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
                 if (permanentlyDenied.isNotEmpty()) {
                     // Inform the user that they need to enable permissions in settings
-                    Toast.makeText(this, "Please enable permissions from app settings.", Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        this,
+                        "Please enable permissions from app settings.",
+                        Toast.LENGTH_LONG
+                    ).show()
                 } else {
                     // Inform the user that permissions were denied
-                    Toast.makeText(this, "Required permissions denied: $deniedPermissions", Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        this,
+                        "Required permissions denied: $deniedPermissions",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             } else {
                 // All permissions were granted
@@ -751,6 +771,10 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
     override fun onItemClick(data: TextHistoryData, holder: TextHistoryAdapter.DataViewHolder) {
 
+    }
+
+    override fun onTimeSelected(hour: Int, minute: Int, amPm: String) {
+        binding.lblStartTime.text  = String.format("%02d:%02d %s", hour, minute, amPm)
     }
 }
 

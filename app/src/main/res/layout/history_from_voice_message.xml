@@ -32,20 +32,19 @@
             android:layout_marginTop="@dimen/ten"
             android:layout_marginEnd="@dimen/ten"
             android:text="01 Apr 2024"
-            android:textStyle="bold"
             android:textColor="@color/black"
-            android:textSize="@dimen/fifteen_sp"></TextView>
+            android:textSize="@dimen/fifteen_sp"
+            android:textStyle="bold"></TextView>
 
 
         <RelativeLayout
             android:id="@+id/rlaVoiceHistory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/lblTitle"
             android:layout_marginStart="@dimen/twenty"
             android:layout_marginTop="@dimen/five"
-            android:layout_marginEnd="@dimen/twenty"
-            android:layout_below="@+id/lblTitle"
-           >
+            android:layout_marginEnd="@dimen/twenty">
 
             <ImageView
                 android:id="@+id/imgVoicePlay"
@@ -59,8 +58,8 @@
                 android:id="@+id/waveformSeekBar"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/thirty"
-                android:layout_marginTop="@dimen/seven"
                 android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/seven"
                 android:layout_marginEnd="@dimen/ten"
                 android:layout_toEndOf="@+id/imgVoicePlay" />
 
@@ -69,8 +68,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/imgVoicePlay"
-                android:layout_marginTop="@dimen/seven"
                 android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/seven"
                 android:layout_toEndOf="@+id/imgVoicePlay"
                 android:text="00:00"
                 android:textColor="@color/black"
@@ -83,8 +82,8 @@
                 android:layout_below="@+id/imgVoicePlay"
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginTop="@dimen/seven"
-                android:text=" / "
                 android:layout_toEndOf="@+id/lblStartDuration"
+                android:text=" / "
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"></TextView>
 
@@ -96,11 +95,10 @@
                 android:layout_below="@+id/imgVoicePlay"
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginTop="@dimen/seven"
-                android:text="00:00"
                 android:layout_toEndOf="@+id/lblSlash"
+                android:text="00:00"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"></TextView>
-
 
 
             <TextView
@@ -108,9 +106,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/imgVoicePlay"
+                android:layout_alignParentRight="true"
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginTop="@dimen/seven"
-                android:layout_alignParentRight="true"
                 android:text="10:56 AM"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"></TextView>
