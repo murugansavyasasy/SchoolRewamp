@@ -33,7 +33,7 @@
                 android:layout_toStartOf="@dimen/fifteen"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_toEndOf="@+id/imgBack"
-                android:text="Attendance Mark"
+                android:text="@string/AttendanceMark"
                 android:textColor="@color/black"
                 android:textSize="@dimen/twenty_sp"
                 android:textStyle="bold">
@@ -54,7 +54,7 @@
                     android:id="@+id/lblSend"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Send"
+                    android:text="@string/Send"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
                     android:textStyle="bold"

@@ -334,16 +334,17 @@
                     </LinearLayout>
                 </RelativeLayout>
 
-                <GridView
+                <com.vs.schoolmessenger.Utils.ExpandableGridView
                     android:id="@+id/gridViewScheduleCall"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/rlaBackRecord"
                     android:layout_marginTop="@dimen/ten"
                     android:numColumns="3"
+                    android:visibility="gone"
                     tools:listitem="@layout/schedule_call_date_data">
 
-                </GridView>
+                </com.vs.schoolmessenger.Utils.ExpandableGridView>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rcyHistoryDataVoiceAndText"

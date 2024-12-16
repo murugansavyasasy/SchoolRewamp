@@ -18,6 +18,7 @@ import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesStudentMark
 import com.vs.schoolmessenger.School.Communication.CommunicationSchool
 import com.vs.schoolmessenger.School.Event.CreateEvent
 import com.vs.schoolmessenger.School.NoticeBoard.CreateNoticeBoard
+import com.vs.schoolmessenger.School.StudentReport.StudentReport
 import com.vs.schoolmessenger.School.Video.CreateVideo
 
 class SchoolMenuAdapter(
@@ -86,10 +87,10 @@ class SchoolMenuAdapter(
                     "Assignment" -> {
                         context.startActivity(Intent(context, SchoolList::class.java))
                     }
-
-
+                    "Student Report" -> {
+                        context.startActivity(Intent(context, StudentReport::class.java))
+                    }
                 }
-
             }
         }
     }

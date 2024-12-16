@@ -7,15 +7,15 @@
   <!-- Circle Background Color -->
   <path
       android:fillColor="#c1bff2"
-  android:pathData="M13,0A13,13 0,0 0,0 13a13,13 0,0 0,13 13,13 13,0 0,0 13,-13A13,13 0,0 0,13 0z"/>
+      android:pathData="M13,0A13,13 0,0 0,0 13a13,13 0,0 0,13 13,13 13,0 0,0 13,-13A13,13 0,0 0,13 0z"/>
 
   <!-- Triangle (or inner design) Color -->
   <path
       android:fillColor="#1109eb"
-  android:pathData="M6.893,9.008h12.224l-6.11,4.847 -6.114,-4.847z"/>
+      android:pathData="M6.893,9.008h12.224l-6.11,4.847 -6.114,-4.847z"/>
 
   <!-- Bottom part or additional design Color -->
   <path
       android:fillColor="#1109eb"
-  android:pathData="M6.016,9.59 L12.701,14.887a0.5,0.5 0,0 0,0.62 0l6.665,-5.293v7.398L6.016,16.992L6.016,9.59z"/>
+      android:pathData="M6.016,9.59 L12.701,14.887a0.5,0.5 0,0 0,0.62 0l6.665,-5.293v7.398L6.016,16.992L6.016,9.59z"/>
 </vector>

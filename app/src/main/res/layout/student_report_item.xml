@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/twenty"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginEnd="@dimen/twenty"
+        android:background="@drawable/rect_shadow_white">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="450dp"
+            android:background="@drawable/bg_student_report">
+
+            <View
+                android:layout_width="@dimen/fifty"
+                android:layout_height="@dimen/twenty"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/ten"
+                android:background="@drawable/bg_oval_shape"></View>
+
+            <RelativeLayout
+                android:id="@+id/rlaBioData"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginTop="@dimen/fourty"
+                android:layout_marginEnd="@dimen/ten">
+
+                <ImageView
+                    android:id="@+id/imgStudent"
+                    android:layout_width="@dimen/hundred"
+                    android:layout_height="@dimen/hundred"
+                    android:background="@drawable/rect_shadow_white"
+                    android:padding="5dp"
+                    android:src="@drawable/student_image"></ImageView>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/imgStudent">
+
+                    <LinearLayout
+                        android:id="@+id/lnrAdmission"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ten"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/ten"
+                            android:layout_weight="0.5"
+                            android:text="Admission no"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/thirteen_sp"
+                            android:textStyle="bold">
+
+                        </TextView>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" : "
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/thirteen_sp"
+                            android:textStyle="bold">
+
+                        </TextView>
+
+                        <TextView
+                            android:id="@+id/lblAdmisionNumber"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/ten"
+                            android:layout_marginEnd="@dimen/ten"
+                            android:layout_weight="0.5"
+                            android:text="1785278272"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/thirteen_sp"
+                            android:textStyle="bold">
+
+                        </TextView>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/lnrAge"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/lnrAdmission"
+                        android:layout_marginTop="@dimen/ten"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/ten"
+                            android:layout_weight="0.5"
+                            android:text="Gender"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/thirteen_sp"
+                            android:textStyle="bold">
+
+                        </TextView>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" : "
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/thirteen_sp"
+                            android:textStyle="bold">
+
+                        </TextView>
+
+                        <TextView
+                            android:id="@+id/lblGender"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/ten"
+                            android:layout_marginEnd="@dimen/ten"
+                            android:layout_weight="0.5"
+                            android:text="Male"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/thirteen_sp"
+                            android:textStyle="bold">
+
+                        </TextView>
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/lnrAge"
+                        android:layout_marginTop="@dimen/ten"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/ten"
+                            android:layout_weight="0.5"
+                            android:text="Date of birth"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/thirteen_sp"
+                            android:textStyle="bold">
+
+                        </TextView>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" : "
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/thirteen_sp"
+                            android:textStyle="bold">
+
+                        </TextView>
+
+                        <TextView
+                            android:id="@+id/lblDOB"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/ten"
+                            android:layout_marginEnd="@dimen/ten"
+                            android:layout_weight="0.5"
+                            android:text="Apr 1 , 2021"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/thirteen_sp"
+                            android:textStyle="bold">
+
+                        </TextView>
+                    </LinearLayout>
+                </RelativeLayout>
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/rlaNames"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rlaBioData"
+                android:layout_marginTop="@dimen/twenty">
+
+
+                <LinearLayout
+                    android:id="@+id/lnrStudentName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ten"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/ten"
+                        android:layout_weight="0.6"
+                        android:text="Student name"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/thirteen_sp"
+                        android:textStyle="bold">
+
+                    </TextView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" : "
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/thirteen_sp"
+                        android:textStyle="bold">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/lblStudentName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/ten"
+                        android:layout_marginEnd="@dimen/ten"
+                        android:layout_weight="0.5"
+                        android:text="Sathish"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/thirteen_sp"
+                        android:textStyle="bold">
+
+                    </TextView>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/lnrFatherName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lnrStudentName"
+                    android:layout_marginTop="@dimen/ten"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/ten"
+                        android:layout_weight="0.6"
+                        android:text="Father name"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/thirteen_sp"
+                        android:textStyle="bold">
+
+                    </TextView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" : "
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/thirteen_sp"
+                        android:textStyle="bold">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/lblFatherName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/ten"
+                        android:layout_marginEnd="@dimen/ten"
+                        android:layout_weight="0.5"
+                        android:text="Ganesan"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/thirteen_sp"
+                        android:textStyle="bold">
+
+                    </TextView>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/lnrTeacherName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lnrFatherName"
+                    android:layout_marginTop="@dimen/ten"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/ten"
+                        android:layout_weight="0.6"
+                        android:text="Teacher name"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/thirteen_sp"
+                        android:textStyle="bold">
+
+                    </TextView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" : "
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/thirteen_sp"
+                        android:textStyle="bold">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/lblTeacherName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/ten"
+                        android:layout_marginEnd="@dimen/ten"
+                        android:layout_weight="0.5"
+                        android:text="Abi"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/thirteen_sp"
+                        android:textStyle="bold">
+
+                    </TextView>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rlaNames"
+                android:layout_marginTop="@dimen/twenty">
+
+
+                <LinearLayout
+                    android:id="@+id/lnrPhoneNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ten"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <ImageView
+                        android:layout_width="@dimen/thirty"
+                        android:layout_height="@dimen/thirty"
+                        android:layout_marginStart="@dimen/ten"
+                        android:src="@drawable/phone_call_icon">
+
+                    </ImageView>
+
+                    <TextView
+                        android:id="@+id/lblMobileNumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/twenty"
+                        android:text="6382677672"
+                        android:textColor="@color/navi_blue3"
+                        android:textSize="@dimen/thirteen_sp"
+                        android:textStyle="bold">
+
+                    </TextView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lnrSms"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lnrPhoneNumber"
+                    android:layout_marginTop="@dimen/ten"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <ImageView
+                        android:layout_width="@dimen/thirty"
+                        android:layout_height="@dimen/thirty"
+                        android:layout_marginStart="@dimen/ten"
+                        android:src="@drawable/message_icon">
+
+                    </ImageView>
+
+                    <TextView
+                        android:id="@+id/lblSMS"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/twenty"
+                        android:text="SMS"
+                        android:textColor="@color/navi_blue3"
+                        android:textSize="@dimen/thirteen_sp"
+                        android:textStyle="bold">
+
+                    </TextView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lnrMail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lnrSms"
+                    android:layout_marginTop="@dimen/ten"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <ImageView
+                        android:layout_width="@dimen/thirty"
+                        android:layout_height="@dimen/thirty"
+                        android:layout_marginStart="@dimen/ten"
+                        android:src="@drawable/mail_send_icon">
+
+                    </ImageView>
+
+                    <TextView
+                        android:id="@+id/lblEmail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/twenty"
+                        android:text="sathishg079@gmail.com"
+                        android:textColor="@color/navi_blue3"
+                        android:textSize="@dimen/thirteen_sp"
+                        android:textStyle="bold">
+
+                    </TextView>
+                </LinearLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

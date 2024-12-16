@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/ten"
             android:layout_toEndOf="@+id/imgBack"
-            android:text="Create Event"
+            android:text="@string/CreateEvent"
             android:textColor="@color/black"
             android:textSize="@dimen/twenty"
             android:textStyle="bold" />
@@ -53,7 +53,7 @@
             android:background="@drawable/bg_blue"
             android:gravity="center"
             android:padding="@dimen/ten"
-            android:text="Create"
+            android:text="@string/Create"
             android:textColor="@color/white"
             android:textSize="@dimen/thirteen_sp"
             android:textStyle="bold" />
@@ -65,7 +65,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:padding="@dimen/ten"
-            android:text="History"
+            android:text="@string/History"
             android:textColor="@color/dark_blue"
             android:textSize="@dimen/thirteen_sp"
             android:textStyle="bold" />
@@ -139,7 +139,7 @@
                 android:id="@+id/lblLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Venue"
+                android:text="@string/Venue"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
                 android:textStyle="bold" />
@@ -170,7 +170,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/txtLocation"
                 android:layout_marginTop="@dimen/fifteen"
-                android:text="Event Title"
+                android:text="@string/EventTitle"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
                 android:textStyle="bold" />
@@ -215,7 +215,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
-                    android:hint="Description"
+                    android:hint="@string/Description"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp" />
 
@@ -244,7 +244,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/ten"
-                    android:text="Add Photos"
+                    android:text="@string/AddPhotos"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
                     android:textStyle="bold" />
@@ -255,7 +255,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/ten"
                     android:layout_toEndOf="@+id/lblAddPhoto"
-                    android:text=" (Optional?)"
+                    android:text="@string/Optional"
                     android:textColor="@color/grey"
                     android:textSize="@dimen/thirteen_sp"
                     android:textStyle="normal" />
@@ -340,7 +340,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/ten"
-                        android:text="Event Date Time"
+                        android:text="@string/EventDateTime"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp"
                         android:textStyle="bold" />
@@ -358,7 +358,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/lblDateTime"
                         android:layout_marginTop="@dimen/ten"
-                        android:text="Start"
+                        android:text="@string/Start"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp"
                         android:textStyle="bold" />
@@ -483,7 +483,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/rytStart"
                         android:layout_marginTop="@dimen/ten"
-                        android:text="End"
+                        android:text="@string/End"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp"
                         android:textStyle="bold" />
@@ -609,7 +609,7 @@
                         android:layout_marginTop="@dimen/thirty"
                         android:background="@drawable/rect_btn_orange"
                         android:gravity="center"
-                        android:text="NEXT"
+                        android:text="@string/NEXT"
                         android:textColor="@color/white"
                         android:textSize="@dimen/thirteen_sp"
                         android:textStyle="bold" />

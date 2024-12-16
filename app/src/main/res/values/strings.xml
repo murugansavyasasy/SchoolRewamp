@@ -121,6 +121,33 @@
     <string name="name">Name</string>
     <string name="Communication">Communication</string>
     <string name="VoiceMessage">Voice Message</string>
+    <string name="UploadVideo">Upload Video</string>
+    <string name="Clicktochoosevideofromfile">Click to choose video from file</string>
+    <string name="ChangeVideo">Change Video</string>
+    <string name="Entervideotitle">Enter video title</string>
+    <string name="Description">Description</string>
+    <string name="Send">Send</string>
+    <string name="CreateEvent">Create Event</string>
+    <string name="Create">Create</string>
+    <string name="History">History</string>
+    <string name="Venue">Venue</string>
+    <string name="EventTitle">Event Title</string>
+    <string name="Eventdetail">Event detail</string>
+    <string name="AddPhotos">Add Photos</string>
+    <string name="Optional">(Optional?)</string>
+    <string name="EventDateTime">Event Date Time</string>
+    <string name="Start">Start</string>
+    <string name="End">End</string>
+    <string name="NEXT">NEXT</string>
+    <string name="NoticeBoard">Notice Board</string>
+    <string name="Title">Title</string>
+    <string name="Detail">Detail</string>
+    <string name="DateTime">Date Time</string>
+    <string name="AttendanceMark">Attendance Mark</string>
+    <string name="SchoolList">School List</string>
+
+
+
 
 
 </resources>

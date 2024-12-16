@@ -121,4 +121,29 @@
     <string name="name">" नाम"</string>
     <string name="Communication">संचार</string>
     <string name="VoiceMessage">स्वर संदेश</string>
+    <string name="UploadVideo">वीडियो अपलोड करें</string>
+    <string name="Clicktochoosevideofromfile">फ़ाइल से वीडियो चुनने के लिए क्लिक करें</string>
+    <string name="ChangeVideo">वीडियो बदलें</string>
+    <string name="Entervideotitle">वीडियो का शीर्षक दर्ज करें</string>
+    <string name="Description">विवरण</string>
+    <string name="Send">भेजना</string>
+    <string name="CreateEvent">ईवेंट बनाएं</string>
+    <string name="Create">बनाएं</string>
+    <string name="History">इतिहास</string>
+    <string name="Venue">कार्यक्रम का स्थान</string>
+    <string name="EventTitle">घटना का शीर्षक</string>
+    <string name="Eventdetail">घटना विवरण</string>
+    <string name="AddPhotos">तस्वीरें जोडो</string>
+    <string name="Optional">(वैकल्पिक?)</string>
+    <string name="EventDateTime">घटना दिनांक समय</string>
+    <string name="Start">शुरू करें</string>
+    <string name="End">समाप्त</string>
+    <string name="NEXT">अगला</string>
+    <string name="NoticeBoard">सूचना बोर्ड</string>
+    <string name="Title">शीर्षक</string>
+    <string name="Detail">विवरण</string>
+    <string name="DateTime">तारीख और समय</string>
+    <string name="AttendanceMark">उपस्थिति चिह्न</string>
+    <string name="SchoolList">विद्यालय सूची</string>
+
 </resources>

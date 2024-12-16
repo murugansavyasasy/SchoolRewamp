@@ -25,7 +25,7 @@
             android:layout_toEndOf="@+id/imgBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="School List"
+            android:text="@string/SchoolList"
             android:textStyle="bold"
             android:textColor="@color/black"
             android:textSize="@dimen/twenty"/>

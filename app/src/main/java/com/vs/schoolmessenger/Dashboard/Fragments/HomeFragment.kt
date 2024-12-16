@@ -74,6 +74,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
             GridItem(R.drawable.assignment, "Assignment"),
             GridItem(R.drawable.chats, "Interaction with student"),
             GridItem(R.drawable.online_meeting, "Online Meeting"),
+            GridItem(R.drawable.student_image, "Student Report"),
             GridItem(R.drawable.splash_icon5, "Lesson Plan"),
             GridItem(R.drawable.meeting, "PTM"),
             GridItem(R.drawable.biometric_attendance, "Mark your attendance")

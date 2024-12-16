@@ -2,23 +2,29 @@ package com.vs.schoolmessenger.School.Communication
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.drawable.ColorDrawable
 import android.media.MediaPlayer
 import android.media.MediaRecorder
-import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.PopupWindow
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
@@ -26,7 +32,9 @@ import com.vs.schoolmessenger.Utils.CustomSwitch
 import com.vs.schoolmessenger.Utils.TimeSelectedListener
 import com.vs.schoolmessenger.databinding.CommunicationSchoolBinding
 import java.io.IOException
-import java.util.Random
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 import kotlin.math.max
 
 class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnClickListener,
@@ -36,6 +44,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         return CommunicationSchoolBinding.inflate(layoutInflater)
     }
 
+    private lateinit var selectedDatesAdapter: SelectedDatesAdapter
     private var mediaRecorder: MediaRecorder? = null
     private var isRecording = false
     private var audioFilePath: String? = null
@@ -60,10 +69,14 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
         }
     }
+    private val selectedDates = mutableSetOf<String>()
+
     private var recordingTime = 0 // Recording time in seconds
     private lateinit var recordingHandler: Handler
     private lateinit var recordingRunnable: Runnable
-
+    private val calendar = Calendar.getInstance()
+    private lateinit var dateAdapter: DateAdapter
+    private lateinit var popupWindow: PopupWindow
 
     @SuppressLint("ClickableViewAccessibility")
     override fun setupViews() {
@@ -87,6 +100,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         binding.lnrHistoryList.setOnClickListener(this)
         binding.rlaBackRecord.setOnClickListener(this)
         binding.imgBack.setOnClickListener(this)
+        binding.lnrScheduleCall.setOnClickListener(this)
+
 
         checkAndRequestPermissions()
         audioFilePath = "${externalCacheDir?.absolutePath}/audiorecord.3gp"
@@ -154,11 +169,10 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     private fun stopRecording() {
         val parts = binding.lblDurationOfVoice.text.toString().split(" / ")
         if (parts.isNotEmpty()) {
-            val currentDuration = parts[0] // This will be "06:45"
+            val currentDuration = parts[0]
             binding.lblEndDuration.text = currentDuration
         }
-//        loadWaveform()
-
+        //        loadWaveform()
         mediaRecorder?.apply {
             binding.imgVoiceRecord.setImageDrawable(
                 ContextCompat.getDrawable(this@CommunicationSchool, R.drawable.record_icon)
@@ -290,6 +304,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 binding.lblBackToVoiceMessage.text = "Back to voice message"
 
                 binding.rlaBackRecord.visibility = View.GONE
+                binding.gridViewScheduleCall.visibility = View.GONE
                 binding.lnrHistoryList.visibility = View.VISIBLE
                 binding.rlaScheduleCallPickDate.visibility = View.GONE
                 binding.rlaMessageFromText.visibility = View.GONE
@@ -312,6 +327,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
                 binding.rlaBackRecord.visibility = View.GONE
                 binding.lnrHistoryList.visibility = View.VISIBLE
+                binding.gridViewScheduleCall.visibility = View.VISIBLE
                 binding.rlaScheduleCallPickDate.visibility = View.VISIBLE
                 binding.rlaMessageFromText.visibility = View.GONE
                 binding.rlaRecordVoice.visibility = View.VISIBLE
@@ -330,6 +346,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 }
                 binding.lblBackToVoiceMessage.text = "Back to text message"
                 binding.rlaBackRecord.visibility = View.GONE
+                binding.gridViewScheduleCall.visibility = View.GONE
                 binding.lnrHistoryList.visibility = View.VISIBLE
                 binding.rlaMessageFromText.visibility = View.VISIBLE
                 binding.rlaScheduleCallPickDate.visibility = View.GONE
@@ -356,12 +373,12 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
 
             R.id.rlaToTime -> {
-                showSpinnerTimePicker(this) { hour, minute, isAm ->
-                    val amPm = if (isAm) "AM" else "PM"
-                    Toast.makeText(this, "Selected Time: $hour:$minute $amPm", Toast.LENGTH_SHORT)
-                        .show()
-                    binding.lblEndTime.text = "$hour:$minute $amPm"
-                }
+//                showSpinnerTimePicker(this) { hour, minute, isAm ->
+//                    val amPm = if (isAm) "AM" else "PM"
+//                    Toast.makeText(this, "Selected Time: $hour:$minute $amPm", Toast.LENGTH_SHORT)
+//                        .show()
+                showTimePickerDialog(this, this)
+                //     }
             }
 
             R.id.imgVoicePlay -> {
@@ -424,30 +441,40 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 onBackPressed()
             }
 
+            R.id.lnrScheduleCall -> {
+                showDatePickerPopup()
+            }
+
             R.id.rlaBackRecord -> {
                 if (mAdapter != null) {
                     mAdapter!!.releaseMediaPlayer()
                 }
+
                 Log.d("isClickType", isClickType.toString())
                 when (isClickType) {
                     1 -> {
+                        binding.gridViewScheduleCall.visibility = View.GONE
                         binding.rlaScheduleCallPickDate.visibility = View.GONE
                     }
 
                     2 -> {
+                        binding.gridViewScheduleCall.visibility = View.VISIBLE
                         binding.rlaScheduleCallPickDate.visibility = View.VISIBLE
+                        binding.rlaRecordVoice.visibility = View.VISIBLE
+
                     }
 
                     else -> {
+                        binding.gridViewScheduleCall.visibility = View.GONE
                         binding.rlaScheduleCallPickDate.visibility = View.GONE
+                        binding.rlaMessageFromText.visibility = View.VISIBLE
                     }
                 }
 
                 binding.rcyHistoryDataVoiceAndText.visibility = View.GONE
                 binding.rlaBackRecord.visibility = View.GONE
                 binding.lnrHistoryList.visibility = View.VISIBLE
-                binding.gridViewScheduleCall.visibility = View.VISIBLE
-                binding.rlaRecordVoice.visibility = View.VISIBLE
+
 
             }
 
@@ -459,6 +486,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                         binding.rlaBackRecord.visibility = View.VISIBLE
                         binding.gridViewScheduleCall.visibility = View.GONE
                         binding.rlaRecordVoice.visibility = View.GONE
+                        binding.gridViewScheduleCall.visibility = View.GONE
                         binding.rlaMessageFromText.visibility = View.GONE
                         loadData()
                     }
@@ -470,6 +498,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                         binding.gridViewScheduleCall.visibility = View.GONE
                         binding.rlaRecordVoice.visibility = View.GONE
                         binding.rlaMessageFromText.visibility = View.GONE
+                        binding.gridViewScheduleCall.visibility = View.VISIBLE
                         loadData()
                     }
 
@@ -480,6 +509,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                         binding.gridViewScheduleCall.visibility = View.GONE
                         binding.rlaRecordVoice.visibility = View.GONE
                         binding.rlaMessageFromText.visibility = View.GONE
+                        binding.gridViewScheduleCall.visibility = View.GONE
                         loadTextData()
                     }
                 }
@@ -774,7 +804,152 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     }
 
     override fun onTimeSelected(hour: Int, minute: Int, amPm: String) {
-        binding.lblStartTime.text  = String.format("%02d:%02d %s", hour, minute, amPm)
+        binding.lblStartTime.text = String.format("%02d:%02d %s", hour, minute, amPm)
+        binding.lblEndTime.text = String.format("%02d:%02d %s", hour, minute, amPm)
+
+    }
+
+
+    private fun showDatePickerPopup() {
+        val inflater = LayoutInflater.from(this)
+        val popupView = inflater.inflate(R.layout.dialog_multi_date_picker, null)
+
+        // Create the PopupWindow
+        val popupWindow = PopupWindow(
+            popupView,
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            true // Focusable
+        )
+
+        // Dim the background when the popup is displayed
+        dimBehind(popupWindow)
+
+        // Initialize views from the popup layout
+        val prevMonthButton = popupView.findViewById<ImageView>(R.id.prevMonthButton)
+        val nextMonthButton = popupView.findViewById<ImageView>(R.id.nextMonthButton)
+        val currentMonthText = popupView.findViewById<TextView>(R.id.currentMonthText)
+        val confirmButton = popupView.findViewById<TextView>(R.id.confirmButton)
+        val dateRecyclerView = popupView.findViewById<RecyclerView>(R.id.dateRecyclerView)
+
+        // Initialize the DateAdapter
+        dateAdapter = DateAdapter(this) { selectedDatesList ->
+            // You can handle additional selections here if needed
+        }
+
+        dateRecyclerView.layoutManager = GridLayoutManager(this, 7) // 7 columns for the week
+        dateRecyclerView.adapter = dateAdapter
+
+        // Load current month dates
+        loadDates(currentMonthText)
+
+        // Update the DateAdapter to reflect current selected dates
+        dateAdapter.setSelectedDates(selectedDates.toList())
+
+        // Initialize selectedDatesAdapter and pass dateAdapter reference
+        selectedDatesAdapter = SelectedDatesAdapter(this, selectedDates.toMutableList(), dateAdapter) { removedDate ->
+            dateAdapter.removeSelectedDate(removedDate)
+        }
+
+        // Set the adapter for your GridView or RecyclerView where you display selected dates
+        binding.gridViewScheduleCall.adapter = selectedDatesAdapter
+
+        // Highlight previously selected dates in DateAdapter
+        selectedDates.forEach { date ->
+            dateAdapter.selectDate(date)
+        }
+
+        // Set up button click listeners
+        prevMonthButton.setOnClickListener {
+            calendar.add(Calendar.MONTH, -1)
+            loadDates(currentMonthText)
+            dateAdapter.setSelectedDates(selectedDates.toList())
+        }
+
+        nextMonthButton.setOnClickListener {
+            calendar.add(Calendar.MONTH, 1)
+            loadDates(currentMonthText)
+            dateAdapter.setSelectedDates(selectedDates.toList())
+        }
+
+        confirmButton.setOnClickListener {
+            clearDim()
+            val selectedDatesList = dateAdapter.getSelectedDates().toMutableList()
+
+            // Update the selected dates in the SelectedDatesAdapter
+            selectedDates.clear()
+            selectedDates.addAll(selectedDatesList)
+
+            // Notify the selectedDatesAdapter of changes
+            selectedDatesAdapter.submitSelectedDates(selectedDates.toList()) // Notify adapter of changes
+
+            popupWindow.dismiss() // Dismiss the popup
+        }
+
+        // Show the popup at the center of the screen
+        popupWindow.showAtLocation(window.decorView.rootView, Gravity.CENTER, 0, 0)
+
+        // Set a transparent background for the popup window
+        popupWindow.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        // Clear the dimming effect when the popup is dismissed
+        popupWindow.setOnDismissListener {
+            clearDim()
+        }
+    }
+
+
+
+
+
+
+    private fun dimBehind(popupWindow: PopupWindow) {
+        val window = this.window
+        val layoutParams = window.attributes
+        layoutParams.alpha = 0.4f // Lower alpha to dim the background
+        window.addFlags(android.view.WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+        window.attributes = layoutParams
+    }
+
+    private fun clearDim() {
+        val window = this.window
+        val layoutParams = window.attributes
+        layoutParams.alpha = 1.0f
+        window.clearFlags(android.view.WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+        window.attributes = layoutParams
+    }
+
+    private fun loadDates(currentMonthText: TextView) {
+        val dateFormat = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
+        currentMonthText.text = dateFormat.format(calendar.time)
+
+        val today = Calendar.getInstance()
+        val endDate = today.clone() as Calendar
+        endDate.add(Calendar.DAY_OF_MONTH, 6)
+
+        val dates = mutableListOf<DateItem>()
+        val firstDayOfMonth = calendar.clone() as Calendar
+        firstDayOfMonth.set(Calendar.DAY_OF_MONTH, 1)
+
+        val daysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
+        val firstDayOfWeek = firstDayOfMonth.get(Calendar.DAY_OF_WEEK)
+
+        // Add empty cells for days before the first day of the month
+        for (i in 1 until firstDayOfWeek) {
+            dates.add(DateItem(null, false)) // Empty cells
+        }
+
+        // Add the dates of the month
+        for (i in 1..daysInMonth) {
+            val currentDate = calendar.clone() as Calendar
+            currentDate.set(Calendar.DAY_OF_MONTH, i)
+
+            // Check if the date is in the selectable range
+            val isSelectable = !currentDate.before(today) && !currentDate.after(endDate)
+            dates.add(DateItem(i, isSelectable))
+        }
+
+        dateAdapter.submitDates(dates)
     }
 }
 

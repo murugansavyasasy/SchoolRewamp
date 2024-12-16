@@ -121,4 +121,32 @@
     <string name="name">ชื่อ</string>
     <string name="Communication">การสื่อสาร</string>
     <string name="VoiceMessage">ข้อความเสียง</string>
+    <string name="UploadVideo">อัปโหลดวิดีโอ</string>
+    <string name="Clicktochoosevideofromfile">คลิกเพื่อเลือกวิดีโอจากไฟล์</string>
+    <string name="ChangeVideo">เปลี่ยนวิดีโอ</string>
+    <string name="Entervideotitle">ป้อนชื่อวิดีโอ</string>
+    <string name="Description">คำอธิบาย</string>
+    <string name="Send">ส่ง</string>
+    <string name="CreateEvent">สร้างกิจกรรม</string>
+    <string name="Create">สร้าง</string>
+    <string name="History">ประวัติศาสตร์</string>
+    <string name="Venue">สถานที่</string>
+    <string name="EventTitle">ชื่อกิจกรรม</string>
+    <string name="Eventdetail">รายละเอียดกิจกรรม</string>
+    <string name="AddPhotos">เพิ่มรูปถ่าย</string>
+    <string name="Optional">(ไม่จำเป็น?)</string>
+    <string name="EventDateTime">วันที่จัดงาน เวลา</string>
+    <string name="Start">เริ่ม</string>
+    <string name="End">สิ้นสุด</string>
+    <string name="NEXT">ถัดไป</string>
+    <string name="NoticeBoard">กระดานประกาศ</string>
+    <string name="Title">ชื่อเรื่อง</string>
+    <string name="Detail">รายละเอียด</string>
+    <string name="DateTime">วันที่และเวลา</string>
+    <string name="AttendanceMark">เครื่องหมายการเข้าเรียน</string>
+    <string name="SchoolList">รายชื่อโรงเรียน</string>
+
+
+
+
 </resources>
