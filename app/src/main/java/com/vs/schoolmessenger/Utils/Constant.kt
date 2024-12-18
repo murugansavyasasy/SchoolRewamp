@@ -74,6 +74,15 @@ object Constant {
         }
     }
 
+
+    fun redirectToMessage(context: Context, phoneNumber: String){
+        val smsUri = Uri.parse("sms:"+phoneNumber)
+        val intent = Intent(Intent.ACTION_VIEW, smsUri).apply {
+            putExtra("", "")
+        }
+        context.startActivity(intent)
+    }
+
     fun editTextCounter(
         context: Context,
         editText: EditText,

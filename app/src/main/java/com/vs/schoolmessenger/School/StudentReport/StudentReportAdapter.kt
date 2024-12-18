@@ -1,16 +1,15 @@
 package com.vs.schoolmessenger.School.StudentReport
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RelativeLayout
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager.widget.ViewPager
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.R
-import me.relex.circleindicator.CircleIndicator
 
 class StudentReportAdapter(
     private var itemList: List<StudentReportData>? = emptyList(),
@@ -61,6 +60,9 @@ class StudentReportAdapter(
         private val lblTeacherName: TextView = itemView.findViewById(R.id.lblTeacherName)
         private val lblMobileNumber: TextView = itemView.findViewById(R.id.lblMobileNumber)
         private val lblEmail: TextView = itemView.findViewById(R.id.lblEmail)
+        private val lnrPhoneNumber: LinearLayout = itemView.findViewById(R.id.lnrPhoneNumber)
+        private val lnrSms: LinearLayout = itemView.findViewById(R.id.lnrSms)
+        private val lnrMail: LinearLayout = itemView.findViewById(R.id.lnrMail)
 
         fun bind(data: StudentReportData, listener: StudentReportClickListener) {
             // Bind actual data to the views
@@ -74,11 +76,25 @@ class StudentReportAdapter(
             lblEmail.text = data.email
 
             // Set click listener for the email TextView
-            lblEmail.setOnClickListener {
-                listener.onItemClick(data)
+            lnrMail.setOnClickListener {
+                listener.onMailClick(data)
+            }
+
+            lnrSms.setOnClickListener {
+                listener.onMessageClick(data)
+            }
+
+            lnrPhoneNumber.setOnClickListener {
+                listener.onPhoneClick(data)
             }
         }
     }
+
+    fun updateData(newList: List<StudentReportData>) {
+        itemList = newList
+        notifyDataSetChanged()
+    }
+
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val shimmerLayout: ShimmerFrameLayout = itemView.findViewById(R.id.shimmer_view_container)

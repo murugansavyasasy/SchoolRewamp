@@ -5,16 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.facebook.shimmer.ShimmerFrameLayout
-import com.vs.schoolmessenger.Dashboard.Settings.Notification.NotificationDataClass
 import com.vs.schoolmessenger.R
-import de.hdodenhof.circleimageview.CircleImageView
 
 class SchoolListAdapter(
     private var itemList: List<SchoolsData>?,
+    private var listener: SchoolListClickListener,
     private var context: Context,
     private var isLoading: Boolean
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -43,7 +43,8 @@ class SchoolListAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
             // Bind actual data when loading is complete
-            holder.bind(itemList!![position], position)
+//            holder.bind(itemList!![position], position)
+            holder.bind(itemList!![position], position, listener)
         }
     }
 
@@ -57,8 +58,9 @@ class SchoolListAdapter(
         val imgSchoolLogo: ImageView = itemView.findViewById(R.id.imgSchoolLogo)
         val lblSchoolName: TextView = itemView.findViewById(R.id.lblSchoolName)
         val lblSchoolAddress: TextView = itemView.findViewById(R.id.lblSchoolAddress)
+        val rlaHeader: RelativeLayout = itemView.findViewById(R.id.rlaHeader)
 
-        fun bind(data: SchoolsData, position: Int) {
+        fun bind(data: SchoolsData, position: Int, listener: SchoolListClickListener) {
 
             lblSchoolName.text = data.schoolName
             lblSchoolAddress.text = data.schoolAddress
@@ -66,6 +68,10 @@ class SchoolListAdapter(
             Glide.with(context)
                 .load(data.schoolLogo)
                 .into(imgSchoolLogo)
+
+            rlaHeader.setOnClickListener {
+                listener.onItemClick(data)
+            }
 
         }
     }

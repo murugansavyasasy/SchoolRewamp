@@ -1,13 +1,15 @@
 package com.vs.schoolmessenger.CommonScreens
 
+import android.content.Intent
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.Assignment.Assignment
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.SchoolListActivityBinding
 
-class SchoolList : BaseActivity<SchoolListActivityBinding>(),
+class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickListener,
     View.OnClickListener {
 
     override fun getViewBinding(): SchoolListActivityBinding {
@@ -55,11 +57,11 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(),
             )
         )
 
-        mAdapter = SchoolListAdapter(null, this, Constant.isShimmerViewShow)
+        mAdapter = SchoolListAdapter(null, this, this, Constant.isShimmerViewShow)
         binding.recycleSchools.layoutManager = LinearLayoutManager(this)
         binding.recycleSchools.adapter = mAdapter
         Constant.executeAfterDelay {
-            mAdapter = SchoolListAdapter(schoolsList, this, Constant.isShimmerViewDisable)
+            mAdapter = SchoolListAdapter(schoolsList, this, this, Constant.isShimmerViewDisable)
             binding.recycleSchools.adapter = mAdapter
         }
     }
@@ -73,8 +75,11 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(),
             R.id.imgBack -> {
                 onBackPressed()
             }
-
         }
     }
 
+    override fun onItemClick(data: SchoolsData) {
+        startActivity(Intent(this, Assignment::class.java))
+
+    }
 }

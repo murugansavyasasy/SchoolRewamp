@@ -12,12 +12,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.CommonScreens.SchoolList
 import com.vs.schoolmessenger.Dashboard.Model.GridItem
-import com.vs.schoolmessenger.Parent.Video.ParentVideo
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesStudentMark
+import com.vs.schoolmessenger.School.Assignment.Assignment
 import com.vs.schoolmessenger.School.Communication.CommunicationSchool
 import com.vs.schoolmessenger.School.Event.CreateEvent
+import com.vs.schoolmessenger.School.LessonPlan.LessonPlan
 import com.vs.schoolmessenger.School.NoticeBoard.CreateNoticeBoard
+import com.vs.schoolmessenger.School.SchoolStrength.SchoolStrength
 import com.vs.schoolmessenger.School.StudentReport.StudentReport
 import com.vs.schoolmessenger.School.Video.CreateVideo
 
@@ -80,6 +82,7 @@ class SchoolMenuAdapter(
                     "Event" -> {
                         context.startActivity(Intent(context, CreateEvent::class.java))
                     }
+
                     "Notice Board" -> {
                         context.startActivity(Intent(context, CreateNoticeBoard::class.java))
                     }
@@ -87,9 +90,19 @@ class SchoolMenuAdapter(
                     "Assignment" -> {
                         context.startActivity(Intent(context, SchoolList::class.java))
                     }
+
                     "Student Report" -> {
                         context.startActivity(Intent(context, StudentReport::class.java))
                     }
+
+                    "School Strength" -> {
+                        context.startActivity(Intent(context, SchoolStrength::class.java))
+                    }
+                    "Lesson Plan" -> {
+                        context.startActivity(Intent(context, LessonPlan::class.java))
+                    }
+
+
                 }
             }
         }

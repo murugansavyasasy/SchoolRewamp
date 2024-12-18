@@ -145,6 +145,21 @@
     <string name="DateTime">தேதி மற்றும் நேரம்</string>
     <string name="AttendanceMark">வரவுக் குறி</string>
     <string name="SchoolList">பள்ளி பட்டியல்</string>
+    <string name="StudentReport">மாணவர் அறிக்கை</string>
+    <string name="Admissionno">சேர்க்கை எண்</string>
+    <string name="Gender">பாலினம்</string>
+    <string name="Dateofbirth">பிறந்த தேதி</string>
+    <string name="Studentname">மாணவர் பெயர்</string>
+    <string name="Fathername">தந்தை பெயர்</string>
+    <string name="Teachername">ஆசிரியர் பெயர்</string>
+    <string name="Assignment">கோப்பு</string>
+    <string name="Catogory">வகை</string>
+    <string name="Entertitle">தலைப்பை உள்ளிடவும்</string>
+    <string name="Enterdescription">விவரணையை உள்ளிடவும்</string>
+    <string name="SubmissionDate">சமர்ப்பிப்பு தேதி</string>
+    <string name="AddPhoto">புகைப்படம் சேர்க்கவும்</string>
+    <string name="ChooseRecipients">பெறுநர்களை தேர்ந்தெடுக்கவும்</string>
+
 
 
 </resources>

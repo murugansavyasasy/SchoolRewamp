@@ -145,6 +145,21 @@
     <string name="DateTime">วันที่และเวลา</string>
     <string name="AttendanceMark">เครื่องหมายการเข้าเรียน</string>
     <string name="SchoolList">รายชื่อโรงเรียน</string>
+    <string name="StudentReport">รายงานนักเรียน</string>
+    <string name="Admissionno">หมายเลขการรับเข้า</string>
+    <string name="Gender">เพศ</string>
+    <string name="Dateofbirth">วันเกิด</string>
+    <string name="Studentname">ชื่อนักเรียน</string>
+    <string name="Fathername">ชื่อบิดา</string>
+    <string name="Teachername">ชื่อครู</string>
+    <string name="Assignment">การบ้าน</string>
+    <string name="Catogory">หมวดหมู่</string>
+    <string name="Entertitle">กรุณาใส่ชื่อเรื่อง</string>
+    <string name="Enterdescription">กรุณาใส่คำอธิบาย</string>
+    <string name="SubmissionDate">วันที่ส่ง</string>
+    <string name="AddPhoto">เพิ่มรูปภาพ</string>
+    <string name="ChooseRecipients">เลือกผู้รับ</string>
+
 
 
 

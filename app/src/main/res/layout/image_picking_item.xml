@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/ten">
+
+    <RelativeLayout
+        android:layout_width="@dimen/eighty"
+        android:layout_height="@dimen/eighty">
+
+        <ImageView
+            android:id="@+id/imgPicking"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/add_image"></ImageView>
+
+        <ImageView
+
+            android:id="@+id/imgDelete"
+            android:layout_width="@dimen/twenty_five"
+            android:layout_height="@dimen/twenty_five"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/delete_icon">
+
+        </ImageView>
+
+
+    </RelativeLayout>
+</RelativeLayout>

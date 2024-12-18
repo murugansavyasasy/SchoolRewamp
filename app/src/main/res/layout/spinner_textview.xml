@@ -11,7 +11,7 @@
     android:drawableRight="@drawable/ic_arrow_down"
     android:gravity="center_vertical"
     android:maxLines="1"
-    android:padding="10dp"
+    android:padding="@dimen/ten"
     android:textSize="@dimen/twele"
     android:textStyle="bold" />
 

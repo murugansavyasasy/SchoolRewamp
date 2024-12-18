@@ -145,5 +145,20 @@
     <string name="DateTime">तारीख और समय</string>
     <string name="AttendanceMark">उपस्थिति चिह्न</string>
     <string name="SchoolList">विद्यालय सूची</string>
+    <string name="StudentReport">छात्र रिपोर्ट</string>
+    <string name="Admissionno">प्रवेश संख्या</string>
+    <string name="Gender">लिंग</string>
+    <string name="Dateofbirth">जन्म तिथि</string>
+    <string name="Studentname">छात्र का नाम</string>
+    <string name="Fathername">पिता का नाम</string>
+    <string name="Teachername">शिक्षक का नाम</string>
+    <string name="Assignment">असाइनमेंट</string>
+    <string name="Catogory">श्रेणी</string>
+    <string name="Entertitle">शीर्षक दर्ज करें</string>
+    <string name="Enterdescription">विवरण दर्ज करें</string>
+    <string name="SubmissionDate">जमा करने की तारीख</string>
+    <string name="AddPhoto">फोटो जोड़ें</string>
+    <string name="ChooseRecipients">प्राप्तकर्ताओं को चुनें</string>
+
 
 </resources>

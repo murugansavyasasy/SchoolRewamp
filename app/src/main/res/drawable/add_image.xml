@@ -1,0 +1,16 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+  <!-- Blue outline of the square -->
+  <path
+      android:pathData="M21,2H3C2.4,2 2,2.4 2,3v18c0,0.6 0.4,1 1,1h18c0.6,0 1,-0.4 1,-1V3C22,2.4 21.6,2 21,2z"
+      android:fillColor="@color/navi_blue4" />
+
+  <!-- Smaller, centered black plus symbol -->
+  <path
+      android:pathData="M12,8h-1v3H8v1h3v3h1v-3h3v-1h-3V8z"
+      android:fillColor="#000000" />
+</vector>

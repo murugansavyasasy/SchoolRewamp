@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/rytHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/primary_light"
+            android:paddingVertical="@dimen/twenty">
+
+            <ImageView
+                android:id="@+id/imgBack"
+                android:layout_width="@dimen/thirty"
+                android:layout_height="@dimen/thirty"
+                android:layout_marginStart="@dimen/twenty"
+                android:src="@drawable/arrow_back_black" />
+
+            <TextView
+                android:id="@+id/lblCreateNoticeBoard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="@string/Assignment"
+                android:textColor="@color/black"
+                android:textSize="@dimen/twenty"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rytHeader"
+            android:layout_margin="@dimen/five"
+            android:background="@drawable/rect_shadow_white">
+
+
+            <RelativeLayout
+                android:id="@+id/rlaAssignmentType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/fifteen"
+                android:background="@drawable/rect_light_blue"
+                android:padding="@dimen/ten">
+
+
+                <ImageView
+                    android:layout_width="@dimen/twenty_five"
+                    android:layout_height="@dimen/twenty_five"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/ten"
+                    android:src="@drawable/ic_down_arrow">
+
+                </ImageView>
+
+                <TextView
+                    android:id="@+id/lblAssignment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/fifteen"
+                    android:text="Text"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/fifteen_sp"
+                    android:textStyle="bold"></TextView>
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/lblCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rlaAssignmentType"
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginTop="@dimen/ten"
+                android:text="@string/Catogory"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen_sp"
+                android:textStyle="bold">
+
+            </TextView>
+
+
+            <RelativeLayout
+                android:id="@+id/rlaTypeofSending"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblCategory"
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/fifteen"
+                android:background="@drawable/rect_grey"
+                android:padding="@dimen/ten">
+
+
+                <ImageView
+                    android:id="@+id/imgStandardSort"
+                    android:layout_width="@dimen/twenty_five"
+                    android:layout_height="@dimen/twenty_five"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/ten"
+                    android:src="@drawable/ic_down_arrow">
+
+                </ImageView>
+
+                <TextView
+                    android:id="@+id/lblAssignmentSendingType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/fifteen"
+                    android:text="General"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/fifteen_sp"
+                    android:textStyle="bold"></TextView>
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/lblTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rlaTypeofSending"
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginTop="@dimen/ten"
+                android:text="@string/Title"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen_sp"
+                android:textStyle="bold">
+
+            </TextView>
+
+            <EditText
+                android:id="@+id/edtTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblTitle"
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/fifteen"
+                android:hint="@string/Entertitle"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen_sp"
+                android:textStyle="normal">
+
+            </EditText>
+
+            <TextView
+                android:id="@+id/lblDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edtTitle"
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginTop="@dimen/ten"
+                android:text="@string/Description"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen_sp"
+                android:textStyle="bold">
+
+            </TextView>
+
+            <EditText
+                android:id="@+id/edtDescription"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/hundred"
+                android:layout_below="@+id/lblDescription"
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/fifteen"
+                android:background="@drawable/bg_outline_black"
+                android:editable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="start"
+                android:hint="@string/Enterdescription"
+                android:maxLength="100"
+                android:padding="@dimen/ten"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen_sp"
+                android:textStyle="normal">
+
+            </EditText>
+
+
+            <TextView
+                android:id="@+id/lblTextCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edtDescription"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/fifteen"
+                android:text="0 / 100"
+                android:textColor="@color/light_gray"
+                android:textSize="@dimen/fifteen_sp"
+                android:textStyle="normal">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/lblSubDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblTextCount"
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/ten"
+                android:text="@string/SubmissionDate"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen_sp"
+                android:textStyle="bold">
+
+            </TextView>
+
+            <ImageView
+                android:id="@+id/imgCalender"
+                android:layout_width="@dimen/twenty_five"
+                android:layout_height="@dimen/twenty_five"
+                android:layout_below="@+id/lblSubDate"
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginTop="@dimen/ten"
+                android:src="@drawable/calender_icon"></ImageView>
+
+
+            <TextView
+                android:id="@+id/lblDatePick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblSubDate"
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_toEndOf="@+id/imgCalender"
+                android:drawableRight="@drawable/ic_down_arrow"
+                android:drawablePadding="@dimen/ten"
+                android:text="Sun 12 Dec 2022"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen_sp"
+                android:textStyle="normal">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/lblTimePick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblSubDate"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/fifteen"
+                android:drawableRight="@drawable/ic_down_arrow"
+                android:drawablePadding="@dimen/ten"
+                android:text="12:12 PM"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen_sp"
+                android:textStyle="normal"></TextView>
+
+
+            <RelativeLayout
+                android:id="@+id/rlaFilePicking"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblTimePick"
+                android:layout_marginTop="@dimen/five"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/lblAddPhoto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/fifteen"
+                    android:layout_marginTop="@dimen/ten"
+                    android:text="@string/AddPhoto"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/fifteen_sp"
+                    android:textStyle="bold">
+
+                </TextView>
+
+                <ImageView
+                    android:id="@+id/lmgCamera"
+                    android:layout_width="@dimen/twenty_five"
+                    android:layout_height="@dimen/twenty_five"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_marginEnd="@dimen/twenty"
+                    android:src="@drawable/camera_icon"></ImageView>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcyImages"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lmgCamera"
+                    android:orientation="vertical">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+            </RelativeLayout>
+
+
+            <TextView
+                android:id="@+id/btnChooseRecipient"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rlaFilePicking"
+                android:layout_marginStart="@dimen/twenty_five"
+                android:layout_marginTop="@dimen/fifteen"
+                android:layout_marginEnd="@dimen/twenty_five"
+                android:layout_marginBottom="@dimen/ten"
+                android:background="@drawable/rect_btn_orange"
+                android:gravity="center"
+                android:padding="@dimen/ten"
+                android:text="@string/ChooseRecipients"
+                android:textColor="@color/white"
+                android:textSize="@dimen/thirteen_sp"
+                android:textStyle="bold">
+
+            </TextView>
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+</ScrollView>

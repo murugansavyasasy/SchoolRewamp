@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/rytHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primary_light"
+        android:paddingVertical="@dimen/twenty">
+
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
+            android:layout_marginStart="@dimen/twenty"
+            android:src="@drawable/arrow_back_black" />
+
+        <TextView
+            android:id="@+id/lblCreateNoticeBoard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="Lession Plan"
+            android:textColor="@color/black"
+            android:textSize="@dimen/twenty_sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/lnrParent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rytHeader"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="@dimen/ten"
+        android:layout_marginTop="@dimen/fifteen"
+        android:background="@drawable/bg_light_blue">
+
+        <TextView
+            android:id="@+id/btnCreate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/bg_blue"
+            android:gravity="center"
+            android:padding="@dimen/ten"
+            android:text="All Classes"
+            android:textColor="@color/white"
+            android:textSize="@dimen/thirteen_sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/btnHistory"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/ten"
+            android:text="My Classes"
+            android:textColor="@color/dark_blue"
+            android:textSize="@dimen/thirteen_sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlaFilter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lnrParent"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/imgFilter"
+            android:layout_width="@dimen/twenty_five"
+            android:layout_height="@dimen/twenty_five"
+            android:layout_centerVertical="true"
+            android:src="@drawable/filter_icon"></ImageView>
+
+        <TextView
+            android:id="@+id/lblFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/five"
+            android:layout_toEndOf="@+id/imgFilter"
+            android:text="Filter"
+            android:textColor="@color/black"
+            android:textSize="@dimen/fifteen_sp">
+
+        </TextView>
+
+
+        <RelativeLayout
+            android:id="@+id/rytSearch"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/thirty_five"
+            android:layout_margin="@dimen/ten"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_toEndOf="@+id/lblFilter"
+            android:background="@drawable/rect_grey">
+
+
+            <ImageView
+                android:id="@+id/imgSearch"
+                android:layout_width="@dimen/thirty"
+                android:layout_height="@dimen/thirty"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/ten"
+                android:src="@drawable/ic_search" />
+
+            <EditText
+                android:id="@+id/txtSearchMenu"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@+id/imgSearch"
+                android:background="@android:color/transparent"
+                android:hint="@string/lblSearch"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp" />
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcyLessonPlan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rlaFilter">
+
+    </androidx.recyclerview.widget.RecyclerView>
+</RelativeLayout>

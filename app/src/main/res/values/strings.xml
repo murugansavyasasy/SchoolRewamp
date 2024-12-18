@@ -74,9 +74,9 @@
     <string name="lblHelp">Help</string>
     <string name="lblSchoolStrength">School Strength</string>
     <string name="lblTotalStrength">Total Strength</string>
-    <string name="lblSfaffcount">Sfaff\'s count</string>
-    <string name="lblBoycount">Boy\'s count</string>
-    <string name="lblGirlcount">Girl\'s count</string>
+    <string name="lblSfaffcount">Sfaff\'s </string>
+    <string name="lblBoycount">Boy\'s </string>
+    <string name="lblGirlcount">Girl\'s </string>
     <string name="lblAttachment">Attachment</string>
     <string name="lblContactSupport">Contact Support</string>
     <string name="lblOurCustomerService">Our 24*7 Customer Service.</string>
@@ -145,6 +145,21 @@
     <string name="DateTime">Date Time</string>
     <string name="AttendanceMark">Attendance Mark</string>
     <string name="SchoolList">School List</string>
+    <string name="StudentReport">Student Report</string>
+    <string name="Admissionno">Admission no</string>
+    <string name="Gender">Gender</string>
+    <string name="Dateofbirth">Date of birth</string>
+    <string name="Studentname">Student name</string>
+    <string name="Fathername">Father name</string>
+    <string name="Teachername">Teacher name</string>
+    <string name="Assignment">Assignment</string>
+    <string name="Catogory">Catogory</string>
+    <string name="Entertitle">Enter title</string>
+    <string name="Enterdescription">Enter description</string>
+    <string name="SubmissionDate">Submission Date</string>
+    <string name="AddPhoto">Add Photo</string>
+    <string name="ChooseRecipients">Choose Recipients</string>
+
 
 
 

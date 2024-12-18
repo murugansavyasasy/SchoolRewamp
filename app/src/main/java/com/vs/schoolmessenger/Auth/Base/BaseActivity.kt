@@ -4,6 +4,8 @@ import android.animation.AnimatorListenerAdapter
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
+import android.app.Activity
+import android.app.DatePickerDialog
 import android.app.Dialog
 import android.app.TimePickerDialog
 import android.content.Context
@@ -12,11 +14,16 @@ import android.graphics.PorterDuff
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.ListView
+import android.widget.PopupWindow
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -30,10 +37,12 @@ import com.vs.schoolmessenger.Dashboard.Fragments.HomeFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.ProfileFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.SettingsFragment
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.OnDateSelectedListener
 import com.vs.schoolmessenger.Utils.TimePickerAdapter
 import com.vs.schoolmessenger.Utils.TimeSelectedListener
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Locale
 
 abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
@@ -141,6 +150,71 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         }
 
         // Perform actions on the view
+    }
+
+    fun showDropdownMenuSort(
+        anchor: View,
+        items: List<String>,
+        onItemSelected: (String) -> Unit
+    ) {
+
+        val activity = anchor.context as? Activity
+        if (activity == null || activity.isFinishing || activity.isDestroyed) {
+            Log.e("DropdownMenu", "Activity is not valid for showing the popup.")
+            return
+        }
+
+
+        val inflater = LayoutInflater.from(anchor.context)
+        val dropdownView = inflater.inflate(R.layout.dropdown_menu, null)
+
+        // Create a PopupWindow
+        val popupWindow = PopupWindow(
+            dropdownView,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            true
+        )
+        dimBehind(popupWindow)
+        // Set up the ListView in the dropdown
+        val listView: ListView = dropdownView.findViewById(R.id.dropdownListView)
+        val adapter =
+            ArrayAdapter(anchor.context, R.layout.dropdown_spinner, items)
+        listView.adapter = adapter
+
+        // Handle item clicks
+        listView.setOnItemClickListener { _, _, position, _ ->
+            val selectedItem = items[position]
+            onItemSelected(selectedItem)
+            clearDim()
+            popupWindow.dismiss() // Close the dropdown
+        }
+
+        popupWindow.setOnDismissListener {
+            clearDim()
+        }
+
+        try {
+            popupWindow.showAsDropDown(anchor)
+        } catch (e: Exception) {
+            Log.e("DropdownMenu", "Failed to show dropdown menu", e)
+        }
+    }
+
+    private fun dimBehind(popupWindow: PopupWindow) {
+        val window = this.window
+        val layoutParams = window.attributes
+        layoutParams.alpha = 0.4f // Lower alpha to dim the background
+        window.addFlags(android.view.WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+        window.attributes = layoutParams
+    }
+
+    private fun clearDim() {
+        val window = this.window
+        val layoutParams = window.attributes
+        layoutParams.alpha = 1.0f
+        window.clearFlags(android.view.WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+        window.attributes = layoutParams
     }
 
     private fun updateNavBar(selectedItemId: Int) {
@@ -337,7 +411,8 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
                 context,
                 { _, selectedHour, selectedMinute ->
                     val amPm = if (selectedHour < 12) "AM" else "PM"
-                    val hourIn12Format = if (selectedHour == 0) 12 else if (selectedHour > 12) selectedHour - 12 else selectedHour
+                    val hourIn12Format =
+                        if (selectedHour == 0) 12 else if (selectedHour > 12) selectedHour - 12 else selectedHour
                     listener.onTimeSelected(hourIn12Format, selectedMinute, amPm)
                 },
                 hour,
@@ -346,6 +421,41 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
             )
             timePickerDialog.show()
         }
+
+
+    fun showDatePickerDialog(
+        context: Context,
+        listener: OnDateSelectedListener
+    ) {
+        // Get the current date by default
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        // Show DatePickerDialog
+        val datePickerDialog = DatePickerDialog(
+            context,
+            { _, selectedYear, selectedMonth, selectedDay ->
+                val formattedDate = "${selectedDay}/${selectedMonth + 1}/${selectedYear}"
+                listener.onDateSelected(formattedDate)
+            },
+            year, month, day
+        )
+        datePickerDialog.show()
+    }
+    fun changeDateFormat(inputDate: String): String {
+        // Define the current format of the input date
+        val inputFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+
+        // Define the desired output format
+        val outputFormat = SimpleDateFormat("EEE dd MMM, yyyy", Locale.getDefault())
+
+        // Parse the input date and reformat it
+        val date = inputFormat.parse(inputDate)
+        return outputFormat.format(date!!)
+    }
+
 
 
 
