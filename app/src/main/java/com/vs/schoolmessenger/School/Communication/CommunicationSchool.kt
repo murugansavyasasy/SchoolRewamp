@@ -898,27 +898,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         }
     }
 
-
-
-
-
-
-    private fun dimBehind(popupWindow: PopupWindow) {
-        val window = this.window
-        val layoutParams = window.attributes
-        layoutParams.alpha = 0.4f // Lower alpha to dim the background
-        window.addFlags(android.view.WindowManager.LayoutParams.FLAG_DIM_BEHIND)
-        window.attributes = layoutParams
-    }
-
-    private fun clearDim() {
-        val window = this.window
-        val layoutParams = window.attributes
-        layoutParams.alpha = 1.0f
-        window.clearFlags(android.view.WindowManager.LayoutParams.FLAG_DIM_BEHIND)
-        window.attributes = layoutParams
-    }
-
     private fun loadDates(currentMonthText: TextView) {
         val dateFormat = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
         currentMonthText.text = dateFormat.format(calendar.time)

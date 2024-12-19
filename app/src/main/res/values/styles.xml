@@ -24,4 +24,9 @@
         <item name="ci_drawable_unselected">@drawable/indicator_inactive</item>
     </style>
 
+    <style name="PopupAnimation">
+        <item name="android:windowEnterAnimation">@anim/bottom_to_top</item>
+    </style>
+
+
 </resources>

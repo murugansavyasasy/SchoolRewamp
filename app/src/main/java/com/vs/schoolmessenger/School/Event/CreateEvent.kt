@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.School.Event
 import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
@@ -9,11 +10,14 @@ import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.CreateEventBinding
 
 class CreateEvent : BaseActivity<CreateEventBinding>(),
-    View.OnClickListener {
+    View.OnClickListener, EventClickListener {
 
     override fun getViewBinding(): CreateEventBinding {
         return CreateEventBinding.inflate(layoutInflater)
     }
+
+    lateinit var mAdapter: EventHistoryAdapter
+    private lateinit var isEventHistoryData: List<EventHistoryData>
 
     override fun setupViews() {
         super.setupViews()
@@ -45,12 +49,78 @@ class CreateEvent : BaseActivity<CreateEventBinding>(),
                 binding.eventCreate.visibility = View.VISIBLE
 
             }
+
             R.id.btnHistory -> {
                 isBackRoundChange(binding.btnHistory)
                 binding.rytHistory.visibility = View.VISIBLE
                 binding.eventCreate.visibility = View.GONE
+                loadData()
             }
         }
+    }
+
+
+    private fun loadData() {
+        isEventHistoryData = listOf(
+            EventHistoryData(
+                "Annual Day celebrartions",
+                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
+                "15 Nov 2024"
+            ),
+            EventHistoryData(
+                "Annual Day celebrartions",
+                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
+                "15 Nov 2024"
+            ),
+            EventHistoryData(
+                "Annual Day celebrartions",
+                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
+                "15 Nov 2024"
+            ),
+            EventHistoryData(
+                "Annual Day celebrartions",
+                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
+                "15 Nov 2024"
+            ),
+            EventHistoryData(
+                "Annual Day celebrartions",
+                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
+                "15 Nov 2024"
+            ),
+            EventHistoryData(
+                "Annual Day celebrartions",
+                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
+                "15 Nov 2024"
+            ),
+            EventHistoryData(
+                "Annual Day celebrartions",
+                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
+                "15 Nov 2024"
+            ),
+            EventHistoryData(
+                "Annual Day celebrartions",
+                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
+                "15 Nov 2024"
+            ),
+            EventHistoryData(
+                "Annual Day celebrartions",
+                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
+                "15 Nov 2024"
+            )
+        )
+
+        mAdapter = EventHistoryAdapter(null, this, this, Constant.isShimmerViewShow)
+        binding.recycleStudents.layoutManager = LinearLayoutManager(this)
+        binding.recycleStudents.adapter = mAdapter
+
+        Constant.executeAfterDelay {
+            // Once data is loaded, stop shimmer and pass the actual data
+            mAdapter =
+                EventHistoryAdapter(isEventHistoryData, this, this, Constant.isShimmerViewDisable)
+            // Set GridLayoutManager (2 columns in this case)
+            binding.recycleStudents.adapter = mAdapter
+        }
+
     }
 
     private fun isBackRoundChange(isClickingId: TextView) {
@@ -68,6 +138,10 @@ class CreateEvent : BaseActivity<CreateEventBinding>(),
 
         isClickingId.background = ContextCompat.getDrawable(this, R.drawable.bg_blue)
         isClickingId.setTextColor(ContextCompat.getColor(this, R.color.white))
+
+    }
+
+    override fun onItemClick(data: EventHistoryData) {
 
     }
 }

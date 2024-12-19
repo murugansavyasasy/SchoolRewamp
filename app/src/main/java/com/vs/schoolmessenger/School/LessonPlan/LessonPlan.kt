@@ -1,6 +1,8 @@
 package com.vs.schoolmessenger.School.LessonPlan
 
+import android.content.Intent
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
@@ -8,10 +10,10 @@ import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.LessonPlanBinding
 
 class LessonPlan : BaseActivity<LessonPlanBinding>(),
-    View.OnClickListener, LessonPlanClickListener {
+    View.OnClickListener, LessonPlanChartClickListener {
 
-    private lateinit var mAdapter: LessonPlanAdapter
-    private lateinit var isLessonPlanData: List<LessonPlanData>
+    private lateinit var mAdapter: LessonPlanPicChartAdapter
+    private lateinit var isLessonPlanChartData: List<LessonPlanChartData>
 
     override fun getViewBinding(): LessonPlanBinding {
         return LessonPlanBinding.inflate(layoutInflater)
@@ -21,90 +23,106 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(),
         super.setupViews()
         setupToolbar()
         binding.imgBack.setOnClickListener(this)
+        binding.btnAllClasses.setOnClickListener(this)
+        binding.btnMyClasses.setOnClickListener(this)
 
+        isLoadData()
 
+    }
 
-        isLessonPlanData = listOf(
-            LessonPlanData(
+    private fun isLoadData() {
+        isLessonPlanChartData = listOf(
+            LessonPlanChartData(
                 "Tamil",
-                "12:21",
-                "11:21",
-                "Tamil",
-                "Nothing",
-                2
+                "X - A",
+                "Sathish",
+                "Pending",
+                30,
+                70
             ),
-            LessonPlanData(
+            LessonPlanChartData(
                 "Tamil",
-                "12:21",
-                "11:21",
-                "Tamil",
-                "Nothing",
-                3
+                "X - A",
+                "Sathish",
+                "Pending",
+                10,
+                90
             ),
-            LessonPlanData(
+            LessonPlanChartData(
                 "Tamil",
-                "12:21",
-                "11:21",
-                "Tamil",
-                "Nothing", 1
+                "X - A",
+                "Sathish",
+                "Pending",
+                80,
+                20
             ),
-            LessonPlanData(
+            LessonPlanChartData(
                 "Tamil",
-                "12:21",
-                "11:21",
-                "Tamil",
-                "Nothing", 2
+                "X - A",
+                "Sathish",
+                "Pending",
+                90,
+                10
             ),
-            LessonPlanData(
+            LessonPlanChartData(
                 "Tamil",
-                "12:21",
-                "11:21",
-                "Tamil",
-                "Nothing", 1
+                "X - A",
+                "Sathish",
+                "Pending",
+                60,
+                40
             ),
-            LessonPlanData(
+            LessonPlanChartData(
                 "Tamil",
-                "12:21",
-                "11:21",
-                "Tamil",
-                "Nothing", 3
+                "X - A",
+                "Sathish",
+                "Pending",
+                70,
+                30
             ),
-            LessonPlanData(
+            LessonPlanChartData(
                 "Tamil",
-                "12:21",
-                "11:21",
-                "Tamil",
-                "Nothing", 2
+                "X - A",
+                "Sathish",
+                "Pending",
+                90,
+                10
             ),
-            LessonPlanData(
+            LessonPlanChartData(
                 "Tamil",
-                "12:21",
-                "11:21",
-                "Tamil",
-                "Nothing", 1
+                "X - A",
+                "Sathish",
+                "Pending",
+                40,
+                60
             ),
-            LessonPlanData(
+            LessonPlanChartData(
                 "Tamil",
-                "12:21",
-                "11:21",
-                "Tamil",
-                "Nothing", 3
+                "X - A",
+                "Sathish",
+                "Pending",
+                50,
+                50
             )
         )
 
-        mAdapter = LessonPlanAdapter(null, this, this, Constant.isShimmerViewShow)
+
+        mAdapter = LessonPlanPicChartAdapter(null, this, this, Constant.isShimmerViewShow)
         binding.rcyLessonPlan.layoutManager = LinearLayoutManager(this)
         binding.rcyLessonPlan.adapter = mAdapter
 
         Constant.executeAfterDelay {
             // Once data is loaded, stop shimmer and pass the actual data
             mAdapter =
-                LessonPlanAdapter(isLessonPlanData, this, this, Constant.isShimmerViewDisable)
+                LessonPlanPicChartAdapter(
+                    isLessonPlanChartData,
+                    this,
+                    this,
+                    Constant.isShimmerViewDisable
+                )
             // Set GridLayoutManager (2 columns in this case)
             binding.rcyLessonPlan.adapter = mAdapter
         }
-
-
     }
 
     override fun onClick(p0: View?) {
@@ -112,10 +130,31 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(),
             R.id.imgBack -> {
                 onBackPressed()
             }
+
+            R.id.btnAllClasses -> {
+                isLoadData()
+                binding.btnMyClasses.setTextColor(ContextCompat.getColor(this, R.color.black))
+                binding.btnAllClasses.setTextColor(ContextCompat.getColor(this, R.color.white))
+                binding.btnAllClasses.background =
+                    ContextCompat.getDrawable(this, R.drawable.bg_blue)
+                binding.btnMyClasses.background = null
+            }
+
+            R.id.btnMyClasses -> {
+                isLoadData()
+                binding.btnMyClasses.setTextColor(ContextCompat.getColor(this, R.color.white))
+                binding.btnAllClasses.setTextColor(ContextCompat.getColor(this, R.color.black))
+                binding.btnMyClasses.background =
+                    ContextCompat.getDrawable(this, R.drawable.bg_blue)
+                binding.btnAllClasses.background = null
+
+            }
         }
     }
 
-    override fun onItem(data: LessonPlanData) {
 
+    override fun onItem(data: LessonPlanChartData) {
+        val intent = Intent(this@LessonPlan, LessonPlanViewDetails::class.java)
+        startActivity(intent)
     }
 }

@@ -38,11 +38,9 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),NoticeClickLi
 
     }
 
-
     override fun onResume() {
         super.onResume()
     }
-
 
     override fun onPause() {
         super.onPause()

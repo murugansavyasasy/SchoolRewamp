@@ -159,6 +159,25 @@
     <string name="SubmissionDate">जमा करने की तारीख</string>
     <string name="AddPhoto">फोटो जोड़ें</string>
     <string name="ChooseRecipients">प्राप्तकर्ताओं को चुनें</string>
+    <string name="Close">बंद करें</string>
+    <string name="Update">अपडेट करें</string>
+    <string name="Topic">विषय</string>
+    <string name="ToDate">तक दिनांक</string>
+    <string name="FromDate">से दिनांक</string>
+    <string name="Unit">इकाई</string>
+    <string name="Status">स्थिति</string>
+    <string name="AdminRemarks">प्रशासन टिप्पणी</string>
+    <string name="Month">महीना</string>
+    <string name="LessonPlan">पाठ योजना</string>
+    <string name="AllClasses">सभी कक्षाएं</string>
+    <string name="MyClasses">मेरी कक्षाएं</string>
+    <string name="Filter">फ़िल्टर</string>
+    <string name="View">देखें</string>
+    <string name="Unti">इकाई</string>
+    <string name="Remarks">टिप्पणियां</string>
+    <string name="Progress">प्रगति</string>
+    <string name="Complete">पूरा</string>
+
 
 
 </resources>

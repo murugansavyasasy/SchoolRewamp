@@ -60,6 +60,11 @@
             android:windowSoftInputMode="adjustPan|adjustResize"></activity>
 
         <activity
+            android:name=".School.LessonPlan.LessonPlanViewDetails"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+
+        <activity
             android:name=".School.LessonPlan.LessonPlan"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize"></activity>

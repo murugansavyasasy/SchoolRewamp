@@ -159,6 +159,24 @@
     <string name="SubmissionDate">Submission Date</string>
     <string name="AddPhoto">Add Photo</string>
     <string name="ChooseRecipients">Choose Recipients</string>
+    <string name="Close">Close</string>
+    <string name="Update">Update</string>
+    <string name="Topic">Topic</string>
+    <string name="ToDate">To Date</string>
+    <string name="FromDate">From Date</string>
+    <string name="Unit">Unit</string>
+    <string name="Status">Status</string>
+    <string name="AdminRemarks">Admin Remarks</string>
+    <string name="Month">Month</string>
+    <string name="LessonPlan">Lesson Plan</string>
+    <string name="AllClasses">All Classes</string>
+    <string name="MyClasses">MyClasses</string>
+    <string name="Filter">Filter</string>
+    <string name="View">View</string>
+    <string name="Unti">Unti</string>
+    <string name="Remarks">Remarks</string>
+    <string name="Progress">Progress</string>
+    <string name="Complete">Complete</string>
 
 
 

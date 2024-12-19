@@ -159,6 +159,25 @@
     <string name="SubmissionDate">วันที่ส่ง</string>
     <string name="AddPhoto">เพิ่มรูปภาพ</string>
     <string name="ChooseRecipients">เลือกผู้รับ</string>
+    <string name="Close">ปิด</string>
+    <string name="Update">อัปเดต</string>
+    <string name="Topic">หัวข้อ</string>
+    <string name="ToDate">ถึงวันที่</string>
+    <string name="FromDate">จากวันที่</string>
+    <string name="Unit">หน่วย</string>
+    <string name="Status">สถานะ</string>
+    <string name="AdminRemarks">หมายเหตุผู้ดูแลระบบ</string>
+    <string name="Month">เดือน</string>
+    <string name="LessonPlan">แผนการสอน</string>
+    <string name="AllClasses">ทุกชั้นเรียน</string>
+    <string name="MyClasses">ชั้นเรียนของฉัน</string>
+    <string name="Filter">ตัวกรอง</string>
+    <string name="View">ดู</string>
+    <string name="Unti">หน่วย</string>
+    <string name="Remarks">หมายเหตุ</string>
+    <string name="Progress">ความคืบหน้า</string>
+    <string name="Complete">เสร็จสมบูรณ์</string>
+
 
 
 

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/five">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rect_shadow_white">
+
+        <com.vs.schoolmessenger.Utils.PieChartView
+            android:id="@+id/customPieChart"
+            android:layout_width="@dimen/hundred"
+            android:layout_height="@dimen/hundred"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/ten"
+            android:layout_marginRight="@dimen/ten" />
+
+        <RelativeLayout
+            android:id="@+id/rlaDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_toStartOf="@+id/customPieChart">
+
+            <TextView
+                android:id="@+id/lblSubject"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Tamil"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"
+                android:textStyle="bold">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/lblSection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblSubject"
+                android:layout_marginTop="@dimen/five"
+                android:gravity="center"
+                android:text="XII - A"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"
+                android:textStyle="normal">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/lblStaffName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblSection"
+                android:layout_marginTop="@dimen/five"
+                android:gravity="center"
+                android:text="Staff name : Sathish"
+                android:textColor="@color/red"
+                android:textSize="@dimen/thirteen_sp"
+                android:textStyle="normal">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/lblStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblStaffName"
+                android:layout_marginTop="@dimen/five"
+                android:gravity="center"
+                android:text="Complete Status : 20 / 100"
+                android:textColor="@color/dark_blue_and_green_"
+                android:textSize="@dimen/thirteen_sp"
+                android:textStyle="normal">
+
+            </TextView>
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/customPieChart"
+            android:layout_marginTop="@dimen/ten"
+            android:paddingBottom="@dimen/ten">
+
+            <TextView
+                android:id="@+id/lblComplete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="@dimen/ten"
+                android:text="20 % Completed"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"
+                android:textStyle="bold">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/lblPending"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblComplete"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/twenty_eight"
+                android:text="80 % Pending"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"
+                android:textStyle="bold">
+
+            </TextView>
+
+            <ImageView
+                android:layout_width="@dimen/twenty"
+                android:layout_height="@dimen/twenty"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="@dimen/hundred_thirty"
+                android:background="@drawable/green_box">
+
+            </ImageView>
+
+            <ImageView
+                android:layout_width="@dimen/twenty"
+                android:layout_height="@dimen/twenty"
+                android:layout_below="@+id/lblComplete"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="@dimen/hundred_thirty"
+                android:background="@drawable/red_box">
+
+            </ImageView>
+
+            <TextView
+                android:id="@+id/btnView"
+                android:layout_width="@dimen/ninety"
+                android:layout_height="@dimen/twenty_five"
+                android:layout_marginStart="@dimen/eighty"
+                android:layout_marginTop="@dimen/fifteen"
+                android:background="@drawable/rect_btn_orange"
+                android:gravity="center"
+                android:text="@string/View"
+                android:textColor="@color/white"
+                android:textSize="@dimen/fifteen_sp"
+                android:textStyle="bold">
+
+            </TextView>
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

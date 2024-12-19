@@ -1,118 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="@dimen/fifteen">
 
     <FrameLayout
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-
-    <RelativeLayout
-        android:background="@drawable/rect_shadow_white_list_item"
-        android:layout_marginTop="@dimen/ten"
-        android:id="@+id/rytHeader"
-        android:padding="@dimen/ten"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/lblDate"
-            android:layout_alignParentEnd="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="15 Nov 2024"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:textSize="@dimen/fifteen_sp"/>
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
 
 
         <RelativeLayout
-            android:layout_marginTop="@dimen/ten"
-            android:id="@+id/rytImageSlider"
-            android:layout_below="@+id/lblDate"
+            android:id="@+id/rytHeader"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten"
+            android:background="@drawable/rect_shadow_white_list_item"
+            android:padding="@dimen/ten">
 
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/viewpager"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/one_fifty"
-                android:paddingStart="@dimen/thirty"
-                android:paddingEnd="@dimen/thirty"
-                android:clipToPadding="false"
-                android:clipChildren="false"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                />
-
-            <me.relex.circleindicator.CircleIndicator
-                android:layout_below="@+id/viewpager"
-                android:id="@+id/indicator"
+            <TextView
+                android:id="@+id/lblDate"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/thirty"
-                style="@style/IndicatorStyle"
-                android:layout_centerHorizontal="true"
-                android:elevation="4dp"/>
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:text="15 Nov 2024"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen_sp"
+                android:textStyle="bold" />
 
 
-<!--            <ImageView-->
-<!--            android:layout_marginTop="@dimen/ten"-->
-<!--            android:id="@+id/imgSmaple"-->
-<!--            android:src="@drawable/schoolad"-->
-<!--            android:scaleType="centerCrop"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="@dimen/one_twenty"/>-->
+            <RelativeLayout
+                android:id="@+id/rytImageSlider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblDate"
+                android:layout_marginTop="@dimen/ten">
+
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/one_fifty"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:paddingStart="@dimen/thirty"
+                    android:paddingEnd="@dimen/thirty"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <me.relex.circleindicator.CircleIndicator
+                    android:id="@+id/indicator"
+                    style="@style/IndicatorStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/thirty"
+                    android:layout_below="@+id/viewpager"
+                    android:layout_centerHorizontal="true"
+                    android:elevation="4dp" />
+
+
+                <!--            <ImageView-->
+                <!--            android:layout_marginTop="@dimen/ten"-->
+                <!--            android:id="@+id/imgSmaple"-->
+                <!--            android:src="@drawable/schoolad"-->
+                <!--            android:scaleType="centerCrop"-->
+                <!--            android:layout_width="match_parent"-->
+                <!--            android:layout_height="@dimen/one_twenty"/>-->
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/lblTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rytImageSlider"
+                android:layout_marginTop="@dimen/ten"
+                android:text="Annual Day celebrations"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen_sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/lblContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblTitle"
+                android:layout_marginTop="@dimen/ten"
+                android:text="If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress."
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"
+                android:textStyle="normal" />
 
         </RelativeLayout>
 
-        <TextView
-            android:layout_marginTop="@dimen/ten"
-            android:layout_below="@+id/rytImageSlider"
-            android:id="@+id/lblTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Annual Day celebrations"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:textSize="@dimen/fifteen_sp"/>
-
-        <TextView
-            android:layout_marginTop="@dimen/ten"
-            android:layout_below="@+id/lblTitle"
-            android:id="@+id/lblContent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress."
-            android:textColor="@color/black"
-            android:textStyle="normal"
-            android:textSize="@dimen/thirteen_sp"/>
-
-    </RelativeLayout>
-
 
         <FrameLayout
-            android:layout_gravity="center_horizontal"
             android:id="@+id/rytPin"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone">
 
             <View
-                android:layout_marginTop="@dimen/fifteen"
                 android:layout_width="@dimen/fifteen"
                 android:layout_height="@dimen/fifteen"
-                android:background="@drawable/circle_bg_black"/>
+                android:layout_marginTop="@dimen/fifteen"
+                android:background="@drawable/circle_bg_black" />
 
             <ImageView
                 android:id="@+id/imgPin"
-                android:src="@drawable/pin"
-                android:layout_marginStart="@dimen/five"
                 android:layout_width="@dimen/twenty_five"
-                android:layout_height="@dimen/twenty_five"/>
+                android:layout_height="@dimen/twenty_five"
+                android:layout_marginStart="@dimen/five"
+                android:src="@drawable/pin" />
 
         </FrameLayout>
 

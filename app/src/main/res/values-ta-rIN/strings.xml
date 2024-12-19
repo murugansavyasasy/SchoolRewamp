@@ -159,6 +159,25 @@
     <string name="SubmissionDate">சமர்ப்பிப்பு தேதி</string>
     <string name="AddPhoto">புகைப்படம் சேர்க்கவும்</string>
     <string name="ChooseRecipients">பெறுநர்களை தேர்ந்தெடுக்கவும்</string>
+    <string name="Close">மூடு</string>
+    <string name="Update">புதுப்பி</string>
+    <string name="Topic">தலைப்பு</string>
+    <string name="ToDate">முதல் தேதி</string>
+    <string name="FromDate">வரை தேதி</string>
+    <string name="Unit">அலகு</string>
+    <string name="Status">நிலைமை</string>
+    <string name="AdminRemarks">நிர்வாகர் கருத்துகள்</string>
+    <string name="Month">மாதம்</string>
+    <string name="LessonPlan">பாடத்திட்டம்</string>
+    <string name="AllClasses">அனைத்து வகுப்புகள்</string>
+    <string name="MyClasses">என் வகுப்புகள்</string>
+    <string name="Filter">வடிகட்டி</string>
+    <string name="View">காண்க</string>
+    <string name="Unti">அலகு</string>
+    <string name="Remarks">கருத்துகள்</string>
+    <string name="Progress">முன்னேற்றம்</string>
+    <string name="Complete">முழுமை</string>
+
 
 
 

@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.School.NoticeBoard
+package com.vs.schoolmessenger.School.Event
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -10,13 +10,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.facebook.shimmer.ShimmerFrameLayout
-import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.CommonScreens.ImageSliderAdapter
+import com.vs.schoolmessenger.R
 import me.relex.circleindicator.CircleIndicator
 
-class SchoolNoticeBoardAdapter(
-    private var itemList: List<NoticeData>?,
-    private var listener: NoticeClickListener,
+class EventHistoryAdapter(
+    private var itemList: List<EventHistoryData>?,
+    private var listener: EventClickListener,
     private var context: Context,
     private var isLoading: Boolean
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -62,12 +62,12 @@ class SchoolNoticeBoardAdapter(
         private val indicator: CircleIndicator = itemView.findViewById(R.id.indicator)
         private val rytPin: FrameLayout = itemView.findViewById(R.id.rytPin)
 
-        fun bind(data: NoticeData, position: Int, listener: NoticeClickListener) {
+        fun bind(data: EventHistoryData, position: Int, listener: EventClickListener) {
 
-            rytPin.visibility=View.VISIBLE
             lblTitle.text = data.title
             lblContent.text = data.content
             lblDate.text = data.date
+            rytPin.visibility=View.GONE
 
             val imageUrls = listOf(
                 "https://s3.ap-south-1.amazonaws.com/schoolchimes-files-india/27-11-2024/File_vc_-5346401391795845263.png",

@@ -67,11 +67,13 @@ class LessonPlanAdapter(
         private val imgCompleted: ImageView = itemView.findViewById(R.id.imgCompleted)
         private val vwStageOne: View = itemView.findViewById(R.id.vwStageOne)
         private val vwStageTwo: View = itemView.findViewById(R.id.vwStageTwo)
+        private val btnEdit: ImageView = itemView.findViewById(R.id.btnEdit)
+        private val btnDelete: ImageView = itemView.findViewById(R.id.btnDelete)
 
         fun bind(data: LessonPlanData, listener: LessonPlanClickListener, position: Int) {
             lblTitle.text = data.Title
-            lblFromDate.text = data.FromTime
-            lblToTime.text = data.ToTime
+            lblFromDate.text = data.FromDate
+            lblToTime.text = data.ToDate
             lblUnitValue.text = data.Unit
             lblRemarks.text = data.Remarks
 
@@ -118,6 +120,13 @@ class LessonPlanAdapter(
                     lblInProgress.setTextColor(context.resources.getColor(R.color.green))
                     lblCompleted.setTextColor(context.resources.getColor(R.color.green))
                 }
+            }
+
+            btnEdit.setOnClickListener {
+                listener.onEditItem(data)
+            }
+            btnDelete.setOnClickListener {
+                listener.onDeleteItem(data)
             }
         }
     }

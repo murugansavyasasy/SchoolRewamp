@@ -109,6 +109,7 @@ class Assignment : BaseActivity<AssignmentBinding>(),
             R.id.rlaAssignmentType -> {
                 showDropdownMenuSort(
                     binding.lblAssignment,
+                    this,
                     itemsAssignmentType
                 ) { selectedOption ->
                     binding.lblAssignment.text = selectedOption
@@ -124,6 +125,7 @@ class Assignment : BaseActivity<AssignmentBinding>(),
             R.id.rlaTypeofSending -> {
                 showDropdownMenuSort(
                     binding.lblAssignmentSendingType,
+                    this,
                     itemsCategory
                 ) { selectedOption ->
                     binding.lblAssignmentSendingType.text = selectedOption
@@ -165,13 +167,16 @@ class Assignment : BaseActivity<AssignmentBinding>(),
             dialog.dismiss()
         }
 
+        dialog.window?.apply {
+            setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT)) // Transparent background
+            setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            ) // Size
+            setGravity(Gravity.BOTTOM) // Display at the bottom
+            setWindowAnimations(R.style.PopupAnimation) // Apply the animation
+        }
         dialog.show()
-        dialog.window!!.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.window!!.setGravity(Gravity.BOTTOM)
     }
 
     override fun onTimeSelected(hour: Int, minute: Int, amPm: String) {

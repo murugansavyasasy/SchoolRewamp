@@ -154,15 +154,19 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
     fun showDropdownMenuSort(
         anchor: View,
+        activity: Activity,
         items: List<String>,
         onItemSelected: (String) -> Unit
     ) {
-
-        val activity = anchor.context as? Activity
-        if (activity == null || activity.isFinishing || activity.isDestroyed) {
+        if (activity.isFinishing || activity.isDestroyed) {
             Log.e("DropdownMenu", "Activity is not valid for showing the popup.")
             return
         }
+//        val activity = anchor.context as? Activity
+//        if (activity == null || activity.isFinishing || activity.isDestroyed) {
+//            Log.e("DropdownMenu", "Activity is not valid for showing the popup.")
+//            return
+//        }
 
 
         val inflater = LayoutInflater.from(anchor.context)
@@ -201,7 +205,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         }
     }
 
-    private fun dimBehind(popupWindow: PopupWindow) {
+    fun dimBehind(popupWindow: PopupWindow) {
         val window = this.window
         val layoutParams = window.attributes
         layoutParams.alpha = 0.4f // Lower alpha to dim the background
@@ -209,7 +213,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         window.attributes = layoutParams
     }
 
-    private fun clearDim() {
+     fun clearDim() {
         val window = this.window
         val layoutParams = window.attributes
         layoutParams.alpha = 1.0f

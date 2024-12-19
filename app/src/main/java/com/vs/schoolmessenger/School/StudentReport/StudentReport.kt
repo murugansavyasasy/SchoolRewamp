@@ -6,7 +6,6 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.view.animation.AnimationUtils
-import android.widget.PopupWindow
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
@@ -196,7 +195,7 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
 
             R.id.rlaSort -> {
 
-                showDropdownMenuSort(binding.dropdownTextView, items) { selectedOption ->
+                showDropdownMenuSort(binding.dropdownTextView, this, items) { selectedOption ->
                     binding.dropdownTextView.text = selectedOption
                 }
             }
@@ -205,6 +204,7 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
 
                 showDropdownMenuSort(
                     binding.dropdownTextViewStandard,
+                    this,
                     itemsStandard
                 ) { selectedOption ->
                     binding.dropdownTextViewStandard.text = selectedOption
@@ -216,6 +216,7 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
 
                 showDropdownMenuSort(
                     binding.dropdownTextViewSection,
+                    this,
                     itemsSection
                 ) { selectedOption ->
                     binding.dropdownTextViewSection.text = selectedOption
