@@ -19,7 +19,7 @@ class DateAdapter(
     private val dates = mutableListOf<DateItem>()
     private val selectedDates = mutableSetOf<String>() // Set to track selected dates
     private val selectedBackgroundDrawable =
-        ContextCompat.getDrawable(context, R.drawable.rect_shadow_green)
+        ContextCompat.getDrawable(context, R.drawable.rect_shadow_light_green)
 
     fun submitDates(newDates: List<DateItem>) {
         dates.clear()

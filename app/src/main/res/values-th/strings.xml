@@ -177,6 +177,13 @@
     <string name="Remarks">หมายเหตุ</string>
     <string name="Progress">ความคืบหน้า</string>
     <string name="Complete">เสร็จสมบูรณ์</string>
+    <string name="MarkAttendance">ลงชื่อเข้าเรียน</string>
+    <string name="AttendanceReport">รายงานการเข้าร่วม</string>
+    <string name="Selectallaspresent">เลือกทั้งหมดเป็นเข้าร่วม</string>
+    <string name="OR">หรือ</string>
+    <string name="MarkAbsentees">ทำเครื่องหมายผู้ที่ขาด</string>
+    <string name="Admissionnoist">เลขที่สมัคร :</string>
+
 
 
 

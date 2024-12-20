@@ -177,6 +177,13 @@
     <string name="Remarks">கருத்துகள்</string>
     <string name="Progress">முன்னேற்றம்</string>
     <string name="Complete">முழுமை</string>
+    <string name="MarkAttendance">வருகை பதிவு செய்யவும்</string>
+    <string name="AttendanceReport">வருகை அறிக்கை</string>
+    <string name="Selectallaspresent">அனைவரையும் வருகையாகக் குறிக்கவும்</string>
+    <string name="OR">அல்லது</string>
+    <string name="MarkAbsentees">இல்லாதவர்களைச் சேர்க்கவும்</string>
+    <string name="Admissionnoist">சேர்க்கை எண் :</string>
+
 
 
 

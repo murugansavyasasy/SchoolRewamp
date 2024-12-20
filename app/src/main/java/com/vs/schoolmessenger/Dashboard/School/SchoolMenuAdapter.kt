@@ -14,11 +14,13 @@ import com.vs.schoolmessenger.CommonScreens.SchoolList
 import com.vs.schoolmessenger.Dashboard.Model.GridItem
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesStudentMark
+import com.vs.schoolmessenger.School.AbsenteesMarking.AttendanceMark
 import com.vs.schoolmessenger.School.Assignment.Assignment
 import com.vs.schoolmessenger.School.Communication.CommunicationSchool
 import com.vs.schoolmessenger.School.Event.CreateEvent
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlan
 import com.vs.schoolmessenger.School.NoticeBoard.CreateNoticeBoard
+import com.vs.schoolmessenger.School.OnlineMeeting.OnlineMeeting
 import com.vs.schoolmessenger.School.SchoolStrength.SchoolStrength
 import com.vs.schoolmessenger.School.StudentReport.StudentReport
 import com.vs.schoolmessenger.School.Video.CreateVideo
@@ -77,7 +79,7 @@ class SchoolMenuAdapter(
                         context.startActivity(Intent(context, CommunicationSchool::class.java))
                     }
                     "Attendance Marking" -> {
-                        context.startActivity(Intent(context, AbsenteesStudentMark::class.java))
+                        context.startActivity(Intent(context, AttendanceMark::class.java))
                     }
                     "Event" -> {
                         context.startActivity(Intent(context, CreateEvent::class.java))
@@ -101,6 +103,12 @@ class SchoolMenuAdapter(
                     "Lesson Plan" -> {
                         context.startActivity(Intent(context, LessonPlan::class.java))
                     }
+
+                    "Online Meeting" -> {
+                        context.startActivity(Intent(context, OnlineMeeting::class.java))
+                    }
+
+
 
 
                 }

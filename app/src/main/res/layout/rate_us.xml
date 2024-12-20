@@ -84,7 +84,7 @@
                 android:layout_marginTop="@dimen/thirty"
                 android:layout_marginEnd="@dimen/thirty"
                 android:layout_marginBottom="@dimen/thirty"
-                android:background="@drawable/bg_outline_blue"
+                android:background="@drawable/bg_outline_green"
                 android:gravity="center"
                 android:padding="8dp"
                 android:text="@string/lblMaybelater"

@@ -177,6 +177,13 @@
     <string name="Remarks">टिप्पणियां</string>
     <string name="Progress">प्रगति</string>
     <string name="Complete">पूरा</string>
+    <string name="MarkAttendance">हाजिरी दर्ज करें</string>
+    <string name="AttendanceReport">उपस्थिति रिपोर्ट</string>
+    <string name="Selectallaspresent">सभी को उपस्थित चिह्नित करें</string>
+    <string name="OR">या</string>
+    <string name="MarkAbsentees">गैर-हाजिर चिह्नित करें</string>
+    <string name="Admissionnoist">प्रवेश संख्या :</string>
+
 
 
 

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/five"
+    tools:ignore="MissingDefaultResource">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
+        android:background="@drawable/rect_shadow_white">
+
+        <RelativeLayout
+            android:id="@+id/rlaAttendance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_outline_green">
+
+            <TextView
+                android:id="@+id/lblStudentName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/twenty_five"
+                android:layout_marginTop="@dimen/fifteen"
+                android:layout_marginEnd="@dimen/twenty_five"
+                android:gravity="start"
+                android:text="Sathish"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"
+                android:textStyle="bold">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/lblAdmission"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblStudentName"
+                android:layout_marginStart="@dimen/twenty_five"
+                android:layout_marginTop="@dimen/ten"
+                android:text="@string/Admissionno"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"
+                android:textStyle="bold">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/lblAdmissionValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblStudentName"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_toEndOf="@+id/lblAdmission"
+                android:text="1234556776"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"
+                android:textStyle="normal">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/lblAttendanceStatus"
+                android:layout_width="@dimen/eighty"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblAdmission"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/rounded_top_right_bottom_end_green"
+                android:gravity="center"
+                android:padding="@dimen/five"
+                android:text="Present"
+                android:textColor="@color/white"
+                android:textSize="@dimen/thirteen_sp"
+                android:textStyle="bold">
+
+            </TextView>
+
+
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

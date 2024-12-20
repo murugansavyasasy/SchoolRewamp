@@ -59,6 +59,17 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize"></activity>
 
+
+        <activity
+            android:name=".School.AbsenteesMarking.AttendanceMark"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+
+        <activity
+            android:name=".School.OnlineMeeting.OnlineMeeting"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+
         <activity
             android:name=".School.LessonPlan.LessonPlanViewDetails"
             android:theme="@style/AppTheme"
@@ -118,10 +129,6 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize"></activity>
 
-<!--        <activity-->
-<!--            android:name=".Auth.Splash.Splash"-->
-<!--            android:theme="@style/AppTheme"-->
-<!--            android:windowSoftInputMode="adjustPan|adjustResize"></activity>-->
         <activity
             android:name=".Dashboard.Settings.Notification.Notification"
             android:theme="@style/AppTheme"

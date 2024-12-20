@@ -177,6 +177,12 @@
     <string name="Remarks">Remarks</string>
     <string name="Progress">Progress</string>
     <string name="Complete">Complete</string>
+    <string name="MarkAttendance">Mark Attendance</string>
+    <string name="AttendanceReport">Attendance Report</string>
+    <string name="Selectallaspresent">Select all as present</string>
+    <string name="OR">OR</string>
+    <string name="MarkAbsentees">Mark Absentees</string>
+    <string name="Admissionnoist">Admission no  : </string>
 
 
 

@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/three_hundred"
+        android:layout_alignParentBottom="true"
+        android:alpha="0.3"
+        android:background="@drawable/bg_attendance_mark">
+
+    </ImageView>
+
+    <RelativeLayout
+        android:id="@+id/rytHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primary_light"
+        android:padding="@dimen/ten">
+
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
+            android:layout_marginStart="@dimen/twenty"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/ten"
+            android:layout_marginBottom="@dimen/ten"
+            android:src="@drawable/arrow_back_black"></ImageView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/ten"
+            android:text="@string/AttendanceMark"
+            android:textColor="@color/black"
+            android:textSize="@dimen/twenty_sp"
+            android:textStyle="bold">
+
+        </TextView>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/lnrParent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rytHeader"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="@dimen/ten"
+        android:layout_marginTop="@dimen/fifteen"
+        android:background="@drawable/bg_light_blue">
+
+        <TextView
+            android:id="@+id/btnCreate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/bg_blue"
+            android:gravity="center"
+            android:padding="@dimen/ten"
+            android:text="@string/MarkAttendance"
+            android:textColor="@color/white"
+            android:textSize="@dimen/thirteen_sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/btnHistory"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/ten"
+            android:text="@string/AttendanceReport"
+            android:textColor="@color/dark_blue"
+            android:textSize="@dimen/thirteen_sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlaAttendanceMark"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/lnrParent">
+
+        <LinearLayout
+            android:id="@+id/lnrAttendance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/ten"
+            android:background="@drawable/rect_shadow_violet"
+            android:orientation="vertical"
+            android:padding="@dimen/fifteen">
+
+            <CalendarView
+                android:id="@+id/calendarView"
+                android:layout_width="match_parent"
+                android:layout_height="300dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lnrClasses"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lnrAttendance"
+            android:weightSum="1">
+
+
+            <RelativeLayout
+                android:id="@+id/rlaStandard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/fifteen"
+                android:layout_weight="0.5"
+                android:background="@drawable/rect_grey"
+                android:padding="@dimen/five">
+
+
+                <ImageView
+                    android:id="@+id/imgStandard"
+                    android:layout_width="@dimen/twenty_five"
+                    android:layout_height="@dimen/twenty_five"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/ten"
+                    android:src="@drawable/ic_down_arrow">
+
+                </ImageView>
+
+                <TextView
+                    android:id="@+id/lblStandard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/fifteen"
+                    android:text="XII"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/fifteen_sp"
+                    android:textStyle="bold"></TextView>
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/rlaSection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/fifteen"
+                android:layout_weight="0.5"
+                android:background="@drawable/rect_grey"
+                android:padding="@dimen/five">
+
+
+                <ImageView
+                    android:id="@+id/imgSection"
+                    android:layout_width="@dimen/twenty_five"
+                    android:layout_height="@dimen/twenty_five"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/ten"
+                    android:src="@drawable/ic_down_arrow">
+
+                </ImageView>
+
+                <TextView
+                    android:id="@+id/lblSection"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/fifteen"
+                    android:text="A"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/fifteen_sp"
+                    android:textStyle="bold"></TextView>
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/rlaAttendanceType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lnrClasses"
+            android:layout_marginStart="@dimen/fifteen"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/fifteen"
+            android:layout_weight="0.5"
+            android:background="@drawable/rect_grey"
+            android:padding="@dimen/five">
+
+
+            <ImageView
+                android:id="@+id/imgTypeOfAttendance"
+                android:layout_width="@dimen/twenty_five"
+                android:layout_height="@dimen/twenty_five"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/ten"
+                android:src="@drawable/ic_down_arrow">
+
+            </ImageView>
+
+            <TextView
+                android:id="@+id/lblAttendanceType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/fifteen"
+                android:text="Full day"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen_sp"
+                android:textStyle="bold"></TextView>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/btnSelectPresent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rlaAttendanceType"
+            android:layout_marginStart="@dimen/twenty"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/twenty"
+            android:background="@drawable/rect_shadow_green"
+            android:gravity="center"
+            android:padding="@dimen/ten"
+            android:text="@string/Selectallaspresent"
+            android:textColor="@color/white"
+            android:textSize="@dimen/fifteen_sp"
+            android:textStyle="bold">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/btnOr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btnSelectPresent"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/ten"
+            android:gravity="center"
+            android:text="@string/OR"
+            android:textColor="@color/black"
+            android:textSize="@dimen/fifteen_sp"
+            android:textStyle="bold">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/btnAbsent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btnOr"
+            android:layout_marginStart="@dimen/twenty"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/twenty"
+            android:background="@drawable/rect_shadow_red"
+            android:gravity="center"
+            android:padding="@dimen/ten"
+            android:text="@string/MarkAbsentees"
+            android:textColor="@color/white"
+            android:textSize="@dimen/fifteen_sp"
+            android:textStyle="bold">
+
+        </TextView>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rlaAttendanceReport"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/lnrParent"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/imgCalender"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
+            android:layout_marginStart="@dimen/twenty"
+            android:layout_marginTop="@dimen/twenty"
+            android:src="@drawable/calender_icon_color">
+
+        </ImageView>
+
+        <TextView
+            android:id="@+id/lblDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/twenty"
+            android:layout_marginTop="@dimen/twenty_five"
+            android:layout_toEndOf="@+id/imgCalender"
+            android:drawableRight="@drawable/ic_down_arrow"
+            android:drawablePadding="@dimen/fifteen"
+            android:text="Apr 21, 2024"
+            android:textColor="@color/black"
+            android:textSize="@dimen/fifteen_sp"
+            android:textStyle="bold">
+
+        </TextView>
+
+
+        <LinearLayout
+            android:id="@+id/lnrClassesReport"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblDate"
+            android:layout_marginTop="@dimen/ten"
+            android:weightSum="1">
+
+
+            <RelativeLayout
+                android:id="@+id/rlaStandardReport"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/fifteen"
+                android:layout_weight="0.5"
+                android:background="@drawable/rect_grey"
+                android:padding="@dimen/five">
+
+
+                <ImageView
+                    android:id="@+id/imgStandardReport"
+                    android:layout_width="@dimen/twenty_five"
+                    android:layout_height="@dimen/twenty_five"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/ten"
+                    android:src="@drawable/ic_down_arrow">
+
+                </ImageView>
+
+                <TextView
+                    android:id="@+id/lblStandardReport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/fifteen"
+                    android:text="XII"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/fifteen_sp"
+                    android:textStyle="bold"></TextView>
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/rlaSectionReport"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/fifteen"
+                android:layout_weight="0.5"
+                android:background="@drawable/rect_grey"
+                android:padding="@dimen/five">
+
+
+                <ImageView
+                    android:id="@+id/imgSectionReport"
+                    android:layout_width="@dimen/twenty_five"
+                    android:layout_height="@dimen/twenty_five"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/ten"
+                    android:src="@drawable/ic_down_arrow">
+
+                </ImageView>
+
+                <TextView
+                    android:id="@+id/lblSectionReport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/fifteen"
+                    android:text="A"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/fifteen_sp"
+                    android:textStyle="bold"></TextView>
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcyAttendanceReport"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lnrClassesReport">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

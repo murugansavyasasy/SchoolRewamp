@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/rytHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primary_light"
+        android:paddingVertical="@dimen/twenty">
+
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
+            android:layout_marginStart="@dimen/twenty"
+            android:src="@drawable/arrow_back_black" />
+
+        <TextView
+            android:id="@+id/lblCreateNoticeBoard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="@dimen/ten"
+            android:text="Online Meeting"
+            android:textColor="@color/black"
+            android:textSize="@dimen/twenty"
+            android:textStyle="bold" />
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/lnrParent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rytHeader"
+        android:layout_marginHorizontal="@dimen/ten"
+        android:layout_marginTop="@dimen/fifteen"
+        android:background="@drawable/bg_light_blue">
+
+        <TextView
+            android:id="@+id/btnCreate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/bg_blue"
+            android:gravity="center"
+            android:padding="@dimen/ten"
+            android:text="@string/Create"
+            android:textColor="@color/white"
+            android:textSize="@dimen/thirteen_sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/btnHistory"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/ten"
+            android:text="View"
+            android:textColor="@color/dark_blue"
+            android:textSize="@dimen/thirteen_sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/noticeboardCreate"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/lnrParent"
+        android:layout_marginHorizontal="@dimen/ten"
+        android:layout_marginTop="@dimen/ten"
+        android:scrollbars="none">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rect_shadow_white"
+            android:padding="@dimen/ten">
+
+            <TextView
+                android:id="@+id/lblTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"
+                android:text="@string/Title"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen_sp"
+                android:textStyle="bold">
+
+            </TextView>
+
+            <EditText
+                android:id="@+id/edtTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblTitle"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/ten"
+                android:hint="@string/Entertitle"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen_sp"
+                android:textStyle="normal">
+
+            </EditText>
+
+            <TextView
+                android:id="@+id/lblDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edtTitle"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"
+                android:text="@string/Description"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen_sp"
+                android:textStyle="bold">
+
+            </TextView>
+
+            <EditText
+                android:id="@+id/edtDescription"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/hundred"
+                android:layout_below="@+id/lblDescription"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/ten"
+                android:background="@drawable/bg_outline_black"
+                android:editable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="start"
+                android:hint="@string/Enterdescription"
+                android:maxLength="100"
+                android:padding="@dimen/ten"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen_sp"
+                android:textStyle="normal">
+
+            </EditText>
+
+
+            <TextView
+                android:id="@+id/lblTextCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edtDescription"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/fifteen"
+                android:text="0 / 100"
+                android:textColor="@color/light_gray"
+                android:textSize="@dimen/fifteen_sp"
+                android:textStyle="normal">
+
+            </TextView>
+
+            <ImageView
+                android:id="@+id/imgInfo"
+                android:layout_width="@dimen/thirty_five"
+                android:layout_height="@dimen/thirty_five"
+                android:layout_below="@+id/lblTextCount"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="@dimen/fifteen"
+                android:layout_marginEnd="@dimen/ten"
+                android:src="@drawable/info_icon">
+
+            </ImageView>
+
+
+            <RelativeLayout
+                android:id="@+id/rlaAssignmentType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblTextCount"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/ten"
+                android:layout_toStartOf="@+id/imgInfo"
+                android:background="@drawable/rect_light_blue"
+                android:padding="@dimen/ten">
+
+
+                <ImageView
+                    android:layout_width="@dimen/twenty_five"
+                    android:layout_height="@dimen/twenty_five"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/ten"
+                    android:src="@drawable/ic_down_arrow">
+
+                </ImageView>
+
+                <TextView
+                    android:id="@+id/lblAssignment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/fifteen"
+                    android:text="Select meeting"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/fifteen_sp"
+                    android:textStyle="bold"></TextView>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rlaAssignmentType"
+                android:layout_marginTop="@dimen/ten">
+
+
+                <ImageView
+                    android:id="@+id/imgCalender"
+                    android:layout_width="@dimen/twenty_five"
+                    android:layout_height="@dimen/twenty_five"
+                    android:layout_marginStart="@dimen/ten"
+                    android:layout_marginTop="@dimen/ten"
+                    android:src="@drawable/calender_icon_color"></ImageView>
+
+
+                <TextView
+                    android:id="@+id/lblDatePick"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/twenty"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_toEndOf="@+id/imgCalender"
+                    android:drawableRight="@drawable/ic_down_arrow"
+                    android:drawablePadding="@dimen/ten"
+                    android:text="Sun 12 Dec 2022"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/fifteen_sp"
+                    android:textStyle="normal">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/lblTimePick"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_marginEnd="@dimen/ten"
+                    android:drawableRight="@drawable/ic_down_arrow"
+                    android:drawablePadding="@dimen/ten"
+                    android:text="12:12 PM"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/fifteen_sp"
+                    android:textStyle="normal"></TextView>
+
+
+                <TextView
+                    android:id="@+id/lblMeetingLink"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imgCalender"
+                    android:layout_marginStart="@dimen/ten"
+                    android:layout_marginTop="@dimen/fifteen"
+                    android:layout_marginEnd="@dimen/ten"
+                    android:drawablePadding="@dimen/ten"
+                    android:text="Meeting link"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/fifteen_sp"
+                    android:textStyle="bold"></TextView>
+
+
+                <EditText
+                    android:id="@+id/edtMeetingLink"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lblMeetingLink"
+                    android:layout_marginStart="@dimen/ten"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_marginEnd="@dimen/ten"
+                    android:background="@drawable/bg_outline_black"
+                    android:hint="Paste your meeting link"
+                    android:padding="@dimen/ten"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/fifteen_sp"
+                    android:textStyle="normal">
+
+                </EditText>
+
+
+                <TextView
+                    android:id="@+id/btnCreateMeeting"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/edtMeetingLink"
+                    android:layout_marginStart="@dimen/ten"
+                    android:layout_marginTop="@dimen/fifteen"
+                    android:layout_marginEnd="@dimen/ten"
+                    android:layout_marginBottom="@dimen/ten"
+                    android:background="@drawable/rect_btn_orange"
+                    android:gravity="center"
+                    android:padding="@dimen/ten"
+                    android:text="Create Meeting"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:textStyle="bold">
+
+                </TextView>
+
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+    </ScrollView>
+
+
+</RelativeLayout>

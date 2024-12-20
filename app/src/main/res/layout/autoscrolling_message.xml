@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/ten"
-        android:background="@drawable/rect_shadow_green"
+        android:background="@drawable/rect_shadow_light_green"
         android:padding="@dimen/ten">
 
         <TextView
