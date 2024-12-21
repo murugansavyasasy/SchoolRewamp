@@ -67,6 +67,15 @@
 
     </LinearLayout>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcyOnlineMeeting"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/lnrParent"
+        android:visibility="gone"
+        android:layout_height="wrap_content">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
     <ScrollView
         android:id="@+id/noticeboardCreate"
         android:layout_width="match_parent"
@@ -74,6 +83,7 @@
         android:layout_below="@+id/lnrParent"
         android:layout_marginHorizontal="@dimen/ten"
         android:layout_marginTop="@dimen/ten"
+        android:visibility="visible"
         android:scrollbars="none">
 
         <RelativeLayout
