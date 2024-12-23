@@ -58,28 +58,33 @@ class VoiceHistoryAdapter(
 
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
+
         private val lblDate: TextView = itemView.findViewById(R.id.lblDate)
         private val lblTitle: TextView = itemView.findViewById(R.id.lblTitle)
         private val waveformSeekBar: WaveformSeekBar = itemView.findViewById(R.id.waveformSeekBar)
         private val imgVoicePlay: ImageView = itemView.findViewById(R.id.imgVoicePlay)
         private val lblStartDuration: TextView = itemView.findViewById(R.id.lblStartDuration)
         private val lblEndDuration: TextView = itemView.findViewById(R.id.lblEndDuration)
+
+
         private lateinit var mediaPlayer: MediaPlayer
         private var isPrepared = false
-        var isPlayingVoice = false // Track the playback state
-        private var lastPosition: Int = 0 // Variable to hold the last playback position
+        private var isPlayingVoice = false
+        private var lastPosition: Int = 0
         private val handler = Handler(Looper.getMainLooper())
+
+        // Progress updater for audio playback
         private val progressUpdater = object : Runnable {
             override fun run() {
                 if (isPrepared && mediaPlayer.isPlaying) {
-                    val progress = mediaPlayer.currentPosition.toFloat() / mediaPlayer.duration
-//                    waveformSeekBar.progress = progress // Ensure this updates correctly
-                    val currentPosition = mediaPlayer.currentPosition
-                    lblStartDuration.text = formatTime(currentPosition)
-                    handler.postDelayed(this, 100) // Update every 100ms
+                    val normalizedPower = max(1f, (1f + 160) / 160)
+                    waveformSeekBar.updateWithLevel(normalizedPower)
+                    lblStartDuration.text = formatTime(mediaPlayer.currentPosition)
+                    handler.postDelayed(this, 100)
                 }
             }
         }
+
 
         fun bind(
             data: VoiceHistoryData,
@@ -90,153 +95,133 @@ class VoiceHistoryAdapter(
             lblTitle.text = data.title
 
             getAudioDuration(data.url) { duration ->
-                lblEndDuration.text = formatTime(duration) // Update the TextView with formatted duration
+                lblEndDuration.text =
+                    formatTime(duration) // Update the TextView with formatted duration
             }
 
 
             imgVoicePlay.setOnClickListener {
                 listener.onItemClick(data, this@DataViewHolder)
 
-                // Stop any currently playing audio before playing the new one
-                if (adapter.currentlyPlayingHolder != null && adapter.currentlyPlayingHolder != this) {
-                    adapter.currentlyPlayingHolder?.stopAudioPlayback() // Stop previous audio
-                }
-
-                if (isPlayingVoice) {
-                    // Pause the media player
-                    mediaPlayer.pause()
-                    lastPosition = mediaPlayer.currentPosition // Save current position
-                    isPlayingVoice = false
-                    imgVoicePlay.setImageDrawable(
-                        ContextCompat.getDrawable(
-                            context,
-                            R.drawable.video_play
-                        )
-                    ) // Change icon to play
-                    waveformSeekBar.updateWithLevel(0f)
-                } else {
-
-                    if (!isPrepared) {
-                        val normalizedPower = max(1f, (1f + 160) / 160)
-                        waveformSeekBar.updateWithLevel(normalizedPower)
-                        imgVoicePlay.setImageDrawable(
-                            ContextCompat.getDrawable(
-                                context,
-                                R.drawable.pause_icon
-                            )
-                        ) // Change icon to pause
-                        initializeMediaPlayer(data.url) // Prepare the media player for the first time
-                    } else {
-                        val normalizedPower = max(1f, (1f + 160) / 160)
-                        waveformSeekBar.updateWithLevel(normalizedPower)
-                        mediaPlayer.seekTo(lastPosition) // Seek to last position
-                        mediaPlayer.start() // Start playing
-                        isPlayingVoice = true
-                        imgVoicePlay.setImageDrawable(
-                            ContextCompat.getDrawable(
-                                context,
-                                R.drawable.pause_icon
-                            )
-                        ) // Change icon to pause
-                        startAudioProgressUpdate() // Start updating progress again
+                imgVoicePlay.setOnClickListener {
+                    if (adapter.currentlyPlayingHolder != null && adapter.currentlyPlayingHolder != this) {
+                        adapter.currentlyPlayingHolder?.stopAudioPlayback()
                     }
+
+                    if (isPlayingVoice) {
+                        pauseAudio()
+                    } else {
+                        if (!isPrepared) {
+                            initializeMediaPlayer(data.url)
+                        } else {
+                            resumeAudio()
+                        }
+                    }
+
+                    adapter.currentlyPlayingHolder = this
                 }
-                adapter.currentlyPlayingHolder = this // Set the current holder to this
             }
         }
 
-        private fun getAudioDuration(audioUrl: String, callback: (Int) -> Unit) {
-
-            // Check if the mediaPlayer is already initialized
-            if (!::mediaPlayer.isInitialized) {
-                mediaPlayer = MediaPlayer() // Initialize if not already done
-            } else {
-                mediaPlayer.reset() // Reset the MediaPlayer before reusing
-            }
-
-            try {
-                mediaPlayer.setDataSource(audioUrl) // Set the data source to the audio URL
-                mediaPlayer.prepareAsync() // Prepare asynchronously
-
-                mediaPlayer.setOnPreparedListener {
-                    // Once prepared, get the duration
-                    val duration = mediaPlayer.duration // Duration in milliseconds
-                    callback(duration) // Return the duration using the callback
-                    mediaPlayer.release() // Release the media player resources
+        // isVoice
+        // Initialize MediaPlayer and prepare audio
+        private fun initializeMediaPlayer(audioUrl: String) {
+            mediaPlayer = MediaPlayer().apply {
+                setDataSource(audioUrl)
+                prepareAsync()
+                setOnPreparedListener {
+                    isPrepared = true
+                    startAudioProgressUpdate()
+                    start()
+                    isPlayingVoice = true
+                    updatePlayPauseIcon(isPlaying = true)
                 }
-
-                mediaPlayer.setOnErrorListener { mp, what, extra ->
-                    mp.release() // Release the media player resources on error
-                    false // Return false to indicate the error was handled
+                setOnCompletionListener {
+                    resetPlaybackState()
                 }
-            } catch (e: Exception) {
-                mediaPlayer.release() // Release resources on exception
             }
         }
 
-        // Function to format milliseconds into a time string (mm:ss)
+        // Pause audio playback
+        private fun pauseAudio() {
+            mediaPlayer.pause()
+            lastPosition = mediaPlayer.currentPosition
+            isPlayingVoice = false
+            updatePlayPauseIcon(isPlaying = false)
+            waveformSeekBar.updateWithLevel(0f)
+
+        }
+
+        // Resume audio playback
+        private fun resumeAudio() {
+            mediaPlayer.seekTo(lastPosition)
+            mediaPlayer.start()
+            isPlayingVoice = true
+            startAudioProgressUpdate()
+            updatePlayPauseIcon(isPlaying = true)
+        }
+
+        // Stop audio playback
+        fun stopAudioPlayback() {
+            if (::mediaPlayer.isInitialized) {
+                if (mediaPlayer.isPlaying) {
+                    mediaPlayer.stop()
+                }
+                mediaPlayer.reset()
+                resetPlaybackState()
+            }
+        }
+
+        // Update the play/pause icon
+        private fun updatePlayPauseIcon(isPlaying: Boolean) {
+            val icon = if (isPlaying) R.drawable.pause_icon else R.drawable.video_play
+            imgVoicePlay.setImageDrawable(ContextCompat.getDrawable(context, icon))
+        }
+
+        // Reset playback state
+        private fun resetPlaybackState() {
+            stopAudioProgressUpdate()
+            isPrepared = false
+            isPlayingVoice = false
+            lastPosition = 0
+            waveformSeekBar.updateWithLevel(0f)
+            updatePlayPauseIcon(isPlaying = false)
+        }
+
+        // Start updating audio progress
+        private fun startAudioProgressUpdate() {
+            handler.post(progressUpdater)
+        }
+
+        // Stop updating audio progress
+        private fun stopAudioProgressUpdate() {
+            handler.removeCallbacks(progressUpdater)
+        }
+
+        // Format milliseconds to "mm:ss"
         private fun formatTime(milliseconds: Int): String {
             val seconds = (milliseconds / 1000) % 60
             val minutes = (milliseconds / (1000 * 60)) % 60
             return String.format("%02d:%02d", minutes, seconds)
         }
 
-        fun stopAudioPlayback() {
-            if (::mediaPlayer.isInitialized) {
-                if (mediaPlayer.isPlaying) {
-                    waveformSeekBar.updateWithLevel(0f)
-
-                    mediaPlayer.stop() // Stop playback
-                    mediaPlayer.reset() // Reset media player
+        // Get audio duration asynchronously
+        private fun getAudioDuration(audioUrl: String, callback: (Int) -> Unit) {
+            val tempMediaPlayer = MediaPlayer()
+            try {
+                tempMediaPlayer.setDataSource(audioUrl)
+                tempMediaPlayer.prepareAsync()
+                tempMediaPlayer.setOnPreparedListener {
+                    callback(tempMediaPlayer.duration)
+                    tempMediaPlayer.release()
                 }
-                isPlayingVoice = false
-                lastPosition = 0 // Reset last position on stop
-//                waveformSeekBar.progress = 0f // Reset seek bar on stop
-                imgVoicePlay.setImageDrawable(
-                    ContextCompat.getDrawable(context, R.drawable.video_play)
-                ) // Change the icon back to play
+                tempMediaPlayer.setOnErrorListener { mp, _, _ ->
+                    mp.release()
+                    false
+                }
+            } catch (e: Exception) {
+                tempMediaPlayer.release()
             }
-        }
-
-
-        private fun initializeMediaPlayer(audioUrl: String) {
-            mediaPlayer = MediaPlayer().apply {
-                setDataSource(audioUrl)
-                prepareAsync() // Prepare asynchronously
-                setOnPreparedListener {
-                    isPrepared = true
-                    startAudioProgressUpdate() // Start updating progress
-                    start() // Start playback
-                }
-                setOnCompletionListener {
-                    waveformSeekBar.updateWithLevel(0f)
-                    stopAudioProgressUpdate()
-                    lastPosition = 0 // Reset last position on completion
-                    isPlayingVoice = false // Update playback state
-                    imgVoicePlay.setImageDrawable(
-                        ContextCompat.getDrawable(
-                            context,
-                            R.drawable.video_play
-                        )
-                    ) // Change icon back to play on completion
-                }
-            }
-        }
-
-        private fun startAudioProgressUpdate() {
-            handler.post(progressUpdater)
-            waveformSeekBar.invalidate() // Force redraw
-        }
-
-        private fun stopAudioProgressUpdate() {
-            waveformSeekBar.updateWithLevel(0f)
-
-            mediaPlayer.stop() // Stop playback
-            mediaPlayer.reset()
-            handler.removeCallbacks(progressUpdater)
-            imgVoicePlay.setImageDrawable(
-                ContextCompat.getDrawable(context, R.drawable.video_play)
-            ) // Reset icon when stopping
         }
     }
 

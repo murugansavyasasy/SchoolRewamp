@@ -143,7 +143,7 @@
                     android:layout_marginStart="@dimen/fifteen"
                     android:text="XII"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/fifteen_sp"
+                    android:textSize="@dimen/thirteen_sp"
                     android:textStyle="bold"></TextView>
             </RelativeLayout>
 
@@ -179,7 +179,7 @@
                     android:layout_marginStart="@dimen/fifteen"
                     android:text="A"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/fifteen_sp"
+                    android:textSize="@dimen/thirteen_sp"
                     android:textStyle="bold"></TextView>
             </RelativeLayout>
 
@@ -218,7 +218,7 @@
                 android:layout_marginStart="@dimen/fifteen"
                 android:text="Full day"
                 android:textColor="@color/black"
-                android:textSize="@dimen/fifteen_sp"
+                android:textSize="@dimen/thirteen_sp"
                 android:textStyle="bold"></TextView>
         </RelativeLayout>
 
@@ -235,7 +235,7 @@
             android:padding="@dimen/ten"
             android:text="@string/Selectallaspresent"
             android:textColor="@color/white"
-            android:textSize="@dimen/fifteen_sp"
+            android:textSize="@dimen/thirteen_sp"
             android:textStyle="bold">
 
         </TextView>
@@ -250,7 +250,7 @@
             android:gravity="center"
             android:text="@string/OR"
             android:textColor="@color/black"
-            android:textSize="@dimen/fifteen_sp"
+            android:textSize="@dimen/thirteen_sp"
             android:textStyle="bold">
 
         </TextView>
@@ -268,7 +268,7 @@
             android:padding="@dimen/ten"
             android:text="@string/MarkAbsentees"
             android:textColor="@color/white"
-            android:textSize="@dimen/fifteen_sp"
+            android:textSize="@dimen/thirteen_sp"
             android:textStyle="bold">
 
         </TextView>

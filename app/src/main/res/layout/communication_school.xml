@@ -79,6 +79,7 @@
                         android:gravity="center"
                         android:paddingStart="@dimen/five"
                         android:paddingEnd="@dimen/five"
+                        android:textSize="@dimen/fifteen_sp"
                         android:textStyle="bold"
                         android:paddingBottom="@dimen/ten"
                         android:text="@string/VoiceMessage"
@@ -113,6 +114,7 @@
                         android:gravity="center"
                         android:paddingStart="@dimen/five"
                         android:paddingEnd="@dimen/five"
+                        android:textSize="@dimen/fifteen_sp"
                         android:textStyle="bold"
                         android:paddingBottom="@dimen/ten"
                         android:text="Schedule Call"
@@ -149,6 +151,7 @@
                         android:textStyle="bold"
                         android:paddingEnd="@dimen/five"
                         android:paddingBottom="@dimen/ten"
+                        android:textSize="@dimen/fifteen_sp"
                         android:text="Text Message"
                         android:textColor="@color/black">
 
@@ -184,7 +187,7 @@
                             android:layout_weight="0.4"
                             android:text="From Time"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/fifteen_sp"
+                            android:textSize="@dimen/thirteen_sp"
                             android:textStyle="bold">
 
                         </TextView>
@@ -246,7 +249,7 @@
                             android:layout_weight="0.4"
                             android:text="To Time"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/fifteen_sp"
+                            android:textSize="@dimen/thirteen_sp"
                             android:textStyle="bold">
 
                         </TextView>
@@ -309,7 +312,7 @@
                             android:layout_weight="0.4"
                             android:text="Schedule Call"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/fifteen_sp"
+                            android:textSize="@dimen/thirteen_sp"
                             android:textStyle="bold">
 
                         </TextView>
@@ -372,7 +375,7 @@
                         android:layout_marginEnd="@dimen/five"
                         android:text="Back to voice record"
                         android:textColor="@color/navi_blue2"
-                        android:textSize="@dimen/fifteen_sp">
+                        android:textSize="@dimen/thirteen_sp">
 
                     </TextView>
 
@@ -403,7 +406,7 @@
                         android:layout_height="wrap_content"
                         android:text="Do you want send from history ?"
                         android:textColor="@color/navi_blue2"
-                        android:textSize="@dimen/fifteen_sp">
+                        android:textSize="@dimen/thirteen_sp">
 
                     </TextView>
 
@@ -436,7 +439,7 @@
                         android:layout_marginTop="@dimen/ten"
                         android:text="Title"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/fifteen_sp"
+                        android:textSize="@dimen/thirteen_sp"
                         android:textStyle="bold">
 
                     </TextView>
@@ -687,7 +690,7 @@
                             android:layout_toEndOf="@+id/imgSend"
                             android:text="Send"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/fifteen_sp"></TextView>
+                            android:textSize="@dimen/thirteen_sp"></TextView>
                     </RelativeLayout>
                 </RelativeLayout>
             </RelativeLayout>

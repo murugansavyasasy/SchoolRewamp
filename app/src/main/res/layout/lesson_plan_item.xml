@@ -19,7 +19,7 @@
             android:gravity="center"
             android:text="Bio Chemistry"
             android:textColor="@color/black"
-            android:textSize="@dimen/fifteen_sp"
+            android:textSize="@dimen/thirteen_sp"
             android:textStyle="bold"></TextView>
 
         <TextView
@@ -249,7 +249,7 @@
                     android:layout_weight="5"
                     android:text="@string/Start"
                     android:textColor="@color/light_gray"
-                    android:textSize="12dp" />
+                    android:textSize="@dimen/thirteen_sp" />
 
                 <TextView
                     android:id="@+id/lblInProgress"
@@ -259,7 +259,7 @@
                     android:gravity="center"
                     android:text="@string/Progress"
                     android:textColor="@color/light_gray"
-                    android:textSize="12dp" />
+                    android:textSize="@dimen/thirteen_sp" />
 
                 <TextView
                     android:id="@+id/lblCompleted"
@@ -269,7 +269,7 @@
                     android:gravity="right"
                     android:text="@string/Complete"
                     android:textColor="@color/light_gray"
-                    android:textSize="12dp" />
+                    android:textSize="@dimen/thirteen_sp" />
 
             </LinearLayout>
 

@@ -18,7 +18,7 @@
             android:gravity="center"
             android:text="Pick your file type "
             android:textColor="@color/black"
-            android:textSize="@dimen/twenty"
+            android:textSize="@dimen/fifteen_sp"
             android:textStyle="bold"></TextView>
 
 

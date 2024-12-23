@@ -183,11 +183,16 @@
     <string name="OR">หรือ</string>
     <string name="MarkAbsentees">ทำเครื่องหมายผู้ที่ขาด</string>
     <string name="Admissionnoist">เลขที่สมัคร :</string>
-
-
-
-
-
+    <string name="Uploadimagepdf">อัปโหลดรูปภาพหรือ PDF</string>
+    <string name="OnlineMeeting">การประชุมออนไลน์</string>
+    <string name="Selectmeeting">เลือกการประชุม</string>
+    <string name="Meetinglink">ลิงก์การประชุม</string>
+    <string name="Pasteyourmeetinglink">วางลิงก์การประชุมของคุณ</string>
+    <string name="CreateMeeting">สร้างการประชุม</string>
+    <string name="HomeWork">การบ้าน</string>
+    <string name="Reports">รายงาน</string>
+    <string name="UploadAttachment">อัปโหลดไฟล์แนบ</string>
+    <string name="TOSTANDARDORSECTION">ไปยังระดับหรือตอน</string>
 
 
 </resources>

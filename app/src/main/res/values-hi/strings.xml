@@ -183,8 +183,16 @@
     <string name="OR">या</string>
     <string name="MarkAbsentees">गैर-हाजिर चिह्नित करें</string>
     <string name="Admissionnoist">प्रवेश संख्या :</string>
-
-
+    <string name="Uploadimagepdf">छवि या पीडीएफ अपलोड करें</string>
+    <string name="OnlineMeeting">ऑनलाइन बैठक</string>
+    <string name="Selectmeeting">बैठक चुनें</string>
+    <string name="Meetinglink">बैठक लिंक</string>
+    <string name="Pasteyourmeetinglink">अपना बैठक लिंक पेस्ट करें</string>
+    <string name="CreateMeeting">बैठक बनाएं</string>
+    <string name="HomeWork">गृहकार्य</string>
+    <string name="Reports">रिपोर्ट</string>
+    <string name="UploadAttachment">अटैचमेंट अपलोड करें</string>
+    <string name="TOSTANDARDORSECTION">मानक या सेक्शन पर जाएं</string>
 
 
 </resources>

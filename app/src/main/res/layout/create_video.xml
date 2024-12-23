@@ -17,14 +17,15 @@
             android:id="@+id/imgBack"
             android:layout_width="@dimen/thirty"
             android:layout_height="@dimen/thirty"
+            android:layout_marginStart="@dimen/twenty"
             android:src="@drawable/arrow_back_black" />
 
         <TextView
             android:id="@+id/lblCreateEvent"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/ten"
-            android:layout_toEndOf="@+id/imgBack"
+            android:gravity="center"
             android:text="@string/UploadVideo"
             android:textColor="@color/black"
             android:textSize="@dimen/twenty"

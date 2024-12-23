@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Downloading video..."
-        android:textSize="18sp"
+        android:textSize="@dimen/thirteen_sp"
         android:paddingBottom="10dp" />
 
     <ProgressBar
@@ -26,6 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0%"
+        android:textSize="@dimen/thirteen_sp"
         android:layout_gravity="end"
         android:paddingTop="10dp" />
 </LinearLayout>

@@ -183,6 +183,16 @@
     <string name="OR">OR</string>
     <string name="MarkAbsentees">Mark Absentees</string>
     <string name="Admissionnoist">Admission no  : </string>
+    <string name="Uploadimagepdf">Upload image pdf</string>
+    <string name="OnlineMeeting">Online Meeting</string>
+    <string name="Selectmeeting">Select meeting</string>
+    <string name="Meetinglink">Meeting link</string>
+    <string name="Pasteyourmeetinglink">Paste your meeting link</string>
+    <string name="CreateMeeting">Create Meeting</string>
+    <string name="HomeWork">Home Work</string>
+    <string name="Reports">Reports</string>
+    <string name="UploadAttachment">Upload Attachment</string>
+    <string name="TOSTANDARDORSECTION">TO STANDARD OR SECTION</string>
 
 
 

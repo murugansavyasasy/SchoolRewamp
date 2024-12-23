@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <RelativeLayout
         android:id="@+id/rytHeader"
         android:layout_width="match_parent"
@@ -22,12 +23,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginStart="@dimen/ten"
-            android:text="@string/OnlineMeeting"
+            android:text="@string/HomeWork"
             android:textColor="@color/black"
             android:textSize="@dimen/twenty"
             android:textStyle="bold" />
-
 
     </RelativeLayout>
 
@@ -36,6 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rytHeader"
+        android:layout_centerHorizontal="true"
         android:layout_marginHorizontal="@dimen/ten"
         android:layout_marginTop="@dimen/fifteen"
         android:background="@drawable/bg_light_blue">
@@ -48,7 +48,7 @@
             android:background="@drawable/bg_blue"
             android:gravity="center"
             android:padding="@dimen/ten"
-            android:text="@string/Create"
+            android:text="@string/HomeWork"
             android:textColor="@color/white"
             android:textSize="@dimen/thirteen_sp"
             android:textStyle="bold" />
@@ -60,43 +60,31 @@
             android:layout_weight="1"
             android:gravity="center"
             android:padding="@dimen/ten"
-            android:text="View"
+            android:text="@string/Reports"
             android:textColor="@color/dark_blue"
             android:textSize="@dimen/thirteen_sp"
             android:textStyle="bold" />
 
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcyOnlineMeeting"
+    <RelativeLayout
+        android:id="@+id/rlaHomework"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/lnrParent"
-        android:visibility="gone"
-        android:layout_height="wrap_content">
-
-    </androidx.recyclerview.widget.RecyclerView>
-
-    <ScrollView
-        android:id="@+id/noticeboardCreate"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/lnrParent"
-        android:layout_marginHorizontal="@dimen/ten"
-        android:layout_marginTop="@dimen/ten"
-        android:visibility="visible"
-        android:scrollbars="none">
+        android:visibility="visible">
 
         <RelativeLayout
+            android:id="@+id/rlaTitleDescription"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/rect_shadow_white"
-            android:padding="@dimen/ten">
+            android:layout_height="wrap_content">
+
 
             <TextView
                 android:id="@+id/lblTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/ten"
+                android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/ten"
                 android:text="@string/Title"
                 android:textColor="@color/black"
@@ -110,9 +98,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblTitle"
-                android:layout_marginStart="@dimen/ten"
+                android:layout_marginStart="@dimen/fifteen"
                 android:layout_marginTop="@dimen/ten"
-                android:layout_marginEnd="@dimen/ten"
+                android:layout_marginEnd="@dimen/fifteen"
                 android:hint="@string/Entertitle"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
@@ -125,7 +113,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/edtTitle"
-                android:layout_marginStart="@dimen/ten"
+                android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/ten"
                 android:text="@string/Description"
                 android:textColor="@color/black"
@@ -139,9 +127,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/hundred"
                 android:layout_below="@+id/lblDescription"
-                android:layout_marginStart="@dimen/ten"
+                android:layout_marginStart="@dimen/fifteen"
                 android:layout_marginTop="@dimen/ten"
-                android:layout_marginEnd="@dimen/ten"
+                android:layout_marginEnd="@dimen/fifteen"
                 android:background="@drawable/bg_stroke_rect_black"
                 android:editable="true"
                 android:focusable="true"
@@ -172,33 +160,123 @@
 
             </TextView>
 
-            <ImageView
-                android:id="@+id/imgInfo"
-                android:layout_width="@dimen/thirty_five"
-                android:layout_height="@dimen/thirty_five"
-                android:layout_below="@+id/lblTextCount"
-                android:layout_alignParentRight="true"
-                android:layout_marginTop="@dimen/fifteen"
-                android:layout_marginEnd="@dimen/ten"
-                android:src="@drawable/info_icon">
 
-            </ImageView>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlaFilePicking"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rlaTitleDescription"
+            android:layout_marginTop="@dimen/five">
+
+            <TextView
+                android:id="@+id/lblAddPhoto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginTop="@dimen/ten"
+                android:text="@string/UploadAttachment"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"
+                android:textStyle="bold">
+
+            </TextView>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcyImages"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblAddPhoto"
+                android:layout_marginTop="@dimen/ten"
+                android:orientation="vertical">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+
+            <TextView
+                android:id="@+id/btnChooseRecipient"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rcyImages"
+                android:layout_marginStart="@dimen/twenty_five"
+                android:layout_marginTop="@dimen/fifteen"
+                android:layout_marginEnd="@dimen/twenty_five"
+                android:layout_marginBottom="@dimen/ten"
+                android:background="@drawable/rect_btn_orange"
+                android:gravity="center"
+                android:padding="@dimen/ten"
+                android:text="@string/TOSTANDARDORSECTION"
+                android:textColor="@color/white"
+                android:textSize="@dimen/thirteen_sp"
+                android:textStyle="bold">
+
+            </TextView>
+
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rlaHomeWorkReport"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lnrParent"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/ten"
+        android:visibility="gone">
+
+
+        <ImageView
+            android:id="@+id/imgCalender"
+            android:layout_width="@dimen/twenty_five"
+            android:layout_height="@dimen/twenty_five"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/ten"
+            android:src="@drawable/calender_icon_color"></ImageView>
+
+
+        <TextView
+            android:id="@+id/lblDatePick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/twenty"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_toEndOf="@+id/imgCalender"
+            android:drawableRight="@drawable/ic_down_arrow"
+            android:drawablePadding="@dimen/ten"
+            android:text="Sun 12 Dec 2022"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp"
+            android:textStyle="normal">
+
+        </TextView>
+
+
+        <LinearLayout
+            android:id="@+id/lnrClasses"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblDatePick"
+            android:weightSum="1">
 
 
             <RelativeLayout
-                android:id="@+id/rlaAssignmentType"
+                android:id="@+id/rlaStandard"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/lblTextCount"
-                android:layout_marginStart="@dimen/ten"
+                android:layout_height="31dp"
+                android:layout_marginStart="@dimen/fifteen"
                 android:layout_marginTop="@dimen/ten"
-                android:layout_marginEnd="@dimen/ten"
-                android:layout_toStartOf="@+id/imgInfo"
+                android:layout_marginEnd="@dimen/fifteen"
+                android:layout_weight="0.5"
                 android:background="@drawable/rect_light_blue"
-                android:padding="@dimen/ten">
+                android:padding="@dimen/five">
 
 
                 <ImageView
+                    android:id="@+id/imgStandard"
                     android:layout_width="@dimen/twenty_five"
                     android:layout_height="@dimen/twenty_five"
                     android:layout_alignParentRight="true"
@@ -209,122 +287,65 @@
                 </ImageView>
 
                 <TextView
-                    android:id="@+id/lblAssignment"
+                    android:id="@+id/lblStandard"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/fifteen"
-                    android:text="Select meeting"
+                    android:text="XII"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
                     android:textStyle="bold"></TextView>
             </RelativeLayout>
 
+
             <RelativeLayout
+                android:id="@+id/rlaSection"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/rlaAssignmentType"
-                android:layout_marginTop="@dimen/ten">
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/fifteen"
+                android:layout_weight="0.5"
+                android:background="@drawable/rect_light_blue"
+                android:padding="@dimen/five">
 
 
                 <ImageView
-                    android:id="@+id/imgCalender"
+                    android:id="@+id/imgSection"
                     android:layout_width="@dimen/twenty_five"
                     android:layout_height="@dimen/twenty_five"
-                    android:layout_marginStart="@dimen/ten"
-                    android:layout_marginTop="@dimen/ten"
-                    android:src="@drawable/calender_icon_color"></ImageView>
-
-
-                <TextView
-                    android:id="@+id/lblDatePick"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/twenty"
-                    android:layout_marginTop="@dimen/ten"
-                    android:layout_toEndOf="@+id/imgCalender"
-                    android:drawableRight="@drawable/ic_down_arrow"
-                    android:drawablePadding="@dimen/ten"
-                    android:text="Sun 12 Dec 2022"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"
-                    android:textStyle="normal">
-
-                </TextView>
-
-                <TextView
-                    android:id="@+id/lblTimePick"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_marginTop="@dimen/ten"
+                    android:layout_centerVertical="true"
                     android:layout_marginEnd="@dimen/ten"
-                    android:drawableRight="@drawable/ic_down_arrow"
-                    android:drawablePadding="@dimen/ten"
-                    android:text="12:12 PM"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"
-                    android:textStyle="normal"></TextView>
+                    android:src="@drawable/ic_down_arrow">
 
+                </ImageView>
 
                 <TextView
-                    android:id="@+id/lblMeetingLink"
+                    android:id="@+id/lblSection"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/imgCalender"
-                    android:layout_marginStart="@dimen/ten"
-                    android:layout_marginTop="@dimen/fifteen"
-                    android:layout_marginEnd="@dimen/ten"
-                    android:drawablePadding="@dimen/ten"
-                    android:text="Meeting link"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/fifteen"
+                    android:text="A"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
                     android:textStyle="bold"></TextView>
-
-
-                <EditText
-                    android:id="@+id/edtMeetingLink"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/lblMeetingLink"
-                    android:layout_marginStart="@dimen/ten"
-                    android:layout_marginTop="@dimen/ten"
-                    android:layout_marginEnd="@dimen/ten"
-                    android:background="@drawable/bg_outline_black"
-                    android:hint="@string/Pasteyourmeetinglink"
-                    android:padding="@dimen/ten"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"
-                    android:textStyle="normal">
-
-                </EditText>
-
-
-                <TextView
-                    android:id="@+id/btnCreateMeeting"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/edtMeetingLink"
-                    android:layout_marginStart="@dimen/ten"
-                    android:layout_marginTop="@dimen/fifteen"
-                    android:layout_marginEnd="@dimen/ten"
-                    android:layout_marginBottom="@dimen/ten"
-                    android:background="@drawable/rect_btn_orange"
-                    android:gravity="center"
-                    android:padding="@dimen/ten"
-                    android:text="@string/CreateMeeting"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/thirteen_sp"
-                    android:textStyle="bold">
-
-                </TextView>
-
-
             </RelativeLayout>
 
+        </LinearLayout>
 
-        </RelativeLayout>
-    </ScrollView>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcyHomeWorkReport"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lnrClasses">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+
+    </RelativeLayout>
 
 
 </RelativeLayout>

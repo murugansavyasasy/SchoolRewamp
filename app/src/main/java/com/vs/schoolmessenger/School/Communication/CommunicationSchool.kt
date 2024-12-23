@@ -360,25 +360,11 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
 
             R.id.rlaFromTime -> {
-//                showSpinnerTimePicker(this) { hour, minute, isAm ->
-//                    val amPm = if (isAm) "AM" else "PM"
-//                    Toast.makeText(this, "Selected Time: $hour:$minute $amPm", Toast.LENGTH_SHORT)
-//                        .show()
-//                    binding.lblStartTime.text = "$hour:$minute $amPm"
-
                     showTimePickerDialog(this,this)
-
-
-             //   }
             }
 
             R.id.rlaToTime -> {
-//                showSpinnerTimePicker(this) { hour, minute, isAm ->
-//                    val amPm = if (isAm) "AM" else "PM"
-//                    Toast.makeText(this, "Selected Time: $hour:$minute $amPm", Toast.LENGTH_SHORT)
-//                        .show()
                 showTimePickerDialog(this, this)
-                //     }
             }
 
             R.id.imgVoicePlay -> {

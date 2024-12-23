@@ -22,7 +22,7 @@
             android:layout_toStartOf="@+id/lblDate"
             android:text="Friday Leave"
             android:textColor="@color/black"
-            android:textSize="@dimen/fifteen_sp"
+            android:textSize="@dimen/thirteen_sp"
             android:textStyle="bold"></TextView>
 
         <TextView
@@ -34,7 +34,7 @@
             android:layout_marginEnd="@dimen/ten"
             android:text="01 Apr 2024"
             android:textColor="@color/black"
-            android:textSize="@dimen/fifteen_sp"></TextView>
+            android:textSize="@dimen/thirteen_sp"></TextView>
 
 
         <TextView

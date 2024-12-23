@@ -162,12 +162,6 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
             Log.e("DropdownMenu", "Activity is not valid for showing the popup.")
             return
         }
-//        val activity = anchor.context as? Activity
-//        if (activity == null || activity.isFinishing || activity.isDestroyed) {
-//            Log.e("DropdownMenu", "Activity is not valid for showing the popup.")
-//            return
-//        }
-
 
         val inflater = LayoutInflater.from(anchor.context)
         val dropdownView = inflater.inflate(R.layout.dropdown_menu, null)

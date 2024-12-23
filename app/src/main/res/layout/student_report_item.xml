@@ -348,8 +348,8 @@
                     android:weightSum="1">
 
                     <ImageView
-                        android:layout_width="@dimen/thirty"
-                        android:layout_height="@dimen/thirty"
+                        android:layout_width="@dimen/twenty_five"
+                        android:layout_height="@dimen/twenty_five"
                         android:layout_marginStart="@dimen/ten"
                         android:src="@drawable/phone_call_icon">
 
@@ -379,8 +379,8 @@
                     android:weightSum="1">
 
                     <ImageView
-                        android:layout_width="@dimen/thirty"
-                        android:layout_height="@dimen/thirty"
+                        android:layout_width="@dimen/twenty_five"
+                        android:layout_height="@dimen/twenty_five"
                         android:layout_marginStart="@dimen/ten"
                         android:src="@drawable/message_icon">
 
@@ -410,8 +410,8 @@
                     android:weightSum="1">
 
                     <ImageView
-                        android:layout_width="@dimen/thirty"
-                        android:layout_height="@dimen/thirty"
+                        android:layout_width="@dimen/twenty_five"
+                        android:layout_height="@dimen/twenty_five"
                         android:layout_marginStart="@dimen/ten"
                         android:src="@drawable/mail_send_icon">
 

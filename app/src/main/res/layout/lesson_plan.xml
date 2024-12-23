@@ -95,7 +95,7 @@
             android:layout_toEndOf="@+id/imgFilter"
             android:text="@string/Filter"
             android:textColor="@color/black"
-            android:textSize="@dimen/fifteen_sp">
+            android:textSize="@dimen/thirteen_sp">
 
         </TextView>
 

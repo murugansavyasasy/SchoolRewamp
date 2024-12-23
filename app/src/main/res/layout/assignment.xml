@@ -71,7 +71,7 @@
                     android:layout_marginStart="@dimen/fifteen"
                     android:text="Text"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/fifteen_sp"
+                    android:textSize="@dimen/thirteen_sp"
                     android:textStyle="bold"></TextView>
             </RelativeLayout>
 
@@ -121,7 +121,7 @@
                     android:layout_marginStart="@dimen/fifteen"
                     android:text="General"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/fifteen_sp"
+                    android:textSize="@dimen/thirteen_sp"
                     android:textStyle="bold"></TextView>
             </RelativeLayout>
 
@@ -149,7 +149,7 @@
                 android:layout_marginEnd="@dimen/fifteen"
                 android:hint="@string/Entertitle"
                 android:textColor="@color/black"
-                android:textSize="@dimen/fifteen_sp"
+                android:textSize="@dimen/thirteen_sp"
                 android:textStyle="normal">
 
             </EditText>
@@ -176,7 +176,7 @@
                 android:layout_marginStart="@dimen/fifteen"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/fifteen"
-                android:background="@drawable/bg_outline_black"
+                android:background="@drawable/bg_stroke_rect_black"
                 android:editable="true"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
@@ -185,7 +185,7 @@
                 android:maxLength="100"
                 android:padding="@dimen/ten"
                 android:textColor="@color/black"
-                android:textSize="@dimen/fifteen_sp"
+                android:textSize="@dimen/thirteen_sp"
                 android:textStyle="normal">
 
             </EditText>
@@ -201,7 +201,7 @@
                 android:layout_marginEnd="@dimen/fifteen"
                 android:text="0 / 100"
                 android:textColor="@color/light_gray"
-                android:textSize="@dimen/fifteen_sp"
+                android:textSize="@dimen/thirteen_sp"
                 android:textStyle="normal">
 
             </TextView>
@@ -243,7 +243,7 @@
                 android:drawablePadding="@dimen/ten"
                 android:text="Sun 12 Dec 2022"
                 android:textColor="@color/black"
-                android:textSize="@dimen/fifteen_sp"
+                android:textSize="@dimen/thirteen_sp"
                 android:textStyle="normal">
 
             </TextView>
@@ -260,7 +260,7 @@
                 android:drawablePadding="@dimen/ten"
                 android:text="12:12 PM"
                 android:textColor="@color/black"
-                android:textSize="@dimen/fifteen_sp"
+                android:textSize="@dimen/thirteen_sp"
                 android:textStyle="normal"></TextView>
 
 

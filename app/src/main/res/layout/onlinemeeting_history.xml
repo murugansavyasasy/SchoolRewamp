@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginStart="@dimen/twenty"
-        android:layout_marginTop="@dimen/ten"
+        android:layout_marginTop="@dimen/fifteen"
         android:layout_marginEnd="@dimen/twenty"
         android:background="@drawable/rect_shadow_white"
         app:cardCornerRadius="@dimen/eight">
@@ -22,7 +22,7 @@
 
             <TextView
                 android:id="@+id/lblView"
-                android:layout_width="@dimen/ten"
+                android:layout_width="@dimen/five"
                 android:layout_height="match_parent"
                 android:background="@color/light_dark_blue">
 
@@ -43,7 +43,7 @@
                     android:layout_marginTop="@dimen/ten"
                     android:text="Parent Meeting"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/fifteen_sp"
+                    android:textSize="@dimen/thirteen_sp"
                     android:textStyle="bold">
 
                 </TextView>

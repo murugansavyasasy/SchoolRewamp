@@ -26,6 +26,7 @@
             android:layout_centerHorizontal="true"
             android:layout_toStartOf="@dimen/fifteen"
             android:text="@string/StudentReport"
+            android:layout_marginTop="@dimen/ten"
             android:textColor="@color/black"
             android:textSize="@dimen/twenty_sp"
             android:textStyle="bold">

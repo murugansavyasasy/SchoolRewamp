@@ -377,7 +377,7 @@
             android:padding="@dimen/ten"
             android:text="@string/Close"
             android:textColor="@color/white"
-            android:textSize="@dimen/fifteen_sp"
+            android:textSize="@dimen/thirteen_sp"
             android:textStyle="bold">
 
         </TextView>
@@ -396,7 +396,7 @@
             android:padding="@dimen/ten"
             android:text="@string/Update"
             android:textColor="@color/white"
-            android:textSize="@dimen/fifteen_sp"
+            android:textSize="@dimen/thirteen_sp"
             android:textStyle="bold">
 
         </TextView>

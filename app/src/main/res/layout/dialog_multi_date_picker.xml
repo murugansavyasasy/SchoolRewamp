@@ -50,6 +50,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="Sun"
+            android:textSize="@dimen/thirteen_sp"
             android:textColor="@color/red"
             android:textStyle="bold" />
 
@@ -58,6 +59,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
+            android:textSize="@dimen/thirteen_sp"
+
             android:text="Mon"
             android:textColor="@color/black"
             android:textStyle="bold" />
@@ -67,6 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
+            android:textSize="@dimen/thirteen_sp"
 
             android:text="Tue"
             android:textColor="@color/black"
@@ -79,6 +83,7 @@
             android:gravity="center"
             android:text="Wed"
             android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp"
 
             android:textStyle="bold" />
 
@@ -88,6 +93,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="Thu"
+            android:textSize="@dimen/thirteen_sp"
 
             android:textColor="@color/black"
             android:textStyle="bold" />
@@ -98,6 +104,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="Fri"
+            android:textSize="@dimen/thirteen_sp"
 
             android:textColor="@color/black"
             android:textStyle="bold" />
@@ -107,6 +114,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
+            android:textSize="@dimen/thirteen_sp"
 
             android:text="Sat"
             android:textColor="@color/black"
@@ -129,6 +137,7 @@
         android:background="@drawable/rect_btn_orange"
         android:gravity="center"
         android:padding="@dimen/ten"
+        android:textSize="@dimen/thirteen_sp"
         android:text="Confirm"
         android:textColor="@color/black" />
 </LinearLayout>

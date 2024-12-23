@@ -18,6 +18,8 @@ import com.vs.schoolmessenger.School.AbsenteesMarking.AttendanceMark
 import com.vs.schoolmessenger.School.Assignment.Assignment
 import com.vs.schoolmessenger.School.Communication.CommunicationSchool
 import com.vs.schoolmessenger.School.Event.CreateEvent
+import com.vs.schoolmessenger.School.Homework.HomeWork
+import com.vs.schoolmessenger.School.ImagePDF.ImagePdf
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlan
 import com.vs.schoolmessenger.School.NoticeBoard.CreateNoticeBoard
 import com.vs.schoolmessenger.School.OnlineMeeting.OnlineMeeting
@@ -107,10 +109,12 @@ class SchoolMenuAdapter(
                     "Online Meeting" -> {
                         context.startActivity(Intent(context, OnlineMeeting::class.java))
                     }
-
-
-
-
+                    "Image/Pdf" -> {
+                        context.startActivity(Intent(context, ImagePdf::class.java))
+                    }
+                    "Homework" -> {
+                        context.startActivity(Intent(context, HomeWork::class.java))
+                    }
                 }
             }
         }

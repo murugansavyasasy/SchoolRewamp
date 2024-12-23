@@ -75,6 +75,8 @@ class VideoListAdapter(
             }
             isTextExpanded = !isTextExpanded
         }
+
+
         fetchVimeoThumbnail("https://vimeo.com/${item.videoId}") { thumbnailUrl ->
             if (thumbnailUrl != null) {
                 Glide.with(holder.imgVimeoThumbnail.context)

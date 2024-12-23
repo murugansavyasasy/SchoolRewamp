@@ -183,6 +183,16 @@
     <string name="OR">அல்லது</string>
     <string name="MarkAbsentees">இல்லாதவர்களைச் சேர்க்கவும்</string>
     <string name="Admissionnoist">சேர்க்கை எண் :</string>
+    <string name="Uploadimagepdf">படம் அல்லது PDF பதிவேற்றவும்</string>
+    <string name="OnlineMeeting">ஆன்லைன் கூட்டம்</string>
+    <string name="Selectmeeting">கூட்டத்தைத் தேர்ந்தெடுக்கவும்</string>
+    <string name="Meetinglink">கூட்ட இணைப்பு</string>
+    <string name="Pasteyourmeetinglink">உங்கள் கூட்ட இணைப்பை ஒட்டவும்</string>
+    <string name="CreateMeeting">கூட்டத்தை உருவாக்கவும்</string>
+    <string name="HomeWork">வீட்டுப் பணிகள்</string>
+    <string name="Reports">அறிக்கைகள்</string>
+    <string name="UploadAttachment">அமைப்பு இணைப்பை பதிவேற்றவும்</string>
+    <string name="TOSTANDARDORSECTION">தரத்திற்கு அல்லது பிரிவுக்கு செல்லவும்</string>
 
 
 
