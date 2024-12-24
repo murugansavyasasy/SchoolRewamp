@@ -18,6 +18,7 @@ import com.vs.schoolmessenger.School.AbsenteesMarking.AttendanceMark
 import com.vs.schoolmessenger.School.Assignment.Assignment
 import com.vs.schoolmessenger.School.Communication.CommunicationSchool
 import com.vs.schoolmessenger.School.Event.CreateEvent
+import com.vs.schoolmessenger.School.ExamSchedule.Exam
 import com.vs.schoolmessenger.School.Homework.HomeWork
 import com.vs.schoolmessenger.School.ImagePDF.ImagePdf
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlan
@@ -114,6 +115,9 @@ class SchoolMenuAdapter(
                     }
                     "Homework" -> {
                         context.startActivity(Intent(context, HomeWork::class.java))
+                    }
+                    "Schedule Exam/Test" -> {
+                        context.startActivity(Intent(context, Exam::class.java))
                     }
                 }
             }

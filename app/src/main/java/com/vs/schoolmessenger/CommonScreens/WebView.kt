@@ -38,7 +38,7 @@ class WebView : BaseActivity<WebViewBinding>(),
 
             webViewClient = object : WebViewClient() {
                 override fun onPageStarted(
-                    view: android.webkit.WebView?,
+                    view: WebView?,
                     url: String?,
                     favicon: Bitmap?
                 ) {

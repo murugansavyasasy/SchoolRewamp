@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:id="@+id/rytHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primary_light"
+        android:paddingVertical="@dimen/twenty">
+
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
+            android:layout_marginStart="@dimen/twenty"
+            android:src="@drawable/arrow_back_black" />
+
+        <TextView
+            android:id="@+id/lblCreateNoticeBoard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="Schedule Exam"
+            android:textColor="@color/black"
+            android:textSize="@dimen/twenty"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rytSearch"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/thirty_five"
+        android:layout_below="@id/rytHeader"
+        android:layout_margin="@dimen/ten"
+        android:background="@drawable/rect_grey"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/imgSearch"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/ten"
+            android:src="@drawable/ic_search" />
+
+        <EditText
+            android:id="@+id/txtSearch"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@id/imgSearch"
+            android:background="@android:color/transparent"
+            android:hint="@string/lblSearch"
+            android:maxLines="1"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp" />
+    </RelativeLayout>
+
+    <com.vs.schoolmessenger.Utils.ExpandableGridView
+        android:id="@+id/gridExamSubjectList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rytSearch"
+        android:layout_marginTop="@dimen/ten"
+        android:numColumns="2"
+        tools:listitem="@layout/exam_subject_list_item">
+
+    </com.vs.schoolmessenger.Utils.ExpandableGridView>
+
+
+</RelativeLayout>

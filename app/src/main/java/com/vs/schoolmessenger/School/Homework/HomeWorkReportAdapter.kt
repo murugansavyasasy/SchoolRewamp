@@ -264,21 +264,6 @@ class HomeWorkReportAdapter(
                             override fun onPageFinished(view: WebView?, url: String?) {
                                 loadingBar.visibility = View.GONE
                             }
-
-                            override fun onReceivedError(
-                                view: WebView?,
-                                errorCode: Int,
-                                description: String?,
-                                failingUrl: String?
-                            ) {
-                                loadingBar.visibility = View.GONE
-                                Toast.makeText(
-                                    context,
-                                    "Failed to load PDF. Please try again.",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-
                         }
 
                         webChromeClient = WebChromeClient()

@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/rytHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primary_light"
+        android:paddingVertical="@dimen/twenty">
+
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
+            android:layout_marginStart="@dimen/twenty"
+            android:src="@drawable/arrow_back_black" />
+
+        <TextView
+            android:id="@+id/lblCreateNoticeBoard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="Exam Creation"
+            android:textColor="@color/black"
+            android:textSize="@dimen/twenty"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rytHeader"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/twenty_five"
+        android:layout_marginBottom="@dimen/fifty"
+        android:layout_marginEnd="@dimen/ten"
+        android:background="@drawable/rect_shadow_white">
+
+
+        <RelativeLayout
+            android:id="@+id/rlaStandard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/fifteen"
+            android:layout_marginTop="@dimen/twenty_five"
+            android:background="@drawable/bg_stroke_rect_black"
+            android:layout_marginEnd="@dimen/fifteen"
+            android:padding="@dimen/ten">
+
+
+            <ImageView
+                android:id="@+id/imgStandard"
+                android:layout_width="@dimen/twenty_five"
+                android:layout_height="@dimen/twenty_five"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/ten"
+                android:src="@drawable/ic_down_arrow">
+
+            </ImageView>
+
+            <TextView
+                android:id="@+id/lblStandard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/fifteen"
+                android:text="Select Standard"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"
+                android:textStyle="bold"></TextView>
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/rlaSection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rlaStandard"
+            android:layout_marginStart="@dimen/fifteen"
+            android:layout_marginTop="@dimen/twenty_five"
+            android:layout_marginEnd="@dimen/fifteen"
+            android:background="@drawable/bg_stroke_rect_black"
+            android:padding="@dimen/ten">
+
+
+            <ImageView
+                android:id="@+id/imgSection"
+                android:layout_width="@dimen/twenty_five"
+                android:layout_height="@dimen/twenty_five"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/ten"
+                android:src="@drawable/ic_down_arrow">
+
+            </ImageView>
+
+            <TextView
+                android:id="@+id/lblSection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/fifteen"
+                android:text="Select Section"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"
+                android:textStyle="bold"></TextView>
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/edtTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rlaSection"
+            android:layout_marginStart="@dimen/fifteen"
+            android:layout_marginTop="@dimen/twenty_five"
+            android:layout_marginEnd="@dimen/fifteen"
+            android:hint="Enter exam title "
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp"
+            android:textStyle="normal">
+
+        </EditText>
+
+        <EditText
+            android:id="@+id/edtDescription"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/hundred"
+            android:layout_below="@+id/edtTitle"
+            android:layout_marginStart="@dimen/fifteen"
+            android:layout_marginTop="@dimen/twenty_five"
+            android:layout_marginEnd="@dimen/fifteen"
+            android:background="@drawable/bg_stroke_rect_black"
+            android:editable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="start"
+            android:hint="@string/Enterdescription"
+            android:maxLength="100"
+            android:padding="@dimen/ten"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp"
+            android:textStyle="normal">
+
+        </EditText>
+
+
+        <TextView
+            android:id="@+id/lblTextCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edtDescription"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/fifteen"
+            android:text="0 / 500"
+            android:textColor="@color/light_gray"
+            android:textSize="@dimen/thirteen_sp"
+            android:textStyle="normal">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/btnSelectExam"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblTextCount"
+            android:layout_marginStart="@dimen/twenty"
+            android:layout_marginTop="@dimen/twenty_five"
+            android:layout_marginEnd="@dimen/twenty"
+            android:layout_marginBottom="@dimen/twenty_five"
+            android:background="@drawable/rect_btn_orange"
+            android:gravity="center"
+            android:padding="@dimen/ten"
+            android:text="Select Exam"
+            android:textColor="@color/white"
+            android:textSize="@dimen/thirteen_sp"
+            android:textStyle="bold">
+
+        </TextView>
+    </RelativeLayout>
+</RelativeLayout>

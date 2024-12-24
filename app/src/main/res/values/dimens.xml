@@ -34,6 +34,7 @@
     <dimen name="one_fourty">140dp</dimen>
     <dimen name="hundred_thirty">120dp</dimen>
     <dimen name="one_fifty">150dp</dimen>
+    <dimen name="one_seventy">170dp</dimen>
     <dimen name="two_hundred">200dp</dimen>
     <dimen name="two_fifty">250dp</dimen>
     <dimen name="two_sixty">260dp</dimen>

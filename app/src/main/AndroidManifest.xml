@@ -76,9 +76,20 @@
             android:windowSoftInputMode="adjustPan|adjustResize"></activity>
 
         <activity
+            android:name=".School.ExamSchedule.ExamSubjectList"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+
+        <activity
             android:name=".CommonScreens.WebView"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+        <activity
+            android:name=".School.ExamSchedule.Exam"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+
+
 
         <activity
             android:name=".School.LessonPlan.LessonPlan"
