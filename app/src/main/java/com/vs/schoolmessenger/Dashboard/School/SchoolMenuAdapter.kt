@@ -13,9 +13,7 @@ import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.CommonScreens.SchoolList
 import com.vs.schoolmessenger.Dashboard.Model.GridItem
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesStudentMark
 import com.vs.schoolmessenger.School.AbsenteesMarking.AttendanceMark
-import com.vs.schoolmessenger.School.Assignment.Assignment
 import com.vs.schoolmessenger.School.Communication.CommunicationSchool
 import com.vs.schoolmessenger.School.Event.CreateEvent
 import com.vs.schoolmessenger.School.ExamSchedule.Exam

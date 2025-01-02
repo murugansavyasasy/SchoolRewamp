@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Dashboard.School.Dashboard
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.RoleSelecionBinding
 
 class RoleSelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListener {
@@ -95,6 +96,7 @@ class RoleSelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListener 
 
         binding.btnGo.setOnClickListener {
             val intent = Intent(this, Dashboard::class.java)
+            Constant.isParentChoose = false
             startActivity(intent)
         }
     }

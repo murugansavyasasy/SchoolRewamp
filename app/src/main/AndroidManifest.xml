@@ -5,7 +5,7 @@
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true"
-        tools:node="replace"/>
+        tools:node="replace" />
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
@@ -14,11 +14,16 @@
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
     <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-    <uses-feature android:name="android.hardware.camera" android:required="true" />
-    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
-<!--    <uses-permission android:name="android.permission.CAMERA" />-->
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+    <uses-permission
+        android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+
+    <!--    <uses-permission android:name="android.permission.CAMERA" />-->
 
     <application
         android:allowBackup="false"
@@ -26,10 +31,10 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/school_chimes_logo"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/school_chimes_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.SchoolChimes"
-        android:networkSecurityConfig="@xml/network_security_config"
         tools:targetApi="31">
 
         <provider
@@ -43,7 +48,8 @@
         </provider>
 
         <activity
-            android:name=".Auth.Splash.Splash"
+            android:name=".Dashboard.Parent.Dashboard"
+
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/AppTheme">
@@ -57,131 +63,176 @@
         <activity
             android:name=".School.StudentReport.StudentReport"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
 
 
         <activity
             android:name=".School.AbsenteesMarking.AttendanceMark"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
 
         <activity
             android:name=".School.OnlineMeeting.OnlineMeeting"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
 
         <activity
             android:name=".School.LessonPlan.LessonPlanViewDetails"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
 
         <activity
             android:name=".School.ExamSchedule.ExamSubjectList"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
 
         <activity
             android:name=".CommonScreens.WebView"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
         <activity
             android:name=".School.ExamSchedule.Exam"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
 
-
+        </activity>
 
         <activity
             android:name=".School.LessonPlan.LessonPlan"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
 
         <activity
             android:name=".School.Homework.HomeWork"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
 
+        </activity>
 
 
         <activity
             android:name=".Auth.Country.CountryScreen"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
 
         <activity
             android:name=".School.Assignment.Assignment"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
 
 
         <activity
             android:name=".School.SchoolStrength.SchoolStrength"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
 
 
         <activity
             android:name=".Auth.OTP.OTP"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
 
         <activity
             android:name=".Auth.CreateResetChangePassword.PasswordGeneration"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustResize"></activity>
+            android:windowSoftInputMode="adjustResize">
+
+        </activity>
 
         <activity
             android:name=".Auth.TermsConditions.TermsAndConditions"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
 
         <activity
             android:name=".Auth.MobilePasswordSignIn.Login"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustResize"></activity>
+            android:windowSoftInputMode="adjustResize">
+
+        </activity>
 
         <activity
             android:name=".Auth.Introduction.Introduction"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
 
 
         <activity
             android:name=".Dashboard.Combination.RoleSelection"
+
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
 
         <activity
             android:name=".Dashboard.Settings.Notification.Notification"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
 
         <activity
             android:name=".Dashboard.Settings.ContactUs.ContactUs"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
 
         <activity
             android:name=".Parent.Video.ParentVideo"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
         <activity
             android:name=".School.ImagePDF.ImagePdf"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
 
+        </activity>
 
 
         <activity
             android:name=".Dashboard.Settings.ReportTheBug.ReportTheBug"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
 
 
         <activity
             android:name=".Dashboard.Settings.RateUs.RateUs"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
 
         <activity
             android:name=".AlbumImage.AlbumSelectActivity"
@@ -219,13 +270,13 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
 
         <activity
-            android:name=".Dashboard.Parent.Dashboard"
+            android:name=".Dashboard.School.Dashboard"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
 
         <activity
-            android:name=".Dashboard.School.Dashboard"
+            android:name=".Auth.Splash.Splash"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
@@ -239,38 +290,52 @@
 
             android:name=".School.Communication.CommunicationSchool"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustResize"></activity>
+            android:windowSoftInputMode="adjustResize">
+
+        </activity>
 
         <activity
             android:name=".School.AbsenteesMarking.AbsenteesStudentMark"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
 
         <activity
             android:name=".School.Event.CreateEvent"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
 
 
         <activity
             android:name=".School.NoticeBoard.CreateNoticeBoard"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
 
         <activity
             android:name=".School.Video.CreateVideo"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
 
         <activity
             android:name=".CommonScreens.ImageViewActivity"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
 
         <activity
             android:name=".CommonScreens.SchoolList"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
 
     </application>
 </manifest>

@@ -34,9 +34,11 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.vs.schoolmessenger.Dashboard.Fragments.HelpFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.HomeFragment
+import com.vs.schoolmessenger.Dashboard.Fragments.ParentHomeFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.ProfileFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.SettingsFragment
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.OnDateSelectedListener
 import com.vs.schoolmessenger.Utils.TimePickerAdapter
 import com.vs.schoolmessenger.Utils.TimeSelectedListener
@@ -128,12 +130,20 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         val nav_settings = binding.root.findViewById<LinearLayout>(nav_settings)
         val nav_profile = binding.root.findViewById<LinearLayout>(nav_profile)
 
-
-        loadFragment(HomeFragment())
+        Constant.isParentChoose = true
+        if (Constant.isParentChoose) {
+            loadFragment(ParentHomeFragment())
+        } else {
+            loadFragment(HomeFragment())
+        }
         updateNavBar(icon_home)
 
         nav_home.setOnClickListener {
-            loadFragment(HomeFragment())
+            if (Constant.isParentChoose) {
+                loadFragment(ParentHomeFragment())
+            } else {
+                loadFragment(HomeFragment())
+            }
             updateNavBar(icon_home)
         }
         nav_help.setOnClickListener {

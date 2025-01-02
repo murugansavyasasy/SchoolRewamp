@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Dashboard.School.Dashboard
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.StudentDetailsListItemBinding
 
 class StudentDetailAdapter(private val itemList: List<StudentDetailsData>, val context: Context) :
@@ -153,6 +154,7 @@ class StudentDetailAdapter(private val itemList: List<StudentDetailsData>, val c
 
         holder.binding.rlaStudent.setOnClickListener {
             val intent = Intent(context, Dashboard::class.java)
+            Constant.isParentChoose = true
             context.startActivity(intent)
         }
 

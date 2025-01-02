@@ -23,6 +23,7 @@ object Constant {
     var isShimmerView = false  // added by murugan to development branch
     var handler = Handler(Looper.getMainLooper())
     val delayTime = 1500
+    var isParentChoose = false
 
 
     fun setGridViewHeight(gridView: GridView, columns: Int) {

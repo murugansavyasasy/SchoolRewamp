@@ -12,7 +12,6 @@
     <color name="colorPrimaryDark">#0e4275</color>
     <color name="colorAccent">#FF6200EE</color>
     <color name="colorPrimary_light">#0F536A</color>
-
     <color name="primary">#8ec5d6</color>
     <color name="primary_light">#A6DADF</color>
 
@@ -91,9 +90,6 @@
     <color name="dark_green">#58B814</color>
     <color name="light_sky_blue1">#DFF4F7</color>
     <color name="light_orang1">#FCEDDB</color>
-
-<!--    <color name="light_green_">#A6DADF</color>-->
-
 
 
 </resources>

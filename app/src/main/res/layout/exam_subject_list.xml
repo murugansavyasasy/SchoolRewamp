@@ -60,7 +60,7 @@
     </RelativeLayout>
 
     <com.vs.schoolmessenger.Utils.ExpandableGridView
-        android:id="@+id/gridExamSubjectList"
+        android:id="@+id/grid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rytSearch"

@@ -103,7 +103,7 @@ class RateUs : BaseActivity<RateUsBinding>(), View.OnClickListener {
         binding.lnrRatingContent.visibility = View.VISIBLE
     }
 
-    fun isMaybeLater() {
+    private fun isMaybeLater() {
         binding.imgFeedBack.visibility = View.VISIBLE
         binding.lblMayBeLater.visibility = View.VISIBLE
         binding.lnrRatingContent.visibility = View.GONE
@@ -150,7 +150,7 @@ class RateUs : BaseActivity<RateUsBinding>(), View.OnClickListener {
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun isBackRoundChange(isRatingId: TextView) {
 
-        if (isRatingId.background.constantState == getResources().getDrawable(R.drawable.bg_outline_light_blue).constantState) {
+        if (isRatingId.background.constantState == resources.getDrawable(R.drawable.bg_outline_light_blue).constantState) {
             isRatingId.setBackgroundResource(R.drawable.bg_choose_rating)
             isRatingId.setTextColor(resources.getColor(R.color.white))
 //            isRatingType.add(isRatingId.text.toString())

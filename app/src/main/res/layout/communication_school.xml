@@ -574,8 +574,9 @@
                         <ImageView
                             android:layout_width="@dimen/twenty_five"
                             android:layout_height="@dimen/twenty_five"
-                            android:layout_marginStart="@dimen/thirteen"
+                            android:layout_alignParentEnd="true"
                             android:elevation="10dp"
+                            android:layout_marginEnd="@dimen/thirteen"
                             android:src="@drawable/close_red_color"></ImageView>
 
                         <RelativeLayout
