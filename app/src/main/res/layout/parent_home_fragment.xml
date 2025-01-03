@@ -194,7 +194,7 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp">
+            android:layout_height="@dimen/two_hundred">
 
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/lblGif"
@@ -205,7 +205,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:alpha="0.5"
+                android:alpha="0.8"
                 android:background="@drawable/gradient_background_dashboard_gren" />
         </FrameLayout>
 
@@ -221,12 +221,11 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imgSchoolLogo1"
-                android:layout_width="@dimen/fourty"
-                android:layout_height="@dimen/fourty"
+                android:layout_width="@dimen/fifty"
+                android:layout_height="@dimen/fifty"
                 android:layout_centerVertical="true"
-                android:src="@drawable/user_icon"
-                app:civ_border_color="@color/colorPrimary"
-                app:civ_border_width="1dp" />
+                android:src="@drawable/sample_10"
+                />
 
             <RelativeLayout
                 android:id="@+id/rytSchoolDetails1"
@@ -241,9 +240,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Hello, Sathish"
-                    android:textColor="@color/black"
+                    style="@style/CustomTextStyle"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/twenty_sp"
-                    android:textStyle="bold">
+                  >
 
                 </TextView>
 
@@ -253,7 +253,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/lblStudentName1"
                     android:text="Savyasasy software solutions pvt Ltd.,"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/thirteen_sp"
                     android:textStyle="bold" />
 
@@ -263,7 +263,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/lblSchoolName1"
                     android:text="Savyasasy schools, Chennai  600043"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/thirteen_sp" />
             </RelativeLayout>
 
@@ -313,8 +313,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rlaStudentDetail"
-            android:layout_marginStart="@dimen/fourty"
-            android:layout_marginEnd="@dimen/fourty"
+            android:layout_marginStart="@dimen/twenty"
+            android:layout_marginEnd="@dimen/twenty"
             android:background="@drawable/rect_white_light_radious"
             android:elevation="10dp"
             android:padding="@dimen/fifteen">
@@ -362,7 +362,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/rlaAttendanceReport"
-            android:layout_marginTop="-20dp"
+            android:layout_marginTop="-30dp"
             android:background="@drawable/rounded_top_corners">
 
 
@@ -370,7 +370,7 @@
                 android:id="@+id/lblCategories"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/twenty_five"
+                android:layout_marginTop="@dimen/thirty_five"
                 android:layout_marginStart="@dimen/ten"
                 android:text="Categories"
                 android:textColor="@color/black"

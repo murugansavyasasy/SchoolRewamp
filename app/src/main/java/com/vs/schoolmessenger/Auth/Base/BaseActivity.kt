@@ -20,6 +20,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.ArrayAdapter
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ListView
@@ -121,7 +122,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     // Method to allow child activities to access specific views
     protected fun <T : ViewBinding> accessChildView(
         binding: T, nav_home: Int, nav_help: Int, nav_profile: Int, nav_settings: Int,
-        icon_home: Int, icon_help: Int, icon_settings: Int, icon_profile: Int, frm: Int
+        icon_home: Int, icon_help: Int, icon_settings: Int, icon_profile: Int, frm: Int,isBottomMenu:Int
     ) {
         // Use reflection or a specific method to access views
 
@@ -129,6 +130,10 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         val nav_help = binding.root.findViewById<LinearLayout>(nav_help)
         val nav_settings = binding.root.findViewById<LinearLayout>(nav_settings)
         val nav_profile = binding.root.findViewById<LinearLayout>(nav_profile)
+        val frm = binding.root.findViewById<FrameLayout>(frm)
+        val isBottomMenu = binding.root.findViewById<LinearLayout>(isBottomMenu)
+
+        isBottomMenu.setBackgroundResource(R.drawable.gradient_background_dashboard_gren)
 
         Constant.isParentChoose = true
         if (Constant.isParentChoose) {

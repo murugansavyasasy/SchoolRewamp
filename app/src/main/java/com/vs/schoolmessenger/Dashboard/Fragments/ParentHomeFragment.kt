@@ -35,7 +35,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener {
 
     private lateinit var binding: ParentHomeFragmentBinding // Automatically generated binding class
     lateinit var isMenuAdapter: ChildMenuAdapter
-    private lateinit var items: List<GridItem>
+    private lateinit var items: ArrayList<GridItem>
     private lateinit var aditems: List<AdItem>
     private var isMenuItems: MutableList<GridItem> = mutableListOf()
     private var isSearchVisible = false
@@ -60,34 +60,29 @@ class ParentHomeFragment : Fragment(), View.OnClickListener {
         binding.imgSearchClick.setOnClickListener(this)
 
         // Sample data
-        items = listOf(
+        items = arrayListOf(
             GridItem(R.drawable.communication, "Communication"),  //Text,voice,Image ,Pdf , video
             GridItem(R.drawable.image, "Image/Pdf"),
             GridItem(R.drawable.video, "Video"),
             GridItem(R.drawable.pdf, "Circulars"),
             GridItem(R.drawable.homework, "Homework"),
             GridItem(R.drawable.exam, "Schedule Exam/Test"),
-            GridItem(R.drawable.chats, "Event / Holidays"),
-            GridItem(R.drawable.chats, "Class Timetable"),
-            GridItem(R.drawable.noticeboard, "Notice Board"),
-            GridItem(R.drawable.attendance, "Attendance Report"),
-            GridItem(R.drawable.messages, "Fee Details"),
-            GridItem(R.drawable.leave, "Leave Requests"),
-            GridItem(R.drawable.assignment, "Assignment"),
-            GridItem(R.drawable.chats, "Interaction with student"),
-            GridItem(R.drawable.online_meeting, "Online Meeting"),
-            GridItem(R.drawable.meeting, "PTM"),
-            GridItem(R.drawable.meeting, "LSRW"),
-            GridItem(R.drawable.biometric_attendance, "Exam Marks")
+            GridItem(R.drawable.chats, "Event / Holidays")
         )
 
+        aditems = listOf(
+            AdItem("https://fastly.picsum.photos/id/169/2500/1662.jpg?hmac=3DBeyQbiPxO88hBdhIuFPbvy2ff7cm9vmnq8lPIL9Ug"),
+            AdItem("https://fastly.picsum.photos/id/64/4326/2884.jpg?hmac=9_SzX666YRpR_fOyYStXpfSiJ_edO3ghlSRnH2w09Kg"),
+            AdItem("https://fastly.picsum.photos/id/30/1280/901.jpg?hmac=A_hpFyEavMBB7Dsmmp53kPXKmatwM05MUDatlWSgATE"),
+            AdItem("https://fastly.picsum.photos/id/26/4209/2769.jpg?hmac=vcInmowFvPCyKGtV7Vfh7zWcA_Z0kStrPDW3ppP0iGI"),
+            AdItem("https://fastly.picsum.photos/id/69/4912/3264.jpg?hmac=Q08LW3SoOxPfaE-y8-braexxvm5PESXMCdEDqFbEhQ8"),
+            AdItem("https://fastly.picsum.photos/id/106/2592/1728.jpg?hmac=E1-3Hac5ffuCVwYwexdHImxbMFRsv83exZ2EhlYxkgY")
+        )
 
-
-//        // Play the animation
         binding.lblGif.playAnimation()
+        binding.lblGif.setAnimation(R.raw.mathematics)
 
-//        // Load a new animation
-        binding.lblGif.setAnimation(R.raw.mathematics) // Ma
+
         // Pie chart scrolling
         getListUrls()
         layoutManager =
@@ -218,15 +213,14 @@ class ParentHomeFragment : Fragment(), View.OnClickListener {
 //        }
 //        Log.d("Status", "onResume")
 
-// In your Fragment or Activity
         val adapter = ChildMenuAdapter(requireActivity(), null, null, Constant.isShimmerViewShow)
-        val gridLayoutManager = GridLayoutManager(requireContext(), 4)
+        val gridLayoutManager = GridLayoutManager(requireContext(), 3)
 
-// Adjust span count for special layout
+        // Adjust span count for special layout
         gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
                 return when (adapter.getItemViewType(position)) {
-                    2 -> 4 // TYPE_SPECIAL: Span across all 4 columns
+                    2 -> 3 // TYPE_AD: Span across all 3 columns
                     else -> 1 // Default: 1 span per item
                 }
             }
@@ -236,25 +230,20 @@ class ParentHomeFragment : Fragment(), View.OnClickListener {
         binding.recyclerViewMenus.adapter = adapter
 
         Constant.executeAfterDelay {
-            // Ensure items and aditems are not null or empty
-            if (items != null && aditems.isNotEmpty()) {
-                val isAdapter = ChildMenuAdapter(requireActivity(), items, aditems, Constant.isShimmerViewDisable)
-
-                // Adjust span count again for the updated adapter
-                gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-                    override fun getSpanSize(position: Int): Int {
-                        return when (isAdapter.getItemViewType(position)) {
-                            2 -> 4 // TYPE_SPECIAL: Span across all 4 columns
-                            else -> 1 // Default: 1 span per item
-                        }
+            val isAdapter =
+                ChildMenuAdapter(requireActivity(), items, aditems, Constant.isShimmerViewDisable)
+            Log.d("aditems", aditems.size.toString())
+            // Adjust span count again for the updated adapter
+            gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                override fun getSpanSize(position: Int): Int {
+                    return when (isAdapter.getItemViewType(position)) {
+                        2 -> 3 // TYPE_AD: Span across all 3 columns
+                        else -> 1 // Default: 1 span per item
                     }
                 }
-
-                binding.recyclerViewMenus.layoutManager = gridLayoutManager
-                binding.recyclerViewMenus.adapter = isAdapter
-            } else {
-                Log.d("AdapterSetup", "Items or adItems are null or empty")
             }
+            binding.recyclerViewMenus.layoutManager = gridLayoutManager
+            binding.recyclerViewMenus.adapter = isAdapter
         }
     }
 

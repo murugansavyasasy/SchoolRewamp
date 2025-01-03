@@ -1,13 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/imgAd"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp">
+        android:layout_height="match_parent">
 
-    </ImageView>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewAdImages"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/one_thirty"
+            android:layout_marginStart="@dimen/twenty"
+            android:layout_marginEnd="@dimen/twenty"
+            android:background="@drawable/rect_white_light_radious"
+            android:orientation="horizontal"
+            tools:listitem="@layout/ad_image_item" />
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/lblSeeMore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/recyclerViewAdImages"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/twenty"
+            android:text="@string/SeeMore"
+            android:textColor="@color/sky_blue0"
+            android:textSize="@dimen/fifteen"
+            android:textStyle="normal"></TextView>
+
+        <LinearLayout
+            android:id="@+id/dotContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/recyclerViewAdImages"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal"
+            android:padding="@dimen/ten" />
+
+        <LinearLayout
+            android:id="@+id/rlaMenuExample"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/dotContainer"
+            android:orientation="horizontal"
+            android:padding="@dimen/ten"
+            android:visibility="visible"
+            android:weightSum="3">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginEnd="@dimen/ten"
+                android:layout_weight="1"
+                android:background="@drawable/gradient_background_dashboard_purple"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/fifty"
+                    android:layout_marginTop="@dimen/ten"
+                    android:src="@drawable/attendance">
+
+                </ImageView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:padding="@dimen/five"
+                    android:text="Assignment"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:textStyle="bold">
+
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginEnd="@dimen/ten"
+                android:layout_weight="1"
+                android:background="@drawable/gradient_background_dashboard_purple_light_orange"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/fifty"
+                    android:layout_marginTop="@dimen/ten"
+                    android:src="@drawable/leave"></ImageView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:padding="@dimen/five"
+                    android:text="Leave Request"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:textStyle="bold">
+
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginEnd="@dimen/ten"
+                android:layout_weight="1"
+                android:background="@drawable/gradient_background_dashboard_purple_light_green"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/fifty"
+                    android:layout_marginTop="@dimen/ten"
+                    android:src="@drawable/homework">
+
+                </ImageView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:padding="@dimen/five"
+                    android:text="Home Work"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:textStyle="bold">
+
+                </TextView>
+            </LinearLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+</androidx.core.widget.NestedScrollView>

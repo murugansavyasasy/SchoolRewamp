@@ -34,7 +34,8 @@ class Dashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListener {
             R.id.icon_help,
             R.id.icon_settings,
             R.id.icon_profile,
-            R.id.fragment_container
+            R.id.fragment_container,
+            R.id.customBottomNav
         )
     }
 
