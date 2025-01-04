@@ -28,7 +28,9 @@
             android:text="@string/SeeMore"
             android:textColor="@color/sky_blue0"
             android:textSize="@dimen/fifteen"
-            android:textStyle="normal"></TextView>
+            android:textStyle="normal">
+
+        </TextView>
 
         <LinearLayout
             android:id="@+id/dotContainer"

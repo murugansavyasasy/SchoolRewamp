@@ -200,7 +200,7 @@
                 android:id="@+id/lblGif"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:lottie_fileName="your_animation.json" />
+               />
 
             <View
                 android:layout_width="match_parent"

@@ -1,158 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/primary_light">
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/conCountry"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/ten"
-        app:layout_constraintTop_toTopOf="parent">
-
-
-        <TextView
-            android:id="@+id/lblCountryTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/twenty"
-            android:text="@string/lblChoosecountry"
-            android:textColor="@color/black"
-            android:textSize="@dimen/twenty_sp"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/lblContent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/twenty"
-            android:layout_marginTop="@dimen/thirteen"
-            android:lineSpacingExtra="@dimen/five"
-            android:text="@string/lblCountryNotes"
-            android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"
-            app:layout_constraintTop_toBottomOf="@+id/lblCountryTitle" />
-
-
-        <ImageView
-            android:id="@+id/imgCountry"
-            android:layout_width="@dimen/twenty"
-            android:layout_height="@dimen/twenty"
-            android:layout_marginLeft="@dimen/twenty"
-            android:layout_marginTop="@dimen/twenty"
-            android:src="@drawable/flag_india"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lblContent"></ImageView>
-
-
-        <TextView
-            android:id="@+id/lblCountry"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/twenty"
-            android:layout_marginTop="@dimen/twenty"
-            android:text="India"
-            android:textColor="@color/black"
-            app:layout_constraintLeft_toRightOf="@+id/imgCountry"
-            app:layout_constraintTop_toBottomOf="@+id/lblContent"></TextView>
-
-        <View
-            android:id="@+id/vw"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="@dimen/twenty"
-            android:layout_marginTop="@dimen/ten"
-            android:layout_marginRight="@dimen/twenty"
-            android:background="@color/black"
-            app:layout_constraintTop_toBottomOf="@+id/lblCountry" />
-
-
-
-        <RelativeLayout
-            android:id="@+id/rytTerms"
-            android:padding="@dimen/five"
-            android:layout_marginTop="@dimen/twenty"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/vw">
-
-        <CheckBox
-            android:id="@+id/terms_checkbox"
-            style="@style/CustomCheckbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            tools:ignore="MissingConstraints" />
-
-
-            <LinearLayout
-                android:layout_toRightOf="@+id/terms_checkbox"
-                android:id="@+id/lblTermsConditions"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_toRightOf="@+id/terms_checkbox"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/ten"
-                    android:text="@string/lblIagreetotheTermsandConditions"
-                    android:textColor="@color/navi_blue3"
-                    android:textSize="@dimen/thirteen_sp"/>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginLeft="@dimen/ten"
-                    android:background="@color/navi_blue3" />
-            </LinearLayout>
-
-        </RelativeLayout>
-
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/btnArrowNext"
-            android:layout_width="@dimen/hundred"
-            android:layout_height="@dimen/hundred"
-            android:layout_centerInParent="true"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rytTerms"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true"
-            app:lottie_rawRes="@raw/arrow_country_check" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-   <androidx.recyclerview.widget.RecyclerView
-       android:id="@+id/recyclerFeatures"
-       android:layout_width="wrap_content"
-       app:layout_constraintTop_toBottomOf="@+id/conCountry"
-       android:layout_height="wrap_content">
-
-   </androidx.recyclerview.widget.RecyclerView>
-
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:visibility="gone"
         android:layout_height="wrap_content"
         android:layout_marginBottom="-60dp"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintTop_toTopOf="parent">
 
         <RelativeLayout
             android:id="@+id/rytShape1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/twenty"
+            android:visibility="gone"
             app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
@@ -223,6 +86,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="-40dp"
+            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@+id/rytShape1">
 
             <LinearLayout
@@ -285,5 +149,18 @@
             </LinearLayout>
         </RelativeLayout>
 
+
+        <ImageView
+            android:id="@+id/imageFeature"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
