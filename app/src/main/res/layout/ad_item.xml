@@ -11,26 +11,45 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewAdImages"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/one_thirty"
+            android:layout_height="@dimen/one_ten"
+            android:layout_marginTop="@dimen/fifteen"
             android:layout_marginStart="@dimen/twenty"
             android:layout_marginEnd="@dimen/twenty"
-            android:background="@drawable/rect_white_light_radious"
             android:orientation="horizontal"
             tools:listitem="@layout/ad_image_item" />
 
-        <TextView
-            android:id="@+id/lblSeeMore"
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/ten"
             android:layout_below="@+id/recyclerViewAdImages"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="@dimen/twenty"
-            android:text="@string/SeeMore"
-            android:textColor="@color/sky_blue0"
-            android:textSize="@dimen/fifteen"
-            android:textStyle="normal">
+            android:layout_marginEnd="@dimen/twenty">
 
-        </TextView>
+            <TextView
+                android:id="@+id/lblSeeMore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/ten"
+                android:text="@string/SeeAll"
+                android:textColor="@color/navi_blue1"
+                android:textSize="@dimen/fifteen"
+                android:textStyle="normal">
+
+            </TextView>
+
+            <View
+                android:layout_width="@dimen/sixty"
+                android:layout_height="1dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/lblSeeMore"
+                android:background="@color/navi_blue1">
+
+            </View>
+
+        </RelativeLayout>
+
 
         <LinearLayout
             android:id="@+id/dotContainer"
@@ -38,20 +57,23 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/recyclerViewAdImages"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/ten"
             android:orientation="horizontal"
-            android:padding="@dimen/ten" />
+            android:padding="@dimen/five" />
 
         <LinearLayout
             android:id="@+id/rlaMenuExample"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/dotContainer"
+            android:layout_marginTop="@dimen/fifteen"
             android:orientation="horizontal"
             android:padding="@dimen/ten"
             android:visibility="visible"
             android:weightSum="3">
 
             <LinearLayout
+                android:id="@+id/lnrAssignment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/ten"
@@ -64,7 +86,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/fifty"
                     android:layout_marginTop="@dimen/ten"
-                    android:src="@drawable/attendance">
+                    android:src="@drawable/assignment_icon">
 
                 </ImageView>
 
@@ -75,7 +97,7 @@
                     android:maxLines="1"
                     android:padding="@dimen/five"
                     android:text="Assignment"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
                     android:textStyle="bold">
 
@@ -83,6 +105,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/lnrLeaveRequest"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/ten"
@@ -95,7 +118,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/fifty"
                     android:layout_marginTop="@dimen/ten"
-                    android:src="@drawable/leave"></ImageView>
+                    android:src="@drawable/leave_request_icon"></ImageView>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -104,7 +127,7 @@
                     android:maxLines="1"
                     android:padding="@dimen/five"
                     android:text="Leave Request"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
                     android:textStyle="bold">
 
@@ -112,6 +135,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/lnrHomeWork"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/ten"
@@ -124,7 +148,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/fifty"
                     android:layout_marginTop="@dimen/ten"
-                    android:src="@drawable/homework">
+                    android:src="@drawable/home_work_icon">
 
                 </ImageView>
 
@@ -135,7 +159,7 @@
                     android:maxLines="1"
                     android:padding="@dimen/five"
                     android:text="Home Work"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
                     android:textStyle="bold">
 

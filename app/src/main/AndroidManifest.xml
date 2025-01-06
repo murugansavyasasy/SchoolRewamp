@@ -48,7 +48,7 @@
         </provider>
 
         <activity
-            android:name=".Auth.Country.CountryScreen"
+            android:name=".Dashboard.Parent.Dashboard"
 
             android:exported="true"
             android:label="@string/app_name"
@@ -125,7 +125,7 @@
 
 
         <activity
-            android:name=".Dashboard.Parent.Dashboard"
+            android:name=".Auth.Country.CountryScreen"
 
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize">
@@ -337,6 +337,113 @@
             android:windowSoftInputMode="adjustPan|adjustResize">
 
         </activity>
+
+        <activity
+            android:name=".Parent.Assignment.Assignment"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
+        <activity
+            android:name=".Parent.Attendance.AttendanceReport"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
+
+        <activity
+            android:name=".Parent.CertificateRequest.CertificateRequest"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
+
+        <activity
+            android:name=".Parent.EventsHolidays.Event"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
+
+        <activity
+            android:name=".Parent.ExamMarks.ExamMark"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
+
+
+        <activity
+            android:name=".Parent.ExamTest.ExamTest"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
+
+
+        <activity
+            android:name=".Parent.FeeDetails.FeeDetails"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
+
+
+        <activity
+            android:name=".Parent.Homework.HomeWork"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+
+        <activity
+            android:name=".Parent.InteractionWithStaff.InteractionWithStaff"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+
+        <activity
+            android:name=".Parent.LSRW.LSRW"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+
+        <activity
+            android:name=".Parent.Noticeboard.NoticeBoard"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+
+        <activity
+            android:name=".Parent.OnlineMeeting.OnlineMeeting"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+
+        <activity
+            android:name=".Parent.PTM.PTM"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+
+        <activity
+            android:name=".Parent.QuizExam.Quiz"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+
+
+        <activity
+            android:name=".Parent.RequestLeave.LeaveRequest"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+
+        <activity
+            android:name=".Parent.Timetable.TimeTable"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+        <activity
+            android:name=".Parent.Images.ImageOrPdf"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+
+        <activity
+            android:name=".Parent.Communication.Communication"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+
 
     </application>
 </manifest>

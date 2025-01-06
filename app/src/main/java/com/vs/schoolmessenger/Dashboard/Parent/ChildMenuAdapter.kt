@@ -19,6 +19,24 @@ import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.Dashboard.Model.AdItem
 import com.vs.schoolmessenger.Dashboard.Model.GridItem
+import com.vs.schoolmessenger.Parent.Assignment.Assignment
+import com.vs.schoolmessenger.Parent.Attendance.AttendanceReport
+import com.vs.schoolmessenger.Parent.CertificateRequest.CertificateRequest
+import com.vs.schoolmessenger.Parent.Communication.Communication
+import com.vs.schoolmessenger.Parent.EventsHolidays.Event
+import com.vs.schoolmessenger.Parent.ExamMarks.ExamMark
+import com.vs.schoolmessenger.Parent.ExamTest.ExamTest
+import com.vs.schoolmessenger.Parent.FeeDetails.FeeDetails
+import com.vs.schoolmessenger.Parent.Homework.HomeWork
+import com.vs.schoolmessenger.Parent.Images.ImageOrPdf
+import com.vs.schoolmessenger.Parent.InteractionWithStaff.InteractionWithStaff
+import com.vs.schoolmessenger.Parent.LSRW.LSRW
+import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoard
+import com.vs.schoolmessenger.Parent.OnlineMeeting.OnlineMeeting
+import com.vs.schoolmessenger.Parent.PTM.PTM
+import com.vs.schoolmessenger.Parent.QuizExam.Quiz
+import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequest
+import com.vs.schoolmessenger.Parent.Timetable.TimeTable
 import com.vs.schoolmessenger.Parent.Video.ParentVideo
 import com.vs.schoolmessenger.R
 import java.util.Timer
@@ -34,6 +52,7 @@ class ChildMenuAdapter(
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
     private val TYPE_AD = 2
+
     private var isSeeMore = false
     private var seeMoreMenus = 0
 
@@ -100,6 +119,78 @@ class ChildMenuAdapter(
             rlaMenu.setOnClickListener {
                 when (data[position].title) {
                     "Video" -> context.startActivity(Intent(context, ParentVideo::class.java))
+                    "Communication" -> context.startActivity(
+                        Intent(
+                            context,
+                            Communication::class.java
+                        )
+                    )
+
+                    "Image/Pdf" -> context.startActivity(Intent(context, ImageOrPdf::class.java))
+                    "Homework" -> context.startActivity(Intent(context, HomeWork::class.java))
+                    "Schedule Exam/Test" -> context.startActivity(
+                        Intent(
+                            context,
+                            ExamTest::class.java
+                        )
+                    )
+
+                    "Event / Holidays" -> context.startActivity(Intent(context, Event::class.java))
+                    "Notice Board" -> context.startActivity(
+                        Intent(
+                            context,
+                            NoticeBoard::class.java
+                        )
+                    )
+
+                    "Attendance Report" -> context.startActivity(
+                        Intent(
+                            context,
+                            AttendanceReport::class.java
+                        )
+                    )
+
+                    "Assignment" -> context.startActivity(Intent(context, Assignment::class.java))
+                    "Certificate Request" -> context.startActivity(
+                        Intent(
+                            context,
+                            CertificateRequest::class.java
+                        )
+                    )
+
+                    "Exam Marks" -> context.startActivity(Intent(context, ExamMark::class.java))
+                    "Fee Details" -> context.startActivity(Intent(context, FeeDetails::class.java))
+                    "Online Meeting" -> context.startActivity(
+                        Intent(
+                            context,
+                            OnlineMeeting::class.java
+                        )
+                    )
+
+                    "PTM" -> context.startActivity(Intent(context, PTM::class.java))
+                    "Quiz" -> context.startActivity(Intent(context, Quiz::class.java))
+                    "Leave Requests" -> context.startActivity(
+                        Intent(
+                            context,
+                            LeaveRequest::class.java
+                        )
+                    )
+
+                    "Class Timetable" -> context.startActivity(
+                        Intent(
+                            context,
+                            TimeTable::class.java
+                        )
+                    )
+
+                    "Interaction with student" -> context.startActivity(
+                        Intent(
+                            context,
+                            InteractionWithStaff::class.java
+                        )
+                    )
+
+                    "LSRW" -> context.startActivity(Intent(context, LSRW::class.java))
                 }
             }
         }
@@ -107,8 +198,8 @@ class ChildMenuAdapter(
 
     fun toggleMoreItems(lblSeeMore: TextView,rlaMenuExample:LinearLayout) {
         if (isSeeMore) {
-            lblSeeMore.text = context.getString(R.string.SeeMore)
-            rlaMenuExample.visibility=View.VISIBLE
+            lblSeeMore.text = context.getString(R.string.SeeAll)
+            rlaMenuExample.visibility = View.VISIBLE
             val startPosition = itemList!!.size - seeMoreMenus
             itemList!!.subList(startPosition, itemList!!.size).clear()
             notifyItemRangeRemoved(startPosition, seeMoreMenus)
@@ -128,6 +219,9 @@ class ChildMenuAdapter(
     class AdViewHolder(itemView: View, private val adapter: ChildMenuAdapter) :
         RecyclerView.ViewHolder(itemView) {
         private val recyclerView: RecyclerView = itemView.findViewById(R.id.recyclerViewAdImages)
+        private val lnrHomeWork: LinearLayout = itemView.findViewById(R.id.lnrHomeWork)
+        private val lnrLeaveRequest: LinearLayout = itemView.findViewById(R.id.lnrLeaveRequest)
+        private val lnrAssignment: LinearLayout = itemView.findViewById(R.id.lnrAssignment)
         private val lblSeeMore: TextView = itemView.findViewById(R.id.lblSeeMore)
         private val dotContainer: LinearLayout = itemView.findViewById(R.id.dotContainer)
         private val rlaMenuExample: LinearLayout = itemView.findViewById(R.id.rlaMenuExample)
@@ -141,16 +235,29 @@ class ChildMenuAdapter(
 
         @SuppressLint("ClickableViewAccessibility")
         fun bind(images: List<AdItem>, context: Context) {
-            lblSeeMore.paintFlags = lblSeeMore.paintFlags or Paint.UNDERLINE_TEXT_FLAG
-
             // Initialize layoutManager
             layoutManager =
                 LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
             recyclerView.layoutManager = layoutManager
             recyclerView.adapter = AdImageAdapter(images)
-            rlaMenuExample.visibility=View.VISIBLE
+            rlaMenuExample.visibility = View.VISIBLE
             lblSeeMore.setOnClickListener {
-                adapter.toggleMoreItems(lblSeeMore,rlaMenuExample)
+                adapter.toggleMoreItems(lblSeeMore, rlaMenuExample)
+            }
+
+            lnrAssignment.setOnClickListener {
+                context.startActivity(Intent(context, Assignment::class.java))
+            }
+            lnrLeaveRequest.setOnClickListener {
+                context.startActivity(
+                    Intent(
+                        context,
+                        LeaveRequest::class.java
+                    )
+                )
+            }
+            lnrHomeWork.setOnClickListener {
+                context.startActivity(Intent(context, HomeWork::class.java))
             }
 
             runAutoScrollBanner(images)
@@ -248,18 +355,19 @@ class ChildMenuAdapter(
 
     private fun getMoreItems(): ArrayList<GridItem> {
         return arrayListOf(
-            GridItem(R.drawable.chats, "Event / Holidays"),
-            GridItem(R.drawable.chats, "Class Timetable"),
-            GridItem(R.drawable.noticeboard, "Notice Board"),
-            GridItem(R.drawable.attendance, "Attendance Report"),
-            GridItem(R.drawable.messages, "Fee Details"),
-            GridItem(R.drawable.leave, "Leave Requests"),
-            GridItem(R.drawable.assignment, "Assignment"),
-            GridItem(R.drawable.chats, "Interaction with student"),
-            GridItem(R.drawable.online_meeting, "Online Meeting"),
+
+            GridItem(R.drawable.timetable_icon, "Class Timetable"),
+            GridItem(R.drawable.noticeboard_icon, "Notice Board"),
+            GridItem(R.drawable.attendance_report_icon, "Attendance Report"),
+            GridItem(R.drawable.fee_details, "Fee Details"),
+            GridItem(R.drawable.leave_request_icon, "Leave Requests"),
+            GridItem(R.drawable.assignment_icon, "Assignment"),
+            GridItem(R.drawable.chat_icon, "Interaction with student"),
+            GridItem(R.drawable.online_meeting_icon, "Online Meeting"),
             GridItem(R.drawable.meeting, "PTM"),
             GridItem(R.drawable.meeting, "LSRW"),
-            GridItem(R.drawable.biometric_attendance, "Exam Marks")
+            GridItem(R.drawable.quiz_icon, "Quiz"),
+            GridItem(R.drawable.exam_mark_icon, "Exam Marks")
         )
     }
 

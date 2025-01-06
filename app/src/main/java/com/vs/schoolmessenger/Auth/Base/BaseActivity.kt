@@ -9,6 +9,7 @@ import android.app.DatePickerDialog
 import android.app.Dialog
 import android.app.TimePickerDialog
 import android.content.Context
+import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.PorterDuff
 import android.graphics.drawable.GradientDrawable
@@ -118,6 +119,18 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         }
     }
 
+    protected open fun setUpGradient() {
+
+        if (Build.VERSION.SDK_INT >= 21) {
+            val window = this.window
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.statusBarColor = Color.TRANSPARENT
+            window.navigationBarColor = Color.TRANSPARENT
+            window.setBackgroundDrawableResource(R.drawable.gradient_background_dashboard_gren)
+        }
+    }
+
+
 
     // Method to allow child activities to access specific views
     protected fun <T : ViewBinding> accessChildView(
@@ -125,7 +138,6 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         icon_home: Int, icon_help: Int, icon_settings: Int, icon_profile: Int, frm: Int,isBottomMenu:Int
     ) {
         // Use reflection or a specific method to access views
-
         val nav_home = binding.root.findViewById<LinearLayout>(nav_home)
         val nav_help = binding.root.findViewById<LinearLayout>(nav_help)
         val nav_settings = binding.root.findViewById<LinearLayout>(nav_settings)
@@ -282,9 +294,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
                     R.color.sky_blue2
                 )
 
-
-                setupToolbar()
-
+                setUpGradient()
 
             }
 

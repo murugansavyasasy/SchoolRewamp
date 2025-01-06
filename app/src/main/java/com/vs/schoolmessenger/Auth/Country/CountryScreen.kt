@@ -11,8 +11,8 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.Login
 import com.vs.schoolmessenger.Auth.TermsConditions.TermsAndConditions
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.databinding.CountryListScreenBinding
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickListener {
 
@@ -25,8 +25,8 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
     private val SCROLL_DX = 5
     private val DIRECTION_RIGHT = 1
 
-    private val featuresAdapter by lazy {
-        CountryListScrollingAdapter()
+    private val isCountryAdapter by lazy {
+        CountryListScrollingAdapter(getDummyFeatures())
     }
 
     override fun setupViews() {
@@ -42,36 +42,51 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
             isAgree = isChecked
         }
 
-        setupFeatureTiles(getDummyFeatures())
+
+//        binding.lnrFirst.setBackgroundResource(R.drawable.thailand_flag)
+//        binding.lnrSecound.setBackgroundResource(R.drawable.india_flag)
+//        binding.lnrThird.setBackgroundResource(R.drawable.united_states_flag)
+//        binding.lnrFourth.setBackgroundResource(R.drawable.australia_flag)
+//        binding.lnrFifth.setBackgroundResource(R.drawable.albania_flag)
+//        binding.lnrSixth.setBackgroundResource(R.drawable.afghanistan_flag)
+
+        //  isCountryLoading(getDummyFeatures())
     }
 
-    private fun setupFeatureTiles(featuresList: List<CountryItem>) {
+    private fun isCountryLoading(isCountryItem: List<CountryItem>) {
         with(binding.recyclerFeatures) {
             layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
-            adapter = featuresAdapter
+            adapter = isCountryAdapter
         }
-        featuresAdapter.submitList(featuresList)
+        isCountryAdapter.submitList(isCountryItem)
 
         lifecycleScope.launch { autoScrollFeaturesList() }
     }
 
+    private var isAutoScrollActive = true
+
     private suspend fun autoScrollFeaturesList() {
-        while (true) {
+        while (isAutoScrollActive) {
             if (binding.recyclerFeatures.canScrollHorizontally(DIRECTION_RIGHT)) {
                 binding.recyclerFeatures.smoothScrollBy(SCROLL_DX, 0)
             } else {
                 val layoutManager = binding.recyclerFeatures.layoutManager as LinearLayoutManager
                 val firstPosition = layoutManager.findFirstVisibleItemPosition()
-                if (firstPosition != RecyclerView.NO_POSITION) {
-                    val currentList = featuresAdapter.currentList
+                val currentList =
+                    (binding.recyclerFeatures.adapter as CountryListScrollingAdapter).itemList
+
+                if (firstPosition != RecyclerView.NO_POSITION && currentList.isNotEmpty()) {
                     val reorderedList = currentList.subList(firstPosition, currentList.size) +
                             currentList.subList(0, firstPosition)
-                    featuresAdapter.submitList(reorderedList)
+                    (binding.recyclerFeatures.adapter as CountryListScrollingAdapter).submitList(
+                        reorderedList
+                    )
                 }
             }
             delay(DELAY_BETWEEN_SCROLL_MS)
         }
     }
+
 
     override fun onClick(v: View?) {
         when (v?.id) {
@@ -88,19 +103,20 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
 
     private fun getDummyFeatures(): List<CountryItem> {
         return listOf(
-            CountryItem(R.drawable.call_schedule_icon, "Feature 1"),
-            CountryItem(R.drawable.text_icon_black, "Feature 2"),
-            CountryItem(R.drawable.play_icon_voice, "Feature 3"),
-            CountryItem(R.drawable.play_icon_voice, "Feature 3"),
-            CountryItem(R.drawable.play_icon_voice, "Feature 3"),
-            CountryItem(R.drawable.play_icon_voice, "Feature 3"),
-            CountryItem(R.drawable.play_icon_voice, "Feature 3"),
-            CountryItem(R.drawable.play_icon_voice, "Feature 3"),
-            CountryItem(R.drawable.play_icon_voice, "Feature 3"),
-            CountryItem(R.drawable.play_icon_voice, "Feature 3"),
-            CountryItem(R.drawable.play_icon_voice, "Feature 3"),
-            CountryItem(R.drawable.play_icon_voice, "Feature 3"),
-            CountryItem(R.drawable.text_icon, "Feature 4")
+            CountryItem(R.drawable.thailand_flag),
+            CountryItem(R.drawable.india_flag),
+            CountryItem(R.drawable.united_states_flag),
+            CountryItem(R.drawable.zimbabwe_flag),
+            CountryItem(R.drawable.france_flag),
+            CountryItem(R.drawable.argentina_flag),
+            CountryItem(R.drawable.finland_flag),
+            CountryItem(R.drawable.antigua_and_barbuda_flag),
+            CountryItem(R.drawable.australia_flag),
+            CountryItem(R.drawable.american_samoa_flag),
+            CountryItem(R.drawable.angola_flag),
+            CountryItem(R.drawable.albania_flag),
+            CountryItem(R.drawable.united_states_flag),
+            CountryItem(R.drawable.algeria_flag),
         )
     }
 }

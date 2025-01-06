@@ -134,8 +134,10 @@
 
    <androidx.recyclerview.widget.RecyclerView
        android:id="@+id/recyclerFeatures"
-       android:layout_width="wrap_content"
-       app:layout_constraintTop_toBottomOf="@+id/conCountry"
+       android:layout_width="match_parent"
+       app:layout_constraintStart_toStartOf="parent"
+       android:visibility="gone"
+       app:layout_constraintBottom_toBottomOf="parent"
        android:layout_height="wrap_content">
 
    </androidx.recyclerview.widget.RecyclerView>
@@ -143,9 +145,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:visibility="gone"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="-60dp"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <RelativeLayout
@@ -156,6 +156,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
+                android:id="@+id/lnrFirst"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_alignParentLeft="true"
@@ -176,6 +177,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/lnrSecound"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
                 android:layout_centerHorizontal="true"
@@ -196,6 +198,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/lnrThird"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_alignParentRight="true"
@@ -212,7 +215,6 @@
                     android:gravity="center"
                     android:text="@string/lblUSA"
                     android:textColor="@color/white"
-
                     android:textSize="@dimen/twele_sp" />
 
             </LinearLayout>
@@ -226,6 +228,7 @@
             app:layout_constraintTop_toBottomOf="@+id/rytShape1">
 
             <LinearLayout
+                android:id="@+id/lnrFourth"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
                 android:layout_alignParentLeft="true"
@@ -245,6 +248,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/lnrFifth"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_centerHorizontal="true"
@@ -265,6 +269,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/lnrSixth"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
                 android:layout_alignParentRight="true"

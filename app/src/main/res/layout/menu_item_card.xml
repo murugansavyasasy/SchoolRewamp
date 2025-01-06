@@ -2,14 +2,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-   android:layout_margin="@dimen/five">
+    android:layout_marginTop="@dimen/thirty_five"
+    android:layout_marginEnd="@dimen/ten"
+    android:layout_marginStart="@dimen/ten"
+  >
 
     <RelativeLayout
         android:id="@+id/rlaMenu"
-        android:layout_width="@dimen/sixty"
+        android:layout_width="@dimen/fifty"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/school_menu_gradient_rect"
-        android:layout_height="@dimen/sixty">
+        android:background="@drawable/bg_menu_light_gray_radious"
+        android:layout_height="@dimen/fifty">
 
         <ImageView
             android:id="@+id/imgMenu"

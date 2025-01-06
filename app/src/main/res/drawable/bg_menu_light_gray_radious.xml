@@ -1,0 +1,9 @@
+<!-- res/drawable/shadow_background.xml -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <solid android:color="#EDEDF7" /> <!-- Shadow color -->
+            <corners android:radius="16dp" />
+        </shape>
+    </item>
+</layer-list>
