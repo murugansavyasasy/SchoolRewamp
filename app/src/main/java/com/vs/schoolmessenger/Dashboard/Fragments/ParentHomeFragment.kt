@@ -16,6 +16,7 @@ import com.vs.schoolmessenger.Dashboard.Model.AdItem
 import com.vs.schoolmessenger.Dashboard.Model.GridItem
 import com.vs.schoolmessenger.Dashboard.Parent.ChildMenuAdapter
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.Notification
+import com.vs.schoolmessenger.Parent.Attendance.AttendanceReport
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.ParentHomeFragmentBinding
@@ -44,7 +45,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener {
         // Sample data
         items = arrayListOf(
             GridItem(
-                R.drawable.communication_icon,
+                R.drawable.communication_icon_dashboard,
                 "Communication"
             ),
             GridItem(R.drawable.image_pdf_icon, "Image/Pdf"),
@@ -58,11 +59,21 @@ class ParentHomeFragment : Fragment(), View.OnClickListener {
         binding.lblViewDetails.paintFlags =
             binding.lblViewDetails.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
+
+        binding.lblViewDetails.setOnClickListener {
+            this.startActivity(
+                Intent(
+                    requireActivity(),
+                    AttendanceReport::class.java
+                )
+            )
+        }
+
         aditems = listOf(
+            AdItem(R.drawable.ad_1),
+            AdItem(R.drawable.ad_2),
             AdItem(R.drawable.sample_ad),
-            AdItem(R.drawable.sample_ad),
-            AdItem(R.drawable.sample_ad),
-            AdItem(R.drawable.sample_ad)
+            AdItem(R.drawable.ad_3),
         )
 
         binding.lblGif.playAnimation()

@@ -3,7 +3,6 @@ package com.vs.schoolmessenger.Dashboard.Parent
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.graphics.Paint
 import android.os.Handler
 import android.os.Looper
 import android.view.LayoutInflater
@@ -364,8 +363,8 @@ class ChildMenuAdapter(
             GridItem(R.drawable.assignment_icon, "Assignment"),
             GridItem(R.drawable.chat_icon, "Interaction with student"),
             GridItem(R.drawable.online_meeting_icon, "Online Meeting"),
-            GridItem(R.drawable.meeting, "PTM"),
-            GridItem(R.drawable.meeting, "LSRW"),
+            GridItem(R.drawable.ptm_icon, "PTM"),
+            GridItem(R.drawable.lsrw_icon, "LSRW"),
             GridItem(R.drawable.quiz_icon, "Quiz"),
             GridItem(R.drawable.exam_mark_icon, "Exam Marks")
         )

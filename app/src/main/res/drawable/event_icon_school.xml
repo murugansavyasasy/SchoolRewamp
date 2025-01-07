@@ -1,0 +1,21 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="98dp"
+    android:height="98dp"
+    android:viewportWidth="98"
+    android:viewportHeight="98">
+    <path
+        android:pathData="M27.5,11L33.5,11A0.5,0.5 0,0 1,34 11.5L34,23.5A0.5,0.5 0,0 1,33.5 24L27.5,24A0.5,0.5 0,0 1,27 23.5L27,11.5A0.5,0.5 0,0 1,27.5 11z"
+        android:fillColor="@color/dash_board_icon_color_school"/>
+    <path
+        android:pathData="M81.4,20H74v3.2c0,1.9 -1.4,3.8 -3.3,3.8H64.8A4.1,4.1 0,0 1,61 23.2V20H37v3.2A4.1,4.1 0,0 1,33.2 27H27.3c-1.9,0 -3.3,-1.9 -3.3,-3.8V20H16.6A4.7,4.7 0,0 0,12 24.7V37H86V24.7A4.7,4.7 0,0 0,81.4 20Z"
+        android:fillColor="@color/dash_board_icon_color_school"/>
+    <path
+        android:pathData="M64.5,11L70.5,11A0.5,0.5 0,0 1,71 11.5L71,23.5A0.5,0.5 0,0 1,70.5 24L64.5,24A0.5,0.5 0,0 1,64 23.5L64,11.5A0.5,0.5 0,0 1,64.5 11z"
+        android:fillColor="@color/dash_board_icon_color_school"/>
+    <path
+        android:pathData="M41.5,66.8l-1.4,8.1 7.2,-3.8 0.7,-0.2 0.7,0.2 7.2,3.8 -1.4,-8.1a1.7,1.7 0,0 1,0.4 -1.3l5.9,-5.6 -8.1,-1.2a1.5,1.5 0,0 1,-1.1 -0.8L48,50.6l-3.6,7.3a1.5,1.5 0,0 1,-1.1 0.8l-8.1,1.2 5.9,5.6A1.7,1.7 0,0 1,41.5 66.8Z"
+        android:fillColor="@color/dash_board_icon_color_school"/>
+    <path
+        android:pathData="M12,82.5A4.6,4.6 0,0 0,16.6 87H81.4A4.6,4.6 0,0 0,86 82.5V40H12ZM30.6,58.4a1.4,1.4 0,0 1,1.2 -1l10.3,-1.6 4.6,-9.3a1.5,1.5 0,0 1,2.6 0l4.6,9.3 10.3,1.6a1.4,1.4 0,0 1,1.2 1,1.4 1.4,0 0,1 -0.4,1.5l-7.4,7.2 1.8,10.3a1.5,1.5 0,0 1,-0.6 1.4,1.6 1.6,0 0,1 -0.9,0.3 1,1 0,0 1,-0.7 -0.2L48,74.1l-9.2,4.8a1.4,1.4 0,0 1,-1.6 -0.1,1.5 1.5,0 0,1 -0.6,-1.4l1.8,-10.3L31,59.9A1.4,1.4 0,0 1,30.6 58.4Z"
+        android:fillColor="@color/dash_board_icon_color_school"/>
+</vector>

@@ -90,6 +90,9 @@
     <color name="dark_green">#58B814</color>
     <color name="light_sky_blue1">#DFF4F7</color>
     <color name="light_orang1">#FCEDDB</color>
+    <color name="dash_board_icon_color">#0097B2</color>
+<!--    <color name="dash_board_icon_color_school">#FF16C7DF</color>-->
+    <color name="dash_board_icon_color_school">#0097B2</color>
 
 
 </resources>

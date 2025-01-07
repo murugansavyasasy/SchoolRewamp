@@ -9,17 +9,17 @@
 
     <RelativeLayout
         android:id="@+id/rlaMenu"
-        android:layout_width="@dimen/fifty"
+        android:layout_width="@dimen/fourty"
         android:layout_centerHorizontal="true"
         android:background="@drawable/bg_menu_light_gray_radious"
-        android:layout_height="@dimen/fifty">
+        android:layout_height="@dimen/fourty">
 
         <ImageView
             android:id="@+id/imgMenu"
-            android:layout_width="@dimen/twenty_five"
+            android:layout_width="@dimen/thirty"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:layout_height="@dimen/twenty_five"
+            android:layout_height="@dimen/thirty"
             android:src="@drawable/splash_icon7"/>
 
         </RelativeLayout>

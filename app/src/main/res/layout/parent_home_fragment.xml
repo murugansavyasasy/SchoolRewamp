@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_background_dashboard_gren">
+    android:background="@drawable/gradient_theme_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,24 +16,52 @@
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/lblGif"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-               />
+                android:layout_height="match_parent" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:alpha="0.8"
-                android:background="@drawable/gradient_background_dashboard_gren" />
+                android:alpha="0.9"
+                android:background="@drawable/gradient_theme_parent" />
         </FrameLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/rlaChangeRoll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/ten"
+            android:layout_marginTop="@dimen/five"
+            android:layout_alignParentEnd="true"
+            android:paddingBottom="@dimen/ten">
+
+            <TextView
+                android:id="@+id/lblChangeRoll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Change Roll >"
+                android:textColor="@color/sky_blue0"
+                android:textSize="@dimen/fifteen_sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="@dimen/hundred"
+                android:layout_marginTop="@dimen/three"
+                android:layout_height="1dp"
+                android:layout_below="@+id/lblChangeRoll"
+                android:background="@color/sky_blue0">
+
+            </View>
+
+        </RelativeLayout>
 
 
         <RelativeLayout
             android:id="@+id/rlaStudentDetail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/rlaChangeRoll"
             android:paddingHorizontal="@dimen/ten"
-            android:layout_marginTop="@dimen/five"
-            android:paddingVertical="@dimen/twenty"
             android:visibility="visible">
 
             <de.hdodenhof.circleimageview.CircleImageView
@@ -41,7 +69,7 @@
                 android:layout_width="@dimen/fifty"
                 android:layout_height="@dimen/fifty"
                 android:layout_centerVertical="true"
-                android:src="@drawable/sample_10"
+                android:src="@drawable/profile_student"
                 />
 
             <RelativeLayout
@@ -59,7 +87,13 @@
                     android:text="Hello, Sathish"
                     style="@style/CustomTextStyle"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/twenty_sp">
+                    android:textSize="@dimen/twenty_sp"
+                    android:shadowColor="@color/light_gray"
+                    android:shadowDx="12"
+                    android:shadowDy="7"
+                    android:shadowRadius="10"
+
+                    >
 
                 </TextView>
 
@@ -134,6 +168,7 @@
             android:layout_below="@+id/rlaStudentDetail"
             android:layout_marginStart="@dimen/twenty"
             android:layout_marginEnd="@dimen/twenty"
+            android:layout_marginTop="@dimen/ten"
             android:background="@drawable/rect_white_light_radious"
             android:elevation="10dp"
             android:padding="@dimen/fifteen">
@@ -143,9 +178,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Attendance Report"
+                style="@style/CustomTextStyleAttendanceReportDashBoard"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
-                android:textStyle="bold">
+               >
 
             </TextView>
 
@@ -155,10 +191,11 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblReportAttendance"
                 android:text="01, May 2025"
+                style="@style/CustomTextStyleAttendanceReportDashBoardRegular"
                 android:textColor="@color/black"
                 android:layout_marginTop="@dimen/ten"
                 android:textSize="@dimen/thirteen_sp"
-                android:textStyle="normal">
+               >
 
             </TextView>
 

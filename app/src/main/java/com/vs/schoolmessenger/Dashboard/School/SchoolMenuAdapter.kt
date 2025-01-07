@@ -3,7 +3,6 @@ package com.vs.schoolmessenger.Dashboard.School
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.graphics.Paint
 import android.os.Handler
 import android.os.Looper
 import android.view.LayoutInflater
@@ -21,34 +20,29 @@ import com.vs.schoolmessenger.CommonScreens.SchoolList
 import com.vs.schoolmessenger.Dashboard.Model.AdItem
 import com.vs.schoolmessenger.Dashboard.Model.GridItem
 import com.vs.schoolmessenger.Dashboard.Parent.AdImageAdapter
-import com.vs.schoolmessenger.Parent.Assignment.Assignment
-import com.vs.schoolmessenger.Parent.Attendance.AttendanceReport
-import com.vs.schoolmessenger.Parent.CertificateRequest.CertificateRequest
-import com.vs.schoolmessenger.Parent.Communication.Communication
-import com.vs.schoolmessenger.Parent.EventsHolidays.Event
-import com.vs.schoolmessenger.Parent.ExamMarks.ExamMark
-import com.vs.schoolmessenger.Parent.ExamTest.ExamTest
-import com.vs.schoolmessenger.Parent.FeeDetails.FeeDetails
-import com.vs.schoolmessenger.Parent.Images.ImageOrPdf
-import com.vs.schoolmessenger.Parent.InteractionWithStaff.InteractionWithStaff
-import com.vs.schoolmessenger.Parent.LSRW.LSRW
-import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoard
-import com.vs.schoolmessenger.Parent.PTM.PTM
-import com.vs.schoolmessenger.Parent.QuizExam.Quiz
-import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequest
-import com.vs.schoolmessenger.Parent.Timetable.TimeTable
-import com.vs.schoolmessenger.Parent.Video.ParentVideo
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.AbsenteesMarking.AttendanceMark
+import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesReport
+import com.vs.schoolmessenger.School.Assignment.Assignment
 import com.vs.schoolmessenger.School.Communication.CommunicationSchool
+import com.vs.schoolmessenger.School.DailyCollection.DailyCollection
 import com.vs.schoolmessenger.School.Event.CreateEvent
 import com.vs.schoolmessenger.School.ExamSchedule.Exam
+import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReport
 import com.vs.schoolmessenger.School.Homework.HomeWork
 import com.vs.schoolmessenger.School.ImagePDF.ImagePdf
+import com.vs.schoolmessenger.School.ImportantInfo.ImportantInfo
+import com.vs.schoolmessenger.School.InteractionWithStudent.InteractionWithStudent
+import com.vs.schoolmessenger.School.LeaveRequests.LeaveRequests
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlan
+import com.vs.schoolmessenger.School.MarkYourAttendance.MarkYourAttendance
+import com.vs.schoolmessenger.School.MessageFromManagement.MessageFromManagement
 import com.vs.schoolmessenger.School.NoticeBoard.CreateNoticeBoard
 import com.vs.schoolmessenger.School.OnlineMeeting.OnlineMeeting
+import com.vs.schoolmessenger.School.PTM.PTM
+import com.vs.schoolmessenger.School.SchoolNeeds.SchoolNeeds
 import com.vs.schoolmessenger.School.SchoolStrength.SchoolStrength
+import com.vs.schoolmessenger.School.StaffWiseAttendanceReport.StaffWiseAttendanceReport
 import com.vs.schoolmessenger.School.StudentReport.StudentReport
 import com.vs.schoolmessenger.School.Video.CreateVideo
 import java.util.Timer
@@ -132,47 +126,99 @@ class SchoolMenuAdapter(
             rlaMenu.setOnClickListener {
 
                 when (data[position].title) {
-                    "Video Upload" -> {
-                        context.startActivity(Intent(context, CreateVideo::class.java))
-                    }
+
                     "Communication" -> {
                         context.startActivity(Intent(context, CommunicationSchool::class.java))
                     }
-                    "Attendance Marking" -> {
-                        context.startActivity(Intent(context, AttendanceMark::class.java))
+
+                    "Image/Pdf" -> {
+                        context.startActivity(Intent(context, ImagePdf::class.java))
                     }
-                    "Event" -> {
-                        context.startActivity(Intent(context, CreateEvent::class.java))
+
+                    "Video Upload" -> {
+                        context.startActivity(Intent(context, CreateVideo::class.java))
                     }
 
                     "Notice Board" -> {
                         context.startActivity(Intent(context, CreateNoticeBoard::class.java))
                     }
 
+                    "Leave Requests" -> {
+                        context.startActivity(Intent(context, LeaveRequests::class.java))
+                    }
+
                     "Assignment" -> {
                         context.startActivity(Intent(context, SchoolList::class.java))
+                    }
+
+                    "Home Work" -> {
+                        context.startActivity(Intent(context, HomeWork::class.java))
+                    }
+
+                    "Attendance Marking" -> {
+                        context.startActivity(Intent(context, AttendanceMark::class.java))
+                    }
+
+                    "Message From Management" -> {
+                        context.startActivity(Intent(context, MessageFromManagement::class.java))
+                    }
+
+                    "Interaction With Student" -> {
+                        context.startActivity(Intent(context, InteractionWithStudent::class.java))
+                    }
+
+                    "Lesson Plan" -> {
+                        context.startActivity(Intent(context, LessonPlan::class.java))
+                    }
+
+                    "PTM" -> {
+                        context.startActivity(Intent(context, PTM::class.java))
+                    }
+
+                    "Event" -> {
+                        context.startActivity(Intent(context, CreateEvent::class.java))
+                    }
+
+                    "School Needs" -> {
+                        context.startActivity(Intent(context, SchoolNeeds::class.java))
+                    }
+
+                    "Important Info" -> {
+                        context.startActivity(Intent(context, ImportantInfo::class.java))
+                    }
+
+                    "Absentees Report" -> {
+                        context.startActivity(Intent(context, AbsenteesReport::class.java))
+                    }
+
+                    "School Strength" -> {
+                        context.startActivity(Intent(context, SchoolStrength::class.java))
+                    }
+
+                    "Daily Collection" -> {
+                        context.startActivity(Intent(context, DailyCollection::class.java))
                     }
 
                     "Student Report" -> {
                         context.startActivity(Intent(context, StudentReport::class.java))
                     }
 
-                    "School Strength" -> {
-                        context.startActivity(Intent(context, SchoolStrength::class.java))
-                    }
-                    "Lesson Plan" -> {
-                        context.startActivity(Intent(context, LessonPlan::class.java))
-                    }
-
                     "Online Meeting" -> {
                         context.startActivity(Intent(context, OnlineMeeting::class.java))
                     }
-                    "Image/Pdf" -> {
-                        context.startActivity(Intent(context, ImagePdf::class.java))
+
+                    "Fee Pending Report" -> {
+                        context.startActivity(Intent(context, FeePendingReport::class.java))
                     }
-                    "Homework" -> {
-                        context.startActivity(Intent(context, HomeWork::class.java))
+
+                    "Mark Your Attendance" -> {
+                        context.startActivity(Intent(context, MarkYourAttendance::class.java))
                     }
+
+                    "Staff Wise Attendance Report" -> {
+                        context.startActivity(Intent(context, StaffWiseAttendanceReport::class.java))
+                    }
+
                     "Schedule Exam/Test" -> {
                         context.startActivity(Intent(context, Exam::class.java))
                     }
@@ -220,8 +266,6 @@ class SchoolMenuAdapter(
 
         @SuppressLint("ClickableViewAccessibility")
         fun bind(images: List<AdItem>, context: Context) {
-            lblSeeMore.paintFlags = lblSeeMore.paintFlags or Paint.UNDERLINE_TEXT_FLAG
-
             // Initialize layoutManager
             layoutManager =
                 LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
@@ -239,7 +283,7 @@ class SchoolMenuAdapter(
                 context.startActivity(
                     Intent(
                         context,
-                        LeaveRequest::class.java
+                        LeaveRequests::class.java
                     )
                 )
             }
@@ -344,18 +388,23 @@ class SchoolMenuAdapter(
     private fun getMoreItems(): ArrayList<GridItem> {
         return arrayListOf(
 
-            GridItem(R.drawable.timetable_icon, "Class Timetable"),
-            GridItem(R.drawable.noticeboard_icon, "Notice Board"),
-            GridItem(R.drawable.attendance_report_icon, "Attendance Report"),
-            GridItem(R.drawable.fee_details, "Fee Details"),
-            GridItem(R.drawable.leave_request_icon, "Leave Requests"),
-            GridItem(R.drawable.assignment_icon, "Assignment"),
-            GridItem(R.drawable.chat_icon, "Interaction with student"),
+            GridItem(R.drawable.home_work_icon_school, "Home Work"),
+            GridItem(R.drawable.attendance_marking, "Attendance Marking"),
+            GridItem(R.drawable.message_f_management, "Message From Management"),
+            GridItem(R.drawable.interact_with_student, "Interaction With Student"),
+            GridItem(R.drawable.lesson_plan, "Lesson Plan"),
+            GridItem(R.drawable.ptm_school, "PTM"),
+            GridItem(R.drawable.event_icon_school, "Event"),
+            GridItem(R.drawable.school_needs, "School Needs"),
+            GridItem(R.drawable.importent_info, "Important Info"),
+            GridItem(R.drawable.absentees_report, "Absentees Report"),
+            GridItem(R.drawable.school_strength, "School Strength"),
+            GridItem(R.drawable.daily_collection, "Daily Collection"),
+            GridItem(R.drawable.student_report, "Student Report"),
             GridItem(R.drawable.online_meeting_icon, "Online Meeting"),
-            GridItem(R.drawable.meeting, "PTM"),
-            GridItem(R.drawable.meeting, "LSRW"),
-            GridItem(R.drawable.quiz_icon, "Quiz"),
-            GridItem(R.drawable.exam_mark_icon, "Exam Marks")
+            GridItem(R.drawable.fee_pending_reports, "Fee Pending Report"),
+            GridItem(R.drawable.mark_your_attendance, "Mark Your Attendance"),
+            GridItem(R.drawable.staff_attendance_report, "Staff Wise Attendance Report")
         )
     }
 
@@ -368,112 +417,3 @@ class SchoolMenuAdapter(
         }
     }
 }
-
-
-
-
-//class SchoolMenuAdapter(
-//    private var context: Context, private val itemList: List<GridItem>?,
-//    private val isLoading: Boolean
-//) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-//
-//    private val TYPE_SHIMMER = 0
-//    private val TYPE_DATA = 1
-//
-//    override fun getItemViewType(position: Int): Int {
-//        return if (isLoading) TYPE_SHIMMER else TYPE_DATA
-//    }
-//
-//    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-//        return if (viewType == TYPE_SHIMMER) {
-//            val view =
-//                LayoutInflater.from(parent.context).inflate(R.layout.shimmer_dashboard_item, parent, false)
-//            ShimmerViewHolder(view)
-//        } else {
-//            val view =
-//                LayoutInflater.from(parent.context).inflate(R.layout.menu_item_card, parent, false)
-//            DataViewHolder(view, context) // Pass context to DataViewHolder
-//        }
-//    }
-//
-//    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-//        if (holder is DataViewHolder) {
-//            // Bind actual data when loading is complete
-//            holder.bind(itemList!![position])
-//        }
-//    }
-//
-//    override fun getItemCount(): Int {
-//        return if (isLoading) 20 // Show shimmer items while loading
-//        else itemList?.size ?: 0
-//    }
-//
-//    class DataViewHolder(itemView: View, private val context: Context) : RecyclerView.ViewHolder(itemView) {
-//        private val imgMenu: ImageView = itemView.findViewById(R.id.imgMenu)
-//        private val lblMenuName: TextView = itemView.findViewById(R.id.lblMenuName)
-//        private val rlaMenu: RelativeLayout = itemView.findViewById(R.id.rlaMenu)
-//
-//        fun bind(data: GridItem) {
-//            imgMenu.setImageResource(data.image)
-//            lblMenuName.text = data.title
-//
-//            rlaMenu.setOnClickListener {
-//
-//                when (data.title) {
-//                    "Video Upload" -> {
-//                        context.startActivity(Intent(context, CreateVideo::class.java))
-//                    }
-//                    "Communication" -> {
-//                        context.startActivity(Intent(context, CommunicationSchool::class.java))
-//                    }
-//                    "Attendance Marking" -> {
-//                        context.startActivity(Intent(context, AttendanceMark::class.java))
-//                    }
-//                    "Event" -> {
-//                        context.startActivity(Intent(context, CreateEvent::class.java))
-//                    }
-//
-//                    "Notice Board" -> {
-//                        context.startActivity(Intent(context, CreateNoticeBoard::class.java))
-//                    }
-//
-//                    "Assignment" -> {
-//                        context.startActivity(Intent(context, SchoolList::class.java))
-//                    }
-//
-//                    "Student Report" -> {
-//                        context.startActivity(Intent(context, StudentReport::class.java))
-//                    }
-//
-//                    "School Strength" -> {
-//                        context.startActivity(Intent(context, SchoolStrength::class.java))
-//                    }
-//                    "Lesson Plan" -> {
-//                        context.startActivity(Intent(context, LessonPlan::class.java))
-//                    }
-//
-//                    "Online Meeting" -> {
-//                        context.startActivity(Intent(context, OnlineMeeting::class.java))
-//                    }
-//                    "Image/Pdf" -> {
-//                        context.startActivity(Intent(context, ImagePdf::class.java))
-//                    }
-//                    "Homework" -> {
-//                        context.startActivity(Intent(context, HomeWork::class.java))
-//                    }
-//                    "Schedule Exam/Test" -> {
-//                        context.startActivity(Intent(context, Exam::class.java))
-//                    }
-//                }
-//            }
-//        }
-//    }
-//
-//    class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-//        private val shimmerLayout: ShimmerFrameLayout = itemView.findViewById(R.id.shimmer_view_container)
-//
-//        init {
-//            shimmerLayout.startShimmer() // Start shimmer effect
-//        }
-//    }
-//}

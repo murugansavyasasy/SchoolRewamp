@@ -11,8 +11,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewAdImages"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/one_ten"
-            android:layout_marginTop="@dimen/fifteen"
+            android:layout_height="@dimen/eighty"
+            android:layout_marginTop="@dimen/twenty"
             android:layout_marginStart="@dimen/twenty"
             android:layout_marginEnd="@dimen/twenty"
             android:orientation="horizontal"

@@ -1,0 +1,29 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="32dp"
+    android:height="32dp"
+    android:viewportWidth="32"
+    android:viewportHeight="32">
+  <path
+      android:pathData="M16,15L16,21"
+      android:strokeLineJoin="round"
+      android:strokeWidth="2"
+      android:fillColor="#00000000"
+      android:strokeColor="@color/dash_board_icon_color_school"
+      android:strokeLineCap="round"/>
+  <path
+      android:fillColor="@color/dash_board_icon_color_school"
+      android:pathData="M16,24m-1,0a1,1 0,1 1,2 0a1,1 0,1 1,-2 0"/>
+  <path
+      android:pathData="m25,6h1c0.55,0 1,0.45 1,1v23c0,0.55 -0.45,1 -1,1H6c-0.55,0 -1,-0.45 -1,-1V7c0,-0.55 0.45,-1 1,-1h4"
+      android:strokeLineJoin="round"
+      android:strokeWidth="2"
+      android:fillColor="#00000000"
+      android:strokeColor="@color/dash_board_icon_color_school"
+      android:strokeLineCap="round"/>
+  <path
+      android:pathData="m13,4v-1.3c0,-0.94 0.76,-1.7 1.7,-1.7h2.6c0.94,0 1.7,0.76 1.7,1.7v1.3s3,0 3,0v4h-12v-4h3Z"
+      android:strokeLineJoin="round"
+      android:strokeWidth="2"
+      android:fillColor="#00000000"
+      android:strokeColor="@color/dash_board_icon_color_school"/>
+</vector>

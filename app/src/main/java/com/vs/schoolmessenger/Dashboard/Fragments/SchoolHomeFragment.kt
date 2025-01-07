@@ -3,37 +3,26 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Paint
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.LinearSnapHelper
-import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Dashboard.Model.AdItem
 import com.vs.schoolmessenger.Dashboard.Model.GridItem
-import com.vs.schoolmessenger.Dashboard.Parent.ChildMenuAdapter
-import com.vs.schoolmessenger.Dashboard.School.PieChartAdapter
 import com.vs.schoolmessenger.Dashboard.School.SchoolMenuAdapter
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.Notification
+import com.vs.schoolmessenger.Parent.Attendance.AttendanceReport
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.SchoolHomeFragmentBinding
 import java.util.Locale
-import java.util.Timer
-import java.util.TimerTask
 
 
-class HomeFragment : Fragment(), View.OnClickListener {
+class SchoolHomeFragment : Fragment(), View.OnClickListener {
 
     private lateinit var binding: SchoolHomeFragmentBinding // Automatically generated binding class
     lateinit var isMenuAdapter: SchoolMenuAdapter
@@ -54,35 +43,24 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
         // Sample data
         items = arrayListOf(
-            GridItem(R.drawable.communication, "Communication"),
-            GridItem(R.drawable.image, "Image/Pdf"),
-            GridItem(R.drawable.video, "Video Upload"),
-            GridItem(R.drawable.pdf, "Circulars"),
-            GridItem(R.drawable.homework, "Homework"),
-            GridItem(R.drawable.exam, "Schedule Exam/Test"),
-            GridItem(R.drawable.chats, "Event"),
-            GridItem(R.drawable.chats, "School Strength"),
-            GridItem(R.drawable.noticeboard, "Notice Board"),
-            GridItem(R.drawable.attendance, "Attendance Marking"),
-            GridItem(R.drawable.messages, "Messages from management"),
-            GridItem(R.drawable.leave, "Leave Requests"),
-            GridItem(R.drawable.assignment, "Assignment"),
-            GridItem(R.drawable.chats, "Interaction with student"),
-            GridItem(R.drawable.online_meeting, "Online Meeting"),
-            GridItem(R.drawable.student_image, "Student Report"),
-            GridItem(R.drawable.splash_icon5, "Lesson Plan"),
-            GridItem(R.drawable.meeting, "PTM"),
-            GridItem(R.drawable.biometric_attendance, "Mark your attendance")
+            GridItem(R.drawable.communication_icon_dashboard_school, "Communication"),
+            GridItem(R.drawable.image_pdf_icon_school, "Image/Pdf"),
+            GridItem(R.drawable.video_upload, "Video Upload"),
+            GridItem(R.drawable.noticeboard_icon_school, "Notice Board"),
+            GridItem(R.drawable.leave_request_icon_school, "Leave Requests"),
+            GridItem(R.drawable.assignment_icon_school, "Assignment"),
+            GridItem(R.drawable.home_work_icon_school, "Homework"),
+
         )
 
         binding.lblViewDetails.paintFlags =
             binding.lblViewDetails.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
         aditems = listOf(
+            AdItem(R.drawable.ad_1),
+            AdItem(R.drawable.ad_2),
             AdItem(R.drawable.sample_ad),
-            AdItem(R.drawable.sample_ad),
-            AdItem(R.drawable.sample_ad),
-            AdItem(R.drawable.sample_ad)
+            AdItem(R.drawable.ad_3),
         )
 
         binding.lblGif.playAnimation()
@@ -97,10 +75,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 filter(s.toString())
             }
         })
-
         return binding.root
     }
-
 
     @SuppressLint("NotifyDataSetChanged")
     private fun filter(text: String) {

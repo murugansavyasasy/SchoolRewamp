@@ -35,9 +35,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.vs.schoolmessenger.Dashboard.Fragments.HelpFragment
-import com.vs.schoolmessenger.Dashboard.Fragments.HomeFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.ParentHomeFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.ProfileFragment
+import com.vs.schoolmessenger.Dashboard.Fragments.SchoolHomeFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.SettingsFragment
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
@@ -126,16 +126,35 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
             window.statusBarColor = Color.TRANSPARENT
             window.navigationBarColor = Color.TRANSPARENT
-            window.setBackgroundDrawableResource(R.drawable.gradient_background_dashboard_gren)
+            window.setBackgroundDrawableResource(R.drawable.gradient_theme_parent)
+        }
+    }
+
+    protected open fun setUpGradientSchool() {
+
+        if (Build.VERSION.SDK_INT >= 21) {
+            val window = this.window
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.statusBarColor = Color.TRANSPARENT
+            window.navigationBarColor = Color.TRANSPARENT
+            window.setBackgroundDrawableResource(R.drawable.gradient_theme_school)
         }
     }
 
 
-
     // Method to allow child activities to access specific views
     protected fun <T : ViewBinding> accessChildView(
-        binding: T, nav_home: Int, nav_help: Int, nav_profile: Int, nav_settings: Int,
-        icon_home: Int, icon_help: Int, icon_settings: Int, icon_profile: Int, frm: Int,isBottomMenu:Int
+        binding: T,
+        nav_home: Int,
+        nav_help: Int,
+        nav_profile: Int,
+        nav_settings: Int,
+        icon_home: Int,
+        icon_help: Int,
+        icon_settings: Int,
+        icon_profile: Int,
+        frm: Int,
+        isBottomMenu: Int
     ) {
         // Use reflection or a specific method to access views
         val nav_home = binding.root.findViewById<LinearLayout>(nav_home)
@@ -145,13 +164,13 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         val frm = binding.root.findViewById<FrameLayout>(frm)
         val isBottomMenu = binding.root.findViewById<LinearLayout>(isBottomMenu)
 
-        isBottomMenu.setBackgroundResource(R.drawable.gradient_background_dashboard_gren)
-
-        Constant.isParentChoose = true
+//        Constant.isParentChoose = true
         if (Constant.isParentChoose) {
+            isBottomMenu.setBackgroundResource(R.drawable.gradient_theme_parent)
             loadFragment(ParentHomeFragment())
         } else {
-            loadFragment(HomeFragment())
+            loadFragment(SchoolHomeFragment())
+            isBottomMenu.setBackgroundResource(R.drawable.gradient_theme_school)
         }
         updateNavBar(icon_home)
 
@@ -159,7 +178,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
             if (Constant.isParentChoose) {
                 loadFragment(ParentHomeFragment())
             } else {
-                loadFragment(HomeFragment())
+                loadFragment(SchoolHomeFragment())
             }
             updateNavBar(icon_home)
         }
@@ -284,17 +303,21 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
                 findViewById<ImageView>(R.id.icon_home).setColorFilter(
                     ContextCompat.getColor(
                         this,
-                        R.color.colorPrimary
+                        R.color.white
                     ), PorterDuff.Mode.SRC_IN
                 )
 
-                animateBackgroundColor(
-                    binding.root.findViewById(R.id.icon_home),
-                    R.color.sky_blue0,
-                    R.color.sky_blue2
-                )
+//                animateBackgroundColor(
+//                    binding.root.findViewById(R.id.icon_home),
+//                    R.color.sky_blue0,
+//                    R.color.sky_blue2
+//                )
 
-                setUpGradient()
+                if (Constant.isParentChoose) {
+                    setUpGradient()
+                } else {
+                    setUpGradientSchool()
+                }
 
             }
 
@@ -302,47 +325,62 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
                 zoomOutToZoomIn(binding.root.findViewById(R.id.icon_help))
                 findViewById<ImageView>(R.id.icon_help).setColorFilter(
-                    ContextCompat.getColor(this, R.color.colorPrimary),
+                    ContextCompat.getColor(this, R.color.white),
                     PorterDuff.Mode.SRC_IN
                 )
-                animateBackgroundColor(
-                    binding.root.findViewById(R.id.icon_help),
-                    R.color.sky_blue0,
-                    R.color.sky_blue2
-                )
-                setupToolbar()
+//                animateBackgroundColor(
+//                    binding.root.findViewById(R.id.icon_help),
+//                    R.color.sky_blue0,
+//                    R.color.sky_blue2
+//                )
+                //   setupToolbar()
+                if (Constant.isParentChoose) {
+                    setUpGradient()
+                } else {
+                    setUpGradientSchool()
+                }
             }
 
             R.id.icon_profile -> {
                 zoomOutToZoomIn(binding.root.findViewById(R.id.icon_profile))
 
                 findViewById<ImageView>(R.id.icon_profile).setColorFilter(
-                    ContextCompat.getColor(this, R.color.colorPrimary),
+                    ContextCompat.getColor(this, R.color.white),
                     PorterDuff.Mode.SRC_IN
                 )
-                animateBackgroundColor(
-                    binding.root.findViewById(R.id.icon_profile),
-                    R.color.sky_blue0,
-                    R.color.sky_blue2
-                )
+//                animateBackgroundColor(
+//                    binding.root.findViewById(R.id.icon_profile),
+//                    R.color.sky_blue0,
+//                    R.color.sky_blue2
+//                )
 
-                setupToolbar()
+                //   setupToolbar()
+                if (Constant.isParentChoose) {
+                    setUpGradient()
+                } else {
+                    setUpGradientSchool()
+                }
             }
 
             R.id.icon_settings -> {
                 zoomOutToZoomIn(binding.root.findViewById(R.id.icon_settings))
 
                 findViewById<ImageView>(R.id.icon_settings).setColorFilter(
-                    ContextCompat.getColor(this, R.color.colorPrimary),
+                    ContextCompat.getColor(this, R.color.white),
                     PorterDuff.Mode.SRC_IN
                 )
-                animateBackgroundColor(
-                    binding.root.findViewById(R.id.icon_settings),
-                    R.color.sky_blue0,
-                    R.color.sky_blue2
-                )
+//                animateBackgroundColor(
+//                    binding.root.findViewById(R.id.icon_settings),
+//                    R.color.sky_blue0,
+//                    R.color.sky_blue2
+//                )
 
-                setupToolbar()
+                // setupToolbar()
+                if (Constant.isParentChoose) {
+                    setUpGradient()
+                } else {
+                    setUpGradientSchool()
+                }
             }
         }
     }
