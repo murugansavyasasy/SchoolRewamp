@@ -96,7 +96,6 @@ class RoleSelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListener 
 
         binding.btnGo.setOnClickListener {
             val intent = Intent(this, Dashboard::class.java)
-            Constant.isParentChoose = false
             startActivity(intent)
         }
     }
@@ -134,6 +133,7 @@ class RoleSelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListener 
             binding.lblTeacher.setTextColor(ContextCompat.getColor(this, R.color.dark_blue))
             binding.btnGo.visibility = View.GONE
             isLoadData(false)
+          Constant.isParentChoose = true
         }
 
         if (isClickingId == binding.lblTeacher) {
@@ -141,6 +141,7 @@ class RoleSelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListener 
             binding.lblParent.setTextColor(ContextCompat.getColor(this, R.color.dark_blue))
             binding.btnGo.visibility = View.VISIBLE
             isLoadData(true)
+            Constant.isParentChoose = false
 
         }
 

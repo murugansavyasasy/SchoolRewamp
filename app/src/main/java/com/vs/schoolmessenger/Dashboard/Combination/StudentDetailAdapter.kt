@@ -154,7 +154,6 @@ class StudentDetailAdapter(private val itemList: List<StudentDetailsData>, val c
 
         holder.binding.rlaStudent.setOnClickListener {
             val intent = Intent(context, Dashboard::class.java)
-            Constant.isParentChoose = true
             context.startActivity(intent)
         }
 

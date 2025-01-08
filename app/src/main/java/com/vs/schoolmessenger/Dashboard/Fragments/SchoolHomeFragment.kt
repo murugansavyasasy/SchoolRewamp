@@ -1,4 +1,5 @@
 package com.vs.schoolmessenger.Dashboard.Fragments
+
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Paint
@@ -15,7 +16,6 @@ import com.vs.schoolmessenger.Dashboard.Model.AdItem
 import com.vs.schoolmessenger.Dashboard.Model.GridItem
 import com.vs.schoolmessenger.Dashboard.School.SchoolMenuAdapter
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.Notification
-import com.vs.schoolmessenger.Parent.Attendance.AttendanceReport
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.SchoolHomeFragmentBinding
@@ -51,7 +51,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener {
             GridItem(R.drawable.assignment_icon_school, "Assignment"),
             GridItem(R.drawable.home_work_icon_school, "Homework"),
 
-        )
+            )
 
         binding.lblViewDetails.paintFlags =
             binding.lblViewDetails.paintFlags or Paint.UNDERLINE_TEXT_FLAG
@@ -149,13 +149,13 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener {
         }
 
 
-        Log.d("Status","onResume")
+        Log.d("Status", "onResume")
     }
 
     override fun onPause() {
         super.onPause()
         Constant.stopDelay()
-        Log.d("Status","onPause")
+        Log.d("Status", "onPause")
 
     }
 }

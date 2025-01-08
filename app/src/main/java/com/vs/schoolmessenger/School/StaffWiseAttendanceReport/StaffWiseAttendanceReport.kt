@@ -2,7 +2,6 @@ package com.vs.schoolmessenger.School.StaffWiseAttendanceReport
 
 import android.view.View
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
-import com.vs.schoolmessenger.databinding.LeaveRequestsBinding
 import com.vs.schoolmessenger.databinding.StaffAttendanceReportBinding
 
 class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),

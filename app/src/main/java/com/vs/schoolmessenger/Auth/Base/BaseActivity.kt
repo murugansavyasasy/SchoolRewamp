@@ -164,7 +164,6 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         val frm = binding.root.findViewById<FrameLayout>(frm)
         val isBottomMenu = binding.root.findViewById<LinearLayout>(isBottomMenu)
 
-//        Constant.isParentChoose = true
         if (Constant.isParentChoose) {
             isBottomMenu.setBackgroundResource(R.drawable.gradient_theme_parent)
             loadFragment(ParentHomeFragment())
