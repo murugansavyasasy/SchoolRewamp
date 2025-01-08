@@ -76,7 +76,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     private lateinit var recordingRunnable: Runnable
     private val calendar = Calendar.getInstance()
     private lateinit var dateAdapter: DateAdapter
-    private lateinit var popupWindow: PopupWindow
 
     @SuppressLint("ClickableViewAccessibility")
     override fun setupViews() {

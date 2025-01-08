@@ -4,4 +4,5 @@
         android:endColor="#9AF170"
         android:startColor="@color/dash_board_icon_color"
         android:angle="0" />
+    <corners android:radius="16dp" />
 </shape>

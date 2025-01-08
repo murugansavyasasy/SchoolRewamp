@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/rytHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/ten"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/lblLetter"
+            android:layout_width="@dimen/fourty"
+            android:layout_height="@dimen/fourty"
+            android:layout_centerVertical="true"
+            android:background="@drawable/circle_bg_red"
+            android:gravity="center"
+            android:text="A"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/fifteen_sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/rytRight"
+            android:layout_toEndOf="@+id/lblLetter">
+
+            <TextView
+                android:id="@+id/lblStuName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/ten"
+                android:text="Arun Kumar"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen_sp"
+                android:textStyle="bold" />
+
+            <RelativeLayout
+                android:id="@+id/rytStudentDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblStuName"
+                android:layout_marginStart="@dimen/ten"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/lblRollNo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/five"
+                    android:text="Roll No : 23453426"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/thirteen_sp" />
+
+                <TextView
+                    android:id="@+id/lblStandard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lblRollNo"
+                    android:layout_marginTop="@dimen/five"
+                    android:text="XII - A"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/thirteen_sp" />
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rytRight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true">
+
+            <ImageView
+                android:id="@+id/imgDownArrow"
+                android:layout_width="@dimen/twenty"
+                android:layout_height="@dimen/twenty"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_down_arrow" />
+
+            <View
+                android:id="@+id/vw"
+                android:layout_width="1dp"
+                android:layout_height="@dimen/fourty"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginEnd="@dimen/ten"
+                android:layout_toEndOf="@+id/imgDownArrow"
+                android:background="@color/grey" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/vw" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="@dimen/ten"
+        android:layout_marginTop="@dimen/ten"
+        android:background="@color/grey"
+        app:layout_constraintTop_toBottomOf="@+id/rytHeader" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

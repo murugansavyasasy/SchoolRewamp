@@ -3,6 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <ImageView
+        android:layout_width="@dimen/sixty"
+        android:layout_height="@dimen/sixty"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="-17dp"
+        android:layout_marginEnd="@dimen/twenty_five"
+        android:elevation="10dp"
+        android:src="@drawable/new_icon">
+
+    </ImageView>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -19,22 +29,12 @@
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/ten"
             android:layout_marginEnd="@dimen/ten"
-            android:layout_toStartOf="@+id/lblDate"
             android:text="Function Call"
+            android:textStyle="bold"
             android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"></TextView>
+            android:textSize="@dimen/thirteen_sp">
 
-        <TextView
-            android:id="@+id/lblDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="@dimen/ten"
-            android:layout_marginEnd="@dimen/ten"
-            android:text="01 Apr 2024"
-            android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"
-            android:textStyle="bold"></TextView>
+        </TextView>
 
 
         <RelativeLayout
@@ -69,11 +69,12 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/imgVoicePlay"
                 android:layout_marginStart="@dimen/ten"
-                android:layout_marginTop="@dimen/seven"
                 android:layout_toEndOf="@+id/imgVoicePlay"
                 android:text="00:00"
                 android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp"></TextView>
+                android:textSize="@dimen/thirteen_sp">
+
+            </TextView>
 
             <TextView
                 android:id="@+id/lblSlash"
@@ -81,11 +82,12 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/imgVoicePlay"
                 android:layout_marginStart="@dimen/ten"
-                android:layout_marginTop="@dimen/seven"
                 android:layout_toEndOf="@+id/lblStartDuration"
                 android:text=" / "
                 android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp"></TextView>
+                android:textSize="@dimen/thirteen_sp">
+
+            </TextView>
 
 
             <TextView
@@ -94,24 +96,39 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/imgVoicePlay"
                 android:layout_marginStart="@dimen/ten"
-                android:layout_marginTop="@dimen/seven"
                 android:layout_toEndOf="@+id/lblSlash"
                 android:text="00:00"
                 android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp"></TextView>
+                android:textSize="@dimen/thirteen_sp">
+
+            </TextView>
+
+
+            <TextView
+                android:id="@+id/lblDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imgVoicePlay"
+                android:layout_alignParentRight="true"
+                android:text="01 Apr 2024"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp">
+
+            </TextView>
 
 
             <TextView
                 android:id="@+id/lblTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/imgVoicePlay"
+                android:layout_below="@+id/lblDate"
                 android:layout_alignParentRight="true"
                 android:layout_marginStart="@dimen/ten"
-                android:layout_marginTop="@dimen/seven"
                 android:text="10:56 AM"
                 android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp"></TextView>
+                android:textSize="@dimen/thirteen_sp">
+
+            </TextView>
 
         </RelativeLayout>
 
@@ -121,6 +138,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/rlaVoiceHistory"
             android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/five"
             android:layout_marginEnd="@dimen/ten"
             android:background="@drawable/rect_blue_and_green_small_radious"
             android:padding="@dimen/ten">
@@ -131,7 +149,9 @@
                 android:layout_height="@dimen/fifteen"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/five"
-                android:src="@drawable/send_icon_white"></ImageView>
+                android:src="@drawable/send_icon_white">
+
+            </ImageView>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -141,7 +161,9 @@
                 android:layout_toEndOf="@+id/imgSend"
                 android:text="Send"
                 android:textColor="@color/white"
-                android:textSize="@dimen/thirteen_sp"></TextView>
+                android:textSize="@dimen/thirteen_sp">
+
+            </TextView>
         </RelativeLayout>
 
 

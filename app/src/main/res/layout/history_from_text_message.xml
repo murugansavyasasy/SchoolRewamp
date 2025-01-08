@@ -3,6 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <ImageView
+        android:layout_width="@dimen/sixty"
+        android:layout_height="@dimen/sixty"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="-17dp"
+        android:layout_marginEnd="@dimen/twenty_five"
+        android:elevation="10dp"
+        android:src="@drawable/new_icon">
+
+    </ImageView>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -19,22 +29,10 @@
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/fifteen"
             android:layout_marginEnd="@dimen/ten"
-            android:layout_toStartOf="@+id/lblDate"
             android:text="Friday Leave"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"
             android:textStyle="bold"></TextView>
-
-        <TextView
-            android:id="@+id/lblDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="@dimen/fifteen"
-            android:layout_marginEnd="@dimen/ten"
-            android:text="01 Apr 2024"
-            android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"></TextView>
 
 
         <TextView
@@ -56,9 +54,34 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/lblContent"
             android:layout_marginStart="@dimen/ten"
-            android:paddingBottom="@dimen/ten"
+
             android:text="See More"
             android:textColor="@color/navi_blue2"
+            android:textSize="@dimen/thirteen_sp">
+
+        </TextView>
+
+
+        <TextView
+            android:id="@+id/lblDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblSeeMore"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="@dimen/ten"
+            android:text="01 Apr 2024"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp"></TextView>
+
+        <TextView
+            android:id="@+id/lblTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblDate"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="@dimen/ten"
+            android:text="10:56 AM"
+            android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp">
 
         </TextView>
@@ -68,7 +91,7 @@
             android:id="@+id/rlaSelectText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lblSeeMore"
+            android:layout_below="@+id/lblTime"
             android:layout_alignParentRight="true"
             android:layout_marginEnd="@dimen/ten"
             android:background="@drawable/rect_blue_and_green_small_radious"

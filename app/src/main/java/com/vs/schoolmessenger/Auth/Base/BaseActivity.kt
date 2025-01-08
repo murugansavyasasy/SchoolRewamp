@@ -119,7 +119,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         }
     }
 
-    protected open fun setUpGradient() {
+    protected open fun setUpGradientParent() {
 
         if (Build.VERSION.SDK_INT >= 21) {
             val window = this.window
@@ -313,7 +313,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 //                )
 
                 if (Constant.isParentChoose) {
-                    setUpGradient()
+                    setUpGradientParent()
                 } else {
                     setUpGradientSchool()
                 }
@@ -334,7 +334,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 //                )
                 //   setupToolbar()
                 if (Constant.isParentChoose) {
-                    setUpGradient()
+                    setUpGradientParent()
                 } else {
                     setUpGradientSchool()
                 }
@@ -355,7 +355,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
                 //   setupToolbar()
                 if (Constant.isParentChoose) {
-                    setUpGradient()
+                    setUpGradientParent()
                 } else {
                     setUpGradientSchool()
                 }
@@ -376,7 +376,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
                 // setupToolbar()
                 if (Constant.isParentChoose) {
-                    setUpGradient()
+                    setUpGradientParent()
                 } else {
                     setUpGradientSchool()
                 }

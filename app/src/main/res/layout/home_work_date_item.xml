@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/twenty"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginEnd="@dimen/twenty"
+        android:background="@drawable/rect_black_outline"
+        android:padding="@dimen/eight">
+
+
+        <ImageView
+            android:id="@+id/imgCalender"
+            android:layout_width="@dimen/twenty_five"
+            android:layout_height="@dimen/twenty_five"
+            android:layout_marginStart="@dimen/twenty"
+            android:src="@drawable/calendar_homework"></ImageView>
+
+        <TextView
+            android:id="@+id/lblDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_toStartOf="@+id/imgDown"
+            android:layout_toEndOf="@+id/imgCalender"
+            android:text=""
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp"
+            android:textStyle="bold">
+
+        </TextView>
+
+
+        <ImageView
+            android:id="@+id/imgDown"
+            android:layout_width="@dimen/twenty_five"
+            android:layout_height="@dimen/twenty_five"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/twenty"
+            android:src="@drawable/arrow_down_round"></ImageView>
+    </RelativeLayout>
+
+</RelativeLayout>

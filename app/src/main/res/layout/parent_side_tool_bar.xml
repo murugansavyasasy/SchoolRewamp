@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/rytHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gradient_theme_parent"
+        android:paddingVertical="@dimen/fifteen">
+
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_width="@dimen/thirty_five"
+            android:layout_height="@dimen/thirty_five"
+            android:layout_centerVertical="true"
+            android:src="@drawable/left_arrow">
+
+        </ImageView>
+
+
+        <TextView
+            android:id="@+id/lblParentToolBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/rlaStudentName"
+            android:layout_toEndOf="@+id/imgBack"
+            android:text=""
+            android:textColor="@color/black"
+            android:textSize="@dimen/fifteen_sp"
+            android:textStyle="bold">
+
+        </TextView>
+
+        <RelativeLayout
+            android:id="@+id/rlaStudentName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/ten">
+
+            <TextView
+                android:id="@+id/lblStudentName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/lblStudentSection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblStudentName"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp">
+
+            </TextView>
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rytSearch"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/thirty_five"
+        android:layout_below="@id/rytHeader"
+        android:layout_margin="@dimen/ten"
+        android:background="@drawable/rect_grey"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/imgSearch"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/ten"
+            android:src="@drawable/ic_search" />
+
+        <EditText
+            android:id="@+id/txtVideoMenu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/imgSearch"
+            android:background="@android:color/transparent"
+            android:hint="@string/lblSearch"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp" />
+    </RelativeLayout>
+
+</RelativeLayout>

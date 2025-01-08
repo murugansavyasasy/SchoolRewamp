@@ -1,0 +1,50 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Black Outline -->
+    <item>
+        <shape>
+            <solid android:color="#00000000" /> <!-- Transparent background -->
+            <stroke android:width="0.1dp" android:color="#000000" /> <!-- Black outline -->
+            <corners android:radius="10dp" /> <!-- Match the corner radius -->
+        </shape>
+    </item>
+
+    <!-- Drop Shadow Stack -->
+    <item>
+        <shape>
+            <padding android:top="0.5dp" android:right="0.5dp" android:bottom="0dp" android:left="0.5dp" />
+            <solid android:color="#10CCCCCC" />
+            <corners android:radius="10dp" />
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <padding android:top="0.5dp" android:right="0dp" android:bottom="1dp" android:left="0.5dp" />
+            <solid android:color="#10CCCCCC" />
+            <corners android:radius="10dp" />
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <padding android:top="1dp" android:right="1dp" android:bottom="1dp" android:left="1dp" />
+            <solid android:color="#20CCCCCC" />
+            <corners android:radius="10dp" />
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <padding android:top="0dp" android:right="0dp" android:bottom="1dp" android:left="0dp" />
+            <solid android:color="#30CCCCCC" />
+            <corners android:radius="10dp" />
+        </shape>
+    </item>
+
+
+
+    <!-- Background -->
+    <item>
+        <shape>
+            <solid android:color="#ffffff" />
+            <corners android:radius="10dp" />
+        </shape>
+    </item>
+</layer-list>
