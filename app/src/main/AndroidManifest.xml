@@ -48,8 +48,7 @@
         </provider>
 
         <activity
-
-            android:name=".Parent.Homework.HomeWork"
+            android:name=".Dashboard.Combination.RoleSelection"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/AppTheme">
@@ -270,7 +269,9 @@
 
         <activity
 
-            android:name=".Dashboard.Parent.Dashboard"
+
+            android:name=".Parent.Homework.HomeWork"
+
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
@@ -345,7 +346,7 @@
 
         </activity>
         <activity
-            android:name=".Parent.Attendance.AttendanceReport"
+            android:name=".Parent.Noticeboard.NoticeBoard"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize">
 
@@ -359,7 +360,7 @@
         </activity>
 
         <activity
-            android:name=".Parent.EventsHolidays.Event"
+            android:name=".Parent.ImagesOrPdf.ImageOrPdf"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize">
 
@@ -406,7 +407,7 @@
             android:windowSoftInputMode="adjustPan|adjustResize"></activity>
 
         <activity
-            android:name=".Parent.Noticeboard.NoticeBoard"
+            android:name=".Parent.EventsHolidays.Event"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize"></activity>
 
@@ -436,12 +437,14 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize"></activity>
         <activity
-            android:name=".Parent.Images.ImageOrPdf"
+
+            android:name=".Dashboard.Parent.Dashboard"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize"></activity>
 
         <activity
-            android:name=".Dashboard.Combination.RoleSelection"
+
+            android:name=".Parent.Attendance.AttendanceReport"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize"></activity>
 

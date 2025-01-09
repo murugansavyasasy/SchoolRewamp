@@ -1,32 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_marginTop="@dimen/five"
     android:layout_height="wrap_content">
+
+
+    <ImageView
+        android:id="@+id/imgNewImage"
+        android:layout_width="@dimen/eighty"
+        android:layout_height="@dimen/fifty"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="-10dp"
+        android:elevation="10dp"
+        android:src="@drawable/new_icon"
+        android:visibility="visible">
+
+    </ImageView>
+
+    <ImageView
+        android:id="@+id/imgNoticeBoardPin"
+        android:layout_width="@dimen/thirty"
+        android:layout_height="@dimen/thirty"
+        android:layout_centerHorizontal="true"
+        android:elevation="10dp"
+        android:layout_marginStart="@dimen/twenty"
+        android:src="@drawable/noticeboard_pin"
+        android:visibility="gone">
+    </ImageView>
+
+    <ImageView
+        android:id="@+id/imgBgPin"
+        android:layout_width="@dimen/thirteen"
+        android:layout_height="@dimen/thirteen"
+        android:layout_marginTop="@dimen/eighteen"
+        android:layout_centerHorizontal="true"
+        android:elevation="10dp"
+        android:src="@drawable/circle_dark_blue"
+        android:visibility="gone">
+    </ImageView>
 
     <RelativeLayout
         android:id="@+id/rlaImageReport"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/ten"
         android:layout_marginTop="@dimen/ten"
-        android:layout_marginEnd="@dimen/ten"
-        android:padding="@dimen/ten"
         android:background="@drawable/rect_shadow_light_gray"
         android:visibility="gone">
 
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/imgNewImage"
-            android:layout_width="@dimen/eighty"
-            android:layout_height="@dimen/fifty"
-            android:layout_alignParentEnd="true"
-            app:lottie_autoPlay="true"
-            android:visibility="gone"
-            app:lottie_loop="true"
-            app:lottie_rawRes="@raw/new_icon">
-
-        </com.airbnb.lottie.LottieAnimationView>
+        <TextView
+            android:id="@+id/lblTitleImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/fifteen"
+            android:text="Annual Day celebrations"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp"
+            android:textStyle="bold" />
 
 
         <TextView
@@ -36,6 +67,7 @@
             android:layout_marginTop="@dimen/ten"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="@dimen/ten"
+            android:layout_below="@+id/lblContentImage"
             android:text="15 Nov 2024"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"
@@ -46,7 +78,7 @@
             android:id="@+id/rytImageSlider"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lblDateImage"
+            android:layout_below="@+id/lblTitleImage"
             android:layout_marginTop="@dimen/ten">
 
             <androidx.viewpager.widget.ViewPager
@@ -70,23 +102,13 @@
 
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/lblTitleImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/rytImageSlider"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/ten"
-            android:text="Annual Day celebrations"
-            android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"
-            android:textStyle="bold" />
+
 
         <TextView
             android:id="@+id/lblContentImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lblTitleImage"
+            android:layout_below="@+id/rytImageSlider"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/ten"
             android:maxLines="3"
@@ -115,23 +137,10 @@
         android:id="@+id/rlaVoiceReport"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/ten"
         android:layout_marginTop="@dimen/ten"
-        android:layout_marginEnd="@dimen/ten"
         android:padding="@dimen/ten"
         android:background="@drawable/rect_shadow_light_gray"
         android:visibility="gone">
-
-
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/imgNewVoice"
-            android:layout_width="@dimen/eighty"
-            android:visibility="gone"
-            android:layout_height="@dimen/fifty"
-            android:layout_alignParentEnd="true"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true"
-            app:lottie_rawRes="@raw/new_icon"></com.airbnb.lottie.LottieAnimationView>
 
 
         <TextView
@@ -140,6 +149,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/fifteen"
             android:layout_marginEnd="@dimen/ten"
+            android:layout_below="@+id/lblVoiceContent"
             android:layout_alignParentEnd="true"
             android:text="01 Apr 2024"
             android:textColor="@color/black"
@@ -152,7 +162,7 @@
             android:id="@+id/imgVoicePlay"
             android:layout_width="@dimen/fourty_five"
             android:layout_height="@dimen/fourty_five"
-            android:layout_below="@+id/lblDateVoice"
+            android:layout_below="@+id/lblTitleVoice"
             android:layout_marginStart="@dimen/five"
             android:layout_marginTop="@dimen/ten"
             android:src="@drawable/video_play">
@@ -163,7 +173,7 @@
             android:id="@+id/isVoiceProgress"
             android:layout_width="@dimen/fourty_five"
             android:layout_height="@dimen/fourty_five"
-            android:layout_below="@+id/lblDateVoice"
+            android:layout_below="@+id/lblTitleVoice"
             android:layout_marginStart="@dimen/five"
             android:layout_marginTop="@dimen/ten"
             android:indeterminateDrawable="@drawable/progress_bar_white"
@@ -176,7 +186,7 @@
             android:id="@+id/waveformSeekBar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/thirty"
-            android:layout_below="@+id/lblDateVoice"
+            android:layout_below="@+id/lblTitleVoice"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/eighteen"
             android:layout_marginEnd="@dimen/ten"
@@ -214,7 +224,6 @@
             android:id="@+id/lblTitleVoice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lblStartDuration"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/five"
             android:text=""
@@ -226,7 +235,7 @@
             android:id="@+id/lblVoiceContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lblTitleVoice"
+            android:layout_below="@+id/lblEndDuration"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/five"
             android:layout_marginEnd="@dimen/ten"
@@ -255,9 +264,7 @@
         android:id="@+id/rlaReportText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/ten"
         android:layout_marginTop="@dimen/ten"
-        android:layout_marginEnd="@dimen/ten"
         android:padding="@dimen/ten"
         android:background="@drawable/rect_shadow_light_gray"
         android:visibility="gone">
@@ -277,17 +284,6 @@
 
         </TextView>
 
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/imgNewText"
-            android:layout_width="@dimen/eighty"
-            android:layout_height="@dimen/fifty"
-            android:visibility="gone"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="@dimen/twenty"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true"
-            app:lottie_rawRes="@raw/new_icon"></com.airbnb.lottie.LottieAnimationView>
-
 
         <TextView
             android:id="@+id/lblDateText"
@@ -297,6 +293,7 @@
             android:layout_marginEnd="@dimen/ten"
             android:layout_alignParentEnd="true"
             android:text="01 Apr 2024"
+            android:layout_below="@+id/lblContentText"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp">
 
@@ -337,9 +334,7 @@
         android:id="@+id/rlaReportVideo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/ten"
         android:layout_marginTop="@dimen/ten"
-        android:layout_marginEnd="@dimen/ten"
         android:padding="@dimen/ten"
         android:background="@drawable/rect_shadow_light_gray"
         android:visibility="gone">
@@ -348,31 +343,21 @@
             android:id="@+id/lblDateVideo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/thirty"
+            android:layout_below="@+id/lblVideoContent"
             android:layout_alignParentEnd="true"
             android:padding="@dimen/five"
+            android:layout_marginEnd="@dimen/ten"
             android:text="Sun 22 Mar,2020"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp">
 
         </TextView>
 
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/imgNewVideo"
-            android:layout_width="@dimen/eighty"
-            android:layout_height="@dimen/fifty"
-            android:layout_alignParentEnd="true"
-            android:visibility="gone"
-            android:layout_marginEnd="@dimen/twenty"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true"
-            app:lottie_rawRes="@raw/new_icon"></com.airbnb.lottie.LottieAnimationView>
-
         <RelativeLayout
             android:id="@+id/rlaVimeoThumbnail"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:layout_below="@+id/lblDateVideo">
+            android:layout_below="@+id/lblTitleVideo">
 
             <ImageView
                 android:id="@+id/imgVimeoThumbnail"
@@ -412,9 +397,8 @@
             android:id="@+id/lblTitleVideo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/rlaVimeoThumbnail"
             android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/fifteen"
+            android:layout_marginTop="@dimen/ten"
             android:text=""
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"
@@ -424,7 +408,7 @@
             android:id="@+id/lblVideoContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lblTitleVideo"
+            android:layout_below="@+id/rlaVimeoThumbnail"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/five"
             android:layout_marginEnd="@dimen/ten"
@@ -453,9 +437,7 @@
         android:id="@+id/rlaPdf"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/ten"
         android:layout_marginTop="@dimen/ten"
-        android:layout_marginEnd="@dimen/ten"
         android:padding="@dimen/ten"
         android:background="@drawable/rect_shadow_light_gray"
         android:visibility="gone">
@@ -466,9 +448,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/ten"
-            android:layout_marginEnd="@dimen/thirty"
+            android:layout_below="@+id/lblPdfContent"
             android:layout_alignParentEnd="true"
             android:padding="@dimen/five"
+            android:layout_marginEnd="@dimen/ten"
             android:text="Sun 22 Mar,2020"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp">
@@ -476,25 +459,13 @@
         </TextView>
 
 
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/imgNewPdf"
-            android:layout_width="@dimen/eighty"
-            android:layout_height="@dimen/fifty"
-            android:visibility="gone"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="@dimen/twenty"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true"
-            app:lottie_rawRes="@raw/new_icon"></com.airbnb.lottie.LottieAnimationView>
-
 
         <TextView
             android:id="@+id/lblTitlePdf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lblDatePdf"
             android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/fifteen"
+            android:layout_marginTop="@dimen/ten"
             android:text="Nothing"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"

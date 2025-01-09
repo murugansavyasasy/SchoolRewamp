@@ -31,7 +31,7 @@ class Communication : BaseActivity<CommunicationBinding>(), View.OnClickListener
 
         binding.toolbarLayout.lblParentToolBar.text = resources.getText(R.string.Communication)
         binding.toolbarLayout.lblStudentName.text = "Sathish Ganesan"
-        binding.toolbarLayout.lblParentToolBar.text = "XII - B"
+        binding.toolbarLayout.lblStudentSection.text = "XII - B"
         loadVoiceData()
     }
 

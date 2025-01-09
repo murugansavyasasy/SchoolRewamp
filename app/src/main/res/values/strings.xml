@@ -194,6 +194,9 @@
     <string name="UploadAttachment">Upload Attachment</string>
     <string name="TOSTANDARDORSECTION">TO STANDARD OR SECTION</string>
     <string name="SeeAll">See All</string>
+    <string name="ImageOrPdf">Image/Pdf</string>
+    <string name="Event">Event</string>
+    <string name="HoliDay">Holiday</string>
 
 
 

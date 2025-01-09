@@ -18,13 +18,15 @@ class WebView : BaseActivity<WebViewBinding>(),
 
     override fun setupViews() {
         super.setupViews()
-        setupToolbar()
-        binding.imgBack.setOnClickListener(this)
+        setUpGradientParent()
+        binding.toolbarLayout.imgBack.setOnClickListener(this)
 
         val title = intent.getStringExtra("isTitle") ?: "No Title"
         val link = intent.getStringExtra("isWebLink") ?: "No Link"
 
-        binding.lblTitle.text = title
+        binding.toolbarLayout.lblParentToolBar.text = title
+        binding.toolbarLayout.lblStudentName.text = "Sathish Ganesan"
+        binding.toolbarLayout.lblStudentSection.text = "XII - B"
         loadPdf(link)
     }
 

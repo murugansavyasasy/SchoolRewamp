@@ -27,7 +27,7 @@ import com.vs.schoolmessenger.Parent.ExamMarks.ExamMark
 import com.vs.schoolmessenger.Parent.ExamTest.ExamTest
 import com.vs.schoolmessenger.Parent.FeeDetails.FeeDetails
 import com.vs.schoolmessenger.Parent.Homework.HomeWork
-import com.vs.schoolmessenger.Parent.Images.ImageOrPdf
+import com.vs.schoolmessenger.Parent.ImagesOrPdf.ImageOrPdf
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.InteractionWithStaff
 import com.vs.schoolmessenger.Parent.LSRW.LSRW
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoard

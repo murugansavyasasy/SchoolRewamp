@@ -4,20 +4,21 @@
     android:layout_height="wrap_content">
 
     <RelativeLayout
+        android:id="@+id/rlaDateItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/twenty"
         android:layout_marginTop="@dimen/ten"
         android:layout_marginEnd="@dimen/twenty"
         android:background="@drawable/rect_black_outline"
-        android:padding="@dimen/eight">
+        android:padding="@dimen/ten">
 
 
         <ImageView
             android:id="@+id/imgCalender"
             android:layout_width="@dimen/twenty_five"
             android:layout_height="@dimen/twenty_five"
-            android:layout_marginStart="@dimen/twenty"
+            android:layout_marginStart="@dimen/ten"
             android:src="@drawable/calendar_homework"></ImageView>
 
         <TextView
@@ -25,6 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_marginStart="@dimen/ten"
             android:layout_toStartOf="@+id/imgDown"
             android:layout_toEndOf="@+id/imgCalender"
@@ -41,8 +43,18 @@
             android:layout_width="@dimen/twenty_five"
             android:layout_height="@dimen/twenty_five"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="@dimen/twenty"
+            android:layout_marginEnd="@dimen/ten"
             android:src="@drawable/arrow_down_round"></ImageView>
     </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcyHomeWorkItem"
+        android:layout_width="match_parent"
+        android:layout_marginStart="@dimen/twenty_five"
+        android:layout_marginEnd="@dimen/twenty_five"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rlaDateItem">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
 </RelativeLayout>

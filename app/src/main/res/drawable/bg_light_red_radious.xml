@@ -1,0 +1,9 @@
+<!-- res/drawable/rounded_orange_bar.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#F8C6C6" /> <!-- Orange color -->
+    <corners
+        android:topLeftRadius="15dp"
+        android:bottomLeftRadius="15dp"
+        android:topRightRadius="15dp"
+        android:bottomRightRadius="15dp" /> <!-- Only round left corners -->
+</shape>

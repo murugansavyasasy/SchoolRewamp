@@ -14,8 +14,13 @@ class ImageViewActivity : BaseActivity<ImageViewActivityBinding>(),
 
     override fun setupViews() {
         super.setupViews()
-        setupToolbar()
-        binding.imgBack.setOnClickListener(this)
+        setUpGradientParent()
+        binding.toolbarLayout.imgBack.setOnClickListener(this)
+
+
+        binding.toolbarLayout.lblParentToolBar.text = "Images"
+        binding.toolbarLayout.lblStudentName.text = "Sathish Ganesan"
+        binding.toolbarLayout.lblStudentSection.text = "XII - B"
 
         val imageUrls = listOf(
             "https://picsum.photos/600/400?random=1", // Random Image 1

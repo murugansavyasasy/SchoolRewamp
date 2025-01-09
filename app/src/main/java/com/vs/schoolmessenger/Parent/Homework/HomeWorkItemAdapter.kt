@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.School.Homework
+package com.vs.schoolmessenger.Parent.Homework
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -18,7 +18,6 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
@@ -32,9 +31,8 @@ import com.vs.schoolmessenger.Utils.fetchVimeoThumbnail
 import me.relex.circleindicator.CircleIndicator
 import kotlin.math.max
 
-class HomeWorkReportAdapter(
-    private var itemList: List<HomeWorkReport>?,
-    private var listener: HomeWorkReportClickListener,
+class HomeWorkItemAdapter (
+    private var itemList: List<HomeWorkList>?,
     private var context: Context,
     private var isLoading: Boolean
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -64,7 +62,7 @@ class HomeWorkReportAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
             // Bind actual data when loading is complete
-            holder.bind(itemList!![position], position, listener, this)
+            holder.bind(itemList!![position], position, this)
         }
     }
 
@@ -155,10 +153,9 @@ class HomeWorkReportAdapter(
 
         @SuppressLint("ClickableViewAccessibility")
         fun bind(
-            data: HomeWorkReport,
+            data: HomeWorkList,
             position: Int,
-            listener: HomeWorkReportClickListener,
-            adapter: HomeWorkReportAdapter
+            adapter: HomeWorkItemAdapter
         ) {
 
             when (data.isType) {
@@ -192,7 +189,7 @@ class HomeWorkReportAdapter(
                     }
 
                     imgVoicePlay.setOnClickListener {
-                        isVoiceProgress.visibility=View.VISIBLE
+                        isVoiceProgress.visibility= View.VISIBLE
 
                         if (adapter.currentlyPlayingHolder != null && adapter.currentlyPlayingHolder != this) {
                             adapter.currentlyPlayingHolder?.stopAudioPlayback()
@@ -270,7 +267,7 @@ class HomeWorkReportAdapter(
 
                         setOnTouchListener { _, event ->
                             if (event.action == MotionEvent.ACTION_UP) {
-                                listener.onItemPDFClick(data) // Trigger your custom listener
+//                                listener.onItemPDFClick(data) // Trigger your custom listener
                             }
                             false // Let the WebView handle the touch event as well
                         }
@@ -305,7 +302,7 @@ class HomeWorkReportAdapter(
             }
 
             imgVideoPlay.setOnClickListener {
-                listener.onItemVideoClick(data)
+//                listener.onItemVideoClick(data)
             }
 
             tvSeeMoreImage.setOnClickListener {
@@ -371,7 +368,7 @@ class HomeWorkReportAdapter(
                 setOnPreparedListener {
                     isPrepared = true
                     startAudioProgressUpdate()
-                    isVoiceProgress.visibility=View.GONE
+                    isVoiceProgress.visibility= View.GONE
                     start()
                     isPlayingVoice = true
                     updatePlayPauseIcon(isPlaying = true)
@@ -384,7 +381,7 @@ class HomeWorkReportAdapter(
 
         // Pause audio playback
         private fun pauseAudio() {
-            isVoiceProgress.visibility=View.GONE
+            isVoiceProgress.visibility= View.GONE
             mediaPlayer.pause()
             lastPosition = mediaPlayer.currentPosition
             isPlayingVoice = false
@@ -394,7 +391,7 @@ class HomeWorkReportAdapter(
 
         // Resume audio playback
         private fun resumeAudio() {
-            isVoiceProgress.visibility=View.GONE
+            isVoiceProgress.visibility= View.GONE
             mediaPlayer.seekTo(lastPosition)
             mediaPlayer.start()
             isPlayingVoice = true
@@ -404,7 +401,7 @@ class HomeWorkReportAdapter(
 
         // Stop audio playback
         private fun stopAudioPlayback() {
-            isVoiceProgress.visibility=View.GONE
+            isVoiceProgress.visibility= View.GONE
             if (::mediaPlayer.isInitialized) {
                 if (mediaPlayer.isPlaying) {
                     mediaPlayer.stop()
