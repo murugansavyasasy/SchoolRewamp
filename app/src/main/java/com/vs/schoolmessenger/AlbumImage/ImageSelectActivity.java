@@ -311,7 +311,6 @@ public class ImageSelectActivity extends AppCompatActivity {
                 Log.d("paths", String.valueOf(selectedImages));
 
             }
-
         }
         return selectedImages;
     }

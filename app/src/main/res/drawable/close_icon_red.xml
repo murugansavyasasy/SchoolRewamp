@@ -1,0 +1,16 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="100dp"
+    android:height="100dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100">
+
+    <!-- Outer Circle -->
+    <path
+        android:fillColor="@color/white"
+        android:pathData="M50,9C27.39,9 9,27.39 9,50s18.39,41 41,41 41,-18.39 41,-41S72.61,9 50,9z" />
+
+    <!-- Close Icon (Center "X") -->
+    <path
+        android:fillColor="@color/red"
+        android:pathData="M67.41,64.59c0.79,0.78 0.79,2.04 0,2.82 -0.39,0.39 -0.9,0.59 -1.41,0.59s-1.02,-0.2 -1.41,-0.59L50,52.83 35.41,67.41c-0.39,0.39 -0.9,0.59 -1.41,0.59s-1.02,-0.2 -1.41,-0.59c-0.79,-0.78 -0.79,-2.04 0,-2.82L47.17,50 32.59,35.41c-0.79,-0.78 -0.79,-2.04 0,-2.82 0.78,-0.79 2.04,-0.79 2.82,0L50,47.17l14.59,-14.58c0.78,-0.79 2.04,-0.79 2.82,0 0.79,0.78 0.79,2.04 0,2.82L52.83,50l14.58,14.59z" />
+</vector>
