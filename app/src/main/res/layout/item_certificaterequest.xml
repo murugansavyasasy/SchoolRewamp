@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+<!--    <RelativeLayout-->
+<!--        android:id="@+id/relative_layout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="@dimen/ten"-->
+<!--        android:layout_marginTop="@dimen/ten"-->
+<!--        android:layout_marginEnd="@dimen/ten"-->
+<!--        android:layout_marginBottom="@dimen/ten"-->
+<!--        android:background="@drawable/rect_shadow_white"-->
+<!--        android:padding="@dimen/twenty">-->
+
+<!--        <RelativeLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content">-->
+
+<!--            <LinearLayout-->
+<!--                android:id="@+id/linear_layout1"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:gravity="center_vertical"-->
+<!--                android:weightSum="1">-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/certificate_type"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Certificate Type"-->
+<!--                android:layout_weight="0.5"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textSize="@dimen/fifteen_sp"-->
+<!--                android:textStyle="normal" />-->
+
+
+<!--            <TextView-->
+<!--                android:id="@+id/certificate_value"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text=": Attendance Certificate"-->
+<!--                android:layout_weight="0.5"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textSize="@dimen/fifteen_sp"-->
+<!--                android:layout_marginEnd="@dimen/fifteen"-->
+<!--                android:textStyle="normal" />-->
+
+<!--            </LinearLayout>-->
+
+
+<!--            <LinearLayout-->
+<!--                android:id="@+id/linear_layout2"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_below=""-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:gravity="center_vertical"-->
+<!--                android:weightSum="1">-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/reason"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@+id/certificate_type"-->
+<!--                android:text="Reason"-->
+<!--                android:layout_weight="0.5"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textSize="@dimen/fifteen_sp"-->
+<!--                android:layout_marginTop="@dimen/ten"-->
+<!--                android:textStyle="normal" />-->
+
+
+<!--            <TextView-->
+<!--                android:id="@+id/reason_value"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text=": I need this certificate to apply "-->
+<!--                android:textColor="@color/black"-->
+<!--                android:layout_weight="0.5"-->
+<!--                android:textSize="@dimen/fifteen_sp"-->
+<!--                android:layout_marginEnd="@dimen/fifteen"-->
+<!--                android:layout_marginTop="@dimen/ten"-->
+<!--                android:textStyle="normal" />-->
+
+<!--            </LinearLayout>-->
+<!--            <TextView-->
+<!--                android:id="@+id/created_on"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@+id/reason"-->
+<!--                android:text="Created On"-->
+<!--                android:layout_marginTop="@dimen/ten"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textSize="@dimen/fifteen" />-->
+
+
+<!--            <TextView-->
+<!--                android:id="@+id/lblSchoolName2"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@+id/reason_value"-->
+<!--                android:text=": 21 Jan 2024"-->
+<!--                android:layout_alignParentEnd="true"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textSize="@dimen/fifteen_sp"-->
+<!--                android:layout_toStartOf="@+id/reason_value"-->
+<!--                android:layout_marginEnd="@dimen/fifteen"-->
+<!--                android:layout_marginTop="@dimen/ten"-->
+<!--                android:textStyle="normal" />-->
+
+<!--        </RelativeLayout>-->
+
+<!--    </RelativeLayout>-->
+</RelativeLayout>

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@color/white"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
     <include
         android:id="@+id/toolbarLayout"
         layout="@layout/parent_side_tool_bar" />
@@ -10,13 +11,12 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcyAssignment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/toolbarLayout"
         android:layout_marginStart="@dimen/ten"
-        android:layout_marginEnd="@dimen/ten"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_marginEnd="@dimen/ten">
 
     </androidx.recyclerview.widget.RecyclerView>
-
 
 </RelativeLayout>

@@ -23,7 +23,6 @@ import com.vs.schoolmessenger.Parent.Attendance.AttendanceReport
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificateRequest
 import com.vs.schoolmessenger.Parent.Communication.Communication
 import com.vs.schoolmessenger.Parent.EventsHolidays.Event
-import com.vs.schoolmessenger.Parent.ExamMarks.ExamMark
 import com.vs.schoolmessenger.Parent.ExamTest.ExamTest
 import com.vs.schoolmessenger.Parent.FeeDetails.FeeDetails
 import com.vs.schoolmessenger.Parent.Homework.HomeWork
@@ -181,6 +180,8 @@ class ChildMenuAdapter(
                             TimeTable::class.java
                         )
                     )
+
+
 
                     "Interaction with student" -> context.startActivity(
                         Intent(
@@ -366,7 +367,8 @@ class ChildMenuAdapter(
             GridItem(R.drawable.ptm_icon, "PTM"),
             GridItem(R.drawable.lsrw_icon, "LSRW"),
             GridItem(R.drawable.quiz_icon, "Quiz"),
-            GridItem(R.drawable.exam_mark_icon, "Exam Marks")
+            GridItem(R.drawable.exam_mark_icon, "Exam Marks"),
+            GridItem(R.drawable.exam_mark_icon, "Certificate Request"),
         )
     }
 

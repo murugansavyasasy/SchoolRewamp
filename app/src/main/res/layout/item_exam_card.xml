@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="12dp"
+        android:gravity="center_horizontal">
+
+
+        <TextView
+            android:id="@+id/textExamTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:text="Half Yearly Exam"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnViewMarks"
+            android:layout_width="120dp"
+            android:layout_height="30dp"
+            android:text="View Marks"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:background="@drawable/bg_orange"
+            android:textSize="12sp"
+            android:gravity="center"
+            android:layout_marginTop="25dp"/>
+
+        <Button
+            android:id="@+id/btnViewProgress"
+            android:layout_width="120dp"
+            android:layout_height="30dp"
+            android:text="View Progress"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:background="@drawable/bg_orange"
+            android:textSize="12sp"
+            android:gravity="center"
+            android:layout_marginTop="8dp"/>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

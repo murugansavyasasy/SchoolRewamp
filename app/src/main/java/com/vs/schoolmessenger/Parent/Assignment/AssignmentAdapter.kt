@@ -84,7 +84,6 @@ class AssignmentAdapter(
         }
     }
 
-
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val shimmerLayout: ShimmerFrameLayout =
             itemView.findViewById(R.id.shimmer_view_container)

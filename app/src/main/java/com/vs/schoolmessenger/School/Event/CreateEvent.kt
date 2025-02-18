@@ -63,47 +63,47 @@ class CreateEvent : BaseActivity<CreateEventBinding>(),
     private fun loadData() {
         isEventHistoryData = listOf(
             EventHistoryData(
-                "Annual Day celebrartions",
+                "Annual Day celebrations",
                 "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
                 "15 Nov 2024"
             ),
             EventHistoryData(
-                "Annual Day celebrartions",
+                "Annual Day celebrations",
                 "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
                 "15 Nov 2024"
             ),
             EventHistoryData(
-                "Annual Day celebrartions",
+                "Annual Day celebrations",
                 "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
                 "15 Nov 2024"
             ),
             EventHistoryData(
-                "Annual Day celebrartions",
+                "Annual Day celebrations",
                 "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
                 "15 Nov 2024"
             ),
             EventHistoryData(
-                "Annual Day celebrartions",
+                "Annual Day celebrations",
                 "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
                 "15 Nov 2024"
             ),
             EventHistoryData(
-                "Annual Day celebrartions",
+                "Annual Day celebrations",
                 "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
                 "15 Nov 2024"
             ),
             EventHistoryData(
-                "Annual Day celebrartions",
+                "Annual Day celebrations",
                 "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
                 "15 Nov 2024"
             ),
             EventHistoryData(
-                "Annual Day celebrartions",
+                "Annual Day celebrations",
                 "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
                 "15 Nov 2024"
             ),
             EventHistoryData(
-                "Annual Day celebrartions",
+                "Annual Day celebrations",
                 "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
                 "15 Nov 2024"
             )

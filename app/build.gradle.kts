@@ -75,7 +75,7 @@ dependencies {
     implementation("com.airbnb.android:lottie:5.0.3")
     implementation("com.github.bumptech.glide:glide:4.16.0")
     implementation("de.hdodenhof:circleimageview:3.1.0")
-    implementation ("com.facebook.shimmer:shimmer:0.5.0")
+    implementation("com.facebook.shimmer:shimmer:0.5.0")
 
     implementation("com.squareup.retrofit2:retrofit:2.10.0")
     implementation("com.squareup.retrofit2:converter-gson:2.10.0")
@@ -98,14 +98,14 @@ dependencies {
     implementation("com.squareup.picasso:picasso:2.8")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 
-    implementation  ("com.github.massoudss:waveformSeekBar:5.0.2")
+    implementation("com.github.massoudss:waveformSeekBar:5.0.2")
     // Amplitude will allow you to call setSampleFrom() with files, URLs, Uri and resources
     // Important: Only works with api level 21 and higher
-    implementation ("com.github.lincollincol:amplituda:2.2.2") // or newer version
+    implementation("com.github.lincollincol:amplituda:2.2.2") // or newer version
 
     //Viewpager Implementation
-    implementation ("androidx.viewpager2:viewpager2:1.0.0")
+    implementation("androidx.viewpager2:viewpager2:1.0.0")
     //CircleIndicator
-    implementation ("me.relex:circleindicator:2.1.6")
+    implementation("me.relex:circleindicator:2.1.6")
 
 }

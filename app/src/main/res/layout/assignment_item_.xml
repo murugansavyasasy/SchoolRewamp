@@ -8,11 +8,13 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:layout_width="@dimen/thirty"
+            android:layout_width="@dimen/twenty"
             android:layout_height="250dp"
             android:layout_marginTop="@dimen/twenty"
             android:elevation="10dp"
-            android:src="@drawable/spiral_icon"></ImageView>
+            android:src="@drawable/spiral_icon">
+
+        </ImageView>
 
         <RelativeLayout
             android:id="@+id/rlaNames"
@@ -98,7 +100,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/ten"
                     android:layout_weight="0.6"
-                    android:text="Categotry"
+                    android:text="Category"
                     android:textColor="@color/navi_blue3"
                     android:textSize="@dimen/thirteen_sp"
                     android:textStyle="bold">

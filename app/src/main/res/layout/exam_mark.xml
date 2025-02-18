@@ -1,6 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rytHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primary_light"
+        android:padding="@dimen/ten">
+
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/ten"
+            android:layout_marginBottom="@dimen/ten"
+            android:src="@drawable/arrow_back_black">
+
+        </ImageView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@dimen/fifteen"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_toEndOf="@+id/imgBack"
+            android:text="Exam Marks"
+            android:textColor="@color/black"
+            android:textSize="@dimen/twenty_sp"
+            android:textStyle="bold">
+
+        </TextView>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rytSearch"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/thirty_five"
+        android:layout_below="@id/rytHeader"
+        android:layout_margin="@dimen/ten"
+        android:background="@drawable/rect_grey"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/imgSearch"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/ten"
+            android:src="@drawable/ic_search" />
+
+        <EditText
+            android:id="@+id/txtSearch"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@id/imgSearch"
+            android:background="@android:color/transparent"
+            android:hint="@string/lblSearch"
+            android:maxLines="1"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp" />
+    </RelativeLayout>
+
+    <!-- RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:layout_below="@+id/rytSearch"
+        android:layout_marginTop="@dimen/five"
+        android:layout_marginBottom="16dp"/>
+
+</RelativeLayout>

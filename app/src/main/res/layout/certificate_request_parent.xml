@@ -1,6 +1,225 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <RelativeLayout
+        android:id="@+id/rytHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primary_light"
+        android:padding="@dimen/ten">
+
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/ten"
+            android:layout_marginBottom="@dimen/ten"
+            android:src="@drawable/arrow_back_black"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/fifteen"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_toEndOf="@id/imgBack"
+            android:text="Certificate Request"
+            android:textColor="@color/black"
+            android:textSize="@dimen/twenty_sp"
+            android:textStyle="bold"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/lnrParent"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rytHeader"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/fifteen"
+        android:background="@drawable/bg_light_grey">
+
+        <TextView
+            android:id="@+id/lblTeacher"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/bg_radiantgreen"
+            android:gravity="center"
+            android:padding="@dimen/ten"
+            android:text="Request"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/lblParent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/ten"
+            android:text="Certificates"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/thirteen_sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rel_lay1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lnrParent"
+        android:layout_marginStart="@dimen/fifteen"
+        android:layout_marginEnd="@dimen/fifteen"
+        android:layout_marginTop="@dimen/ten"
+        android:background="@drawable/rect_shadow_white">
+
+        <TextView
+            android:id="@+id/header_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select Certificate"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_marginTop="@dimen/twenty"
+            android:layout_marginStart="@dimen/ten"
+            android:textSize="15sp"/>
+
+        <Spinner
+            android:id="@+id/spinner_text"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_below="@+id/header_text"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginStart="@dimen/ten"
+            android:background="@drawable/spinner_bg"
+            android:layout_marginEnd="@dimen/ten"/>
+
+        <TextView
+            android:id="@+id/header_text1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select Urgency Level"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_marginTop="@dimen/twenty"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_below="@+id/spinner_text"
+            android:textSize="15sp"/>
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/header_text1"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginEnd="@dimen/ten"
+            android:layout_marginTop="@dimen/ten"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/radio_button_background"
+                android:orientation="horizontal"
+                android:layout_marginEnd="@dimen/five"
+                android:padding="@dimen/five">
+
+                <ImageView
+                    android:id="@+id/iv_radio"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="@dimen/five"
+                    android:src="@drawable/custom_radio_button"
+                    android:layout_marginEnd="@dimen/five"/>
+
+                <RadioButton
+                    android:id="@+id/rb_not_urgent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Not Urgent"
+                    android:layout_marginStart="@dimen/five"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:button="@android:color/transparent"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/radio_button_background"
+                android:orientation="horizontal"
+                android:layout_marginEnd="@dimen/five"
+                android:padding="@dimen/five">
+
+                <ImageView
+                    android:id="@+id/iv_radio1"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="@dimen/five"
+                    android:src="@drawable/custom_radio_button"
+                    android:layout_marginEnd="@dimen/five"/>
+
+                <RadioButton
+                    android:id="@+id/rb_urgent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@android:color/transparent"
+                    android:text="Urgent"
+                    android:layout_marginStart="@dimen/five"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"/>
+            </LinearLayout>
+
+        </RadioGroup>
+
+
+
+
+        <EditText
+            android:id="@+id/edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:gravity="top"
+            android:hint="Enter Reason For Certificate"
+            android:padding="@dimen/five"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginEnd="@dimen/ten"
+            android:layout_marginTop="@dimen/fifteen"
+            android:layout_below="@+id/radioGroup"
+            android:background="@drawable/spinner_bg"/>
+
+
+        <Button
+            android:layout_width="250dp"
+            android:layout_height="45dp"
+            android:text="Request Certificate"
+            android:layout_below="@+id/edit_text"
+            android:background="@drawable/bg_orange"
+            android:textColor="@color/white"
+            android:textSize="@dimen/twele"
+            android:layout_marginBottom="@dimen/twele"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/twenty_five"
+            android:gravity="center"/>
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/lnrParent"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/ten" />
+
+</RelativeLayout>

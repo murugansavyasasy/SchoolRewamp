@@ -118,7 +118,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/fifty"
                     android:layout_marginTop="@dimen/ten"
-                    android:src="@drawable/leave_request_icon"></ImageView>
+                    android:src="@drawable/leave_request_icon">
+                </ImageView>
 
                 <TextView
                     android:layout_width="match_parent"
