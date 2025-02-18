@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -12,16 +13,17 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_height="wrap_content">
 
-        <ImageView
-<<<<<<< HEAD
-            android:layout_width="@dimen/twenty"
-            android:layout_height="250dp"
-            android:layout_marginTop="@dimen/twenty"
-            android:elevation="10dp"
-            android:src="@drawable/spiral_icon">
+<!--        <ImageView-->
 
-        </ImageView>
-=======
+<!--            android:layout_width="@dimen/twenty"-->
+<!--            android:layout_height="250dp"-->
+<!--            android:layout_marginTop="@dimen/twenty"-->
+<!--            android:elevation="10dp"-->
+<!--            android:src="@drawable/spiral_icon">-->
+<!--            -->
+<!--        </ImageView>-->
+
+        <ImageView
             android:id="@+id/imgIcon"
             android:layout_width="@dimen/fourty"
             android:layout_height="0dp"
@@ -31,7 +33,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/rlaNames"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
->>>>>>> 2f36584914db0b2c596b43caa64c85df7bd9c040
+
 
         <RelativeLayout
             android:id="@+id/rlaNames"

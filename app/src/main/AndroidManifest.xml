@@ -46,11 +46,7 @@
         </provider>
 
         <activity
-<<<<<<< HEAD
-            android:name=".Auth.Splash.Splash"
-=======
             android:name=".School.LeaveRequests.LeaveRequests"
->>>>>>> 2f36584914db0b2c596b43caa64c85df7bd9c040
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/AppTheme">
@@ -191,7 +187,7 @@
         </activity>
 
         <activity
-            android:name=".Parent.Assignment.Assignment"
+            android:name=".Auth.Splash.Splash"
 
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize">
