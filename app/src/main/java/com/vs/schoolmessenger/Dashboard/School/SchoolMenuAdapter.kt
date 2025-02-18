@@ -216,7 +216,12 @@ class SchoolMenuAdapter(
                     }
 
                     "Staff Wise Attendance Report" -> {
-                        context.startActivity(Intent(context, StaffWiseAttendanceReport::class.java))
+                        context.startActivity(
+                            Intent(
+                                context,
+                                StaffWiseAttendanceReport::class.java
+                            )
+                        )
                     }
 
                     "Schedule Exam/Test" -> {
@@ -227,7 +232,7 @@ class SchoolMenuAdapter(
         }
     }
 
-    fun toggleMoreItems(lblSeeMore: TextView,rlaMenuExample: LinearLayout) {
+    fun toggleMoreItems(lblSeeMore: TextView, rlaMenuExample: LinearLayout) {
         if (isSeeMore) {
             lblSeeMore.text = context.getString(R.string.SeeAll)
             rlaMenuExample.visibility = View.VISIBLE
@@ -236,8 +241,8 @@ class SchoolMenuAdapter(
             notifyItemRangeRemoved(startPosition, seeMoreMenus)
             seeMoreMenus = 0
         } else {
-            rlaMenuExample.visibility=View.GONE
-            lblSeeMore.text =context.getString(R.string.SeeLess)
+            rlaMenuExample.visibility = View.GONE
+            lblSeeMore.text = context.getString(R.string.SeeLess)
             val moreItems = getMoreItems()
             seeMoreMenus = moreItems.size
             val startPosition = itemList!!.size
@@ -288,7 +293,12 @@ class SchoolMenuAdapter(
                 )
             }
             lnrHomeWork.setOnClickListener {
-                context.startActivity(Intent(context, com.vs.schoolmessenger.Parent.Homework.HomeWork::class.java))
+                context.startActivity(
+                    Intent(
+                        context,
+                        com.vs.schoolmessenger.Parent.Homework.HomeWork::class.java
+                    )
+                )
             }
 
 

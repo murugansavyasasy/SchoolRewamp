@@ -7,7 +7,8 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.AssignmentParentBinding
 
-class Assignment : BaseActivity<AssignmentParentBinding>(), View.OnClickListener,AssignmentClickListener {
+class Assignment : BaseActivity<AssignmentParentBinding>(), View.OnClickListener,
+    AssignmentClickListener {
 
     override fun getViewBinding(): AssignmentParentBinding {
         return AssignmentParentBinding.inflate(layoutInflater)
@@ -37,36 +38,35 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), View.OnClickListener
             AssignmentData(
                 "Tamil",
                 "If you're working in a collaborative environment, stashing and pulling is often the safest option",
-                "Final Exam","15 Nov 2024",
+                "Final Exam", "15 Nov 2024",
                 "13", "Sathish Ganesan",
                 "Apr 1, 2024. 11:12 AM"
             ),
             AssignmentData(
                 "Tamil",
                 "If you're working in a collaborative environment, stashing and pulling is often the safest option",
-                "Final Exam","15 Nov 2024",
-                "13", "Sathish Ganesan",
-                "Apr 1, 2024. 11:12 AM"
-            ),
-
-            AssignmentData(
-                "Tamil",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option",
-                "Final Exam","15 Nov 2024",
+                "Final Exam", "15 Nov 2024",
                 "13", "Sathish Ganesan",
                 "Apr 1, 2024. 11:12 AM"
             ),
             AssignmentData(
                 "Tamil",
                 "If you're working in a collaborative environment, stashing and pulling is often the safest option",
-                "Final Exam","15 Nov 2024",
+                "Final Exam", "15 Nov 2024",
                 "13", "Sathish Ganesan",
                 "Apr 1, 2024. 11:12 AM"
             ),
             AssignmentData(
                 "Tamil",
                 "If you're working in a collaborative environment, stashing and pulling is often the safest option",
-                "Final Exam","15 Nov 2024",
+                "Final Exam", "15 Nov 2024",
+                "13", "Sathish Ganesan",
+                "Apr 1, 2024. 11:12 AM"
+            ),
+            AssignmentData(
+                "Tamil",
+                "If you're working in a collaborative environment, stashing and pulling is often the safest option",
+                "Final Exam", "15 Nov 2024",
                 "13", "Sathish Ganesan",
                 "Apr 1, 2024. 11:12 AM"
             )
@@ -83,7 +83,6 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), View.OnClickListener
             // Set GridLayoutManager (2 columns in this case)
             binding.rcyAssignment.adapter = mAdapter
         }
-
     }
 
     override fun onItemClick(data: AssignmentData) {

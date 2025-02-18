@@ -36,7 +36,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         binding = SchoolHomeFragmentBinding.inflate(layoutInflater)
         binding.imgNotification.setOnClickListener(this)
         binding.imgSearchClick.setOnClickListener(this)
@@ -147,8 +146,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener {
             binding.recyclerViewMenus.layoutManager = gridLayoutManager
             binding.recyclerViewMenus.adapter = isAdapter
         }
-
-
         Log.d("Status", "onResume")
     }
 

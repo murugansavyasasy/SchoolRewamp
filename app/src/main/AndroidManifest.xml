@@ -46,8 +46,7 @@
         </provider>
 
         <activity
-            android:name=".Parent.Assignment.Assignment"
-
+            android:name=".School.LeaveRequests.LeaveRequests"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/AppTheme">
@@ -60,6 +59,13 @@
 
         <activity
             android:name=".School.StudentReport.StudentReport"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
+
+        <activity
+            android:name=".Parent.Assignment.AssignmentFilePicking"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize">
 
@@ -124,7 +130,6 @@
 
         <activity
             android:name=".Auth.Country.CountryScreen"
-
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize">
 
@@ -437,7 +442,7 @@
             android:windowSoftInputMode="adjustPan|adjustResize"></activity>
         <activity
 
-            android:name=".Dashboard.Parent.Dashboard"
+            android:name=".Parent.Assignment.Assignment"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize"></activity>
 
@@ -448,7 +453,7 @@
             android:windowSoftInputMode="adjustPan|adjustResize"></activity>
 
         <activity
-            android:name=".School.LeaveRequests.LeaveRequests"
+            android:name=".Dashboard.Parent.Dashboard"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize"></activity>
 

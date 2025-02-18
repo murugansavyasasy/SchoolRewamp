@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.Parent.Assignment
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
+import com.vs.schoolmessenger.Dashboard.School.Dashboard
 import com.vs.schoolmessenger.R
 
 class AssignmentAdapter(
@@ -54,9 +56,6 @@ class AssignmentAdapter(
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
 
-        private var isTextExpanded = false
-
-
         private val lblTitle: TextView = itemView.findViewById(R.id.lblTitle)
         private val lblSubject: TextView = itemView.findViewById(R.id.lblSubject)
         private val lblCategotry: TextView = itemView.findViewById(R.id.lblCategotry)
@@ -64,7 +63,8 @@ class AssignmentAdapter(
         private val lblSubmissionCount: TextView = itemView.findViewById(R.id.lblSubmissionCount)
         private val lblSendby: TextView = itemView.findViewById(R.id.lblSendby)
         private val lblDateAndTime: TextView = itemView.findViewById(R.id.lblDateAndTime)
-
+        private val btnView: TextView = itemView.findViewById(R.id.btnView)
+        private val btnSubmit: TextView = itemView.findViewById(R.id.btnSubmit)
 
 
         @SuppressLint("ClickableViewAccessibility")
@@ -74,13 +74,22 @@ class AssignmentAdapter(
             listener: AssignmentClickListener,
             adapter: AssignmentAdapter
         ) {
-            lblTitle.text=data.isTitle
-            lblSubject.text=data.isSubject
-            lblCategotry.text=data.isCategory
-            lblSubmissionDue.text=data.isSubmissionDue
-            lblSubmissionCount.text=data.isSubmissionCount
-            lblSendby.text=data.isSendBy
-            lblDateAndTime.text=data.isDateAndTime
+            lblTitle.text = data.isTitle
+            lblSubject.text = data.isSubject
+            lblCategotry.text = data.isCategory
+            lblSubmissionDue.text = data.isSubmissionDue
+            lblSubmissionCount.text = data.isSubmissionCount
+            lblSendby.text = data.isSendBy
+            lblDateAndTime.text = data.isDateAndTime
+
+            btnView.setOnClickListener {
+
+            }
+
+            btnSubmit.setOnClickListener {
+                val intent = Intent(context, AssignmentFilePicking::class.java)
+                context.startActivity(intent)
+            }
         }
     }
 
@@ -90,8 +99,7 @@ class AssignmentAdapter(
             itemView.findViewById(R.id.shimmer_view_container)
 
         init {
-            shimmerLayout.startShimmer() // Start shimmer effect
+            shimmerLayout.startShimmer()
         }
     }
-
 }
