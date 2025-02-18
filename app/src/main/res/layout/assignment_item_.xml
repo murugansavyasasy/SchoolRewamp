@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:background="@drawable/rect_shadow_white"
+        android:layout_marginStart="-10dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         android:layout_height="wrap_content">
 
         <ImageView
+<<<<<<< HEAD
             android:layout_width="@dimen/twenty"
             android:layout_height="250dp"
             android:layout_marginTop="@dimen/twenty"
@@ -15,15 +21,27 @@
             android:src="@drawable/spiral_icon">
 
         </ImageView>
+=======
+            android:id="@+id/imgIcon"
+            android:layout_width="@dimen/fourty"
+            android:layout_height="0dp"
+            android:elevation="@dimen/ten"
+            android:scaleType="fitCenter"
+            android:src="@drawable/spiral_icon"
+            app:layout_constraintBottom_toBottomOf="@+id/rlaNames"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+>>>>>>> 2f36584914db0b2c596b43caa64c85df7bd9c040
 
         <RelativeLayout
             android:id="@+id/rlaNames"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/twenty"
-            android:layout_marginEnd="@dimen/ten"
-            android:background="@drawable/rect_shadow_white">
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imgIcon"
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/lblTitle"
@@ -77,7 +95,7 @@
                     android:layout_marginStart="@dimen/ten"
                     android:layout_marginEnd="@dimen/ten"
                     android:layout_weight="0.5"
-                    android:text="Sathish"
+                    android:text="Sathguaefgi[aosihsdfnsnnvsipsguhpsoifjsfnugtotuweituaoiffs[fknmpsuhfpawuhg[woigjaporng[aorghpiwgwpoia[orignarjbfbpyweff[aojnfisffgpiaeff[f;kniSFbfpiyfhioefhipwyafFNgkgnrfbfpwiugish"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
                     android:textStyle="bold">
@@ -330,10 +348,6 @@
 
             </RelativeLayout>
 
-
         </RelativeLayout>
-
-    </RelativeLayout>
-
-
-</RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
