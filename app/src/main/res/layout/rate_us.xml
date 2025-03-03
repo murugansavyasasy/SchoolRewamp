@@ -18,7 +18,7 @@
                 android:id="@+id/imgback"
                 android:layout_width="@dimen/thirty"
                 android:layout_height="@dimen/thirty"
-                android:layout_marginLeft="@dimen/ten"
+                android:layout_marginStart="@dimen/ten"
                 android:layout_marginTop="@dimen/twenty"
                 android:src="@drawable/arrow_back_black">
 
@@ -107,9 +107,9 @@
                     android:id="@+id/lblContent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/fifteen"
+                    android:layout_marginStart="@dimen/fifteen"
                     android:layout_marginTop="@dimen/five"
-                    android:layout_marginRight="@dimen/fifteen"
+                    android:layout_marginEnd="@dimen/fifteen"
                     android:gravity="center"
                     android:textColor="@color/orange"
                     android:textStyle="bold">
@@ -120,9 +120,9 @@
                     android:id="@+id/view"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginLeft="@dimen/fifteen"
+                    android:layout_marginStart="@dimen/fifteen"
                     android:layout_marginTop="@dimen/ten"
-                    android:layout_marginRight="@dimen/fifteen"
+                    android:layout_marginEnd="@dimen/fifteen"
                     android:background="@color/grey"></View>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -135,7 +135,7 @@
                         android:id="@+id/lblAppUi"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/twenty"
+                        android:layout_marginStart="@dimen/twenty"
                         android:layout_marginTop="@dimen/twenty"
                         android:background="@drawable/bg_outline_light_blue"
                         android:padding="10dp"
@@ -143,7 +143,7 @@
                         android:textColor="@color/navi_blue1"
                         android:textSize="@dimen/thirteen_sp"
                         android:textStyle="bold"
-                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
                     </TextView>
@@ -152,7 +152,7 @@
                         android:id="@+id/lblWatchUi"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/twenty"
+                        android:layout_marginStart="@dimen/twenty"
                         android:layout_marginTop="@dimen/twenty"
                         android:background="@drawable/bg_outline_light_blue"
                         android:padding="10dp"
@@ -160,7 +160,7 @@
                         android:textColor="@color/navi_blue1"
                         android:textSize="@dimen/thirteen_sp"
                         android:textStyle="bold"
-                        app:layout_constraintLeft_toRightOf="@+id/lblAppUi"
+                        app:layout_constraintStart_toEndOf="@+id/lblAppUi"
                         app:layout_constraintTop_toTopOf="parent">
 
                     </TextView>
@@ -169,16 +169,16 @@
                         android:id="@+id/lbPricing"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/twenty"
+                        android:layout_marginStart="@dimen/twenty"
                         android:layout_marginTop="@dimen/twenty"
-                        android:layout_marginRight="@dimen/twenty"
+                        android:layout_marginEnd="@dimen/twenty"
                         android:background="@drawable/bg_outline_light_blue"
                         android:padding="10dp"
                         android:text="@string/lblPricing"
                         android:textColor="@color/navi_blue1"
                         android:textSize="@dimen/thirteen_sp"
                         android:textStyle="bold"
-                        app:layout_constraintLeft_toRightOf="@+id/lblWatchUi"
+                        app:layout_constraintStart_toEndOf="@+id/lblWatchUi"
                         app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -186,7 +186,7 @@
                         android:id="@+id/lblConnection"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/twenty"
+                        android:layout_marginStart="@dimen/twenty"
                         android:layout_marginTop="@dimen/twenty"
                         android:background="@drawable/bg_outline_light_blue"
                         android:padding="10dp"
@@ -194,7 +194,7 @@
                         android:textColor="@color/navi_blue1"
                         android:textSize="@dimen/thirteen_sp"
                         android:textStyle="bold"
-                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/lblAppUi">
 
                     </TextView>
@@ -204,7 +204,7 @@
                         android:id="@+id/lblPairing"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/twenty"
+                        android:layout_marginStart="@dimen/twenty"
                         android:layout_marginTop="@dimen/twenty"
                         android:background="@drawable/bg_outline_light_blue"
                         android:padding="10dp"
@@ -212,14 +212,14 @@
                         android:textColor="@color/navi_blue1"
                         android:textSize="@dimen/thirteen_sp"
                         android:textStyle="bold"
-                        app:layout_constraintLeft_toRightOf="@+id/lblConnection"
+                        app:layout_constraintStart_toEndOf="@+id/lblConnection"
                         app:layout_constraintTop_toBottomOf="@+id/lblAppUi"></TextView>
 
                     <TextView
                         android:id="@+id/lblWatchFaces"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/twenty_five"
+                        android:layout_marginStart="@dimen/twenty_five"
                         android:layout_marginTop="@dimen/twenty"
                         android:background="@drawable/bg_outline_light_blue"
                         android:padding="10dp"
@@ -227,7 +227,7 @@
                         android:textColor="@color/navi_blue1"
                         android:textSize="@dimen/thirteen_sp"
                         android:textStyle="bold"
-                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/lblConnection">
 
                     </TextView>
@@ -236,7 +236,7 @@
                         android:id="@+id/lblWatchHardware"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/twenty_five"
+                        android:layout_marginStart="@dimen/twenty_five"
                         android:layout_marginTop="@dimen/twenty"
                         android:background="@drawable/bg_outline_light_blue"
                         android:padding="10dp"
@@ -244,7 +244,7 @@
                         android:textColor="@color/navi_blue1"
                         android:textSize="@dimen/thirteen_sp"
                         android:textStyle="bold"
-                        app:layout_constraintLeft_toRightOf="@+id/lblWatchFaces"
+                        app:layout_constraintStart_toEndOf="@+id/lblWatchFaces"
                         app:layout_constraintTop_toBottomOf="@+id/lblConnection">
 
                     </TextView>
@@ -254,7 +254,7 @@
                         android:id="@+id/lblAlumniAssistance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/twenty_five"
+                        android:layout_marginStart="@dimen/twenty_five"
                         android:layout_marginTop="@dimen/twenty"
                         android:background="@drawable/bg_outline_light_blue"
                         android:padding="10dp"
@@ -272,7 +272,7 @@
                         android:id="@+id/lblLoginuser"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/ten"
+                        android:layout_marginStart="@dimen/ten"
                         android:layout_marginTop="@dimen/twenty"
                         android:background="@drawable/bg_outline_light_blue"
                         android:padding="10dp"
@@ -280,7 +280,7 @@
                         android:textColor="@color/navi_blue1"
                         android:textSize="@dimen/thirteen_sp"
                         android:textStyle="bold"
-                        app:layout_constraintLeft_toRightOf="@+id/lblAlumniAssistance"
+                        app:layout_constraintStart_toEndOf="@+id/lblAlumniAssistance"
                         app:layout_constraintTop_toBottomOf="@+id/lblWatchFaces">
 
                     </TextView>
@@ -289,16 +289,16 @@
                         android:id="@+id/lblRegistration"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/twenty_five"
+                        android:layout_marginStart="@dimen/twenty_five"
                         android:layout_marginTop="@dimen/twenty"
-                        android:layout_marginRight="@dimen/five"
+                        android:layout_marginEnd="@dimen/five"
                         android:background="@drawable/bg_outline_light_blue"
                         android:padding="10dp"
                         android:text="@string/lblRegistration"
                         android:textColor="@color/navi_blue1"
                         android:textSize="@dimen/thirteen_sp"
                         android:textStyle="bold"
-                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/lblAlumniAssistance">
 
                     </TextView>
@@ -307,9 +307,9 @@
                         android:id="@+id/lblOthers"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/ten"
+                        android:layout_marginStart="@dimen/ten"
                         android:layout_marginTop="@dimen/twenty"
-                        android:layout_marginRight="@dimen/five"
+                        android:layout_marginEnd="@dimen/five"
                         android:background="@drawable/bg_outline_light_blue"
                         android:padding="10dp"
                         android:text="@string/lblOthers"
@@ -317,7 +317,7 @@
                         android:textSize="@dimen/thirteen_sp"
                         android:textStyle="bold"
                         android:visibility="gone"
-                        app:layout_constraintLeft_toRightOf="@+id/lblRegistration"
+                        app:layout_constraintStart_toEndOf="@+id/lblRegistration"
                         app:layout_constraintTop_toBottomOf="@+id/lblAlumniAssistance">
 
                     </TextView>
@@ -326,9 +326,9 @@
                         android:id="@+id/view1"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_marginLeft="@dimen/fifteen"
+                        android:layout_marginStart="@dimen/fifteen"
                         android:layout_marginTop="@dimen/fifteen"
-                        android:layout_marginRight="@dimen/fifteen"
+                        android:layout_marginEnd="@dimen/fifteen"
                         android:background="@color/grey"
                         app:layout_constraintTop_toBottomOf="@+id/lblRegistration">
 
@@ -339,12 +339,12 @@
                         android:id="@+id/lblEdtTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/twenty"
+                        android:layout_marginStart="@dimen/twenty"
                         android:layout_marginTop="@dimen/twenty"
                         android:text="@string/lblAnyothersuggestions"
                         android:textColor="@color/black"
                         android:textSize="@dimen/fifteen_sp"
-                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/view1"></TextView>
 
 
@@ -352,13 +352,13 @@
                         android:id="@+id/edtSuggestions"
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
-                        android:layout_marginLeft="@dimen/twenty"
+                        android:layout_marginStart="@dimen/twenty"
                         android:layout_marginTop="@dimen/ten"
-                        android:layout_marginRight="@dimen/fifteen"
+                        android:layout_marginEnd="@dimen/fifteen"
                         android:background="@drawable/bg_edittext"
-                        android:gravity="top|left"
+                        android:gravity="top|start"
                         android:maxLength="300"
-                        android:paddingLeft="@dimen/five"
+                        android:paddingStart="@dimen/five"
                         android:paddingTop="@dimen/five"
                         android:scrollbars="vertical"
                         android:textColor="@color/black"
@@ -377,8 +377,8 @@
                     android:text="@string/lblSubmit"
                     android:textColor="@color/white"
                     android:textSize="@dimen/thirteen_sp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"></Button>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"></Button>
 
             </LinearLayout>
         </RelativeLayout>

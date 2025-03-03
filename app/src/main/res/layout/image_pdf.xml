@@ -93,7 +93,7 @@
             android:id="@+id/lmgCamera"
             android:layout_width="@dimen/twenty_five"
             android:layout_height="@dimen/twenty_five"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_marginTop="@dimen/ten"
             android:layout_marginEnd="@dimen/twenty"
             android:src="@drawable/camera_icon"></ImageView>

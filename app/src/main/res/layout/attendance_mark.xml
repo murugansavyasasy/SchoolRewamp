@@ -128,7 +128,7 @@
                     android:id="@+id/imgStandard"
                     android:layout_width="@dimen/twenty_five"
                     android:layout_height="@dimen/twenty_five"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="@dimen/ten"
                     android:src="@drawable/ic_down_arrow">
@@ -164,7 +164,7 @@
                     android:id="@+id/imgSection"
                     android:layout_width="@dimen/twenty_five"
                     android:layout_height="@dimen/twenty_five"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="@dimen/ten"
                     android:src="@drawable/ic_down_arrow">
@@ -203,7 +203,7 @@
                 android:id="@+id/imgTypeOfAttendance"
                 android:layout_width="@dimen/twenty_five"
                 android:layout_height="@dimen/twenty_five"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/ten"
                 android:src="@drawable/ic_down_arrow">
@@ -299,7 +299,7 @@
             android:layout_marginStart="@dimen/twenty"
             android:layout_marginTop="@dimen/twenty_five"
             android:layout_toEndOf="@+id/imgCalender"
-            android:drawableRight="@drawable/ic_down_arrow"
+            android:drawableEnd="@drawable/ic_down_arrow"
             android:drawablePadding="@dimen/fifteen"
             android:text="Apr 21, 2024"
             android:textColor="@color/black"
@@ -334,7 +334,7 @@
                     android:id="@+id/imgStandardReport"
                     android:layout_width="@dimen/twenty_five"
                     android:layout_height="@dimen/twenty_five"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="@dimen/ten"
                     android:src="@drawable/ic_down_arrow">
@@ -370,7 +370,7 @@
                     android:id="@+id/imgSectionReport"
                     android:layout_width="@dimen/twenty_five"
                     android:layout_height="@dimen/twenty_five"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="@dimen/ten"
                     android:src="@drawable/ic_down_arrow">

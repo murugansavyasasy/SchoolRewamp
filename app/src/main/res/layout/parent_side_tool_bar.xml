@@ -128,7 +128,7 @@
             android:id="@+id/txtVideoMenu"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_toRightOf="@id/imgSearch"
+            android:layout_toEndOf="@id/imgSearch"
             android:background="@android:color/transparent"
             android:hint="@string/lblSearch"
             android:textColor="@color/black"

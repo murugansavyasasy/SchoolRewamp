@@ -15,8 +15,8 @@
             android:id="@+id/lblTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/ten"
-            android:layout_toLeftOf="@+id/lblTime"
+            android:layout_marginEnd="@dimen/ten"
+            android:layout_toStartOf="@+id/lblTime"
             android:text="Images"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"
@@ -40,7 +40,7 @@
             android:id="@+id/lblTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:text="May 22, 2024"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp">
@@ -63,15 +63,15 @@
                 android:layout_width="@dimen/twenty"
                 android:layout_height="@dimen/twenty"
                 android:gravity="center"
-                android:layout_marginLeft="@dimen/five"
+                android:layout_marginStart="@dimen/five"
                 android:src="@drawable/attachment_icon"></ImageView>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/ten"
+                android:layout_marginStart="@dimen/ten"
                 android:text="@string/lblAttachment"
-                android:layout_toRightOf="@+id/imgAttachment"
+                android:layout_toEndOf="@+id/imgAttachment"
                 android:gravity="center"
                 android:textColor="@color/white"
                 android:textSize="@dimen/thirteen_sp"

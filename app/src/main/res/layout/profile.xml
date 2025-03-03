@@ -82,9 +82,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:paddingLeft="@dimen/twenty"
+            android:paddingStart="@dimen/twenty"
             android:paddingTop="@dimen/ten"
-            android:paddingRight="@dimen/twenty">
+            android:paddingEnd="@dimen/twenty">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -202,7 +202,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
-                            android:paddingRight="@dimen/eight">
+                            android:paddingEnd="@dimen/eight">
 
                             <ImageView
                                 android:layout_width="@dimen/fourty"
@@ -214,7 +214,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="20dp"
+                                android:layout_marginStart="20dp"
                                 android:text="+91 6382677672"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/thirteen_sp" />
@@ -223,7 +223,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="0.5dp"
-                            android:layout_marginLeft="@dimen/sixty"
+                            android:layout_marginStart="@dimen/sixty"
                             android:layout_marginTop="@dimen/ten"
                             android:background="@color/grey">
 
@@ -234,7 +234,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/ten"
                             android:gravity="center_vertical"
-                            android:paddingRight="@dimen/eight">
+                            android:paddingEnd="@dimen/eight">
 
                             <ImageView
                                 android:layout_width="@dimen/fourty"
@@ -246,7 +246,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/twenty"
+                                android:layout_marginStart="@dimen/twenty"
                                 android:text="sathishkumar@savyasasy.com"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/thirteen_sp" />
@@ -286,7 +286,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
-                            android:paddingRight="@dimen/eight">
+                            android:paddingEnd="@dimen/eight">
 
                             <ImageView
                                 android:layout_width="@dimen/fourty"
@@ -298,7 +298,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/twenty"
+                                android:layout_marginStart="@dimen/twenty"
                                 android:text="O+"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/thirteen_sp" />
@@ -309,7 +309,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/ten"
                             android:gravity="center_vertical"
-                            android:paddingRight="@dimen/eight">
+                            android:paddingEnd="@dimen/eight">
 
                             <ImageView
                                 android:layout_width="@dimen/fourty"
@@ -321,7 +321,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/twenty"
+                                android:layout_marginStart="@dimen/twenty"
                                 android:textColor="@color/black"
                                 android:text="Kodaikanal, Dindigul (D.T), Pin code : 624103"
                                 android:textSize="@dimen/thirteen_sp" />
@@ -332,7 +332,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/ten"
                             android:gravity="center_vertical"
-                            android:paddingRight="@dimen/eight">
+                            android:paddingEnd="@dimen/eight">
 
                             <ImageView
                                 android:layout_width="@dimen/fourty"
@@ -344,7 +344,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/twenty"
+                                android:layout_marginStart="@dimen/twenty"
                                 android:text="Hostel"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/thirteen_sp" />
@@ -377,7 +377,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/ten"
+                            android:layout_marginStart="@dimen/ten"
                             android:orientation="vertical">
 
                             <TextView

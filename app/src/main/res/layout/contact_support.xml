@@ -23,8 +23,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/fifteen"
-            android:layout_toRightOf="@+id/imgBack"
+            android:layout_marginStart="@dimen/fifteen"
+            android:layout_toEndOf="@+id/imgBack"
             android:text="@string/lblContactSupport"
             android:layout_marginTop="@dimen/twenty"
             android:textColor="@color/black"
@@ -39,10 +39,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rlaLblContactSupport"
-        android:layout_marginLeft="@dimen/ten"
+        android:layout_marginStart="@dimen/ten"
         android:paddingVertical="@dimen/fifteen"
         android:layout_marginTop="@dimen/twenty_five"
-        android:layout_marginRight="@dimen/twenty"
+        android:layout_marginEnd="@dimen/twenty"
         android:background="@drawable/rect_shadow_white">
 
 
@@ -51,7 +51,7 @@
             android:layout_width="@dimen/thirty"
             android:layout_height="@dimen/thirty"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/ten"
+            android:layout_marginStart="@dimen/ten"
             android:src="@drawable/phone_icon">
 
         </ImageView>
@@ -59,7 +59,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/imgPhoneCall"
+            android:layout_toEndOf="@+id/imgPhoneCall"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -67,10 +67,10 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/ten"
+                android:layout_marginStart="@dimen/ten"
                 android:text="@string/lblOurCustomerService"
                 android:textSize="@dimen/fifteen_sp"
-                android:layout_marginRight="@dimen/ten"
+                android:layout_marginEnd="@dimen/ten"
                 android:textColor="@color/black">
 
             </TextView>
@@ -79,11 +79,11 @@
                 android:id="@+id/lblContactNo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/ten"
+                android:layout_marginStart="@dimen/ten"
                 android:layout_marginTop="@dimen/five"
                 android:text="6382677672"
                 android:textSize="@dimen/thirteen_sp"
-                android:layout_marginRight="@dimen/ten"
+                android:layout_marginEnd="@dimen/ten"
                 android:textColor="@color/navi_blue1"
                 android:textStyle="bold">
 
@@ -97,17 +97,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rytPhone"
-        android:layout_marginLeft="@dimen/ten"
+        android:layout_marginStart="@dimen/ten"
         android:layout_marginTop="@dimen/ten"
         android:paddingVertical="@dimen/fifteen"
-        android:layout_marginRight="@dimen/twenty"
+        android:layout_marginEnd="@dimen/twenty"
         android:background="@drawable/rect_shadow_white">
         <ImageView
             android:id="@+id/imgMail"
             android:layout_width="@dimen/thirty"
             android:layout_height="@dimen/thirty"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/ten"
+            android:layout_marginStart="@dimen/ten"
             android:src="@drawable/mail_icon">
 
         </ImageView>
@@ -115,15 +115,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/imgMail"
+            android:layout_toEndOf="@+id/imgMail"
             android:gravity="center"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/ten"
-                android:layout_marginRight="@dimen/ten"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginEnd="@dimen/ten"
                 android:textSize="@dimen/fifteen_sp"
                 android:text="@string/lblWriteus"
                 android:textColor="@color/black">
@@ -134,11 +134,11 @@
                 android:id="@+id/lblContacttMail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/ten"
+                android:layout_marginStart="@dimen/ten"
                 android:layout_marginTop="@dimen/five"
                 android:textSize="@dimen/thirteen_sp"
                 android:text="support@savyasasy.com"
-                android:layout_marginRight="@dimen/ten"
+                android:layout_marginEnd="@dimen/ten"
                 android:textColor="@color/navi_blue1"
                 android:textStyle="bold">
 

@@ -8,8 +8,8 @@
         android:id="@+id/rlaPieChartCount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/five"
-        android:layout_marginRight="@dimen/five"
+        android:layout_marginStart="@dimen/five"
+        android:layout_marginEnd="@dimen/five"
         android:layout_marginTop="@dimen/five"
         android:background="@drawable/rect_shadow_white">
 
@@ -17,17 +17,17 @@
             android:id="@+id/customPieChart"
             android:layout_width="@dimen/hundred"
             android:layout_height="@dimen/hundred"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/ten"
-            android:layout_marginRight="@dimen/ten" />
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginEnd="@dimen/ten" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/ten"
+            android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/five"
-            android:layout_toLeftOf="@+id/customPieChart">
+            android:layout_toStartOf="@+id/customPieChart">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -38,7 +38,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/ten"
+                    android:layout_marginStart="@dimen/ten"
                     android:orientation="vertical">
 
                     <TextView
@@ -69,7 +69,7 @@
                             android:id="@+id/lblTotalStrength"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/ten"
+                            android:layout_marginStart="@dimen/ten"
                             android:layout_weight="0.5"
                             android:text="10,000"
                             android:textColor="@color/black"
@@ -96,7 +96,7 @@
                             android:id="@+id/lblTeachersCount"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/ten"
+                            android:layout_marginStart="@dimen/ten"
                             android:layout_weight="0.5"
                             android:text="20,000 - 20%"
                             android:textColor="@color/light_orange0"
@@ -123,7 +123,7 @@
                             android:id="@+id/lblBoysCount"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/ten"
+                            android:layout_marginStart="@dimen/ten"
                             android:layout_weight="0.5"
                             android:text="45,000 - 45%"
                             android:textColor="@color/light_green_bg1"
@@ -151,7 +151,7 @@
                             android:id="@+id/lblGirlsCount"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/ten"
+                            android:layout_marginStart="@dimen/ten"
                             android:layout_weight="0.5"
                             android:text="35,000 - 30%"
                             android:textColor="@color/yellow"

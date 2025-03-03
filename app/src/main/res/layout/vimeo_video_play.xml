@@ -24,8 +24,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_toLeftOf="@+id/imgDownload"
-            android:layout_toRightOf="@+id/imgBack"
+            android:layout_toStartOf="@+id/imgDownload"
+            android:layout_toEndOf="@+id/imgBack"
             android:layout_marginStart="@dimen/twenty"
             android:layout_marginEnd="@dimen/twenty"
             android:layout_centerHorizontal="true"
@@ -41,7 +41,7 @@
             android:layout_height="@dimen/thirty"
             android:layout_marginEnd="@dimen/twenty"
             android:src="@drawable/download_icon"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             >
 
         </ImageView>

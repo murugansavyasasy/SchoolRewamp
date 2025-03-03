@@ -13,9 +13,9 @@
             android:id="@+id/rlaLogoutPopup"
             android:layout_width="match_parent"
             android:layout_height="@dimen/three_hundred"
-            android:layout_marginLeft="@dimen/twenty"
+            android:layout_marginStart="@dimen/twenty"
             android:layout_marginTop="@dimen/twenty_five"
-            android:layout_marginRight="@dimen/thirty"
+            android:layout_marginEnd="@dimen/thirty"
             android:background="@drawable/rect_shadow_white"
             android:padding="@dimen/ten">
 
@@ -43,9 +43,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblLogoutContent"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_marginTop="@dimen/twenty_four"
-                android:layout_marginRight="@dimen/seventy_five"
+                android:layout_marginEnd="@dimen/seventy_five"
                 android:text="@string/Cancel"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp">
@@ -59,9 +59,9 @@
             android:id="@+id/rlaLogout"
             android:layout_width="@dimen/ninety"
             android:layout_height="@dimen/fourty"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginRight="@dimen/ten"
+            android:layout_marginEnd="@dimen/ten"
             android:layout_marginBottom="@dimen/fifty"
             android:background="@drawable/rect_shadow_red"
             android:gravity="center">
@@ -81,8 +81,8 @@
             <ImageView
                 android:layout_width="@dimen/twenty"
                 android:layout_height="@dimen/twenty"
-                android:layout_marginLeft="@dimen/ten"
-                android:layout_toRightOf="@+id/lblLogout"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_toEndOf="@+id/lblLogout"
                 android:src="@drawable/ic_right_arrow">
 
             </ImageView>

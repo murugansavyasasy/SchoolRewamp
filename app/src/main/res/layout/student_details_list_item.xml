@@ -2,11 +2,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_marginLeft="@dimen/thirty"
+    android:layout_marginStart="@dimen/thirty"
     android:layout_marginTop="@dimen/ten"
     android:id="@+id/rlaStudent"
 
-    android:layout_marginRight="@dimen/thirty"
+    android:layout_marginEnd="@dimen/thirty"
     android:background="@drawable/rect_shadow_white"
     android:layout_height="wrap_content">
 
@@ -100,13 +100,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/imgSchool">
+                android:layout_toEndOf="@+id/imgSchool">
 
                 <TextView
                     android:id="@+id/lblSchoolName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/ten"
+                    android:layout_marginEnd="@dimen/ten"
                     android:gravity="start"
                     android:text="Kodaikanal International School"
                     android:textColor="@color/black"
@@ -121,7 +121,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/lblSchoolName"
-                    android:layout_marginRight="@dimen/ten"
+                    android:layout_marginEnd="@dimen/ten"
                     android:gravity="start"
                     android:text="Kodaikanal"
                     android:textColor="@color/black"

@@ -23,8 +23,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/fifteen"
-            android:layout_toRightOf="@+id/imgClose"
+            android:layout_marginStart="@dimen/fifteen"
+            android:layout_toEndOf="@+id/imgClose"
             android:text="@string/lblSelectlanguage"
             android:textColor="@color/black"
             android:textSize="@dimen/fifteen_sp"
@@ -45,7 +45,7 @@
             android:id="@+id/rlaEnglish"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/five"
+            android:layout_marginStart="@dimen/five"
             android:layout_marginTop="@dimen/twenty"
             android:padding="@dimen/five">
 
@@ -65,7 +65,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/chEnglish">
+                android:layout_toEndOf="@+id/chEnglish">
 
                 <TextView
                     android:id="@+id/lblEnglish"
@@ -90,7 +90,7 @@
                     android:id="@+id/imgEnglish"
                     android:layout_width="@dimen/fourty"
                     android:layout_height="@dimen/fourty"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:src="@drawable/en_language_gray">
 
                 </ImageView>
@@ -104,7 +104,7 @@
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:layout_below="@+id/rlaEnglish"
-            android:layout_marginLeft="@dimen/fifteen"
+            android:layout_marginStart="@dimen/fifteen"
             android:layout_marginTop="@dimen/ten"
             android:background="@color/grey">
 
@@ -116,7 +116,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rlaEnglish"
-            android:layout_marginLeft="@dimen/five"
+            android:layout_marginStart="@dimen/five"
             android:layout_marginTop="@dimen/twenty"
             android:padding="@dimen/five">
 
@@ -136,7 +136,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/chTamil">
+                android:layout_toEndOf="@+id/chTamil">
 
                 <TextView
                     android:id="@+id/lblTamil"
@@ -160,7 +160,7 @@
                     android:id="@+id/imgTamil"
                     android:layout_width="@dimen/fourty"
                     android:layout_height="@dimen/fourty"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:src="@drawable/ta_language_gray">
 
                 </ImageView>
@@ -173,7 +173,7 @@
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:layout_below="@+id/rlaTamil"
-            android:layout_marginLeft="@dimen/fifteen"
+            android:layout_marginStart="@dimen/fifteen"
             android:layout_marginTop="@dimen/ten"
             android:background="@color/grey">
 
@@ -184,7 +184,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rlaTamil"
-            android:layout_marginLeft="@dimen/five"
+            android:layout_marginStart="@dimen/five"
             android:layout_marginTop="@dimen/twenty"
             android:padding="@dimen/five">
 
@@ -204,7 +204,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/chThai">
+                android:layout_toEndOf="@+id/chThai">
 
                 <TextView
                     android:id="@+id/lblThai"
@@ -228,7 +228,7 @@
                     android:id="@+id/imgThai"
                     android:layout_width="@dimen/fourty"
                     android:layout_height="@dimen/fourty"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:src="@drawable/th_language_gray">
 
                 </ImageView>
@@ -240,7 +240,7 @@
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:layout_below="@+id/rlaThai"
-            android:layout_marginLeft="@dimen/fifteen"
+            android:layout_marginStart="@dimen/fifteen"
             android:layout_marginTop="@dimen/ten"
             android:background="@color/grey"></View>
 
@@ -249,7 +249,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rlaThai"
-            android:layout_marginLeft="@dimen/five"
+            android:layout_marginStart="@dimen/five"
             android:layout_marginTop="@dimen/twenty"
             android:padding="@dimen/five">
 
@@ -269,7 +269,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/chHindi">
+                android:layout_toEndOf="@+id/chHindi">
 
                 <TextView
                     android:id="@+id/lblHindi"
@@ -293,7 +293,7 @@
                     android:id="@+id/imgHindi"
                     android:layout_width="@dimen/fourty"
                     android:layout_height="@dimen/fourty"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:src="@drawable/hi_language_gray">
 
                 </ImageView>
@@ -305,7 +305,7 @@
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:layout_below="@+id/rlaHindi"
-            android:layout_marginLeft="@dimen/fifteen"
+            android:layout_marginStart="@dimen/fifteen"
             android:layout_marginTop="@dimen/ten"
             android:layout_marginBottom="@dimen/ten"
             android:background="@color/grey"></View>

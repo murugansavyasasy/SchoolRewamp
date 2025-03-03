@@ -63,6 +63,15 @@
 
             </TextView>
 
+            <CheckBox
+                android:id="@+id/cbSelect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ten"
+                android:button="@drawable/custom_checkbox"
+                android:padding="@dimen/five"
+                android:text="Select all"
+                android:visibility="gone" />
 
         </RelativeLayout>
 
@@ -80,7 +89,7 @@
         android:visibility="gone">
 
         <TextView
-            android:id="@+id/lblRightSideBar"
+            android:id="@+id/lblEndSideBar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -106,6 +115,39 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/rytFilter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lnrParent"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/ten"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/imgFilter"
+            android:layout_width="@dimen/twenty"
+            android:layout_height="@dimen/twenty"
+            android:layout_gravity="center"
+            android:src="@drawable/filter_icon">
+
+        </ImageView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="@dimen/five"
+            android:text="@string/Filter"
+            android:textColor="@color/black"
+            android:textSize="@dimen/fifteen_sp"
+            android:textStyle="bold">
+
+        </TextView>
+
+    </LinearLayout>
+
 
     <RelativeLayout
         android:id="@+id/rytSearch"
@@ -113,6 +155,8 @@
         android:layout_height="@dimen/thirty_five"
         android:layout_below="@id/lnrParent"
         android:layout_margin="@dimen/ten"
+        android:layout_marginStart="@dimen/five"
+        android:layout_toEndOf="@+id/rytFilter"
         android:background="@drawable/rect_grey"
         android:visibility="gone">
 
@@ -121,14 +165,14 @@
             android:layout_width="@dimen/thirty"
             android:layout_height="@dimen/thirty"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/ten"
+            android:layout_marginStart="@dimen/ten"
             android:src="@drawable/ic_search" />
 
         <EditText
             android:id="@+id/txtVideoMenu"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_toRightOf="@id/imgSearch"
+            android:layout_toEndOf="@id/imgSearch"
             android:background="@android:color/transparent"
             android:hint="@string/lblSearch"
             android:textColor="@color/black"

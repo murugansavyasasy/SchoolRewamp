@@ -43,8 +43,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/ten"
-            android:layout_toRightOf="@+id/cardImage">
+            android:layout_marginStart="@dimen/ten"
+            android:layout_toEndOf="@+id/cardImage">
 
             <TextView
                 android:id="@+id/lblStaffName"
@@ -91,10 +91,10 @@
         <!--            android:id="@+id/imgArrow"-->
         <!--            android:layout_width="@dimen/fifteen"-->
         <!--            android:layout_height="@dimen/fifteen"-->
-        <!--            android:layout_alignParentRight="true"-->
+        <!--            android:layout_alignParentEnd="true"-->
         <!--            android:layout_centerVertical="true"-->
         <!--            android:scaleType="centerCrop"-->
-        <!--            android:src="@drawable/ic_right_arrow" />-->
+        <!--            android:src="@drawable/ic_End_arrow" />-->
 
     </RelativeLayout>
 
@@ -103,10 +103,10 @@
         style="@style/CustomCheckbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:layout_marginTop="@dimen/ten"
-        android:layout_marginRight="@dimen/five"
+        android:layout_marginEnd="@dimen/five"
         android:padding="@dimen/five"
         android:visibility="gone"
         android:textColor="@color/black"

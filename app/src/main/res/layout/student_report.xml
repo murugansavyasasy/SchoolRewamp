@@ -48,14 +48,14 @@
             android:layout_width="@dimen/thirty"
             android:layout_height="@dimen/thirty"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/ten"
+            android:layout_marginStart="@dimen/ten"
             android:src="@drawable/ic_search" />
 
         <EditText
             android:id="@+id/txtSearchMenu"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_toRightOf="@+id/imgSearch"
+            android:layout_toEndOf="@+id/imgSearch"
             android:background="@android:color/transparent"
             android:hint="@string/lblSearch"
             android:textColor="@color/black"

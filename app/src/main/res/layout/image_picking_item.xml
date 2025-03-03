@@ -19,7 +19,7 @@
             android:id="@+id/imgDelete"
             android:layout_width="@dimen/twenty_five"
             android:layout_height="@dimen/twenty_five"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:src="@drawable/delete_icon">
 

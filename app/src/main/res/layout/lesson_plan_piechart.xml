@@ -13,9 +13,9 @@
             android:id="@+id/customPieChart"
             android:layout_width="@dimen/hundred"
             android:layout_height="@dimen/hundred"
-            android:layout_alignParentRight="true"
-            android:layout_marginLeft="@dimen/ten"
-            android:layout_marginRight="@dimen/ten" />
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginEnd="@dimen/ten" />
 
         <RelativeLayout
             android:id="@+id/rlaDetails"
@@ -92,7 +92,7 @@
                 android:id="@+id/lblComplete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_marginEnd="@dimen/ten"
                 android:text="20 % Completed"
                 android:textColor="@color/black"
@@ -106,7 +106,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblComplete"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/twenty_eight"
                 android:text="80 % Pending"
@@ -119,7 +119,7 @@
             <ImageView
                 android:layout_width="@dimen/twenty"
                 android:layout_height="@dimen/twenty"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_marginEnd="@dimen/hundred_thirty"
                 android:background="@drawable/green_box">
 
@@ -130,7 +130,7 @@
                 android:layout_height="@dimen/twenty"
                 android:layout_below="@+id/lblComplete"
                 android:layout_marginTop="@dimen/ten"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_marginEnd="@dimen/hundred_thirty"
                 android:background="@drawable/red_box">
 

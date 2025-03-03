@@ -331,7 +331,7 @@
                         <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/twenty"
-                            android:layout_gravity="right"
+                            android:layout_gravity="end"
                             android:layout_weight="0.8"
                             android:src="@drawable/calender_icon"></ImageView>
                     </LinearLayout>
@@ -380,7 +380,7 @@
                     </TextView>
 
                     <ImageView
-                        android:id="@+id/imgRightArrow1"
+                        android:id="@+id/imgEndArrow1"
                         android:layout_width="@dimen/twenty"
                         android:layout_height="@dimen/twenty"
                         android:layout_marginTop="@dimen/twenty"
@@ -395,7 +395,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/gridViewScheduleCall"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_marginTop="@dimen/twenty"
                     android:layout_marginEnd="@dimen/five"
                     android:orientation="horizontal">
@@ -411,7 +411,7 @@
                     </TextView>
 
                     <ImageView
-                        android:id="@+id/imgRightArrow"
+                        android:id="@+id/imgEndArrow"
                         android:layout_width="@dimen/twenty"
                         android:layout_height="@dimen/twenty"
                         android:layout_marginEnd="@dimen/ten"
@@ -539,7 +539,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/lblDurationOfVoice"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_centerInParent="true"
                         android:layout_marginEnd="@dimen/ten"
                         android:background="@drawable/rect_light_blue_light_radious"
@@ -623,7 +623,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/imgVoicePlay"
-                                android:layout_alignParentRight="true"
+                                android:layout_alignParentEnd="true"
                                 android:layout_marginEnd="@dimen/ten"
                                 android:text="00:00"
                                 android:textColor="@color/black"
@@ -669,7 +669,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/rlaTitle"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_marginTop="@dimen/thirty_five"
                         android:layout_marginEnd="@dimen/twenty"
                         android:background="@drawable/rect_blue_light_radious"

@@ -19,7 +19,7 @@
             android:id="@+id/lblCountryTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/twenty"
+            android:layout_marginStart="@dimen/twenty"
             android:text="@string/lblChoosecountry"
             android:textColor="@color/black"
             android:textSize="@dimen/twenty_sp"
@@ -29,7 +29,7 @@
             android:id="@+id/lblContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/twenty"
+            android:layout_marginStart="@dimen/twenty"
             android:layout_marginTop="@dimen/thirteen"
             android:lineSpacingExtra="@dimen/five"
             android:text="@string/lblCountryNotes"
@@ -42,10 +42,10 @@
             android:id="@+id/imgCountry"
             android:layout_width="@dimen/twenty"
             android:layout_height="@dimen/twenty"
-            android:layout_marginLeft="@dimen/twenty"
+            android:layout_marginStart="@dimen/twenty"
             android:layout_marginTop="@dimen/twenty"
             android:src="@drawable/flag_india"
-            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/lblContent"></ImageView>
 
 
@@ -53,20 +53,20 @@
             android:id="@+id/lblCountry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/twenty"
+            android:layout_marginStart="@dimen/twenty"
             android:layout_marginTop="@dimen/twenty"
             android:text="India"
             android:textColor="@color/black"
-            app:layout_constraintLeft_toRightOf="@+id/imgCountry"
+            app:layout_constraintStart_toEndOf="@+id/imgCountry"
             app:layout_constraintTop_toBottomOf="@+id/lblContent"></TextView>
 
         <View
             android:id="@+id/vw"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginLeft="@dimen/twenty"
+            android:layout_marginStart="@dimen/twenty"
             android:layout_marginTop="@dimen/ten"
-            android:layout_marginRight="@dimen/twenty"
+            android:layout_marginEnd="@dimen/twenty"
             android:background="@color/black"
             app:layout_constraintTop_toBottomOf="@+id/lblCountry" />
 
@@ -78,8 +78,8 @@
             android:layout_marginTop="@dimen/twenty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/vw">
 
         <CheckBox
@@ -92,18 +92,18 @@
 
 
             <LinearLayout
-                android:layout_toRightOf="@+id/terms_checkbox"
+                android:layout_toEndOf="@+id/terms_checkbox"
                 android:id="@+id/lblTermsConditions"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_toRightOf="@+id/terms_checkbox"
+                    android:layout_toEndOf="@+id/terms_checkbox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/ten"
+                    android:layout_marginStart="@dimen/ten"
                     android:text="@string/lblIagreetotheTermsandConditions"
                     android:textColor="@color/navi_blue3"
                     android:textSize="@dimen/thirteen_sp"/>
@@ -112,7 +112,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="2dp"
-                    android:layout_marginLeft="@dimen/ten"
+                    android:layout_marginStart="@dimen/ten"
                     android:background="@color/navi_blue3" />
             </LinearLayout>
 
@@ -123,8 +123,8 @@
             android:layout_width="@dimen/hundred"
             android:layout_height="@dimen/hundred"
             android:layout_centerInParent="true"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rytTerms"
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
@@ -159,8 +159,8 @@
                 android:id="@+id/lnrFirst"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="-20dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="-20dp"
                 android:layout_weight="1"
                 android:background="@drawable/country_shape_one"
                 android:orientation="vertical">
@@ -168,7 +168,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/twenty"
+                    android:layout_marginStart="@dimen/twenty"
                     android:gravity="center"
                     android:text="@string/lblIndia"
                     android:textColor="@color/white"
@@ -181,7 +181,7 @@
                 android:layout_width="200dp"
                 android:layout_height="200dp"
                 android:layout_centerHorizontal="true"
-                android:layout_marginLeft="@dimen/twenty"
+                android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="-30dp"
                 android:layout_weight="1"
                 android:background="@drawable/country_shape_four"
@@ -201,9 +201,9 @@
                 android:id="@+id/lnrThird"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginLeft="@dimen/twenty"
-                android:layout_marginRight="-20dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginEnd="-20dp"
                 android:layout_weight="1"
                 android:background="@drawable/country_shape_two"
                 android:orientation="vertical">
@@ -211,7 +211,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="@dimen/ten"
+                    android:layout_marginEnd="@dimen/ten"
                     android:gravity="center"
                     android:text="@string/lblUSA"
                     android:textColor="@color/white"
@@ -231,8 +231,8 @@
                 android:id="@+id/lnrFourth"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="-60dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="-60dp"
                 android:layout_weight="1"
                 android:background="@drawable/country_shape_five"
                 android:orientation="vertical">
@@ -252,7 +252,7 @@
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_centerHorizontal="true"
-                android:layout_marginLeft="@dimen/twenty"
+                android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="30dp"
                 android:layout_weight="1"
                 android:background="@drawable/country_shape_three"
@@ -272,9 +272,9 @@
                 android:id="@+id/lnrSixth"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginLeft="@dimen/twenty"
-                android:layout_marginRight="-60dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginEnd="-60dp"
                 android:layout_weight="1"
                 android:background="@drawable/country_shape_six"
                 android:orientation="vertical">

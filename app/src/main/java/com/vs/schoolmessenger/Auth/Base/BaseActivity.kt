@@ -1,4 +1,5 @@
 package com.vs.schoolmessenger.Auth.Base
+
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.AnimatorSet
@@ -488,7 +489,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         context: Context,
         listener: OnDateSelectedListener
     ) {
-        // Get the current date by default
+
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)

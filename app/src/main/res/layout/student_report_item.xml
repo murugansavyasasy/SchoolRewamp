@@ -183,7 +183,6 @@
                 </RelativeLayout>
             </RelativeLayout>
 
-
             <RelativeLayout
                 android:id="@+id/rlaNames"
                 android:layout_width="match_parent"
