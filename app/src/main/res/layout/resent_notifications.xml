@@ -40,7 +40,6 @@
                 android:text="Function"
                 android:textStyle="bold"
                 android:textSize="@dimen/thirteen_sp"
-
                 android:textColor="@color/black">
 
             </TextView>

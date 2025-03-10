@@ -46,8 +46,23 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
+<!--        <activity-->
+<!--            android:name=".Parent.QuizExam.Quiz"-->
+
+<!--            android:exported="true"-->
+<!--            android:label="@string/app_name"-->
+<!--            android:theme="@style/AppTheme">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+<!--        </activity>-->
+
+
         <activity
-            android:name=".School.InteractionWithStudent.InteractionWithStudent"
+            android:name=".School.LessonPlan.LessonPlan"
+
 
             android:exported="true"
             android:label="@string/app_name"
@@ -58,7 +73,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".School.StudentReport.StudentReport"
             android:theme="@style/AppTheme"
@@ -123,12 +137,12 @@
 
         </activity>
 
-        <activity
-            android:name=".School.LessonPlan.LessonPlan"
-            android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize">
+<!--        <activity-->
+<!--            android:name=".School.LessonPlan.LessonPlan"-->
+<!--            android:theme="@style/AppTheme"-->
+<!--            android:windowSoftInputMode="adjustPan|adjustResize">-->
 
-        </activity>
+<!--        </activity>-->
 
         <activity
             android:name=".School.Homework.HomeWork"
@@ -197,7 +211,7 @@
         </activity>
 
         <activity
-            android:name=".Auth.Splash.Splash"
+            android:name=".School.InteractionWithStudent.InteractionWithStudent"
 
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize">
@@ -328,7 +342,8 @@
         <activity
             android:name=".School.Event.CreateEvent"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
+        </activity>
 
         <activity
             android:name=".School.NoticeBoard.CreateNoticeBoard"
@@ -341,28 +356,24 @@
             android:name=".School.Video.CreateVideo"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize">
-
         </activity>
 
         <activity
             android:name=".CommonScreens.ImageViewActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize">
-
         </activity>
 
         <activity
             android:name=".CommonScreens.SchoolList"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize">
-
         </activity>
 
         <activity
             android:name=".Parent.RequestLeave.LeaveRequest"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize">
-
         </activity>
         <activity
             android:name=".Parent.Noticeboard.NoticeBoard"
@@ -440,10 +451,12 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize"></activity>
 
-        <activity
-            android:name=".Parent.QuizExam.Quiz"
-            android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+<!--        <activity-->
+<!--            android:name=".Parent.QuizExam.Quiz"-->
+<!--            android:theme="@style/AppTheme"-->
+<!--            android:windowSoftInputMode="adjustPan|adjustResize">-->
+<!--            -->
+<!--        </activity>-->
 
 
         <activity
