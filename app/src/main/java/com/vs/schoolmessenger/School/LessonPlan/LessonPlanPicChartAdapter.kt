@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.CustomPieChartView
 import com.vs.schoolmessenger.Utils.PieChartView
 
 class LessonPlanPicChartAdapter(
@@ -28,12 +29,14 @@ class LessonPlanPicChartAdapter(
         return if (viewType == TYPE_SHIMMER) {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.shimmer_view_small_list, parent, false)
+
             ShimmerViewHolder(view)
         } else {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.lesson_plan_piechart, parent, false)
             DataViewHolder(view, context) // Pass context to DataViewHolder
         }
+
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -58,7 +61,7 @@ class LessonPlanPicChartAdapter(
         private val lblStatus: TextView = itemView.findViewById(R.id.lblStatus)
         private val lblComplete: TextView = itemView.findViewById(R.id.lblComplete)
         private val lblPending: TextView = itemView.findViewById(R.id.lblPending)
-        private val customPieChart: PieChartView = itemView.findViewById(R.id.customPieChart)
+        private val customPieChart: CustomPieChartView = itemView.findViewById(R.id.customPieChart)
         private val btnView: TextView = itemView.findViewById(R.id.btnView)
 
 
@@ -78,8 +81,7 @@ class LessonPlanPicChartAdapter(
                 listener.onItem(data)
             }
 
-            customPieChart.setData(chartData)
-
+            customPieChart.setProgress(60f)
         }
     }
 

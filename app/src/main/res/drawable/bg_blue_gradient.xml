@@ -4,49 +4,49 @@
     <item>
         <shape>
             <padding android:top="0.5dp" android:end="0.5dp" android:bottom="0dp" android:start="0.5dp" />
-            <solid android:color="#10CCCCCC" />
+            <solid android:color="#A1E3F9" />
             <corners android:radius="15dp" />
         </shape>
     </item>
     <item>
         <shape>
             <padding android:top="0.5dp" android:end="0dp" android:bottom="1dp" android:start="0.5dp" />
-            <solid android:color="#10CCCCCC" />
+            <solid android:color="#A1E3F9" />
             <corners android:radius="15dp" />
         </shape>
     </item>
     <item>
         <shape>
             <padding android:top="1dp" android:end="1dp" android:bottom="1dp" android:start="1dp" />
-            <solid android:color="#20CCCCCC" />
+            <solid android:color="#A1E3F9" />
             <corners android:radius="15dp" />
         </shape>
     </item>
     <item>
         <shape>
             <padding android:top="0dp" android:end="0dp" android:bottom="1dp" android:start="0dp" />
-            <solid android:color="#30CCCCCC" />
+            <solid android:color="#A1E3F9" />
             <corners android:radius="15dp" />
         </shape>
     </item>
     <item>
         <shape>
             <padding android:top="0dp" android:end="0dp" android:bottom="1dp" android:start="0dp" />
-            <solid android:color="#40CCCCCC" />
+            <solid android:color="#A1E3F9" />
             <corners android:radius="15dp" />
         </shape>
     </item>
     <item>
         <shape>
             <padding android:top="0dp" android:end="0dp" android:bottom="1dp" android:start="0dp" />
-            <solid android:color="#50CCCCCC" />
+            <solid android:color="#A1E3F9" />
             <corners android:radius="15dp" />
         </shape>
     </item>
     <item>
         <shape>
             <padding android:top="0dp" android:end="0.1dp" android:bottom="0.5dp" android:start="0.1dp" />
-            <solid android:color="#60CCCCCC" />
+            <solid android:color="#A1E3F9" />
             <corners android:radius="15dp" />
         </shape>
     </item>
@@ -54,8 +54,8 @@
     <item>
         <shape android:shape="rectangle">
             <gradient
-                android:startColor="#93C3FA"
-                android:endColor="#FBFDFF"></gradient>
+                android:startColor="#A1E3F9"
+                android:endColor="#A1E3F9"></gradient>
             <corners android:radius="15dp" />
         </shape>
     </item>

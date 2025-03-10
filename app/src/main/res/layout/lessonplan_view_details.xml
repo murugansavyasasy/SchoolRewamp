@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:id="@+id/rlaHeader"
     android:layout_height="match_parent">
@@ -30,11 +31,51 @@
 
     </RelativeLayout>
 
+    <LinearLayout
+        android:id="@+id/lnrParent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rytHeader"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="@dimen/ten"
+        android:layout_marginTop="@dimen/fifteen"
+        android:background="@drawable/bg_light_blue">
+
+        <TextView
+            android:id="@+id/btnAllClasses"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/bg_blue"
+            android:gravity="center"
+            android:padding="@dimen/ten"
+            android:text="@string/AllClasses"
+            android:textColor="@color/white"
+            android:textSize="@dimen/thirteen_sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/btnMyClasses"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/ten"
+            android:text="@string/MyClasses"
+            android:textColor="@color/dark_blue"
+            android:textSize="@dimen/thirteen_sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+
+
+
     <RelativeLayout
         android:id="@+id/rlaFilter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rytHeader"
+        android:layout_below="@+id/lnrParent"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginTop="@dimen/ten"
         android:layout_marginEnd="@dimen/ten"
@@ -45,6 +86,7 @@
             android:layout_width="@dimen/twenty_five"
             android:layout_height="@dimen/twenty_five"
             android:layout_centerVertical="true"
+            android:visibility="gone"
             android:src="@drawable/filter_icon">
 
         </ImageView>
@@ -58,6 +100,7 @@
             android:layout_toEndOf="@+id/imgFilter"
             android:text="@string/Filter"
             android:textColor="@color/black"
+            android:visibility="gone"
             android:textSize="@dimen/thirteen_sp">
 
         </TextView>

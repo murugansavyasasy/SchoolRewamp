@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginStart="@dimen/twenty"
-        android:layout_marginTop="@dimen/fifteen"
-        android:layout_marginEnd="@dimen/twenty"
-        android:background="@drawable/rect_shadow_white"
-        app:cardCornerRadius="@dimen/eight">
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
+        app:cardCornerRadius="@dimen/eight"
+        app:cardElevation="3dp"
+        app:cardUseCompatPadding="true"
+        app:cardBackgroundColor="@android:color/white">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -22,46 +23,112 @@
 
             <TextView
                 android:id="@+id/lblView"
-                android:layout_width="@dimen/five"
+                android:layout_width="@dimen/eight"
                 android:layout_height="match_parent"
-                android:background="@color/light_dark_blue">
+                android:background="@color/light_dark_blue" />
 
-            </TextView>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/eight"
+                android:orientation="vertical"
+                android:layout_gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/lblNewText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="June"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:layout_gravity="center_horizontal"
+                    android:textStyle="normal" />
+
+                <TextView
+                    android:id="@+id/lblAdditionalText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="15"
+                    android:textColor="@color/black"
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="23sp"
+                    android:layout_marginTop="@dimen/two"
+                    android:textStyle="bold"
+                    />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/view1"
+                android:layout_width="0.7dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/eighteen"
+                android:background="@color/grey" />
+
 
             <LinearLayout
                 android:id="@+id/lnrView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/light_sky_blue1"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/lblTitle"
+                <LinearLayout
+                    android:id="@+id/lnrView2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/ten"
-                    android:layout_marginTop="@dimen/ten"
-                    android:text="Parent Meeting"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"
-                    android:textStyle="bold">
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
 
-                </TextView>
+                    <TextView
+                        android:id="@+id/lblTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/ten"
+                        android:text="Parents Meeting"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/thirteen_sp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="@dimen/eight"
+                        android:layout_weight="1" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginEnd="@dimen/ten"
+                        android:gravity="end">
+
+                        <TextView
+                            android:id="@+id/lblSetReminder"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Set Reminder"
+                            android:textColor="@color/black"
+                            android:textSize="10sp"
+                            android:textStyle="normal"
+                            android:gravity="center" />
+
+                        <ImageView
+                            android:id="@+id/imgReminder"
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:src="@drawable/clockremainder" />
+                    </LinearLayout>
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:weightSum="1.3">
+                    android:weightSum="1">
 
                     <TextView
                         android:id="@+id/lblDate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/ten"
-                        android:layout_weight="0.4"
-                        android:text="Wen 12, 2024"
+                        android:layout_weight="0.5"
+                        android:text="Wed 12, 2024"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp"
                         android:textStyle="normal" />
@@ -70,27 +137,17 @@
                         android:id="@+id/lblTime"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.4"
+                        android:layout_weight="0.5"
                         android:text="12:12 AM"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp"
-                        android:textStyle="normal">
-
-                    </TextView>
-
-                    <ImageView
-                        android:id="@+id/imgReminder"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/thirty"
-                        android:layout_weight="0.5"
-                        android:src="@drawable/remainder_icon">
-
-                    </ImageView>
+                        android:textStyle="normal" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/five"
                     android:weightSum="1">
 
                     <TextView
@@ -98,24 +155,20 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/ten"
                         android:layout_weight="0.6"
-                        android:text="Meeting type   : "
+                        android:text="Meeting type  : "
                         android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp"
-                        android:textStyle="bold">
-
-                    </TextView>
+                        android:textSize="@dimen/twele_sp"
+                        android:textStyle="normal" />
 
                     <TextView
                         android:id="@+id/lblMeetingType"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
-                        android:text="Zoom Meeting"
+                        android:text="ZOOM MEET"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp"
-                        android:textStyle="bold">
-
-                    </TextView>
+                        android:textSize="@dimen/twele_sp"
+                        android:textStyle="normal" />
                 </LinearLayout>
 
                 <TextView
@@ -125,12 +178,12 @@
                     android:layout_marginStart="@dimen/ten"
                     android:layout_marginTop="@dimen/five"
                     android:layout_marginBottom="@dimen/ten"
-                    android:text="https://meet.google.com/mnd-tpqm-gbb"
+                    android:text="Join"
                     android:textColor="@color/sky_blue0"
                     android:textSize="@dimen/thirteen_sp"
-                    android:textStyle="bold">
-
-                </TextView>
+                    android:gravity="end"
+                    android:layout_marginEnd="@dimen/ten"
+                    android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>

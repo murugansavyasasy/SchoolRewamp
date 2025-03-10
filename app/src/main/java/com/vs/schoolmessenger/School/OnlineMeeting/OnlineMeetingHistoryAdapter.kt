@@ -72,14 +72,14 @@ class OnlineMeetingHistoryAdapter(
             lblDate.text = data.date
             lblTime.text = data.time
             lblMeetingType.text = data.meetingType
-            lblLink.text = data.link
+//            lblLink.text = data.link
 
             if (position % 2 == 0) {
                 lblView.setBackgroundColor(context.resources.getColor(R.color.light_dark_blue))
-                lnrView.setBackgroundColor(context.resources.getColor(R.color.light_sky_blue1))
+//                lnrView.setBackgroundColor(context.resources.getColor(R.color.light_sky_blue1))
             } else {
                 lblView.setBackgroundColor(context.resources.getColor(R.color.orange))
-                lnrView.setBackgroundColor(context.resources.getColor(R.color.light_orang1))
+//                lnrView.setBackgroundColor(context.resources.getColor(R.color.light_orang1))
             }
 
             lblLink.setOnClickListener {
