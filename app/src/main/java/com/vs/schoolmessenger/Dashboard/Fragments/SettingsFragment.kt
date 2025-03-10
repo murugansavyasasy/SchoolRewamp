@@ -48,6 +48,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
     private lateinit var chTamil: CheckBox
     private lateinit var chThai: CheckBox
     private lateinit var chHindi: CheckBox
+    private lateinit var chArabic: CheckBox
     private lateinit var btnConfirm: TextView
     private var isChecking = false
 
@@ -166,11 +167,15 @@ class SettingsFragment : Fragment(), View.OnClickListener {
             .create()
 
         imgClose = dialogView.findViewById(R.id.imgClose)
+
         chEnglish = dialogView.findViewById(R.id.chEnglish)
         chTamil = dialogView.findViewById(R.id.chTamil)
         chThai = dialogView.findViewById(R.id.chThai)
         chHindi = dialogView.findViewById(R.id.chHindi)
+        chArabic = dialogView.findViewById(R.id.chArabic)
+
         btnConfirm = dialogView.findViewById(R.id.btnConfirm)
+
         imgTamil = dialogView.findViewById(R.id.imgTamil)
         imgEnglish = dialogView.findViewById(R.id.imgEnglish)
         imgThai = dialogView.findViewById(R.id.imgThai)
@@ -225,6 +230,18 @@ class SettingsFragment : Fragment(), View.OnClickListener {
             }
         }
 
+        chArabic.setOnCheckedChangeListener { _, isChecked ->
+            isRemoveCheckBox()
+            if (isChecked) {
+                isChecking = true
+                isSelectedLanguage = "ar"
+                chArabic.isChecked = true
+                isSelectedImageSetting(imgHindi)
+            } else {
+                isChecking = false
+            }
+        }
+
         var isAppLanguage = SharedPreference.getLanguage(requireActivity())
         Log.d("isAppLanguage", isAppLanguage.toString())
         if (isAppLanguage.equals("")) {
@@ -238,6 +255,8 @@ class SettingsFragment : Fragment(), View.OnClickListener {
             chHindi.isChecked = true
         } else if (isAppLanguage.equals("en")) {
             chEnglish.isChecked = true
+        } else if (isAppLanguage.equals("ar")) {
+            chArabic.isChecked = true
         }
 
         btnConfirm.setOnClickListener {
@@ -278,6 +297,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         chTamil.isChecked = false
         chThai.isChecked = false
         chHindi.isChecked = false
+        chArabic.isChecked = false
     }
 
     private fun refreshFragment() {
