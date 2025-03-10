@@ -54,28 +54,28 @@ class LessonPlanAdapter(
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
         private val lblTitle: TextView = itemView.findViewById(R.id.lblTitle)
-        private val lblFromDate: TextView = itemView.findViewById(R.id.lblFromDate)
-        private val lblToTime: TextView = itemView.findViewById(R.id.lblToTime)
-        private val lblUnitValue: TextView = itemView.findViewById(R.id.lblUnitValue)
-        private val lblRemarks: TextView = itemView.findViewById(R.id.lblRemarks)
-        private val lblYetToStart: TextView = itemView.findViewById(R.id.lblYetToStart)
-        private val lblInProgress: TextView = itemView.findViewById(R.id.lblInProgress)
-        private val lblCompleted: TextView = itemView.findViewById(R.id.lblCompleted)
-        private val rlaHeader: RelativeLayout = itemView.findViewById(R.id.rlaHeader)
-        private val imgYetStart: ImageView = itemView.findViewById(R.id.imgYetStart)
-        private val imgInProgress: ImageView = itemView.findViewById(R.id.imgInProgress)
-        private val imgCompleted: ImageView = itemView.findViewById(R.id.imgCompleted)
-        private val vwStageOne: View = itemView.findViewById(R.id.vwStageOne)
-        private val vwStageTwo: View = itemView.findViewById(R.id.vwStageTwo)
-        private val btnEdit: ImageView = itemView.findViewById(R.id.btnEdit)
-        private val btnDelete: ImageView = itemView.findViewById(R.id.btnDelete)
+//        private val lblFromDate: TextView = itemView.findViewById(R.id.lblFromDate)
+//        private val lblToTime: TextView = itemView.findViewById(R.id.lblToTime)
+//        private val lblUnitValue: TextView = itemView.findViewById(R.id.lblUnitValue)
+//        private val lblRemarks: TextView = itemView.findViewById(R.id.lblRemarks)
+//        private val lblYetToStart: TextView = itemView.findViewById(R.id.lblYetToStart)
+//        private val lblInProgress: TextView = itemView.findViewById(R.id.lblInProgress)
+//        private val lblCompleted: TextView = itemView.findViewById(R.id.lblCompleted)
+//        private val rlaHeader: RelativeLayout = itemView.findViewById(R.id.rlaHeader)
+//        private val imgYetStart: ImageView = itemView.findViewById(R.id.imgYetStart)
+//        private val imgInProgress: ImageView = itemView.findViewById(R.id.imgInProgress)
+//        private val imgCompleted: ImageView = itemView.findViewById(R.id.imgCompleted)
+//        private val vwStageOne: View = itemView.findViewById(R.id.vwStageOne)
+//        private val vwStageTwo: View = itemView.findViewById(R.id.vwStageTwo)
+//        private val btnEdit: ImageView = itemView.findViewById(R.id.btnEdit)
+//        private val btnDelete: ImageView = itemView.findViewById(R.id.btnDelete)
 
         fun bind(data: LessonPlanData, listener: LessonPlanClickListener, position: Int) {
             lblTitle.text = data.Title
-            lblFromDate.text = data.FromDate
-            lblToTime.text = data.ToDate
-            lblUnitValue.text = data.Unit
-            lblRemarks.text = data.Remarks
+//            lblFromDate.text = data.FromDate
+//            lblToTime.text = data.ToDate
+//            lblUnitValue.text = data.Unit
+//            lblRemarks.text = data.Remarks
 
             // Set the background color based on the position
             val backgroundResource = when (position % 4) { // Cycle through 4 different backgrounds
@@ -84,50 +84,50 @@ class LessonPlanAdapter(
                 2 -> R.drawable.bg_orange_gradient
                 else -> R.drawable.bg_purple_gradient
             }
-            rlaHeader.setBackgroundResource(backgroundResource)
+//            rlaHeader.setBackgroundResource(backgroundResource)
 
             // Handle status and stage updates
             when (data.Status) {
                 1 -> {
-                    vwStageOne.setBackgroundColor(context.resources.getColor(R.color.grey))
-                    vwStageTwo.setBackgroundColor(context.resources.getColor(R.color.grey))
-                    imgYetStart.setImageResource(R.drawable.yet_to_start_green)
-                    imgInProgress.setImageResource(R.drawable.inprogress_grey)
-                    imgCompleted.setImageResource(R.drawable.completed_grey)
-                    lblYetToStart.setTextColor(context.resources.getColor(R.color.green))
-                    lblInProgress.setTextColor(context.resources.getColor(R.color.grey))
-                    lblCompleted.setTextColor(context.resources.getColor(R.color.grey))
+//                    vwStageOne.setBackgroundColor(context.resources.getColor(R.color.grey))
+//                    vwStageTwo.setBackgroundColor(context.resources.getColor(R.color.grey))
+//                    imgYetStart.setImageResource(R.drawable.yet_to_start_green)
+//                    imgInProgress.setImageResource(R.drawable.inprogress_grey)
+//                    imgCompleted.setImageResource(R.drawable.completed_grey)
+//                    lblYetToStart.setTextColor(context.resources.getColor(R.color.green))
+//                    lblInProgress.setTextColor(context.resources.getColor(R.color.grey))
+//                    lblCompleted.setTextColor(context.resources.getColor(R.color.grey))
                 }
 
                 2 -> {
-                    vwStageOne.setBackgroundColor(context.resources.getColor(R.color.green))
-                    vwStageTwo.setBackgroundColor(context.resources.getColor(R.color.grey))
-                    imgYetStart.setImageResource(R.drawable.yet_to_start_green)
-                    imgInProgress.setImageResource(R.drawable.inprogress_green)
-                    imgCompleted.setImageResource(R.drawable.completed_grey)
-                    lblYetToStart.setTextColor(context.resources.getColor(R.color.green))
-                    lblInProgress.setTextColor(context.resources.getColor(R.color.green))
-                    lblCompleted.setTextColor(context.resources.getColor(R.color.grey))
+//                    vwStageOne.setBackgroundColor(context.resources.getColor(R.color.green))
+//                    vwStageTwo.setBackgroundColor(context.resources.getColor(R.color.grey))
+//                    imgYetStart.setImageResource(R.drawable.yet_to_start_green)
+//                    imgInProgress.setImageResource(R.drawable.inprogress_green)
+//                    imgCompleted.setImageResource(R.drawable.completed_grey)
+//                    lblYetToStart.setTextColor(context.resources.getColor(R.color.green))
+//                    lblInProgress.setTextColor(context.resources.getColor(R.color.green))
+//                    lblCompleted.setTextColor(context.resources.getColor(R.color.grey))
                 }
 
                 3 -> {
-                    vwStageOne.setBackgroundColor(context.resources.getColor(R.color.green))
-                    vwStageTwo.setBackgroundColor(context.resources.getColor(R.color.green))
-                    imgYetStart.setImageResource(R.drawable.yet_to_start_green)
-                    imgInProgress.setImageResource(R.drawable.inprogress_green)
-                    imgCompleted.setImageResource(R.drawable.completed_green)
-                    lblYetToStart.setTextColor(context.resources.getColor(R.color.green))
-                    lblInProgress.setTextColor(context.resources.getColor(R.color.green))
-                    lblCompleted.setTextColor(context.resources.getColor(R.color.green))
+//                    vwStageOne.setBackgroundColor(context.resources.getColor(R.color.green))
+//                    vwStageTwo.setBackgroundColor(context.resources.getColor(R.color.green))
+//                    imgYetStart.setImageResource(R.drawable.yet_to_start_green)
+//                    imgInProgress.setImageResource(R.drawable.inprogress_green)
+//                    imgCompleted.setImageResource(R.drawable.completed_green)
+//                    lblYetToStart.setTextColor(context.resources.getColor(R.color.green))
+//                    lblInProgress.setTextColor(context.resources.getColor(R.color.green))
+//                    lblCompleted.setTextColor(context.resources.getColor(R.color.green))
                 }
             }
 
-            btnEdit.setOnClickListener {
-                listener.onEditItem(data)
-            }
-            btnDelete.setOnClickListener {
-                listener.onDeleteItem(data)
-            }
+//            btnEdit.setOnClickListener {
+//                listener.onEditItem(data)
+//            }
+//            btnDelete.setOnClickListener {
+//                listener.onDeleteItem(data)
+//            }
         }
     }
 
