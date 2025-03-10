@@ -61,13 +61,7 @@
 
 
         <activity
-<<<<<<< HEAD
             android:name=".Dashboard.Parent.Dashboard"
-=======
-            android:name=".School.LessonPlan.LessonPlan"
-
-
->>>>>>> 411a9c8455f1818387bd99feed441b89750e1067
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/AppTheme">
@@ -141,12 +135,12 @@
 
         </activity>
 
-<!--        <activity-->
-<!--            android:name=".School.LessonPlan.LessonPlan"-->
-<!--            android:theme="@style/AppTheme"-->
-<!--            android:windowSoftInputMode="adjustPan|adjustResize">-->
+        <activity
+            android:name=".School.LessonPlan.LessonPlan"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize">
 
-<!--        </activity>-->
+        </activity>
 
         <activity
             android:name=".School.Homework.HomeWork"
@@ -216,10 +210,6 @@
 
         <activity
             android:name=".School.InteractionWithStudent.InteractionWithStudent"
-<<<<<<< HEAD
-=======
-
->>>>>>> 411a9c8455f1818387bd99feed441b89750e1067
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize">
 
