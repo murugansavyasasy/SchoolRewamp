@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <!-- Rounded Corners -->
+    <corners android:radius="0dp"/> <!-- Adjust for more or less curve -->
+
+    <!-- Gradient Background -->
+    <gradient
+        android:angle="360"
+        android:startColor="@color/navi_blue3"
+        android:endColor="@color/sky_blue4"
+        android:type="linear"/>
+
+</shape>

@@ -152,7 +152,7 @@
                         android:paddingEnd="@dimen/five"
                         android:paddingBottom="@dimen/ten"
                         android:textSize="@dimen/fifteen_sp"
-                        android:text="Text Message"
+                        android:text="Text"
                         android:textColor="@color/black">
 
                     </TextView>
@@ -370,10 +370,11 @@
                         android:id="@+id/lblBackToVoiceMessage"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/ten"
+                        android:layout_marginStart="@dimen/five"
                         android:layout_marginTop="@dimen/twenty"
+                        android:layout_toEndOf="@+id/imgEndArrow1"
                         android:layout_marginEnd="@dimen/five"
-                        android:text="Back to voice record"
+                        android:text="Back To Voice Message"
                         android:textColor="@color/navi_blue2"
                         android:textSize="@dimen/thirteen_sp">
 
@@ -383,10 +384,11 @@
                         android:id="@+id/imgEndArrow1"
                         android:layout_width="@dimen/twenty"
                         android:layout_height="@dimen/twenty"
+                        android:layout_marginStart="@dimen/fifteen"
                         android:layout_marginTop="@dimen/twenty"
-                        android:layout_marginEnd="@dimen/ten"
-                        android:layout_toEndOf="@+id/lblBackToVoiceMessage"
-                        android:src="@drawable/right_arrow_round"></ImageView>
+                        android:src="@drawable/right_arrow_round">
+
+                    </ImageView>
 
                 </RelativeLayout>
 
@@ -477,10 +479,47 @@
                         android:gravity="start"
                         android:hint="Java is a multi-platform, object-oriented, and network-centric language that can be used as a platform in itself. It is a fast, secure, reliable programming language for coding everything from mobile apps and enterprise software to big data applications and server-side technologies."
                         android:padding="@dimen/ten"
-                        android:textSize="@dimen/thirteen_sp"></EditText>
+                        android:textSize="@dimen/thirteen_sp">
 
+                    </EditText>
 
                 </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlaSendText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rlaMessageFromText"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="@dimen/eleven"
+                    android:layout_marginEnd="@dimen/twele"
+                    android:layout_marginBottom="@dimen/eight"
+                    android:visibility="gone"
+                    android:background="@drawable/rect_blue_and_green_small_radious"
+                    android:padding="@dimen/ten">
+
+                    <ImageView
+                        android:id="@+id/imgSend1"
+                        android:layout_width="@dimen/fifteen"
+                        android:layout_height="@dimen/fifteen"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/five"
+                        android:src="@drawable/send_icon_white">
+
+                    </ImageView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginStart="@dimen/five"
+                        android:layout_toEndOf="@+id/imgSend1"
+                        android:text="Send"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/thirteen_sp">
+
+                    </TextView>
+                </RelativeLayout>
 
 
                 <RelativeLayout
@@ -507,7 +546,9 @@
                         android:layout_toEndOf="@+id/SwitchEmergencyVoice"
                         android:text="Emergency voice messages"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp"></TextView>
+                        android:textSize="@dimen/thirteen_sp">
+
+                    </TextView>
 
 
                     <ImageView
@@ -616,7 +657,8 @@
                                 android:layout_marginBottom="@dimen/five"
                                 android:text="00:00"
                                 android:textColor="@color/black"
-                                android:textSize="@dimen/thirteen_sp"></TextView>
+                                android:textSize="@dimen/thirteen_sp">
+                            </TextView>
 
                             <TextView
                                 android:id="@+id/lblEndDuration"
@@ -648,11 +690,13 @@
                             android:id="@+id/lblTitle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Title"
+                            android:text="@string/title"
                             android:textColor="@color/black"
                             android:textSize="@dimen/fifteen_sp"
                             android:visibility="gone"
-                            android:textStyle="bold"></TextView>
+                            android:textStyle="bold">
+
+                        </TextView>
 
                         <EditText
                             android:id="@+id/edtTitle"
@@ -681,7 +725,9 @@
                             android:layout_height="@dimen/twenty"
                             android:layout_centerVertical="true"
                             android:layout_marginEnd="@dimen/five"
-                            android:src="@drawable/send_icon_white"></ImageView>
+                            android:src="@drawable/send_icon_white">
+
+                        </ImageView>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -691,7 +737,9 @@
                             android:layout_toEndOf="@+id/imgSend"
                             android:text="Send"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/thirteen_sp"></TextView>
+                            android:textSize="@dimen/thirteen_sp">
+
+                        </TextView>
                     </RelativeLayout>
                 </RelativeLayout>
             </RelativeLayout>

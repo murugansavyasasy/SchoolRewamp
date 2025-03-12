@@ -1,74 +1,82 @@
-<?xml version="1.0" encoding="utf-8"?>
+
+
+
+
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content">
-
-<RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/header_layout">
-
+    android:layout_height="wrap_content">
     <ImageView
         android:id="@+id/imgInProgress"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:layout_gravity="center_vertical"
         android:layout_marginTop="@dimen/fourty"
         android:layout_marginStart="@dimen/twenty"
-        android:src="@drawable/correcticon" />
+        android:layout_centerVertical="true"
+        android:src="@drawable/correctic"/>
 
 
-    
+    <!-- Vertical Line Below imgInProgress -->
+    <View
+        android:id="@+id/viewVerticalLine"
+        android:layout_width="2dp"
+        android:layout_height="50dp"
+        android:background="@color/green"
+        android:layout_marginStart="32dp"
+        android:layout_below="@id/imgInProgress"
+        android:layout_marginTop="6dp"
+        android:visibility="gone"/>
+
+
     <RelativeLayout
-        android:id="@+id/relative_layout"
+        android:id="@+id/header_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/ten"
-        android:layout_marginStart="@dimen/ten"
-        android:layout_marginEnd="@dimen/twenty"
-        android:backgroundTint="@color/sky_blue1"
         android:layout_toEndOf="@+id/imgInProgress"
-        android:background="@drawable/rect_shadow_white">
+        android:layout_height="wrap_content">
 
-        <TextView
+        <RelativeLayout
+            android:id="@+id/relative_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Atoms,Elements,States of Matter"
-            android:textStyle="bold"
-            android:textSize="11sp"
-            android:textColor="@color/black"
-            android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/ten"
-            android:id="@+id/header_values">
-        </TextView>
+            android:layout_marginStart="9dp"
+            android:layout_marginEnd="@dimen/twenty"
+            android:background="@drawable/rect_shadow_white"
+            android:backgroundTint="@color/custom_blue">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="15-July-2024    To    21-July-2024"
-            android:textStyle="normal"
-            android:textSize="11sp"
-            android:textColor="@color/black"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_below="@+id/header_values"
-            android:layout_marginTop="@dimen/ten"
-            android:id="@+id/date_values">
-        </TextView>
+            <TextView
+                android:id="@+id/header_values"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Title"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:textColor="@color/black"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Unit : Matter around us"
-            android:textStyle="normal"
-            android:textSize="11sp"
-            android:textColor="@color/black"
-            android:layout_marginStart="@dimen/ten"
-            android:id="@+id/footer_values"
-            android:layout_marginTop="@dimen/ten"
-            android:layout_marginBottom="@dimen/ten"
-            android:layout_below="@+id/date_values">
-        </TextView>
+            <TextView
+                android:id="@+id/date_values"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Date"
+                android:textSize="11sp"
+                android:textColor="@color/black"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_below="@+id/header_values"
+                android:layout_marginTop="@dimen/ten"/>
+
+            <TextView
+                android:id="@+id/footer_values"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Unit"
+                android:textSize="11sp"
+                android:textColor="@color/black"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_below="@+id/date_values"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginBottom="@dimen/ten"/>
+        </RelativeLayout>
     </RelativeLayout>
- </RelativeLayout>
 </RelativeLayout>

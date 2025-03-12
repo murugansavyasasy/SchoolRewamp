@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/header_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_margin="8dp"
+        app:cardCornerRadius="4dp"
+        android:background="@color/grey"
+        app:cardElevation="4dp">
+
+        <RelativeLayout
+            android:id="@+id/cardview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/badge_count"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:background="@drawable/circle_background1"
+                android:text="0"
+                android:textSize="12sp"
+                android:elevation="10dp"
+                android:textColor="@color/grey"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/two"
+                android:layout_marginEnd="@dimen/two"
+              />
+
+            <TextView
+                android:id="@+id/section_values"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="VII - A"
+                android:textSize="15dp"
+                android:textColor="@color/grey"
+                android:layout_centerInParent="true"
+                android:textStyle="bold"/>
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+</RelativeLayout>

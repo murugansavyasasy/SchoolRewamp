@@ -20,13 +20,14 @@
             android:padding="@dimen/ten">
 
             <TextView
-                android:id="@+id/lblDate"
+                android:id="@+id/lblDate1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:text="15 Nov 2024"
                 android:textColor="@color/black"
                 android:textSize="@dimen/fifteen_sp"
+                android:visibility="gone"
                 android:textStyle="bold" />
 
 
@@ -34,7 +35,7 @@
                 android:id="@+id/rytImageSlider"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/lblDate"
+                android:layout_below="@+id/lblDate1"
                 android:layout_marginTop="@dimen/ten">
 
                 <androidx.viewpager.widget.ViewPager
@@ -53,7 +54,7 @@
                     android:id="@+id/indicator"
                     style="@style/IndicatorStyle"
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/thirty"
+                    android:layout_height="@dimen/twenty"
                     android:layout_below="@+id/viewpager"
                     android:layout_centerHorizontal="true"
                     android:elevation="4dp" />
@@ -90,6 +91,48 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
                 android:textStyle="normal" />
+            <TextView
+                android:id="@+id/lblDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:text="15 Nov 2024"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:layout_marginTop="@dimen/fifteen"
+                android:layout_marginEnd="@dimen/five"
+                android:layout_below="@+id/lblContent"
+                android:textStyle="bold" />
+
+            <RelativeLayout
+                android:id="@+id/rlaSelectText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/lblDate"
+                android:layout_marginTop="@dimen/five"
+                android:background="@drawable/rect_blue_and_green_small_radious"
+                android:padding="@dimen/seven">
+
+                <ImageView
+                    android:id="@+id/imgSend"
+                    android:layout_width="@dimen/fifteen"
+                    android:layout_height="@dimen/fifteen"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/five"
+                    android:src="@drawable/send_icon_white" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="@dimen/five"
+                    android:layout_toEndOf="@+id/imgSend"
+                    android:text="Forward"
+                    android:textColor="@color/white"
+                    android:layout_marginBottom="@dimen/five"
+                    android:textSize="@dimen/thirteen_sp" />
+            </RelativeLayout>
 
         </RelativeLayout>
 
@@ -99,7 +142,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <View
                 android:layout_width="@dimen/fifteen"
@@ -117,5 +160,23 @@
         </FrameLayout>
 
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="-25dp"
+            android:layout_marginEnd="@dimen/twenty"
+            android:elevation="10dp"
+            android:src="@drawable/new_icon">
+
+        </ImageView>
+
+        </RelativeLayout>
     </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -157,7 +157,7 @@ class StudentDetailAdapter(private val itemList: List<StudentDetailsData>, val c
             context.startActivity(intent)
         }
 
-        holder.binding.lblRegisterNumber.text = item.registerNumber
+        holder.binding.lblRegisterNumber.text = "Register No:"+ item.registerNumber
         holder.binding.lblName.text = item.name
         holder.binding.lblClass.text = item.standard + " - " + item.section
         holder.binding.lblSchoolName.text = item.schoolName

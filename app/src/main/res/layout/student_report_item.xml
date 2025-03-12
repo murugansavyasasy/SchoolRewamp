@@ -361,7 +361,7 @@
                         android:layout_gravity="center"
                         android:layout_marginStart="@dimen/twenty"
                         android:text="6382677672"
-                        android:textColor="@color/navi_blue3"
+                        android:textColor="@color/navi_blue2"
                         android:textSize="@dimen/thirteen_sp"
                         android:textStyle="bold">
 
@@ -392,7 +392,7 @@
                         android:layout_gravity="center"
                         android:layout_marginStart="@dimen/twenty"
                         android:text="SMS"
-                        android:textColor="@color/navi_blue3"
+                        android:textColor="@color/navi_blue2"
                         android:textSize="@dimen/thirteen_sp"
                         android:textStyle="bold">
 
@@ -423,7 +423,7 @@
                         android:layout_gravity="center"
                         android:layout_marginStart="@dimen/twenty"
                         android:text="sathishg079@gmail.com"
-                        android:textColor="@color/navi_blue3"
+                        android:textColor="@color/navi_blue2"
                         android:textSize="@dimen/thirteen_sp"
                         android:textStyle="bold">
 

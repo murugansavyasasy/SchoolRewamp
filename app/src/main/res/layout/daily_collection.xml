@@ -1,6 +1,333 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlaLbCommunication"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/eighty"
+        android:background="@color/primary_light"
+        android:paddingBottom="@dimen/thirty">
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
+            android:layout_marginStart="@dimen/twenty"
+            android:layout_marginTop="@dimen/twenty"
+            android:src="@drawable/arrow_back_black">
+
+        </ImageView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/sixty"
+            android:layout_marginTop="@dimen/twenty"
+            android:text="Daily Collection Fees"
+            android:textColor="@color/black"
+            android:textSize="@dimen/twenty"
+            android:textStyle="bold">
+
+        </TextView>
+    </RelativeLayout>
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/relative_layout"
+        android:layout_below="@+id/rlaLbCommunication"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="@dimen/ten">
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/linear_layout2"
+            android:layout_marginEnd="@dimen/thirty"
+            android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/from_date"
+            android:textStyle="normal"
+            android:textColor="@color/black"
+            android:textSize="13sp"
+            android:layout_gravity="center"
+            android:layout_marginEnd="@dimen/ten"
+            android:text="From Date"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/linear_layout3"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:background="@drawable/custom_rounded_background"
+                android:padding="@dimen/three"
+                android:layout_marginTop="@dimen/ten">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/from_date2"
+                android:textStyle="normal"
+                android:textColor="@color/black"
+                android:textSize="13sp"
+                android:layout_marginEnd="@dimen/ten"
+                android:text="Feb 13,2025"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/five"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/five"/>
+
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:id="@+id/image_view"
+                    android:textStyle="normal"
+                    android:textColor="@color/black"
+                    android:textSize="13sp"
+                    android:layout_marginEnd="@dimen/ten"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/three"
+                    android:src="@drawable/calender_icon_color"/>
+
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/linear_layout4"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/from_date1"
+                android:textStyle="normal"
+                android:textColor="@color/black"
+                android:textSize="13sp"
+                android:layout_gravity="center"
+                android:layout_marginEnd="@dimen/ten"
+                android:text="To Date"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/linear_layout5"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:background="@drawable/custom_rounded_background"
+                android:padding="@dimen/three"
+                android:layout_marginTop="@dimen/ten">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/from_date3"
+                    android:textStyle="normal"
+                    android:textColor="@color/black"
+                    android:textSize="13sp"
+                    android:layout_marginEnd="@dimen/ten"
+                    android:text="Feb 13,2025"
+                    android:layout_marginStart="@dimen/ten"
+                    android:layout_marginTop="@dimen/five"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="@dimen/five"/>
+
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:id="@+id/image_view1"
+                    android:textStyle="normal"
+                    android:textColor="@color/black"
+                    android:textSize="13sp"
+                    android:layout_marginEnd="@dimen/ten"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/three"
+                    android:src="@drawable/calender_icon_color"/>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/relative_layout8"
+        android:layout_below="@+id/relative_layout"
+        android:weightSum="3"
+        android:gravity="center_vertical"
+        android:layout_marginTop="@dimen/ten">
+
+
+        <TextView
+            android:id="@+id/category_name"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="CATEGORY"
+            android:textColor="@color/white"
+            android:textSize="@dimen/fifteen"
+            android:layout_marginTop="@dimen/five"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:background="@drawable/custom_category_background"
+            android:textStyle="bold">
+        </TextView>
+
+        <TextView
+            android:id="@+id/class_name"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="CLASS"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/fifteen"
+            android:layout_marginTop="@dimen/five"
+            android:layout_weight="1"
+            android:layout_marginStart="3dp"
+            android:background="@drawable/custom_rounded_background2"
+android:layout_marginEnd="3dp"
+            android:gravity="center"
+
+            android:textStyle="bold">
+        </TextView>
+
+
+        <TextView
+            android:id="@+id/mode_name"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="MODE"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/fifteen"
+            android:layout_marginTop="@dimen/five"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:background="@drawable/custom_rounded_background2"
+            android:textStyle="bold">
+        </TextView>
+
+     </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/linear_layout"
+        android:layout_below="@+id/relative_layout8"
+        android:layout_marginTop="@dimen/twenty"
+        android:background="@color/custom_blue"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:layout_marginStart="@dimen/eight"
+            android:layout_marginTop="@dimen/five"
+            android:layout_marginBottom="@dimen/five"
+            android:id="@+id/total_label"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="37,515"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/five"
+            android:layout_marginBottom="@dimen/five"
+            android:layout_marginEnd="@dimen/eight"
+            android:id="@+id/total_value"/>
+    </RelativeLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/totalsummary1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linear_layout"
+        android:layout_marginTop="@dimen/ten">
+    </androidx.recyclerview.widget.RecyclerView>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/linear_layout1"
+        android:layout_below="@+id/totalsummary1"
+        android:layout_marginTop="@dimen/ten"
+        android:background="@color/custom_blue"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:layout_marginStart="@dimen/eight"
+            android:layout_marginTop="@dimen/five"
+            android:layout_marginBottom="@dimen/five"
+            android:id="@+id/total_label1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="37,515"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/five"
+            android:layout_marginBottom="@dimen/five"
+            android:layout_marginEnd="@dimen/eight"
+            android:id="@+id/total_value1"/>
+    </RelativeLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/totalsummary2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linear_layout1"
+        android:layout_marginTop="@dimen/ten">
+    </androidx.recyclerview.widget.RecyclerView>
+
+</RelativeLayout>

@@ -12,10 +12,10 @@ import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.R
 
 class LessonPlanAdapter(
-    private var itemList: List<LessonPlanData>? = emptyList(),
-    private var listener: LessonPlanClickListener,
-    private var context: Context,
-    private var isLoading: Boolean
+    private var data: List<LessonPlanData>, // List of lesson plans
+    private val listener: LessonPlanClickListener, // Click listener
+    private val context: Context,
+    private val isLoading: Boolean // Flag for shimmer effect
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val TYPE_SHIMMER = 0
@@ -33,115 +33,61 @@ class LessonPlanAdapter(
         } else {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.lesson_plan_item, parent, false)
-            DataViewHolder(view, context) // Pass context to DataViewHolder
+            DataViewHolder(view)
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
-            // Bind actual data when loading is complete
-            itemList?.get(position)?.let { data ->
-                holder.bind(data, listener, position) // Pass position to the bind method
+            holder.bind(data[position], listener)
+
+            // Handle visibility and height of vertical line
+            if (position == data.size - 1) {
+                // Hide line for last item
+                holder.viewVerticalLine.visibility = View.GONE
+            } else {
+                // Show and adjust height dynamically
+                holder.viewVerticalLine.visibility = View.VISIBLE
             }
         }
     }
 
     override fun getItemCount(): Int {
-        return if (isLoading) 20 // Show shimmer items while loading
-        else itemList?.size ?: 0
+        return if (isLoading) 10 else data.size // Show 10 shimmer items while loading
     }
 
-    class DataViewHolder(itemView: View, private val context: Context) :
-        RecyclerView.ViewHolder(itemView) {
-        private val lblTitle: TextView = itemView.findViewById(R.id.lblTitle)
-//        private val lblFromDate: TextView = itemView.findViewById(R.id.lblFromDate)
-//        private val lblToTime: TextView = itemView.findViewById(R.id.lblToTime)
-//        private val lblUnitValue: TextView = itemView.findViewById(R.id.lblUnitValue)
-//        private val lblRemarks: TextView = itemView.findViewById(R.id.lblRemarks)
-//        private val lblYetToStart: TextView = itemView.findViewById(R.id.lblYetToStart)
-//        private val lblInProgress: TextView = itemView.findViewById(R.id.lblInProgress)
-//        private val lblCompleted: TextView = itemView.findViewById(R.id.lblCompleted)
-//        private val rlaHeader: RelativeLayout = itemView.findViewById(R.id.rlaHeader)
-//        private val imgYetStart: ImageView = itemView.findViewById(R.id.imgYetStart)
-//        private val imgInProgress: ImageView = itemView.findViewById(R.id.imgInProgress)
-//        private val imgCompleted: ImageView = itemView.findViewById(R.id.imgCompleted)
-//        private val vwStageOne: View = itemView.findViewById(R.id.vwStageOne)
-//        private val vwStageTwo: View = itemView.findViewById(R.id.vwStageTwo)
-//        private val btnEdit: ImageView = itemView.findViewById(R.id.btnEdit)
-//        private val btnDelete: ImageView = itemView.findViewById(R.id.btnDelete)
 
-        fun bind(data: LessonPlanData, listener: LessonPlanClickListener, position: Int) {
+
+    class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val lblTitle: TextView = itemView.findViewById(R.id.header_values)
+        private val lblDate: TextView = itemView.findViewById(R.id.date_values)
+        private val lblUnit: TextView = itemView.findViewById(R.id.footer_values)
+        val viewVerticalLine: View = itemView.findViewById(R.id.viewVerticalLine) // Get reference
+
+        fun bind(data: LessonPlanData, listener: LessonPlanClickListener) {
             lblTitle.text = data.Title
-//            lblFromDate.text = data.FromDate
-//            lblToTime.text = data.ToDate
-//            lblUnitValue.text = data.Unit
-//            lblRemarks.text = data.Remarks
+            lblDate.text = "${data.FromDate}  To  ${data.ToDate}"
+            lblUnit.text = "Unit: ${data.Remarks}"
 
-            // Set the background color based on the position
-            val backgroundResource = when (position % 4) { // Cycle through 4 different backgrounds
-                0 -> R.drawable.bg_green_gradient
-                1 -> R.drawable.bg_blue_gradient
-                2 -> R.drawable.bg_orange_gradient
-                else -> R.drawable.bg_purple_gradient
+            itemView.setOnClickListener {
+                listener.onEditItem(data)
             }
-//            rlaHeader.setBackgroundResource(backgroundResource)
-
-            // Handle status and stage updates
-            when (data.Status) {
-                1 -> {
-//                    vwStageOne.setBackgroundColor(context.resources.getColor(R.color.grey))
-//                    vwStageTwo.setBackgroundColor(context.resources.getColor(R.color.grey))
-//                    imgYetStart.setImageResource(R.drawable.yet_to_start_green)
-//                    imgInProgress.setImageResource(R.drawable.inprogress_grey)
-//                    imgCompleted.setImageResource(R.drawable.completed_grey)
-//                    lblYetToStart.setTextColor(context.resources.getColor(R.color.green))
-//                    lblInProgress.setTextColor(context.resources.getColor(R.color.grey))
-//                    lblCompleted.setTextColor(context.resources.getColor(R.color.grey))
-                }
-
-                2 -> {
-//                    vwStageOne.setBackgroundColor(context.resources.getColor(R.color.green))
-//                    vwStageTwo.setBackgroundColor(context.resources.getColor(R.color.grey))
-//                    imgYetStart.setImageResource(R.drawable.yet_to_start_green)
-//                    imgInProgress.setImageResource(R.drawable.inprogress_green)
-//                    imgCompleted.setImageResource(R.drawable.completed_grey)
-//                    lblYetToStart.setTextColor(context.resources.getColor(R.color.green))
-//                    lblInProgress.setTextColor(context.resources.getColor(R.color.green))
-//                    lblCompleted.setTextColor(context.resources.getColor(R.color.grey))
-                }
-
-                3 -> {
-//                    vwStageOne.setBackgroundColor(context.resources.getColor(R.color.green))
-//                    vwStageTwo.setBackgroundColor(context.resources.getColor(R.color.green))
-//                    imgYetStart.setImageResource(R.drawable.yet_to_start_green)
-//                    imgInProgress.setImageResource(R.drawable.inprogress_green)
-//                    imgCompleted.setImageResource(R.drawable.completed_green)
-//                    lblYetToStart.setTextColor(context.resources.getColor(R.color.green))
-//                    lblInProgress.setTextColor(context.resources.getColor(R.color.green))
-//                    lblCompleted.setTextColor(context.resources.getColor(R.color.green))
-                }
-            }
-
-//            btnEdit.setOnClickListener {
-//                listener.onEditItem(data)
-//            }
-//            btnDelete.setOnClickListener {
-//                listener.onDeleteItem(data)
-//            }
         }
     }
 
-    fun updateData(newList: List<LessonPlanData>) {
-        itemList = newList
-        notifyDataSetChanged()
-    }
 
+    // ViewHolder for shimmer effect
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val shimmerLayout: ShimmerFrameLayout =
-            itemView.findViewById(R.id.shimmer_view_container)
+        private val shimmerLayout: ShimmerFrameLayout = itemView.findViewById(R.id.shimmer_view_container)
 
         init {
-            shimmerLayout.startShimmer() // Start shimmer effect
+            shimmerLayout.startShimmer()
         }
+    }
+
+    // Function to update the data dynamically
+    fun updateData(newData: List<LessonPlanData>, isLoading: Boolean) {
+        this.data = newData
+        notifyDataSetChanged()
     }
 }

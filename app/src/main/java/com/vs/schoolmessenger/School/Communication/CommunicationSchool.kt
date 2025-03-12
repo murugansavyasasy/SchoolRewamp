@@ -307,6 +307,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 binding.lnrHistoryList.visibility = View.VISIBLE
                 binding.rlaScheduleCallPickDate.visibility = View.GONE
                 binding.rlaMessageFromText.visibility = View.GONE
+                binding.rlaSendText.visibility = View.GONE
                 binding.rlaRecordVoice.visibility = View.VISIBLE
                 binding.rcyHistoryDataVoiceAndText.visibility = View.GONE
 
@@ -329,6 +330,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 binding.gridViewScheduleCall.visibility = View.VISIBLE
                 binding.rlaScheduleCallPickDate.visibility = View.VISIBLE
                 binding.rlaMessageFromText.visibility = View.GONE
+                binding.rlaSendText.visibility = View.GONE
                 binding.rlaRecordVoice.visibility = View.VISIBLE
                 binding.rcyHistoryDataVoiceAndText.visibility = View.GONE
                 isChangeBackRoundCommunicationType(
@@ -348,6 +350,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 binding.gridViewScheduleCall.visibility = View.GONE
                 binding.lnrHistoryList.visibility = View.VISIBLE
                 binding.rlaMessageFromText.visibility = View.VISIBLE
+                binding.rlaSendText.visibility = View.VISIBLE
                 binding.rlaScheduleCallPickDate.visibility = View.GONE
                 binding.rlaRecordVoice.visibility = View.GONE
                 binding.rcyHistoryDataVoiceAndText.visibility = View.GONE
@@ -453,6 +456,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                         binding.gridViewScheduleCall.visibility = View.GONE
                         binding.rlaScheduleCallPickDate.visibility = View.GONE
                         binding.rlaMessageFromText.visibility = View.VISIBLE
+                        binding.rlaSendText.visibility = View.VISIBLE
                     }
                 }
 
@@ -473,6 +477,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                         binding.rlaRecordVoice.visibility = View.GONE
                         binding.gridViewScheduleCall.visibility = View.GONE
                         binding.rlaMessageFromText.visibility = View.GONE
+                        binding.rlaSendText.visibility = View.GONE
                         loadData()
                     }
 
@@ -483,6 +488,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                         binding.gridViewScheduleCall.visibility = View.GONE
                         binding.rlaRecordVoice.visibility = View.GONE
                         binding.rlaMessageFromText.visibility = View.GONE
+                        binding.rlaSendText.visibility = View.GONE
                         binding.gridViewScheduleCall.visibility = View.VISIBLE
                         loadData()
                     }
@@ -494,6 +500,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                         binding.gridViewScheduleCall.visibility = View.GONE
                         binding.rlaRecordVoice.visibility = View.GONE
                         binding.rlaMessageFromText.visibility = View.GONE
+                        binding.rlaSendText.visibility = View.GONE
                         binding.gridViewScheduleCall.visibility = View.GONE
                         loadTextData()
                     }

@@ -61,9 +61,7 @@
 
 
         <activity
-            android:name=".School.LessonPlan.LessonPlan"
-
-
+            android:name=".Auth.Splash.Splash"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/AppTheme">
@@ -137,12 +135,12 @@
 
         </activity>
 
-<!--        <activity-->
-<!--            android:name=".School.LessonPlan.LessonPlan"-->
-<!--            android:theme="@style/AppTheme"-->
-<!--            android:windowSoftInputMode="adjustPan|adjustResize">-->
+        <activity
+            android:name=".School.LessonPlan.LessonPlan"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize">
 
-<!--        </activity>-->
+        </activity>
 
         <activity
             android:name=".School.Homework.HomeWork"
@@ -212,18 +210,17 @@
 
         <activity
             android:name=".School.InteractionWithStudent.InteractionWithStudent"
-
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize">
 
         </activity>
 
-        <activity
-            android:name=".Dashboard.Parent.Dashboard"
-            android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize">
+<!--        <activity-->
+<!--            android:name=".Auth.Splash.Splash"-->
+<!--            android:theme="@style/AppTheme"-->
+<!--            android:windowSoftInputMode="adjustPan|adjustResize">-->
 
-        </activity>
+<!--        </activity>-->
 
         <activity
             android:name=".Dashboard.Settings.Notification.Notification"
@@ -544,6 +541,14 @@
             android:windowSoftInputMode="adjustPan|adjustResize">
 
         </activity>
+
+        <activity
+            android:name=".School.AbsenteesReport.AbsenteesStudents"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
+
 
         <activity
             android:name=".School.MarkYourAttendance.MarkYourAttendance"

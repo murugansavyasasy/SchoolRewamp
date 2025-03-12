@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:padding="@dimen/twenty">
 
@@ -94,9 +94,7 @@
                     android:src="@drawable/en_language_gray">
 
                 </ImageView>
-
             </RelativeLayout>
-
         </RelativeLayout>
 
         <View
@@ -309,8 +307,64 @@
             android:layout_marginTop="@dimen/ten"
             android:layout_marginBottom="@dimen/ten"
             android:background="@color/grey"></View>
-    </RelativeLayout>
 
+
+        <RelativeLayout
+            android:id="@+id/rlaArabic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/view4"
+            android:layout_marginStart="@dimen/five"
+            android:layout_marginTop="@dimen/twenty"
+            android:padding="@dimen/five">
+
+            <CheckBox
+                android:id="@+id/chArabic"
+                style="@style/CustomCheckbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/five"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"
+                tools:ignore="MissingConstraints" />
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/chArabic">
+
+                <TextView
+                    android:id="@+id/lblArabic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="عربي"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:textStyle="bold"></TextView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lblArabic"
+                    android:layout_marginTop="@dimen/ten"
+                    android:text="Arabic"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp"></TextView>
+
+                <ImageView
+                    android:id="@+id/imgArabic"
+                    android:layout_width="@dimen/fourty"
+                    android:layout_height="@dimen/fourty"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/hi_language_gray">
+
+                </ImageView>
+            </RelativeLayout>
+        </RelativeLayout>
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/btnConfirm"
