@@ -46,22 +46,8 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-<!--        <activity-->
-<!--            android:name=".Parent.QuizExam.Quiz"-->
-
-<!--            android:exported="true"-->
-<!--            android:label="@string/app_name"-->
-<!--            android:theme="@style/AppTheme">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-<!--        </activity>-->
-
-
         <activity
-            android:name=".Dashboard.Parent.Dashboard"
+            android:name=".Dashboard.Combination.RoleSelection"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/AppTheme">
@@ -216,7 +202,7 @@
         </activity>
 
         <activity
-            android:name=".Auth.Splash.Splash"
+            android:name=".Dashboard.Parent.Dashboard"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize">
 
@@ -448,16 +434,16 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize"></activity>
 
-<!--        <activity-->
-<!--            android:name=".Parent.QuizExam.Quiz"-->
-<!--            android:theme="@style/AppTheme"-->
-<!--            android:windowSoftInputMode="adjustPan|adjustResize">-->
-<!--            -->
-<!--        </activity>-->
+        <activity
+            android:name=".Parent.QuizExam.Quiz"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
 
 
         <activity
-            android:name=".Dashboard.Combination.RoleSelection"
+            android:name=".Auth.Splash.Splash"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize"></activity>
 
