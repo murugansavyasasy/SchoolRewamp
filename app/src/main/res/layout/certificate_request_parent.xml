@@ -4,40 +4,15 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <RelativeLayout
-        android:id="@+id/rytHeader"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/primary_light"
-        android:padding="@dimen/ten">
-
-        <ImageView
-            android:id="@+id/imgBack"
-            android:layout_width="@dimen/thirty"
-            android:layout_height="@dimen/thirty"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/ten"
-            android:layout_marginEnd="@dimen/ten"
-            android:layout_marginBottom="@dimen/ten"
-            android:src="@drawable/arrow_back_black"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/fifteen"
-            android:layout_marginTop="@dimen/ten"
-            android:layout_toEndOf="@id/imgBack"
-            android:text="Certificate Request"
-            android:textColor="@color/black"
-            android:textSize="@dimen/twenty_sp"
-            android:textStyle="bold"/>
-    </RelativeLayout>
+    <include
+        android:id="@+id/toolbarLayout"
+        layout="@layout/parent_side_tool_bar" />
 
     <LinearLayout
         android:id="@+id/lnrParent"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rytHeader"
+        android:layout_below="@+id/toolbarLayout"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/fifteen"
         android:background="@drawable/bg_light_grey">
@@ -70,14 +45,15 @@
     </LinearLayout>
 
     <RelativeLayout
-        android:id="@+id/rel_lay1"
+        android:id="@+id/rellay1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/lnrParent"
         android:layout_marginStart="@dimen/fifteen"
         android:layout_marginEnd="@dimen/fifteen"
         android:layout_marginTop="@dimen/ten"
-        android:background="@drawable/rect_shadow_white">
+        android:background="@drawable/rect_shadow_white"
+        android:visibility="visible">
 
         <TextView
             android:id="@+id/header_text"

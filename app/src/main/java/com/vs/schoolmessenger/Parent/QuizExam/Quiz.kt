@@ -6,61 +6,139 @@ import com.vs.schoolmessenger.databinding.QuizBinding
 
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Parent.LSRW.LSRWAdapter
+import com.vs.schoolmessenger.Parent.LSRW.LSRWClickListener
+import com.vs.schoolmessenger.Parent.LSRW.LSRWData
+import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.databinding.LsrwBinding
+class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
 
-class Quiz : AppCompatActivity() {
-    private lateinit var binding: QuizBinding
-
-    private val questions = listOf(
-        "What is the square root of 64?" to listOf("6", "7", "8", "9"),
-        "What is 5 + 3?" to listOf("7", "8", "9", "10"),
-        "Which planet is closest to the Sun?" to listOf("Earth", "Venus", "Mercury", "Mars"),
-        "Who invented the light bulb?" to listOf("Nikola Tesla", "Albert Einstein", "Thomas Edison", "Isaac Newton"),
-        "What is the capital of Japan?" to listOf("Beijing", "Seoul", "Bangkok", "Tokyo"),
-        "What is H2O commonly known as?" to listOf("Oxygen", "Water", "Hydrogen", "Steam"),
-        "How many continents are there?" to listOf("5", "6", "7", "8"),
-        "Which gas do plants absorb?" to listOf("Oxygen", "Carbon Dioxide", "Nitrogen", "Hydrogen"),
-        "What is the largest mammal?" to listOf("Elephant", "Blue Whale", "Giraffe", "Hippo"),
-        "What is the speed of light?" to listOf("300,000 km/s", "150,000 km/s", "500,000 km/s", "1,000,000 km/s")
-    )
-
+    private lateinit var questionList: List<Question>
     private var currentQuestionIndex = 0
+    private lateinit var selectedAnswers: IntArray
+    private lateinit var optionsArray: Array<TextView>
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = QuizBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun getViewBinding(): QuizBinding {
+        return QuizBinding.inflate(layoutInflater)
+    }
 
-        updateQuestion()
+    override fun setupViews() {
+        super.setupViews()
+        setupToolbar()
 
-        binding.btnNext.setOnClickListener {
-            if (currentQuestionIndex < questions.size - 1) {
-                currentQuestionIndex++
-                updateQuestion()
-            }
+        optionsArray = arrayOf(binding.option1, binding.option2, binding.option3, binding.option4)
+
+        questionList = listOf(
+            Question("Which planet is known as the Red Planet?", "Venus", "Mars", "Jupiter", "Saturn"),
+            Question("Which element has the symbol 'O'?", "Oxygen", "Ozone", "Osmium", "Opium"),
+            Question("What is 2+2?", "2", "3", "4", "5"),
+            Question("What is 5+3?", "6", "7", "8", "9"),
+            Question("What is 10-7?", "1", "2", "3", "4")
+        )
+
+        selectedAnswers = IntArray(questionList.size) { -1 }
+        displayQuestion()
+
+        optionsArray.forEachIndexed { index, option ->
+            option.setOnClickListener { selectOption(index) }
         }
 
-        binding.btnPrevious.setOnClickListener {
-            if (currentQuestionIndex > 0) {
-                currentQuestionIndex--
-                updateQuestion()
+        binding.nextButton.setOnClickListener(this)
+        binding.prevButton.setOnClickListener(this)
+    }
+
+    override fun onClick(p0: View?) {
+        when (p0?.id) {
+            R.id.nextButton -> {
+                if (currentQuestionIndex < questionList.size - 1) {
+                    currentQuestionIndex++
+                    displayQuestion()
+                } else {
+                    showSubmitDialog()
+                }
+            }
+            R.id.prevButton -> {
+                if (currentQuestionIndex > 0) {
+                    currentQuestionIndex--
+                    displayQuestion()
+                }
             }
         }
     }
 
-    private fun updateQuestion() {
-        val (question, options) = questions[currentQuestionIndex]
-        binding.tvQuestion.text = question
-        binding.option1.text = options[0]
-        binding.option2.text = options[1]
-        binding.option3.text = options[2]
-        binding.option4.text = options[3]
+    private fun displayQuestion() {
+        val q = questionList[currentQuestionIndex]
 
-        // Update Progress Bar
-        binding.progressBar.progress = currentQuestionIndex + 1
-        binding.tvProgress.text = "${currentQuestionIndex + 1} / ${questions.size}"
 
-        // Show/hide Previous button
-        binding.btnPrevious.visibility = if (currentQuestionIndex == 0) View.GONE else View.VISIBLE
+        resetOptionColors()
+
+        if (selectedAnswers[currentQuestionIndex] != -1) {
+            optionsArray[selectedAnswers[currentQuestionIndex]].apply {
+                setTextColor(resources.getColor(R.color.white))
+                setBackgroundResource(R.drawable.quiz_option_selected_bg)
+            }
+            binding.nextButton.isEnabled = true
+        } else {
+            binding.nextButton.isEnabled = false
+        }
+
+        updateProgressBar()
+        binding.prevButton.isEnabled = currentQuestionIndex > 0
+        binding.nextButton.text = if (currentQuestionIndex == questionList.size - 1) "Submit" else "Next"
+    }
+
+    private fun selectOption(index: Int) {
+        resetOptionColors()
+        optionsArray[index].apply {
+            setTextColor(resources.getColor(R.color.white))
+            setBackgroundResource(R.drawable.quiz_option_selected_bg)
+        }
+        selectedAnswers[currentQuestionIndex] = index
+        binding.nextButton.isEnabled = true
+        updateProgressBar()
+    }
+
+    private fun resetOptionColors() {
+        optionsArray.forEach {
+            it.setBackgroundResource(R.drawable.quiz_option_bg)
+            it.setTextColor(ContextCompat.getColor(this, R.color.azure_radiance))
+        }
+    }
+
+    private fun updateProgressBar() {
+        val answeredCount = selectedAnswers.count { it != -1 }
+        val progress = (answeredCount.toFloat() / questionList.size * 100).toInt()
+        binding.progressBar.progress = progress
+        binding.questionCounter.text = "$answeredCount/${questionList.size}"
+    }
+
+    private fun showSubmitDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("Submit Quiz")
+            .setMessage("Are you sure you want to submit the quiz?")
+            .setPositiveButton("Yes") { _, _ -> showQuizCompletion() }
+            .setNegativeButton("No") { dialog, _ -> dialog.dismiss() }
+            .show()
+    }
+
+    private fun showQuizCompletion() {
+        binding.apply {
+            questionText.visibility = View.GONE
+            questionCounter.visibility = View.GONE
+            option1.visibility = View.GONE
+            option2.visibility = View.GONE
+            option3.visibility = View.GONE
+            option4.visibility = View.GONE
+            nextButton.visibility = View.GONE
+            prevButton.visibility = View.GONE
+            progressBar.visibility = View.GONE
+            quizStatus.visibility = View.VISIBLE
+        }
     }
 }

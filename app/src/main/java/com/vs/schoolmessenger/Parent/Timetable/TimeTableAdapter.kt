@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.Parent.CertificateRequest
+package com.vs.schoolmessenger.Parent.Timetable
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -12,12 +12,9 @@ import com.vs.schoolmessenger.Parent.LSRW.LSRWClickListener
 import com.vs.schoolmessenger.Parent.LSRW.LSRWData
 import com.vs.schoolmessenger.R
 
-
-data class CertificateRequestItem(val title: String)
-
-class CertificateRequestAdapter (
-    private var itemList: List<CertificateRequestData>?,
-    private var listener: CertificateListener,
+class TimeTableAdapter (
+    private var itemList: List<TimeTableData>?,
+    private var listener: TimeTableListener,
     private var context: Context,
     private var isLoading: Boolean
 
@@ -38,7 +35,7 @@ class CertificateRequestAdapter (
             DataViewHolder.ShimmerViewHolder(view)
         } else {
             val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_certificaterequest, parent, false)
+                .inflate(R.layout.item_timetable, parent, false)
             DataViewHolder(view, context) // Pass context to DataViewHolder
         }
     }
@@ -60,21 +57,24 @@ class CertificateRequestAdapter (
 
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
-        private val certificate_value: TextView = itemView.findViewById(R.id.certificate_value)
-        private val reason_value: TextView = itemView.findViewById(R.id.reason_value)
-        private val created_value: TextView = itemView.findViewById(R.id.created_value)
-
+        private val time: TextView = itemView.findViewById(R.id.time_value)
+        private val subject_value: TextView = itemView.findViewById(R.id.subject_value)
+        private val name_value: TextView = itemView.findViewById(R.id.name_value)
+        private val total_time: TextView = itemView.findViewById(R.id.total_time)
+        private val duration_value: TextView = itemView.findViewById(R.id.duration_value)
 
 
         fun bind(
-            data: CertificateRequestData,
+            data: TimeTableData,
             position: Int,
-            listener: CertificateListener,
-            adapter: CertificateRequestAdapter
+            listener: TimeTableListener,
+            adapter: TimeTableAdapter
         ) {
-            certificate_value.text = data.cf_value
-            reason_value.text = data.reason_value
-            created_value.text = data.created_on
+            time.text = data.time
+            subject_value.text = data.subject
+            name_value.text = data.teacher
+            total_time.text = data.schedule
+            duration_value.text = data.duration
         }
 
         class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

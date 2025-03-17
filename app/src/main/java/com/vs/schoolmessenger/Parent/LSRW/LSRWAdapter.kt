@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.Parent.CertificateRequest
+package com.vs.schoolmessenger.Parent.LSRW
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,17 +7,15 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
-import com.vs.schoolmessenger.Parent.LSRW.LSRWAdapter
-import com.vs.schoolmessenger.Parent.LSRW.LSRWClickListener
-import com.vs.schoolmessenger.Parent.LSRW.LSRWData
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesFooterClickListener
+import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesStudentFooterData
+import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesStudentFooterListAdapter
+import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesStudentFooterListAdapter.DataViewHolder
 
-
-data class CertificateRequestItem(val title: String)
-
-class CertificateRequestAdapter (
-    private var itemList: List<CertificateRequestData>?,
-    private var listener: CertificateListener,
+class LSRWAdapter (
+    private var itemList: List<LSRWData>?,
+    private var listener: LSRWClickListener,
     private var context: Context,
     private var isLoading: Boolean
 
@@ -38,7 +36,7 @@ class CertificateRequestAdapter (
             DataViewHolder.ShimmerViewHolder(view)
         } else {
             val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_certificaterequest, parent, false)
+                .inflate(R.layout.recyclerview_lsrw, parent, false)
             DataViewHolder(view, context) // Pass context to DataViewHolder
         }
     }
@@ -60,21 +58,18 @@ class CertificateRequestAdapter (
 
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
-        private val certificate_value: TextView = itemView.findViewById(R.id.certificate_value)
-        private val reason_value: TextView = itemView.findViewById(R.id.reason_value)
-        private val created_value: TextView = itemView.findViewById(R.id.created_value)
-
+        private val title: TextView = itemView.findViewById(R.id.title)
+        private val description: TextView = itemView.findViewById(R.id.description)
 
 
         fun bind(
-            data: CertificateRequestData,
+            data: LSRWData,
             position: Int,
-            listener: CertificateListener,
-            adapter: CertificateRequestAdapter
+            listener: LSRWClickListener,
+            adapter: LSRWAdapter
         ) {
-            certificate_value.text = data.cf_value
-            reason_value.text = data.reason_value
-            created_value.text = data.created_on
+            title.text = data.lsrw_headervalues
+            description.text = data.lsrw_description
         }
 
         class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

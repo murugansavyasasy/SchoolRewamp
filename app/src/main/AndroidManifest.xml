@@ -549,6 +549,14 @@
 
         </activity>
 
+        <activity
+            android:name=".Parent.QuizExam.Quiz"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
+
+
 
         <activity
             android:name=".School.MarkYourAttendance.MarkYourAttendance"

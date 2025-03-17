@@ -6,6 +6,14 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
+    <color name="azure_radiance">#0079fd</color>
+    <color name="AthensGray">#f2f2f7</color>
+    <color name="athens_gray">#efeff0</color>
+    <color name="emerald">#57cd76</color>
+    <color name="jaffa">#ec874c</color>
+    <color name="Emerald1">#34c759</color>
+
+    <color name="purple_2">#713EE4</color>
 
 <!--    <color name="colorPrimary">#22c9cc</color>-->
     <color name="colorPrimary">#0e4275</color>
@@ -27,6 +35,9 @@
 
     <color name="grey">#ACACBA</color>
     <color name="grey_mild">#E3E3E9</color>
+    <color name="neon_green">#0FFF50</color>
+    <color name="onahau">#c2e7ff</color>
+
 
     <color name="light_blue_color">#f0f4f9</color>
 
@@ -50,6 +61,7 @@
     <color name="orange">#e9a243</color>
     <color name="dark_orange">#e26b26</color>
     <color name="green">#22b34d</color>
+    <color name="dark_green1">#12451F</color>
     <color name="light_green">#92b879</color>
     <color name="light_green1">#cdffab</color>
     <color name="light_green2">#ccf4e6</color>

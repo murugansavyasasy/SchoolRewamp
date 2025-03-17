@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_marginBottom="10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginStart="10dp"
+    app:cardCornerRadius="10dp"
+    android:layout_marginEnd="10dp"
+
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_marginBottom="5dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_marginTop="10dp"
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:text="Parent Meeting"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_height="wrap_content">
+        </TextView>
+        <TextView
+            android:id="@+id/staffandsubjectdetails"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:text="Staff And Subject Details"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:layout_height="wrap_content">
+        </TextView>
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:text="Phone Call"
+            android:drawableStart="@drawable/phone_call"
+            android:textColor="@color/azure_radiance"
+            android:textStyle="bold"
+            android:drawablePadding="10dp"
+            android:layout_height="wrap_content">
+        </TextView>
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:text="Available Slots"
+            android:drawableStart="@drawable/available_slots"
+            android:textStyle="bold"
+            android:drawablePadding="10dp"
+            android:layout_height="wrap_content">
+        </TextView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginTop="10dp"
+            android:background="@drawable/ptm_time_slot_black_outline"
+            android:id="@+id/time_slot"
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

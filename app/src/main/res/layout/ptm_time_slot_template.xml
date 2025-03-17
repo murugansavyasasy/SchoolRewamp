@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/unselected_ptm_time_slot_green_outline"
+    android:text="07:00 AM - 07:30 PM"
+    android:id="@+id/time_slot"
+    android:layout_width="140dp"
+    android:textStyle="bold"
+    android:gravity="center"
+    android:layout_marginStart="5dp"
+    android:padding="10dp"
+    android:textSize="12sp"
+    android:layout_marginBottom="10dp"
+    android:layout_height="wrap_content">
+</TextView>
