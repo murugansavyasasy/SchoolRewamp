@@ -4,10 +4,10 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:layout_width="@dimen/sixty"
-        android:layout_height="@dimen/sixty"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="-17dp"
+        android:layout_marginTop="-19dp"
         android:layout_marginEnd="@dimen/twenty_five"
         android:elevation="10dp"
         android:src="@drawable/new_icon">
@@ -46,7 +46,8 @@
             android:layout_marginEnd="@dimen/ten"
             android:text="Dear (Recipient's Name), I am writing to request leave from school for (number of days) days, starting from (start date) to (end date). The reason for my leave is (briefly state the reason, e.g., a family function, medical treatment, personal reasons)."
             android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"></TextView>
+            android:textSize="@dimen/thirteen_sp">
+        </TextView>
 
         <TextView
             android:id="@+id/lblSeeMore"
@@ -54,7 +55,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/lblContent"
             android:layout_marginStart="@dimen/ten"
-
             android:text="See More"
             android:textColor="@color/navi_blue2"
             android:textSize="@dimen/thirteen_sp">
@@ -62,16 +62,7 @@
         </TextView>
 
 
-        <TextView
-            android:id="@+id/lblDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/lblSeeMore"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="@dimen/ten"
-            android:text="01 Apr 2024"
-            android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"></TextView>
+
 
         <TextView
             android:id="@+id/lblTime"
@@ -82,39 +73,61 @@
             android:layout_marginEnd="@dimen/ten"
             android:text="10:56 AM"
             android:textColor="@color/black"
+            android:visibility="gone"
             android:textSize="@dimen/thirteen_sp">
 
         </TextView>
 
 
+
+
         <RelativeLayout
-            android:id="@+id/rlaSelectText"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lblTime"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="@dimen/ten"
-            android:background="@drawable/rect_blue_and_green_small_radious"
+            android:layout_below="@+id/lblSeeMore"
             android:padding="@dimen/ten">
 
-            <ImageView
-                android:id="@+id/imgSend"
-                android:layout_width="@dimen/fifteen"
-                android:layout_height="@dimen/fifteen"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="@dimen/five"
-                android:src="@drawable/send_icon_white"></ImageView>
-
             <TextView
+                android:id="@+id/lblDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
+                android:layout_alignParentStart="true"
+                android:text="01 Apr 2024"
+                android:layout_marginTop="@dimen/five"
                 android:layout_marginStart="@dimen/five"
-                android:layout_toEndOf="@+id/imgSend"
-                android:text="Select"
-                android:textColor="@color/white"
-                android:textSize="@dimen/thirteen_sp"></TextView>
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp" />
+
+            <RelativeLayout
+                android:id="@+id/rlaSelectText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/rect_blue_and_green_small_radious"
+                android:padding="@dimen/seven">
+
+                <ImageView
+                    android:id="@+id/imgSend"
+                    android:layout_width="@dimen/fifteen"
+                    android:layout_height="@dimen/fifteen"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/five"
+                    android:src="@drawable/send_icon_white" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="@dimen/five"
+                    android:layout_toEndOf="@+id/imgSend"
+                    android:text="Select"
+                    android:textColor="@color/white"
+                    android:layout_marginBottom="5dp"
+                    android:textSize="@dimen/thirteen_sp" />
+            </RelativeLayout>
+
         </RelativeLayout>
+
 
 
     </RelativeLayout>

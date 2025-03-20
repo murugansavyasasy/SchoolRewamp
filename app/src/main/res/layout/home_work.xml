@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
     <RelativeLayout
@@ -38,6 +39,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginHorizontal="@dimen/ten"
         android:layout_marginTop="@dimen/fifteen"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
         android:background="@drawable/bg_light_blue">
 
         <TextView
@@ -66,6 +69,7 @@
             android:textStyle="bold" />
 
     </LinearLayout>
+
 
     <RelativeLayout
         android:id="@+id/rlaHomework"
@@ -224,64 +228,121 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/lnrParent"
         android:layout_marginStart="@dimen/ten"
-        android:layout_marginTop="@dimen/ten"
+        android:layout_marginTop="@dimen/twenty"
         android:visibility="gone">
 
 
-        <ImageView
-            android:id="@+id/imgCalender"
-            android:layout_width="@dimen/twenty_five"
-            android:layout_height="@dimen/twenty_five"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/ten"
-            android:src="@drawable/calender_icon_color"></ImageView>
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardStart"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:cardCornerRadius="@dimen/ten"
+            android:layout_marginStart="@dimen/fifteen"
+            app:cardElevation="0dp">
+
+            <LinearLayout
+                android:id="@+id/lnrStartCalendar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:background="@drawable/bg_stroke_rect_black"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/lblDay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/five"
+                    android:text="Fri"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/fifteen_sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/lblDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/primary_light"
+                    android:gravity="center"
+                    android:text="12"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/fifteen_sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
 
-        <TextView
-            android:id="@+id/lblDatePick"
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/twenty"
-            android:layout_marginTop="@dimen/ten"
-            android:layout_toEndOf="@+id/imgCalender"
-            android:drawableEnd="@drawable/ic_down_arrow"
-            android:drawablePadding="@dimen/ten"
-            android:text="Sun 12 Dec 2022"
-            android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"
-            android:textStyle="normal">
+            android:layout_toEndOf="@+id/cardStart"
+            android:id="@+id/relative_layout">
+            <TextView
+                android:id="@+id/lblDatePick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"
+                android:drawablePadding="@dimen/ten"
+                android:text="Select Date"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"
+                android:textStyle="normal">
+            </TextView>
+             <ImageView
+               android:layout_width="20dp"
+               android:layout_height="20dp"
+               android:id="@+id/image_downarrow"
+                 android:layout_alignBottom="@+id/lblDatePick"
+                 android:layout_toEndOf="@+id/lblDatePick"
+                 android:layout_marginStart="@dimen/eight"
+                 android:layout_marginTop="@dimen/ten"
+               android:src="@drawable/ic_down_arrow"/>
+        </RelativeLayout>
 
-        </TextView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_below="@+id/cardStart"
+            android:layout_toEndOf="@+id/cardStart"
+            android:layout_marginEnd="@dimen/fourty"
+            android:layout_marginStart="@dimen/ten"
+            android:background="@color/grey"/>
+
 
 
         <LinearLayout
             android:id="@+id/lnrClasses"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lblDatePick"
-            android:weightSum="1">
+            android:layout_below="@+id/cardStart"
+            android:layout_marginTop="@dimen/ten"
+            android:gravity="center"
+            android:weightSum="0">
 
 
             <RelativeLayout
                 android:id="@+id/rlaStandard"
-                android:layout_width="match_parent"
-                android:layout_height="31dp"
+                android:layout_width="120dp"
+                android:layout_height="35dp"
                 android:layout_marginStart="@dimen/fifteen"
-                android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/fifteen"
-                android:layout_weight="0.5"
+                android:layout_weight="0"
                 android:background="@drawable/rect_light_blue"
-                android:padding="@dimen/five">
+                >
 
 
                 <ImageView
                     android:id="@+id/imgStandard"
-                    android:layout_width="@dimen/twenty_five"
-                    android:layout_height="@dimen/twenty_five"
+                    android:layout_width="@dimen/eighteen"
+                    android:layout_height="@dimen/eighteen"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="@dimen/ten"
-                    android:src="@drawable/ic_down_arrow">
+                    android:src="@drawable/downarrow">
 
                 </ImageView>
 
@@ -291,33 +352,34 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/fifteen"
-                    android:text="XII"
+                    android:text="STANDARD"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
-                    android:textStyle="bold"></TextView>
+                    android:textStyle="bold">
+                </TextView>
             </RelativeLayout>
 
 
             <RelativeLayout
                 android:id="@+id/rlaSection"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="120dp"
+                android:layout_height="35dp"
                 android:layout_marginStart="@dimen/fifteen"
-                android:layout_marginTop="@dimen/ten"
+
                 android:layout_marginEnd="@dimen/fifteen"
-                android:layout_weight="0.5"
+                android:layout_weight="0"
                 android:background="@drawable/rect_light_blue"
                 android:padding="@dimen/five">
 
 
                 <ImageView
                     android:id="@+id/imgSection"
-                    android:layout_width="@dimen/twenty_five"
-                    android:layout_height="@dimen/twenty_five"
+                    android:layout_width="@dimen/eighteen"
+                    android:layout_height="@dimen/eighteen"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="@dimen/ten"
-                    android:src="@drawable/ic_down_arrow">
+                    android:src="@drawable/downarrow">
 
                 </ImageView>
 
@@ -326,11 +388,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/fifteen"
+                    android:layout_marginStart="@dimen/thirty"
                     android:text="A"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
-                    android:textStyle="bold"></TextView>
+                    android:textStyle="bold">
+
+                </TextView>
             </RelativeLayout>
 
         </LinearLayout>

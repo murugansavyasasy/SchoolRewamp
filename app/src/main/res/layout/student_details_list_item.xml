@@ -33,32 +33,51 @@
 
             </com.google.android.material.imageview.ShapeableImageView>
 
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/relative_layout2"
+                android:layout_below="@+id/imgStudentProfile">
+
+
             <TextView
                 android:id="@+id/lblRegisterNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/imgStudentProfile"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/ten"
                 android:gravity="center"
                 android:text="Register No : 1470000"
                 android:textColor="@color/black"
-                android:textSize="@dimen/fifteen_sp"
+                android:textSize="13sp"
                 android:textStyle="bold">
-
             </TextView>
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:id="@+id/squarearrow"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_marginEnd="@dimen/ten"
+                    android:src="@drawable/rightsquarearrow"/>
+
+            </RelativeLayout>
+
 
             <TextView
                 android:id="@+id/lblName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/lblRegisterNumber"
+                android:layout_below="@+id/relative_layout2"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/ten"
+                android:layout_marginTop="@dimen/eight"
                 android:gravity="center"
                 android:text="Sathish"
                 android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp"></TextView>
+                android:textStyle="bold"
+                android:textSize="@dimen/thirteen_sp">
+            </TextView>
 
             <TextView
                 android:id="@+id/lblClass"
@@ -66,10 +85,11 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblName"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/ten"
+                android:layout_marginTop="@dimen/eight"
                 android:gravity="center"
                 android:text="IIX - A"
                 android:textColor="@color/black"
+                android:layout_marginBottom="@dimen/ten"
                 android:textSize="@dimen/thirteen_sp">
 
             </TextView>
@@ -107,8 +127,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/ten"
-                    android:gravity="start"
+                    android:gravity="end"
                     android:text="Kodaikanal International School"
+                    android:textStyle="bold"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
 
@@ -122,7 +143,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/lblSchoolName"
                     android:layout_marginEnd="@dimen/ten"
-                    android:gravity="start"
+                    android:gravity="end"
+                    android:textStyle="normal"
                     android:text="Kodaikanal"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"

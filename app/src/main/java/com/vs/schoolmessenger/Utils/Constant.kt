@@ -1,10 +1,13 @@
 package com.vs.schoolmessenger.Utils
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
+import android.provider.Settings
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -13,10 +16,17 @@ import android.webkit.WebViewClient
 import android.widget.EditText
 import android.widget.GridView
 import android.widget.TextView
+import com.vs.schoolmessenger.Auth.Country.Country
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.PasswordUpdateData
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserValidationData
 
 object Constant {
 
-    var isOtpRedirection = 1
+    var isDeviceType="Android"
+    var isVersionId=1
     var isShimmerViewShow = true
     var isShimmerViewDisable = false
     var isShimmerViewDisablenew = false  // added by murugan
@@ -24,6 +34,19 @@ object Constant {
     var handler = Handler(Looper.getMainLooper())
     val delayTime = 1500
     var isParentChoose = false
+    var isSelectedCountry: Country? = null
+    var isUserDetails: UserDetails? = null
+    var isUserValidationData: List<UserValidationData>? = null
+    var isStaffDetails: List<StaffDetails>? = null
+    var isParentDetails: List<ChildDetails>? = null
+    var isPassWordCreateType = 1
+
+
+    fun isInternetAvailable(activity: Activity): Boolean {
+        val connectivityManager = activity.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkInfo = connectivityManager.activeNetworkInfo
+        return networkInfo != null && networkInfo.isConnected
+    }
 
 
     fun setGridViewHeight(gridView: GridView, columns: Int) {
@@ -138,5 +161,9 @@ object Constant {
         webView.settings.displayZoomControls = false
         webView.webViewClient = WebViewClient()
         webView.loadUrl(url)
+    }
+
+    fun getAndroidSecureId(activity: Activity): String {
+        return Settings.Secure.getString(activity.contentResolver, Settings.Secure.ANDROID_ID) ?: "Unknown"
     }
 }

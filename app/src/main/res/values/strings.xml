@@ -198,10 +198,7 @@
     <string name="Event">Event</string>
     <string name="HoliDay">Holiday</string>
     <string name="Leave_Request">Leave Request</string>
-
-
-
-
+    <string name="title">Title</string>
 
 
 </resources>

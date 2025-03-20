@@ -38,81 +38,70 @@
             app:layout_constraintTop_toBottomOf="@+id/lblCountryTitle" />
 
 
-        <ImageView
-            android:id="@+id/imgCountry"
-            android:layout_width="@dimen/twenty"
-            android:layout_height="@dimen/twenty"
-            android:layout_marginStart="@dimen/twenty"
-            android:layout_marginTop="@dimen/twenty"
-            android:src="@drawable/flag_india"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lblContent"></ImageView>
-
-
-        <TextView
-            android:id="@+id/lblCountry"
-            android:layout_width="wrap_content"
+        <Spinner
+            android:id="@+id/isSpineer"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/twenty"
             android:layout_marginTop="@dimen/twenty"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginEnd="@dimen/ten"
             android:text="India"
             android:textColor="@color/black"
-            app:layout_constraintStart_toEndOf="@+id/imgCountry"
-            app:layout_constraintTop_toBottomOf="@+id/lblContent"></TextView>
+            app:layout_constraintTop_toBottomOf="@+id/lblContent">
+
+        </Spinner>
 
         <View
             android:id="@+id/vw"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginStart="@dimen/twenty"
-            android:layout_marginTop="@dimen/ten"
             android:layout_marginEnd="@dimen/twenty"
             android:background="@color/black"
-            app:layout_constraintTop_toBottomOf="@+id/lblCountry" />
-
+            app:layout_constraintTop_toBottomOf="@+id/isSpineer" />
 
 
         <RelativeLayout
             android:id="@+id/rytTerms"
-            android:padding="@dimen/five"
-            android:layout_marginTop="@dimen/twenty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="@dimen/twenty"
+            android:padding="@dimen/five"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/vw">
 
-        <CheckBox
-            android:id="@+id/terms_checkbox"
-            style="@style/CustomCheckbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            tools:ignore="MissingConstraints" />
+            <CheckBox
+                android:id="@+id/terms_checkbox"
+                style="@style/CustomCheckbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                tools:ignore="MissingConstraints" />
 
 
             <LinearLayout
-                android:layout_toEndOf="@+id/terms_checkbox"
                 android:id="@+id/lblTermsConditions"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/terms_checkbox"
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_toEndOf="@+id/terms_checkbox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/ten"
+                    android:layout_toEndOf="@+id/terms_checkbox"
                     android:text="@string/lblIagreetotheTermsandConditions"
                     android:textColor="@color/navi_blue3"
-                    android:textSize="@dimen/thirteen_sp"/>
+                    android:textSize="@dimen/thirteen_sp" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginTop="2dp"
                     android:layout_marginStart="@dimen/ten"
+                    android:layout_marginTop="2dp"
                     android:background="@color/navi_blue3" />
             </LinearLayout>
 
@@ -123,8 +112,8 @@
             android:layout_width="@dimen/hundred"
             android:layout_height="@dimen/hundred"
             android:layout_centerInParent="true"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rytTerms"
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
@@ -132,15 +121,15 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-   <androidx.recyclerview.widget.RecyclerView
-       android:id="@+id/recyclerFeatures"
-       android:layout_width="match_parent"
-       app:layout_constraintStart_toStartOf="parent"
-       android:visibility="gone"
-       app:layout_constraintBottom_toBottomOf="parent"
-       android:layout_height="wrap_content">
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerFeatures"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-   </androidx.recyclerview.widget.RecyclerView>
+    </androidx.recyclerview.widget.RecyclerView>
 
 
     <androidx.constraintlayout.widget.ConstraintLayout

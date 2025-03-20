@@ -26,6 +26,7 @@ import com.vs.schoolmessenger.Dashboard.Settings.RateUs.RateUs
 import com.vs.schoolmessenger.Dashboard.Settings.ReportTheBug.ReportTheBug
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.ChangeLanguage
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SettingsFragmentBinding
 
@@ -100,6 +101,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
             }
 
             R.id.lnrChangePassword -> {
+                Constant.isPassWordCreateType = 3
                 startActivity(Intent(requireActivity(), PasswordGeneration::class.java))
             }
 

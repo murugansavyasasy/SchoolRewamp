@@ -16,4 +16,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "School Chimes"
 include(":app")
- 

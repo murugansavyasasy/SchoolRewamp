@@ -10,10 +10,10 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/two_hundred"
         android:layout_centerVertical="true"
-        android:layout_marginTop="@dimen/fifty"
+        android:layout_marginTop="@dimen/thirty"
         android:src="@drawable/verification_code"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -37,11 +37,90 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp" />
 
+            <TextView
+                android:id="@+id/lblContactTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblEnter"
+                android:layout_marginTop="@dimen/twenty_five"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp" />
+
+
+            <LinearLayout
+                android:id="@+id/lblContactNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblContactTitle"
+                android:layout_marginTop="@dimen/twenty_five"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:id="@+id/lnrFirstNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="@dimen/thirty"
+                        android:layout_height="@dimen/thirty"
+                        android:src="@drawable/phone_call_icon">
+
+                    </ImageView>
+
+                    <TextView
+                        android:id="@+id/lblNumberOne"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/ten"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/thirteen_sp"
+                        android:textStyle="bold">
+
+                    </TextView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lnrSecondNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/lblNumberOne"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="@dimen/thirty"
+                        android:layout_height="@dimen/thirty"
+                        android:src="@drawable/phone_call_icon">
+
+                    </ImageView>
+
+                    <TextView
+                        android:id="@+id/lblNumberTwo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/ten"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/thirteen_sp"
+                        android:textStyle="bold">
+
+                    </TextView>
+
+                </LinearLayout>
+            </LinearLayout>
+
+
             <LinearLayout
                 android:id="@+id/lnrEditBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/lblEnter"
+                android:layout_below="@+id/lblContactNumber"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/fourty"
                 android:orientation="horizontal">
@@ -158,9 +237,9 @@
                 android:layout_marginTop="@dimen/fourty"
                 android:layout_toEndOf="@+id/lblDidNot"
                 android:text="Resend"
-                android:visibility="gone"
                 android:textColor="@color/dark_orange"
-                android:textSize="@dimen/fifteen_sp" />
+                android:textSize="@dimen/fifteen_sp"
+                android:visibility="gone" />
 
 
             <TextView
@@ -175,6 +254,18 @@
                 android:text="@string/lblValidate"
                 android:textColor="@color/white"
                 android:textSize="@dimen/thirteen_sp" />
+
+            <com.vs.schoolmessenger.Utils.SpinningProgressBar
+                android:id="@+id/isLoading"
+                android:layout_width="@dimen/thirty"
+                android:layout_height="@dimen/thirty"
+                android:layout_below="@+id/lblDidNot"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/fourty_five"
+                android:layout_marginBottom="@dimen/fifty"
+                android:visibility="gone">
+
+            </com.vs.schoolmessenger.Utils.SpinningProgressBar>
 
         </RelativeLayout>
 

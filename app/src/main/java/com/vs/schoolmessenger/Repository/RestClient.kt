@@ -1,4 +1,5 @@
 package com.vs.schoolmessenger.Repository
+
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -7,7 +8,7 @@ import java.util.concurrent.TimeUnit
 
 class RestClient : OkHttpClient() {
     companion object {
-        private var BASE_URL = "https://vss.voicesnapforschools.com/nodejs/api/MergedApi/"
+        private var BASE_URL = "http://apiv7.schoolchimes.net/app/"
         lateinit var apiInterfaces: ApiInterfaces
         private var retrofit: Retrofit? = null
         val client: Retrofit?
@@ -32,6 +33,7 @@ class RestClient : OkHttpClient() {
                 .create(ApiInterfaces::class.java)
         }
     }
+
     init {
         val client = Builder()
         val interceptor = HttpLoggingInterceptor()

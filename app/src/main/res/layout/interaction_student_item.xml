@@ -27,7 +27,7 @@
             android:layout_marginTop="@dimen/ten"
             android:text="Sathish"
             android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"
+            android:textSize="@dimen/fifteen"
             android:textStyle="bold">
 
         </TextView>
@@ -48,15 +48,16 @@
 
         <TextView
             android:id="@+id/btnInteract"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="38dp"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/ten"
             android:background="@drawable/bg_green_radoius_10dp"
             android:text="Interact"
+            android:gravity="center"
             android:padding="@dimen/five"
             android:textColor="@color/white"
-            android:textSize="@dimen/thirteen_sp"
+            android:textSize="@dimen/fifteen"
             android:textStyle="bold">
 
         </TextView>

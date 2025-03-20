@@ -1,18 +1,22 @@
 package com.vs.schoolmessenger.Auth.Country
 
 import android.content.Intent
+import android.util.Log
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.Login
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.MobileNumber
 import com.vs.schoolmessenger.Auth.TermsConditions.TermsAndConditions
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.Auth
+import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.CountryListScreenBinding
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickListener {
 
@@ -20,19 +24,15 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
         return CountryListScreenBinding.inflate(layoutInflater)
     }
 
+    var authViewModel: Auth? = null
     private var isAgree = false
-    private val DELAY_BETWEEN_SCROLL_MS = 25L
-    private val SCROLL_DX = 5
-    private val DIRECTION_RIGHT = 1
-
-    private val isCountryAdapter by lazy {
-        CountryListScrollingAdapter(getDummyFeatures())
-    }
 
     override fun setupViews() {
         super.setupViews()
         binding.btnArrowNext.setOnClickListener(this)
         setupToolbar()
+        authViewModel = ViewModelProvider(this).get(Auth::class.java)
+        authViewModel!!.init()
 
         binding.lblTermsConditions.setOnClickListener {
             startActivity(Intent(this, TermsAndConditions::class.java))
@@ -42,48 +42,55 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
             isAgree = isChecked
         }
 
+        isCountry()
 
-//        binding.lnrFirst.setBackgroundResource(R.drawable.thailand_flag)
-//        binding.lnrSecound.setBackgroundResource(R.drawable.india_flag)
-//        binding.lnrThird.setBackgroundResource(R.drawable.united_states_flag)
-//        binding.lnrFourth.setBackgroundResource(R.drawable.australia_flag)
-//        binding.lnrFifth.setBackgroundResource(R.drawable.albania_flag)
-//        binding.lnrSixth.setBackgroundResource(R.drawable.afghanistan_flag)
-
-        //  isCountryLoading(getDummyFeatures())
-    }
-
-    private fun isCountryLoading(isCountryItem: List<CountryItem>) {
-        with(binding.recyclerFeatures) {
-            layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
-            adapter = isCountryAdapter
-        }
-        isCountryAdapter.submitList(isCountryItem)
-
-        lifecycleScope.launch { autoScrollFeaturesList() }
-    }
-
-    private var isAutoScrollActive = true
-
-    private suspend fun autoScrollFeaturesList() {
-        while (isAutoScrollActive) {
-            if (binding.recyclerFeatures.canScrollHorizontally(DIRECTION_RIGHT)) {
-                binding.recyclerFeatures.smoothScrollBy(SCROLL_DX, 0)
-            } else {
-                val layoutManager = binding.recyclerFeatures.layoutManager as LinearLayoutManager
-                val firstPosition = layoutManager.findFirstVisibleItemPosition()
-                val currentList =
-                    (binding.recyclerFeatures.adapter as CountryListScrollingAdapter).itemList
-
-                if (firstPosition != RecyclerView.NO_POSITION && currentList.isNotEmpty()) {
-                    val reorderedList = currentList.subList(firstPosition, currentList.size) +
-                            currentList.subList(0, firstPosition)
-                    (binding.recyclerFeatures.adapter as CountryListScrollingAdapter).submitList(
-                        reorderedList
-                    )
+        authViewModel!!.isCountryList?.observe(this) { response ->
+            if (response != null) {
+                val status = response.status
+                val message = response.message
+                if (status) {
+                    val isCountryList = response.data
+                    isLoadCountry(isCountryList)
                 }
             }
-            delay(DELAY_BETWEEN_SCROLL_MS)
+        }
+    }
+
+    private fun isCountry() {
+        authViewModel!!.isCountryList()
+    }
+
+    private fun isLoadCountry(countryList: List<Country>) {
+        val adapter = CountrySpinnerAdapter(this@CountryScreen, countryList)
+        binding.isSpineer.adapter = adapter
+
+        if (countryList.isNotEmpty()) {
+            Constant.isSelectedCountry = countryList[0]
+        }
+
+        // Handle selection event
+        binding.isSpineer.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                Constant.isSelectedCountry = countryList[position]
+
+                Log.d(
+                    "SelectedCountry",
+                    "ID: ${Constant.isSelectedCountry!!.id}, Name: ${Constant.isSelectedCountry!!.name}"
+                )
+
+                Toast.makeText(
+                    this@CountryScreen,
+                    "Selected: ${Constant.isSelectedCountry!!.name}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
     }
 
@@ -92,31 +99,14 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
         when (v?.id) {
             R.id.btnArrowNext -> {
                 if (isAgree) {
-                    val intent = Intent(this@CountryScreen, Login::class.java)
+                    SharedPreference.putAgreeTerms(this, isAgree)
+                    SharedPreference.putCountryId(this, Constant.isSelectedCountry!!.id.toString())
+                    val intent = Intent(this@CountryScreen, MobileNumber::class.java)
                     startActivity(intent)
                 } else {
                     Toast.makeText(this, R.string.AgreeTermsConditions, Toast.LENGTH_SHORT).show()
                 }
             }
         }
-    }
-
-    private fun getDummyFeatures(): List<CountryItem> {
-        return listOf(
-            CountryItem(R.drawable.thailand_flag),
-            CountryItem(R.drawable.india_flag),
-            CountryItem(R.drawable.united_states_flag),
-            CountryItem(R.drawable.zimbabwe_flag),
-            CountryItem(R.drawable.france_flag),
-            CountryItem(R.drawable.argentina_flag),
-            CountryItem(R.drawable.finland_flag),
-            CountryItem(R.drawable.antigua_and_barbuda_flag),
-            CountryItem(R.drawable.australia_flag),
-            CountryItem(R.drawable.american_samoa_flag),
-            CountryItem(R.drawable.angola_flag),
-            CountryItem(R.drawable.albania_flag),
-            CountryItem(R.drawable.united_states_flag),
-            CountryItem(R.drawable.algeria_flag),
-        )
     }
 }

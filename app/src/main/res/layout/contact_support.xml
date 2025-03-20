@@ -48,11 +48,11 @@
 
         <ImageView
             android:id="@+id/imgPhoneCall"
-            android:layout_width="@dimen/thirty"
-            android:layout_height="@dimen/thirty"
+            android:layout_width="@dimen/twenty_two"
+            android:layout_height="@dimen/twenty_two"
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/ten"
-            android:src="@drawable/phone_icon">
+            android:src="@drawable/telephoneicon">
 
         </ImageView>
 
@@ -84,7 +84,7 @@
                 android:text="6382677672"
                 android:textSize="@dimen/thirteen_sp"
                 android:layout_marginEnd="@dimen/ten"
-                android:textColor="@color/navi_blue1"
+                android:textColor="@color/navi_blue2"
                 android:textStyle="bold">
 
             </TextView>
@@ -104,11 +104,11 @@
         android:background="@drawable/rect_shadow_white">
         <ImageView
             android:id="@+id/imgMail"
-            android:layout_width="@dimen/thirty"
-            android:layout_height="@dimen/thirty"
+            android:layout_width="@dimen/twenty_two"
+            android:layout_height="@dimen/twenty_two"
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/ten"
-            android:src="@drawable/mail_icon">
+            android:src="@drawable/mailimage">
 
         </ImageView>
 
@@ -139,7 +139,7 @@
                 android:textSize="@dimen/thirteen_sp"
                 android:text="support@savyasasy.com"
                 android:layout_marginEnd="@dimen/ten"
-                android:textColor="@color/navi_blue1"
+                android:textColor="@color/navi_blue2"
                 android:textStyle="bold">
 
             </TextView>

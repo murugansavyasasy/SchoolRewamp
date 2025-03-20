@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <corners android:radius="0dp"/> <!-- Adjust radius for more/less curve -->
+    <solid android:color="@color/mild_grey3"/> <!-- Use the same background color -->
+</shape>

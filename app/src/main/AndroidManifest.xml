@@ -16,6 +16,10 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
@@ -46,8 +50,23 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
+        <!--        <activity-->
+        <!--            android:name=".Parent.QuizExam.Quiz"-->
+
+        <!--            android:exported="true"-->
+        <!--            android:label="@string/app_name"-->
+        <!--            android:theme="@style/AppTheme">-->
+        <!--            <intent-filter>-->
+        <!--                <action android:name="android.intent.action.MAIN" />-->
+
+        <!--                <category android:name="android.intent.category.LAUNCHER" />-->
+        <!--            </intent-filter>-->
+        <!--        </activity>-->
+
+
         <activity
-            android:name=".Dashboard.Combination.RoleSelection"
+            android:name=".Auth.Splash.Splash"
+
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/AppTheme">
@@ -59,6 +78,20 @@
         </activity>
         <activity
             android:name=".School.StudentReport.StudentReport"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
+
+        <activity
+            android:name=".Auth.MobilePasswordSignIn.MobileNumber"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
+
+        <activity
+            android:name=".Auth.MobilePasswordSignIn.PassWord"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize">
 
@@ -81,7 +114,6 @@
 
         <activity
             android:name=".School.AbsenteesMarking.AbsenteesStudentMark"
-
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize">
 
@@ -131,25 +163,19 @@
         <activity
             android:name=".School.Homework.HomeWork"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize">
-
-        </activity>
+            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
 
 
         <activity
-            android:name=".Auth.Country.CountryScreen"
-            android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize">
 
-        </activity>
+            android:name=".Dashboard.Parent.Dashboard"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
 
         <activity
             android:name=".School.Assignment.Assignment"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize">
-
-        </activity>
-
+            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
 
         <activity
             android:name=".School.SchoolStrength.SchoolStrength"
@@ -157,7 +183,6 @@
             android:windowSoftInputMode="adjustPan|adjustResize">
 
         </activity>
-
 
         <activity
             android:name=".Auth.OTP.OTP"
@@ -202,7 +227,7 @@
         </activity>
 
         <activity
-            android:name=".Dashboard.Parent.Dashboard"
+            android:name=".Auth.Country.CountryScreen"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize">
 
@@ -231,17 +256,12 @@
         <activity
             android:name=".School.ImagePDF.ImagePdf"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize">
-
-        </activity>
-
+            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
 
         <activity
             android:name=".Dashboard.Settings.ReportTheBug.ReportTheBug"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize">
-
-        </activity>
+            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
 
 
         <activity
@@ -290,7 +310,6 @@
 
 
             android:name=".Parent.Homework.HomeWork"
-
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
@@ -308,7 +327,6 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
 
         <activity
-
             android:name=".School.Communication.CommunicationSchool"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize">
@@ -326,6 +344,7 @@
             android:name=".School.Event.CreateEvent"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize">
+
         </activity>
 
         <activity
@@ -339,25 +358,28 @@
             android:name=".School.Video.CreateVideo"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize">
+
         </activity>
 
         <activity
             android:name=".CommonScreens.ImageViewActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize">
+
         </activity>
 
         <activity
             android:name=".CommonScreens.SchoolList"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize">
-        </activity>
+            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
 
         <activity
             android:name=".Parent.RequestLeave.LeaveRequest"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize">
+
         </activity>
+
         <activity
             android:name=".Parent.Noticeboard.NoticeBoard"
             android:theme="@style/AppTheme"
@@ -394,7 +416,6 @@
 
         </activity>
 
-
         <activity
             android:name=".Parent.FeeDetails.FeeDetails"
             android:theme="@style/AppTheme"
@@ -402,12 +423,13 @@
 
         </activity>
 
-
         <activity
 
             android:name=".Parent.Communication.Communication"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
 
         <activity
             android:name=".Parent.InteractionWithStaff.InteractionWithStaff"
@@ -434,34 +456,41 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize"></activity>
 
+        <!--        <activity-->
+        <!--            android:name=".Parent.QuizExam.Quiz"-->
+        <!--            android:theme="@style/AppTheme"-->
+        <!--            android:windowSoftInputMode="adjustPan|adjustResize">-->
+        <!--            -->
+        <!--        </activity>-->
+
+
         <activity
-            android:name=".Parent.QuizExam.Quiz"
+            android:name=".Dashboard.Combination.RoleSelection"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize">
 
         </activity>
 
-
-        <activity
-            android:name=".Auth.Splash.Splash"
-            android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
-
         <activity
             android:name=".Parent.Timetable.TimeTable"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
         <activity
 
             android:name=".Parent.Assignment.Assignment"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
 
         <activity
-
             android:name=".Parent.Attendance.AttendanceReport"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
 
         <activity
             android:name=".Testing.CouponClass"
@@ -480,7 +509,6 @@
 
         <activity
             android:name=".School.AbsenteesMarking.AttendanceMark"
-
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize">
 
@@ -536,7 +564,8 @@
         <activity
             android:name=".School.StaffWiseAttendanceReport.StaffWiseAttendanceReport"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
 
+        </activity>
     </application>
 </manifest>

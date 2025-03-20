@@ -6,12 +6,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.Dashboard.School.Dashboard
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.StudentDetailsListItemBinding
 
-class StudentDetailAdapter(private val itemList: List<StudentDetailsData>, val context: Context) :
+class StudentDetailAdapter(private val itemList: List<ChildDetails>?, val context: Context) :
     RecyclerView.Adapter<StudentDetailAdapter.GridViewHolder>() {
 
 
@@ -28,24 +29,12 @@ class StudentDetailAdapter(private val itemList: List<StudentDetailsData>, val c
     }
 
     override fun onBindViewHolder(holder: GridViewHolder, position: Int) {
-        val item = itemList[position]
+        val item = itemList!![position]
 
         when (position) {
 
             0 -> {
-//                holder.binding.imgStudentProfile.setImageDrawable(
-//                    ContextCompat.getDrawable(
-//                        context,
-//                        R.drawable.school_building_1
-//                    )
-//                )
 
-//                holder.binding.rlaStudent.setBackgroundDrawable(
-//                    ContextCompat.getDrawable(
-//                        context,
-//                        R.drawable.rect_shadow_light_sky_blue
-//                    )
-//                )
                 holder.binding.rlaStudent.setBackgroundDrawable(
                     ContextCompat.getDrawable(
                         context,
@@ -63,19 +52,6 @@ class StudentDetailAdapter(private val itemList: List<StudentDetailsData>, val c
 
             1 -> {
 
-//                holder.binding.imgStudentProfile.setImageDrawable(
-//                    ContextCompat.getDrawable(
-//                        context,
-//                        R.drawable.school_building_2
-//                    )
-//                )
-
-//                holder.binding.rlaStudent.setBackgroundDrawable(
-//                    ContextCompat.getDrawable(
-//                        context,
-//                        R.drawable.rect_shadow_violet
-//                    )
-//                )
                 holder.binding.rlaStudent.setBackgroundDrawable(
                     ContextCompat.getDrawable(
                         context,
@@ -92,21 +68,6 @@ class StudentDetailAdapter(private val itemList: List<StudentDetailsData>, val c
             }
 
             2 -> {
-
-//                holder.binding.imgStudentProfile.setImageDrawable(
-//                    ContextCompat.getDrawable(
-//                        context,
-//                        R.drawable.school_building_3
-//                    )
-//                )
-
-//                holder.binding.rlaStudent.setBackgroundDrawable(
-//                    ContextCompat.getDrawable(
-//                        context,
-//                        R.drawable.rect_shadow_green
-//                    )
-//                )
-
                 holder.binding.rlaStudent.setBackgroundDrawable(
                     ContextCompat.getDrawable(
                         context,
@@ -122,20 +83,6 @@ class StudentDetailAdapter(private val itemList: List<StudentDetailsData>, val c
             }
 
             3 -> {
-
-//                holder.binding.imgStudentProfile.setImageDrawable(
-//                    ContextCompat.getDrawable(
-//                        context,
-//                        R.drawable.school_building_4
-//                    )
-//                )
-
-//                holder.binding.rlaStudent.setBackgroundDrawable(
-//                    ContextCompat.getDrawable(
-//                        context,
-//                        R.drawable.rect_shadow_blue
-//                    )
-//                )
 
                 holder.binding.rlaStudent.setBackgroundDrawable(
                     ContextCompat.getDrawable(
@@ -157,12 +104,16 @@ class StudentDetailAdapter(private val itemList: List<StudentDetailsData>, val c
             context.startActivity(intent)
         }
 
-        holder.binding.lblRegisterNumber.text = item.registerNumber
-        holder.binding.lblName.text = item.name
-        holder.binding.lblClass.text = item.standard + " - " + item.section
-        holder.binding.lblSchoolName.text = item.schoolName
-        holder.binding.lblSchoolPlace.text = item.place
+        holder.binding.lblRegisterNumber.text = "Register No:"+ item.roll_number
+        holder.binding.lblName.text = item.child_name
+        holder.binding.lblClass.text = item.standard_name + " - " + item.section_name
+        holder.binding.lblSchoolName.text = item.school_name
+        holder.binding.lblSchoolPlace.text = item.school_city
+
+        Glide.with(context)
+            .load(item.school_logo_url)
+            .into(holder.binding.imgStudentProfile)
     }
 
-    override fun getItemCount(): Int = itemList.size
+    override fun getItemCount(): Int = itemList!!.size
 }

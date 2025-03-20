@@ -53,7 +53,7 @@ class LessonPlanAdapter(
 
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
-//        private val lblTitle: TextView = itemView.findViewById(R.id.lblTitle)
+        private val lblTitle: TextView = itemView.findViewById(R.id.lblTitle)
 //        private val lblFromDate: TextView = itemView.findViewById(R.id.lblFromDate)
 //        private val lblToTime: TextView = itemView.findViewById(R.id.lblToTime)
 //        private val lblUnitValue: TextView = itemView.findViewById(R.id.lblUnitValue)
@@ -71,7 +71,7 @@ class LessonPlanAdapter(
 //        private val btnDelete: ImageView = itemView.findViewById(R.id.btnDelete)
 
         fun bind(data: LessonPlanData, listener: LessonPlanClickListener, position: Int) {
-//            lblTitle.text = data.Title
+            lblTitle.text = data.Title
 //            lblFromDate.text = data.FromDate
 //            lblToTime.text = data.ToDate
 //            lblUnitValue.text = data.Unit

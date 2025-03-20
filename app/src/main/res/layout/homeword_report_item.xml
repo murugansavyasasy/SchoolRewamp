@@ -9,9 +9,9 @@
     <ImageView
         android:id="@+id/imgNewImage"
         android:layout_width="@dimen/eighty"
-        android:layout_height="@dimen/fifty"
+        android:layout_height="@dimen/eighty"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="-10dp"
+        android:layout_marginTop="-18dp"
         android:elevation="10dp"
         android:src="@drawable/new_icon"
         android:visibility="visible">
@@ -160,8 +160,8 @@
 
         <ImageView
             android:id="@+id/imgVoicePlay"
-            android:layout_width="@dimen/fourty_five"
-            android:layout_height="@dimen/fourty_five"
+            android:layout_width="@dimen/thirty_five"
+            android:layout_height="@dimen/thirty_five"
             android:layout_below="@+id/lblTitleVoice"
             android:layout_marginStart="@dimen/five"
             android:layout_marginTop="@dimen/ten"
@@ -188,7 +188,7 @@
             android:layout_height="@dimen/thirty"
             android:layout_below="@+id/lblTitleVoice"
             android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/eighteen"
+            android:layout_marginTop="@dimen/fifteen"
             android:layout_marginEnd="@dimen/ten"
             android:layout_toEndOf="@+id/imgVoicePlay" />
 
@@ -468,6 +468,7 @@
             android:layout_marginTop="@dimen/ten"
             android:text="Nothing"
             android:textColor="@color/black"
+            android:gravity="center"
             android:textSize="@dimen/thirteen_sp"
             android:textStyle="bold" />
 
@@ -490,7 +491,7 @@
             android:layout_centerInParent="true"
             android:indeterminateDrawable="@drawable/progress_bar_white"
             android:indeterminateOnly="true"
-            android:visibility="visible">
+            android:visibility="gone">
 
         </ProgressBar>
 

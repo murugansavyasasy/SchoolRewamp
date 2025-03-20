@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/three_hundred"
-        android:layout_alignParentBottom="true"
-        android:alpha="0.3"
-        android:background="@drawable/bg_attendance_mark">
-
-    </ImageView>
 
     <RelativeLayout
         android:id="@+id/rytHeader"
@@ -75,7 +68,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:padding="@dimen/ten"
-            android:text="@string/AttendanceReport"
+            android:text="Report"
             android:textColor="@color/dark_blue"
             android:textSize="@dimen/thirteen_sp"
             android:textStyle="bold" />
@@ -97,6 +90,7 @@
             android:layout_marginEnd="@dimen/ten"
             android:background="@drawable/rect_shadow_violet"
             android:orientation="vertical"
+            android:visibility="gone"
             android:padding="@dimen/fifteen">
 
             <CalendarView
@@ -106,18 +100,133 @@
 
         </LinearLayout>
 
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Select Date"
+    android:textColor="@color/black"
+    android:textStyle="bold"
+    android:layout_alignStart="@+id/cardStart"
+    android:layout_marginTop="@dimen/fifteen"
+    android:textSize="@dimen/thirteen"
+    android:id="@+id/date_header"/>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardStart"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:cardCornerRadius="@dimen/ten"
+            android:layout_marginStart="@dimen/fifteen"
+            android:layout_below="@+id/date_header"
+            android:layout_marginTop="@dimen/twele"
+            app:cardElevation="0dp">
+
+            <LinearLayout
+                android:id="@+id/lnrStartCalendar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:background="@drawable/bg_stroke_rect_black"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/lblDay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/five"
+                    android:text="Fri"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/fifteen_sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/lblDate1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/primary_light"
+                    android:gravity="center"
+                    android:text="12"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/fifteen_sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/cardStart"
+            android:layout_marginTop="55dp"
+            android:id="@+id/relative_layout">
+            <TextView
+                android:id="@+id/lblDatePick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"
+                android:drawablePadding="@dimen/ten"
+                android:text="Thu 13 Feb 2025"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"
+                android:textStyle="normal">
+            </TextView>
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:id="@+id/image_downarrow"
+                android:layout_alignBottom="@+id/lblDatePick"
+                android:layout_toEndOf="@+id/lblDatePick"
+                android:layout_marginStart="@dimen/eight"
+                android:layout_marginTop="@dimen/ten"
+                android:src="@drawable/ic_down_arrow"/>
+        </RelativeLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_below="@+id/cardStart"
+            android:layout_toEndOf="@+id/cardStart"
+            android:layout_marginEnd="@dimen/fourty"
+            android:layout_marginStart="@dimen/ten"
+            android:background="@color/grey"/>
+
+
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select Standard and Section"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_below="@+id/cardStart"
+            android:layout_alignStart="@+id/cardStart"
+            android:layout_marginTop="@dimen/fifteen"
+            android:textSize="@dimen/thirteen"
+            android:id="@+id/sction_header"/>
+
+
+
+
+
         <LinearLayout
             android:id="@+id/lnrClasses"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lnrAttendance"
+            android:layout_below="@+id/sction_header"
             android:weightSum="1">
 
 
             <RelativeLayout
                 android:id="@+id/rlaStandard"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="35dp"
                 android:layout_marginStart="@dimen/fifteen"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/fifteen"
@@ -128,12 +237,12 @@
 
                 <ImageView
                     android:id="@+id/imgStandard"
-                    android:layout_width="@dimen/twenty_five"
-                    android:layout_height="@dimen/twenty_five"
+                    android:layout_width="@dimen/fifteen"
+                    android:layout_height="@dimen/twenty"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="@dimen/ten"
-                    android:src="@drawable/ic_down_arrow">
+                    android:src="@drawable/downarrow">
 
                 </ImageView>
 
@@ -143,17 +252,18 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/fifteen"
-                    android:text="XII"
+                    android:text="STANDARD"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"
-                    android:textStyle="bold"></TextView>
+                    android:textSize="@dimen/twele"
+                    android:textStyle="bold">
+                </TextView>
             </RelativeLayout>
 
 
             <RelativeLayout
                 android:id="@+id/rlaSection"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="35dp"
                 android:layout_marginStart="@dimen/fifteen"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/fifteen"
@@ -164,8 +274,8 @@
 
                 <ImageView
                     android:id="@+id/imgSection"
-                    android:layout_width="@dimen/twenty_five"
-                    android:layout_height="@dimen/twenty_five"
+                    android:layout_width="@dimen/fifteen"
+                    android:layout_height="@dimen/twenty"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="@dimen/ten"
@@ -179,24 +289,257 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/fifteen"
-                    android:text="A"
+                    android:text="SECTION"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"
-                    android:textStyle="bold"></TextView>
+                    android:textSize="@dimen/twele"
+                    android:textStyle="bold">
+                </TextView>
             </RelativeLayout>
 
         </LinearLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select Standard and Section"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_below="@+id/lnrClasses"
+            android:layout_alignStart="@+id/cardStart"
+            android:layout_marginTop="@dimen/fifteen"
+            android:textSize="@dimen/thirteen"
+            android:id="@+id/attendancetype_header"/>
+
+
+
+
+
+
+        <LinearLayout
+            android:id="@+id/lnrClasses1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/attendancetype_header"
+            android:weightSum="1">
+
+
+            <RelativeLayout
+                android:id="@+id/full_day"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/fifteen"
+                android:layout_weight="0.5"
+                android:background="@drawable/rect_grey"
+                android:padding="@dimen/five">
+
+
+                <RadioButton
+                    android:id="@+id/radio_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/ten">
+                </RadioButton>
+
+                <TextView
+                    android:id="@+id/fullday_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="Full Day"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen"
+                    android:layout_toEndOf="@+id/radio_button"
+                    android:layout_marginEnd="@dimen/ten"
+                    android:textStyle="normal">
+                </TextView>
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/half_day"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/fifteen"
+                android:layout_weight="0.5"
+                android:background="@drawable/rect_grey"
+                android:padding="@dimen/five">
+
+
+                <RadioButton
+                    android:id="@+id/half_radiobutton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/ten">
+
+                </RadioButton>
+
+                <TextView
+                    android:id="@+id/halfday_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="Half Day"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen"
+                    android:layout_toEndOf="@+id/half_radiobutton"
+                    android:textStyle="normal">
+                </TextView>
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select Session"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_below="@+id/lnrClasses1"
+            android:layout_alignStart="@+id/cardStart"
+            android:layout_marginTop="@dimen/fifteen"
+            android:textSize="@dimen/thirteen"
+            android:id="@+id/session_header"/>
+
+
+
+
+
+
+        <LinearLayout
+            android:id="@+id/lnrClasses2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/session_header"
+            android:weightSum="1">
+
+
+            <RelativeLayout
+                android:id="@+id/first_half"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/fifteen"
+                android:layout_weight="0.5"
+                android:background="@drawable/rect_grey"
+                android:padding="@dimen/five">
+
+
+                <RadioButton
+                    android:id="@+id/radio_button1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/ten">
+                </RadioButton>
+
+                <TextView
+                    android:id="@+id/firsthalf_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="First Half"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen"
+                    android:layout_toEndOf="@+id/radio_button1"
+                    android:layout_marginEnd="@dimen/ten"
+                    android:textStyle="normal">
+                </TextView>
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/second_half"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/fifteen"
+                android:layout_weight="0.5"
+                android:background="@drawable/rect_grey"
+                android:padding="@dimen/five">
+
+
+                <RadioButton
+                    android:id="@+id/secondhalf_radiobutton1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/ten">
+
+                </RadioButton>
+
+                <TextView
+                    android:id="@+id/secondhalf_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="Half Day"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen"
+                    android:layout_toEndOf="@+id/secondhalf_radiobutton1"
+                    android:textStyle="normal">
+                </TextView>
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         <RelativeLayout
             android:id="@+id/rlaAttendanceType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lnrClasses"
+            android:layout_below="@+id/attendancetype_header"
             android:layout_marginStart="@dimen/fifteen"
             android:layout_marginTop="@dimen/ten"
             android:layout_marginEnd="@dimen/fifteen"
             android:layout_weight="0.5"
+            android:visibility="gone"
             android:background="@drawable/rect_grey"
             android:padding="@dimen/five">
 
@@ -221,16 +564,18 @@
                 android:text="Full day"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
-                android:textStyle="bold"></TextView>
+                android:textStyle="bold">
+
+            </TextView>
         </RelativeLayout>
 
         <TextView
             android:id="@+id/btnSelectPresent"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/rlaAttendanceType"
+            android:layout_height="45dp"
+            android:layout_below="@+id/lnrClasses2"
             android:layout_marginStart="@dimen/twenty"
-            android:layout_marginTop="@dimen/ten"
+            android:layout_marginTop="@dimen/twenty_five"
             android:layout_marginEnd="@dimen/twenty"
             android:background="@drawable/rect_shadow_green"
             android:gravity="center"
@@ -238,6 +583,7 @@
             android:text="@string/Selectallaspresent"
             android:textColor="@color/white"
             android:textSize="@dimen/thirteen_sp"
+
             android:textStyle="bold">
 
         </TextView>
@@ -260,7 +606,7 @@
         <TextView
             android:id="@+id/btnAbsent"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
             android:layout_below="@+id/btnOr"
             android:layout_marginStart="@dimen/twenty"
             android:layout_marginTop="@dimen/ten"
@@ -274,7 +620,13 @@
             android:textStyle="bold">
 
         </TextView>
+
+
+
+
     </RelativeLayout>
+
+
 
 
     <RelativeLayout

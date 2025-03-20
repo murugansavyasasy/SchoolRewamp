@@ -8,20 +8,28 @@ import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.CreateResetChangePassword.PasswordGeneration
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.Login
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.Auth
+import com.vs.schoolmessenger.Repository.RequestKeys
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.OtpScreenBinding
 
 class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
 
     private val otpTimeout = 30000L
     private val otpInterval = 1000L
-
+    private var isMobileNumber: String? = null
     override fun getViewBinding(): OtpScreenBinding {
         return OtpScreenBinding.inflate(layoutInflater)
     }
+
+    var authViewModel: Auth? = null
 
     override fun setupViews() {
         super.setupViews()
@@ -30,17 +38,36 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
         isToolBarWhiteTheme()
         binding.lblResend.setOnClickListener(this)
         binding.btnNext.setOnClickListener(this)
+        binding.lnrFirstNumber.setOnClickListener(this)
+        binding.lnrSecondNumber.setOnClickListener(this)
+
+        authViewModel = ViewModelProvider(this).get(Auth::class.java)
+        authViewModel!!.init()
+        binding.btnNext.isClickable = true
+        binding.btnNext.setBackgroundDrawable(resources.getDrawable(R.drawable.rect_btn_orange))
+
+        isMobileNumber = SharedPreference.getMobileNumber(this@OTP)
+
+        if (Constant.isUserValidationData!!.isNotEmpty()) {
+            binding.lblEnter.text = Constant.isUserValidationData!![0].message
+            binding.lblContactTitle.text = Constant.isUserValidationData!![0].more_info
+            val numberList: List<String> =
+                Constant.isUserValidationData!![0].dial_numbers.split(",")
+            val firstNumber = numberList[0]
+            val secondNumber = numberList[1]
+            binding.lblNumberOne.text = firstNumber
+            binding.lblNumberTwo.text = secondNumber
+        }
 
 
-        when (Constant.isOtpRedirection) {
-            1 -> {
-
-            }
-            2 -> {
-
-            }
-            3 -> {
-
+        authViewModel!!.isOtpResponse?.observe(this) { response ->
+            if (response != null) {
+                val status = response.status
+                val message = response.message
+                if (status) {
+                    val intent = Intent(this@OTP, PasswordGeneration::class.java)
+                    startActivity(intent)
+                }
             }
         }
 
@@ -55,11 +82,15 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
         startOtpTimer()
     }
 
+    private fun isOtpValidate(isOpt: String) {
+        val jsonObject = JsonObject()
+        jsonObject.addProperty(RequestKeys.Req_mobile_number, isMobileNumber)
+        jsonObject.addProperty(RequestKeys.Req_otp, isOpt)
+        authViewModel!!.isOtpResponse(jsonObject, this)
+    }
 
     private fun setOtpInputListener(
-        currentEditText: EditText,
-        nextEditText: EditText?,
-        previousEditText: EditText?
+        currentEditText: EditText, nextEditText: EditText?, previousEditText: EditText?
     ) {
         currentEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -109,14 +140,26 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
             }
 
             R.id.btnNext -> {
-                if (binding.txtOtp1.text.toString() != "" && binding.txtOtp2.text.toString() != "" && binding.txtOtp3.text.toString() != "" &&
-                    binding.txtOtp4.text.toString() != "" && binding.txtOtp5.text.toString() != "" && binding.txtOtp6.text.toString() != ""
-                ) {
-                    val intent = Intent(this@OTP, PasswordGeneration::class.java)
-                    startActivity(intent)
+                if (binding.txtOtp1.text.toString() != "" && binding.txtOtp2.text.toString() != "" && binding.txtOtp3.text.toString() != "" && binding.txtOtp4.text.toString() != "" && binding.txtOtp5.text.toString() != "" && binding.txtOtp6.text.toString() != "") {
+                    val isOpt =
+                        binding.txtOtp1.text.toString() + binding.txtOtp2.text.toString() + binding.txtOtp3.text.toString() + binding.txtOtp4.text.toString() + binding.txtOtp5.text.toString() + binding.txtOtp6.text.toString()
+                    binding.btnNext.isClickable = false
+                    binding.isLoading.visibility = View.VISIBLE
+                    binding.btnNext.setBackgroundColor(resources.getColor(R.color.mild_grey0))
+                    isOtpValidate(isOpt)
                 } else {
+                    binding.btnNext.isClickable = true
+                    binding.isLoading.visibility = View.GONE
                     Toast.makeText(this, R.string.EnterTheOtp, Toast.LENGTH_SHORT).show()
                 }
+            }
+
+            R.id.lnrFirstNumber -> {
+                Constant.redirectToDialPad(this, binding.lblNumberOne.text.toString())
+            }
+
+            R.id.lnrSecondNumber -> {
+                Constant.redirectToDialPad(this, binding.lblNumberTwo.text.toString())
             }
         }
     }

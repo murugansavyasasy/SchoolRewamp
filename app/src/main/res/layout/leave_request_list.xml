@@ -23,26 +23,24 @@
                 android:id="@+id/lblDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
                 android:layout_marginTop="@dimen/five"
                 android:layout_marginEnd="@dimen/ten"
-                android:text="Apr 2 1000"
+                android:text="12 sep 2024,12:00 Am"
                 android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp"
+                android:textSize="@dimen/twele"
                 android:textStyle="normal" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/five"
-                android:gravity="center_vertical"
-                android:weightSum="1">
+                android:layout_marginTop="@dimen/eight"
+                android:weightSum="0">
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
-                    android:text="Name"
+                    android:layout_weight="0"
+                    android:text="Name :"
                     android:gravity="start"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
@@ -50,10 +48,10 @@
 
                 <TextView
                     android:id="@+id/lblName"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/ten"
-                    android:layout_weight="0.5"
+                    android:layout_marginStart="@dimen/twenty_five"
+                    android:layout_weight="0"
                     android:text="Sathish"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp" />
@@ -62,75 +60,73 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/ten"
-                android:gravity="center_vertical"
-                android:weightSum="1">
+                android:layout_marginTop="@dimen/eight"
+                android:weightSum="0">
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
-                    android:text="Section"
+                    android:layout_weight="0"
+                    android:text="Class :"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/lblSection"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/ten"
-                    android:layout_weight="0.5"
+                    android:layout_marginStart="28dp"
+                    android:layout_weight="0"
                     android:text="XII - B"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp" />
             </LinearLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/fifteen"
-                android:gravity="center_vertical"
-                android:weightSum="3">
+                >
 
                 <TextView
                     android:id="@+id/lblFromData"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="end"
+                    android:gravity="start"
                     android:text="Mar 31, 2023"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"
+                    android:textSize="@dimen/twele"
                     android:textStyle="bold" />
 
                 <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/twenty"
-                    android:layout_weight="1"
-                    android:src="@drawable/leave_level"></ImageView>
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginStart="@dimen/ninety"
+                    android:src="@drawable/exchangearrow">
+                </ImageView>
 
                 <TextView
                     android:id="@+id/lblToDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/ten"
-                    android:layout_weight="1"
-                    android:gravity="start"
+                    android:layout_marginStart="120dp"
                     android:text="Apr 2 -2023"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"
+                    android:textSize="@dimen/twele"
                     android:textStyle="bold" />
-            </LinearLayout>
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/lblReason"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/ten"
-                android:padding="@dimen/five"
+                android:padding="@dimen/eight"
                 android:text="The reason for my leave is [brief reason for leave, such as personal reasons, family emergency, etc.]. During my absence, I will ensure that all pending tasks are completed or delegated to a colleague. In case of any urgent matters, I can be reached at [your contact details]. I kindly request you to approve my leave."
-                android:textColor="@color/black"></TextView>
+                android:textColor="@color/black">
+
+            </TextView>
 
         </LinearLayout>
 
@@ -139,40 +135,46 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/lblLeaveInformation"
             android:layout_margin="@dimen/ten"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="33dp"
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginEnd="@dimen/twenty"
-                android:layout_weight="1"
+                android:layout_weight="0"
                 android:background="@drawable/bg_green_radoius_10dp"
                 android:gravity="center"
-                android:padding="@dimen/five">
+                android:padding="@dimen/two">
 
                 <ImageView
                     android:id="@+id/imgChecked"
                     android:layout_width="@dimen/twenty"
                     android:layout_height="@dimen/twenty"
                     android:layout_marginEnd="@dimen/ten"
-                    android:src="@drawable/checked"></ImageView>
+                    android:src="@drawable/checkimage">
+
+                </ImageView>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/imgChecked"
-                    android:text="Approval"
+                    android:text="Approve"
+                    android:textSize="13sp"
                     android:textColor="@color/white"
-                    android:textStyle="bold"></TextView>
+                    android:textStyle="bold">
+
+                </TextView>
             </RelativeLayout>
 
             <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="33dp"
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginEnd="@dimen/twenty"
-                android:layout_weight="1"
+                android:layout_weight="0"
                 android:background="@drawable/bg_red_radious__all_side_same"
                 android:gravity="center"
                 android:padding="@dimen/five">
@@ -182,7 +184,9 @@
                     android:layout_width="@dimen/twenty"
                     android:layout_height="@dimen/twenty"
                     android:layout_marginEnd="@dimen/ten"
-                    android:src="@drawable/close_icon_red"></ImageView>
+                    android:src="@drawable/close_icon_red">
+
+                </ImageView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -190,7 +194,10 @@
                     android:layout_toEndOf="@+id/imgReject"
                     android:text="Reject"
                     android:textColor="@color/white"
-                    android:textStyle="bold"></TextView>
+                    android:textSize="13sp"
+                    android:textStyle="bold">
+
+                </TextView>
             </RelativeLayout>
 
         </LinearLayout>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <ScrollView
+        android:id="@+id/scrollingView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imgIllustrate"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/two_hundred"
+                android:layout_marginTop="@dimen/thirty"
+                android:src="@drawable/password_illustrate"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <RelativeLayout
+                android:id="@+id/rytMobileNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/twenty"
+                app:layout_constraintTop_toBottomOf="@+id/imgIllustrate">
+
+                <TextView
+                    android:id="@+id/lblMobile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lblMobileNumber"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/fifteen_sp" />
+
+                <RelativeLayout
+                    android:id="@+id/rytMobile"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/fourty_five"
+                    android:layout_below="@+id/lblMobile"
+                    android:layout_marginTop="@dimen/ten">
+
+                    <ImageView
+                        android:id="@+id/imgMobile"
+                        android:layout_width="@dimen/twenty_five"
+                        android:layout_height="@dimen/twenty_five"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/mobile" />
+
+                    <View
+                        android:id="@+id/vwMobile"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginVertical="@dimen/ten"
+                        android:layout_marginStart="@dimen/ten"
+                        android:layout_toEndOf="@+id/imgMobile"
+                        android:background="@color/mild_grey1" />
+
+                    <EditText
+                        android:id="@+id/txtMobileNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_toEndOf="@+id/vwMobile"
+                        android:hint="00000-00000"
+                        android:inputType="number"
+                        android:maxLength="10"
+                        android:paddingHorizontal="@dimen/ten"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/grey"
+                        android:textSize="@dimen/thirteen_sp" />
+
+                </RelativeLayout>
+            </RelativeLayout>
+
+
+            <TextView
+                android:id="@+id/btnLoginContinue"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/fourty"
+                android:layout_marginHorizontal="@dimen/twenty"
+                android:layout_marginTop="@dimen/fifty"
+                android:layout_marginBottom="@dimen/fifty"
+                android:background="@drawable/rect_btn_orange"
+                android:gravity="center"
+                android:text="@string/lblContinue"
+                android:textColor="@color/white"
+                android:textSize="@dimen/thirteen_sp"
+                app:layout_constraintTop_toBottomOf="@+id/rytMobileNumber" />
+
+            <com.vs.schoolmessenger.Utils.SpinningProgressBar
+                android:id="@+id/isLoading"
+                android:layout_width="@dimen/thirty"
+                android:layout_height="@dimen/thirty"
+                android:layout_marginTop="55dp"
+                android:layout_marginBottom="@dimen/fifty"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rytMobileNumber">
+
+            </com.vs.schoolmessenger.Utils.SpinningProgressBar>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

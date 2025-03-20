@@ -13,8 +13,6 @@ import com.vs.schoolmessenger.databinding.RoleSelecionBinding
 
 class RoleSelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListener {
 
-    private lateinit var items: List<StudentDetailsData>
-    private lateinit var itemsStaff: List<StaffDetailData>
     private lateinit var isStudentDetailAdapter: StudentDetailAdapter
     private lateinit var isStaffDetailAdapter: StaffDetailAdapter
 
@@ -28,70 +26,6 @@ class RoleSelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListener 
         binding.lblParent.setOnClickListener(this)
         binding.lblTeacher.setOnClickListener(this)
         binding.btnGo.setOnClickListener(this)
-
-        items = listOf(
-            StudentDetailsData(
-                "Sathish",
-                "Kodaikanal international school",
-                "147525855",
-                "IIX",
-                "B",
-                "Deepka",
-                "Kodaikanal"
-            ),
-            StudentDetailsData(
-                "Saran",
-                "N.S.V.V Boys hr school",
-                "5861558464",
-                "I",
-                "A",
-                "Ravi",
-                "Chennai"
-            ),
-            StudentDetailsData(
-                "Gayathri",
-                "A.B.C girls school",
-                "47986212",
-                "II", "C", "Bala", "Madurai"
-            ),
-            StudentDetailsData(
-                "Murugan",
-                "Z.Y public school",
-                "231153211",
-                "III",
-                "D",
-                "Jeeva",
-                "Kovai"
-            )
-        )
-
-        itemsStaff = listOf(
-            StaffDetailData(
-                "Sathish",
-                "PT Teacher",
-                "Kodaikanal international school",
-                "Kodaikanal"
-            ),
-            StaffDetailData(
-                "Saran",
-                "Staff",
-                "N.S.V.V Boys hr school",
-                "Chennai"
-            ),
-            StaffDetailData(
-                "Gayathri",
-                "Principle",
-                "A.B.C girls school",
-                "Madurai"
-            ),
-            StaffDetailData(
-                "Murugan",
-                "Staff",
-                "Z.Y public school",
-                "Kovai"
-            )
-        )
-
         isLoadData(true)
 
         binding.btnGo.setOnClickListener {
@@ -104,11 +38,11 @@ class RoleSelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListener 
     private fun isLoadData(isStaff: Boolean) {
 
         if (isStaff) {
-            isStaffDetailAdapter = StaffDetailAdapter(this.itemsStaff, this)
+            isStaffDetailAdapter = StaffDetailAdapter(Constant.isStaffDetails, this)
             binding.recyclerViews.layoutManager = LinearLayoutManager(this)
             binding.recyclerViews.adapter = isStaffDetailAdapter
         } else {
-            isStudentDetailAdapter = StudentDetailAdapter(this.items, this)
+            isStudentDetailAdapter = StudentDetailAdapter(Constant.isParentDetails, this)
             binding.recyclerViews.layoutManager = LinearLayoutManager(this)
             binding.recyclerViews.adapter = isStudentDetailAdapter
         }
