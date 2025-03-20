@@ -5,5 +5,5 @@ data class VideoData(
     var videoId: String,
     val title: String,
     val content: String,
-    val date: String
+    val header: String
 )

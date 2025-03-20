@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.Parent.QuizExam
 
 
+import android.graphics.Color
 import com.vs.schoolmessenger.databinding.QuizBinding
 
 
@@ -12,17 +13,24 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Parent.CertificateRequest.CertificateListener
+import com.vs.schoolmessenger.Parent.CertificateRequest.CertificateRequestAdapter
+import com.vs.schoolmessenger.Parent.CertificateRequest.CertificateRequestData
 import com.vs.schoolmessenger.Parent.LSRW.LSRWAdapter
 import com.vs.schoolmessenger.Parent.LSRW.LSRWClickListener
 import com.vs.schoolmessenger.Parent.LSRW.LSRWData
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.databinding.CertificateRequestParentBinding
 import com.vs.schoolmessenger.databinding.LsrwBinding
+import com.vs.schoolmessenger.databinding.QuizExamBinding
+
 class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
 
-    private lateinit var questionList: List<Question>
-    private var currentQuestionIndex = 0
-    private lateinit var selectedAnswers: IntArray
-    private lateinit var optionsArray: Array<TextView>
+    private lateinit var adapter: QuizUpcomingAdapter
+    private val quizupcominglist = mutableListOf<QuizUpcomingData>()
+    private lateinit var adapter1: QuizCompletedAdapter
+    private val quizcompletedlist = mutableListOf<QuizCompletedData>()
+
 
     override fun getViewBinding(): QuizBinding {
         return QuizBinding.inflate(layoutInflater)
@@ -31,114 +39,109 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
     override fun setupViews() {
         super.setupViews()
         setupToolbar()
+        binding.lblTeacher.setOnClickListener(this)
+        binding.lblParent.setOnClickListener(this)
+        isUpcoming()
+//        isCompleted()
+        setupRecyclerView()
+        loadHardcodedData()
 
-        optionsArray = arrayOf(binding.option1, binding.option2, binding.option3, binding.option4)
+          setupRecyclerView1()
+         loadHardcodedData1()
 
-        questionList = listOf(
-            Question("Which planet is known as the Red Planet?", "Venus", "Mars", "Jupiter", "Saturn"),
-            Question("Which element has the symbol 'O'?", "Oxygen", "Ozone", "Osmium", "Opium"),
-            Question("What is 2+2?", "2", "3", "4", "5"),
-            Question("What is 5+3?", "6", "7", "8", "9"),
-            Question("What is 10-7?", "1", "2", "3", "4")
-        )
-
-        selectedAnswers = IntArray(questionList.size) { -1 }
-        displayQuestion()
-
-        optionsArray.forEachIndexed { index, option ->
-            option.setOnClickListener { selectOption(index) }
-        }
-
-        binding.nextButton.setOnClickListener(this)
-        binding.prevButton.setOnClickListener(this)
     }
 
-    override fun onClick(p0: View?) {
-        when (p0?.id) {
-            R.id.nextButton -> {
-                if (currentQuestionIndex < questionList.size - 1) {
-                    currentQuestionIndex++
-                    displayQuestion()
-                } else {
-                    showSubmitDialog()
-                }
+
+    private fun setupRecyclerView() {
+        adapter = QuizUpcomingAdapter(quizupcominglist, object : QuizUpcomingListener {
+            override fun onItemClick(
+                data: QuizUpcomingData,
+                holder: QuizUpcomingAdapter.DataViewHolder
+            ) {
+                // Handle item click
             }
-            R.id.prevButton -> {
-                if (currentQuestionIndex > 0) {
-                    currentQuestionIndex--
-                    displayQuestion()
-                }
+        }, this, false)
+
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        binding.recyclerView.adapter = adapter
+    }
+
+    private fun loadHardcodedData() {
+        quizupcominglist.apply {
+            add(QuizUpcomingData("Online Quiz", "Play Quiz games to improve the learning in a funnier way it will reduce the stress and improve the brain activities ", "Subject : Tamil","15 Questions"))
+            add(QuizUpcomingData("Online Quiz", "Play Quiz games to improve the learning in a funnier way it will reduce the stress and improve the brain activities ", "Subject : Tamil","15 Questions"))
+            add(QuizUpcomingData("Online Quiz", "Play Quiz games to improve the learning in a funnier way it will reduce the stress and improve the brain activities ", "Subject : Tamil","15 Questions"))
+            add(QuizUpcomingData("Online Quiz", "Play Quiz games to improve the learning in a funnier way it will reduce the stress and improve the brain activities ", "Subject : Tamil","15 Questions"))
+            add(QuizUpcomingData("Online Quiz", "Play Quiz games to improve the learning in a funnier way it will reduce the stress and improve the brain activities ", "Subject : Tamil","15 Questions"))
+        }
+        adapter.notifyDataSetChanged()
+    }
+
+
+    private fun setupRecyclerView1() {
+        adapter1 = QuizCompletedAdapter(quizcompletedlist, object : QuizCompletedListener {
+            override fun onItemClick(
+                data: QuizCompletedData,
+                holder: QuizCompletedAdapter.DataViewHolder
+            ) {
+                // Handle item click
             }
-        }
+        }, this, false)
+
+        binding.recyclerView1.layoutManager = LinearLayoutManager(this)
+        binding.recyclerView1.adapter = adapter1
     }
 
-    private fun displayQuestion() {
-        val q = questionList[currentQuestionIndex]
+    private fun loadHardcodedData1() {
+        quizcompletedlist.apply {
+            add(QuizCompletedData("What is the capital of Germany", "Berlin", "Munich","Frankurt","Hamburg"))
+            add(QuizCompletedData("What is the capital of Germany", "Berlin ", "Munich","Frankurt","Hamburg"))
+            add(QuizCompletedData("What is the capital of Germany", "Berlin", "Munich","1Frankurt","Hamburg"))
+            add(QuizCompletedData("What is the capital of Germany", "Berlin ", "Munich","Frankurt","Hamburg"))
+            add(QuizCompletedData("What is the capital of Germany", "Berlin", "Munich","Frankurt","Hamburg"))
+        }
+        adapter1.notifyDataSetChanged()
+    }
 
 
-        resetOptionColors()
 
-        if (selectedAnswers[currentQuestionIndex] != -1) {
-            optionsArray[selectedAnswers[currentQuestionIndex]].apply {
-                setTextColor(resources.getColor(R.color.white))
-                setBackgroundResource(R.drawable.quiz_option_selected_bg)
+    override fun onClick(v: View?) {
+        if (v == null) return
+        when (v.id) {
+
+            R.id.lblTeacher -> {
+
+                isUpcoming()
             }
-            binding.nextButton.isEnabled = true
-        } else {
-            binding.nextButton.isEnabled = false
-        }
 
-        updateProgressBar()
-        binding.prevButton.isEnabled = currentQuestionIndex > 0
-        binding.nextButton.text = if (currentQuestionIndex == questionList.size - 1) "Submit" else "Next"
-    }
+            com.vs.schoolmessenger.R.id.lblParent -> {
+                isCompleted()
+            }
 
-    private fun selectOption(index: Int) {
-        resetOptionColors()
-        optionsArray[index].apply {
-            setTextColor(resources.getColor(R.color.white))
-            setBackgroundResource(R.drawable.quiz_option_selected_bg)
-        }
-        selectedAnswers[currentQuestionIndex] = index
-        binding.nextButton.isEnabled = true
-        updateProgressBar()
-    }
-
-    private fun resetOptionColors() {
-        optionsArray.forEach {
-            it.setBackgroundResource(R.drawable.quiz_option_bg)
-            it.setTextColor(ContextCompat.getColor(this, R.color.azure_radiance))
         }
     }
 
-    private fun updateProgressBar() {
-        val answeredCount = selectedAnswers.count { it != -1 }
-        val progress = (answeredCount.toFloat() / questionList.size * 100).toInt()
-        binding.progressBar.progress = progress
-        binding.questionCounter.text = "$answeredCount/${questionList.size}"
+    fun isUpcoming(){
+        binding.lblTeacher.setBackgroundResource(com.vs.schoolmessenger.R.drawable.bg_radiantgreen1)
+        binding.lblTeacher.setTextColor(Color.BLACK)
+        binding.lblParent.setBackgroundResource(R.drawable.bg_radiantwhite1)
+        binding.lblParent.setTextColor(Color.GRAY)
+        binding.correctanswers.visibility =View.GONE
+        binding.incorrectanswers.visibility =View.GONE
+        binding.recyclerView1.visibility = View.GONE
+        binding.recyclerView.visibility = View.VISIBLE
     }
 
-    private fun showSubmitDialog() {
-        AlertDialog.Builder(this)
-            .setTitle("Submit Quiz")
-            .setMessage("Are you sure you want to submit the quiz?")
-            .setPositiveButton("Yes") { _, _ -> showQuizCompletion() }
-            .setNegativeButton("No") { dialog, _ -> dialog.dismiss() }
-            .show()
-    }
+    fun isCompleted() {
+        binding.lblParent.setBackgroundResource(com.vs.schoolmessenger.R.drawable.bg_radiantgreen1)
+        binding.lblParent.setTextColor(Color.BLACK)
+        binding.lblTeacher.setBackgroundResource(R.drawable.bg_radiantwhite1)
+        binding.lblTeacher.setTextColor(Color.GRAY)
+        binding.correctanswers.visibility =View.VISIBLE
+        binding.incorrectanswers.visibility =View.VISIBLE
+        binding.recyclerView1.visibility = View.VISIBLE
+        binding.recyclerView.visibility = View.GONE
 
-    private fun showQuizCompletion() {
-        binding.apply {
-            questionText.visibility = View.GONE
-            questionCounter.visibility = View.GONE
-            option1.visibility = View.GONE
-            option2.visibility = View.GONE
-            option3.visibility = View.GONE
-            option4.visibility = View.GONE
-            nextButton.visibility = View.GONE
-            prevButton.visibility = View.GONE
-            progressBar.visibility = View.GONE
-            quizStatus.visibility = View.VISIBLE
-        }
+
     }
 }

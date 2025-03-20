@@ -1,6 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <include
+        android:id="@+id/toolbarLayout"
+        layout="@layout/parent_side_tool_bar" />
+
+    <RelativeLayout
+        android:id="@+id/rytSearch"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/thirty_five"
+        android:layout_margin="@dimen/ten"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_below="@+id/toolbarLayout"
+        android:layout_alignStart="@+id/rcyOnlineMeeting"
+        android:layout_alignEnd="@+id/rcyOnlineMeeting"
+        android:background="@drawable/rect_grey">
+
+
+        <ImageView
+            android:id="@+id/imgSearch"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/ten"
+            android:src="@drawable/ic_search" />
+
+        <EditText
+            android:id="@+id/txtSearchMenu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@+id/imgSearch"
+            android:background="@android:color/transparent"
+            android:hint="@string/lblSearch"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp" />
+
+    </RelativeLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcyOnlineMeeting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_below="@+id/rytSearch">
+    </androidx.recyclerview.widget.RecyclerView>
+
+</RelativeLayout>

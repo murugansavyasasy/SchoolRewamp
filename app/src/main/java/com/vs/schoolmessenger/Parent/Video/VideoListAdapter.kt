@@ -23,7 +23,7 @@ class VideoListAdapter(
     private var isTextExpanded = false
 
     inner class GridViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val lblDate: TextView = itemView.findViewById(R.id.lblDate)
+        val lblDate: TextView = itemView.findViewById(R.id.lblheader)
         val imgVimeoThumbnail: ImageView = itemView.findViewById(R.id.imgVimeoThumbnail)
         val lblTitle: TextView = itemView.findViewById(R.id.lblTitle)
         val lblVideoContent: TextView = itemView.findViewById(R.id.lblVideoContent)
@@ -51,7 +51,7 @@ class VideoListAdapter(
         holder.customProgressBar.visibility = View.VISIBLE
         holder.imgVideoPlay.visibility = View.GONE
 
-        holder.lblDate.text = item.date
+        holder.lblDate.text = item.header
         holder.lblVideoContent.text = item.content
         holder.lblTitle.text = item.title
 

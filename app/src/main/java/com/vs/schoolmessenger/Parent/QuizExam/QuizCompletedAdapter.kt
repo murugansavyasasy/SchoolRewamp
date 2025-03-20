@@ -1,22 +1,19 @@
-package com.vs.schoolmessenger.Parent.CertificateRequest
+package com.vs.schoolmessenger.Parent.QuizExam
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
-import com.vs.schoolmessenger.Parent.LSRW.LSRWAdapter
-import com.vs.schoolmessenger.Parent.LSRW.LSRWClickListener
-import com.vs.schoolmessenger.Parent.LSRW.LSRWData
 import com.vs.schoolmessenger.R
 
-
-
-class CertificateRequestAdapter (
-    private var itemList: List<CertificateRequestData>?,
-    private var listener: CertificateListener,
+class QuizCompletedAdapter (
+    private var itemList: List<QuizCompletedData>?,
+    private var listener: QuizCompletedListener,
     private var context: Context,
     private var isLoading: Boolean
 
@@ -37,7 +34,7 @@ class CertificateRequestAdapter (
             DataViewHolder.ShimmerViewHolder(view)
         } else {
             val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_certificaterequest, parent, false)
+                .inflate(R.layout.quiz_completedlist, parent, false)
             DataViewHolder(view, context) // Pass context to DataViewHolder
         }
     }
@@ -59,21 +56,27 @@ class CertificateRequestAdapter (
 
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
-        private val certificate_value: TextView = itemView.findViewById(R.id.certificate_value)
-        private val reason_value: TextView = itemView.findViewById(R.id.reason_value)
-        private val created_value: TextView = itemView.findViewById(R.id.created_value)
+        private val questionText: TextView = itemView.findViewById(R.id.questionText)
+        private val option1: TextView = itemView.findViewById(R.id.option1)
+        private val option2: TextView = itemView.findViewById(R.id.option2)
+        private val option3: TextView = itemView.findViewById(R.id.option3)
+        private val option4: TextView = itemView.findViewById(R.id.option4)
 
 
 
         fun bind(
-            data: CertificateRequestData,
+            data: QuizCompletedData,
             position: Int,
-            listener: CertificateListener,
-            adapter: CertificateRequestAdapter
+            listener: QuizCompletedListener,
+            adapter: QuizCompletedAdapter
         ) {
-            certificate_value.text = data.cf_value
-            reason_value.text = data.reason_value
-            created_value.text = data.created_on
+            questionText.text = data.questionvalue
+            option1.text = data.option1
+            option2.text = data.option2
+            option3.text = data.option3
+            option4.text = data.option4
+
+
         }
 
         class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

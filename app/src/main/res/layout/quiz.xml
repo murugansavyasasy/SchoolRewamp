@@ -1,184 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <include
+        android:id="@+id/toolbarLayout"
+        layout="@layout/parent_side_tool_bar" />
 
-    <ScrollView
+    <LinearLayout
+        android:id="@+id/lnrParent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbarLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/fifteen"
+        android:padding="@dimen/two"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
+        android:background="@drawable/bg_light_white">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/lblTeacher"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/bg_radiantgreen1"
+            android:gravity="center"
+            android:padding="@dimen/ten"
+            android:text="Upcoming"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp"
+            android:textStyle="bold" />
 
-            <LinearLayout
-                android:id="@+id/quiz_status"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/quiz_complete">
-                </ImageView>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center"
-                    android:shadowColor="@color/black"
-                    android:shadowDx="2"
-                    android:shadowDy="1"
-                    android:shadowRadius="3"
-                    android:text="Submitted the Quiz Successfully"
-                    android:textColor="@color/neon_green"
-                    android:textSize="@dimen/twenty_sp"
-                    android:textStyle="bold">
-                </TextView>
-            </LinearLayout>
-
-            <!-- Progress Bar -->
-            <ProgressBar
-                android:id="@+id/progressBar"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:layout_marginTop="20dp"
-                android:max="100"
-                android:progress="0"
-                android:progressDrawable="@android:drawable/progress_horizontal"
-                android:progressTint="@color/azure_radiance" />
-
-            <TextView
-                android:id="@+id/questionCounter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity=""
-                android:padding="8dp"
-                android:text="0/0"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <!-- Question Text -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-
-                app:cardCornerRadius="15dp">
-
-                <TextView
-                    android:id="@+id/questionText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/onahau"
-                    android:padding="16dp"
-                    android:text="Question will appear here"
-                    android:textSize="15sp"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
-            </androidx.cardview.widget.CardView>
-
-            <!-- Options -->
-            <TextView
-                android:id="@+id/option1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/quiz_option_bg"
-                android:clickable="true"
-                android:gravity="center"
-
-                android:minHeight="49sp"
-                android:padding="10dp"
-                android:text="Option 1"
-                android:textColor="@color/azure_radiance"
-                android:textSize="16sp" />
+        <TextView
+            android:id="@+id/lblParent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/ten"
+            android:text="Completed"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/thirteen_sp"
+            android:background="@drawable/bg_radiantwhite1"
+            android:textStyle="bold" >
+        </TextView>
+    </LinearLayout>
 
 
-            <TextView
-                android:id="@+id/option2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/quiz_option_bg"
-                android:clickable="true"
-                android:gravity="center"
-                android:minHeight="49sp"
-                android:padding="10dp"
-                android:text="Option 2"
-                android:textColor="@color/azure_radiance"
-                android:textSize="16sp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Correct Answers: 2/10"
+        android:id="@+id/correctanswers"
+        android:fontFamily="@font/poppins_medium"
+        android:layout_below="@+id/lnrParent"
+        android:textColor="@color/black"
+        android:textSize="13sp"
+        android:visibility="gone"
+        android:layout_marginStart="@dimen/fifteen"
+        android:layout_marginTop="@dimen/ten"/>
 
-            <TextView
-                android:id="@+id/option3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/quiz_option_bg"
-                android:clickable="true"
-                android:gravity="center"
-                android:minHeight="49sp"
-                android:padding="10dp"
-                android:text="Option 3"
-                android:textColor="@color/azure_radiance"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/option4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/quiz_option_bg"
-                android:clickable="true"
-                android:gravity="center"
-                android:minHeight="49sp"
-                android:padding="10dp"
-                android:text="Option 4"
-                android:textColor="@color/azure_radiance"
-                android:textSize="16sp" />
-
-            <!--Next and Previous Button-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:paddingTop="25dp">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Incorrect Answers: 8/10"
+        android:id="@+id/incorrectanswers"
+        android:fontFamily="@font/poppins_medium"
+        android:layout_below="@+id/correctanswers"
+        android:textColor="@color/black"
+        android:textSize="13sp"
+        android:visibility="gone"
+        android:layout_marginStart="@dimen/fifteen"
+        android:layout_marginTop="@dimen/eight"/>
 
 
 
-                <Button
-                    android:id="@+id/prevButton"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:enabled="false"
-                    android:background="@drawable/bg_button_blue_color"
-                    android:textColor="@color/white"
-                    android:text="Previous" />
 
-                <View
-                    android:layout_width="16dp"
-                    android:layout_height="wrap_content" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/lnrParent"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/fifteen" />
 
-                <Button
-                    android:id="@+id/nextButton"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:background="@drawable/bg_button_blue_color"
-                    android:text="Next" />
-            </LinearLayout>
 
-        </LinearLayout>
-    </ScrollView>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/incorrectanswers"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/fifteen" />
+
+
+
 </RelativeLayout>

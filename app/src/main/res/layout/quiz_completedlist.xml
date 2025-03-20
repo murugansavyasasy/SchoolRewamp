@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/relative_layout"
+        android:layout_marginStart="@dimen/fifteen"
+        android:layout_marginEnd="@dimen/fifteen"
+        android:layout_marginTop="@dimen/fifteen"
+        android:background="@drawable/text_bg">
+
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:cardCornerRadius="15dp"
+        android:layout_marginStart="@dimen/fifteen"
+        android:layout_marginEnd="@dimen/fifteen">
+
+        <TextView
+            android:id="@+id/questionText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/onahau"
+            android:padding="16dp"
+            android:text="Question will appear here"
+            android:textSize="13sp"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppins_bold" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/option1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/quiz_option_bg"
+        android:clickable="true"
+        android:gravity="center"
+        android:minHeight="40sp"
+        android:text="Berlin"
+        android:fontFamily="@font/poppins_medium"
+        android:textSize="13sp"
+        android:textColor="@color/azure_radiance"
+        android:layout_below="@+id/cardview"
+        android:layout_marginStart="@dimen/fifteen"
+        android:layout_marginEnd="@dimen/fifteen"
+        />
+
+
+    <TextView
+        android:id="@+id/option2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/quiz_option_bg"
+        android:clickable="true"
+        android:gravity="center"
+        android:minHeight="40sp"
+        android:text="Munich"
+        android:layout_marginStart="@dimen/fifteen"
+        android:layout_marginEnd="@dimen/fifteen"
+        android:textColor="@color/azure_radiance"
+        android:layout_below="@+id/option1"
+        android:fontFamily="@font/poppins_medium"
+        android:textSize="13sp"/>
+
+    <TextView
+        android:id="@+id/option3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/quiz_option_bg"
+        android:clickable="true"
+        android:gravity="center"
+        android:minHeight="40sp"
+        android:text="Frankurt"
+        android:layout_marginStart="@dimen/fifteen"
+        android:layout_marginEnd="@dimen/fifteen"
+        android:textColor="@color/azure_radiance"
+        android:layout_below="@+id/option2"
+        android:fontFamily="@font/poppins_medium"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/option4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/quiz_option_bg"
+        android:clickable="true"
+        android:gravity="center"
+        android:minHeight="40sp"
+        android:layout_marginStart="@dimen/fifteen"
+        android:layout_marginEnd="@dimen/fifteen"
+        android:text="Hamburg"
+        android:textColor="@color/azure_radiance"
+        android:layout_below="@+id/option3"
+        android:layout_marginBottom="@dimen/fifteen"
+        android:fontFamily="@font/poppins_medium"
+        android:textSize="13sp"/>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

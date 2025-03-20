@@ -23,21 +23,29 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:background="@drawable/custom_rounded_green_background"
-            android:orientation="horizontal">
+            android:padding="@dimen/ten">
+
+            <ImageView
+                android:id="@+id/icon"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:src="@drawable/checkimage"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"/>
+
             <TextView
                 android:id="@+id/certificate_value1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
                 android:text="Approved"
-                android:layout_marginTop="@dimen/ten"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/icon"
                 android:layout_marginStart="@dimen/ten"
-                android:layout_marginEnd="@dimen/ten"
-                android:layout_marginBottom="@dimen/ten"
                 android:textColor="@color/white"
                 android:textSize="13sp"
-                android:textStyle="normal" />
+                android:textStyle="normal"/>
         </RelativeLayout>
+
 
 
         <LinearLayout
@@ -56,7 +64,7 @@
                 android:text="Certificate Type"
                 android:textColor="@color/black"
                 android:textSize="13sp"
-                android:textStyle="bold" />
+                android:fontFamily="@font/poppins_medium" />
 
             <TextView
                 android:id="@+id/certificate_value"
@@ -66,7 +74,7 @@
                 android:text=": Attendance Type"
                 android:textColor="@color/black"
                 android:textSize="13sp"
-                android:textStyle="normal"
+                android:fontFamily="@font/poppins_medium"
                 android:gravity="start"
                 android:maxLines="3"
                 android:ellipsize="end" />
@@ -89,7 +97,7 @@
                 android:text="Reason"
                 android:textColor="@color/black"
                 android:textSize="13sp"
-                android:textStyle="bold" />
+                android:fontFamily="@font/poppins_medium" />
 
             <TextView
                 android:id="@+id/reason_value"
@@ -99,7 +107,7 @@
                 android:text=": I need this  to apply for the education loan for my studies"
                 android:textColor="@color/black"
                 android:textSize="13sp"
-                android:textStyle="normal"
+                android:fontFamily="@font/poppins_medium"
                 android:gravity="start"
                 android:maxLines="100"
                 android:ellipsize="end" />
@@ -121,7 +129,7 @@
                 android:text="Created On"
                 android:textColor="@color/black"
                 android:textSize="13sp"
-                android:textStyle="bold" />
+                android:fontFamily="@font/poppins_medium" />
 
             <TextView
                 android:id="@+id/created_value"
@@ -131,7 +139,7 @@
                 android:text=": 21 Jan 2024"
                 android:textColor="@color/black"
                 android:textSize="13sp"
-                android:textStyle="normal"
+                android:fontFamily="@font/poppins_medium"
                 android:gravity="start"
                 android:maxLines="100"
                 android:ellipsize="end" />
@@ -139,27 +147,33 @@
 
 
         <RelativeLayout
-            android:id="@+id/linear_layout6"
+            android:id="@+id/linear_layout8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_below="@+id/linear_layout2"
-            android:orientation="horizontal">
+            android:layout_below="@id/linear_layout2"
+            android:padding="@dimen/ten">
+
+            <ImageView
+                android:id="@+id/icon3"
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:src="@drawable/downloadicon"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"/>
+
             <TextView
-                android:id="@+id/download_button"
+                android:id="@+id/certificate_value7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
                 android:text="Download"
-                android:layout_marginTop="@dimen/ten"
-                android:layout_marginStart="@dimen/ten"
-                android:layout_marginEnd="@dimen/ten"
-                android:layout_marginBottom="@dimen/ten"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/icon3"
+                android:layout_marginStart="@dimen/five"
                 android:textColor="@color/sky_blue0"
                 android:textSize="15sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"/>
         </RelativeLayout>
-
 
 
     </RelativeLayout>

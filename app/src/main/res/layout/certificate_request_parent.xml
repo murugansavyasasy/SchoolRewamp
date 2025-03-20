@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="match_parent">
 
     <include
         android:id="@+id/toolbarLayout"
@@ -10,11 +10,14 @@
 
     <LinearLayout
         android:id="@+id/lnrParent"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbarLayout"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/fifteen"
+        android:layout_alignStart="@+id/rellay1"
+        android:layout_alignEnd="@+id/rellay1"
+        android:padding="@dimen/two"
         android:background="@drawable/bg_light_grey">
 
         <TextView
@@ -25,7 +28,7 @@
             android:background="@drawable/bg_radiantgreen"
             android:gravity="center"
             android:padding="@dimen/ten"
-            android:text="Request"
+            android:text="REQUEST"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"
             android:textStyle="bold" />
@@ -37,9 +40,12 @@
             android:layout_weight="1"
             android:gravity="center"
             android:padding="@dimen/ten"
-            android:text="Certificates"
+            android:text="CERTIFICATES"
             android:textColor="@color/grey"
             android:textSize="@dimen/thirteen_sp"
+            android:layout_marginStart="@dimen/two"
+            android:background="@drawable/bg_radiantwhite"
+
             android:textStyle="bold" />
 
     </LinearLayout>
@@ -64,17 +70,19 @@
             android:textStyle="bold"
             android:layout_marginTop="@dimen/twenty"
             android:layout_marginStart="@dimen/ten"
-            android:textSize="15sp"/>
+            android:fontFamily="@font/poppins_bold"
+            android:textSize="13sp"/>
 
         <Spinner
             android:id="@+id/spinner_text"
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:layout_below="@+id/header_text"
-            android:layout_marginTop="@dimen/ten"
+            android:layout_marginTop="@dimen/five"
             android:layout_marginStart="@dimen/ten"
             android:background="@drawable/spinner_bg"
-            android:layout_marginEnd="@dimen/ten"/>
+            android:layout_marginEnd="@dimen/ten">
+        </Spinner>
 
         <TextView
             android:id="@+id/header_text1"
@@ -86,7 +94,8 @@
             android:layout_marginTop="@dimen/twenty"
             android:layout_marginStart="@dimen/ten"
             android:layout_below="@+id/spinner_text"
-            android:textSize="15sp"/>
+            android:fontFamily="@font/poppins_bold"
+            android:textSize="13sp"/>
 
         <RadioGroup
             android:id="@+id/radioGroup"
@@ -95,7 +104,7 @@
             android:layout_below="@+id/header_text1"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginEnd="@dimen/ten"
-            android:layout_marginTop="@dimen/ten"
+            android:layout_marginTop="@dimen/five"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -108,22 +117,24 @@
                 android:padding="@dimen/five">
 
                 <ImageView
-                    android:id="@+id/iv_radio"
+                    android:id="@+id/ivradio"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginStart="@dimen/five"
                     android:src="@drawable/custom_radio_button"
                     android:layout_marginEnd="@dimen/five"/>
 
-                <RadioButton
+                <TextView
                     android:id="@+id/rb_not_urgent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Not Urgent"
                     android:layout_marginStart="@dimen/five"
                     android:textColor="@android:color/black"
-                    android:textSize="14sp"
+                    android:textSize="13sp"
                     android:textStyle="bold"
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/poppins_medium"
                     android:button="@android:color/transparent"/>
             </LinearLayout>
 
@@ -137,21 +148,23 @@
                 android:padding="@dimen/five">
 
                 <ImageView
-                    android:id="@+id/iv_radio1"
+                    android:id="@+id/ivradio1"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginStart="@dimen/five"
                     android:src="@drawable/custom_radio_button"
                     android:layout_marginEnd="@dimen/five"/>
 
-                <RadioButton
+                <TextView
                     android:id="@+id/rb_urgent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:button="@android:color/transparent"
                     android:text="Urgent"
                     android:layout_marginStart="@dimen/five"
-                    android:textSize="14sp"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:layout_gravity="center_vertical"
                     android:textStyle="bold"
                     android:textColor="@android:color/black"/>
             </LinearLayout>
@@ -172,7 +185,9 @@
             android:layout_marginEnd="@dimen/ten"
             android:layout_marginTop="@dimen/fifteen"
             android:layout_below="@+id/radioGroup"
-            android:background="@drawable/spinner_bg"/>
+            android:fontFamily="@font/poppins_medium"
+            android:textSize="13sp"
+            android:background="@drawable/text_bg"/>
 
 
         <Button
@@ -182,13 +197,13 @@
             android:layout_below="@+id/edit_text"
             android:background="@drawable/bg_orange"
             android:textColor="@color/white"
-            android:textSize="@dimen/twele"
+            android:textSize="11sp"
             android:layout_marginBottom="@dimen/twele"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/twenty_five"
             android:gravity="center"/>
-
     </RelativeLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"

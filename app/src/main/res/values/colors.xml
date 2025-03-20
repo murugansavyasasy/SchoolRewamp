@@ -6,12 +6,16 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
+    <color name="jumbo">#87878a</color>
+
     <color name="azure_radiance">#0079fd</color>
     <color name="AthensGray">#f2f2f7</color>
     <color name="athens_gray">#efeff0</color>
     <color name="emerald">#57cd76</color>
     <color name="jaffa">#ec874c</color>
     <color name="Emerald1">#34c759</color>
+    <color name="RobinssEggBlue">#00c5bc</color>
+    <color name="iron">#e4e4e5</color>
 
     <color name="purple_2">#713EE4</color>
 

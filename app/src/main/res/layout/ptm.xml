@@ -5,58 +5,65 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-
     <androidx.cardview.widget.CardView
         android:id="@+id/nav"
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
-        app:cardCornerRadius="20dp"
         app:cardBackgroundColor="@color/athens_gray"
-        android:layout_height="wrap_content">
+        app:cardCornerRadius="20dp">
 
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
-            android:layout_width="match_parent"
-            android:weightSum="1"
             android:gravity="center"
-            android:layout_height="wrap_content">
+            android:weightSum="1">
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/smcardview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
-                android:layout_width="match_parent"
                 android:layout_weight="0.5"
-                app:cardCornerRadius="9dp"
                 app:cardBackgroundColor="@color/emerald"
-                android:layout_height="wrap_content">
+                app:cardCornerRadius="9dp">
+
                 <TextView
-                    android:textStyle="bold"
-                    android:textSize="14sp"
-                    android:padding="15dp"
+                    android:id="@+id/smtext"
                     android:layout_width="match_parent"
-                    android:text="Schedule Meeting"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:layout_height="wrap_content">
+                    android:padding="15dp"
+                    android:text="Schedule Meeting"
+                    android:textSize="14sp"
+                    android:textStyle="bold">
                 </TextView>
             </androidx.cardview.widget.CardView>
+
             <androidx.cardview.widget.CardView
-                app:cardCornerRadius="9dp"
+                android:id="@+id/mhcardview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
-                android:layout_width="match_parent"
                 android:layout_weight="0.5"
-                android:layout_height="wrap_content">
+                app:cardCornerRadius="9dp">
+
                 <TextView
-                    android:padding="15dp"
+                    android:id="@+id/mhtext"
                     android:layout_width="match_parent"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:text="Meeting History"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:layout_height="wrap_content">
+                    android:padding="15dp"
+                    android:text="Meeting History"
+                    android:textSize="14sp"
+                    android:textStyle="bold">
+
                 </TextView>
 
             </androidx.cardview.widget.CardView>
@@ -64,6 +71,7 @@
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_below="@+id/nav"

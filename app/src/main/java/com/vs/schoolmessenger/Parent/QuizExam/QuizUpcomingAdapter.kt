@@ -1,22 +1,22 @@
-package com.vs.schoolmessenger.Parent.CertificateRequest
+package com.vs.schoolmessenger.Parent.QuizExam
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
-import com.vs.schoolmessenger.Parent.LSRW.LSRWAdapter
-import com.vs.schoolmessenger.Parent.LSRW.LSRWClickListener
-import com.vs.schoolmessenger.Parent.LSRW.LSRWData
+import com.vs.schoolmessenger.Parent.CertificateRequest.CertificateListener
+import com.vs.schoolmessenger.Parent.CertificateRequest.CertificateRequestAdapter
+import com.vs.schoolmessenger.Parent.CertificateRequest.CertificateRequestData
 import com.vs.schoolmessenger.R
 
-
-
-class CertificateRequestAdapter (
-    private var itemList: List<CertificateRequestData>?,
-    private var listener: CertificateListener,
+class QuizUpcomingAdapter (
+    private var itemList: List<QuizUpcomingData>?,
+    private var listener: QuizUpcomingListener,
     private var context: Context,
     private var isLoading: Boolean
 
@@ -37,7 +37,7 @@ class CertificateRequestAdapter (
             DataViewHolder.ShimmerViewHolder(view)
         } else {
             val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_certificaterequest, parent, false)
+                .inflate(R.layout.quiz_upcominglist, parent, false)
             DataViewHolder(view, context) // Pass context to DataViewHolder
         }
     }
@@ -59,21 +59,35 @@ class CertificateRequestAdapter (
 
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
-        private val certificate_value: TextView = itemView.findViewById(R.id.certificate_value)
-        private val reason_value: TextView = itemView.findViewById(R.id.reason_value)
-        private val created_value: TextView = itemView.findViewById(R.id.created_value)
+        private val quizname: TextView = itemView.findViewById(R.id.quizname)
+        private val quizdescription: TextView = itemView.findViewById(R.id.quizdescription)
+        private val subjectvalue: TextView = itemView.findViewById(R.id.subjectvalue)
+        private val qustionsvalue: TextView = itemView.findViewById(R.id.qustionsvalue)
+        private val playnow: TextView = itemView.findViewById(R.id.playnow)
+        private val playnow2: ImageView = itemView.findViewById(R.id.playnow2)
 
 
 
         fun bind(
-            data: CertificateRequestData,
+            data: QuizUpcomingData,
             position: Int,
-            listener: CertificateListener,
-            adapter: CertificateRequestAdapter
+            listener: QuizUpcomingListener,
+            adapter: QuizUpcomingAdapter
         ) {
-            certificate_value.text = data.cf_value
-            reason_value.text = data.reason_value
-            created_value.text = data.created_on
+            quizname.text = data.quizname
+            quizdescription.text = data.quizdescription
+            subjectvalue.text = data.subjectvalue
+            qustionsvalue.text = data.qustionsvalue
+
+
+            playnow.setOnClickListener {
+                val intent = Intent(context, QuizExam::class.java)
+                context.startActivity(intent)
+            }
+            playnow2.setOnClickListener {
+                val intent = Intent(context, QuizExam::class.java)
+                context.startActivity(intent)
+            }
         }
 
         class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

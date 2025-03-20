@@ -24,38 +24,37 @@ class ParentVideo : BaseActivity<ParentSideVideoBinding>(), VideoOnItemClickList
     override fun setupViews() {
         super.setupViews()
         setupToolbar()
-        binding.imgBack.setOnClickListener(this)
 
         items = listOf(
             VideoData(
                 "https://vimeo.com/76979871", "76979871",
                 "Text Message",
                 "Come to school",
-                "Mon 12 Mar, 2020"
+                "Intorduction to Swift"
             ),
             VideoData(
                 "https://vimeo.com/22439234", "22439234",
                 "Voice Message",
                 "Big Content is a content marketing format that requires far greater time and effort to produce than the more common formats (i.e. blog posts). Big Content is often based on a novel or original idea and is differentiated in its form, frequency or duration.",
-                "Sun 17 Apr, 2023"
+                "Advanced iOS Animations"
             ),
             VideoData(
                 "https://vimeo.com/259411563", "259411563",
                 "Assignment Message",
                 "Complete the Assignment",
-                "Fri 2 Jun, 2044"
+                "Advanced iOS Animations"
             ),
             VideoData(
                 "https://vimeo.com/216098214", "216098214",
                 "Image Message",
                 "Drawing the Image",
-                "Wen 22 Jan, 2021"
+                "Advanced iOS Animations"
             ),
             VideoData(
                 "https://vimeo.com/90509568", "90509568",
                 "Notice Board Message",
                 "Follow the NoticeBoard",
-                "Tus 31 Dec, 2077",
+                "Advanced iOS Animations",
             )
         )
 

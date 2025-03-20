@@ -1,6 +1,6 @@
 package com.vs.schoolmessenger.Parent.QuizExam
 
-data class Question(
+data class QuestionData(
     val question: String,
     val option1: String,
     val option2: String,

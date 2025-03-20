@@ -2,11 +2,16 @@ package com.vs.schoolmessenger.Dashboard.Parent
 
 import androidx.recyclerview.widget.GridLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkResultsAdapter
 import com.vs.schoolmessenger.databinding.ExamMarkBinding
 
 class ExamMark : BaseActivity<ExamMarkBinding>() {
 
     private lateinit var examAdapter: ExamMarkAdapter
+
+
+
+
 
     override fun getViewBinding(): ExamMarkBinding {
         return ExamMarkBinding.inflate(layoutInflater)

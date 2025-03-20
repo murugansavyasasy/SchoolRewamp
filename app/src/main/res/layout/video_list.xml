@@ -10,11 +10,11 @@
         android:background="@drawable/rect_shadow_white">
 
         <TextView
-            android:id="@+id/lblDate"
+            android:id="@+id/lblheader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toStartOf="@+id/imgNew"
-            android:layout_marginEnd="@dimen/thirty"
+            android:layout_marginStart="@dimen/five"
+            android:layout_marginTop="@dimen/ten"
             android:padding="@dimen/five"
             android:text="Sun 22 Mar,2020"
             android:textColor="@color/black"
@@ -24,10 +24,11 @@
 
         <ImageView
             android:id="@+id/imgNew"
-            android:layout_width="@dimen/thirty"
-            android:layout_height="@dimen/thirty"
+            android:layout_width="@dimen/seventy"
+            android:layout_height="@dimen/seventy"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="@dimen/twenty"
+            android:layout_marginTop="-24dp"
             android:src="@drawable/new_icon">
 
         </ImageView>
@@ -36,7 +37,7 @@
             android:id="@+id/rlaVimeoThumbnail"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:layout_below="@+id/lblDate">
+            android:layout_below="@+id/lblheader">
 
             <ImageView
                 android:id="@+id/imgVimeoThumbnail"
