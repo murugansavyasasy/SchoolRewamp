@@ -25,8 +25,8 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserValidationData
 
 object Constant {
 
-    var isDeviceType="Android"
-    var isVersionId=1
+    var isDeviceType = "Android"
+    var isVersionId = 1
     var isShimmerViewShow = true
     var isShimmerViewDisable = false
     var isShimmerViewDisablenew = false  // added by murugan
@@ -43,7 +43,8 @@ object Constant {
 
 
     fun isInternetAvailable(activity: Activity): Boolean {
-        val connectivityManager = activity.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val connectivityManager =
+            activity.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val networkInfo = connectivityManager.activeNetworkInfo
         return networkInfo != null && networkInfo.isConnected
     }
@@ -99,8 +100,8 @@ object Constant {
     }
 
 
-    fun redirectToMessage(context: Context, phoneNumber: String){
-        val smsUri = Uri.parse("sms:"+phoneNumber)
+    fun redirectToMessage(context: Context, phoneNumber: String) {
+        val smsUri = Uri.parse("sms:" + phoneNumber)
         val intent = Intent(Intent.ACTION_VIEW, smsUri).apply {
             putExtra("", "")
         }
@@ -164,6 +165,7 @@ object Constant {
     }
 
     fun getAndroidSecureId(activity: Activity): String {
-        return Settings.Secure.getString(activity.contentResolver, Settings.Secure.ANDROID_ID) ?: "Unknown"
+        return Settings.Secure.getString(activity.contentResolver, Settings.Secure.ANDROID_ID)
+            ?: "Empty"
     }
 }
