@@ -76,6 +76,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
+        <activity
+            android:name=".Parent.ExamMarks.ExamMarkResults"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
+
+
+
         <activity
             android:name=".School.StudentReport.StudentReport"
             android:theme="@style/AppTheme"
@@ -226,12 +237,21 @@
 
         </activity>
 
+<<<<<<< HEAD
         <activity
             android:name=".Auth.Country.CountryScreen"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize">
 
         </activity>
+=======
+        <!--        <activity-->
+        <!--            android:name=".Auth.Splash.Splash"-->
+        <!--            android:theme="@style/AppTheme"-->
+        <!--            android:windowSoftInputMode="adjustPan|adjustResize">-->
+
+        <!--        </activity>-->
+>>>>>>> a00eab654677dc57fb1eda602a2304abe9eec0f8
 
         <activity
             android:name=".Dashboard.Settings.Notification.Notification"
@@ -557,6 +577,25 @@
         </activity>
 
         <activity
+<<<<<<< HEAD
+=======
+            android:name=".School.AbsenteesReport.AbsenteesStudents"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
+
+        <activity
+            android:name=".Parent.QuizExam.Quiz"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
+
+
+
+        <activity
+>>>>>>> a00eab654677dc57fb1eda602a2304abe9eec0f8
             android:name=".School.MarkYourAttendance.MarkYourAttendance"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize"></activity>

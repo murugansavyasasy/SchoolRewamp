@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <include
+        android:id="@+id/toolbarLayout"
+        layout="@layout/parent_side_tool_bar" />
+
+    <LinearLayout
+        android:id="@+id/search"
+        android:layout_below="@+id/toolbarLayout"
+        android:layout_margin="25dp"
+        android:background="@drawable/search_bg"
+        android:weightSum="1"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+
+        <ImageView
+            android:layout_marginStart="0dp"
+            android:layout_weight="0.1"
+            android:layout_width="0dp"
+            android:src="@drawable/search_icon"
+            android:layout_height="25dp">
+        </ImageView>
+
+        <EditText
+            android:id="@+id/searchText"
+            android:textSize="16sp"
+            android:background="@android:color/transparent"
+            android:layout_weight="0.85"
+            android:layout_width="0dp"
+            android:hint="Search"
+            android:minHeight="50dp"
+            android:textStyle="normal"
+            android:fontFamily="@font/poppins_medium"
+            android:layout_height="wrap_content">
+        </EditText>
+
+        <ImageView
+            android:id="@+id/close"
+            android:clickable="true"
+            android:visibility="gone"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="0.05"
+            android:layout_width="0dp"
+            android:src="@drawable/close_icon_red"
+            android:layout_height="30dp">
+        </ImageView>
+    </LinearLayout>
+    <ScrollView
+        android:layout_below="@+id/search"
+        android:layout_width="match_parent"
+        android:background="@color/athens_gray"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="25dp"
+        android:layout_marginEnd="10dp"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_marginBottom="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_marginTop="10dp"
+                android:id="@+id/examheading"
+                android:layout_width="match_parent"
+                android:text="Exam Mark"
+                android:textColor="@color/jumbo"
+                android:textStyle="bold"
+                android:textSize="13sp"
+                android:layout_marginStart="15dp"
+                android:layout_height="wrap_content">
+
+            </TextView>
+            <androidx.cardview.widget.CardView
+                app:cardCornerRadius="10dp"
+                android:id="@+id/examMarkCard"
+                android:layout_width="match_parent"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_below="@+id/examheading"
+                app:cardElevation="5dp"
+                android:layout_height="wrap_content">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:id="@+id/ExamMarkRV"
+                    android:layout_margin="10dp"
+                    android:layout_height="wrap_content">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/examRankCard"
+                app:cardCornerRadius="10dp"
+                android:layout_width="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/examMarkCard"
+                app:cardElevation="5dp"
+                android:layout_marginBottom="10dp"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:weightSum="1"
+                        android:gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_marginStart="15dp"
+                            android:layout_weight="0.25"
+                            android:text="Total"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/poppins_medium"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                        </TextView>
+                        <TextView
+                            android:id="@+id/MarkOutOf500"
+                            android:layout_weight="0.75"
+                            android:text="372 / 500"
+                            android:textStyle="bold"
+                            android:textSize="15sp"
+                            android:layout_width="match_parent"
+                            android:textColor="@color/black"
+                            android:layout_height="wrap_content">
+                        </TextView>
+
+
+                    </LinearLayout>
+                    <ProgressBar
+                        android:layout_marginTop="15dp"
+                        android:id="@+id/progressBarOutOf500"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="50dp"
+                        android:layout_height="10dp"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@android:drawable/progress_horizontal"
+                        android:progressTint="@color/azure_radiance" />
+                    <LinearLayout
+                        android:layout_margin="10dp"
+                        android:orientation="horizontal"
+                        android:weightSum="1"
+                        android:gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_weight="0.95"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/poppins_medium"
+                            android:layout_width="match_parent"
+                            android:text="Rank : 8"
+                            android:layout_height="wrap_content">
+
+                        </TextView>
+                        <TextView
+                            android:layout_weight="0.05"
+                            android:textStyle="bold"
+                            android:textSize="16sp"
+                            android:gravity="center"
+                            android:background="@drawable/rank_medal_icon"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp">
+
+                        </TextView>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </RelativeLayout>
+    </ScrollView>
+
+
+
+</RelativeLayout>

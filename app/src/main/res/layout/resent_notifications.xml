@@ -17,28 +17,55 @@
             android:background="@drawable/rect_shadow_white"
             android:paddingTop="@dimen/ten"
             android:paddingBottom="@dimen/ten">
-
-            <TextView
-                android:id="@+id/lblSendBy"
-                android:layout_width="match_parent"
+            
+            <LinearLayout
+                android:id="@+id/linear_layout"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/twenty"
-                android:text="Send By Sathish"
-                android:textSize="@dimen/fifteen_sp"
-                android:textColor="@color/sky_blue0"
-                android:textStyle="bold">
+                android:orientation="horizontal"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="@dimen/five"
+                android:gravity="center_vertical">
 
-            </TextView>
+                <TextView
+                    android:id="@+id/first_letter"
+                    android:layout_width="27dp"
+                    android:layout_height="27dp"
+                    android:gravity="center"
+                    android:background="@drawable/notification_contact_bg"
+                    android:text="A"
+                    android:textSize="16sp"
+                    android:layout_marginStart="@dimen/fifteen"
+                    android:textStyle="bold" />
+
+
+                <TextView
+                    android:id="@+id/lblSendBy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/five"
+                    android:text="Send By Sathish"
+                    android:textSize="13sp"
+                    android:textColor="@color/sky_blue0"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppins_bold">
+
+                </TextView>
+
+            </LinearLayout>
+
+
 
             <TextView
                 android:id="@+id/lblTitle"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/lblSendBy"
-                android:layout_marginStart="@dimen/twenty"
-                android:layout_marginTop="@dimen/five"
+                android:layout_below="@+id/linear_layout"
+                android:layout_marginStart="48dp"
+                android:layout_marginTop="@dimen/three"
                 android:text="Function"
                 android:textStyle="bold"
+                android:fontFamily="@font/poppins_bold"
                 android:textSize="@dimen/thirteen_sp"
                 android:textColor="@color/black">
 
@@ -49,9 +76,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblTitle"
-                android:layout_marginStart="@dimen/twenty"
-                android:layout_marginTop="@dimen/five"
+                android:layout_marginStart="48dp"
+                android:layout_marginTop="@dimen/three"
                 android:textSize="@dimen/thirteen_sp"
+                android:fontFamily="@font/poppins_regular"
                 android:text="All of you come to school tomorrow"
                 android:textColor="@color/black">
 
@@ -85,18 +113,22 @@
 
         </de.hdodenhof.circleimageview.CircleImageView>
 
+
+
     </RelativeLayout>
 
     <TextView
         android:id="@+id/lblNotification"
         android:layout_width="@dimen/fifteen"
         android:layout_height="@dimen/fifteen"
-        android:layout_marginTop="@dimen/five"
-        android:layout_alignParentStart="true"
-        android:visibility="gone"
-        android:layout_marginStart="@dimen/fifteen"
+        android:layout_marginTop="5dp"
+        android:visibility="visible"
+        android:layout_alignParentEnd="true"
+        android:elevation="@dimen/ten"
+        android:layout_marginEnd="23dp"
         android:background="@drawable/circle_dark_blue"
-        android:elevation="@dimen/ten"></TextView>
+        >
+    </TextView>
 
 
 </RelativeLayout>

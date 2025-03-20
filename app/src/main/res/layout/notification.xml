@@ -5,10 +5,11 @@
     android:layout_height="match_parent"
     android:background="@color/mild4">
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/rlaLblNotification"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:background="@color/primary_light"
         android:paddingBottom="@dimen/thirty">
 
@@ -27,16 +28,16 @@
             android:id="@+id/lblNotification"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/twenty"
             android:text="@string/lblNotifications"
             android:textColor="@color/black"
-            android:textSize="@dimen/twenty"
+            android:fontFamily="@font/poppins_bold"
+            android:textSize="20sp"
             android:textStyle="bold">
 
         </TextView>
-    </RelativeLayout>
+    </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/rytSearch"

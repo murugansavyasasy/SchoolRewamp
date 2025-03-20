@@ -4,41 +4,18 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <RelativeLayout
-        android:paddingVertical="@dimen/fifteen"
-        android:id="@+id/rytHeader"
-        android:background="@color/primary_light"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <include
+        android:id="@+id/toolbarLayout"
+        layout="@layout/parent_side_tool_bar" />
 
-        <ImageView
-            android:id="@+id/imgBack"
-            android:layout_width="@dimen/thirty"
-            android:layout_height="@dimen/thirty"
-            android:layout_marginStart="@dimen/twenty"
-            android:src="@drawable/arrow_back_black">
-
-        </ImageView>
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="@string/Video"
-            android:textColor="@color/black"
-            android:textSize="@dimen/twenty_sp"
-            android:textStyle="bold">
-
-        </TextView>
-
-    </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/rytSearch"
             android:layout_width="match_parent"
             android:layout_height="@dimen/thirty_five"
-            android:layout_below="@id/rytHeader"
+            android:layout_below="@id/toolbarLayout"
+            android:layout_alignStart="@+id/rcyVideo"
+            android:layout_alignEnd="@+id/rcyVideo"
             android:layout_margin="@dimen/ten"
             android:background="@drawable/rect_grey">
 
@@ -68,7 +45,9 @@
             android:layout_below="@+id/rytSearch"
             android:layout_marginStart="@dimen/ten"
             tools:listitem="@layout/video_list"
-            android:layout_marginEnd="@dimen/ten"></androidx.recyclerview.widget.RecyclerView>
+            android:layout_marginEnd="@dimen/ten">
+
+        </androidx.recyclerview.widget.RecyclerView>
 
 
 </RelativeLayout>

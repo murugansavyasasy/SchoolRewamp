@@ -3,7 +3,11 @@ package com.vs.schoolmessenger.Dashboard.Parent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkResults
 import com.vs.schoolmessenger.databinding.ItemExamCardBinding
+import android.content.Intent
+
+
 
 data class ExamItem(val title: String)
 
@@ -15,9 +19,10 @@ class ExamMarkAdapter(private val examList: List<ExamItem>) :
 
         fun bind(item: ExamItem) {
             binding.textExamTitle.text = item.title
-
+            val context = binding.root.context
             binding.btnViewMarks.setOnClickListener {
-                // Handle View Marks click
+                val intent = Intent(context, ExamMarkResults::class.java)
+                context.startActivity(intent)
             }
 
             binding.btnViewProgress.setOnClickListener {

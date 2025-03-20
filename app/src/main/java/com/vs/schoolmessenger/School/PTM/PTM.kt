@@ -15,12 +15,11 @@ class PTM : BaseActivity<PtmStaffBinding>(),
     override fun setupViews() {
         super.setupViews()
         setupToolbar()
-
-
     }
 
     override fun onClick(p0: View?) {
         when (p0?.id) {
+
 
         }
     }

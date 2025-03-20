@@ -13,6 +13,7 @@
         android:id="@+id/rcLsrw"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ten"
         android:layout_below="@+id/toolbarLayout">
     </androidx.recyclerview.widget.RecyclerView>
 
