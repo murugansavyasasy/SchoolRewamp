@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.Login
 import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.Auth
@@ -31,7 +32,6 @@ class PasswordGeneration : BaseActivity<PasswordGenerationBinding>(), View.OnCli
         isToolBarWhiteTheme()
         binding.imgHide.setOnClickListener(this)
         binding.btnCreate.setOnClickListener(this)
-
         authViewModel = ViewModelProvider(this).get(Auth::class.java)
         authViewModel!!.init()
 
@@ -48,7 +48,7 @@ class PasswordGeneration : BaseActivity<PasswordGenerationBinding>(), View.OnCli
                 if (status) {
                     Toast.makeText(this, R.string.SuccessfullyPasswordCreation, Toast.LENGTH_SHORT)
                         .show()
-                    val intent = Intent(this@PasswordGeneration, PrioritySelection::class.java)
+                    val intent = Intent(this@PasswordGeneration, Login::class.java)
                     startActivity(intent)
                 }
             }
@@ -58,7 +58,8 @@ class PasswordGeneration : BaseActivity<PasswordGenerationBinding>(), View.OnCli
                 val status = response.status
                 val message = response.message
                 if (status) {
-
+                    val intent = Intent(this@PasswordGeneration, Login::class.java)
+                    startActivity(intent)
                 }
             }
         }

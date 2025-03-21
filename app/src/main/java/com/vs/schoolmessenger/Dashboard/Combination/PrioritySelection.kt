@@ -28,21 +28,19 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
         binding.btnGo.setOnClickListener(this)
         isLoadData(true)
 
+        binding.lblTeacher.text = Constant.user_details!!.role_name
         binding.btnGo.setOnClickListener {
             val intent = Intent(this, Dashboard::class.java)
             startActivity(intent)
         }
     }
-
-
     private fun isLoadData(isStaff: Boolean) {
-
         if (isStaff) {
             isStaffDetailAdapter = StaffDetailAdapter(Constant.isStaffDetails, this)
             binding.recyclerViews.layoutManager = LinearLayoutManager(this)
             binding.recyclerViews.adapter = isStaffDetailAdapter
         } else {
-            isStudentDetailAdapter = StudentDetailAdapter(Constant.isParentDetails, this)
+            isStudentDetailAdapter = StudentDetailAdapter(Constant.isChildDetails, this)
             binding.recyclerViews.layoutManager = LinearLayoutManager(this)
             binding.recyclerViews.adapter = isStudentDetailAdapter
         }
@@ -53,23 +51,19 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
             R.id.lblTeacher -> {
                 isBackRoundChange(binding.lblTeacher)
             }
-
             R.id.lblParent -> {
                 isBackRoundChange(binding.lblParent)
             }
         }
     }
-
     private fun isBackRoundChange(isClickingId: TextView) {
-
         if (isClickingId == binding.lblParent) {
             binding.lblTeacher.background = null
             binding.lblTeacher.setTextColor(ContextCompat.getColor(this, R.color.dark_blue))
             binding.btnGo.visibility = View.GONE
             isLoadData(false)
-          Constant.isParentChoose = true
+            Constant.isParentChoose = true
         }
-
         if (isClickingId == binding.lblTeacher) {
             binding.lblParent.background = null
             binding.lblParent.setTextColor(ContextCompat.getColor(this, R.color.dark_blue))
