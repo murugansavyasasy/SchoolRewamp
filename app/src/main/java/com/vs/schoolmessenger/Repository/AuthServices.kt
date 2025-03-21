@@ -63,7 +63,8 @@ class AuthServices {
                                 isCountryList.postValue(response.body())
                             }
                         }
-                    } else if (response.code() == 400) {
+                    }
+                    else  {
                         if (response.body() != null) {
                             isCountryList.postValue(response.body())
                         }

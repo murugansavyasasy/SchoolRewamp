@@ -12,12 +12,12 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.CreateResetChangePassword.PasswordGeneration
-import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.Login
+import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
+import com.vs.schoolmessenger.Dashboard.School.Dashboard
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.Auth
 import com.vs.schoolmessenger.Repository.RequestKeys
 import com.vs.schoolmessenger.Utils.Constant
-import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.OtpScreenBinding
 
 class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
@@ -46,17 +46,28 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
         binding.btnNext.isClickable = true
         binding.btnNext.setBackgroundDrawable(resources.getDrawable(R.drawable.rect_btn_orange))
 
-        isMobileNumber = SharedPreference.getMobileNumber(this@OTP)
-
-        if (Constant.isUserValidationData!!.isNotEmpty()) {
-            binding.lblEnter.text = Constant.isUserValidationData!![0].message
-            binding.lblContactTitle.text = Constant.isUserValidationData!![0].more_info
+        if(Constant.isForgotPassword!!){
+            binding.lblEnter.text = Constant.forgotData!![0].forgot_otp_message
+            binding.lblContactTitle.text = Constant.forgotData!![0].more_info
             val numberList: List<String> =
-                Constant.isUserValidationData!![0].dial_numbers.split(",")
+                Constant.forgotData!![0].dial_numbers.split(",")
             val firstNumber = numberList[0]
             val secondNumber = numberList[1]
             binding.lblNumberOne.text = firstNumber
             binding.lblNumberTwo.text = secondNumber
+        }
+        else {
+
+            if (Constant.user_data!!.isNotEmpty()) {
+                binding.lblEnter.text = Constant.user_data!![0].message
+                binding.lblContactTitle.text = Constant.user_data!![0].more_info
+                val numberList: List<String> =
+                    Constant.user_data!![0].dial_numbers.split(",")
+                val firstNumber = numberList[0]
+                val secondNumber = numberList[1]
+                binding.lblNumberOne.text = firstNumber
+                binding.lblNumberTwo.text = secondNumber
+            }
         }
 
 
@@ -65,8 +76,40 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
                 val status = response.status
                 val message = response.message
                 if (status) {
-                    val intent = Intent(this@OTP, PasswordGeneration::class.java)
-                    startActivity(intent)
+
+                    if(Constant.isForgotPassword!!){
+                        val intent = Intent(this@OTP, PasswordGeneration::class.java)
+                        Constant.isPasswordCreation = false
+                        startActivity(intent)
+                    }
+                    else if(Constant.user_data!![0].is_password_updated){
+
+                        if (Constant.user_data!![0].user_details.is_staff && Constant.user_data!![0].user_details.is_parent) {
+                            val intent = Intent(this@OTP, PrioritySelection::class.java)
+                            startActivity(intent)
+
+                        } else if (Constant.user_data!![0].user_details.is_staff) {
+
+                            val intent = Intent(
+                                this@OTP,
+                                Dashboard::class.java
+                            )
+                            startActivity(intent)
+                        } else if (Constant.user_data!![0].user_details.is_parent) {
+                            val intent = Intent(
+                                this@OTP,
+                                com.vs.schoolmessenger.Dashboard.Parent.Dashboard::class.java
+                            )
+                            startActivity(intent)
+
+                        }
+                    }
+                    else {
+                        val intent = Intent(this@OTP, PasswordGeneration::class.java)
+                        Constant.isPasswordCreation = true
+                        startActivity(intent)
+                    }
+
                 }
             }
         }

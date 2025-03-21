@@ -24,6 +24,7 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.PasswordUpdateData
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserValidationData
+import com.vs.schoolmessenger.Auth.OTP.ForgetOtpData
 
 object Constant {
 
@@ -37,11 +38,16 @@ object Constant {
     val delayTime = 1500
     var isParentChoose = false
     var country_details: Country? = null
-    var isUserDetails: UserDetails? = null
-    var isUserValidationData: List<UserValidationData>? = null
+    var user_details: UserDetails? = null
+    var user_data: List<UserValidationData>? = null
     var isStaffDetails: List<StaffDetails>? = null
-    var isParentDetails: List<ChildDetails>? = null
-    var isPassWordCreateType = 1
+    var isChildDetails: List<ChildDetails>? = null
+    var isPasswordCreation : Boolean? = false
+
+    var forgotData: List<ForgetOtpData>? = null
+    var isForgotPassword: Boolean? = false
+    var isMobileNumber: String? = ""
+
 
 
     fun isInternetAvailable(activity: Activity): Boolean {

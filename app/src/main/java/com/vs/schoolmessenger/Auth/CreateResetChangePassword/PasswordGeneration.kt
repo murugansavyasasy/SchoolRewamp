@@ -28,25 +28,19 @@ class PasswordGeneration : BaseActivity<PasswordGenerationBinding>(), View.OnCli
     override fun setupViews() {
         super.setupViews()
         // Access a specific view using its ID
+        isToolBarWhiteTheme()
+        binding.imgHide.setOnClickListener(this)
+        binding.btnCreate.setOnClickListener(this)
 
         authViewModel = ViewModelProvider(this).get(Auth::class.java)
         authViewModel!!.init()
 
-
-            when (Constant.isPassWordCreateType) {
-                1 -> {
-                    binding.lblCreatePassword.text = getString(R.string.lblCreateNewPassword)
-                }
-
-                2 -> {
-                    binding.lblCreatePassword.text = getString(R.string.ResetThePassword)
-                }
-
-                3 -> {
-                    binding.lblCreatePassword.text = getString(R.string.change_password)
-                }
-            }
-
+        if(Constant.isPasswordCreation!!){
+            binding.lblCreatePassword.text = getString(R.string.lblCreateNewPassword)
+        }
+        else{
+            binding.lblCreatePassword.text = getString(R.string.ResetThePassword)
+        }
         authViewModel!!.isCreateNewPassword?.observe(this) { response ->
             if (response != null) {
                 val status = response.status
@@ -59,14 +53,6 @@ class PasswordGeneration : BaseActivity<PasswordGenerationBinding>(), View.OnCli
                 }
             }
         }
-
-        binding.imgHide.setOnClickListener(this)
-        binding.btnCreate.setOnClickListener(this)
-        isToolBarWhiteTheme()
-//        isPasswordChange()
-//        isPasswordReset()
-
-
         authViewModel!!.isPasswordReset?.observe(this) { response ->
             if (response != null) {
                 val status = response.status
@@ -133,10 +119,16 @@ class PasswordGeneration : BaseActivity<PasswordGenerationBinding>(), View.OnCli
             R.id.imgHide -> {
                 isPasswordViewAndHide()
             }
-
             R.id.btnCreate -> {
-                if (isPassWordNotEmpty()) {
-                    isCreatePassword()
+                if(Constant.isPasswordCreation!!) {
+                    if (isPassWordNotEmpty()) {
+                        isCreatePassword()
+                    }
+                }
+                else {
+                    if (isPassWordNotEmpty()) {
+                        isPasswordReset()
+                    }
                 }
             }
         }

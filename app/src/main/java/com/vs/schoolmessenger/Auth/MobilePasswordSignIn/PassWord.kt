@@ -8,6 +8,7 @@ import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.OTP.OTP
 import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
+import com.vs.schoolmessenger.Dashboard.School.Dashboard
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.Auth
 import com.vs.schoolmessenger.Repository.RequestKeys
@@ -45,37 +46,43 @@ class PassWord : BaseActivity<PassWordBinding>(), View.OnClickListener {
                 val message = response.message
                 if (status) {
                     val isValidateUser = response.data
+                    Constant.user_data = isValidateUser
+                    Constant.user_details = Constant.user_data!![0].user_details
+                    Constant.isStaffDetails= Constant.user_data!![0].user_details.staff_details
+                    Constant.isChildDetails= Constant.user_data!![0].user_details.child_details
 
-//                    SharedPreference.(this,binding.txtPassword.text.toString())
+                    if(isValidateUser[0].is_password_updated) {
 
-                    Constant.isUserValidationData = isValidateUser
-                    if (Constant.isUserValidationData!![0].user_details.is_staff && Constant.isUserValidationData!![0].user_details.is_parent) {
-                        val isUserDetails = Constant.isUserValidationData!![0].user_details
-                        val isStaffDetails = isUserDetails.staff_details
-                        Constant.isStaffDetails = isStaffDetails
-                        val isParentDetails = isUserDetails.child_details
-                        Constant.isParentDetails = isParentDetails
-                    } else if (Constant.isUserValidationData!![0].user_details.is_staff) {
-                        val isUserDetails = Constant.isUserValidationData!![0].user_details
-                        val isStaffDetails = isUserDetails.staff_details
-                        Constant.isStaffDetails = isStaffDetails
-                    } else if (Constant.isUserValidationData!![0].user_details.is_parent) {
-                        val isUserDetails = Constant.isUserValidationData!![0].user_details
-                        val isParentDetails = isUserDetails.child_details
-                        Constant.isParentDetails = isParentDetails
+                        if (isValidateUser[0].otp_sent) {
+                            val intent = Intent(this@PassWord, OTP::class.java)
+                            startActivity(intent)
+                        } else {
+
+                            if (Constant.user_data!![0].user_details.is_staff && Constant.user_data!![0].user_details.is_parent) {
+                                val intent = Intent(this@PassWord, PrioritySelection::class.java)
+                                startActivity(intent)
+
+                            } else if (Constant.user_data!![0].user_details.is_staff) {
+
+                                val intent = Intent(
+                                    this@PassWord,
+                                    Dashboard::class.java
+                                )
+                                startActivity(intent)
+                            } else if (Constant.user_data!![0].user_details.is_parent) {
+                                val intent = Intent(
+                                    this@PassWord,
+                                    com.vs.schoolmessenger.Dashboard.Parent.Dashboard::class.java
+                                )
+                                startActivity(intent)
+
+                            }
+                        }
                     }
 
                     binding.isLoading.visibility = View.GONE
                     binding.btnLoginContinue.isClickable = true
                     binding.btnLoginContinue.setBackgroundDrawable(resources.getDrawable(R.drawable.rect_btn_orange))
-
-                    if (!Constant.isUserValidationData!![0].otp_sent) {
-                        val intent = Intent(this@PassWord, PrioritySelection::class.java)
-                        startActivity(intent)
-                    } else {
-                        val intent = Intent(this@PassWord, OTP::class.java)
-                        startActivity(intent)
-                    }
 
                 } else {
                     binding.isLoading.visibility = View.GONE
@@ -92,9 +99,11 @@ class PassWord : BaseActivity<PassWordBinding>(), View.OnClickListener {
             if (response != null) {
                 val status = response.status
                 val message = response.message
+                Constant.forgotData = response.data
+
                 if (status) {
                     val intent = Intent(this@PassWord, OTP::class.java)
-                    Constant.isPassWordCreateType = 2
+                    Constant.isForgotPassword = true
                     startActivity(intent)
                 }
             }

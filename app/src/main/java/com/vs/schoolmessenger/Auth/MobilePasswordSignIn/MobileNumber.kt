@@ -43,19 +43,29 @@ class MobileNumber : BaseActivity<MobileNumberBinding>(), View.OnClickListener {
                 val message = response.message
                 if (status) {
                     val isValidateUser = response.data
-//                    Constant.isUserValidationData = isValidateUser
+                    Constant.user_data = isValidateUser
+                    Constant.user_details = Constant.user_data!![0].user_details
+                    Constant.isStaffDetails= Constant.user_data!![0].user_details.staff_details
+                    Constant.isChildDetails= Constant.user_data!![0].user_details.child_details
+
+                    if (Constant.user_data!![0].is_password_updated) {
+                        if(Constant.user_data!![0].otp_sent){
+                            val intent = Intent(this@MobileNumber, OTP::class.java)
+                            startActivity(intent)
+                        }
+                        else{
+                            val intent = Intent(this@MobileNumber, PassWord::class.java)
+                            startActivity(intent)
+                        }
+                    }
+                    else {
+                        val intent = Intent(this@MobileNumber, OTP::class.java)
+                        startActivity(intent)
+                    }
 
                     binding.isLoading.visibility = View.GONE
                     binding.btnLoginContinue.isClickable = true
                     binding.btnLoginContinue.setBackgroundDrawable(resources.getDrawable(R.drawable.rect_btn_orange))
-
-                    if (Constant.isUserValidationData!![0].is_password_updated) {
-                        val intent = Intent(this@MobileNumber, PassWord::class.java)
-                        startActivity(intent)
-                    } else {
-                        val intent = Intent(this@MobileNumber, OTP::class.java)
-                        startActivity(intent)
-                    }
 
 
                 } else {
