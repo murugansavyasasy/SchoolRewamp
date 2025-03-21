@@ -7,7 +7,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
-import com.vs.schoolmessenger.Dashboard.Combination.RoleSelection
+import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.Auth
 import com.vs.schoolmessenger.Repository.RequestKeys
@@ -54,7 +54,7 @@ class PasswordGeneration : BaseActivity<PasswordGenerationBinding>(), View.OnCli
                 if (status) {
                     Toast.makeText(this, R.string.SuccessfullyPasswordCreation, Toast.LENGTH_SHORT)
                         .show()
-                    val intent = Intent(this@PasswordGeneration, RoleSelection::class.java)
+                    val intent = Intent(this@PasswordGeneration, PrioritySelection::class.java)
                     startActivity(intent)
                 }
             }

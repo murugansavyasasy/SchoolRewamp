@@ -2,20 +2,15 @@ package com.vs.schoolmessenger.Auth.Splash
 
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
-import com.vs.schoolmessenger.Auth.Introduction.Introduction
-import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.Login
-import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.MobileNumber
-import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.PasswordUpdateData
+import com.vs.schoolmessenger.Auth.Country.CountryScreen
 import com.vs.schoolmessenger.Auth.OTP.OTP
-import com.vs.schoolmessenger.Auth.TermsConditions.TermsAndConditions
-import com.vs.schoolmessenger.Dashboard.Combination.RoleSelection
+import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.Dashboard.School.Dashboard
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.Auth
@@ -54,19 +49,12 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
         authViewModel!!.init()
 
         if (Constant.isInternetAvailable(this)) {
-            val isFirstTimeLogin = SharedPreference.getAgreeTerms(this)
-            Log.d("isFirstTimeLogin", isFirstTimeLogin.toString())
-            if (isFirstTimeLogin!!) {
-                if (SharedPreference.getMobileNumber(this)
-                        .toString() != "" && SharedPreference.getPassWord(this).toString() != ""
-                ) {
-                    isVersionCheck()
-                } else {
-                    val intent = Intent(this@Splash, MobileNumber::class.java)
-                    startActivity(intent)
-                }
+            val countryId = SharedPreference.getCountryId(this)
+            Log.d("countryId", countryId.toString())
+            if (!countryId.equals("")) {
+                isVersionCheck()
             } else {
-                val intent = Intent(this@Splash, Introduction::class.java)
+                val intent = Intent(this@Splash, CountryScreen::class.java)
                 startActivity(intent)
             }
         } else {
@@ -111,12 +99,11 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
                 if (status) {
                     val isVersionCheckData = response.data
                     isVersionData = isVersionCheckData
-                    Constant.isSelectedCountry = isVersionData!![0].country_details
-                    if (SharedPreference.getMobileNumber(this)
-                            .toString() != "" && SharedPreference.getPassWord(this).toString() != ""
-                    ) {
-                        isValidateUser()
-                    }
+                    Constant.country_details = isVersionData!![0].country_details
+                    SharedPreference.putCountryId(this, Constant.country_details!!.id.toString())
+
+                    isValidateUser()
+
                 }
             }
         }
@@ -132,7 +119,7 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
                     startActivity(intent)
                 } else {
                     if (Constant.isUserValidationData!![0].user_details.is_parent && Constant.isUserValidationData!![0].user_details.is_staff) {
-                        val intent = Intent(this@Splash, RoleSelection::class.java)
+                        val intent = Intent(this@Splash, PrioritySelection::class.java)
                         startActivity(intent)
                     } else {
                         if (Constant.isUserValidationData!![0].user_details.is_parent) {
@@ -144,7 +131,7 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
                         } else {
                             val intent = Intent(
                                 this@Splash,
-                                com.vs.schoolmessenger.Dashboard.School.Dashboard::class.java
+                                Dashboard::class.java
                             )
                             startActivity(intent)
                         }

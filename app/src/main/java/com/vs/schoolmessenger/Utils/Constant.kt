@@ -16,6 +16,8 @@ import android.webkit.WebViewClient
 import android.widget.EditText
 import android.widget.GridView
 import android.widget.TextView
+import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.MasterKeys
 import com.vs.schoolmessenger.Auth.Country.Country
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.PasswordUpdateData
@@ -34,7 +36,7 @@ object Constant {
     var handler = Handler(Looper.getMainLooper())
     val delayTime = 1500
     var isParentChoose = false
-    var isSelectedCountry: Country? = null
+    var country_details: Country? = null
     var isUserDetails: UserDetails? = null
     var isUserValidationData: List<UserValidationData>? = null
     var isStaffDetails: List<StaffDetails>? = null

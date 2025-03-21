@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.OTP.OTP
-import com.vs.schoolmessenger.Dashboard.Combination.RoleSelection
+import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.Auth
 import com.vs.schoolmessenger.Repository.RequestKeys
@@ -41,7 +41,7 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener {
         binding.btnLoginContinue.setBackgroundDrawable(resources.getDrawable(R.drawable.rect_btn_orange))
 
 
-        binding.txtMobileNumber.hint = Constant.isSelectedCountry!!.mobile_no_hint
+        binding.txtMobileNumber.hint = Constant.country_details!!.mobile_no_hint
 
         authViewModel!!.isUserValidation?.observe(this) { response ->
             if (response != null) {
@@ -76,7 +76,7 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener {
                         val intent = Intent(this@Login, OTP::class.java)
                         startActivity(intent)
                     } else {
-                        val intent = Intent(this@Login, RoleSelection::class.java)
+                        val intent = Intent(this@Login, PrioritySelection::class.java)
                         startActivity(intent)
                     }
                 } else {
@@ -104,7 +104,7 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener {
     }
 
     private fun isValidMobileNumber(mobileNumber: String): Boolean {
-        return mobileNumber.length == Constant.isSelectedCountry!!.mobile_number_length.toInt() && mobileNumber.all { it.isDigit() }
+        return mobileNumber.length == Constant.country_details!!.mobile_number_length.toInt() && mobileNumber.all { it.isDigit() }
     }
 
     private fun isForgetPassword() {
@@ -160,7 +160,7 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener {
             }
 
             R.id.lblForgetPassword -> {
-                if (binding.txtMobileNumber.text.toString() != "" && binding.txtMobileNumber.text.toString().length == Constant.isSelectedCountry!!.mobile_number_length.toInt()) {
+                if (binding.txtMobileNumber.text.toString() != "" && binding.txtMobileNumber.text.toString().length == Constant.country_details!!.mobile_number_length.toInt()) {
                     isForgetPassword()
                 } else {
                     Toast.makeText(this, R.string.EnterTheMobileNumber, Toast.LENGTH_SHORT).show()
@@ -175,7 +175,7 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener {
             isValidation = true
         } else {
             binding.txtMobileNumber.error =
-                "Enter the " + Constant.isSelectedCountry!!.mobile_number_length + " digit's mobile number"
+                "Enter the " + Constant.country_details!!.mobile_number_length + " digit's mobile number"
             isValidation = false
         }
         return isValidation

@@ -3,12 +3,11 @@ package com.vs.schoolmessenger.Auth.MobilePasswordSignIn
 import android.content.Intent
 import android.text.InputType
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.OTP.OTP
-import com.vs.schoolmessenger.Dashboard.Combination.RoleSelection
+import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.Auth
 import com.vs.schoolmessenger.Repository.RequestKeys
@@ -47,7 +46,7 @@ class PassWord : BaseActivity<PassWordBinding>(), View.OnClickListener {
                 if (status) {
                     val isValidateUser = response.data
 
-                    SharedPreference.putPassWord(this,binding.txtPassword.text.toString())
+//                    SharedPreference.(this,binding.txtPassword.text.toString())
 
                     Constant.isUserValidationData = isValidateUser
                     if (Constant.isUserValidationData!![0].user_details.is_staff && Constant.isUserValidationData!![0].user_details.is_parent) {
@@ -71,7 +70,7 @@ class PassWord : BaseActivity<PassWordBinding>(), View.OnClickListener {
                     binding.btnLoginContinue.setBackgroundDrawable(resources.getDrawable(R.drawable.rect_btn_orange))
 
                     if (!Constant.isUserValidationData!![0].otp_sent) {
-                        val intent = Intent(this@PassWord, RoleSelection::class.java)
+                        val intent = Intent(this@PassWord, PrioritySelection::class.java)
                         startActivity(intent)
                     } else {
                         val intent = Intent(this@PassWord, OTP::class.java)

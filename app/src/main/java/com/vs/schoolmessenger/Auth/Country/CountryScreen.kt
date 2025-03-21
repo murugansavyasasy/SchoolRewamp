@@ -65,7 +65,7 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
         binding.isSpineer.adapter = adapter
 
         if (countryList.isNotEmpty()) {
-            Constant.isSelectedCountry = countryList[0]
+            Constant.country_details = countryList[0]
         }
 
         // Handle selection event
@@ -76,16 +76,16 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
                 position: Int,
                 id: Long
             ) {
-                Constant.isSelectedCountry = countryList[position]
+                Constant.country_details = countryList[position]
 
                 Log.d(
                     "SelectedCountry",
-                    "ID: ${Constant.isSelectedCountry!!.id}, Name: ${Constant.isSelectedCountry!!.name}"
+                    "ID: ${Constant.country_details!!.id}, Name: ${Constant.country_details!!.name}"
                 )
 
                 Toast.makeText(
                     this@CountryScreen,
-                    "Selected: ${Constant.isSelectedCountry!!.name}",
+                    "Selected: ${Constant.country_details!!.name}",
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -99,8 +99,7 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
         when (v?.id) {
             R.id.btnArrowNext -> {
                 if (isAgree) {
-                    SharedPreference.putAgreeTerms(this, isAgree)
-                    SharedPreference.putCountryId(this, Constant.isSelectedCountry!!.id.toString())
+                    SharedPreference.putCountryId(this, Constant.country_details!!.id.toString())
                     val intent = Intent(this@CountryScreen, MobileNumber::class.java)
                     startActivity(intent)
                 } else {

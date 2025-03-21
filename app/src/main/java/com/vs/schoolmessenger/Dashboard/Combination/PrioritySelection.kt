@@ -11,7 +11,7 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.RoleSelecionBinding
 
-class RoleSelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListener {
+class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListener {
 
     private lateinit var isStudentDetailAdapter: StudentDetailAdapter
     private lateinit var isStaffDetailAdapter: StaffDetailAdapter
