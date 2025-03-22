@@ -87,6 +87,7 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
                         } else {
                             val mobile_number = SharedPreference.getMobileNumber(this)
                             val password = SharedPreference.getPassWord(this)
+                            Constant.isMobileNumber = mobile_number
                             SharedPreference.putMobileNumberPassWord(this@Splash,mobile_number,password)
                             if (Constant.user_data!![0].user_details.is_staff && Constant.user_data!![0].user_details.is_parent) {
                                 val intent = Intent(this@Splash, PrioritySelection::class.java)

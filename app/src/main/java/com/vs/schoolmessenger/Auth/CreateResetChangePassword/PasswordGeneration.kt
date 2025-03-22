@@ -46,7 +46,7 @@ class PasswordGeneration : BaseActivity<PasswordGenerationBinding>(), View.OnCli
                 val status = response.status
                 val message = response.message
                 if (status) {
-                    Toast.makeText(this, R.string.SuccessfullyPasswordCreation, Toast.LENGTH_SHORT)
+                    Toast.makeText(this, message, Toast.LENGTH_SHORT)
                         .show()
                     val intent = Intent(this@PasswordGeneration, Login::class.java)
                     startActivity(intent)
@@ -58,6 +58,7 @@ class PasswordGeneration : BaseActivity<PasswordGenerationBinding>(), View.OnCli
                 val status = response.status
                 val message = response.message
                 if (status) {
+                    Toast.makeText(this,message, Toast.LENGTH_SHORT)
                     val intent = Intent(this@PasswordGeneration, Login::class.java)
                     startActivity(intent)
                 }
