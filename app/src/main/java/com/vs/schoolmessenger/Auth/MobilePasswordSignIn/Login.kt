@@ -50,6 +50,8 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener {
                     Constant.user_details = Constant.user_data!![0].user_details
                     Constant.isStaffDetails= Constant.user_data!![0].user_details.staff_details
                     Constant.isChildDetails= Constant.user_data!![0].user_details.child_details
+                    SharedPreference.putUserDetails(this@Login, Constant.user_details!!)
+
 
                     if(isValidateUser[0].is_password_updated) {
 

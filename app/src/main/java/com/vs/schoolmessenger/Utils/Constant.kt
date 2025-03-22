@@ -4,6 +4,8 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Handler
@@ -11,6 +13,7 @@ import android.os.Looper
 import android.provider.Settings
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.LayoutInflater
 import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -27,6 +30,7 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserValidationData
 import com.vs.schoolmessenger.Auth.OTP.ForgetOtpData
 import com.vs.schoolmessenger.Auth.Splash.Splash
+import com.vs.schoolmessenger.R
 
 object Constant {
 
@@ -183,17 +187,20 @@ object Constant {
             ?: "Empty"
     }
 
-
     fun errorAlert(activity: Activity,title : String,content : String){
-        AlertDialog.Builder(activity)
-            .setTitle("Alert")
-            .setMessage(content)
-            .setPositiveButton("OK") { dialog, _ ->
-                dialog.dismiss()
-            }
-//            .setNegativeButton("Cancel") { dialog, _ ->
-//                dialog.dismiss()
-//            }
-            .show()
+        val dialogView = LayoutInflater.from(activity).inflate(R.layout.custom_error_alert, null)
+        val builder = AlertDialog.Builder(activity)
+        builder.setView(dialogView)
+        val alertDialog = builder.create()
+        alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT)) // Transparent background
+        alertDialog.show()
+        // Access views
+        val titleText = dialogView.findViewById<TextView>(R.id.alertTitle)
+        val messageText = dialogView.findViewById<TextView>(R.id.alertMessage)
+        val okButton = dialogView.findViewById<TextView>(R.id.btnOk)
+        messageText.text = content
+        okButton.setOnClickListener {
+            alertDialog.dismiss()
+        }
     }
 }

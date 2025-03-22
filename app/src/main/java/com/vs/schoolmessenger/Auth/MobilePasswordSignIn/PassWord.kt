@@ -52,6 +52,8 @@ class PassWord : BaseActivity<PassWordBinding>(), View.OnClickListener {
                     Constant.isStaffDetails= Constant.user_data!![0].user_details.staff_details
                     Constant.isChildDetails= Constant.user_data!![0].user_details.child_details
 
+                    SharedPreference.putUserDetails(this@PassWord, Constant.user_details!!)
+
                     if(isValidateUser[0].is_password_updated) {
 
                         if (isValidateUser[0].otp_sent) {

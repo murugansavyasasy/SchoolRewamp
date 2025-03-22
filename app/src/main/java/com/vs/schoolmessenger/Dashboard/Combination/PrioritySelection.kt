@@ -5,10 +5,13 @@ import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.Gson
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Dashboard.School.Dashboard
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.RoleSelecionBinding
 
 class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListener {
@@ -19,6 +22,7 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
     override fun getViewBinding(): RoleSelecionBinding {
         return RoleSelecionBinding.inflate(layoutInflater)
     }
+    var userDetails : UserDetails? = null
 
     override fun setupViews() {
         super.setupViews()
@@ -28,7 +32,9 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
         binding.btnGo.setOnClickListener(this)
         isLoadData(true)
 
-        binding.lblTeacher.text = Constant.user_details!!.role_name
+        userDetails= SharedPreference.getUserDetails(this@PrioritySelection)
+
+        binding.lblTeacher.text = userDetails!!.role_name
         binding.btnGo.setOnClickListener {
             val intent = Intent(this, Dashboard::class.java)
             startActivity(intent)
