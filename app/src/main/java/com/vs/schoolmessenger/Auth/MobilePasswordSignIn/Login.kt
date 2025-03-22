@@ -83,19 +83,10 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener {
                         }
                     }
 
-                    binding.isLoading.visibility = View.GONE
-                    binding.btnLoginContinue.isClickable = true
-                    binding.btnLoginContinue.setBackgroundDrawable(resources.getDrawable(R.drawable.rect_btn_orange))
-                } else {
-                    binding.isLoading.visibility = View.GONE
-                    binding.btnLoginContinue.isClickable = true
-                    binding.btnLoginContinue.setBackgroundDrawable(resources.getDrawable(R.drawable.rect_btn_orange))
                 }
-            } else {
-                binding.isLoading.visibility = View.GONE
-                binding.btnLoginContinue.isClickable = true
-                binding.btnLoginContinue.setBackgroundDrawable(resources.getDrawable(R.drawable.rect_btn_orange))
+
             }
+
         }
         authViewModel!!.isForgetPassword?.observe(this) { response ->
             if (response != null) {
@@ -108,7 +99,7 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener {
                     startActivity(intent) }
                 else
                 {
-
+                    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -163,9 +154,6 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener {
 
             R.id.btnLoginContinue -> {
                 if (isUserNamePasswordValidation()) {
-                    binding.btnLoginContinue.isClickable = false
-                    binding.isLoading.visibility = View.VISIBLE
-                    binding.btnLoginContinue.setBackgroundColor(resources.getColor(R.color.mild_grey0))
                     isValidateUser()
                 }
             }

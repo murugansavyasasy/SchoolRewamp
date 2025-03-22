@@ -64,21 +64,8 @@ class MobileNumber : BaseActivity<MobileNumberBinding>(), View.OnClickListener {
                         Constant.pageType = Constant.MobileNumberScreen
                         startActivity(intent)
                     }
-
-                    binding.isLoading.visibility = View.GONE
-                    binding.btnLoginContinue.isClickable = true
-                    binding.btnLoginContinue.setBackgroundDrawable(resources.getDrawable(R.drawable.rect_btn_orange))
-
-
-                } else {
-                    binding.isLoading.visibility = View.GONE
-                    binding.btnLoginContinue.isClickable = true
-                    binding.btnLoginContinue.setBackgroundDrawable(resources.getDrawable(R.drawable.rect_btn_orange))
                 }
-            } else {
-                binding.isLoading.visibility = View.GONE
-                binding.btnLoginContinue.isClickable = true
-                binding.btnLoginContinue.setBackgroundDrawable(resources.getDrawable(R.drawable.rect_btn_orange))
+
             }
         }
     }

@@ -25,7 +25,6 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
 
     private val otpTimeout = 30000L
     private val otpInterval = 1000L
-    private var isMobileNumber: String? = null
     override fun getViewBinding(): OtpScreenBinding {
         return OtpScreenBinding.inflate(layoutInflater)
     }
@@ -109,19 +108,16 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
                                     com.vs.schoolmessenger.Dashboard.Parent.Dashboard::class.java
                                 )
                                 startActivity(intent)
-
                             }
                         }
-
-
                     }
                     else {
                         val intent = Intent(this@OTP, PasswordGeneration::class.java)
                         Constant.isPasswordCreation = true
                         startActivity(intent)
                     }
-
                 }
+
             }
         }
 
@@ -131,7 +127,6 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
         setOtpInputListener(binding.txtOtp4, binding.txtOtp5, binding.txtOtp3)
         setOtpInputListener(binding.txtOtp5, binding.txtOtp6, binding.txtOtp4)
         setOtpInputListener(binding.txtOtp6, null, binding.txtOtp5)
-
 
         startOtpTimer()
     }

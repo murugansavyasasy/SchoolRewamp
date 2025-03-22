@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.Utils
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
@@ -54,9 +55,6 @@ object Constant {
     var SignInScreen: Int? = 3
     var PasswordScreen: Int? = 4
     var pageType: Int? = 0
-
-
-
 
     fun isInternetAvailable(activity: Activity): Boolean {
         val connectivityManager =
@@ -183,5 +181,19 @@ object Constant {
     fun getAndroidSecureId(activity: Activity): String {
         return Settings.Secure.getString(activity.contentResolver, Settings.Secure.ANDROID_ID)
             ?: "Empty"
+    }
+
+
+    fun errorAlert(activity: Activity,title : String,content : String){
+        AlertDialog.Builder(activity)
+            .setTitle("Alert")
+            .setMessage(content)
+            .setPositiveButton("OK") { dialog, _ ->
+                dialog.dismiss()
+            }
+//            .setNegativeButton("Cancel") { dialog, _ ->
+//                dialog.dismiss()
+//            }
+            .show()
     }
 }

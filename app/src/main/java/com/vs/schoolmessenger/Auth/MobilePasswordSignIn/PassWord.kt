@@ -3,6 +3,7 @@ package com.vs.schoolmessenger.Auth.MobilePasswordSignIn
 import android.content.Intent
 import android.text.InputType
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
@@ -82,19 +83,8 @@ class PassWord : BaseActivity<PassWordBinding>(), View.OnClickListener {
                         }
                     }
 
-                    binding.isLoading.visibility = View.GONE
-                    binding.btnLoginContinue.isClickable = true
-                    binding.btnLoginContinue.setBackgroundDrawable(resources.getDrawable(R.drawable.rect_btn_orange))
 
-                } else {
-                    binding.isLoading.visibility = View.GONE
-                    binding.btnLoginContinue.isClickable = true
-                    binding.btnLoginContinue.setBackgroundDrawable(resources.getDrawable(R.drawable.rect_btn_orange))
                 }
-            } else {
-                binding.isLoading.visibility = View.GONE
-                binding.btnLoginContinue.isClickable = true
-                binding.btnLoginContinue.setBackgroundDrawable(resources.getDrawable(R.drawable.rect_btn_orange))
             }
         }
         authViewModel!!.isForgetPassword?.observe(this) { response ->
@@ -107,6 +97,9 @@ class PassWord : BaseActivity<PassWordBinding>(), View.OnClickListener {
                     val intent = Intent(this@PassWord, OTP::class.java)
                     Constant.isForgotPassword = true
                     startActivity(intent)
+                }
+                else{
+                    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
                 }
             }
         }

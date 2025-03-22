@@ -2,8 +2,10 @@ package com.vs.schoolmessenger.Repository
 
 import android.app.Activity
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Country.CountryResponse
 import com.vs.schoolmessenger.Auth.CreateResetChangePassword.PasswordCreationResponse
@@ -14,6 +16,9 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserValidationResponse
 import com.vs.schoolmessenger.Auth.OTP.ForgetOtpSendResponse
 import com.vs.schoolmessenger.Auth.OTP.OtpResponse
 import com.vs.schoolmessenger.Auth.Splash.VersionCheckResponse
+import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -65,9 +70,6 @@ class AuthServices {
                         }
                     }
                     else  {
-                        if (response.body() != null) {
-                            isCountryList.postValue(response.body())
-                        }
                     }
                 }
 
@@ -102,10 +104,11 @@ class AuthServices {
                                 isVersionCheck.postValue(response.body())
                             }
                         }
-                    } else if (response.code() == 400) {
-                        if (response.body() != null) {
-                            isVersionCheck.postValue(response.body())
-                        }
+                    } else  {
+                        val errorBodyString = response.errorBody()?.string()
+                        val gson = Gson()
+                        val errorModel = gson.fromJson(errorBodyString, ErrorResponse::class.java)
+                        Toast.makeText(activity, errorModel.message, Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -130,6 +133,7 @@ class AuthServices {
                         "isPasswordUpdateCheck",
                         response.code().toString() + " - " + response.toString()
                     )
+
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
@@ -140,8 +144,12 @@ class AuthServices {
                             }
                         }
                     } else {
-                            isValidationUser.postValue(response.body())
+                        val errorBodyString = response.errorBody()?.string()
+                        val gson = Gson()
+                        val errorModel = gson.fromJson(errorBodyString, ErrorResponse::class.java)
+                        Constant.errorAlert(activity,"",errorModel.message)
                     }
+
                 }
 
                 override fun onFailure(call: Call<UserValidationResponse?>, t: Throwable) {
@@ -176,10 +184,11 @@ class AuthServices {
                                 isOtpResponse.postValue(response.body())
                             }
                         }
-                    } else if (response.code() == 400) {
-                        if (response.body() != null) {
-                            isOtpResponse.postValue(response.body())
-                        }
+                    } else  {
+                        val errorBodyString = response.errorBody()?.string()
+                        val gson = Gson()
+                        val errorModel = gson.fromJson(errorBodyString, ErrorResponse::class.java)
+                        Toast.makeText(activity, errorModel.message, Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -192,43 +201,6 @@ class AuthServices {
 
     val isOtpResponseLiveData: LiveData<OtpResponse?>
         get() = isOtpResponse
-
-//    fun isUserDetails(isMobileNumber:String,isPassword:String,isDeviceType:String,isSecureId:String,activity: Activity) {
-//        RestClient.apiInterfaces.isUserDetails(isMobileNumber,isPassword,isDeviceType,isSecureId)
-//            ?.enqueue(object : Callback<UserDetailsResponse?> {
-//                override fun onResponse(
-//                    call: Call<UserDetailsResponse?>,
-//                    response: Response<UserDetailsResponse?>
-//                ) {
-//                    Log.d(
-//                        "isGetCountryList",
-//                        response.code().toString() + " - " + response.toString()
-//                    )
-//                    if (response.code() == 200) {
-//                        if (response.body() != null) {
-//                            val status = response.body()!!.status
-//                            if (status) {
-//                                isUserDetails.postValue(response.body())
-//                            } else {
-//                                isUserDetails.postValue(response.body())
-//                            }
-//                        }
-//                    } else if (response.code() == 400) {
-//                        if (response.body() != null) {
-//                            isUserDetails.postValue(response.body())
-//                        }
-//                    }
-//                }
-//
-//                override fun onFailure(call: Call<UserDetailsResponse?>, t: Throwable) {
-//                    isUserDetails.postValue(null)
-//                    t.printStackTrace()
-//                }
-//            })
-//    }
-//
-//    val isUserDetailsLiveData: LiveData<UserDetailsResponse?>
-//        get() = isUserDetails
 
     fun isPasswordChange(jsonObject: JsonObject,activity: Activity) {
         RestClient.apiInterfaces.isPasswordChange(jsonObject)
@@ -250,10 +222,8 @@ class AuthServices {
                                 isPasswordChange.postValue(response.body())
                             }
                         }
-                    } else if (response.code() == 400) {
-                        if (response.body() != null) {
-                            isPasswordChange.postValue(response.body())
-                        }
+                    } else  {
+
                     }
                 }
 
@@ -287,10 +257,11 @@ class AuthServices {
                                 isForgetPassword.postValue(response.body())
                             }
                         }
-                    } else if (response.code() == 400) {
-                        if (response.body() != null) {
-                            isForgetPassword.postValue(response.body())
-                        }
+                    } else  {
+                        val errorBodyString = response.errorBody()?.string()
+                        val gson = Gson()
+                        val errorModel = gson.fromJson(errorBodyString, ErrorResponse::class.java)
+                        Toast.makeText(activity, errorModel.message, Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -324,10 +295,8 @@ class AuthServices {
                                 isPasswordReset.postValue(response.body())
                             }
                         }
-                    } else if (response.code() == 400) {
-                        if (response.body() != null) {
-                            isPasswordReset.postValue(response.body())
-                        }
+                    } else  {
+
                     }
                 }
 
@@ -340,8 +309,6 @@ class AuthServices {
 
     val isPasswordResetLiveData: LiveData<PasswordResetResponse?>
         get() = isPasswordReset
-
-
 
     fun isCreateNewPassword(jsonObject: JsonObject,activity: Activity) {
         RestClient.apiInterfaces.isCreateNewPassword(jsonObject)
@@ -363,10 +330,8 @@ class AuthServices {
                                 isCreatePassWord.postValue(response.body())
                             }
                         }
-                    } else if (response.code() == 400) {
-                        if (response.body() != null) {
-                            isCreatePassWord.postValue(response.body())
-                        }
+                    } else  {
+
                     }
                 }
 
@@ -380,8 +345,4 @@ class AuthServices {
     val isCreatePassWordLiveData: LiveData<PasswordResetResponse?>
         get() = isCreatePassWord
 
-
-
-
-    
 }
