@@ -66,9 +66,8 @@ class PasswordGeneration : BaseActivity<PasswordGenerationBinding>(), View.OnCli
     }
 
     private fun isPasswordChange() {
-        val isMobileNumber = SharedPreference.getMobileNumber(this)
         val jsonObject = JsonObject()
-        jsonObject.addProperty(RequestKeys.Req_mobile_number, isMobileNumber)
+        jsonObject.addProperty(RequestKeys.Req_mobile_number, Constant.isMobileNumber)
         jsonObject.addProperty(RequestKeys.Req_old_password, "12345")
         jsonObject.addProperty(
             RequestKeys.Req_new_password,
@@ -78,9 +77,8 @@ class PasswordGeneration : BaseActivity<PasswordGenerationBinding>(), View.OnCli
     }
 
     private fun isPasswordReset() {
-        val isMobileNumber = SharedPreference.getMobileNumber(this)
         val jsonObject = JsonObject()
-        jsonObject.addProperty(RequestKeys.Req_mobile_number, isMobileNumber)
+        jsonObject.addProperty(RequestKeys.Req_mobile_number, Constant.isMobileNumber)
         jsonObject.addProperty(
             RequestKeys.Req_new_password,
             binding.txtConfirmPassword.text.toString()
@@ -90,8 +88,7 @@ class PasswordGeneration : BaseActivity<PasswordGenerationBinding>(), View.OnCli
 
     private fun isCreatePassword() {
         val jsonObject = JsonObject()
-        val isMobileNumber = SharedPreference.getMobileNumber(this)
-        jsonObject.addProperty(RequestKeys.Req_mobile_number, isMobileNumber)
+        jsonObject.addProperty(RequestKeys.Req_mobile_number, Constant.isMobileNumber)
         jsonObject.addProperty(
             RequestKeys.Req_new_password,
             binding.txtConfirmPassword.text.toString()
