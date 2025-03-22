@@ -101,7 +101,6 @@ class SettingsFragment : Fragment(), View.OnClickListener {
             }
 
             R.id.lnrChangePassword -> {
-                Constant.isPassWordCreateType = 3
                 startActivity(Intent(requireActivity(), PasswordGeneration::class.java))
             }
 
@@ -131,6 +130,8 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         }
 
         rlaLogout.setOnClickListener {
+            SharedPreference.putMobileNumberPassWord(requireActivity(),"","")
+
             startActivity(Intent(requireActivity(), Login::class.java))
         }
 

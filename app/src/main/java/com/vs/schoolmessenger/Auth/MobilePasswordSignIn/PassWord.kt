@@ -55,9 +55,11 @@ class PassWord : BaseActivity<PassWordBinding>(), View.OnClickListener {
 
                         if (isValidateUser[0].otp_sent) {
                             val intent = Intent(this@PassWord, OTP::class.java)
+                            Constant.pageType = Constant.PasswordScreen
                             startActivity(intent)
                         } else {
 
+                            SharedPreference.putMobileNumberPassWord(this@PassWord,Constant.isMobileNumber,binding.txtPassword.text.toString())
                             if (Constant.user_data!![0].user_details.is_staff && Constant.user_data!![0].user_details.is_parent) {
                                 val intent = Intent(this@PassWord, PrioritySelection::class.java)
                                 startActivity(intent)
@@ -134,8 +136,7 @@ class PassWord : BaseActivity<PassWordBinding>(), View.OnClickListener {
     private fun isValidateUser() {
         val jsonObject = JsonObject()
         val isSecureId = Constant.getAndroidSecureId(this@PassWord)
-            val isMobileNumber = SharedPreference.getMobileNumber(this)
-            jsonObject.addProperty(RequestKeys.Req_mobile_number, isMobileNumber)
+        jsonObject.addProperty(RequestKeys.Req_mobile_number, Constant.isMobileNumber)
 
         jsonObject.addProperty(RequestKeys.Req_device_type, Constant.isDeviceType)
         jsonObject.addProperty(RequestKeys.Req_secure_id, isSecureId)

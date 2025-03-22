@@ -51,6 +51,7 @@ class MobileNumber : BaseActivity<MobileNumberBinding>(), View.OnClickListener {
                     if (Constant.user_data!![0].is_password_updated) {
                         if(Constant.user_data!![0].otp_sent){
                             val intent = Intent(this@MobileNumber, OTP::class.java)
+                            Constant.pageType = Constant.MobileNumberScreen
                             startActivity(intent)
                         }
                         else{
@@ -60,6 +61,7 @@ class MobileNumber : BaseActivity<MobileNumberBinding>(), View.OnClickListener {
                     }
                     else {
                         val intent = Intent(this@MobileNumber, OTP::class.java)
+                        Constant.pageType = Constant.MobileNumberScreen
                         startActivity(intent)
                     }
 
@@ -103,6 +105,7 @@ class MobileNumber : BaseActivity<MobileNumberBinding>(), View.OnClickListener {
 
             R.id.btnLoginContinue -> {
                 if (isValidMobileNumber(binding.txtMobileNumber.text.toString())) {
+                    Constant.isMobileNumber = binding.txtMobileNumber.text.toString()
                     isValidateUser()
                 }
 

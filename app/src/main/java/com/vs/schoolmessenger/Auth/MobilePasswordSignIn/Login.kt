@@ -28,7 +28,6 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener {
 
     override fun setupViews() {
         super.setupViews()
-        // Access a specific view using its ID
         binding.imgHide.setOnClickListener(this)
         binding.btnLoginContinue.setOnClickListener(this)
         binding.lblForgetPassword.setOnClickListener(this)
@@ -56,8 +55,11 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener {
 
                         if (isValidateUser[0].otp_sent) {
                             val intent = Intent(this@Login, OTP::class.java)
+                            Constant.pageType = Constant.SignInScreen
                             startActivity(intent)
                         } else {
+
+                            SharedPreference.putMobileNumberPassWord(this@Login,binding.txtMobileNumber.text.toString(),binding.txtPassword.text.toString())
 
                             if (Constant.user_data!![0].user_details.is_staff && Constant.user_data!![0].user_details.is_parent) {
                                 val intent = Intent(this@Login, PrioritySelection::class.java)
@@ -143,8 +145,8 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener {
         val jsonObject = JsonObject()
         val isSecureId = Constant.getAndroidSecureId(this@Login)
 
-        val isMobileNumber = SharedPreference.getMobileNumber(this)
-        jsonObject.addProperty(RequestKeys.Req_mobile_number, isMobileNumber)
+        Constant.isMobileNumber = binding.txtMobileNumber.text.toString()
+        jsonObject.addProperty(RequestKeys.Req_mobile_number, binding.txtMobileNumber.text.toString())
         jsonObject.addProperty(RequestKeys.Req_device_type, Constant.isDeviceType)
         jsonObject.addProperty(RequestKeys.Req_secure_id, isSecureId)
         jsonObject.addProperty(RequestKeys.Req_password, binding.txtPassword.text.toString())

@@ -25,11 +25,12 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserValidationData
 import com.vs.schoolmessenger.Auth.OTP.ForgetOtpData
+import com.vs.schoolmessenger.Auth.Splash.Splash
 
 object Constant {
 
     var isDeviceType = "Android"
-    var isVersionId = 1
+    var isVersionId = 93
     var isShimmerViewShow = true
     var isShimmerViewDisable = false
     var isShimmerViewDisablenew = false  // added by murugan
@@ -47,6 +48,13 @@ object Constant {
     var forgotData: List<ForgetOtpData>? = null
     var isForgotPassword: Boolean? = false
     var isMobileNumber: String? = ""
+
+    var SplashScreen: Int? = 1
+    var MobileNumberScreen: Int? = 2
+    var SignInScreen: Int? = 3
+    var PasswordScreen: Int? = 4
+    var pageType: Int? = 0
+
 
 
 

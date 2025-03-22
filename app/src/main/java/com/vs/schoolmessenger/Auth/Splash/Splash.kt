@@ -50,18 +50,22 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
         authViewModel = ViewModelProvider(this).get(Auth::class.java)
         authViewModel!!.init()
 
-        if (Constant.isInternetAvailable(this)) {
-            val countryId = SharedPreference.getCountryId(this)
-            Log.d("countryId", countryId.toString())
-            if (!countryId.equals("")) {
-                isVersionCheck()
-            } else {
-                val intent = Intent(this@Splash, CountryScreen::class.java)
-                startActivity(intent)
+        GlobalScope.launch {
+            delay(2000) // 2-second delay
+            withContext(Dispatchers.Main) {
+                if (Constant.isInternetAvailable(this@Splash)) {
+                    val countryId = SharedPreference.getCountryId(this@Splash)
+                    Log.d("countryId", countryId.toString())
+                    if (!countryId.equals("")) {
+                        isVersionCheck()
+                    } else {
+                        val intent = Intent(this@Splash, CountryScreen::class.java)
+                        startActivity(intent)
+                    }
+                } else {
+                    Log.e("Network Error", "No Internet Connection")
+                }
             }
-        }
-        else {
-            Log.e("Network Error", "No Internet Connection")
         }
 
         authViewModel!!.isUserValidation?.observe(this) { response ->
@@ -72,22 +76,23 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
                     val isValidateUser = response.data
                     Constant.user_data = isValidateUser
                     Constant.user_details = Constant.user_data!![0].user_details
-                    Constant.isStaffDetails= Constant.user_data!![0].user_details.staff_details
-                    Constant.isChildDetails= Constant.user_data!![0].user_details.child_details
+                    Constant.isStaffDetails = Constant.user_data!![0].user_details.staff_details
+                    Constant.isChildDetails = Constant.user_data!![0].user_details.child_details
 
-                    if(isValidateUser[0].is_password_updated) {
-
+                    if (isValidateUser[0].is_password_updated) {
                         if (isValidateUser[0].otp_sent) {
                             val intent = Intent(this@Splash, OTP::class.java)
+                            Constant.pageType = Constant.SplashScreen
                             startActivity(intent)
                         } else {
-
+                            val mobile_number = SharedPreference.getMobileNumber(this)
+                            val password = SharedPreference.getPassWord(this)
+                            SharedPreference.putMobileNumberPassWord(this@Splash,mobile_number,password)
                             if (Constant.user_data!![0].user_details.is_staff && Constant.user_data!![0].user_details.is_parent) {
                                 val intent = Intent(this@Splash, PrioritySelection::class.java)
                                 startActivity(intent)
 
                             } else if (Constant.user_data!![0].user_details.is_staff) {
-
                                 val intent = Intent(
                                     this@Splash,
                                     Dashboard::class.java
@@ -99,13 +104,9 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
                                     com.vs.schoolmessenger.Dashboard.Parent.Dashboard::class.java
                                 )
                                 startActivity(intent)
-
                             }
                         }
                     }
-
-
-                    //isProceedNextScreen()
                 }
             }
         }
@@ -119,81 +120,37 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
                     isVersionData = isVersionCheckData
                     Constant.country_details = isVersionData!![0].country_details
                     SharedPreference.putCountryId(this, Constant.country_details!!.id.toString())
-
-                    if(isVersionData!![0].update_available){
-                          showUpdatePopup(isVersionData!!)
-                    }
-                    else{
+                    if (isVersionData!![0].update_available) {
+                        showUpdatePopup(isVersionData!!)
+                    } else {
                         autoLoginFlowCheck(isVersionData!!)
                     }
-
                 }
             }
         }
     }
 
     private fun showUpdatePopup(versionData: List<VersionData>) {
-
         //show update popup here
-
-        if(versionData[0].update_available == true && versionData[0].force_update){
+        if (versionData[0].update_available == true && versionData[0].force_update) {
 
             //show update button only
-        }
-        else if(versionData[0].update_available == true){
+        } else if (versionData[0].update_available == true) {
             // show not now , update
         }
-
         //call appFlowCheck method when clicking on not now button
-
     }
 
     private fun autoLoginFlowCheck(isVersionData: List<VersionData>) {
         val mobile_number = SharedPreference.getMobileNumber(this)
         val password = SharedPreference.getPassWord(this)
-
-        if(!mobile_number.equals("") && !password.equals("")){
+        if (!mobile_number.equals("") && !password.equals("")) {
             isValidateUser()
-        }
-        else {
+        } else {
             val intent = Intent(this@Splash, Login::class.java)
             startActivity(intent)
         }
-
     }
-
-    @OptIn(DelicateCoroutinesApi::class)
-    private fun isProceedNextScreen() {
-        GlobalScope.launch {
-            delay(2000) // 2-second delay
-            withContext(Dispatchers.Main) {
-                if (Constant.isUserValidationData!![0].otp_sent) {
-                    val intent = Intent(this@Splash, OTP::class.java)
-                    startActivity(intent)
-                } else {
-                    if (Constant.isUserValidationData!![0].user_details.is_parent && Constant.isUserValidationData!![0].user_details.is_staff) {
-                        val intent = Intent(this@Splash, PrioritySelection::class.java)
-                        startActivity(intent)
-                    } else {
-                        if (Constant.isUserValidationData!![0].user_details.is_parent) {
-                            val intent = Intent(
-                                this@Splash,
-                                com.vs.schoolmessenger.Dashboard.Parent.Dashboard::class.java
-                            )
-                            startActivity(intent)
-                        } else {
-                            val intent = Intent(
-                                this@Splash,
-                                Dashboard::class.java
-                            )
-                            startActivity(intent)
-                        }
-                    }
-                }
-            }
-        }
-    }
-
 
     private fun isValidateUser() {
         val jsonObject = JsonObject()
@@ -204,10 +161,8 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
         jsonObject.addProperty(RequestKeys.Req_secure_id, isSecureId)
         val isPassWord = SharedPreference.getPassWord(this)
         jsonObject.addProperty(RequestKeys.Req_password, isPassWord)
-
         authViewModel!!.isValidateUser(jsonObject, this)
     }
-
 
     private fun isVersionCheck() {
         val jsonObject = JsonObject()
@@ -216,7 +171,6 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
         jsonObject.addProperty(RequestKeys.Req_country_id, SharedPreference.getCountryId(this))
         authViewModel!!.isVersionCheck(jsonObject, this)
     }
-
 
     private fun isToolBarTheme() {
         val window = this.window

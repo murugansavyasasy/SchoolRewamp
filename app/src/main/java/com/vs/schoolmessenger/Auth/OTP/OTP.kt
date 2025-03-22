@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.CreateResetChangePassword.PasswordGeneration
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.PassWord
 import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.Dashboard.School.Dashboard
 import com.vs.schoolmessenger.R
@@ -30,6 +31,7 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
     }
 
     var authViewModel: Auth? = null
+    var screenType : Int ?= 0
 
     override fun setupViews() {
         super.setupViews()
@@ -84,25 +86,34 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
                     }
                     else if(Constant.user_data!![0].is_password_updated){
 
-                        if (Constant.user_data!![0].user_details.is_staff && Constant.user_data!![0].user_details.is_parent) {
-                            val intent = Intent(this@OTP, PrioritySelection::class.java)
+                        if(Constant.pageType == Constant.MobileNumberScreen){
+                            val intent = Intent(this@OTP, PassWord::class.java)
                             startActivity(intent)
-
-                        } else if (Constant.user_data!![0].user_details.is_staff) {
-
-                            val intent = Intent(
-                                this@OTP,
-                                Dashboard::class.java
-                            )
-                            startActivity(intent)
-                        } else if (Constant.user_data!![0].user_details.is_parent) {
-                            val intent = Intent(
-                                this@OTP,
-                                com.vs.schoolmessenger.Dashboard.Parent.Dashboard::class.java
-                            )
-                            startActivity(intent)
-
                         }
+
+                        else {
+                            if (Constant.user_data!![0].user_details.is_staff && Constant.user_data!![0].user_details.is_parent) {
+                                val intent = Intent(this@OTP, PrioritySelection::class.java)
+                                startActivity(intent)
+
+                            } else if (Constant.user_data!![0].user_details.is_staff) {
+
+                                val intent = Intent(
+                                    this@OTP,
+                                    Dashboard::class.java
+                                )
+                                startActivity(intent)
+                            } else if (Constant.user_data!![0].user_details.is_parent) {
+                                val intent = Intent(
+                                    this@OTP,
+                                    com.vs.schoolmessenger.Dashboard.Parent.Dashboard::class.java
+                                )
+                                startActivity(intent)
+
+                            }
+                        }
+
+
                     }
                     else {
                         val intent = Intent(this@OTP, PasswordGeneration::class.java)
@@ -127,7 +138,7 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
 
     private fun isOtpValidate(isOpt: String) {
         val jsonObject = JsonObject()
-        jsonObject.addProperty(RequestKeys.Req_mobile_number, isMobileNumber)
+        jsonObject.addProperty(RequestKeys.Req_mobile_number, Constant.isMobileNumber)
         jsonObject.addProperty(RequestKeys.Req_otp, isOpt)
         authViewModel!!.isOtpResponse(jsonObject, this)
     }
