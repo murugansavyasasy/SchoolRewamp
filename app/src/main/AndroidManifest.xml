@@ -476,7 +476,7 @@
 
 
         <activity
-            android:name=".Dashboard.Combination.RoleSelection"
+            android:name=".Dashboard.Combination.PrioritySelection"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize">
 
@@ -510,6 +510,7 @@
 <!--            android:windowSoftInputMode="adjustPan|adjustResize">-->
 
 <!--        </activity>-->
+
 
         <activity
             android:name=".School.MessageFromManagement.MessageFromManagement"
@@ -585,8 +586,7 @@
         <activity
             android:name=".School.MarkYourAttendance.MarkYourAttendance"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize">
-        </activity>
+            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
 
         <activity
             android:name=".School.StaffWiseAttendanceReport.StaffWiseAttendanceReport"

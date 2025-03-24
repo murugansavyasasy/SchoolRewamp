@@ -3,6 +3,8 @@ package com.vs.schoolmessenger.Auth.MobilePasswordSignIn
 import android.content.Intent
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
+import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.MasterKeys
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.OTP.OTP
@@ -30,7 +32,7 @@ class MobileNumber : BaseActivity<MobileNumberBinding>(), View.OnClickListener {
         authViewModel = ViewModelProvider(this).get(Auth::class.java)
         authViewModel!!.init()
 
-        binding.txtMobileNumber.hint = Constant.isSelectedCountry!!.mobile_no_hint
+        binding.txtMobileNumber.hint = Constant.country_details!!.mobile_no_hint
 
         binding.btnLoginContinue.isClickable = true
         binding.btnLoginContinue.setBackgroundDrawable(resources.getDrawable(R.drawable.rect_btn_orange))
@@ -41,59 +43,37 @@ class MobileNumber : BaseActivity<MobileNumberBinding>(), View.OnClickListener {
                 val message = response.message
                 if (status) {
                     val isValidateUser = response.data
-                    Constant.isUserValidationData = isValidateUser
+                    Constant.user_data = isValidateUser
+                    Constant.user_details = Constant.user_data!![0].user_details
+                    Constant.isStaffDetails= Constant.user_data!![0].user_details.staff_details
+                    Constant.isChildDetails= Constant.user_data!![0].user_details.child_details
+                    SharedPreference.putUserDetails(this@MobileNumber, Constant.user_details!!)
 
-                    Constant.isUserValidationData = isValidateUser
-                    if (Constant.isUserValidationData!![0].user_details.is_staff && Constant.isUserValidationData!![0].user_details.is_parent) {
-                        val isUserDetails = Constant.isUserValidationData!![0].user_details
-                        val isStaffDetails = isUserDetails.staff_details
-                        Constant.isStaffDetails = isStaffDetails
-                        val isParentDetails = isUserDetails.child_details
-                        Constant.isParentDetails = isParentDetails
-                    } else if (Constant.isUserValidationData!![0].user_details.is_staff) {
-                        val isUserDetails = Constant.isUserValidationData!![0].user_details
-                        val isStaffDetails = isUserDetails.staff_details
-                        Constant.isStaffDetails = isStaffDetails
-                    } else if (Constant.isUserValidationData!![0].user_details.is_parent) {
-                        val isUserDetails = Constant.isUserValidationData!![0].user_details
-                        val isParentDetails = isUserDetails.child_details
-                        Constant.isParentDetails = isParentDetails
+                    if (Constant.user_data!![0].is_password_updated) {
+                        if(Constant.user_data!![0].otp_sent){
+                            val intent = Intent(this@MobileNumber, OTP::class.java)
+                            Constant.pageType = Constant.MobileNumberScreen
+                            startActivity(intent)
+                        }
+                        else{
+                            val intent = Intent(this@MobileNumber, PassWord::class.java)
+                            startActivity(intent)
+                        }
                     }
-
-                    SharedPreference.putMobileNumber(
-                        this@MobileNumber, binding.txtMobileNumber.text.toString()
-                    )
-
-                    binding.isLoading.visibility = View.GONE
-                    binding.btnLoginContinue.isClickable = true
-                    binding.btnLoginContinue.setBackgroundDrawable(resources.getDrawable(R.drawable.rect_btn_orange))
-
-                    if (Constant.isUserValidationData!![0].is_password_updated) {
-                        val intent = Intent(this@MobileNumber, PassWord::class.java)
-                        startActivity(intent)
-                    } else {
+                    else {
                         val intent = Intent(this@MobileNumber, OTP::class.java)
+                        Constant.pageType = Constant.MobileNumberScreen
                         startActivity(intent)
                     }
-
-
-                } else {
-                    binding.isLoading.visibility = View.GONE
-                    binding.btnLoginContinue.isClickable = true
-                    binding.btnLoginContinue.setBackgroundDrawable(resources.getDrawable(R.drawable.rect_btn_orange))
                 }
-            } else {
-                binding.isLoading.visibility = View.GONE
-                binding.btnLoginContinue.isClickable = true
-                binding.btnLoginContinue.setBackgroundDrawable(resources.getDrawable(R.drawable.rect_btn_orange))
+
             }
         }
     }
 
     private fun isValidMobileNumber(mobileNumber: String): Boolean {
-        return mobileNumber.length == Constant.isSelectedCountry!!.mobile_number_length.toInt() && mobileNumber.all { it.isDigit() }
+        return mobileNumber.length == Constant.country_details!!.mobile_number_length && mobileNumber.all { it.isDigit() }
     }
-
 
     private fun isValidateUser() {
         val jsonObject = JsonObject()
@@ -113,6 +93,7 @@ class MobileNumber : BaseActivity<MobileNumberBinding>(), View.OnClickListener {
 
             R.id.btnLoginContinue -> {
                 if (isValidMobileNumber(binding.txtMobileNumber.text.toString())) {
+                    Constant.isMobileNumber = binding.txtMobileNumber.text.toString()
                     isValidateUser()
                 }
 

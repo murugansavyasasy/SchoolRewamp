@@ -5,13 +5,16 @@ import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.Gson
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Dashboard.School.Dashboard
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.RoleSelecionBinding
 
-class RoleSelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListener {
+class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListener {
 
     private lateinit var isStudentDetailAdapter: StudentDetailAdapter
     private lateinit var isStaffDetailAdapter: StaffDetailAdapter
@@ -19,6 +22,7 @@ class RoleSelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListener 
     override fun getViewBinding(): RoleSelecionBinding {
         return RoleSelecionBinding.inflate(layoutInflater)
     }
+    var userDetails : UserDetails? = null
 
     override fun setupViews() {
         super.setupViews()
@@ -28,21 +32,21 @@ class RoleSelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListener 
         binding.btnGo.setOnClickListener(this)
         isLoadData(true)
 
+        userDetails= SharedPreference.getUserDetails(this@PrioritySelection)
+
+        binding.lblTeacher.text = userDetails!!.role_name
         binding.btnGo.setOnClickListener {
             val intent = Intent(this, Dashboard::class.java)
             startActivity(intent)
         }
     }
-
-
     private fun isLoadData(isStaff: Boolean) {
-
         if (isStaff) {
             isStaffDetailAdapter = StaffDetailAdapter(Constant.isStaffDetails, this)
             binding.recyclerViews.layoutManager = LinearLayoutManager(this)
             binding.recyclerViews.adapter = isStaffDetailAdapter
         } else {
-            isStudentDetailAdapter = StudentDetailAdapter(Constant.isParentDetails, this)
+            isStudentDetailAdapter = StudentDetailAdapter(Constant.isChildDetails, this)
             binding.recyclerViews.layoutManager = LinearLayoutManager(this)
             binding.recyclerViews.adapter = isStudentDetailAdapter
         }
@@ -53,23 +57,19 @@ class RoleSelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListener 
             R.id.lblTeacher -> {
                 isBackRoundChange(binding.lblTeacher)
             }
-
             R.id.lblParent -> {
                 isBackRoundChange(binding.lblParent)
             }
         }
     }
-
     private fun isBackRoundChange(isClickingId: TextView) {
-
         if (isClickingId == binding.lblParent) {
             binding.lblTeacher.background = null
             binding.lblTeacher.setTextColor(ContextCompat.getColor(this, R.color.dark_blue))
             binding.btnGo.visibility = View.GONE
             isLoadData(false)
-          Constant.isParentChoose = true
+            Constant.isParentChoose = true
         }
-
         if (isClickingId == binding.lblTeacher) {
             binding.lblParent.background = null
             binding.lblParent.setTextColor(ContextCompat.getColor(this, R.color.dark_blue))
