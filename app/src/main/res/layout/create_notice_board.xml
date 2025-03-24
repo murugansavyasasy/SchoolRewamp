@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/light_blue">
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/rytHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,14 +26,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/ten"
-            android:gravity="center"
             android:text="@string/NoticeBoard"
             android:textColor="@color/black"
             android:textSize="@dimen/twenty"
             android:textStyle="bold" />
 
 
-    </RelativeLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/lnrParent"
@@ -55,6 +54,7 @@
             android:text="@string/Create"
             android:textColor="@color/white"
             android:textSize="@dimen/thirteen_sp"
+            android:fontFamily="@font/poppins_bold"
             android:textStyle="bold" />
 
         <TextView
@@ -67,6 +67,7 @@
             android:text="@string/History"
             android:textColor="@color/dark_blue"
             android:textSize="@dimen/thirteen_sp"
+            android:fontFamily="@font/poppins_bold"
             android:textStyle="bold" />
 
     </LinearLayout>
@@ -141,6 +142,7 @@
                 android:text="@string/Title"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
+                android:fontFamily="@font/poppins_bold"
                 android:textStyle="bold" />
 
             <EditText
@@ -154,6 +156,7 @@
                 android:paddingBottom="@dimen/ten"
                 android:inputType="text"
                 android:textColor="@color/black"
+                android:fontFamily="@font/poppins_regular"
                 android:textSize="@dimen/thirteen_sp" />
 
             <TextView
@@ -165,6 +168,7 @@
                 android:text="@string/Detail"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
+                android:fontFamily="@font/poppins_bold"
                 android:textStyle="bold" />
 
 
@@ -185,6 +189,7 @@
                     android:background="@android:color/transparent"
                     android:hint="@string/Description"
                     android:textColor="@color/black"
+                    android:fontFamily="@font/poppins_regular"
                     android:textSize="@dimen/thirteen_sp" />
 
                 <TextView
@@ -196,6 +201,7 @@
                     android:text="0 of 500"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
+                    android:fontFamily="@font/poppins_bold"
                     android:textStyle="bold" />
 
             </RelativeLayout>
@@ -215,6 +221,7 @@
                     android:text="@string/AddPhotos"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
+                    android:fontFamily="@font/poppins_bold"
                     android:textStyle="bold" />
 
                 <TextView
@@ -225,6 +232,7 @@
                     android:layout_marginTop="@dimen/ten"
                     android:text="@string/Optional"
                     android:textColor="@color/grey"
+                    android:fontFamily="@font/poppins_regular"
                     android:textSize="@dimen/thirteen_sp"
                     android:textStyle="normal" />
 
@@ -312,6 +320,7 @@
                         android:text="@string/DateTime"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp"
+                        android:fontFamily="@font/poppins_bold"
                         android:textStyle="bold" />
 
                     <ImageView
@@ -330,6 +339,7 @@
                         android:text="@string/Start"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp"
+                        android:fontFamily="@font/poppins_bold"
                         android:textStyle="bold" />
 
 
@@ -366,6 +376,7 @@
                                         android:layout_gravity="center_horizontal"
                                         android:layout_marginTop="@dimen/five"
                                         android:text="Fri"
+                                        android:fontFamily="@font/poppins_bold"
                                         android:textColor="@color/black"
                                         android:textSize="@dimen/fifteen_sp"
                                         android:textStyle="bold" />
@@ -377,6 +388,7 @@
                                         android:background="@color/primary_light"
                                         android:gravity="center"
                                         android:text="12"
+                                        android:fontFamily="@font/poppins_bold"
                                         android:textColor="@color/black"
                                         android:textSize="@dimen/fifteen_sp"
                                         android:textStyle="bold" />
@@ -403,6 +415,7 @@
                                 android:layout_marginTop="@dimen/ten"
                                 android:layout_toEndOf="@+id/imgDateDown"
                                 android:text="2024 Dec, 04"
+                                android:fontFamily="@font/poppins_regular"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/thirteen_sp" />
 
@@ -431,6 +444,7 @@
                                 android:layout_alignParentEnd="true"
                                 android:text="12:11 AM"
                                 android:textColor="@color/black"
+                                android:fontFamily="@font/poppins_regular"
                                 android:textSize="@dimen/thirteen_sp" />
 
                         </RelativeLayout>
@@ -456,6 +470,7 @@
                         android:text="@string/End"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp"
+                        android:fontFamily="@font/poppins_bold"
                         android:textStyle="bold" />
 
                     <RelativeLayout
@@ -491,6 +506,7 @@
                                         android:layout_gravity="center_horizontal"
                                         android:layout_marginTop="@dimen/five"
                                         android:text="Fri"
+                                        android:fontFamily="@font/poppins_bold"
                                         android:textColor="@color/black"
                                         android:textSize="@dimen/fifteen_sp"
                                         android:textStyle="bold" />
@@ -502,6 +518,7 @@
                                         android:background="@color/primary_light"
                                         android:gravity="center"
                                         android:text="12"
+                                        android:fontFamily="@font/poppins_bold"
                                         android:textColor="@color/black"
                                         android:textSize="@dimen/fifteen_sp"
                                         android:textStyle="bold" />
@@ -528,6 +545,7 @@
                                 android:layout_marginTop="@dimen/ten"
                                 android:layout_toEndOf="@+id/imgDateDown1"
                                 android:text="2024 Dec, 04"
+                                android:fontFamily="@font/poppins_regular"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/thirteen_sp" />
 
@@ -555,6 +573,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:text="12:11 AM"
+                                android:fontFamily="@font/poppins_regular"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/thirteen_sp" />
 
@@ -582,6 +601,7 @@
                         android:text="@string/NEXT"
                         android:textColor="@color/white"
                         android:textSize="@dimen/thirteen_sp"
+                        android:fontFamily="@font/poppins_bold"
                         android:textStyle="bold" />
 
 

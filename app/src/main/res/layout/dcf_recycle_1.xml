@@ -20,6 +20,7 @@
             android:layout_marginStart="@dimen/eight"
             android:layout_marginTop="@dimen/five"
             android:layout_marginBottom="@dimen/five"
+            android:fontFamily="@font/poppins_bold"
             android:id="@+id/total_label"/>
 
         <TextView
@@ -33,6 +34,7 @@
             android:layout_marginTop="@dimen/five"
             android:layout_marginBottom="@dimen/five"
             android:layout_marginEnd="@dimen/eight"
+            android:fontFamily="@font/poppins_bold"
             android:id="@+id/total_value"/>
     </RelativeLayout>
 

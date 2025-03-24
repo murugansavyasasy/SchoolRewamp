@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/rytHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,13 +22,13 @@
             android:id="@+id/lblCreateNoticeBoard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:text="Schedule Exam"
+            android:layout_marginStart="@dimen/ten"
             android:textColor="@color/black"
             android:textSize="@dimen/twenty"
             android:textStyle="bold" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/rytSearch"

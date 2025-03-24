@@ -16,7 +16,8 @@
             android:layout_width="@dimen/hundred"
             android:layout_height="@dimen/hundred"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/exam_subject_icon"></ImageView>
+            android:src="@drawable/exam_subject_icon">
+        </ImageView>
 
 
         <TextView
@@ -31,6 +32,7 @@
             android:layout_marginBottom="@dimen/ten"
             android:text="Tamil"
             android:textColor="@color/black"
+            android:fontFamily="@font/poppins_bold"
             android:textSize="@dimen/thirteen_sp"
             android:textStyle="bold">
 

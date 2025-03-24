@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/rytHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,13 +21,13 @@
             android:id="@+id/lblCreateNoticeBoard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
+            android:layout_marginStart="@dimen/ten"
             android:text="Exam Creation"
             android:textColor="@color/black"
             android:textSize="@dimen/twenty"
             android:textStyle="bold" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -71,7 +71,9 @@
                 android:text="Select Standard"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
-                android:textStyle="bold"></TextView>
+                android:fontFamily="@font/poppins_bold"
+                android:textStyle="bold">
+            </TextView>
         </RelativeLayout>
 
 
@@ -107,7 +109,9 @@
                 android:text="Select Section"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
-                android:textStyle="bold"></TextView>
+                android:fontFamily="@font/poppins_bold"
+                android:textStyle="bold">
+            </TextView>
         </RelativeLayout>
 
         <EditText
@@ -121,6 +125,7 @@
             android:hint="Enter exam title "
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"
+            android:fontFamily="@font/poppins_regular"
             android:textStyle="normal">
 
         </EditText>
@@ -143,6 +148,7 @@
             android:padding="@dimen/ten"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"
+            android:fontFamily="@font/poppins_regular"
             android:textStyle="normal">
 
         </EditText>
@@ -157,6 +163,7 @@
             android:layout_marginTop="@dimen/ten"
             android:layout_marginEnd="@dimen/fifteen"
             android:text="0 / 500"
+            android:fontFamily="@font/poppins_regular"
             android:textColor="@color/light_gray"
             android:textSize="@dimen/thirteen_sp"
             android:textStyle="normal">
@@ -175,6 +182,7 @@
             android:background="@drawable/rect_btn_orange"
             android:gravity="center"
             android:padding="@dimen/ten"
+            android:fontFamily="@font/poppins_bold"
             android:text="Select Exam"
             android:textColor="@color/white"
             android:textSize="@dimen/thirteen_sp"

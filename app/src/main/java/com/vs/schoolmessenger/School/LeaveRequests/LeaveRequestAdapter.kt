@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.compose.ui.text.font.FontFamily
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.R
@@ -35,6 +36,8 @@ class LeaveRequestAdapter(
                     .inflate(R.layout.leave_request_list, parent, false)
             DataViewHolder(view, context) // Pass context to DataViewHolder
         }
+
+
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

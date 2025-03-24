@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/rytHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,7 +18,8 @@
             android:layout_marginTop="@dimen/ten"
             android:layout_marginEnd="@dimen/ten"
             android:layout_marginBottom="@dimen/ten"
-            android:src="@drawable/arrow_back_black"></ImageView>
+            android:src="@drawable/arrow_back_black">
+        </ImageView>
 
         <TextView
             android:layout_width="wrap_content"
@@ -32,7 +33,7 @@
             android:textStyle="bold">
 
         </TextView>
-    </RelativeLayout>
+    </LinearLayout>
 
 
     <RelativeLayout
@@ -79,6 +80,7 @@
                         android:text="@string/lblSchoolStrength"
                         android:textColor="@color/black"
                         android:textSize="@dimen/fifteen_sp"
+                        android:fontFamily="@font/poppins_bold"
                         android:textStyle="bold" />
 
                     <LinearLayout
@@ -95,6 +97,7 @@
                             android:text="@string/lblTotalStrength"
                             android:textColor="@color/black"
                             android:textSize="@dimen/thirteen_sp"
+                            android:fontFamily="@font/poppins_bold"
                             android:textStyle="bold" />
 
                         <TextView
@@ -104,6 +107,7 @@
                             android:layout_marginStart="@dimen/ten"
                             android:layout_weight="0.5"
                             android:text="10,000"
+                            android:fontFamily="@font/poppins_regular"
                             android:textColor="@color/black"
                             android:textSize="@dimen/thirteen_sp" />
                     </LinearLayout>
@@ -122,6 +126,7 @@
                             android:text="@string/lblSfaffcount"
                             android:textColor="@color/light_orange0"
                             android:textSize="@dimen/thirteen_sp"
+                            android:fontFamily="@font/poppins_bold"
                             android:textStyle="bold" />
 
                         <TextView
@@ -131,6 +136,7 @@
                             android:layout_marginStart="@dimen/ten"
                             android:layout_weight="0.5"
                             android:text="20,000 - 20%"
+                            android:fontFamily="@font/poppins_regular"
                             android:textColor="@color/light_orange0"
                             android:textSize="@dimen/thirteen_sp" />
                     </LinearLayout>
@@ -149,6 +155,7 @@
                             android:text="@string/lblBoycount"
                             android:textColor="@color/light_green_bg1"
                             android:textSize="@dimen/thirteen_sp"
+                            android:fontFamily="@font/poppins_bold"
                             android:textStyle="bold" />
 
                         <TextView
@@ -158,6 +165,7 @@
                             android:layout_marginStart="@dimen/ten"
                             android:layout_weight="0.5"
                             android:text="45,000 - 45%"
+                            android:fontFamily="@font/poppins_regular"
                             android:textColor="@color/light_green_bg1"
                             android:textSize="@dimen/thirteen_sp" />
                     </LinearLayout>
@@ -177,6 +185,7 @@
                             android:text="@string/lblGirlcount"
                             android:textColor="@color/yellow"
                             android:textSize="@dimen/thirteen_sp"
+                            android:fontFamily="@font/poppins_bold"
                             android:textStyle="bold" />
 
                         <TextView
@@ -186,6 +195,7 @@
                             android:layout_marginStart="@dimen/ten"
                             android:layout_weight="0.5"
                             android:text="35,000 - 30%"
+                            android:fontFamily="@font/poppins_regular"
                             android:textColor="@color/yellow"
                             android:textSize="@dimen/thirteen_sp" />
                     </LinearLayout>

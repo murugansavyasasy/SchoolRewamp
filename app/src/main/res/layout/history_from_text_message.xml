@@ -32,7 +32,9 @@
             android:text="Friday Leave"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"
-            android:textStyle="bold"></TextView>
+            android:fontFamily="@font/poppins_bold"
+            android:textStyle="bold">
+        </TextView>
 
 
         <TextView
@@ -44,6 +46,8 @@
             android:maxLines="3"
             android:layout_marginTop="@dimen/fifteen"
             android:layout_marginEnd="@dimen/ten"
+            android:textStyle="normal"
+            android:fontFamily="@font/poppins_regular"
             android:text="Dear (Recipient's Name), I am writing to request leave from school for (number of days) days, starting from (start date) to (end date). The reason for my leave is (briefly state the reason, e.g., a family function, medical treatment, personal reasons)."
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp">
@@ -95,6 +99,8 @@
                 android:text="01 Apr 2024"
                 android:layout_marginTop="@dimen/five"
                 android:layout_marginStart="@dimen/five"
+                android:textStyle="normal"
+                android:fontFamily="@font/poppins_regular"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp" />
 
@@ -123,6 +129,8 @@
                     android:text="Select"
                     android:textColor="@color/white"
                     android:layout_marginBottom="5dp"
+                    android:textStyle="normal"
+                    android:fontFamily="@font/poppins_regular"
                     android:textSize="@dimen/thirteen_sp" />
             </RelativeLayout>
 

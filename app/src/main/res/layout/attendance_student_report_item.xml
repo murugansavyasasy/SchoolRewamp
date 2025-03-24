@@ -30,6 +30,7 @@
                 android:text="Sathish"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
+                android:fontFamily="@font/poppins_medium"
                 android:textStyle="bold">
 
             </TextView>
@@ -44,6 +45,7 @@
                 android:text="@string/Admissionno"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
+                android:fontFamily="@font/poppins_bold"
                 android:textStyle="bold">
 
             </TextView>
@@ -59,6 +61,7 @@
                 android:text="1234556776"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
+                android:fontFamily="@font/poppins_regular"
                 android:textStyle="normal">
 
             </TextView>
@@ -74,6 +77,7 @@
                 android:padding="@dimen/five"
                 android:text="Present"
                 android:textColor="@color/white"
+                android:fontFamily="@font/poppins_bold"
                 android:textSize="@dimen/thirteen_sp"
                 android:textStyle="bold">
 

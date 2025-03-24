@@ -34,6 +34,7 @@
                 android:text="@string/permission_settings"
                 android:textColor="@color/black"
                 android:textSize="@dimen/twenty_sp"
+                android:fontFamily="@font/poppins_bold"
                 android:textStyle="bold">
 
             </TextView>
@@ -47,6 +48,8 @@
             android:layout_marginStart="@dimen/twenty"
             android:layout_marginTop="@dimen/twenty"
             android:text="@string/lblGENERAL"
+            android:textStyle="normal"
+            android:fontFamily="@font/poppins_regular"
             android:textSize="@dimen/fifteen_sp">
 
         </TextView>
@@ -90,6 +93,7 @@
                         android:text="@string/lblNotifications"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp"
+                        android:fontFamily="@font/poppins_bold"
                         android:textStyle="bold">
 
                     </TextView>
@@ -142,6 +146,7 @@
                         android:text="@string/lblFAQ"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp"
+                        android:fontFamily="@font/poppins_bold"
                         android:textStyle="bold">
 
                     </TextView>
@@ -194,6 +199,7 @@
                         android:text="@string/lblContact"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp"
+                        android:fontFamily="@font/poppins_bold"
                         android:textStyle="bold">
 
                     </TextView>
@@ -246,6 +252,7 @@
                         android:text="@string/lblTermsCondition"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp"
+                        android:fontFamily="@font/poppins_bold"
                         android:textStyle="bold">
 
                     </TextView>
@@ -301,6 +308,7 @@
                         android:text="@string/lblChangeLanguage"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp"
+                        android:fontFamily="@font/poppins_bold"
                         android:textStyle="bold">
 
                     </TextView>
@@ -357,6 +365,7 @@
                         android:text="@string/change_password"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp"
+                        android:fontFamily="@font/poppins_bold"
                         android:textStyle="bold">
 
                     </TextView>
@@ -412,6 +421,7 @@
                         android:text="@string/save_contact_to_avoid"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp"
+                        android:fontFamily="@font/poppins_bold"
                         android:textStyle="bold">
 
                     </TextView>
@@ -437,6 +447,8 @@
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/twenty"
                 android:text="@string/lblFEEDBACK"
+                android:textStyle="normal"
+                android:fontFamily="@font/poppins_regular"
                 android:textSize="@dimen/fifteen_sp">
 
             </TextView>
@@ -475,6 +487,7 @@
                         android:text="@string/lblReportbug"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp"
+                        android:fontFamily="@font/poppins_bold"
                         android:textStyle="bold">
 
                     </TextView>
@@ -525,6 +538,7 @@
                         android:text="@string/lblRateus"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp"
+                        android:fontFamily="@font/poppins_bold"
                         android:textStyle="bold">
 
                     </TextView>
@@ -576,6 +590,7 @@
                         android:text="@string/lblLogout"
                         android:textColor="@color/red"
                         android:textSize="@dimen/thirteen_sp"
+                        android:fontFamily="@font/poppins_bold"
                         android:textStyle="bold">
 
                     </TextView>
@@ -597,7 +612,8 @@
                     android:layout_marginStart="@dimen/twenty"
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/twenty"
-                    android:background="@color/grey"></View>
+                    android:background="@color/grey">
+                </View>
 
             </RelativeLayout>
 

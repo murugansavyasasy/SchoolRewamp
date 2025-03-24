@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/rytHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,7 +18,8 @@
             android:layout_marginTop="@dimen/ten"
             android:layout_marginEnd="@dimen/ten"
             android:layout_marginBottom="@dimen/ten"
-            android:src="@drawable/arrow_back_black"></ImageView>
+            android:src="@drawable/arrow_back_black">
+        </ImageView>
 
         <TextView
             android:layout_width="wrap_content"
@@ -32,7 +33,7 @@
             android:textStyle="bold">
 
         </TextView>
-    </RelativeLayout>
+    </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/rytSearch"
@@ -58,6 +59,7 @@
             android:layout_toEndOf="@+id/imgSearch"
             android:background="@android:color/transparent"
             android:hint="@string/lblSearch"
+            android:fontFamily="@font/poppins_regular"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp" />
 
@@ -100,6 +102,7 @@
                 android:drawableEnd="@drawable/ic_down_arrow"
                 android:gravity="center_vertical"
                 android:padding="@dimen/five"
+                android:fontFamily="@font/poppins_regular"
                 android:textSize="@dimen/thirteen_sp"
                 android:text="Get all student"
                 android:textColor="@color/black" />
@@ -135,8 +138,10 @@
                 android:layout_marginEnd="@dimen/twenty"
                 android:text="XII - B"
                 android:textColor="@color/black"
+                android:fontFamily="@font/poppins_bold"
                 android:textSize="@dimen/thirteen_sp"
-                android:textStyle="bold"></TextView>
+                android:textStyle="bold">
+            </TextView>
         </RelativeLayout>
 
     </LinearLayout>

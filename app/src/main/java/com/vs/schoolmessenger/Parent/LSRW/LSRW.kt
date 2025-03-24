@@ -3,16 +3,10 @@ package com.vs.schoolmessenger.Parent.LSRW
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
-import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesClickListener
-import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesDateData
-import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesDetailClickListener
-import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesDetailData
-import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesReportAdapter
-import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesReportDetailAdapter
-import com.vs.schoolmessenger.databinding.AbsenteesReportBinding
-import com.vs.schoolmessenger.databinding.AssignmentParentBinding
 import com.vs.schoolmessenger.databinding.LsrwBinding
+
+
+
 
 class LSRW : BaseActivity<LsrwBinding>() ,
     View.OnClickListener {

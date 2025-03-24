@@ -21,6 +21,8 @@
             android:layout_gravity="start"
             android:text="Murugan"
             android:padding="@dimen/ten"
+            android:textStyle="normal"
+            android:fontFamily="@font/poppins_regular"
             android:textColor="@color/black"
             android:textSize="@dimen/twele_sp" />
 
@@ -44,6 +46,8 @@
             android:layout_height="wrap_content"
             android:text="111"
             android:textAlignment="center"
+            android:textStyle="normal"
+            android:fontFamily="@font/poppins_medium"
             android:textColor="@color/black"
             android:textSize="@dimen/twele_sp" />
 
@@ -73,6 +77,8 @@
                 android:layout_height="wrap_content"
                 android:text="Present"
                 android:textColor="@color/green"
+                android:textStyle="normal"
+                android:fontFamily="@font/poppins_regular"
                 android:textSize="@dimen/twele_sp" />
 
         </LinearLayout>

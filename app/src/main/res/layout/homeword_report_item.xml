@@ -57,6 +57,7 @@
             android:text="Annual Day celebrations"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"
+            android:fontFamily="@font/poppins_bold"
             android:textStyle="bold" />
 
 
@@ -71,6 +72,7 @@
             android:text="15 Nov 2024"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"
+            android:fontFamily="@font/poppins_regular"
             android:textStyle="normal" />
 
 

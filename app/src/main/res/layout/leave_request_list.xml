@@ -122,7 +122,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/ten"
-                android:padding="@dimen/eight"
+                android:padding="@dimen/six"
                 android:text="The reason for my leave is [brief reason for leave, such as personal reasons, family emergency, etc.]. During my absence, I will ensure that all pending tasks are completed or delegated to a colleague. In case of any urgent matters, I can be reached at [your contact details]. I kindly request you to approve my leave."
                 android:textColor="@color/black">
 

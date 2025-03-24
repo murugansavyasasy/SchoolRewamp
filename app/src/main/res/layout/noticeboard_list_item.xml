@@ -78,7 +78,8 @@
                 android:layout_marginTop="@dimen/ten"
                 android:text="Annual Day celebrations"
                 android:textColor="@color/black"
-                android:textSize="@dimen/fifteen_sp"
+                android:textSize="12sp"
+                android:fontFamily="@font/poppins_bold"
                 android:textStyle="bold" />
 
             <TextView
@@ -86,10 +87,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblTitle"
-                android:layout_marginTop="@dimen/ten"
+                android:layout_marginTop="8dp"
                 android:text="If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress."
                 android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp"
+                android:textSize="11sp"
+                android:fontFamily="@font/poppins_medium"
                 android:textStyle="normal" />
             <TextView
                 android:id="@+id/lblDate"
@@ -98,7 +100,8 @@
                 android:layout_alignParentEnd="true"
                 android:text="15 Nov 2024"
                 android:textColor="@color/black"
-                android:textSize="14sp"
+                android:fontFamily="@font/poppins_medium"
+                android:textSize="11sp"
                 android:layout_marginTop="@dimen/fifteen"
                 android:layout_marginEnd="@dimen/five"
                 android:layout_below="@+id/lblContent"
@@ -130,6 +133,7 @@
                     android:layout_toEndOf="@+id/imgSend"
                     android:text="Forward"
                     android:textColor="@color/white"
+                    android:fontFamily="@font/poppins_medium"
                     android:layout_marginBottom="@dimen/five"
                     android:textSize="@dimen/thirteen_sp" />
             </RelativeLayout>
@@ -167,11 +171,11 @@
 
 
         <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="-25dp"
-            android:layout_marginEnd="@dimen/twenty"
+            android:layout_marginEnd="8dp"
             android:elevation="10dp"
             android:src="@drawable/new_icon">
 

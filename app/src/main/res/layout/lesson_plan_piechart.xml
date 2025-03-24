@@ -59,6 +59,7 @@
                     android:text="Principles of  Management"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
+                    android:fontFamily="@font/poppins_bold"
                     android:textStyle="bold">
 
                 </TextView>
@@ -68,11 +69,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/lblSubject"
-
                     android:layout_marginStart="@dimen/ten"
                     android:text="XII - A"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
+                    android:fontFamily="@font/poppins_regular"
                     android:textStyle="normal">
 
                 </TextView>
@@ -82,11 +83,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/lblSection"
-
                     android:layout_marginStart="@dimen/ten"
                     android:text="Staff name : Sathish"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
+                    android:fontFamily="@font/poppins_regular"
                     android:textStyle="normal">
 
                 </TextView>
@@ -178,6 +179,7 @@
                     android:text="View Progress"
                     android:textColor="@color/white"
                     android:textSize="@dimen/thirteen_sp"
+                    android:fontFamily="@font/poppins_bold"
                     android:textStyle="bold">
 
 

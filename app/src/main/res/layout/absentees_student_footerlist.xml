@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
@@ -49,6 +49,7 @@
                 android:id="@+id/student_name"
                 android:textStyle="bold"
                 android:textColor="@color/black"
+                android:fontFamily="@font/poppins_bold"
                 android:layout_marginTop="@dimen/twenty"
                 android:textSize="17sp">
             </TextView>
@@ -61,6 +62,7 @@
                     android:textStyle="normal"
                     android:textColor="@color/black"
                     android:textSize="16sp"
+                    android:fontFamily="@font/poppins_regular"
                     android:layout_marginTop="@dimen/fifteen">
                 </TextView>
 
@@ -71,6 +73,7 @@
                     android:text="AD1234"
                     android:id="@+id/register_number"
                     android:textStyle="normal"
+                    android:fontFamily="@font/poppins_regular"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:layout_marginTop="@dimen/five"

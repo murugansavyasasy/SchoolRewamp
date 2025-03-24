@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/light_blue">
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/rytHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,7 +25,6 @@
             android:id="@+id/lblCreateEvent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_marginStart="@dimen/ten"
             android:text="@string/CreateEvent"
             android:textColor="@color/black"
@@ -33,7 +32,7 @@
             android:textStyle="bold" />
 
 
-    </RelativeLayout>
+    </LinearLayout>
 
 
     <LinearLayout
@@ -56,6 +55,7 @@
             android:padding="@dimen/ten"
             android:text="@string/Create"
             android:textColor="@color/white"
+            android:fontFamily="@font/poppins_bold"
             android:textSize="@dimen/thirteen_sp"
             android:textStyle="bold" />
 
@@ -69,6 +69,7 @@
             android:text="@string/History"
             android:textColor="@color/dark_blue"
             android:textSize="@dimen/thirteen_sp"
+            android:fontFamily="@font/poppins_bold"
             android:textStyle="bold" />
 
     </LinearLayout>
@@ -144,6 +145,7 @@
                 android:text="@string/Venue"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
+                android:fontFamily="@font/poppins_bold"
                 android:textStyle="bold" />
 
             <ImageView
@@ -163,6 +165,7 @@
                 android:hint="eg. Chennai"
                 android:paddingBottom="@dimen/ten"
                 android:inputType="text"
+                android:fontFamily="@font/poppins_regular"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp" />
 
@@ -175,6 +178,7 @@
                 android:text="@string/EventTitle"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
+                android:fontFamily="@font/poppins_bold"
                 android:textStyle="bold" />
 
             <EditText
@@ -188,6 +192,7 @@
                 android:paddingBottom="@dimen/ten"
                 android:inputType="text"
                 android:textColor="@color/black"
+                android:fontFamily="@font/poppins_regular"
                 android:textSize="@dimen/thirteen_sp" />
 
             <TextView
@@ -198,6 +203,7 @@
                 android:layout_marginTop="@dimen/fifteen"
                 android:text="Event detail"
                 android:textColor="@color/black"
+                android:fontFamily="@font/poppins_bold"
                 android:textSize="@dimen/thirteen_sp"
                 android:textStyle="bold" />
 
@@ -219,6 +225,7 @@
                     android:background="@android:color/transparent"
                     android:hint="@string/Description"
                     android:textColor="@color/black"
+                    android:fontFamily="@font/poppins_regular"
                     android:textSize="@dimen/thirteen_sp" />
 
                 <TextView
@@ -230,6 +237,7 @@
                     android:text="0 of 500"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
+                    android:fontFamily="@font/poppins_bold"
                     android:textStyle="bold" />
 
             </RelativeLayout>
@@ -249,6 +257,7 @@
                     android:text="@string/AddPhotos"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
+                    android:fontFamily="@font/poppins_bold"
                     android:textStyle="bold" />
 
                 <TextView
@@ -259,6 +268,7 @@
                     android:layout_toEndOf="@+id/lblAddPhoto"
                     android:text="@string/Optional"
                     android:textColor="@color/grey"
+                    android:fontFamily="@font/poppins_regular"
                     android:textSize="@dimen/thirteen_sp"
                     android:textStyle="normal" />
 
@@ -345,6 +355,7 @@
                         android:text="@string/EventDateTime"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp"
+                        android:fontFamily="@font/poppins_bold"
                         android:textStyle="bold" />
 
                     <ImageView
@@ -363,6 +374,7 @@
                         android:text="@string/Start"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp"
+                        android:fontFamily="@font/poppins_medium"
                         android:textStyle="bold" />
 
 
@@ -436,6 +448,7 @@
                                 android:layout_marginTop="@dimen/ten"
                                 android:layout_toEndOf="@+id/imgDateDown"
                                 android:text="2024 Dec, 04"
+                                android:fontFamily="@font/poppins_regular"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/thirteen_sp" />
 
@@ -464,6 +477,7 @@
                                 android:layout_alignParentEnd="true"
                                 android:text="12:11 AM"
                                 android:textColor="@color/black"
+                                android:fontFamily="@font/poppins_medium"
                                 android:textSize="@dimen/thirteen_sp" />
 
                         </RelativeLayout>
@@ -612,6 +626,7 @@
                         android:background="@drawable/rect_btn_orange"
                         android:gravity="center"
                         android:text="@string/NEXT"
+                        android:fontFamily="@font/poppins_bold"
                         android:textColor="@color/white"
                         android:textSize="@dimen/thirteen_sp"
                         android:textStyle="bold" />

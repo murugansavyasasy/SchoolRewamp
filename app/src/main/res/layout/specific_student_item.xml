@@ -28,7 +28,7 @@
                 android:layout_gravity="center"
                 android:text="A"
                 android:textColor="@android:color/black"
-                android:textSize="@dimen/twenty"
+                android:textSize="20sp"
                 android:textStyle="bold" />
         </RelativeLayout>
 
@@ -46,6 +46,7 @@
                 android:text="Ajith Kumar"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/fifteen_sp"
+                android:fontFamily="@font/poppins_bold"
                 android:textStyle="bold" />
 
         </LinearLayout>

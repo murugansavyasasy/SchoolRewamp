@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/rytHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,13 +25,13 @@
             android:id="@+id/lblCreateNoticeBoard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
+            android:layout_marginStart="@dimen/ten"
             android:text="@string/LessonPlan"
             android:textColor="@color/black"
             android:textSize="@dimen/twenty_sp"
             android:textStyle="bold" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/lnrParent"
@@ -54,6 +54,7 @@
             android:text="@string/AllClasses"
             android:textColor="@color/white"
             android:textSize="@dimen/thirteen_sp"
+            android:fontFamily="@font/poppins_bold"
             android:textStyle="bold" />
 
         <TextView
@@ -66,6 +67,7 @@
             android:text="@string/MyClasses"
             android:textColor="@color/dark_blue"
             android:textSize="@dimen/thirteen_sp"
+            android:fontFamily="@font/poppins_bold"
             android:textStyle="bold" />
 
     </LinearLayout>
@@ -97,6 +99,7 @@
             android:layout_marginStart="@dimen/five"
             android:layout_toEndOf="@+id/imgFilter"
             android:text="@string/Filter"
+            android:fontFamily="@font/poppins_regular"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp">
 
@@ -128,6 +131,7 @@
                 android:layout_toEndOf="@+id/imgSearch"
                 android:background="@android:color/transparent"
                 android:hint="@string/lblSearch"
+                android:fontFamily="@font/poppins_regular"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp" />
 

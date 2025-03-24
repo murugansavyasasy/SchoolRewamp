@@ -31,6 +31,7 @@
             android:layout_marginEnd="@dimen/ten"
             android:text="Function Call"
             android:textStyle="bold"
+            android:fontFamily="@font/poppins_bold"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp">
 
@@ -73,6 +74,7 @@
                 android:layout_toEndOf="@+id/imgVoicePlay"
                 android:text="00:00"
                 android:textColor="@color/black"
+                android:fontFamily="@font/poppins_regular"
                 android:textStyle="normal"
                 android:textSize="@dimen/thirteen_sp">
 
@@ -101,6 +103,7 @@
                 android:layout_toEndOf="@+id/lblSlash"
                 android:text="00:00"
                 android:textStyle="normal"
+                android:fontFamily="@font/poppins_regular"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp">
 
@@ -128,6 +131,7 @@
                 android:text="10:56 AM"
                 android:textColor="@color/black"
                 android:textSize="12sp"
+                android:fontFamily="@font/poppins_regular"
                 android:textStyle="normal"
                 android:layout_marginEnd="16dp">
             </TextView>
@@ -140,6 +144,7 @@
                 android:text="01 Apr 2024"
                 android:textColor="@color/black"
                 android:textSize="12sp"
+                android:fontFamily="@font/poppins_regular"
                 android:textStyle="normal"
                 android:layout_marginEnd="8dp">
 
@@ -176,6 +181,7 @@
                 android:layout_toEndOf="@+id/imgSend"
                 android:text="Send"
                 android:textColor="@color/white"
+                android:fontFamily="@font/poppins_regular"
                 android:textSize="@dimen/thirteen_sp">
 
             </TextView>

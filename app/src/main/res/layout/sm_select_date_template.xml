@@ -17,6 +17,7 @@
             android:text="Month"
             android:textSize="@dimen/eighteen_sp"
             android:textStyle="bold"
+            android:fontFamily="@font/poppins_bold"
             android:layout_height="wrap_content">
         </TextView>
         <TextView
@@ -26,6 +27,7 @@
             android:text="00"
             android:textSize="@dimen/eighteen_sp"
             android:textStyle="bold"
+            android:fontFamily="@font/poppins_bold"
             android:layout_height="wrap_content">
         </TextView>
         <LinearLayout

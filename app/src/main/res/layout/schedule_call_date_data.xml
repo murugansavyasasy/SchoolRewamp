@@ -30,6 +30,9 @@
             android:padding="10dp"
             android:text="01 Apr 2004"
             android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"></TextView>
+            android:textStyle="normal"
+            android:fontFamily="@font/poppins_regular"
+            android:textSize="@dimen/thirteen_sp">
+        </TextView>
     </RelativeLayout>
 </RelativeLayout>

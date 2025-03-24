@@ -15,6 +15,8 @@
         android:elevation="10dp"
         android:textColor="@color/black"
         android:gravity="center"
+        android:textStyle="normal"
+        android:fontFamily="@font/poppins_regular"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="8dp" />
 
@@ -50,6 +52,7 @@
                     android:textSize="17sp"
                     android:textStyle="bold"
                     android:layout_marginTop="@dimen/ten"
+                    android:fontFamily="@font/poppins_bold"
                     android:textColor="@color/black" />
 
                 <TextView
@@ -60,6 +63,7 @@
                     android:textSize="17sp"
                     android:textColor="@color/black"
                     android:textStyle="normal"
+                    android:fontFamily="@font/poppins_regular"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="10dp" />
             </LinearLayout>

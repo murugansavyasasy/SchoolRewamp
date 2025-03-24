@@ -50,7 +50,8 @@
                 android:text="Register No : 1470000"
                 android:textColor="@color/black"
                 android:textSize="13sp"
-                android:textStyle="bold">
+                android:textStyle="bold"
+                android:fontFamily="@font/poppins_bold">
             </TextView>
 
                 <ImageView
@@ -76,6 +77,7 @@
                 android:text="Sathish"
                 android:textColor="@color/black"
                 android:textStyle="bold"
+                android:fontFamily="@font/poppins_bold"
                 android:textSize="@dimen/thirteen_sp">
             </TextView>
 
@@ -90,6 +92,7 @@
                 android:text="IIX - A"
                 android:textColor="@color/black"
                 android:layout_marginBottom="@dimen/ten"
+                android:fontFamily="@font/poppins_regular"
                 android:textSize="@dimen/thirteen_sp">
 
             </TextView>
@@ -131,6 +134,7 @@
                     android:text="Kodaikanal International School"
                     android:textStyle="bold"
                     android:textColor="@color/black"
+                    android:fontFamily="@font/poppins_bold"
                     android:textSize="@dimen/thirteen_sp"
 
                     >
@@ -146,6 +150,7 @@
                     android:gravity="end"
                     android:textStyle="normal"
                     android:text="Kodaikanal"
+                    android:fontFamily="@font/poppins_regular"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
 

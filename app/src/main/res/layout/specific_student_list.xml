@@ -38,7 +38,8 @@
                 android:text="Arun Kumar"
                 android:textColor="@color/black"
                 android:textSize="@dimen/fifteen_sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:fontFamily="@font/poppins_bold"/>
 
             <RelativeLayout
                 android:id="@+id/rytStudentDetails"

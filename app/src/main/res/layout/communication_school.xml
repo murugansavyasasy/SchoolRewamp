@@ -12,7 +12,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/rlaLbCommunication"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/eighty"
@@ -25,7 +25,9 @@
                     android:layout_height="@dimen/thirty"
                     android:layout_marginStart="@dimen/thirty"
                     android:layout_marginTop="@dimen/twenty"
-                    android:src="@drawable/arrow_back_black"></ImageView>
+                    android:src="@drawable/arrow_back_black">
+
+                </ImageView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -39,7 +41,7 @@
                     android:textStyle="bold">
 
                 </TextView>
-            </RelativeLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/lnrCommunicationIcon"
@@ -79,10 +81,11 @@
                         android:gravity="center"
                         android:paddingStart="@dimen/five"
                         android:paddingEnd="@dimen/five"
-                        android:textSize="@dimen/fifteen_sp"
+                        android:textSize="13sp"
                         android:textStyle="bold"
                         android:paddingBottom="@dimen/ten"
                         android:text="@string/VoiceMessage"
+                        android:fontFamily="@font/poppins_bold"
                         android:textColor="@color/white">
 
                     </TextView>
@@ -114,10 +117,11 @@
                         android:gravity="center"
                         android:paddingStart="@dimen/five"
                         android:paddingEnd="@dimen/five"
-                        android:textSize="@dimen/fifteen_sp"
+                        android:textSize="13sp"
                         android:textStyle="bold"
                         android:paddingBottom="@dimen/ten"
                         android:text="Schedule Call"
+                        android:fontFamily="@font/poppins_bold"
                         android:textColor="@color/black">
 
                     </TextView>
@@ -151,8 +155,9 @@
                         android:textStyle="bold"
                         android:paddingEnd="@dimen/five"
                         android:paddingBottom="@dimen/ten"
-                        android:textSize="@dimen/fifteen_sp"
+                        android:textSize="13sp"
                         android:text="Text"
+                        android:fontFamily="@font/poppins_bold"
                         android:textColor="@color/black">
 
                     </TextView>
@@ -408,6 +413,8 @@
                         android:layout_height="wrap_content"
                         android:text="Do you want send from history ?"
                         android:textColor="@color/navi_blue2"
+                        android:textStyle="normal"
+                        android:fontFamily="@font/poppins_medium"
                         android:textSize="@dimen/thirteen_sp">
 
                     </TextView>
@@ -546,6 +553,8 @@
                         android:layout_toEndOf="@+id/SwitchEmergencyVoice"
                         android:text="Emergency voice messages"
                         android:textColor="@color/black"
+                        android:textStyle="normal"
+                        android:fontFamily="@font/poppins_regular"
                         android:textSize="@dimen/thirteen_sp">
 
                     </TextView>
@@ -558,7 +567,8 @@
                         android:layout_below="@+id/lblEmergencyVoice"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="@dimen/twenty_five"
-                        android:src="@drawable/record_voice_icon"></ImageView>
+                        android:src="@drawable/record_voice_icon">
+                    </ImageView>
 
                     <TextView
                         android:id="@+id/lblDurationOfVoice"
@@ -570,7 +580,8 @@
                         android:text="00:00 / 03:00"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp"
-                        android:textStyle="bold">
+                        android:textStyle="bold"
+                        android:fontFamily="@font/poppins_bold">
 
                     </TextView>
 
@@ -592,7 +603,8 @@
                             android:layout_height="@dimen/fifteen"
                             android:layout_centerVertical="true"
                             android:layout_marginEnd="@dimen/five"
-                            android:src="@drawable/add_icon"></ImageView>
+                            android:src="@drawable/add_icon">
+                        </ImageView>
 
 
                         <TextView
@@ -601,8 +613,11 @@
                             android:layout_centerInParent="true"
                             android:layout_toEndOf="@+id/imgAddFile"
                             android:text="Add file"
+                            android:textStyle="normal"
+                            android:fontFamily="@font/poppins_regular"
                             android:textColor="@color/light_gray_"
-                            android:textSize="@dimen/thirteen_sp"></TextView>
+                            android:textSize="@dimen/thirteen_sp">
+                        </TextView>
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -618,7 +633,8 @@
                             android:layout_alignParentEnd="true"
                             android:elevation="10dp"
                             android:layout_marginEnd="@dimen/thirteen"
-                            android:src="@drawable/close_red_color"></ImageView>
+                            android:src="@drawable/close_red_color">
+                        </ImageView>
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -736,6 +752,8 @@
                             android:layout_marginStart="@dimen/five"
                             android:layout_toEndOf="@+id/imgSend"
                             android:text="Send"
+                            android:textStyle="normal"
+                            android:fontFamily="@font/poppins_regular"
                             android:textColor="@color/white"
                             android:textSize="@dimen/thirteen_sp">
 

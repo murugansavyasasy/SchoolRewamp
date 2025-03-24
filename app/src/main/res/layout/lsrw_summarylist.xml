@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:id="@+id/relative_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
+        android:layout_marginBottom="@dimen/ten"
+        android:background="@drawable/rect_shadow_white"
+        android:gravity="center_vertical"
+        android:padding="@dimen/ten">
+
+        <LinearLayout
+            android:id="@+id/linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten"
+            android:weightSum="2"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/lblattachment"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Attachment"
+                android:textColor="@color/sky_blue0"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/poppins_bold" />
+
+            <TextView
+                android:id="@+id/attachment_value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text=": Image"
+                android:textColor="@color/black"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/poppins_bold"
+                android:gravity="start"
+                android:maxLines="3"
+                android:ellipsize="end" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/linear_layout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linear_layout"
+            android:layout_marginTop="@dimen/thirteen"
+            android:weightSum="2"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/lblReason"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Reason"
+                android:textColor="@color/sky_blue0"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/poppins_bold" />
+
+            <TextView
+                android:id="@+id/reason_value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text=": Text"
+                android:textColor="@color/black"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/poppins_bold"
+                android:gravity="start"
+                android:maxLines="100"
+                android:ellipsize="end" />
+        </LinearLayout>
+
+
+
+
+        <RelativeLayout
+            android:id="@+id/linear_layout8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="@dimen/fifteen"
+            android:layout_below="@id/linear_layout1"
+            android:background="@drawable/bg_orange"
+            android:layout_marginBottom="@dimen/fifteen"
+            android:padding="@dimen/ten">
+
+
+
+            <TextView
+                android:id="@+id/certificate_value7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="View Attachment"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/five"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="bold"/>
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+</RelativeLayout>

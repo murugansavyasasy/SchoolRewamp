@@ -41,6 +41,7 @@
                     android:text="June"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
+                    android:fontFamily="@font/poppins_regular"
                     android:layout_gravity="center_horizontal"
                     android:textStyle="normal" />
 
@@ -53,6 +54,7 @@
                     android:layout_gravity="center_horizontal"
                     android:textSize="23sp"
                     android:layout_marginTop="@dimen/two"
+                    android:fontFamily="@font/poppins_bold"
                     android:textStyle="bold"
                     />
             </LinearLayout>
@@ -87,6 +89,7 @@
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp"
                         android:textStyle="bold"
+                        android:fontFamily="@font/poppins_bold"
                         android:layout_marginTop="@dimen/eight"
                         android:layout_weight="1" />
 
@@ -104,6 +107,7 @@
                             android:text="Set Reminder"
                             android:textColor="@color/black"
                             android:textSize="10sp"
+                            android:fontFamily="@font/poppins_regular"
                             android:textStyle="normal"
                             android:gravity="center" />
 
@@ -131,6 +135,7 @@
                         android:text="Wed 12, 2024"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp"
+                        android:fontFamily="@font/poppins_regular"
                         android:textStyle="normal" />
 
                     <TextView
@@ -141,6 +146,7 @@
                         android:text="12:12 AM"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp"
+                        android:fontFamily="@font/poppins_regular"
                         android:textStyle="normal" />
                 </LinearLayout>
 
@@ -158,6 +164,7 @@
                         android:text="Meeting type  : "
                         android:textColor="@color/black"
                         android:textSize="@dimen/twele_sp"
+                        android:fontFamily="@font/poppins_regular"
                         android:textStyle="normal" />
 
                     <TextView
@@ -166,8 +173,10 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
                         android:text="ZOOM MEET"
+                        android:layout_marginTop="1dp"
                         android:textColor="@color/black"
                         android:textSize="@dimen/twele_sp"
+                        android:fontFamily="@font/poppins_regular"
                         android:textStyle="normal" />
                 </LinearLayout>
 
@@ -182,6 +191,7 @@
                     android:textColor="@color/sky_blue0"
                     android:textSize="@dimen/thirteen_sp"
                     android:gravity="end"
+                    android:fontFamily="@font/poppins_bold"
                     android:layout_marginEnd="@dimen/ten"
                     android:textStyle="bold" />
             </LinearLayout>
