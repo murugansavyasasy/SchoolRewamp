@@ -9,7 +9,7 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.ChangeLanguage
 import com.vs.schoolmessenger.databinding.SchoolDashboardBinding
 
-class Dashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickListener {
+class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickListener {
 
 
     override fun attachBaseContext(newBase: Context) {

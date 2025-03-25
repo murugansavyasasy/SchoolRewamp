@@ -178,7 +178,7 @@
 
         <activity
 
-            android:name=".Dashboard.Parent.Dashboard"
+            android:name=".Dashboard.Parent.ParentDashboard"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize"></activity>
 
@@ -327,7 +327,7 @@
 
         <activity
 
-            android:name=".Dashboard.School.Dashboard"
+            android:name=".Dashboard.School.SchoolDashboard"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />

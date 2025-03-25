@@ -1,13 +1,11 @@
 package com.vs.schoolmessenger.Dashboard.Parent
 
-import android.graphics.Color
 import android.view.View
-import android.view.WindowManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.databinding.ChildDashboardBinding
 
-class Dashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListener {
+class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListener {
 
     override fun getViewBinding(): ChildDashboardBinding {
         return ChildDashboardBinding.inflate(layoutInflater)
