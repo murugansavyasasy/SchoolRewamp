@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.gms.google-services")
 }
 android {
     namespace = "com.vs.schoolmessenger"
@@ -78,10 +79,10 @@ dependencies {
     implementation("de.hdodenhof:circleimageview:3.1.0")
     implementation("com.facebook.shimmer:shimmer:0.5.0")
 
-    implementation("com.squareup.retrofit2:retrofit:2.10.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.10.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.4.1")
-    implementation("com.squareup.okhttp3:okhttp:4.9.2")
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
 
     //AWS s3 libraries
     implementation("com.amazonaws:aws-android-sdk-s3:2.59.0")

@@ -10,6 +10,7 @@ object RequestKeys {
     const val Req_otp = "otp"
     const val Req_old_password = "old_password"
     const val Req_new_password = "new_password"
+    const val Req_device_token = "device_token"
 
 
 }

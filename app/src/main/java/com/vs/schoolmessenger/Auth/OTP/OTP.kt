@@ -14,7 +14,7 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.CreateResetChangePassword.PasswordGeneration
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.PassWord
 import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
-import com.vs.schoolmessenger.Dashboard.School.Dashboard
+import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.Auth
 import com.vs.schoolmessenger.Repository.RequestKeys
@@ -99,13 +99,13 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
 
                                 val intent = Intent(
                                     this@OTP,
-                                    Dashboard::class.java
+                                    SchoolDashboard::class.java
                                 )
                                 startActivity(intent)
                             } else if (Constant.user_data!![0].user_details.is_parent) {
                                 val intent = Intent(
                                     this@OTP,
-                                    com.vs.schoolmessenger.Dashboard.Parent.Dashboard::class.java
+                                    com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard::class.java
                                 )
                                 startActivity(intent)
                             }

@@ -10,10 +10,9 @@ import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.Country.CountryScreen
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.Login
-import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.MobileNumber
 import com.vs.schoolmessenger.Auth.OTP.OTP
 import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
-import com.vs.schoolmessenger.Dashboard.School.Dashboard
+import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.Auth
 import com.vs.schoolmessenger.Repository.RequestKeys
@@ -21,7 +20,6 @@ import com.vs.schoolmessenger.Utils.ChangeLanguage
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SplashBinding
-import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -97,13 +95,13 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
                             } else if (Constant.user_data!![0].user_details.is_staff) {
                                 val intent = Intent(
                                     this@Splash,
-                                    Dashboard::class.java
+                                    SchoolDashboard::class.java
                                 )
                                 startActivity(intent)
                             } else if (Constant.user_data!![0].user_details.is_parent) {
                                 val intent = Intent(
                                     this@Splash,
-                                    com.vs.schoolmessenger.Dashboard.Parent.Dashboard::class.java
+                                    com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard::class.java
                                 )
                                 startActivity(intent)
                             }

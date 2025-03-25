@@ -5,10 +5,9 @@ import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.gson.Gson
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
-import com.vs.schoolmessenger.Dashboard.School.Dashboard
+import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -36,7 +35,7 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
 
         binding.lblTeacher.text = userDetails!!.role_name
         binding.btnGo.setOnClickListener {
-            val intent = Intent(this, Dashboard::class.java)
+            val intent = Intent(this, SchoolDashboard::class.java)
             startActivity(intent)
         }
     }

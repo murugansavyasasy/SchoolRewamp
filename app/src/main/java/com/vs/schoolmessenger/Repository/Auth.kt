@@ -14,6 +14,7 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserValidationResponse
 import com.vs.schoolmessenger.Auth.OTP.ForgetOtpSendResponse
 import com.vs.schoolmessenger.Auth.OTP.OtpResponse
 import com.vs.schoolmessenger.Auth.Splash.VersionCheckResponse
+import com.vs.schoolmessenger.CommonScreens.DeviceToken
 
 class Auth(application: Application) : AndroidViewModel(application) {
 
@@ -46,6 +47,9 @@ class Auth(application: Application) : AndroidViewModel(application) {
     var isCreateNewPassword: LiveData<PasswordResetResponse?>? = null
         private set
 
+    var isDeviceToken: LiveData<DeviceToken?>? = null
+        private set
+
 
     fun init() {
         apiRepositories = AuthServices()
@@ -58,6 +62,7 @@ class Auth(application: Application) : AndroidViewModel(application) {
         isForgetPassword = apiRepositories!!.isForgetPasswordLiveData
         isPasswordReset = apiRepositories!!.isPasswordResetLiveData
         isCreateNewPassword = apiRepositories!!.isCreatePassWordLiveData
+        isDeviceToken = apiRepositories!!.isUpdateDeviceTokenLiveData
     }
 
     fun isCountryList() {
@@ -108,5 +113,10 @@ class Auth(application: Application) : AndroidViewModel(application) {
     fun isCreatePassword(jsonObject: JsonObject, activity: Activity) {
         apiRepositories!!.isCreateNewPassword(jsonObject, activity)
     }
+
+    fun isDeviceToken(jsonObject: JsonObject, activity: Activity) {
+        apiRepositories!!.isDeviceToken(jsonObject, activity)
+    }
+
 
 }

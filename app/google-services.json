@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "369542815930",
+    "project_id": "school-chimes",
+    "storage_bucket": "school-chimes.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:369542815930:android:4a9785f193e87e29b96283",
+        "android_client_info": {
+          "package_name": "com.vs.schoolmessenger"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwuHjeRJgUrd5T08K7GfwZxq_UwCEdFiE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

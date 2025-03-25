@@ -9,7 +9,7 @@ import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.OTP.OTP
 import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
-import com.vs.schoolmessenger.Dashboard.School.Dashboard
+import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.Auth
 import com.vs.schoolmessenger.Repository.RequestKeys
@@ -71,13 +71,13 @@ class PassWord : BaseActivity<PassWordBinding>(), View.OnClickListener {
 
                                 val intent = Intent(
                                     this@PassWord,
-                                    Dashboard::class.java
+                                    SchoolDashboard::class.java
                                 )
                                 startActivity(intent)
                             } else if (Constant.user_data!![0].user_details.is_parent) {
                                 val intent = Intent(
                                     this@PassWord,
-                                    com.vs.schoolmessenger.Dashboard.Parent.Dashboard::class.java
+                                    com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard::class.java
                                 )
                                 startActivity(intent)
 

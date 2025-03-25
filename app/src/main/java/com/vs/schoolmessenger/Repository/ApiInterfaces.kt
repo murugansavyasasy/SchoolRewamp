@@ -13,6 +13,7 @@ import com.vs.schoolmessenger.Auth.OTP.ForgetOtpData
 import com.vs.schoolmessenger.Auth.OTP.ForgetOtpSendResponse
 import com.vs.schoolmessenger.Auth.OTP.OtpResponse
 import com.vs.schoolmessenger.Auth.Splash.VersionCheckResponse
+import com.vs.schoolmessenger.CommonScreens.DeviceToken
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -67,6 +68,9 @@ interface ApiInterfaces {
         @Body jsonObject: JsonObject
     ): Call<PasswordResetResponse?>?
 
-
+    @POST(APIMethods.isDeviceToken)
+    fun isDeviceToken(
+        @Body jsonObject: JsonObject
+    ): Call<DeviceToken?>?
 
 }

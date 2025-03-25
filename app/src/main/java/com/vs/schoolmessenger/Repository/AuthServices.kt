@@ -16,6 +16,7 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserValidationResponse
 import com.vs.schoolmessenger.Auth.OTP.ForgetOtpSendResponse
 import com.vs.schoolmessenger.Auth.OTP.OtpResponse
 import com.vs.schoolmessenger.Auth.Splash.VersionCheckResponse
+import com.vs.schoolmessenger.CommonScreens.DeviceToken
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import org.json.JSONObject
@@ -34,6 +35,7 @@ class AuthServices {
     var isForgetPassword: MutableLiveData<ForgetOtpSendResponse?>
     var isPasswordReset: MutableLiveData<PasswordResetResponse?>
     var isCreatePassWord: MutableLiveData<PasswordResetResponse?>
+    var isDeviceTokenUpdate: MutableLiveData<DeviceToken?>
 
     init {
         client_auth = RestClient()
@@ -46,6 +48,7 @@ class AuthServices {
         isForgetPassword = MutableLiveData()
         isPasswordReset = MutableLiveData()
         isCreatePassWord = MutableLiveData()
+        isDeviceTokenUpdate = MutableLiveData()
     }
 
     fun isCountryList() {
@@ -344,5 +347,43 @@ class AuthServices {
 
     val isCreatePassWordLiveData: LiveData<PasswordResetResponse?>
         get() = isCreatePassWord
+
+
+    fun isDeviceToken(jsonObject: JsonObject,activity: Activity) {
+        RestClient.apiInterfaces.isDeviceToken(jsonObject)
+            ?.enqueue(object : Callback<DeviceToken?> {
+                override fun onResponse(
+                    call: Call<DeviceToken?>,
+                    response: Response<DeviceToken?>
+                ) {
+                    Log.d(
+                        "isGetCountryList",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isDeviceTokenUpdate.postValue(response.body())
+                            } else {
+                                isDeviceTokenUpdate.postValue(response.body())
+                            }
+                        }
+                    } else  {
+
+                    }
+                }
+
+                override fun onFailure(call: Call<DeviceToken?>, t: Throwable) {
+                    isDeviceTokenUpdate.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isUpdateDeviceTokenLiveData: LiveData<DeviceToken?>
+        get() = isDeviceTokenUpdate
+
+
 
 }

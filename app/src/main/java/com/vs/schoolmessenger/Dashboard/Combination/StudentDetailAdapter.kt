@@ -8,7 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
-import com.vs.schoolmessenger.Dashboard.School.Dashboard
+import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.databinding.StudentDetailsListItemBinding
 
@@ -100,7 +100,7 @@ class StudentDetailAdapter(private val itemList: List<ChildDetails>?, val contex
         }
 
         holder.binding.rlaStudent.setOnClickListener {
-            val intent = Intent(context, Dashboard::class.java)
+            val intent = Intent(context, SchoolDashboard::class.java)
             context.startActivity(intent)
         }
 
