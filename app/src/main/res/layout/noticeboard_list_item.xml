@@ -78,7 +78,7 @@
                 android:layout_marginTop="@dimen/ten"
                 android:text="Annual Day celebrations"
                 android:textColor="@color/black"
-                android:textSize="12sp"
+                android:textSize="13sp"
                 android:fontFamily="@font/poppins_bold"
                 android:textStyle="bold" />
 

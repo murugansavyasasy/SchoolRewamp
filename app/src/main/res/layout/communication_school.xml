@@ -23,7 +23,7 @@
                     android:id="@+id/imgBack"
                     android:layout_width="@dimen/thirty"
                     android:layout_height="@dimen/thirty"
-                    android:layout_marginStart="@dimen/thirty"
+                    android:layout_marginStart="@dimen/fifteen"
                     android:layout_marginTop="@dimen/twenty"
                     android:src="@drawable/arrow_back_black">
 
@@ -32,12 +32,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginStart="@dimen/thirty"
+                    android:layout_marginStart="@dimen/fifteen"
                     android:layout_marginTop="@dimen/twenty"
                     android:text="@string/Communication"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/twenty"
+                    android:textSize="20sp"
                     android:textStyle="bold">
 
                 </TextView>
@@ -224,7 +223,8 @@
                                 android:layout_height="wrap_content"
                                 android:text="01:20 AM"
                                 android:textColor="@color/black"
-                                android:textSize="@dimen/thirteen_sp"></TextView>
+                                android:textSize="@dimen/thirteen_sp">
+                            </TextView>
 
                             <ImageView
                                 android:layout_width="@dimen/twenty"
@@ -449,6 +449,7 @@
                         android:text="Title"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp"
+                        android:fontFamily="@font/poppins_bold"
                         android:textStyle="bold">
 
                     </TextView>
@@ -470,7 +471,8 @@
                         android:layout_marginTop="@dimen/ten"
                         android:text="Content"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/fifteen_sp"
+                        android:textSize="@dimen/thirteen_sp"
+                        android:fontFamily="@font/poppins_bold"
                         android:textStyle="bold">
 
                     </TextView>
@@ -484,7 +486,7 @@
                         android:layout_marginEnd="@dimen/ten"
                         android:background="@drawable/bg_outline_black"
                         android:gravity="start"
-                        android:hint="Java is a multi-platform, object-oriented, and network-centric language that can be used as a platform in itself. It is a fast, secure, reliable programming language for coding everything from mobile apps and enterprise software to big data applications and server-side technologies."
+                        android:hint="Content"
                         android:padding="@dimen/ten"
                         android:textSize="@dimen/thirteen_sp">
 

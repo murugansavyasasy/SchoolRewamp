@@ -11,4 +11,5 @@ data class StaffDetails(  val staff_id: String,
                           val is_payment_pending: String,
                           val schedule_call_type: Int,
                           val biometric_enable: Int,
+                          val access_token: String,
                           val allow_video_download: Boolean)

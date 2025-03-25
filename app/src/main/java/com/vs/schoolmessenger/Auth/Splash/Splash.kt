@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import androidx.lifecycle.ViewModelProvider
+import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.Country.CountryScreen
@@ -77,6 +78,9 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
                     Constant.isStaffDetails = Constant.user_data!![0].user_details.staff_details
                     Constant.isChildDetails = Constant.user_data!![0].user_details.child_details
                     SharedPreference.putUserDetails(this@Splash, Constant.user_details!!)
+
+
+
 
                     if (isValidateUser[0].is_password_updated) {
                         if (isValidateUser[0].otp_sent) {

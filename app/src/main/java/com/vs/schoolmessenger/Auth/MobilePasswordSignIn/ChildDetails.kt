@@ -13,5 +13,6 @@ data class ChildDetails(
     val roll_number: String,
     val display_message: String,
     val class_id: Int,
-    val section_id: Int
+    val section_id: Int,
+    val access_token: String
 )
