@@ -111,4 +111,9 @@ dependencies {
     implementation ("com.github.AAChartModel:AAChartCore-Kotlin:-SNAPSHOT")
 
 
+    implementation("com.github.lecho:hellocharts-library:1.5.8@aar")
+
+    implementation("com.google.android.play:app-update:2.1.0")
+    implementation("com.google.android.play:app-update-ktx:2.1.0")
+
 }

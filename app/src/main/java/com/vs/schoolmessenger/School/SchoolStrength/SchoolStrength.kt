@@ -14,16 +14,28 @@ import com.github.aachartmodel.aainfographics.aaoptionsmodel.AAStyle
 
 import com.vs.schoolmessenger.databinding.SchoolStrengthBinding
 
+
+
 class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListener {
 
     override fun getViewBinding(): SchoolStrengthBinding {
         return SchoolStrengthBinding.inflate(layoutInflater)
     }
 
+
+
+
+
     override fun setupViews() {
         super.setupViews()
         setupToolbar()
         binding.imgBack.setOnClickListener(this)
+
+
+
+
+
+
 
         val chartData = listOf(
             Pair(20f, this.getColor(R.color.yellow)),

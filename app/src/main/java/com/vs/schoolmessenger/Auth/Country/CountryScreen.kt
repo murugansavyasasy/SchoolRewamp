@@ -14,6 +14,7 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.MobileNumber
 import com.vs.schoolmessenger.Auth.TermsConditions.TermsAndConditions
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.Auth
+import com.vs.schoolmessenger.Repository.RestClient
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.CountryListScreenBinding
@@ -100,6 +101,7 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
             R.id.btnArrowNext -> {
                 if (isAgree) {
                     SharedPreference.putCountryId(this, Constant.country_details!!.id.toString())
+                    RestClient.changeApiBaseUrl(Constant.country_details!!.base_url)
                     val intent = Intent(this@CountryScreen, MobileNumber::class.java)
                     startActivity(intent)
                 } else {

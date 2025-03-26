@@ -1,12 +1,13 @@
 package com.vs.schoolmessenger.Auth.Splash
 
+import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import androidx.lifecycle.ViewModelProvider
-import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.Country.CountryScreen
@@ -17,6 +18,7 @@ import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.Auth
 import com.vs.schoolmessenger.Repository.RequestKeys
+import com.vs.schoolmessenger.Repository.RestClient
 import com.vs.schoolmessenger.Utils.ChangeLanguage
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -27,12 +29,36 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+
+import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
+import com.google.android.material.snackbar.Snackbar
+import com.google.android.play.core.appupdate.AppUpdateManager
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.google.android.play.core.appupdate.AppUpdateOptions
+import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.UpdateAvailability
+
+
 class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
 
     override fun attachBaseContext(newBase: Context) {
         val savedLanguage = ChangeLanguage.getPersistedLanguage(newBase)
         val context = ChangeLanguage.setLocale(newBase, savedLanguage)
         super.attachBaseContext(context)
+    }
+
+    private lateinit var appUpdateManager: AppUpdateManager
+    private val updateLauncher = registerForActivityResult(
+        ActivityResultContracts.StartIntentSenderForResult()
+    ) { result ->
+        if (result.resultCode != Activity.RESULT_OK) {
+            Snackbar.make(
+                findViewById(android.R.id.content),
+                "Update failed!",
+                Snackbar.LENGTH_LONG
+            ).show()
+        }
     }
 
     var isVersionData: List<VersionData>? = null
@@ -48,6 +74,9 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
 
         authViewModel = ViewModelProvider(this).get(Auth::class.java)
         authViewModel!!.init()
+
+        appUpdateManager = AppUpdateManagerFactory.create(this)
+
 
         GlobalScope.launch {
             delay(2000) // 2-second delay
@@ -79,9 +108,6 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
                     Constant.isChildDetails = Constant.user_data!![0].user_details.child_details
                     SharedPreference.putUserDetails(this@Splash, Constant.user_details!!)
 
-
-
-
                     if (isValidateUser[0].is_password_updated) {
                         if (isValidateUser[0].otp_sent) {
                             val intent = Intent(this@Splash, OTP::class.java)
@@ -91,7 +117,11 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
                             val mobile_number = SharedPreference.getMobileNumber(this)
                             val password = SharedPreference.getPassWord(this)
                             Constant.isMobileNumber = mobile_number
-                            SharedPreference.putMobileNumberPassWord(this@Splash,mobile_number,password)
+                            SharedPreference.putMobileNumberPassWord(
+                                this@Splash,
+                                mobile_number,
+                                password
+                            )
                             if (Constant.user_data!![0].user_details.is_staff && Constant.user_data!![0].user_details.is_parent) {
                                 val intent = Intent(this@Splash, PrioritySelection::class.java)
                                 startActivity(intent)
@@ -124,25 +154,15 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
                     isVersionData = isVersionCheckData
                     Constant.country_details = isVersionData!![0].country_details
                     SharedPreference.putCountryId(this, Constant.country_details!!.id.toString())
+                    RestClient.changeApiBaseUrl(Constant.country_details!!.base_url)
                     if (isVersionData!![0].update_available) {
-                        showUpdatePopup(isVersionData!!)
+                        isShowUpdateAvailable(isVersionData!!)
                     } else {
                         autoLoginFlowCheck(isVersionData!!)
                     }
                 }
             }
         }
-    }
-
-    private fun showUpdatePopup(versionData: List<VersionData>) {
-        //show update popup here
-        if (versionData[0].update_available == true && versionData[0].force_update) {
-
-            //show update button only
-        } else if (versionData[0].update_available == true) {
-            // show not now , update
-        }
-        //call appFlowCheck method when clicking on not now button
     }
 
     private fun autoLoginFlowCheck(isVersionData: List<VersionData>) {
@@ -186,5 +206,71 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         TODO("Not yet implemented")
+    }
+
+    private fun isShowUpdateAvailable(versionData: List<VersionData>) {
+        val dialogView = layoutInflater.inflate(R.layout.whats_new_popup, null)
+        val dialogBuilder = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .setCancelable(false) // Prevent dismissing by clicking outside
+
+        val alertDialog = dialogBuilder.create()
+        alertDialog.window?.setBackgroundDrawableResource(android.R.color.transparent) // Remove default background
+        alertDialog.show()
+
+        val btnUpdateButton = dialogView.findViewById<TextView>(R.id.btnUpdate)
+        val btnNotNow = dialogView.findViewById<TextView>(R.id.btnNotNow)
+
+        if (versionData[0].force_update) {
+            btnUpdateButton.visibility = View.VISIBLE
+            btnNotNow.visibility = View.GONE
+        } else {
+            btnUpdateButton.visibility = View.VISIBLE
+            btnNotNow.visibility = View.VISIBLE
+        }
+
+        btnUpdateButton.setOnClickListener {
+            alertDialog.dismiss() // Close popup
+            startInAppUpdate()
+        }
+
+        btnNotNow.setOnClickListener {
+            alertDialog.dismiss() // Close popup
+        }
+    }
+
+
+    private fun startInAppUpdate() {
+        val appUpdateInfoTask = appUpdateManager.appUpdateInfo
+        appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
+            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE &&
+                appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)
+            ) {
+
+                try {
+                    appUpdateManager.startUpdateFlowForResult(
+                        appUpdateInfo,
+                        updateLauncher,
+                        AppUpdateOptions.newBuilder(AppUpdateType.IMMEDIATE).build()
+                    )
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    Log.d("isNotAvailable", e.toString())
+                }
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        appUpdateManager.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
+            if (appUpdateInfo.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
+                appUpdateManager.startUpdateFlowForResult(
+                    appUpdateInfo,
+                    updateLauncher,
+                    AppUpdateOptions.newBuilder(AppUpdateType.IMMEDIATE).build()
+                )
+            }
+        }
     }
 }

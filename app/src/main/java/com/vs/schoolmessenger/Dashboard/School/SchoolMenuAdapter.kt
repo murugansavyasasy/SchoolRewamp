@@ -80,8 +80,8 @@ class SchoolMenuAdapter(
             }
 
             TYPE_AD -> {
-                val view = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.ad_item, parent, false)
+                val view =
+                    LayoutInflater.from(parent.context).inflate(R.layout.ad_item, parent, false)
                 AdViewHolder(view, this)
             }
 
@@ -218,8 +218,7 @@ class SchoolMenuAdapter(
                     "Staff Wise Attendance Report" -> {
                         context.startActivity(
                             Intent(
-                                context,
-                                StaffWiseAttendanceReport::class.java
+                                context, StaffWiseAttendanceReport::class.java
                             )
                         )
                     }
@@ -250,6 +249,13 @@ class SchoolMenuAdapter(
             notifyItemRangeInserted(startPosition, seeMoreMenus)
         }
         isSeeMore = !isSeeMore
+    }
+
+    fun toggleMoreItems() {
+        seeMoreMenus = 0
+        val moreItems = getMenu()
+        seeMoreMenus = moreItems.size
+        itemList!!.addAll(moreItems)
     }
 
     class AdViewHolder(itemView: View, private val adapter: SchoolMenuAdapter) :
@@ -287,20 +293,17 @@ class SchoolMenuAdapter(
             lnrLeaveRequest.setOnClickListener {
                 context.startActivity(
                     Intent(
-                        context,
-                        LeaveRequests::class.java
+                        context, LeaveRequests::class.java
                     )
                 )
             }
             lnrHomeWork.setOnClickListener {
                 context.startActivity(
                     Intent(
-                        context,
-                        com.vs.schoolmessenger.Parent.Homework.HomeWork::class.java
+                        context, com.vs.schoolmessenger.Parent.Homework.HomeWork::class.java
                     )
                 )
             }
-
 
             runAutoScrollBanner(images)
             if (isFirstTime) {
@@ -344,6 +347,8 @@ class SchoolMenuAdapter(
                 }
                 false
             }
+
+            adapter.toggleMoreItems()
         }
 
         private fun setupDots(count: Int, context: Context) {
@@ -411,6 +416,14 @@ class SchoolMenuAdapter(
             GridItem(R.drawable.fee_pending_reports, "Fee Pending Report"),
             GridItem(R.drawable.mark_your_attendance, "Mark Your Attendance"),
             GridItem(R.drawable.staff_attendance_report, "Staff Wise Attendance Report")
+        )
+    }
+
+    private fun getMenu(): ArrayList<GridItem> {
+        return arrayListOf(
+            GridItem(R.drawable.interact_with_student, "Interaction With Student"),
+            GridItem(R.drawable.lesson_plan, "Lesson Plan"),
+            GridItem(R.drawable.ptm_school, "PTM")
         )
     }
 
