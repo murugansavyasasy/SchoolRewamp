@@ -109,4 +109,9 @@ dependencies {
     implementation("me.relex:circleindicator:2.1.6")
     implementation("androidx.security:security-crypto:1.1.0-alpha06") // latest as of now
 
+    implementation("com.github.lecho:hellocharts-library:1.5.8@aar")
+
+    implementation("com.google.android.play:app-update:2.1.0")
+    implementation("com.google.android.play:app-update-ktx:2.1.0")
+
 }

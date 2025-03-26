@@ -1,12 +1,10 @@
 package com.vs.schoolmessenger.Dashboard.Parent
 
-import android.content.Intent
+import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.JsonObject
-import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.Login
 import com.vs.schoolmessenger.Repository.Auth
 import com.vs.schoolmessenger.Repository.RequestKeys
 import com.vs.schoolmessenger.Utils.Constant
@@ -47,6 +45,7 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
                 return@addOnCompleteListener
             }
             val token = it.result //this is the token retrieved
+            Log.d("isDeviceToken",token)
             isUpdateDeviceToken(token)
         }
 

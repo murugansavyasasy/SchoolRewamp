@@ -62,10 +62,7 @@
                 android:textSize="@dimen/thirteen_sp">
 
             </TextView>
-
-
         </RelativeLayout>
-
     </RelativeLayout>
 
     <LinearLayout
@@ -74,10 +71,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/rytHeader"
         android:layout_centerHorizontal="true"
-        android:visibility="gone"
         android:layout_marginHorizontal="@dimen/ten"
         android:layout_marginTop="@dimen/fifteen"
-        android:background="@drawable/bg_light_blue">
+        android:background="@drawable/bg_light_blue"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/lblRightSideBar"

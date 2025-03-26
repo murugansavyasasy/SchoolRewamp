@@ -69,7 +69,7 @@
             android:layout_marginTop="@dimen/fifteen"
             android:orientation="horizontal"
             android:padding="@dimen/ten"
-            android:visibility="visible"
+            android:visibility="gone"
             android:weightSum="3">
 
             <LinearLayout

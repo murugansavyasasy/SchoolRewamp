@@ -8,6 +8,11 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.CustomGraphView
 import com.vs.schoolmessenger.databinding.SchoolStrengthBinding
+import lecho.lib.hellocharts.model.Line
+import lecho.lib.hellocharts.model.LineChartData
+import lecho.lib.hellocharts.model.PointValue
+import lecho.lib.hellocharts.view.LineChartView
+
 
 class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListener {
 
@@ -15,11 +20,33 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
         return SchoolStrengthBinding.inflate(layoutInflater)
     }
 
+    var lineChartView: LineChartView? = null
+
 
     override fun setupViews() {
         super.setupViews()
         setupToolbar()
         binding.imgBack.setOnClickListener(this)
+
+        val values: MutableList<PointValue> = ArrayList()
+        values.add(PointValue(0f, 2f))
+        values.add(PointValue(1f, 4f))
+        values.add(PointValue(2f, 3f))
+        values.add(PointValue(3f, 4f))
+
+
+        //In most cased you can call data model methods in builder-pattern-like manner.
+        val line = Line(values).setColor(Color.BLUE).setCubic(true)
+        val lines: MutableList<Line> = ArrayList()
+        lines.add(line)
+
+        val data1 = LineChartData()
+        data1.setLines(lines)
+
+//        val chart = LineChartView(this)
+        lineChartView = findViewById(R.id.chart);
+
+        lineChartView!!.lineChartData = data1
 
 
         val chartData = listOf(

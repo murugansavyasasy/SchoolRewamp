@@ -3,6 +3,7 @@ package com.vs.schoolmessenger.Dashboard.School
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
@@ -70,6 +71,7 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
                 return@addOnCompleteListener
             }
             val token = it.result //this is the token retrieved
+            Log.d("isDeviceToken",token)
             isUpdateDeviceToken(token)
         }
 

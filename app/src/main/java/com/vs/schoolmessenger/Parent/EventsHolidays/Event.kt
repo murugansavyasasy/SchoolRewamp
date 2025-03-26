@@ -33,8 +33,8 @@ class Event : BaseActivity<EventParentBinding>(), View.OnClickListener, EventCli
         binding.toolbarLayout.lblStudentName.text = "Sathish Ganesan"
         binding.toolbarLayout.lblStudentSection.text = "XII - B"
 
-        binding.toolbarLayout.lblLeftSideBar.text = resources.getText(R.string.Event)
-        binding.toolbarLayout.lblRightSideBar.text = resources.getText(R.string.HoliDay)
+        binding.toolbarLayout.lblLeftSideBar.text = resources.getText(R.string.HoliDay)
+        binding.toolbarLayout.lblRightSideBar.text = resources.getText(R.string.Event)
 
         loadData()
 
