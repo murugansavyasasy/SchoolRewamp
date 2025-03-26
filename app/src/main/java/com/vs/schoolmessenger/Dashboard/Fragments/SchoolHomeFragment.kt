@@ -49,7 +49,9 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener {
             GridItem(R.drawable.leave_request_icon_school, "Leave Requests"),
             GridItem(R.drawable.assignment_icon_school, "Assignment"),
             GridItem(R.drawable.home_work_icon_school, "Homework"),
-
+            GridItem(R.drawable.attendance_marking, "Attendance Marking"),
+            GridItem(R.drawable.message_f_management, "Message From Management"),
+            GridItem(R.drawable.interact_with_student, "Interaction With Student"),
             )
 
         binding.lblViewDetails.paintFlags =

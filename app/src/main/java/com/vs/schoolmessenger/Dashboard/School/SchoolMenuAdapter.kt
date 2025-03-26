@@ -66,7 +66,7 @@ class SchoolMenuAdapter(
     override fun getItemViewType(position: Int): Int {
         return when {
             isLoading -> TYPE_SHIMMER
-            position == 6 -> TYPE_AD
+            position == 9 -> TYPE_AD
             else -> TYPE_DATA
         }
     }
@@ -100,7 +100,7 @@ class SchoolMenuAdapter(
             }
 
             is AdViewHolder -> {
-                if (position == 6) {
+                if (position == 9) {
                     holder.bind(specialImages!!, context)
                 } else {
                     holder.bind(emptyList(), context)
@@ -235,7 +235,7 @@ class SchoolMenuAdapter(
     fun toggleMoreItems(lblSeeMore: TextView, rlaMenuExample: LinearLayout) {
         if (isSeeMore) {
             lblSeeMore.text = context.getString(R.string.SeeAll)
-            rlaMenuExample.visibility = View.VISIBLE
+            rlaMenuExample.visibility = View.GONE
             val startPosition = itemList!!.size - seeMoreMenus
             itemList!!.subList(startPosition, itemList!!.size).clear()
             notifyItemRangeRemoved(startPosition, seeMoreMenus)
@@ -276,7 +276,7 @@ class SchoolMenuAdapter(
                 LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
             recyclerView.layoutManager = layoutManager
             recyclerView.adapter = AdImageAdapter(images)
-            rlaMenuExample.visibility = View.VISIBLE
+            rlaMenuExample.visibility = View.GONE
             lblSeeMore.setOnClickListener {
                 adapter.toggleMoreItems(lblSeeMore, rlaMenuExample)
             }
@@ -397,10 +397,6 @@ class SchoolMenuAdapter(
 
     private fun getMoreItems(): ArrayList<GridItem> {
         return arrayListOf(
-
-            GridItem(R.drawable.home_work_icon_school, "Home Work"),
-            GridItem(R.drawable.attendance_marking, "Attendance Marking"),
-            GridItem(R.drawable.message_f_management, "Message From Management"),
             GridItem(R.drawable.interact_with_student, "Interaction With Student"),
             GridItem(R.drawable.lesson_plan, "Lesson Plan"),
             GridItem(R.drawable.ptm_school, "PTM"),

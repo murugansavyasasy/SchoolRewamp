@@ -7,6 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="jumbo">#87878a</color>
+    <color name="teal">#53c0bd</color>
 
     <color name="azure_radiance">#0079fd</color>
     <color name="AthensGray">#f2f2f7</color>
@@ -36,6 +37,7 @@
     <color name="mild_grey1">#cccccc</color>
     <color name="mild_grey2">#c9c9c9</color>
     <color name="mild_grey3">#ededf7</color>
+    <color name="mild_grey4">#E5E4E2</color>
 
     <color name="grey">#ACACBA</color>
     <color name="grey_mild">#E3E3E9</color>
@@ -87,6 +89,9 @@
     <color name="mild4">#f4f5f9</color>
     <color name="navi_blue3">#0153e1</color>
     <color name="navi_blue4">#c7eaff</color>
+    <color name="navi_blue5">#2972b6</color>
+
+
     <color name="system_blue">#9DD6FD</color>
     <color name="light_violet">#E3F1FB</color>
     <color name="card_blue">#EEE9F3</color>

@@ -85,6 +85,19 @@
 
         </activity>
 
+        <activity
+            android:name=".Parent.QuizExam.QuizExam"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
+        <activity
+            android:name=".Parent.QuizExam.Quiz"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
+
 
         <activity
             android:name=".School.StudentReport.StudentReport"
@@ -185,7 +198,8 @@
         <activity
             android:name=".School.Assignment.Assignment"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
+        </activity>
 
         <activity
             android:name=".School.SchoolStrength.SchoolStrength"
@@ -575,18 +589,14 @@
 
         </activity>
 
-        <activity
-            android:name=".Parent.QuizExam.Quiz"
-            android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize">
 
-        </activity>
 
 
         <activity
             android:name=".School.MarkYourAttendance.MarkYourAttendance"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
+        </activity>
 
         <activity
             android:name=".School.StaffWiseAttendanceReport.StaffWiseAttendanceReport"

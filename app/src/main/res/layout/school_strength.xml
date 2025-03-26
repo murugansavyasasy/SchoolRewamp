@@ -1,253 +1,192 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <LinearLayout
-        android:id="@+id/rytHeader"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/primary_light"
-        android:padding="@dimen/ten">
-
-        <ImageView
-            android:id="@+id/imgBack"
-            android:layout_width="@dimen/thirty"
-            android:layout_height="@dimen/thirty"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/ten"
-            android:layout_marginEnd="@dimen/ten"
-            android:layout_marginBottom="@dimen/ten"
-            android:src="@drawable/arrow_back_black">
-        </ImageView>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/ten"
-            android:layout_toStartOf="@dimen/fifteen"
-            android:text="School Strrength"
-            android:textColor="@color/black"
-            android:textSize="@dimen/twenty_sp"
-            android:textStyle="bold">
-
-        </TextView>
-    </LinearLayout>
-
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
     <RelativeLayout
-        android:id="@+id/rlaPieChartCount"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/rytHeader"
-        android:layout_marginStart="@dimen/five"
-        android:layout_marginTop="@dimen/five"
-        android:layout_marginEnd="@dimen/five"
-        android:background="@drawable/rect_shadow_white">
-
-        <com.vs.schoolmessenger.Utils.PieChartView
-            android:id="@+id/customPieChart"
-            android:layout_width="@dimen/hundred"
-            android:layout_height="@dimen/hundred"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_marginEnd="@dimen/ten" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/five"
-            android:layout_toStartOf="@+id/customPieChart">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:gravity="center_vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/ten"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/lblSchoolStrength"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/fifteen_sp"
-                        android:fontFamily="@font/poppins_bold"
-                        android:textStyle="bold" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/five"
-                        android:gravity="center_vertical"
-                        android:weightSum="1">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.5"
-                            android:text="@string/lblTotalStrength"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/thirteen_sp"
-                            android:fontFamily="@font/poppins_bold"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/lblTotalStrength"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/ten"
-                            android:layout_weight="0.5"
-                            android:text="10,000"
-                            android:fontFamily="@font/poppins_regular"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/thirteen_sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/five"
-                        android:gravity="center_vertical"
-                        android:weightSum="1">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.5"
-                            android:text="@string/lblSfaffcount"
-                            android:textColor="@color/light_orange0"
-                            android:textSize="@dimen/thirteen_sp"
-                            android:fontFamily="@font/poppins_bold"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/lblTeachersCount"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/ten"
-                            android:layout_weight="0.5"
-                            android:text="20,000 - 20%"
-                            android:fontFamily="@font/poppins_regular"
-                            android:textColor="@color/light_orange0"
-                            android:textSize="@dimen/thirteen_sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/five"
-                        android:gravity="center_vertical"
-                        android:weightSum="1">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.5"
-                            android:text="@string/lblBoycount"
-                            android:textColor="@color/light_green_bg1"
-                            android:textSize="@dimen/thirteen_sp"
-                            android:fontFamily="@font/poppins_bold"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/lblBoysCount"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/ten"
-                            android:layout_weight="0.5"
-                            android:text="45,000 - 45%"
-                            android:fontFamily="@font/poppins_regular"
-                            android:textColor="@color/light_green_bg1"
-                            android:textSize="@dimen/thirteen_sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/five"
-                        android:gravity="center_vertical"
-                        android:paddingBottom="@dimen/five"
-                        android:weightSum="1">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.5"
-                            android:text="@string/lblGirlcount"
-                            android:textColor="@color/yellow"
-                            android:textSize="@dimen/thirteen_sp"
-                            android:fontFamily="@font/poppins_bold"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/lblGirlsCount"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/ten"
-                            android:layout_weight="0.5"
-                            android:text="35,000 - 30%"
-                            android:fontFamily="@font/poppins_regular"
-                            android:textColor="@color/yellow"
-                            android:textSize="@dimen/thirteen_sp" />
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
-        </RelativeLayout>
-    </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/rlaPieChartCount"
-        android:orientation="horizontal"
-        android:visibility="gone">
+        android:layout_height="wrap_content">
 
         <LinearLayout
-            android:id="@+id/y_axis_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:paddingEnd="16dp">
-            <!-- Y-axis labels will be added programmatically in MainActivity -->
-        </LinearLayout>
-
-        <HorizontalScrollView
+            android:id="@+id/rytHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:fillViewport="true">
+            android:background="@color/primary_light"
+            android:padding="@dimen/ten">
 
-            <LinearLayout
-                android:id="@+id/x_axis_layout"
+            <ImageView
+                android:id="@+id/imgBack"
+                android:layout_width="@dimen/thirty"
+                android:layout_height="@dimen/thirty"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/ten"
+                android:layout_marginBottom="@dimen/ten"
+                android:src="@drawable/arrow_back_black"/>
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_marginTop="@dimen/ten"
+                android:text="School Strength"
+                android:textColor="@color/black"
+                android:textSize="@dimen/twenty_sp"
+                android:textStyle="bold"/>
+        </LinearLayout>
 
-                <com.vs.schoolmessenger.Utils.CustomGraphView
-                    android:id="@+id/customGraphScrollableView"
+        <LinearLayout
+            android:id="@+id/rlaPieChartCount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rytHeader"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/fifteen"
+            android:layout_marginEnd="@dimen/ten"
+            android:padding="@dimen/twenty"
+            android:background="@drawable/rect_shadow_white">
+
+            <com.vs.schoolmessenger.Utils.PieChartView
+                android:id="@+id/customPieChart"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="@dimen/ten"/>
+
+            <LinearLayout
+                android:id="@+id/data_card"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical">
+
+                <!-- Students -->
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="#EFEFEF" />
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <View
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="@color/teal"
+                        android:layout_marginEnd="8dp"/>
+
+                    <TextView
+                        android:id="@+id/students_data"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Students - 543"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/poppins_medium"
+                        android:textSize="13sp"/>
+                </LinearLayout>
+
+                <!-- Staff -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="15dp">
+
+                    <View
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="@color/red"
+                        android:layout_marginEnd="8dp"/>
+
+                    <TextView
+                        android:id="@+id/students_data1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Staff - 63"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/poppins_medium"
+                        android:textSize="13sp"/>
+                </LinearLayout>
+
+                <!-- Total -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="15dp">
+
+                    <View
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="@color/yellow"
+                        android:layout_marginEnd="8dp"/>
+
+                    <TextView
+                        android:id="@+id/students_data2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Total - 606"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/poppins_medium"
+                        android:textSize="13sp"/>
+                </LinearLayout>
+
             </LinearLayout>
-        </HorizontalScrollView>
-    </LinearLayout>
 
 
-    <!--    <com.vs.schoolmessenger.Utils.CustomGraphView-->
-    <!--        android:id="@+id/customGraphScrollableView"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent"-->
-    <!--        android:layout_below="@+id/rlaPieChartCount"-->
-    <!--        android:background="#EFEFEF" />-->
+        </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/linear_layout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/rect_light_blue1"
+            android:layout_below="@+id/rlaPieChartCount"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginEnd="@dimen/ten"
+            android:layout_marginTop="8dp">
 
-</RelativeLayout>
+            <TextView
+                android:id="@+id/header1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="9th Standard"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_bold"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_weight="1"/>
+
+            <ImageView
+                android:id="@+id/header2"
+                android:layout_width="23dp"
+                android:layout_height="19dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="@dimen/five"
+                android:layout_marginEnd="@dimen/ten"
+                android:layout_marginBottom="@dimen/five"
+                android:src="@drawable/downarrow"/>
+        </LinearLayout>
+
+        <com.github.aachartmodel.aainfographics.aachartcreator.AAChartView
+            android:id="@+id/aa_chart_view"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:layout_below="@+id/linear_layout2"
+            android:layout_marginTop="@dimen/three"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginEnd="@dimen/ten"/>
+
+    </RelativeLayout>
+
+</ScrollView>
