@@ -11,8 +11,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.ShimmerUtil
 import com.vs.schoolmessenger.Utils.WaveformSeekBar
 import kotlin.math.max
 
@@ -34,9 +34,8 @@ class VoiceHistoryAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-            val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.shimmer_view_small_list, parent, false)
-            ShimmerViewHolder(view)
+            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.history_from_voice_message)
+            ShimmerViewHolder(shimmerView)
         } else {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.history_from_voice_message, parent, false)
@@ -48,6 +47,8 @@ class VoiceHistoryAdapter(
         if (holder is DataViewHolder) {
             // Bind actual data when loading is complete
             holder.bind(itemList!![position], position, listener, this) // Pass adapter reference
+        } else if (holder is ShimmerViewHolder) {
+            holder.startShimmer()
         }
     }
 
@@ -232,11 +233,8 @@ class VoiceHistoryAdapter(
 
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val shimmerLayout: ShimmerFrameLayout =
-            itemView.findViewById(R.id.shimmer_view_container)
-
-        init {
-            shimmerLayout.startShimmer() // Start shimmer effect
+        fun startShimmer() {
+            ShimmerUtil.startShimmer(itemView)
         }
     }
 }

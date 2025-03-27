@@ -21,8 +21,8 @@ class ExamMarkAdapter(private val examList: List<ExamItem>) :
             binding.textExamTitle.text = item.title
             val context = binding.root.context
             binding.btnViewMarks.setOnClickListener {
-//                val intent = Intent(context, ExamMarkResults::class.java)
-//                context.startActivity(intent)
+                val intent = Intent(context, ExamMarkResults::class.java)
+                context.startActivity(intent)
             }
 
             binding.btnViewProgress.setOnClickListener {

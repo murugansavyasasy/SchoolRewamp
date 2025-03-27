@@ -38,6 +38,7 @@
     <color name="mild_grey2">#c9c9c9</color>
     <color name="mild_grey3">#ededf7</color>
     <color name="mild_grey4">#E5E4E2</color>
+    <color name="violet1">#5856D6</color>
 
     <color name="grey">#ACACBA</color>
     <color name="grey_mild">#E3E3E9</color>
@@ -54,6 +55,8 @@
 
     <color name="sky_blue_light">#d4e7eb</color>
     <color name="sky_blue0">#4eb7f1</color>
+    <color name="system_blue1">#42CFFC</color>
+
     <color name="sky_blue4">#7ECCF6</color>
     <color name="custom_blue">#84DFF2</color>
     <color name="sky_blue1">#98d2de</color>
@@ -64,7 +67,11 @@
     <color name="light_yellow">#f4d382</color>
     <color name="light_orange0">#d3603b</color>
     <color name="light_orange1">#ffd8b9</color>
+    <color name="system_orange">#FF9500</color>
+
     <color name="orange">#e9a243</color>
+    <color name="system_pink">#FF2D55</color>
+
     <color name="dark_orange">#e26b26</color>
     <color name="green">#22b34d</color>
     <color name="dark_green1">#12451F</color>

@@ -14,6 +14,8 @@ import com.vs.schoolmessenger.School.Communication.TextHistoryAdapter
 import com.vs.schoolmessenger.School.Communication.TextHistoryAdapter.DataViewHolder
 import com.vs.schoolmessenger.School.Communication.TextHistoryClickListener
 import com.vs.schoolmessenger.School.Communication.TextHistoryData
+import com.vs.schoolmessenger.School.NoticeBoard.SchoolNoticeBoardAdapter.ShimmerViewHolder
+import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 
 class AbsenteesReportAdapter (
@@ -34,9 +36,8 @@ private var selectedPosition = RecyclerView.NO_POSITION
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-            val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.shimmer_view_small_list, parent, false)
-            DataViewHolder.ShimmerViewHolder(view)
+            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.noticeboard_list_item)
+            ShimmerViewHolder(shimmerView)
         } else {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.absentees_date_list, parent, false)
@@ -49,6 +50,8 @@ private var selectedPosition = RecyclerView.NO_POSITION
         if (holder is DataViewHolder) {
             // Bind actual data when loading is complete
             holder.bind(itemList!![position], position, listener, this) // Pass adapter reference
+        } else if (holder is ShimmerViewHolder) {
+            holder.startShimmer()
         }
     }
 
@@ -100,11 +103,11 @@ private var selectedPosition = RecyclerView.NO_POSITION
         }
 
         class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-            private val shimmerLayout: ShimmerFrameLayout =
-                itemView.findViewById(R.id.shimmer_view_container)
-            init {
-                shimmerLayout.startShimmer() // Start shimmer effect
+            fun startShimmer() {
+                ShimmerUtil.startShimmer(itemView)
             }
         }
     }
+
+
 }

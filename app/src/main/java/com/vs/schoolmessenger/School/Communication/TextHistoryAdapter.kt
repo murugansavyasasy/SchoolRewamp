@@ -8,6 +8,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.Communication.TextHistoryAdapter.DataViewHolder.ShimmerViewHolder
+import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class TextHistoryAdapter(
     private var itemList: List<TextHistoryData>?,
@@ -25,9 +27,8 @@ class TextHistoryAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-            val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.shimmer_view_small_list, parent, false)
-            DataViewHolder.ShimmerViewHolder(view)
+            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.history_from_text_message)
+            ShimmerViewHolder(shimmerView)
         } else {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.history_from_text_message, parent, false)
@@ -39,6 +40,8 @@ class TextHistoryAdapter(
         if (holder is DataViewHolder) {
             // Bind actual data when loading is complete
             holder.bind(itemList!![position], position, listener, this) // Pass adapter reference
+        } else if (holder is ShimmerViewHolder) {
+            holder.startShimmer()
         }
     }
 
@@ -86,11 +89,8 @@ class TextHistoryAdapter(
         }
 
         class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-            private val shimmerLayout: ShimmerFrameLayout =
-                itemView.findViewById(R.id.shimmer_view_container)
-
-            init {
-                shimmerLayout.startShimmer() // Start shimmer effect
+            fun startShimmer() {
+                ShimmerUtil.startShimmer(itemView)
             }
         }
     }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,7 +12,7 @@
         android:id="@+id/conCountry"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/ten"
+        android:layout_marginTop="20dp"
         app:layout_constraintTop_toTopOf="parent">
 
 
@@ -22,7 +23,9 @@
             android:layout_marginStart="@dimen/twenty"
             android:text="@string/lblChoosecountry"
             android:textColor="@color/black"
-            android:textSize="@dimen/twenty_sp"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/poppins_bold"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -34,7 +37,8 @@
             android:lineSpacingExtra="@dimen/five"
             android:text="@string/lblCountryNotes"
             android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"
+            android:textSize="11sp"
+            android:fontFamily="@font/poppins_regular"
             app:layout_constraintTop_toBottomOf="@+id/lblCountryTitle" />
 
 
@@ -45,7 +49,7 @@
             android:layout_marginTop="@dimen/twenty"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginEnd="@dimen/ten"
-            android:text="India"
+            android:text="Select Your Country"
             android:textColor="@color/black"
             app:layout_constraintTop_toBottomOf="@+id/lblContent">
 
@@ -65,7 +69,7 @@
             android:id="@+id/rytTerms"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/twenty"
+            android:layout_marginTop="50dp"
             android:padding="@dimen/five"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -94,7 +98,10 @@
                     android:layout_marginStart="@dimen/ten"
                     android:layout_toEndOf="@+id/terms_checkbox"
                     android:text="@string/lblIagreetotheTermsandConditions"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textStyle="bold"
                     android:textColor="@color/navi_blue3"
+                    android:layout_marginTop="@dimen/five"
                     android:textSize="@dimen/thirteen_sp" />
 
                 <View
@@ -107,17 +114,17 @@
 
         </RelativeLayout>
 
-        <com.airbnb.lottie.LottieAnimationView
+        <ImageView
             android:id="@+id/btnArrowNext"
-            android:layout_width="@dimen/hundred"
-            android:layout_height="@dimen/hundred"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_centerInParent="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rytTerms"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true"
-            app:lottie_rawRes="@raw/arrow_country_check" />
+            android:layout_marginTop="30dp"
+            android:src="@drawable/right_arrow1" >
+        </ImageView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -157,9 +164,10 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="@dimen/twenty"
                     android:gravity="center"
                     android:text="@string/lblIndia"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppins_bold"
                     android:textColor="@color/white"
                     android:textSize="@dimen/twele_sp" />
 
@@ -181,6 +189,8 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="@string/lblThailand"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppins_bold"
                     android:textColor="@color/white"
                     android:textSize="@dimen/twele_sp" />
 
@@ -203,6 +213,8 @@
                     android:layout_marginEnd="@dimen/ten"
                     android:gravity="center"
                     android:text="@string/lblUSA"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppins_bold"
                     android:textColor="@color/white"
                     android:textSize="@dimen/twele_sp" />
 
@@ -231,6 +243,8 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="@string/lblChina"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppins_bold"
                     android:textColor="@color/white"
                     android:textSize="@dimen/twele_sp" />
 
@@ -252,6 +266,8 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="@string/lblSingapore"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppins_bold"
                     android:textColor="@color/white"
                     android:textSize="@dimen/twele_sp" />
 
@@ -273,6 +289,8 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="@string/lblCanada"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textStyle="bold"
                     android:textColor="@color/white"
                     android:textSize="@dimen/twele_sp" />
 

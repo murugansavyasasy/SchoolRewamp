@@ -111,7 +111,7 @@
         android:layout_below="@id/lnrParent"
         android:layout_margin="@dimen/ten"
         android:background="@drawable/rect_grey"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/imgSearch"

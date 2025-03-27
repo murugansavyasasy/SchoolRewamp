@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/thirty_five"
@@ -19,8 +20,7 @@
             android:layout_width="@dimen/thirty"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:layout_height="@dimen/thirty"
-            android:src="@drawable/splash_icon7"/>
+            android:layout_height="@dimen/thirty" />
 
         </RelativeLayout>
 
@@ -30,7 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/ten"
-        android:text="Text Message"
+        android:text=""
         android:textAlignment="center"
         android:layout_centerHorizontal="true"
         android:textSize="@dimen/ten_sp"

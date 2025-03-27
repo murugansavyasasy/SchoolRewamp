@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import com.vs.schoolmessenger.Auth.TermsConditions.TermsAndConditions
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
-import com.vs.schoolmessenger.databinding.ChildHomeFragmentBinding
 import com.vs.schoolmessenger.databinding.HelpFragmentBinding
 
 class HelpFragment : Fragment(), View.OnClickListener {
