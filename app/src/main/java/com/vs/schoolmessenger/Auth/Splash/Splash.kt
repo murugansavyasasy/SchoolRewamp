@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import androidx.lifecycle.ViewModelProvider
@@ -28,16 +29,21 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-
-
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricPrompt
+import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.appupdate.AppUpdateOptions
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.UpdateAvailability
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.MobileNumber
 
 
 class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
@@ -77,11 +83,39 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
 
         appUpdateManager = AppUpdateManagerFactory.create(this)
 
+//        val biometricManager = BiometricManager.from(this)
+//        when (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG)) {
+//            BiometricManager.BIOMETRIC_SUCCESS -> {
+//                showBiometricPrompt()
+//            }
+//
+//            BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> {
+//                Toast.makeText(this, "No biometric hardware available", Toast.LENGTH_LONG).show()
+//            }
+//
+//            BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
+//                Toast.makeText(
+//                    this,
+//                    "Biometric features are currently unavailable",
+//                    Toast.LENGTH_LONG
+//                ).show()
+//            }
+//
+//            BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
+//                Toast.makeText(this, "No biometric data enrolled", Toast.LENGTH_LONG).show()
+//            }
+//        }
+
 
         GlobalScope.launch {
             delay(2000) // 2-second delay
             withContext(Dispatchers.Main) {
                 if (Constant.isInternetAvailable(this@Splash)) {
+
+//                    val isEnabled = Constant.isDeveloperOptionsEnabled(this@Splash)
+//                    if (!isEnabled) {
+//                        showBottomPopup(this@Splash) // Call your popup function if needed
+//                    } else {
                     val countryId = SharedPreference.getCountryId(this@Splash)
                     Log.d("countryId", countryId.toString())
                     if (!countryId.equals("")) {
@@ -90,6 +124,8 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
                         val intent = Intent(this@Splash, CountryScreen::class.java)
                         startActivity(intent)
                     }
+                    // }
+
                 } else {
                     Log.e("Network Error", "No Internet Connection")
                 }
@@ -108,15 +144,15 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
                     Constant.isChildDetails = Constant.user_data!![0].user_details.child_details
                     SharedPreference.putUserDetails(this@Splash, Constant.user_details!!)
 
+                    val mobile_number = SharedPreference.getMobileNumber(this)
+                    val password = SharedPreference.getPassWord(this)
+                    Constant.isMobileNumber = mobile_number
                     if (isValidateUser[0].is_password_updated) {
                         if (isValidateUser[0].otp_sent) {
                             val intent = Intent(this@Splash, OTP::class.java)
                             Constant.pageType = Constant.SplashScreen
                             startActivity(intent)
                         } else {
-                            val mobile_number = SharedPreference.getMobileNumber(this)
-                            val password = SharedPreference.getPassWord(this)
-                            Constant.isMobileNumber = mobile_number
                             SharedPreference.putMobileNumberPassWord(
                                 this@Splash,
                                 mobile_number,
@@ -125,7 +161,6 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
                             if (Constant.user_data!![0].user_details.is_staff && Constant.user_data!![0].user_details.is_parent) {
                                 val intent = Intent(this@Splash, PrioritySelection::class.java)
                                 startActivity(intent)
-
                             } else if (Constant.user_data!![0].user_details.is_staff) {
                                 val intent = Intent(
                                     this@Splash,
@@ -133,13 +168,23 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
                                 )
                                 startActivity(intent)
                             } else if (Constant.user_data!![0].user_details.is_parent) {
-                                val intent = Intent(
-                                    this@Splash,
-                                    com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard::class.java
-                                )
-                                startActivity(intent)
+                                if (Constant.user_data!![0].user_details.child_details.size > 1) {
+                                    val intent = Intent(this@Splash, PrioritySelection::class.java)
+                                    startActivity(intent)
+                                } else {
+                                    val intent = Intent(
+                                        this@Splash,
+                                        com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard::class.java
+                                    )
+                                    startActivity(intent)
+                                }
                             }
                         }
+                    } else {
+                        val intent = Intent(this@Splash, OTP::class.java)
+                        Constant.pageType = Constant.SplashScreen
+                        Constant.isPasswordCreation = true
+                        startActivity(intent)
                     }
                 }
             }
@@ -165,15 +210,79 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
         }
     }
 
+    private fun showBiometricPrompt() {
+        val executor = ContextCompat.getMainExecutor(this)
+        val biometricPrompt = BiometricPrompt(
+            this, executor,
+            object : BiometricPrompt.AuthenticationCallback() {
+                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                    super.onAuthenticationSucceeded(result)
+                    Toast.makeText(
+                        applicationContext,
+                        "Authentication Successful",
+                        Toast.LENGTH_LONG
+                    ).show()
+
+                    // Navigate to the next screen after authentication
+                    startActivity(Intent(this@Splash, CountryScreen::class.java))
+                    finish()
+                }
+
+                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                    super.onAuthenticationError(errorCode, errString)
+                    Toast.makeText(
+                        applicationContext,
+                        "Authentication Error: $errString",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+
+                override fun onAuthenticationFailed() {
+                    super.onAuthenticationFailed()
+                    Toast.makeText(applicationContext, "Authentication Failed", Toast.LENGTH_LONG)
+                        .show()
+                }
+            })
+
+        val promptInfo = BiometricPrompt.PromptInfo.Builder()
+            .setTitle("Biometric Authentication")
+            .setSubtitle("Use your fingerprint or face to authenticate")
+            .setNegativeButtonText("Cancel")
+            .build()
+
+        biometricPrompt.authenticate(promptInfo)
+    }
+
     private fun autoLoginFlowCheck(isVersionData: List<VersionData>) {
         val mobile_number = SharedPreference.getMobileNumber(this)
         val password = SharedPreference.getPassWord(this)
         if (!mobile_number.equals("") && !password.equals("")) {
             isValidateUser()
         } else {
-            val intent = Intent(this@Splash, Login::class.java)
-            startActivity(intent)
+            val isLogout = SharedPreference.getLogout(this)
+            if (isLogout!!) {
+                val intent = Intent(this@Splash, Login::class.java)
+                startActivity(intent)
+            } else {
+                val intent = Intent(this@Splash, MobileNumber::class.java)
+                startActivity(intent)
+            }
         }
+    }
+
+
+    fun showBottomPopup(context: Context) {
+        val dialog = BottomSheetDialog(context)
+        val view = LayoutInflater.from(context).inflate(R.layout.layout_bottom_sheet, null)
+        dialog.setContentView(view)
+
+        val btnClose = view.findViewById<CardView>(R.id.btnClose)
+
+        btnClose.setOnClickListener {
+            finish()
+        }
+
+        dialog.show()
     }
 
     private fun isValidateUser() {
@@ -185,6 +294,7 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
         jsonObject.addProperty(RequestKeys.Req_secure_id, isSecureId)
         val isPassWord = SharedPreference.getPassWord(this)
         jsonObject.addProperty(RequestKeys.Req_password, isPassWord)
+        Log.d("jsonObject", jsonObject.toString())
         authViewModel!!.isValidateUser(jsonObject, this)
     }
 
@@ -236,6 +346,8 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
 
         btnNotNow.setOnClickListener {
             alertDialog.dismiss() // Close popup
+            autoLoginFlowCheck(isVersionData!!)
+
         }
     }
 

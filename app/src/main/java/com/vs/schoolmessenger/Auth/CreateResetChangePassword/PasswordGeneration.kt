@@ -8,7 +8,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.Login
+import com.vs.schoolmessenger.Auth.OTP.OTP
 import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
+import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.Auth
 import com.vs.schoolmessenger.Repository.RequestKeys
@@ -35,10 +37,9 @@ class PasswordGeneration : BaseActivity<PasswordGenerationBinding>(), View.OnCli
         authViewModel = ViewModelProvider(this).get(Auth::class.java)
         authViewModel!!.init()
 
-        if(Constant.isPasswordCreation!!){
+        if (Constant.isPasswordCreation!!) {
             binding.lblCreatePassword.text = getString(R.string.lblCreateNewPassword)
-        }
-        else{
+        } else {
             binding.lblCreatePassword.text = getString(R.string.ResetThePassword)
         }
         authViewModel!!.isCreateNewPassword?.observe(this) { response ->
@@ -48,8 +49,38 @@ class PasswordGeneration : BaseActivity<PasswordGenerationBinding>(), View.OnCli
                 if (status) {
                     Toast.makeText(this, message, Toast.LENGTH_SHORT)
                         .show()
-                    val intent = Intent(this@PasswordGeneration, Login::class.java)
-                    startActivity(intent)
+
+                    SharedPreference.putMobileNumberPassWord(
+                        this@PasswordGeneration,
+                        Constant.isMobileNumber,
+                        binding.txtConfirmPassword.text.toString()
+                    )
+
+                    if (Constant.user_data!![0].user_details.is_staff && Constant.user_data!![0].user_details.is_parent) {
+                        val intent = Intent(this@PasswordGeneration, PrioritySelection::class.java)
+                        startActivity(intent)
+
+                    } else if (Constant.user_data!![0].user_details.is_staff) {
+
+                        val intent = Intent(
+                            this@PasswordGeneration,
+                            SchoolDashboard::class.java
+                        )
+                        startActivity(intent)
+                    } else if (Constant.user_data!![0].user_details.is_parent) {
+                        if(Constant.user_data!![0].user_details.child_details.size > 1){
+                            val intent = Intent(this@PasswordGeneration, PrioritySelection::class.java)
+                            startActivity(intent)
+                        }
+                        else {
+                            val intent = Intent(
+                                this@PasswordGeneration,
+                                com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard::class.java
+                            )
+                            startActivity(intent)
+                        }
+                    }
+
                 }
             }
         }
@@ -58,7 +89,7 @@ class PasswordGeneration : BaseActivity<PasswordGenerationBinding>(), View.OnCli
                 val status = response.status
                 val message = response.message
                 if (status) {
-                    Toast.makeText(this,message, Toast.LENGTH_SHORT)
+                    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
                     val intent = Intent(this@PasswordGeneration, Login::class.java)
                     startActivity(intent)
                 }
@@ -118,13 +149,13 @@ class PasswordGeneration : BaseActivity<PasswordGenerationBinding>(), View.OnCli
             R.id.imgHide -> {
                 isPasswordViewAndHide()
             }
+
             R.id.btnCreate -> {
-                if(Constant.isPasswordCreation!!) {
+                if (Constant.isPasswordCreation!!) {
                     if (isPassWordNotEmpty()) {
                         isCreatePassword()
                     }
-                }
-                else {
+                } else {
                     if (isPassWordNotEmpty()) {
                         isPasswordReset()
                     }

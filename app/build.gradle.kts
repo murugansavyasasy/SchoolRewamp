@@ -115,5 +115,13 @@ dependencies {
 
     implementation("com.google.android.play:app-update:2.1.0")
     implementation("com.google.android.play:app-update-ktx:2.1.0")
+    implementation("com.google.android.material:material:1.12.0")
+
+
+    implementation("androidx.compose.foundation:foundation:1.7.8")
+    implementation("androidx.biometric:biometric:1.1.0")
+
+
+
 
 }

@@ -130,8 +130,8 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         }
 
         rlaLogout.setOnClickListener {
-            SharedPreference.putMobileNumberPassWord(requireActivity(),"","")
-
+            SharedPreference.putMobileNumberPassWord(requireActivity(), "", "")
+            SharedPreference.putLogout(requireActivity(), true)
             startActivity(Intent(requireActivity(), Login::class.java))
         }
 

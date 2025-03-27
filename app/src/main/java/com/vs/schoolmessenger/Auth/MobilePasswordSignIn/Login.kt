@@ -7,7 +7,9 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.MobileNumber
 import com.vs.schoolmessenger.Auth.OTP.OTP
+import com.vs.schoolmessenger.Auth.Splash.Splash
 import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.R
@@ -37,7 +39,7 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener {
         authViewModel!!.init()
 
         binding.btnLoginContinue.isClickable = true
-        binding.btnLoginContinue.setBackgroundDrawable(resources.getDrawable(R.drawable.rect_btn_orange))
+        binding.btnLoginContinue.setBackgroundDrawable(resources.getDrawable(R.drawable.rect_btn_blue))
         binding.txtMobileNumber.hint = Constant.country_details!!.mobile_no_hint
 
         authViewModel!!.isUserValidation?.observe(this) { response ->
@@ -52,37 +54,60 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener {
                     Constant.isChildDetails= Constant.user_data!![0].user_details.child_details
                     SharedPreference.putUserDetails(this@Login, Constant.user_details!!)
 
+                    if(Constant.user_data!![0].is_number_exists) {
 
-                    if(isValidateUser[0].is_password_updated) {
+                        if (isValidateUser[0].is_password_updated) {
 
-                        if (isValidateUser[0].otp_sent) {
-                            val intent = Intent(this@Login, OTP::class.java)
-                            Constant.pageType = Constant.SignInScreen
-                            startActivity(intent)
-                        } else {
-
-                            SharedPreference.putMobileNumberPassWord(this@Login,binding.txtMobileNumber.text.toString(),binding.txtPassword.text.toString())
-
-                            if (Constant.user_data!![0].user_details.is_staff && Constant.user_data!![0].user_details.is_parent) {
-                                val intent = Intent(this@Login, PrioritySelection::class.java)
+                            if (isValidateUser[0].otp_sent) {
+                                val intent = Intent(this@Login, OTP::class.java)
+                                Constant.pageType = Constant.SignInScreen
                                 startActivity(intent)
+                            } else {
 
-                            } else if (Constant.user_data!![0].user_details.is_staff) {
-
-                                val intent = Intent(
+                                SharedPreference.putMobileNumberPassWord(
                                     this@Login,
-                                    SchoolDashboard::class.java
+                                    binding.txtMobileNumber.text.toString(),
+                                    binding.txtPassword.text.toString()
                                 )
-                                startActivity(intent)
-                            } else if (Constant.user_data!![0].user_details.is_parent) {
-                                val intent = Intent(
-                                    this@Login,
-                                    com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard::class.java
-                                )
-                                startActivity(intent)
 
+                                if (Constant.user_data!![0].user_details.is_staff && Constant.user_data!![0].user_details.is_parent) {
+                                    val intent = Intent(this@Login, PrioritySelection::class.java)
+                                    startActivity(intent)
+
+                                } else if (Constant.user_data!![0].user_details.is_staff) {
+
+                                    val intent = Intent(
+                                        this@Login,
+                                        SchoolDashboard::class.java
+                                    )
+                                    startActivity(intent)
+                                } else if (Constant.user_data!![0].user_details.is_parent) {
+                                    if (Constant.user_data!![0].user_details.child_details.size > 1) {
+                                        val intent =
+                                            Intent(this@Login, PrioritySelection::class.java)
+                                        startActivity(intent)
+                                    } else {
+
+                                        val intent = Intent(
+                                            this@Login,
+                                            com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard::class.java
+                                        )
+                                        startActivity(intent)
+                                    }
+
+                                }
                             }
                         }
+                        else{
+                            val intent = Intent(this@Login, OTP::class.java)
+                            Constant.pageType = Constant.SignInScreen
+                            Constant.isPasswordCreation = true
+                            startActivity(intent)
+                        }
+                    }
+                    else{
+                        Constant.errorAlert(this@Login,"",message)
+
                     }
 
                 }

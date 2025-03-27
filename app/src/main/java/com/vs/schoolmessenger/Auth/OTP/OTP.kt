@@ -13,6 +13,7 @@ import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.CreateResetChangePassword.PasswordGeneration
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.PassWord
+import com.vs.schoolmessenger.Auth.Splash.Splash
 import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.R
@@ -39,13 +40,11 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
         isToolBarWhiteTheme()
         binding.lblResend.setOnClickListener(this)
         binding.btnNext.setOnClickListener(this)
-        binding.lnrFirstNumber.setOnClickListener(this)
-        binding.lnrSecondNumber.setOnClickListener(this)
+
 
         authViewModel = ViewModelProvider(this).get(Auth::class.java)
         authViewModel!!.init()
         binding.btnNext.isClickable = true
-        binding.btnNext.setBackgroundDrawable(resources.getDrawable(R.drawable.rect_btn_orange))
 
         if(Constant.isForgotPassword!!){
             binding.lblEnter.text = Constant.forgotData!![0].forgot_otp_message
@@ -54,8 +53,8 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
                 Constant.forgotData!![0].dial_numbers.split(",")
             val firstNumber = numberList[0]
             val secondNumber = numberList[1]
-            binding.lblNumberOne.text = firstNumber
-            binding.lblNumberTwo.text = secondNumber
+//            binding.lblNumberOne.text = firstNumber
+//            binding.lblNumberTwo.text = secondNumber
         }
         else {
 
@@ -66,8 +65,8 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
                     Constant.user_data!![0].dial_numbers.split(",")
                 val firstNumber = numberList[0]
                 val secondNumber = numberList[1]
-                binding.lblNumberOne.text = firstNumber
-                binding.lblNumberTwo.text = secondNumber
+//                binding.lblNumberOne.text = firstNumber
+//                binding.lblNumberTwo.text = secondNumber
             }
         }
 
@@ -91,6 +90,9 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
                         }
 
                         else {
+
+
+
                             if (Constant.user_data!![0].user_details.is_staff && Constant.user_data!![0].user_details.is_parent) {
                                 val intent = Intent(this@OTP, PrioritySelection::class.java)
                                 startActivity(intent)
@@ -103,11 +105,17 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
                                 )
                                 startActivity(intent)
                             } else if (Constant.user_data!![0].user_details.is_parent) {
-                                val intent = Intent(
-                                    this@OTP,
-                                    com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard::class.java
-                                )
-                                startActivity(intent)
+                                if(Constant.user_data!![0].user_details.child_details.size > 1){
+                                    val intent = Intent(this@OTP, PrioritySelection::class.java)
+                                    startActivity(intent)
+                                }
+                                else {
+                                    val intent = Intent(
+                                        this@OTP,
+                                        com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard::class.java
+                                    )
+                                    startActivity(intent)
+                                }
                             }
                         }
                     }
@@ -203,13 +211,13 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
                 }
             }
 
-            R.id.lnrFirstNumber -> {
-                Constant.redirectToDialPad(this, binding.lblNumberOne.text.toString())
-            }
-
-            R.id.lnrSecondNumber -> {
-                Constant.redirectToDialPad(this, binding.lblNumberTwo.text.toString())
-            }
+//            R.id.lnrFirstNumber -> {
+//                Constant.redirectToDialPad(this, binding.lblNumberOne.text.toString())
+//            }
+//
+//            R.id.lnrSecondNumber -> {
+//                Constant.redirectToDialPad(this, binding.lblNumberTwo.text.toString())
+//            }
         }
     }
 }

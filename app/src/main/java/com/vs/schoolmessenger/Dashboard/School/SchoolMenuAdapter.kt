@@ -283,6 +283,7 @@ class SchoolMenuAdapter(
             recyclerView.layoutManager = layoutManager
             recyclerView.adapter = AdImageAdapter(images)
             rlaMenuExample.visibility = View.GONE
+
             lblSeeMore.setOnClickListener {
                 adapter.toggleMoreItems(lblSeeMore, rlaMenuExample)
             }

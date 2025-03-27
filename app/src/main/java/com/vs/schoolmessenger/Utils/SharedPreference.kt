@@ -16,6 +16,7 @@ object SharedPreference {
     private const val SH_PASSWORD = "isPassWord"
     private const val SH_COUNTRY_ID = "isCountryId"
     private const val SH_USER_DETAILS = "UserDetails"
+    private const val SH_LOGOUT = "isLogout"
 
     val masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
 
@@ -78,7 +79,28 @@ object SharedPreference {
         return sharedPreferences.getString(SH_COUNTRY_ID, "")
     }
 
+    fun putLogout(activity: Activity, isLogout: Boolean?) {
+        val sharedPreferences = EncryptedSharedPreferences.create(
+            SH_PREF,
+            masterKeyAlias,
+            activity,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
+        sharedPreferences.edit().putBoolean(SH_LOGOUT, isLogout!!).apply()
+    }
 
+    fun getLogout(activity: Context): Boolean? {
+
+        val sharedPreferences = EncryptedSharedPreferences.create(
+            SH_PREF,
+            masterKeyAlias,
+            activity,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
+        return sharedPreferences.getBoolean(SH_LOGOUT, false)
+    }
 
 
     fun putLanguage(activity: Context, isAppLanguage: String?) {
@@ -104,8 +126,7 @@ object SharedPreference {
         return sharedPreferences.getString(SH_AGREE, "")
     }
 
-    fun putUserDetails(activity: Context,userDetails : UserDetails)
-    {
+    fun putUserDetails(activity: Context, userDetails: UserDetails) {
         val gson = Gson()
         val userJson = gson.toJson(userDetails)
         val sharedPreferences = EncryptedSharedPreferences.create(
@@ -119,8 +140,7 @@ object SharedPreference {
     }
 
 
-    fun getUserDetails(activity: Context): UserDetails?
-    {
+    fun getUserDetails(activity: Context): UserDetails? {
         val sharedPreferences = EncryptedSharedPreferences.create(
             SH_PREF,
             masterKeyAlias,
@@ -130,10 +150,10 @@ object SharedPreference {
         )
 
         val userJson = sharedPreferences.getString(SH_USER_DETAILS, null)
-        var userDetails : UserDetails? = null
+        var userDetails: UserDetails? = null
         if (userJson != null) {
             val gson = Gson()
-             userDetails = gson.fromJson(userJson, UserDetails::class.java)
+            userDetails = gson.fromJson(userJson, UserDetails::class.java)
         }
         return userDetails;
     }

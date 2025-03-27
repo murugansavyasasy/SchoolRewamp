@@ -85,9 +85,11 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
 
     private fun isUpdateDeviceToken(token: String) {
         val jsonObject = JsonObject()
+        val isSecureId= Constant.getAndroidSecureId(this)
         jsonObject.addProperty(RequestKeys.Req_mobile_number, Constant.isMobileNumber)
         jsonObject.addProperty(RequestKeys.Req_device_type, Constant.isDeviceType)
         jsonObject.addProperty(RequestKeys.Req_device_token, token)
+        jsonObject.addProperty(RequestKeys.Req_secure_id, isSecureId)
         authViewModel!!.isDeviceToken(jsonObject, this)
     }
 

@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.OTP.OTP
+import com.vs.schoolmessenger.Auth.Splash.Splash
 import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.R
@@ -75,15 +76,22 @@ class PassWord : BaseActivity<PassWordBinding>(), View.OnClickListener {
                                 )
                                 startActivity(intent)
                             } else if (Constant.user_data!![0].user_details.is_parent) {
-                                val intent = Intent(
-                                    this@PassWord,
-                                    com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard::class.java
-                                )
-                                startActivity(intent)
+                                if(Constant.user_data!![0].user_details.child_details.size > 1){
+                                    val intent = Intent(this@PassWord, PrioritySelection::class.java)
+                                    startActivity(intent)
+                                }
+                                else {
+                                    val intent = Intent(
+                                        this@PassWord,
+                                        com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard::class.java
+                                    )
+                                    startActivity(intent)
+                                }
 
                             }
                         }
                     }
+
 
 
                 }

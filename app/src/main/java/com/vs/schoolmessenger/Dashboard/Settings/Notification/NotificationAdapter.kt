@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.Dashboard.Settings.Notification
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,10 +31,12 @@ class NotificationAdapter(
                     .inflate(R.layout.shimmer_view_small_list, parent, false)
             ShimmerViewHolder(view)
         } else {
+
             val view =
                 LayoutInflater.from(parent.context)
                     .inflate(R.layout.resent_notifications, parent, false)
             DataViewHolder(view, context) // Pass context to DataViewHolder
+
         }
     }
 
@@ -63,7 +66,6 @@ class NotificationAdapter(
             lblSendBy.text = data.sendBy
             lblTitle.text = data.title
             lblContent.text = data.content
-
             when (position) {
                 1 -> {
                     lblNotification.visibility = View.VISIBLE

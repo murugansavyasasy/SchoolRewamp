@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
 import android.net.ConnectivityManager
 import android.net.Uri
@@ -48,8 +49,8 @@ object Constant {
     var user_data: List<UserValidationData>? = null
     var isStaffDetails: List<StaffDetails>? = null
     var isChildDetails: List<ChildDetails>? = null
-    var isPasswordCreation : Boolean? = false
-
+    var isPasswordCreation: Boolean? = false
+//    var isLogOut = false
     var forgotData: List<ForgetOtpData>? = null
     var isForgotPassword: Boolean? = false
     var isMobileNumber: String? = ""
@@ -187,7 +188,7 @@ object Constant {
             ?: "Empty"
     }
 
-    fun errorAlert(activity: Activity,title : String,content : String){
+    fun errorAlert(activity: Activity, title: String, content: String) {
         val dialogView = LayoutInflater.from(activity).inflate(R.layout.custom_error_alert, null)
         val builder = AlertDialog.Builder(activity)
         builder.setView(dialogView)
@@ -201,6 +202,25 @@ object Constant {
         messageText.text = content
         okButton.setOnClickListener {
             alertDialog.dismiss()
+        }
+    }
+
+    fun isDeveloperOptionsEnabled(context: Context): Boolean {
+        return Settings.Global.getInt(
+            context.contentResolver,
+            Settings.Global.DEVELOPMENT_SETTINGS_ENABLED, 0
+        ) == 1
+    }
+
+    fun setKeyboardListener(rootView: View, onKeyboardStateChanged: (Boolean) -> Unit) {
+        rootView.viewTreeObserver.addOnGlobalLayoutListener {
+            val rect = Rect()
+            rootView.getWindowVisibleDisplayFrame(rect)
+            val screenHeight = rootView.height
+            val keypadHeight = screenHeight - rect.bottom
+
+            val isKeyboardOpened = keypadHeight > screenHeight * 0.15
+            onKeyboardStateChanged(isKeyboardOpened)
         }
     }
 }

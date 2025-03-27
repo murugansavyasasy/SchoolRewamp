@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:id="@+id/bottom_sheet"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rect_white_light_radious"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="@dimen/hundred"
+        android:layout_height="@dimen/ten"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/ten"
+        android:background="@drawable/rect_btn_blue">
+
+    </View>
+
+    <TextView
+        android:id="@+id/lblTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/twenty"
+        android:gravity="center"
+        android:text="Developer Mode Conflict "
+        android:textColor="@color/black"
+        android:textSize="@dimen/twenty_sp"
+        android:textStyle="bold"></TextView>
+
+    <TextView
+        android:id="@+id/lblContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/ten"
+        android:layout_marginTop="@dimen/twenty"
+        android:padding="@dimen/ten"
+        android:text="The app encountered as error. If you have enabled Developer Mode on your device. please try disabling it and relaunching the app. If the issue presists. please contact customer support. Please follow the path: Device Settings > search for Developer options > toggle the switch to off."
+        android:textColor="@color/black"
+        android:textSize="@dimen/fifteen_sp"
+        android:textStyle="normal"></TextView>
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/btnClose"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fourty_five"
+        android:layout_below="@+id/lblForgetPassword"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/thirty"
+        android:layout_marginEnd="@dimen/ten"
+        android:layout_marginBottom="@dimen/ten"
+        card_view:cardCornerRadius="@dimen/ten"
+        card_view:cardElevation="10dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/rect_btn_blue"
+            android:gravity="center"
+            android:text="OK"
+            android:textColor="@color/white"
+            android:textSize="@dimen/fifteen_sp"
+            android:textStyle="bold" />
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

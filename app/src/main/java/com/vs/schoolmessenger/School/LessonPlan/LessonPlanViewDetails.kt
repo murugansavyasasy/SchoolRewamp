@@ -29,7 +29,20 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(),
         return LessonplanViewDetailsBinding.inflate(layoutInflater)
     }
 
-    private val months = listOf("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")
+    private val months = listOf(
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+    )
     private val statuses = listOf("Completed", "Pending", "Not Started", "In Progress")
 
     override fun setupViews() {
@@ -38,9 +51,30 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(),
         binding.imgBack.setOnClickListener(this)
 
         lessonPlanData = listOf(
-            LessonPlanData("Atoms,Elements,States of Matter", "10/02/2024", "15/02/2024", "Algebra", "Introduction to equations", 2),
-            LessonPlanData("Atoms,Elements,States of Matter", "05/03/2024", "12/03/2024", "Physics", "Newton's Laws", 3),
-            LessonPlanData("Atoms,Elements,States of Matter", "20/01/2024", "25/01/2024", "Literature", "Poetry analysis", 1)
+            LessonPlanData(
+                "Atoms,Elements,States of Matter",
+                "10/02/2024",
+                "15/02/2024",
+                "Algebra",
+                "Introduction to equations",
+                2
+            ),
+            LessonPlanData(
+                "Atoms,Elements,States of Matter",
+                "05/03/2024",
+                "12/03/2024",
+                "Physics",
+                "Newton's Laws",
+                3
+            ),
+            LessonPlanData(
+                "Atoms,Elements,States of Matter",
+                "20/01/2024",
+                "25/01/2024",
+                "Literature",
+                "Poetry analysis",
+                1
+            )
         )
 
         adapter = LessonPlanAdapter(lessonPlanData, this, this, Constant.isShimmerViewDisable)
