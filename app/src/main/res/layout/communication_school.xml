@@ -16,14 +16,14 @@
                 android:id="@+id/rlaLbCommunication"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/eighty"
-                android:background="@color/primary_light"
+                android:background="@drawable/gradient_theme_school"
                 android:paddingBottom="@dimen/thirty">
 
                 <ImageView
                     android:id="@+id/imgBack"
                     android:layout_width="@dimen/thirty"
                     android:layout_height="@dimen/thirty"
-                    android:layout_marginStart="@dimen/fifteen"
+                    android:layout_marginStart="@dimen/ten"
                     android:layout_marginTop="@dimen/twenty"
                     android:src="@drawable/arrow_back_black">
 
@@ -595,7 +595,7 @@
                         android:layout_below="@+id/lblDurationOfVoice"
                         android:layout_alignParentEnd="true"
                         android:layout_centerInParent="true"
-                        android:layout_marginEnd="@dimen/ten"
+                        android:layout_marginEnd="@dimen/twenty"
                         android:background="@drawable/rect_light_blue_light_radious"
                         android:padding="@dimen/ten">
 
