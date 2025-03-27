@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottom_sheet"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bottom_sheet_bg"
+    android:orientation="vertical"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/relative_layout"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="18dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/rounded_bg"
+        android:padding="15dp"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/header_textview"
+            android:layout_marginStart="10dp"
+            android:text="Saloon &amp; Spa"
+            android:textColor="@color/black"
+            android:textStyle="normal"
+            android:textSize="11sp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="8dp">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/thumbnail"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/search_icon" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/offer_text"
+                    android:text="20% Off"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="17sp"
+                    android:layout_marginStart="5dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/offer_text1"
+                    android:text="TONI&amp;GUY"
+                    android:textColor="@color/black"
+                    android:textStyle="normal"
+                    android:textSize="13sp"
+                    android:layout_marginStart="5dp"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="7dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/offer_text2"
+                android:text="10 locations"
+                android:textColor="@color/black"
+                android:textStyle="normal"
+                android:textSize="13sp"
+                android:layout_marginStart="5dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/offer_text4"
+                android:text="Valid till 01.01.2024"
+                android:textColor="@color/black"
+                android:textStyle="normal"
+                android:textSize="13sp"
+                android:layout_marginStart="5dp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/linear_layout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:layout_marginTop="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/remember"
+                android:text="Things to remember"
+                android:textColor="@color/black"
+                android:textStyle="normal"
+                android:textSize="15sp"
+                android:layout_weight="1"
+                android:layout_marginStart="10dp"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/remember_symbol"
+                android:src="@drawable/down_arrow_black"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="5dp"/>
+
+        </LinearLayout>
+
+        <!-- Hidden TextView to be expanded -->
+        <TextView
+            android:id="@+id/expandable_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Here are some important thakdjnkasjdn jkansjdknkjnadksad nkajndkjnkjasnkjasndkings to remember..."
+            android:textSize="14sp"
+            android:textStyle="normal"
+            android:padding="10dp"
+            android:layout_marginEnd="40dp"
+            android:visibility="gone"
+            android:textColor="@color/grey"/>
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@color/grey"
+        />
+
+
+    <LinearLayout
+        android:id="@+id/linear_layout4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:layout_marginTop="10dp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/remember1"
+                android:text="Terms &amp; Conditions"
+                android:textColor="@color/black"
+                android:textStyle="normal"
+                android:textSize="15sp"
+                android:layout_weight="1"
+                android:layout_marginStart="10dp"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/remember_symbol1"
+                android:src="@color/black"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="5dp"/>
+        </LinearLayout>
+
+        <!-- Hidden TextView to be expanded -->
+        <TextView
+            android:id="@+id/expandable_text1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Here are some important thakdjnkasjdn jkansjdknkjnadksad nkajndkjnkjasnkjasndkings to remember..."
+            android:textSize="14sp"
+            android:textStyle="normal"
+            android:padding="10dp"
+            android:layout_marginEnd="40dp"
+            android:visibility="gone"
+            android:textColor="@color/grey"/>
+    </LinearLayout>
+
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@color/grey"
+        />
+
+
+
+</LinearLayout>

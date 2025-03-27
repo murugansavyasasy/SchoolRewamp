@@ -4,7 +4,6 @@
     android:background="@color/white"
     android:orientation="vertical"
     android:padding="10dp"
-
     android:layout_height="wrap_content">
 
     <LinearLayout
@@ -18,7 +17,7 @@
             android:id="@+id/subjectname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
+            android:layout_marginStart="0dp"
             android:layout_weight="0.25"
             android:text="Subject Name"
             android:textSize="13sp"
@@ -50,7 +49,6 @@
         android:layout_marginTop="5dp"
         android:layout_height="wrap_content">
         <ProgressBar
-
             android:layout_weight="0.9"
             android:id="@+id/progressBarOutOf100"
             style="?android:attr/progressBarStyleHorizontal"
@@ -60,7 +58,7 @@
             android:max="100"
             android:progress="0"
             android:progressDrawable="@android:drawable/progress_horizontal"
-            android:progressTint="@color/RobinssEggBlue" />
+            android:progressTint="@color/black" />
         <ImageView
             android:layout_weight="0.1"
             android:src="@drawable/arrow_down_round"

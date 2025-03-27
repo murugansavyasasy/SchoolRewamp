@@ -38,6 +38,8 @@ import com.vs.schoolmessenger.School.LessonPlan.LessonPlan
 import com.vs.schoolmessenger.School.MarkYourAttendance.MarkYourAttendance
 import com.vs.schoolmessenger.School.MessageFromManagement.MessageFromManagement
 import com.vs.schoolmessenger.School.NoticeBoard.CreateNoticeBoard
+import com.vs.schoolmessenger.School.NoticeBoard.SchoolNoticeBoardAdapter
+import com.vs.schoolmessenger.School.NoticeBoard.SchoolNoticeBoardAdapter.ShimmerViewHolder
 import com.vs.schoolmessenger.School.OnlineMeeting.OnlineMeeting
 import com.vs.schoolmessenger.School.PTM.PTM
 import com.vs.schoolmessenger.School.SchoolNeeds.SchoolNeeds
@@ -45,6 +47,7 @@ import com.vs.schoolmessenger.School.SchoolStrength.SchoolStrength
 import com.vs.schoolmessenger.School.StaffWiseAttendanceReport.StaffWiseAttendanceReport
 import com.vs.schoolmessenger.School.StudentReport.StudentReport
 import com.vs.schoolmessenger.School.Video.CreateVideo
+import com.vs.schoolmessenger.Utils.ShimmerUtil
 import java.util.Timer
 import java.util.TimerTask
 
@@ -74,9 +77,8 @@ class SchoolMenuAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             TYPE_SHIMMER -> {
-                val view = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.shimmer_dashboard_item, parent, false)
-                ShimmerViewHolder(view)
+                val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.menu_item_card)
+                ShimmerViewHolder(shimmerView)
             }
 
             TYPE_AD -> {
@@ -98,7 +100,9 @@ class SchoolMenuAdapter(
             is DataViewHolder -> {
                 holder.bind(itemList!!, position)
             }
-
+            is ShimmerViewHolder -> {
+                holder.startShimmer()
+            }
             is AdViewHolder -> {
                 if (position == 9) {
                     holder.bind(specialImages!!, context)
@@ -108,6 +112,7 @@ class SchoolMenuAdapter(
             }
         }
     }
+
 
     override fun getItemCount(): Int {
         return if (isLoading) 20
@@ -428,11 +433,8 @@ class SchoolMenuAdapter(
     }
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val shimmerLayout: ShimmerFrameLayout =
-            itemView.findViewById(R.id.shimmer_view_container)
-
-        init {
-            shimmerLayout.startShimmer()
+        fun startShimmer() {
+            ShimmerUtil.startShimmer(itemView)
         }
     }
 }

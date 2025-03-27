@@ -101,12 +101,12 @@
                 android:id="@+id/examRankCard"
                 app:cardCornerRadius="10dp"
                 android:layout_width="match_parent"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_below="@+id/examMarkCard"
                 app:cardElevation="5dp"
                 android:layout_marginBottom="10dp"
+                android:layout_alignStart="@+id/examMarkCard"
+                android:layout_alignEnd="@+id/examMarkCard"
                 android:layout_height="wrap_content">
                 <LinearLayout
                     android:layout_marginBottom="10dp"

@@ -27,6 +27,8 @@ import com.bumptech.glide.Glide
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.CommonScreens.ImageSliderAdapter
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.InteractionWithStudent.InteractionWithStudentAdapter.ShimmerViewHolder
+import com.vs.schoolmessenger.Utils.ShimmerUtil
 import com.vs.schoolmessenger.Utils.WaveformSeekBar
 import com.vs.schoolmessenger.Utils.fetchVimeoThumbnail
 import me.relex.circleindicator.CircleIndicator
@@ -49,10 +51,8 @@ class HomeWorkReportAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-            val view =
-                LayoutInflater.from(parent.context)
-                    .inflate(R.layout.shimmer_view_small_list, parent, false)
-            ShimmerViewHolder(view)
+            val shimmerView = ShimmerUtil.wrapWithShimmer(parent,R.layout.homeword_report_item)
+            ShimmerViewHolder(shimmerView)
         } else {
             val view =
                 LayoutInflater.from(parent.context)
@@ -65,6 +65,9 @@ class HomeWorkReportAdapter(
         if (holder is DataViewHolder) {
             // Bind actual data when loading is complete
             holder.bind(itemList!![position], position, listener, this)
+        } else if (holder is ShimmerViewHolder) {
+            holder.startShimmer()
+
         }
     }
 
@@ -468,11 +471,8 @@ class HomeWorkReportAdapter(
     }
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val shimmerLayout: ShimmerFrameLayout =
-            itemView.findViewById(R.id.shimmer_view_container)
-
-        init {
-            shimmerLayout.startShimmer() // Start shimmer effect
+        fun startShimmer() {
+            ShimmerUtil.startShimmer(itemView)
         }
     }
 }

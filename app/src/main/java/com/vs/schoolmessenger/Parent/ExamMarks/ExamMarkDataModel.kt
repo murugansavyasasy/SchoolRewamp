@@ -1,4 +1,6 @@
 package com.vs.schoolmessenger.Parent.ExamMarks
 
-class ExamMarkDataModel {
-}
+class ExamMarkDataModel (
+    val subjectname: String,
+    val markvalue: String
+)
