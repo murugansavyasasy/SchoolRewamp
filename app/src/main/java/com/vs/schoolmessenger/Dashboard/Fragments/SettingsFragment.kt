@@ -16,6 +16,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.masoudss.lib.utils.Utils
 import com.vs.schoolmessenger.Auth.CreateResetChangePassword.PasswordGeneration
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.Login
 import com.vs.schoolmessenger.Auth.TermsConditions.TermsAndConditions
@@ -27,6 +28,7 @@ import com.vs.schoolmessenger.Dashboard.Settings.ReportTheBug.ReportTheBug
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.ChangeLanguage
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.NetworkSpeedMonitor
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SettingsFragmentBinding
 
@@ -67,6 +69,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         binding.lnrLogout.setOnClickListener(this)
         binding.lnrLanguage.setOnClickListener(this)
         binding.lnrChangePassword.setOnClickListener(this)
+        binding.lnrSignalCheck.setOnClickListener(this)
         return binding.root
     }
 
@@ -106,6 +109,11 @@ class SettingsFragment : Fragment(), View.OnClickListener {
 
             R.id.lnrLogout -> {
                 isShowLogoutPopup()
+            }
+
+            R.id.lnrSignalCheck -> {
+                val networkSpeedMonitor = NetworkSpeedMonitor(requireContext())
+                networkSpeedMonitor.showNetworkSpeedPopup()
             }
         }
     }

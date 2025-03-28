@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -123,8 +122,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rytTerms"
             android:layout_marginTop="30dp"
-            android:src="@drawable/right_arrow1" >
-        </ImageView>
+            android:src="@drawable/right_arrow1"></ImageView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -158,13 +156,22 @@
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="-20dp"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:background="@drawable/country_shape_one"
                 android:orientation="vertical">
 
+                <ImageView
+                    android:layout_width="@dimen/thirty_five"
+                    android:layout_height="@dimen/thirty_five"
+                    android:src="@drawable/india_flag">
+
+                </ImageView>
+
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:layout_marginTop="@dimen/ten"
                     android:text="@string/lblIndia"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins_bold"
@@ -181,15 +188,24 @@
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="-30dp"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:background="@drawable/country_shape_four"
                 android:orientation="vertical">
 
+                <ImageView
+                    android:layout_width="@dimen/thirty_five"
+                    android:layout_height="@dimen/thirty_five"
+                    android:src="@drawable/thailand_flag">
+
+                </ImageView>
+
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="@string/lblThailand"
                     android:textStyle="bold"
+                    android:layout_marginTop="@dimen/ten"
                     android:fontFamily="@font/poppins_bold"
                     android:textColor="@color/white"
                     android:textSize="@dimen/twele_sp" />
@@ -204,14 +220,24 @@
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginEnd="-20dp"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:background="@drawable/country_shape_two"
                 android:orientation="vertical">
 
+                <ImageView
+                    android:layout_width="@dimen/thirty_five"
+                    android:layout_height="@dimen/thirty_five"
+                    android:src="@drawable/united_states_flag">
+
+                </ImageView>
+
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/ten"
                     android:gravity="center"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_marginStart="@dimen/ten"
                     android:text="@string/lblUSA"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins_bold"
@@ -235,14 +261,23 @@
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="-60dp"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:background="@drawable/country_shape_five"
                 android:orientation="vertical">
 
+                <ImageView
+                    android:layout_width="@dimen/thirty_five"
+                    android:layout_height="@dimen/thirty_five"
+                    android:src="@drawable/australia_flag">
+
+                </ImageView>
+
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="@string/lblChina"
+                    android:layout_marginTop="@dimen/ten"
+                    android:text="Australia"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins_bold"
                     android:textColor="@color/white"
@@ -256,16 +291,25 @@
                 android:layout_height="120dp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginStart="@dimen/twenty"
+                android:gravity="center"
                 android:layout_marginTop="30dp"
                 android:layout_weight="1"
                 android:background="@drawable/country_shape_three"
                 android:orientation="vertical">
 
+                <ImageView
+                    android:layout_width="@dimen/thirty_five"
+                    android:layout_height="@dimen/thirty_five"
+                    android:src="@drawable/zimbabwe_flag">
+
+                </ImageView>
+
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ten"
                     android:gravity="center"
-                    android:text="@string/lblSingapore"
+                    android:text="Zimbabwe"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins_bold"
                     android:textColor="@color/white"
@@ -281,14 +325,23 @@
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginEnd="-60dp"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:background="@drawable/country_shape_six"
                 android:orientation="vertical">
 
+                <ImageView
+                    android:layout_width="@dimen/thirty_five"
+                    android:layout_height="@dimen/thirty_five"
+                    android:src="@drawable/finland_flag">
+
+                </ImageView>
+
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="@string/lblCanada"
+                    android:text="Finland"
+                    android:layout_marginTop="@dimen/ten"
                     android:fontFamily="@font/poppins_bold"
                     android:textStyle="bold"
                     android:textColor="@color/white"

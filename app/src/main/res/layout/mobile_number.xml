@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/ten"
             android:gravity="center"
-            android:text="Your password has been securely stored and encrypted for protection. For security reasons, it cannot be displayed in plain text."
+            android:text="Seamless school communication, anytime, anywhere, effortlessly connecting student, teachers, and parents at all times."
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp">
 
@@ -48,15 +48,15 @@
             <RelativeLayout
                 android:id="@+id/rytMobileNumber"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/twenty">
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/lblLogin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/twenty_five"
                     android:gravity="center"
-                    android:text="Login"
+                    android:text="Let's Get Started!"
                     android:textColor="@color/white"
                     android:textSize="@dimen/twenty_sp" />
 
@@ -65,7 +65,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/lblLogin"
+                    android:layout_marginStart="@dimen/ten"
                     android:layout_marginTop="@dimen/twenty"
+                    android:layout_marginEnd="@dimen/ten"
                     android:text="@string/lblMobileNumber"
                     android:textColor="@color/white"
                     android:textSize="@dimen/fifteen_sp" />
@@ -75,7 +77,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/fourty_five"
                     android:layout_below="@+id/lblMobile"
-                    android:layout_marginTop="@dimen/ten"
+                    android:layout_marginStart="@dimen/ten"
+                    android:layout_marginTop="@dimen/twenty"
+                    android:layout_marginEnd="@dimen/ten"
                     android:background="@drawable/rect_white">
 
                     <ImageView
@@ -118,8 +122,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/fourty_five"
                     android:layout_below="@+id/rytMobile"
-                    android:layout_marginTop="@dimen/thirty"
                     android:layout_marginStart="@dimen/ten"
+                    android:layout_marginTop="@dimen/thirty"
                     android:layout_marginEnd="@dimen/ten"
                     android:layout_marginBottom="@dimen/ten"
                     card_view:cardCornerRadius="@dimen/ten"
@@ -130,8 +134,7 @@
                         android:layout_height="match_parent"
                         android:background="@drawable/rect_btn_blue"
                         android:gravity="center"
-                        android:padding="@dimen/fifteen"
-                        android:text="LOGIN"
+                        android:text="Continue to schoolchimes"
                         android:textColor="@color/white"
                         android:textSize="@dimen/fifteen_sp"
                         android:textStyle="bold" />

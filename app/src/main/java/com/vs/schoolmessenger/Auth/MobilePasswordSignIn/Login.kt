@@ -38,8 +38,6 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener {
         authViewModel = ViewModelProvider(this).get(Auth::class.java)
         authViewModel!!.init()
 
-        binding.btnLoginContinue.isClickable = true
-        binding.btnLoginContinue.setBackgroundDrawable(resources.getDrawable(R.drawable.rect_btn_blue))
         binding.txtMobileNumber.hint = Constant.country_details!!.mobile_no_hint
 
         authViewModel!!.isUserValidation?.observe(this) { response ->
@@ -50,20 +48,17 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener {
                     val isValidateUser = response.data
                     Constant.user_data = isValidateUser
                     Constant.user_details = Constant.user_data!![0].user_details
-                    Constant.isStaffDetails= Constant.user_data!![0].user_details.staff_details
-                    Constant.isChildDetails= Constant.user_data!![0].user_details.child_details
+                    Constant.isStaffDetails = Constant.user_data!![0].user_details.staff_details
+                    Constant.isChildDetails = Constant.user_data!![0].user_details.child_details
                     SharedPreference.putUserDetails(this@Login, Constant.user_details!!)
 
-                    if(Constant.user_data!![0].is_number_exists) {
-
+                    if (Constant.user_data!![0].is_number_exists) {
                         if (isValidateUser[0].is_password_updated) {
-
                             if (isValidateUser[0].otp_sent) {
                                 val intent = Intent(this@Login, OTP::class.java)
                                 Constant.pageType = Constant.SignInScreen
                                 startActivity(intent)
                             } else {
-
                                 SharedPreference.putMobileNumberPassWord(
                                     this@Login,
                                     binding.txtMobileNumber.text.toString(),
@@ -97,23 +92,18 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener {
 
                                 }
                             }
-                        }
-                        else{
+                        } else {
                             val intent = Intent(this@Login, OTP::class.java)
                             Constant.pageType = Constant.SignInScreen
                             Constant.isPasswordCreation = true
                             startActivity(intent)
                         }
-                    }
-                    else{
-                        Constant.errorAlert(this@Login,"",message)
+                    } else {
+                        Constant.errorAlert(this@Login, "", message)
 
                     }
-
                 }
-
             }
-
         }
         authViewModel!!.isForgetPassword?.observe(this) { response ->
             if (response != null) {
@@ -121,11 +111,11 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener {
                 val message = response.message
                 Constant.forgotData = response.data
                 if (status) {
+                    Constant.isMobileNumber = binding.txtMobileNumber.text.toString()
                     val intent = Intent(this@Login, OTP::class.java)
                     Constant.isForgotPassword = true
-                    startActivity(intent) }
-                else
-                {
+                    startActivity(intent)
+                } else {
                     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
                 }
             }
@@ -164,7 +154,10 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener {
         val isSecureId = Constant.getAndroidSecureId(this@Login)
 
         Constant.isMobileNumber = binding.txtMobileNumber.text.toString()
-        jsonObject.addProperty(RequestKeys.Req_mobile_number, binding.txtMobileNumber.text.toString())
+        jsonObject.addProperty(
+            RequestKeys.Req_mobile_number,
+            binding.txtMobileNumber.text.toString()
+        )
         jsonObject.addProperty(RequestKeys.Req_device_type, Constant.isDeviceType)
         jsonObject.addProperty(RequestKeys.Req_secure_id, isSecureId)
         jsonObject.addProperty(RequestKeys.Req_password, binding.txtPassword.text.toString())

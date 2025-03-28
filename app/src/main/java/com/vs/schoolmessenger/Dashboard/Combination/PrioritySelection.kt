@@ -21,7 +21,8 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
     override fun getViewBinding(): RoleSelecionBinding {
         return RoleSelecionBinding.inflate(layoutInflater)
     }
-    var userDetails : UserDetails? = null
+
+    var userDetails: UserDetails? = null
 
     override fun setupViews() {
         super.setupViews()
@@ -31,14 +32,20 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
         binding.btnGo.setOnClickListener(this)
         isLoadData(true)
 
-        userDetails= SharedPreference.getUserDetails(this@PrioritySelection)
+        userDetails = SharedPreference.getUserDetails(this@PrioritySelection)
+        if (userDetails!!.is_staff) {
+            binding.lblTeacher.text = userDetails!!.role_name
+        }
+        if (userDetails!!.is_parent) {
+            binding.lblParent.text = "Student"
+        }
 
-        binding.lblTeacher.text = userDetails!!.role_name
         binding.btnGo.setOnClickListener {
             val intent = Intent(this, SchoolDashboard::class.java)
             startActivity(intent)
         }
     }
+
     private fun isLoadData(isStaff: Boolean) {
         if (isStaff) {
             isStaffDetailAdapter = StaffDetailAdapter(Constant.isStaffDetails, this)
@@ -56,11 +63,13 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
             R.id.lblTeacher -> {
                 isBackRoundChange(binding.lblTeacher)
             }
+
             R.id.lblParent -> {
                 isBackRoundChange(binding.lblParent)
             }
         }
     }
+
     private fun isBackRoundChange(isClickingId: TextView) {
         if (isClickingId == binding.lblParent) {
             binding.lblTeacher.background = null

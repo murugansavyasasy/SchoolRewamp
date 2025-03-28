@@ -12,12 +12,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import com.bumptech.glide.Glide
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
+import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.Dashboard.Model.AdItem
 import com.vs.schoolmessenger.Dashboard.Model.GridItem
 import com.vs.schoolmessenger.Dashboard.School.SchoolMenuAdapter
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.Notification
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SchoolHomeFragmentBinding
 import java.util.Locale
 
@@ -30,6 +34,8 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener {
     private var isMenuItems: MutableList<GridItem> = mutableListOf()
     private var isSearchVisible = false
     private lateinit var aditems: List<AdItem>
+    var userDetails: UserDetails? = null
+
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
@@ -39,6 +45,19 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener {
         binding = SchoolHomeFragmentBinding.inflate(layoutInflater)
         binding.imgNotification.setOnClickListener(this)
         binding.imgSearchClick.setOnClickListener(this)
+
+        userDetails = SharedPreference.getUserDetails(requireActivity())
+
+        binding.lblSchoolAddress.text = userDetails!!.staff_details[0].school_address
+        Glide.with(requireActivity())
+            .load(userDetails!!.staff_details[0].school_logo)
+            .into(binding.imgSchoolLogo)
+
+        if (userDetails!!.staff_details.size > 1) {
+            binding.lblSchoolName.text = userDetails!!.role_name
+        } else {
+            binding.lblSchoolName.text = userDetails!!.staff_details[0].school_name
+        }
 
         // Sample data
         items = arrayListOf(
@@ -52,7 +71,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener {
             GridItem(R.drawable.attendance_marking, "Attendance Marking"),
             GridItem(R.drawable.message_f_management, "Message From Management"),
             GridItem(R.drawable.interact_with_student, "Interaction With Student"),
-            )
+        )
 
         binding.lblViewDetails.paintFlags =
             binding.lblViewDetails.paintFlags or Paint.UNDERLINE_TEXT_FLAG

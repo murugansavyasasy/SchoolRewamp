@@ -3,6 +3,7 @@ package com.vs.schoolmessenger.Auth.MobilePasswordSignIn
 import android.content.Intent
 import android.os.Build
 import android.view.View
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -22,6 +23,7 @@ class MobileNumber : BaseActivity<MobileNumberBinding>(), View.OnClickListener {
     override fun getViewBinding(): MobileNumberBinding {
         return MobileNumberBinding.inflate(layoutInflater)
     }
+
     var authViewModel: Auth? = null
 
     @RequiresApi(Build.VERSION_CODES.R)
@@ -38,12 +40,17 @@ class MobileNumber : BaseActivity<MobileNumberBinding>(), View.OnClickListener {
             if (isValidMobileNumber(binding.txtMobileNumber.text.toString())) {
                 Constant.isMobileNumber = binding.txtMobileNumber.text.toString()
                 isValidateUser()
+            } else {
+                Toast.makeText(
+                    this,
+                    "Enter the " + Constant.country_details!!.mobile_number_length + " Digit's Mobile Number",
+                    Toast.LENGTH_SHORT
+                ).show()
+
             }
         }
 
         binding.txtMobileNumber.hint = Constant.country_details!!.mobile_no_hint
-        binding.btnLoginContinue.isClickable = true
-        binding.btnLoginContinue.setBackgroundDrawable(resources.getDrawable(R.drawable.rect_btn_orange))
 
         authViewModel!!.isUserValidation?.observe(this) { response ->
             if (response != null) {

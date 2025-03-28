@@ -50,7 +50,6 @@ object Constant {
     var isStaffDetails: List<StaffDetails>? = null
     var isChildDetails: List<ChildDetails>? = null
     var isPasswordCreation: Boolean? = false
-//    var isLogOut = false
     var forgotData: List<ForgetOtpData>? = null
     var isForgotPassword: Boolean? = false
     var isMobileNumber: String? = ""

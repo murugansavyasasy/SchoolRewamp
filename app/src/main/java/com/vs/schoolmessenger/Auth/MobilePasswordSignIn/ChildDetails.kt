@@ -2,7 +2,7 @@ package com.vs.schoolmessenger.Auth.MobilePasswordSignIn
 
 data class ChildDetails(
     val child_id: String,
-    val child_name: String,
+    val name: String,
     val standard_name: String,
     val section_name: String,
     val school_id: String,
@@ -14,5 +14,16 @@ data class ChildDetails(
     val display_message: String,
     val class_id: Int,
     val section_id: Int,
-    val access_token: String
+    val access_token: String,
+    val email: String,
+    val father_name: String,
+    val mother_name: String,
+    val father_occupation: String,
+    val mother_occupation: String,
+    val blood_group: String,
+    val student_address: String,
+    val secondary_mobile: String,
+    val whatsapp_number: String,
+    val class_teacher: String
+
 )

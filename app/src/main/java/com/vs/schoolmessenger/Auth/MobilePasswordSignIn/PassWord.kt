@@ -39,9 +39,6 @@ class PassWord : BaseActivity<PassWordBinding>(), View.OnClickListener {
         authViewModel!!.init()
 
 
-        binding.btnLoginContinue.isClickable = true
-        binding.btnLoginContinue.setBackgroundDrawable(resources.getDrawable(R.drawable.rect_btn_orange))
-
         authViewModel!!.isUserValidation?.observe(this) { response ->
             if (response != null) {
                 val status = response.status
@@ -50,20 +47,23 @@ class PassWord : BaseActivity<PassWordBinding>(), View.OnClickListener {
                     val isValidateUser = response.data
                     Constant.user_data = isValidateUser
                     Constant.user_details = Constant.user_data!![0].user_details
-                    Constant.isStaffDetails= Constant.user_data!![0].user_details.staff_details
-                    Constant.isChildDetails= Constant.user_data!![0].user_details.child_details
+                    Constant.isStaffDetails = Constant.user_data!![0].user_details.staff_details
+                    Constant.isChildDetails = Constant.user_data!![0].user_details.child_details
 
                     SharedPreference.putUserDetails(this@PassWord, Constant.user_details!!)
 
-                    if(isValidateUser[0].is_password_updated) {
+                    if (isValidateUser[0].is_password_updated) {
 
                         if (isValidateUser[0].otp_sent) {
                             val intent = Intent(this@PassWord, OTP::class.java)
                             Constant.pageType = Constant.PasswordScreen
                             startActivity(intent)
                         } else {
-
-                            SharedPreference.putMobileNumberPassWord(this@PassWord,Constant.isMobileNumber,binding.txtPassword.text.toString())
+                            SharedPreference.putMobileNumberPassWord(
+                                this@PassWord,
+                                Constant.isMobileNumber,
+                                binding.txtPassword.text.toString()
+                            )
                             if (Constant.user_data!![0].user_details.is_staff && Constant.user_data!![0].user_details.is_parent) {
                                 val intent = Intent(this@PassWord, PrioritySelection::class.java)
                                 startActivity(intent)
@@ -71,16 +71,15 @@ class PassWord : BaseActivity<PassWordBinding>(), View.OnClickListener {
                             } else if (Constant.user_data!![0].user_details.is_staff) {
 
                                 val intent = Intent(
-                                    this@PassWord,
-                                    SchoolDashboard::class.java
+                                    this@PassWord, SchoolDashboard::class.java
                                 )
                                 startActivity(intent)
                             } else if (Constant.user_data!![0].user_details.is_parent) {
-                                if(Constant.user_data!![0].user_details.child_details.size > 1){
-                                    val intent = Intent(this@PassWord, PrioritySelection::class.java)
+                                if (Constant.user_data!![0].user_details.child_details.size > 1) {
+                                    val intent =
+                                        Intent(this@PassWord, PrioritySelection::class.java)
                                     startActivity(intent)
-                                }
-                                else {
+                                } else {
                                     val intent = Intent(
                                         this@PassWord,
                                         com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard::class.java
@@ -91,7 +90,6 @@ class PassWord : BaseActivity<PassWordBinding>(), View.OnClickListener {
                             }
                         }
                     }
-
 
 
                 }
@@ -107,8 +105,7 @@ class PassWord : BaseActivity<PassWordBinding>(), View.OnClickListener {
                     val intent = Intent(this@PassWord, OTP::class.java)
                     Constant.isForgotPassword = true
                     startActivity(intent)
-                }
-                else{
+                } else {
                     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
                 }
             }
@@ -118,6 +115,7 @@ class PassWord : BaseActivity<PassWordBinding>(), View.OnClickListener {
 
     private fun isForgetPassword() {
         val jsonObject = JsonObject()
+        jsonObject.addProperty(RequestKeys.Req_mobile_number, Constant.isMobileNumber)
         authViewModel!!.isForgetPassword(jsonObject, this)
     }
 
@@ -156,14 +154,18 @@ class PassWord : BaseActivity<PassWordBinding>(), View.OnClickListener {
             }
 
             R.id.btnLoginContinue -> {
-                isValidateUser()
+
+                if (binding.lblPassword.text.toString() != "") {
+                    isValidateUser()
+                } else {
+                    Toast.makeText(
+                        this, "Enter the password", Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
 
             R.id.lblForgetPassword -> {
-                    isForgetPassword()
-//                } else {
-//                    Toast.makeText(this, R.string.EnterTheMobileNumber, Toast.LENGTH_SHORT).show()
-//                }
+                isForgetPassword()
             }
         }
     }
