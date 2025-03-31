@@ -63,7 +63,6 @@
                 android:background="@drawable/bg_blue"
                 android:gravity="center"
                 android:padding="@dimen/ten"
-                android:text="@string/lblTeacher"
                 android:textColor="@color/white"
                 android:textSize="@dimen/thirteen_sp"
                 android:textStyle="bold" />
@@ -75,7 +74,6 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:padding="@dimen/ten"
-                android:text="@string/lblParent"
                 android:textColor="@color/dark_blue"
                 android:textSize="@dimen/thirteen_sp"
                 android:textStyle="bold" />

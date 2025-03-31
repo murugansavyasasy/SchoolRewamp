@@ -62,11 +62,13 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
     }
 
     private fun isLoadCountry(countryList: List<Country>) {
-        val adapter = CountrySpinnerAdapter(this@CountryScreen, countryList)
+
+        val isCountryList = listOf(Country(-0, "Select Country", -0, -0, "", "", "", "")) + countryList
+        val adapter = CountrySpinnerAdapter(this@CountryScreen, isCountryList)
         binding.isSpineer.adapter = adapter
 
-        if (countryList.isNotEmpty()) {
-            Constant.country_details = countryList[0]
+        if (isCountryList.isNotEmpty()) {
+            Constant.country_details = isCountryList[0]
         }
 
         // Handle selection event
@@ -77,18 +79,21 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
                 position: Int,
                 id: Long
             ) {
-                Constant.country_details = countryList[position]
+                if (position != 0) {
+                    Constant.country_details = isCountryList[position]
 
-                Log.d(
-                    "SelectedCountry",
-                    "ID: ${Constant.country_details!!.id}, Name: ${Constant.country_details!!.name}"
-                )
+                    Log.d(
+                        "SelectedCountry",
+                        "ID: ${Constant.country_details!!.id}, Name: ${Constant.country_details!!.name}"
+                    )
 
-                Toast.makeText(
-                    this@CountryScreen,
-                    "Selected: ${Constant.country_details!!.name}",
-                    Toast.LENGTH_SHORT
-                ).show()
+                    Toast.makeText(
+                        this@CountryScreen,
+                        "Selected: ${Constant.country_details!!.name}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -99,13 +104,21 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btnArrowNext -> {
-                if (isAgree) {
-                    SharedPreference.putCountryId(this, Constant.country_details!!.id.toString())
-                    RestClient.changeApiBaseUrl(Constant.country_details!!.base_url)
-                    val intent = Intent(this@CountryScreen, MobileNumber::class.java)
-                    startActivity(intent)
+                if (Constant.country_details!!.id != -0) {
+                    if (isAgree) {
+                        SharedPreference.putCountryId(
+                            this,
+                            Constant.country_details!!.id.toString()
+                        )
+                        RestClient.changeApiBaseUrl(Constant.country_details!!.base_url)
+                        val intent = Intent(this@CountryScreen, MobileNumber::class.java)
+                        startActivity(intent)
+                    } else {
+                        Toast.makeText(this, R.string.AgreeTermsConditions, Toast.LENGTH_SHORT)
+                            .show()
+                    }
                 } else {
-                    Toast.makeText(this, R.string.AgreeTermsConditions, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Select Country", Toast.LENGTH_SHORT).show()
                 }
             }
         }

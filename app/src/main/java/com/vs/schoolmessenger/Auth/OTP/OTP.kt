@@ -7,8 +7,10 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.CreateResetChangePassword.PasswordGeneration
@@ -31,7 +33,6 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
     }
 
     var authViewModel: Auth? = null
-    var screenType : Int ?= 0
 
     override fun setupViews() {
         super.setupViews()
@@ -40,35 +41,13 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
         isToolBarWhiteTheme()
         binding.lblResend.setOnClickListener(this)
         binding.btnNext.setOnClickListener(this)
+        binding.lblContactUs.setOnClickListener(this)
 
 
         authViewModel = ViewModelProvider(this).get(Auth::class.java)
         authViewModel!!.init()
-        binding.btnNext.isClickable = true
 
-        if(Constant.isForgotPassword!!){
-            binding.lblEnter.text = Constant.forgotData!![0].forgot_otp_message
-            binding.lblContactTitle.text = Constant.forgotData!![0].more_info
-            val numberList: List<String> =
-                Constant.forgotData!![0].dial_numbers.split(",")
-            val firstNumber = numberList[0]
-            val secondNumber = numberList[1]
-//            binding.lblNumberOne.text = firstNumber
-//            binding.lblNumberTwo.text = secondNumber
-        }
-        else {
-
-            if (Constant.user_data!!.isNotEmpty()) {
-                binding.lblEnter.text = Constant.user_data!![0].message
-                binding.lblContactTitle.text = Constant.user_data!![0].more_info
-                val numberList: List<String> =
-                    Constant.user_data!![0].dial_numbers.split(",")
-                val firstNumber = numberList[0]
-                val secondNumber = numberList[1]
-//                binding.lblNumberOne.text = firstNumber
-//                binding.lblNumberTwo.text = secondNumber
-            }
-        }
+        isOtpTitleLoad()
 
 
         authViewModel!!.isOtpResponse?.observe(this) { response ->
@@ -77,20 +56,16 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
                 val message = response.message
                 if (status) {
 
-                    if(Constant.isForgotPassword!!){
+                    if (Constant.isForgotPassword!!) {
                         val intent = Intent(this@OTP, PasswordGeneration::class.java)
                         Constant.isPasswordCreation = false
                         startActivity(intent)
-                    }
-                    else if(Constant.user_data!![0].is_password_updated){
+                    } else if (Constant.user_data!![0].is_password_updated) {
 
-                        if(Constant.pageType == Constant.MobileNumberScreen){
+                        if (Constant.pageType == Constant.MobileNumberScreen) {
                             val intent = Intent(this@OTP, PassWord::class.java)
                             startActivity(intent)
-                        }
-
-                        else {
-
+                        } else {
 
 
                             if (Constant.user_data!![0].user_details.is_staff && Constant.user_data!![0].user_details.is_parent) {
@@ -105,11 +80,10 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
                                 )
                                 startActivity(intent)
                             } else if (Constant.user_data!![0].user_details.is_parent) {
-                                if(Constant.user_data!![0].user_details.child_details.size > 1){
+                                if (Constant.user_data!![0].user_details.child_details.size > 1) {
                                     val intent = Intent(this@OTP, PrioritySelection::class.java)
                                     startActivity(intent)
-                                }
-                                else {
+                                } else {
                                     val intent = Intent(
                                         this@OTP,
                                         com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard::class.java
@@ -118,14 +92,20 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
                                 }
                             }
                         }
-                    }
-                    else {
+                    } else {
                         val intent = Intent(this@OTP, PasswordGeneration::class.java)
                         Constant.isPasswordCreation = true
                         startActivity(intent)
                     }
                 }
 
+            }
+        }
+
+        authViewModel!!.isForgetPassword?.observe(this) { response ->
+            if (response != null) {
+                Constant.forgotData = response.data
+                isOtpTitleLoad()
             }
         }
 
@@ -186,6 +166,12 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
         }.start()
     }
 
+    private fun isForgetPassword() {
+        val jsonObject = JsonObject()
+        jsonObject.addProperty(RequestKeys.Req_mobile_number, Constant.isMobileNumber)
+        authViewModel!!.isForgetPassword(jsonObject, this)
+    }
+
 
     override fun onClick(v: View?) {
 
@@ -194,30 +180,83 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
                 binding.lblOtpTimer.visibility = View.VISIBLE
                 binding.lblResend.visibility = View.GONE
                 startOtpTimer()
+                isForgetPassword()
             }
 
             R.id.btnNext -> {
                 if (binding.txtOtp1.text.toString() != "" && binding.txtOtp2.text.toString() != "" && binding.txtOtp3.text.toString() != "" && binding.txtOtp4.text.toString() != "" && binding.txtOtp5.text.toString() != "" && binding.txtOtp6.text.toString() != "") {
                     val isOpt =
                         binding.txtOtp1.text.toString() + binding.txtOtp2.text.toString() + binding.txtOtp3.text.toString() + binding.txtOtp4.text.toString() + binding.txtOtp5.text.toString() + binding.txtOtp6.text.toString()
-                    binding.btnNext.isClickable = false
-                    binding.isLoading.visibility = View.VISIBLE
-                    binding.btnNext.setBackgroundColor(resources.getColor(R.color.mild_grey0))
+                    binding.isLoading.visibility = View.GONE
                     isOtpValidate(isOpt)
                 } else {
-                    binding.btnNext.isClickable = true
                     binding.isLoading.visibility = View.GONE
                     Toast.makeText(this, R.string.EnterTheOtp, Toast.LENGTH_SHORT).show()
                 }
             }
+            R.id.lblContactUs -> {
+                isShowContactNumber()
+            }
+        }
+    }
 
-//            R.id.lnrFirstNumber -> {
-//                Constant.redirectToDialPad(this, binding.lblNumberOne.text.toString())
-//            }
-//
-//            R.id.lnrSecondNumber -> {
-//                Constant.redirectToDialPad(this, binding.lblNumberTwo.text.toString())
-//            }
+
+    private fun isShowContactNumber() {
+
+        var isFirstNumber=""
+        var isSecondNumber=""
+
+        if (Constant.isForgotPassword!!) {
+            val numberList: List<String> =
+                Constant.forgotData!![0].dial_numbers.split(",")
+             isFirstNumber = numberList[0]
+             isSecondNumber = numberList[1]
+
+        } else {
+            if (Constant.user_data!!.isNotEmpty()) {
+                val numberList: List<String> =
+                    Constant.user_data!![0].dial_numbers.split(",")
+                isFirstNumber = numberList[0]
+                isSecondNumber = numberList[1]
+            }
+        }
+
+
+        val dialog = BottomSheetDialog(this)
+        val view = layoutInflater.inflate(R.layout.bottom_textview_showing, null)
+
+        val isNumberOne = view.findViewById<TextView>(R.id.txtNumberOne)
+        val isNumberTwo = view.findViewById<TextView>(R.id.txtNumberTwo)
+
+        isNumberOne.text=isFirstNumber
+        isNumberTwo.text=isSecondNumber
+
+        // Handle click events on text views
+        isNumberOne.setOnClickListener {
+            Constant.redirectToDialPad(this, isNumberOne.text.toString())
+            dialog.dismiss()
+        }
+
+        isNumberTwo.setOnClickListener {
+            Constant.redirectToDialPad(this, isNumberTwo.text.toString())
+            dialog.dismiss()
+        }
+
+        dialog.setContentView(view)
+        dialog.show()
+    }
+
+    fun isOtpTitleLoad(){
+        if (Constant.isForgotPassword!!) {
+            binding.lblEnter.text = Constant.forgotData!![0].forgot_otp_message
+            binding.lblContactTitle.text = Constant.forgotData!![0].more_info
+
+        } else {
+
+            if (Constant.user_data!!.isNotEmpty()) {
+                binding.lblEnter.text = Constant.user_data!![0].message
+                binding.lblContactTitle.text = Constant.user_data!![0].more_info
+            }
         }
     }
 }

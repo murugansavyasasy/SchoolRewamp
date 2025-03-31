@@ -42,6 +42,7 @@ class PasswordGeneration : BaseActivity<PasswordGenerationBinding>(), View.OnCli
         } else {
             binding.lblCreatePassword.text = getString(R.string.ResetThePassword)
         }
+
         authViewModel!!.isCreateNewPassword?.observe(this) { response ->
             if (response != null) {
                 val status = response.status
@@ -68,11 +69,11 @@ class PasswordGeneration : BaseActivity<PasswordGenerationBinding>(), View.OnCli
                         )
                         startActivity(intent)
                     } else if (Constant.user_data!![0].user_details.is_parent) {
-                        if(Constant.user_data!![0].user_details.child_details.size > 1){
-                            val intent = Intent(this@PasswordGeneration, PrioritySelection::class.java)
+                        if (Constant.user_data!![0].user_details.child_details.size > 1) {
+                            val intent =
+                                Intent(this@PasswordGeneration, PrioritySelection::class.java)
                             startActivity(intent)
-                        }
-                        else {
+                        } else {
                             val intent = Intent(
                                 this@PasswordGeneration,
                                 com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard::class.java
@@ -80,10 +81,10 @@ class PasswordGeneration : BaseActivity<PasswordGenerationBinding>(), View.OnCli
                             startActivity(intent)
                         }
                     }
-
                 }
             }
         }
+
         authViewModel!!.isPasswordReset?.observe(this) { response ->
             if (response != null) {
                 val status = response.status

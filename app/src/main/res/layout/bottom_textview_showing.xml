@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/light_gray1"
+    android:orientation="vertical"
+    android:padding="@dimen/fifteen">
+
+    <ImageView
+        android:id="@+id/imgOne"
+        android:layout_width="@dimen/fourty_five"
+        android:layout_height="@dimen/fourty_five"
+        android:layout_marginStart="@dimen/ten"
+        android:src="@drawable/phone_call_icon">
+
+    </ImageView>
+
+    <TextView
+        android:id="@+id/txtNumberOne"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_toEndOf="@+id/imgOne"
+        android:padding="@dimen/ten"
+        android:text=""
+        android:textColor="@color/black"
+        android:textSize="@dimen/fifteen_sp"
+        android:textStyle="bold" />
+
+
+    <ImageView
+        android:id="@+id/imgTwo"
+        android:layout_width="@dimen/fourty_five"
+        android:layout_height="@dimen/fourty_five"
+        android:layout_below="@+id/imgOne"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/ten"
+        android:src="@drawable/phone_call_icon">
+
+    </ImageView>
+
+    <TextView
+        android:id="@+id/txtNumberTwo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtNumberOne"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_toEndOf="@+id/imgTwo"
+        android:padding="@dimen/ten"
+        android:text=""
+        android:textColor="@color/black"
+        android:textSize="@dimen/fifteen_sp"
+        android:textStyle="bold" />
+
+
+</RelativeLayout>

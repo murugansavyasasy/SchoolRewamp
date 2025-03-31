@@ -1,11 +1,15 @@
 package com.vs.schoolmessenger.Dashboard.Combination
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.databinding.SchoolDetailsListItemBinding
@@ -78,11 +82,36 @@ class StaffDetailAdapter(private val itemList: List<StaffDetails>?, val context:
 
         holder.binding.lblSchoolName.text = item.school_name
         holder.binding.lblRole.text = item.role
-        holder.binding.lblStaffName.text = item.staff_name
-        holder.binding.lblSchoolAddress.text = item.city
+        holder.binding.lblStaffName.text = item.name
+        holder.binding.lblSchoolAddress.text = item.school_address
+        holder.binding.lblCity.text = item.city
+
+//        Glide.with(context)
+//            .load(item.school_logo)
+//            .into(holder.binding.imgSchool)
 
         Glide.with(context)
             .load(item.school_logo)
+            .listener(object : RequestListener<Drawable> {
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any?,
+                    target: com.bumptech.glide.request.target.Target<Drawable?>,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    TODO("Not yet implemented")
+                }
+
+                override fun onResourceReady(
+                    resource: Drawable,
+                    model: Any,
+                    target: com.bumptech.glide.request.target.Target<Drawable?>?,
+                    dataSource: DataSource,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    TODO("Not yet implemented")
+                }
+            })
             .into(holder.binding.imgSchool)
     }
 

@@ -12,6 +12,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
+import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.Dashboard.Model.AdItem
 import com.vs.schoolmessenger.Dashboard.Model.GridItem
 import com.vs.schoolmessenger.Dashboard.Parent.ChildMenuAdapter
@@ -19,6 +21,7 @@ import com.vs.schoolmessenger.Dashboard.Settings.Notification.Notification
 import com.vs.schoolmessenger.Parent.Attendance.AttendanceReport
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ParentHomeFragmentBinding
 import java.util.Locale
 
@@ -30,6 +33,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener {
     private lateinit var aditems: List<AdItem>
     private var isMenuItems: MutableList<GridItem> = mutableListOf()
     private var isSearchVisible = false
+    var userDetails: UserDetails? = null
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -41,6 +45,18 @@ class ParentHomeFragment : Fragment(), View.OnClickListener {
         binding = ParentHomeFragmentBinding.inflate(layoutInflater)
         binding.imgNotification.setOnClickListener(this)
         binding.imgSearchClick.setOnClickListener(this)
+        binding.lblChangeRoll.setOnClickListener(this)
+        userDetails = SharedPreference.getUserDetails(requireActivity())
+
+        binding.lblStudentName.text = "Hello, " + userDetails!!.child_details.get(0).name
+        binding.lblSchoolName.text = userDetails!!.child_details.get(0).school_name
+        binding.lblSchoolAddress.text = userDetails!!.child_details.get(0).student_address
+
+        if (userDetails!!.is_staff) {
+            binding.lblChangeRoll.visibility = View.VISIBLE
+        } else {
+            binding.lblChangeRoll.visibility = View.GONE
+        }
 
         // Sample data
         items = arrayListOf(
@@ -114,6 +130,11 @@ class ParentHomeFragment : Fragment(), View.OnClickListener {
                 val intent = Intent(requireActivity(), Notification::class.java)
                 startActivity(intent)
             }
+
+            R.id.lblChangeRoll -> {
+                requireActivity().onBackPressedDispatcher.onBackPressed()
+            }
+
 
             R.id.imgSearchClick -> {
                 if (isSearchVisible) {

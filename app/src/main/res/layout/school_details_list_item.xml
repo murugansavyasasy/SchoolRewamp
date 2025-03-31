@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -29,8 +28,8 @@
 
             <ImageView
                 android:id="@+id/imgSchool"
-                android:layout_width="@dimen/sixty"
-                android:layout_height="@dimen/sixty"
+                android:layout_width="@dimen/seventy"
+                android:layout_height="@dimen/hundred"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"
                 android:scaleType="centerCrop"
@@ -60,10 +59,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblStaffName"
+                android:layout_marginTop="@dimen/five"
                 android:text="Savyasasy software solutions"
                 android:textColor="@color/black"
                 android:textSize="@dimen/fifteen_sp"
-                android:layout_marginTop="@dimen/five"
                 android:textStyle="bold" />
 
             <TextView
@@ -76,10 +75,19 @@
                 android:textSize="@dimen/thirteen_sp" />
 
             <TextView
-                android:id="@+id/lblSchoolAddress"
+                android:id="@+id/lblCity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblRole"
+                android:text="KOdaikanal"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp" />
+
+            <TextView
+                android:id="@+id/lblSchoolAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblCity"
                 android:text="7/4 ,Palat Sangaran street,Mahalingapuram, Chennai - 600043"
                 android:textColor="@color/light_gray"
                 android:textSize="@dimen/thirteen_sp" />
@@ -108,8 +116,8 @@
         android:layout_marginTop="@dimen/ten"
         android:layout_marginEnd="@dimen/five"
         android:padding="@dimen/five"
-        android:visibility="gone"
         android:textColor="@color/black"
-        android:textSize="@dimen/thirteen_sp" />
+        android:textSize="@dimen/thirteen_sp"
+        android:visibility="gone" />
 
 </RelativeLayout>

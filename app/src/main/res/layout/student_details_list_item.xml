@@ -97,6 +97,22 @@
 
             </TextView>
 
+            <TextView
+                android:id="@+id/lblClassTeacher"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblClass"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/eight"
+                android:gravity="center"
+                android:text="Sathish"
+                android:textColor="@color/black"
+                android:layout_marginBottom="@dimen/ten"
+                android:fontFamily="@font/poppins_regular"
+                android:textSize="@dimen/thirteen_sp">
+
+            </TextView>
+
         </RelativeLayout>
 
         <RelativeLayout

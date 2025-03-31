@@ -435,6 +435,62 @@
                     </ImageView>
                 </LinearLayout>
 
+                <View
+                    android:id="@+id/isViewSignalCheck"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.1dp"
+                    android:layout_below="@+id/lnrSaveContact"
+                    android:layout_marginStart="@dimen/thirty"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_marginEnd="@dimen/thirty"
+                    android:background="@color/grey"/>
+
+
+                <LinearLayout
+                    android:id="@+id/lnrSignalCheck"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/isViewSignalCheck"
+                    android:layout_marginStart="@dimen/thirty"
+                    android:layout_marginTop="@dimen/twenty"
+                    android:layout_marginBottom="@dimen/fifteen"
+                    android:layout_marginEnd="@dimen/thirty"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <ImageView
+                        android:layout_width="@dimen/twenty_five"
+                        android:layout_height="@dimen/twenty_five"
+                        android:layout_weight="0.1"
+                        android:src="@drawable/ic_contact">
+
+                    </ImageView>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/thirty"
+                        android:layout_weight="0.8"
+                        android:text="Check network speed"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/thirteen_sp"
+                        android:fontFamily="@font/poppins_bold"
+                        android:textStyle="bold">
+
+                    </TextView>
+
+                    <ImageView
+                        android:layout_width="@dimen/twenty_five_sp"
+                        android:layout_height="@dimen/twenty_five_sp"
+                        android:layout_weight="0.1"
+                        android:src="@drawable/arrow_right_gray">
+
+                    </ImageView>
+                </LinearLayout>
+
+
 
             </RelativeLayout>
 
