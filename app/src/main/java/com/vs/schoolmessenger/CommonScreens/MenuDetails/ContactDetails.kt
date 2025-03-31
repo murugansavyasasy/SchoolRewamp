@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.Dashboard.School
+package com.vs.schoolmessenger.CommonScreens.MenuDetails
 
 import com.google.gson.annotations.SerializedName
 

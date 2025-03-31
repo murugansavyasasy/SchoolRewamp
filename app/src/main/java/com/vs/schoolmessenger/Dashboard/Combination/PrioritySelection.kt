@@ -45,7 +45,7 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
 
         binding.btnGo.setOnClickListener {
             val intent = Intent(this, SchoolDashboard::class.java)
-            SharedPreference.putToken(this, userDetails!!.staff_details[0].access_token)
+//            SharedPreference.putChildDetails(this, userDetails!!)
             startActivity(intent)
         }
     }
@@ -97,7 +97,7 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
 
     override fun onItemClick(data: ChildDetails) {
         val intent = Intent(this, ParentDashboard::class.java)
-        SharedPreference.putToken(this, data.access_token)
+        SharedPreference.putChildDetails(this, data)
         startActivity(intent)
     }
 }

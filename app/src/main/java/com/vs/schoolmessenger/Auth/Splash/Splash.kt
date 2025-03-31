@@ -176,6 +176,7 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
                                         this@Splash,
                                         com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard::class.java
                                     )
+//                                    SharedPreference.putChildDetails(this,Constant.user_data!![0].user_details.child_details)
                                     startActivity(intent)
                                 }
                             }

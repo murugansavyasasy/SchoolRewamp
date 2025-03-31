@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.CommonScreens
+package com.vs.schoolmessenger.CommonScreens.SpecificStudentData
 
 interface SpecificStudentSelectClickListener {
     fun onItemClick(data: SpecificStudentData)

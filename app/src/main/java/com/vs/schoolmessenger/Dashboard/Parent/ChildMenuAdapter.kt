@@ -16,33 +16,20 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
-import com.vs.schoolmessenger.Dashboard.Model.AdItem
-import com.vs.schoolmessenger.Dashboard.Model.GridItem
+import com.vs.schoolmessenger.CommonScreens.Ads.AdItem
+import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuClickListener
+import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuDetail
 import com.vs.schoolmessenger.Parent.Assignment.Assignment
-import com.vs.schoolmessenger.Parent.Attendance.AttendanceReport
-import com.vs.schoolmessenger.Parent.CertificateRequest.CertificateRequest
-import com.vs.schoolmessenger.Parent.Communication.Communication
-import com.vs.schoolmessenger.Parent.EventsHolidays.Event
-import com.vs.schoolmessenger.Parent.ExamTest.ExamTest
-import com.vs.schoolmessenger.Parent.FeeDetails.FeeDetails
 import com.vs.schoolmessenger.Parent.Homework.HomeWork
-import com.vs.schoolmessenger.Parent.ImagesOrPdf.ImageOrPdf
-import com.vs.schoolmessenger.Parent.InteractionWithStaff.InteractionWithStaff
-import com.vs.schoolmessenger.Parent.LSRW.LSRW
-import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoard
-import com.vs.schoolmessenger.Parent.OnlineMeeting.OnlineMeeting
-import com.vs.schoolmessenger.Parent.PTM.PTM
-import com.vs.schoolmessenger.Parent.QuizExam.Quiz
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequest
-import com.vs.schoolmessenger.Parent.Timetable.TimeTable
-import com.vs.schoolmessenger.Parent.Video.ParentVideo
 import com.vs.schoolmessenger.R
 import java.util.Timer
 import java.util.TimerTask
 
 class ChildMenuAdapter(
     private var context: Context,
-    private var itemList: ArrayList<GridItem>?,
+    private var listener: MenuClickListener,
+    private var isMenuDetails: List<MenuDetail>?,
     private val specialImages: List<AdItem>? = null,
     private val isLoading: Boolean
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -87,12 +74,15 @@ class ChildMenuAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is DataViewHolder -> {
-                holder.bind(itemList!!, position)
+                // holder.bind(isMenuDetails!!, position)
+                isMenuDetails?.get(position)?.let { menuDetail ->
+                    holder.bind(menuDetail, position, listener)
+                }
             }
 
             is AdViewHolder -> {
                 if (position == 6) {
-                    holder.bind(specialImages!!, context)
+//                    holder.bind(specialImages!!, context)
                 } else {
                     holder.bind(emptyList(), context)
                 }
@@ -102,119 +92,121 @@ class ChildMenuAdapter(
 
     override fun getItemCount(): Int {
         return if (isLoading) 20
-        else itemList!!.size
+        else isMenuDetails!!.size
     }
 
-    class DataViewHolder(itemView: View, private val context: Context) :
+    class DataViewHolder(
+        itemView: View,
+        private val context: Context
+    ) :
         RecyclerView.ViewHolder(itemView) {
         private val imgMenu: ImageView = itemView.findViewById(R.id.imgMenu)
         private val lblMenuName: TextView = itemView.findViewById(R.id.lblMenuName)
         private val rlaMenu: RelativeLayout = itemView.findViewById(R.id.rlaMenu)
 
-        fun bind(data: ArrayList<GridItem>, position: Int) {
-            imgMenu.setImageResource(data[position].image)
-            lblMenuName.text = data[position].title
-            rlaMenu.setOnClickListener {
-                when (data[position].title) {
-                    "Video" -> context.startActivity(Intent(context, ParentVideo::class.java))
-                    "Communication" -> context.startActivity(
-                        Intent(
-                            context,
-                            Communication::class.java
-                        )
-                    )
+        fun bind(data: MenuDetail, position: Int, listener: MenuClickListener) {
+            lblMenuName.text = data.name
 
-                    "Image/Pdf" -> context.startActivity(Intent(context, ImageOrPdf::class.java))
-                    "Homework" -> context.startActivity(Intent(context, HomeWork::class.java))
-                    "Schedule Exam/Test" -> context.startActivity(
-                        Intent(
-                            context,
-                            ExamTest::class.java
-                        )
-                    )
+            when (data.id) {
 
-                    "Event / Holidays" -> context.startActivity(Intent(context, Event::class.java))
-                    "Notice Board" -> context.startActivity(
-                        Intent(
-                            context,
-                            NoticeBoard::class.java
-                        )
-                    )
-
-                    "Attendance Report" -> context.startActivity(
-                        Intent(
-                            context,
-                            AttendanceReport::class.java
-                        )
-                    )
-
-                    "Assignment" -> context.startActivity(Intent(context, Assignment::class.java))
-                    "Certificate Request" -> context.startActivity(
-                        Intent(
-                            context,
-                            CertificateRequest::class.java
-                        )
-                    )
-
-                    "Exam Marks" -> context.startActivity(Intent(context, ExamMark::class.java))
-                    "Fee Details" -> context.startActivity(Intent(context, FeeDetails::class.java))
-                    "Online Meeting" -> context.startActivity(
-                        Intent(
-                            context,
-                            OnlineMeeting::class.java
-                        )
-                    )
-
-                    "PTM" -> context.startActivity(Intent(context, PTM::class.java))
-                    "Quiz" -> context.startActivity(Intent(context, Quiz::class.java))
-                    "Leave Requests" -> context.startActivity(
-                        Intent(
-                            context,
-                            LeaveRequest::class.java
-                        )
-                    )
-
-                    "Class Timetable" -> context.startActivity(
-                        Intent(
-                            context,
-                            TimeTable::class.java
-                        )
-                    )
-
-
-
-                    "Interaction with student" -> context.startActivity(
-                        Intent(
-                            context,
-                            InteractionWithStaff::class.java
-                        )
-                    )
-
-                    "LSRW" -> context.startActivity(Intent(context, LSRW::class.java))
+                0 -> {
+                    imgMenu.setImageResource(R.drawable.communication_icon_dashboard)
                 }
+
+                3 -> {
+                    imgMenu.setImageResource(R.drawable.home_work_icon_school)
+                }
+
+                5 -> {
+                    imgMenu.setImageResource(R.drawable.exam_icon)
+                }
+
+                24 -> {
+                    //imgMenu.setImageResource(R.drawable.assignment_icon_school)
+                }
+
+                7 -> {
+                    imgMenu.setImageResource(R.drawable.noticeboard_icon)
+                }
+
+                8 -> {
+                    imgMenu.setImageResource(R.drawable.event_icon_school)
+                }
+
+                9 -> {
+                    imgMenu.setImageResource(R.drawable.attendance_report_icon)
+                }
+
+                10 -> {
+                    imgMenu.setImageResource(R.drawable.leave_request_icon_school)
+                }
+
+                11 -> {
+                    imgMenu.setImageResource(R.drawable.fee_details)
+                }
+
+                14 -> {
+                    //    imgMenu.setImageResource(R.drawable.interact_with_student)
+                }
+
+                15 -> {
+                    // imgMenu.setImageResource(R.drawable.event_icon_school)
+                }
+
+                18 -> {
+                    imgMenu.setImageResource(R.drawable.assignment_icon_school)
+                }
+
+                19 -> {
+//                    imgMenu.setImageResource(R.drawable.event_icon_school)
+                }
+
+                20 -> {
+                    imgMenu.setImageResource(R.drawable.online_meeting_icon)
+                }
+
+                21 -> {
+                    imgMenu.setImageResource(R.drawable.quiz_icon)
+                }
+
+                22 -> {
+                    imgMenu.setImageResource(R.drawable.lsrw_icon)
+                }
+
+                23 -> {
+                    imgMenu.setImageResource(R.drawable.timetable_icon)
+                }
+
+                25 -> {
+//                    imgMenu.setImageResource(R.drawable.)
+                }
+            }
+
+            rlaMenu.setOnClickListener {
+                listener.onClick(data)
             }
         }
     }
 
-    fun toggleMoreItems(lblSeeMore: TextView,rlaMenuExample:LinearLayout) {
-        if (isSeeMore) {
-            lblSeeMore.text = context.getString(R.string.SeeAll)
-            rlaMenuExample.visibility = View.VISIBLE
-            val startPosition = itemList!!.size - seeMoreMenus
-            itemList!!.subList(startPosition, itemList!!.size).clear()
-            notifyItemRangeRemoved(startPosition, seeMoreMenus)
-            seeMoreMenus = 0
-        } else {
-            rlaMenuExample.visibility=View.GONE
-            lblSeeMore.text =context.getString(R.string.SeeLess)
-            val moreItems = getMoreItems()
-            seeMoreMenus = moreItems.size
-            val startPosition = itemList!!.size
-            itemList!!.addAll(moreItems)
-            notifyItemRangeInserted(startPosition, seeMoreMenus)
-        }
-        isSeeMore = !isSeeMore
-    }
+//    fun toggleMoreItems(lblSeeMore: TextView,rlaMenuExample:LinearLayout) {
+//        if (isSeeMore) {
+//            lblSeeMore.text = context.getString(R.string.SeeAll)
+//            rlaMenuExample.visibility = View.VISIBLE
+//            val startPosition = itemList!!.size - seeMoreMenus
+//            itemList!!.subList(startPosition, itemList!!.size).clear()
+//            notifyItemRangeRemoved(startPosition, seeMoreMenus)
+//            seeMoreMenus = 0
+//        } else {
+//            rlaMenuExample.visibility=View.GONE
+//            lblSeeMore.text =context.getString(R.string.SeeLess)
+//            val moreItems = getMoreItems()
+//            seeMoreMenus = moreItems.size
+//            val startPosition = itemList!!.size
+//            itemList!!.addAll(moreItems)
+//            notifyItemRangeInserted(startPosition, seeMoreMenus)
+//        }
+//        isSeeMore = !isSeeMore
+//    }
 
     class AdViewHolder(itemView: View, private val adapter: ChildMenuAdapter) :
         RecyclerView.ViewHolder(itemView) {
@@ -241,9 +233,9 @@ class ChildMenuAdapter(
             recyclerView.layoutManager = layoutManager
             recyclerView.adapter = AdImageAdapter(images)
             rlaMenuExample.visibility = View.VISIBLE
-            lblSeeMore.setOnClickListener {
-                adapter.toggleMoreItems(lblSeeMore, rlaMenuExample)
-            }
+//            lblSeeMore.setOnClickListener {
+//                adapter.toggleMoreItems(lblSeeMore, rlaMenuExample)
+//            }
 
             lnrAssignment.setOnClickListener {
                 context.startActivity(Intent(context, Assignment::class.java))
@@ -353,24 +345,24 @@ class ChildMenuAdapter(
         }
     }
 
-    private fun getMoreItems(): ArrayList<GridItem> {
-        return arrayListOf(
-
-            GridItem(R.drawable.timetable_icon, "Class Timetable"),
-            GridItem(R.drawable.noticeboard_icon, "Notice Board"),
-            GridItem(R.drawable.attendance_report_icon, "Attendance Report"),
-            GridItem(R.drawable.fee_details, "Fee Details"),
-            GridItem(R.drawable.leave_request_icon, "Leave Requests"),
-            GridItem(R.drawable.assignment_icon, "Assignment"),
-            GridItem(R.drawable.chat_icon, "Interaction with student"),
-            GridItem(R.drawable.online_meeting_icon, "Online Meeting"),
-            GridItem(R.drawable.ptm_icon, "PTM"),
-            GridItem(R.drawable.lsrw_icon, "LSRW"),
-            GridItem(R.drawable.quiz_icon, "Quiz"),
-            GridItem(R.drawable.exam_mark_icon, "Exam Marks"),
-            GridItem(R.drawable.exam_mark_icon, "Certificate Request"),
-        )
-    }
+//    private fun getMoreItems(): ArrayList<GridItem> {
+//        return arrayListOf(
+//
+//            GridItem(R.drawable.timetable_icon, "Class Timetable"),
+//            GridItem(R.drawable.noticeboard_icon, "Notice Board"),
+//            GridItem(R.drawable.attendance_report_icon, "Attendance Report"),
+//            GridItem(R.drawable.fee_details, "Fee Details"),
+//            GridItem(R.drawable.leave_request_icon, "Leave Requests"),
+//            GridItem(R.drawable.assignment_icon, "Assignment"),
+//            GridItem(R.drawable.chat_icon, "Interaction with student"),
+//            GridItem(R.drawable.online_meeting_icon, "Online Meeting"),
+//            GridItem(R.drawable.ptm_icon, "PTM"),
+//            GridItem(R.drawable.lsrw_icon, "LSRW"),
+//            GridItem(R.drawable.quiz_icon, "Quiz"),
+//            GridItem(R.drawable.exam_mark_icon, "Exam Marks"),
+//            GridItem(R.drawable.exam_mark_icon, "Certificate Request"),
+//        )
+//    }
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val shimmerLayout: ShimmerFrameLayout =

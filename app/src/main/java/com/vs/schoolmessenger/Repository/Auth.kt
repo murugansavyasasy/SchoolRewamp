@@ -15,7 +15,7 @@ import com.vs.schoolmessenger.Auth.OTP.ForgetOtpSendResponse
 import com.vs.schoolmessenger.Auth.OTP.OtpResponse
 import com.vs.schoolmessenger.Auth.Splash.VersionCheckResponse
 import com.vs.schoolmessenger.CommonScreens.DeviceToken
-import com.vs.schoolmessenger.Dashboard.School.DashboardResponse
+import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
 
 class Auth(application: Application) : AndroidViewModel(application) {
 

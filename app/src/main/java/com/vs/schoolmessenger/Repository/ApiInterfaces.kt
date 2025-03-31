@@ -13,8 +13,9 @@ import com.vs.schoolmessenger.Auth.OTP.ForgetOtpData
 import com.vs.schoolmessenger.Auth.OTP.ForgetOtpSendResponse
 import com.vs.schoolmessenger.Auth.OTP.OtpResponse
 import com.vs.schoolmessenger.Auth.Splash.VersionCheckResponse
+import com.vs.schoolmessenger.CommonScreens.Ads.AdsResponse
 import com.vs.schoolmessenger.CommonScreens.DeviceToken
-import com.vs.schoolmessenger.Dashboard.School.DashboardResponse
+import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -81,6 +82,13 @@ interface ApiInterfaces {
         @Header("Authorization") token: String,  // Pass token as a header
         @Query("member_type") isMemberType: String  // Pass isMemberType as a query parameter
     ): Call<DashboardResponse?>
+
+    @GET(APIMethods.isGetAds)
+    fun isGetAds(
+        @Header("Authorization") token: String,  // Pass token as a header
+        @Query("menu_id") isMenuId: String  // Pass isMemberType as a query parameter
+    ): Call<AdsResponse?>
+
 
 
 }

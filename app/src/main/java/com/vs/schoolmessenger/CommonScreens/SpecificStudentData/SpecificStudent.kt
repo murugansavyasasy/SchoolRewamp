@@ -1,6 +1,5 @@
-package com.vs.schoolmessenger.CommonScreens
+package com.vs.schoolmessenger.CommonScreens.SpecificStudentData
 
-import android.content.Intent
 import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager

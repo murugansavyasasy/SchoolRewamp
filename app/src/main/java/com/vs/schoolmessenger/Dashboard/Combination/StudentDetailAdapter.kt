@@ -114,35 +114,32 @@ class StudentDetailAdapter(
         holder.binding.lblSchoolPlace.text = item.school_city
 
 
-        Glide.with(context).load(item.school_logo_url).listener(object : RequestListener<Drawable> {
-            override fun onLoadFailed(
-                e: GlideException?,
-                model: Any?,
-                target: com.bumptech.glide.request.target.Target<Drawable?>,
-                isFirstResource: Boolean
-            ): Boolean {
-                Log.d("isImageLoadingSuccess", "isImageLoadingFailed")
-                isLoadImage = false
-                return false
-            }
+        Glide.with(context)
+            .load(item.school_logo_url)
+            .placeholder(R.drawable.user_icon) // Temporary image while loading
+            .listener(object : RequestListener<Drawable> {
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any?,
+                    target: com.bumptech.glide.request.target.Target<Drawable?>,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    // Log the error if needed
+                    Log.e("GlideError", "Image load failed", e)
+                    return false
+                }
 
-            override fun onResourceReady(
-                resource: Drawable,
-                model: Any,
-                target: com.bumptech.glide.request.target.Target<Drawable?>?,
-                dataSource: DataSource,
-                isFirstResource: Boolean
-            ): Boolean {
-                isLoadImage = true
-                Log.d("isImageLoadingSuccess", "isImageLoadingSuccess")
-                return false
-            }
-        }).into(holder.binding.imgStudentProfile)
-
-        if (isLoadImage) {
-            Glide.with(context).load(R.drawable.user_icon)
-                .into(holder.binding.imgStudentProfile)
-        }
+                override fun onResourceReady(
+                    resource: Drawable,
+                    model: Any,
+                    target: com.bumptech.glide.request.target.Target<Drawable?>?,
+                    dataSource: DataSource,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    return false
+                }
+            })
+            .into(holder.binding.imgSchool)
     }
 
     override fun getItemCount(): Int = itemList!!.size

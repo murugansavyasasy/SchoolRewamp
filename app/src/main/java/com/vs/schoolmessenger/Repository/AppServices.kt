@@ -4,7 +4,8 @@ import android.app.Activity
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.vs.schoolmessenger.Dashboard.School.DashboardResponse
+import com.vs.schoolmessenger.CommonScreens.Ads.AdsResponse
+import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -13,10 +14,12 @@ class AppServices {
 
     var client_auth: RestClient
     var isDashBoard: MutableLiveData<DashboardResponse?>
+    var isGetAds: MutableLiveData<AdsResponse?>
 
     init {
         client_auth = RestClient()
         isDashBoard = MutableLiveData()
+        isGetAds = MutableLiveData()
     }
 
 
@@ -53,4 +56,41 @@ class AppServices {
 
     val isDashBoardLiveData: LiveData<DashboardResponse?>
         get() = isDashBoard
+
+
+    fun isGetAds(isToken:String,isMenuId: String,activity: Activity) {
+        RestClient.apiInterfaces.isGetAds(isToken,isMenuId)
+            ?.enqueue(object : Callback<AdsResponse?> {
+                override fun onResponse(
+                    call: Call<AdsResponse?>,
+                    response: Response<AdsResponse?>
+                ) {
+                    Log.d(
+                        "isGetCountryList",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isGetAds.postValue(response.body())
+                            } else {
+                                isGetAds.postValue(response.body())
+                            }
+                        }
+                    } else {
+                    }
+                }
+
+                override fun onFailure(call: Call<AdsResponse?>, t: Throwable) {
+                    isGetAds.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isGetAdsLiveData: LiveData<AdsResponse?>
+        get() = isGetAds
+
+
 }
