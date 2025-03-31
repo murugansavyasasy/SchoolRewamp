@@ -425,6 +425,8 @@ class SchoolMenuAdapter(
         )
     }
 
+
+
     private fun getMenu(): ArrayList<GridItem> {
         return arrayListOf(
             GridItem(R.drawable.interact_with_student, "Interaction With Student"),
