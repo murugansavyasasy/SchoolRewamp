@@ -187,7 +187,8 @@
 
             android:name=".Dashboard.Parent.ParentDashboard"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
+        </activity>
 
         <activity
             android:name=".School.Assignment.Assignment"
@@ -282,12 +283,14 @@
         <activity
             android:name=".School.ImagePDF.ImagePdf"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
+        </activity>
 
         <activity
             android:name=".Dashboard.Settings.ReportTheBug.ReportTheBug"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
+        </activity>
 
 
         <activity
@@ -397,7 +400,8 @@
         <activity
             android:name=".CommonScreens.SchoolList"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
+        </activity>
 
         <activity
             android:name=".Parent.RequestLeave.LeaveRequest"
@@ -460,27 +464,32 @@
         <activity
             android:name=".Parent.InteractionWithStaff.InteractionWithStaff"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
+        </activity>
 
         <activity
             android:name=".Parent.LSRW.LSRW"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
+        </activity>
 
         <activity
             android:name=".Parent.EventsHolidays.Event"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
+        </activity>
 
         <activity
             android:name=".Parent.OnlineMeeting.OnlineMeeting"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
+        </activity>
 
         <activity
             android:name=".Parent.PTM.PTM"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
+        </activity>
 
         <!--        <activity-->
         <!--            android:name=".Parent.QuizExam.Quiz"-->

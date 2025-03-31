@@ -155,6 +155,7 @@ class AuthServices {
                         Constant.errorAlert(activity, "", errorModel.message)
                     }
 
+
                 }
 
                 override fun onFailure(call: Call<UserValidationResponse?>, t: Throwable) {

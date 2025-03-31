@@ -496,6 +496,25 @@ class SchoolMenuAdapter(
 //                timer?.schedule(timerTask, 3000, 3000)
 //            }
 //        }
+//        private fun runAutoScrollBanner(images: List<AdItem>) {
+//            if (timer == null && timerTask == null) {
+//                timer = Timer()
+//                timerTask = object : TimerTask() {
+//                    override fun run() {
+//                        handler.post {
+//                            position++
+//                            if (isFirstTime) {
+//                                isFirstTime = false
+//                                recyclerView.smoothScrollToPosition(position % images.size + 1) // Loop within the list size
+//                            } else {
+//                                recyclerView.smoothScrollToPosition(position % images.size) // Loop within the list size
+//                            }
+//                        }
+//                    }
+//                }
+//                timer?.schedule(timerTask, 3000, 3000)
+//            }
+//        }
     }
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
