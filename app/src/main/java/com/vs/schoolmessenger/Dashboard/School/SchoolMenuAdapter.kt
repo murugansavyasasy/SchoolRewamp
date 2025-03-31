@@ -6,7 +6,6 @@ import android.content.Intent
 import android.os.Handler
 import android.os.Looper
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -15,15 +14,12 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.CommonScreens.SchoolList
 import com.vs.schoolmessenger.Dashboard.Model.AdItem
-import com.vs.schoolmessenger.Dashboard.Model.GridItem
 import com.vs.schoolmessenger.Dashboard.Parent.AdImageAdapter
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.AbsenteesMarking.AttendanceMark
 import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesReport
-import com.vs.schoolmessenger.School.Assignment.Assignment
 import com.vs.schoolmessenger.School.Communication.CommunicationSchool
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollection
 import com.vs.schoolmessenger.School.Event.CreateEvent
@@ -38,8 +34,6 @@ import com.vs.schoolmessenger.School.LessonPlan.LessonPlan
 import com.vs.schoolmessenger.School.MarkYourAttendance.MarkYourAttendance
 import com.vs.schoolmessenger.School.MessageFromManagement.MessageFromManagement
 import com.vs.schoolmessenger.School.NoticeBoard.CreateNoticeBoard
-import com.vs.schoolmessenger.School.NoticeBoard.SchoolNoticeBoardAdapter
-import com.vs.schoolmessenger.School.NoticeBoard.SchoolNoticeBoardAdapter.ShimmerViewHolder
 import com.vs.schoolmessenger.School.OnlineMeeting.OnlineMeeting
 import com.vs.schoolmessenger.School.PTM.PTM
 import com.vs.schoolmessenger.School.SchoolNeeds.SchoolNeeds

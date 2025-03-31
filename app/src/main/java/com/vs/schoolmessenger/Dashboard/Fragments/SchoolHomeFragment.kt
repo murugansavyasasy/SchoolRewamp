@@ -14,12 +14,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
-import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
-import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserValidationData
-import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.Dashboard.Model.AdItem
-import com.vs.schoolmessenger.Dashboard.Model.GridItem
 import com.vs.schoolmessenger.Dashboard.School.ContactDetails
 import com.vs.schoolmessenger.Dashboard.School.DashboardData
 import com.vs.schoolmessenger.Dashboard.School.MenuDetail
@@ -27,14 +23,9 @@ import com.vs.schoolmessenger.Dashboard.School.SchoolMenuAdapter
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.Notification
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
-import com.vs.schoolmessenger.Repository.Auth
-import com.vs.schoolmessenger.Repository.RequestKeys
-import com.vs.schoolmessenger.Repository.RestClient
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SchoolHomeFragmentBinding
-import java.util.Locale
-
 
 class SchoolHomeFragment : Fragment(), View.OnClickListener {
 
