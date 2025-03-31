@@ -99,7 +99,7 @@ class StaffDetailAdapter(private val itemList: List<StaffDetails>?, val context:
                     target: com.bumptech.glide.request.target.Target<Drawable?>,
                     isFirstResource: Boolean
                 ): Boolean {
-                    TODO("Not yet implemented")
+                    return false
                 }
 
                 override fun onResourceReady(

@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit
 
 class RestClient : OkHttpClient() {
     companion object {
-        private var BASE_URL = "http://apiv7.schoolchimes.net/app/"
+        private var BASE_URL = "http://apiv7.schoolchimes.net/"
         lateinit var apiInterfaces: ApiInterfaces
         private var retrofit: Retrofit? = null
         val client: Retrofit?

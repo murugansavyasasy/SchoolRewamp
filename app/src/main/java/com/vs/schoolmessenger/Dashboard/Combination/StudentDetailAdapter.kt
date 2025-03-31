@@ -13,11 +13,17 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
+import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
 import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
+import com.vs.schoolmessenger.Parent.Assignment.AssignmentClickListener
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.StudentDetailsListItemBinding
 
-class StudentDetailAdapter(private val itemList: List<ChildDetails>?, val context: Context) :
+class StudentDetailAdapter(
+    private val itemList: List<ChildDetails>?, private var listener: PriorityClickListener,
+    val context: Context
+) :
     RecyclerView.Adapter<StudentDetailAdapter.GridViewHolder>() {
 
     var isLoadImage = true
@@ -95,9 +101,9 @@ class StudentDetailAdapter(private val itemList: List<ChildDetails>?, val contex
             }
         }
 
+        // Click Listener
         holder.binding.rlaStudent.setOnClickListener {
-            val intent = Intent(context, SchoolDashboard::class.java)
-            context.startActivity(intent)
+            listener.onItemClick(item)
         }
 
         holder.binding.lblRegisterNumber.text = "Register No : " + item.roll_number

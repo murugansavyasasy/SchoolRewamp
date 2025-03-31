@@ -16,6 +16,7 @@
         android:layout_below="@+id/toolbarLayout"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginTop="@dimen/ten"
+        android:visibility="gone"
         android:layout_marginEnd="@dimen/ten"
         android:orientation="horizontal"
         android:weightSum="2">
@@ -54,7 +55,6 @@
                 android:textStyle="bold">
 
             </TextView>
-
         </RelativeLayout>
 
         <RelativeLayout

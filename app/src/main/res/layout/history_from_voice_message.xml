@@ -3,183 +3,321 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <ImageView
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="-22dp"
-        android:layout_marginEnd="@dimen/twenty_five"
-        android:elevation="10dp"
-        android:src="@drawable/new_icon">
-
-    </ImageView>
-
     <RelativeLayout
+        android:id="@+id/rlaVoice"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/twenty"
-        android:layout_marginTop="@dimen/five"
-        android:layout_marginEnd="@dimen/twenty"
-        android:background="@drawable/rect_shadow_white">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/lblTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/ten"
-            android:layout_marginEnd="@dimen/ten"
-            android:text="Function Call"
-            android:textStyle="bold"
-            android:fontFamily="@font/poppins_bold"
-            android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp">
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="-22dp"
+            android:layout_marginEnd="@dimen/twenty_five"
+            android:elevation="10dp"
+            android:src="@drawable/new_icon">
 
-        </TextView>
-
+        </ImageView>
 
         <RelativeLayout
-            android:id="@+id/rlaVoiceHistory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lblTitle"
             android:layout_marginStart="@dimen/twenty"
             android:layout_marginTop="@dimen/five"
-            android:layout_marginEnd="@dimen/twenty">
+            android:layout_marginEnd="@dimen/twenty"
+            android:background="@drawable/rect_shadow_white">
 
-            <ImageView
-                android:id="@+id/imgVoicePlay"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginTop="7dp"
-                android:src="@drawable/video_play">
-
-            </ImageView>
-
-            <com.vs.schoolmessenger.Utils.WaveformSeekBar
-                android:id="@+id/waveformSeekBar"
+            <TextView
+                android:id="@+id/lblTitle"
                 android:layout_width="match_parent"
-                android:layout_height="25dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/ten"
-                android:layout_marginTop="@dimen/seven"
+                android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/ten"
-                android:layout_toEndOf="@+id/imgVoicePlay" />
-
-            <TextView
-                android:id="@+id/lblStartDuration"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/imgVoicePlay"
-                android:layout_marginStart="@dimen/ten"
-                android:layout_toEndOf="@+id/imgVoicePlay"
-                android:text="00:00"
+                android:fontFamily="@font/poppins_bold"
+                android:text="Function Call"
                 android:textColor="@color/black"
-                android:fontFamily="@font/poppins_medium"
-                android:textStyle="bold"
-                android:textSize="@dimen/thirteen_sp">
-
-            </TextView>
-
-            <TextView
-                android:id="@+id/lblSlash"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/imgVoicePlay"
-                android:layout_marginStart="1dp"
-                android:layout_toEndOf="@+id/lblStartDuration"
-                android:text="/"
-                android:textStyle="normal"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp">
+                android:textSize="@dimen/thirteen_sp"
+                android:textStyle="bold">
 
             </TextView>
 
 
-            <TextView
-                android:id="@+id/lblEndDuration"
+            <RelativeLayout
+                android:id="@+id/rlaVoiceHistory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblTitle"
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginTop="@dimen/five"
+                android:layout_marginEnd="@dimen/twenty">
+
+                <ImageView
+                    android:id="@+id/imgVoicePlay"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="7dp"
+                    android:src="@drawable/video_play">
+
+                </ImageView>
+
+                <com.vs.schoolmessenger.Utils.WaveformSeekBar
+                    android:id="@+id/waveformSeekBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="@dimen/ten"
+                    android:layout_marginTop="@dimen/seven"
+                    android:layout_marginEnd="@dimen/ten"
+                    android:layout_toEndOf="@+id/imgVoicePlay" />
+
+                <TextView
+                    android:id="@+id/lblStartDuration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imgVoicePlay"
+                    android:layout_marginStart="@dimen/ten"
+                    android:layout_toEndOf="@+id/imgVoicePlay"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="00:00"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:textStyle="bold">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/lblSlash"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imgVoicePlay"
+                    android:layout_marginStart="1dp"
+                    android:layout_toEndOf="@+id/lblStartDuration"
+                    android:text="/"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:textStyle="normal">
+
+                </TextView>
+
+
+                <TextView
+                    android:id="@+id/lblEndDuration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imgVoicePlay"
+                    android:layout_toEndOf="@+id/lblSlash"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="00:00"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:textStyle="bold">
+
+                </TextView>
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relative_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/imgVoicePlay"
-                android:layout_toEndOf="@+id/lblSlash"
-                android:text="00:00"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:fontFamily="@font/poppins_medium"
-                android:textSize="@dimen/thirteen_sp">
+                android:layout_below="@+id/rlaVoiceHistory">
 
-            </TextView>
+                <TextView
+                    android:id="@+id/lblTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="16dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="10:56 AM"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:textStyle="bold"></TextView>
 
+                <TextView
+                    android:id="@+id/lblDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_toStartOf="@id/lblTime"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="01 Apr 2024"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:textStyle="bold"></TextView>
+            </RelativeLayout>
 
+            <RelativeLayout
+                android:id="@+id/rlaSendVoice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relative_layout"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/eight"
+                android:layout_marginEnd="@dimen/ten"
+                android:layout_marginBottom="@dimen/eight"
+                android:background="@drawable/rect_blue_and_green_small_radious"
+                android:padding="@dimen/ten">
 
+                <ImageView
+                    android:id="@+id/imgSend"
+                    android:layout_width="@dimen/fifteen"
+                    android:layout_height="@dimen/fifteen"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/five"
+                    android:src="@drawable/send_icon_white"></ImageView>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="@dimen/five"
+                    android:layout_toEndOf="@+id/imgSend"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Send"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:textStyle="bold"></TextView>
+            </RelativeLayout>
         </RelativeLayout>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rlaText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="-19dp"
+            android:layout_marginEnd="@dimen/twenty_five"
+            android:elevation="10dp"
+            android:src="@drawable/new_icon">
+
+        </ImageView>
 
         <RelativeLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/rlaVoiceHistory"
-            android:id="@+id/relative_layout">
+            android:layout_marginStart="@dimen/twenty"
+            android:layout_marginTop="@dimen/five"
+            android:layout_marginEnd="@dimen/twenty"
+            android:background="@drawable/rect_shadow_white">
 
             <TextView
-                android:id="@+id/lblTime"
+                android:id="@+id/lblTitleText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/fifteen"
+                android:layout_marginEnd="@dimen/ten"
+                android:fontFamily="@font/poppins_medium"
+                android:text="Friday Leave"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"
+                android:textStyle="bold"></TextView>
+
+
+            <TextView
+                android:id="@+id/lblContentText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblTitleText"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/fifteen"
+                android:layout_marginEnd="@dimen/ten"
+                android:fontFamily="@font/poppins_regular"
+                android:maxLines="3"
+                android:text="Dear (Recipient's Name), I am writing to request leave from school for (number of days) days, starting from (start date) to (end date). The reason for my leave is (briefly state the reason, e.g., a family function, medical treatment, personal reasons)."
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"
+                android:textStyle="bold"></TextView>
+
+            <TextView
+                android:id="@+id/lblSeeMore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblContentText"
+                android:layout_marginStart="@dimen/ten"
+                android:text="See More"
+                android:textColor="@color/navi_blue2"
+                android:textSize="@dimen/thirteen_sp"
+                android:textStyle="bold">
+
+            </TextView>
+
+
+            <TextView
+                android:id="@+id/lblTimeText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/ten"
                 android:text="10:56 AM"
                 android:textColor="@color/black"
-                android:textSize="12sp"
-                android:fontFamily="@font/poppins_medium"
-                android:textStyle="bold"
-                android:layout_marginEnd="16dp">
-            </TextView>
-
-            <TextView
-                android:id="@+id/lblDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toStartOf="@id/lblTime"
-                android:text="01 Apr 2024"
-                android:textColor="@color/black"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:fontFamily="@font/poppins_medium"
-                android:layout_marginEnd="8dp">
-            </TextView>
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rlaSendVoice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/relative_layout"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="@dimen/eight"
-            android:layout_marginEnd="@dimen/ten"
-            android:layout_marginBottom="@dimen/eight"
-            android:background="@drawable/rect_blue_and_green_small_radious"
-            android:padding="@dimen/ten">
-
-            <ImageView
-                android:id="@+id/imgSend"
-                android:layout_width="@dimen/fifteen"
-                android:layout_height="@dimen/fifteen"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="@dimen/five"
-                android:src="@drawable/send_icon_white">
-            </ImageView>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_marginStart="@dimen/five"
-                android:layout_toEndOf="@+id/imgSend"
-                android:text="Send"
-                android:textColor="@color/white"
-                android:fontFamily="@font/poppins_medium"
                 android:textSize="@dimen/thirteen_sp"
-                android:textStyle="bold">
+                android:visibility="gone">
+
             </TextView>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblSeeMore"
+                android:padding="@dimen/ten">
+
+                <TextView
+                    android:id="@+id/lblDateText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="@dimen/five"
+                    android:layout_marginTop="@dimen/five"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="01 Apr 2024"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:textStyle="bold" />
+
+                <RelativeLayout
+                    android:id="@+id/rlaSelectText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:background="@drawable/rect_blue_and_green_small_radious"
+                    android:padding="@dimen/seven"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:id="@+id/imgSendText"
+                        android:layout_width="@dimen/fifteen"
+                        android:layout_height="@dimen/fifteen"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/five"
+                        android:src="@drawable/send_icon_white" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginStart="@dimen/five"
+                        android:layout_marginBottom="5dp"
+                        android:layout_toEndOf="@+id/imgSendText"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="Select"
+                        android:textColor="@color/white"
+                        android:textSize="15sp"
+                        android:textStyle="normal" />
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+
         </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>

@@ -6,6 +6,7 @@ import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
 import com.google.gson.Gson
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
+import androidx.core.content.edit
 
 object SharedPreference {
 
@@ -17,6 +18,7 @@ object SharedPreference {
     private const val SH_COUNTRY_ID = "isCountryId"
     private const val SH_USER_DETAILS = "UserDetails"
     private const val SH_LOGOUT = "isLogout"
+    private const val SH_TOKEN = "isToken"
 
     val masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
 
@@ -28,8 +30,8 @@ object SharedPreference {
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
-        sharedPreferences.edit().putString(SH_MOBILE_NUMBER, isMobileNumber).apply()
-        sharedPreferences.edit().putString(SH_PASSWORD, isPassWord).apply()
+        sharedPreferences.edit() { putString(SH_MOBILE_NUMBER, isMobileNumber) }
+        sharedPreferences.edit() { putString(SH_PASSWORD, isPassWord) }
     }
 
     fun getMobileNumber(activity: Context): String? {
@@ -64,7 +66,7 @@ object SharedPreference {
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
-        sharedPreferences.edit().putString(SH_COUNTRY_ID, isCountryId).apply()
+        sharedPreferences.edit() { putString(SH_COUNTRY_ID, isCountryId) }
     }
 
     fun getCountryId(activity: Context): String? {
@@ -87,7 +89,7 @@ object SharedPreference {
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
-        sharedPreferences.edit().putBoolean(SH_LOGOUT, isLogout!!).apply()
+        sharedPreferences.edit() { putBoolean(SH_LOGOUT, isLogout!!) }
     }
 
     fun getLogout(activity: Context): Boolean? {
@@ -111,7 +113,7 @@ object SharedPreference {
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
-        sharedPreferences.edit().putString(SH_AGREE, isAppLanguage).apply()
+        sharedPreferences.edit() { putString(SH_AGREE, isAppLanguage) }
     }
 
     fun getLanguage(activity: Context): String? {
@@ -136,7 +138,7 @@ object SharedPreference {
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
-        sharedPreferences.edit().putString(SH_USER_DETAILS, userJson).apply()
+        sharedPreferences.edit() { putString(SH_USER_DETAILS, userJson) }
     }
 
 
@@ -156,6 +158,29 @@ object SharedPreference {
             userDetails = gson.fromJson(userJson, UserDetails::class.java)
         }
         return userDetails;
+    }
+
+    fun putToken(activity: Activity, isToken: String?) {
+        val sharedPreferences = EncryptedSharedPreferences.create(
+            SH_PREF,
+            masterKeyAlias,
+            activity,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
+        sharedPreferences.edit() { putString(SH_TOKEN, isToken) }
+    }
+
+    fun getToken(activity: Context): String? {
+
+        val sharedPreferences = EncryptedSharedPreferences.create(
+            SH_PREF,
+            masterKeyAlias,
+            activity,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
+        return sharedPreferences.getString(SH_TOKEN, "")
     }
 
 }

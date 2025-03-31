@@ -75,6 +75,16 @@ class VoiceAdapter(
         private val rlaSendVoice: RelativeLayout = itemView.findViewById(R.id.rlaSendVoice)
 
 
+        private val lblTitleText: TextView = itemView.findViewById(R.id.lblTitleText)
+        private val lblDateText: TextView = itemView.findViewById(R.id.lblDateText)
+        private val lblContentText: TextView = itemView.findViewById(R.id.lblContentText)
+//        private val lblSeeMoreText: TextView = itemView.findViewById(R.id.lblSeeMoreText)
+        private val rlaSelectText: RelativeLayout = itemView.findViewById(R.id.rlaSelectText)
+        private val rlaText: RelativeLayout = itemView.findViewById(R.id.rlaText)
+        private val rlaVoice: RelativeLayout = itemView.findViewById(R.id.rlaVoice)
+
+
+
         private lateinit var mediaPlayer: MediaPlayer
         private var isPrepared = false
         private var isPlayingVoice = false
@@ -100,6 +110,22 @@ class VoiceAdapter(
             listener: VoiceClickListener,
             adapter: VoiceAdapter
         ) {
+
+            if (data.isType == "voice") {
+                rlaText.visibility = View.GONE
+                rlaVoice.visibility = View.VISIBLE
+            } else {
+                rlaText.visibility = View.VISIBLE
+                rlaVoice.visibility = View.GONE
+            }
+
+            rlaSelectText.visibility= View.GONE
+
+            lblTitleText.text = data.title
+            lblDateText.text = data.isDate
+            lblContentText.text = data.content
+
+
             lblTitle.text = data.title
             rlaSendVoice.visibility = View.GONE
             getAudioDuration(data.url) { duration ->

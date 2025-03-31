@@ -15,6 +15,7 @@ import com.vs.schoolmessenger.Auth.OTP.ForgetOtpSendResponse
 import com.vs.schoolmessenger.Auth.OTP.OtpResponse
 import com.vs.schoolmessenger.Auth.Splash.VersionCheckResponse
 import com.vs.schoolmessenger.CommonScreens.DeviceToken
+import com.vs.schoolmessenger.Dashboard.School.DashboardResponse
 
 class Auth(application: Application) : AndroidViewModel(application) {
 
@@ -49,6 +50,7 @@ class Auth(application: Application) : AndroidViewModel(application) {
 
     var isDeviceToken: LiveData<DeviceToken?>? = null
         private set
+
 
 
     fun init() {
@@ -117,6 +119,4 @@ class Auth(application: Application) : AndroidViewModel(application) {
     fun isDeviceToken(jsonObject: JsonObject, activity: Activity) {
         apiRepositories!!.isDeviceToken(jsonObject, activity)
     }
-
-
 }

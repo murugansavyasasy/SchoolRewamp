@@ -17,6 +17,7 @@ import com.vs.schoolmessenger.Auth.OTP.ForgetOtpSendResponse
 import com.vs.schoolmessenger.Auth.OTP.OtpResponse
 import com.vs.schoolmessenger.Auth.Splash.VersionCheckResponse
 import com.vs.schoolmessenger.CommonScreens.DeviceToken
+import com.vs.schoolmessenger.Dashboard.School.DashboardResponse
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import org.json.JSONObject
@@ -36,6 +37,7 @@ class AuthServices {
     var isPasswordReset: MutableLiveData<PasswordResetResponse?>
     var isCreatePassWord: MutableLiveData<PasswordResetResponse?>
     var isDeviceTokenUpdate: MutableLiveData<DeviceToken?>
+    var isDashBoard: MutableLiveData<DashboardResponse?>
 
     init {
         client_auth = RestClient()
@@ -49,6 +51,7 @@ class AuthServices {
         isPasswordReset = MutableLiveData()
         isCreatePassWord = MutableLiveData()
         isDeviceTokenUpdate = MutableLiveData()
+        isDashBoard = MutableLiveData()
     }
 
     fun isCountryList() {
@@ -71,8 +74,7 @@ class AuthServices {
                                 isCountryList.postValue(response.body())
                             }
                         }
-                    }
-                    else  {
+                    } else {
                     }
                 }
 
@@ -87,7 +89,7 @@ class AuthServices {
         get() = isCountryList
 
 
-    fun isVersionCheck(jsonObject: JsonObject,activity: Activity) {
+    fun isVersionCheck(jsonObject: JsonObject, activity: Activity) {
         RestClient.apiInterfaces.isVersionCheck(jsonObject)
             ?.enqueue(object : Callback<VersionCheckResponse?> {
                 override fun onResponse(
@@ -107,7 +109,7 @@ class AuthServices {
                                 isVersionCheck.postValue(response.body())
                             }
                         }
-                    } else  {
+                    } else {
                         val errorBodyString = response.errorBody()?.string()
                         val gson = Gson()
                         val errorModel = gson.fromJson(errorBodyString, ErrorResponse::class.java)
@@ -125,7 +127,7 @@ class AuthServices {
     val isVersionCheckLiveData: LiveData<VersionCheckResponse?>
         get() = isVersionCheck
 
-    fun isValidateUser(jsonObject: JsonObject,activity: Activity) {
+    fun isValidateUser(jsonObject: JsonObject, activity: Activity) {
         RestClient.apiInterfaces.isValidateUser(jsonObject)
             ?.enqueue(object : Callback<UserValidationResponse?> {
                 override fun onResponse(
@@ -150,13 +152,13 @@ class AuthServices {
                         val errorBodyString = response.errorBody()?.string()
                         val gson = Gson()
                         val errorModel = gson.fromJson(errorBodyString, ErrorResponse::class.java)
-                        Constant.errorAlert(activity,"",errorModel.message)
+                        Constant.errorAlert(activity, "", errorModel.message)
                     }
 
                 }
 
                 override fun onFailure(call: Call<UserValidationResponse?>, t: Throwable) {
-                    Log.d("isException",t.toString())
+                    Log.d("isException", t.toString())
                     isValidationUser.postValue(null)
                     t.printStackTrace()
                 }
@@ -167,7 +169,7 @@ class AuthServices {
         get() = isValidationUser
 
 
-    fun isValidateOtp(jsonObject: JsonObject,activity: Activity) {
+    fun isValidateOtp(jsonObject: JsonObject, activity: Activity) {
         RestClient.apiInterfaces.isValidateOtp(jsonObject)
             ?.enqueue(object : Callback<OtpResponse?> {
                 override fun onResponse(
@@ -187,7 +189,7 @@ class AuthServices {
                                 isOtpResponse.postValue(response.body())
                             }
                         }
-                    } else  {
+                    } else {
                         val errorBodyString = response.errorBody()?.string()
                         val gson = Gson()
                         val errorModel = gson.fromJson(errorBodyString, ErrorResponse::class.java)
@@ -205,7 +207,7 @@ class AuthServices {
     val isOtpResponseLiveData: LiveData<OtpResponse?>
         get() = isOtpResponse
 
-    fun isPasswordChange(jsonObject: JsonObject,activity: Activity) {
+    fun isPasswordChange(jsonObject: JsonObject, activity: Activity) {
         RestClient.apiInterfaces.isPasswordChange(jsonObject)
             ?.enqueue(object : Callback<PasswordCreationResponse?> {
                 override fun onResponse(
@@ -225,7 +227,7 @@ class AuthServices {
                                 isPasswordChange.postValue(response.body())
                             }
                         }
-                    } else  {
+                    } else {
 
                     }
                 }
@@ -240,7 +242,7 @@ class AuthServices {
     val isPasswordChangeLiveData: LiveData<PasswordCreationResponse?>
         get() = isPasswordChange
 
-    fun isForgetPassword(jsonObject: JsonObject,activity: Activity) {
+    fun isForgetPassword(jsonObject: JsonObject, activity: Activity) {
         RestClient.apiInterfaces.isForgetPassword(jsonObject)
             ?.enqueue(object : Callback<ForgetOtpSendResponse?> {
                 override fun onResponse(
@@ -260,7 +262,7 @@ class AuthServices {
                                 isForgetPassword.postValue(response.body())
                             }
                         }
-                    } else  {
+                    } else {
                         val errorBodyString = response.errorBody()?.string()
                         val gson = Gson()
                         val errorModel = gson.fromJson(errorBodyString, ErrorResponse::class.java)
@@ -278,7 +280,7 @@ class AuthServices {
     val isForgetPasswordLiveData: LiveData<ForgetOtpSendResponse?>
         get() = isForgetPassword
 
-    fun isResetPassword(jsonObject: JsonObject,activity: Activity) {
+    fun isResetPassword(jsonObject: JsonObject, activity: Activity) {
         RestClient.apiInterfaces.isResetPassword(jsonObject)
             ?.enqueue(object : Callback<PasswordResetResponse?> {
                 override fun onResponse(
@@ -298,7 +300,7 @@ class AuthServices {
                                 isPasswordReset.postValue(response.body())
                             }
                         }
-                    } else  {
+                    } else {
 
                     }
                 }
@@ -313,7 +315,7 @@ class AuthServices {
     val isPasswordResetLiveData: LiveData<PasswordResetResponse?>
         get() = isPasswordReset
 
-    fun isCreateNewPassword(jsonObject: JsonObject,activity: Activity) {
+    fun isCreateNewPassword(jsonObject: JsonObject, activity: Activity) {
         RestClient.apiInterfaces.isCreateNewPassword(jsonObject)
             ?.enqueue(object : Callback<PasswordResetResponse?> {
                 override fun onResponse(
@@ -333,7 +335,7 @@ class AuthServices {
                                 isCreatePassWord.postValue(response.body())
                             }
                         }
-                    } else  {
+                    } else {
 
                     }
                 }
@@ -349,7 +351,7 @@ class AuthServices {
         get() = isCreatePassWord
 
 
-    fun isDeviceToken(jsonObject: JsonObject,activity: Activity) {
+    fun isDeviceToken(jsonObject: JsonObject, activity: Activity) {
         RestClient.apiInterfaces.isDeviceToken(jsonObject)
             ?.enqueue(object : Callback<DeviceToken?> {
                 override fun onResponse(
@@ -369,7 +371,7 @@ class AuthServices {
                                 isDeviceTokenUpdate.postValue(response.body())
                             }
                         }
-                    } else  {
+                    } else {
 
                     }
                 }

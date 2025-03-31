@@ -11,15 +11,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserValidationData
 import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.Dashboard.Model.AdItem
 import com.vs.schoolmessenger.Dashboard.Model.GridItem
+import com.vs.schoolmessenger.Dashboard.School.ContactDetails
+import com.vs.schoolmessenger.Dashboard.School.DashboardData
+import com.vs.schoolmessenger.Dashboard.School.MenuDetail
 import com.vs.schoolmessenger.Dashboard.School.SchoolMenuAdapter
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.Notification
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.Repository.Auth
+import com.vs.schoolmessenger.Repository.RequestKeys
+import com.vs.schoolmessenger.Repository.RestClient
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SchoolHomeFragmentBinding
@@ -30,11 +40,18 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener {
 
     private lateinit var binding: SchoolHomeFragmentBinding // Automatically generated binding class
     lateinit var isMenuAdapter: SchoolMenuAdapter
-    private lateinit var items: ArrayList<GridItem>
-    private var isMenuItems: MutableList<GridItem> = mutableListOf()
+
+    //    private lateinit var items: ArrayList<GridItem>
+//    private var isMenuItems: MutableList<GridItem> = mutableListOf()
     private var isSearchVisible = false
-    private lateinit var aditems: List<AdItem>
+    private var appViewModel: App? = null
+
+
+        private lateinit var aditems: List<AdItem>
     var userDetails: UserDetails? = null
+    var isDashBoardData: List<DashboardData>? = null
+    var isContactDetails: ContactDetails? = null
+    var isMenuDetails: List<MenuDetail>? = null
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -46,8 +63,11 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener {
         binding.imgNotification.setOnClickListener(this)
         binding.imgSearchClick.setOnClickListener(this)
 
-        userDetails = SharedPreference.getUserDetails(requireActivity())
+        appViewModel = ViewModelProvider(this).get(App::class.java)
+        appViewModel!!.init()
 
+        userDetails = SharedPreference.getUserDetails(requireActivity())
+        isDashBoardData()
         binding.lblSchoolAddress.text = userDetails!!.staff_details[0].school_address
         Glide.with(requireActivity())
             .load(userDetails!!.staff_details[0].school_logo)
@@ -59,32 +79,26 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener {
             binding.lblSchoolName.text = userDetails!!.staff_details[0].school_name
         }
 
-        // Sample data
-        items = arrayListOf(
-            GridItem(R.drawable.communication_icon_dashboard_school, "Communication"),
-            GridItem(R.drawable.image_pdf_icon_school, "Image/Pdf"),
-            GridItem(R.drawable.video_upload, "Video Upload"),
-            GridItem(R.drawable.noticeboard_icon_school, "Notice Board"),
-            GridItem(R.drawable.leave_request_icon_school, "Leave Requests"),
-            GridItem(R.drawable.assignment_icon_school, "Assignment"),
-            GridItem(R.drawable.home_work_icon_school, "Homework"),
-            GridItem(R.drawable.attendance_marking, "Attendance Marking"),
-            GridItem(R.drawable.message_f_management, "Message From Management"),
-            GridItem(R.drawable.interact_with_student, "Interaction With Student"),
-        )
-
         binding.lblViewDetails.paintFlags =
             binding.lblViewDetails.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
-        aditems = listOf(
-            AdItem(R.drawable.ad_1),
-            AdItem(R.drawable.ad_2),
-            AdItem(R.drawable.sample_ad),
-            AdItem(R.drawable.ad_3),
-        )
 
         binding.lblGif.playAnimation()
         binding.lblGif.setAnimation(R.raw.mathematics)
+
+
+        appViewModel!!.isDashBoardData?.observe(requireActivity()) { response ->
+            if (response != null) {
+                val status = response.status
+                val message = response.message
+                if (status) {
+                    val isDashboardResponse = response.data
+                    isDashBoardData = isDashboardResponse
+                    isContactDetails = isDashBoardData!![0].contactDetails
+                    isMenuDetails=isDashBoardData!!.get(0).menuDetails
+                }
+            }
+        }
 
         binding.txtSearchMenu.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
@@ -92,26 +106,26 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                filter(s.toString())
+                //   filter(s.toString())
             }
         })
         return binding.root
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    private fun filter(text: String) {
-        isMenuItems.clear()
-        if (text.isEmpty()) {
-            isMenuItems.addAll(items)  // If search is empty, show all items
-        } else {
-            for (item in items) {
-                if (item.title.toLowerCase(Locale.ROOT).contains(text.toLowerCase(Locale.ROOT))) {
-                    isMenuItems.add(item)  // Add the matching GridItem to filteredList
-                }
-            }
-        }
-        isMenuAdapter.notifyDataSetChanged()
-    }
+//    @SuppressLint("NotifyDataSetChanged")
+//    private fun filter(text: String) {
+//        isMenuItems.clear()
+//        if (text.isEmpty()) {
+//            isMenuItems.addAll(items)  // If search is empty, show all items
+//        } else {
+//            for (item in items) {
+//                if (item.title.toLowerCase(Locale.ROOT).contains(text.toLowerCase(Locale.ROOT))) {
+//                    isMenuItems.add(item)  // Add the matching GridItem to filteredList
+//                }
+//            }
+//        }
+//        isMenuAdapter.notifyDataSetChanged()
+//    }
 
     override fun onClick(p0: View?) {
         when (p0?.id) {
@@ -133,9 +147,21 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener {
         }
     }
 
+
+    private fun isDashBoardData() {
+        val isToken = SharedPreference.getToken(requireActivity())
+        Log.d("isToken", isToken!!)
+        appViewModel!!.isDashBoardData(
+            isToken!!,
+            "staff",
+            requireActivity()
+        )
+    }
+
+
     override fun onResume() {
         super.onResume()
-        val adapter = SchoolMenuAdapter(requireActivity(), null, null, Constant.isShimmerViewShow)
+        val adapter = SchoolMenuAdapter(requireActivity(), null, Constant.isShimmerViewShow)
         val gridLayoutManager = GridLayoutManager(requireContext(), 3)
 
         // Adjust span count for special layout
@@ -153,8 +179,8 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener {
 
         Constant.executeAfterDelay {
             val isAdapter =
-                SchoolMenuAdapter(requireActivity(), items, aditems, Constant.isShimmerViewDisable)
-            Log.d("aditems", aditems.size.toString())
+                SchoolMenuAdapter(requireActivity(),
+                    isMenuDetails, Constant.isShimmerViewDisable)
             // Adjust span count again for the updated adapter
             gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int {
@@ -174,6 +200,5 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener {
         super.onPause()
         Constant.stopDelay()
         Log.d("Status", "onPause")
-
     }
 }

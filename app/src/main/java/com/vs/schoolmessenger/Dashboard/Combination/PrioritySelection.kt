@@ -6,14 +6,17 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
+import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
 import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.RoleSelecionBinding
 
-class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListener {
+class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListener,
+    PriorityClickListener {
 
     private lateinit var isStudentDetailAdapter: StudentDetailAdapter
     private lateinit var isStaffDetailAdapter: StaffDetailAdapter
@@ -42,6 +45,7 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
 
         binding.btnGo.setOnClickListener {
             val intent = Intent(this, SchoolDashboard::class.java)
+            SharedPreference.putToken(this, userDetails!!.staff_details[0].access_token)
             startActivity(intent)
         }
     }
@@ -52,7 +56,7 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
             binding.recyclerViews.layoutManager = LinearLayoutManager(this)
             binding.recyclerViews.adapter = isStaffDetailAdapter
         } else {
-            isStudentDetailAdapter = StudentDetailAdapter(Constant.isChildDetails, this)
+            isStudentDetailAdapter = StudentDetailAdapter(Constant.isChildDetails, this, this)
             binding.recyclerViews.layoutManager = LinearLayoutManager(this)
             binding.recyclerViews.adapter = isStudentDetailAdapter
         }
@@ -89,6 +93,11 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
 
         isClickingId.background = ContextCompat.getDrawable(this, R.drawable.bg_blue)
         isClickingId.setTextColor(ContextCompat.getColor(this, R.color.white))
+    }
 
+    override fun onItemClick(data: ChildDetails) {
+        val intent = Intent(this, ParentDashboard::class.java)
+        SharedPreference.putToken(this, data.access_token)
+        startActivity(intent)
     }
 }

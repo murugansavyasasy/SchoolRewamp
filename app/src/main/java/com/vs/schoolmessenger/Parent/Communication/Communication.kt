@@ -123,46 +123,64 @@ class Communication : BaseActivity<CommunicationBinding>(), View.OnClickListener
 
         isVoiceData = arrayListOf(
             VoiceData(
+                "voice",
+                "Apr 1, 2021",
                 "Annual Day celebrations",
                 "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
                 "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
             ),
             VoiceData(
+                "text",
+                "Apr 1, 2021",
                 "Parent Meeting",
                 "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
+                ""
             ),
             VoiceData(
+                "voice",
+                "Apr 1, 2021",
                 "Normal Day",
                 "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
                 "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
             ),
             VoiceData(
+                "text",
+                "Apr 1, 2021",
                 "Day",
                 "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                "https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_700KB.mp3"
+                ""
             ),
             VoiceData(
+                "voice",
+                "Apr 1, 2021",
                 "Monday",
                 "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
                 "https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_1MG.mp3"
             ),
             VoiceData(
+                "text",
+                "Apr 1, 2021",
                 "Nothing",
                 "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                "https://www2.cs.uic.edu/~i101/SoundFiles/BabyElephantWalk60.wav"
+                ""
             ),
             VoiceData(
+                "voice",
+                "Apr 1, 2021",
                 "Value Education",
                 "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
                 "https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3"
             ),
             VoiceData(
+                "text",
+                "Apr 1, 2021",
                 "Environmental Science",
                 "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                "https://filesamples.com/samples/audio/mp3/sample4.mp3"
+                ""
             ),
             VoiceData(
+                "voice",
+                "Apr 1, 2021",
                 "Okay okay",
                 "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
                 "https://ia800304.us.archive.org/8/items/testmp3testfile/mpthreetest.mp3"

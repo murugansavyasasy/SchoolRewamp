@@ -14,9 +14,11 @@ import com.vs.schoolmessenger.Auth.OTP.ForgetOtpSendResponse
 import com.vs.schoolmessenger.Auth.OTP.OtpResponse
 import com.vs.schoolmessenger.Auth.Splash.VersionCheckResponse
 import com.vs.schoolmessenger.CommonScreens.DeviceToken
+import com.vs.schoolmessenger.Dashboard.School.DashboardResponse
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Query
 
@@ -72,5 +74,13 @@ interface ApiInterfaces {
     fun isDeviceToken(
         @Body jsonObject: JsonObject
     ): Call<DeviceToken?>?
+
+
+    @GET(APIMethods.isGetDashBoard)
+    fun isDashBoard(
+        @Header("Authorization") token: String,  // Pass token as a header
+        @Query("member_type") isMemberType: String  // Pass isMemberType as a query parameter
+    ): Call<DashboardResponse?>
+
 
 }
