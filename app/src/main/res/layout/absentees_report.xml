@@ -27,7 +27,7 @@
             android:layout_marginTop="@dimen/twenty"
             android:text="Absentees Report"
             android:textColor="@color/black"
-            android:textSize="@dimen/twenty"
+            android:textSize="20sp"
             android:textStyle="bold">
 
         </TextView>

@@ -97,7 +97,7 @@ object ShimmerUtil {
                     is ImageView -> {
                         if (originalImageVisibility.containsKey(child)) {
                             child.visibility = originalImageVisibility[child]!!
-                            child.setImageDrawable(null) // Remove placeholder
+                            child.setImageDrawable(null)
                             originalImageVisibility.remove(child)
                         }
                     }
