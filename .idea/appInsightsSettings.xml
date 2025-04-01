@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="com.vs.schoolmessenger" />
-                  <option name="mobileSdkAppId" value="1:369542815930:android:4a9785f193e87e29b96283" />
-                  <option name="projectId" value="school-chimes" />
-                  <option name="projectNumber" value="369542815930" />
+                  <option name="appId" value="PLACEHOLDER" />
+                  <option name="mobileSdkAppId" value="" />
+                  <option name="projectId" value="" />
+                  <option name="projectNumber" value="" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
