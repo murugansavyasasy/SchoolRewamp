@@ -229,24 +229,25 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
     override fun onClick(data: MenuDetail) {
         val intent = when (data.id) {
-            0 -> Intent(requireActivity(), Communication::class.java)
-            3 -> Intent(requireActivity(), HomeWork::class.java)
-            5 -> Intent(requireActivity(), Exam::class.java)
-            7 -> Intent(requireActivity(), NoticeBoard::class.java)
-            8 -> Intent(requireActivity(), Event::class.java)
-            9 -> Intent(requireActivity(), AttendanceReport::class.java)
-            10 -> Intent(requireActivity(), LeaveRequest::class.java)
-            11 -> Intent(requireActivity(), FeeDetails::class.java)
-            14 -> Intent(requireActivity(), InteractionWithStaff::class.java)
+
+            Constant.stu_communication_id -> Intent(requireActivity(), Communication::class.java)
+            Constant.stu_homework_id -> Intent(requireActivity(), HomeWork::class.java)
+            Constant.stu_exam_id -> Intent(requireActivity(), Exam::class.java)
+            Constant.stu_noticeboard_id -> Intent(requireActivity(), NoticeBoard::class.java)
+            Constant.stu_event_id -> Intent(requireActivity(), Event::class.java)
+            Constant.stu_attendance_report_id -> Intent(requireActivity(), AttendanceReport::class.java)
+            Constant.stu_leave_request_id -> Intent(requireActivity(), LeaveRequest::class.java)
+            Constant.stu_fee_details_id -> Intent(requireActivity(), FeeDetails::class.java)
+            Constant.stu_interaction_with_staff_id -> Intent(requireActivity(), InteractionWithStaff::class.java)
 //            15 -> Intent(requireActivity(), OnlineTextBook::class.java)
-            18 -> Intent(requireActivity(), Assignment::class.java)
+            Constant.stu_assignment_id -> Intent(requireActivity(), Assignment::class.java)
 //            19 -> Intent(requireActivity(), Attachments::class.java)
-            20 -> Intent(requireActivity(), OnlineMeeting::class.java)
-            21 -> Intent(requireActivity(), Quiz::class.java)
-            22 -> Intent(requireActivity(), LSRW::class.java)
-            23 -> Intent(requireActivity(), TimeTable::class.java)
+            Constant.stu_online_meeting_id -> Intent(requireActivity(), OnlineMeeting::class.java)
+            Constant.stu_quiz_id -> Intent(requireActivity(), Quiz::class.java)
+            Constant.stu_lsrw_id -> Intent(requireActivity(), LSRW::class.java)
+            Constant.stu_time_table_id -> Intent(requireActivity(), TimeTable::class.java)
 //            24 -> Intent(requireActivity(), UserProfile::class.java)
-            25 -> Intent(requireActivity(), CertificateRequest::class.java)
+            Constant.stu_certificate_request_id -> Intent(requireActivity(), CertificateRequest::class.java)
             else -> null
         }
         intent?.let { requireActivity().startActivity(it) }

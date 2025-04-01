@@ -23,6 +23,7 @@ import com.vs.schoolmessenger.Parent.Assignment.Assignment
 import com.vs.schoolmessenger.Parent.Homework.HomeWork
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequest
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
 import java.util.Timer
 import java.util.TimerTask
 
@@ -109,15 +110,15 @@ class ChildMenuAdapter(
 
             when (data.id) {
 
-                0 -> {
+                Constant.stu_communication_id -> {
                     imgMenu.setImageResource(R.drawable.communication_icon_dashboard)
                 }
 
-                3 -> {
+                Constant.stu_homework_id -> {
                     imgMenu.setImageResource(R.drawable.home_work_icon_school)
                 }
 
-                5 -> {
+                Constant.stu_exam_id -> {
                     imgMenu.setImageResource(R.drawable.exam_icon)
                 }
 
@@ -125,27 +126,27 @@ class ChildMenuAdapter(
                     //imgMenu.setImageResource(R.drawable.assignment_icon_school)
                 }
 
-                7 -> {
+                Constant.stu_noticeboard_id -> {
                     imgMenu.setImageResource(R.drawable.noticeboard_icon)
                 }
 
-                8 -> {
+                Constant.stu_event_id -> {
                     imgMenu.setImageResource(R.drawable.event_icon_school)
                 }
 
-                9 -> {
+                Constant.stu_attendance_report_id -> {
                     imgMenu.setImageResource(R.drawable.attendance_report_icon)
                 }
 
-                10 -> {
+                Constant.stu_leave_request_id -> {
                     imgMenu.setImageResource(R.drawable.leave_request_icon_school)
                 }
 
-                11 -> {
+                Constant.stu_fee_details_id -> {
                     imgMenu.setImageResource(R.drawable.fee_details)
                 }
 
-                14 -> {
+                Constant.stu_interaction_with_staff_id -> {
                     //    imgMenu.setImageResource(R.drawable.interact_with_student)
                 }
 
@@ -153,7 +154,7 @@ class ChildMenuAdapter(
                     // imgMenu.setImageResource(R.drawable.event_icon_school)
                 }
 
-                18 -> {
+                Constant.stu_assignment_id -> {
                     imgMenu.setImageResource(R.drawable.assignment_icon_school)
                 }
 
@@ -161,23 +162,23 @@ class ChildMenuAdapter(
 //                    imgMenu.setImageResource(R.drawable.event_icon_school)
                 }
 
-                20 -> {
+                Constant.stu_online_meeting_id -> {
                     imgMenu.setImageResource(R.drawable.online_meeting_icon)
                 }
 
-                21 -> {
+                Constant.stu_quiz_id -> {
                     imgMenu.setImageResource(R.drawable.quiz_icon)
                 }
 
-                22 -> {
+                Constant.stu_lsrw_id -> {
                     imgMenu.setImageResource(R.drawable.lsrw_icon)
                 }
 
-                23 -> {
+                Constant.stu_time_table_id -> {
                     imgMenu.setImageResource(R.drawable.timetable_icon)
                 }
 
-                25 -> {
+                Constant.stu_certificate_request_id -> {
 //                    imgMenu.setImageResource(R.drawable.)
                 }
             }
