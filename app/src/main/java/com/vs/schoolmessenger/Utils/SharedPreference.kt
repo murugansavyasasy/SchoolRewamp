@@ -8,6 +8,7 @@ import com.google.gson.Gson
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import androidx.core.content.edit
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 
 object SharedPreference {
 
@@ -19,6 +20,7 @@ object SharedPreference {
     private const val SH_COUNTRY_ID = "isCountryId"
     private const val SH_USER_DETAILS = "UserDetails"
     private const val SH_CHILD_DETAILS = "ChildDetails"
+    private const val SH_STAFF_DETAILS = "StaffDetails"
     private const val SH_LOGOUT = "isLogout"
     private const val SH_TOKEN = "isToken"
 
@@ -188,6 +190,37 @@ object SharedPreference {
         if (userJson != null) {
             val gson = Gson()
             isChildDetails = gson.fromJson(userJson, ChildDetails::class.java)
+        }
+        return isChildDetails;
+    }
+
+    fun putStaffDetails(activity: Context, isChildDetails: StaffDetails) {
+        val gson = Gson()
+        val userJson = gson.toJson(isChildDetails)
+        val sharedPreferences = EncryptedSharedPreferences.create(
+            SH_PREF,
+            masterKeyAlias,
+            activity,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
+        sharedPreferences.edit() { putString(SH_STAFF_DETAILS, userJson) }
+    }
+
+    fun getStaffDetails(activity: Context): StaffDetails? {
+        val sharedPreferences = EncryptedSharedPreferences.create(
+            SH_PREF,
+            masterKeyAlias,
+            activity,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
+
+        val userJson = sharedPreferences.getString(SH_STAFF_DETAILS, null)
+        var isChildDetails: StaffDetails? = null
+        if (userJson != null) {
+            val gson = Gson()
+            isChildDetails = gson.fromJson(userJson, StaffDetails::class.java)
         }
         return isChildDetails;
     }

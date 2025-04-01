@@ -71,11 +71,33 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener {
 
                                 } else if (Constant.user_data!![0].user_details.is_staff) {
 
-                                    val intent = Intent(
-                                        this@Login,
-                                        SchoolDashboard::class.java
-                                    )
-                                    startActivity(intent)
+                                    if (Constant.user_data!![0].user_details.staff_role.equals(
+                                            Constant.isStaffRole
+                                        )
+                                    ) {
+
+                                        if (Constant.user_data!![0].user_details.staff_details.size > 1) {
+                                            val intent =
+                                                Intent(this@Login, PrioritySelection::class.java)
+                                            startActivity(intent)
+                                        } else {
+                                            val intent = Intent(
+                                                this@Login,
+                                                SchoolDashboard::class.java
+                                            )
+                                            SharedPreference.putStaffDetails(
+                                                this,
+                                                Constant.user_data!![0].user_details.staff_details[0]
+                                            )
+                                            startActivity(intent)
+                                        }
+                                    } else {
+                                        val intent = Intent(
+                                            this@Login,
+                                            SchoolDashboard::class.java
+                                        )
+                                        startActivity(intent)
+                                    }
                                 } else if (Constant.user_data!![0].user_details.is_parent) {
                                     if (Constant.user_data!![0].user_details.child_details.size > 1) {
                                         val intent =
@@ -86,6 +108,10 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener {
                                         val intent = Intent(
                                             this@Login,
                                             com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard::class.java
+                                        )
+                                        SharedPreference.putChildDetails(
+                                            this,
+                                            Constant.user_data!![0].user_details.child_details[0]
                                         )
                                         startActivity(intent)
                                     }

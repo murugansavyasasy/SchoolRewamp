@@ -22,6 +22,7 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.Auth
 import com.vs.schoolmessenger.Repository.RequestKeys
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.OtpScreenBinding
 
 class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
@@ -74,11 +75,30 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
 
                             } else if (Constant.user_data!![0].user_details.is_staff) {
 
-                                val intent = Intent(
-                                    this@OTP,
-                                    SchoolDashboard::class.java
-                                )
-                                startActivity(intent)
+                                if (Constant.user_data!![0].user_details.staff_role.equals(Constant.isStaffRole)) {
+
+                                    if (Constant.user_data!![0].user_details.staff_details.size > 1) {
+                                        val intent =
+                                            Intent(this@OTP, PrioritySelection::class.java)
+                                        startActivity(intent)
+                                    } else {
+                                        val intent = Intent(
+                                            this@OTP,
+                                            SchoolDashboard::class.java
+                                        )
+                                        SharedPreference.putStaffDetails(
+                                            this,
+                                            Constant.user_data!![0].user_details.staff_details[0]
+                                        )
+                                        startActivity(intent)
+                                    }
+                                } else {
+                                    val intent = Intent(
+                                        this@OTP,
+                                        SchoolDashboard::class.java
+                                    )
+                                    startActivity(intent)
+                                }
                             } else if (Constant.user_data!![0].user_details.is_parent) {
                                 if (Constant.user_data!![0].user_details.child_details.size > 1) {
                                     val intent = Intent(this@OTP, PrioritySelection::class.java)
@@ -87,6 +107,10 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
                                     val intent = Intent(
                                         this@OTP,
                                         com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard::class.java
+                                    )
+                                    SharedPreference.putChildDetails(
+                                        this,
+                                        Constant.user_data!![0].user_details.child_details[0]
                                     )
                                     startActivity(intent)
                                 }
@@ -194,6 +218,7 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
                     Toast.makeText(this, R.string.EnterTheOtp, Toast.LENGTH_SHORT).show()
                 }
             }
+
             R.id.lblContactUs -> {
                 isShowContactNumber()
             }
@@ -203,14 +228,14 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
 
     private fun isShowContactNumber() {
 
-        var isFirstNumber=""
-        var isSecondNumber=""
+        var isFirstNumber = ""
+        var isSecondNumber = ""
 
         if (Constant.isForgotPassword!!) {
             val numberList: List<String> =
                 Constant.forgotData!![0].dial_numbers.split(",")
-             isFirstNumber = numberList[0]
-             isSecondNumber = numberList[1]
+            isFirstNumber = numberList[0]
+            isSecondNumber = numberList[1]
 
         } else {
             if (Constant.user_data!!.isNotEmpty()) {
@@ -228,8 +253,8 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
         val isNumberOne = view.findViewById<TextView>(R.id.txtNumberOne)
         val isNumberTwo = view.findViewById<TextView>(R.id.txtNumberTwo)
 
-        isNumberOne.text=isFirstNumber
-        isNumberTwo.text=isSecondNumber
+        isNumberOne.text = isFirstNumber
+        isNumberTwo.text = isSecondNumber
 
         // Handle click events on text views
         isNumberOne.setOnClickListener {
@@ -246,7 +271,7 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
         dialog.show()
     }
 
-    fun isOtpTitleLoad(){
+    fun isOtpTitleLoad() {
         if (Constant.isForgotPassword!!) {
             binding.lblEnter.text = Constant.forgotData!![0].forgot_otp_message
             binding.lblContactTitle.text = Constant.forgotData!![0].more_info

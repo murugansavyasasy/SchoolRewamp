@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.CommonScreens.Ads.AdItem
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.ContactDetails
@@ -48,6 +49,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     lateinit var isMenuAdapter: ChildMenuAdapter
     private lateinit var aditems: List<AdItem>
     private var isSearchVisible = false
+    var childDetails: ChildDetails? = null
     var userDetails: UserDetails? = null
     private var appViewModel: App? = null
     var isDashBoardData: List<DashboardData>? = null
@@ -55,7 +57,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     var isMenuDetails: List<MenuDetail>? = null
 
 
-    @SuppressLint("ClickableViewAccessibility")
+    @SuppressLint("ClickableViewAccessibility", "SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -64,19 +66,19 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         binding.imgNotification.setOnClickListener(this)
         binding.imgSearchClick.setOnClickListener(this)
         binding.lblChangeRoll.setOnClickListener(this)
+        childDetails = SharedPreference.getChildDetails(requireActivity())
         userDetails = SharedPreference.getUserDetails(requireActivity())
 
-        binding.lblStudentName.text = "Hello, " + userDetails!!.child_details.get(0).name
-        binding.lblSchoolName.text = userDetails!!.child_details.get(0).school_name
-        binding.lblSchoolAddress.text = userDetails!!.child_details.get(0).student_address
-
+        binding.lblStudentName.text = "Hello, " + childDetails!!.name
+        binding.lblSchoolName.text =childDetails!!.school_name
+        binding.lblSchoolAddress.text = childDetails!!.student_address
 
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel!!.init()
         isDashBoardData()
 
 
-        if (userDetails!!.is_staff) {
+        if (userDetails!!.is_staff || userDetails!!.child_details.size > 1) {
             binding.lblChangeRoll.visibility = View.VISIBLE
         } else {
             binding.lblChangeRoll.visibility = View.GONE
@@ -170,10 +172,9 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     }
 
     private fun isDashBoardData() {
-        val isToken = SharedPreference.getChildDetails(requireActivity())
-        Log.d("isToken", isToken!!.access_token)
+        Log.d("isToken", childDetails!!.access_token)
         appViewModel!!.isDashBoardData(
-            isToken.access_token, "parent", requireActivity()
+            childDetails!!.access_token, "parent", requireActivity()
         )
     }
 

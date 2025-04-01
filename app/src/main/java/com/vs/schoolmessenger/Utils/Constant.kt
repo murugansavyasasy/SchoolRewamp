@@ -60,6 +60,13 @@ object Constant {
     var PasswordScreen: Int? = 4
     var pageType: Int? = 0
 
+    var isGroupHeadRole: String? = "p1"
+    var isPrincipalRole: String? = "p2"
+    var isStaffRole: String? = "p3"
+    var isAdminRole: String? = "p4"
+    var isNonTeachingStaffRole: String? = "p5"
+
+
     fun isInternetAvailable(activity: Activity): Boolean {
         val connectivityManager =
             activity.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
