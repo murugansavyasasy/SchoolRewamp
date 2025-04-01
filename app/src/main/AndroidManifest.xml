@@ -363,7 +363,7 @@
         </activity>
 
         <activity
-            android:name=".CommonScreens.SpecificStudent"
+            android:name=".CommonScreens.SpecificStudentData.SpecificStudent"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize">
 
@@ -398,7 +398,7 @@
         </activity>
 
         <activity
-            android:name=".CommonScreens.SchoolList"
+            android:name=".CommonScreens.SchoolList.SchoolList"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize">
         </activity>
@@ -603,7 +603,10 @@
         <activity
             android:name=".School.MarkYourAttendance.MarkYourAttendance"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+
+        </activity>
 
         <activity
             android:name=".School.StaffWiseAttendanceReport.StaffWiseAttendanceReport"

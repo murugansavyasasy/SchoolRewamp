@@ -32,7 +32,6 @@
                 android:layout_height="@dimen/hundred"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"
-                android:scaleType="centerCrop"
                 android:src="@drawable/splash_icon1" />
 
         </androidx.cardview.widget.CardView>

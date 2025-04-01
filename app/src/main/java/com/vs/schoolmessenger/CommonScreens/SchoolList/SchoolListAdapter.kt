@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.CommonScreens
+package com.vs.schoolmessenger.CommonScreens.SchoolList
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -10,6 +10,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.facebook.shimmer.ShimmerFrameLayout
+import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolListClickListener
+import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolsData
 import com.vs.schoolmessenger.R
 
 class SchoolListAdapter(

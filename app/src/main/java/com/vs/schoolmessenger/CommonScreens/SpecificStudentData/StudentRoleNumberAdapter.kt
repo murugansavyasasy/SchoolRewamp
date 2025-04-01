@@ -1,10 +1,11 @@
-package com.vs.schoolmessenger.CommonScreens
+package com.vs.schoolmessenger.CommonScreens.SpecificStudentData
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.vs.schoolmessenger.CommonScreens.SpecificStudentData.StudentRoleNumberData
 import com.vs.schoolmessenger.R
 
 class StudentRoleNumberAdapter(private var childList: List<StudentRoleNumberData>) :

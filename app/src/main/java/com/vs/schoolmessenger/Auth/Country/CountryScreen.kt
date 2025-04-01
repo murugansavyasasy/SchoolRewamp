@@ -118,7 +118,7 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
                             .show()
                     }
                 } else {
-                    Toast.makeText(this, "Select Country", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Please select a country before proceeding", Toast.LENGTH_SHORT).show()
                 }
             }
         }

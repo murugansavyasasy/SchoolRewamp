@@ -22,9 +22,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Great to see you again!"
+            android:text="Happy to have you with us!"
             android:textColor="@color/black"
             android:textSize="@dimen/eighteen_sp"
+            android:fontFamily="@font/poppins_bold"
             android:textStyle="bold">
 
         </TextView>
@@ -36,6 +37,7 @@
             android:gravity="center"
             android:text="Your password has already been created. Use your credentials to log in and access SchoolChimes for seamless school communication and management."
             android:textColor="@color/black"
+            android:fontFamily="@font/poppins_medium"
             android:textSize="@dimen/thirteen_sp">
 
         </TextView>
@@ -58,11 +60,12 @@
                     android:gravity="center"
                     android:text="Login"
                     android:textColor="@color/white"
+                    android:fontFamily="@font/poppins_medium"
                     android:textSize="@dimen/twenty_sp" />
 
                 <TextView
                     android:id="@+id/lblPassword"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/lblLogin"
                     android:layout_marginStart="@dimen/ten"
@@ -70,7 +73,20 @@
                     android:layout_marginEnd="@dimen/ten"
                     android:text="@string/lblPassword"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/fifteen_sp" />
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="@dimen/fifteen_sp"
+                    android:textStyle="normal"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/lblPassword"
+                    android:layout_marginTop="1dp"
+                    android:background="@color/white"
+                    android:layout_alignStart="@+id/lblPassword"
+                    android:layout_alignEnd="@+id/lblPassword" />
+
+
 
                 <RelativeLayout
                     android:id="@+id/rytMobile"
@@ -78,7 +94,7 @@
                     android:layout_height="@dimen/fourty_five"
                     android:layout_below="@+id/lblPassword"
                     android:layout_marginStart="@dimen/ten"
-                    android:layout_marginTop="@dimen/ten"
+                    android:layout_marginTop="@dimen/fifteen"
                     android:layout_marginEnd="@dimen/ten"
                     android:background="@drawable/rect_white">
 
@@ -114,6 +130,8 @@
                     android:layout_marginTop="@dimen/twenty"
                     android:text="@string/lblForgotPassword"
                     android:textColor="@color/white"
+                    android:textStyle="normal"
+                    android:fontFamily="@font/poppins_medium"
                     android:textSize="@dimen/fifteen_sp" />
 
                 <androidx.cardview.widget.CardView
@@ -133,10 +151,11 @@
                         android:layout_height="match_parent"
                         android:background="@drawable/rect_btn_blue"
                         android:gravity="center"
-                        android:text="Validate Password"
+                        android:text="Validate"
                         android:textColor="@color/white"
                         android:textSize="@dimen/fifteen_sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:fontFamily="@font/poppins_bold"/>
 
                 </androidx.cardview.widget.CardView>
             </RelativeLayout>

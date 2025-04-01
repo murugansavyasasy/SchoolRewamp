@@ -7,6 +7,7 @@ import androidx.security.crypto.MasterKeys
 import com.google.gson.Gson
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import androidx.core.content.edit
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 
 object SharedPreference {
 
@@ -17,6 +18,7 @@ object SharedPreference {
     private const val SH_PASSWORD = "isPassWord"
     private const val SH_COUNTRY_ID = "isCountryId"
     private const val SH_USER_DETAILS = "UserDetails"
+    private const val SH_CHILD_DETAILS = "ChildDetails"
     private const val SH_LOGOUT = "isLogout"
     private const val SH_TOKEN = "isToken"
 
@@ -150,7 +152,6 @@ object SharedPreference {
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
-
         val userJson = sharedPreferences.getString(SH_USER_DETAILS, null)
         var userDetails: UserDetails? = null
         if (userJson != null) {
@@ -160,7 +161,9 @@ object SharedPreference {
         return userDetails;
     }
 
-    fun putToken(activity: Activity, isToken: String?) {
+    fun putChildDetails(activity: Context, isChildDetails: ChildDetails) {
+        val gson = Gson()
+        val userJson = gson.toJson(isChildDetails)
         val sharedPreferences = EncryptedSharedPreferences.create(
             SH_PREF,
             masterKeyAlias,
@@ -168,11 +171,10 @@ object SharedPreference {
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
-        sharedPreferences.edit() { putString(SH_TOKEN, isToken) }
+        sharedPreferences.edit() { putString(SH_CHILD_DETAILS, userJson) }
     }
 
-    fun getToken(activity: Context): String? {
-
+    fun getChildDetails(activity: Context): ChildDetails? {
         val sharedPreferences = EncryptedSharedPreferences.create(
             SH_PREF,
             masterKeyAlias,
@@ -180,7 +182,13 @@ object SharedPreference {
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
-        return sharedPreferences.getString(SH_TOKEN, "")
-    }
 
+        val userJson = sharedPreferences.getString(SH_CHILD_DETAILS, null)
+        var isChildDetails: ChildDetails? = null
+        if (userJson != null) {
+            val gson = Gson()
+            isChildDetails = gson.fromJson(userJson, ChildDetails::class.java)
+        }
+        return isChildDetails;
+    }
 }

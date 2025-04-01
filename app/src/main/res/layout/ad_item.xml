@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <RelativeLayout
@@ -12,8 +12,8 @@
             android:id="@+id/recyclerViewAdImages"
             android:layout_width="match_parent"
             android:layout_height="@dimen/eighty"
-            android:layout_marginTop="@dimen/twenty"
             android:layout_marginStart="@dimen/twenty"
+            android:layout_marginTop="@dimen/twenty"
             android:layout_marginEnd="@dimen/twenty"
             android:orientation="horizontal"
             tools:listitem="@layout/ad_image_item" />
@@ -21,10 +21,11 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/ten"
             android:layout_below="@+id/recyclerViewAdImages"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="@dimen/twenty">
+            android:layout_marginEnd="@dimen/twenty"
+            android:paddingBottom="@dimen/ten"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/lblSeeMore"
@@ -42,8 +43,8 @@
             <View
                 android:layout_width="@dimen/sixty"
                 android:layout_height="1dp"
-                android:layout_centerHorizontal="true"
                 android:layout_below="@+id/lblSeeMore"
+                android:layout_centerHorizontal="true"
                 android:background="@color/navi_blue1">
 
             </View>
@@ -118,8 +119,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/fifty"
                     android:layout_marginTop="@dimen/ten"
-                    android:src="@drawable/leave_request_icon">
-                </ImageView>
+                    android:src="@drawable/leave_request_icon"></ImageView>
 
                 <TextView
                     android:layout_width="match_parent"

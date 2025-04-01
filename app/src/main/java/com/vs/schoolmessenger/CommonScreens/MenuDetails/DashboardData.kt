@@ -1,6 +1,7 @@
-package com.vs.schoolmessenger.Dashboard.School
+package com.vs.schoolmessenger.CommonScreens.MenuDetails
 
 import com.google.gson.annotations.SerializedName
+import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuDetail
 
 data class DashboardData(
     @SerializedName("contact_details") val contactDetails: ContactDetails,

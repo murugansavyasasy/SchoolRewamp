@@ -15,19 +15,38 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
-import com.vs.schoolmessenger.Dashboard.Model.AdItem
-import com.vs.schoolmessenger.Dashboard.School.ContactDetails
-import com.vs.schoolmessenger.Dashboard.School.DashboardData
-import com.vs.schoolmessenger.Dashboard.School.MenuDetail
+import com.vs.schoolmessenger.CommonScreens.Ads.AdItem
+import com.vs.schoolmessenger.CommonScreens.Ads.AdsDisplayOptions
+import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolList
+import com.vs.schoolmessenger.CommonScreens.MenuDetails.ContactDetails
+import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardData
+import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuClickListener
+import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuDetail
 import com.vs.schoolmessenger.Dashboard.School.SchoolMenuAdapter
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.Notification
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.AbsenteesMarking.AttendanceMark
+import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesReport
+import com.vs.schoolmessenger.School.Communication.CommunicationSchool
+import com.vs.schoolmessenger.School.DailyCollection.DailyCollection
+import com.vs.schoolmessenger.School.Event.CreateEvent
+import com.vs.schoolmessenger.School.ExamSchedule.Exam
+import com.vs.schoolmessenger.School.Homework.HomeWork
+import com.vs.schoolmessenger.School.ImportantInfo.ImportantInfo
+import com.vs.schoolmessenger.School.InteractionWithStudent.InteractionWithStudent
+import com.vs.schoolmessenger.School.LessonPlan.LessonPlan
+import com.vs.schoolmessenger.School.MessageFromManagement.MessageFromManagement
+import com.vs.schoolmessenger.School.NoticeBoard.CreateNoticeBoard
+import com.vs.schoolmessenger.School.OnlineMeeting.OnlineMeeting
+import com.vs.schoolmessenger.School.SchoolStrength.SchoolStrength
+import com.vs.schoolmessenger.School.StudentReport.StudentReport
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SchoolHomeFragmentBinding
 
-class SchoolHomeFragment : Fragment(), View.OnClickListener {
+
+class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
     private lateinit var binding: SchoolHomeFragmentBinding // Automatically generated binding class
     lateinit var isMenuAdapter: SchoolMenuAdapter
@@ -38,17 +57,20 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener {
     private var appViewModel: App? = null
 
 
-        private lateinit var aditems: List<AdItem>
+    private lateinit var aditems: List<AdItem>
     var userDetails: UserDetails? = null
     var isDashBoardData: List<DashboardData>? = null
     var isContactDetails: ContactDetails? = null
     var isMenuDetails: List<MenuDetail>? = null
 
+    var isAdItem: List<AdItem>? = null
+    var isAdsList: List<AdItem>? = null
+    var isAdsDisplayOptions: AdsDisplayOptions? = null
+
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = SchoolHomeFragmentBinding.inflate(layoutInflater)
         binding.imgNotification.setOnClickListener(this)
@@ -60,8 +82,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener {
         userDetails = SharedPreference.getUserDetails(requireActivity())
         isDashBoardData()
         binding.lblSchoolAddress.text = userDetails!!.staff_details[0].school_address
-        Glide.with(requireActivity())
-            .load(userDetails!!.staff_details[0].school_logo)
+        Glide.with(requireActivity()).load(userDetails!!.staff_details[0].school_logo)
             .into(binding.imgSchoolLogo)
 
         if (userDetails!!.staff_details.size > 1) {
@@ -86,10 +107,44 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener {
                     val isDashboardResponse = response.data
                     isDashBoardData = isDashboardResponse
                     isContactDetails = isDashBoardData!![0].contactDetails
-                    isMenuDetails=isDashBoardData!!.get(0).menuDetails
+                    isMenuDetails = isDashBoardData!![0].menuDetails
+                    isGetAds()
                 }
             }
         }
+
+        appViewModel!!.isGetAds?.observe(requireActivity()) { response ->
+            if (response != null) {
+                val status = response.status
+                val message = response.message
+                if (status) {
+                    isAdItem = response.data
+//
+//                    isAdsDisplayOptions = isAdItem!![0].ads_display_options
+//                    isLoadData()
+
+                    if (status) {
+                        // Filter out the first item (which contains ads_display_options)
+                        val filteredAds = response.data.filter { it.id != null }
+                        isAdsDisplayOptions = isAdItem!![0].ads_display_options
+                        // Save the list of ads in a variable
+                        val adList: List<AdItem> = filteredAds.map { ad ->
+                            AdItem(
+                                ad.id!!,
+                                ad.name ?: "",
+                                ad.content_url ?: "",
+                                ad.redirect_url ?: ""
+                            )
+                        }
+
+                        // Now you can use `adList` anywhere in the activity/fragment
+                        isAdItem = adList
+                        isLoadData()
+                    }
+                }
+            }
+        }
+
 
         binding.txtSearchMenu.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
@@ -103,11 +158,47 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener {
         return binding.root
     }
 
+    private fun isLoadData() {
+        val adapter =
+            SchoolMenuAdapter(requireActivity(), this, null, null, Constant.isShimmerViewShow)
+        val gridLayoutManager = GridLayoutManager(requireContext(), 3)
+
+        // Adjust span count for special layout
+        gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int {
+                return when (adapter.getItemViewType(position)) {
+                    2 -> 3 // TYPE_AD: Span across all 3 columns
+                    else -> 1 // Default: 1 span per item
+                }
+            }
+        }
+
+        binding.recyclerViewMenus.layoutManager = gridLayoutManager
+        binding.recyclerViewMenus.adapter = adapter
+
+        Constant.executeAfterDelay {
+            val isAdapter = SchoolMenuAdapter(
+                requireActivity(), this, isMenuDetails, isAdItem, Constant.isShimmerViewDisable
+            )
+            // Adjust span count again for the updated adapter
+            gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                override fun getSpanSize(position: Int): Int {
+                    return when (isAdapter.getItemViewType(position)) {
+                        2 -> 3 // TYPE_AD: Span across all 3 columns
+                        else -> 1 // Default: 1 span per item
+                    }
+                }
+            }
+            binding.recyclerViewMenus.layoutManager = gridLayoutManager
+            binding.recyclerViewMenus.adapter = isAdapter
+        }
+    }
+
 //    @SuppressLint("NotifyDataSetChanged")
 //    private fun filter(text: String) {
-//        isMenuItems.clear()
+//        isMenuDetails.clear()
 //        if (text.isEmpty()) {
-//            isMenuItems.addAll(items)  // If search is empty, show all items
+//            isMenuDetails.addAll(items)  // If search is empty, show all items
 //        } else {
 //            for (item in items) {
 //                if (item.title.toLowerCase(Locale.ROOT).contains(text.toLowerCase(Locale.ROOT))) {
@@ -140,50 +231,28 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener {
 
 
     private fun isDashBoardData() {
-        val isToken = SharedPreference.getToken(requireActivity())
-        Log.d("isToken", isToken!!)
+//        val isToken = SharedPreference.getChildDetails(requireActivity())
+        val isToken =
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdGFmZl9pZCI6IjEwMDY5NTAzIiwic2Nob29sX2lkIjoiNTUxMiIsImlhdCI6MTc0MzQyMjM3N30.zk7XLtGdGh5slNHmeH0KCe7K1Mv6sQ0YFbuYSlP9GcM"
+//        Log.d("isToken", isToken!!.access_token)
         appViewModel!!.isDashBoardData(
-            isToken!!,
-            "staff",
-            requireActivity()
+            isToken, "staff", requireActivity()
+        )
+    }
+
+    private fun isGetAds() {
+//        val isToken = SharedPreference.getChildDetails(requireActivity())
+//        Log.d("isToken", isToken!!.access_token)
+        val isToken =
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdGFmZl9pZCI6IjEwMDY5NTAzIiwic2Nob29sX2lkIjoiNTUxMiIsImlhdCI6MTc0MzQyMjM3N30.zk7XLtGdGh5slNHmeH0KCe7K1Mv6sQ0YFbuYSlP9GcM"
+        appViewModel!!.isGetMenuId(
+            isToken, "101", requireActivity()
         )
     }
 
 
     override fun onResume() {
         super.onResume()
-        val adapter = SchoolMenuAdapter(requireActivity(), null, Constant.isShimmerViewShow)
-        val gridLayoutManager = GridLayoutManager(requireContext(), 3)
-
-        // Adjust span count for special layout
-        gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-            override fun getSpanSize(position: Int): Int {
-                return when (adapter.getItemViewType(position)) {
-                    2 -> 3 // TYPE_AD: Span across all 3 columns
-                    else -> 1 // Default: 1 span per item
-                }
-            }
-        }
-
-        binding.recyclerViewMenus.layoutManager = gridLayoutManager
-        binding.recyclerViewMenus.adapter = adapter
-
-        Constant.executeAfterDelay {
-            val isAdapter =
-                SchoolMenuAdapter(requireActivity(),
-                    isMenuDetails, Constant.isShimmerViewDisable)
-            // Adjust span count again for the updated adapter
-            gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-                override fun getSpanSize(position: Int): Int {
-                    return when (isAdapter.getItemViewType(position)) {
-                        2 -> 3 // TYPE_AD: Span across all 3 columns
-                        else -> 1 // Default: 1 span per item
-                    }
-                }
-            }
-            binding.recyclerViewMenus.layoutManager = gridLayoutManager
-            binding.recyclerViewMenus.adapter = isAdapter
-        }
         Log.d("Status", "onResume")
     }
 
@@ -191,5 +260,32 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener {
         super.onPause()
         Constant.stopDelay()
         Log.d("Status", "onPause")
+    }
+
+    override fun onClick(data: MenuDetail) {
+        val activityClass = when (data.id) {
+            0 -> CommunicationSchool::class.java
+            22 -> SchoolList::class.java
+            9 -> HomeWork::class.java
+            12 -> AttendanceMark::class.java
+            6 -> AbsenteesReport::class.java
+            7 -> SchoolStrength::class.java
+            3 -> CreateNoticeBoard::class.java
+            4 -> CreateEvent::class.java
+            11 -> Exam::class.java
+            13 -> MessageFromManagement::class.java
+            16 -> InteractionWithStudent::class.java
+            26 -> OnlineMeeting::class.java
+            28 -> DailyCollection::class.java
+            29 -> StudentReport::class.java
+            30 -> LessonPlan::class.java
+            21 -> ImportantInfo::class.java
+//          14 -> ImportantInfo::class.java
+            else -> null
+        }
+
+        activityClass?.let {
+            startActivity(Intent(requireActivity(), it))
+        }
     }
 }

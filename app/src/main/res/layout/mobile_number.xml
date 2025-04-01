@@ -22,9 +22,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Welcome back!"
+            android:text="Welcome aboard!"
             android:textColor="@color/black"
             android:textSize="@dimen/eighteen_sp"
+            android:fontFamily="@font/poppins_bold"
             android:textStyle="bold">
 
         </TextView>
@@ -36,7 +37,9 @@
             android:gravity="center"
             android:text="Seamless school communication, anytime, anywhere, effortlessly connecting student, teachers, and parents at all times."
             android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp">
+            android:textStyle="normal"
+            android:fontFamily="@font/poppins_regular"
+            android:textSize="13sp">
 
         </TextView>
 
@@ -58,6 +61,8 @@
                     android:gravity="center"
                     android:text="Let's Get Started!"
                     android:textColor="@color/white"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textStyle="normal"
                     android:textSize="@dimen/twenty_sp" />
 
                 <TextView
@@ -70,6 +75,7 @@
                     android:layout_marginEnd="@dimen/ten"
                     android:text="@string/lblMobileNumber"
                     android:textColor="@color/white"
+                    android:fontFamily="@font/poppins_medium"
                     android:textSize="@dimen/fifteen_sp" />
 
                 <RelativeLayout
@@ -111,8 +117,10 @@
                         android:maxLength="10"
                         android:paddingHorizontal="@dimen/ten"
                         android:textColor="@color/black"
+                        android:fontFamily="@font/poppins_medium"
                         android:textColorHint="@color/light_gray_"
-                        android:textSize="@dimen/thirteen_sp" />
+                        android:textSize="@dimen/thirteen_sp"
+                        android:textStyle="normal"/>
 
 
                 </RelativeLayout>
@@ -134,10 +142,11 @@
                         android:layout_height="match_parent"
                         android:background="@drawable/rect_btn_blue"
                         android:gravity="center"
-                        android:text="Continue to schoolchimes"
+                        android:text="Continue"
                         android:textColor="@color/white"
                         android:textSize="@dimen/fifteen_sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:fontFamily="@font/poppins_bold"/>
 
                 </androidx.cardview.widget.CardView>
             </RelativeLayout>

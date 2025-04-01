@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.Dashboard.Combination
 
 import android.content.Context
 import android.graphics.drawable.Drawable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -86,12 +87,9 @@ class StaffDetailAdapter(private val itemList: List<StaffDetails>?, val context:
         holder.binding.lblSchoolAddress.text = item.school_address
         holder.binding.lblCity.text = item.city
 
-//        Glide.with(context)
-//            .load(item.school_logo)
-//            .into(holder.binding.imgSchool)
-
         Glide.with(context)
             .load(item.school_logo)
+            .placeholder(R.drawable.splash_icon1) // Temporary image while loading
             .listener(object : RequestListener<Drawable> {
                 override fun onLoadFailed(
                     e: GlideException?,
@@ -99,6 +97,8 @@ class StaffDetailAdapter(private val itemList: List<StaffDetails>?, val context:
                     target: com.bumptech.glide.request.target.Target<Drawable?>,
                     isFirstResource: Boolean
                 ): Boolean {
+                    // Log the error if needed
+                    Log.e("GlideError", "Image load failed", e)
                     return false
                 }
 
@@ -109,10 +109,11 @@ class StaffDetailAdapter(private val itemList: List<StaffDetails>?, val context:
                     dataSource: DataSource,
                     isFirstResource: Boolean
                 ): Boolean {
-                    TODO("Not yet implemented")
+                    return false
                 }
             })
             .into(holder.binding.imgSchool)
+
     }
 
     override fun getItemCount(): Int = itemList!!.size

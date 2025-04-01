@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.CommonScreens
+package com.vs.schoolmessenger.CommonScreens.SpecificStudentData
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -11,6 +11,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
+import com.vs.schoolmessenger.CommonScreens.SpecificStudentData.SpecificStudentData
+import com.vs.schoolmessenger.CommonScreens.SpecificStudentData.SpecificStudentSelectClickListener
+import com.vs.schoolmessenger.CommonScreens.SpecificStudentData.StudentRoleNumberAdapter
 import com.vs.schoolmessenger.R
 
 class SpecificStudentAdapter(

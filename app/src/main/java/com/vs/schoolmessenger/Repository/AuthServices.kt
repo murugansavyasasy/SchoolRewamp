@@ -17,7 +17,7 @@ import com.vs.schoolmessenger.Auth.OTP.ForgetOtpSendResponse
 import com.vs.schoolmessenger.Auth.OTP.OtpResponse
 import com.vs.schoolmessenger.Auth.Splash.VersionCheckResponse
 import com.vs.schoolmessenger.CommonScreens.DeviceToken
-import com.vs.schoolmessenger.Dashboard.School.DashboardResponse
+import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import org.json.JSONObject

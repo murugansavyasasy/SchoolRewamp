@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.CommonScreens
+package com.vs.schoolmessenger.CommonScreens.SchoolList
 
 class SchoolsData(
     val schoolName: String,
