@@ -53,13 +53,9 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
             binding.lblParent.visibility = View.VISIBLE
         }
 
-
-//        if (staff_role.equals(Constant.isStaffRole)) {
-//            binding.btnGo.visibility = View.GONE;
-//            binding.recyclerViews.visibility = View.VISIBLE;
-//        } else {
-//            binding.btnGo.visibility = View.VISIBLE
-//        }
+        if (staff_role.equals(Constant.isStaffRole)) {
+            binding.btnGo.visibility = View.GONE //set single selection for staff login only
+        }
 
         if (userDetails!!.is_staff) {
             binding.lblTeacher.text = userDetails!!.role_name
@@ -77,17 +73,18 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
         }
     }
 
-    private fun isLoadData(isStaff: Boolean) {
-        if (isStaff) {
-            isStaffDetailAdapter = StaffDetailAdapter(Constant.isStaffDetails, this)
-            binding.recyclerViews.layoutManager = LinearLayoutManager(this)
-            binding.recyclerViews.adapter = isStaffDetailAdapter
-        } else {
-            isStudentDetailAdapter = StudentDetailAdapter(Constant.isChildDetails, this, this)
-            binding.recyclerViews.layoutManager = LinearLayoutManager(this)
-            binding.recyclerViews.adapter = isStudentDetailAdapter
+        private fun isLoadData(isStaff: Boolean) {
+            if (isStaff) {
+                isStaffDetailAdapter = StaffDetailAdapter(Constant.isStaffDetails, this)
+                binding.recyclerViews.layoutManager = LinearLayoutManager(this)
+                binding.recyclerViews.adapter = isStaffDetailAdapter
+            } else {
+                isStudentDetailAdapter = StudentDetailAdapter(Constant.isChildDetails, this, this)
+                binding.recyclerViews.layoutManager = LinearLayoutManager(this)
+                binding.recyclerViews.adapter = isStudentDetailAdapter
+            }
         }
-    }
+
 
     override fun onClick(p0: View?) {
         when (p0?.id) {

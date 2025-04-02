@@ -13,8 +13,10 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolListAdapter
 import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolListClickListener
 import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolsData
+import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Assignment.Assignment
+import com.vs.schoolmessenger.School.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.SchoolListActivityBinding
 
@@ -24,6 +26,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
     override fun getViewBinding(): SchoolListActivityBinding {
         return SchoolListActivityBinding.inflate(layoutInflater)
     }
+
     private val selectedSchoolIds = mutableListOf<Int>()
 
     var isMultipleSchool = true
@@ -46,11 +49,25 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
 
     private fun isLoadData() {
 
-        mAdapter = SchoolListAdapter(isMultipleSchool,selectedSchoolIds,null, this, this, Constant.isShimmerViewShow)
+        mAdapter = SchoolListAdapter(
+            isMultipleSchool,
+            selectedSchoolIds,
+            null,
+            this,
+            this,
+            Constant.isShimmerViewShow
+        )
         binding.recycleSchools.layoutManager = LinearLayoutManager(this)
         binding.recycleSchools.adapter = mAdapter
         Constant.executeAfterDelay {
-            mAdapter = SchoolListAdapter(isMultipleSchool,selectedSchoolIds, Constant.isStaffDetails, this, this, Constant.isShimmerViewDisable)
+            mAdapter = SchoolListAdapter(
+                isMultipleSchool,
+                selectedSchoolIds,
+                Constant.isStaffDetails,
+                this,
+                this,
+                Constant.isShimmerViewDisable
+            )
             binding.recycleSchools.adapter = mAdapter
         }
     }
@@ -67,18 +84,19 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             }
 
             R.id.lblSingleSchool -> {
-                isMultipleSchool=false
+                isMultipleSchool = false
                 isChangeBackRound(binding.lblSingleSchool)
             }
 
             R.id.lblMultipleSchool -> {
-                isMultipleSchool=true
+                isMultipleSchool = true
                 isChangeBackRound(binding.lblMultipleSchool)
             }
+
             R.id.lblSend -> {
-               for (i in selectedSchoolIds.indices){
-                   Log.d("SelectedSchoolId", selectedSchoolIds[i].toString())
-               }
+                for (i in selectedSchoolIds.indices) {
+                    Log.d("SelectedSchoolId", selectedSchoolIds[i].toString())
+                }
             }
         }
     }
@@ -101,6 +119,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
     }
 
     override fun onItemClick(data: StaffDetails) {
-
+        val intent = Intent(this, RecipientActivity::class.java)
+        startActivity(intent)
     }
 }

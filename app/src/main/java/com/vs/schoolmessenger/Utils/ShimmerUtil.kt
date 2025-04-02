@@ -1,7 +1,6 @@
 package com.vs.schoolmessenger.Utils
 
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.shapes.RectShape
 import android.view.LayoutInflater
@@ -11,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.R
+import androidx.core.graphics.drawable.toDrawable
 
 object ShimmerUtil {
 
@@ -21,12 +21,9 @@ object ShimmerUtil {
     fun wrapWithShimmer(parent: ViewGroup, layoutResId: Int): View {
         val shimmerLayout = LayoutInflater.from(parent.context)
             .inflate(R.layout.shimmer_wrapper, parent, false) as ShimmerFrameLayout
-
         val contentView = LayoutInflater.from(parent.context)
             .inflate(layoutResId, shimmerLayout, true)
-
         hideViewsDuringShimmer(contentView)
-
         return contentView
     }
 
@@ -64,7 +61,7 @@ object ShimmerUtil {
                         val background = ShapeDrawable(RectShape()).apply {
                             intrinsicWidth = textWidth
                             intrinsicHeight = textHeight
-                            paint.color = Color.parseColor("#D3D3D3")
+                            paint.color = Color.WHITE
                         }
 
                         child.background = background // Apply shimmer effect
@@ -73,7 +70,7 @@ object ShimmerUtil {
                         if (!originalImageVisibility.containsKey(child)) {
                             originalImageVisibility[child] = child.visibility
                         }
-                        child.setImageDrawable(ColorDrawable(Color.WHITE)) // Set gray placeholder
+                        child.setImageDrawable(Color.WHITE.toDrawable()) // Set gray placeholder
                     }
                     is ViewGroup -> hideViewsDuringShimmer(child)
                 }

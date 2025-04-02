@@ -63,23 +63,24 @@ class PasswordGeneration : BaseActivity<PasswordGenerationBinding>(), View.OnCli
 
                     } else if (Constant.user_data!![0].user_details.is_staff) {
 
-                        if(Constant.user_data!![0].user_details.staff_role.equals(Constant.isStaffRole)) {
+                        if (Constant.user_data!![0].user_details.staff_role.equals(Constant.isStaffRole)) {
 
                             if (Constant.user_data!![0].user_details.staff_details.size > 1) {
                                 val intent =
                                     Intent(this@PasswordGeneration, PrioritySelection::class.java)
                                 startActivity(intent)
-                            }
-                            else {
+                            } else {
                                 val intent = Intent(
                                     this@PasswordGeneration,
                                     SchoolDashboard::class.java
                                 )
-                                SharedPreference.putStaffDetails(this,Constant.user_data!![0].user_details.staff_details[0])
+                                SharedPreference.putStaffDetails(
+                                    this,
+                                    Constant.user_data!![0].user_details.staff_details[0]
+                                )
                                 startActivity(intent)
                             }
-                        }
-                        else{
+                        } else {
                             val intent = Intent(
                                 this@PasswordGeneration,
                                 SchoolDashboard::class.java
@@ -96,7 +97,10 @@ class PasswordGeneration : BaseActivity<PasswordGenerationBinding>(), View.OnCli
                                 this@PasswordGeneration,
                                 com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard::class.java
                             )
-                            SharedPreference.putChildDetails(this,Constant.user_data!![0].user_details.child_details[0])
+                            SharedPreference.putChildDetails(
+                                this,
+                                Constant.user_data!![0].user_details.child_details[0]
+                            )
                             startActivity(intent)
                         }
                     }
