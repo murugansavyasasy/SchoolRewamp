@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -30,6 +31,14 @@ class StaffDetailAdapter(private val itemList: List<StaffDetails>?, val context:
 
     override fun onBindViewHolder(holder: GridViewHolder, position: Int) {
         val item = itemList!![position]
+
+
+        if(itemList.size > 1) {
+            holder.binding.selectionarrow.visibility = View.VISIBLE
+        }
+        else{
+            holder.binding.selectionarrow.visibility = View.GONE
+        }
 
         when (position) {
 

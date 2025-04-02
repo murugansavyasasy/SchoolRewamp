@@ -39,10 +39,16 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
         val isStaff = userDetails?.is_staff
         val isParent = userDetails?.is_parent
         val staff_role = userDetails?.staff_role
+        val role_name = userDetails?.role_name
+
 
         if (isStaff == true && isParent == true) {
             binding.lblTeacher.visibility = View.VISIBLE
             binding.lblParent.visibility = View.VISIBLE
+        } else if (isStaff == true) {
+            binding.lblTeacher.visibility = View.VISIBLE
+            binding.lblParent.visibility = View.GONE
+        } else if (isParent == true) {
         } else if (isStaff == true) {
             binding.lblTeacher.visibility = View.VISIBLE
             binding.lblParent.visibility = View.GONE
@@ -54,21 +60,28 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
         if (staff_role.equals(Constant.isStaffRole)) {
             binding.btnGo.visibility = View.GONE //set single selection for staff login only
         } else {
-            binding.btnGo.visibility = View.VISIBLE
+            if (staff_role.equals(Constant.isStaffRole)) {
+                binding.btnGo.visibility = View.GONE;
+                binding.recyclerViews.visibility = View.VISIBLE;
+            } else {
+                binding.btnGo.visibility = View.VISIBLE
+            }
 
-        }
+            if (userDetails!!.is_staff) {
+                binding.lblTeacher.text = userDetails!!.role_name
+                binding.lblTeacher.text = role_name
+            }
 
-        if (userDetails!!.is_staff) {
-            binding.lblTeacher.text = userDetails!!.role_name
-        }
-        if (userDetails!!.is_parent) {
-            binding.lblParent.text = "Student"
-        }
+            if (userDetails!!.is_parent) {
+                binding.lblParent.text = "Student"
+            }
 
-        binding.btnGo.setOnClickListener {
-            val intent = Intent(this, SchoolDashboard::class.java)
+            binding.btnGo.setOnClickListener {
+                val intent = Intent(this, SchoolDashboard::class.java)
 //            SharedPreference.putChildDetails(this, userDetails!!)
-            startActivity(intent)
+                startActivity(intent)
+            }
+
         }
     }
 
