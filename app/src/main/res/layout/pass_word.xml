@@ -77,14 +77,7 @@
                     android:textSize="@dimen/fifteen_sp"
                     android:textStyle="normal"/>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_below="@id/lblPassword"
-                    android:layout_marginTop="1dp"
-                    android:background="@color/white"
-                    android:layout_alignStart="@+id/lblPassword"
-                    android:layout_alignEnd="@+id/lblPassword" />
+
 
 
 
@@ -132,7 +125,11 @@
                     android:textColor="@color/white"
                     android:textStyle="normal"
                     android:fontFamily="@font/poppins_medium"
-                    android:textSize="@dimen/fifteen_sp" />
+                    android:textSize="@dimen/fifteen_sp"
+                    android:layout_marginEnd="@dimen/ten"/>
+
+
+
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btnLoginContinue"

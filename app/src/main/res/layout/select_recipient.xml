@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/sendlabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Send To :"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="normal"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/twenty" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabMode="fixed"
+        app:tabIndicatorHeight="0dp"
+        app:tabBackground="@drawable/tab_selector"
+        app:tabRippleColor="@android:color/transparent"
+        app:tabTextAppearance="@style/TabTextStyle"
+        android:background="@drawable/tab_background"
+        android:layout_below="@id/sendlabel"
+        android:layout_alignStart="@id/sendlabel"
+        android:layout_marginEnd="@dimen/five"
+        android:layout_marginTop="@dimen/fifteen" />
+
+    <!-- Container for description and buttons -->
+    <LinearLayout
+        android:id="@+id/bottomLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginBottom="20dp"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/text_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Click the SEND button to send an important announcement from Entier School"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:fontFamily="@font/poppins_medium"
+            android:textSize="15sp"
+            android:gravity="center"
+            android:padding="16dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="1dp"
+            android:padding="8dp">
+
+            <Button
+                android:id="@+id/btnViewMarks"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:text="Send"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:background="@drawable/bg_orange"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:layout_marginEnd="10dp" />
+
+            <Button
+                android:id="@+id/btnViewProgress"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:text="Specific Student"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:background="@drawable/bg_orange"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:layout_marginStart="10dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

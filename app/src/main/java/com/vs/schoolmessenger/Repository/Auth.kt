@@ -111,7 +111,6 @@ class Auth(application: Application) : AndroidViewModel(application) {
         apiRepositories!!.isResetPassword(jsonObject, activity)
     }
 
-
     fun isCreatePassword(jsonObject: JsonObject, activity: Activity) {
         apiRepositories!!.isCreateNewPassword(jsonObject, activity)
     }

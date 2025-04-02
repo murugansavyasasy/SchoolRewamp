@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.Auth.MobilePasswordSignIn
 
 import android.content.Intent
+import android.graphics.Paint
 import android.text.InputType
 import android.view.View
 import android.widget.Toast
@@ -34,6 +35,7 @@ class PassWord : BaseActivity<PassWordBinding>(), View.OnClickListener {
         binding.btnLoginContinue.setOnClickListener(this)
         binding.lblForgetPassword.setOnClickListener(this)
         isToolBarWhiteTheme()
+        binding.lblForgetPassword.paintFlags = binding.lblForgetPassword.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
         authViewModel = ViewModelProvider(this).get(Auth::class.java)
         authViewModel!!.init()
@@ -162,7 +164,6 @@ class PassWord : BaseActivity<PassWordBinding>(), View.OnClickListener {
         val jsonObject = JsonObject()
         val isSecureId = Constant.getAndroidSecureId(this@PassWord)
         jsonObject.addProperty(RequestKeys.Req_mobile_number, Constant.isMobileNumber)
-
         jsonObject.addProperty(RequestKeys.Req_device_type, Constant.isDeviceType)
         jsonObject.addProperty(RequestKeys.Req_secure_id, isSecureId)
         jsonObject.addProperty(RequestKeys.Req_password, binding.txtPassword.text.toString())

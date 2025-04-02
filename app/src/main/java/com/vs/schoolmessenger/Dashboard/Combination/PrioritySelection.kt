@@ -55,13 +55,7 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
 
         if (staff_role.equals(Constant.isStaffRole)) {
             binding.btnGo.visibility = View.GONE //set single selection for staff login only
-        } else {
-            if (staff_role.equals(Constant.isStaffRole)) {
-                binding.btnGo.visibility = View.GONE;
-                binding.recyclerViews.visibility = View.VISIBLE;
-            } else {
-                binding.btnGo.visibility = View.VISIBLE
-            }
+        }
 
             if (userDetails!!.is_staff) {
                 binding.lblTeacher.text = userDetails!!.role_name
@@ -79,7 +73,6 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
             }
 
         }
-    }
 
     private fun isLoadData(isStaff: Boolean) {
         if (isStaff) {
