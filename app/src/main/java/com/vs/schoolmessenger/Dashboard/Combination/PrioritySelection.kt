@@ -39,31 +39,36 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
         val isStaff = userDetails?.is_staff
         val isParent = userDetails?.is_parent
         val staff_role = userDetails?.staff_role
+        val role_name = userDetails?.role_name
+
 
         if(isStaff == true && isParent == true){
             binding.lblTeacher.visibility = View.VISIBLE
             binding.lblParent.visibility = View.VISIBLE
         }
+
         else if(isStaff == true){
             binding.lblTeacher.visibility = View.VISIBLE
             binding.lblParent.visibility = View.GONE
         }
+
         else if(isParent == true){
             binding.lblTeacher.visibility = View.GONE
             binding.lblParent.visibility = View.VISIBLE
         }
 
         if(staff_role.equals(Constant.isStaffRole)){
-            binding.btnGo.visibility = View.GONE //set single selection for staff login only
+            binding.btnGo.visibility = View.GONE;
+            binding.recyclerViews.visibility = View.VISIBLE;
         }
         else{
             binding.btnGo.visibility = View.VISIBLE
-
         }
 
         if (userDetails!!.is_staff) {
-            binding.lblTeacher.text = staff_role
+            binding.lblTeacher.text = role_name
         }
+
         if (userDetails!!.is_parent) {
             binding.lblParent.text = "Student"
         }
@@ -73,6 +78,7 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
 //            SharedPreference.putChildDetails(this, userDetails!!)
             startActivity(intent)
         }
+
     }
 
     private fun isLoadData(isStaff: Boolean) {

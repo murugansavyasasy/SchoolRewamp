@@ -15,5 +15,4 @@ data class StaffDetails(
     val access_token: String,
     val allow_video_download: Boolean,
     val school_address: String
-
 )
