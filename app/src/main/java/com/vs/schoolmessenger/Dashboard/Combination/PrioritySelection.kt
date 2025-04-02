@@ -40,29 +40,26 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
         val isParent = userDetails?.is_parent
         val staff_role = userDetails?.staff_role
 
-        if(isStaff == true && isParent == true){
+        if (isStaff == true && isParent == true) {
             binding.lblTeacher.visibility = View.VISIBLE
             binding.lblParent.visibility = View.VISIBLE
-        }
-        else if(isStaff == true){
+        } else if (isStaff == true) {
             binding.lblTeacher.visibility = View.VISIBLE
             binding.lblParent.visibility = View.GONE
-        }
-        else if(isParent == true){
+        } else if (isParent == true) {
             binding.lblTeacher.visibility = View.GONE
             binding.lblParent.visibility = View.VISIBLE
         }
 
-        if(staff_role.equals(Constant.isStaffRole)){
+        if (staff_role.equals(Constant.isStaffRole)) {
             binding.btnGo.visibility = View.GONE //set single selection for staff login only
-        }
-        else{
+        } else {
             binding.btnGo.visibility = View.VISIBLE
 
         }
 
         if (userDetails!!.is_staff) {
-            binding.lblTeacher.text = staff_role
+            binding.lblTeacher.text = userDetails!!.role_name
         }
         if (userDetails!!.is_parent) {
             binding.lblParent.text = "Student"
