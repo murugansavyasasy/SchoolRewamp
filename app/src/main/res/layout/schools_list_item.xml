@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white"
-    android:layout_marginTop="@dimen/ten"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/five"
+    android:background="@drawable/rect_white_light_radious">
 
     <RelativeLayout
         android:id="@+id/rlaHeader"
@@ -15,10 +15,11 @@
 
 
         <androidx.cardview.widget.CardView
-            android:layout_centerVertical="true"
             android:id="@+id/cardSchoolLogo"
             android:layout_width="@dimen/sixty"
+            android:visibility="gone"
             android:layout_height="@dimen/sixty"
+            android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/ten"
             app:cardCornerRadius="@dimen/thirty"
             app:layout_constraintTop_toTopOf="parent">
@@ -44,22 +45,22 @@
                 android:id="@+id/lblSchoolName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_bold"
                 android:text="Savyasasy software solution pvt ltd.,"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
-                android:fontFamily="@font/poppins_bold"
                 android:textStyle="bold" />
 
             <TextView
-                android:layout_marginTop="@dimen/five"
-                android:layout_below="@+id/lblSchoolName"
                 android:id="@+id/lblSchoolAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/lblSchoolName"
+                android:layout_marginTop="@dimen/five"
+                android:fontFamily="@font/poppins_regular"
                 android:text="Chennai, Nungambakkam"
                 android:textColor="@color/grey"
                 android:textSize="@dimen/thirteen_sp"
-                android:fontFamily="@font/poppins_regular"
                 android:textStyle="normal" />
 
 
@@ -73,20 +74,25 @@
             android:layout_centerVertical="true">
 
             <ImageView
+                android:id="@+id/imgSingleSchoolArrow"
                 android:layout_width="@dimen/twenty"
                 android:layout_height="@dimen/twenty"
+                android:visibility="gone"
+                android:layout_centerVertical="true"
                 android:src="@drawable/arrow_right_gray" />
 
 
+            <CheckBox
+                android:id="@+id/chMultipleSchool"
+                android:layout_width="wrap_content"
+                android:layout_centerVertical="true"
+                android:visibility="visible"
+                android:layout_height="wrap_content">
+
+            </CheckBox>
+
+
         </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.6dp"
-            android:layout_below="@+id/cardSchoolLogo"
-            android:layout_marginTop="@dimen/twenty"
-            android:background="@color/grey" />
-
 
     </RelativeLayout>
 

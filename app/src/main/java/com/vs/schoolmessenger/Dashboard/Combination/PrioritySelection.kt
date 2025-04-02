@@ -53,31 +53,27 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
             binding.lblParent.visibility = View.VISIBLE
         }
 
-        if (staff_role.equals(Constant.isStaffRole)) {
-            binding.btnGo.visibility = View.GONE //set single selection for staff login only
-        } else {
-            if (staff_role.equals(Constant.isStaffRole)) {
-                binding.btnGo.visibility = View.GONE;
-                binding.recyclerViews.visibility = View.VISIBLE;
-            } else {
-                binding.btnGo.visibility = View.VISIBLE
-            }
 
-            if (userDetails!!.is_staff) {
-                binding.lblTeacher.text = userDetails!!.role_name
-                binding.lblTeacher.text = role_name
-            }
+//        if (staff_role.equals(Constant.isStaffRole)) {
+//            binding.btnGo.visibility = View.GONE;
+//            binding.recyclerViews.visibility = View.VISIBLE;
+//        } else {
+//            binding.btnGo.visibility = View.VISIBLE
+//        }
 
-            if (userDetails!!.is_parent) {
-                binding.lblParent.text = "Student"
-            }
+        if (userDetails!!.is_staff) {
+            binding.lblTeacher.text = userDetails!!.role_name
+            binding.lblTeacher.text = role_name
+        }
 
-            binding.btnGo.setOnClickListener {
-                val intent = Intent(this, SchoolDashboard::class.java)
+        if (userDetails!!.is_parent) {
+            binding.lblParent.text = "Student"
+        }
+
+        binding.btnGo.setOnClickListener {
+            val intent = Intent(this, SchoolDashboard::class.java)
 //            SharedPreference.putChildDetails(this, userDetails!!)
-                startActivity(intent)
-            }
-
+            startActivity(intent)
         }
     }
 
@@ -106,20 +102,20 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
     }
 
     private fun isBackRoundChange(isClickingId: TextView) {
+
         if (isClickingId == binding.lblParent) {
             binding.lblTeacher.background = null
             binding.lblTeacher.setTextColor(ContextCompat.getColor(this, R.color.dark_blue))
-            binding.btnGo.visibility = View.GONE
+//            binding.btnGo.visibility = View.GONE
             isLoadData(false)
             Constant.isParentChoose = true
         }
         if (isClickingId == binding.lblTeacher) {
             binding.lblParent.background = null
             binding.lblParent.setTextColor(ContextCompat.getColor(this, R.color.dark_blue))
-            binding.btnGo.visibility = View.VISIBLE
+//            binding.btnGo.visibility = View.VISIBLE
             isLoadData(true)
             Constant.isParentChoose = false
-
         }
 
         isClickingId.background = ContextCompat.getDrawable(this, R.drawable.bg_blue)

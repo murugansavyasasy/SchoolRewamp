@@ -1,53 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/mild4">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_blue_1">
 
     <RelativeLayout
         android:id="@+id/rytHeader"
-        android:paddingVertical="@dimen/twenty"
-        android:background="@color/primary_light"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/light_blue_1"
+        android:paddingVertical="@dimen/twenty"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/imgBack"
             android:layout_width="@dimen/thirty"
-            android:layout_marginStart="@dimen/fifteen"
             android:layout_height="@dimen/thirty"
-            android:src="@drawable/arrow_back_black"/>
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/fifteen"
+            android:src="@drawable/arrow_back_black" />
+
+        <ImageView
+            android:id="@+id/imgSchool"
+            android:layout_width="@dimen/thirty_five"
+            android:layout_height="@dimen/thirty_five"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_toEndOf="@+id/imgBack"
+            android:src="@drawable/school_building_2">
+
+        </ImageView>
+
         <TextView
-            android:id="@+id/lblCreateEvent"
+            android:id="@+id/lblTitle"
             android:layout_width="match_parent"
-            android:gravity="center"
             android:layout_height="wrap_content"
-            android:text="@string/SchoolList"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:textSize="@dimen/twenty"/>
+            android:layout_marginStart="@dimen/fifteen"
+            android:layout_toEndOf="@+id/imgSchool"
+            android:text="School Selection"
+            android:textColor="@color/white"
+            android:textSize="@dimen/fifteen_sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/lblSchoolSelection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblTitle"
+            android:layout_marginStart="@dimen/fifteen"
+            android:layout_toEndOf="@+id/imgSchool"
+            android:text="Choose your preferred school"
+            android:textColor="@color/white"
+            android:textSize="@dimen/fifteen_sp"
+            android:textStyle="normal" />
 
     </RelativeLayout>
 
-
-    <RelativeLayout
-        android:layout_marginTop="@dimen/eighty"
-        app:layout_constraintTop_toBottomOf="@+id/rytHeader"
+    <LinearLayout
+        android:id="@+id/lnrTab"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="@dimen/thirty_five"
+        android:layout_below="@+id/rytHeader"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
+        android:background="@drawable/rect_btn_blue"
+        android:orientation="horizontal"
+        android:weightSum="1">
 
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:padding="@dimen/ten"
-            android:id="@+id/recycleSchools"
+        <TextView
+            android:id="@+id/lblMultipleSchool"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:listitem="@layout/schools_list_item"/>
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="0.5"
+            android:background="@drawable/white_radious"
+            android:gravity="center"
+            android:text="Send to multiple school"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp"
+            android:textStyle="bold">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/lblSingleSchool"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:text="Send to Single school"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp"
+            android:textStyle="bold">
+
+        </TextView>
+    </LinearLayout>
 
 
-    </RelativeLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycleSchools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/lblSend"
+        android:layout_below="@+id/lnrTab"
+        android:layout_marginBottom="@dimen/ten"
+        android:padding="@dimen/ten"
+        tools:listitem="@layout/schools_list_item" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/lblSend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="@dimen/twenty"
+        android:layout_marginEnd="@dimen/twenty"
+        android:layout_marginBottom="@dimen/ten"
+        android:background="@drawable/rect_btn_blue"
+        android:gravity="center"
+        android:padding="@dimen/five"
+        android:text="@string/Send"
+        android:textColor="@color/white"
+        android:textSize="@dimen/fifteen_sp"
+        android:textStyle="bold">
+
+    </TextView>
+
+</RelativeLayout>
