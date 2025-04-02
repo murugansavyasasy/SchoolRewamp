@@ -49,10 +49,6 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
             binding.lblTeacher.visibility = View.VISIBLE
             binding.lblParent.visibility = View.GONE
         } else if (isParent == true) {
-        } else if (isStaff == true) {
-            binding.lblTeacher.visibility = View.VISIBLE
-            binding.lblParent.visibility = View.GONE
-        } else if (isParent == true) {
             binding.lblTeacher.visibility = View.GONE
             binding.lblParent.visibility = View.VISIBLE
         }
