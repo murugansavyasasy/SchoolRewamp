@@ -78,7 +78,7 @@
                 android:layout_width="@dimen/thirty"
                 android:layout_height="@dimen/thirty"
                 android:layout_toStartOf="@+id/rytImageNotification"
-                android:src="@drawable/search_icon"
+                android:src="@drawable/search_icon_white"
                 android:visibility="visible">
 
             </ImageView>
@@ -108,7 +108,7 @@
                     android:id="@+id/imgNotification"
                     android:layout_width="@dimen/thirty"
                     android:layout_height="@dimen/thirty"
-                    android:src="@drawable/notification_icon" />
+                    android:src="@drawable/notification_icon_white" />
 
             </FrameLayout>
         </RelativeLayout>

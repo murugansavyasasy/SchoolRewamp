@@ -101,10 +101,10 @@
         android:layout_marginBottom="@dimen/twenty_five"
         android:background="@drawable/bg_blue"
         android:gravity="center"
-        android:padding="@dimen/ten"
         android:text="@string/lblNext"
         android:textColor="@color/white"
         android:textSize="@dimen/thirteen_sp"
+        android:fontFamily="@font/poppins_bold"
         android:textStyle="bold" />
 
 

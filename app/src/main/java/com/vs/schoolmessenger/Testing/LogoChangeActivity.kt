@@ -8,7 +8,6 @@ import android.content.pm.ShortcutManager
 import android.graphics.Bitmap
 import android.graphics.drawable.Icon
 import android.os.Build
-import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi

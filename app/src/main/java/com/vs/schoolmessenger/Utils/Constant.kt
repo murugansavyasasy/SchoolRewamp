@@ -60,6 +60,29 @@ object Constant {
     var PasswordScreen: Int? = 4
     var pageType: Int? = 0
 
+    var isGroupHeadRole: String? = "p1"
+    var isPrincipalRole: String? = "p2"
+    var isStaffRole: String? = "p3"
+    var isAdminRole: String? = "p4"
+    var isNonTeachingStaffRole: String? = "p5"
+
+    val stu_communication_id = 0
+    val stu_homework_id = 3
+    val stu_exam_id = 5
+    val stu_noticeboard_id = 7
+    val stu_event_id = 8
+    val stu_attendance_report_id = 9
+    val stu_leave_request_id = 10
+    val stu_fee_details_id = 11
+    val stu_interaction_with_staff_id = 14
+    val stu_assignment_id = 18
+    val stu_online_meeting_id = 20
+    val stu_quiz_id = 21
+    val stu_lsrw_id = 22
+    val stu_time_table_id = 23
+    val stu_certificate_request_id = 25
+
+
     fun isInternetAvailable(activity: Activity): Boolean {
         val connectivityManager =
             activity.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager

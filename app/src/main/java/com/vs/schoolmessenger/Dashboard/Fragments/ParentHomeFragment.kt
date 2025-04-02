@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.CommonScreens.Ads.AdItem
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.ContactDetails
@@ -48,6 +49,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     lateinit var isMenuAdapter: ChildMenuAdapter
     private lateinit var aditems: List<AdItem>
     private var isSearchVisible = false
+    var childDetails: ChildDetails? = null
     var userDetails: UserDetails? = null
     private var appViewModel: App? = null
     var isDashBoardData: List<DashboardData>? = null
@@ -55,7 +57,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     var isMenuDetails: List<MenuDetail>? = null
 
 
-    @SuppressLint("ClickableViewAccessibility")
+    @SuppressLint("ClickableViewAccessibility", "SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -64,19 +66,19 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         binding.imgNotification.setOnClickListener(this)
         binding.imgSearchClick.setOnClickListener(this)
         binding.lblChangeRoll.setOnClickListener(this)
+        childDetails = SharedPreference.getChildDetails(requireActivity())
         userDetails = SharedPreference.getUserDetails(requireActivity())
 
-        binding.lblStudentName.text = "Hello, " + userDetails!!.child_details.get(0).name
-        binding.lblSchoolName.text = userDetails!!.child_details.get(0).school_name
-        binding.lblSchoolAddress.text = userDetails!!.child_details.get(0).student_address
-
+        binding.lblStudentName.text = "Hello, " + childDetails!!.name
+        binding.lblSchoolName.text =childDetails!!.school_name
+        binding.lblSchoolAddress.text = childDetails!!.student_address
 
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel!!.init()
         isDashBoardData()
 
 
-        if (userDetails!!.is_staff) {
+        if (userDetails!!.is_staff || userDetails!!.child_details.size > 1) {
             binding.lblChangeRoll.visibility = View.VISIBLE
         } else {
             binding.lblChangeRoll.visibility = View.GONE
@@ -170,10 +172,9 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     }
 
     private fun isDashBoardData() {
-        val isToken = SharedPreference.getChildDetails(requireActivity())
-        Log.d("isToken", isToken!!.access_token)
+        Log.d("isToken", childDetails!!.access_token)
         appViewModel!!.isDashBoardData(
-            isToken.access_token, "parent", requireActivity()
+            childDetails!!.access_token, "parent", requireActivity()
         )
     }
 
@@ -228,24 +229,25 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
     override fun onClick(data: MenuDetail) {
         val intent = when (data.id) {
-            0 -> Intent(requireActivity(), Communication::class.java)
-            3 -> Intent(requireActivity(), HomeWork::class.java)
-            5 -> Intent(requireActivity(), Exam::class.java)
-            7 -> Intent(requireActivity(), NoticeBoard::class.java)
-            8 -> Intent(requireActivity(), Event::class.java)
-            9 -> Intent(requireActivity(), AttendanceReport::class.java)
-            10 -> Intent(requireActivity(), LeaveRequest::class.java)
-            11 -> Intent(requireActivity(), FeeDetails::class.java)
-            14 -> Intent(requireActivity(), InteractionWithStaff::class.java)
+
+            Constant.stu_communication_id -> Intent(requireActivity(), Communication::class.java)
+            Constant.stu_homework_id -> Intent(requireActivity(), HomeWork::class.java)
+            Constant.stu_exam_id -> Intent(requireActivity(), Exam::class.java)
+            Constant.stu_noticeboard_id -> Intent(requireActivity(), NoticeBoard::class.java)
+            Constant.stu_event_id -> Intent(requireActivity(), Event::class.java)
+            Constant.stu_attendance_report_id -> Intent(requireActivity(), AttendanceReport::class.java)
+            Constant.stu_leave_request_id -> Intent(requireActivity(), LeaveRequest::class.java)
+            Constant.stu_fee_details_id -> Intent(requireActivity(), FeeDetails::class.java)
+            Constant.stu_interaction_with_staff_id -> Intent(requireActivity(), InteractionWithStaff::class.java)
 //            15 -> Intent(requireActivity(), OnlineTextBook::class.java)
-            18 -> Intent(requireActivity(), Assignment::class.java)
+            Constant.stu_assignment_id -> Intent(requireActivity(), Assignment::class.java)
 //            19 -> Intent(requireActivity(), Attachments::class.java)
-            20 -> Intent(requireActivity(), OnlineMeeting::class.java)
-            21 -> Intent(requireActivity(), Quiz::class.java)
-            22 -> Intent(requireActivity(), LSRW::class.java)
-            23 -> Intent(requireActivity(), TimeTable::class.java)
+            Constant.stu_online_meeting_id -> Intent(requireActivity(), OnlineMeeting::class.java)
+            Constant.stu_quiz_id -> Intent(requireActivity(), Quiz::class.java)
+            Constant.stu_lsrw_id -> Intent(requireActivity(), LSRW::class.java)
+            Constant.stu_time_table_id -> Intent(requireActivity(), TimeTable::class.java)
 //            24 -> Intent(requireActivity(), UserProfile::class.java)
-            25 -> Intent(requireActivity(), CertificateRequest::class.java)
+            Constant.stu_certificate_request_id -> Intent(requireActivity(), CertificateRequest::class.java)
             else -> null
         }
         intent?.let { requireActivity().startActivity(it) }
