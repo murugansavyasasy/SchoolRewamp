@@ -1,21 +1,19 @@
 package com.vs.schoolmessenger.Repository
 
-import android.app.Activity
-import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Country.CountryResponse
 import com.vs.schoolmessenger.Auth.CreateResetChangePassword.PasswordCreationResponse
 import com.vs.schoolmessenger.Auth.CreateResetChangePassword.PasswordResetResponse
-import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.PasswordUpdateResponse
-import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetailsResponse
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserValidationResponse
-import com.vs.schoolmessenger.Auth.OTP.ForgetOtpData
 import com.vs.schoolmessenger.Auth.OTP.ForgetOtpSendResponse
 import com.vs.schoolmessenger.Auth.OTP.OtpResponse
 import com.vs.schoolmessenger.Auth.Splash.VersionCheckResponse
 import com.vs.schoolmessenger.CommonScreens.Ads.AdsResponse
 import com.vs.schoolmessenger.CommonScreens.DeviceToken
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
+import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.StaffListResponse
+import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
+import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.StandardResponse
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -89,6 +87,28 @@ interface ApiInterfaces {
         @Query("menu_id") isMenuId: String  // Pass isMemberType as a query parameter
     ): Call<AdsResponse?>
 
+    @GET(APIMethods.getStaffList)
+    fun getStaffList(
+        @Header("Authorization") token: String,
+    ): Call<StaffListResponse?>
+
+    @GET(APIMethods.getSubjectList)
+    fun getSubjectList(
+        @Header("Authorization") token: String,
+    ): Call<NameAndIdsResponse?>
+
+
+    @GET(APIMethods.getStandard)
+    fun getStandard(
+        @Header("Authorization") token: String,
+        @Query("section_id") isSectionId: String
+    ): Call<StandardResponse?>
+
+    @GET(APIMethods.getStudentList)
+    fun getStudentList(
+        @Header("Authorization") token: String,
+        @Query("section_id") isSectionId: String
+    ): Call<NameAndIdsResponse?>
 
 
 }

@@ -35,6 +35,9 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
+import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIds
+import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.Section
+import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.Standard
 import com.vs.schoolmessenger.Dashboard.Fragments.HelpFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.ParentHomeFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.ProfileFragment
@@ -62,7 +65,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         // Common setup for all activities
         // setupToolbar()
         setupViews()
-      //  applyCustomFontToViews()
+        //  applyCustomFontToViews()
     }
 
     open fun setupViews() {
@@ -246,6 +249,136 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         }
     }
 
+    fun isDropDownLoadData(
+        anchor: View,
+        activity: Activity,
+        items: List<NameAndIds>?, // Pass full list, not just names
+        onItemSelected: (Pair<String, Int>) -> Unit // Return name + ID
+    ) {
+        if (activity.isFinishing || activity.isDestroyed) {
+            Log.e("DropdownMenu", "Activity is not valid for showing the popup.")
+            return
+        }
+
+        val inflater = LayoutInflater.from(anchor.context)
+        val dropdownView = inflater.inflate(R.layout.dropdown_menu, null)
+
+        val popupWindow = PopupWindow(
+            dropdownView,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            true
+        )
+        dimBehind(popupWindow)
+
+        val listView: ListView = dropdownView.findViewById(R.id.dropdownListView)
+
+        // Extract names for UI display
+        val subjectNames = items!!.map { it.name }
+        val adapter = ArrayAdapter(anchor.context, R.layout.dropdown_spinner, subjectNames)
+        listView.adapter = adapter
+
+        listView.setOnItemClickListener { _, _, position, _ ->
+            val selectedSubject = items[position] // Get full SubjectListData object
+            onItemSelected(Pair(selectedSubject.name, selectedSubject.id)) // Pass both name & ID
+            clearDim()
+            popupWindow.dismiss()
+        }
+
+        popupWindow.setOnDismissListener {
+            clearDim()
+        }
+
+        try {
+            popupWindow.showAsDropDown(anchor)
+        } catch (e: Exception) {
+            Log.e("DropdownMenu", "Failed to show dropdown menu", e)
+        }
+    }
+
+
+    fun showStandardDropdown(
+        anchor: View,
+        activity: Activity,
+        standards: List<Standard>?,
+        onStandardSelected: (Standard, Int) -> Unit // Add position
+    ) {
+        if (activity.isFinishing || activity.isDestroyed) {
+            Log.e("DropdownMenu", "Activity is not valid for showing the popup.")
+            return
+        }
+
+        val inflater = LayoutInflater.from(anchor.context)
+        val dropdownView = inflater.inflate(R.layout.dropdown_menu, null)
+        val popupWindow = PopupWindow(
+            dropdownView,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            true
+        )
+        dimBehind(popupWindow)
+
+        val standardNames = standards!!.map { it.name }
+        val listView: ListView = dropdownView.findViewById(R.id.dropdownListView)
+        val adapter =
+            ArrayAdapter(anchor.context, android.R.layout.simple_list_item_1, standardNames)
+        listView.adapter = adapter
+
+        listView.setOnItemClickListener { _, _, position, _ ->
+            val selectedStandard = standards[position]
+            onStandardSelected(selectedStandard, position) // Pass position
+            popupWindow.dismiss()
+        }
+
+        popupWindow.setOnDismissListener {
+            clearDim()
+        }
+
+        popupWindow.showAsDropDown(anchor)
+    }
+
+
+    fun showSectionDropdown(
+        anchor: View,
+        activity: Activity,
+        sections: List<Section>?,
+        onSectionSelected: (Section) -> Unit
+    ) {
+        if (activity.isFinishing || activity.isDestroyed) {
+            Log.e("DropdownMenu", "Activity is not valid for showing the popup.")
+            return
+        }
+
+        val inflater = LayoutInflater.from(anchor.context)
+        val dropdownView = inflater.inflate(R.layout.dropdown_menu, null)
+        val popupWindow = PopupWindow(
+            dropdownView,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            true
+        )
+        dimBehind(popupWindow)
+
+        val sectionNames = sections!!.map { it.name }
+        val listView: ListView = dropdownView.findViewById(R.id.dropdownListView)
+        val adapter =
+            ArrayAdapter(anchor.context, android.R.layout.simple_list_item_1, sectionNames)
+        listView.adapter = adapter
+
+        listView.setOnItemClickListener { _, _, position, _ ->
+            val selectedSection = sections[position]
+            onSectionSelected(selectedSection) // Pass the selected Section
+            popupWindow.dismiss()
+        }
+
+        popupWindow.showAsDropDown(anchor)
+
+        popupWindow.setOnDismissListener {
+            clearDim()
+        }
+    }
+
+
     fun dimBehind(popupWindow: PopupWindow) {
         val window = this.window
         val layoutParams = window.attributes
@@ -254,7 +387,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         window.attributes = layoutParams
     }
 
-     fun clearDim() {
+    fun clearDim() {
         val window = this.window
         val layoutParams = window.attributes
         layoutParams.alpha = 1.0f
@@ -449,7 +582,6 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
     }
 
-
     // Example: Show a common loading dialog
     protected fun showLoadingDialog() {
         // Code to show loading dialog
@@ -461,28 +593,27 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     }
 
 
+    fun showTimePickerDialog(context: Context, listener: TimeSelectedListener) {
+        // Get current time
+        val calendar = Calendar.getInstance()
+        val hour = calendar.get(Calendar.HOUR_OF_DAY)
+        val minute = calendar.get(Calendar.MINUTE)
 
-        fun showTimePickerDialog(context:Context,listener:TimeSelectedListener) {
-            // Get current time
-            val calendar = Calendar.getInstance()
-            val hour = calendar.get(Calendar.HOUR_OF_DAY)
-            val minute = calendar.get(Calendar.MINUTE)
-
-            // Create and show TimePickerDialog
-            val timePickerDialog = TimePickerDialog(
-                context,
-                { _, selectedHour, selectedMinute ->
-                    val amPm = if (selectedHour < 12) "AM" else "PM"
-                    val hourIn12Format =
-                        if (selectedHour == 0) 12 else if (selectedHour > 12) selectedHour - 12 else selectedHour
-                    listener.onTimeSelected(hourIn12Format, selectedMinute, amPm)
-                },
-                hour,
-                minute,
-                false // Use 12-hour format
-            )
-            timePickerDialog.show()
-        }
+        // Create and show TimePickerDialog
+        val timePickerDialog = TimePickerDialog(
+            context,
+            { _, selectedHour, selectedMinute ->
+                val amPm = if (selectedHour < 12) "AM" else "PM"
+                val hourIn12Format =
+                    if (selectedHour == 0) 12 else if (selectedHour > 12) selectedHour - 12 else selectedHour
+                listener.onTimeSelected(hourIn12Format, selectedMinute, amPm)
+            },
+            hour,
+            minute,
+            false // Use 12-hour format
+        )
+        timePickerDialog.show()
+    }
 
 
     fun showDatePickerDialog(
@@ -506,6 +637,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         )
         datePickerDialog.show()
     }
+
     fun changeDateFormat(inputDate: String): String {
         // Define the current format of the input date
         val inputFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
@@ -517,8 +649,6 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         val date = inputFormat.parse(inputDate)
         return outputFormat.format(date!!)
     }
-
-
 
 
     fun showSpinnerTimePicker(

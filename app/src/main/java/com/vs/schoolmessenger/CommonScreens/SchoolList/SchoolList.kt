@@ -3,21 +3,15 @@ package com.vs.schoolmessenger.CommonScreens.SchoolList
 import android.content.Intent
 import android.util.Log
 import android.view.View
-import android.widget.ImageView
-import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
-import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolListAdapter
-import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolListClickListener
-import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolsData
-import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.Assignment.Assignment
-import com.vs.schoolmessenger.School.SelectRecipient.RecipientActivity
+import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SchoolListActivityBinding
 
 class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickListener,
@@ -28,7 +22,6 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
     }
 
     private val selectedSchoolIds = mutableListOf<Int>()
-
     var isMultipleSchool = true
     private lateinit var mAdapter: SchoolListAdapter
 
@@ -120,6 +113,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
 
     override fun onItemClick(data: StaffDetails) {
         val intent = Intent(this, RecipientActivity::class.java)
+        SharedPreference.putStaffDetails(this, data)
         startActivity(intent)
     }
 }

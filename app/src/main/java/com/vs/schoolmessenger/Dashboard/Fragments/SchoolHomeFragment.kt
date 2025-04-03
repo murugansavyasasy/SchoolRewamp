@@ -231,22 +231,16 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
 
     private fun isDashBoardData() {
-//        val isToken = SharedPreference.getChildDetails(requireActivity())
-        val isToken =
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdGFmZl9pZCI6IjEwMDY5NTAzIiwic2Nob29sX2lkIjoiNTUxMiIsImlhdCI6MTc0MzQyMjM3N30.zk7XLtGdGh5slNHmeH0KCe7K1Mv6sQ0YFbuYSlP9GcM"
-//        Log.d("isToken", isToken!!.access_token)
+        val isToken = SharedPreference.getUserDetails(requireActivity())
         appViewModel!!.isDashBoardData(
-            isToken, "staff", requireActivity()
+            isToken!!.staff_details[0].access_token, "staff", requireActivity()
         )
     }
 
     private fun isGetAds() {
-//        val isToken = SharedPreference.getChildDetails(requireActivity())
-//        Log.d("isToken", isToken!!.access_token)
-        val isToken =
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdGFmZl9pZCI6IjEwMDY5NTAzIiwic2Nob29sX2lkIjoiNTUxMiIsImlhdCI6MTc0MzQyMjM3N30.zk7XLtGdGh5slNHmeH0KCe7K1Mv6sQ0YFbuYSlP9GcM"
-        appViewModel!!.isGetMenuId(
-            isToken, "101", requireActivity()
+        val isToken = SharedPreference.getUserDetails(requireActivity())
+        appViewModel!!.isGetAds(
+            isToken!!.staff_details[0].access_token,"102", requireActivity()
         )
     }
 

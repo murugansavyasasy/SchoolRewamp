@@ -30,6 +30,116 @@
         app:tabRippleColor="@android:color/transparent"
         app:tabTextAppearance="@style/TabTextStyle" />
 
+    <RelativeLayout
+        android:id="@+id/rlaStandard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tabLayout"
+        android:layout_marginStart="@dimen/fifteen"
+        android:layout_marginTop="@dimen/twenty_five"
+        android:layout_marginEnd="@dimen/fifteen"
+        android:background="@drawable/bg_stroke_rect_black"
+        android:padding="@dimen/ten">
+
+
+        <ImageView
+            android:id="@+id/imgStandard"
+            android:layout_width="@dimen/twenty_five"
+            android:layout_height="@dimen/twenty_five"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/ten"
+            android:src="@drawable/ic_down_arrow">
+
+        </ImageView>
+
+        <TextView
+            android:id="@+id/lblStandard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/fifteen"
+            android:fontFamily="@font/poppins_bold"
+            android:text="Select Standard"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp"
+            android:textStyle="bold"></TextView>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rlaSection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rlaStandard"
+        android:layout_marginStart="@dimen/fifteen"
+        android:layout_marginTop="@dimen/twenty_five"
+        android:layout_marginEnd="@dimen/fifteen"
+        android:background="@drawable/bg_stroke_rect_black"
+        android:padding="@dimen/ten">
+
+
+        <ImageView
+            android:id="@+id/imgSection"
+            android:layout_width="@dimen/twenty_five"
+            android:layout_height="@dimen/twenty_five"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/ten"
+            android:src="@drawable/ic_down_arrow">
+
+        </ImageView>
+
+        <TextView
+            android:id="@+id/lblSection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/fifteen"
+            android:fontFamily="@font/poppins_bold"
+            android:text="Select Section"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp"
+            android:textStyle="bold"></TextView>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlaSubject"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rlaSection"
+        android:layout_marginStart="@dimen/fifteen"
+        android:layout_marginTop="@dimen/twenty_five"
+        android:layout_marginEnd="@dimen/fifteen"
+        android:background="@drawable/bg_stroke_rect_black"
+        android:padding="@dimen/ten">
+
+
+        <ImageView
+            android:id="@+id/imgSubject"
+            android:layout_width="@dimen/twenty_five"
+            android:layout_height="@dimen/twenty_five"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/ten"
+            android:src="@drawable/ic_down_arrow">
+
+        </ImageView>
+
+        <TextView
+            android:id="@+id/lblSuibject"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/fifteen"
+            android:fontFamily="@font/poppins_bold"
+            android:text="Select Subject"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp"
+            android:textStyle="bold"></TextView>
+    </RelativeLayout>
+
+
     <!-- Container for description and buttons -->
     <LinearLayout
         android:id="@+id/bottomLayout"

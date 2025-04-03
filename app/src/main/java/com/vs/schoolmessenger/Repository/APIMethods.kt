@@ -15,5 +15,9 @@ object APIMethods {
     const val isDeviceToken = "app/auth/device-token"
     const val isGetDashBoard = "dashboard/dashboard/get-dashboard-details"
     const val isGetAds = "dashboard/dashboard/get-ads"
+    const val getStaffList = "comm/recipient/get-staff-list"
+    const val getSubjectList = "comm/recipient/get-subject-list"
+    const val getStandard = "comm/recipient/get-standards"
+    const val getStudentList = "comm/recipient/get-student-list"
 
 }

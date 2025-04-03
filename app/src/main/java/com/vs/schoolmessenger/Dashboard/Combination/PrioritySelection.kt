@@ -41,7 +41,6 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
         val staff_role = userDetails?.staff_role
         val role_name = userDetails?.role_name
 
-
         if (isStaff == true && isParent == true) {
             binding.lblTeacher.visibility = View.VISIBLE
             binding.lblParent.visibility = View.VISIBLE
@@ -54,7 +53,7 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
         }
 
         if (staff_role.equals(Constant.isStaffRole)) {
-            binding.btnGo.visibility = View.GONE //set single selection for staff login only
+            binding.btnGo.visibility = View.VISIBLE //set single selection for staff login only
         }
 
         if (userDetails!!.is_staff) {
@@ -73,17 +72,17 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
         }
     }
 
-        private fun isLoadData(isStaff: Boolean) {
-            if (isStaff) {
-                isStaffDetailAdapter = StaffDetailAdapter(Constant.isStaffDetails, this)
-                binding.recyclerViews.layoutManager = LinearLayoutManager(this)
-                binding.recyclerViews.adapter = isStaffDetailAdapter
-            } else {
-                isStudentDetailAdapter = StudentDetailAdapter(Constant.isChildDetails, this, this)
-                binding.recyclerViews.layoutManager = LinearLayoutManager(this)
-                binding.recyclerViews.adapter = isStudentDetailAdapter
-            }
+    private fun isLoadData(isStaff: Boolean) {
+        if (isStaff) {
+            isStaffDetailAdapter = StaffDetailAdapter(Constant.isStaffDetails, this)
+            binding.recyclerViews.layoutManager = LinearLayoutManager(this)
+            binding.recyclerViews.adapter = isStaffDetailAdapter
+        } else {
+            isStudentDetailAdapter = StudentDetailAdapter(Constant.isChildDetails, this, this)
+            binding.recyclerViews.layoutManager = LinearLayoutManager(this)
+            binding.recyclerViews.adapter = isStudentDetailAdapter
         }
+    }
 
 
     override fun onClick(p0: View?) {
