@@ -9,7 +9,6 @@ import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.StaffListResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.StandardResponse
-import com.vs.schoolmessenger.CommonScreens.GroupList.GroupListResponse
 
 class App(application: Application) : AndroidViewModel(application) {
 
@@ -33,7 +32,7 @@ class App(application: Application) : AndroidViewModel(application) {
 
     var isStudentList: LiveData<NameAndIdsResponse?>? = null
 
-    var isGetGroupList: LiveData<GroupListResponse?>? = null
+    var isGetGroupList: LiveData<NameAndIdsResponse?>? = null
         private set
 
     fun init() {

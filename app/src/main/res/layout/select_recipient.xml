@@ -30,11 +30,25 @@
         app:tabRippleColor="@android:color/transparent"
         app:tabTextAppearance="@style/TabTextStyle" />
 
+
+
+    <TextView
+        android:id="@+id/grouplabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/twenty"
+        android:text="Group"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="normal"
+        android:layout_below="@+id/tabLayout"/>
+
     <RelativeLayout
         android:id="@+id/rlaStandard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tabLayout"
+        android:layout_below="@+id/grouplabel"
         android:layout_marginStart="@dimen/fifteen"
         android:layout_marginTop="@dimen/twenty_five"
         android:layout_marginEnd="@dimen/fifteen"
@@ -140,6 +154,22 @@
     </RelativeLayout>
 
 
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/rect_white_light_radious"
+        android:layout_below="@+id/grouplabel">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+
+
+
     <!-- Container for description and buttons -->
     <LinearLayout
         android:id="@+id/bottomLayout"
@@ -152,7 +182,7 @@
         android:padding="8dp">
 
         <TextView
-            android:id="@+id/text_desc"
+            android:id="@+id/textdesc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_medium"
