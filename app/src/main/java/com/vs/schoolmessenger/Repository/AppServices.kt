@@ -9,6 +9,7 @@ import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.StaffListResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.StandardResponse
+import com.vs.schoolmessenger.CommonScreens.GroupList.GroupListResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,6 +23,7 @@ class AppServices {
     var isGetSubjectList: MutableLiveData<NameAndIdsResponse?>
     var isGetStandardSection: MutableLiveData<StandardResponse?>
     var isGetStudentList: MutableLiveData<NameAndIdsResponse?>
+    var isGetGroupList: MutableLiveData<GroupListResponse?>
 
     init {
         client_auth = RestClient()
@@ -31,6 +33,7 @@ class AppServices {
         isGetSubjectList = MutableLiveData()
         isGetStandardSection = MutableLiveData()
         isGetStudentList = MutableLiveData()
+        isGetGroupList = MutableLiveData()
     }
 
 
@@ -53,6 +56,8 @@ class AppServices {
                             }
                         }
                     } else {
+
+
                     }
                 }
 
@@ -224,6 +229,45 @@ class AppServices {
 
     val isStudentLiveData: LiveData<NameAndIdsResponse?>
         get() = isGetStudentList
+
+
+    fun isGetGroupList(isToken:String,activity: Activity) {
+        RestClient.apiInterfaces.isGroupList(isToken)
+            ?.enqueue(object : Callback<GroupListResponse?> {
+                override fun onResponse(
+                    call: Call<GroupListResponse?>,
+                    response: Response<GroupListResponse?>
+                ) {
+                    Log.d(
+                        "isGetCountryList",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isGetGroupList.postValue(response.body())
+                            } else {
+                                isGetGroupList.postValue(response.body())
+                            }
+                        }
+                    } else {
+                    }
+                }
+
+                override fun onFailure(call: Call<GroupListResponse?>, t: Throwable) {
+                    isGetGroupList.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isGetGroupLiveData: LiveData<GroupListResponse?>
+        get() = isGetGroupList
+
+
+
+
 
 
 }

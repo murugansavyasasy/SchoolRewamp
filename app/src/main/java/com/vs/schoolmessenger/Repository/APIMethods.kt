@@ -19,5 +19,6 @@ object APIMethods {
     const val getSubjectList = "comm/recipient/get-subject-list"
     const val getStandard = "comm/recipient/get-standards"
     const val getStudentList = "comm/recipient/get-student-list"
+    const val isGroupList = "comm/recipient/get-group-list"
 
 }

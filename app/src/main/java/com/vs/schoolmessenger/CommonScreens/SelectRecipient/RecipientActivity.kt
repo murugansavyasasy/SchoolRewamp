@@ -42,6 +42,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(),
         binding.rlaStandard.setOnClickListener(
             this
         )
+
         val tabLayout = binding.tabLayout
         tabLayout.addTab(tabLayout.newTab().setText("Entire School"), true)
         tabLayout.addTab(tabLayout.newTab().setText("Group"))
@@ -153,3 +154,4 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(),
         )
     }
 }
+

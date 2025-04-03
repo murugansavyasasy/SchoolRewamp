@@ -14,6 +14,7 @@ import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.StaffListResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.StandardResponse
+import com.vs.schoolmessenger.CommonScreens.GroupList.GroupListResponse
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -109,6 +110,13 @@ interface ApiInterfaces {
         @Header("Authorization") token: String,
         @Query("section_id") isSectionId: String
     ): Call<NameAndIdsResponse?>
+
+    @GET(APIMethods.isGroupList)
+    fun isGroupList(
+        @Header("Authorization") token: String
+    ): Call<GroupListResponse?>
+
+
 
 
 }

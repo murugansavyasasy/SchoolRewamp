@@ -9,6 +9,7 @@ import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.StaffListResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.StandardResponse
+import com.vs.schoolmessenger.CommonScreens.GroupList.GroupListResponse
 
 class App(application: Application) : AndroidViewModel(application) {
 
@@ -31,6 +32,8 @@ class App(application: Application) : AndroidViewModel(application) {
         private set
 
     var isStudentList: LiveData<NameAndIdsResponse?>? = null
+
+    var isGetGroupList: LiveData<GroupListResponse?>? = null
         private set
 
     fun init() {
@@ -40,6 +43,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isGetSubjectList = apiRepositories!!.isSubjectListLiveData
         isStandardSectionList = apiRepositories!!.isGetStandardSectionLiveData
         isStudentList = apiRepositories!!.isStudentLiveData
+        isGetGroupList = apiRepositories!!.isGetGroupLiveData
     }
 
     fun isDashBoardData(isToken: String, isMemberType: String, activity: Activity) {
@@ -65,5 +69,8 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun isGetStudentList(isToken: String, isSection: String, activity: Activity) {
         apiRepositories.isGetStudentList(isToken,isSection, activity)
+    }
+    fun isGetGroupList(isToken: String, activity: Activity) {
+        apiRepositories!!.isGetGroupList(isToken, activity)
     }
 }

@@ -52,9 +52,11 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
             binding.lblParent.visibility = View.VISIBLE
         }
 
-        if (staff_role.equals(Constant.isStaffRole)) {
-            binding.btnGo.visibility = View.VISIBLE //set single selection for staff login only
-        }
+//        if (staff_role.equals(Constant.isStaffRole)) {
+//            binding.btnGo.visibility = View.VISIBLE //set single selection for staff login only
+//        }
+        binding.btnGo.visibility = View.VISIBLE
+
 
         if (userDetails!!.is_staff) {
             binding.lblTeacher.text = userDetails!!.role_name
