@@ -16,6 +16,7 @@ import com.vs.schoolmessenger.Auth.Splash.VersionCheckResponse
 import com.vs.schoolmessenger.CommonScreens.Ads.AdsResponse
 import com.vs.schoolmessenger.CommonScreens.DeviceToken
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
+import com.vs.schoolmessenger.CommonScreens.GroupList.GroupListResponse
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -88,6 +89,13 @@ interface ApiInterfaces {
         @Header("Authorization") token: String,  // Pass token as a header
         @Query("menu_id") isMenuId: String  // Pass isMemberType as a query parameter
     ): Call<AdsResponse?>
+
+
+    @GET(APIMethods.isGroupList)
+    fun isGroupList(
+        @Header("Authorization") token: String
+    ): Call<GroupListResponse?>
+
 
 
 

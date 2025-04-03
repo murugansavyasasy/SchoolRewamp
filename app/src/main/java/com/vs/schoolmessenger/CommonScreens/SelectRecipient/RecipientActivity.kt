@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.School.SelectRecipient
+package com.vs.schoolmessenger.CommonScreens.SelectRecipient
 
 import android.view.View
 import com.vs.schoolmessenger.Auth.Base.BaseActivity

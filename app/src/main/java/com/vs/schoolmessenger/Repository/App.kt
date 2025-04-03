@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.vs.schoolmessenger.CommonScreens.Ads.AdsResponse
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
+import com.vs.schoolmessenger.CommonScreens.GroupList.GroupListResponse
 
 class App(application: Application) : AndroidViewModel(application) {
 
@@ -18,9 +19,14 @@ class App(application: Application) : AndroidViewModel(application) {
     var isGetAds: LiveData<AdsResponse?>? = null
         private set
 
+
+    var isGetGroupList: LiveData<GroupListResponse?>? = null
+        private set
+
     fun init() {
         isDashBoardData = apiRepositories!!.isDashBoardLiveData
         isGetAds = apiRepositories!!.isGetAdsLiveData
+        isGetGroupList = apiRepositories!!.isGetGroupLiveData
     }
 
     fun isDashBoardData(isToken: String, isMemberType: String, activity: Activity) {
@@ -29,6 +35,10 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun isGetMenuId(isToken: String, isMenuId: String, activity: Activity) {
         apiRepositories!!.isGetAds(isToken, isMenuId, activity)
+    }
+
+    fun isGetGroupList(isToken: String, activity: Activity) {
+        apiRepositories!!.isGetGroupList(isToken, activity)
     }
 
 }

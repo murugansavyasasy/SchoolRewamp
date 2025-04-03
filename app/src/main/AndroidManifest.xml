@@ -69,6 +69,12 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".CommonScreens.SelectRecipient.RecipientActivity"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
 
         <activity
             android:name=".Parent.ExamMarks.ExamMarkResults"
