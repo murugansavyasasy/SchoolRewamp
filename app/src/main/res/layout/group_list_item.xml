@@ -1,59 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/five"
-    android:background="@drawable/rect_white_light_radious"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    >
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp">
 
     <RelativeLayout
-        android:id="@+id/rlaHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/ten"
-        app:layout_constraintTop_toTopOf="parent">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_alignParentEnd="true"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/twenty"
-            android:layout_toEndOf="@+id/rytRight">
-            <TextView
-                android:id="@+id/lblgroupname"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_regular"
-                android:text="Teachers Group"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp"
-                android:textStyle="normal" />
-        </RelativeLayout>
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="10dp">
 
-        <RelativeLayout
-            android:id="@+id/rytRight"
+        <TextView
+            android:id="@+id/lblgroupname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="false"
-            android:layout_centerVertical="true">
-            <ImageView
-                android:id="@+id/imgSingleSchoolArrow"
-                android:layout_width="@dimen/twenty"
-                android:layout_height="@dimen/twenty"
-                android:visibility="gone"
-                android:layout_centerVertical="true"
-                android:src="@drawable/arrow_right_gray" />
-            <CheckBox
-                android:id="@+id/chMultipleSchool"
-                android:layout_width="wrap_content"
-                android:layout_centerVertical="true"
-                android:visibility="visible"
-                android:layout_height="wrap_content">
-            </CheckBox>
-        </RelativeLayout>
+            android:text="Group Name"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="@dimen/five"
+            android:layout_toEndOf="@+id/chMultipleSchool"/>
+
+        <CheckBox
+            android:id="@+id/chMultipleSchool"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </RelativeLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
