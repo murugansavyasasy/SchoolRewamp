@@ -4,6 +4,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <RelativeLayout
+        android:id="@+id/rlaTitle"
+        android:layout_width="match_parent"
+        android:padding="@dimen/ten"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_width="@dimen/thirty_five"
+            android:src="@drawable/arrow_back_black"
+            android:layout_height="@dimen/thirty_five">
+
+        </ImageView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_toEndOf="@+id/imgBack"
+            android:textColor="@color/black"
+            android:layout_marginStart="@dimen/ten"
+            android:textStyle="bold"
+            android:layout_centerVertical="true"
+            android:text="Select Recipient"
+            android:layout_height="wrap_content">
+
+        </TextView>
+
+    </RelativeLayout>
+
+
     <TextView
         android:id="@+id/sendlabel"
         android:layout_width="wrap_content"
@@ -12,6 +41,7 @@
         android:layout_marginTop="@dimen/twenty"
         android:text="Send To :"
         android:textColor="@color/black"
+        android:layout_below="@+id/rlaTitle"
         android:textSize="16sp"
         android:textStyle="normal" />
 

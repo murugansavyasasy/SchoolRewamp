@@ -168,7 +168,7 @@ class AppServices {
 
 
     fun isGetStandardSection(isToken: String, isSection: String, activity: Activity) {
-        RestClient.apiInterfaces.getStandard(isToken,isSection)
+        RestClient.apiInterfaces.getStandard(isToken, isSection)
             ?.enqueue(object : Callback<StandardResponse?> {
                 override fun onResponse(
                     call: Call<StandardResponse?>, response: Response<StandardResponse?>
@@ -200,7 +200,7 @@ class AppServices {
 
 
     fun isGetStudentList(isToken: String, isSection: String, activity: Activity) {
-        RestClient.apiInterfaces.getStudentList(isToken,isSection)
+        RestClient.apiInterfaces.getStudentList(isToken, isSection)
             ?.enqueue(object : Callback<NameAndIdsResponse?> {
                 override fun onResponse(
                     call: Call<NameAndIdsResponse?>, response: Response<NameAndIdsResponse?>
@@ -231,7 +231,7 @@ class AppServices {
         get() = isGetStudentList
 
 
-    fun isGetGroupList(isToken:String,activity: Activity) {
+    fun isGetGroupList(isToken: String, activity: Activity) {
         RestClient.apiInterfaces.isGroupList(isToken)
             ?.enqueue(object : Callback<GroupListResponse?> {
                 override fun onResponse(
@@ -264,10 +264,6 @@ class AppServices {
 
     val isGetGroupLiveData: LiveData<GroupListResponse?>
         get() = isGetGroupList
-
-
-
-
 
 
 }

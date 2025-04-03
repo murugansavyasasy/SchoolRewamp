@@ -39,8 +39,8 @@ object Constant {
     var isVersionId = 93
     var isShimmerViewShow = true
     var isShimmerViewDisable = false
-    var isShimmerViewDisablenew = false  // added by murugan
-    var isShimmerView = false  // added by murugan to development branch
+    var isShimmerViewDisablenew = false
+    var isShimmerView = false
     var handler = Handler(Looper.getMainLooper())
     val delayTime = 1500
     var isParentChoose = false

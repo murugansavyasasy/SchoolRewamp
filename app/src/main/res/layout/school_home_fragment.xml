@@ -21,8 +21,6 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-
-
                 android:alpha="0.8"
                 android:background="@drawable/gradient_theme_school" />
         </FrameLayout>
@@ -32,8 +30,8 @@
             android:id="@+id/rlaSchoolDetail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="@dimen/ten"
             android:layout_marginTop="@dimen/ten"
+            android:paddingHorizontal="@dimen/ten"
             android:paddingVertical="@dimen/twenty"
             android:visibility="visible">
 
@@ -119,35 +117,33 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/rlaSchoolDetail"
             android:layout_marginStart="@dimen/twenty"
-            android:layout_marginEnd="@dimen/twenty"
             android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/twenty"
             android:background="@drawable/rect_white_light_radious"
             android:elevation="10dp"
             android:padding="@dimen/fifteen">
 
             <TextView
                 android:id="@+id/lblReportAttendance"
+                style="@style/CustomTextStyleAttendanceReportDashBoard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Attendance Report"
-                style="@style/CustomTextStyleAttendanceReportDashBoard"
                 android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp"
-                >
+                android:textSize="@dimen/thirteen_sp">
 
             </TextView>
 
             <TextView
                 android:id="@+id/lblDate"
+                style="@style/CustomTextStyleAttendanceReportDashBoardRegular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblReportAttendance"
-                android:text="01, May 2025"
-                style="@style/CustomTextStyleAttendanceReportDashBoardRegular"
-                android:textColor="@color/black"
                 android:layout_marginTop="@dimen/ten"
-                android:textSize="@dimen/thirteen_sp"
-                >
+                android:text="01, May 2025"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp">
 
             </TextView>
 
@@ -229,7 +225,6 @@
 
         </RelativeLayout>
     </RelativeLayout>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

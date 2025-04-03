@@ -30,18 +30,9 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(),
         setupToolbar()
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel!!.init()
-
-        binding.rlaSubject.setOnClickListener(
-            this
-        )
-
-        binding.rlaSection.setOnClickListener(
-            this
-        )
-
-        binding.rlaStandard.setOnClickListener(
-            this
-        )
+        binding.rlaSubject.setOnClickListener(this)
+        binding.rlaSection.setOnClickListener(this)
+        binding.rlaStandard.setOnClickListener(this)
 
         val tabLayout = binding.tabLayout
         tabLayout.addTab(tabLayout.newTab().setText("Entire School"), true)

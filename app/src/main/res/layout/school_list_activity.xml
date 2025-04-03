@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light_blue_1">
+    android:background="@color/white">
 
     <RelativeLayout
         android:id="@+id/rytHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/light_blue_1"
+        android:background="@color/primary_light"
         android:paddingVertical="@dimen/twenty"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -40,7 +40,7 @@
             android:layout_marginStart="@dimen/fifteen"
             android:layout_toEndOf="@+id/imgSchool"
             android:text="School Selection"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="@dimen/fifteen_sp"
             android:textStyle="bold" />
 
@@ -52,7 +52,7 @@
             android:layout_marginStart="@dimen/fifteen"
             android:layout_toEndOf="@+id/imgSchool"
             android:text="Choose your preferred school"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="@dimen/fifteen_sp"
             android:textStyle="normal" />
 

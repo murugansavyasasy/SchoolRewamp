@@ -50,9 +50,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
     private lateinit var binding: SchoolHomeFragmentBinding // Automatically generated binding class
     lateinit var isMenuAdapter: SchoolMenuAdapter
-
-    //    private lateinit var items: ArrayList<GridItem>
-//    private var isMenuItems: MutableList<GridItem> = mutableListOf()
     private var isSearchVisible = false
     private var appViewModel: App? = null
 

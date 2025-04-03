@@ -115,8 +115,4 @@ interface ApiInterfaces {
     fun isGroupList(
         @Header("Authorization") token: String
     ): Call<GroupListResponse?>
-
-
-
-
 }
