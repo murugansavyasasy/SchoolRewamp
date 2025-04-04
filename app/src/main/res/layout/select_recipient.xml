@@ -7,26 +7,26 @@
     <RelativeLayout
         android:id="@+id/rlaTitle"
         android:layout_width="match_parent"
-        android:padding="@dimen/ten"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="@dimen/ten">
 
         <ImageView
             android:id="@+id/imgBack"
             android:layout_width="@dimen/thirty_five"
-            android:src="@drawable/arrow_back_black"
-            android:layout_height="@dimen/thirty_five">
+            android:layout_height="@dimen/thirty_five"
+            android:src="@drawable/arrow_back_black">
 
         </ImageView>
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_toEndOf="@+id/imgBack"
-            android:textColor="@color/black"
-            android:layout_marginStart="@dimen/ten"
-            android:textStyle="bold"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_toEndOf="@+id/imgBack"
             android:text="Select Recipient"
-            android:layout_height="wrap_content">
+            android:textColor="@color/black"
+            android:textStyle="bold">
 
         </TextView>
 
@@ -37,11 +37,11 @@
         android:id="@+id/sendlabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/rlaTitle"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginTop="@dimen/twenty"
         android:text="Send To :"
         android:textColor="@color/black"
-        android:layout_below="@+id/rlaTitle"
         android:textSize="16sp"
         android:textStyle="normal" />
 
@@ -61,18 +61,18 @@
         app:tabTextAppearance="@style/TabTextStyle" />
 
 
-
     <TextView
         android:id="@+id/grouplabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/tabLayout"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginTop="@dimen/twenty"
         android:text="Group"
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="normal"
-        android:layout_below="@+id/tabLayout"/>
+        android:visibility="gone" />
 
     <RelativeLayout
         android:id="@+id/rlaStandard"
@@ -83,7 +83,8 @@
         android:layout_marginTop="@dimen/twenty_five"
         android:layout_marginEnd="@dimen/fifteen"
         android:background="@drawable/bg_stroke_rect_black"
-        android:padding="@dimen/ten">
+        android:padding="@dimen/ten"
+        android:visibility="gone">
 
 
         <ImageView
@@ -111,52 +112,31 @@
     </RelativeLayout>
 
 
-    <RelativeLayout
-        android:id="@+id/rlaSection"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rlaStandard"
-        android:layout_marginStart="@dimen/fifteen"
-        android:layout_marginTop="@dimen/twenty_five"
-        android:layout_marginEnd="@dimen/fifteen"
-        android:background="@drawable/bg_stroke_rect_black"
-        android:padding="@dimen/ten">
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
+        android:layout_marginBottom="@dimen/fifty"
+        android:background="@drawable/rect_white_light_radious"
+        android:visibility="gone">
 
-
-        <ImageView
-            android:id="@+id/imgSection"
-            android:layout_width="@dimen/twenty_five"
-            android:layout_height="@dimen/twenty_five"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/ten"
-            android:src="@drawable/ic_down_arrow">
-
-        </ImageView>
-
-        <TextView
-            android:id="@+id/lblSection"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/fifteen"
-            android:fontFamily="@font/poppins_bold"
-            android:text="Select Section"
-            android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"
-            android:textStyle="bold"></TextView>
-    </RelativeLayout>
+    </androidx.recyclerview.widget.RecyclerView>
 
     <RelativeLayout
         android:id="@+id/rlaSubject"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rlaSection"
+        android:layout_below="@+id/recyclerView"
         android:layout_marginStart="@dimen/fifteen"
-        android:layout_marginTop="@dimen/twenty_five"
+        android:layout_marginTop="-40dp"
         android:layout_marginEnd="@dimen/fifteen"
         android:background="@drawable/bg_stroke_rect_black"
-        android:padding="@dimen/ten">
+        android:padding="@dimen/ten"
+        android:visibility="gone">
 
 
         <ImageView
@@ -184,32 +164,16 @@
     </RelativeLayout>
 
 
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/ten"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:background="@drawable/rect_white_light_radious"
-        android:layout_below="@+id/grouplabel">
-
-    </androidx.recyclerview.widget.RecyclerView>
-
-
-
-
     <!-- Container for description and buttons -->
     <LinearLayout
         android:id="@+id/bottomLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="@dimen/five"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="8dp">
+        android:padding="@dimen/five">
 
         <TextView
             android:id="@+id/textdesc"
@@ -221,38 +185,39 @@
             android:text="Click the SEND button to send an important announcement from Entier School"
             android:textColor="@color/black"
             android:textSize="15sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:visibility="visible" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
             android:gravity="center"
             android:orientation="horizontal"
-            android:padding="8dp">
+            android:weightSum="1">
 
             <Button
                 android:id="@+id/btnViewMarks"
-                android:layout_width="150dp"
+                android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_marginEnd="10dp"
+                android:layout_weight="0.5"
                 android:background="@drawable/bg_orange"
                 android:gravity="center"
                 android:text="Send"
                 android:textColor="@color/white"
-                android:textSize="12sp"
+                android:textSize="@dimen/thirteen_sp"
                 android:textStyle="bold" />
 
             <Button
                 android:id="@+id/btnViewProgress"
-                android:layout_width="150dp"
+                android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginStart="10dp"
+                android:layout_weight="0.5"
                 android:background="@drawable/bg_orange"
                 android:gravity="center"
                 android:text="Specific Student"
                 android:textColor="@color/white"
-                android:textSize="12sp"
+                android:textSize="@dimen/thirteen_sp"
                 android:textStyle="bold" />
         </LinearLayout>
 

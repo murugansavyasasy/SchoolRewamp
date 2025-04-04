@@ -36,8 +36,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIds
-import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.Section
-import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.Standard
+import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SectionList.Section
+import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.Standard
 import com.vs.schoolmessenger.Dashboard.Fragments.HelpFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.ParentHomeFragment
 import com.vs.schoolmessenger.Dashboard.Fragments.ProfileFragment
