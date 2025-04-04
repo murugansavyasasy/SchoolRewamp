@@ -48,7 +48,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(),
         appViewModel!!.init()
 
         binding.rlaSubject.setOnClickListener(this)
-//        binding.rlaSection.setOnClickListener(this)
         binding.rlaStandard.setOnClickListener(this)
 
         val tabLayout = binding.tabLayout
@@ -56,19 +55,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(),
         tabLayout.addTab(tabLayout.newTab().setText("Group"))
         tabLayout.addTab(tabLayout.newTab().setText("Standard"))
         tabLayout.addTab(tabLayout.newTab().setText("Section/Specific Student"))
-
-//        // Set up RecyclerView and Adapter
-//        groupListAdapter = GroupListAdapter(object : GroupListClickListener {
-//            override fun onGroupClick(group: NameAndIds) {
-//                // Handle group click
-//            }
-//        }, this, true)
-//
-//        binding.recyclerView.apply {
-//            layoutManager = LinearLayoutManager(this@RecipientActivity)
-//            adapter = groupListAdapter
-//        }
-
 
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
@@ -117,10 +103,14 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(),
                         } else {
                             binding.rlaStandard.visibility = View.GONE
                         }
+                        binding.recyclerView.visibility = View.GONE
+                        binding.rlaSubject.visibility = View.VISIBLE
+                        binding.rlaStandard.visibility = View.VISIBLE
+                        binding.textdesc.visibility = View.GONE
+                        binding.btnViewProgress.visibility = View.VISIBLE
                         binding.grouplabel.visibility = View.GONE
                         binding.recyclerView.visibility = View.GONE
                         binding.rlaSubject.visibility = View.GONE
-                        binding.textdesc.visibility = View.GONE
                     }
                 }
             }
