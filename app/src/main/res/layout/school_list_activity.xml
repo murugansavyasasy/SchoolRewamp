@@ -3,14 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/light_blue_1">
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/rytHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/light_blue_1"
+        android:background="@drawable/blue_gradient_color"
         android:paddingVertical="@dimen/twenty"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -22,26 +21,17 @@
             android:layout_marginStart="@dimen/fifteen"
             android:src="@drawable/arrow_back_black" />
 
-        <ImageView
-            android:id="@+id/imgSchool"
-            android:layout_width="@dimen/thirty_five"
-            android:layout_height="@dimen/thirty_five"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_toEndOf="@+id/imgBack"
-            android:src="@drawable/school_building_2">
 
-        </ImageView>
 
         <TextView
             android:id="@+id/lblTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/fifteen"
-            android:layout_toEndOf="@+id/imgSchool"
+            android:layout_toEndOf="@+id/imgBack"
             android:text="School Selection"
             android:textColor="@color/white"
-            android:textSize="@dimen/fifteen_sp"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView
@@ -50,10 +40,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/lblTitle"
             android:layout_marginStart="@dimen/fifteen"
-            android:layout_toEndOf="@+id/imgSchool"
+            android:layout_toEndOf="@+id/imgBack"
             android:text="Choose your preferred school"
             android:textColor="@color/white"
-            android:textSize="@dimen/fifteen_sp"
+            android:textSize="13sp"
             android:textStyle="normal" />
 
     </RelativeLayout>
@@ -61,14 +51,15 @@
     <LinearLayout
         android:id="@+id/lnrTab"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/thirty_five"
+        android:layout_height="@dimen/fourty"
         android:layout_below="@+id/rytHeader"
-        android:layout_marginStart="@dimen/ten"
+        android:layout_marginStart="@dimen/two"
         android:layout_marginTop="@dimen/ten"
-        android:layout_marginEnd="@dimen/ten"
-        android:background="@drawable/rect_btn_blue"
+        android:layout_marginEnd="@dimen/two"
+        android:background="@drawable/rect_btn_grey"
         android:orientation="horizontal"
-        android:weightSum="1">
+        android:weightSum="1"
+        android:padding="@dimen/one">
 
 
         <TextView
@@ -81,8 +72,9 @@
             android:gravity="center"
             android:text="Send to multiple school"
             android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"
-            android:textStyle="bold">
+            android:textSize="13sp"
+            android:textStyle="normal"
+            android:fontFamily="@font/poppins_medium">
 
         </TextView>
 
@@ -93,10 +85,11 @@
             android:layout_gravity="center"
             android:layout_weight="0.5"
             android:gravity="center"
-            android:text="Send to Single school"
+            android:text="Select Resipent"
             android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"
-            android:textStyle="bold">
+            android:textSize="13sp"
+            android:textStyle="normal"
+            android:fontFamily="@font/poppins_medium">
 
         </TextView>
     </LinearLayout>
@@ -108,7 +101,8 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/lblSend"
         android:layout_below="@+id/lnrTab"
-        android:layout_marginBottom="@dimen/ten"
+        android:layout_marginTop="-32dp"
+        android:layout_marginBottom="42dp"
         android:padding="@dimen/ten"
         tools:listitem="@layout/schools_list_item" />
 
@@ -120,13 +114,14 @@
         android:layout_marginStart="@dimen/twenty"
         android:layout_marginEnd="@dimen/twenty"
         android:layout_marginBottom="@dimen/ten"
-        android:background="@drawable/rect_btn_blue"
-        android:gravity="center"
-        android:padding="@dimen/five"
-        android:text="@string/Send"
+        android:background="@drawable/rect_btn_orange"
+        android:gravity="center_horizontal"
+        android:padding="@dimen/eight"
+        android:text="Send to multiple school"
         android:textColor="@color/white"
         android:textSize="@dimen/fifteen_sp"
-        android:textStyle="bold">
+        android:textStyle="normal"
+        android:fontFamily="@font/poppins_regular">
 
     </TextView>
 

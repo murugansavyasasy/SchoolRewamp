@@ -80,7 +80,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(),
                         binding.rlaSubject.visibility = View.VISIBLE
                         binding.rlaSection.visibility = View.VISIBLE
                         binding.rlaStandard.visibility = View.VISIBLE
-                        binding.textdesc.visibility = View.VISIBLE
+                        binding.textdesc.visibility = View.GONE
                         binding.btnViewProgress.visibility = View.VISIBLE
                         binding.grouplabel.visibility = View.GONE
                     }
