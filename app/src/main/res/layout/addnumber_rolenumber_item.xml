@@ -14,7 +14,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_weight="0.3"
-            android:text="Admission No"
+            android:text="@string/admission_no"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"
             android:textStyle="bold"
@@ -55,7 +55,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_weight="0.3"
-            android:text="Role No"
+            android:text="@string/role_no"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"
             android:textStyle="bold"

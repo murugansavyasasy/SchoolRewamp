@@ -28,7 +28,7 @@
             android:background="@drawable/bg_radiantgreen1"
             android:gravity="center"
             android:padding="@dimen/ten"
-            android:text="Upcoming"
+            android:text="@string/upcoming"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"
             android:textStyle="bold" />
@@ -40,7 +40,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:padding="@dimen/ten"
-            android:text="Completed"
+            android:text="@string/completed"
             android:textColor="@color/grey"
             android:textSize="@dimen/thirteen_sp"
             android:background="@drawable/bg_radiantwhite1"

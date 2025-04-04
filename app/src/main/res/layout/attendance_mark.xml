@@ -69,7 +69,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:padding="@dimen/ten"
-            android:text="Report"
+            android:text="@string/Reports"
             android:fontFamily="@font/poppins_bold"
             android:textColor="@color/dark_blue"
             android:textSize="@dimen/thirteen_sp"
@@ -106,7 +106,7 @@
 <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="Select Date"
+    android:text="@string/select_date"
     android:textColor="@color/black"
     android:textStyle="bold"
     android:layout_alignStart="@+id/cardStart"
@@ -205,7 +205,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Select Standard and Section"
+            android:text="@string/select_standard_and_section"
             android:textColor="@color/black"
             android:textStyle="bold"
             android:layout_below="@+id/cardStart"
@@ -256,7 +256,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/fifteen"
-                    android:text="STANDARD"
+                    android:text="@string/standard"
                     android:textColor="@color/black"
                     android:textSize="12sp"
                     android:fontFamily="@font/poppins_bold"
@@ -294,7 +294,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/fifteen"
-                    android:text="SECTION"
+                    android:text="@string/section"
                     android:textColor="@color/black"
                     android:textSize="12sp"
                     android:fontFamily="@font/poppins_bold"
@@ -308,7 +308,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Select Standard and Section"
+            android:text="@string/select_standard_and_section"
             android:textColor="@color/black"
             android:textStyle="bold"
             android:layout_below="@+id/lnrClasses"
@@ -356,7 +356,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="Full Day"
+                    android:text="@string/full_day"
                     android:textColor="@color/black"
                     android:textSize="13sp"
                     android:layout_toEndOf="@+id/radio_button"
@@ -394,7 +394,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="Half Day"
+                    android:text="@string/half_day"
                     android:textColor="@color/black"
                     android:textSize="13sp"
                     android:fontFamily="@font/poppins_medium"
@@ -459,7 +459,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="First Half"
+                    android:text="@string/first_half"
                     android:textColor="@color/black"
                     android:textSize="13sp"
                     android:fontFamily="@font/poppins_medium"
@@ -497,7 +497,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="Half Day"
+                    android:text="@string/half_day"
                     android:textColor="@color/black"
                     android:textSize="13sp"
                     android:fontFamily="@font/poppins_medium"
@@ -561,7 +561,6 @@
             android:textColor="@color/white"
             android:fontFamily="@font/poppins_bold"
             android:textSize="@dimen/thirteen_sp"
-
             android:textStyle="bold">
 
         </TextView>
@@ -683,7 +682,8 @@
                     android:text="XII"
                     android:textColor="@color/black"
                     android:textSize="@dimen/fifteen_sp"
-                    android:textStyle="bold"></TextView>
+                    android:textStyle="bold">
+                </TextView>
             </RelativeLayout>
 
 

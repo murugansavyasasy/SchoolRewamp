@@ -59,7 +59,7 @@
                 android:id="@+id/editbutton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Edit"
+                android:text="@string/edit"
                 android:textColor="@color/navi_blue2"
                 android:textSize="16sp"
                 android:textStyle="bold"

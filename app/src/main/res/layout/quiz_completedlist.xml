@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:background="@color/onahau"
             android:padding="16dp"
-            android:text="Question will appear here"
+            android:text="@string/question_will_appear_here"
             android:textSize="13sp"
             android:gravity="center"
             android:textColor="@color/black"

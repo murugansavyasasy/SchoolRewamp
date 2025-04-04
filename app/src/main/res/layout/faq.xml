@@ -21,7 +21,8 @@
             android:layout_height="@dimen/thirty"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginEnd="@dimen/ten"
-            android:src="@drawable/arrow_back_black"></ImageView>
+            android:src="@drawable/arrow_back_black">
+        </ImageView>
 
         <TextView
             android:id="@+id/title"
@@ -51,8 +52,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/eight"
-                app:cardCornerRadius="@dimen/eight"
-                app:cardElevation="@dimen/five">
+                app:cardElevation="@dimen/eight"
+                app:cardCornerRadius="@dimen/five">
 
                 <LinearLayout
                     android:layout_width="match_parent"

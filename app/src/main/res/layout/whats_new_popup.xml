@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:text="Update Available"
+                android:text="@string/update_available"
                 android:textColor="@color/white" />
 
 
@@ -54,7 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:text="New Version"
+                android:text="@string/new_version"
                 android:textColor="@color/colorPrimary"
                 android:textSize="13dp" />
 
@@ -89,7 +89,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:text="Your Version"
+                android:text="@string/your_version"
                 android:textColor="@color/colorPrimary"
                 android:textSize="13dp" />
 
@@ -118,7 +118,7 @@
             android:layout_below="@+id/vwYour"
             android:layout_marginTop="10dp"
             android:padding="10dp"
-            android:text="The new version changes."
+            android:text="@string/the_new_version_changes"
             android:textColor="@color/orange"
             android:textSize="16dp"
             android:textStyle="bold" />
@@ -165,7 +165,7 @@
                 android:layout_marginLeft="10dp"
                 android:gravity="center"
                 android:padding="10dp"
-                android:text="Not now"
+                android:text="@string/not_now"
                 android:textColor="@color/white"
                 android:textSize="16dp"
                 android:visibility="visible" />
@@ -178,7 +178,7 @@
                 android:layout_marginRight="10dp"
                 android:gravity="center"
                 android:padding="10dp"
-                android:text="Update now"
+                android:text="@string/update_now"
                 android:textColor="@color/white"
                 android:textSize="16dp"
                 android:visibility="visible" />

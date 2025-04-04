@@ -88,7 +88,7 @@
                     android:layout_height="wrap_content"
                     android:background="@color/onahau"
                     android:padding="16dp"
-                    android:text="Question will appear here"
+                    android:text="@string/question_will_appear_here"
                     android:textSize="15sp"
                     android:gravity="center"
                     android:textColor="@color/black"
@@ -171,7 +171,7 @@
                     android:enabled="false"
                     android:background="@drawable/bg_button_blue_color"
                     android:textColor="@color/white"
-                    android:text="Previous" />
+                    android:text="@string/lblPrevious" />
 
                 <View
                     android:layout_width="16dp"
@@ -183,7 +183,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
                     android:background="@drawable/bg_button_blue_color"
-                    android:text="Next" />
+                    android:text="@string/NEXT" />
             </LinearLayout>
 
         </LinearLayout>

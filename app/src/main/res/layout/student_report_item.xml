@@ -404,7 +404,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginStart="@dimen/twenty"
-                        android:text="SMS"
+                        android:text="@string/sms"
                         android:textColor="@color/navi_blue2"
                         android:textSize="@dimen/thirteen_sp"
                         android:fontFamily="@font/poppins_bold"

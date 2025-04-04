@@ -22,7 +22,7 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/ten"
             android:layout_toEndOf="@+id/imgBack"
-            android:text="Select Recipient"
+            android:text="@string/select_recipient"
             android:textColor="@color/black"
             android:textStyle="bold">
 
@@ -38,7 +38,7 @@
         android:layout_below="@+id/rlaTitle"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginTop="@dimen/twenty"
-        android:text="Send To :"
+        android:text="@string/send_to"
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="normal" />
@@ -171,7 +171,7 @@
         android:gravity="center"
         android:visibility="gone"
         android:padding="16dp"
-        android:text="Click the SEND button to send an important announcement from Entier School"
+        android:text="@string/click_the_send_button_to_send_an_important_announcement_from_entier_school"
         android:textColor="@color/black"
         android:textSize="15sp"
         android:textStyle="bold" />
@@ -204,7 +204,7 @@
                 android:layout_weight="0.5"
                 android:background="@drawable/bg_orange"
                 android:gravity="center"
-                android:text="Send"
+                android:text="@string/send"
                 android:textColor="@color/white"
                 android:textSize="@dimen/thirteen_sp"
                 android:textStyle="bold" />
@@ -217,7 +217,7 @@
                 android:layout_weight="0.5"
                 android:background="@drawable/bg_orange"
                 android:gravity="center"
-                android:text="Specific Student"
+                android:text="@string/specific_student"
                 android:textColor="@color/white"
                 android:textSize="@dimen/thirteen_sp"
                 android:textStyle="bold"

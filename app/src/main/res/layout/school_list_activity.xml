@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <RelativeLayout
         android:id="@+id/rytHeader"
         android:layout_width="match_parent"
@@ -27,8 +28,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/fifteen"
             android:layout_toEndOf="@+id/imgBack"
-            android:text="School Selection"
-            android:textColor="@color/black"
+            android:text="@string/school_selection"
+            android:textColor="@color/white"
             android:textSize="@dimen/fifteen_sp"
             android:textStyle="bold" />
 
@@ -39,9 +40,9 @@
             android:layout_below="@+id/lblTitle"
             android:layout_marginStart="@dimen/fifteen"
             android:layout_toEndOf="@+id/imgBack"
-            android:text="Choose your preferred school"
-            android:textColor="@color/black"
-            android:textSize="@dimen/fifteen_sp"
+            android:text="@string/choose_your_preferred_school"
+            android:textColor="@color/white"
+            android:textSize="13sp"
             android:textStyle="normal" />
 
     </RelativeLayout>
@@ -69,7 +70,7 @@
             android:background="@drawable/white_radious"
             android:fontFamily="@font/poppins_medium"
             android:gravity="center"
-            android:text="Send to multiple school"
+            android:text="@string/send_to_multiple_school"
             android:textColor="@color/black"
             android:textSize="13sp"
             android:textStyle="normal">
@@ -84,7 +85,7 @@
             android:layout_weight="0.5"
             android:fontFamily="@font/poppins_medium"
             android:gravity="center"
-            android:text="Select Resipent"
+            android:text="@string/select_resipent"
             android:textColor="@color/black"
             android:textSize="13sp"
             android:textStyle="normal">
@@ -115,7 +116,7 @@
         android:fontFamily="@font/poppins_regular"
         android:gravity="center_horizontal"
         android:padding="@dimen/eight"
-        android:text="Send to multiple school"
+        android:text="@string/send_to_multiple_school"
         android:textColor="@color/white"
         android:textSize="@dimen/fifteen_sp"
         android:textStyle="normal">

@@ -64,7 +64,8 @@
                 android:layout_height="@dimen/twenty"
                 android:gravity="center"
                 android:layout_marginStart="@dimen/five"
-                android:src="@drawable/attachment_icon"></ImageView>
+                android:src="@drawable/attachment_icon">
+            </ImageView>
 
             <TextView
                 android:layout_width="wrap_content"

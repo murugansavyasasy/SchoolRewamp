@@ -28,7 +28,7 @@
                 android:layout_marginTop="@dimen/fifteen"
                 android:layout_marginEnd="@dimen/twenty_five"
                 android:gravity="start"
-                android:text="Online Quiz"
+                android:text="@string/online_quiz"
                 android:textColor="@color/black"
                 android:textSize="12sp"
                 android:fontFamily="@font/poppins_bold">
@@ -71,7 +71,7 @@
                 android:layout_below="@+id/subjectvalue"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="@dimen/fifteen"
-                android:text="Play Now"
+                android:text="@string/play_now"
                 android:textColor="@color/sky_blue0"
                 android:textSize="@dimen/thirteen_sp"
                 android:fontFamily="@font/poppins_bold"

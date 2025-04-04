@@ -25,7 +25,7 @@
             android:layout_marginStart="@dimen/ten"
             android:text="@string/Uploadimagepdf"
             android:textColor="@color/black"
-            android:textSize="@dimen/twenty"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
 
@@ -99,7 +99,8 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="@dimen/ten"
             android:layout_marginEnd="@dimen/twenty"
-            android:src="@drawable/camera_icon"></ImageView>
+            android:src="@drawable/camera_icon">
+        </ImageView>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcyImages"

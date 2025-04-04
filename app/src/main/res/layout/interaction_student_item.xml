@@ -56,7 +56,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/ten"
             android:background="@drawable/bg_green_radoius_10dp"
-            android:text="Interact"
+            android:text="@string/interact"
             android:gravity="center"
             android:padding="@dimen/five"
             android:textColor="@color/white"

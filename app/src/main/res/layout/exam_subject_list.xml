@@ -22,7 +22,7 @@
             android:id="@+id/lblCreateNoticeBoard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Schedule Exam"
+            android:text="@string/schedule_exam"
             android:layout_marginStart="@dimen/ten"
             android:textColor="@color/black"
             android:textSize="@dimen/twenty"
