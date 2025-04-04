@@ -7,7 +7,9 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
+import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SchoolClickListener
 import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
 import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.R
@@ -16,7 +18,7 @@ import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.RoleSelecionBinding
 
 class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListener,
-    PriorityClickListener {
+    PriorityClickListener, SchoolClickListener {
 
     private lateinit var isStudentDetailAdapter: StudentDetailAdapter
     private lateinit var isStaffDetailAdapter: StaffDetailAdapter
@@ -52,11 +54,11 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
             binding.lblParent.visibility = View.VISIBLE
         }
 
-//        if (staff_role.equals(Constant.isStaffRole)) {
-//            binding.btnGo.visibility = View.VISIBLE //set single selection for staff login only
-//        }
-        binding.btnGo.visibility = View.VISIBLE
-
+        if (staff_role.equals(Constant.isStaffRole)) {
+            binding.btnGo.visibility = View.GONE
+        } else {
+            binding.btnGo.visibility = View.VISIBLE
+        }
 
         if (userDetails!!.is_staff) {
             binding.lblTeacher.text = userDetails!!.role_name
@@ -76,7 +78,7 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
 
     private fun isLoadData(isStaff: Boolean) {
         if (isStaff) {
-            isStaffDetailAdapter = StaffDetailAdapter(Constant.isStaffDetails, this)
+            isStaffDetailAdapter = StaffDetailAdapter(Constant.isStaffDetails, this, this,Constant.user_details!!.staff_role)
             binding.recyclerViews.layoutManager = LinearLayoutManager(this)
             binding.recyclerViews.adapter = isStaffDetailAdapter
         } else {
@@ -123,6 +125,12 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
     override fun onItemClick(data: ChildDetails) {
         val intent = Intent(this, ParentDashboard::class.java)
         SharedPreference.putChildDetails(this, data)
+        startActivity(intent)
+    }
+
+    override fun onItemClick(data: StaffDetails) {
+        val intent = Intent(this, SchoolDashboard::class.java)
+        SharedPreference.putStaffDetails(this, data)
         startActivity(intent)
     }
 }

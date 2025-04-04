@@ -43,12 +43,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
     private fun isLoadData() {
 
         mAdapter = SchoolListAdapter(
-            isMultipleSchool,
-            selectedSchoolIds,
-            null,
-            this,
-            this,
-            Constant.isShimmerViewShow
+            isMultipleSchool, selectedSchoolIds, null, this, this, Constant.isShimmerViewShow
         )
         binding.recycleSchools.layoutManager = LinearLayoutManager(this)
         binding.recycleSchools.adapter = mAdapter
@@ -105,8 +100,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         lblSelectedTab.background = ContextCompat.getDrawable(this, R.drawable.white_radious)
         lblSelectedTab.setTextColor(
             ContextCompat.getColor(
-                application,
-                R.color.black
+                application, R.color.black
             )
         )
     }

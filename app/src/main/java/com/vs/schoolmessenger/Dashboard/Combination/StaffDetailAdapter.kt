@@ -13,10 +13,17 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
+import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SchoolClickListener
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.SchoolDetailsListItemBinding
 
-class StaffDetailAdapter(private val itemList: List<StaffDetails>?, val context: Context) :
+class StaffDetailAdapter(
+    private val itemList: List<StaffDetails>?,
+    val context: Context,
+    private var listener: SchoolClickListener,
+    private val isStaffRole: String
+) :
     RecyclerView.Adapter<StaffDetailAdapter.GridViewHolder>() {
 
     class GridViewHolder(val binding: SchoolDetailsListItemBinding) :
@@ -32,14 +39,11 @@ class StaffDetailAdapter(private val itemList: List<StaffDetails>?, val context:
     override fun onBindViewHolder(holder: GridViewHolder, position: Int) {
         val item = itemList!![position]
 
-
-        if(itemList.size > 1) {
+        if (isStaffRole == Constant.isStaffRole) {
             holder.binding.selectionarrow.visibility = View.VISIBLE
-        }
-        else{
+        } else {
             holder.binding.selectionarrow.visibility = View.GONE
         }
-
         when (position) {
 
             0 -> {
@@ -95,6 +99,10 @@ class StaffDetailAdapter(private val itemList: List<StaffDetails>?, val context:
         holder.binding.lblStaffName.text = item.name
         holder.binding.lblSchoolAddress.text = item.school_address
         holder.binding.lblCity.text = item.city
+
+        holder.binding.rlaStaffDetails.setOnClickListener {
+            listener.onItemClick(item)
+        }
 
         Glide.with(context)
             .load(item.school_logo)

@@ -58,15 +58,11 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(),
             layoutManager = LinearLayoutManager(this@RecipientActivity)
             adapter = groupListAdapter
         }
-
-        // Initially hide RecyclerView
         binding.recyclerView.visibility = View.GONE
-
-        // Tab selection listener
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 when (tab?.position) {
-                    1 -> { // "Group" tab selected
+                    1 -> {
                         binding.grouplabel.visibility = View.VISIBLE
                         binding.recyclerView.visibility = View.VISIBLE
                         binding.rlaSubject.visibility = View.GONE
@@ -75,7 +71,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(),
                         binding.textdesc.visibility = View.GONE
                         binding.btnViewProgress.visibility = View.GONE
                     }
-                    else -> { // Other tabs selected
+
+                    else -> {
                         binding.recyclerView.visibility = View.GONE
                         binding.rlaSubject.visibility = View.VISIBLE
                         binding.rlaSection.visibility = View.VISIBLE
@@ -185,7 +182,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(),
         appViewModel!!.isGetStandardSection(isToken!!.access_token, isSectionId.toString(), this)
     }
 
-private fun isGetStudentList() {
+    private fun isGetStudentList() {
         val isToken = SharedPreference.getStaffDetails(this)
         appViewModel!!.isGetStudentList(
             isToken!!.access_token, isSectionId.toString(), this
