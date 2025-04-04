@@ -22,7 +22,8 @@ class StaffDetailAdapter(
     private val itemList: List<StaffDetails>?,
     val context: Context,
     private var listener: SchoolClickListener,
-    private val isStaffRole: String
+    private val isStaffRole: String,
+    private val isSchoolList: Int
 ) :
     RecyclerView.Adapter<StaffDetailAdapter.GridViewHolder>() {
 
@@ -101,7 +102,9 @@ class StaffDetailAdapter(
         holder.binding.lblCity.text = item.city
 
         holder.binding.rlaStaffDetails.setOnClickListener {
-            listener.onItemClick(item)
+            if (isSchoolList == 1) {
+                listener.onItemClick(item)
+            }
         }
 
         Glide.with(context)

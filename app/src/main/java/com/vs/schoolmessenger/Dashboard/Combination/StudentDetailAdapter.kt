@@ -25,7 +25,6 @@ class StudentDetailAdapter(
     val context: Context
 ) :
     RecyclerView.Adapter<StudentDetailAdapter.GridViewHolder>() {
-
     var isLoadImage = true
 
     class GridViewHolder(val binding: StudentDetailsListItemBinding) :
@@ -101,7 +100,6 @@ class StudentDetailAdapter(
             }
         }
 
-        // Click Listener
         holder.binding.rlaStudent.setOnClickListener {
             listener.onItemClick(item)
         }

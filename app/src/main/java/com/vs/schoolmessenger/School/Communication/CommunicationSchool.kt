@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.School.Communication
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.Paint
@@ -26,9 +27,13 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolList
+import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
+import com.vs.schoolmessenger.Dashboard.Settings.Notification.Notification
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.CustomSwitch
+import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.Utils.TimeSelectedListener
 import com.vs.schoolmessenger.databinding.CommunicationSchoolBinding
 import java.io.IOException
@@ -54,8 +59,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     private val PERMISSIONS_REQUEST_CODE = 200
     var mediaPlayer: MediaPlayer? = null
     private var isPrepared = false
-     var mAdapter: VoiceHistoryAdapter?=null
-     var mTextAdapter: TextHistoryAdapter?=null
+    var mAdapter: VoiceHistoryAdapter? = null
+    var mTextAdapter: TextHistoryAdapter? = null
     private lateinit var isVoiceHistoryData: List<VoiceHistoryData>
     private lateinit var isTextHistoryData: List<TextHistoryData>
     private val MAX_RECORDING_TIME = 180
@@ -76,6 +81,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     private lateinit var recordingRunnable: Runnable
     private val calendar = Calendar.getInstance()
     private lateinit var dateAdapter: DateAdapter
+    var isMultipleSchool = false
 
     @SuppressLint("ClickableViewAccessibility")
     override fun setupViews() {
@@ -100,15 +106,38 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         binding.rlaBackRecord.setOnClickListener(this)
         binding.imgBack.setOnClickListener(this)
         binding.lnrScheduleCall.setOnClickListener(this)
+        binding.rlaSendVoice.setOnClickListener(this)
 
 
         checkAndRequestPermissions()
         audioFilePath = "${externalCacheDir?.absolutePath}/audiorecord.3gp"
 
         val customSwitch: CustomSwitch = findViewById(R.id.SwitchEmergencyVoice)
+        val isUserDetails = SharedPreference.getUserDetails(this)
+        if (isUserDetails!!.staff_role == Constant.isGroupHeadRole || isUserDetails.staff_role == Constant.isPrincipalRole || isUserDetails.staff_role == Constant.isAdminRole) {
+            customSwitch.visibility = View.VISIBLE
+            binding.lblEmergencyVoice.visibility = View.VISIBLE
+        } else {
+            customSwitch.visibility = View.GONE
+            binding.lblEmergencyVoice.visibility = View.GONE
+        }
+
+        if (isUserDetails.staff_details.size > 1) {
+            binding.lblSend.text = resources.getString(R.string.NEXT)
+            isMultipleSchool = true
+        } else {
+            binding.lblSend.text = resources.getString(R.string.Send)
+            isMultipleSchool = false
+        }
+
         customSwitch.setOnClickListener {
-            val state = if (customSwitch.isChecked()) "ON" else "OFF"
-            Toast.makeText(this, "Switch is $state", Toast.LENGTH_SHORT).show()
+            if (customSwitch.isChecked()) {
+                Constant.isEmergencyVoiceNoticeBoard = true
+                Constant.isAccessType = Constant.isEmergency
+            } else {
+                Constant.isEmergencyVoiceNoticeBoard = false
+                Constant.isAccessType = Constant.isNonEmergency
+            }
         }
 
         // Initialize handler for updating recording time
@@ -117,9 +146,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             if (isRecording) {
                 recordingTime++
                 binding.lblDurationOfVoice.text = String.format(
-                    "%02d:%02d" + " / 03:00",
-                    recordingTime / 60,
-                    recordingTime % 60
+                    "%02d:%02d" + " / 03:00", recordingTime / 60, recordingTime % 60
                 )
 
                 if (recordingTime >= MAX_RECORDING_TIME) {
@@ -150,9 +177,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     recordingTime = 0 // Reset recording time
                     recordingHandler.post(recordingRunnable) // Start updating time
                     Toast.makeText(
-                        this@CommunicationSchool,
-                        "Recording started",
-                        Toast.LENGTH_SHORT
+                        this@CommunicationSchool, "Recording started", Toast.LENGTH_SHORT
                     ).show()
                 } catch (e: IOException) {
                     e.printStackTrace()
@@ -183,8 +208,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             recordingHandler.removeCallbacks(recordingRunnable) // Stop updating time
             Toast.makeText(this@CommunicationSchool, "Recording stopped", Toast.LENGTH_SHORT).show()
             Log.d(
-                "RecordingFilePath",
-                "Recording stopped. File Path: $audioFilePath"
+                "RecordingFilePath", "Recording stopped. File Path: $audioFilePath"
             ) // Print the file path when recording stops
             binding.rlaSeekBarAndTitle.visibility = View.VISIBLE
         }
@@ -312,9 +336,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 binding.rcyHistoryDataVoiceAndText.visibility = View.GONE
 
                 isChangeBackRoundCommunicationType(
-                    binding.rlaVoiceMessage,
-                    binding.imgVoiceMessage,
-                    binding.lblVoiceMessage
+                    binding.rlaVoiceMessage, binding.imgVoiceMessage, binding.lblVoiceMessage
                 )
             }
 
@@ -334,9 +356,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 binding.rlaRecordVoice.visibility = View.VISIBLE
                 binding.rcyHistoryDataVoiceAndText.visibility = View.GONE
                 isChangeBackRoundCommunicationType(
-                    binding.rlaScheduleCall,
-                    binding.imgScheduleCall,
-                    binding.lblScheduleCall
+                    binding.rlaScheduleCall, binding.imgScheduleCall, binding.lblScheduleCall
                 )
             }
 
@@ -355,18 +375,26 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 binding.rlaRecordVoice.visibility = View.GONE
                 binding.rcyHistoryDataVoiceAndText.visibility = View.GONE
                 isChangeBackRoundCommunicationType(
-                    binding.rlaTextMessage,
-                    binding.imgTextMessage,
-                    binding.lblTextMessage
+                    binding.rlaTextMessage, binding.imgTextMessage, binding.lblTextMessage
                 )
             }
 
             R.id.rlaFromTime -> {
-                    showTimePickerDialog(this,this)
+                showTimePickerDialog(this, this)
             }
 
             R.id.rlaToTime -> {
                 showTimePickerDialog(this, this)
+            }
+
+            R.id.rlaSendVoice -> {
+                if (isMultipleSchool) {
+                    val intent = Intent(this, SchoolList::class.java)
+                    startActivity(intent)
+                } else {
+                    val intent = Intent(this, RecipientActivity::class.java)
+                    startActivity(intent)
+                }
             }
 
             R.id.imgVoicePlay -> {
@@ -379,8 +407,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                         isPlayingVoice = false
                         binding.imgVoicePlay.setImageDrawable(
                             ContextCompat.getDrawable(
-                                this,
-                                R.drawable.video_play
+                                this, R.drawable.video_play
                             ) // Change icon to play
                         )
                     }
@@ -392,8 +419,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                         initializeMediaPlayer() // Prepare the media player for the first time
                         binding.imgVoicePlay.setImageDrawable(
                             ContextCompat.getDrawable(
-                                this,
-                                R.drawable.pause_icon
+                                this, R.drawable.pause_icon
                             ) // Change icon to pause
                         )
                         isPlayingVoice = true
@@ -407,8 +433,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                             isPlayingVoice = true
                             binding.imgVoicePlay.setImageDrawable(
                                 ContextCompat.getDrawable(
-                                    this,
-                                    R.drawable.pause_icon
+                                    this, R.drawable.pause_icon
                                 ) // Change icon to pause
                             )
                             startAudioProgressUpdate() // Start updating progress again
@@ -529,22 +554,19 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
         binding.imgVoiceMessage.setImageDrawable(
             ContextCompat.getDrawable(
-                this,
-                R.drawable.mic_icon_black
+                this, R.drawable.mic_icon_black
             )
         )
 
         binding.imgScheduleCall.setImageDrawable(
             ContextCompat.getDrawable(
-                this,
-                R.drawable.call_schedule_icon_black
+                this, R.drawable.call_schedule_icon_black
             )
         )
 
         binding.imgTextMessage.setImageDrawable(
             ContextCompat.getDrawable(
-                this,
-                R.drawable.text_icon_black
+                this, R.drawable.text_icon_black
             )
         )
 
@@ -553,8 +575,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             binding.imgVoiceMessage -> {
                 binding.imgVoiceMessage.setImageDrawable(
                     ContextCompat.getDrawable(
-                        this,
-                        R.drawable.mic_icon
+                        this, R.drawable.mic_icon
                     )
                 )
             }
@@ -562,8 +583,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             binding.imgScheduleCall -> {
                 binding.imgScheduleCall.setImageDrawable(
                     ContextCompat.getDrawable(
-                        this,
-                        R.drawable.call_schedule_icon
+                        this, R.drawable.call_schedule_icon
                     )
                 )
             }
@@ -571,8 +591,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             binding.imgTextMessage -> {
                 binding.imgTextMessage.setImageDrawable(
                     ContextCompat.getDrawable(
-                        this,
-                        R.drawable.text_icon
+                        this, R.drawable.text_icon
                     )
                 )
             }
@@ -586,43 +605,35 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 "Annual Day celebrations",
                 "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
                 "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
-            ),
-            VoiceHistoryData(
+            ), VoiceHistoryData(
                 "Parent Meeting",
                 "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
                 "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
-            ),
-            VoiceHistoryData(
+            ), VoiceHistoryData(
                 "Normal Day",
                 "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
                 "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
-            ),
-            VoiceHistoryData(
+            ), VoiceHistoryData(
                 "Day",
                 "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
                 "https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_700KB.mp3"
-            ),
-            VoiceHistoryData(
+            ), VoiceHistoryData(
                 "Monday",
                 "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
                 "https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_1MG.mp3"
-            ),
-            VoiceHistoryData(
+            ), VoiceHistoryData(
                 "Nothing",
                 "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
                 "https://www2.cs.uic.edu/~i101/SoundFiles/BabyElephantWalk60.wav"
-            ),
-            VoiceHistoryData(
+            ), VoiceHistoryData(
                 "Value Education",
                 "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
                 "https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3"
-            ),
-            VoiceHistoryData(
+            ), VoiceHistoryData(
                 "Environmental Science",
                 "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
                 "https://filesamples.com/samples/audio/mp3/sample4.mp3"
-            ),
-            VoiceHistoryData(
+            ), VoiceHistoryData(
                 "Okay okay",
                 "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
                 "https://ia800304.us.archive.org/8/items/testmp3testfile/mpthreetest.mp3"
@@ -649,43 +660,35 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 "Annual Day celebrations",
                 "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
                 "Apr 1, 2021"
-            ),
-            TextHistoryData(
+            ), TextHistoryData(
                 "Parent Meeting",
                 "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
                 "Apr 1, 2021"
-            ),
-            TextHistoryData(
+            ), TextHistoryData(
                 "Normal Day",
                 "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
                 "Apr 1, 2021"
-            ),
-            TextHistoryData(
+            ), TextHistoryData(
                 "Day",
                 "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
                 "Apr 1, 2021"
-            ),
-            TextHistoryData(
+            ), TextHistoryData(
                 "Monday",
                 "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
                 "Apr 1, 2021"
-            ),
-            TextHistoryData(
+            ), TextHistoryData(
                 "Nothing",
                 "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
                 "Apr 1, 2021"
-            ),
-            TextHistoryData(
+            ), TextHistoryData(
                 "Value Education",
                 "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
                 "Apr 1, 2021"
-            ),
-            TextHistoryData(
+            ), TextHistoryData(
                 "Environmental Science",
                 "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
                 "Apr 1, 2021"
-            ),
-            TextHistoryData(
+            ), TextHistoryData(
                 "Okay okay",
                 "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
                 "Apr 1, 2021"
@@ -711,24 +714,21 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
         // Check each permission and add to the list if not granted
         if (ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.RECORD_AUDIO
+                this, Manifest.permission.RECORD_AUDIO
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             requiredPermissions.add(Manifest.permission.RECORD_AUDIO)
         }
 
         if (ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.READ_EXTERNAL_STORAGE
+                this, Manifest.permission.READ_EXTERNAL_STORAGE
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             requiredPermissions.add(Manifest.permission.READ_EXTERNAL_STORAGE)
         }
 
         if (ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
+                this, Manifest.permission.WRITE_EXTERNAL_STORAGE
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             requiredPermissions.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -737,9 +737,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         // Request permissions if needed
         return if (requiredPermissions.isNotEmpty()) {
             ActivityCompat.requestPermissions(
-                this,
-                requiredPermissions.toTypedArray(),
-                PERMISSIONS_REQUEST_CODE
+                this, requiredPermissions.toTypedArray(), PERMISSIONS_REQUEST_CODE
             )
             false // Indicate that permissions are not yet granted
         } else {
@@ -748,15 +746,12 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     }
 
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
+        requestCode: Int, permissions: Array<out String>, grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == PERMISSIONS_REQUEST_CODE) {
             val deniedPermissions = permissions.zip(grantResults.toTypedArray())
-                .filter { it.second != PackageManager.PERMISSION_GRANTED }
-                .map { it.first }
+                .filter { it.second != PackageManager.PERMISSION_GRANTED }.map { it.first }
 
             if (deniedPermissions.isNotEmpty()) {
                 // Check if the user has permanently denied any permission
@@ -767,16 +762,12 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 if (permanentlyDenied.isNotEmpty()) {
                     // Inform the user that they need to enable permissions in settings
                     Toast.makeText(
-                        this,
-                        "Please enable permissions from app settings.",
-                        Toast.LENGTH_LONG
+                        this, "Please enable permissions from app settings.", Toast.LENGTH_LONG
                     ).show()
                 } else {
                     // Inform the user that permissions were denied
                     Toast.makeText(
-                        this,
-                        "Required permissions denied: $deniedPermissions",
-                        Toast.LENGTH_LONG
+                        this, "Required permissions denied: $deniedPermissions", Toast.LENGTH_LONG
                     ).show()
                 }
             } else {
@@ -839,9 +830,10 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         dateAdapter.setSelectedDates(selectedDates.toList())
 
         // Initialize selectedDatesAdapter and pass dateAdapter reference
-        selectedDatesAdapter = SelectedDatesAdapter(this, selectedDates.toMutableList(), dateAdapter) { removedDate ->
-            dateAdapter.removeSelectedDate(removedDate)
-        }
+        selectedDatesAdapter =
+            SelectedDatesAdapter(this, selectedDates.toMutableList(), dateAdapter) { removedDate ->
+                dateAdapter.removeSelectedDate(removedDate)
+            }
 
         // Set the adapter for your GridView or RecyclerView where you display selected dates
         binding.gridViewScheduleCall.adapter = selectedDatesAdapter

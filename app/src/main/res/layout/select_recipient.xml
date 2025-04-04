@@ -14,9 +14,7 @@
             android:id="@+id/imgBack"
             android:layout_width="@dimen/thirty_five"
             android:layout_height="@dimen/thirty_five"
-            android:src="@drawable/arrow_back_black">
-
-        </ImageView>
+            android:src="@drawable/arrow_back_black"></ImageView>
 
         <TextView
             android:layout_width="match_parent"
@@ -164,18 +162,18 @@
     </RelativeLayout>
 
 
-
     <TextView
         android:id="@+id/textdesc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/tabLayout"
         android:fontFamily="@font/poppins_medium"
         android:gravity="center"
+        android:visibility="gone"
         android:padding="16dp"
         android:text="Click the SEND button to send an important announcement from Entier School"
         android:textColor="@color/black"
         android:textSize="15sp"
-        android:layout_below="@+id/tabLayout"
         android:textStyle="bold" />
 
 
@@ -193,6 +191,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/twenty"
+            android:layout_marginEnd="@dimen/twenty"
             android:gravity="center"
             android:orientation="horizontal"
             android:weightSum="1">
@@ -220,7 +220,8 @@
                 android:text="Specific Student"
                 android:textColor="@color/white"
                 android:textSize="@dimen/thirteen_sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="gone" />
         </LinearLayout>
 
     </LinearLayout>

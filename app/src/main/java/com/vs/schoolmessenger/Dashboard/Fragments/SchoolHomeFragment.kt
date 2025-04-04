@@ -127,10 +127,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                         // Save the list of ads in a variable
                         val adList: List<AdItem> = filteredAds.map { ad ->
                             AdItem(
-                                ad.id!!,
-                                ad.name ?: "",
-                                ad.content_url ?: "",
-                                ad.redirect_url ?: ""
+                                ad.id!!, ad.name ?: "", ad.content_url ?: "", ad.redirect_url ?: ""
                             )
                         }
 
@@ -237,7 +234,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     private fun isGetAds() {
         val isToken = SharedPreference.getUserDetails(requireActivity())
         appViewModel!!.isGetAds(
-            isToken!!.staff_details[0].access_token,"102", requireActivity()
+            isToken!!.staff_details[0].access_token, "102", requireActivity()
         )
     }
 
@@ -255,23 +252,23 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
     override fun onClick(data: MenuDetail) {
         val activityClass = when (data.id) {
-            0 -> CommunicationSchool::class.java
-            22 -> SchoolList::class.java
-            9 -> HomeWork::class.java
-            12 -> AttendanceMark::class.java
-            6 -> AbsenteesReport::class.java
-            7 -> SchoolStrength::class.java
-            3 -> CreateNoticeBoard::class.java
-            4 -> CreateEvent::class.java
-            11 -> Exam::class.java
-            13 -> MessageFromManagement::class.java
-            16 -> InteractionWithStudent::class.java
-            26 -> OnlineMeeting::class.java
-            28 -> DailyCollection::class.java
-            29 -> StudentReport::class.java
-            30 -> LessonPlan::class.java
-            21 -> ImportantInfo::class.java
-//          14 -> ImportantInfo::class.java
+            Constant.sch_communication_id -> CommunicationSchool::class.java
+            Constant.sch_assignment_id -> SchoolList::class.java
+            Constant.sch_homework_id -> HomeWork::class.java
+            Constant.sch_attendance_marking_id -> AttendanceMark::class.java
+            Constant.sch_absenteeism_report_id -> AbsenteesReport::class.java
+            Constant.sch_school_strength_id -> SchoolStrength::class.java
+            Constant.sch_notice_board_id -> CreateNoticeBoard::class.java
+            Constant.sch_school_class_events_id -> CreateEvent::class.java
+            Constant.sch_schedule_exam_test_id -> Exam::class.java
+            Constant.sch_messages_from_management_id -> MessageFromManagement::class.java
+            Constant.sch_conference_call_with_teachers_id -> InteractionWithStudent::class.java
+            Constant.sch_online_meeting_id -> OnlineMeeting::class.java
+            Constant.sch_daily_collection_id -> DailyCollection::class.java
+            Constant.sch_student_report_id -> StudentReport::class.java
+            Constant.sch_lesson_plan_id -> LessonPlan::class.java
+            Constant.sch_very_important_info_id -> ImportantInfo::class.java
+            // Constant.sch_feedback_id -> ImportantInfo::class.java
             else -> null
         }
 
@@ -279,4 +276,5 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             startActivity(Intent(requireActivity(), it))
         }
     }
+
 }

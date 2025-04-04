@@ -78,7 +78,8 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
 
     private fun isLoadData(isStaff: Boolean) {
         if (isStaff) {
-            isStaffDetailAdapter = StaffDetailAdapter(Constant.isStaffDetails, this, this,Constant.user_details!!.staff_role)
+            val isSchoolList=Constant.isStaffDetails!!.size
+            isStaffDetailAdapter = StaffDetailAdapter(Constant.isStaffDetails, this, this,Constant.user_details!!.staff_role,isSchoolList)
             binding.recyclerViews.layoutManager = LinearLayoutManager(this)
             binding.recyclerViews.adapter = isStaffDetailAdapter
         } else {

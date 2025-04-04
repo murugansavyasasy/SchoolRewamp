@@ -21,9 +21,8 @@ import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SelectRecipientBinding
 
-class RecipientActivity : BaseActivity<SelectRecipientBinding>(),
-    View.OnClickListener, SectionListClickListener, StandardListClickListener,
-    GroupListClickListener {
+class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickListener,
+    SectionListClickListener, StandardListClickListener, GroupListClickListener {
 
     override fun getViewBinding(): SelectRecipientBinding {
         return SelectRecipientBinding.inflate(layoutInflater)
@@ -38,13 +37,13 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(),
     var isGetStandard: List<Standard>? = null
     var isSection: List<Section>? = null
     private var groupListAdapter: GroupListAdapter? = null
-
+    private var isAccessToken: String? = null
 
     private var appViewModel: App? = null
     override fun setupViews() {
         super.setupViews()
         setupToolbar()
-        appViewModel = ViewModelProvider(this).get(App::class.java)
+        appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
 
         binding.rlaSubject.setOnClickListener(this)
@@ -56,9 +55,24 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(),
         tabLayout.addTab(tabLayout.newTab().setText("Standard"))
         tabLayout.addTab(tabLayout.newTab().setText("Section/Specific Student"))
 
+        val isStaffDetails = SharedPreference.getStaffDetails(this)
+        isAccessToken = isStaffDetails!!.access_token
+
+        val isUserDetails = SharedPreference.getUserDetails(this)
+        if (isUserDetails!!.staff_role == Constant.isGroupHeadRole || isUserDetails.staff_role == Constant.isPrincipalRole || isUserDetails.staff_role == Constant.isAdminRole) {
+            tabLayout.getTabAt(0)?.view?.visibility = View.VISIBLE
+            tabLayout.getTabAt(3)?.view?.visibility = View.GONE
+            binding.btnViewProgress.visibility = View.GONE
+            binding.textdesc.visibility = View.VISIBLE
+        } else {
+            tabLayout.getTabAt(0)?.view?.visibility = View.GONE
+            tabLayout.getTabAt(3)?.view?.visibility = View.VISIBLE
+            binding.btnViewProgress.visibility = View.VISIBLE
+            binding.textdesc.visibility = View.VISIBLE
+        }
+
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                Log.d("tab?.position", tab?.position.toString())
                 when (tab?.position) {
                     0 -> {
                         binding.rlaStandard.visibility = View.GONE
@@ -89,7 +103,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(),
                         Log.d("isDropDown", isDropDown.toString())
                         if (!isDropDown) {
                             binding.recyclerView.visibility = View.VISIBLE
-
                         } else {
                             binding.recyclerView.visibility = View.GONE
                         }
@@ -107,7 +120,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(),
                         binding.rlaSubject.visibility = View.VISIBLE
                         binding.rlaStandard.visibility = View.VISIBLE
                         binding.textdesc.visibility = View.GONE
-                        binding.btnViewProgress.visibility = View.VISIBLE
                         binding.grouplabel.visibility = View.GONE
                         binding.recyclerView.visibility = View.GONE
                         binding.rlaSubject.visibility = View.GONE
@@ -153,10 +165,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(),
         binding.recyclerView.adapter = groupListAdapter
         Constant.executeAfterDelay {
             groupListAdapter = GroupListAdapter(
-                isGetGroupListData,
-                this@RecipientActivity,
-                this,
-                Constant.isShimmerViewDisable
+                isGetGroupListData, this@RecipientActivity, this, Constant.isShimmerViewDisable
             )
             binding.recyclerView.adapter = groupListAdapter
         }
@@ -171,10 +180,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(),
         binding.recyclerView.adapter = isSectionAdapter
         Constant.executeAfterDelay {
             isSectionAdapter = SectionListAdapter(
-                isSection,
-                this@RecipientActivity,
-                this,
-                Constant.isShimmerViewDisable
+                isSection, this@RecipientActivity, this, Constant.isShimmerViewDisable
             )
             binding.recyclerView.adapter = isSectionAdapter
         }
@@ -188,10 +194,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(),
         binding.recyclerView.adapter = isStandardListAdapter
         Constant.executeAfterDelay {
             isStandardListAdapter = StandardListAdapter(
-                isGetStandard,
-                this,
-                this,
-                Constant.isShimmerViewDisable
+                isGetStandard, this, this, Constant.isShimmerViewDisable
             )
             binding.recyclerView.adapter = isStandardListAdapter
         }
@@ -202,9 +205,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(),
         when (p0?.id) {
             R.id.rlaSubject -> {
                 isDropDownLoadData(
-                    binding.rlaSubject,
-                    this,
-                    isGetSubjectListData
+                    binding.rlaSubject, this, isGetSubjectListData
                 ) { selectedSubject ->
                     binding.lblSuibject.text = selectedSubject.first // Set name
                     Log.d(
@@ -217,9 +218,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(),
 
             R.id.rlaStandard -> {
                 showStandardDropdown(
-                    binding.rlaStandard,
-                    this,
-                    isGetStandard
+                    binding.rlaStandard, this, isGetStandard
                 ) { selectStandard, position ->
                     binding.lblStandard.text = selectStandard.name // Set name
                     Log.d(
@@ -235,31 +234,26 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(),
     }
 
     private fun isGetGroupList() {
-        val isToken = SharedPreference.getStaffDetails(this)
-        appViewModel!!.isGetGroupList(isToken!!.access_token, this)
+        appViewModel!!.isGetGroupList(isAccessToken!!, this)
     }
 
     private fun isGetSubjectList(isSectionId: Int?) {
-        val isToken = SharedPreference.getStaffDetails(this)
-        appViewModel!!.isGetSubjectList(isToken!!.access_token, isSectionId.toString(), this)
+        appViewModel!!.isGetSubjectList(isAccessToken!!, isSectionId.toString(), this)
     }
 
     private fun isGetStandardSection() {
-        val isToken = SharedPreference.getStaffDetails(this)
-        appViewModel!!.isGetStandardSection(isToken!!.access_token.toString(), this)
+        appViewModel!!.isGetStandardSection(isAccessToken!!.toString(), this)
     }
 
     private fun isGetStudentList() {
-        val isToken = SharedPreference.getStaffDetails(this)
         appViewModel!!.isGetStudentList(
-            isToken!!.access_token, isSectionId.toString(), this
+            isAccessToken!!, isSectionId.toString(), this
         )
     }
 
 
     override fun onSectionClick(
-        data: Section,
-        isChecked: Boolean
+        data: Section, isChecked: Boolean
     ) {
         Log.d("data.id", data.id.toString())
         isSectionId = data.id
@@ -267,8 +261,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(),
     }
 
     override fun onStandardClick(
-        data: Standard,
-        isChecked: Boolean
+        data: Standard, isChecked: Boolean
     ) {
 
     }

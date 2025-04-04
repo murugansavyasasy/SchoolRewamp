@@ -82,6 +82,31 @@ object Constant {
     val stu_time_table_id = 23
     val stu_certificate_request_id = 25
 
+    val sch_communication_id = 0
+    val sch_assignment_id = 22
+    val sch_homework_id = 9
+    val sch_attendance_marking_id = 12
+    val sch_absenteeism_report_id = 6
+    val sch_school_strength_id = 7
+    val sch_notice_board_id = 3
+    val sch_school_class_events_id = 4
+    val sch_schedule_exam_test_id = 11
+    val sch_messages_from_management_id = 13
+    val sch_conference_call_with_teachers_id = 16
+    val sch_online_meeting_id = 26
+    val sch_daily_collection_id = 28
+    val sch_student_report_id = 29
+    val sch_lesson_plan_id = 30
+    val sch_feedback_id = 14
+    val sch_very_important_info_id = 21
+
+    var isEmergencyVoiceNoticeBoard: Boolean? = false
+    var isAccessType: Int? = null
+
+    var isNonEmergency = 100
+    var isEmergency = 101
+    var isText = 102
+
 
     fun isInternetAvailable(activity: Activity): Boolean {
         val connectivityManager =

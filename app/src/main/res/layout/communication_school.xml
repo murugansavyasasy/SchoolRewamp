@@ -748,12 +748,13 @@
                         </ImageView>
 
                         <TextView
+                            android:id="@+id/lblSend"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
                             android:layout_marginStart="@dimen/five"
                             android:layout_toEndOf="@+id/imgSend"
-                            android:text="Send"
+                            android:text="@string/Send"
                             android:textStyle="normal"
                             android:fontFamily="@font/poppins_regular"
                             android:textColor="@color/white"
