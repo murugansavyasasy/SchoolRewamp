@@ -23,7 +23,8 @@
                 android:layout_marginStart="@dimen/thirty"
                 android:layout_marginTop="@dimen/thirty"
                 android:src="@drawable/arrow_back_black"
-                android:visibility="gone"></ImageView>
+                android:visibility="gone">
+            </ImageView>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -82,7 +83,8 @@
                         android:layout_width="@dimen/thirty"
                         android:layout_height="@dimen/thirty"
                         android:layout_weight="0.1"
-                        android:src="@drawable/notification_icon"></ImageView>
+                        android:src="@drawable/notification_icon">
+                    </ImageView>
 
                     <TextView
                         android:layout_width="match_parent"
@@ -188,7 +190,8 @@
                         android:layout_width="@dimen/thirty"
                         android:layout_height="@dimen/thirty"
                         android:layout_weight="0.1"
-                        android:src="@drawable/contact_us_icon"></ImageView>
+                        android:src="@drawable/contact_us_icon">
+                    </ImageView>
 
                     <TextView
                         android:layout_width="match_parent"
@@ -241,7 +244,8 @@
                         android:layout_width="@dimen/twenty_five"
                         android:layout_height="@dimen/twenty_five"
                         android:layout_weight="0.1"
-                        android:src="@drawable/terms_conditions_icon"></ImageView>
+                        android:src="@drawable/terms_conditions_icon">
+                    </ImageView>
 
                     <TextView
                         android:layout_width="match_parent"
@@ -297,7 +301,8 @@
                         android:layout_width="@dimen/twenty_five"
                         android:layout_height="@dimen/twenty_five"
                         android:layout_weight="0.1"
-                        android:src="@drawable/ic_language"></ImageView>
+                        android:src="@drawable/ic_language">
+                    </ImageView>
 
                     <TextView
                         android:layout_width="match_parent"

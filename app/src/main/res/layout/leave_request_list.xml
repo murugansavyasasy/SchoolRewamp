@@ -40,7 +40,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
-                    android:text="Name :"
+                    android:text="@string/name"
                     android:gravity="start"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
@@ -161,7 +161,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/imgChecked"
-                    android:text="Approve"
+                    android:text="@string/approve"
                     android:textSize="13sp"
                     android:textColor="@color/white"
                     android:textStyle="bold">
@@ -192,7 +192,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/imgReject"
-                    android:text="Reject"
+                    android:text="@string/reject"
                     android:textColor="@color/white"
                     android:textSize="13sp"
                     android:textStyle="bold">

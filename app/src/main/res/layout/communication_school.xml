@@ -119,7 +119,7 @@
                         android:textSize="13sp"
                         android:textStyle="bold"
                         android:paddingBottom="@dimen/ten"
-                        android:text="Schedule Call"
+                        android:text="@string/schedule_call"
                         android:fontFamily="@font/poppins_bold"
                         android:textColor="@color/black">
 
@@ -155,7 +155,7 @@
                         android:paddingEnd="@dimen/five"
                         android:paddingBottom="@dimen/ten"
                         android:textSize="13sp"
-                        android:text="Text"
+                        android:text="@string/text"
                         android:fontFamily="@font/poppins_bold"
                         android:textColor="@color/black">
 
@@ -338,7 +338,8 @@
                             android:layout_height="@dimen/twenty"
                             android:layout_gravity="end"
                             android:layout_weight="0.8"
-                            android:src="@drawable/calender_icon"></ImageView>
+                            android:src="@drawable/calender_icon">
+                        </ImageView>
                     </LinearLayout>
                 </RelativeLayout>
 
@@ -361,7 +362,8 @@
                     android:layout_below="@+id/gridViewScheduleCall"
                     android:layout_marginTop="@dimen/ten"
                     android:visibility="gone"
-                    tools:listitem="@layout/history_from_text_message"></androidx.recyclerview.widget.RecyclerView>
+                    tools:listitem="@layout/history_from_text_message">
+                </androidx.recyclerview.widget.RecyclerView>
 
                 <RelativeLayout
                     android:id="@+id/rlaBackRecord"
@@ -411,7 +413,7 @@
                         android:id="@+id/lblHistoryList"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Do you want send from history ?"
+                        android:text="@string/do_you_want_send_from_history"
                         android:textColor="@color/navi_blue2"
                         android:textStyle="normal"
                         android:fontFamily="@font/poppins_medium"
@@ -553,7 +555,7 @@
                         android:layout_marginEnd="@dimen/ten"
                         android:layout_marginStart="@dimen/ten"
                         android:layout_toEndOf="@+id/SwitchEmergencyVoice"
-                        android:text="Emergency voice messages"
+                        android:text="@string/emergency_voice_messages"
                         android:textColor="@color/black"
                         android:textStyle="normal"
                         android:fontFamily="@font/poppins_regular"
@@ -614,7 +616,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
                             android:layout_toEndOf="@+id/imgAddFile"
-                            android:text="Add file"
+                            android:text="@string/add_file"
                             android:textStyle="normal"
                             android:fontFamily="@font/poppins_regular"
                             android:textColor="@color/light_gray_"
@@ -753,7 +755,7 @@
                             android:layout_centerInParent="true"
                             android:layout_marginStart="@dimen/five"
                             android:layout_toEndOf="@+id/imgSend"
-                            android:text="Send"
+                            android:text="@string/send"
                             android:textStyle="normal"
                             android:fontFamily="@font/poppins_regular"
                             android:textColor="@color/white"

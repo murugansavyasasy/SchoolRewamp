@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/sixty"
             android:layout_marginTop="@dimen/twenty"
-            android:text="Absentees Report"
+            android:text="@string/absentees_report"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold">

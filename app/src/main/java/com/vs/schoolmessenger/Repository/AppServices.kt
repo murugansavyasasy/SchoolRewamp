@@ -8,7 +8,7 @@ import com.vs.schoolmessenger.CommonScreens.Ads.AdsResponse
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.StaffListResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
-import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.StandardResponse
+import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -134,8 +134,8 @@ class AppServices {
     val isGetStaffListLiveData: LiveData<StaffListResponse?>
         get() = isGetStaffList
 
-    fun isGetSubjectList(isToken: String, activity: Activity) {
-        RestClient.apiInterfaces.getSubjectList(isToken)
+    fun isGetSubjectList(isToken: String, isSection: String, activity: Activity) {
+        RestClient.apiInterfaces.getSubjectList(isToken,isSection)
             ?.enqueue(object : Callback<NameAndIdsResponse?> {
                 override fun onResponse(
                     call: Call<NameAndIdsResponse?>, response: Response<NameAndIdsResponse?>
@@ -166,8 +166,8 @@ class AppServices {
         get() = isGetSubjectList
 
 
-    fun isGetStandardSection(isToken: String, isSection: String, activity: Activity) {
-        RestClient.apiInterfaces.getStandard(isToken, isSection)
+    fun isGetStandardSection(isToken: String, activity: Activity) {
+        RestClient.apiInterfaces.getStandard(isToken)
             ?.enqueue(object : Callback<StandardResponse?> {
                 override fun onResponse(
                     call: Call<StandardResponse?>, response: Response<StandardResponse?>

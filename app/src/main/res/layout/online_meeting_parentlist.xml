@@ -103,9 +103,9 @@
                             android:id="@+id/lblSetReminder"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Set Reminder"
+                            android:text="@string/set_reminder"
                             android:textColor="@color/black"
-                            android:textSize="10sp"
+                            android:textSize="11sp"
                             android:fontFamily="@font/poppins_regular"
                             android:gravity="center" />
 
@@ -157,7 +157,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/ten"
                         android:layout_weight="0.6"
-                        android:text="Meeting type  : "
+                        android:text="@string/meeting_type"
                         android:textColor="@color/black"
                         android:textSize="@dimen/twele_sp"
                         android:fontFamily="@font/poppins_medium"  />
@@ -180,7 +180,7 @@
                     android:layout_marginStart="@dimen/ten"
                     android:layout_marginTop="@dimen/five"
                     android:layout_marginBottom="@dimen/ten"
-                    android:text="Join"
+                    android:text="@string/join"
                     android:textColor="@color/sky_blue0"
                     android:textSize="@dimen/thirteen_sp"
                     android:gravity="end"

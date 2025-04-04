@@ -192,12 +192,6 @@
 
         </RelativeLayout>
 
-        <!--        <androidx.recyclerview.widget.RecyclerView-->
-        <!--            android:id="@+id/recyclerViews"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="match_parent"-->
-        <!--            android:layout_below="@+id/rytHeader"-->
-        <!--            tools:listitem="@layout/school_details_list_item" />-->
 
 
     </RelativeLayout>

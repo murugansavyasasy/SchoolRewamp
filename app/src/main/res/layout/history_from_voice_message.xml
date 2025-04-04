@@ -243,7 +243,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblContentText"
                 android:layout_marginStart="@dimen/ten"
-                android:text="See More"
+                android:text="@string/see_more"
                 android:textColor="@color/navi_blue2"
                 android:textSize="@dimen/thirteen_sp"
                 android:textStyle="bold">

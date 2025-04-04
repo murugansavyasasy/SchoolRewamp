@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -76,10 +77,10 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rytImageSlider"
                 android:layout_marginTop="@dimen/ten"
+                android:fontFamily="@font/poppins_bold"
                 android:text="Annual Day celebrations"
                 android:textColor="@color/black"
                 android:textSize="13sp"
-                android:fontFamily="@font/poppins_bold"
                 android:textStyle="bold" />
 
             <TextView
@@ -131,7 +132,7 @@
                     android:layout_centerInParent="true"
                     android:layout_marginStart="@dimen/five"
                     android:layout_toEndOf="@+id/imgSend"
-                    android:text="Forward"
+                    android:text="@string/forward"
                     android:textColor="@color/white"
                     android:fontFamily="@font/poppins_medium"
                     android:layout_marginBottom="@dimen/five"

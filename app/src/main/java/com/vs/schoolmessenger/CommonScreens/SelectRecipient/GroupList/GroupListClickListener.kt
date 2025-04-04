@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.CommonScreens.GroupList
+package com.vs.schoolmessenger.CommonScreens.SelectRecipient.GroupList
 
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIds
 

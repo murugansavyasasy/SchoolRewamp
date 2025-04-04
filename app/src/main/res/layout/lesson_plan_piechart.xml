@@ -176,7 +176,7 @@
                     android:layout_marginStart="@dimen/seven"
                     android:background="@drawable/rect_btn_skyblue"
                     android:gravity="center"
-                    android:text="View Progress"
+                    android:text="@string/view_progress"
                     android:textColor="@color/white"
                     android:textSize="@dimen/thirteen_sp"
                     android:fontFamily="@font/poppins_bold"

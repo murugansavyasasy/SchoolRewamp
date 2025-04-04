@@ -13,7 +13,7 @@ import com.vs.schoolmessenger.CommonScreens.DeviceToken
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.StaffListResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
-import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.StandardResponse
+import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -95,13 +95,13 @@ interface ApiInterfaces {
     @GET(APIMethods.getSubjectList)
     fun getSubjectList(
         @Header("Authorization") token: String,
+        @Query("section_id") isSectionId: String
     ): Call<NameAndIdsResponse?>
 
 
     @GET(APIMethods.getStandard)
     fun getStandard(
-        @Header("Authorization") token: String,
-        @Query("section_id") isSectionId: String
+        @Header("Authorization") token: String
     ): Call<StandardResponse?>
 
     @GET(APIMethods.getStudentList)

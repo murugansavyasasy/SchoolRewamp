@@ -60,7 +60,8 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
                 android:textStyle="bold"
-                android:visibility="visible"></TextView>
+                android:visibility="visible">
+            </TextView>
 
             <RatingBar
                 android:id="@+id/ratingBar"
@@ -91,7 +92,8 @@
                 android:textColor="@color/orange"
                 android:textSize="@dimen/thirteen_sp"
                 android:textStyle="bold"
-                android:visibility="visible"></TextView>
+                android:visibility="visible">
+            </TextView>
 
 
             <LinearLayout
@@ -123,7 +125,8 @@
                     android:layout_marginStart="@dimen/fifteen"
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/fifteen"
-                    android:background="@color/grey"></View>
+                    android:background="@color/grey">
+                </View>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/consRatingType"
@@ -213,7 +216,8 @@
                         android:textSize="@dimen/thirteen_sp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toEndOf="@+id/lblConnection"
-                        app:layout_constraintTop_toBottomOf="@+id/lblAppUi"></TextView>
+                        app:layout_constraintTop_toBottomOf="@+id/lblAppUi">
+                    </TextView>
 
                     <TextView
                         android:id="@+id/lblWatchFaces"
@@ -345,7 +349,8 @@
                         android:textColor="@color/black"
                         android:textSize="@dimen/fifteen_sp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/view1"></TextView>
+                        app:layout_constraintTop_toBottomOf="@+id/view1">
+                    </TextView>
 
 
                     <EditText
@@ -363,7 +368,8 @@
                         android:scrollbars="vertical"
                         android:textColor="@color/black"
                         android:textSize="@dimen/fifteen"
-                        app:layout_constraintTop_toBottomOf="@+id/lblEdtTitle"></EditText>
+                        app:layout_constraintTop_toBottomOf="@+id/lblEdtTitle">
+                    </EditText>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

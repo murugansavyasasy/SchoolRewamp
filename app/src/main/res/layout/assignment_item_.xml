@@ -73,7 +73,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/ten"
                     android:layout_weight="0.6"
-                    android:text="Subject"
+                    android:text="@string/subject"
                     android:textColor="@color/navi_blue3"
                     android:textSize="@dimen/thirteen_sp"
                     android:textStyle="bold">
@@ -120,7 +120,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/ten"
                     android:layout_weight="0.6"
-                    android:text="Category"
+                    android:text="@string/category"
                     android:textColor="@color/navi_blue3"
                     android:textSize="@dimen/thirteen_sp"
                     android:textStyle="bold">
@@ -167,7 +167,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/ten"
                     android:layout_weight="0.6"
-                    android:text="Submission Due"
+                    android:text="@string/submission_due"
                     android:textColor="@color/navi_blue3"
                     android:textSize="@dimen/thirteen_sp"
                     android:textStyle="bold">
@@ -214,7 +214,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/ten"
                     android:layout_weight="0.6"
-                    android:text="Submission Count"
+                    android:text="@string/submission_count"
                     android:textColor="@color/navi_blue3"
                     android:textSize="@dimen/thirteen_sp"
                     android:textStyle="bold">
@@ -261,7 +261,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/ten"
                     android:layout_weight="0.6"
-                    android:text="Send By"
+                    android:text="@string/send_by"
                     android:textColor="@color/navi_blue3"
                     android:textSize="@dimen/thirteen_sp"
                     android:textStyle="bold">
@@ -324,7 +324,7 @@
                     android:background="@drawable/bg_green_radoius_10dp"
                     android:gravity="center"
                     android:padding="@dimen/five"
-                    android:text="View"
+                    android:text="@string/view"
                     android:textColor="@color/white"
                     android:textSize="@dimen/fifteen_sp"
                     android:textStyle="bold">
@@ -341,7 +341,7 @@
                     android:background="@drawable/bg_red_radious__all_side_same"
                     android:gravity="center"
                     android:padding="@dimen/five"
-                    android:text="Submit"
+                    android:text="@string/submit"
                     android:textColor="@color/white"
                     android:textSize="@dimen/fifteen_sp"
                     android:textStyle="bold">

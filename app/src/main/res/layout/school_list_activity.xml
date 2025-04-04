@@ -22,15 +22,13 @@
             android:layout_marginStart="@dimen/fifteen"
             android:src="@drawable/arrow_back_black" />
 
-
-
         <TextView
             android:id="@+id/lblTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/fifteen"
             android:layout_toEndOf="@+id/imgBack"
-            android:text="School Selection"
+            android:text="@string/school_selection"
             android:textColor="@color/white"
             android:textSize="@dimen/fifteen_sp"
             android:textStyle="bold" />
@@ -42,7 +40,7 @@
             android:layout_below="@+id/lblTitle"
             android:layout_marginStart="@dimen/fifteen"
             android:layout_toEndOf="@+id/imgBack"
-            android:text="Choose your preferred school"
+            android:text="@string/choose_your_preferred_school"
             android:textColor="@color/white"
             android:textSize="13sp"
             android:textStyle="normal" />
@@ -59,8 +57,8 @@
         android:layout_marginEnd="@dimen/two"
         android:background="@drawable/rect_btn_grey"
         android:orientation="horizontal"
-        android:weightSum="1"
-        android:padding="@dimen/one">
+        android:padding="@dimen/one"
+        android:weightSum="1">
 
 
         <TextView
@@ -70,12 +68,12 @@
             android:layout_gravity="center"
             android:layout_weight="0.5"
             android:background="@drawable/white_radious"
+            android:fontFamily="@font/poppins_medium"
             android:gravity="center"
-            android:text="Send to multiple school"
+            android:text="@string/send_to_multiple_school"
             android:textColor="@color/black"
             android:textSize="13sp"
-            android:textStyle="normal"
-            android:fontFamily="@font/poppins_medium">
+            android:textStyle="normal">
 
         </TextView>
 
@@ -85,12 +83,12 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="0.5"
+            android:fontFamily="@font/poppins_medium"
             android:gravity="center"
-            android:text="Select Resipent"
+            android:text="@string/select_resipent"
             android:textColor="@color/black"
             android:textSize="13sp"
-            android:textStyle="normal"
-            android:fontFamily="@font/poppins_medium">
+            android:textStyle="normal">
 
         </TextView>
     </LinearLayout>
@@ -102,7 +100,7 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/lblSend"
         android:layout_below="@+id/lnrTab"
-        android:layout_marginBottom="42dp"
+        android:layout_marginBottom="@dimen/ten"
         android:padding="@dimen/ten"
         tools:listitem="@layout/schools_list_item" />
 
@@ -115,13 +113,13 @@
         android:layout_marginEnd="@dimen/twenty"
         android:layout_marginBottom="@dimen/ten"
         android:background="@drawable/rect_btn_orange"
+        android:fontFamily="@font/poppins_regular"
         android:gravity="center_horizontal"
         android:padding="@dimen/eight"
-        android:text="Send to multiple school"
+        android:text="@string/send_to_multiple_school"
         android:textColor="@color/white"
         android:textSize="@dimen/fifteen_sp"
-        android:textStyle="normal"
-        android:fontFamily="@font/poppins_regular">
+        android:textStyle="normal">
 
     </TextView>
 

@@ -201,7 +201,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/txtTitle"
                 android:layout_marginTop="@dimen/fifteen"
-                android:text="Event detail"
+                android:text="@string/event_detail"
                 android:textColor="@color/black"
                 android:fontFamily="@font/poppins_bold"
                 android:textSize="@dimen/thirteen_sp"
@@ -234,7 +234,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/txtDesc"
                     android:layout_alignParentEnd="true"
-                    android:text="0 of 500"
+                    android:text="@string/_0_of_500"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
                     android:fontFamily="@font/poppins_bold"
@@ -253,11 +253,10 @@
                     android:id="@+id/lblAddPhoto"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/ten"
+                    android:fontFamily="@font/poppins_bold"
                     android:text="@string/AddPhotos"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
-                    android:fontFamily="@font/poppins_bold"
                     android:textStyle="bold" />
 
                 <TextView

@@ -39,7 +39,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:padding="15dp"
-                    android:text="Schedule Meeting"
+                    android:text="@string/schedule_meeting"
                     android:textSize="14sp"
                     android:textStyle="bold">
                 </TextView>
@@ -60,7 +60,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:padding="15dp"
-                    android:text="Meeting History"
+                    android:text="@string/meeting_history"
                     android:textSize="14sp"
                     android:textStyle="bold">
 
@@ -97,7 +97,7 @@
             android:layout_height="50dp">
             <TextView
                 android:layout_width="match_parent"
-                android:text="Book Slot"
+                android:text="@string/book_slot"
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:textColor="@color/white"

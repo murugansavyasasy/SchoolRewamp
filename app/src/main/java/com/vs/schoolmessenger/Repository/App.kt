@@ -8,7 +8,7 @@ import com.vs.schoolmessenger.CommonScreens.Ads.AdsResponse
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.StaffListResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
-import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.StandardResponse
+import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
 
 class App(application: Application) : AndroidViewModel(application) {
 
@@ -57,13 +57,13 @@ class App(application: Application) : AndroidViewModel(application) {
         apiRepositories!!.isGetStaffList(isToken, activity)
     }
 
-    fun isGetSubjectList(isToken: String, activity: Activity) {
-        apiRepositories.isGetSubjectList(isToken, activity)
+    fun isGetSubjectList(isToken: String, isSectionId: String, activity: Activity) {
+        apiRepositories.isGetSubjectList(isToken,isSectionId, activity)
     }
 
 
-    fun isGetStandardSection(isToken: String, isSection: String, activity: Activity) {
-        apiRepositories.isGetStandardSection(isToken,isSection, activity)
+    fun isGetStandardSection(isToken: String, activity: Activity) {
+        apiRepositories.isGetStandardSection(isToken, activity)
     }
 
     fun isGetStudentList(isToken: String, isSection: String, activity: Activity) {

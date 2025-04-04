@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/sixty"
             android:layout_marginTop="@dimen/twenty"
-            android:text="Daily Collection Fees"
+            android:text="@string/daily_collection_fees"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold">
@@ -64,7 +64,7 @@
             android:layout_gravity="center"
             android:fontFamily="@font/poppins_regular"
             android:layout_marginEnd="@dimen/ten"
-            android:text="From Date"/>
+            android:text="@string/FromDate"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -133,7 +133,7 @@
                 android:layout_gravity="center"
                 android:fontFamily="@font/poppins_regular"
                 android:layout_marginEnd="@dimen/ten"
-                android:text="To Date"/>
+                android:text="@string/ToDate"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -198,15 +198,15 @@
         <TextView
             android:id="@+id/category_name"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="@dimen/five"
+            android:layout_weight="1"
+            android:background="@drawable/custom_category_background"
+            android:fontFamily="@font/poppins_bold"
+            android:gravity="center"
             android:text="CATEGORY"
             android:textColor="@color/white"
             android:textSize="15sp"
-            android:layout_marginTop="@dimen/five"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:fontFamily="@font/poppins_bold"
-            android:background="@drawable/custom_category_background"
             android:textStyle="bold">
         </TextView>
 
@@ -259,7 +259,7 @@ android:layout_marginEnd="3dp"
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Total"
+            android:text="@string/total"
             android:textColor="@color/black"
             android:textStyle="bold"
             android:textSize="15sp"
@@ -307,7 +307,7 @@ android:layout_marginEnd="3dp"
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Total"
+            android:text="@string/total"
             android:textColor="@color/black"
             android:textStyle="bold"
             android:textSize="15sp"

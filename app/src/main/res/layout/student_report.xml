@@ -24,8 +24,6 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_toStartOf="@dimen/fifteen"
             android:text="@string/StudentReport"
             android:layout_marginTop="@dimen/ten"
             android:textColor="@color/black"
@@ -163,7 +161,8 @@
             android:text="Standard"
             android:textColor="@color/black"
             android:textSize="@dimen/fifteen_sp"
-            android:textStyle="bold"></TextView>
+            android:textStyle="bold">
+        </TextView>
 
 
         <TextView
@@ -174,7 +173,6 @@
             android:layout_marginStart="@dimen/fifteen"
             android:layout_marginEnd="@dimen/fifteen"
             android:background="@drawable/rect_shadow_white"
-            android:drawableEnd="@drawable/drop_down_blue"
             android:gravity="center_vertical"
             android:padding="@dimen/ten"
             android:text="XII"
@@ -193,7 +191,8 @@
             android:text="Section"
             android:textColor="@color/black"
             android:textSize="@dimen/fifteen_sp"
-            android:textStyle="bold"></TextView>
+            android:textStyle="bold">
+        </TextView>
 
         <TextView
             android:id="@+id/dropdownTextViewSection"

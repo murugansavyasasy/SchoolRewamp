@@ -131,7 +131,7 @@
                 android:background="@drawable/rounded_top_right_bottom_end_green"
                 android:gravity="center"
                 android:padding="@dimen/five"
-                android:text="Present"
+                android:text="@string/present"
                 android:textColor="@color/white"
                 android:textSize="@dimen/thirteen_sp"
                 android:textStyle="bold">
