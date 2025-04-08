@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/ten"
             android:gravity="center"
-            android:text="Your password has been securely stored and encrypted for protection. For security reasons, it cannot be displayed in plain text."
+            android:text="@string/your_password_has_been_securely_stored_and_encrypted_for_protection_for_security_reasons_it_cannot_be_displayed_in_plain_text"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp">
 
@@ -149,7 +149,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/fifteen"
                     android:layout_toEndOf="@+id/lblDidNot"
-                    android:text="00:00"
+                    android:text="@string/_00_00"
                     android:textColor="@color/dark_orange"
                     android:textSize="@dimen/fifteen_sp"
                     android:visibility="visible">
@@ -177,7 +177,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/ten"
                 android:gravity="center"
-                android:text="If you don't recive the otp please contact any of the  below number."
+                android:text="@string/if_you_don_t_recive_the_otp_please_contact_any_of_the_below_number"
                 android:textColor="@color/white"
                 android:textSize="@dimen/thirteen_sp">
 
@@ -190,7 +190,7 @@
                 android:layout_gravity="center"
                 android:layout_margin="@dimen/ten"
                 android:gravity="center"
-                android:text="Contact Us?"
+                android:text="@string/contact_us"
                 android:textColor="@color/white"
                 android:textSize="@dimen/fifteen_sp"
                 android:textStyle="bold">
@@ -214,7 +214,7 @@
                     android:layout_height="match_parent"
                     android:background="@drawable/rect_btn_blue"
                     android:gravity="center"
-                    android:text="Next"
+                    android:text="@string/NEXT"
                     android:textColor="@color/white"
                     android:textSize="@dimen/fifteen_sp"
                     android:textStyle="bold" />

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -22,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Welcome back!"
+            android:text="@string/welcome_back"
             android:textColor="@color/black"
             android:textSize="@dimen/eighteen_sp"
             android:textStyle="bold">
@@ -34,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/ten"
             android:gravity="center"
-            android:text="Your password has been securely stored and encrypted for protection. For security reasons, it cannot be displayed in plain text."
+            android:text="@string/your_password_has_been_securely_stored_and_encrypted_for_protection_for_security_reasons_it_cannot_be_displayed_in_plain_text"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp">
 
@@ -56,9 +57,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Login"
+                    android:text="@string/login"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/thirty" />
+                    android:textSize="30sp" />
 
                 <TextView
                     android:id="@+id/lblMobile"
@@ -102,7 +103,7 @@
                         android:layout_height="match_parent"
                         android:layout_toEndOf="@+id/vwMobile"
                         android:background="@null"
-                        android:hint="00000-00000"
+                        android:hint="@string/_00000_00000"
                         android:inputType="number"
                         android:maxLength="10"
                         android:paddingHorizontal="@dimen/ten"
@@ -138,7 +139,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@null"
-                        android:hint="**********"
+                        android:hint="@string/star"
                         android:inputType="textPassword"
                         android:paddingHorizontal="@dimen/ten"
                         android:textColor="@color/black"
@@ -183,7 +184,7 @@
                         android:background="@drawable/rect_btn_blue"
                         android:gravity="center"
                         android:padding="@dimen/fifteen"
-                        android:text="LOGIN"
+                        android:text="@string/logintext"
                         android:textColor="@color/white"
                         android:textSize="@dimen/fifteen_sp"
                         android:textStyle="bold" />

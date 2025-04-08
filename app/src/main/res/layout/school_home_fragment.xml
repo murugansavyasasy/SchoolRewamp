@@ -40,7 +40,7 @@
                 android:layout_width="@dimen/fifty"
                 android:layout_height="@dimen/fifty"
                 android:layout_centerVertical="true"
-                android:src="@drawable/profile_student" />
+                android:src="@mipmap/school_chimes_logo" />
 
             <RelativeLayout
                 android:id="@+id/rytSchoolDetails"
@@ -56,9 +56,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Savyasasy software solutions pvt Ltd.,"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"
-                    android:textStyle="bold" />
+                    android:textSize="14sp"
+                    style="@style/CustomTextStylePoppinsBold" />
 
                 <TextView
                     android:id="@+id/lblSchoolAddress"
@@ -67,24 +66,46 @@
                     android:layout_below="@+id/lblSchoolName"
                     android:text="Savyasasy schools, Chennai  600043"
                     android:textColor="@color/black"
+                    android:visibility="gone"
                     android:textSize="@dimen/thirteen_sp" />
             </RelativeLayout>
+
+
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/changeroll"
+                android:text="Change Roll >"
+                style="@style/CustomTextStylePoppinsRegular"
+                android:textColor="@color/navi_blue2"
+                android:textSize="@dimen/fifteen_sp"
+                android:layout_alignParentEnd="true"/>
 
 
             <ImageView
                 android:id="@+id/imgSearchClick"
                 android:layout_width="@dimen/thirty"
                 android:layout_height="@dimen/thirty"
+                android:layout_below="@+id/changeroll"
                 android:layout_toStartOf="@+id/rytImageNotification"
-                android:src="@drawable/search_icon_white"
+                android:src="@drawable/search_icon"
+                android:layout_marginEnd="@dimen/ten"
+                android:layout_marginTop="@dimen/five"
                 android:visibility="visible">
 
             </ImageView>
+
+
+
 
             <FrameLayout
                 android:id="@+id/rytImageNotification"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/changeroll"
+                android:layout_marginTop="@dimen/five"
                 android:layout_alignParentEnd="true">
 
                 <TextView
@@ -106,7 +127,8 @@
                     android:id="@+id/imgNotification"
                     android:layout_width="@dimen/thirty"
                     android:layout_height="@dimen/thirty"
-                    android:src="@drawable/notification_icon_white" />
+
+                    android:src="@drawable/notification_icon" />
 
             </FrameLayout>
         </RelativeLayout>
@@ -117,7 +139,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/rlaSchoolDetail"
             android:layout_marginStart="@dimen/twenty"
-            android:layout_marginTop="@dimen/ten"
             android:layout_marginEnd="@dimen/twenty"
             android:background="@drawable/rect_white_light_radious"
             android:elevation="10dp"
@@ -125,7 +146,7 @@
 
             <TextView
                 android:id="@+id/lblReportAttendance"
-                style="@style/CustomTextStyleAttendanceReportDashBoard"
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/attendance_report"
@@ -136,11 +157,11 @@
 
             <TextView
                 android:id="@+id/lblDate"
-                style="@style/CustomTextStyleAttendanceReportDashBoardRegular"
+                style="@style/CustomTextStylePoppinsRegular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblReportAttendance"
-                android:layout_marginTop="@dimen/ten"
+                android:layout_marginTop="@dimen/five"
                 android:text="01, May 2025"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp">
@@ -151,12 +172,12 @@
                 android:id="@+id/lblViewDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/lblReportAttendance"
                 android:layout_alignParentEnd="true"
                 android:text="View Details"
+                android:gravity="center_vertical"
                 android:textColor="@color/navi_blue1"
                 android:textSize="@dimen/thirteen_sp"
-                android:textStyle="normal">
+                style="@style/CustomTextStylePoppinsRegular">
 
             </TextView>
 
@@ -209,9 +230,8 @@
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/thirty_five"
                 android:text="Categories"
-                android:textColor="@color/black"
-                android:textSize="@dimen/fifteen_sp"
-                android:textStyle="bold">
+                android:textSize="15sp"
+                 style="@style/CustomTextStylePoppinsBold">
 
             </TextView>
 

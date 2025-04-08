@@ -75,12 +75,13 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel!!.init()
+        binding.changeroll.paintFlags =binding. changeroll.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
         userDetails = SharedPreference.getUserDetails(requireActivity())
         isDashBoardData()
         binding.lblSchoolAddress.text = userDetails!!.staff_details[0].school_address
-        Glide.with(requireActivity()).load(userDetails!!.staff_details[0].school_logo)
-            .into(binding.imgSchoolLogo)
+//        Glide.with(requireActivity()).load(userDetails!!.staff_details[0].school_logo)
+//            .into(binding.imgSchoolLogo)
 
         if (userDetails!!.staff_details.size > 1) {
             binding.lblSchoolName.text = userDetails!!.role_name

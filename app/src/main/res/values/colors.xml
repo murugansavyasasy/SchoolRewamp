@@ -28,6 +28,9 @@
     <color name="colorPrimary_light">#0F536A</color>
     <color name="primary">#8ec5d6</color>
     <color name="primary_light">#A6DADF</color>
+    <color name="primary_light1">#a6d1df</color>
+
+
 
     <color name="light_sky_blue">#c7eaff</color>
     <color name="light_gray">#616159</color>
@@ -100,7 +103,7 @@
     <color name="navi_blue3">#0153e1</color>
     <color name="navi_blue4">#c7eaff</color>
     <color name="navi_blue5">#2972b6</color>
-
+    <color name="navi_blue6">#3f87f2</color>
 
     <color name="system_blue">#9DD6FD</color>
     <color name="light_violet">#E3F1FB</color>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary_light">
+    android:background="@color/primary_light1">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,23 +21,19 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/twenty"
             android:text="@string/lblChoosecountry"
-            android:textColor="@color/black"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            android:fontFamily="@font/poppins_bold"
-            app:layout_constraintTop_toTopOf="parent" />
+            style="@style/CustomTextStylePoppinsBold"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="@dimen/ten"/>
 
         <TextView
             android:id="@+id/lblContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/twenty"
-            android:layout_marginTop="@dimen/thirteen"
+            android:layout_marginTop="@dimen/twenty"
+            style="@style/CustomTextStylePoppinsRegular"
             android:lineSpacingExtra="@dimen/five"
             android:text="@string/lblCountryNotes"
-            android:textColor="@color/black"
-            android:textSize="11sp"
-            android:fontFamily="@font/poppins_regular"
             app:layout_constraintTop_toBottomOf="@+id/lblCountryTitle" />
 
 
@@ -49,6 +45,7 @@
             android:layout_marginStart="@dimen/ten"
             android:layout_marginEnd="@dimen/ten"
             android:text="Select Your Country"
+            style="@style/CustomTextStyle"
             android:textColor="@color/black"
             app:layout_constraintTop_toBottomOf="@+id/lblContent">
 
@@ -97,9 +94,8 @@
                     android:layout_marginStart="@dimen/ten"
                     android:layout_toEndOf="@+id/terms_checkbox"
                     android:text="@string/lblIagreetotheTermsandConditions"
-                    android:fontFamily="@font/poppins_bold"
-                    android:textStyle="bold"
-                    android:textColor="@color/navi_blue3"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:textColor="@color/navi_blue6"
                     android:layout_marginTop="@dimen/five"
                     android:textSize="@dimen/thirteen_sp" />
 
@@ -163,7 +159,7 @@
                 <ImageView
                     android:layout_width="@dimen/thirty_five"
                     android:layout_height="@dimen/thirty_five"
-                    android:src="@drawable/india_flag">
+                    android:src="@drawable/indiaflag">
 
                 </ImageView>
 

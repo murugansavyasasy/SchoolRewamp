@@ -6,17 +6,15 @@ import android.graphics.drawable.shapes.RectShape
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.R
-import androidx.core.graphics.drawable.toDrawable
+import androidx.core.graphics.toColorInt
 
 object ShimmerUtil {
 
     private val originalText = mutableMapOf<TextView, CharSequence>()
     private val originalTextColors = mutableMapOf<TextView, Int>()
-    private val originalImageVisibility = mutableMapOf<ImageView, Int>()
 
     fun wrapWithShimmer(parent: ViewGroup, layoutResId: Int): View {
         val shimmerLayout = LayoutInflater.from(parent.context)
@@ -53,25 +51,9 @@ object ShimmerUtil {
                             originalTextColors[child] = child.currentTextColor
                         }
 
-                        // Create a gray background placeholder
-                        val paint = child.paint
-                        val textWidth = paint.measureText(child.text.toString()).toInt()
-                        val textHeight = child.lineHeight
-
-                        val background = ShapeDrawable(RectShape()).apply {
-                            intrinsicWidth = textWidth
-                            intrinsicHeight = textHeight
-                            paint.color = Color.WHITE
-                        }
-
-                        child.background = background // Apply shimmer effect
+                        child.setBackgroundColor("#DDDDDD".toColorInt())
                     }
-                    is ImageView -> {
-                        if (!originalImageVisibility.containsKey(child)) {
-                            originalImageVisibility[child] = child.visibility
-                        }
-                        child.setImageDrawable(Color.WHITE.toDrawable()) // Set gray placeholder
-                    }
+
                     is ViewGroup -> hideViewsDuringShimmer(child)
                 }
             }
@@ -89,13 +71,6 @@ object ShimmerUtil {
                             child.background = null
                             originalText.remove(child)
                             originalTextColors.remove(child)
-                        }
-                    }
-                    is ImageView -> {
-                        if (originalImageVisibility.containsKey(child)) {
-                            child.visibility = originalImageVisibility[child]!!
-                            child.setImageDrawable(null)
-                            originalImageVisibility.remove(child)
                         }
                     }
                     is ViewGroup -> restoreViewsAfterShimmer(child)
