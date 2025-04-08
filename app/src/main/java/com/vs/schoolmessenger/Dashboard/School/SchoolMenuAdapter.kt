@@ -18,6 +18,7 @@ import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuClickListener
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuDetail
 import com.vs.schoolmessenger.Dashboard.Parent.AdImageAdapter
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 import java.util.Timer
 import java.util.TimerTask
@@ -177,6 +178,7 @@ class SchoolMenuAdapter(
             }
 
             rlaMenu.setOnClickListener {
+                Constant.selected_school_menu_id = data.id
                 listener.onClick(data)
 
             }
