@@ -49,7 +49,7 @@
                 android:text="Savyasasy software solution pvt ltd.,"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
-                android:textStyle="bold" />
+               style="@style/CustomTextStylePoppinsBold" />
 
             <TextView
                 android:id="@+id/lblSchoolAddress"
@@ -57,11 +57,10 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblSchoolName"
                 android:layout_marginTop="@dimen/five"
-                android:fontFamily="@font/poppins_regular"
                 android:text="Chennai, Nungambakkam"
                 android:textColor="@color/grey"
                 android:textSize="@dimen/thirteen_sp"
-                android:textStyle="normal" />
+                style="@style/CustomTextStylePoppinsRegular" />
 
 
         </RelativeLayout>

@@ -13,6 +13,9 @@ import com.bumptech.glide.Glide
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.Communication.TextHistoryAdapter
+import com.vs.schoolmessenger.School.Communication.TextHistoryAdapter.DataViewHolder.ShimmerViewHolder
+import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class SchoolListAdapter(
     private var isMultipleSchool: Boolean,
@@ -32,10 +35,8 @@ class SchoolListAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-            val view =
-                LayoutInflater.from(parent.context)
-                    .inflate(R.layout.shimmer_view_small_list, parent, false)
-            ShimmerViewHolder(view)
+            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.schools_list_item)
+            ShimmerViewHolder(shimmerView)
         } else {
             val view =
                 LayoutInflater.from(parent.context)
@@ -47,6 +48,8 @@ class SchoolListAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
             holder.bind(itemList!![position], position, listener, isMultipleSchool, selectedIds)
+        }else if (holder is SchoolListAdapter.ShimmerViewHolder) {
+            holder.startShimmer()
         }
     }
 
@@ -104,11 +107,8 @@ class SchoolListAdapter(
     }
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val shimmerLayout: ShimmerFrameLayout =
-            itemView.findViewById(R.id.shimmer_view_container)
-
-        init {
-            shimmerLayout.startShimmer() // Start shimmer effect
+        fun startShimmer() {
+            ShimmerUtil.startShimmer(itemView)
         }
     }
 }

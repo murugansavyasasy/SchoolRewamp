@@ -26,41 +26,14 @@
         </FrameLayout>
 
 
-        <RelativeLayout
-            android:id="@+id/rlaChangeRoll"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/ten"
-            android:layout_marginTop="@dimen/five"
-            android:layout_alignParentEnd="true"
-            android:paddingBottom="@dimen/ten">
 
-            <TextView
-                android:id="@+id/lblChangeRoll"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/change_roll"
-                android:textColor="@color/sky_blue0"
-                android:textSize="@dimen/fifteen_sp"
-                android:textStyle="bold" />
-
-            <View
-                android:layout_width="@dimen/hundred"
-                android:layout_marginTop="@dimen/three"
-                android:layout_height="1dp"
-                android:layout_below="@+id/lblChangeRoll"
-                android:background="@color/sky_blue0">
-
-            </View>
-
-        </RelativeLayout>
 
 
         <RelativeLayout
             android:id="@+id/rlaStudentDetail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/rlaChangeRoll"
+            android:layout_marginTop="@dimen/twenty"
             android:paddingHorizontal="@dimen/ten"
             android:visibility="visible">
 
@@ -69,7 +42,7 @@
                 android:layout_width="@dimen/fifty"
                 android:layout_height="@dimen/fifty"
                 android:layout_centerVertical="true"
-                android:src="@drawable/profile_student"
+                android:src="@drawable/school_chimes"
                 />
 
             <RelativeLayout
@@ -80,11 +53,14 @@
                 android:layout_toStartOf="@+id/imgSearchClick"
                 android:layout_toEndOf="@+id/imgSchoolLogo">
 
+
+
+
                 <TextView
                     android:id="@+id/lblStudentName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Hello, Sathish"
+                    android:text="Hello"
                     style="@style/CustomTextStyle"
                     android:textColor="@color/white"
                     android:textSize="@dimen/twenty_sp"
@@ -92,10 +68,13 @@
                     android:shadowDx="12"
                     android:shadowDy="7"
                     android:shadowRadius="10"
-
                     >
 
                 </TextView>
+
+
+
+
 
                 <TextView
                     android:id="@+id/lblSchoolName"
@@ -105,7 +84,7 @@
                     android:text="Savyasasy software solutions pvt Ltd.,"
                     android:textColor="@color/white"
                     android:textSize="@dimen/thirteen_sp"
-                    android:textStyle="bold" />
+                   style="@style/CustomTextStylePoppinsBold" />
 
                 <TextView
                     android:id="@+id/lblSchoolAddress"
@@ -117,12 +96,32 @@
                     android:textSize="@dimen/thirteen_sp" />
             </RelativeLayout>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/lblChangeRoll"
+                android:text="Change Roll >"
+                style="@style/CustomTextStylePoppinsRegular"
+                android:textColor="@color/navi_blue2"
+                android:textSize="@dimen/fifteen_sp"
+                android:layout_alignParentEnd="true"/>
+
+            <View
+                android:layout_width="@dimen/hundred"
+                android:layout_marginTop="@dimen/three"
+                android:layout_height="1dp"
+                android:layout_below="@+id/lblChangeRoll"
+                android:layout_alignParentEnd="true"
+                android:background="@color/sky_blue0">
+
+            </View>
+
 
             <ImageView
                 android:id="@+id/imgSearchClick"
                 android:layout_width="@dimen/thirty"
                 android:layout_height="@dimen/thirty"
-                android:layout_marginTop="@dimen/thirty"
+                android:layout_marginTop="@dimen/thirty_five"
                 android:layout_marginEnd="@dimen/ten"
                 android:layout_toStartOf="@+id/rytImageNotification"
                 android:src="@drawable/search_icon_white"
@@ -133,7 +132,7 @@
             <FrameLayout
                 android:id="@+id/rytImageNotification"
                 android:layout_width="wrap_content"
-                android:layout_marginTop="@dimen/thirty"
+                android:layout_marginTop="@dimen/thirty_five"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true">
 
@@ -178,7 +177,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/attendance_report"
-                style="@style/CustomTextStyleAttendanceReportDashBoard"
+                style="@style/CustomTextStylePoppinsBold"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
                >
@@ -191,7 +190,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblReportAttendance"
                 android:text="01, May 2025"
-                style="@style/CustomTextStyleAttendanceReportDashBoardRegular"
+                style="@style/CustomTextStylePoppinsRegular"
                 android:textColor="@color/black"
                 android:layout_marginTop="@dimen/ten"
                 android:textSize="@dimen/thirteen_sp"
@@ -208,7 +207,7 @@
                 android:text="@string/view_details"
                 android:textColor="@color/navi_blue1"
                 android:textSize="@dimen/thirteen_sp"
-                android:textStyle="normal">
+                style="@style/CustomTextStylePoppinsRegular">
 
             </TextView>
 
@@ -261,15 +260,14 @@
                 android:layout_marginTop="@dimen/thirty_five"
                 android:text="@string/categories"
                 android:layout_marginStart="@dimen/twenty"
-                android:textColor="@color/black"
+
                 android:textSize="@dimen/fifteen_sp"
-                android:textStyle="bold">
+                style="@style/CustomTextStylePoppinsBold">
 
             </TextView>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewMenus"
-                android:layout_marginTop="@dimen/ten"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@id/lblCategories"

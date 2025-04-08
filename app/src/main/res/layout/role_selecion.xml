@@ -25,9 +25,7 @@
             android:layout_below="@+id/imgTeaching"
             android:gravity="center"
             android:text="@string/lblChooseyourrole"
-            android:textColor="@color/black"
-            android:textSize="@dimen/fifteen_sp"
-            android:textStyle="bold">
+            style="@style/CustomTextStylePoppinsBold">
 
         </TextView>
 
@@ -41,7 +39,8 @@
             android:gravity="center"
             android:text="@string/lblLoginteacherparent"
             android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp">
+            android:textSize="@dimen/thirteen_sp"
+            style="@style/CustomTextStylePoppinsRegular">
 
         </TextView>
 
@@ -65,7 +64,7 @@
                 android:padding="@dimen/ten"
                 android:textColor="@color/white"
                 android:textSize="@dimen/thirteen_sp"
-                android:textStyle="bold" />
+                style="@style/CustomTextStylePoppinsMedium"/>
 
             <TextView
                 android:id="@+id/lblParent"
@@ -76,7 +75,7 @@
                 android:padding="@dimen/ten"
                 android:textColor="@color/dark_blue"
                 android:textSize="@dimen/thirteen_sp"
-                android:textStyle="bold" />
+                style="@style/CustomTextStylePoppinsMedium" />
 
         </LinearLayout>
 
@@ -104,8 +103,7 @@
         android:text="@string/lblNext"
         android:textColor="@color/white"
         android:textSize="@dimen/thirteen_sp"
-        android:fontFamily="@font/poppins_bold"
-        android:textStyle="bold" />
+        style="@style/CustomTextStylePoppinsBold"/>
 
 
     <!-- OLD  -->

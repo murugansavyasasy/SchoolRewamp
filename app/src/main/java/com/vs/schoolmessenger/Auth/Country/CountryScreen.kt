@@ -63,7 +63,7 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
 
     private fun isLoadCountry(countryList: List<Country>) {
 
-        val isCountryList = listOf(Country(-0, "Select Country", -0, -0, "", "", "", "")) + countryList
+        val isCountryList = listOf(Country(-0, "Select Your Country", -0, -0, "", "", "", "")) + countryList
         val adapter = CountrySpinnerAdapter(this@CountryScreen, isCountryList)
         binding.isSpineer.adapter = adapter
 

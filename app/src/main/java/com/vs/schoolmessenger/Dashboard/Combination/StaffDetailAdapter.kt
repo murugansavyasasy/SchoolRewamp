@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.Visibility
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -98,7 +99,12 @@ class StaffDetailAdapter(
         holder.binding.lblRole.text = item.role
         holder.binding.lblStaffName.text = item.name
         holder.binding.lblSchoolAddress.text = item.school_address
-        holder.binding.lblCity.text = item.city
+        if (!item.city.isNullOrBlank()) {
+            holder.binding.lblCity.text = item.city
+            holder.binding.lblCity.visibility = View.VISIBLE
+        } else {
+            holder.binding.lblCity.visibility = View.GONE
+        }
 
         holder.binding.rlaStaffDetails.setOnClickListener {
             listener.onItemClick(item)

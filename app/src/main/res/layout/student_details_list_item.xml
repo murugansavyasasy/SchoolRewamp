@@ -5,7 +5,6 @@
     android:layout_marginStart="@dimen/thirty"
     android:layout_marginTop="@dimen/ten"
     android:id="@+id/rlaStudent"
-
     android:layout_marginEnd="@dimen/thirty"
     android:background="@drawable/rect_shadow_white"
     android:layout_height="wrap_content">
@@ -47,11 +46,10 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/ten"
                 android:gravity="center"
-                android:text="Register No : 1470000"
+                android:text="Roll No : 1470000"
                 android:textColor="@color/black"
                 android:textSize="13sp"
-                android:textStyle="bold"
-                android:fontFamily="@font/poppins_bold">
+               style="@style/CustomTextStylePoppinsBold">
             </TextView>
 
                 <ImageView
@@ -76,8 +74,7 @@
                 android:gravity="center"
                 android:text="Sathish"
                 android:textColor="@color/black"
-                android:textStyle="bold"
-                android:fontFamily="@font/poppins_bold"
+               style="@style/CustomTextStylePoppinsBold"
                 android:textSize="@dimen/thirteen_sp">
             </TextView>
 
@@ -92,8 +89,8 @@
                 android:text="IIX - A"
                 android:textColor="@color/black"
                 android:layout_marginBottom="@dimen/ten"
-                android:fontFamily="@font/poppins_regular"
-                android:textSize="@dimen/thirteen_sp">
+                android:textSize="@dimen/thirteen_sp"
+                style="@style/CustomTextStylePoppinsRegular">
 
             </TextView>
 
@@ -108,7 +105,7 @@
                 android:text="Sathish"
                 android:textColor="@color/black"
                 android:layout_marginBottom="@dimen/ten"
-                android:fontFamily="@font/poppins_regular"
+              style="@style/CustomTextStylePoppinsRegular"
                 android:textSize="@dimen/thirteen_sp">
 
             </TextView>
@@ -120,7 +117,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rlaStudentDetails"
-            android:background="@color/system_blue">
+            android:background="@drawable/bg_school_name_rounded">
 
             <ImageView
                 android:id="@+id/imgSchool"
@@ -148,12 +145,9 @@
                     android:layout_marginEnd="@dimen/ten"
                     android:gravity="end"
                     android:text="Kodaikanal International School"
-                    android:textStyle="bold"
                     android:textColor="@color/black"
-                    android:fontFamily="@font/poppins_bold"
-                    android:textSize="@dimen/thirteen_sp"
-
-                    >
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:textSize="@dimen/thirteen_sp">
 
                 </TextView>
 
@@ -164,14 +158,10 @@
                     android:layout_below="@+id/lblSchoolName"
                     android:layout_marginEnd="@dimen/ten"
                     android:gravity="end"
-                    android:textStyle="normal"
                     android:text="Kodaikanal"
-                    android:fontFamily="@font/poppins_regular"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
-
-                    >
-
+                    style="@style/CustomTextStylePoppinsRegular">
                 </TextView>
 
             </RelativeLayout>

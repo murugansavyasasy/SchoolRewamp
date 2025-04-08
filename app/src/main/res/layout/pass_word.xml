@@ -25,8 +25,7 @@
             android:text="Happy to have you with us!"
             android:textColor="@color/black"
             android:textSize="@dimen/eighteen_sp"
-            android:fontFamily="@font/poppins_bold"
-            android:textStyle="bold">
+            style="@style/CustomTextStylePoppinsBold">
 
         </TextView>
 
@@ -37,8 +36,8 @@
             android:gravity="center"
             android:text="Your password has already been created. Use your credentials to log in and access SchoolChimes for seamless school communication and management."
             android:textColor="@color/black"
-            android:fontFamily="@font/poppins_medium"
-            android:textSize="@dimen/thirteen_sp">
+            android:textSize="@dimen/thirteen_sp"
+            style="@style/CustomTextStylePoppinsRegular">
 
         </TextView>
 
@@ -58,9 +57,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/twenty_five"
                     android:gravity="center"
-                    android:text="Login"
+                    android:text="@string/login"
                     android:textColor="@color/white"
-                    android:fontFamily="@font/poppins_medium"
+                    style="@style/CustomTextStylePoppinsRegular"
                     android:textSize="@dimen/twenty_sp" />
 
                 <TextView
@@ -73,9 +72,8 @@
                     android:layout_marginEnd="@dimen/ten"
                     android:text="@string/lblPassword"
                     android:textColor="@color/white"
-                    android:fontFamily="@font/poppins_medium"
                     android:textSize="@dimen/fifteen_sp"
-                    android:textStyle="normal"/>
+                    style="@style/CustomTextStylePoppinsRegular"/>
 
 
 
@@ -123,9 +121,8 @@
                     android:layout_marginTop="@dimen/twenty"
                     android:text="@string/lblForgotPassword"
                     android:textColor="@color/white"
-                    android:textStyle="normal"
-                    android:fontFamily="@font/poppins_medium"
                     android:textSize="@dimen/fifteen_sp"
+                    style="@style/CustomTextStylePoppinsRegular"
                     android:layout_marginEnd="@dimen/ten"/>
 
 
@@ -151,8 +148,8 @@
                         android:text="Validate"
                         android:textColor="@color/white"
                         android:textSize="@dimen/fifteen_sp"
-                        android:textStyle="bold"
-                        android:fontFamily="@font/poppins_bold"/>
+                        style="@style/CustomTextStylePoppinsBold"
+                        />
 
                 </androidx.cardview.widget.CardView>
             </RelativeLayout>
