@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.ProfileBinding
 
 class ProfileFragment : Fragment(), View.OnClickListener {
@@ -16,6 +17,14 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     ): View {
 
         binding = ProfileBinding.inflate(layoutInflater)
+
+        if (Constant.isParentChoose) {
+            binding.rytHeader.setBackgroundResource(com.vs.schoolmessenger.R.drawable.gradient_theme_parent)
+        } else {
+            binding.rytHeader.setBackgroundResource(com.vs.schoolmessenger.R.drawable.gradient_theme_school)
+        }
+
+
         return binding.root
     }
 

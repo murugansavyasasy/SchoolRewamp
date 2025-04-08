@@ -7,9 +7,10 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/rytHeader"
         android:layout_width="match_parent"
         android:layout_height="240dp"
-        android:background="@color/primary_light" />
+        android:background="@drawable/gradient_theme_school" />
 
     <LinearLayout
         android:id="@+id/topbar"

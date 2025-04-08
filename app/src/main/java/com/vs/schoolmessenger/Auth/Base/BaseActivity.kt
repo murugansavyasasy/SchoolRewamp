@@ -400,25 +400,25 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         findViewById<ImageView>(R.id.icon_home).setColorFilter(
             ContextCompat.getColor(
                 this,
-                R.color.grey
+                R.color.black1
             ), PorterDuff.Mode.SRC_IN
         )
         findViewById<ImageView>(R.id.icon_help).setColorFilter(
             ContextCompat.getColor(
                 this,
-                R.color.grey
+                R.color.black1
             ), PorterDuff.Mode.SRC_IN
         )
         findViewById<ImageView>(R.id.icon_profile).setColorFilter(
             ContextCompat.getColor(
                 this,
-                R.color.grey
+                R.color.black1
             ), PorterDuff.Mode.SRC_IN
         )
         findViewById<ImageView>(R.id.icon_settings).setColorFilter(
             ContextCompat.getColor(
                 this,
-                R.color.grey
+                R.color.black1
             ), PorterDuff.Mode.SRC_IN
         )
 
@@ -446,12 +446,12 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 //                    R.color.sky_blue0,
 //                    R.color.sky_blue2
 //                )
-                setupToolbar()
-//                if (Constant.isParentChoose) {
-//                    setUpGradientParent()
-//                } else {
-//                    setUpGradientSchool()
-//                }
+            //    setupToolbar()
+                if (Constant.isParentChoose) {
+                    setUpGradientParent()
+                } else {
+                    setUpGradientSchool()
+                }
 
             }
 
@@ -467,12 +467,12 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 //                    R.color.sky_blue0,
 //                    R.color.sky_blue2
 //                )
-                setupToolbar()
-//                if (Constant.isParentChoose) {
-//                    setUpGradientParent()
-//                } else {
-//                    setUpGradientSchool()
-//                }
+          //      setupToolbar()
+                if (Constant.isParentChoose) {
+                    setUpGradientParent()
+                } else {
+                    setUpGradientSchool()
+                }
             }
 
             R.id.icon_profile -> {
@@ -489,11 +489,11 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 //                )
 
                 //   setupToolbar()
-                //if (Constant.isParentChoose) {
-//                    setUpGradientParent()
-//                } else {
-//                    setUpGradientSchool()
-//                }
+                if (Constant.isParentChoose) {
+                    setUpGradientParent()
+                } else {
+                    setUpGradientSchool()
+                }
             }
 
             R.id.icon_settings -> {
@@ -509,12 +509,12 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 //                    R.color.sky_blue2
 //                )
 
-                setupToolbar()
-//                if (Constant.isParentChoose) {
-//                    setUpGradientParent()
-//                } else {
-//                    setUpGradientSchool()
-//                }
+            //    setupToolbar()
+                if (Constant.isParentChoose) {
+                    setUpGradientParent()
+                } else {
+                    setUpGradientSchool()
+                }
             }
         }
     }

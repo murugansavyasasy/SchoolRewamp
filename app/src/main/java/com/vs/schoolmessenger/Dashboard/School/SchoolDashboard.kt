@@ -38,19 +38,19 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
         super.setupViews()
         // Access a specific view using its ID
 
-        if (Build.VERSION.SDK_INT >= 21) {
-            val window = this.window
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-            window.statusBarColor = this.resources.getColor(R.color.primary_light)
-            window.navigationBarColor = this.resources.getColor(R.color.primary_light)
-        }
+//        if (Build.VERSION.SDK_INT >= 21) {
+//            val window = this.window
+//            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+//            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+//            window.statusBarColor = this.resources.getColor(R.color.primary_light)
+//            window.navigationBarColor = this.resources.getColor(R.color.primary_light)
+//        }
 
         authViewModel = ViewModelProvider(this).get(Auth::class.java)
         authViewModel!!.init()
         FirebaseMessaging.getInstance().isAutoInitEnabled = true
-
-        setupToolbar()
+        setUpGradientSchool()
+//        setupToolbar()
 
         accessChildView(
             binding,
