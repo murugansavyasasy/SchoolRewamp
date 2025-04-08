@@ -33,6 +33,13 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         binding.lblSingleSchool.setOnClickListener(this)
         binding.lblSend.setOnClickListener(this)
 
+        if (Constant.isEmergencyVoiceNoticeBoard!!) {
+            binding.lnrTab.visibility = View.GONE
+            binding.lblSend.visibility= View.GONE
+        } else {
+            binding.lnrTab.visibility = View.VISIBLE
+            binding.lblSend.visibility= View.VISIBLE
+        }
     }
 
     override fun onResume() {
@@ -72,11 +79,13 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             }
 
             R.id.lblSingleSchool -> {
+                binding.lblSend.visibility= View.GONE
                 isMultipleSchool = false
                 isChangeBackRound(binding.lblSingleSchool)
             }
 
             R.id.lblMultipleSchool -> {
+                binding.lblSend.visibility= View.VISIBLE
                 isMultipleSchool = true
                 isChangeBackRound(binding.lblMultipleSchool)
             }
