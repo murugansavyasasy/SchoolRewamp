@@ -71,7 +71,6 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         binding.lnrChangePassword.setOnClickListener(this)
         binding.lnrSignalCheck.setOnClickListener(this)
 
-
         if (Constant.isParentChoose) {
             binding.rlaLblSettings.setBackgroundResource(com.vs.schoolmessenger.R.drawable.gradient_theme_parent)
         } else {
