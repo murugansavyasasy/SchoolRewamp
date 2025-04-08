@@ -16,7 +16,11 @@ class HelpFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View? {
         binding = HelpFragmentBinding.inflate(layoutInflater)
-
+        if (Constant.isParentChoose) {
+            binding.rytHeader.setBackgroundResource(com.vs.schoolmessenger.R.drawable.gradient_theme_parent)
+        } else {
+            binding.rytHeader.setBackgroundResource(com.vs.schoolmessenger.R.drawable.gradient_theme_school)
+        }
         Constant.loadWebView(
             this.requireContext(),
             binding.webView,

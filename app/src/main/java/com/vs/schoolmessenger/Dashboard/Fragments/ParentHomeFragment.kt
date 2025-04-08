@@ -78,6 +78,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         isDashBoardData()
 
 
+
         if (userDetails!!.is_staff || userDetails!!.child_details.size > 1) {
             binding.lblChangeRoll.visibility = View.VISIBLE
         } else {
