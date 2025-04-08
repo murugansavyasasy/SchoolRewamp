@@ -143,6 +143,7 @@
                     android:layout_toStartOf="@id/lblTime"
                     android:fontFamily="@font/poppins_medium"
                     android:text="01 Apr 2024"
+                    android:visibility="gone"
                     android:textColor="@color/black"
                     android:textSize="12sp"
                     android:textStyle="bold"></TextView>
@@ -187,6 +188,7 @@
     <RelativeLayout
         android:id="@+id/rlaText"
         android:layout_width="match_parent"
+        android:visibility="gone"
         android:layout_height="wrap_content">
 
         <ImageView

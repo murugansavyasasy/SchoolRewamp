@@ -17,7 +17,7 @@ import com.vs.schoolmessenger.Utils.WaveformSeekBar
 import kotlin.math.max
 
 class VoiceHistoryAdapter(
-    private var itemList: List<VoiceHistoryData>?,
+    private var itemList: List<VoiceHistoryDetails>?,
     private var listener: VoiceHistoryClickListener,
     private var context: Context,
     private var isLoading: Boolean
@@ -66,6 +66,7 @@ class VoiceHistoryAdapter(
         private val imgVoicePlay: ImageView = itemView.findViewById(R.id.imgVoicePlay)
         private val lblStartDuration: TextView = itemView.findViewById(R.id.lblStartDuration)
         private val lblEndDuration: TextView = itemView.findViewById(R.id.lblEndDuration)
+        private val lblTime: TextView = itemView.findViewById(R.id.lblTime)
 
 
         private lateinit var mediaPlayer: MediaPlayer
@@ -88,12 +89,13 @@ class VoiceHistoryAdapter(
 
 
         fun bind(
-            data: VoiceHistoryData,
+            data: VoiceHistoryDetails,
             position: Int,
             listener: VoiceHistoryClickListener,
             adapter: VoiceHistoryAdapter
         ) {
-            lblTitle.text = data.title
+            lblTitle.text = data.description
+            lblTime.text=data.sentOn
 
             getAudioDuration(data.url) { duration ->
                 lblEndDuration.text =

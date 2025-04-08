@@ -49,12 +49,12 @@ class StudentDetailAdapter(
                         context, R.drawable.bg_blue_gradient
                     )
                 )
-
-                holder.binding.rlaSchoolName.setBackgroundColor(
-                    ContextCompat.getColor(
-                        context, R.color.light_bg_blue
-                    )
-                )
+//
+//                holder.binding.rlaSchoolName.setBackgroundColor(
+//                    ContextCompat.getColor(
+//                        context, R.color.light_bg_blue
+//                    )
+//                )
             }
 
             1 -> {
@@ -104,7 +104,7 @@ class StudentDetailAdapter(
             listener.onItemClick(item)
         }
 
-        holder.binding.lblRegisterNumber.text = "Register No : " + item.roll_number
+        holder.binding.lblRegisterNumber.text = "Roll No : " + item.roll_number
         holder.binding.lblClassTeacher.text = "Class Teacher : " + item.class_teacher
         holder.binding.lblName.text = item.name
         holder.binding.lblClass.text = item.standard_name + " - " + item.section_name

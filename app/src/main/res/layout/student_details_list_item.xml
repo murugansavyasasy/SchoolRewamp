@@ -46,7 +46,6 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/ten"
                 android:gravity="center"
-                android:text="Roll No : 1470000"
                 android:textColor="@color/black"
                 android:textSize="13sp"
                style="@style/CustomTextStylePoppinsBold">

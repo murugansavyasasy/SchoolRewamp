@@ -4,11 +4,15 @@ import android.app.Activity
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.CommonScreens.Ads.AdsResponse
+import com.vs.schoolmessenger.CommonScreens.DeviceToken
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
-import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.StaffListResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
+import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.StaffListResponse
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
+import com.vs.schoolmessenger.School.Communication.TextSendResponse
+import com.vs.schoolmessenger.School.Communication.VoiceDetails
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -23,6 +27,8 @@ class AppServices {
     var isGetStandardSection: MutableLiveData<StandardResponse?>
     var isGetStudentList: MutableLiveData<NameAndIdsResponse?>
     var isGetGroupList: MutableLiveData<NameAndIdsResponse?>
+    var isGetVoiceHistory: MutableLiveData<VoiceDetails?>
+    var isSendText: MutableLiveData<TextSendResponse?>
 
     init {
         client_auth = RestClient()
@@ -33,6 +39,8 @@ class AppServices {
         isGetStandardSection = MutableLiveData()
         isGetStudentList = MutableLiveData()
         isGetGroupList = MutableLiveData()
+        isGetVoiceHistory = MutableLiveData()
+        isSendText = MutableLiveData()
     }
 
 
@@ -262,6 +270,76 @@ class AppServices {
 
     val isGetGroupLiveData: LiveData<NameAndIdsResponse?>
         get() = isGetGroupList
+
+    fun isGetVoiceHistory(isToken: String, isEmergency: String, activity: Activity) {
+        RestClient.apiInterfaces.isGetVoiceHistory(isToken, isEmergency)
+            ?.enqueue(object : Callback<VoiceDetails?> {
+                override fun onResponse(
+                    call: Call<VoiceDetails?>,
+                    response: Response<VoiceDetails?>
+                ) {
+                    Log.d(
+                        "isGetCountryList",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isGetVoiceHistory.postValue(response.body())
+                            } else {
+                                isGetVoiceHistory.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<VoiceDetails?>, t: Throwable) {
+                    isGetVoiceHistory.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isGetVoiceHistoryLiveData: LiveData<VoiceDetails?>
+        get() = isGetVoiceHistory
+
+
+    fun isSendText(isToken:String,jsonObject: JsonObject, activity: Activity) {
+        RestClient.apiInterfaces.isSendText(isToken,jsonObject)
+            ?.enqueue(object : Callback<TextSendResponse?> {
+                override fun onResponse(
+                    call: Call<TextSendResponse?>,
+                    response: Response<TextSendResponse?>
+                ) {
+                    Log.d(
+                        "isGetCountryList",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isSendText.postValue(response.body())
+                            } else {
+                                isSendText.postValue(response.body())
+                            }
+                        }
+                    } else {
+
+                    }
+                }
+
+                override fun onFailure(call: Call<TextSendResponse?>, t: Throwable) {
+                    isSendText.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isSendTextLiveData: LiveData<TextSendResponse?>
+        get() = isSendText
+
 
 
 }

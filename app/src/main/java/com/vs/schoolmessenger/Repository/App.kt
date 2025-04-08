@@ -4,11 +4,14 @@ import android.app.Activity
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.CommonScreens.Ads.AdsResponse
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
-import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.StaffListResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
+import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.StaffListResponse
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
+import com.vs.schoolmessenger.School.Communication.TextSendResponse
+import com.vs.schoolmessenger.School.Communication.VoiceDetails
 
 class App(application: Application) : AndroidViewModel(application) {
 
@@ -35,6 +38,15 @@ class App(application: Application) : AndroidViewModel(application) {
     var isGetGroupList: LiveData<NameAndIdsResponse?>? = null
         private set
 
+    var isGetVoiceHistory: LiveData<VoiceDetails?>? = null
+        private set
+
+    var isSendText: LiveData<TextSendResponse?>? = null
+        private set
+
+
+
+
     fun init() {
         isDashBoardData = apiRepositories!!.isDashBoardLiveData
         isGetAds = apiRepositories!!.isGetAdsLiveData
@@ -43,6 +55,8 @@ class App(application: Application) : AndroidViewModel(application) {
         isStandardSectionList = apiRepositories!!.isGetStandardSectionLiveData
         isStudentList = apiRepositories!!.isStudentLiveData
         isGetGroupList = apiRepositories!!.isGetGroupLiveData
+        isGetVoiceHistory = apiRepositories!!.isGetVoiceHistoryLiveData
+        isSendText = apiRepositories!!.isSendTextLiveData
     }
 
     fun isDashBoardData(isToken: String, isMemberType: String, activity: Activity) {
@@ -71,5 +85,12 @@ class App(application: Application) : AndroidViewModel(application) {
     }
     fun isGetGroupList(isToken: String, activity: Activity) {
         apiRepositories!!.isGetGroupList(isToken, activity)
+    }
+    fun isGetVoiceHistory(isToken: String, isEmergency: String, activity: Activity) {
+        apiRepositories!!.isGetVoiceHistory(isToken, isEmergency, activity)
+    }
+
+    fun isSendText(isToken: String, josnObject: JsonObject, activity: Activity) {
+        apiRepositories!!.isSendText(isToken, josnObject, activity)
     }
 }

@@ -14,7 +14,8 @@
             android:id="@+id/imgBack"
             android:layout_width="@dimen/thirty_five"
             android:layout_height="@dimen/thirty_five"
-            android:src="@drawable/arrow_back_black"></ImageView>
+            android:src="@drawable/arrow_back_black">
+        </ImageView>
 
         <TextView
             android:layout_width="match_parent"
@@ -169,13 +170,12 @@
         android:layout_below="@+id/tabLayout"
         android:fontFamily="@font/poppins_medium"
         android:gravity="center"
-        android:visibility="gone"
         android:padding="16dp"
         android:text="@string/click_the_send_button_to_send_an_important_announcement_from_entier_school"
         android:textColor="@color/black"
         android:textSize="15sp"
-        android:textStyle="bold" />
-
+        android:textStyle="bold"
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/bottomLayout"
