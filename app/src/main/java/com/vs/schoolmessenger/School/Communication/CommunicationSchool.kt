@@ -23,14 +23,17 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolList
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
-import com.vs.schoolmessenger.Dashboard.Settings.Notification.Notification
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.CustomSwitch
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -61,7 +64,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     private var isPrepared = false
     var mAdapter: VoiceHistoryAdapter? = null
     var mTextAdapter: TextHistoryAdapter? = null
-    private lateinit var isVoiceHistoryData: List<VoiceHistoryData>
+    private lateinit var isVoiceHistoryData: List<VoiceHistoryDetails>
     private lateinit var isTextHistoryData: List<TextHistoryData>
     private val MAX_RECORDING_TIME = 180
     private val handler = Handler(Looper.getMainLooper())
@@ -82,6 +85,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     private val calendar = Calendar.getInstance()
     private lateinit var dateAdapter: DateAdapter
     var isMultipleSchool = false
+    private var appViewModel: App? = null
+    private var isAccessToken: String? = null
 
     @SuppressLint("ClickableViewAccessibility")
     override fun setupViews() {
@@ -108,6 +113,12 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         binding.lnrScheduleCall.setOnClickListener(this)
         binding.rlaSendVoice.setOnClickListener(this)
 
+        appViewModel = ViewModelProvider(this)[App::class.java]
+        appViewModel!!.init()
+
+        val isStaffDetails = SharedPreference.getStaffDetails(this)
+        isAccessToken = isStaffDetails!!.access_token
+
 
         checkAndRequestPermissions()
         audioFilePath = "${externalCacheDir?.absolutePath}/audiorecord.3gp"
@@ -128,6 +139,20 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         } else {
             binding.lblSend.text = resources.getString(R.string.Send)
             isMultipleSchool = false
+        }
+
+        appViewModel!!.isGetVoiceHistory?.observe(this) { response ->
+            if (response != null && response.status) {
+                val isGetHistory = response.data
+                isVoiceHistoryData = isGetHistory
+                loadVoiceData(isVoiceHistoryData)
+            }
+        }
+
+        appViewModel!!.isSendText?.observe(this) { response ->
+            if (response != null && response.status) {
+
+            }
         }
 
         customSwitch.setOnClickListener {
@@ -157,7 +182,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
         }
     }
-
 
     private fun startRecording() {
         if (checkAndRequestPermissions()) {
@@ -500,10 +524,9 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                         binding.rlaBackRecord.visibility = View.VISIBLE
                         binding.gridViewScheduleCall.visibility = View.GONE
                         binding.rlaRecordVoice.visibility = View.GONE
-                        binding.gridViewScheduleCall.visibility = View.GONE
                         binding.rlaMessageFromText.visibility = View.GONE
                         binding.rlaSendText.visibility = View.GONE
-                        loadData()
+                        isGetVoiceHistory()
                     }
 
                     2 -> {
@@ -515,7 +538,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                         binding.rlaMessageFromText.visibility = View.GONE
                         binding.rlaSendText.visibility = View.GONE
                         binding.gridViewScheduleCall.visibility = View.VISIBLE
-                        loadData()
+                        isGetVoiceHistory()
                     }
 
                     else -> {
@@ -527,7 +550,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                         binding.rlaMessageFromText.visibility = View.GONE
                         binding.rlaSendText.visibility = View.GONE
                         binding.gridViewScheduleCall.visibility = View.GONE
-                        loadTextData()
+                        //   loadTextData()
                     }
                 }
             }
@@ -598,58 +621,32 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         }
     }
 
+    private fun isGetVoiceHistory() {
+        appViewModel!!.isGetVoiceHistory(isAccessToken!!, "0", this)
+    }
 
-    private fun loadData() {
-        isVoiceHistoryData = listOf(
-            VoiceHistoryData(
-                "Annual Day celebrations",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
-            ), VoiceHistoryData(
-                "Parent Meeting",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
-            ), VoiceHistoryData(
-                "Normal Day",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
-            ), VoiceHistoryData(
-                "Day",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                "https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_700KB.mp3"
-            ), VoiceHistoryData(
-                "Monday",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                "https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_1MG.mp3"
-            ), VoiceHistoryData(
-                "Nothing",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                "https://www2.cs.uic.edu/~i101/SoundFiles/BabyElephantWalk60.wav"
-            ), VoiceHistoryData(
-                "Value Education",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                "https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3"
-            ), VoiceHistoryData(
-                "Environmental Science",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                "https://filesamples.com/samples/audio/mp3/sample4.mp3"
-            ), VoiceHistoryData(
-                "Okay okay",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                "https://ia800304.us.archive.org/8/items/testmp3testfile/mpthreetest.mp3"
-            )
-        )
+    private fun isSendText() {
+        val jsonObject = JsonObject()
+        val jsonArray = JsonArray()
+        jsonArray.add("1234")
+        jsonObject.add("target_code", jsonArray)
+        jsonObject.addProperty("target_type", 1)
+        jsonObject.addProperty("message", "Testing School message")
+        jsonObject.addProperty("description", " Purpose text message")
+        appViewModel!!.isSendText(isAccessToken!!, jsonObject, this)
+    }
 
+
+    private fun loadVoiceData(isVoiceHistoryData: List<VoiceHistoryDetails>) {
+        Log.d("isVoiceHistory", "isVoiceHistory")
         mAdapter = VoiceHistoryAdapter(null, this, this, Constant.isShimmerViewShow)
         binding.rcyHistoryDataVoiceAndText.layoutManager = LinearLayoutManager(this)
-        binding.rcyHistoryDataVoiceAndText.isNestedScrollingEnabled = false;
+        binding.rcyHistoryDataVoiceAndText.isNestedScrollingEnabled = false
         binding.rcyHistoryDataVoiceAndText.adapter = mAdapter
 
         Constant.executeAfterDelay {
-            // Once data is loaded, stop shimmer and pass the actual data
             mAdapter =
                 VoiceHistoryAdapter(isVoiceHistoryData, this, this, Constant.isShimmerViewDisable)
-            // Set GridLayoutManager (2 columns in this case)
             binding.rcyHistoryDataVoiceAndText.adapter = mAdapter
         }
     }
@@ -775,11 +772,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 Toast.makeText(this, "All permissions granted.", Toast.LENGTH_LONG).show()
             }
         }
-    }
-
-
-    override fun onItemClick(data: VoiceHistoryData, holder: VoiceHistoryAdapter.DataViewHolder) {
-
     }
 
     override fun onItemClick(data: TextHistoryData, holder: TextHistoryAdapter.DataViewHolder) {
@@ -913,6 +905,13 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         }
 
         dateAdapter.submitDates(dates)
+    }
+
+    override fun onItemClick(
+        data: VoiceHistoryDetails,
+        holder: VoiceHistoryAdapter.DataViewHolder
+    ) {
+
     }
 }
 

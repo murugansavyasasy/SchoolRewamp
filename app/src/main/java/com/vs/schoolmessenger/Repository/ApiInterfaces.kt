@@ -14,6 +14,8 @@ import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.StaffListResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
+import com.vs.schoolmessenger.School.Communication.TextSendResponse
+import com.vs.schoolmessenger.School.Communication.VoiceDetails
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -114,4 +116,18 @@ interface ApiInterfaces {
     fun isGroupList(
         @Header("Authorization") token: String
     ): Call<NameAndIdsResponse?>
+
+    @GET(APIMethods.isGetVoiceHistory)
+    fun isGetVoiceHistory(
+        @Header("Authorization") token: String,
+        @Query("is_emergency") is_emergency: String
+    ): Call<VoiceDetails?>
+
+    @POST(APIMethods.isSendText)
+    fun isSendText(
+        @Header("Authorization") token: String,
+        @Body jsonObject: JsonObject
+    ): Call<TextSendResponse>?
+
+
 }
