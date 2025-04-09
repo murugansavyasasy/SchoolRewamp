@@ -83,7 +83,7 @@
                         android:textSize="13sp"
                         android:textStyle="bold"
                         android:paddingBottom="@dimen/ten"
-                        android:text="@string/VoiceMessage"
+                        android:text="Voice"
                         android:fontFamily="@font/poppins_bold"
                         android:textColor="@color/white">
 
