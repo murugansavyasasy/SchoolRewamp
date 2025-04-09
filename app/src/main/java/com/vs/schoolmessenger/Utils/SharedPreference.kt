@@ -23,6 +23,7 @@ object SharedPreference {
     private const val SH_STAFF_DETAILS = "StaffDetails"
     private const val SH_LOGOUT = "isLogout"
     private const val SH_TOKEN = "isToken"
+    private const val SH_BASEURL = "isBaseUrl"
 
     val masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
 
@@ -224,4 +225,29 @@ object SharedPreference {
         }
         return isChildDetails;
     }
+
+
+    fun putBaseUrl(activity: Context, isBaseUrl: String?) {
+        val sharedPreferences = EncryptedSharedPreferences.create(
+            SH_PREF,
+            masterKeyAlias,
+            activity,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
+        sharedPreferences.edit() { putString(SH_BASEURL, isBaseUrl) }
+    }
+
+    fun getBaseUrl(activity: Context): String? {
+
+        val sharedPreferences = EncryptedSharedPreferences.create(
+            SH_PREF,
+            masterKeyAlias,
+            activity,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
+        return sharedPreferences.getString(SH_BASEURL, "")
+    }
+
 }

@@ -110,6 +110,9 @@ object Constant {
     var isText = 102
 
 
+    var isVoiceFile: String? = null
+
+
     fun isInternetAvailable(activity: Activity): Boolean {
         val connectivityManager =
             activity.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -299,4 +302,15 @@ object Constant {
             activity.startActivity(intent)
         }
     }
+
+    fun showAlert(title: String, message: String,activity: Activity) {
+        AlertDialog.Builder(activity)
+            .setTitle(title)
+            .setMessage(message)
+            .setPositiveButton("OK") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
 }

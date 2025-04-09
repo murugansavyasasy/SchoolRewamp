@@ -224,6 +224,7 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
                     isVersionData = isVersionCheckData
                     Constant.country_details = isVersionData!![0].country_details
                     SharedPreference.putCountryId(this, Constant.country_details!!.id.toString())
+                    SharedPreference.putBaseUrl(this, Constant.country_details!!.base_url)
                     RestClient.changeApiBaseUrl(Constant.country_details!!.base_url)
                     if (isVersionData!![0].update_available) {
                         isShowUpdateAvailable(isVersionData!!)

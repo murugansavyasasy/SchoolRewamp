@@ -14,7 +14,7 @@
             android:id="@+id/image_banner"
             android:layout_width="match_parent"
             android:layout_height="@dimen/two_fifty"
-            android:layout_marginTop="@dimen/fifty"
+            android:layout_marginTop="@dimen/twenty"
             android:adjustViewBounds="true"
             android:src="@drawable/login_image" />
 
@@ -55,12 +55,12 @@
                     android:id="@+id/lblLogin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/twenty_five"
+                    android:layout_marginTop="@dimen/twenty"
                     android:gravity="center"
                     android:text="@string/login"
                     android:textColor="@color/white"
                     style="@style/CustomTextStylePoppinsRegular"
-                    android:textSize="@dimen/twenty_sp" />
+                    android:textSize="@dimen/eighteen_sp" />
 
                 <TextView
                     android:id="@+id/lblPassword"
@@ -131,7 +131,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btnLoginContinue"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/fourty_five"
+                    android:layout_height="wrap_content"
                     android:layout_below="@+id/lblForgetPassword"
                     android:layout_marginStart="@dimen/ten"
                     android:layout_marginTop="@dimen/thirty"
@@ -146,6 +146,7 @@
                         android:background="@drawable/rect_btn_blue"
                         android:gravity="center"
                         android:text="Validate"
+                        android:padding="@dimen/ten"
                         android:textColor="@color/white"
                         android:textSize="@dimen/fifteen_sp"
                         style="@style/CustomTextStylePoppinsBold"

@@ -110,6 +110,7 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
                             this,
                             Constant.country_details!!.id.toString()
                         )
+                        SharedPreference.putBaseUrl(this, Constant.country_details!!.base_url)
                         RestClient.changeApiBaseUrl(Constant.country_details!!.base_url)
                         val intent = Intent(this@CountryScreen, MobileNumber::class.java)
                         startActivity(intent)

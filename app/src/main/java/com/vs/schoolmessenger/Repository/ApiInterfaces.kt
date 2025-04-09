@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.Repository
 
 import com.google.gson.JsonObject
+import com.vs.schoolmessenger.AWS.PreSignedUrl
 import com.vs.schoolmessenger.Auth.Country.CountryResponse
 import com.vs.schoolmessenger.Auth.CreateResetChangePassword.PasswordCreationResponse
 import com.vs.schoolmessenger.Auth.CreateResetChangePassword.PasswordResetResponse
@@ -11,7 +12,6 @@ import com.vs.schoolmessenger.Auth.Splash.VersionCheckResponse
 import com.vs.schoolmessenger.CommonScreens.Ads.AdsResponse
 import com.vs.schoolmessenger.CommonScreens.DeviceToken
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
-import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.StaffListResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
 import com.vs.schoolmessenger.School.Communication.TextSendResponse
@@ -134,5 +134,13 @@ interface ApiInterfaces {
         @Header("Authorization") token: String,
         @Body jsonObject: JsonObject
     ): Call<TextSendResponse>?
+
+    @GET("get-s3-presigned-url")
+    fun getPreSignedUrl(
+        @Query("bucket") bucket: String?,
+        @Query("fileName") fileName: String?,
+        @Query("bucketPath") bucketPath: String?,
+        @Query("fileType") fileType: String?
+    ): Call<PreSignedUrl?>?
 
 }

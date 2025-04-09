@@ -47,7 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/ten"
-                android:layout_toStartOf="@+id/imgSearchClick"
+                android:layout_toStartOf="@+id/changeroll"
                 android:layout_toEndOf="@+id/imgSchoolLogo">
 
 
@@ -55,7 +55,7 @@
                     android:id="@+id/lblSchoolName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Savyasasy software solutions pvt Ltd.,"
+                    android:text="Savyasasy sofwiewieisefvwibtware solutions pvt Ltd.,"
                     android:textSize="14sp"
                     style="@style/CustomTextStylePoppinsBold" />
 
@@ -81,6 +81,7 @@
                 style="@style/CustomTextStylePoppinsRegular"
                 android:textColor="@color/navi_blue2"
                 android:textSize="@dimen/fifteen_sp"
+                android:visibility="visible"
                 android:layout_alignParentEnd="true"/>
 
 
@@ -88,7 +89,7 @@
                 android:id="@+id/imgSearchClick"
                 android:layout_width="@dimen/thirty"
                 android:layout_height="@dimen/thirty"
-                android:layout_below="@+id/changeroll"
+                android:layout_below="@+id/rytSchoolDetails"
                 android:layout_toStartOf="@+id/rytImageNotification"
                 android:src="@drawable/search_icon"
                 android:layout_marginEnd="@dimen/ten"
@@ -104,7 +105,7 @@
                 android:id="@+id/rytImageNotification"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/changeroll"
+                android:layout_below="@+id/rytSchoolDetails"
                 android:layout_marginTop="@dimen/five"
                 android:layout_alignParentEnd="true">
 

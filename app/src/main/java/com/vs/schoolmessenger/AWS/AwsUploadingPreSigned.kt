@@ -1,177 +1,233 @@
-//package com.vs.schoolmessenger.AWS
-//
-//
-//class AwsUploadingPreSigned {
-//    var isBucket: kotlin.String = ""
-//
-//    fun getPreSignedUrl(
-//        isFilePathUrl: kotlin.String,
-//        instituteID: kotlin.String?,
-//        uploadCallback: com.vs.schoolmessenger.AWS.UploadCallback
-//    ) {
-//        var bucketPath = ""
-//        val currentDate = CurrentDatePicking.getCurrentDate()
-//
-//        isBucket = AWSKeys.BUCKET_NAME
-//        bucketPath = currentDate + "/" + instituteID
-//
-//        android.util.Log.d("isBucket", isBucket)
-//        val isFilePth = java.io.File(isFilePathUrl)
-//        android.util.Log.d("isFilePth.getName()", isFilePth.getName().toString())
-//        val fileExtension = getFileExtension(isFilePth.getName())
-//        var mediaType: okhttp3.MediaType? = null
-//
-//        try {
-//            mediaType = getMediaType(fileExtension)
-//            kotlin.io.println("MediaType: " + mediaType)
-//        } catch (e: java.lang.UnsupportedOperationException) {
-//            java.lang.System.err.println(e.message)
-//        }
-//
-//        val parts: kotlin.Array<kotlin.String?> =
-//            mediaType.toString().split("/".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-//        var isFileType: kotlin.String? = ""
-//        if (parts.size == 2) {
-//            val type = parts[0] // "image"
-//            val subtype = parts[1] // "jpeg"
-//            isFileType = type
-//        }
-//
-//
-//        val baseUrl: kotlin.String = RestClient.Companion.getBaseUrl()
-//        android.util.Log.d("baseUrl", baseUrl.toString())
-//        RestClient.Companion.changeApiBaseUrl("https://api.schoolchimes.com/nodejs/api/MergedApi/")
-//
-//        val isFileName = getFileNameFromPath(isFilePathUrl)
-//
-//        val retrofit: Retrofit = RestClient.Companion.getClient()
-//        val retrofitBaseUrl = retrofit.baseUrl().toString()
-//        android.util.Log.d("RetrofitBaseURL", "Base URL from Retrofit: " + retrofitBaseUrl)
-//
-//        val apiService: ApiInterfaces =
-//            RestClient.Companion.getClient().create(ApiInterfaces::class.java)
-//        val call: retrofit2.Call<com.google.gson.JsonArray?> =
-//            apiService.getPreSignedUrl(isBucket, isFileName, bucketPath, isFileType.toString())
-//
-//        call.enqueue(object : retrofit2.Callback<com.google.gson.JsonArray?> {
-//            override fun onResponse(
-//                call: retrofit2.Call<com.google.gson.JsonArray?>?,
-//                response: retrofit2.Response<com.google.gson.JsonArray?>?
-//            ) {
-//                android.util.Log.d(
-//                    "attendance:code-res",
-//                    response!!.code().toString() + " - " + response
-//                )
-//                try {
-//                    val jsonArray = org.json.JSONArray(response.body().toString())
-//                    for (i in 0..<jsonArray.length()) {
-//                        val jsonObject = jsonArray.getJSONObject(i)
-//                        val status = jsonObject.getInt("status")
-//                        val message = jsonObject.getString("message")
-//                        val ispresignedurl = jsonObject.getString("presignedurl")
-//                        val isfileurl = jsonObject.getString("fileurl")
-//                        isAwsUpload(ispresignedurl, isFilePathUrl, isfileurl, uploadCallback)
-//                    }
-//                } catch (e: java.lang.Exception) {
-//                    val errorMessage =
-//                        response.message() // Get the error message from the response
-//                    android.util.Log.e(
-//                        "Response Error",
-//                        if (errorMessage != null) errorMessage else "Unknown error occurred"
-//                    )
-//                    uploadCallback.onUploadError(errorMessage)
-//                }
-//            }
-//
-//            override fun onFailure(
-//                call: retrofit2.Call<com.google.gson.JsonArray?>?,
-//                t: kotlin.Throwable?
-//            ) {
-//                android.util.Log.e("Response Failure", t!!.message!!)
-//                //                Toast.makeText(activity, activity.getResources().getString(R.string.check_internet), Toast.LENGTH_SHORT).show();
-//                uploadCallback.onUploadError(t.message)
-//            }
-//        })
-//    }
-//
-//    fun getFileNameFromPath(filePath: kotlin.String): kotlin.String {
-//        val file = java.io.File(filePath)
-//        return file.getName()
-//    }
-//
-//    private fun isAwsUpload(
-//        presignedUrl: kotlin.String?,
-//        filePath: kotlin.String,
-//        isFileUploadUrl: kotlin.String?,
-//        uploadCallback: com.vs.schoolmessenger.AWS.UploadCallback
-//    ) {
-//        val imageData = getImageData(filePath) // Replace with the actual byte array of your image
-//        val isFilePth = java.io.File(filePath)
-//        val fileExtension = getFileExtension(isFilePth.getName())
-//        var mediaType: okhttp3.MediaType? = null
-//        try {
-//            mediaType = getMediaType(fileExtension)
-//            kotlin.io.println("MediaType: " + mediaType)
-//        } catch (e: java.lang.UnsupportedOperationException) {
-//            java.lang.System.err.println(e.message)
-//        }
-//
-//        //        String[] parts = String.valueOf(mediaType).split("/");
-////        String isFileType = "";
-////        if (parts.length == 2) {
-////            String type = parts[0];   // "image"
-////            String subtype = parts[1]; // "jpeg"
-////            isFileType = type;
-////        }
-//        val uploader = S3Uploader()
-//        uploader.uploadImageToS3(
-//            presignedUrl,
-//            imageData,
-//            mediaType.toString(),
-//            object : S3Uploader.UploadCallback {
-//                override fun onSuccess(message: kotlin.String) {
-//                    android.util.Log.d("S3Upload", message)
-//                    uploadCallback.onUploadSuccess(message, isFileUploadUrl)
-//                }
-//
-//                override fun onError(error: java.lang.Exception) {
-//                    android.util.Log.e("S3Upload", "Error: " + error.message, error)
-//                }
-//            })
-//    }
-//
-//    private fun getFileExtension(fileName: kotlin.String): kotlin.String {
-//        val lastIndexOfDot = fileName.lastIndexOf('.')
-//        if (lastIndexOfDot > 0 && lastIndexOfDot < fileName.length - 1) {
-//            return fileName.substring(lastIndexOfDot + 1).lowercase(java.util.Locale.getDefault())
-//        }
-//        return "" // Return empty string if no extension found
-//    }
-//
-//    private fun getImageData(filePath: kotlin.String): kotlin.ByteArray? {
-//        val imageFile = java.io.File(filePath)
-//        var imageData: kotlin.ByteArray? = null
-//        try {
-//            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-//                imageData = java.nio.file.Files.readAllBytes(imageFile.toPath())
-//            }
-//        } catch (e: java.io.IOException) {
-//            e.printStackTrace()
-//        }
-//        return imageData
-//    }
-//
-//    fun getMediaType(fileExtension: kotlin.String): okhttp3.MediaType? {
-//        when (fileExtension.lowercase(java.util.Locale.getDefault())) {
-//            "jpg", "jpeg" -> return parse.parse("image/jpeg")
-//
-//            "png" -> return parse.parse("image/png")
-//
-//            "pdf" -> return parse.parse("application/pdf")
-//            "mp3" -> return parse.parse("audio/mpeg")
-//
-//            "wav" -> return parse.parse("audio/wav")
-//            else -> throw java.lang.UnsupportedOperationException("Unsupported file type: " + fileExtension)
-//        }
-//    }
-//}
+package com.vs.schoolmessenger.AWS
+
+import android.app.Activity
+import android.os.Build
+import android.util.Log
+import android.widget.Toast
+import androidx.annotation.RequiresApi
+import com.vs.schoolmessenger.AWS.S3Uploader.UploadCallbackResponse
+import com.vs.schoolmessenger.Repository.RestClient
+import com.vs.schoolmessenger.Utils.SharedPreference
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import retrofit2.Call
+import retrofit2.Response
+
+class AwsUploadingPreSigned {
+    var isBucket: String = ""
+
+    fun getPreSignedUrl(
+        isFilePathUrl: String,
+        instituteID: String?,
+        isFileExtension: String,
+        activity: Activity,
+        isCountryId: String,
+        isCommunication: Boolean,
+        isProfilePage: Boolean,
+        uploadCallback: UploadCallback
+    ) {
+        var bucketPath: String? = ""
+        val currentDate: String? = CurrentDatePicking.currentDate
+
+        if (isCountryId == "4") {
+            if (isProfilePage) {
+                if (isCommunication) {
+                    isBucket = AWSKeys.THAI_SCHOOL_PHOTOS
+                    bucketPath = instituteID
+                } else {
+                    isBucket = AWSKeys.THAI_SCHOOL_DOCS
+                    bucketPath = instituteID + "/" + "profile"
+                }
+            } else {
+                if (isCommunication) {
+                    isBucket = AWSKeys.THAI_SCHOOL_CHIMES_COMMUNICATION
+                    bucketPath = currentDate + "/" + instituteID
+                } else {
+                    isBucket = AWSKeys.THAI_SCHOOL_CHIMES_LMS
+                    bucketPath = instituteID + "/" + "lsrw"
+                }
+            }
+        } else {
+            if (isProfilePage) {
+                if (isCommunication) {
+                    isBucket = AWSKeys.SCHOOL_PHOTOS
+                    bucketPath = instituteID
+                } else {
+                    isBucket = AWSKeys.SCHOOL_DOCS
+                    bucketPath = instituteID + "/" + "profile"
+                }
+            } else {
+                if (isCommunication) {
+                    isBucket = AWSKeys.SCHOOL_CHIMES_COMMUNICATION
+                    bucketPath = currentDate + "/" + instituteID
+                } else {
+                    isBucket = AWSKeys.SCHOOL_CHIMES_LMS
+                    bucketPath = instituteID + "/" + "lsrw"
+                }
+            }
+        }
+
+        Log.d("isBucket", isBucket)
+        Log.d("isFileExtension", isFileExtension)
+        val isFilePth = java.io.File(isFilePathUrl)
+
+        val fileExtension = getFileExtension(isFilePth.getName())
+        var mediaType: MediaType? = null
+
+        try {
+            mediaType = getMediaType(fileExtension)
+            println("MediaType: " + mediaType)
+        } catch (e: java.lang.UnsupportedOperationException) {
+            System.err.println(e.message)
+        }
+        val baseURL = "https://api.schoolchimes.com/nodejs/api/MergedApi/"
+        RestClient.changeApiBaseUrl(baseURL)
+
+        val apiService = RestClient.apiInterfaces
+        val isFileName = getFileNameFromPath(isFilePathUrl)
+
+        val call = apiService.getPreSignedUrl(
+            isBucket, isFileName, bucketPath, mediaType.toString()
+        )
+        call!!.enqueue(object : retrofit2.Callback<PreSignedUrl?> {
+
+            @RequiresApi(Build.VERSION_CODES.O)
+            override fun onResponse(
+                call: Call<PreSignedUrl?>, response: Response<PreSignedUrl?>
+            ) {
+                Log.d(
+                    "UploadFile:code-res", response!!.code().toString() + " - " + response
+                )
+
+                if (response.isSuccessful() && response.body() != null) {
+                    val preSignedUrlResponse: PreSignedUrl? = response.body()
+                    Log.d(
+                        "PreSignedData", com.google.gson.Gson().toJson(preSignedUrlResponse)
+                    )
+
+                    if (preSignedUrlResponse!!.status === 1) {
+                        Log.d("isSuccessFullUpload", "isSuccessFullUpload")
+                        val presignedUrl: String =
+                            preSignedUrlResponse!!.data!!.presignedUrl.toString()
+                        val isFileUrl: String? = preSignedUrlResponse.data!!.fileUrl
+                        Log.d("presignedUrl", presignedUrl)
+
+                        // Upload the file and get the upload response
+                        isAwsUpload(
+                            activity,
+                            presignedUrl,
+                            isFilePathUrl,
+                            isFileUrl,
+                            uploadCallback
+                        )
+                    } else {
+                        Log.d(
+                            "isSuccessFullUpload",
+                            "isErrorUpload: " + preSignedUrlResponse!!.message
+                        )
+                        var isBaseUrl = SharedPreference.getBaseUrl(activity)
+                        Log.d("isBaseUrl",isBaseUrl.toString())
+                        RestClient.changeApiBaseUrl(isBaseUrl.toString())
+                        uploadCallback.onUploadError(preSignedUrlResponse.message)
+                    }
+                } else {
+                    Toast.makeText(
+                        activity, "Check InterNet", Toast.LENGTH_SHORT
+                    ).show()
+                    val errorMessage = response.message() // Get the error message from the response
+                    Log.e(
+                        "Response Error",
+                        if (errorMessage != null) errorMessage else "Unknown error occurred"
+                    )
+
+                    var isBaseUrl = SharedPreference.getBaseUrl(activity)
+                    Log.d("isBaseUrl",isBaseUrl.toString())
+                    RestClient.changeApiBaseUrl(isBaseUrl.toString())
+                    uploadCallback.onUploadError(errorMessage)
+                }
+            }
+
+            override fun onFailure(call: Call<PreSignedUrl?>?, t: Throwable?) {
+                Log.e("Response Failure", t!!.message!!)
+                Toast.makeText(
+                    activity, "Check InterNet", Toast.LENGTH_SHORT
+                ).show()
+                uploadCallback.onUploadError(t.message)
+            }
+        })
+    }
+
+    fun getFileNameFromPath(filePath: String): String {
+        val file = java.io.File(filePath)
+        return file.name
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun isAwsUpload(
+        activity: Activity,
+        presignedUrl: String?,
+        filePath: String,
+        isFileUploadUrl: String?,
+        uploadCallback: UploadCallback
+    ) {
+        val imageData = getImageData(filePath) // Replace with the actual byte array of your image
+
+        val isFilePth = java.io.File(filePath)
+
+        val fileExtension = getFileExtension(isFilePth.name)
+
+        var mediaType: MediaType? = null
+        try {
+            mediaType = getMediaType(fileExtension)
+            println("MediaType: " + mediaType)
+        } catch (e: java.lang.UnsupportedOperationException) {
+            System.err.println(e.message)
+        }
+
+        val uploader = S3Uploader()
+        uploader.uploadImageToS3(
+            presignedUrl, imageData, mediaType.toString(), object : UploadCallbackResponse {
+
+                override fun onSuccess(message: String?) {
+                    Log.d("S3Upload", message!!)
+                    uploadCallback.onUploadSuccess(message, isFileUploadUrl)
+                }
+
+                override fun onError(error: Exception?) {
+
+                }
+            })
+    }
+
+    private fun getFileExtension(fileName: String): String {
+        val lastIndexOfDot = fileName.lastIndexOf('.')
+        if (lastIndexOfDot > 0 && lastIndexOfDot < fileName.length - 1) {
+            return fileName.substring(lastIndexOfDot + 1).lowercase(java.util.Locale.getDefault())
+        }
+        return "" // Return empty string if no extension found
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun getImageData(filePath: String): ByteArray? {
+        val imageFile = java.io.File(filePath)
+        var imageData: ByteArray? = null
+        try {
+            imageData = java.nio.file.Files.readAllBytes(imageFile.toPath())
+        } catch (e: java.io.IOException) {
+            e.printStackTrace()
+        }
+        return imageData
+    }
+
+    fun getMediaType(fileExtension: String): MediaType? {
+        return when (fileExtension.lowercase(java.util.Locale.getDefault())) {
+            "jpg", "jpeg" -> "image/jpeg".toMediaTypeOrNull()
+            "png" -> "image/png".toMediaTypeOrNull()
+            "pdf" -> "application/pdf".toMediaTypeOrNull()
+            "mp3" -> "audio/mpeg".toMediaTypeOrNull()
+            "wav" -> "audio/wav".toMediaTypeOrNull()
+            "3gp" -> "audio/3gpp".toMediaTypeOrNull()
+            else -> throw UnsupportedOperationException("Unsupported file type: $fileExtension")
+        }
+    }
+}
