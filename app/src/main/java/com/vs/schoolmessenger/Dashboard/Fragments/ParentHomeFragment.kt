@@ -97,13 +97,6 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             )
         }
 
-//        aditems = listOf(
-//            AdItem(R.drawable.ad_1),
-//            AdItem(R.drawable.ad_2),
-//            AdItem(R.drawable.sample_ad),
-//            AdItem(R.drawable.ad_3),
-//        )
-
         binding.lblGif.playAnimation()
         binding.lblGif.setAnimation(R.raw.mathematics)
 

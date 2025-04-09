@@ -58,7 +58,8 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/ten"
-                    android:src="@drawable/rightsquarearrow"/>
+                    android:src="@drawable/rightsquarearrow">
+                </ImageView>
 
             </RelativeLayout>
 

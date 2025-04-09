@@ -8,7 +8,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIds
+import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolListAdapter
+import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolListAdapter.ShimmerViewHolder
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class GroupListAdapter(
     private var itemList: List<NameAndIds>?,
@@ -16,6 +19,8 @@ class GroupListAdapter(
     private var context: Context,
     private var isLoading: Boolean,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+
 
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
@@ -26,9 +31,8 @@ class GroupListAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-            val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.shimmer_view_small_list, parent, false)
-            ShimmerViewHolder(view)
+            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.group_list_item)
+            ShimmerViewHolder(shimmerView)
         } else {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.group_list_item, parent, false)
@@ -39,6 +43,8 @@ class GroupListAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
             holder.bind(itemList!![position], position, listener)
+        } else if (holder is GroupListAdapter.ShimmerViewHolder) {
+            holder.startShimmer()
         }
     }
 
@@ -62,11 +68,8 @@ class GroupListAdapter(
     }
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val shimmerLayout: ShimmerFrameLayout =
-            itemView.findViewById(R.id.shimmer_view_container)
-
-        init {
-            shimmerLayout.startShimmer()
+        fun startShimmer() {
+            ShimmerUtil.startShimmer(itemView)
         }
     }
 }

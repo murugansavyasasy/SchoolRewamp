@@ -1,8 +1,6 @@
 package com.vs.schoolmessenger.Utils
 
 import android.graphics.Color
-import android.graphics.drawable.ShapeDrawable
-import android.graphics.drawable.shapes.RectShape
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -51,6 +49,7 @@ object ShimmerUtil {
                             originalTextColors[child] = child.currentTextColor
                         }
 
+                        child.setTextColor(Color.TRANSPARENT)
                         child.setBackgroundColor("#DDDDDD".toColorInt())
                     }
 
@@ -68,11 +67,13 @@ object ShimmerUtil {
                     is TextView -> {
                         if (originalText.containsKey(child)) {
                             child.text = originalText[child]
+                            child.setTextColor(originalTextColors[child] ?: Color.BLACK)
                             child.background = null
                             originalText.remove(child)
                             originalTextColors.remove(child)
                         }
                     }
+
                     is ViewGroup -> restoreViewsAfterShimmer(child)
                 }
             }

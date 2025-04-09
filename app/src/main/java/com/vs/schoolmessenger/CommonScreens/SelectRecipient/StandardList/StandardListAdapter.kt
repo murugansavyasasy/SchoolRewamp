@@ -8,8 +8,11 @@ import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
+import com.vs.schoolmessenger.CommonScreens.SelectRecipient.GroupList.GroupListAdapter
+import com.vs.schoolmessenger.CommonScreens.SelectRecipient.GroupList.GroupListAdapter.ShimmerViewHolder
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardListClickListener
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class StandardListAdapter (
     private var itemList: List<Standard>?,
@@ -28,9 +31,8 @@ class StandardListAdapter (
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-            val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.shimmer_view_small_list, parent, false)
-            ShimmerViewHolder(view)
+            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.group_list_item)
+            ShimmerViewHolder(shimmerView)
         } else {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.group_list_item, parent, false)
@@ -41,6 +43,8 @@ class StandardListAdapter (
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
             holder.bind(itemList!![position], position, listener)
+        } else if (holder is StandardListAdapter.ShimmerViewHolder) {
+            holder.startShimmer()
         }
     }
 
@@ -66,11 +70,8 @@ class StandardListAdapter (
     }
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val shimmerLayout: ShimmerFrameLayout =
-            itemView.findViewById(R.id.shimmer_view_container)
-
-        init {
-            shimmerLayout.startShimmer()
+        fun startShimmer() {
+            ShimmerUtil.startShimmer(itemView)
         }
     }
 }
