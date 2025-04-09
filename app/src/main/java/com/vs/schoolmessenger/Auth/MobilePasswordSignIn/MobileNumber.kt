@@ -6,12 +6,9 @@ import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.OTP.OTP
-import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.Auth
 import com.vs.schoolmessenger.Repository.RequestKeys
 import com.vs.schoolmessenger.Utils.Constant

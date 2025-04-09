@@ -92,7 +92,7 @@ interface ApiInterfaces {
     @GET(APIMethods.getStaffList)
     fun getStaffList(
         @Header("Authorization") token: String,
-    ): Call<StaffListResponse?>
+    ): Call<NameAndIdsResponse?>
 
     @GET(APIMethods.getSubjectList)
     fun getSubjectList(
@@ -129,5 +129,10 @@ interface ApiInterfaces {
         @Body jsonObject: JsonObject
     ): Call<TextSendResponse>?
 
+    @POST(APIMethods.isSendVoice)
+    fun isSendVoice(
+        @Header("Authorization") token: String,
+        @Body jsonObject: JsonObject
+    ): Call<TextSendResponse>?
 
 }

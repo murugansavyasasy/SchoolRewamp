@@ -22,13 +22,14 @@ class AppServices {
     var client_auth: RestClient
     var isDashBoard: MutableLiveData<DashboardResponse?>
     var isGetAds: MutableLiveData<AdsResponse?>
-    var isGetStaffList: MutableLiveData<StaffListResponse?>
+    var isGetStaffList: MutableLiveData<NameAndIdsResponse?>
     var isGetSubjectList: MutableLiveData<NameAndIdsResponse?>
     var isGetStandardSection: MutableLiveData<StandardResponse?>
     var isGetStudentList: MutableLiveData<NameAndIdsResponse?>
     var isGetGroupList: MutableLiveData<NameAndIdsResponse?>
     var isGetVoiceHistory: MutableLiveData<VoiceDetails?>
     var isSendText: MutableLiveData<TextSendResponse?>
+    var isSendVoice: MutableLiveData<TextSendResponse?>
 
     init {
         client_auth = RestClient()
@@ -41,6 +42,7 @@ class AppServices {
         isGetGroupList = MutableLiveData()
         isGetVoiceHistory = MutableLiveData()
         isSendText = MutableLiveData()
+        isSendVoice = MutableLiveData()
     }
 
 
@@ -113,9 +115,9 @@ class AppServices {
 
     fun isGetStaffList(isToken: String, activity: Activity) {
         RestClient.apiInterfaces.getStaffList(isToken)
-            ?.enqueue(object : Callback<StaffListResponse?> {
+            ?.enqueue(object : Callback<NameAndIdsResponse?> {
                 override fun onResponse(
-                    call: Call<StaffListResponse?>, response: Response<StaffListResponse?>
+                    call: Call<NameAndIdsResponse?>, response: Response<NameAndIdsResponse?>
                 ) {
                     Log.d(
                         "isGetCountryList", response.code().toString() + " - " + response.toString()
@@ -132,14 +134,14 @@ class AppServices {
                     }
                 }
 
-                override fun onFailure(call: Call<StaffListResponse?>, t: Throwable) {
+                override fun onFailure(call: Call<NameAndIdsResponse?>, t: Throwable) {
                     isGetAds.postValue(null)
                     t.printStackTrace()
                 }
             })
     }
 
-    val isGetStaffListLiveData: LiveData<StaffListResponse?>
+    val isGetStaffListLiveData: LiveData<NameAndIdsResponse?>
         get() = isGetStaffList
 
     fun isGetSubjectList(isToken: String, isSection: String, activity: Activity) {
@@ -339,6 +341,42 @@ class AppServices {
 
     val isSendTextLiveData: LiveData<TextSendResponse?>
         get() = isSendText
+
+
+    fun isSendVoice(isToken:String,jsonObject: JsonObject, activity: Activity) {
+        RestClient.apiInterfaces.isSendVoice(isToken,jsonObject)
+            ?.enqueue(object : Callback<TextSendResponse?> {
+                override fun onResponse(
+                    call: Call<TextSendResponse?>,
+                    response: Response<TextSendResponse?>
+                ) {
+                    Log.d(
+                        "isGetCountryList",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isSendVoice.postValue(response.body())
+                            } else {
+                                isSendVoice.postValue(response.body())
+                            }
+                        }
+                    } else {
+
+                    }
+                }
+
+                override fun onFailure(call: Call<TextSendResponse?>, t: Throwable) {
+                    isSendVoice.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isSendVoiceLiveData: LiveData<TextSendResponse?>
+        get() = isSendVoice
 
 
 

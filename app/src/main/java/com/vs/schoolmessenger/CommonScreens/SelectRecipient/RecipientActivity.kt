@@ -6,15 +6,17 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
-import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SectionList.SectionListAdapter
-import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SectionList.SectionListClickListener
-import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardListAdapter
-import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardListClickListener
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIds
+import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.StaffListData
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.GroupList.GroupListAdapter
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.GroupList.GroupListClickListener
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SectionList.Section
+import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SectionList.SectionListAdapter
+import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SectionList.SectionListClickListener
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.Standard
+import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardListAdapter
+import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardListClickListener
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
@@ -39,6 +41,10 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     private var groupListAdapter: GroupListAdapter? = null
     private var isAccessToken: String? = null
 
+    private var isUserDetails: UserDetails? = null
+
+
+
     private var appViewModel: App? = null
     override fun setupViews() {
         super.setupViews()
@@ -51,22 +57,24 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
         val tabLayout = binding.tabLayout
         tabLayout.addTab(tabLayout.newTab().setText("Entire School"), true)
-        tabLayout.addTab(tabLayout.newTab().setText("Group"))
-        tabLayout.addTab(tabLayout.newTab().setText("Standard"))
-        tabLayout.addTab(tabLayout.newTab().setText("Section/Specific Student"))
+        tabLayout.addTab(tabLayout.newTab().setText("Groups"))
+        tabLayout.addTab(tabLayout.newTab().setText("Standards"))
+        tabLayout.addTab(tabLayout.newTab().setText("Staffs"))
+        tabLayout.addTab(tabLayout.newTab().setText("Section/Student"))
 
         val isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
 
-        val isUserDetails = SharedPreference.getUserDetails(this)
-        if (isUserDetails!!.staff_role == Constant.isGroupHeadRole || isUserDetails.staff_role == Constant.isPrincipalRole || isUserDetails.staff_role == Constant.isAdminRole) {
-            tabLayout.getTabAt(0)?.view?.visibility = View.VISIBLE
-            tabLayout.getTabAt(3)?.view?.visibility = View.GONE
+        binding.lblSchoolName.text = isStaffDetails.school_name
+
+        isUserDetails = SharedPreference.getUserDetails(this)
+        if (isUserDetails!!.staff_role == Constant.isGroupHeadRole || isUserDetails!!.staff_role == Constant.isPrincipalRole || isUserDetails!!.staff_role == Constant.isAdminRole) {
             binding.btnViewProgress.visibility = View.GONE
             binding.textdesc.visibility = View.VISIBLE
         } else {
+            tabLayout.getTabAt(1)?.select()
             tabLayout.getTabAt(0)?.view?.visibility = View.GONE
-            tabLayout.getTabAt(3)?.view?.visibility = View.VISIBLE
+            tabLayout.getTabAt(3)?.view?.visibility = View.GONE
             binding.btnViewProgress.visibility = View.VISIBLE
             binding.textdesc.visibility = View.VISIBLE
         }
@@ -97,6 +105,21 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         isGetStandardSection()
                         binding.rlaStandard.visibility = View.GONE
                         binding.grouplabel.text = "Standard"
+                        binding.grouplabel.visibility = View.VISIBLE
+                        binding.rlaSubject.visibility = View.GONE
+                        binding.textdesc.visibility = View.GONE
+                        Log.d("isDropDown", isDropDown.toString())
+                        if (!isDropDown) {
+                            binding.recyclerView.visibility = View.VISIBLE
+                        } else {
+                            binding.recyclerView.visibility = View.GONE
+                        }
+                    }
+                    3 -> {
+                        isDropDown = false
+                        isGetStaffList()
+                        binding.rlaStandard.visibility = View.GONE
+                        binding.grouplabel.text = "Staff's"
                         binding.grouplabel.visibility = View.VISIBLE
                         binding.rlaSubject.visibility = View.GONE
                         binding.textdesc.visibility = View.GONE
@@ -154,6 +177,26 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     isLoadTheStandardData(isGetStandard)
                 }
             }
+        }
+
+        appViewModel!!.isGetStaffList?.observe(this) { response ->
+            if (response != null && response.status) {
+                isLoadStaffData(response.data)
+            }
+        }
+    }
+
+    private fun isLoadStaffData(data: List<NameAndIds>) {
+        groupListAdapter = GroupListAdapter(
+            null, this, this, Constant.isShimmerViewShow
+        )
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        binding.recyclerView.adapter = groupListAdapter
+        Constant.executeAfterDelay {
+            groupListAdapter = GroupListAdapter(
+                data, this@RecipientActivity, this, Constant.isShimmerViewDisable
+            )
+            binding.recyclerView.adapter = groupListAdapter
         }
     }
 
@@ -216,6 +259,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
             }
 
+
             R.id.rlaStandard -> {
                 showStandardDropdown(
                     binding.rlaStandard, this, isGetStandard
@@ -251,6 +295,12 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         )
     }
 
+    private fun isGetStaffList() {
+        appViewModel!!.isGetStaffList(
+            isAccessToken!!, this
+        )
+    }
+
 
     override fun onSectionClick(
         data: Section, isChecked: Boolean
@@ -259,6 +309,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         isSectionId = data.id
         isGetSubjectList(isSectionId)
     }
+
 
     override fun onStandardClick(
         data: Standard, isChecked: Boolean

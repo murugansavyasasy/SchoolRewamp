@@ -21,16 +21,14 @@ import android.webkit.WebViewClient
 import android.widget.EditText
 import android.widget.GridView
 import android.widget.TextView
-import androidx.security.crypto.EncryptedSharedPreferences
-import androidx.security.crypto.MasterKeys
 import com.vs.schoolmessenger.Auth.Country.Country
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
-import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.PasswordUpdateData
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserValidationData
 import com.vs.schoolmessenger.Auth.OTP.ForgetOtpData
-import com.vs.schoolmessenger.Auth.Splash.Splash
+import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolList
+import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.R
 
 object Constant {
@@ -99,6 +97,10 @@ object Constant {
     val sch_lesson_plan_id = 30
     val sch_feedback_id = 14
     val sch_very_important_info_id = 21
+
+
+    var selected_school_menu_id = 0
+    var selected_parent_menu_id = 0
 
     var isEmergencyVoiceNoticeBoard: Boolean? = false
     var isAccessType: Int? = null
@@ -268,6 +270,33 @@ object Constant {
 
             val isKeyboardOpened = keypadHeight > screenHeight * 0.15
             onKeyboardStateChanged(isKeyboardOpened)
+        }
+    }
+
+    fun isNavigation(activity: Activity) {
+        val isUserDetails = SharedPreference.getUserDetails(activity)
+
+        val isStaffRole = isUserDetails!!.staff_role
+        var isMultipleSchool = false
+        if (isUserDetails.staff_details.size > 1) {
+            isMultipleSchool = true
+        } else {
+            isMultipleSchool = false
+        }
+        if (isMultipleSchool) {
+            if (isStaffRole.equals(Constant.isGroupHeadRole) || isStaffRole.equals(Constant.isPrincipalRole) || isStaffRole.equals(
+                    Constant.isAdminRole
+                )
+            ) {
+                val intent = Intent(activity, SchoolList::class.java)
+                activity.startActivity(intent)
+            } else {
+                val intent = Intent(activity, RecipientActivity::class.java)
+                activity.startActivity(intent)
+            }
+        } else {
+            val intent = Intent(activity, RecipientActivity::class.java)
+            activity.startActivity(intent)
         }
     }
 }

@@ -18,6 +18,7 @@
         </ImageView>
 
         <TextView
+            android:id="@+id/lblSchoolName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -38,7 +39,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/rlaTitle"
         android:layout_marginStart="@dimen/ten"
-        android:layout_marginTop="@dimen/twenty"
         android:text="@string/send_to"
         android:textColor="@color/black"
         android:textSize="16sp"
@@ -50,7 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/sendlabel"
         android:layout_alignStart="@id/sendlabel"
-        android:layout_marginTop="@dimen/fifteen"
+        android:layout_marginTop="@dimen/ten"
         android:layout_marginEnd="@dimen/five"
         android:background="@drawable/tab_background"
         app:tabBackground="@drawable/tab_selector"

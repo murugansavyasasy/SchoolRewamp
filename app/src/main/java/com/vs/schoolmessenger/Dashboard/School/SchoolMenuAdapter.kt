@@ -18,6 +18,7 @@ import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuClickListener
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuDetail
 import com.vs.schoolmessenger.Dashboard.Parent.AdImageAdapter
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 import java.util.Timer
 import java.util.TimerTask
@@ -106,77 +107,78 @@ class SchoolMenuAdapter(
             lblMenuName.text = data.name
 
             when (data.id) {
-
-                0 -> {
+                Constant.sch_communication_id -> {
                     imgMenu.setImageResource(R.drawable.communication_icon_dashboard)
                 }
 
-                22 -> {
+                Constant.sch_assignment_id -> {
                     imgMenu.setImageResource(R.drawable.assignment_icon_school)
                 }
 
-                9 -> {
+                Constant.sch_homework_id -> {
                     imgMenu.setImageResource(R.drawable.home_work_icon_school)
                 }
 
-                12 -> {
+                Constant.sch_attendance_marking_id -> {
                     imgMenu.setImageResource(R.drawable.attendance_marking)
                 }
 
-                6 -> {
+                Constant.sch_absenteeism_report_id -> {
                     imgMenu.setImageResource(R.drawable.absentees_report)
                 }
 
-                7 -> {
+                Constant.sch_school_strength_id -> {
                     imgMenu.setImageResource(R.drawable.school_strength)
                 }
 
-                3 -> {
+                Constant.sch_notice_board_id -> {
                     imgMenu.setImageResource(R.drawable.noticeboard_icon)
                 }
 
-                4 -> {
+                Constant.sch_school_class_events_id -> {
                     imgMenu.setImageResource(R.drawable.event_icon_school)
                 }
 
-                11 -> {
+                Constant.sch_schedule_exam_test_id -> {
                     imgMenu.setImageResource(R.drawable.exam_icon)
                 }
 
-                13 -> {
+                Constant.sch_messages_from_management_id -> {
                     imgMenu.setImageResource(R.drawable.message_f_management)
                 }
 
-                16 -> {
+                Constant.sch_conference_call_with_teachers_id -> {
                     imgMenu.setImageResource(R.drawable.interact_with_student)
                 }
 
-                26 -> {
+                Constant.sch_online_meeting_id -> {
                     imgMenu.setImageResource(R.drawable.online_meeting_icon)
                 }
 
-                28 -> {
+                Constant.sch_daily_collection_id -> {
                     imgMenu.setImageResource(R.drawable.daily_collection)
                 }
 
-                29 -> {
+                Constant.sch_student_report_id -> {
                     imgMenu.setImageResource(R.drawable.student_report)
                 }
 
-                30 -> {
+                Constant.sch_lesson_plan_id -> {
                     imgMenu.setImageResource(R.drawable.lesson_plan)
                 }
 
-                14 -> {
+                Constant.sch_feedback_id -> {
                     imgMenu.setImageResource(R.drawable.fee_pending_reports)
                 }
 
-                21 -> {
+                Constant.sch_very_important_info_id -> {
                     imgMenu.setImageResource(R.drawable.importent_info)
                 }
             }
 
+
             rlaMenu.setOnClickListener {
+                Constant.selected_school_menu_id = data.id
                 listener.onClick(data)
 
             }

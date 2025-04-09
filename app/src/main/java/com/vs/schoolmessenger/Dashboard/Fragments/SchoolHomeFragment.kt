@@ -52,16 +52,11 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     lateinit var isMenuAdapter: SchoolMenuAdapter
     private var isSearchVisible = false
     private var appViewModel: App? = null
-
-
-    private lateinit var aditems: List<AdItem>
     var userDetails: UserDetails? = null
     var isDashBoardData: List<DashboardData>? = null
     var isContactDetails: ContactDetails? = null
     var isMenuDetails: List<MenuDetail>? = null
-
     var isAdItem: List<AdItem>? = null
-    var isAdsList: List<AdItem>? = null
     var isAdsDisplayOptions: AdsDisplayOptions? = null
 
 

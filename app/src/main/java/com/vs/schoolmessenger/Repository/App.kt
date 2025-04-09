@@ -24,7 +24,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var isGetAds: LiveData<AdsResponse?>? = null
         private set
 
-    var isGetStaffList: LiveData<StaffListResponse?>? = null
+    var isGetStaffList: LiveData<NameAndIdsResponse?>? = null
         private set
 
     var isGetSubjectList: LiveData<NameAndIdsResponse?>? = null
@@ -44,6 +44,9 @@ class App(application: Application) : AndroidViewModel(application) {
     var isSendText: LiveData<TextSendResponse?>? = null
         private set
 
+    var isVoiceSend: LiveData<TextSendResponse?>? = null
+        private set
+
 
 
 
@@ -57,6 +60,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isGetGroupList = apiRepositories!!.isGetGroupLiveData
         isGetVoiceHistory = apiRepositories!!.isGetVoiceHistoryLiveData
         isSendText = apiRepositories!!.isSendTextLiveData
+        isVoiceSend = apiRepositories!!.isSendVoiceLiveData
     }
 
     fun isDashBoardData(isToken: String, isMemberType: String, activity: Activity) {
@@ -92,5 +96,9 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun isSendText(isToken: String, josnObject: JsonObject, activity: Activity) {
         apiRepositories!!.isSendText(isToken, josnObject, activity)
+    }
+
+    fun isVoiceSend(isToken: String, josnObject: JsonObject, activity: Activity) {
+        apiRepositories!!.isSendVoice(isToken, josnObject, activity)
     }
 }
