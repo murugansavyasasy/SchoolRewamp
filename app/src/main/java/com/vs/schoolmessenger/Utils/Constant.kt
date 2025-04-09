@@ -100,6 +100,10 @@ object Constant {
     val sch_feedback_id = 14
     val sch_very_important_info_id = 21
 
+
+    var selected_school_menu_id = 0
+    var selected_parent_menu_id = 0
+
     var isEmergencyVoiceNoticeBoard: Boolean? = false
     var isAccessType: Int? = null
 

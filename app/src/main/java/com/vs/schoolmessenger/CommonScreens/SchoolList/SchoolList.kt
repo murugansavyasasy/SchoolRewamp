@@ -35,7 +35,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
 
         if (Constant.isEmergencyVoiceNoticeBoard!!) {
             binding.lnrTab.visibility = View.GONE
-            binding.lblSend.visibility= View.GONE
+            binding.lblSend.visibility= View.VISIBLE
         } else {
             binding.lnrTab.visibility = View.VISIBLE
             binding.lblSend.visibility= View.VISIBLE
@@ -93,6 +93,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             R.id.lblSend -> {
                 for (i in selectedSchoolIds.indices) {
                     Log.d("SelectedSchoolId", selectedSchoolIds[i].toString())
+
                 }
             }
         }

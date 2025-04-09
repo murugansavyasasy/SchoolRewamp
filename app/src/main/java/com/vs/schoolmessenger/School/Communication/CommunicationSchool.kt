@@ -30,6 +30,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolList
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.R
@@ -87,6 +88,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     var isMultipleSchool = false
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
+    private var isUserDetails: UserDetails? = null
 
     @SuppressLint("ClickableViewAccessibility")
     override fun setupViews() {
@@ -124,8 +126,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         audioFilePath = "${externalCacheDir?.absolutePath}/audiorecord.3gp"
 
         val customSwitch: CustomSwitch = findViewById(R.id.SwitchEmergencyVoice)
-        val isUserDetails = SharedPreference.getUserDetails(this)
-        if (isUserDetails!!.staff_role == Constant.isGroupHeadRole || isUserDetails.staff_role == Constant.isPrincipalRole || isUserDetails.staff_role == Constant.isAdminRole) {
+         isUserDetails = SharedPreference.getUserDetails(this)
+        if (isUserDetails!!.staff_role == Constant.isGroupHeadRole || isUserDetails!!.staff_role == Constant.isPrincipalRole || isUserDetails!!.staff_role == Constant.isAdminRole) {
             customSwitch.visibility = View.VISIBLE
             binding.lblEmergencyVoice.visibility = View.VISIBLE
         } else {
@@ -133,13 +135,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             binding.lblEmergencyVoice.visibility = View.GONE
         }
 
-        if (isUserDetails.staff_details.size > 1) {
-            binding.lblSend.text = resources.getString(R.string.NEXT)
-            isMultipleSchool = true
-        } else {
-            binding.lblSend.text = resources.getString(R.string.Send)
-            isMultipleSchool = false
-        }
 
         appViewModel!!.isGetVoiceHistory?.observe(this) { response ->
             if (response != null && response.status) {
@@ -155,6 +150,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
         }
 
+        changeLabel()
         customSwitch.setOnClickListener {
             if (customSwitch.isChecked()) {
                 Constant.isEmergencyVoiceNoticeBoard = true
@@ -163,7 +159,11 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 Constant.isEmergencyVoiceNoticeBoard = false
                 Constant.isAccessType = Constant.isNonEmergency
             }
+
+            changeLabel()
         }
+
+
 
         // Initialize handler for updating recording time
         recordingHandler = Handler()
@@ -179,6 +179,17 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 } else {
                     recordingHandler.postDelayed(recordingRunnable, 1000) // Update every second
                 }
+            }
+        }
+    }
+
+    private fun changeLabel() {
+        if(Constant.isEmergencyVoiceNoticeBoard == true){
+            if(isMultipleSchool){
+                binding.lblSend.text = resources.getString(R.string.NEXT)
+            }
+            else{
+                binding.lblSend.text = resources.getString(R.string.Send)
             }
         }
     }
@@ -412,13 +423,41 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
 
             R.id.rlaSendVoice -> {
+
+
+                val isStaffRole = isUserDetails!!.staff_role
                 if (isMultipleSchool) {
-                    val intent = Intent(this, SchoolList::class.java)
-                    startActivity(intent)
-                } else {
+                    if(isStaffRole.equals(Constant.isGroupHeadRole) || isStaffRole.equals(Constant.isPrincipalRole) || isStaffRole.equals(Constant.isAdminRole)) {
+                        val intent = Intent(this, SchoolList::class.java)
+                        startActivity(intent)
+                    }
+                    else{
+                        val intent = Intent(this, RecipientActivity::class.java)
+                        startActivity(intent)
+                    }
+                }
+
+                else {
+
                     val intent = Intent(this, RecipientActivity::class.java)
                     startActivity(intent)
+
+                    if(isStaffRole.equals(Constant.isGroupHeadRole) || isStaffRole.equals(Constant.isPrincipalRole) || isStaffRole.equals(Constant.isAdminRole)) {
+                        if(Constant.isEmergencyVoiceNoticeBoard == true){
+                            //send api call here itself
+                        }
+                        else{
+                            val intent = Intent(this, RecipientActivity::class.java)
+                            startActivity(intent)
+                        }
+                    }
+                    else {
+                        val intent = Intent(this, RecipientActivity::class.java)
+                        startActivity(intent)
+                    }
                 }
+
+
             }
 
             R.id.imgVoicePlay -> {

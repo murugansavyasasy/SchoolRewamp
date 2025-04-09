@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SectionList.SectionListAdapter
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SectionList.SectionListClickListener
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardListAdapter
@@ -39,6 +40,10 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     private var groupListAdapter: GroupListAdapter? = null
     private var isAccessToken: String? = null
 
+    private var isUserDetails: UserDetails? = null
+
+
+
     private var appViewModel: App? = null
     override fun setupViews() {
         super.setupViews()
@@ -51,22 +56,22 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
         val tabLayout = binding.tabLayout
         tabLayout.addTab(tabLayout.newTab().setText("Entire School"), true)
-        tabLayout.addTab(tabLayout.newTab().setText("Group"))
-        tabLayout.addTab(tabLayout.newTab().setText("Standard"))
-        tabLayout.addTab(tabLayout.newTab().setText("Section/Specific Student"))
+        tabLayout.addTab(tabLayout.newTab().setText("Groups"))
+        tabLayout.addTab(tabLayout.newTab().setText("Standards"))
+        tabLayout.addTab(tabLayout.newTab().setText("Staffs"))
+        tabLayout.addTab(tabLayout.newTab().setText("Section/Student"))
 
         val isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
 
-        val isUserDetails = SharedPreference.getUserDetails(this)
-        if (isUserDetails!!.staff_role == Constant.isGroupHeadRole || isUserDetails.staff_role == Constant.isPrincipalRole || isUserDetails.staff_role == Constant.isAdminRole) {
-            tabLayout.getTabAt(0)?.view?.visibility = View.VISIBLE
-            tabLayout.getTabAt(3)?.view?.visibility = View.GONE
+         isUserDetails = SharedPreference.getUserDetails(this)
+        if (isUserDetails!!.staff_role == Constant.isGroupHeadRole || isUserDetails!!.staff_role == Constant.isPrincipalRole || isUserDetails!!.staff_role == Constant.isAdminRole) {
             binding.btnViewProgress.visibility = View.GONE
             binding.textdesc.visibility = View.VISIBLE
-        } else {
+        }
+        else {
             tabLayout.getTabAt(0)?.view?.visibility = View.GONE
-            tabLayout.getTabAt(3)?.view?.visibility = View.VISIBLE
+            tabLayout.getTabAt(3)?.view?.visibility = View.GONE
             binding.btnViewProgress.visibility = View.VISIBLE
             binding.textdesc.visibility = View.VISIBLE
         }
@@ -215,6 +220,9 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 }
 
             }
+
+
+
 
             R.id.rlaStandard -> {
                 showStandardDropdown(
