@@ -4,12 +4,10 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIds
-import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolListAdapter
-import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolListAdapter.ShimmerViewHolder
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
@@ -55,14 +53,19 @@ class GroupListAdapter(
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
         val lblgroupname: TextView = itemView.findViewById(R.id.lblgroupname)
+        val chMultipleSchool: CheckBox = itemView.findViewById(R.id.chMultipleSchool)
         fun bind(
             data: NameAndIds,
             position: Int,
             listener: GroupListClickListener,
         ) {
             lblgroupname.text = data.name
-            itemView.setOnClickListener {
-                listener.onGroupClick(data)
+            chMultipleSchool.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
+                    listener.onIdCheck(data) // add to selected list
+                } else {
+                    listener.onIdUnchecked(data) // remove from selected list
+                }
             }
         }
     }

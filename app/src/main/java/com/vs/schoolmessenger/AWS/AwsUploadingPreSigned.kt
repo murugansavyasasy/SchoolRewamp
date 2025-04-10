@@ -96,10 +96,10 @@ class AwsUploadingPreSigned {
                 call: Call<PreSignedUrl?>, response: Response<PreSignedUrl?>
             ) {
                 Log.d(
-                    "UploadFile:code-res", response!!.code().toString() + " - " + response
+                    "UploadFile:code-res", response.code().toString() + " - " + response
                 )
 
-                if (response.isSuccessful() && response.body() != null) {
+                if (response.isSuccessful && response.body() != null) {
                     val preSignedUrlResponse: PreSignedUrl? = response.body()
                     Log.d(
                         "PreSignedData", com.google.gson.Gson().toJson(preSignedUrlResponse)

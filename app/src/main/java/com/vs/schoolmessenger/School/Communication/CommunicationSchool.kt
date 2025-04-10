@@ -3,6 +3,7 @@ package com.vs.schoolmessenger.School.Communication
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Paint
@@ -23,17 +24,18 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.gson.JsonArray
-import com.google.gson.JsonObject
 import com.vs.schoolmessenger.AWS.AwsUploadingPreSigned
 import com.vs.schoolmessenger.AWS.UploadCallback
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
+import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolList
+import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.ApiCallRequest
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.CustomDatePicker
-import com.vs.schoolmessenger.Utils.CustomSwitch
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.Utils.TimeSelectedListener
 import com.vs.schoolmessenger.databinding.CommunicationSchoolBinding
@@ -64,6 +66,10 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     private lateinit var isTextHistoryData: List<TextHistoryData>
     private val MAX_RECORDING_TIME = 180
     private val handler = Handler(Looper.getMainLooper())
+
+    var isEmergency = 0
+    var isScheduleCall = false
+
     private val progressUpdater = object : Runnable {
         override fun run() {
             if (isPrepared && mediaPlayer!!.isPlaying) {
@@ -73,7 +79,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
         }
     }
-    private val selectedDates = mutableSetOf<String>()
+    private val selectedDates = ArrayList<String>()
     private var recordingTime = 0
     private lateinit var recordingHandler: Handler
     private lateinit var recordingRunnable: Runnable
@@ -81,6 +87,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
     private var isUserDetails: UserDetails? = null
+    private var isStaffDetails: StaffDetails? = null
 
     @SuppressLint("ClickableViewAccessibility")
     override fun setupViews() {
@@ -106,11 +113,12 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         binding.imgBack.setOnClickListener(this)
         binding.lnrScheduleCall.setOnClickListener(this)
         binding.rlaSendVoice.setOnClickListener(this)
+        binding.rlaSendText.setOnClickListener(this)
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
 
-        val isStaffDetails = SharedPreference.getStaffDetails(this)
+        isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
 
 
@@ -124,7 +132,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
         isAwsUploadingPreSigned = AwsUploadingPreSigned()
 
-        val customSwitch: CustomSwitch = findViewById(R.id.SwitchEmergencyVoice)
         isUserDetails = SharedPreference.getUserDetails(this)
 
         if (isUserDetails!!.staff_details.size > 1) {
@@ -134,12 +141,15 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         }
 
         if (isUserDetails!!.staff_role == Constant.isGroupHeadRole || isUserDetails!!.staff_role == Constant.isPrincipalRole || isUserDetails!!.staff_role == Constant.isAdminRole) {
-            customSwitch.visibility = View.VISIBLE
+            binding.SwitchEmergencyVoice.visibility = View.VISIBLE
             binding.lblEmergencyVoice.visibility = View.VISIBLE
         } else {
-            customSwitch.visibility = View.GONE
+            binding.SwitchEmergencyVoice.visibility = View.GONE
             binding.lblEmergencyVoice.visibility = View.GONE
         }
+
+        binding.lblStartTime.text = Constant.getCurrentTime()
+        binding.lblEndTime.text = Constant.getCurrentTime()
 
         appViewModel!!.isGetVoiceHistory?.observe(this) { response ->
             if (response != null && response.status) {
@@ -151,18 +161,26 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
         appViewModel!!.isSendText?.observe(this) { response ->
             if (response != null && response.status) {
+                Constant.showAlert("Info!", response.message, this)
+            }
+        }
 
+        appViewModel!!.isVoiceSend?.observe(this) { response ->
+            if (response != null && response.status) {
+                Constant.showAlert("Info!", response.message, this)
             }
         }
 
         changeLabel()
-        customSwitch.setOnClickListener {
-            if (customSwitch.isChecked()) {
+        binding.SwitchEmergencyVoice.setOnClickListener {
+            if (binding.SwitchEmergencyVoice.isChecked()) {
                 Constant.isEmergencyVoiceNoticeBoard = true
                 Constant.isAccessType = Constant.isEmergency
+                isEmergency = 1
             } else {
                 Constant.isEmergencyVoiceNoticeBoard = false
                 Constant.isAccessType = Constant.isNonEmergency
+                isEmergency = 0
             }
             changeLabel()
         }
@@ -259,6 +277,16 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     private fun changeLabel() {
         if (Constant.isEmergencyVoiceNoticeBoard == true) {
             if (isMultipleSchool) {
+                binding.lblSend.text = resources.getString(R.string.NEXT)
+            } else {
+                if (isEmergency == 0) {
+                    binding.lblSend.text = resources.getString(R.string.NEXT)
+                } else {
+                    binding.lblSend.text = resources.getString(R.string.Send)
+                }
+            }
+        } else {
+            if (isEmergency == 0) {
                 binding.lblSend.text = resources.getString(R.string.NEXT)
             } else {
                 binding.lblSend.text = resources.getString(R.string.Send)
@@ -444,7 +472,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     response: String?,
                     isFileUploaded: String?
                 ) {
-                    isVoiceSend(isFileUploaded)
+                    //isVoiceSend(isFileUploaded)
                 }
 
                 override fun onUploadError(error: String?) {
@@ -456,6 +484,14 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     override fun onClick(p0: View?) {
         when (p0?.id) {
             R.id.rlaVoiceMessage -> {
+                Constant.isEmergencyVoiceNoticeBoard = false
+                Constant.isAccessType = Constant.isNonEmergency
+                isEmergency = 0
+                binding.SwitchEmergencyVoice.setChecked(false)
+                changeLabel()
+                binding.SwitchEmergencyVoice.visibility = View.VISIBLE
+                binding.lblEmergencyVoice.visibility = View.VISIBLE
+                isScheduleCall = false
                 isClickType = 1
                 if (mAdapter != null) {
                     mAdapter!!.releaseMediaPlayer()
@@ -477,6 +513,14 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
 
             R.id.rlaScheduleCall -> {
+                Constant.isEmergencyVoiceNoticeBoard = false
+                Constant.isAccessType = Constant.isNonEmergency
+                isEmergency = 0
+                binding.SwitchEmergencyVoice.setChecked(false)
+                changeLabel()
+                binding.SwitchEmergencyVoice.visibility = View.GONE
+                binding.lblEmergencyVoice.visibility = View.GONE
+                isScheduleCall = true
                 isClickType = 2
                 if (mAdapter != null) {
                     mAdapter!!.releaseMediaPlayer()
@@ -497,6 +541,15 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
 
             R.id.rlaTextMessage -> {
+                Constant.isEmergencyVoiceNoticeBoard = false
+                Constant.isAccessType = Constant.isNonEmergency
+                isEmergency = 0
+                binding.SwitchEmergencyVoice.setChecked(false)
+                changeLabel()
+
+                binding.SwitchEmergencyVoice.visibility = View.GONE
+                binding.lblEmergencyVoice.visibility = View.GONE
+                isScheduleCall = false
                 isClickType = 3
                 if (mAdapter != null) {
                     mAdapter!!.releaseMediaPlayer()
@@ -518,6 +571,17 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             R.id.rlaFromTime -> {
                 showTimePickerDialog(this, this)
             }
+            R.id.rlaSendText -> {
+                if (binding.edtTitleTextMessage.text.toString() != "") {
+                    if (binding.edtContentTextMessage.text.toString() != "") {
+                        isGoToRecipient()
+                    } else {
+                        Constant.showAlert("Alert", "Enter the Content", this)
+                    }
+                } else {
+                    Constant.showAlert("Alert", "Enter the title", this)
+                }
+            }
 
             R.id.rlaToTime -> {
                 showTimePickerDialog(this, this)
@@ -525,44 +589,19 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
             R.id.rlaSendVoice -> {
                 if (!Constant.isVoiceFile.equals("")) {
-                    if (!binding.edtTitle.text.toString().equals("")) {
-                        isFileUploadInAws(Constant.isVoiceFile!!, "5512", "audio", ".mp3")
+                    if (binding.edtTitle.text.toString() != "") {
+                        if (binding.lblSend.text.toString() == resources.getString(R.string.send)) {
+//                        isFileUploadInAws(Constant.isVoiceFile!!, isStaffDetails!!.school_id, "audio", ".mp3")
+                            showSendConfirmationDialog("Are you want send this voice to entire school?")
+                        } else {
+                            isGoToRecipient()
+                        }
                     } else {
-                        Constant.showAlert("Alert", "Enter the title", this)
+                        Constant.showAlert("Alert!", "Enter the title", this)
                     }
                 } else {
-                    Constant.showAlert("Alert", "Record or pick the voice file!", this)
+                    Constant.showAlert("Alert!", "Record or pick the voice file!", this)
                 }
-
-//                val isStaffRole = isUserDetails!!.staff_role
-//                if (isMultipleSchool) {
-//                    if (isStaffRole.equals(Constant.isGroupHeadRole) || isStaffRole.equals(Constant.isPrincipalRole) || isStaffRole.equals(
-//                            Constant.isAdminRole
-//                        )
-//                    ) {
-//                        val intent = Intent(this, SchoolList::class.java)
-//                        startActivity(intent)
-//                    } else {
-//                        val intent = Intent(this, RecipientActivity::class.java)
-//                        startActivity(intent)
-//                    }
-//                } else {
-//
-//                    if (isStaffRole.equals(Constant.isGroupHeadRole) || isStaffRole.equals(Constant.isPrincipalRole) || isStaffRole.equals(
-//                            Constant.isAdminRole
-//                        )
-//                    ) {
-//                        if (Constant.isEmergencyVoiceNoticeBoard == true) {
-//                            //send api call here itself
-//                        } else {
-//                            val intent = Intent(this, RecipientActivity::class.java)
-//                            startActivity(intent)
-//                        }
-//                    } else {
-//                        val intent = Intent(this, RecipientActivity::class.java)
-//                        startActivity(intent)
-//                    }
-//                }
             }
 
             R.id.imgVoicePlay -> {
@@ -622,6 +661,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 onBackPressed()
             }
             R.id.lnrScheduleCall -> {
+
                 val dateAdapter = DateAdapter(this) { updatedList -> }
                 selectedDatesAdapter = SelectedDatesAdapter(
                     this,
@@ -659,7 +699,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                         binding.gridViewScheduleCall.visibility = View.VISIBLE
                         binding.rlaScheduleCallPickDate.visibility = View.VISIBLE
                         binding.rlaRecordVoice.visibility = View.VISIBLE
-
                     }
 
                     else -> {
@@ -717,6 +756,58 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         }
     }
 
+    private fun isGoToRecipient() {
+        val isStaffRole = isUserDetails!!.staff_role
+        if (isMultipleSchool) {
+            if (isStaffRole.equals(Constant.isGroupHeadRole) || isStaffRole.equals(
+                    Constant.isPrincipalRole
+                ) || isStaffRole.equals(
+                    Constant.isAdminRole
+                )
+            ) {
+                val intent = Intent(this, SchoolList::class.java)
+                isSaveTheVoiceData()
+                startActivity(intent)
+            } else {
+                val intent = Intent(this, RecipientActivity::class.java)
+                isSaveTheVoiceData()
+                startActivity(intent)
+            }
+        } else {
+            if (isStaffRole.equals(Constant.isGroupHeadRole) || isStaffRole.equals(
+                    Constant.isPrincipalRole
+                ) || isStaffRole.equals(
+                    Constant.isAdminRole
+                )
+            ) {
+                if (Constant.isEmergencyVoiceNoticeBoard == true) {
+                    //send api call here itself
+                } else {
+                    val intent = Intent(this, RecipientActivity::class.java)
+                    isSaveTheVoiceData()
+                    startActivity(intent)
+                }
+            } else {
+                val intent = Intent(this, RecipientActivity::class.java)
+                isSaveTheVoiceData()
+                startActivity(intent)
+            }
+        }
+    }
+
+    fun isSaveTheVoiceData() {
+        val voiceData = VoiceSendingData(
+            isFileUploaded = "isVoiceUrl",
+            isClickType = isClickType,
+            selectedDates = selectedDates,
+            isStartTimeText = binding.lblStartTime.text.toString(),
+            isEndTimeText = binding.lblEndTime.text.toString(),
+            title = binding.edtTitle.text.toString(),
+            isEmergency = isEmergency,
+            isScheduleCall = isScheduleCall
+        )
+        Constant.isVoiceSendingData = voiceData
+    }
 
     private fun isChangeBackRoundCommunicationType(
         isTypeCommunication: RelativeLayout,
@@ -784,41 +875,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     private fun isGetVoiceHistory() {
         appViewModel!!.isGetVoiceHistory(isAccessToken!!, "0", this)
     }
-
-    private fun isSendText() {
-        val jsonObject = JsonObject()
-        val jsonArray = JsonArray()
-        jsonArray.add("1234")
-        jsonObject.add("target_code", jsonArray)
-        jsonObject.addProperty("target_type", 1)
-        jsonObject.addProperty("message", "Testing School message")
-        jsonObject.addProperty("description", " Purpose text message")
-        appViewModel!!.isSendText(isAccessToken!!, jsonObject, this)
-    }
-
-    private fun isVoiceSend(isFileUploaded: String?) {
-        val jsonObject = JsonObject()
-        jsonObject.addProperty("voice_link", isFileUploaded)
-        jsonObject.addProperty("target_type", 2)
-        jsonObject.addProperty("circular_type", "C")
-        jsonObject.addProperty("duration", 4)
-        jsonObject.addProperty("description", binding.edtTitle.text.toString())
-        jsonObject.addProperty("is_emergency", 0)
-        jsonObject.addProperty("is_schedule", false)
-        jsonObject.addProperty("start_time", "06:25")
-        jsonObject.addProperty("end_time", "06:26")
-        jsonObject.addProperty("file_name", "test")
-        val jsonArray = JsonArray()
-        jsonArray.add("09-04-2025")
-        jsonObject.add("schedule_date", jsonArray)
-
-        val jsonArray1 = JsonArray()
-        jsonArray1.add("5512")
-        jsonObject.add("target_code", jsonArray1)
-        appViewModel!!.isVoiceSend(isAccessToken!!, jsonObject, this)
-    }
-
-
 
     private fun loadVoiceData(isVoiceHistoryData: List<VoiceHistoryDetails>) {
         Log.d("isVoiceHistory", "isVoiceHistory")
@@ -903,5 +959,30 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         data: VoiceHistoryDetails, holder: VoiceHistoryAdapter.DataViewHolder
     ) {
 
+    }
+
+    fun showSendConfirmationDialog(isMessage: String) {
+        val isSchoolId = mutableListOf(isStaffDetails!!.school_id.toInt())
+        AlertDialog.Builder(this).setTitle("Send Confirmation!").setMessage(isMessage)
+            .setPositiveButton("Yes") { dialog, _ ->
+                val isVoiceUrl =
+                    "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/2025-04-09/5512/audiorecord.m4a"
+                val jsonObject = ApiCallRequest.isVoiceSend(
+                    isFileUploaded = isVoiceUrl,
+                    isClickType = isClickType,
+                    selectedDates = selectedDates,
+                    isStartTimeText = binding.lblStartTime.text.toString(),
+                    isEndTimeText = binding.lblEndTime.text.toString(),
+                    title = binding.edtTitle.text.toString(),
+                    isEmergency = isEmergency,
+                    isScheduleCall = isScheduleCall,
+                    schoolId = isSchoolId,
+                    targetType = Constant.isSchool,
+                    circularType = Constant.school
+                )
+                appViewModel!!.isVoiceSend(isAccessToken!!, jsonObject, this)
+            }.setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }.show()
     }
 }

@@ -11,7 +11,7 @@ import com.vs.schoolmessenger.R
 class SelectedDatesAdapter(
     private val context: Context,
     private val selectedDates: MutableList<String>,
-    private val dateAdapter: DateAdapter?,
+    private val dateAdapter: DateAdapter,
     private val onDateRemoved: (String) -> Unit
 ) : BaseAdapter() {
 
@@ -43,8 +43,21 @@ class SelectedDatesAdapter(
             onDateRemoved(removedDate)
 
             // Update the DateAdapter to reflect the removal
-            dateAdapter!!.removeSelectedDate(removedDate) // Update DateAdapter directly
+            dateAdapter.removeSelectedDate(removedDate) // Update DateAdapter directly
         }
+
+//        dateTextView.setOnClickListener {
+//            // Remove the date from the list
+//            val removedDate = selectedDates[position]
+//            selectedDates.removeAt(position)
+//            notifyDataSetChanged()
+//
+//            // Notify the parent activity/fragment that a date was removed
+//            onDateRemoved(removedDate)
+//
+//            // Update the DateAdapter to reflect the removal
+//            dateAdapter!!.removeSelectedDate(removedDate) // Update DateAdapter directly
+//        }
         return view
     }
 }

@@ -1,5 +1,6 @@
 package com.vs.schoolmessenger.CommonScreens.SelectRecipient
 
+import android.app.AlertDialog
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
@@ -8,7 +9,6 @@ import com.google.android.material.tabs.TabLayout
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIds
-import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.StaffListData
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.GroupList.GroupListAdapter
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.GroupList.GroupListClickListener
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SectionList.Section
@@ -18,6 +18,7 @@ import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.Standar
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardListAdapter
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardListClickListener
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.ApiCallRequest
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -29,6 +30,9 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     override fun getViewBinding(): SelectRecipientBinding {
         return SelectRecipientBinding.inflate(layoutInflater)
     }
+    val isGroupSelectedIds = mutableListOf<NameAndIds>()
+    val isStandardSelectedIds = mutableListOf<Standard>()
+
 
     var isDropDown = false
     private var isSectionId: Int? = null
@@ -42,7 +46,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     private var isAccessToken: String? = null
 
     private var isUserDetails: UserDetails? = null
-
+    private var selectedIds = mutableListOf<Int>()
+    var isSelectedType = 0
 
 
     private var appViewModel: App? = null
@@ -54,9 +59,10 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
         binding.rlaSubject.setOnClickListener(this)
         binding.rlaStandard.setOnClickListener(this)
+        binding.btnSend.setOnClickListener(this)
 
         val tabLayout = binding.tabLayout
-        tabLayout.addTab(tabLayout.newTab().setText("Entire School"), true)
+        tabLayout.addTab(tabLayout.newTab().setText("Entire School"))
         tabLayout.addTab(tabLayout.newTab().setText("Groups"))
         tabLayout.addTab(tabLayout.newTab().setText("Standards"))
         tabLayout.addTab(tabLayout.newTab().setText("Staffs"))
@@ -71,6 +77,12 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         if (isUserDetails!!.staff_role == Constant.isGroupHeadRole || isUserDetails!!.staff_role == Constant.isPrincipalRole || isUserDetails!!.staff_role == Constant.isAdminRole) {
             binding.btnViewProgress.visibility = View.GONE
             binding.textdesc.visibility = View.VISIBLE
+            if (isUserDetails!!.staff_details.size > 1) {
+                tabLayout.post {
+                    tabLayout.getTabAt(0)?.view?.visibility = View.GONE
+                    tabLayout.getTabAt(1)?.select()
+                }
+            }
         } else {
             tabLayout.getTabAt(1)?.select()
             tabLayout.getTabAt(0)?.view?.visibility = View.GONE
@@ -83,6 +95,9 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 when (tab?.position) {
                     0 -> {
+                        isSelectedType = 0
+                        isGroupSelectedIds.clear()
+                        selectedIds.clear()
                         binding.rlaStandard.visibility = View.GONE
                         binding.grouplabel.visibility = View.GONE
                         binding.recyclerView.visibility = View.GONE
@@ -91,6 +106,9 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     }
 
                     1 -> {
+                        isSelectedType = 1
+                        isGroupSelectedIds.clear()
+                        selectedIds.clear()
                         binding.rlaStandard.visibility = View.GONE
                         binding.grouplabel.visibility = View.VISIBLE
                         binding.recyclerView.visibility = View.VISIBLE
@@ -101,6 +119,9 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     }
 
                     2 -> {
+                        isSelectedType = 2
+                        isGroupSelectedIds.clear()
+                        selectedIds.clear()
                         isDropDown = false
                         isGetStandardSection()
                         binding.rlaStandard.visibility = View.GONE
@@ -116,6 +137,9 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         }
                     }
                     3 -> {
+                        isSelectedType = 3
+                        isGroupSelectedIds.clear()
+                        selectedIds.clear()
                         isDropDown = false
                         isGetStaffList()
                         binding.rlaStandard.visibility = View.GONE
@@ -132,6 +156,9 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     }
 
                     else -> {
+                        isSelectedType = 4
+                        isGroupSelectedIds.clear()
+                        selectedIds.clear()
                         isDropDown = true
                         isGetStandardSection()
                         if (isDropDown) {
@@ -182,6 +209,12 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         appViewModel!!.isGetStaffList?.observe(this) { response ->
             if (response != null && response.status) {
                 isLoadStaffData(response.data)
+            }
+        }
+
+        appViewModel!!.isVoiceSend?.observe(this) { response ->
+            if (response != null && response.status) {
+                Constant.showAlert("Info!", response.message, this)
             }
         }
     }
@@ -274,6 +307,31 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     isLoadData(isSection)
                 }
             }
+            R.id.btnSend -> {
+                var isTypeOfName = ""
+                if (isSelectedType == 0) {
+                    isTypeOfName = "School"
+                } else if (isSelectedType == 1) {
+                    isTypeOfName = "Group"
+                    selectedIds = isGroupSelectedIds.map { it.id }.toMutableList()
+                } else if (isSelectedType == 2) {
+                    isTypeOfName = "Standard"
+                    selectedIds = isStandardSelectedIds.map { it.id }.toMutableList()
+                } else if (isSelectedType == 3) {
+                    isTypeOfName = "Staff"
+                } else if (isSelectedType == 4) {
+
+                }
+
+                for (id in selectedIds) {
+                    Log.d("isSelectedIds", id.toString())
+                }
+                if (selectedIds.isNotEmpty()) {
+                    showSendConfirmationDialog("Are you want send this voice?")
+                } else {
+                    Constant.showAlert("Alert!", "Select atleast one $isTypeOfName", this)
+                }
+            }
         }
     }
 
@@ -301,6 +359,53 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         )
     }
 
+    fun showSendConfirmationDialog(isMessage: String) {
+
+        var isTargetType: Int? = null
+        var isCircularType: String? = null
+        if (isSelectedType == 0) {
+            isTargetType = Constant.isSchool
+            isCircularType = Constant.school
+        } else if (isSelectedType == 1) {
+            isTargetType = Constant.isGroup
+            isCircularType = Constant.group
+            selectedIds = isGroupSelectedIds.map { it.id }.toMutableList()
+        } else if (isSelectedType == 2) {
+            isTargetType = Constant.isStandard
+            isCircularType = Constant.standard
+            selectedIds = isStandardSelectedIds.map { it.id }.toMutableList()
+        } else if (isSelectedType == 3) {
+            isTargetType = Constant.isStaff
+            isCircularType = Constant.staff
+        } else if (isSelectedType == 4) {
+            isTargetType = Constant.isStudent
+            isCircularType = Constant.student
+        }
+
+        val isVoiceData = Constant.isVoiceSendingData
+        AlertDialog.Builder(this).setTitle("Send Confirmation!").setMessage(isMessage)
+            .setPositiveButton("Yes") { dialog, _ ->
+                val isVoiceUrl =
+                    "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/2025-04-09/5512/audiorecord.m4a"
+                val jsonObject = ApiCallRequest.isVoiceSend(
+                    isFileUploaded = isVoiceUrl,
+                    isClickType = isVoiceData!!.isClickType,
+                    selectedDates = isVoiceData.selectedDates,
+                    isStartTimeText = isVoiceData.isStartTimeText,
+                    isEndTimeText = isVoiceData.isEndTimeText,
+                    title = isVoiceData.title,
+                    isEmergency = isVoiceData.isEmergency,
+                    isScheduleCall = isVoiceData.isScheduleCall,
+                    schoolId = selectedIds,
+                    targetType = isTargetType!!,
+                    circularType = isCircularType!!
+                )
+                appViewModel!!.isVoiceSend(isAccessToken!!, jsonObject, this)
+            }.setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }.show()
+    }
+
 
     override fun onSectionClick(
         data: Section, isChecked: Boolean
@@ -311,14 +416,24 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     }
 
 
-    override fun onStandardClick(
-        data: Standard, isChecked: Boolean
-    ) {
-
+    override fun onIdCheck(group: NameAndIds) {
+        if (!isGroupSelectedIds.any { it.id == group.id }) {
+            isGroupSelectedIds.add(group)
+        }
     }
 
-    override fun onGroupClick(group: NameAndIds) {
+    override fun onIdUnchecked(group: NameAndIds) {
+        isGroupSelectedIds.removeAll { it.id == group.id }
+    }
 
+    override fun onIdCheck(isStandard: Standard) {
+        if (!isStandardSelectedIds.any { it.id == isStandard.id }) {
+            isStandardSelectedIds.add(isStandard)
+        }
+    }
+
+    override fun onIdUnchecked(isStandard: Standard) {
+        isStandardSelectedIds.removeAll { it.id == isStandard.id }
     }
 }
 

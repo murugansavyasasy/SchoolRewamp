@@ -198,7 +198,7 @@
             android:weightSum="1">
 
             <Button
-                android:id="@+id/btnViewMarks"
+                android:id="@+id/btnSend"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_weight="0.5"

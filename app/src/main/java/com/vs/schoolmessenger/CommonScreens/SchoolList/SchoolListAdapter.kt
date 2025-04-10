@@ -10,11 +10,8 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.Communication.TextHistoryAdapter
-import com.vs.schoolmessenger.School.Communication.TextHistoryAdapter.DataViewHolder.ShimmerViewHolder
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class SchoolListAdapter(
@@ -97,12 +94,14 @@ class SchoolListAdapter(
             }
 
             chMultipleSchool.setOnClickListener {
+                val schoolId = data.school_id.toInt()
                 if (chMultipleSchool.isChecked) {
-                    selectedIds.add(data.schedule_call_type)
+                    selectedIds.add(schoolId)
                 } else {
-                    selectedIds.remove(position)
+                    selectedIds.remove(schoolId)
                 }
             }
+
         }
     }
 

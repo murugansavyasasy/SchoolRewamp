@@ -7,6 +7,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
+import android.media.MediaMetadataRetriever
 import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Handler
@@ -30,6 +31,10 @@ import com.vs.schoolmessenger.Auth.OTP.ForgetOtpData
 import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolList
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.Communication.VoiceSendingData
+import java.time.LocalDate
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 
 object Constant {
 
@@ -109,9 +114,23 @@ object Constant {
     var isEmergency = 101
     var isText = 102
 
+    var isSchool = 1
+    var isStandard = 2
+    var isSection = 3
+    var isGroup = 4
+    var isStudent = 5
+    var isStaff = 6
+
+    var school = "A"
+    var standard = "C"
+    var section = "S"
+    var group = "G"
+    var student = "student"
+    var staff = "staff"
+
 
     var isVoiceFile: String? = null
-
+    var isVoiceSendingData: VoiceSendingData? = null
 
     fun isInternetAvailable(activity: Activity): Boolean {
         val connectivityManager =
@@ -312,5 +331,34 @@ object Constant {
             }
             .show()
     }
+
+    fun getAudioDurationInMinutes(filePath: String): Int {
+        val retriever = MediaMetadataRetriever()
+        return try {
+            retriever.setDataSource(filePath)
+            val durationStr =
+                retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
+            val durationMs = durationStr?.toLongOrNull() ?: 0L
+            (durationMs / 1000 / 60).toInt()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            0
+        } finally {
+            retriever.release()
+        }
+    }
+
+    fun getCurrentTime(): String {
+        val currentTime = LocalTime.now()
+        val formatter = DateTimeFormatter.ofPattern("HH:mm:ss") // or "hh:mm a" for AM/PM
+        return currentTime.format(formatter)
+    }
+
+    fun getCurrentDate(): String {
+        val currentDate = LocalDate.now()
+        val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy") // or "dd/MM/yyyy", etc.
+        return currentDate.format(formatter)
+    }
+
 
 }
