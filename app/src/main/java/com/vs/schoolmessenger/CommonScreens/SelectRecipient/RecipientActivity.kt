@@ -289,9 +289,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         "Selected Subject: Name = ${selectedSubject.first}, ID = ${selectedSubject.second}"
                     )
                 }
-
             }
-
 
             R.id.rlaStandard -> {
                 showStandardDropdown(

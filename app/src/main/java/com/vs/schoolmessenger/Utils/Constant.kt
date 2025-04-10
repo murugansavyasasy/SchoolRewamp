@@ -10,6 +10,7 @@ import android.graphics.drawable.ColorDrawable
 import android.media.MediaMetadataRetriever
 import android.net.ConnectivityManager
 import android.net.Uri
+import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
@@ -22,6 +23,7 @@ import android.webkit.WebViewClient
 import android.widget.EditText
 import android.widget.GridView
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import com.vs.schoolmessenger.Auth.Country.Country
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
@@ -348,6 +350,7 @@ object Constant {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun getCurrentTime(): String {
         val currentTime = LocalTime.now()
         val formatter = DateTimeFormatter.ofPattern("HH:mm:ss") // or "hh:mm a" for AM/PM

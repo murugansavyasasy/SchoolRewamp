@@ -10,6 +10,9 @@ import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.StaffListResponse
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
+import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
+import com.vs.schoolmessenger.Parent.Communication.VoiceData
+import com.vs.schoolmessenger.Parent.Communication.VoiceDataResponse
 import com.vs.schoolmessenger.School.Communication.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.VoiceDetails
 
@@ -38,6 +41,10 @@ class App(application: Application) : AndroidViewModel(application) {
     var isGetGroupList: LiveData<NameAndIdsResponse?>? = null
         private set
 
+    var isGetCommmunicationlist: LiveData<VoiceDataResponse?>? = null
+        private set
+
+
     var isGetVoiceHistory: LiveData<VoiceDetails?>? = null
         private set
 
@@ -45,6 +52,10 @@ class App(application: Application) : AndroidViewModel(application) {
         private set
 
     var isVoiceSend: LiveData<TextSendResponse?>? = null
+        private set
+
+
+    var isUpdateStatusArchive: LiveData<StatusArchiveResponse?>? = null
         private set
 
 
@@ -58,9 +69,11 @@ class App(application: Application) : AndroidViewModel(application) {
         isStandardSectionList = apiRepositories!!.isGetStandardSectionLiveData
         isStudentList = apiRepositories!!.isStudentLiveData
         isGetGroupList = apiRepositories!!.isGetGroupLiveData
+        isGetCommmunicationlist = apiRepositories!!.isGetCommunicationLiveData
         isGetVoiceHistory = apiRepositories!!.isGetVoiceHistoryLiveData
         isSendText = apiRepositories!!.isSendTextLiveData
         isVoiceSend = apiRepositories!!.isSendVoiceLiveData
+        isUpdateStatusArchive = apiRepositories!!.isUpdateStatusArchiveLiveData
     }
 
     fun isDashBoardData(isToken: String, isMemberType: String, activity: Activity) {
@@ -90,6 +103,12 @@ class App(application: Application) : AndroidViewModel(application) {
     fun isGetGroupList(isToken: String, activity: Activity) {
         apiRepositories!!.isGetGroupList(isToken, activity)
     }
+
+    fun isGetCommmunicationlist(isToken: String, activity: Activity) {
+        apiRepositories!!.isGetCommmunicationlist(isToken, activity)
+    }
+
+
     fun isGetVoiceHistory(isToken: String, isEmergency: String, activity: Activity) {
         apiRepositories!!.isGetVoiceHistory(isToken, isEmergency, activity)
     }
@@ -101,4 +120,12 @@ class App(application: Application) : AndroidViewModel(application) {
     fun isVoiceSend(isToken: String, josnObject: JsonObject, activity: Activity) {
         apiRepositories!!.isSendVoice(isToken, josnObject, activity)
     }
+
+    fun isUpdateStatusArchive(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        apiRepositories?.isUpdateStatusArchive(isToken, jsonObject, activity)
+    }
+
+
+
 }
+

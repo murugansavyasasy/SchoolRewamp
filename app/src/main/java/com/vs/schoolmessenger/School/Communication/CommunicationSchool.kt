@@ -171,6 +171,13 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
         }
 
+//        appViewModel?.isUpdateStatusArchive(
+//            isAccessToken!!,
+//            jsonObject,
+//            this // 'this' is the Activity
+//        )
+
+
         changeLabel()
         binding.SwitchEmergencyVoice.setOnClickListener {
             if (binding.SwitchEmergencyVoice.isChecked()) {

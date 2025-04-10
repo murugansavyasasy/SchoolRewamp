@@ -5,23 +5,32 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIds
+import com.vs.schoolmessenger.CommonScreens.SelectRecipient.GroupList.GroupListAdapter
+import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.Repository.Auth
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.CommunicationBinding
 
 class Communication : BaseActivity<CommunicationBinding>(), View.OnClickListener,
-    VoiceClickListener, TextClickListener {
+    VoiceClickListener {
 
     override fun getViewBinding(): CommunicationBinding {
         return CommunicationBinding.inflate(layoutInflater)
     }
 
-    private lateinit var isVoiceData: ArrayList<VoiceData>
+    private var isAccessToken: String? = null
+    private var appViewModel: App? = null
+    var isGetCommmunicationlistData: List<VoiceData>? = null
     var mAdapter: VoiceAdapter? = null
-    private lateinit var isTextData: ArrayList<TextData>
-    var mTextAdapter: TextAdapter? = null
+
     override fun setupViews() {
         super.setupViews()
         setUpGradientParent()
@@ -29,10 +38,26 @@ class Communication : BaseActivity<CommunicationBinding>(), View.OnClickListener
         binding.rlaTextMessage.setOnClickListener(this)
         binding.rlaVoiceMessage.setOnClickListener(this)
 
+        appViewModel = ViewModelProvider(this).get(App::class.java)
+        appViewModel!!.init()
+
         binding.toolbarLayout.lblParentToolBar.text = resources.getText(R.string.Communication)
         binding.toolbarLayout.lblStudentName.text = "Sathish Ganesan"
         binding.toolbarLayout.lblStudentSection.text = "XII - B"
-        loadVoiceData()
+        val isChildDetails = SharedPreference.getChildDetails(this)
+        isAccessToken = isChildDetails!!.access_token
+
+        appViewModel?.isGetCommmunicationlist?.observe(this) { response ->
+            if (response != null && response.status) {
+                isGetCommmunicationlistData = response.data
+                isLoadGroupData(isGetCommmunicationlistData)
+            }
+        }
+
+        isGetCommmunicationlist()
+
+
+
     }
 
     override fun onClick(p0: View?) {
@@ -43,7 +68,6 @@ class Communication : BaseActivity<CommunicationBinding>(), View.OnClickListener
 
             R.id.rlaTextMessage -> {
 
-                loadTextData()
                 mAdapter!!.updateData()
                 mAdapter!!.notifyDataSetChanged()
                 isChangeBackRoundCommunicationType(
@@ -53,17 +77,13 @@ class Communication : BaseActivity<CommunicationBinding>(), View.OnClickListener
                 )
             }
 
-            R.id.rlaVoiceMessage -> {
-                loadVoiceData()
-                mTextAdapter!!.updateData()
-                mTextAdapter!!.notifyDataSetChanged()
-                isChangeBackRoundCommunicationType(
-                    binding.rlaVoiceMessage,
-                    binding.imgVoiceMessage,
-                    binding.lblVoiceMessage
-                )
-            }
+
         }
+    }
+
+
+    private fun isGetCommmunicationlist() {
+        appViewModel!!.isGetCommmunicationlist(isAccessToken!!, this)
     }
 
     private fun isChangeBackRoundCommunicationType(
@@ -81,6 +101,8 @@ class Communication : BaseActivity<CommunicationBinding>(), View.OnClickListener
         binding.lblTextMessage.setTextColor(ContextCompat.getColor(this, R.color.black))
         lblTypeCommunication.setTextColor(ContextCompat.getColor(this, R.color.white))
 
+
+
         binding.imgVoiceMessage.setImageDrawable(
             ContextCompat.getDrawable(
                 this,
@@ -95,6 +117,8 @@ class Communication : BaseActivity<CommunicationBinding>(), View.OnClickListener
                 R.drawable.text_icon_black
             )
         )
+
+
 
         // Update icons based on selection
         when (imgTypeCommunication) {
@@ -119,158 +143,54 @@ class Communication : BaseActivity<CommunicationBinding>(), View.OnClickListener
     }
 
 
-    private fun loadVoiceData() {
 
-        isVoiceData = arrayListOf(
-            VoiceData(
-                "voice",
-                "Apr 1, 2021",
-                "Annual Day celebrations",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
-            ),
-            VoiceData(
-                "text",
-                "Apr 1, 2021",
-                "Parent Meeting",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                ""
-            ),
-            VoiceData(
-                "voice",
-                "Apr 1, 2021",
-                "Normal Day",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
-            ),
-            VoiceData(
-                "text",
-                "Apr 1, 2021",
-                "Day",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                ""
-            ),
-            VoiceData(
-                "voice",
-                "Apr 1, 2021",
-                "Monday",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                "https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_1MG.mp3"
-            ),
-            VoiceData(
-                "text",
-                "Apr 1, 2021",
-                "Nothing",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                ""
-            ),
-            VoiceData(
-                "voice",
-                "Apr 1, 2021",
-                "Value Education",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                "https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3"
-            ),
-            VoiceData(
-                "text",
-                "Apr 1, 2021",
-                "Environmental Science",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                ""
-            ),
-            VoiceData(
-                "voice",
-                "Apr 1, 2021",
-                "Okay okay",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                "https://ia800304.us.archive.org/8/items/testmp3testfile/mpthreetest.mp3"
-            )
+    private fun isLoadGroupData(isGetCommmunicationlistData: List<VoiceData>?) {
+        mAdapter = VoiceAdapter(
+            null,
+            this,
+            this,
+            Constant.isShimmerViewShow,
+            this, // <-- LifecycleOwner (your activity must implement LifecycleOwner)
+            isAccessToken.toString() // <-- make sure this is defined
         )
-
-        mAdapter = VoiceAdapter(null, this, this, Constant.isShimmerViewShow)
         binding.rlaCommunicationData.layoutManager = LinearLayoutManager(this)
-        binding.rlaCommunicationData.isNestedScrollingEnabled = false;
         binding.rlaCommunicationData.adapter = mAdapter
 
         Constant.executeAfterDelay {
-            // Once data is loaded, stop shimmer and pass the actual data
-            mAdapter =
-                VoiceAdapter(isVoiceData, this, this, Constant.isShimmerViewDisable)
-            // Set GridLayoutManager (2 columns in this case)
+            mAdapter = VoiceAdapter(
+                ArrayList(isGetCommmunicationlistData ?: emptyList()),
+                this@Communication,
+                this@Communication,
+                Constant.isShimmerViewDisable,
+                this@Communication, // <-- LifecycleOwner
+                isAccessToken.toString() // <-- pass the token here too
+            )
+
             binding.rlaCommunicationData.adapter = mAdapter
         }
     }
 
+    override fun onUpdateArchiveStatus(type: String?, detailId: String?) {
+        val jsonObject = JsonObject().apply {
+            addProperty("type", type)
+            addProperty("detail_id", detailId)
+        }
 
-    private fun loadTextData() {
-
-        isTextData = arrayListOf(
-            TextData(
-                "Annual Day celebrations",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                "Apr 1, 2021"
-            ),
-            TextData(
-                "Parent Meeting",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                "Apr 1, 2021"
-            ),
-            TextData(
-                "Normal Day",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                "Apr 1, 2021"
-            ),
-            TextData(
-                "Day",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                "Apr 1, 2021"
-            ),
-            TextData(
-                "Monday",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                "Apr 1, 2021"
-            ),
-            TextData(
-                "Nothing",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                "Apr 1, 2021"
-            ),
-            TextData(
-                "Value Education",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                "Apr 1, 2021"
-            ),
-            TextData(
-                "Environmental Science",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                "Apr 1, 2021"
-            ),
-            TextData(
-                "Okay okay",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                "Apr 1, 2021"
+        if (isAccessToken != null) {
+            appViewModel?.isUpdateStatusArchive(
+                isAccessToken!!,
+                jsonObject,
+                this
             )
-        )
-
-        mTextAdapter = TextAdapter(null, this, this, Constant.isShimmerViewShow)
-        binding.rlaCommunicationData.layoutManager = LinearLayoutManager(this)
-        binding.rlaCommunicationData.isNestedScrollingEnabled = false;
-        binding.rlaCommunicationData.adapter = mTextAdapter
-
-        Constant.executeAfterDelay {
-            // Once data is loaded, stop shimmer and pass the actual data
-            mTextAdapter =
-                TextAdapter(isTextData, this, this, Constant.isShimmerViewDisable)
-            // Set GridLayoutManager (2 columns in this case)
-            binding.rlaCommunicationData.adapter = mTextAdapter
         }
     }
 
+
+
+
+
+
     override fun onItemClick(data: VoiceData, holder: VoiceAdapter.DataViewHolder) {
-
-    }
-
-    override fun onItemClick(data: TextData, holder: TextAdapter.DataViewHolder) {
 
     }
 }
