@@ -188,6 +188,7 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
                                     startActivity(intent)
                                 }
                             } else if (Constant.user_data!![0].user_details.is_parent) {
+                                Constant.isParentChoose=true
                                 if (Constant.user_data!![0].user_details.child_details.size > 1) {
                                     val intent = Intent(this@Splash, PrioritySelection::class.java)
                                     startActivity(intent)

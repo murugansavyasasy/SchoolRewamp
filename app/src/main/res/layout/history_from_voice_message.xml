@@ -9,6 +9,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
+            android:id="@+id/lblnewiconVoice"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_alignParentEnd="true"
@@ -121,6 +122,7 @@
                 android:id="@+id/relative_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+
                 android:layout_below="@+id/rlaVoiceHistory">
 
                 <TextView
@@ -133,7 +135,8 @@
                     android:text="10:56 AM"
                     android:textColor="@color/black"
                     android:textSize="12sp"
-                    android:textStyle="bold"></TextView>
+                    android:textStyle="bold">
+                </TextView>
 
                 <TextView
                     android:id="@+id/lblDate"
@@ -143,10 +146,11 @@
                     android:layout_toStartOf="@id/lblTime"
                     android:fontFamily="@font/poppins_medium"
                     android:text="01 Apr 2024"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:textColor="@color/black"
                     android:textSize="12sp"
-                    android:textStyle="bold"></TextView>
+                    android:textStyle="bold">
+                </TextView>
             </RelativeLayout>
 
             <RelativeLayout
@@ -158,6 +162,7 @@
                 android:layout_marginTop="@dimen/eight"
                 android:layout_marginEnd="@dimen/ten"
                 android:layout_marginBottom="@dimen/eight"
+
                 android:background="@drawable/rect_blue_and_green_small_radious"
                 android:padding="@dimen/ten">
 
@@ -167,7 +172,8 @@
                     android:layout_height="@dimen/fifteen"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="@dimen/five"
-                    android:src="@drawable/send_icon_white"></ImageView>
+                    android:src="@drawable/send_icon_white">
+                </ImageView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -179,11 +185,15 @@
                     android:text="Send"
                     android:textColor="@color/white"
                     android:textSize="@dimen/thirteen_sp"
-                    android:textStyle="bold"></TextView>
+                    android:textStyle="bold">
+                </TextView>
             </RelativeLayout>
+
         </RelativeLayout>
     </RelativeLayout>
 
+
+<!--    Text Adapter XML View-->
 
     <RelativeLayout
         android:id="@+id/rlaText"
@@ -192,6 +202,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
+            android:id="@+id/lblnewiconText"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_alignParentEnd="true"
@@ -221,7 +232,8 @@
                 android:text="Friday Leave"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
-                android:textStyle="bold"></TextView>
+                android:textStyle="bold">
+            </TextView>
 
 
             <TextView
@@ -237,7 +249,8 @@
                 android:text="Dear (Recipient's Name), I am writing to request leave from school for (number of days) days, starting from (start date) to (end date). The reason for my leave is (briefly state the reason, e.g., a family function, medical treatment, personal reasons)."
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
-                android:textStyle="bold"></TextView>
+                android:textStyle="bold">
+            </TextView>
 
             <TextView
                 android:id="@+id/lblSeeMore"
@@ -248,6 +261,7 @@
                 android:text="@string/see_more"
                 android:textColor="@color/navi_blue2"
                 android:textSize="@dimen/thirteen_sp"
+                android:visibility="gone"
                 android:textStyle="bold">
 
             </TextView>

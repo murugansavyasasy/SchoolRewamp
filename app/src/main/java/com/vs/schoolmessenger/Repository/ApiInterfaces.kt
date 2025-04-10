@@ -14,6 +14,9 @@ import com.vs.schoolmessenger.CommonScreens.DeviceToken
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
+import com.vs.schoolmessenger.Parent.Communication.StatusArchiveModelRequest
+import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
+import com.vs.schoolmessenger.Parent.Communication.VoiceDataResponse
 import com.vs.schoolmessenger.School.Communication.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.VoiceDetails
 import retrofit2.Call
@@ -117,6 +120,12 @@ interface ApiInterfaces {
         @Header("Authorization") token: String
     ): Call<NameAndIdsResponse?>
 
+
+    @GET(APIMethods.isGetCommmunicationlist)
+    fun isGetCommmunicationlist(
+        @Header("Authorization") token: String
+    ): Call<VoiceDataResponse?>
+
     @GET(APIMethods.isGetVoiceHistory)
     fun isGetVoiceHistory(
         @Header("Authorization") token: String,
@@ -142,5 +151,14 @@ interface ApiInterfaces {
         @Query("bucketPath") bucketPath: String?,
         @Query("fileType") fileType: String?
     ): Call<PreSignedUrl?>?
+
+
+
+    @POST(APIMethods.isUpdateStatusArchive)
+    fun isUpdateStatusArchive(
+        @Header("Authorization") token: String,
+        @Body request: StatusArchiveModelRequest
+    ): Call<StatusArchiveResponse>?
+
 
 }

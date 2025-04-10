@@ -100,6 +100,7 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
                                     startActivity(intent)
                                 }
                             } else if (Constant.user_data!![0].user_details.is_parent) {
+                                Constant.isParentChoose=true
                                 if (Constant.user_data!![0].user_details.child_details.size > 1) {
                                     val intent = Intent(this@OTP, PrioritySelection::class.java)
                                     startActivity(intent)

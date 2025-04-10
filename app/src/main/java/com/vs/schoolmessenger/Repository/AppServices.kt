@@ -9,6 +9,10 @@ import com.vs.schoolmessenger.CommonScreens.Ads.AdsResponse
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
+import com.vs.schoolmessenger.Parent.Communication.StatusArchiveModelRequest
+import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
+import com.vs.schoolmessenger.Parent.Communication.VoiceData
+import com.vs.schoolmessenger.Parent.Communication.VoiceDataResponse
 import com.vs.schoolmessenger.School.Communication.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.VoiceDetails
 import retrofit2.Call
@@ -25,9 +29,12 @@ class AppServices {
     var isGetStandardSection: MutableLiveData<StandardResponse?>
     var isGetStudentList: MutableLiveData<NameAndIdsResponse?>
     var isGetGroupList: MutableLiveData<NameAndIdsResponse?>
+    var isGetCommmunicationlist: MutableLiveData<VoiceDataResponse?>
     var isGetVoiceHistory: MutableLiveData<VoiceDetails?>
     var isSendText: MutableLiveData<TextSendResponse?>
     var isSendVoice: MutableLiveData<TextSendResponse?>
+    var isUpdateStatusArchive: MutableLiveData<StatusArchiveResponse?>
+
 
     init {
         client_auth = RestClient()
@@ -38,9 +45,11 @@ class AppServices {
         isGetStandardSection = MutableLiveData()
         isGetStudentList = MutableLiveData()
         isGetGroupList = MutableLiveData()
+        isGetCommmunicationlist = MutableLiveData()
         isGetVoiceHistory = MutableLiveData()
         isSendText = MutableLiveData()
         isSendVoice = MutableLiveData()
+        isUpdateStatusArchive = MutableLiveData()
     }
 
 
@@ -238,6 +247,40 @@ class AppServices {
         get() = isGetStudentList
 
 
+    fun isGetCommmunicationlist(isToken: String, activity: Activity) {
+        RestClient.apiInterfaces.isGetCommmunicationlist(isToken)
+            ?.enqueue(object : Callback<VoiceDataResponse?> {
+                override fun onResponse(
+                    call: Call<VoiceDataResponse?>,
+                    response: Response<VoiceDataResponse?>
+                ) {
+                    Log.d(
+                        "isGetCountryList",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isGetCommmunicationlist.postValue(response.body())
+                            } else {
+                                isGetCommmunicationlist.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<VoiceDataResponse?>, t: Throwable) {
+                    isGetCommmunicationlist.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isGetCommunicationLiveData: LiveData<VoiceDataResponse?>
+        get() = isGetCommmunicationlist
+
+
     fun isGetGroupList(isToken: String, activity: Activity) {
         RestClient.apiInterfaces.isGroupList(isToken)
             ?.enqueue(object : Callback<NameAndIdsResponse?> {
@@ -270,6 +313,9 @@ class AppServices {
 
     val isGetGroupLiveData: LiveData<NameAndIdsResponse?>
         get() = isGetGroupList
+
+
+
 
     fun isGetVoiceHistory(isToken: String, isEmergency: String, activity: Activity) {
         RestClient.apiInterfaces.isGetVoiceHistory(isToken, isEmergency)
@@ -339,6 +385,38 @@ class AppServices {
 
     val isSendTextLiveData: LiveData<TextSendResponse?>
         get() = isSendText
+
+
+
+    fun isUpdateStatusArchive(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        val request = StatusArchiveModelRequest(isToken, jsonObject)
+
+        RestClient.apiInterfaces.isUpdateStatusArchive("Bearer $isToken", request)
+            ?.enqueue(object : Callback<StatusArchiveResponse> {
+                override fun onResponse(
+                    call: Call<StatusArchiveResponse>,
+                    response: Response<StatusArchiveResponse>
+                ) {
+                    Log.d("isUpdateStatusArchive", "${response.code()} - ${response.body()}")
+
+                    if (response.code() == 200 && response.body() != null) {
+                        isUpdateStatusArchive.postValue(response.body())
+                    } else {
+                        isUpdateStatusArchive.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<StatusArchiveResponse>, t: Throwable) {
+                    isUpdateStatusArchive.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+
+    val isUpdateStatusArchiveLiveData: LiveData<StatusArchiveResponse?>
+        get() = isUpdateStatusArchive
+
 
 
     fun isSendVoice(isToken:String,jsonObject: JsonObject, activity: Activity) {

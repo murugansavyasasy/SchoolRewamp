@@ -1,9 +1,13 @@
 package com.vs.schoolmessenger.Parent.Communication
 
+import android.app.Activity
 import android.content.Context
 import android.media.MediaPlayer
+import android.opengl.Visibility
 import android.os.Handler
 import android.os.Looper
+import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,33 +15,60 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
+import com.google.gson.JsonArray
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.WaveformSeekBar
 import kotlin.math.max
+import com.google.gson.JsonObject
+
 
 class VoiceAdapter(
     private var itemList: ArrayList<VoiceData>?,
     private var listener: VoiceClickListener,
     private var context: Context,
-    private var isLoading: Boolean
+    private var isLoading: Boolean,
+    private var lifecycleOwner: LifecycleOwner,
+    private var isAccessToken: String
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
+    private var currentlyPlayingHolder: DataViewHolder? = null
+    private var appViewModel: App = ViewModelProvider(context as ViewModelStoreOwner)[App::class.java]
 
-    private var currentlyPlayingHolder: DataViewHolder? = null // Track currently playing holder
+    init {
+        appViewModel.init()
+        appViewModel.isUpdateStatusArchive?.observe(lifecycleOwner) { response ->
+            if (response != null && response.status) {
+                Log.d("VoiceAdapter", "Archive API successful")
+            } else {
+                Log.d("VoiceAdapter", "Archive API failed or empty")
+            }
+        }
+    }
+
+
+
 
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
+
+
+
     }
 
 
     fun updateData() {
-        itemList!!.clear()
+        itemList?.clear()
         notifyDataSetChanged()
     }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
@@ -47,8 +78,10 @@ class VoiceAdapter(
         } else {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.history_from_voice_message, parent, false)
-            DataViewHolder(view, context) // Pass context to DataViewHolder
+            DataViewHolder(view, context, appViewModel, isAccessToken) // Pass ViewModel and token
         }
+
+
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -63,26 +96,37 @@ class VoiceAdapter(
         else itemList?.size ?: 0
     }
 
-    class DataViewHolder(itemView: View, private val context: Context) :
-        RecyclerView.ViewHolder(itemView) {
+    class DataViewHolder(
+        itemView: View,
+        private val context: Context,
+        private val appViewModel: App,
+        private val isAccessToken: String
+    ) : RecyclerView.ViewHolder(itemView) {
+
 
         private val lblDate: TextView = itemView.findViewById(R.id.lblDate)
+        private val lblTime: TextView = itemView.findViewById(R.id.lblTime)
+
         private val lblTitle: TextView = itemView.findViewById(R.id.lblTitle)
         private val waveformSeekBar: WaveformSeekBar = itemView.findViewById(R.id.waveformSeekBar)
         private val imgVoicePlay: ImageView = itemView.findViewById(R.id.imgVoicePlay)
         private val lblStartDuration: TextView = itemView.findViewById(R.id.lblStartDuration)
         private val lblEndDuration: TextView = itemView.findViewById(R.id.lblEndDuration)
         private val rlaSendVoice: RelativeLayout = itemView.findViewById(R.id.rlaSendVoice)
-
-
+        private val lblnewiconVoice: ImageView = itemView.findViewById(R.id.lblnewiconVoice)
+        private val lblnewiconText: ImageView = itemView.findViewById(R.id.lblnewiconText)
         private val lblTitleText: TextView = itemView.findViewById(R.id.lblTitleText)
         private val lblDateText: TextView = itemView.findViewById(R.id.lblDateText)
+        private val lblTimeText: TextView = itemView.findViewById(R.id.lblTimeText)
         private val lblContentText: TextView = itemView.findViewById(R.id.lblContentText)
-//        private val lblSeeMoreText: TextView = itemView.findViewById(R.id.lblSeeMoreText)
         private val rlaSelectText: RelativeLayout = itemView.findViewById(R.id.rlaSelectText)
         private val rlaText: RelativeLayout = itemView.findViewById(R.id.rlaText)
         private val rlaVoice: RelativeLayout = itemView.findViewById(R.id.rlaVoice)
 
+        private val lblSeeMore: TextView = itemView.findViewById(R.id.lblSeeMore)
+
+
+        private var isExpanded = false
 
 
         private lateinit var mediaPlayer: MediaPlayer
@@ -110,34 +154,25 @@ class VoiceAdapter(
             listener: VoiceClickListener,
             adapter: VoiceAdapter
         ) {
-
-            if (data.isType == "voice") {
-                rlaText.visibility = View.GONE
+            if (data.type.equals("VOICE", ignoreCase = true)) {
                 rlaVoice.visibility = View.VISIBLE
-            } else {
-                rlaText.visibility = View.VISIBLE
-                rlaVoice.visibility = View.GONE
-            }
-
-            rlaSelectText.visibility= View.GONE
-
-            lblTitleText.text = data.title
-            lblDateText.text = data.isDate
-            lblContentText.text = data.content
-
-
-            lblTitle.text = data.title
-            rlaSendVoice.visibility = View.GONE
-            getAudioDuration(data.url) { duration ->
-                lblEndDuration.text =
-                    formatTime(duration) // Update the TextView with formatted duration
-            }
-
-
-            imgVoicePlay.setOnClickListener {
-                listener.onItemClick(data, this@DataViewHolder)
+                rlaText.visibility = View.GONE
+                lblTitle.text = data.subject
+                lblDate.text = data.date
+                lblTime.text = data.time
+                lblnewiconVoice.visibility = if (data.app_unread_status) View.VISIBLE else View.GONE
+                lblnewiconText.visibility = View.GONE
+                rlaSendVoice.visibility = View.GONE
+                isSeeMoreVisibility(lblContentText,lblSeeMore)
+                getAudioDuration(data.content) { duration ->
+                    lblEndDuration.text = formatTime(duration)
+                }
 
                 imgVoicePlay.setOnClickListener {
+                    listener.onItemClick(data, this@DataViewHolder)
+
+
+
                     if (adapter.currentlyPlayingHolder != null && adapter.currentlyPlayingHolder != this) {
                         adapter.currentlyPlayingHolder?.stopAudioPlayback()
                     }
@@ -146,14 +181,63 @@ class VoiceAdapter(
                         pauseAudio()
                     } else {
                         if (!isPrepared) {
-                            initializeMediaPlayer(data.url)
+                            initializeMediaPlayer(data.content)
                         } else {
                             resumeAudio()
                         }
                     }
                     adapter.currentlyPlayingHolder = this
                 }
+
+            } else {
+                rlaVoice.visibility = View.GONE
+                rlaText.visibility = View.VISIBLE
+
+                lblTitleText.text = data.subject
+                lblContentText.text = data.description
+                lblDateText.text = data.date
+                lblTimeText.text = data.time
+
+                rlaSelectText.visibility = View.GONE
+                rlaSendVoice.visibility = View.GONE
+
+                lblnewiconText.visibility = if (data.app_unread_status) View.VISIBLE else View.GONE
+                lblnewiconVoice.visibility = View.GONE
+
+
             }
+
+
+
+
+
+            lblSeeMore.setOnClickListener {
+                isExpanded = !isExpanded
+                updateTextView()
+            }
+
+
+        imgVoicePlay.setOnClickListener {
+            listener.onItemClick(data, this@DataViewHolder)
+            listener.onUpdateArchiveStatus(data.type, data.detail_id)
+
+
+            if (adapter.currentlyPlayingHolder != null && adapter.currentlyPlayingHolder != this) {
+                    adapter.currentlyPlayingHolder?.stopAudioPlayback()
+                }
+
+                if (isPlayingVoice) {
+                    pauseAudio()
+                } else {
+                    if (!isPrepared) {
+                        initializeMediaPlayer(data.content)
+                    } else {
+                        resumeAudio()
+                    }
+                }
+                adapter.currentlyPlayingHolder = this
+            }
+
         }
 
         // Initialize MediaPlayer and prepare audio
@@ -170,6 +254,36 @@ class VoiceAdapter(
                 }
                 setOnCompletionListener {
                     resetPlaybackState()
+                }
+            }
+        }
+
+
+
+
+
+
+
+
+        private fun updateTextView() {
+            if (isExpanded) {
+                // Expand the TextView to show all lines
+                lblContentText.maxLines = Int.MAX_VALUE
+                lblSeeMore.text = "See Less"
+            } else {
+                lblContentText.maxLines = 3
+                lblSeeMore.text = "See More"
+            }
+        }
+
+        private fun isSeeMoreVisibility(lblContent: TextView, tvSeeMore: TextView) {
+            lblContent.post {
+                if (lblContent.lineCount > 3) {
+                    tvSeeMore.visibility = View.VISIBLE
+                    lblContent.maxLines = 3
+                    lblContent.ellipsize = TextUtils.TruncateAt.END
+                } else {
+                    tvSeeMore.visibility = View.GONE
                 }
             }
         }
@@ -202,6 +316,8 @@ class VoiceAdapter(
                 mediaPlayer.reset()
                 resetPlaybackState()
             }
+            mediaPlayer.release()
+
         }
 
         // Update the play/pause icon
