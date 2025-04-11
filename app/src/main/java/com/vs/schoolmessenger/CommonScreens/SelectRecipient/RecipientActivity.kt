@@ -1,8 +1,10 @@
 package com.vs.schoolmessenger.CommonScreens.SelectRecipient
 
 import android.app.AlertDialog
+import android.os.Build
 import android.util.Log
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
@@ -32,7 +34,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     }
     val isGroupSelectedIds = mutableListOf<NameAndIds>()
     val isStandardSelectedIds = mutableListOf<Standard>()
-
 
     var isDropDown = false
     private var isSectionId: Int? = null
@@ -97,6 +98,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     0 -> {
                         isSelectedType = 0
                         isGroupSelectedIds.clear()
+                        isStandardSelectedIds.clear()
                         selectedIds.clear()
                         binding.rlaStandard.visibility = View.GONE
                         binding.grouplabel.visibility = View.GONE
@@ -108,6 +110,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     1 -> {
                         isSelectedType = 1
                         isGroupSelectedIds.clear()
+                        isStandardSelectedIds.clear()
                         selectedIds.clear()
                         binding.rlaStandard.visibility = View.GONE
                         binding.grouplabel.visibility = View.VISIBLE
@@ -121,6 +124,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     2 -> {
                         isSelectedType = 2
                         isGroupSelectedIds.clear()
+                        isStandardSelectedIds.clear()
                         selectedIds.clear()
                         isDropDown = false
                         isGetStandardSection()
@@ -139,6 +143,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     3 -> {
                         isSelectedType = 3
                         isGroupSelectedIds.clear()
+                        isStandardSelectedIds.clear()
                         selectedIds.clear()
                         isDropDown = false
                         isGetStaffList()
@@ -158,6 +163,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     else -> {
                         isSelectedType = 4
                         isGroupSelectedIds.clear()
+                        isStandardSelectedIds.clear()
                         selectedIds.clear()
                         isDropDown = true
                         isGetStandardSection()
@@ -277,6 +283,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onClick(p0: View?) {
         when (p0?.id) {
             R.id.rlaSubject -> {
@@ -357,6 +364,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         )
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun showSendConfirmationDialog(isMessage: String) {
 
         var isTargetType: Int? = null

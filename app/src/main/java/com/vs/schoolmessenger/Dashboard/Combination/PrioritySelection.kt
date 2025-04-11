@@ -124,6 +124,7 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
     }
 
     override fun onItemClick(data: ChildDetails) {
+        Constant.isParentChoose=true
         val intent = Intent(this, ParentDashboard::class.java)
         SharedPreference.putChildDetails(this, data)
         startActivity(intent)

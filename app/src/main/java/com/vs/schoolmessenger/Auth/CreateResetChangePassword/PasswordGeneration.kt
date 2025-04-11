@@ -93,6 +93,7 @@ class PasswordGeneration : BaseActivity<PasswordGenerationBinding>(), View.OnCli
                                 Intent(this@PasswordGeneration, PrioritySelection::class.java)
                             startActivity(intent)
                         } else {
+                            Constant.isParentChoose=true
                             val intent = Intent(
                                 this@PasswordGeneration,
                                 com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard::class.java

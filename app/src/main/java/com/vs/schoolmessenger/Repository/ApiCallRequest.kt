@@ -1,11 +1,14 @@
 package com.vs.schoolmessenger.Repository
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Utils.Constant
 
 object ApiCallRequest {
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun isVoiceSend(
         isFileUploaded: String?,
         isClickType: Int,

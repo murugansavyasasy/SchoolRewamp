@@ -7,10 +7,6 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.facebook.shimmer.ShimmerFrameLayout
-import com.vs.schoolmessenger.CommonScreens.SelectRecipient.GroupList.GroupListAdapter
-import com.vs.schoolmessenger.CommonScreens.SelectRecipient.GroupList.GroupListAdapter.ShimmerViewHolder
-import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardListClickListener
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
@@ -71,10 +67,6 @@ class StandardListAdapter (
                     listener.onIdUnchecked(data) // remove from selected list
                 }
             }
-
-//            chName.setOnCheckedChangeListener { _, isChecked ->
-//                listener.onStandardClick(data)
-//            }
         }
     }
 

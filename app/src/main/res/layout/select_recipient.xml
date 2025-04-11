@@ -32,7 +32,6 @@
 
     </RelativeLayout>
 
-
     <TextView
         android:id="@+id/sendlabel"
         android:layout_width="wrap_content"
@@ -107,7 +106,9 @@
             android:text="Select Standard"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"
-            android:textStyle="bold"></TextView>
+            android:textStyle="bold">
+
+        </TextView>
     </RelativeLayout>
 
 
@@ -159,7 +160,9 @@
             android:text="Select Subject"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"
-            android:textStyle="bold"></TextView>
+            android:textStyle="bold">
+
+        </TextView>
     </RelativeLayout>
 
 

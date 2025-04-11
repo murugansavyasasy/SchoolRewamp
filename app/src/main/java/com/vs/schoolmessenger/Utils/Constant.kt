@@ -357,11 +357,10 @@ object Constant {
         return currentTime.format(formatter)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun getCurrentDate(): String {
         val currentDate = LocalDate.now()
         val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy") // or "dd/MM/yyyy", etc.
         return currentDate.format(formatter)
     }
-
-
 }

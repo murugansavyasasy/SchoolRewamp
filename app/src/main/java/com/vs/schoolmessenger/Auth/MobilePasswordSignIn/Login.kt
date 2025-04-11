@@ -92,10 +92,7 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener {
                                             startActivity(intent)
                                         }
                                     } else {
-                                        val intent = Intent(
-                                            this@Login,
-                                            SchoolDashboard::class.java
-                                        )
+                                        val intent = Intent(this@Login, SchoolDashboard::class.java)
                                         startActivity(intent)
                                     }
                                 } else if (Constant.user_data!![0].user_details.is_parent) {

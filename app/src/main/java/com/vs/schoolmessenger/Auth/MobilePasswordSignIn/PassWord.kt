@@ -102,6 +102,7 @@ class PassWord : BaseActivity<PassWordBinding>(), View.OnClickListener {
                                         Intent(this@PassWord, PrioritySelection::class.java)
                                     startActivity(intent)
                                 } else {
+                                    Constant.isParentChoose=true
                                     val intent = Intent(
                                         this@PassWord,
                                         com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard::class.java

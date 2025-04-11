@@ -2,9 +2,11 @@ package com.vs.schoolmessenger.CommonScreens.SchoolList
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.os.Build
 import android.util.Log
 import android.view.View
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -105,6 +107,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         Constant.stopDelay()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.imgBack -> {
@@ -187,6 +190,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             })
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun showSendConfirmationDialog(isMessage: String) {
         val isVoiceData = Constant.isVoiceSendingData
         AlertDialog.Builder(this).setTitle("Send Confirmation!").setMessage(isMessage)
