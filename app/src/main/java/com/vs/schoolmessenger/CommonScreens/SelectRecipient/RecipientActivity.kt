@@ -1,15 +1,18 @@
 package com.vs.schoolmessenger.CommonScreens.SelectRecipient
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Build
 import android.util.Log
 import android.view.View
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
+import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIds
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.GroupList.GroupListAdapter
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.GroupList.GroupListClickListener
@@ -19,6 +22,7 @@ import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SectionList.SectionL
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.Standard
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardListAdapter
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardListClickListener
+import com.vs.schoolmessenger.CommonScreens.SpecificStudentData.SpecificStudent
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.ApiCallRequest
 import com.vs.schoolmessenger.Repository.App
@@ -34,21 +38,22 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     }
     val isGroupSelectedIds = mutableListOf<NameAndIds>()
     val isStandardSelectedIds = mutableListOf<Standard>()
-
+    val isSectionSelectedIds = mutableListOf<Section>()
     var isDropDown = false
-    private var isSectionId: Int? = null
+    private var isSectionId = mutableListOf<Int>()
     var isGetSubjectListData: List<NameAndIds>? = null
     var isGetGroupListData: List<NameAndIds>? = null
+    var isAcademicYear: List<AcademicYear>? = null
     private var isSectionAdapter: SectionListAdapter? = null
     private var isStandardListAdapter: StandardListAdapter? = null
     var isGetStandard: List<Standard>? = null
     var isSection: List<Section>? = null
     private var groupListAdapter: GroupListAdapter? = null
     private var isAccessToken: String? = null
-
     private var isUserDetails: UserDetails? = null
     private var selectedIds = mutableListOf<Int>()
     var isSelectedType = 0
+    var isAcademicYearId = -1
 
 
     private var appViewModel: App? = null
@@ -61,6 +66,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         binding.rlaSubject.setOnClickListener(this)
         binding.rlaStandard.setOnClickListener(this)
         binding.btnSend.setOnClickListener(this)
+        binding.rlaAcademicYear.setOnClickListener(this)
+        binding.btnSpecificStudent.setOnClickListener(this)
 
         val tabLayout = binding.tabLayout
         tabLayout.addTab(tabLayout.newTab().setText("Entire School"))
@@ -75,8 +82,9 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         binding.lblSchoolName.text = isStaffDetails.school_name
 
         isUserDetails = SharedPreference.getUserDetails(this)
+        isGetAcademicYear()
         if (isUserDetails!!.staff_role == Constant.isGroupHeadRole || isUserDetails!!.staff_role == Constant.isPrincipalRole || isUserDetails!!.staff_role == Constant.isAdminRole) {
-            binding.btnViewProgress.visibility = View.GONE
+            binding.btnSpecificStudent.visibility = View.GONE
             binding.textdesc.visibility = View.VISIBLE
             if (isUserDetails!!.staff_details.size > 1) {
                 tabLayout.post {
@@ -88,7 +96,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             tabLayout.getTabAt(1)?.select()
             tabLayout.getTabAt(0)?.view?.visibility = View.GONE
             tabLayout.getTabAt(3)?.view?.visibility = View.GONE
-            binding.btnViewProgress.visibility = View.VISIBLE
+            binding.btnSpecificStudent.visibility = View.VISIBLE
             binding.textdesc.visibility = View.VISIBLE
         }
 
@@ -99,32 +107,38 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         isSelectedType = 0
                         isGroupSelectedIds.clear()
                         isStandardSelectedIds.clear()
+                        isSectionSelectedIds.clear()
                         selectedIds.clear()
                         binding.rlaStandard.visibility = View.GONE
                         binding.grouplabel.visibility = View.GONE
                         binding.recyclerView.visibility = View.GONE
                         binding.rlaSubject.visibility = View.GONE
                         binding.textdesc.visibility = View.VISIBLE
+                        binding.btnSpecificStudent.visibility = View.GONE
                     }
 
                     1 -> {
                         isSelectedType = 1
                         isGroupSelectedIds.clear()
                         isStandardSelectedIds.clear()
+                        isSectionSelectedIds.clear()
                         selectedIds.clear()
                         binding.rlaStandard.visibility = View.GONE
                         binding.grouplabel.visibility = View.VISIBLE
+                        binding.btnSpecificStudent.visibility = View.GONE
                         binding.recyclerView.visibility = View.VISIBLE
                         binding.rlaSubject.visibility = View.GONE
                         binding.textdesc.visibility = View.GONE
-                        isGetGroupList()
-
+                        if (isAcademicYearId != -1) {
+                            isGetGroupList()
+                        }
                     }
 
                     2 -> {
                         isSelectedType = 2
                         isGroupSelectedIds.clear()
                         isStandardSelectedIds.clear()
+                        isSectionSelectedIds.clear()
                         selectedIds.clear()
                         isDropDown = false
                         isGetStandardSection()
@@ -133,6 +147,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         binding.grouplabel.visibility = View.VISIBLE
                         binding.rlaSubject.visibility = View.GONE
                         binding.textdesc.visibility = View.GONE
+                        binding.btnSpecificStudent.visibility = View.GONE
                         Log.d("isDropDown", isDropDown.toString())
                         if (!isDropDown) {
                             binding.recyclerView.visibility = View.VISIBLE
@@ -144,6 +159,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         isSelectedType = 3
                         isGroupSelectedIds.clear()
                         isStandardSelectedIds.clear()
+                        isSectionSelectedIds.clear()
                         selectedIds.clear()
                         isDropDown = false
                         isGetStaffList()
@@ -152,6 +168,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         binding.grouplabel.visibility = View.VISIBLE
                         binding.rlaSubject.visibility = View.GONE
                         binding.textdesc.visibility = View.GONE
+                        binding.btnSpecificStudent.visibility = View.GONE
                         Log.d("isDropDown", isDropDown.toString())
                         if (!isDropDown) {
                             binding.recyclerView.visibility = View.VISIBLE
@@ -164,6 +181,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         isSelectedType = 4
                         isGroupSelectedIds.clear()
                         isStandardSelectedIds.clear()
+                        isSectionSelectedIds.clear()
                         selectedIds.clear()
                         isDropDown = true
                         isGetStandardSection()
@@ -173,12 +191,15 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                             binding.rlaStandard.visibility = View.GONE
                         }
                         binding.recyclerView.visibility = View.GONE
-                        binding.rlaSubject.visibility = View.VISIBLE
                         binding.rlaStandard.visibility = View.VISIBLE
                         binding.textdesc.visibility = View.GONE
                         binding.grouplabel.visibility = View.GONE
                         binding.recyclerView.visibility = View.GONE
                         binding.rlaSubject.visibility = View.GONE
+                        binding.btnSpecificStudent.visibility = View.VISIBLE
+                        binding.btnSpecificStudent.isEnabled = false
+                        binding.btnSpecificStudent.background =
+                            ContextCompat.getDrawable(this@RecipientActivity, R.drawable.bg_gray)
                     }
                 }
             }
@@ -188,6 +209,17 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
 
+        appViewModel!!.isGetAcademicList?.observe(this) { response ->
+            if (response != null && response.status) {
+                response.data.let { academicList ->
+                    val reorderedList = academicList.sortedByDescending { it.current_academic_year }
+                    isAcademicYear = reorderedList
+                    binding.lblAcademicYear.text = isAcademicYear!![0].year
+                    isAcademicYearId = isAcademicYear!![0].id
+                    isGetGroupList()
+                }
+            }
+        }
 
         appViewModel!!.isGetGroupList?.observe(this) { response ->
             if (response != null && response.status) {
@@ -198,8 +230,10 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
         appViewModel!!.isGetSubjectList?.observe(this) { response ->
             if (response != null && response.status) {
-                binding.rlaSubject.visibility = View.VISIBLE
-                isGetSubjectListData = response.data
+                // Please don't delete by sathish
+//                binding.rlaSubject.visibility = View.VISIBLE
+//                isGetSubjectListData = response.data
+//                isLoadSubjectData()
             }
         }
 
@@ -224,6 +258,10 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             }
         }
     }
+    // Please don't delete by sathish
+//    private fun isLoadSubjectData() {
+//        binding.rlaSubject.visibility = View.VISIBLE
+//    }
 
     private fun isLoadStaffData(data: List<NameAndIds>) {
         groupListAdapter = GroupListAdapter(
@@ -298,7 +336,30 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 }
             }
 
+            R.id.btnSpecificStudent -> {
+                selectedIds = isSectionSelectedIds.map { it.id }.toMutableList()
+                val intent = Intent(this@RecipientActivity, SpecificStudent::class.java)
+                intent.putExtra("isAcademicYearId", isAcademicYearId)
+                intent.putIntegerArrayListExtra("isSelectedId", ArrayList(selectedIds))
+                startActivity(intent)
+            }
+
+            R.id.rlaAcademicYear -> {
+                showAcademicDropdown(
+                    binding.rlaAcademicYear, this, isAcademicYear
+                ) { selectedYear ->
+                    binding.lblAcademicYear.text = selectedYear.year
+                    Log.d(
+                        "DropdownMenu",
+                        "Clicked Academic Year: ID = ${selectedYear.id}, Year = ${selectedYear.year}, Current = ${selectedYear.current_academic_year}"
+                    )
+                }
+            }
+
+
             R.id.rlaStandard -> {
+                isSectionId.clear()
+                isSectionSelectedIds.clear()
                 showStandardDropdown(
                     binding.rlaStandard, this, isGetStandard
                 ) { selectStandard, position ->
@@ -323,9 +384,11 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     isTypeOfName = "Standard"
                     selectedIds = isStandardSelectedIds.map { it.id }.toMutableList()
                 } else if (isSelectedType == 3) {
+                    selectedIds = isGroupSelectedIds.map { it.id }.toMutableList()
                     isTypeOfName = "Staff"
                 } else if (isSelectedType == 4) {
-
+                    selectedIds = isSectionSelectedIds.map { it.id }.toMutableList()
+                    isTypeOfName = "Section"
                 }
 
                 for (id in selectedIds) {
@@ -341,21 +404,20 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     }
 
     private fun isGetGroupList() {
-        appViewModel!!.isGetGroupList(isAccessToken!!, this)
+        appViewModel!!.isGetGroupList(isAccessToken!!, isAcademicYearId, this)
     }
 
-    private fun isGetSubjectList(isSectionId: Int?) {
-        appViewModel!!.isGetSubjectList(isAccessToken!!, isSectionId.toString(), this)
+    private fun isGetSubjectList(isSectionId: String) {
+        appViewModel!!.isGetSubjectList(
+            isAccessToken!!,
+            isAcademicYearId,
+            isSectionId.toString(),
+            this
+        )
     }
 
     private fun isGetStandardSection() {
-        appViewModel!!.isGetStandardSection(isAccessToken!!.toString(), this)
-    }
-
-    private fun isGetStudentList() {
-        appViewModel!!.isGetStudentList(
-            isAccessToken!!, isSectionId.toString(), this
-        )
+        appViewModel!!.isGetStandardSection(isAccessToken!!.toString(), isAcademicYearId, this)
     }
 
     private fun isGetStaffList() {
@@ -363,6 +425,14 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             isAccessToken!!, this
         )
     }
+
+    private fun isGetAcademicYear() {
+        appViewModel!!.isGetAcademicYear(
+            isAccessToken!!, this
+        )
+    }
+
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun showSendConfirmationDialog(isMessage: String) {
@@ -383,9 +453,10 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         } else if (isSelectedType == 3) {
             isTargetType = Constant.isStaff
             isCircularType = Constant.staff
+            selectedIds = isGroupSelectedIds.map { it.id }.toMutableList()
         } else if (isSelectedType == 4) {
-            isTargetType = Constant.isStudent
-            isCircularType = Constant.student
+            isTargetType = Constant.isSection
+            isCircularType = Constant.section
         }
 
         val isVoiceData = Constant.isVoiceSendingData
@@ -404,23 +475,14 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     isScheduleCall = isVoiceData.isScheduleCall,
                     schoolId = selectedIds,
                     targetType = isTargetType!!,
-                    circularType = isCircularType!!
+                    circularType = isCircularType!!,
+                    fileName = "sss_12-04-2025.mp3"
                 )
                 appViewModel!!.isVoiceSend(isAccessToken!!, jsonObject, this)
             }.setNegativeButton("Cancel") { dialog, _ ->
                 dialog.dismiss()
             }.show()
     }
-
-
-    override fun onSectionClick(
-        data: Section, isChecked: Boolean
-    ) {
-        Log.d("data.id", data.id.toString())
-        isSectionId = data.id
-        isGetSubjectList(isSectionId)
-    }
-
 
     override fun onIdCheck(group: NameAndIds) {
         if (!isGroupSelectedIds.any { it.id == group.id }) {
@@ -440,6 +502,48 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
     override fun onIdUnchecked(isStandard: Standard) {
         isStandardSelectedIds.removeAll { it.id == isStandard.id }
+    }
+
+    override fun onIdCheck(data: Section) {
+
+        if (!isSectionSelectedIds.any { it.id == data.id }) {
+            isSectionSelectedIds.add(data)
+        }
+        // Please don't delete by sathish
+//        val idString = isSectionSelectedIds.joinToString(",") { it.id.toString() }
+//        isGetSubjectList(idString)
+
+        if (isSelectedType == 4) {
+            if (isSectionSelectedIds.size == 1) {
+                binding.btnSpecificStudent.isEnabled = true
+                binding.btnSpecificStudent.background =
+                    ContextCompat.getDrawable(this, R.drawable.bg_orange)
+            } else {
+                binding.btnSpecificStudent.isEnabled = false
+                binding.btnSpecificStudent.background =
+                    ContextCompat.getDrawable(this, R.drawable.bg_gray)
+            }
+        }
+    }
+
+    override fun onIdUnchecked(data: Section) {
+        isSectionSelectedIds.removeAll { it.id == data.id }
+        if (isSelectedType == 4) {
+            if (isSectionSelectedIds.size == 1) {
+                binding.btnSpecificStudent.isEnabled = true
+                binding.btnSpecificStudent.background =
+                    ContextCompat.getDrawable(this, R.drawable.bg_orange)
+            } else {
+                binding.btnSpecificStudent.isEnabled = false
+                binding.btnSpecificStudent.background =
+                    ContextCompat.getDrawable(this, R.drawable.bg_gray)
+            }
+        }
+
+        // Please don't delete by sathish
+
+//        val idString = isSectionSelectedIds.joinToString(",") { it.id.toString() }
+//        isGetSubjectList(idString)
     }
 }
 

@@ -43,12 +43,50 @@
         android:textSize="16sp"
         android:textStyle="normal" />
 
+    <RelativeLayout
+        android:id="@+id/rlaAcademicYear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sendlabel"
+        android:layout_marginStart="@dimen/fifteen"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginEnd="@dimen/fifteen"
+        android:background="@drawable/bg_stroke_rect_black"
+        android:padding="@dimen/ten"
+        android:visibility="visible">
+
+
+        <ImageView
+            android:id="@+id/imgAcademicYear"
+            android:layout_width="@dimen/twenty_five"
+            android:layout_height="@dimen/twenty_five"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/ten"
+            android:src="@drawable/ic_down_arrow">
+
+        </ImageView>
+
+        <TextView
+            android:id="@+id/lblAcademicYear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/fifteen"
+            android:fontFamily="@font/poppins_bold"
+            android:text=""
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp"
+            android:textStyle="bold">
+
+        </TextView>
+    </RelativeLayout>
+
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/sendlabel"
-        android:layout_alignStart="@id/sendlabel"
+        android:layout_below="@id/rlaAcademicYear"
         android:layout_marginTop="@dimen/ten"
         android:layout_marginEnd="@dimen/five"
         android:background="@drawable/tab_background"
@@ -213,13 +251,14 @@
                 android:textStyle="bold" />
 
             <Button
-                android:id="@+id/btnViewProgress"
+                android:id="@+id/btnSpecificStudent"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginStart="10dp"
                 android:layout_weight="0.5"
-                android:background="@drawable/bg_orange"
+                android:background="@drawable/bg_gray"
                 android:gravity="center"
+                android:enabled="false"
                 android:text="@string/specific_student"
                 android:textColor="@color/white"
                 android:textSize="@dimen/thirteen_sp"

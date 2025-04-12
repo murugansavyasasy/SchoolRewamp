@@ -20,6 +20,7 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -89,6 +90,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     private var isUserDetails: UserDetails? = null
     private var isStaffDetails: StaffDetails? = null
 
+    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("ClickableViewAccessibility")
     override fun setupViews() {
         super.setupViews()
@@ -488,6 +490,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             })
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onClick(p0: View?) {
         when (p0?.id) {
             R.id.rlaVoiceMessage -> {
@@ -700,6 +703,9 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     1 -> {
                         binding.gridViewScheduleCall.visibility = View.GONE
                         binding.rlaScheduleCallPickDate.visibility = View.GONE
+                        binding.rlaRecordVoice.visibility = View.VISIBLE
+                        binding.SwitchEmergencyVoice.visibility = View.VISIBLE
+                        binding.lblEmergencyVoice.visibility = View.VISIBLE
                     }
 
                     2 -> {
@@ -897,60 +903,60 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         }
     }
 
-    private fun loadTextData() {
-        isTextHistoryData = listOf(
-            TextHistoryData(
-                "Annual Day celebrations",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                "Apr 1, 2021"
-            ), TextHistoryData(
-                "Parent Meeting",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                "Apr 1, 2021"
-            ), TextHistoryData(
-                "Normal Day",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                "Apr 1, 2021"
-            ), TextHistoryData(
-                "Day",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                "Apr 1, 2021"
-            ), TextHistoryData(
-                "Monday",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                "Apr 1, 2021"
-            ), TextHistoryData(
-                "Nothing",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                "Apr 1, 2021"
-            ), TextHistoryData(
-                "Value Education",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                "Apr 1, 2021"
-            ), TextHistoryData(
-                "Environmental Science",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                "Apr 1, 2021"
-            ), TextHistoryData(
-                "Okay okay",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                "Apr 1, 2021"
-            )
-        )
-
-        mTextAdapter = TextHistoryAdapter(null, this, this, Constant.isShimmerViewShow)
-        binding.rcyHistoryDataVoiceAndText.layoutManager = LinearLayoutManager(this)
-        binding.rcyHistoryDataVoiceAndText.isNestedScrollingEnabled = false;
-        binding.rcyHistoryDataVoiceAndText.adapter = mTextAdapter
-
-        Constant.executeAfterDelay {
-            // Once data is loaded, stop shimmer and pass the actual data
-            mTextAdapter =
-                TextHistoryAdapter(isTextHistoryData, this, this, Constant.isShimmerViewDisable)
-            // Set GridLayoutManager (2 columns in this case)
-            binding.rcyHistoryDataVoiceAndText.adapter = mTextAdapter
-        }
-    }
+//    private fun loadTextData() {
+//        isTextHistoryData = listOf(
+//            TextHistoryData(
+//                "Annual Day celebrations",
+//                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
+//                "Apr 1, 2021"
+//            ), TextHistoryData(
+//                "Parent Meeting",
+//                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
+//                "Apr 1, 2021"
+//            ), TextHistoryData(
+//                "Normal Day",
+//                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
+//                "Apr 1, 2021"
+//            ), TextHistoryData(
+//                "Day",
+//                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
+//                "Apr 1, 2021"
+//            ), TextHistoryData(
+//                "Monday",
+//                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
+//                "Apr 1, 2021"
+//            ), TextHistoryData(
+//                "Nothing",
+//                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
+//                "Apr 1, 2021"
+//            ), TextHistoryData(
+//                "Value Education",
+//                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
+//                "Apr 1, 2021"
+//            ), TextHistoryData(
+//                "Environmental Science",
+//                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
+//                "Apr 1, 2021"
+//            ), TextHistoryData(
+//                "Okay okay",
+//                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
+//                "Apr 1, 2021"
+//            )
+//        )
+//
+//        mTextAdapter = TextHistoryAdapter(null, this, this, Constant.isShimmerViewShow)
+//        binding.rcyHistoryDataVoiceAndText.layoutManager = LinearLayoutManager(this)
+//        binding.rcyHistoryDataVoiceAndText.isNestedScrollingEnabled = false;
+//        binding.rcyHistoryDataVoiceAndText.adapter = mTextAdapter
+//
+//        Constant.executeAfterDelay {
+//            // Once data is loaded, stop shimmer and pass the actual data
+//            mTextAdapter =
+//                TextHistoryAdapter(isTextHistoryData, this, this, Constant.isShimmerViewDisable)
+//            // Set GridLayoutManager (2 columns in this case)
+//            binding.rcyHistoryDataVoiceAndText.adapter = mTextAdapter
+//        }
+//    }
 
     override fun onItemClick(data: TextHistoryData, holder: TextHistoryAdapter.DataViewHolder) {
 
@@ -959,15 +965,23 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     override fun onTimeSelected(hour: Int, minute: Int, amPm: String) {
         binding.lblStartTime.text = String.format("%02d:%02d %s", hour, minute, amPm)
         binding.lblEndTime.text = String.format("%02d:%02d %s", hour, minute, amPm)
-
     }
 
     override fun onItemClick(
         data: VoiceHistoryDetails, holder: VoiceHistoryAdapter.DataViewHolder
     ) {
+        binding.gridViewScheduleCall.visibility = View.GONE
+        binding.rlaScheduleCallPickDate.visibility = View.GONE
+        binding.rlaRecordVoice.visibility = View.VISIBLE
+        binding.SwitchEmergencyVoice.visibility = View.VISIBLE
+        binding.lblEmergencyVoice.visibility = View.VISIBLE
+        binding.rcyHistoryDataVoiceAndText.visibility = View.GONE
+        binding.rlaBackRecord.visibility = View.GONE
+        binding.lnrHistoryList.visibility = View.VISIBLE
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun showSendConfirmationDialog(isMessage: String) {
         val isSchoolId = mutableListOf(isStaffDetails!!.school_id.toInt())
         AlertDialog.Builder(this).setTitle("Send Confirmation!").setMessage(isMessage)
@@ -985,7 +999,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     isScheduleCall = isScheduleCall,
                     schoolId = isSchoolId,
                     targetType = Constant.isSchool,
-                    circularType = Constant.school
+                    circularType = Constant.school,
+                    fileName = "sss_12-04-2025.mp3"
                 )
                 appViewModel!!.isVoiceSend(isAccessToken!!, jsonObject, this)
             }.setNegativeButton("Cancel") { dialog, _ ->

@@ -12,6 +12,7 @@ import com.vs.schoolmessenger.Auth.Splash.VersionCheckResponse
 import com.vs.schoolmessenger.CommonScreens.Ads.AdsResponse
 import com.vs.schoolmessenger.CommonScreens.DeviceToken
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
+import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYearResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
 import com.vs.schoolmessenger.Parent.Communication.StatusArchiveModelRequest
@@ -100,24 +101,28 @@ interface ApiInterfaces {
     @GET(APIMethods.getSubjectList)
     fun getSubjectList(
         @Header("Authorization") token: String,
-        @Query("section_id") isSectionId: String
+        @Query("academic_year_id") isAcademicYearId: Int,
+        @Query("section_ids") isSectionId: String
     ): Call<NameAndIdsResponse?>
 
 
     @GET(APIMethods.getStandard)
     fun getStandard(
-        @Header("Authorization") token: String
+        @Header("Authorization") token: String,
+        @Query("academic_year_id") isAcademicYearId: Int,
     ): Call<StandardResponse?>
 
     @GET(APIMethods.getStudentList)
     fun getStudentList(
         @Header("Authorization") token: String,
-        @Query("section_id") isSectionId: String
+        @Query("section_id") isSectionId: String,
+        @Query("academic_year_id") isAcademicYearId: Int
     ): Call<NameAndIdsResponse?>
 
     @GET(APIMethods.isGroupList)
     fun isGroupList(
-        @Header("Authorization") token: String
+        @Header("Authorization") token: String,
+        @Query("academic_year_id") isAcademicYearId: Int,
     ): Call<NameAndIdsResponse?>
 
 
@@ -160,5 +165,9 @@ interface ApiInterfaces {
         @Body request: StatusArchiveModelRequest
     ): Call<StatusArchiveResponse>?
 
+    @GET(APIMethods.isGetAcademicYear)
+    fun isGetAcademicYear(
+        @Header("Authorization") token: String,
+    ): Call<AcademicYearResponse?>
 
 }

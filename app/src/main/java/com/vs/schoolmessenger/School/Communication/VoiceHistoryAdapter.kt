@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -67,6 +68,7 @@ class VoiceHistoryAdapter(
         private val lblStartDuration: TextView = itemView.findViewById(R.id.lblStartDuration)
         private val lblEndDuration: TextView = itemView.findViewById(R.id.lblEndDuration)
         private val lblTime: TextView = itemView.findViewById(R.id.lblTime)
+        private val rlaSendVoice: RelativeLayout = itemView.findViewById(R.id.rlaSendVoice)
 
 
         private lateinit var mediaPlayer: MediaPlayer
@@ -101,10 +103,12 @@ class VoiceHistoryAdapter(
                 lblEndDuration.text =
                     formatTime(duration) // Update the TextView with formatted duration
             }
-
+            rlaSendVoice.setOnClickListener {
+                listener.onItemClick(data, this@DataViewHolder)
+            }
 
             imgVoicePlay.setOnClickListener {
-                listener.onItemClick(data, this@DataViewHolder)
+//                listener.onItemClick(data, this@DataViewHolder)
 
                 imgVoicePlay.setOnClickListener {
                     if (adapter.currentlyPlayingHolder != null && adapter.currentlyPlayingHolder != this) {

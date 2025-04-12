@@ -208,7 +208,8 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                     isScheduleCall = isVoiceData.isScheduleCall,
                     schoolId = selectedSchoolIds,
                     targetType = Constant.isSchool,
-                    circularType = Constant.school
+                    circularType = Constant.school,
+                    fileName = "sss_12-04-2025.mp3"
                 )
                 appViewModel!!.isVoiceSend(isAccessToken!!, jsonObject, this)
             }.setNegativeButton("Cancel") { dialog, _ ->

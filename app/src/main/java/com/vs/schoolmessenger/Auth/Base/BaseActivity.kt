@@ -35,6 +35,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
+import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIds
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SectionList.Section
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.Standard
@@ -337,14 +338,19 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     }
 
 
-    fun showSectionDropdown(
+    fun showAcademicDropdown(
         anchor: View,
         activity: Activity,
-        sections: List<Section>?,
-        onSectionSelected: (Section) -> Unit
+        academicYearList: List<AcademicYear>?,
+        onAcademicYearSelected: (AcademicYear) -> Unit
     ) {
         if (activity.isFinishing || activity.isDestroyed) {
             Log.e("DropdownMenu", "Activity is not valid for showing the popup.")
+            return
+        }
+
+        if (academicYearList.isNullOrEmpty()) {
+            Log.e("DropdownMenu", "Academic year list is empty or null.")
             return
         }
 
@@ -358,15 +364,20 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         )
         dimBehind(popupWindow)
 
-        val sectionNames = sections!!.map { it.name }
+        val yearNames = academicYearList.map { it.year }
         val listView: ListView = dropdownView.findViewById(R.id.dropdownListView)
-        val adapter =
-            ArrayAdapter(anchor.context, android.R.layout.simple_list_item_1, sectionNames)
+        val adapter = ArrayAdapter(anchor.context, android.R.layout.simple_list_item_1, yearNames)
         listView.adapter = adapter
 
         listView.setOnItemClickListener { _, _, position, _ ->
-            val selectedSection = sections[position]
-            onSectionSelected(selectedSection) // Pass the selected Section
+            val selectedYear = academicYearList[position]
+            onAcademicYearSelected(selectedYear)
+
+            Log.d(
+                "DropdownMenu",
+                "Selected Academic Year:\nID = ${selectedYear.id},\nYear = ${selectedYear.year},\nCurrent = ${selectedYear.current_academic_year}"
+            )
+
             popupWindow.dismiss()
         }
 

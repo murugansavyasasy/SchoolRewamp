@@ -8,16 +8,13 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
-import com.vs.schoolmessenger.CommonScreens.SpecificStudentData.SpecificStudentData
-import com.vs.schoolmessenger.CommonScreens.SpecificStudentData.SpecificStudentSelectClickListener
-import com.vs.schoolmessenger.CommonScreens.SpecificStudentData.StudentRoleNumberAdapter
+import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIds
 import com.vs.schoolmessenger.R
 
 class SpecificStudentAdapter(
-    private var itemList: List<SpecificStudentData>?,
+    private var itemList: List<NameAndIds>?,
     private var listener: SpecificStudentSelectClickListener,
     private var context: Context,
     private var isLoading: Boolean
@@ -60,17 +57,17 @@ class SpecificStudentAdapter(
                 selectAll
             )
 
-            holder.ivArrow.setOnClickListener {
-                val previousExpanded = expandedPosition
-                if (expandedPosition == position) {
-                    expandedPosition = RecyclerView.NO_POSITION // Collapse current item
-                } else {
-                    expandedPosition = position // Expand new item
-                }
-
-                notifyItemChanged(previousExpanded) // Collapse previous item
-                notifyItemChanged(position) // Expand new item
-            }
+//            holder.ivArrow.setOnClickListener {
+//                val previousExpanded = expandedPosition
+//                if (expandedPosition == position) {
+//                    expandedPosition = RecyclerView.NO_POSITION // Collapse current item
+//                } else {
+//                    expandedPosition = position // Expand new item
+//                }
+//
+//                notifyItemChanged(previousExpanded) // Collapse previous item
+//                notifyItemChanged(position) // Expand new item
+//            }
         }
     }
 
@@ -96,14 +93,14 @@ class SpecificStudentAdapter(
 
         @SuppressLint("UseCompatLoadingForDrawables")
         fun bind(
-            data: SpecificStudentData,
+            data: NameAndIds,
             position: Int,
             isExpanded: Boolean,
             listener: SpecificStudentSelectClickListener,
             selectAll: Boolean
         ) {
-            lblName.text = data.isName
-            lblFirstLetter.text = data.isName.firstOrNull()?.uppercase() ?: "?"
+            lblName.text = data.name
+            lblFirstLetter.text = data.name.firstOrNull()?.uppercase() ?: "?"
             cbSelect.isChecked = selectAll
 
             val backgrounds = arrayOf(
@@ -119,20 +116,24 @@ class SpecificStudentAdapter(
             fytFirstLetter.setBackgroundResource(backgrounds[position % backgrounds.size])
 
             // Update arrow rotation
-            ivArrow.rotation = if (isExpanded) 180f else 0f
+            // ivArrow.rotation = if (isExpanded) 180f else 0f
 
-            // Expand/collapse child RecyclerView
-            if (isExpanded) {
-                rcyStudentRoleNumber.visibility = View.VISIBLE
-                rcyStudentRoleNumber.layoutManager = LinearLayoutManager(context)
-                rcyStudentRoleNumber.adapter = StudentRoleNumberAdapter(data.isStudentAddNoData)
-            } else {
-                rcyStudentRoleNumber.visibility = View.GONE
-            }
+//            // Expand/collapse child RecyclerView
+//            if (isExpanded) {
+//                rcyStudentRoleNumber.visibility = View.VISIBLE
+//                rcyStudentRoleNumber.layoutManager = LinearLayoutManager(context)
+//                rcyStudentRoleNumber.adapter = StudentRoleNumberAdapter(data.isStudentAddNoData)
+//            } else {
+//                rcyStudentRoleNumber.visibility = View.GONE
+//            }
 
+            cbSelect.setOnCheckedChangeListener(null) // Prevent unwanted callback
+            cbSelect.isChecked = selectAll
             cbSelect.setOnCheckedChangeListener { _, isChecked ->
-                if (selectAll) {
-                    listener.onItemClick(data)
+                if (isChecked) {
+                    listener.onIdCheck(data)
+                } else {
+                    listener.onIdUnchecked(data)
                 }
             }
         }

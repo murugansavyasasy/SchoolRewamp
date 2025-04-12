@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.CommonScreens.Ads.AdsResponse
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
+import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYearResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.StaffListResponse
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
@@ -58,6 +59,10 @@ class App(application: Application) : AndroidViewModel(application) {
     var isUpdateStatusArchive: LiveData<StatusArchiveResponse?>? = null
         private set
 
+    var isGetAcademicList: LiveData<AcademicYearResponse?>? = null
+        private set
+
+
 
 
 
@@ -74,6 +79,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isSendText = apiRepositories!!.isSendTextLiveData
         isVoiceSend = apiRepositories!!.isSendVoiceLiveData
         isUpdateStatusArchive = apiRepositories!!.isUpdateStatusArchiveLiveData
+        isGetAcademicList = apiRepositories!!.isGetAcademicLiveData
     }
 
     fun isDashBoardData(isToken: String, isMemberType: String, activity: Activity) {
@@ -88,20 +94,20 @@ class App(application: Application) : AndroidViewModel(application) {
         apiRepositories!!.isGetStaffList(isToken, activity)
     }
 
-    fun isGetSubjectList(isToken: String, isSectionId: String, activity: Activity) {
-        apiRepositories.isGetSubjectList(isToken,isSectionId, activity)
+    fun isGetSubjectList(isToken: String, isAcademicYearId: Int, isSectionId: String, activity: Activity) {
+        apiRepositories.isGetSubjectList(isToken,isAcademicYearId,isSectionId, activity)
     }
 
 
-    fun isGetStandardSection(isToken: String, activity: Activity) {
-        apiRepositories.isGetStandardSection(isToken, activity)
+    fun isGetStandardSection(isToken: String, isAcademicYearId: Int, activity: Activity) {
+        apiRepositories.isGetStandardSection(isToken,isAcademicYearId, activity)
     }
 
-    fun isGetStudentList(isToken: String, isSection: String, activity: Activity) {
-        apiRepositories.isGetStudentList(isToken,isSection, activity)
+    fun isGetStudentList(isToken: String, isSection: String,isAcademicYearId: Int, activity: Activity) {
+        apiRepositories.isGetStudentList(isToken,isSection,isAcademicYearId, activity)
     }
-    fun isGetGroupList(isToken: String, activity: Activity) {
-        apiRepositories!!.isGetGroupList(isToken, activity)
+    fun isGetGroupList(isToken: String, isAcademicYearId: Int, activity: Activity) {
+        apiRepositories!!.isGetGroupList(isToken,isAcademicYearId, activity)
     }
 
     fun isGetCommmunicationlist(isToken: String, activity: Activity) {
@@ -124,6 +130,11 @@ class App(application: Application) : AndroidViewModel(application) {
     fun isUpdateStatusArchive(isToken: String, jsonObject: JsonObject, activity: Activity) {
         apiRepositories?.isUpdateStatusArchive(isToken, jsonObject, activity)
     }
+
+    fun isGetAcademicYear(isToken: String, activity: Activity) {
+        apiRepositories?.isGetAcademicYear(isToken, activity)
+    }
+
 
 
 

@@ -7,11 +7,12 @@ import androidx.lifecycle.MutableLiveData
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.CommonScreens.Ads.AdsResponse
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
+import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
+import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYearResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
 import com.vs.schoolmessenger.Parent.Communication.StatusArchiveModelRequest
 import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
-import com.vs.schoolmessenger.Parent.Communication.VoiceData
 import com.vs.schoolmessenger.Parent.Communication.VoiceDataResponse
 import com.vs.schoolmessenger.School.Communication.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.VoiceDetails
@@ -34,6 +35,7 @@ class AppServices {
     var isSendText: MutableLiveData<TextSendResponse?>
     var isSendVoice: MutableLiveData<TextSendResponse?>
     var isUpdateStatusArchive: MutableLiveData<StatusArchiveResponse?>
+    var isAcademicYear: MutableLiveData<AcademicYearResponse?>
 
 
     init {
@@ -50,6 +52,7 @@ class AppServices {
         isSendText = MutableLiveData()
         isSendVoice = MutableLiveData()
         isUpdateStatusArchive = MutableLiveData()
+        isAcademicYear = MutableLiveData()
     }
 
 
@@ -151,8 +154,8 @@ class AppServices {
     val isGetStaffListLiveData: LiveData<NameAndIdsResponse?>
         get() = isGetStaffList
 
-    fun isGetSubjectList(isToken: String, isSection: String, activity: Activity) {
-        RestClient.apiInterfaces.getSubjectList(isToken,isSection)
+    fun isGetSubjectList(isToken: String, isAcademicYearId: Int, isSection: String, activity: Activity) {
+        RestClient.apiInterfaces.getSubjectList(isToken,isAcademicYearId,isSection)
             ?.enqueue(object : Callback<NameAndIdsResponse?> {
                 override fun onResponse(
                     call: Call<NameAndIdsResponse?>, response: Response<NameAndIdsResponse?>
@@ -183,8 +186,8 @@ class AppServices {
         get() = isGetSubjectList
 
 
-    fun isGetStandardSection(isToken: String, activity: Activity) {
-        RestClient.apiInterfaces.getStandard(isToken)
+    fun isGetStandardSection(isToken: String, isAcademicYearId: Int, activity: Activity) {
+        RestClient.apiInterfaces.getStandard(isToken,isAcademicYearId)
             ?.enqueue(object : Callback<StandardResponse?> {
                 override fun onResponse(
                     call: Call<StandardResponse?>, response: Response<StandardResponse?>
@@ -215,8 +218,8 @@ class AppServices {
         get() = isGetStandardSection
 
 
-    fun isGetStudentList(isToken: String, isSection: String, activity: Activity) {
-        RestClient.apiInterfaces.getStudentList(isToken, isSection)
+    fun isGetStudentList(isToken: String, isSection: String, isAcademicYearId: Int, activity: Activity) {
+        RestClient.apiInterfaces.getStudentList(isToken, isSection,isAcademicYearId)
             ?.enqueue(object : Callback<NameAndIdsResponse?> {
                 override fun onResponse(
                     call: Call<NameAndIdsResponse?>, response: Response<NameAndIdsResponse?>
@@ -281,8 +284,8 @@ class AppServices {
         get() = isGetCommmunicationlist
 
 
-    fun isGetGroupList(isToken: String, activity: Activity) {
-        RestClient.apiInterfaces.isGroupList(isToken)
+    fun isGetGroupList(isToken: String, isAcademicYearId: Int, activity: Activity) {
+        RestClient.apiInterfaces.isGroupList(isToken,isAcademicYearId)
             ?.enqueue(object : Callback<NameAndIdsResponse?> {
                 override fun onResponse(
                     call: Call<NameAndIdsResponse?>,
@@ -455,5 +458,37 @@ class AppServices {
         get() = isSendVoice
 
 
+    fun isGetAcademicYear(isToken: String, activity: Activity) {
+        RestClient.apiInterfaces.isGetAcademicYear(isToken)
+            ?.enqueue(object : Callback<AcademicYearResponse?> {
+                override fun onResponse(
+                    call: Call<AcademicYearResponse?>,
+                    response: Response<AcademicYearResponse?>
+                ) {
+                    Log.d(
+                        "isGetCountryList",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isAcademicYear.postValue(response.body())
+                            } else {
+                                isAcademicYear.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<AcademicYearResponse?>, t: Throwable) {
+                    isAcademicYear.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isGetAcademicLiveData: LiveData<AcademicYearResponse?>
+        get() = isAcademicYear
 
 }

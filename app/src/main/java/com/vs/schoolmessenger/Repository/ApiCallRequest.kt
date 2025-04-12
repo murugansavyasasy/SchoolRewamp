@@ -20,7 +20,8 @@ object ApiCallRequest {
         isScheduleCall: Boolean,
         schoolId: MutableList<Int>,
         targetType: Int,
-        circularType: String
+        circularType: String,
+        fileName: String
     ): JsonObject {
         val jsonObject = JsonObject()
         jsonObject.addProperty("voice_link", isFileUploaded)
@@ -45,7 +46,7 @@ object ApiCallRequest {
         jsonObject.addProperty("is_schedule", isScheduleCall)
         jsonObject.addProperty("start_time", startTime)
         jsonObject.addProperty("end_time", endTime)
-        jsonObject.addProperty("file_name", Constant.isVoiceFile)
+        jsonObject.addProperty("file_name", fileName)
 
         val jsonArray = JsonArray()
         if (isClickType == 2) {

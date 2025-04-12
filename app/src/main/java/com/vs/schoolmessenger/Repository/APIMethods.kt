@@ -25,5 +25,6 @@ object APIMethods {
     const val isSendText = "comm/text-message/send-text"
     const val isSendVoice = "comm/voice/send-voice"
     const val isUpdateStatusArchive = "comm/communication/read-status-update-archive"
+    const val isGetAcademicYear = "comm/recipient/get-academic-year-list"
 
 }

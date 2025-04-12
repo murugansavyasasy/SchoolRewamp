@@ -56,7 +56,8 @@ class SectionListAdapter(
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
         val lblgroupname: TextView = itemView.findViewById(R.id.lblgroupname)
-        val chName: CheckBox = itemView.findViewById(R.id.chMultipleSchool)
+        val chMultipleSchool: CheckBox = itemView.findViewById(R.id.chMultipleSchool)
+
         fun bind(
             data: Section,
             position: Int,
@@ -64,8 +65,12 @@ class SectionListAdapter(
         ) {
             lblgroupname.text = data.name
 
-            chName.setOnCheckedChangeListener { _, isChecked ->
-                listener.onSectionClick(data, isChecked)
+            chMultipleSchool.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
+                    listener.onIdCheck(data) // add to selected list
+                } else {
+                    listener.onIdUnchecked(data) // remove from selected list
+                }
             }
         }
     }

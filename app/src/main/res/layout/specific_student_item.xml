@@ -57,6 +57,7 @@
             android:id="@+id/ivArrow"
             android:layout_width="@dimen/thirty"
             android:layout_height="@dimen/fourty"
+            android:visibility="gone"
             android:layout_marginEnd="@dimen/thirty"
             android:padding="@dimen/five"
             android:src="@drawable/ic_down_round" />

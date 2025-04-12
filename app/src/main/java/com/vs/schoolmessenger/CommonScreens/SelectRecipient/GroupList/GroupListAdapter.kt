@@ -18,8 +18,6 @@ class GroupListAdapter(
     private var isLoading: Boolean,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-
-
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
 
