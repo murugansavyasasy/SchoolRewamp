@@ -4,11 +4,12 @@ import com.google.gson.annotations.SerializedName
 
 data class VoiceData(
     @SerializedName("type") val type: String,
-    @SerializedName("detail_id") val detail_id: String,
+    @SerializedName("id") val id: String,
     @SerializedName("content") val content: String,
     @SerializedName("description") var description: String,
     @SerializedName("date") val date: String,
     @SerializedName("time") var time: String,
     @SerializedName("subject") var subject: String,
-    @SerializedName("app_unread_status") var app_unread_status: Boolean
+    @SerializedName("is_unread") var is_unread: Boolean,
+    @SerializedName("is_archive") var is_archive: Boolean
 )

@@ -7,11 +7,9 @@ import androidx.lifecycle.MutableLiveData
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.CommonScreens.Ads.AdsResponse
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
-import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYearResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
-import com.vs.schoolmessenger.Parent.Communication.StatusArchiveModelRequest
 import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
 import com.vs.schoolmessenger.Parent.Communication.VoiceDataResponse
 import com.vs.schoolmessenger.School.Communication.TextSendResponse
@@ -31,11 +29,13 @@ class AppServices {
     var isGetStudentList: MutableLiveData<NameAndIdsResponse?>
     var isGetGroupList: MutableLiveData<NameAndIdsResponse?>
     var isGetCommmunicationlist: MutableLiveData<VoiceDataResponse?>
+    var isGetCommmunicationlistload: MutableLiveData<VoiceDataResponse?>
     var isGetVoiceHistory: MutableLiveData<VoiceDetails?>
     var isSendText: MutableLiveData<TextSendResponse?>
     var isSendVoice: MutableLiveData<TextSendResponse?>
     var isUpdateStatusArchive: MutableLiveData<StatusArchiveResponse?>
     var isAcademicYear: MutableLiveData<AcademicYearResponse?>
+    var isUpdateStatusCommunication: MutableLiveData<StatusArchiveResponse?>
 
 
     init {
@@ -48,11 +48,13 @@ class AppServices {
         isGetStudentList = MutableLiveData()
         isGetGroupList = MutableLiveData()
         isGetCommmunicationlist = MutableLiveData()
+        isGetCommmunicationlistload = MutableLiveData()
         isGetVoiceHistory = MutableLiveData()
         isSendText = MutableLiveData()
         isSendVoice = MutableLiveData()
         isUpdateStatusArchive = MutableLiveData()
         isAcademicYear = MutableLiveData()
+        isUpdateStatusCommunication = MutableLiveData()
     }
 
 
@@ -283,6 +285,39 @@ class AppServices {
     val isGetCommunicationLiveData: LiveData<VoiceDataResponse?>
         get() = isGetCommmunicationlist
 
+    fun isGetCommmunicationlistload(isToken: String, activity: Activity) {
+        RestClient.apiInterfaces.isGetCommmunicationlistload(isToken)
+            ?.enqueue(object : Callback<VoiceDataResponse?> {
+                override fun onResponse(
+                    call: Call<VoiceDataResponse?>,
+                    response: Response<VoiceDataResponse?>
+                ) {
+                    Log.d(
+                        "isGetCountryList",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isGetCommmunicationlistload.postValue(response.body())
+                            } else {
+                                isGetCommmunicationlistload.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<VoiceDataResponse?>, t: Throwable) {
+                    isGetCommmunicationlistload.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isGetCommunicationloadLiveData: LiveData<VoiceDataResponse?>
+        get() = isGetCommmunicationlistload
+
 
     fun isGetGroupList(isToken: String, isAcademicYearId: Int, activity: Activity) {
         RestClient.apiInterfaces.isGroupList(isToken,isAcademicYearId)
@@ -392,9 +427,9 @@ class AppServices {
 
 
     fun isUpdateStatusArchive(isToken: String, jsonObject: JsonObject, activity: Activity) {
-        val request = StatusArchiveModelRequest(isToken, jsonObject)
+//        val request = StatusArchiveModelRequest(isToken, jsonObject)
 
-        RestClient.apiInterfaces.isUpdateStatusArchive("Bearer $isToken", request)
+        RestClient.apiInterfaces.isUpdateStatusArchive(isToken, jsonObject)
             ?.enqueue(object : Callback<StatusArchiveResponse> {
                 override fun onResponse(
                     call: Call<StatusArchiveResponse>,
@@ -419,6 +454,36 @@ class AppServices {
 
     val isUpdateStatusArchiveLiveData: LiveData<StatusArchiveResponse?>
         get() = isUpdateStatusArchive
+
+
+    fun isUpdateStatusCommunication(isToken: String, jsonObject: JsonObject, activity: Activity) {
+//        val request = StatusArchiveModelRequest(isToken, jsonObject)
+
+        RestClient.apiInterfaces.isUpdateStatusCommunication(isToken, jsonObject)
+            ?.enqueue(object : Callback<StatusArchiveResponse> {
+                override fun onResponse(
+                    call: Call<StatusArchiveResponse>,
+                    response: Response<StatusArchiveResponse>
+                ) {
+                    Log.d("isUpdateStatusArchive", "${response.code()} - ${response.body()}")
+
+                    if (response.code() == 200 && response.body() != null) {
+                        isUpdateStatusCommunication.postValue(response.body())
+                    } else {
+                        isUpdateStatusCommunication.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<StatusArchiveResponse>, t: Throwable) {
+                    isUpdateStatusCommunication.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+
+    val isUpdateStatusCommunicationLiveData: LiveData<StatusArchiveResponse?>
+        get() = isUpdateStatusCommunication
 
 
 

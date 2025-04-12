@@ -21,6 +21,8 @@ object APIMethods {
     const val getStudentList = "comm/recipient/get-student-list"
     const val isGroupList = "comm/recipient/get-group-list"
     const val isGetCommmunicationlist = "comm/communication/list-archive"
+    const val isUpdateStatusCommunication = "comm/communication/read-status-update"
+    const val isGetCommmunicationlistload = "comm/communication/list"
     const val isGetVoiceHistory = "comm/voice/get-voice-history"
     const val isSendText = "comm/text-message/send-text"
     const val isSendVoice = "comm/voice/send-voice"

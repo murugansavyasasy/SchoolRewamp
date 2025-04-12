@@ -15,7 +15,6 @@ import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYearResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
-import com.vs.schoolmessenger.Parent.Communication.StatusArchiveModelRequest
 import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
 import com.vs.schoolmessenger.Parent.Communication.VoiceDataResponse
 import com.vs.schoolmessenger.School.Communication.TextSendResponse
@@ -131,6 +130,13 @@ interface ApiInterfaces {
         @Header("Authorization") token: String
     ): Call<VoiceDataResponse?>
 
+
+    @GET(APIMethods.isGetCommmunicationlistload)
+    fun isGetCommmunicationlistload(
+        @Header("Authorization") token: String
+    ): Call<VoiceDataResponse?>
+
+
     @GET(APIMethods.isGetVoiceHistory)
     fun isGetVoiceHistory(
         @Header("Authorization") token: String,
@@ -158,11 +164,20 @@ interface ApiInterfaces {
     ): Call<PreSignedUrl?>?
 
 
+    @POST(APIMethods.isUpdateStatusCommunication)
+    fun isUpdateStatusCommunication(
+        @Header("Authorization") token: String,
+        @Body request: JsonObject
+    ): Call<StatusArchiveResponse>?
+
+
+
+
 
     @POST(APIMethods.isUpdateStatusArchive)
     fun isUpdateStatusArchive(
         @Header("Authorization") token: String,
-        @Body request: StatusArchiveModelRequest
+        @Body request: JsonObject
     ): Call<StatusArchiveResponse>?
 
     @GET(APIMethods.isGetAcademicYear)
@@ -170,4 +185,6 @@ interface ApiInterfaces {
         @Header("Authorization") token: String,
     ): Call<AcademicYearResponse?>
 
+
+//    @Body request: StatusArchiveModelRequest
 }

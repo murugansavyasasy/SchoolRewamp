@@ -1,9 +1,7 @@
 package com.vs.schoolmessenger.Parent.Communication
 
-import android.app.Activity
 import android.content.Context
 import android.media.MediaPlayer
-import android.opengl.Visibility
 import android.os.Handler
 import android.os.Looper
 import android.text.TextUtils
@@ -20,122 +18,107 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
-import com.google.gson.JsonArray
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.WaveformSeekBar
 import kotlin.math.max
-import com.google.gson.JsonObject
 
 
-class VoiceAdapter(
+class UnifiedVoiceAdapter(
     private var itemList: ArrayList<VoiceData>?,
     private var listener: VoiceClickListener,
     private var context: Context,
     private var isLoading: Boolean,
     private var lifecycleOwner: LifecycleOwner,
-    private var isAccessToken: String
+    private var isAccessToken: String,
+    private var isFromArchive: Boolean
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
     private var currentlyPlayingHolder: DataViewHolder? = null
     private var appViewModel: App = ViewModelProvider(context as ViewModelStoreOwner)[App::class.java]
 
+
     init {
         appViewModel.init()
         appViewModel.isUpdateStatusArchive?.observe(lifecycleOwner) { response ->
-            if (response != null && response.status) {
-                Log.d("VoiceAdapter", "Archive API successful")
-            } else {
-                Log.d("VoiceAdapter", "Archive API failed or empty")
-            }
+            Log.d("UnifiedVoiceAdapter", if (response?.status == true) "Archive API successful" else "Archive API failed or empty")
+        }
+        appViewModel.isUpdateStatusCommunication?.observe(lifecycleOwner) { response ->
+            Log.d("UnifiedVoiceAdapter", if (response?.status == true) "API successful" else "API failed or empty")
         }
     }
 
-
+    fun setIsFromArchive(value: Boolean) {
+        this.isFromArchive = value
+    }
 
 
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
-
-
-
     }
-
 
     fun updateData() {
         itemList?.clear()
         notifyDataSetChanged()
     }
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-            val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.shimmer_view_small_list, parent, false)
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.shimmer_view_small_list, parent, false)
             ShimmerViewHolder(view)
         } else {
-            val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.history_from_voice_message, parent, false)
-            DataViewHolder(view, context, appViewModel, isAccessToken) // Pass ViewModel and token
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.history_from_voice_message, parent, false)
+            DataViewHolder(view, context, appViewModel, isAccessToken, isFromArchive)
         }
-
-
     }
+
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
-            // Bind actual data when loading is complete
-            holder.bind(itemList!![position], position, listener, this) // Pass adapter reference
+            holder.bind(itemList!![position], position, listener, this)
         }
     }
 
     override fun getItemCount(): Int {
-        return if (isLoading) 20 // Show shimmer items while loading
-        else itemList?.size ?: 0
+        return if (isLoading) 20 else itemList?.size ?: 0
     }
+
 
     class DataViewHolder(
         itemView: View,
         private val context: Context,
         private val appViewModel: App,
-        private val isAccessToken: String
+        private val isAccessToken: String,
+        private val isFromArchive: Boolean
     ) : RecyclerView.ViewHolder(itemView) {
 
-
+        private val lblSeeMore: TextView = itemView.findViewById(R.id.lblSeeMore)
+        private val lblTitle: TextView = itemView.findViewById(R.id.lblTitle)
         private val lblDate: TextView = itemView.findViewById(R.id.lblDate)
         private val lblTime: TextView = itemView.findViewById(R.id.lblTime)
-
-        private val lblTitle: TextView = itemView.findViewById(R.id.lblTitle)
-        private val waveformSeekBar: WaveformSeekBar = itemView.findViewById(R.id.waveformSeekBar)
-        private val imgVoicePlay: ImageView = itemView.findViewById(R.id.imgVoicePlay)
         private val lblStartDuration: TextView = itemView.findViewById(R.id.lblStartDuration)
         private val lblEndDuration: TextView = itemView.findViewById(R.id.lblEndDuration)
-        private val rlaSendVoice: RelativeLayout = itemView.findViewById(R.id.rlaSendVoice)
-        private val lblnewiconVoice: ImageView = itemView.findViewById(R.id.lblnewiconVoice)
-        private val lblnewiconText: ImageView = itemView.findViewById(R.id.lblnewiconText)
+        private val lblContentText: TextView = itemView.findViewById(R.id.lblContentText)
         private val lblTitleText: TextView = itemView.findViewById(R.id.lblTitleText)
         private val lblDateText: TextView = itemView.findViewById(R.id.lblDateText)
         private val lblTimeText: TextView = itemView.findViewById(R.id.lblTimeText)
-        private val lblContentText: TextView = itemView.findViewById(R.id.lblContentText)
-        private val rlaSelectText: RelativeLayout = itemView.findViewById(R.id.rlaSelectText)
-        private val rlaText: RelativeLayout = itemView.findViewById(R.id.rlaText)
-        private val rlaVoice: RelativeLayout = itemView.findViewById(R.id.rlaVoice)
-
-        private val lblSeeMore: TextView = itemView.findViewById(R.id.lblSeeMore)
-
+        private val rlaVoice: View = itemView.findViewById(R.id.rlaVoice)
+        private val rlaText: View = itemView.findViewById(R.id.rlaText)
+        private val imgVoicePlay: ImageView = itemView.findViewById(R.id.imgVoicePlay)
+        private val waveformSeekBar: WaveformSeekBar = itemView.findViewById(R.id.waveformSeekBar)
+        private val lblnewiconVoice: ImageView = itemView.findViewById(R.id.lblnewiconVoice)
+        private val lblnewiconText: ImageView = itemView.findViewById(R.id.lblnewiconText)
+        private val rlaSendVoice: View = itemView.findViewById(R.id.rlaSendVoice)
+        private val rlaSelectText: View = itemView.findViewById(R.id.rlaSelectText)
 
         private var isExpanded = false
-
-
         private lateinit var mediaPlayer: MediaPlayer
         private var isPrepared = false
         private var isPlayingVoice = false
         private var lastPosition: Int = 0
         private val handler = Handler(Looper.getMainLooper())
 
-        // Progress updater for audio playback
         private val progressUpdater = object : Runnable {
             override fun run() {
                 if (isPrepared && mediaPlayer.isPlaying) {
@@ -147,12 +130,11 @@ class VoiceAdapter(
             }
         }
 
-
         fun bind(
             data: VoiceData,
             position: Int,
             listener: VoiceClickListener,
-            adapter: VoiceAdapter
+            adapter: UnifiedVoiceAdapter
         ) {
             if (data.type.equals("VOICE", ignoreCase = true)) {
                 rlaVoice.visibility = View.VISIBLE
@@ -160,10 +142,11 @@ class VoiceAdapter(
                 lblTitle.text = data.subject
                 lblDate.text = data.date
                 lblTime.text = data.time
-                lblnewiconVoice.visibility = if (data.app_unread_status) View.VISIBLE else View.GONE
-                lblnewiconText.visibility = View.GONE
+                lblnewiconVoice.visibility = if (data.is_unread) View.VISIBLE else View.GONE
                 rlaSendVoice.visibility = View.GONE
-                isSeeMoreVisibility(lblContentText,lblSeeMore)
+
+                isSeeMoreVisibility(lblContentText, lblSeeMore)
+
                 getAudioDuration(data.content) { duration ->
                     lblEndDuration.text = formatTime(duration)
                 }
@@ -171,7 +154,12 @@ class VoiceAdapter(
                 imgVoicePlay.setOnClickListener {
                     listener.onItemClick(data, this@DataViewHolder)
 
-
+                    // Use correct source flag here
+                    if (isFromArchive) {
+                        listener.onUpdateArchiveStatus(data.type, data.id)
+                    } else {
+                        listener.onUpdateCommunicationStatus(data.type, data.id)
+                    }
 
                     if (adapter.currentlyPlayingHolder != null && adapter.currentlyPlayingHolder != this) {
                         adapter.currentlyPlayingHolder?.stopAudioPlayback()
@@ -186,61 +174,28 @@ class VoiceAdapter(
                             resumeAudio()
                         }
                     }
+
                     adapter.currentlyPlayingHolder = this
                 }
 
             } else {
                 rlaVoice.visibility = View.GONE
                 rlaText.visibility = View.VISIBLE
-
                 lblTitleText.text = data.subject
                 lblContentText.text = data.description
                 lblDateText.text = data.date
                 lblTimeText.text = data.time
-
                 rlaSelectText.visibility = View.GONE
                 rlaSendVoice.visibility = View.GONE
-
-                lblnewiconText.visibility = if (data.app_unread_status) View.VISIBLE else View.GONE
-                lblnewiconVoice.visibility = View.GONE
-
-
+                lblnewiconText.visibility = if (data.is_unread) View.VISIBLE else View.GONE
             }
-
-
-
-
 
             lblSeeMore.setOnClickListener {
                 isExpanded = !isExpanded
                 updateTextView()
             }
-
-
-        imgVoicePlay.setOnClickListener {
-            listener.onItemClick(data, this@DataViewHolder)
-            listener.onUpdateArchiveStatus(data.type, data.detail_id)
-
-
-            if (adapter.currentlyPlayingHolder != null && adapter.currentlyPlayingHolder != this) {
-                    adapter.currentlyPlayingHolder?.stopAudioPlayback()
-                }
-
-                if (isPlayingVoice) {
-                    pauseAudio()
-                } else {
-                    if (!isPrepared) {
-                        initializeMediaPlayer(data.content)
-                    } else {
-                        resumeAudio()
-                    }
-                }
-                adapter.currentlyPlayingHolder = this
-            }
-
         }
 
-        // Initialize MediaPlayer and prepare audio
         private fun initializeMediaPlayer(audioUrl: String) {
             mediaPlayer = MediaPlayer().apply {
                 setDataSource(audioUrl)
@@ -258,22 +213,9 @@ class VoiceAdapter(
             }
         }
 
-
-
-
-
-
-
-
         private fun updateTextView() {
-            if (isExpanded) {
-                // Expand the TextView to show all lines
-                lblContentText.maxLines = Int.MAX_VALUE
-                lblSeeMore.text = "See Less"
-            } else {
-                lblContentText.maxLines = 3
-                lblSeeMore.text = "See More"
-            }
+            lblContentText.maxLines = if (isExpanded) Int.MAX_VALUE else 3
+            lblSeeMore.text = if (isExpanded) "See Less" else "See More"
         }
 
         private fun isSeeMoreVisibility(lblContent: TextView, tvSeeMore: TextView) {
@@ -288,17 +230,14 @@ class VoiceAdapter(
             }
         }
 
-        // Pause audio playback
         private fun pauseAudio() {
             mediaPlayer.pause()
             lastPosition = mediaPlayer.currentPosition
             isPlayingVoice = false
             updatePlayPauseIcon(isPlaying = false)
             waveformSeekBar.updateWithLevel(0f)
-
         }
 
-        // Resume audio playback
         private fun resumeAudio() {
             mediaPlayer.seekTo(lastPosition)
             mediaPlayer.start()
@@ -307,26 +246,20 @@ class VoiceAdapter(
             updatePlayPauseIcon(isPlaying = true)
         }
 
-        // Stop audio playback
         fun stopAudioPlayback() {
             if (::mediaPlayer.isInitialized) {
-                if (mediaPlayer.isPlaying) {
-                    mediaPlayer.stop()
-                }
+                if (mediaPlayer.isPlaying) mediaPlayer.stop()
                 mediaPlayer.reset()
                 resetPlaybackState()
+                mediaPlayer.release()
             }
-            mediaPlayer.release()
-
         }
 
-        // Update the play/pause icon
         private fun updatePlayPauseIcon(isPlaying: Boolean) {
             val icon = if (isPlaying) R.drawable.pause_icon else R.drawable.video_play
             imgVoicePlay.setImageDrawable(ContextCompat.getDrawable(context, icon))
         }
 
-        // Reset playback state
         private fun resetPlaybackState() {
             stopAudioProgressUpdate()
             isPrepared = false
@@ -336,17 +269,14 @@ class VoiceAdapter(
             updatePlayPauseIcon(isPlaying = false)
         }
 
-        // Start updating audio progress
         private fun startAudioProgressUpdate() {
             handler.post(progressUpdater)
         }
 
-        // Stop updating audio progress
         private fun stopAudioProgressUpdate() {
             handler.removeCallbacks(progressUpdater)
         }
 
-        // Format milliseconds to "mm:ss"
         private fun formatTime(milliseconds: Int): String {
             val seconds = (milliseconds / 1000) % 60
             val minutes = (milliseconds / (1000 * 60)) % 60
@@ -376,6 +306,11 @@ class VoiceAdapter(
     fun releaseMediaPlayer() {
         currentlyPlayingHolder?.stopAudioPlayback()
         currentlyPlayingHolder = null
+    }
+
+    fun updateList(newList: List<VoiceData>) {
+        this.itemList = ArrayList(newList)
+        notifyDataSetChanged()
     }
 
 
