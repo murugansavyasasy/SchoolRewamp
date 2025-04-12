@@ -44,6 +44,10 @@ class App(application: Application) : AndroidViewModel(application) {
     var isGetCommmunicationlist: LiveData<VoiceDataResponse?>? = null
         private set
 
+    var isGetCommmunicationlistload: LiveData<VoiceDataResponse?>? = null
+        private set
+
+
 
     var isGetVoiceHistory: LiveData<VoiceDetails?>? = null
         private set
@@ -58,6 +62,10 @@ class App(application: Application) : AndroidViewModel(application) {
     var isUpdateStatusArchive: LiveData<StatusArchiveResponse?>? = null
         private set
 
+    var isUpdateStatusCommunication: LiveData<StatusArchiveResponse?>? = null
+        private set
+
+
 
 
 
@@ -70,10 +78,12 @@ class App(application: Application) : AndroidViewModel(application) {
         isStudentList = apiRepositories!!.isStudentLiveData
         isGetGroupList = apiRepositories!!.isGetGroupLiveData
         isGetCommmunicationlist = apiRepositories!!.isGetCommunicationLiveData
+        isGetCommmunicationlistload = apiRepositories!!.isGetCommunicationloadLiveData
         isGetVoiceHistory = apiRepositories!!.isGetVoiceHistoryLiveData
         isSendText = apiRepositories!!.isSendTextLiveData
         isVoiceSend = apiRepositories!!.isSendVoiceLiveData
         isUpdateStatusArchive = apiRepositories!!.isUpdateStatusArchiveLiveData
+        isUpdateStatusCommunication = apiRepositories!!.isUpdateStatusCommunicationLiveData
     }
 
     fun isDashBoardData(isToken: String, isMemberType: String, activity: Activity) {
@@ -104,6 +114,11 @@ class App(application: Application) : AndroidViewModel(application) {
         apiRepositories!!.isGetGroupList(isToken, activity)
     }
 
+    fun isGetCommmunicationlistload(isToken: String, activity: Activity) {
+        apiRepositories!!.isGetCommmunicationlistload(isToken, activity)
+    }
+
+
     fun isGetCommmunicationlist(isToken: String, activity: Activity) {
         apiRepositories!!.isGetCommmunicationlist(isToken, activity)
     }
@@ -123,6 +138,12 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun isUpdateStatusArchive(isToken: String, jsonObject: JsonObject, activity: Activity) {
         apiRepositories?.isUpdateStatusArchive(isToken, jsonObject, activity)
+    }
+
+
+
+    fun isUpdateStatusCommunication(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        apiRepositories?.isUpdateStatusCommunication(isToken, jsonObject, activity)
     }
 
 
