@@ -12,14 +12,17 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class GroupListAdapter(
-    private var itemList: List<NameAndIds>?,
+    var itemList: List<NameAndIds>?,
     private var listener: GroupListClickListener,
     private var context: Context,
-    private var isLoading: Boolean,
+    private var isLoading: Boolean
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
+
+    // Maintain selected item IDs
+    private val selectedIds = mutableSetOf<Int>()
 
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
@@ -32,37 +35,39 @@ class GroupListAdapter(
         } else {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.group_list_item, parent, false)
-            DataViewHolder(view, context)
+            DataViewHolder(view)
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
-            holder.bind(itemList!![position], position, listener)
-        } else if (holder is GroupListAdapter.ShimmerViewHolder) {
+            holder.bind(itemList!![position], position)
+        } else if (holder is ShimmerViewHolder) {
             holder.startShimmer()
         }
     }
 
     override fun getItemCount(): Int {
-        return if (isLoading) 5 else itemList!!.size
+        return if (isLoading) 5 else itemList?.size ?: 0
     }
 
-    class DataViewHolder(itemView: View, private val context: Context) :
-        RecyclerView.ViewHolder(itemView) {
-        val lblgroupname: TextView = itemView.findViewById(R.id.lblgroupname)
-        val chMultipleSchool: CheckBox = itemView.findViewById(R.id.chMultipleSchool)
-        fun bind(
-            data: NameAndIds,
-            position: Int,
-            listener: GroupListClickListener,
-        ) {
-            lblgroupname.text = data.name
+    inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val lblGroupName: TextView = itemView.findViewById(R.id.lblgroupname)
+        private val chMultipleSchool: CheckBox = itemView.findViewById(R.id.chMultipleSchool)
+
+        fun bind(data: NameAndIds, position: Int) {
+            lblGroupName.text = data.name
+
+            chMultipleSchool.setOnCheckedChangeListener(null)
+            chMultipleSchool.isChecked = selectedIds.contains(data.id)
+
             chMultipleSchool.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
-                    listener.onIdCheck(data) // add to selected list
+                    selectedIds.add(data.id)
+                    listener.onIdCheck(data)
                 } else {
-                    listener.onIdUnchecked(data) // remove from selected list
+                    selectedIds.remove(data.id)
+                    listener.onIdUnchecked(data)
                 }
             }
         }
@@ -72,5 +77,22 @@ class GroupListAdapter(
         fun startShimmer() {
             ShimmerUtil.startShimmer(itemView)
         }
+    }
+
+    // Helper functions for select all / deselect all
+    fun selectAll() {
+        itemList?.forEach {
+            selectedIds.add(it.id)
+        }
+        notifyDataSetChanged()
+    }
+
+    fun deselectAll() {
+        selectedIds.clear()
+        notifyDataSetChanged()
+    }
+
+    fun getSelectedIds(): List<Int> {
+        return selectedIds.toList()
     }
 }
