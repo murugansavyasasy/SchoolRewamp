@@ -10,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
@@ -23,9 +22,8 @@ import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.WaveformSeekBar
 import kotlin.math.max
 
-
 class UnifiedVoiceAdapter(
-    private var itemList: ArrayList<VoiceData>?,
+    private var itemList: ArrayList<VoiceData>? = null,
     private var listener: VoiceClickListener,
     private var context: Context,
     private var isLoading: Boolean,
@@ -37,7 +35,6 @@ class UnifiedVoiceAdapter(
     private val TYPE_DATA = 1
     private var currentlyPlayingHolder: DataViewHolder? = null
     private var appViewModel: App = ViewModelProvider(context as ViewModelStoreOwner)[App::class.java]
-
 
     init {
         appViewModel.init()
@@ -52,7 +49,6 @@ class UnifiedVoiceAdapter(
     fun setIsFromArchive(value: Boolean) {
         this.isFromArchive = value
     }
-
 
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
@@ -73,7 +69,6 @@ class UnifiedVoiceAdapter(
         }
     }
 
-
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
             holder.bind(itemList!![position], position, listener, this)
@@ -83,7 +78,6 @@ class UnifiedVoiceAdapter(
     override fun getItemCount(): Int {
         return if (isLoading) 20 else itemList?.size ?: 0
     }
-
 
     class DataViewHolder(
         itemView: View,
@@ -108,6 +102,7 @@ class UnifiedVoiceAdapter(
         private val imgVoicePlay: ImageView = itemView.findViewById(R.id.imgVoicePlay)
         private val waveformSeekBar: WaveformSeekBar = itemView.findViewById(R.id.waveformSeekBar)
         private val lblnewiconVoice: ImageView = itemView.findViewById(R.id.lblnewiconVoice)
+        private val lblviewtext: TextView = itemView.findViewById(R.id.lblviewtext)
         private val lblnewiconText: ImageView = itemView.findViewById(R.id.lblnewiconText)
         private val rlaSendVoice: View = itemView.findViewById(R.id.rlaSendVoice)
         private val rlaSelectText: View = itemView.findViewById(R.id.rlaSelectText)
@@ -139,27 +134,40 @@ class UnifiedVoiceAdapter(
             if (data.type.equals("VOICE", ignoreCase = true)) {
                 rlaVoice.visibility = View.VISIBLE
                 rlaText.visibility = View.GONE
-                lblTitle.text = data.subject
-                lblDate.text = data.date
-                lblTime.text = data.time
-                lblnewiconVoice.visibility = if (data.is_unread) View.VISIBLE else View.GONE
+                lblTitle.text = data.description ?: ""
+                lblDate.text = data.date ?: ""
+                lblTime.text = data.time ?: ""
+                lblnewiconVoice.visibility = if (data.is_unread == true) View.VISIBLE else View.GONE
                 rlaSendVoice.visibility = View.GONE
-
                 isSeeMoreVisibility(lblContentText, lblSeeMore)
 
-                getAudioDuration(data.content) { duration ->
+                getAudioDuration(data.content ?: "") { duration ->
                     lblEndDuration.text = formatTime(duration)
                 }
 
+
+//                lblviewtext.setOnClickListener {
+//                    listener.onItemClick(data, this@DataViewHolder)
+//                    lblviewtext.visibility = View.GONE
+//                    if (data.is_archive ==true) {
+//                        listener.onUpdateArchiveStatus(data.type, data.id)
+//                    } else {
+//                        listener.onUpdateCommunicationStatus(data.type, data.id)
+//                    }
+//                }
+
+
+
+
                 imgVoicePlay.setOnClickListener {
                     listener.onItemClick(data, this@DataViewHolder)
-
-                    // Use correct source flag here
-                    if (isFromArchive) {
+                    lblnewiconVoice.visibility = View.GONE
+                    if (data.is_archive) {
                         listener.onUpdateArchiveStatus(data.type, data.id)
                     } else {
                         listener.onUpdateCommunicationStatus(data.type, data.id)
                     }
+
 
                     if (adapter.currentlyPlayingHolder != null && adapter.currentlyPlayingHolder != this) {
                         adapter.currentlyPlayingHolder?.stopAudioPlayback()
@@ -169,7 +177,7 @@ class UnifiedVoiceAdapter(
                         pauseAudio()
                     } else {
                         if (!isPrepared) {
-                            initializeMediaPlayer(data.content)
+                            initializeMediaPlayer(data.content?: "")
                         } else {
                             resumeAudio()
                         }
@@ -181,13 +189,14 @@ class UnifiedVoiceAdapter(
             } else {
                 rlaVoice.visibility = View.GONE
                 rlaText.visibility = View.VISIBLE
-                lblTitleText.text = data.subject
-                lblContentText.text = data.description
-                lblDateText.text = data.date
-                lblTimeText.text = data.time
+                lblTitleText.text = data.description ?: ""
+                lblContentText.text = data.content ?: ""
+                lblDateText.text = data.date ?: ""
+                lblTimeText.text = data.time ?: ""
                 rlaSelectText.visibility = View.GONE
                 rlaSendVoice.visibility = View.GONE
-                lblnewiconText.visibility = if (data.is_unread) View.VISIBLE else View.GONE
+                lblnewiconVoice.visibility = if (data.is_unread == true) View.VISIBLE else View.GONE
+//                lblviewtext.visibility = if (data.is_unread == true) View.VISIBLE else View.GONE
             }
 
             lblSeeMore.setOnClickListener {
@@ -313,13 +322,12 @@ class UnifiedVoiceAdapter(
         notifyDataSetChanged()
     }
 
-
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val shimmerLayout: ShimmerFrameLayout =
             itemView.findViewById(R.id.shimmer_view_container)
 
         init {
-            shimmerLayout.startShimmer() // Start shimmer effect
+            shimmerLayout.startShimmer()
         }
     }
 }

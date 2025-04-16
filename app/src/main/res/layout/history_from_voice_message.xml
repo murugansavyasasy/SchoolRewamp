@@ -21,25 +21,25 @@
         </ImageView>
 
         <RelativeLayout
+            android:id="@+id/crla"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/twenty"
+            android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/five"
-            android:layout_marginEnd="@dimen/twenty"
+            android:layout_marginEnd="@dimen/ten"
             android:background="@drawable/rect_shadow_white">
 
             <TextView
                 android:id="@+id/lblTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/ten"
-                android:layout_marginTop="@dimen/ten"
+                android:layout_marginStart="13dp"
+                android:layout_marginTop="13dp"
                 android:layout_marginEnd="@dimen/ten"
                 android:fontFamily="@font/poppins_bold"
                 android:text="Function Call"
                 android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp"
-                android:textStyle="bold">
+                android:textSize="@dimen/thirteen_sp">
 
             </TextView>
 
@@ -81,8 +81,7 @@
                     android:fontFamily="@font/poppins_medium"
                     android:text="00:00"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"
-                    android:textStyle="bold">
+                    android:textSize="@dimen/thirteen_sp">
 
                 </TextView>
 
@@ -110,8 +109,7 @@
                     android:fontFamily="@font/poppins_medium"
                     android:text="00:00"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"
-                    android:textStyle="bold">
+                    android:textSize="@dimen/thirteen_sp">
 
                 </TextView>
 
@@ -134,8 +132,7 @@
                     android:fontFamily="@font/poppins_medium"
                     android:text="10:56 AM"
                     android:textColor="@color/black"
-                    android:textSize="12sp"
-                    android:textStyle="bold">
+                    android:textSize="12sp">
                 </TextView>
 
                 <TextView
@@ -162,7 +159,6 @@
                 android:layout_marginTop="@dimen/eight"
                 android:layout_marginEnd="@dimen/ten"
                 android:layout_marginBottom="@dimen/eight"
-
                 android:background="@drawable/rect_blue_and_green_small_radious"
                 android:padding="@dimen/ten">
 
@@ -190,10 +186,15 @@
             </RelativeLayout>
 
         </RelativeLayout>
+
+
+
+
+
     </RelativeLayout>
 
 
-<!--    Text Adapter XML View-->
+    <!--    Text Adapter XML View-->
 
     <RelativeLayout
         android:id="@+id/rlaText"
@@ -228,11 +229,10 @@
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginTop="@dimen/fifteen"
                 android:layout_marginEnd="@dimen/ten"
-                android:fontFamily="@font/poppins_medium"
+                android:fontFamily="@font/poppins_bold"
                 android:text="Friday Leave"
                 android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp"
-                android:textStyle="bold">
+                android:textSize="@dimen/thirteen_sp">
             </TextView>
 
 
@@ -244,12 +244,29 @@
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginTop="@dimen/fifteen"
                 android:layout_marginEnd="@dimen/ten"
-                android:fontFamily="@font/poppins_regular"
+                android:fontFamily="@font/poppins_medium"
                 android:maxLines="3"
                 android:text="Dear (Recipient's Name), I am writing to request leave from school for (number of days) days, starting from (start date) to (end date). The reason for my leave is (briefly state the reason, e.g., a family function, medical treatment, personal reasons)."
                 android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp">
+            </TextView>
+
+
+            <TextView
+                android:id="@+id/lblviewtext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblContentText"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/fifteen"
+                android:layout_marginEnd="@dimen/ten"
+                android:fontFamily="@font/poppins_bold"
+                android:maxLines="1"
+                android:text="View"
+                android:visibility="gone"
+                android:textColor="@color/navi_blue0"
                 android:textSize="@dimen/thirteen_sp"
-                android:textStyle="bold">
+                >
             </TextView>
 
             <TextView
@@ -267,38 +284,41 @@
             </TextView>
 
 
-            <TextView
-                android:id="@+id/lblTimeText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="@dimen/ten"
-                android:text="10:56 AM"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp"
-                android:visibility="gone">
-
-            </TextView>
-
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblSeeMore"
                 android:padding="@dimen/ten">
 
+
+
+
+
+                <TextView
+                    android:id="@+id/lblTimeText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="16dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="10:56 AM"
+                    android:textColor="@color/black"
+                    android:textSize="12sp">
+                </TextView>
+
                 <TextView
                     android:id="@+id/lblDateText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginStart="@dimen/five"
-                    android:layout_marginTop="@dimen/five"
-                    android:fontFamily="@font/poppins_regular"
+                    android:layout_marginEnd="8dp"
+                    android:layout_toStartOf="@id/lblTimeText"
+                    android:fontFamily="@font/poppins_medium"
                     android:text="01 Apr 2024"
+                    android:visibility="visible"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"
-                    android:textStyle="bold" />
+                    android:textSize="12sp"
+                    android:textStyle="bold">
+                </TextView>
 
                 <RelativeLayout
                     android:id="@+id/rlaSelectText"
@@ -335,5 +355,7 @@
 
 
         </RelativeLayout>
+
+
     </RelativeLayout>
 </RelativeLayout>
