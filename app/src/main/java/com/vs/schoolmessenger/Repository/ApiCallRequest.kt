@@ -10,6 +10,7 @@ object ApiCallRequest {
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun isVoiceSend(
+        isAcademicYearId: Int,
         isFileUploaded: String?,
         isClickType: Int,
         selectedDates: List<String>,
@@ -24,6 +25,7 @@ object ApiCallRequest {
         fileName: String
     ): JsonObject {
         val jsonObject = JsonObject()
+        jsonObject.addProperty("isAcademicYearId", isAcademicYearId)
         jsonObject.addProperty("voice_link", isFileUploaded)
         jsonObject.addProperty("target_type", targetType)
         jsonObject.addProperty("circular_type", circularType)
@@ -64,15 +66,16 @@ object ApiCallRequest {
     }
 
     fun isSendText(
-        schoolId: String,
+        isAcademicYearId: Int,
+        schoolId: MutableList<Int>,
         message: String,
         description: String,
         targetType: Int
     ): JsonObject {
         val jsonObject = JsonObject()
         val jsonArray = JsonArray()
-        jsonArray.add(schoolId)
-
+        schoolId.forEach { jsonArray.add(it) }
+        jsonObject.addProperty("isAcademicYearId", isAcademicYearId)
         jsonObject.add("target_code", jsonArray)
         jsonObject.addProperty("target_type", targetType)
         jsonObject.addProperty("message", message)

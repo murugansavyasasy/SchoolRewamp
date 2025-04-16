@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
@@ -12,7 +13,7 @@ import com.vs.schoolmessenger.School.Communication.TextHistoryAdapter.DataViewHo
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class TextHistoryAdapter(
-    private var itemList: List<TextHistoryData>?,
+    private var itemList: List<TextDetail>?,
     private var listener: TextHistoryClickListener,
     private var context: Context,
     private var isLoading: Boolean
@@ -56,22 +57,27 @@ class TextHistoryAdapter(
         private val lblDate: TextView = itemView.findViewById(R.id.lblDate)
         private val lblContent: TextView = itemView.findViewById(R.id.lblContent)
         private val lblSeeMore: TextView = itemView.findViewById(R.id.lblSeeMore)
+        private val rlaSelectText: RelativeLayout = itemView.findViewById(R.id.rlaSelectText)
         private var isExpanded = false
 
 
         fun bind(
-            data: TextHistoryData,
+            data: TextDetail,
             position: Int,
             listener: TextHistoryClickListener,
             adapter: TextHistoryAdapter
         ) {
-            lblTitle.text = data.title
+            lblTitle.text = data.content
             lblDate.text = data.date
-            lblContent.text = data.content
+            lblContent.text = data.description
 
             lblSeeMore.setOnClickListener {
                 isExpanded = !isExpanded
                 updateTextView()
+            }
+
+            rlaSelectText.setOnClickListener {
+                listener.onItemClick(data, this@DataViewHolder)
             }
 
         }

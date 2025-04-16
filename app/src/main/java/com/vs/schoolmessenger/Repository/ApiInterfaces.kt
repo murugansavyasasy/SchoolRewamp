@@ -17,6 +17,7 @@ import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsRespo
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
 import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
 import com.vs.schoolmessenger.Parent.Communication.VoiceDataResponse
+import com.vs.schoolmessenger.School.Communication.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.VoiceDetails
 import retrofit2.Call
@@ -142,6 +143,12 @@ interface ApiInterfaces {
         @Header("Authorization") token: String,
         @Query("is_emergency") is_emergency: String
     ): Call<VoiceDetails?>
+
+    @GET(APIMethods.isGetTextHistory)
+    fun isGetTextHistory(
+        @Header("Authorization") token: String
+    ): Call<TextDetailsResponse?>
+
 
     @POST(APIMethods.isSendText)
     fun isSendText(
