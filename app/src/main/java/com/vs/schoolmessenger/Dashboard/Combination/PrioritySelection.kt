@@ -35,7 +35,6 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
         binding.lblParent.setOnClickListener(this)
         binding.lblTeacher.setOnClickListener(this)
         binding.btnGo.setOnClickListener(this)
-        isLoadData(true)
         userDetails = SharedPreference.getUserDetails(this@PrioritySelection)
 
         val isStaff = userDetails?.is_staff
@@ -46,22 +45,31 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
         if (isStaff == true && isParent == true) {
             binding.lblTeacher.visibility = View.VISIBLE
             binding.lblParent.visibility = View.VISIBLE
-        } else if (isStaff == true) {
+            binding.lblLoginTeacherOrParent.visibility = View.VISIBLE
+            binding.lblLoginTeacherOrParent.text = "Login As "+role_name+" or Student"
+            isLoadData(true)
+
+        }
+        else if (isStaff == true) {
             binding.lblTeacher.visibility = View.VISIBLE
             binding.lblParent.visibility = View.GONE
+            binding.lblLoginTeacherOrParent.visibility = View.GONE
+            isLoadData(true)
+
         } else if (isParent == true) {
             binding.lblTeacher.visibility = View.GONE
             binding.lblParent.visibility = View.VISIBLE
+            binding.lblLoginTeacherOrParent.visibility = View.GONE
+            isLoadData(false)
         }
 
-        if (staff_role.equals(Constant.isStaffRole)) {
+        if (staff_role.equals(Constant.isStaffRole) || staff_role.equals("")) {
             binding.btnGo.visibility = View.GONE
         } else {
             binding.btnGo.visibility = View.VISIBLE
         }
 
         if (userDetails!!.is_staff) {
-            binding.lblTeacher.text = userDetails!!.role_name
             binding.lblTeacher.text = role_name
         }
 

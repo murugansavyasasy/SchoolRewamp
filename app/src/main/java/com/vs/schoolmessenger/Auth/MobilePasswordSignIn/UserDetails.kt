@@ -1,7 +1,6 @@
 package com.vs.schoolmessenger.Auth.MobilePasswordSignIn
 
 data class UserDetails(
-
     val is_staff: Boolean,
     val staff_role: String,
     val role_name: String,
