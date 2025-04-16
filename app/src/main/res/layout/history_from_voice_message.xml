@@ -35,10 +35,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="13dp"
                 android:layout_marginTop="13dp"
-                android:layout_marginEnd="@dimen/ten"
+                android:layout_marginEnd="10sp"
                 android:fontFamily="@font/poppins_bold"
                 android:text="Function Call"
-                android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp">
 
             </TextView>
