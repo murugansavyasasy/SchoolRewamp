@@ -228,7 +228,7 @@
                             android:text="From Time"
                             android:textColor="@color/black"
                             android:textSize="@dimen/thirteen_sp"
-                            android:textStyle="bold">
+                           style="@style/CustomTextStylePoppinsBold">
 
                         </TextView>
 
@@ -288,10 +288,10 @@
                             android:layout_gravity="center"
                             android:layout_marginStart="@dimen/twenty"
                             android:layout_weight="0.4"
-                            android:text="To Time"
+                            android:text="Do not dial beyond"
                             android:textColor="@color/black"
                             android:textSize="@dimen/thirteen_sp"
-                            android:textStyle="bold">
+                           style="@style/CustomTextStylePoppinsBold">
 
                         </TextView>
 
@@ -351,10 +351,10 @@
                             android:layout_gravity="center"
                             android:layout_marginStart="@dimen/twenty"
                             android:layout_weight="0.4"
-                            android:text="Schedule Call"
+                            android:text="Schedule Date"
                             android:textColor="@color/black"
                             android:textSize="@dimen/thirteen_sp"
-                            android:textStyle="bold">
+                           style="@style/CustomTextStylePoppinsBold">
 
                         </TextView>
 
