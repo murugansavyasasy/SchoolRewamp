@@ -134,6 +134,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
 
         checkAndRequestPermissions(this)
+        mediaRecorder = MediaRecorder()
 
         isAwsUploadingPreSigned = AwsUploadingPreSigned()
         isFileExtensionFromContentUri = FileExtensionFromContentUri()

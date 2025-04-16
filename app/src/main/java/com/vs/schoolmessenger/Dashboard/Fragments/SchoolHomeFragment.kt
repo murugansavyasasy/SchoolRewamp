@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.CommonScreens.Ads.AdItem
 import com.vs.schoolmessenger.CommonScreens.Ads.AdsDisplayOptions
@@ -53,11 +54,14 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     private var isSearchVisible = false
     private var appViewModel: App? = null
     var userDetails: UserDetails? = null
+    var staffDetails: StaffDetails? = null
     var isDashBoardData: List<DashboardData>? = null
     var isContactDetails: ContactDetails? = null
     var isMenuDetails: List<MenuDetail>? = null
     var isAdItem: List<AdItem>? = null
     var isAdsDisplayOptions: AdsDisplayOptions? = null
+
+    var access_token = ""
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -73,24 +77,56 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         binding.changeroll.paintFlags =binding. changeroll.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
         userDetails = SharedPreference.getUserDetails(requireActivity())
+        staffDetails = SharedPreference.getStaffDetails(requireActivity())
         isDashBoardData()
-        binding.lblSchoolAddress.text = userDetails!!.staff_details[0].school_address
-//        Glide.with(requireActivity()).load(userDetails!!.staff_details[0].school_logo)
-//            .into(binding.imgSchoolLogo)
 
-        if (userDetails!!.staff_details.size > 1) {
-            binding.lblSchoolName.text = userDetails!!.role_name
-        } else {
-            binding.lblSchoolName.text = userDetails!!.staff_details[0].school_name
+        Log.d("school_logo",staffDetails!!.school_logo)
+
+        if(userDetails!!.staff_role.equals(Constant.isStaffRole)){
+            access_token = staffDetails!!.access_token
+            binding.lblSchoolName.text = staffDetails!!.school_name
+            binding.lblSchoolAddress.text = staffDetails!!.school_address
+            binding.lblSchoolAddress.visibility = View.VISIBLE
+            Glide.with(requireActivity()).load(staffDetails!!.school_logo)
+            .into(binding.imgSchoolLogo)
+
+        }
+        else{
+            access_token = userDetails!!.staff_details[0].access_token
+            if (userDetails!!.staff_details.size > 1) {
+                binding.lblSchoolName.text = userDetails!!.role_name
+                binding.lblSchoolAddress.visibility = View.GONE
+            } else {
+                binding.lblSchoolAddress.visibility = View.VISIBLE
+                binding.lblSchoolName.text = userDetails!!.staff_details[0].school_name
+                binding.lblSchoolAddress.text = userDetails!!.staff_details[0].school_address
+                Glide.with(requireActivity()).load(userDetails!!.staff_details[0].school_logo)
+                    .into(binding.imgSchoolLogo)
+            }
+        }
+
+        if(userDetails!!.is_parent && userDetails!!.is_staff){
+            binding.changeroll.visibility = View.VISIBLE
+        }
+        else {
+            if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
+                if (userDetails!!.staff_details.size > 1) {
+                    binding.changeroll.visibility = View.VISIBLE
+                }
+                else{
+                    binding.changeroll.visibility = View.GONE
+                }
+            }
+            else{
+                binding.changeroll.visibility = View.GONE
+            }
         }
 
         binding.lblViewDetails.paintFlags =
             binding.lblViewDetails.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
-
         binding.lblGif.playAnimation()
         binding.lblGif.setAnimation(R.raw.mathematics)
-
 
         appViewModel!!.isDashBoardData?.observe(requireActivity()) { response ->
             if (response != null) {
@@ -223,14 +259,14 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     private fun isDashBoardData() {
         val isToken = SharedPreference.getUserDetails(requireActivity())
         appViewModel!!.isDashBoardData(
-            isToken!!.staff_details[0].access_token, "staff", requireActivity()
+            access_token, "staff", requireActivity()
         )
     }
 
     private fun isGetAds() {
         val isToken = SharedPreference.getUserDetails(requireActivity())
         appViewModel!!.isGetAds(
-            isToken!!.staff_details[0].access_token, "102", requireActivity()
+            access_token, "102", requireActivity()
         )
     }
 

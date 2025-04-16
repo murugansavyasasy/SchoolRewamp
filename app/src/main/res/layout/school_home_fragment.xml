@@ -55,7 +55,7 @@
                     android:id="@+id/lblSchoolName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Savyasasy sofwiewieisefvwibtware solutions pvt Ltd.,"
+                    android:text=""
                     android:textSize="14sp"
                     style="@style/CustomTextStylePoppinsBold" />
 
@@ -64,9 +64,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/lblSchoolName"
-                    android:text="Savyasasy schools, Chennai  600043"
+                    android:text=""
                     android:textColor="@color/black"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:textSize="@dimen/thirteen_sp" />
             </RelativeLayout>
 
@@ -77,7 +77,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/changeroll"
-                android:text="Change Roll >"
+                android:text="Change Role >"
                 style="@style/CustomTextStylePoppinsRegular"
                 android:textColor="@color/navi_blue2"
                 android:textSize="@dimen/fifteen_sp"
@@ -91,7 +91,7 @@
                 android:layout_height="@dimen/thirty"
                 android:layout_below="@+id/rytSchoolDetails"
                 android:layout_toStartOf="@+id/rytImageNotification"
-                android:src="@drawable/search_icon"
+                android:src="@drawable/search_icon_white"
                 android:layout_marginEnd="@dimen/ten"
                 android:layout_marginTop="@dimen/five"
                 android:visibility="visible">
@@ -129,7 +129,7 @@
                     android:layout_width="@dimen/thirty"
                     android:layout_height="@dimen/thirty"
 
-                    android:src="@drawable/notification_icon" />
+                    android:src="@drawable/notification_icon_white" />
 
             </FrameLayout>
         </RelativeLayout>

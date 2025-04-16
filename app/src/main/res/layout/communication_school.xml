@@ -37,7 +37,7 @@
                     android:text="@string/Communication"
                     android:textColor="@color/black"
                     android:textSize="20sp"
-                    android:textStyle="bold">
+                    style="@style/CustomTextStylePoppinsBold">
 
                 </TextView>
             </LinearLayout>
@@ -72,11 +72,10 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/fifteen"
-                    android:fontFamily="@font/poppins_bold"
                     android:text=""
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
-                    android:textStyle="bold">
+                    style="@style/CustomTextStylePoppinsBold">
 
                 </TextView>
             </RelativeLayout>
@@ -121,10 +120,9 @@
                         android:paddingStart="@dimen/five"
                         android:paddingEnd="@dimen/five"
                         android:textSize="13sp"
-                        android:textStyle="bold"
+                        style="@style/CustomTextStylePoppinsBold"
                         android:paddingBottom="@dimen/ten"
                         android:text="Voice"
-                        android:fontFamily="@font/poppins_bold"
                         android:textColor="@color/white">
 
                     </TextView>
@@ -157,10 +155,9 @@
                         android:paddingStart="@dimen/five"
                         android:paddingEnd="@dimen/five"
                         android:textSize="13sp"
-                        android:textStyle="bold"
+                       style="@style/CustomTextStylePoppinsBold"
                         android:paddingBottom="@dimen/ten"
                         android:text="@string/schedule_call"
-                        android:fontFamily="@font/poppins_bold"
                         android:textColor="@color/black">
 
                     </TextView>
@@ -191,12 +188,11 @@
                         android:layout_marginTop="@dimen/five"
                         android:gravity="center"
                         android:paddingStart="@dimen/five"
-                        android:textStyle="bold"
                         android:paddingEnd="@dimen/five"
                         android:paddingBottom="@dimen/ten"
                         android:textSize="13sp"
                         android:text="@string/text"
-                        android:fontFamily="@font/poppins_bold"
+                        style="@style/CustomTextStylePoppinsBold"
                         android:textColor="@color/black">
 
                     </TextView>
@@ -232,7 +228,7 @@
                             android:text="From Time"
                             android:textColor="@color/black"
                             android:textSize="@dimen/thirteen_sp"
-                            android:textStyle="bold">
+                           style="@style/CustomTextStylePoppinsBold">
 
                         </TextView>
 
@@ -292,10 +288,10 @@
                             android:layout_gravity="center"
                             android:layout_marginStart="@dimen/twenty"
                             android:layout_weight="0.4"
-                            android:text="To Time"
+                            android:text="Do not dial beyond"
                             android:textColor="@color/black"
                             android:textSize="@dimen/thirteen_sp"
-                            android:textStyle="bold">
+                           style="@style/CustomTextStylePoppinsBold">
 
                         </TextView>
 
@@ -355,10 +351,10 @@
                             android:layout_gravity="center"
                             android:layout_marginStart="@dimen/twenty"
                             android:layout_weight="0.4"
-                            android:text="Schedule Call"
+                            android:text="Schedule Date"
                             android:textColor="@color/black"
                             android:textSize="@dimen/thirteen_sp"
-                            android:textStyle="bold">
+                           style="@style/CustomTextStylePoppinsBold">
 
                         </TextView>
 
@@ -453,10 +449,9 @@
                         android:id="@+id/lblHistoryList"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/do_you_want_send_from_history"
+                        android:text="Send voice from history"
                         android:textColor="@color/navi_blue2"
-                        android:textStyle="normal"
-                        android:fontFamily="@font/poppins_medium"
+                        style="@style/CustomTextStylePoppinsMedium"
                         android:textSize="@dimen/thirteen_sp">
 
                     </TextView>
@@ -465,8 +460,7 @@
                         android:id="@+id/imgEndArrow"
                         android:layout_width="@dimen/twenty"
                         android:layout_height="@dimen/twenty"
-                        android:layout_marginEnd="@dimen/ten"
-                        android:src="@drawable/right_arrow_round">
+                        android:src="@drawable/arrowright">
 
                     </ImageView>
 
@@ -598,8 +592,7 @@
                         android:layout_toEndOf="@+id/SwitchEmergencyVoice"
                         android:text="@string/emergency_voice_messages"
                         android:textColor="@color/black"
-                        android:textStyle="normal"
-                        android:fontFamily="@font/poppins_regular"
+                      style="@style/CustomTextStylePoppinsRegular"
                         android:textSize="@dimen/thirteen_sp">
 
                     </TextView>
@@ -625,8 +618,7 @@
                         android:text="00:00 / 03:00"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp"
-                        android:textStyle="bold"
-                        android:fontFamily="@font/poppins_bold">
+                        style="@style/CustomTextStylePoppinsBold">
 
                     </TextView>
 
@@ -636,9 +628,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/lblDurationOfVoice"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerInParent="true"
+                        android:layout_alignParentEnd="false"
+                        android:layout_marginTop="@dimen/ten"
+                        android:layout_centerInParent="false"
                         android:layout_marginEnd="@dimen/twenty"
+                        android:layout_marginStart="15dp"
                         android:background="@drawable/rect_light_blue_light_radious"
                         android:padding="@dimen/ten">
 
@@ -658,8 +652,7 @@
                             android:layout_centerInParent="true"
                             android:layout_toEndOf="@+id/imgAddFile"
                             android:text="@string/add_file"
-                            android:textStyle="normal"
-                            android:fontFamily="@font/poppins_regular"
+                          style="@style/CustomTextStylePoppinsRegular"
                             android:textColor="@color/light_gray_"
                             android:textSize="@dimen/thirteen_sp">
                         </TextView>
@@ -774,9 +767,9 @@
                         android:id="@+id/rlaSendVoice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/rlaTitle"
+                        android:layout_below="@+id/lblDurationOfVoice"
                         android:layout_alignParentEnd="true"
-                        android:layout_marginTop="@dimen/thirty_five"
+                        android:layout_marginTop="@dimen/ten"
                         android:layout_marginEnd="@dimen/twenty"
                         android:background="@drawable/rect_blue_light_radious"
                         android:padding="@dimen/ten">
@@ -799,8 +792,7 @@
                             android:layout_marginStart="@dimen/five"
                             android:layout_toEndOf="@+id/imgSend"
                             android:text="@string/Send"
-                            android:textStyle="normal"
-                            android:fontFamily="@font/poppins_regular"
+                         style="@style/CustomTextStylePoppinsRegular"
                             android:textColor="@color/white"
                             android:textSize="@dimen/thirteen_sp">
 

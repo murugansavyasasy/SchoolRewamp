@@ -77,13 +77,17 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         appViewModel!!.init()
         isDashBoardData()
 
-
-
-        if (userDetails!!.is_staff || userDetails!!.child_details.size > 1) {
+        if(userDetails!!.is_parent && userDetails!!.is_staff){
             binding.lblChangeRoll.visibility = View.VISIBLE
-        } else {
-            binding.lblChangeRoll.visibility = View.GONE
         }
+        else{
+            if (userDetails!!.child_details.size > 1) {
+                binding.lblChangeRoll.visibility = View.VISIBLE
+            } else {
+                binding.lblChangeRoll.visibility = View.GONE
+            }
+        }
+
 
         binding.lblViewDetails.paintFlags =
             binding.lblViewDetails.paintFlags or Paint.UNDERLINE_TEXT_FLAG
