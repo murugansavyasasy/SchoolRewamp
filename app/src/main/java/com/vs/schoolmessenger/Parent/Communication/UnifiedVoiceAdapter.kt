@@ -19,6 +19,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.Communication.TextHistoryAdapter
+import com.vs.schoolmessenger.School.Communication.TextHistoryAdapter.DataViewHolder.ShimmerViewHolder
+import com.vs.schoolmessenger.Utils.ShimmerUtil
 import com.vs.schoolmessenger.Utils.WaveformSeekBar
 import kotlin.math.max
 
@@ -31,6 +34,7 @@ class UnifiedVoiceAdapter(
     private var isAccessToken: String,
     private var isFromArchive: Boolean
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
     private var currentlyPlayingHolder: DataViewHolder? = null
@@ -61,8 +65,8 @@ class UnifiedVoiceAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.shimmer_view_small_list, parent, false)
-            ShimmerViewHolder(view)
+            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.history_from_voice_message)
+            ShimmerViewHolder(shimmerView)
         } else {
             val view = LayoutInflater.from(parent.context).inflate(R.layout.history_from_voice_message, parent, false)
             DataViewHolder(view, context, appViewModel, isAccessToken, isFromArchive)
@@ -72,6 +76,8 @@ class UnifiedVoiceAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
             holder.bind(itemList!![position], position, listener, this)
+        } else if (holder is ShimmerViewHolder) {
+            holder.startShimmer()
         }
     }
 
@@ -117,8 +123,7 @@ class UnifiedVoiceAdapter(
         private val progressUpdater = object : Runnable {
             override fun run() {
                 if (isPrepared && mediaPlayer.isPlaying) {
-                    val normalizedPower = max(1f, (1f + 160) / 160)
-                    waveformSeekBar.updateWithLevel(normalizedPower)
+                    waveformSeekBar.updateWithLevel(1f)
                     lblStartDuration.text = formatTime(mediaPlayer.currentPosition)
                     handler.postDelayed(this, 100)
                 }
@@ -134,10 +139,14 @@ class UnifiedVoiceAdapter(
             if (data.type.equals("VOICE", ignoreCase = true)) {
                 rlaVoice.visibility = View.VISIBLE
                 rlaText.visibility = View.GONE
+
                 lblTitle.text = data.description ?: ""
                 lblDate.text = data.date ?: ""
                 lblTime.text = data.time ?: ""
-                lblnewiconVoice.visibility = if (data.is_unread == true) View.VISIBLE else View.GONE
+
+                lblnewiconVoice.visibility = if (data.is_unread) View.VISIBLE else View.GONE
+                lblnewiconText.visibility = View.GONE
+
                 rlaSendVoice.visibility = View.GONE
                 isSeeMoreVisibility(lblContentText, lblSeeMore)
 
@@ -145,29 +154,15 @@ class UnifiedVoiceAdapter(
                     lblEndDuration.text = formatTime(duration)
                 }
 
-
-//                lblviewtext.setOnClickListener {
-//                    listener.onItemClick(data, this@DataViewHolder)
-//                    lblviewtext.visibility = View.GONE
-//                    if (data.is_archive ==true) {
-//                        listener.onUpdateArchiveStatus(data.type, data.id)
-//                    } else {
-//                        listener.onUpdateCommunicationStatus(data.type, data.id)
-//                    }
-//                }
-
-
-
-
                 imgVoicePlay.setOnClickListener {
                     listener.onItemClick(data, this@DataViewHolder)
                     lblnewiconVoice.visibility = View.GONE
+
                     if (data.is_archive) {
                         listener.onUpdateArchiveStatus(data.type, data.id)
                     } else {
                         listener.onUpdateCommunicationStatus(data.type, data.id)
                     }
-
 
                     if (adapter.currentlyPlayingHolder != null && adapter.currentlyPlayingHolder != this) {
                         adapter.currentlyPlayingHolder?.stopAudioPlayback()
@@ -177,7 +172,7 @@ class UnifiedVoiceAdapter(
                         pauseAudio()
                     } else {
                         if (!isPrepared) {
-                            initializeMediaPlayer(data.content?: "")
+                            initializeMediaPlayer(data.content ?: "")
                         } else {
                             resumeAudio()
                         }
@@ -189,14 +184,17 @@ class UnifiedVoiceAdapter(
             } else {
                 rlaVoice.visibility = View.GONE
                 rlaText.visibility = View.VISIBLE
+
                 lblTitleText.text = data.description ?: ""
                 lblContentText.text = data.content ?: ""
                 lblDateText.text = data.date ?: ""
                 lblTimeText.text = data.time ?: ""
+
                 rlaSelectText.visibility = View.GONE
                 rlaSendVoice.visibility = View.GONE
-                lblnewiconVoice.visibility = if (data.is_unread == true) View.VISIBLE else View.GONE
-//                lblviewtext.visibility = if (data.is_unread == true) View.VISIBLE else View.GONE
+
+                lblnewiconText.visibility = if (data.is_unread) View.VISIBLE else View.GONE
+                lblnewiconVoice.visibility = View.GONE
             }
 
             lblSeeMore.setOnClickListener {
@@ -214,11 +212,82 @@ class UnifiedVoiceAdapter(
                     startAudioProgressUpdate()
                     start()
                     isPlayingVoice = true
-                    updatePlayPauseIcon(isPlaying = true)
+                    updatePlayPauseIcon(true)
                 }
                 setOnCompletionListener {
                     resetPlaybackState()
                 }
+            }
+        }
+
+        private fun pauseAudio() {
+            mediaPlayer.pause()
+            lastPosition = mediaPlayer.currentPosition
+            isPlayingVoice = false
+            updatePlayPauseIcon(false)
+            waveformSeekBar.updateWithLevel(0f)
+        }
+
+        private fun resumeAudio() {
+            mediaPlayer.seekTo(lastPosition)
+            mediaPlayer.start()
+            isPlayingVoice = true
+            startAudioProgressUpdate()
+            updatePlayPauseIcon(true)
+        }
+
+        fun stopAudioPlayback() {
+            if (::mediaPlayer.isInitialized) {
+                if (mediaPlayer.isPlaying) mediaPlayer.stop()
+                mediaPlayer.reset()
+                mediaPlayer.release()
+                resetPlaybackState()
+            }
+        }
+
+        private fun resetPlaybackState() {
+            stopAudioProgressUpdate()
+            isPrepared = false
+            isPlayingVoice = false
+            lastPosition = 0
+            waveformSeekBar.updateWithLevel(0f)
+            updatePlayPauseIcon(false)
+        }
+
+        private fun updatePlayPauseIcon(isPlaying: Boolean) {
+            val icon = if (isPlaying) R.drawable.pause_icon else R.drawable.video_play
+            imgVoicePlay.setImageDrawable(ContextCompat.getDrawable(context, icon))
+        }
+
+        private fun startAudioProgressUpdate() {
+            handler.post(progressUpdater)
+        }
+
+        private fun stopAudioProgressUpdate() {
+            handler.removeCallbacks(progressUpdater)
+        }
+
+        private fun formatTime(milliseconds: Int): String {
+            val seconds = (milliseconds / 1000) % 60
+            val minutes = (milliseconds / (1000 * 60)) % 60
+            return String.format("%02d:%02d", minutes, seconds)
+        }
+
+        private fun getAudioDuration(audioUrl: String, callback: (Int) -> Unit) {
+            val tempMediaPlayer = MediaPlayer()
+            try {
+                tempMediaPlayer.setDataSource(audioUrl)
+                tempMediaPlayer.prepareAsync()
+                tempMediaPlayer.setOnPreparedListener {
+                    callback(tempMediaPlayer.duration)
+                    tempMediaPlayer.release()
+                }
+                tempMediaPlayer.setOnErrorListener { mp, _, _ ->
+                    mp.release()
+                    false
+                }
+            } catch (e: Exception) {
+                tempMediaPlayer.release()
             }
         }
 
@@ -238,78 +307,6 @@ class UnifiedVoiceAdapter(
                 }
             }
         }
-
-        private fun pauseAudio() {
-            mediaPlayer.pause()
-            lastPosition = mediaPlayer.currentPosition
-            isPlayingVoice = false
-            updatePlayPauseIcon(isPlaying = false)
-            waveformSeekBar.updateWithLevel(0f)
-        }
-
-        private fun resumeAudio() {
-            mediaPlayer.seekTo(lastPosition)
-            mediaPlayer.start()
-            isPlayingVoice = true
-            startAudioProgressUpdate()
-            updatePlayPauseIcon(isPlaying = true)
-        }
-
-        fun stopAudioPlayback() {
-            if (::mediaPlayer.isInitialized) {
-                if (mediaPlayer.isPlaying) mediaPlayer.stop()
-                mediaPlayer.reset()
-                resetPlaybackState()
-                mediaPlayer.release()
-            }
-        }
-
-        private fun updatePlayPauseIcon(isPlaying: Boolean) {
-            val icon = if (isPlaying) R.drawable.pause_icon else R.drawable.video_play
-            imgVoicePlay.setImageDrawable(ContextCompat.getDrawable(context, icon))
-        }
-
-        private fun resetPlaybackState() {
-            stopAudioProgressUpdate()
-            isPrepared = false
-            isPlayingVoice = false
-            lastPosition = 0
-            waveformSeekBar.updateWithLevel(0f)
-            updatePlayPauseIcon(isPlaying = false)
-        }
-
-        private fun startAudioProgressUpdate() {
-            handler.post(progressUpdater)
-        }
-
-        private fun stopAudioProgressUpdate() {
-            handler.removeCallbacks(progressUpdater)
-        }
-
-        private fun formatTime(milliseconds: Int): String {
-            val seconds = (milliseconds / 1000) % 60
-            val minutes = (milliseconds / (1000 * 60)) % 60
-            return String.format("%02d:%02d", minutes, seconds)
-        }
-
-        // Get audio duration asynchronously
-        private fun getAudioDuration(audioUrl: String, callback: (Int) -> Unit) {
-            val tempMediaPlayer = MediaPlayer()
-            try {
-                tempMediaPlayer.setDataSource(audioUrl)
-                tempMediaPlayer.prepareAsync()
-                tempMediaPlayer.setOnPreparedListener {
-                    callback(tempMediaPlayer.duration)
-                    tempMediaPlayer.release()
-                }
-                tempMediaPlayer.setOnErrorListener { mp, _, _ ->
-                    mp.release()
-                    false
-                }
-            } catch (e: Exception) {
-                tempMediaPlayer.release()
-            }
-        }
     }
 
     fun releaseMediaPlayer() {
@@ -322,12 +319,14 @@ class UnifiedVoiceAdapter(
         notifyDataSetChanged()
     }
 
-    class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val shimmerLayout: ShimmerFrameLayout =
-            itemView.findViewById(R.id.shimmer_view_container)
+    fun setLoadingState(loading: Boolean) {
+        isLoading = loading
+        notifyDataSetChanged()
+    }
 
-        init {
-            shimmerLayout.startShimmer()
+    class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        fun startShimmer() {
+            ShimmerUtil.startShimmer(itemView)
         }
     }
 }

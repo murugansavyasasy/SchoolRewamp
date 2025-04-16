@@ -80,8 +80,13 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
         binding.btnGo.setOnClickListener {
             val intent = Intent(this, SchoolDashboard::class.java)
             SharedPreference.putStaffDetails(
+<<<<<<< HEAD
+            this,
+            Constant.user_data!![0].user_details.staff_details[0]
+=======
                 this,
                 Constant.user_data!![0].user_details.staff_details[0]
+>>>>>>> 6497069e0f629fdfb7427581689eddf96a9bd779
             )
             startActivity(intent)
         }

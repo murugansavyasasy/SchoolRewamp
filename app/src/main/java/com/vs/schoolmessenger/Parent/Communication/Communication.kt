@@ -70,23 +70,24 @@ class Communication : BaseActivity<CommunicationBinding>(), View.OnClickListener
             override fun afterTextChanged(s: Editable?) {}
         })
 
-
         appViewModel?.isGetCommmunicationlist?.observe(this) { response ->
             if (response?.status == true) {
                 appendData(response.data, archiveFlag = true)
+            } else {
+                checkAndShowNoData()
             }
         }
 
         appViewModel?.isGetCommmunicationlistload?.observe(this) { response ->
             if (response?.status == true) {
                 appendData(response.data, archiveFlag = false)
+            } else {
+                checkAndShowNoData()
             }
         }
 
         fetchInitialData()
     }
-
-
 
     override fun onClick(v: View?) {
         when (v?.id) {
@@ -109,25 +110,16 @@ class Communication : BaseActivity<CommunicationBinding>(), View.OnClickListener
                 popupMenu.show()
             }
 
-
             R.id.rlaTextMessage -> {
                 adapter?.updateData()
                 adapter?.notifyDataSetChanged()
-                isChangeBackRoundCommunicationType(
-                    binding.rlaTextMessage,
-                    binding.imgTextMessage,
-                    binding.lblTextMessage
-                )
+                isChangeBackRoundCommunicationType(binding.rlaTextMessage, binding.imgTextMessage, binding.lblTextMessage)
             }
 
             R.id.rlaVoiceMessage -> {
                 adapter?.updateData()
                 adapter?.notifyDataSetChanged()
-                isChangeBackRoundCommunicationType(
-                    binding.rlaVoiceMessage,
-                    binding.imgVoiceMessage,
-                    binding.lblVoiceMessage
-                )
+                isChangeBackRoundCommunicationType(binding.rlaVoiceMessage, binding.imgVoiceMessage, binding.lblVoiceMessage)
             }
 
             R.id.seeMoreLabel -> {
@@ -139,7 +131,6 @@ class Communication : BaseActivity<CommunicationBinding>(), View.OnClickListener
             }
         }
     }
-
 
     private fun applyCombinedFilter() {
         var filteredList = when (currentFilter) {
@@ -158,8 +149,8 @@ class Communication : BaseActivity<CommunicationBinding>(), View.OnClickListener
         }
 
         adapter?.updateList(filteredList)
+        checkAndShowNoData(filteredList)
     }
-
 
     private fun fetchInitialData() {
         isInitialLoad = true
@@ -172,13 +163,10 @@ class Communication : BaseActivity<CommunicationBinding>(), View.OnClickListener
     }
 
     private fun appendData(newData: List<VoiceData>?, archiveFlag: Boolean) {
+        if (isInitialLoad) allVoiceData.clear()
+
         newData?.let {
-            if (isInitialLoad) {
-                allVoiceData.clear()
-            }
-
             val processedData = it.map { item -> item.copy(is_archive = archiveFlag) }
-
             allVoiceData.addAll(processedData)
 
             if (adapter == null) {
@@ -197,7 +185,20 @@ class Communication : BaseActivity<CommunicationBinding>(), View.OnClickListener
                 adapter?.setIsFromArchive(archiveFlag)
                 adapter?.updateList(allVoiceData)
             }
+
+            applyCombinedFilter() // Reapply filters after appending data
         }
+
+        checkAndShowNoData()
+    }
+
+    private fun checkAndShowNoData(filteredList: List<VoiceData>? = null) {
+        val listToCheck = filteredList ?: allVoiceData
+        val isEmpty = listToCheck.isEmpty()
+
+        binding.txtNoData.visibility = if (isEmpty) View.VISIBLE else View.GONE
+        binding.nomessage.visibility = if (isEmpty) View.VISIBLE else View.GONE
+        binding.recyclerInitial.visibility = if (isEmpty) View.GONE else View.VISIBLE
     }
 
     private fun showShimmer() {
@@ -237,7 +238,7 @@ class Communication : BaseActivity<CommunicationBinding>(), View.OnClickListener
     }
 
     override fun onItemClick(data: VoiceData, holder: UnifiedVoiceAdapter.DataViewHolder) {
-        // Handle item click here if needed
+        // Handle item click here
     }
 
     private fun isChangeBackRoundCommunicationType(
@@ -262,4 +263,5 @@ class Communication : BaseActivity<CommunicationBinding>(), View.OnClickListener
         }
     }
 }
+
 
