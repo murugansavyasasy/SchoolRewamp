@@ -26,7 +26,6 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.AWS.AwsUploadingPreSigned
-import com.vs.schoolmessenger.AWS.CurrentDatePicking
 import com.vs.schoolmessenger.AWS.UploadCallback
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
@@ -78,7 +77,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     var isAcademicYearId = -1
     var isAcademicYear: List<AcademicYear>? = null
     var isFileName: String? = null
-    var isPickingFileExtension=""
     private val progressUpdater = object : Runnable {
         override fun run() {
             if (isPrepared && mediaPlayer!!.isPlaying) {
@@ -387,6 +385,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun stopRecording() {
         val parts = binding.lblDurationOfVoice.text.toString().split(" / ")
         if (parts.isNotEmpty()) {
@@ -406,6 +405,10 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 recordingHandler.removeCallbacks(recordingRunnable)
 
                 val file = File(audioFilePath)
+                val currentDate: String? = Constant.getCurrentDate()
+                val isFileExtension = getFileExtensionFromAwsUrl(audioFilePath.toString())
+                isFileName = "sss_" + currentDate + "." + isFileExtension
+
                 Log.d(
                     "RecordingFilePath",
                     "Stopped. Path: $audioFilePath, Exists: ${file.exists()}, Size: ${file.length()} bytes"
@@ -585,7 +588,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         isFilePath: String, schoolId: String, isFileType: String?
     ) {
         val isCountryId = SharedPreference.getCountryId(this)
-        isAwsUploadingPreSigned!!.getPreSignedUrl(isPickingFileExtension,
+        isAwsUploadingPreSigned!!.getPreSignedUrl(
+            Constant.isPickingFileExtension,
             isFilePath, schoolId, isFileType!!,
             this, isCountryId!!,
             true,
@@ -994,7 +998,9 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             isEndTimeText = binding.lblEndTime.text.toString(),
             title = binding.edtTitle.text.toString(),
             isEmergency = isEmergency,
-            isScheduleCall = isScheduleCall
+            isScheduleCall = isScheduleCall,
+            isAwsUrl = audioFilePath.toString(),
+            isFileName = isFileName.toString()
         )
         Constant.isVoiceSendingData = voiceData
     }
@@ -1151,7 +1157,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         binding.rlaRecordVoice.visibility = View.GONE
         binding.rlaMessageFromText.visibility = View.VISIBLE
         binding.rlaSendText.visibility = View.VISIBLE
-
         binding.edtTitleTextMessage.setText(data.content.toString())
         binding.edtContentTextMessage.setText(data.description.toString())
     }
@@ -1161,6 +1166,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         binding.lblEndTime.text = String.format("%02d:%02d %s", hour, minute, amPm)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onItemClick(
         data: VoiceHistoryDetails, holder: VoiceHistoryAdapter.DataViewHolder
     ) {
@@ -1204,7 +1210,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         audioFilePath = voiceUrlOrPath
 
 
-        val currentDate: String? = CurrentDatePicking.currentDate
+        val currentDate: String? = Constant.getCurrentDate()
         val isFileExtension = getFileExtensionFromAwsUrl(data.url)
         isFileName = "sss_" + currentDate + "." + isFileExtension
 
@@ -1232,9 +1238,14 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                         )
                         appViewModel!!.isSendText(isAccessToken!!, jsonObject, this)
                     } else {
-                        isFileUploadInAws(
-                            Constant.isVoiceFile!!, isStaffDetails!!.school_id, "audio"
-                        )
+                        if (Constant.isVoiceType == 3) {
+                            voiceSendApi(audioFilePath)
+                        } else {
+                            isFileUploadInAws(
+                                Constant.isVoiceFile!!, isStaffDetails!!.school_id, "audio"
+                            )
+                        }
+
                     }
                 }.setNegativeButton("Cancel") { dialog, _ ->
                     dialog.dismiss()
@@ -1254,6 +1265,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -1267,8 +1279,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 val isFileExtension =
                     isFileExtensionFromContentUri!!.getFileExtensionFromContentUri(this, uri)
                 Log.d("isFileExtension++", isFileExtension.toString())
-                isPickingFileExtension = isFileExtension.toString()
-                val currentDate: String? = CurrentDatePicking.currentDate
+                Constant.isPickingFileExtension = isFileExtension.toString()
+                val currentDate: String? = Constant.getCurrentDate()
                 isFileName = "sss_" + currentDate + "." + isFileExtension
 
                 audioFilePath = uri.toString()
@@ -1276,7 +1288,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 Constant.isVoiceFile = audioFilePath
                 binding.rlaSeekBarAndTitle.visibility = View.VISIBLE
                 binding.rlaTitle.visibility = View.VISIBLE
-                initializeMediaPlayer()
+                // initializeMediaPlayer()
             }
         }
     }

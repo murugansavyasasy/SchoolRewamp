@@ -210,7 +210,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         isFilePath: String, schoolId: String, isFileType: String?
     ) {
         val isCountryId = SharedPreference.getCountryId(this)
-        isAwsUploadingPreSigned!!.getPreSignedUrl("",
+        isAwsUploadingPreSigned!!.getPreSignedUrl(Constant.isPickingFileExtension,
             isFilePath, schoolId, isFileType!!,
             this, isCountryId!!,
             true,
@@ -247,7 +247,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             schoolId = selectedSchoolIds,
             targetType = Constant.isSchool,
             circularType = Constant.school,
-            fileName = "sss_12-04-2025.mp3"
+            fileName = isVoiceData.isFileName
         )
         appViewModel!!.isVoiceSend(isAccessToken!!, jsonObject, this)
 
@@ -269,9 +269,14 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                     )
                     appViewModel!!.isSendText(isAccessToken!!, jsonObject, this)
                 } else {
-                    isFileUploadInAws(
-                        Constant.isVoiceFile!!, isStaffDetails!!.school_id, "audio"
-                    )
+                    if (Constant.isVoiceType == 3) {
+                        val isVoiceData = Constant.isVoiceSendingData
+                        voiceSendApi(isVoiceData!!.isAwsUrl)
+                    } else {
+                        isFileUploadInAws(
+                            Constant.isVoiceFile!!, isStaffDetails!!.school_id, "audio"
+                        )
+                    }
                 }
             }.setNegativeButton("Cancel") { dialog, _ ->
                 dialog.dismiss()

@@ -8,5 +8,7 @@ data class VoiceSendingData(
     val isEndTimeText: String,
     val title: String,
     val isEmergency: Int,
-    val isScheduleCall: Boolean
+    val isScheduleCall: Boolean,
+    val isAwsUrl: String,
+    val isFileName: String,
 )

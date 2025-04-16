@@ -46,11 +46,10 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
             binding.lblTeacher.visibility = View.VISIBLE
             binding.lblParent.visibility = View.VISIBLE
             binding.lblLoginTeacherOrParent.visibility = View.VISIBLE
-            binding.lblLoginTeacherOrParent.text = "Login As "+role_name+" or Student"
+            binding.lblLoginTeacherOrParent.text = "Login As " + role_name + " or Student"
             isLoadData(true)
 
-        }
-        else if (isStaff == true) {
+        } else if (isStaff == true) {
             binding.lblTeacher.visibility = View.VISIBLE
             binding.lblParent.visibility = View.GONE
             binding.lblLoginTeacherOrParent.visibility = View.GONE

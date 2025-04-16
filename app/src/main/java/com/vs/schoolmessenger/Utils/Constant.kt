@@ -130,6 +130,8 @@ object Constant {
     var group = "G"
     var student = "student"
     var staff = "staff"
+    var isPickingFileExtension=""
+
 
 
     var isVoiceFile: String? = null
