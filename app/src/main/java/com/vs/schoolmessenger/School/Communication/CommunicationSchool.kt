@@ -43,6 +43,7 @@ import com.vs.schoolmessenger.Utils.FileExtensionFromContentUri
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.Utils.TimeSelectedListener
 import com.vs.schoolmessenger.databinding.CommunicationSchoolBinding
+import java.io.File
 import java.io.IOException
 import kotlin.math.max
 
@@ -125,7 +126,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         binding.rlaSendText.setOnClickListener(this)
         binding.rlaAddLocalFile.setOnClickListener(this)
         binding.rlaAcademicYear.setOnClickListener(this)
-
+        binding.imgClose.setOnClickListener(this)
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
@@ -135,12 +136,15 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
 
         checkAndRequestPermissions(this)
+<<<<<<< HEAD
         mediaRecorder = MediaRecorder()
 //        mediaRecorder!!.setAudioSource(MediaRecorder.AudioSource.MIC)
 //        mediaRecorder!!.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
 //        mediaRecorder!!.setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
         audioFilePath = "${externalCacheDir?.absolutePath}/audiorecord.m4a"
         mediaRecorder!!.setOutputFile(audioFilePath)
+=======
+>>>>>>> 6497069e0f629fdfb7427581689eddf96a9bd779
 
         isAwsUploadingPreSigned = AwsUploadingPreSigned()
         isFileExtensionFromContentUri = FileExtensionFromContentUri()
@@ -202,7 +206,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     isAcademicYear = reorderedList
                     binding.lblAcademicYear.text = isAcademicYear!![0].year
                     isAcademicYearId = isAcademicYear!![0].id
-
                 }
             }
         }
@@ -354,11 +357,15 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
     private fun startRecording() {
         if (checkAndRequestPermissions(this)) {
+
+            val dir = externalCacheDir ?: cacheDir
+            audioFilePath = "${dir.absolutePath}/audiorecord.m4a"
+
             mediaRecorder = MediaRecorder().apply {
                 setAudioSource(MediaRecorder.AudioSource.MIC)
-                setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
+                setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
+                setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
                 setOutputFile(audioFilePath)
-                setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
 
                 try {
                     binding.imgVoiceRecord.setImageDrawable(
@@ -367,10 +374,12 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     prepare()
                     start()
                     isRecording = true
-                    recordingTime = 0 // Reset recording time
-                    recordingHandler.post(recordingRunnable) // Start updating time
+                    recordingTime = 0
+                    recordingHandler.post(recordingRunnable)
                     Toast.makeText(
-                        this@CommunicationSchool, "Recording started", Toast.LENGTH_SHORT
+                        this@CommunicationSchool,
+                        "Recording started",
+                        Toast.LENGTH_SHORT
                     ).show()
                 } catch (e: IOException) {
                     e.printStackTrace()
@@ -378,8 +387,12 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                         .show()
                 }
             }
+
         } else {
-            checkAndRequestPermissions(this)
+            // checkAndRequestPermissions(this)
+            Toast.makeText(this@CommunicationSchool, "Allow the permission", Toast.LENGTH_SHORT)
+                .show()
+            openAppSettings()
         }
     }
 
@@ -389,120 +402,123 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             val currentDuration = parts[0]
             binding.lblEndDuration.text = currentDuration
         }
-        //        loadWaveform()
+
         mediaRecorder?.apply {
             binding.imgVoiceRecord.setImageDrawable(
                 ContextCompat.getDrawable(this@CommunicationSchool, R.drawable.record_icon)
             )
-            stop()
-            release()
-            mediaRecorder = null
-            isRecording = false
-            recordingHandler.removeCallbacks(recordingRunnable) // Stop updating time
-            Toast.makeText(this@CommunicationSchool, "Recording stopped", Toast.LENGTH_SHORT).show()
-            Log.d(
-                "RecordingFilePath", "Recording stopped. File Path: $audioFilePath"
-            ) // Print the file path when recording stops
-            Constant.isVoiceFile = audioFilePath
-            binding.rlaSeekBarAndTitle.visibility = View.VISIBLE
-            binding.rlaTitle.visibility = View.VISIBLE
+            try {
+                stop()
+                release()
+                mediaRecorder = null
+                isRecording = false
+                recordingHandler.removeCallbacks(recordingRunnable)
+
+                val file = File(audioFilePath)
+                Log.d(
+                    "RecordingFilePath",
+                    "Stopped. Path: $audioFilePath, Exists: ${file.exists()}, Size: ${file.length()} bytes"
+                )
+
+                if (file.exists() && file.length() > 0L) {
+                    Constant.isVoiceFile = audioFilePath
+                    binding.rlaSeekBarAndTitle.visibility = View.VISIBLE
+                    binding.rlaTitle.visibility = View.VISIBLE
+                    Toast.makeText(
+                        this@CommunicationSchool,
+                        "Recording stopped",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    Toast.makeText(
+                        this@CommunicationSchool,
+                        "Recording failed: File not valid",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Toast.makeText(
+                    this@CommunicationSchool,
+                    "Failed to stop recording",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
     }
-
-
     private fun initializeMediaPlayer() {
         if (audioFilePath.isNullOrEmpty()) {
             Log.e("MediaPlayerError", "Audio file path is null or empty")
             return
         }
 
-        // Clean up previous media player instance if it's not null
+        // Release any existing player
         mediaPlayer?.apply {
-            stop()
+            try {
+                stop()
+            } catch (e: IllegalStateException) {
+                Log.w("MediaPlayerError", "Tried to stop() a player not in a valid state.")
+            }
             release()
         }
-        // Get file extension
+
+        // Extract extension (just for logging)
         val fileExtension = getFileExtension(audioFilePath!!)
         Log.d("MediaPlayerDebug", "File extension: $fileExtension")
-        val currentDate: String? = CurrentDatePicking.currentDate
-        isFileName = "sss_" + currentDate + "." + fileExtension
-
 
         mediaPlayer = MediaPlayer().apply {
             try {
                 val uri = Uri.parse(audioFilePath)
 
-                // Check if URI starts with "content://" or "file://"
                 if (audioFilePath!!.startsWith("content://") || audioFilePath!!.startsWith("file://")) {
-                    Log.d("MediaPlayerDebug", "Using content or file URI: $uri")
                     setDataSource(this@CommunicationSchool, uri)
                 } else if (audioFilePath!!.startsWith("http")) {
-                    Log.d("MediaPlayerDebug", "Using HTTP URL: $audioFilePath")
                     setDataSource(audioFilePath)
                 } else {
-                    Log.e("MediaPlayerError", "Invalid audio file path: $audioFilePath")
-                    return
+                    // Use file path directly
+                    setDataSource(audioFilePath)
                 }
 
-                // Prepare asynchronously for playback
-                prepareAsync()
-
-                // On prepared listener to start playback and set progress updates
                 setOnPreparedListener {
                     isPrepared = true
+                    it.start()
+                    isPlayingVoice = true
                     startAudioProgressUpdate()
                     updateCurrentTime()
+
+                    binding.imgVoicePlay.setImageDrawable(
+                        ContextCompat.getDrawable(this@CommunicationSchool, R.drawable.pause_icon)
+                    )
                 }
 
-                // On completion listener to handle playback completion
                 setOnCompletionListener {
                     stopAudioProgressUpdate()
                     lastPosition = 0
                     isPlayingVoice = false
+                    isPrepared = false
+
                     binding.imgVoicePlay.setImageDrawable(
                         ContextCompat.getDrawable(this@CommunicationSchool, R.drawable.video_play)
                     )
-
                     binding.lblStartDuration.text = "00:00"
+                    binding.waveformSeekBar.updateWithLevel(0f)
+                    Log.d("AudioDebug", "Playback completed.")
                 }
 
+                prepareAsync()
+
             } catch (e: IOException) {
-                Log.e("MediaPlayerError", "Error preparing MediaPlayer: ${e.message}")
+                Log.e("MediaPlayerError", "IO Error: ${e.message}")
             } catch (e: IllegalStateException) {
-                Log.e("MediaPlayerError", "IllegalStateException: ${e.message}")
+                Log.e("MediaPlayerError", "Illegal state: ${e.message}")
             } catch (e: Exception) {
                 Log.e("MediaPlayerError", "Unexpected error: ${e.message}")
             }
         }
-
-//        if (audioFilePath.isNullOrEmpty()) {
-//            Log.e("MediaPlayerError", "Audio file path is null or empty")
-//            return
-//        }
-//
-//        mediaPlayer = MediaPlayer().apply {
-//            setDataSource(audioFilePath)
-//            prepareAsync() // Prepare asynchronously
-//
-//            setOnPreparedListener {
-//                isPrepared = true
-//                startAudioProgressUpdate() // Start updating progress
-//                start() // Start playback
-//                updateCurrentTime() // Start updating current time
-//            }
-//
-//            setOnCompletionListener {
-//
-//                stopAudioProgressUpdate()
-//                lastPosition = 0 // Reset last position on completion
-//                isPlayingVoice = false // Update playback state
-//                binding.imgVoicePlay.setImageDrawable(
-//                    ContextCompat.getDrawable(this@CommunicationSchool, R.drawable.video_play)
-//                ) // Change icon to play
-//                binding.lblStartDuration.text = "00:00"
-//            }
-//        }
     }
+
+
 
 
     private fun updateCurrentTime() {
@@ -529,7 +545,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         handler.post(progressUpdater)
         binding.waveformSeekBar.invalidate() // Force redraw
     }
-
     private fun stopAudioProgressUpdate() {
         handler.removeCallbacks(progressUpdater)
         binding.waveformSeekBar.updateWithLevel(0f)
@@ -543,7 +558,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         if (checkAndRequestPermissions(this)) {
             println("Permissions granted after returning from settings.") // Debug log
         } else {
-            openAppSettings()
+            // openAppSettings()
         }
         // Consider restoring playback or UI state if necessary
     }
@@ -732,9 +747,16 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
 
             R.id.rlaAddLocalFile -> {
+                stopAudioProgressUpdate()
                 openAudioFilePicker()
             }
 
+            R.id.imgClose -> {
+                binding.lblDurationOfVoice.text = "00:00 / 03:00"
+                binding.rlaSeekBarAndTitle.visibility = View.GONE
+                binding.rlaTitle.visibility = View.GONE
+                Constant.isVoiceFile = ""
+            }
 
             R.id.rlaSendText -> {
                 if (binding.edtTitleTextMessage.text.toString() != "") {
@@ -784,52 +806,42 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
 
             R.id.imgVoicePlay -> {
-
-                if (isPlayingVoice) {
-                    // Pause the media player
-                    mediaPlayer?.let {
-                        it.pause()
-                        lastPosition = it.currentPosition // Save current position
-                        isPlayingVoice = false
-                        binding.imgVoicePlay.setImageDrawable(
-                            ContextCompat.getDrawable(
-                                this, R.drawable.video_play
-                            ) // Change icon to play
-                        )
-
-                    }
+                if (isPlayingVoice && mediaPlayer != null && mediaPlayer!!.isPlaying) {
+                    // 🔁 Pause logic
+                    mediaPlayer?.pause()
+                    stopAudioProgressUpdate()
+                    lastPosition = mediaPlayer!!.currentPosition
+                    isPlayingVoice = false
+                    binding.imgVoicePlay.setImageDrawable(
+                        ContextCompat.getDrawable(this, R.drawable.video_play)
+                    )
                 } else {
-                    // If the media player is not initialized, initialize it
+                    // 🔁 Play logic
+                    Log.d("AudioDebug", "Play button clicked, isPrepared=$isPrepared")
+                    Log.d("AudioDebug", "audioFilePath = $audioFilePath")
+
+                    val normalizedPower = max(1f, (1f + 160) / 160)
+                    binding.waveformSeekBar.updateWithLevel(normalizedPower)
+
                     if (!isPrepared) {
-                        val normalizedPower = max(1f, (1f + 160) / 160)
-                        binding.waveformSeekBar.updateWithLevel(normalizedPower)
-                        initializeMediaPlayer() // Prepare the media player for the first time
-                        binding.imgVoicePlay.setImageDrawable(
-                            ContextCompat.getDrawable(
-                                this, R.drawable.pause_icon
-                            ) // Change icon to pause
-                        )
-                        isPlayingVoice = true
+                        initializeMediaPlayer()
                     } else {
-                        val normalizedPower = max(1f, (1f + 160) / 160)
-                        binding.waveformSeekBar.updateWithLevel(normalizedPower)
-                        // Resume playback from the last position
                         mediaPlayer?.let {
-                            it.seekTo(lastPosition) // Seek to last position
-                            it.start() // Start playing
+                            it.seekTo(lastPosition)
+                            it.start()
                             isPlayingVoice = true
                             binding.imgVoicePlay.setImageDrawable(
-                                ContextCompat.getDrawable(
-                                    this, R.drawable.pause_icon
-                                ) // Change icon to pause
+                                ContextCompat.getDrawable(this, R.drawable.pause_icon)
                             )
-                            startAudioProgressUpdate() // Start updating progress again
-                        }
+                            startAudioProgressUpdate()
+                        } ?: Log.e("AudioDebug", "mediaPlayer is null on resume!")
                     }
                 }
             }
 
+
             R.id.imgVoiceRecord -> {
+                stopAudioProgressUpdate()
                 if (!isRecording) {
                     Constant.isVoiceType = 1
                     startRecording()
@@ -900,6 +912,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
 
             R.id.lnrHistoryList -> {
+                stopAudioProgressUpdate()
                 when (Constant.isClickType) {
                     1 -> {
                         binding.rcyHistoryDataVoiceAndText.visibility = View.VISIBLE
@@ -1205,7 +1218,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         isFileName = "sss_" + currentDate + "." + isFileExtension
 
         // Initialize and play
-        initializeMediaPlayer()
+      //  initializeMediaPlayer()
     }
 
 
@@ -1263,7 +1276,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 val isFileExtension =
                     isFileExtensionFromContentUri!!.getFileExtensionFromContentUri(this, uri)
                 Log.d("isFileExtension++", isFileExtension.toString())
-                isPickingFileExtension=isFileExtension.toString()
+                isPickingFileExtension = isFileExtension.toString()
                 val currentDate: String? = CurrentDatePicking.currentDate
                 isFileName = "sss_" + currentDate + "." + isFileExtension
 
@@ -1285,7 +1298,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
     fun getFileExtensionFromAwsUrl(url: String): String? {
         val fileName = url.substringAfterLast("/")
-
         return getFileExtension(fileName)
     }
 

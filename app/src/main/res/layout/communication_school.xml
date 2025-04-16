@@ -666,6 +666,7 @@
                         android:layout_below="@+id/rlaAddLocalFile">
 
                         <ImageView
+                            android:id="@+id/imgClose"
                             android:layout_width="@dimen/twenty_five"
                             android:layout_height="@dimen/twenty_five"
                             android:layout_alignParentEnd="true"

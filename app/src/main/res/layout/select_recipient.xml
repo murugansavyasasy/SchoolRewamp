@@ -149,12 +149,25 @@
         </TextView>
     </RelativeLayout>
 
+    <CheckBox
+        android:id="@+id/chAllSelect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rlaStandard"
+        android:layout_marginStart="@dimen/fifteen"
+        android:text="Select all"
+        android:textColor="@color/black"
+        android:textSize="@dimen/fifteen_sp"
+        android:textStyle="bold">
+
+    </CheckBox>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rlaStandard"
+        android:layout_below="@+id/chAllSelect"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginTop="@dimen/ten"
         android:layout_marginEnd="@dimen/ten"

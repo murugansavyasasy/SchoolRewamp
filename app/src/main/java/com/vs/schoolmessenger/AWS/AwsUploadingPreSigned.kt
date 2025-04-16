@@ -13,6 +13,7 @@ import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import retrofit2.Call
 import retrofit2.Response
+import java.io.File
 
 class AwsUploadingPreSigned {
     var isBucket: String = ""
@@ -165,7 +166,7 @@ class AwsUploadingPreSigned {
     }
 
     fun getFileNameFromPath(filePath: String): String {
-        val file = java.io.File(filePath)
+        val file = File(filePath)
         return file.name
     }
 
@@ -226,7 +227,7 @@ class AwsUploadingPreSigned {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun getImageData(filePath: String): ByteArray? {
-        val imageFile = java.io.File(filePath)
+        val imageFile = File(filePath)
         var imageData: ByteArray? = null
         try {
             imageData = java.nio.file.Files.readAllBytes(imageFile.toPath())

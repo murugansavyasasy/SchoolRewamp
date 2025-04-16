@@ -268,6 +268,23 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 Constant.showAlert("Info!", response.message, this)
             }
         }
+
+        binding.chAllSelect.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                groupListAdapter!!.selectAll()
+                // Simulate all check events manually
+                groupListAdapter!!.itemList?.forEach { item ->
+                    onIdCheck(item) // use your existing logic to add IDs
+                }
+            } else {
+                groupListAdapter!!.deselectAll()
+                // Simulate uncheck for all
+                groupListAdapter!!.itemList?.forEach { item ->
+                    onIdUnchecked(item) // use your existing logic to remove IDs
+                }
+            }
+        }
+
     }
     // Please don't delete by sathish
 //    private fun isLoadSubjectData() {
@@ -506,6 +523,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         if (!isGroupSelectedIds.any { it.id == group.id }) {
             isGroupSelectedIds.add(group)
         }
+        binding.chAllSelect.isChecked = isGroupSelectedIds.size == isGetGroupListData?.size
+
     }
 
     override fun onIdUnchecked(group: NameAndIds) {
