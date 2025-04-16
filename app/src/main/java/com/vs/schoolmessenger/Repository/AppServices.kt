@@ -12,8 +12,11 @@ import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsRespo
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
 import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
 import com.vs.schoolmessenger.Parent.Communication.VoiceDataResponse
+import com.vs.schoolmessenger.School.Communication.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.VoiceDetails
+import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.SharedPreference
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -31,6 +34,7 @@ class AppServices {
     var isGetCommmunicationlist: MutableLiveData<VoiceDataResponse?>
     var isGetCommmunicationlistload: MutableLiveData<VoiceDataResponse?>
     var isGetVoiceHistory: MutableLiveData<VoiceDetails?>
+    var isGetTextHistory: MutableLiveData<TextDetailsResponse?>
     var isSendText: MutableLiveData<TextSendResponse?>
     var isSendVoice: MutableLiveData<TextSendResponse?>
     var isUpdateStatusArchive: MutableLiveData<StatusArchiveResponse?>
@@ -50,6 +54,7 @@ class AppServices {
         isGetCommmunicationlist = MutableLiveData()
         isGetCommmunicationlistload = MutableLiveData()
         isGetVoiceHistory = MutableLiveData()
+        isGetTextHistory = MutableLiveData()
         isSendText = MutableLiveData()
         isSendVoice = MutableLiveData()
         isUpdateStatusArchive = MutableLiveData()
@@ -388,6 +393,40 @@ class AppServices {
     val isGetVoiceHistoryLiveData: LiveData<VoiceDetails?>
         get() = isGetVoiceHistory
 
+    fun isGetTextHistory(isToken: String, activity: Activity) {
+        RestClient.apiInterfaces.isGetTextHistory(isToken)
+            ?.enqueue(object : Callback<TextDetailsResponse?> {
+                override fun onResponse(
+                    call: Call<TextDetailsResponse?>,
+                    response: Response<TextDetailsResponse?>
+                ) {
+                    Log.d(
+                        "isGetCountryList",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isGetTextHistory.postValue(response.body())
+                            } else {
+                                isGetTextHistory.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<TextDetailsResponse?>, t: Throwable) {
+                    isGetTextHistory.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isGetTextHistoryLiveData: LiveData<TextDetailsResponse?>
+        get() = isGetTextHistory
+
+
 
     fun isSendText(isToken:String,jsonObject: JsonObject, activity: Activity) {
         RestClient.apiInterfaces.isSendText(isToken,jsonObject)
@@ -488,6 +527,8 @@ class AppServices {
 
 
     fun isSendVoice(isToken:String,jsonObject: JsonObject, activity: Activity) {
+
+        RestClient.changeApiBaseUrl(SharedPreference.getBaseUrl(activity).toString())
         RestClient.apiInterfaces.isSendVoice(isToken,jsonObject)
             ?.enqueue(object : Callback<TextSendResponse?> {
                 override fun onResponse(

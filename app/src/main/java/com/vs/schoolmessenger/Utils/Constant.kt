@@ -33,6 +33,7 @@ import com.vs.schoolmessenger.Auth.OTP.ForgetOtpData
 import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolList
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.Communication.TextSendingData
 import com.vs.schoolmessenger.School.Communication.VoiceSendingData
 import java.time.LocalDate
 import java.time.LocalTime
@@ -133,6 +134,10 @@ object Constant {
 
     var isVoiceFile: String? = null
     var isVoiceSendingData: VoiceSendingData? = null
+    var isTextSendingData: TextSendingData? = null
+    var isClickType = 1
+    var isVoiceType = 1
+
 
     fun isInternetAvailable(activity: Activity): Boolean {
         val connectivityManager =

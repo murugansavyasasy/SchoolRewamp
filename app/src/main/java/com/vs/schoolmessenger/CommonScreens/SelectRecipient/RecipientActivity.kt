@@ -10,7 +10,10 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
+import com.vs.schoolmessenger.AWS.AwsUploadingPreSigned
+import com.vs.schoolmessenger.AWS.UploadCallback
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIds
@@ -51,9 +54,12 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     private var groupListAdapter: GroupListAdapter? = null
     private var isAccessToken: String? = null
     private var isUserDetails: UserDetails? = null
+    private var isStaffDetails: StaffDetails? = null
     private var selectedIds = mutableListOf<Int>()
     var isSelectedType = 0
     var isAcademicYearId = -1
+    var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
+
 
 
     private var appViewModel: App? = null
@@ -76,11 +82,11 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         tabLayout.addTab(tabLayout.newTab().setText("Staffs"))
         tabLayout.addTab(tabLayout.newTab().setText("Section/Student"))
 
-        val isStaffDetails = SharedPreference.getStaffDetails(this)
+        isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
 
-        binding.lblSchoolName.text = isStaffDetails.school_name
-
+        binding.lblSchoolName.text = isStaffDetails!!.school_name
+        isAwsUploadingPreSigned = AwsUploadingPreSigned()
         isUserDetails = SharedPreference.getUserDetails(this)
         isGetAcademicYear()
         if (isUserDetails!!.staff_role == Constant.isGroupHeadRole || isUserDetails!!.staff_role == Constant.isPrincipalRole || isUserDetails!!.staff_role == Constant.isAdminRole) {
@@ -257,6 +263,11 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 Constant.showAlert("Info!", response.message, this)
             }
         }
+        appViewModel!!.isSendText?.observe(this) { response ->
+            if (response != null && response.status) {
+                Constant.showAlert("Info!", response.message, this)
+            }
+        }
     }
     // Please don't delete by sathish
 //    private fun isLoadSubjectData() {
@@ -353,6 +364,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         "DropdownMenu",
                         "Clicked Academic Year: ID = ${selectedYear.id}, Year = ${selectedYear.year}, Current = ${selectedYear.current_academic_year}"
                     )
+                    isAcademicYearId = selectedYear.id
                 }
             }
 
@@ -377,6 +389,9 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 var isTypeOfName = ""
                 if (isSelectedType == 0) {
                     isTypeOfName = "School"
+                    isUserDetails?.staff_details?.get(0)?.school_id?.let {
+                        selectedIds.add(it.toInt())
+                    }
                 } else if (isSelectedType == 1) {
                     isTypeOfName = "Group"
                     selectedIds = isGroupSelectedIds.map { it.id }.toMutableList()
@@ -395,7 +410,11 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     Log.d("isSelectedIds", id.toString())
                 }
                 if (selectedIds.isNotEmpty()) {
-                    showSendConfirmationDialog("Are you want send this voice?")
+                    if (Constant.isClickType == 3) {
+                        showSendConfirmationDialog("Are you want send this text to " + isTypeOfName + " school?")
+                    } else {
+                        showSendConfirmationDialog("Are you want send this voice to " + isTypeOfName + " school?")
+                    }
                 } else {
                     Constant.showAlert("Alert!", "Select atleast one $isTypeOfName", this)
                 }
@@ -407,14 +426,14 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         appViewModel!!.isGetGroupList(isAccessToken!!, isAcademicYearId, this)
     }
 
-    private fun isGetSubjectList(isSectionId: String) {
-        appViewModel!!.isGetSubjectList(
-            isAccessToken!!,
-            isAcademicYearId,
-            isSectionId.toString(),
-            this
-        )
-    }
+//    private fun isGetSubjectList(isSectionId: String) {
+//        appViewModel!!.isGetSubjectList(
+//            isAccessToken!!,
+//            isAcademicYearId,
+//            isSectionId.toString(),
+//            this
+//        )
+//    }
 
     private fun isGetStandardSection() {
         appViewModel!!.isGetStandardSection(isAccessToken!!.toString(), isAcademicYearId, this)
@@ -459,26 +478,25 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             isCircularType = Constant.section
         }
 
-        val isVoiceData = Constant.isVoiceSendingData
+        val isTextData = Constant.isTextSendingData
+
         AlertDialog.Builder(this).setTitle("Send Confirmation!").setMessage(isMessage)
             .setPositiveButton("Yes") { dialog, _ ->
-                val isVoiceUrl =
-                    "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/2025-04-09/5512/audiorecord.m4a"
-                val jsonObject = ApiCallRequest.isVoiceSend(
-                    isFileUploaded = isVoiceUrl,
-                    isClickType = isVoiceData!!.isClickType,
-                    selectedDates = isVoiceData.selectedDates,
-                    isStartTimeText = isVoiceData.isStartTimeText,
-                    isEndTimeText = isVoiceData.isEndTimeText,
-                    title = isVoiceData.title,
-                    isEmergency = isVoiceData.isEmergency,
-                    isScheduleCall = isVoiceData.isScheduleCall,
-                    schoolId = selectedIds,
-                    targetType = isTargetType!!,
-                    circularType = isCircularType!!,
-                    fileName = "sss_12-04-2025.mp3"
-                )
-                appViewModel!!.isVoiceSend(isAccessToken!!, jsonObject, this)
+                if (Constant.isClickType == 3) {
+                    val jsonObject = ApiCallRequest.isSendText(
+                        isAcademicYearId = isAcademicYearId,
+                        schoolId = selectedIds,
+                        message = isTextData!!.isTitle,
+                        description = isTextData.isContent,
+                        targetType = Constant.isSchool
+                    )
+                    appViewModel!!.isSendText(isAccessToken!!, jsonObject, this)
+                } else {
+                    isFileUploadInAws(
+                        Constant.isVoiceFile!!, isStaffDetails!!.school_id, "audio"
+                    )
+                }
+
             }.setNegativeButton("Cancel") { dialog, _ ->
                 dialog.dismiss()
             }.show()
@@ -539,11 +557,81 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     ContextCompat.getDrawable(this, R.drawable.bg_gray)
             }
         }
-
         // Please don't delete by sathish
 
 //        val idString = isSectionSelectedIds.joinToString(",") { it.id.toString() }
 //        isGetSubjectList(idString)
+    }
+
+    private fun isFileUploadInAws(
+        isFilePath: String, schoolId: String, isFileType: String?
+    ) {
+        val isCountryId = SharedPreference.getCountryId(this)
+        isAwsUploadingPreSigned!!.getPreSignedUrl("",
+            isFilePath, schoolId, isFileType!!,
+            this, isCountryId!!,
+            true,
+            false,
+            object : UploadCallback {
+                @RequiresApi(Build.VERSION_CODES.O)
+                override fun onUploadSuccess(
+                    response: String?,
+                    isFileUploaded: String?
+                ) {
+                    voiceSendApi(isFileUploaded)
+                    Log.d("isSuccessFullUpload", "isSuccessFullUpload")
+                }
+
+                override fun onUploadError(error: String?) {
+                    TODO("Not yet implemented")
+                }
+            })
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun voiceSendApi(isFileUploadedUrl: String?) {
+
+
+        var isTargetType: Int? = null
+        var isCircularType: String? = null
+        if (isSelectedType == 0) {
+            isTargetType = Constant.isSchool
+            isCircularType = Constant.school
+        } else if (isSelectedType == 1) {
+            isTargetType = Constant.isGroup
+            isCircularType = Constant.group
+            selectedIds = isGroupSelectedIds.map { it.id }.toMutableList()
+        } else if (isSelectedType == 2) {
+            isTargetType = Constant.isStandard
+            isCircularType = Constant.standard
+            selectedIds = isStandardSelectedIds.map { it.id }.toMutableList()
+        } else if (isSelectedType == 3) {
+            isTargetType = Constant.isStaff
+            isCircularType = Constant.staff
+            selectedIds = isGroupSelectedIds.map { it.id }.toMutableList()
+        } else if (isSelectedType == 4) {
+            isTargetType = Constant.isSection
+            isCircularType = Constant.section
+        }
+
+        val isVoiceData = Constant.isVoiceSendingData
+        val jsonObject = ApiCallRequest.isVoiceSend(
+            isAcademicYearId = isAcademicYearId,
+            isFileUploaded = isFileUploadedUrl,
+            isClickType = isVoiceData!!.isClickType,
+            selectedDates = isVoiceData.selectedDates,
+            isStartTimeText = isVoiceData.isStartTimeText,
+            isEndTimeText = isVoiceData.isEndTimeText,
+            title = isVoiceData.title,
+            isEmergency = isVoiceData.isEmergency,
+            isScheduleCall = isVoiceData.isScheduleCall,
+            schoolId = selectedIds,
+            targetType = isTargetType!!,
+            circularType = isCircularType!!,
+            fileName = "sss_12-04-2025.mp3"
+        )
+        appViewModel!!.isVoiceSend(isAccessToken!!, jsonObject, this)
+
     }
 }
 

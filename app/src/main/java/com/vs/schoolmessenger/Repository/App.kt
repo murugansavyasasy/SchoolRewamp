@@ -14,6 +14,7 @@ import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.Standar
 import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
 import com.vs.schoolmessenger.Parent.Communication.VoiceData
 import com.vs.schoolmessenger.Parent.Communication.VoiceDataResponse
+import com.vs.schoolmessenger.School.Communication.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.VoiceDetails
 
@@ -53,6 +54,9 @@ class App(application: Application) : AndroidViewModel(application) {
     var isGetVoiceHistory: LiveData<VoiceDetails?>? = null
         private set
 
+    var isGetTextHistory: LiveData<TextDetailsResponse?>? = null
+        private set
+
     var isSendText: LiveData<TextSendResponse?>? = null
         private set
 
@@ -82,6 +86,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isGetCommmunicationlist = apiRepositories!!.isGetCommunicationLiveData
         isGetCommmunicationlistload = apiRepositories!!.isGetCommunicationloadLiveData
         isGetVoiceHistory = apiRepositories!!.isGetVoiceHistoryLiveData
+        isGetTextHistory = apiRepositories!!.isGetTextHistoryLiveData
         isSendText = apiRepositories!!.isSendTextLiveData
         isVoiceSend = apiRepositories!!.isSendVoiceLiveData
         isUpdateStatusArchive = apiRepositories!!.isUpdateStatusArchiveLiveData
@@ -126,6 +131,9 @@ class App(application: Application) : AndroidViewModel(application) {
         apiRepositories!!.isGetCommmunicationlist(isToken, activity)
     }
 
+    fun isGetTextHistory(isToken: String, activity: Activity) {
+        apiRepositories!!.isGetTextHistory(isToken, activity)
+    }
 
     fun isGetVoiceHistory(isToken: String, isEmergency: String, activity: Activity) {
         apiRepositories!!.isGetVoiceHistory(isToken, isEmergency, activity)

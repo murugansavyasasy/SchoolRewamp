@@ -15,6 +15,7 @@ import com.vs.schoolmessenger.AWS.UploadCallback
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
+import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.ApiCallRequest
@@ -40,7 +41,8 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
     private var isStaffDetails: StaffDetails? = null
     var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
 
-
+    var isAcademicYear: List<AcademicYear>? = null
+    var isAcademicYearId = -1
 
     override fun setupViews() {
         super.setupViews()
@@ -49,6 +51,9 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         binding.lblMultipleSchool.setOnClickListener(this)
         binding.lblSingleSchool.setOnClickListener(this)
         binding.lblSend.setOnClickListener(this)
+        binding.rlaAcademicYear.setOnClickListener(this)
+
+
 
         if (Constant.isEmergencyVoiceNoticeBoard!!) {
             binding.lnrTab.visibility = View.GONE
@@ -67,11 +72,27 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         isAwsUploadingPreSigned = AwsUploadingPreSigned()
 
         isUserDetails = SharedPreference.getUserDetails(this)
-
+        isGetAcademicYear()
 
         appViewModel!!.isVoiceSend?.observe(this) { response ->
             if (response != null && response.status) {
                 Constant.showAlert("Info!", response.message, this)
+            }
+        }
+        appViewModel!!.isSendText?.observe(this) { response ->
+            if (response != null && response.status) {
+                Constant.showAlert("Info!", response.message, this)
+            }
+        }
+
+        appViewModel!!.isGetAcademicList?.observe(this) { response ->
+            if (response != null && response.status) {
+                response.data.let { academicList ->
+                    val reorderedList = academicList.sortedByDescending { it.current_academic_year }
+                    isAcademicYear = reorderedList
+                    binding.lblAcademicYear.text = isAcademicYear!![0].year
+                    isAcademicYearId = isAcademicYear!![0].id
+                }
             }
         }
 
@@ -126,17 +147,41 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                 isChangeBackRound(binding.lblMultipleSchool)
             }
 
+            R.id.rlaAcademicYear -> {
+                showAcademicDropdown(
+                    binding.rlaAcademicYear, this, isAcademicYear
+                ) { selectedYear ->
+                    binding.lblAcademicYear.text = selectedYear.year
+                    Log.d(
+                        "DropdownMenu",
+                        "Clicked Academic Year: ID = ${selectedYear.id}, Year = ${selectedYear.year}, Current = ${selectedYear.current_academic_year}"
+                    )
+                    isAcademicYearId = selectedYear.id
+                }
+            }
+
             R.id.lblSend -> {
                 for (i in selectedSchoolIds.indices) {
                     Log.d("SelectedSchoolId", selectedSchoolIds[i].toString())
                 }
                 if (selectedSchoolIds.isNotEmpty()) {
-                    showSendConfirmationDialog("Are you want send this voice to entire school?")
+                    if (Constant.isClickType == 3) {
+                        showSendConfirmationDialog("Are you want send this text to entire school?")
+                    } else {
+                        showSendConfirmationDialog("Are you want send this voice to entire school?")
+                    }
                 } else {
                     Constant.showAlert("Alert!", "Select the school", this)
                 }
             }
         }
+    }
+
+
+    private fun isGetAcademicYear() {
+        appViewModel!!.isGetAcademicYear(
+            isAccessToken!!, this
+        )
     }
 
     private fun isChangeBackRound(
@@ -162,26 +207,22 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
     }
 
     private fun isFileUploadInAws(
-        isFilePath: String,
-        bucketPath: String,
-        isFileExtension: String?,
-        filetype: String,
+        isFilePath: String, schoolId: String, isFileType: String?
     ) {
-        Log.d("isFilePath____", isFilePath)
-        isAwsUploadingPreSigned!!.getPreSignedUrl(
-            isFilePath,
-            bucketPath,
-            isFileExtension!!,
-            this,
-            "1",
+        val isCountryId = SharedPreference.getCountryId(this)
+        isAwsUploadingPreSigned!!.getPreSignedUrl("",
+            isFilePath, schoolId, isFileType!!,
+            this, isCountryId!!,
             true,
             false,
             object : UploadCallback {
+                @RequiresApi(Build.VERSION_CODES.O)
                 override fun onUploadSuccess(
                     response: String?,
                     isFileUploaded: String?
                 ) {
-                    //isVoiceSend(isFileUploaded)
+                    voiceSendApi(isFileUploaded)
+                    Log.d("isSuccessFullUpload", "isSuccessFullUpload")
                 }
 
                 override fun onUploadError(error: String?) {
@@ -191,27 +232,47 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun showSendConfirmationDialog(isMessage: String) {
+    fun voiceSendApi(isFileUploadedUrl: String?) {
         val isVoiceData = Constant.isVoiceSendingData
+        val jsonObject = ApiCallRequest.isVoiceSend(
+            isAcademicYearId = isAcademicYearId,
+            isFileUploaded = isFileUploadedUrl,
+            isClickType = isVoiceData!!.isClickType,
+            selectedDates = isVoiceData.selectedDates,
+            isStartTimeText = isVoiceData.isStartTimeText,
+            isEndTimeText = isVoiceData.isEndTimeText,
+            title = isVoiceData.title,
+            isEmergency = isVoiceData.isEmergency,
+            isScheduleCall = isVoiceData.isScheduleCall,
+            schoolId = selectedSchoolIds,
+            targetType = Constant.isSchool,
+            circularType = Constant.school,
+            fileName = "sss_12-04-2025.mp3"
+        )
+        appViewModel!!.isVoiceSend(isAccessToken!!, jsonObject, this)
+
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun showSendConfirmationDialog(isMessage: String) {
+        val isTextData = Constant.isTextSendingData
+
         AlertDialog.Builder(this).setTitle("Send Confirmation!").setMessage(isMessage)
             .setPositiveButton("Yes") { dialog, _ ->
-                val isVoiceUrl =
-                    "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/2025-04-09/5512/audiorecord.m4a"
-                val jsonObject = ApiCallRequest.isVoiceSend(
-                    isFileUploaded = isVoiceUrl,
-                    isClickType = isVoiceData!!.isClickType,
-                    selectedDates = isVoiceData.selectedDates,
-                    isStartTimeText = isVoiceData.isStartTimeText,
-                    isEndTimeText = isVoiceData.isEndTimeText,
-                    title = isVoiceData.title,
-                    isEmergency = isVoiceData.isEmergency,
-                    isScheduleCall = isVoiceData.isScheduleCall,
-                    schoolId = selectedSchoolIds,
-                    targetType = Constant.isSchool,
-                    circularType = Constant.school,
-                    fileName = "sss_12-04-2025.mp3"
-                )
-                appViewModel!!.isVoiceSend(isAccessToken!!, jsonObject, this)
+                if (Constant.isClickType == 3) {
+                    val jsonObject = ApiCallRequest.isSendText(
+                        isAcademicYearId = isAcademicYearId,
+                        schoolId = selectedSchoolIds,
+                        message = isTextData!!.isTitle,
+                        description = isTextData.isContent,
+                        targetType = Constant.isSchool
+                    )
+                    appViewModel!!.isSendText(isAccessToken!!, jsonObject, this)
+                } else {
+                    isFileUploadInAws(
+                        Constant.isVoiceFile!!, isStaffDetails!!.school_id, "audio"
+                    )
+                }
             }.setNegativeButton("Cancel") { dialog, _ ->
                 dialog.dismiss()
             }.show()

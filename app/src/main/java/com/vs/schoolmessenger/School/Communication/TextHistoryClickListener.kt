@@ -1,6 +1,6 @@
 package com.vs.schoolmessenger.School.Communication
 
 interface TextHistoryClickListener {
-    fun onItemClick(data: TextHistoryData, holder: TextHistoryAdapter.DataViewHolder)
+    fun onItemClick(data: TextDetail, holder: TextHistoryAdapter.DataViewHolder)
 
 }
