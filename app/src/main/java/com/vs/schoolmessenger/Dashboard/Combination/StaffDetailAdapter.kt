@@ -108,7 +108,7 @@ class StaffDetailAdapter(
         }
 
         holder.binding.rlaStaffDetails.setOnClickListener {
-            if (isSchoolList == 1) {
+            if (isStaffRole == Constant.isStaffRole) {
                 listener.onItemClick(item)
             }
         }
