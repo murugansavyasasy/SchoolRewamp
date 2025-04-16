@@ -1,13 +1,17 @@
 package com.vs.schoolmessenger.Parent.Communication
 
+import android.text.Editable
 import android.util.Log
+import android. text. TextWatcher
 import android.view.View
 import android.widget.ImageView
+import android.widget.PopupMenu
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
@@ -26,41 +30,56 @@ class Communication : BaseActivity<CommunicationBinding>(), View.OnClickListener
     private var adapter: UnifiedVoiceAdapter? = null
     private var isInitialLoad = true
     private var isFromArchive = false
-
+    private var hasFetchedMore = false
+    private var currentFilter: String = "ALL"
+    private var currentSearchQuery: String = ""
 
     override fun setupViews() {
         super.setupViews()
         setUpGradientParent()
-
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.rlaTextMessage.setOnClickListener(this)
         binding.rlaVoiceMessage.setOnClickListener(this)
         binding.seeMoreLabel.setOnClickListener(this)
+        binding.imgFilter.setOnClickListener(this)
 
         isFromArchive = intent.getBooleanExtra("fromArchive", false)
-
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel?.init()
 
         val isChildDetails = SharedPreference.getChildDetails(this)
         isAccessToken = isChildDetails?.access_token
-
-        // Initial shimmer and data loading
         showShimmer()
 
-        appViewModel?.isGetCommmunicationlist?.observe(this) { response ->
-            Log.d("CommDebug", "SeeMore Observer triggered: $response")
-            if (response?.status == true) {
-                appendData(response.data)
-                binding.seeMoreLabel.visibility = View.VISIBLE
+        binding.recyclerMore.post {
+            binding.recyclerMore.requestFocus()
+            binding.recyclerMore.layoutManager?.let { layoutManager ->
+                val itemCount = adapter?.itemCount ?: 0
+                if (itemCount > 0 && layoutManager is LinearLayoutManager) {
+                    layoutManager.scrollToPositionWithOffset(itemCount - 1, 0)
+                }
             }
         }
 
+        binding.txtSearchMenu.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                currentSearchQuery = s.toString()
+                applyCombinedFilter()
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        })
 
+
+        appViewModel?.isGetCommmunicationlist?.observe(this) { response ->
+            if (response?.status == true) {
+                appendData(response.data, archiveFlag = true)
+            }
+        }
 
         appViewModel?.isGetCommmunicationlistload?.observe(this) { response ->
             if (response?.status == true) {
-                appendData(response.data)
+                appendData(response.data, archiveFlag = false)
             }
         }
 
@@ -68,9 +87,29 @@ class Communication : BaseActivity<CommunicationBinding>(), View.OnClickListener
     }
 
 
+
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.imgBack -> onBackPressed()
+
+            R.id.imgFilter -> {
+                val popupMenu = PopupMenu(this, v)
+                popupMenu.menu.add("TEXT")
+                popupMenu.menu.add("VOICE")
+                popupMenu.menu.add("READ")
+                popupMenu.menu.add("UNREAD")
+                popupMenu.menu.add("ALL")
+
+                popupMenu.setOnMenuItemClickListener { item ->
+                    currentFilter = item.title.toString()
+                    applyCombinedFilter()
+                    true
+                }
+
+                popupMenu.show()
+            }
+
+
             R.id.rlaTextMessage -> {
                 adapter?.updateData()
                 adapter?.notifyDataSetChanged()
@@ -80,9 +119,47 @@ class Communication : BaseActivity<CommunicationBinding>(), View.OnClickListener
                     binding.lblTextMessage
                 )
             }
-            R.id.seeMoreLabel -> fetchMoreData()
+
+            R.id.rlaVoiceMessage -> {
+                adapter?.updateData()
+                adapter?.notifyDataSetChanged()
+                isChangeBackRoundCommunicationType(
+                    binding.rlaVoiceMessage,
+                    binding.imgVoiceMessage,
+                    binding.lblVoiceMessage
+                )
+            }
+
+            R.id.seeMoreLabel -> {
+                if (!hasFetchedMore) {
+                    hasFetchedMore = true
+                    binding.seeMoreLabel.visibility = View.GONE
+                    fetchMoreData()
+                }
+            }
         }
     }
+
+
+    private fun applyCombinedFilter() {
+        var filteredList = when (currentFilter) {
+            "TEXT" -> allVoiceData.filter { it.type.equals("TEXT", ignoreCase = true) }
+            "VOICE" -> allVoiceData.filter { it.type.equals("VOICE", ignoreCase = true) }
+            "READ" -> allVoiceData.filter { it.is_unread == false }
+            "UNREAD" -> allVoiceData.filter { it.is_unread == true }
+            else -> allVoiceData
+        }
+
+        if (currentSearchQuery.isNotEmpty()) {
+            filteredList = filteredList.filter {
+                it.description?.contains(currentSearchQuery, ignoreCase = true) == true ||
+                        it.content?.contains(currentSearchQuery, ignoreCase = true) == true
+            }
+        }
+
+        adapter?.updateList(filteredList)
+    }
+
 
     private fun fetchInitialData() {
         isInitialLoad = true
@@ -94,27 +171,30 @@ class Communication : BaseActivity<CommunicationBinding>(), View.OnClickListener
         appViewModel?.isGetCommmunicationlist(isAccessToken.orEmpty(), this)
     }
 
-    private fun appendData(newData: List<VoiceData>?) {
+    private fun appendData(newData: List<VoiceData>?, archiveFlag: Boolean) {
         newData?.let {
             if (isInitialLoad) {
                 allVoiceData.clear()
             }
-            allVoiceData.addAll(it)
+
+            val processedData = it.map { item -> item.copy(is_archive = archiveFlag) }
+
+            allVoiceData.addAll(processedData)
 
             if (adapter == null) {
                 adapter = UnifiedVoiceAdapter(
-                    allVoiceData as ArrayList<VoiceData>?,
+                    allVoiceData as ArrayList<VoiceData>,
                     this,
                     this,
                     Constant.isShimmerViewDisable,
                     this,
                     isAccessToken.orEmpty(),
-                    isFromArchive
+                    archiveFlag
                 )
-
                 binding.recyclerInitial.layoutManager = LinearLayoutManager(this)
                 binding.recyclerInitial.adapter = adapter
             } else {
+                adapter?.setIsFromArchive(archiveFlag)
                 adapter?.updateList(allVoiceData)
             }
         }
@@ -130,8 +210,6 @@ class Communication : BaseActivity<CommunicationBinding>(), View.OnClickListener
             isAccessToken.orEmpty(),
             isFromArchive
         )
-
-
         binding.recyclerInitial.layoutManager = LinearLayoutManager(this)
         binding.recyclerInitial.adapter = shimmerAdapter
     }
@@ -159,7 +237,7 @@ class Communication : BaseActivity<CommunicationBinding>(), View.OnClickListener
     }
 
     override fun onItemClick(data: VoiceData, holder: UnifiedVoiceAdapter.DataViewHolder) {
-
+        // Handle item click here if needed
     }
 
     private fun isChangeBackRoundCommunicationType(

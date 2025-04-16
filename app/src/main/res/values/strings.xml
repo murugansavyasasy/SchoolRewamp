@@ -306,6 +306,7 @@
     <string name="login">Login</string>
     <string name="star">**********</string>
     <string name="logintext">LOGIN</string>
+    <string name="see_less">see less</string>
 
 
 </resources>
