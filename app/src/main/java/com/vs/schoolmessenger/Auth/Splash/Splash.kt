@@ -116,6 +116,7 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
 //                    if (!isEnabled) {
 //                        showBottomPopup(this@Splash) // Call your popup function if needed
 //                    } else {
+
                     val countryId = SharedPreference.getCountryId(this@Splash)
                     Log.d("countryId", countryId.toString())
                     if (!countryId.equals("")) {
@@ -229,7 +230,8 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
                     RestClient.changeApiBaseUrl(Constant.country_details!!.base_url)
                     if (isVersionData!![0].update_available) {
                         isShowUpdateAvailable(isVersionData!!)
-                    } else {
+                    }
+                    else {
                         autoLoginFlowCheck(isVersionData!!)
                     }
                 }
@@ -277,7 +279,7 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
             .setNegativeButtonText("Cancel")
             .build()
 
-        biometricPrompt.authenticate(promptInfo)
+        biometricPrompt.authenticate(promptInfo);
     }
 
     private fun autoLoginFlowCheck(isVersionData: List<VersionData>) {
