@@ -168,7 +168,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
         }
 
-
         appViewModel!!.isGetTextHistory?.observe(this) { response ->
             if (response != null && response.status) {
                 val isTextHistory = response.data
