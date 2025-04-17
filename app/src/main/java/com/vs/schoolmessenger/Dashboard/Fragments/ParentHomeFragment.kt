@@ -70,17 +70,16 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         userDetails = SharedPreference.getUserDetails(requireActivity())
 
         binding.lblStudentName.text = "Hello, " + childDetails!!.name
-        binding.lblSchoolName.text =childDetails!!.school_name
+        binding.lblSchoolName.text = childDetails!!.school_name
         binding.lblSchoolAddress.text = childDetails!!.student_address
 
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel!!.init()
         isDashBoardData()
 
-        if(userDetails!!.is_parent && userDetails!!.is_staff){
+        if (userDetails!!.is_parent && userDetails!!.is_staff) {
             binding.lblChangeRoll.visibility = View.VISIBLE
-        }
-        else{
+        } else {
             if (userDetails!!.child_details.size > 1) {
                 binding.lblChangeRoll.visibility = View.VISIBLE
             } else {
@@ -88,16 +87,12 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             }
         }
 
-
         binding.lblViewDetails.paintFlags =
             binding.lblViewDetails.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
-
         binding.lblViewDetails.setOnClickListener {
             this.startActivity(
-                Intent(
-                    requireActivity(), AttendanceReport::class.java
-                )
+                Intent(requireActivity(), AttendanceReport::class.java)
             )
         }
 
@@ -106,15 +101,14 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
         binding.txtSearchMenu.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
-
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 // filter(s.toString())
             }
         })
 
-        appViewModel!!.isDashBoardData?.observe(requireActivity()) { response ->
+        // ✅ CHANGED: Use viewLifecycleOwner instead of requireActivity()
+        appViewModel!!.isDashBoardData?.observe(viewLifecycleOwner) { response ->
             if (response != null) {
                 val status = response.status
                 val message = response.message
@@ -124,7 +118,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     isContactDetails = isDashBoardData!![0].contactDetails
                     isMenuDetails = isDashBoardData!![0].menuDetails
                     Log.d("isMenuDetails", isMenuDetails!!.size.toString())
-                    isLoadData()
+                    isLoadData()  // ✅ Safe to call now
                 }
             }
         }
@@ -132,17 +126,19 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         return binding.root
     }
 
+
     private fun isLoadData() {
+        if (!isAdded || activity == null) return  // ✅ Prevents crash if fragment is not attached
+
         val adapter =
             ChildMenuAdapter(requireActivity(), this, null, null, Constant.isShimmerViewShow)
         val gridLayoutManager = GridLayoutManager(requireContext(), 3)
 
-        // Adjust span count for special layout
         gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
                 return when (adapter.getItemViewType(position)) {
-                    2 -> 3 // TYPE_AD: Span across all 3 columns
-                    else -> 1 // Default: 1 span per item
+                    2 -> 3
+                    else -> 1
                 }
             }
         }
@@ -151,19 +147,21 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         binding.recyclerViewMenus.adapter = adapter
 
         Constant.executeAfterDelay {
+            if (!isAdded || activity == null) return@executeAfterDelay  // ✅ Double-check after delay
+
             val isAdapter = ChildMenuAdapter(
                 requireActivity(), this, isMenuDetails, null, Constant.isShimmerViewDisable
             )
-//            Log.d("aditems", aditems.size.toString())
-            // Adjust span count again for the updated adapter
+
             gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int {
                     return when (isAdapter.getItemViewType(position)) {
-                        2 -> 3 // TYPE_AD: Span across all 3 columns
-                        else -> 1 // Default: 1 span per item
+                        2 -> 3
+                        else -> 1
                     }
                 }
             }
+
             binding.recyclerViewMenus.layoutManager = gridLayoutManager
             binding.recyclerViewMenus.adapter = isAdapter
         }

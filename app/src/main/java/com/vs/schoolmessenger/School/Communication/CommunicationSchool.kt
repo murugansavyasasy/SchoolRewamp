@@ -147,15 +147,11 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             isMultipleSchool = false
         }
 
-        if (isUserDetails!!.staff_role == Constant.isGroupHeadRole || isUserDetails!!.staff_role == Constant.isPrincipalRole || isUserDetails!!.staff_role == Constant.isAdminRole) {
-            binding.SwitchEmergencyVoice.visibility = View.VISIBLE
-            binding.lblEmergencyVoice.visibility = View.VISIBLE
-        } else {
-            binding.SwitchEmergencyVoice.visibility = View.GONE
-            binding.lblEmergencyVoice.visibility = View.GONE
-        }
-
-        isGetAcademicYear()
+//        if (isUserDetails!!.staff_role == Constant.isGroupHeadRole || isUserDetails!!.staff_role == Constant.isPrincipalRole || isUserDetails!!.staff_role == Constant.isAdminRole) {
+//            binding.llEmergencyContainer.visibility = View.VISIBLE
+//        } else {
+//            binding.llEmergencyContainer.visibility = View.GONE
+//        }
 
         binding.lblStartTime.text = Constant.getCurrentTime()
         binding.lblEndTime.text = Constant.getCurrentTime()
@@ -640,8 +636,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 isEmergency = 0
                 binding.SwitchEmergencyVoice.setChecked(false)
                 changeLabel()
-                binding.SwitchEmergencyVoice.visibility = View.VISIBLE
-                binding.lblEmergencyVoice.visibility = View.VISIBLE
+                
+                binding.llEmergencyContainer.visibility = View.VISIBLE
                 isScheduleCall = false
                 Constant.isClickType = 1
                 if (mAdapter != null) {
@@ -674,8 +670,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 isEmergency = 0
                 binding.SwitchEmergencyVoice.setChecked(false)
                 changeLabel()
-                binding.SwitchEmergencyVoice.visibility = View.GONE
-                binding.lblEmergencyVoice.visibility = View.GONE
+                
+                binding.llEmergencyContainer.visibility = View.GONE
                 isScheduleCall = true
                 Constant.isClickType = 2
                 if (mAdapter != null) {
@@ -708,8 +704,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 binding.SwitchEmergencyVoice.setChecked(false)
                 changeLabel()
 
-                binding.SwitchEmergencyVoice.visibility = View.GONE
-                binding.lblEmergencyVoice.visibility = View.GONE
+                
+                binding.llEmergencyContainer.visibility = View.GONE
                 isScheduleCall = false
                 Constant.isClickType = 3
                 if (mAdapter != null) {
@@ -784,7 +780,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 if (!Constant.isVoiceFile.equals("")) {
                     if (binding.edtTitle.text.toString() != "") {
                         isGoToRecipient()
-
                     } else {
                         Constant.showAlert("Alert!", "Enter the title", this)
                     }
@@ -875,8 +870,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                         binding.gridViewScheduleCall.visibility = View.GONE
                         binding.rlaScheduleCallPickDate.visibility = View.GONE
                         binding.rlaRecordVoice.visibility = View.VISIBLE
-                        binding.SwitchEmergencyVoice.visibility = View.VISIBLE
-                        binding.lblEmergencyVoice.visibility = View.VISIBLE
+                        binding.llEmergencyContainer.visibility = View.VISIBLE
                     }
 
                     2 -> {
@@ -1157,8 +1151,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             binding.gridViewScheduleCall.visibility = View.GONE
         }
         binding.rlaRecordVoice.visibility = View.VISIBLE
-        binding.SwitchEmergencyVoice.visibility = View.VISIBLE
-        binding.lblEmergencyVoice.visibility = View.VISIBLE
+        
+        binding.llEmergencyContainer.visibility = View.VISIBLE
         binding.rcyHistoryDataVoiceAndText.visibility = View.GONE
         binding.rlaBackRecord.visibility = View.GONE
         binding.lnrHistoryList.visibility = View.VISIBLE

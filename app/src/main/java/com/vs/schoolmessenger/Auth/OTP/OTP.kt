@@ -273,16 +273,25 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
     }
 
     fun isOtpTitleLoad() {
-        if (Constant.isForgotPassword!!) {
-            binding.lblEnter.text = Constant.forgotData!![0].forgot_otp_message
-            binding.lblContactTitle.text = Constant.forgotData!![0].more_info
-
+        if (Constant.isForgotPassword == true) {
+            // Check if forgotData is not null or empty
+            if (Constant.forgotData != null && Constant.forgotData!!.isNotEmpty()) {
+                binding.lblEnter.text = Constant.forgotData!![0].forgot_otp_message
+                binding.lblContactTitle.text = Constant.forgotData!![0].more_info
+            } else {
+                // Handle the case when forgotData is null or empty
+                Log.e("OTP", "forgotData is null or empty")
+            }
         } else {
-
-            if (Constant.user_data!!.isNotEmpty()) {
+            // Check if user_data is not null or empty
+            if (Constant.user_data != null && Constant.user_data!!.isNotEmpty()) {
                 binding.lblEnter.text = Constant.user_data!![0].message
                 binding.lblContactTitle.text = Constant.user_data!![0].more_info
+            } else {
+                // Handle the case when user_data is null or empty
+                Log.e("OTP", "user_data is null or empty")
             }
         }
     }
+
 }

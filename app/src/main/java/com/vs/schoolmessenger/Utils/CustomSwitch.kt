@@ -22,7 +22,7 @@ class CustomSwitch @JvmOverloads constructor(
     private var switchWidth = 0f
 
     // Colors from resources
-    private val activeColor = ContextCompat.getColor(context, R.color.light_dark_blue)
+    private val activeColor = ContextCompat.getColor(context, R.color.dark_green)
     private val inactiveColor = ContextCompat.getColor(context, R.color.grey_mild)
 
     init {

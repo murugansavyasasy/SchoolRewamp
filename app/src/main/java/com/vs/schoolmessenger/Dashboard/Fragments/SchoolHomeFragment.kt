@@ -106,7 +106,10 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     .into(binding.imgSchoolLogo)
             }
         }
-        isDashBoardData()
+
+
+
+
         if(userDetails!!.is_parent && userDetails!!.is_staff){
             binding.changeroll.visibility = View.VISIBLE
         }
@@ -129,6 +132,8 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
         binding.lblGif.playAnimation()
         binding.lblGif.setAnimation(R.raw.mathematics)
+
+        isDashBoardData()
 
         appViewModel!!.isDashBoardData?.observe(requireActivity()) { response ->
             if (response != null) {
@@ -263,18 +268,17 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
 
     private fun isDashBoardData() {
-        val isToken = SharedPreference.getUserDetails(requireActivity())
         appViewModel!!.isDashBoardData(
             access_token, "staff", requireActivity()
         )
     }
 
     private fun isGetAds() {
-        val isToken = SharedPreference.getUserDetails(requireActivity())
-        appViewModel!!.isGetAds(
-            access_token, "102", requireActivity()
-        )
+        activity?.let { safeActivity ->
+            appViewModel?.isGetAds(access_token, "102", safeActivity)
+        }
     }
+
 
 
     override fun onResume() {

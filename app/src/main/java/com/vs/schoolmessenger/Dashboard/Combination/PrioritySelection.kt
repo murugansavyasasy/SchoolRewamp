@@ -3,6 +3,7 @@ package com.vs.schoolmessenger.Dashboard.Combination
 import android.content.Intent
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
@@ -27,7 +28,7 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
         return RoleSelecionBinding.inflate(layoutInflater)
     }
 
-    var userDetails: UserDetails? = null
+    private var userDetails: UserDetails? = null
 
     override fun setupViews() {
         super.setupViews()
@@ -35,95 +36,123 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
         binding.lblParent.setOnClickListener(this)
         binding.lblTeacher.setOnClickListener(this)
         binding.btnGo.setOnClickListener(this)
+
         userDetails = SharedPreference.getUserDetails(this@PrioritySelection)
 
-        val isStaff = userDetails?.is_staff
-        val isParent = userDetails?.is_parent
-        val staff_role = userDetails?.staff_role
-        val role_name = userDetails?.role_name
+        val isStaff = userDetails?.is_staff == true
+        val isParent = userDetails?.is_parent == true
+        val staffRole = userDetails?.staff_role.orEmpty()
+        val roleName = userDetails?.role_name.orEmpty()
 
-        if (isStaff == true && isParent == true) {
-            binding.lblTeacher.visibility = View.VISIBLE
-            binding.lblParent.visibility = View.VISIBLE
-            binding.lblLoginTeacherOrParent.visibility = View.VISIBLE
-            binding.lblLoginTeacherOrParent.text = "Login As " + role_name + " or Student"
-            isLoadData(true)
+        when {
+            isStaff && isParent -> {
+                binding.lblTeacher.visibility = View.VISIBLE
+                binding.lblParent.visibility = View.VISIBLE
+                binding.lblLoginTeacherOrParent.visibility = View.VISIBLE
+                binding.lblLoginTeacherOrParent.text = "Login As $roleName or Student"
+                isLoadData(true)
+            }
 
-        } else if (isStaff == true) {
-            binding.lblTeacher.visibility = View.VISIBLE
-            binding.lblParent.visibility = View.GONE
-            binding.lblLoginTeacherOrParent.visibility = View.GONE
-            isLoadData(true)
+            isStaff -> {
+                binding.lblTeacher.visibility = View.VISIBLE
+                binding.lblParent.visibility = View.GONE
+                binding.lblLoginTeacherOrParent.visibility = View.GONE
+                isLoadData(true)
+            }
 
-        } else if (isParent == true) {
-            binding.lblTeacher.visibility = View.GONE
-            binding.lblParent.visibility = View.VISIBLE
-            binding.lblLoginTeacherOrParent.visibility = View.GONE
-            isLoadData(false)
+            isParent -> {
+                binding.lblTeacher.visibility = View.GONE
+                binding.lblParent.visibility = View.VISIBLE
+                binding.lblLoginTeacherOrParent.visibility = View.GONE
+                isLoadData(false)
+            }
+            else -> {
+                Toast.makeText(this, "Invalid user role", Toast.LENGTH_SHORT).show()
+            }
         }
 
-        if (staff_role.equals(Constant.isStaffRole) || staff_role.equals("")) {
-            binding.btnGo.visibility = View.GONE
+        binding.btnGo.visibility = if (staffRole == Constant.isStaffRole || staffRole.isEmpty()) {
+            View.GONE
         } else {
-            binding.btnGo.visibility = View.VISIBLE
+            View.VISIBLE
         }
 
-        if (userDetails!!.is_staff) {
-            binding.lblTeacher.text = role_name
+        if (isStaff) {
+            binding.lblTeacher.text = roleName
         }
 
-        if (userDetails!!.is_parent) {
+        if (isParent) {
             binding.lblParent.text = "Student"
         }
 
         binding.btnGo.setOnClickListener {
-            val intent = Intent(this, SchoolDashboard::class.java)
-            SharedPreference.putStaffDetails(this, Constant.user_data!![0].user_details.staff_details[0])
-            startActivity(intent)
+            val staffDetails = Constant.user_data?.getOrNull(0)?.user_details?.staff_details?.getOrNull(0)
+            if (staffDetails != null) {
+                SharedPreference.putStaffDetails(this, staffDetails)
+                val intent = Intent(this, SchoolDashboard::class.java)
+                startActivity(intent)
+            } else {
+                Toast.makeText(this, "Staff details not available", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
     private fun isLoadData(isStaff: Boolean) {
         if (isStaff) {
-            val isSchoolList=Constant.isStaffDetails!!.size
-            isStaffDetailAdapter = StaffDetailAdapter(Constant.isStaffDetails, this, this,Constant.user_details!!.staff_role,isSchoolList)
-            binding.recyclerViews.layoutManager = LinearLayoutManager(this)
-            binding.recyclerViews.adapter = isStaffDetailAdapter
+            val staffDetails = Constant.isStaffDetails
+            if (!staffDetails.isNullOrEmpty()) {
+                val staffRole = Constant.user_details?.staff_role.orEmpty()
+                isStaffDetailAdapter = StaffDetailAdapter(
+                    staffDetails,
+                    this,
+                    this,
+                    staffRole,
+                    staffDetails.size
+                )
+                binding.recyclerViews.layoutManager = LinearLayoutManager(this)
+                binding.recyclerViews.adapter = isStaffDetailAdapter
+            } else {
+                Toast.makeText(this, "No staff data found", Toast.LENGTH_SHORT).show()
+            }
         } else {
-            isStudentDetailAdapter = StudentDetailAdapter(Constant.isChildDetails, this, this)
-            binding.recyclerViews.layoutManager = LinearLayoutManager(this)
-            binding.recyclerViews.adapter = isStudentDetailAdapter
+            val childDetails = Constant.isChildDetails
+            if (!childDetails.isNullOrEmpty()) {
+                isStudentDetailAdapter = StudentDetailAdapter(childDetails, this, this)
+                binding.recyclerViews.layoutManager = LinearLayoutManager(this)
+                binding.recyclerViews.adapter = isStudentDetailAdapter
+            } else {
+                Toast.makeText(this, "No student data found", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
-
     override fun onClick(p0: View?) {
         when (p0?.id) {
-            R.id.lblTeacher -> {
-                isBackRoundChange(binding.lblTeacher)
-            }
-
-            R.id.lblParent -> {
-                isBackRoundChange(binding.lblParent)
-            }
+            R.id.lblTeacher -> isBackRoundChange(binding.lblTeacher)
+            R.id.lblParent -> isBackRoundChange(binding.lblParent)
         }
     }
 
     private fun isBackRoundChange(isClickingId: TextView) {
+        when (isClickingId) {
+            binding.lblParent -> {
+                binding.lblTeacher.background = null
+                binding.lblTeacher.setTextColor(ContextCompat.getColor(this, R.color.dark_blue))
+                binding.btnGo.visibility = View.GONE
+                isLoadData(false)
+                Constant.isParentChoose = true
+            }
 
-        if (isClickingId == binding.lblParent) {
-            binding.lblTeacher.background = null
-            binding.lblTeacher.setTextColor(ContextCompat.getColor(this, R.color.dark_blue))
-            binding.btnGo.visibility = View.GONE
-            isLoadData(false)
-            Constant.isParentChoose = true
-        }
-        if (isClickingId == binding.lblTeacher) {
-            binding.lblParent.background = null
-            binding.lblParent.setTextColor(ContextCompat.getColor(this, R.color.dark_blue))
-            binding.btnGo.visibility = View.VISIBLE
-            isLoadData(true)
-            Constant.isParentChoose = false
+            binding.lblTeacher -> {
+                binding.lblParent.background = null
+                binding.lblParent.setTextColor(ContextCompat.getColor(this, R.color.dark_blue))
+
+                val showButton = userDetails?.staff_role != Constant.isStaffRole
+                binding.btnGo.visibility = if (showButton) View.VISIBLE else View.GONE
+
+                isLoadData(true)
+                Constant.isParentChoose = false
+            }
         }
 
         isClickingId.background = ContextCompat.getDrawable(this, R.drawable.bg_blue)
@@ -131,14 +160,12 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
     }
 
     override fun onItemClick(data: ChildDetails) {
-        val intent = Intent(this, ParentDashboard::class.java)
         SharedPreference.putChildDetails(this, data)
-        startActivity(intent)
+        startActivity(Intent(this, ParentDashboard::class.java))
     }
 
     override fun onItemClick(data: StaffDetails) {
-        val intent = Intent(this, SchoolDashboard::class.java)
         SharedPreference.putStaffDetails(this, data)
-        startActivity(intent)
+        startActivity(Intent(this, SchoolDashboard::class.java))
     }
 }
