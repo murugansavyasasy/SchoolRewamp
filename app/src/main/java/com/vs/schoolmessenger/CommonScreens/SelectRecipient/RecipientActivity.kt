@@ -81,7 +81,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         tabLayout.addTab(tabLayout.newTab().setText("Entire School"))
         tabLayout.addTab(tabLayout.newTab().setText("Standard"))
         tabLayout.addTab(tabLayout.newTab().setText("Section/Student"))
-        tabLayout.addTab(tabLayout.newTab().setText("Staffs"))
+        tabLayout.addTab(tabLayout.newTab().setText("Staff"))
         tabLayout.addTab(tabLayout.newTab().setText("Groups"))
 
         isStaffDetails = SharedPreference.getStaffDetails(this)

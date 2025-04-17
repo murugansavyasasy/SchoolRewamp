@@ -776,15 +776,16 @@
                         android:padding="@dimen/ten">
 
 
-
                         <TextView
                             android:id="@+id/lblSend"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:layout_marginStart="@dimen/ten"
-                            android:text="Next"
                             style="@style/CustomTextStylePoppinsRegular"
+                            android:layout_centerInParent="true"
+                            android:layout_marginStart="@dimen/five"
+                            android:layout_toEndOf="@+id/imgSend"
+                            android:text="@string/NEXT"
                             android:textColor="@color/white"
                             android:textSize="14sp">
                         </TextView>
