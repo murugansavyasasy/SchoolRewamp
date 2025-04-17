@@ -110,7 +110,7 @@ class StudentDetailAdapter(
 
         Glide.with(context)
             .load(item.school_logo_url)
-            .placeholder(R.drawable.user_icon) // Temporary image while loading
+            .placeholder(R.drawable.school_sample) // Temporary image while loading
             .listener(object : RequestListener<Drawable> {
                 override fun onLoadFailed(
                     e: GlideException?,

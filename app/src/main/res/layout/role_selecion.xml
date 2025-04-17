@@ -84,7 +84,7 @@
             android:layout_height="wrap_content"
             android:text="Click proceed to continue"
             android:textColor="@color/black"
-            android:textSize="14sp"
+            android:textSize="@dimen/thirteen_sp"
             android:layout_below="@+id/lnrParent"
             android:layout_centerInParent="true"
             android:layout_marginTop="@dimen/ten"

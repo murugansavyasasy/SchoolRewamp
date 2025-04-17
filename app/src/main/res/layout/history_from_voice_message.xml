@@ -15,6 +15,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="-22dp"
             android:layout_marginEnd="@dimen/twenty_five"
+            android:visibility="gone"
             android:elevation="10dp"
             android:src="@drawable/new_icon">
 
@@ -130,7 +131,7 @@
                     android:layout_marginEnd="16dp"
                     style="@style/CustomTextStylePoppinsMedium"
                     android:text="10:56 AM"
-                    android:textColor="@color/black"
+                    android:textColor="@color/light_gray"
                     android:textSize="12sp">
                 </TextView>
 
@@ -150,16 +151,16 @@
 
             <RelativeLayout
                 android:id="@+id/rlaSendVoice"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/seventy"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/relative_layout"
                 android:layout_alignParentEnd="true"
-                android:layout_marginTop="@dimen/eight"
+                android:gravity="center"
                 android:visibility="gone"
                 android:layout_marginEnd="@dimen/ten"
                 android:layout_marginBottom="@dimen/eight"
                 android:background="@drawable/rect_blue_and_green_small_radious"
-                android:padding="@dimen/ten">
+                android:padding="@dimen/five">
 
                 <ImageView
                     android:id="@+id/imgSend"
@@ -174,10 +175,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:layout_marginStart="@dimen/five"
                     android:layout_toEndOf="@+id/imgSend"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="Send"
+                    android:text="Select"
                     android:textColor="@color/white"
                     android:textSize="@dimen/thirteen_sp"
                     android:textStyle="bold">

@@ -35,9 +35,11 @@ import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Communication.TextSendingData
 import com.vs.schoolmessenger.School.Communication.VoiceSendingData
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 object Constant {
 
@@ -379,4 +381,16 @@ object Constant {
         val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy") // or "dd/MM/yyyy", etc.
         return currentDate.format(formatter)
     }
+
+    fun convertDateTimeFormat(input: String): String {
+        return try {
+            val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+            val date = inputFormat.parse(input)
+            outputFormat.format(date!!)
+        } catch (e: Exception) {
+            input // return original if there's a parsing error
+        }
+    }
+
 }

@@ -393,6 +393,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             binding.imgVoiceRecord.setImageDrawable(
                 ContextCompat.getDrawable(this@CommunicationSchool, R.drawable.record_icon)
             )
+            binding.rlaAddLocalFile.visibility= View.GONE
             try {
                 stop()
                 release()
@@ -643,7 +644,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 if (mAdapter != null) {
                     mAdapter!!.releaseMediaPlayer()
                 }
-                binding.lblBackToVoiceMessage.text = "Back to voice message"
+                binding.lblBackToVoiceMessage.text = "<<Back to compose"
 
                 binding.rlaBackRecord.visibility = View.GONE
                 binding.gridViewScheduleCall.visibility = View.GONE
@@ -745,6 +746,9 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 binding.rlaSeekBarAndTitle.visibility = View.GONE
                 binding.rlaTitle.visibility = View.GONE
                 Constant.isVoiceFile = ""
+                binding.rlaAddLocalFile.visibility= View.VISIBLE
+                binding.imgVoiceRecord.visibility = View.VISIBLE
+                binding.lblDurationOfVoice.visibility = View.VISIBLE
             }
 
             R.id.rlaSendText -> {
@@ -993,6 +997,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         binding.rlaVoiceMessage.background = null
         binding.rlaScheduleCall.background = null
         binding.rlaTextMessage.background = null
+
         isTypeCommunication.background =
             ContextCompat.getDrawable(this, R.drawable.rect_sky_blue_shadow)
 
@@ -1157,6 +1162,10 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         binding.rlaBackRecord.visibility = View.GONE
         binding.lnrHistoryList.visibility = View.VISIBLE
 
+        binding.imgVoiceRecord.visibility = View.GONE
+        binding.lblDurationOfVoice.visibility = View.GONE
+        binding.rlaAddLocalFile.visibility = View.GONE
+
         binding.imgVoiceRecord.setImageDrawable(
             ContextCompat.getDrawable(this@CommunicationSchool, R.drawable.record_icon)
         )
@@ -1259,6 +1268,11 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 Constant.isVoiceFile = audioFilePath
                 binding.rlaSeekBarAndTitle.visibility = View.VISIBLE
                 binding.rlaTitle.visibility = View.VISIBLE
+
+                binding.imgVoiceRecord.visibility = View.GONE
+                binding.lblDurationOfVoice.visibility = View.GONE
+
+
                 // initializeMediaPlayer()
             }
         }

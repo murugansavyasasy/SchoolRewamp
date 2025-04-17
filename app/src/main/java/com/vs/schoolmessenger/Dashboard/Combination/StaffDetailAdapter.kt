@@ -115,7 +115,7 @@ class StaffDetailAdapter(
 
         Glide.with(context)
             .load(item.school_logo)
-            .placeholder(R.drawable.splash_icon1) // Temporary image while loading
+            .placeholder(R.drawable.school_sample) // Temporary image while loading
             .listener(object : RequestListener<Drawable> {
                 override fun onLoadFailed(
                     e: GlideException?,

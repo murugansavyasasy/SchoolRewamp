@@ -425,7 +425,7 @@
                         android:layout_marginTop="@dimen/twenty"
                         android:layout_toEndOf="@+id/imgEndArrow1"
                         android:layout_marginEnd="@dimen/five"
-                        android:text="Back To Voice Message"
+                        android:text="&lt;&lt;Back to compose"
                         android:textColor="@color/navi_blue2"
                         android:textSize="@dimen/thirteen_sp">
 
@@ -433,7 +433,8 @@
 
                     <ImageView
                         android:id="@+id/imgEndArrow1"
-                        android:layout_width="@dimen/twenty"
+
+android:visibility="gone"                        android:layout_width="@dimen/twenty"
                         android:layout_height="@dimen/twenty"
                         android:layout_marginStart="@dimen/fifteen"
                         android:layout_marginTop="@dimen/twenty"
@@ -660,7 +661,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/ten"
                         android:visibility="gone"
-                        android:layout_below="@+id/rlaSendVoice">
+                        android:layout_below="@+id/rlaAddLocalFile">
 
                         <ImageView
                             android:id="@+id/imgClose"
@@ -745,7 +746,7 @@
                             android:text="@string/title"
                             android:textColor="@color/black"
                             android:textSize="@dimen/fifteen_sp"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             android:textStyle="bold">
 
                         </TextView>
@@ -755,7 +756,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textSize="@dimen/thirteen_sp"
-                            android:hint="Enter the title here "
                             android:layout_below="@+id/lblTitle">
                         </EditText>
 
@@ -765,7 +765,7 @@
                         android:id="@+id/rlaSendVoice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/rlaAddLocalFile"
+                        android:layout_below="@+id/rlaTitle"
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="@dimen/ten"
                         android:layout_marginEnd="@dimen/twenty"

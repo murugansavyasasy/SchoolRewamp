@@ -11,7 +11,7 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/two_hundred">
+            android:layout_height="wrap_content">
 
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/lblGif"
@@ -30,17 +30,15 @@
             android:id="@+id/rlaSchoolDetail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/ten"
             android:paddingHorizontal="@dimen/ten"
-            android:paddingVertical="@dimen/twenty"
+            android:paddingVertical="@dimen/fifteen"
             android:visibility="visible">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imgSchoolLogo"
                 android:layout_width="@dimen/fifty"
                 android:layout_height="@dimen/fifty"
-                android:layout_centerVertical="true"
-                android:src="@mipmap/school_chimes_logo" />
+                android:src="@drawable/school_sample" />
 
             <RelativeLayout
                 android:id="@+id/rytSchoolDetails"
@@ -91,11 +89,11 @@
                 android:id="@+id/imgSearchClick"
                 android:layout_width="@dimen/thirty"
                 android:layout_height="@dimen/thirty"
-                android:layout_below="@+id/rytSchoolDetails"
+                android:layout_marginTop="@dimen/five"
+                android:layout_below="@+id/changeroll"
                 android:layout_toStartOf="@+id/rytImageNotification"
                 android:src="@drawable/search_icon_white"
                 android:layout_marginEnd="@dimen/ten"
-                android:layout_marginTop="@dimen/five"
                 android:visibility="visible">
 
             </ImageView>
@@ -106,9 +104,9 @@
             <FrameLayout
                 android:id="@+id/rytImageNotification"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/rytSchoolDetails"
                 android:layout_marginTop="@dimen/five"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/changeroll"
                 android:layout_alignParentEnd="true">
 
                 <TextView
@@ -176,6 +174,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
                 android:text="View Details"
                 android:gravity="center_vertical"
                 android:textColor="@color/navi_blue1"
