@@ -107,78 +107,78 @@ class SchoolMenuAdapter(
             lblMenuName.text = data.name
 
             when (data.id) {
-                Constant.sch_communication_id -> {
+                Constant.SH_COMMUNICATION -> {
                     imgMenu.setImageResource(R.drawable.communication_icon_dashboard)
                 }
 
-                Constant.sch_assignment_id -> {
+                Constant.SH_ASSIGNMENT -> {
                     imgMenu.setImageResource(R.drawable.assignment_icon_school)
                 }
 
-                Constant.sch_homework_id -> {
+                Constant.SH_HOMEWORK-> {
                     imgMenu.setImageResource(R.drawable.home_work_icon_school)
                 }
 
-                Constant.sch_attendance_marking_id -> {
+                Constant.SH_ATTENDANCE_MARKING -> {
                     imgMenu.setImageResource(R.drawable.attendance_marking)
                 }
 
-                Constant.sch_absenteeism_report_id -> {
+                Constant.SH_ABSENTEEISM_REPORT -> {
                     imgMenu.setImageResource(R.drawable.absentees_report)
                 }
 
-                Constant.sch_school_strength_id -> {
+                Constant.SH_SCHOOL_STRENGTH -> {
                     imgMenu.setImageResource(R.drawable.school_strength)
                 }
 
-                Constant.sch_notice_board_id -> {
+                Constant.SH_NOTICE_BOARD -> {
                     imgMenu.setImageResource(R.drawable.noticeboard_icon)
                 }
 
-                Constant.sch_school_class_events_id -> {
+                Constant.SH_EVENTS -> {
                     imgMenu.setImageResource(R.drawable.event_icon_school)
                 }
 
-                Constant.sch_schedule_exam_test_id -> {
+                Constant.SH_SCHEDULE_EXAM_TEST -> {
                     imgMenu.setImageResource(R.drawable.exam_icon)
                 }
 
-                Constant.sch_messages_from_management_id -> {
+                Constant.SH_MESSAGES_FROM_MANAGEMENT -> {
                     imgMenu.setImageResource(R.drawable.message_f_management)
                 }
 
-                Constant.sch_conference_call_with_teachers_id -> {
+                Constant.SH_CONFERENCE_CALL_WITH_TEACHERS -> {
                     imgMenu.setImageResource(R.drawable.interact_with_student)
                 }
 
-                Constant.sch_online_meeting_id -> {
+                Constant.SH_ONLINE_MEETING -> {
                     imgMenu.setImageResource(R.drawable.online_meeting_icon)
                 }
 
-                Constant.sch_daily_collection_id -> {
+                Constant.SH_DAILY_COLLECTION -> {
                     imgMenu.setImageResource(R.drawable.daily_collection)
                 }
 
-                Constant.sch_student_report_id -> {
+                Constant.SH_STUDENT_REPORT -> {
                     imgMenu.setImageResource(R.drawable.student_report)
                 }
 
-                Constant.sch_lesson_plan_id -> {
+                Constant.SH_LESSON_PLAN -> {
                     imgMenu.setImageResource(R.drawable.lesson_plan)
                 }
 
-                Constant.sch_feedback_id -> {
+                Constant.SH_FEEDBACK -> {
                     imgMenu.setImageResource(R.drawable.fee_pending_reports)
                 }
 
-                Constant.sch_very_important_info_id -> {
+                Constant.SH_IMPORTANT_INFO -> {
                     imgMenu.setImageResource(R.drawable.importent_info)
                 }
             }
 
 
             rlaMenu.setOnClickListener {
-                Constant.selected_school_menu_id = data.id
+                Constant.SELECTED_SCHOOL_MENU = data.id
                 listener.onClick(data)
 
             }

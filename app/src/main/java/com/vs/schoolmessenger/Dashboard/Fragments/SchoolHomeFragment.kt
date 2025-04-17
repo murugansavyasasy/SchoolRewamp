@@ -29,6 +29,7 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.AbsenteesMarking.AttendanceMark
 import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesReport
+import com.vs.schoolmessenger.School.Assignment.Assignment
 import com.vs.schoolmessenger.School.Communication.CommunicationSchool
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollection
 import com.vs.schoolmessenger.School.Event.CreateEvent
@@ -283,23 +284,194 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     }
 
     override fun onClick(data: MenuDetail) {
+
         val activityClass = when (data.id) {
-            Constant.sch_communication_id -> CommunicationSchool::class.java
-            Constant.sch_assignment_id -> SchoolList::class.java
-            Constant.sch_homework_id -> HomeWork::class.java
-            Constant.sch_attendance_marking_id -> AttendanceMark::class.java
-            Constant.sch_absenteeism_report_id -> AbsenteesReport::class.java
-            Constant.sch_school_strength_id -> SchoolStrength::class.java
-            Constant.sch_notice_board_id -> CreateNoticeBoard::class.java
-            Constant.sch_school_class_events_id -> CreateEvent::class.java
-            Constant.sch_schedule_exam_test_id -> Exam::class.java
-            Constant.sch_messages_from_management_id -> MessageFromManagement::class.java
-            Constant.sch_conference_call_with_teachers_id -> InteractionWithStudent::class.java
-            Constant.sch_online_meeting_id -> OnlineMeeting::class.java
-            Constant.sch_daily_collection_id -> DailyCollection::class.java
-            Constant.sch_student_report_id -> StudentReport::class.java
-            Constant.sch_lesson_plan_id -> LessonPlan::class.java
-            Constant.sch_very_important_info_id -> ImportantInfo::class.java
+            Constant.SH_COMMUNICATION -> CommunicationSchool::class.java
+            Constant.SH_ASSIGNMENT -> {
+                Assignment::class.java
+            }
+            Constant.SH_HOMEWORK -> {
+                HomeWork::class.java
+            }
+            Constant.SH_ATTENDANCE_MARKING -> {
+                if(userDetails!!.staff_role.equals(Constant.isStaffRole)){
+                    AttendanceMark::class.java
+                }
+                else {
+                    if(userDetails!!.staff_details.size > 1){
+                        SchoolList::class.java
+                    }
+                    else{
+                        AttendanceMark::class.java
+                    }
+                }
+            }
+            Constant.SH_ABSENTEEISM_REPORT -> {
+                if(userDetails!!.staff_role.equals(Constant.isStaffRole)){
+                    AbsenteesReport::class.java
+                }
+                else{
+                    if(userDetails!!.staff_details.size > 1){
+                        SchoolList::class.java
+                    }
+                    else{
+                        AbsenteesReport::class.java
+                    }
+                }
+            }
+            Constant.SH_SCHOOL_STRENGTH -> {
+                if(userDetails!!.staff_role.equals(Constant.isStaffRole)){
+                    SchoolStrength::class.java
+                }
+                else{
+                    if(userDetails!!.staff_details.size > 1){
+                        SchoolList::class.java
+                    }
+                    else{
+                        SchoolStrength::class.java
+                    }
+                }
+            }
+            Constant.SH_NOTICE_BOARD -> CreateNoticeBoard::class.java
+            Constant.SH_EVENTS -> CreateEvent::class.java
+            Constant.SH_SCHEDULE_EXAM_TEST -> Exam::class.java
+
+            Constant.SH_MESSAGES_FROM_MANAGEMENT ->{
+                if(userDetails!!.staff_role.equals(Constant.isStaffRole)){
+                    MessageFromManagement::class.java
+                }
+                else{
+                    if(userDetails!!.staff_details.size > 1){
+                        SchoolList::class.java
+                    }
+                    else{
+                        MessageFromManagement::class.java
+                    }
+                }
+
+            }
+            Constant.SH_INTERACTION_WITH_STUDENT -> {
+                if(userDetails!!.staff_role.equals(Constant.isStaffRole)){
+                    InteractionWithStudent::class.java
+                }
+                else{
+                    if(userDetails!!.staff_details.size > 1){
+                        SchoolList::class.java
+                    }
+                    else{
+                        InteractionWithStudent::class.java
+                    }
+                }
+            }
+            Constant.SH_ONLINE_MEETING -> OnlineMeeting::class.java
+            Constant.SH_DAILY_COLLECTION ->{
+                if(userDetails!!.staff_role.equals(Constant.isStaffRole)){
+                    DailyCollection::class.java
+                }
+                else{
+                    if(userDetails!!.staff_details.size > 1){
+                        SchoolList::class.java
+                    }
+                    else{
+                        DailyCollection::class.java
+                    }
+                }
+
+            }
+            Constant.SH_STUDENT_REPORT -> {
+                if(userDetails!!.staff_role.equals(Constant.isStaffRole)){
+                    StudentReport::class.java
+                }
+                else{
+                    if(userDetails!!.staff_details.size > 1){
+                        SchoolList::class.java
+                    }
+                    else{
+                        StudentReport::class.java
+                    }
+                }
+            }
+            Constant.SH_LESSON_PLAN -> {
+
+                if(userDetails!!.staff_role.equals(Constant.isStaffRole)){
+                    LessonPlan::class.java
+                }
+                else{
+                    if(userDetails!!.staff_details.size > 1){
+                        SchoolList::class.java
+                    }
+                    else{
+                        LessonPlan::class.java
+                    }
+                }
+            }
+
+            Constant.SH_FEE_PENDING_REPORT ->{
+                if(userDetails!!.staff_role.equals(Constant.isStaffRole)){
+                    //go to fee pending report
+                    LessonPlan::class.java
+                }
+                else{
+                    if(userDetails!!.staff_details.size > 1){
+                        SchoolList::class.java
+                    }
+                    else{
+                        //go to fee pending report
+                        LessonPlan::class.java
+                    }
+                }
+            }
+
+            Constant.SH_MARK_GEOMETRIC_ATTENDANCE ->{
+                if(userDetails!!.staff_role.equals(Constant.isStaffRole)){
+                    //go to geometric mark attendance page
+                    LessonPlan::class.java
+                }
+                else{
+                    if(userDetails!!.staff_details.size > 1){
+                        SchoolList::class.java
+                    }
+                    else{
+                        //go to geometric mark attendance page
+                        LessonPlan::class.java
+                    }
+                }
+            }
+
+            Constant.SH_STAFF_WISE_GEOMETRIC_ATTENDANCE_REPORT ->{
+                if(userDetails!!.staff_role.equals(Constant.isStaffRole)){
+                    //go to staff wise geometric attendance report page
+                    LessonPlan::class.java
+                }
+                else{
+                    if(userDetails!!.staff_details.size > 1){
+                        SchoolList::class.java
+                    }
+                    else{
+                        //go to staff wise geometric attendance report page
+                        LessonPlan::class.java
+                    }
+                }
+            }
+
+            Constant.SH_PTM ->{
+                if(userDetails!!.staff_role.equals(Constant.isStaffRole)){
+                    //go to ptm page
+                    LessonPlan::class.java
+                }
+                else{
+                    if(userDetails!!.staff_details.size > 1){
+                        SchoolList::class.java
+                    }
+                    else{
+                        //go to ptm page
+                        LessonPlan::class.java
+                    }
+                }
+            }
+            Constant.SH_IMPORTANT_INFO -> ImportantInfo::class.java
+            Constant.SH_FEEDBACK -> ImportantInfo::class.java
+
             // Constant.sch_feedback_id -> ImportantInfo::class.java
             else -> null
         }

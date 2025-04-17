@@ -30,6 +30,9 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.ApiCallRequest
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.Constant.SELECTED_SCHOOL_MENU
+import com.vs.schoolmessenger.Utils.Constant.SH_ASSIGNMENT
+import com.vs.schoolmessenger.Utils.Constant.SH_HOMEWORK
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SelectRecipientBinding
 
@@ -61,8 +64,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     var isAcademicYearId = -1
     var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
 
-
-
     private var appViewModel: App? = null
     override fun setupViews() {
         super.setupViews()
@@ -78,10 +79,10 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
         val tabLayout = binding.tabLayout
         tabLayout.addTab(tabLayout.newTab().setText("Entire School"))
-        tabLayout.addTab(tabLayout.newTab().setText("Groups"))
         tabLayout.addTab(tabLayout.newTab().setText("Standards"))
-        tabLayout.addTab(tabLayout.newTab().setText("Staffs"))
         tabLayout.addTab(tabLayout.newTab().setText("Section/Student"))
+        tabLayout.addTab(tabLayout.newTab().setText("Staffs"))
+        tabLayout.addTab(tabLayout.newTab().setText("Groups"))
 
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
@@ -90,26 +91,30 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         isAwsUploadingPreSigned = AwsUploadingPreSigned()
         isUserDetails = SharedPreference.getUserDetails(this)
         isGetAcademicYear()
-        if (isUserDetails!!.staff_role == Constant.isGroupHeadRole || isUserDetails!!.staff_role == Constant.isPrincipalRole || isUserDetails!!.staff_role == Constant.isAdminRole) {
-            binding.btnSpecificStudent.visibility = View.GONE
-            binding.textdesc.visibility = View.VISIBLE
-            if (isUserDetails!!.staff_details.size > 1) {
-                tabLayout.post {
-                    tabLayout.getTabAt(0)?.view?.visibility = View.GONE
-                    binding.chAllSelect.visibility = View.GONE
-                    isSelectedType = 1
-                    tabLayout.getTabAt(1)?.select()
-                }
-            }
-        } else {
-            tabLayout.getTabAt(1)?.select()
-            isSelectedType = 1
-            binding.chAllSelect.visibility = View.VISIBLE
-            tabLayout.getTabAt(0)?.view?.visibility = View.GONE
-            tabLayout.getTabAt(3)?.view?.visibility = View.GONE
-            binding.btnSpecificStudent.visibility = View.VISIBLE
-            binding.textdesc.visibility = View.VISIBLE
-        }
+        tapVisibility(tabLayout)
+
+
+//        if (isUserDetails!!.staff_role == Constant.isGroupHeadRole || isUserDetails!!.staff_role == Constant.isPrincipalRole || isUserDetails!!.staff_role == Constant.isAdminRole) {
+//            binding.btnSpecificStudent.visibility = View.GONE
+//            binding.textdesc.visibility = View.VISIBLE
+//            if (isUserDetails!!.staff_details.size > 1) {
+//                tabLayout.post {
+//                    tabLayout.getTabAt(0)?.view?.visibility = View.GONE
+//                    binding.chAllSelect.visibility = View.GONE
+//                    isSelectedType = 1
+//                    tabLayout.getTabAt(1)?.select()
+//                }
+//            }
+//        }
+//        else {
+//            tabLayout.getTabAt(1)?.select()
+//            isSelectedType = 1
+//            binding.chAllSelect.visibility = View.VISIBLE
+//            tabLayout.getTabAt(0)?.view?.visibility = View.GONE
+//            tabLayout.getTabAt(3)?.view?.visibility = View.GONE
+//            binding.btnSpecificStudent.visibility = View.VISIBLE
+//            binding.textdesc.visibility = View.VISIBLE
+//        }
 
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
@@ -131,25 +136,9 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     }
 
                     1 -> {
-                        binding.chAllSelect.visibility = View.VISIBLE
-                        binding.chAllSelect.isChecked = false
-                        isSelectedType = 1
-                        isGroupSelectedIds.clear()
-                        isStandardSelectedIds.clear()
-                        isSectionSelectedIds.clear()
-                        selectedIds.clear()
-                        binding.rlaStandard.visibility = View.GONE
-                        binding.grouplabel.visibility = View.VISIBLE
-                        binding.btnSpecificStudent.visibility = View.GONE
-                        binding.recyclerView.visibility = View.VISIBLE
-                        binding.rlaSubject.visibility = View.GONE
-                        binding.textdesc.visibility = View.GONE
-                        if (isAcademicYearId != -1) {
-                            isGetGroupList()
-                        }
-                    }
 
-                    2 -> {
+
+
                         isSelectedType = 2
                         binding.chAllSelect.visibility = View.VISIBLE
                         binding.chAllSelect.isChecked = false
@@ -171,6 +160,34 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         } else {
                             binding.recyclerView.visibility = View.GONE
                         }
+
+
+                    }
+
+                    2 -> {
+                        binding.chAllSelect.isChecked = false
+                        isSelectedType = 4
+                        isGroupSelectedIds.clear()
+                        isStandardSelectedIds.clear()
+                        isSectionSelectedIds.clear()
+                        selectedIds.clear()
+                        isDropDown = true
+                        isGetStandardSection()
+                        if (isDropDown) {
+                            binding.rlaStandard.visibility = View.VISIBLE
+                        } else {
+                            binding.rlaStandard.visibility = View.GONE
+                        }
+                        binding.recyclerView.visibility = View.GONE
+                        binding.rlaStandard.visibility = View.VISIBLE
+                        binding.textdesc.visibility = View.GONE
+                        binding.grouplabel.visibility = View.GONE
+                        binding.recyclerView.visibility = View.GONE
+                        binding.rlaSubject.visibility = View.GONE
+                        binding.btnSpecificStudent.visibility = View.VISIBLE
+                        binding.btnSpecificStudent.isEnabled = false
+                        binding.btnSpecificStudent.background =
+                            ContextCompat.getDrawable(this@RecipientActivity, R.drawable.bg_gray)
                     }
                     3 -> {
                         binding.chAllSelect.visibility = View.VISIBLE
@@ -196,30 +213,25 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         }
                     }
 
-                    else -> {
+                    4 -> {
+
+                        binding.chAllSelect.visibility = View.VISIBLE
                         binding.chAllSelect.isChecked = false
-                        isSelectedType = 4
+                        isSelectedType = 1
                         isGroupSelectedIds.clear()
                         isStandardSelectedIds.clear()
                         isSectionSelectedIds.clear()
                         selectedIds.clear()
-                        isDropDown = true
-                        isGetStandardSection()
-                        if (isDropDown) {
-                            binding.rlaStandard.visibility = View.VISIBLE
-                        } else {
-                            binding.rlaStandard.visibility = View.GONE
-                        }
-                        binding.recyclerView.visibility = View.GONE
-                        binding.rlaStandard.visibility = View.VISIBLE
-                        binding.textdesc.visibility = View.GONE
-                        binding.grouplabel.visibility = View.GONE
-                        binding.recyclerView.visibility = View.GONE
+                        binding.rlaStandard.visibility = View.GONE
+                        binding.grouplabel.visibility = View.VISIBLE
+                        binding.btnSpecificStudent.visibility = View.GONE
+                        binding.recyclerView.visibility = View.VISIBLE
                         binding.rlaSubject.visibility = View.GONE
-                        binding.btnSpecificStudent.visibility = View.VISIBLE
-                        binding.btnSpecificStudent.isEnabled = false
-                        binding.btnSpecificStudent.background =
-                            ContextCompat.getDrawable(this@RecipientActivity, R.drawable.bg_gray)
+                        binding.textdesc.visibility = View.GONE
+                        if (isAcademicYearId != -1) {
+                            isGetGroupList()
+                        }
+
                     }
                 }
             }
@@ -338,6 +350,65 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
         }
 
+    }
+
+    private fun tapVisibility(tabLayout: TabLayout) {
+
+        if(isUserDetails!!.staff_role == Constant.isStaffRole){
+            if(SELECTED_SCHOOL_MENU == SH_HOMEWORK){
+                tabLayout.getTabAt(0)?.view?.visibility = View.GONE
+                tabLayout.getTabAt(1)?.view?.visibility = View.GONE
+                tabLayout.getTabAt(3)?.view?.visibility = View.GONE
+                tabLayout.getTabAt(4)?.view?.visibility = View.GONE
+                tabLayout.getTabAt(2)?.select()
+
+               //show send button only
+
+            }
+            else if(SELECTED_SCHOOL_MENU == SH_ASSIGNMENT){
+                tabLayout.getTabAt(0)?.view?.visibility = View.GONE
+                tabLayout.getTabAt(1)?.view?.visibility = View.GONE
+                tabLayout.getTabAt(3)?.view?.visibility = View.GONE
+                tabLayout.getTabAt(4)?.view?.visibility = View.GONE
+                tabLayout.getTabAt(2)?.select()
+
+                //show send and specific student button
+            }
+            else {
+                tabLayout.getTabAt(0)?.view?.visibility = View.GONE
+                tabLayout.getTabAt(3)?.view?.visibility = View.GONE
+                tabLayout.getTabAt(1)?.select()
+
+            }
+
+        }
+        else{
+            if(SELECTED_SCHOOL_MENU == SH_HOMEWORK){
+                tabLayout.getTabAt(0)?.view?.visibility = View.GONE
+                tabLayout.getTabAt(1)?.view?.visibility = View.GONE
+                tabLayout.getTabAt(3)?.view?.visibility = View.GONE
+                tabLayout.getTabAt(4)?.view?.visibility = View.GONE
+
+                tabLayout.getTabAt(2)?.select()
+
+
+                //show send button only
+
+            }
+            else if(SELECTED_SCHOOL_MENU == SH_ASSIGNMENT){
+                tabLayout.getTabAt(0)?.view?.visibility = View.GONE
+                tabLayout.getTabAt(1)?.view?.visibility = View.GONE
+                tabLayout.getTabAt(3)?.view?.visibility = View.GONE
+                tabLayout.getTabAt(4)?.view?.visibility = View.GONE
+                tabLayout.getTabAt(2)?.select()
+
+                //show send and specific student button
+            }
+            else{
+                tabLayout.getTabAt(0)?.select()
+            }
+
+        }
     }
     // Please don't delete by sathish
 //    private fun isLoadSubjectData() {

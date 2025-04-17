@@ -21,6 +21,26 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.ApiCallRequest
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.Constant.SELECTED_SCHOOL_MENU
+import com.vs.schoolmessenger.Utils.Constant.SH_ABSENTEEISM_REPORT
+import com.vs.schoolmessenger.Utils.Constant.SH_ASSIGNMENT
+import com.vs.schoolmessenger.Utils.Constant.SH_ATTACHMENTS
+import com.vs.schoolmessenger.Utils.Constant.SH_ATTENDANCE_MARKING
+import com.vs.schoolmessenger.Utils.Constant.SH_COMMUNICATION
+import com.vs.schoolmessenger.Utils.Constant.SH_DAILY_COLLECTION
+import com.vs.schoolmessenger.Utils.Constant.SH_EVENTS
+import com.vs.schoolmessenger.Utils.Constant.SH_FEE_PENDING_REPORT
+import com.vs.schoolmessenger.Utils.Constant.SH_HOMEWORK
+import com.vs.schoolmessenger.Utils.Constant.SH_LESSON_PLAN
+import com.vs.schoolmessenger.Utils.Constant.SH_MARK_GEOMETRIC_ATTENDANCE
+import com.vs.schoolmessenger.Utils.Constant.SH_MESSAGES_FROM_MANAGEMENT
+import com.vs.schoolmessenger.Utils.Constant.SH_NOTICE_BOARD
+import com.vs.schoolmessenger.Utils.Constant.SH_ONLINE_MEETING
+import com.vs.schoolmessenger.Utils.Constant.SH_PTM
+import com.vs.schoolmessenger.Utils.Constant.SH_SCHEDULE_EXAM_TEST
+import com.vs.schoolmessenger.Utils.Constant.SH_SCHOOL_STRENGTH
+import com.vs.schoolmessenger.Utils.Constant.SH_STAFF_WISE_GEOMETRIC_ATTENDANCE_REPORT
+import com.vs.schoolmessenger.Utils.Constant.SH_STUDENT_REPORT
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SchoolListActivityBinding
 
@@ -32,7 +52,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
     }
 
     private val selectedSchoolIds = mutableListOf<Int>()
-    var isMultipleSchool = true
+    var isMultipleSchool = false
     private lateinit var mAdapter: SchoolListAdapter
 
     private var appViewModel: App? = null
@@ -48,19 +68,27 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         super.setupViews()
         setupToolbar()
         binding.imgBack.setOnClickListener(this)
-        binding.lblMultipleSchool.setOnClickListener(this)
-        binding.lblSingleSchool.setOnClickListener(this)
+        binding.lblSendToMultipleSchool.setOnClickListener(this)
+        binding.lblSelectReceipients.setOnClickListener(this)
         binding.lblSend.setOnClickListener(this)
         binding.rlaAcademicYear.setOnClickListener(this)
 
 
-
-        if (Constant.isEmergencyVoiceNoticeBoard!!) {
+        if(SELECTED_SCHOOL_MENU  == SH_COMMUNICATION || SELECTED_SCHOOL_MENU == SH_NOTICE_BOARD || SELECTED_SCHOOL_MENU == SH_ATTACHMENTS || SELECTED_SCHOOL_MENU == SH_SCHEDULE_EXAM_TEST || SELECTED_SCHOOL_MENU == SH_EVENTS
+            || SELECTED_SCHOOL_MENU == SH_ONLINE_MEETING) {
+            isMultipleSchool  = true
+            if (Constant.isEmergencyVoiceNoticeBoard!!) {
+                binding.lnrTab.visibility = View.GONE
+                binding.lblSend.visibility = View.VISIBLE
+            } else {
+                binding.lnrTab.visibility = View.VISIBLE
+                binding.lblSend.visibility = View.VISIBLE
+            }
+        }
+        else{
+            isMultipleSchool  = false
             binding.lnrTab.visibility = View.GONE
-            binding.lblSend.visibility= View.VISIBLE
-        } else {
-            binding.lnrTab.visibility = View.VISIBLE
-            binding.lblSend.visibility= View.VISIBLE
+            binding.lblSend.visibility = View.GONE
         }
 
         appViewModel = ViewModelProvider(this)[App::class.java]
@@ -135,16 +163,16 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                 onBackPressed()
             }
 
-            R.id.lblSingleSchool -> {
+            R.id.lblSelectReceipients -> {
                 binding.lblSend.visibility= View.GONE
                 isMultipleSchool = false
-                isChangeBackRound(binding.lblSingleSchool)
+                isChangeBackRound(binding.lblSelectReceipients)
             }
 
-            R.id.lblMultipleSchool -> {
+            R.id.lblSendToMultipleSchool -> {
                 binding.lblSend.visibility= View.VISIBLE
                 isMultipleSchool = true
-                isChangeBackRound(binding.lblMultipleSchool)
+                isChangeBackRound(binding.lblSendToMultipleSchool)
             }
 
             R.id.rlaAcademicYear -> {
@@ -189,8 +217,8 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
     ) {
         isLoadData()
         // Reset backgrounds and colors
-        binding.lblMultipleSchool.background = null
-        binding.lblSingleSchool.background = null
+        binding.lblSendToMultipleSchool.background = null
+        binding.lblSelectReceipients.background = null
 
         lblSelectedTab.background = ContextCompat.getDrawable(this, R.drawable.white_radious)
         lblSelectedTab.setTextColor(
@@ -201,9 +229,51 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
     }
 
     override fun onItemClick(data: StaffDetails) {
-        val intent = Intent(this, RecipientActivity::class.java)
-        SharedPreference.putStaffDetails(this, data)
-        startActivity(intent)
+
+        if(SELECTED_SCHOOL_MENU == SH_COMMUNICATION || SELECTED_SCHOOL_MENU == SH_ATTACHMENTS || SELECTED_SCHOOL_MENU == SH_HOMEWORK || SELECTED_SCHOOL_MENU == SH_ASSIGNMENT || SELECTED_SCHOOL_MENU == SH_ONLINE_MEETING
+            || SELECTED_SCHOOL_MENU == SH_EVENTS || SELECTED_SCHOOL_MENU == SH_SCHEDULE_EXAM_TEST) {
+            val intent = Intent(this, RecipientActivity::class.java)
+            SharedPreference.putStaffDetails(this, data)
+            startActivity(intent)
+        }
+        else{
+
+            if(SELECTED_SCHOOL_MENU == SH_ATTENDANCE_MARKING){
+                //go to attendance marking screen
+            }
+            else if(SELECTED_SCHOOL_MENU == SH_ABSENTEEISM_REPORT){
+                //go to absenteeism report screen
+
+            }
+            else if(SELECTED_SCHOOL_MENU == SH_SCHOOL_STRENGTH){
+                //go to school strength  screen
+            }
+
+            else if(SELECTED_SCHOOL_MENU == SH_MESSAGES_FROM_MANAGEMENT){
+                //go to messages from management  screen
+            }
+            else if(SELECTED_SCHOOL_MENU == SH_DAILY_COLLECTION){
+                //go to daily collection screen
+            }
+            else if(SELECTED_SCHOOL_MENU == SH_STUDENT_REPORT){
+                //go to student report screen
+            }
+            else if(SELECTED_SCHOOL_MENU == SH_LESSON_PLAN){
+                //go to lesson plan screen
+            }
+            else if(SELECTED_SCHOOL_MENU == SH_FEE_PENDING_REPORT){
+                //go to fee pending report screen
+            }
+            else if(SELECTED_SCHOOL_MENU == SH_MARK_GEOMETRIC_ATTENDANCE){
+                //go to mark gio metric attendance screen
+            }
+            else if(SELECTED_SCHOOL_MENU == SH_STAFF_WISE_GEOMETRIC_ATTENDANCE_REPORT){
+                //go to staff wise gio metric attendanc report screen
+            }
+            else if(SELECTED_SCHOOL_MENU == SH_PTM){
+                //go to ptm  screen
+            }
+        }
     }
 
     private fun isFileUploadInAws(
