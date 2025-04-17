@@ -57,12 +57,12 @@
 
                 <ImageView
                     android:id="@+id/imgAcademicYear"
-                    android:layout_width="@dimen/twenty_five"
-                    android:layout_height="@dimen/twenty_five"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="@dimen/ten"
-                    android:src="@drawable/ic_down_arrow">
+                    android:src="@drawable/downarrow">
 
                 </ImageView>
 
@@ -601,7 +601,7 @@
                             android:id="@+id/lblEmergencyVoice"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Emergency Call ℹ️"
+                            android:text="Emergency Call   ℹ️"
                             android:textColor="@color/black"
                             style="@style/CustomTextStylePoppinsBold"
                             android:textSize="@dimen/thirteen_sp" />
@@ -644,9 +644,6 @@
                         android:layout_marginEnd="@dimen/twenty"
                         android:layout_marginStart="15dp"
                         android:padding="@dimen/ten">
-
-
-
 
                         <TextView
                             android:layout_width="wrap_content"

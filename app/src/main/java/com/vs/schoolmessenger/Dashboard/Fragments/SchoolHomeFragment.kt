@@ -80,7 +80,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
         userDetails = SharedPreference.getUserDetails(requireActivity())
         staffDetails = SharedPreference.getStaffDetails(requireActivity())
-        isDashBoardData()
+
 
         Log.d("school_logo",staffDetails!!.school_logo)
 
@@ -106,7 +106,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     .into(binding.imgSchoolLogo)
             }
         }
-
+        isDashBoardData()
         if(userDetails!!.is_parent && userDetails!!.is_staff){
             binding.changeroll.visibility = View.VISIBLE
         }
