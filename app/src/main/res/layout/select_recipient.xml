@@ -94,7 +94,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/ten"
-                android:src="@drawable/ic_down_arrow" />
+                android:src="@drawable/downarrow" />
 
         </RelativeLayout>
     </LinearLayout>

@@ -52,7 +52,7 @@
                 android:layout_marginEnd="@dimen/fifteen"
                 android:background="@drawable/bg_stroke_rect_black"
                 android:padding="@dimen/ten"
-                android:visibility="visible">
+                android:visibility="gone">
 
 
                 <ImageView
@@ -62,7 +62,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="@dimen/ten"
-                    android:src="@drawable/ic_down_arrow">
+                    android:src="@drawable/downarrow">
 
                 </ImageView>
 
@@ -204,7 +204,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lnrCommunicationIcon"
-                android:layout_marginTop="@dimen/twenty">
+                android:layout_marginTop="@dimen/five">
 
                 <RelativeLayout
                     android:id="@+id/rlaScheduleCallPickDate"
@@ -449,7 +449,6 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/gridViewScheduleCall"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginTop="@dimen/twenty"
                     android:layout_marginEnd="@dimen/five"
                     android:orientation="horizontal">
 
@@ -662,6 +661,7 @@
                         android:id="@+id/rlaSeekBarAndTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ten"
                         android:visibility="gone"
                         android:layout_below="@+id/rlaSendVoice">
 
@@ -773,7 +773,8 @@
                         android:layout_marginTop="@dimen/ten"
                         android:layout_marginEnd="@dimen/twenty"
                         android:background="@drawable/rect_green_light_radious"
-                        android:padding="@dimen/ten">
+                        android:padding="@dimen/seven">
+
 
 
                         <TextView
@@ -781,11 +782,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            style="@style/CustomTextStylePoppinsRegular"
-                            android:layout_centerInParent="true"
                             android:layout_marginStart="@dimen/five"
-                            android:layout_toEndOf="@+id/imgSend"
                             android:text="@string/NEXT"
+                            style="@style/CustomTextStylePoppinsRegular"
                             android:textColor="@color/white"
                             android:textSize="14sp">
                         </TextView>

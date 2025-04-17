@@ -79,7 +79,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
         userDetails = SharedPreference.getUserDetails(requireActivity())
         staffDetails = SharedPreference.getStaffDetails(requireActivity())
-        isDashBoardData()
 
         Log.d("school_logo",staffDetails!!.school_logo)
 
@@ -128,6 +127,8 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
         binding.lblGif.playAnimation()
         binding.lblGif.setAnimation(R.raw.mathematics)
+
+        isDashBoardData()
 
         appViewModel!!.isDashBoardData?.observe(requireActivity()) { response ->
             if (response != null) {
