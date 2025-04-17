@@ -297,15 +297,15 @@
     <string name="your_password_has_been_securely_stored_and_encrypted_for_protection_for_security_reasons_it_cannot_be_displayed_in_plain_text">Your password has been securely stored and encrypted for protection. For security reasons, it cannot be displayed in plain text.</string>
     <string name="_00_00">00:00</string>
     <string name="if_you_don_t_recive_the_otp_please_contact_any_of_the_below_number">If you don\'t recive the otp please contact any of the below number.</string>
-    <string name="contact_us">Contact Us?</string>
+    <string name="contact_us">Call Us?</string>
     <string name="welcome_aboard">Welcome aboard!</string>
     <string name="seamless_school_communication_anytime_anywhere_effortlessly_connecting_student_teachers_and_parents_at_all_times">Seamless school communication, anytime, anywhere, effortlessly connecting student, teachers, and parents at all times.</string>
     <string name="let_s_get_started">Let\'s Get Started!</string>
     <string name="_00000_00000">00000-00000</string>
-    <string name="welcome_back">Welcome back!</string>
-    <string name="login">Login</string>
+    <string name="welcome_back">WELCOME BACK!</string>
+    <string name="login">Log In</string>
     <string name="star">**********</string>
-    <string name="logintext">LOGIN</string>
+    <string name="logintext">Login</string>
     <string name="see_less">see less</string>
 
 

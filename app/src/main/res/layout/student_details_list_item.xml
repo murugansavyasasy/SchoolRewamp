@@ -27,7 +27,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/ten"
                 android:scaleType="centerCrop"
-                android:src="@drawable/man_icon"
+                android:src="@drawable/user_sample"
                 app:shapeAppearanceOverlay="@style/Circular">
 
             </com.google.android.material.imageview.ShapeableImageView>

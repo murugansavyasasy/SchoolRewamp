@@ -12,7 +12,10 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.util.Util
+import com.masoudss.lib.utils.Utils
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 import com.vs.schoolmessenger.Utils.WaveformSeekBar
 import kotlin.math.max
@@ -97,7 +100,16 @@ class VoiceHistoryAdapter(
             adapter: VoiceHistoryAdapter
         ) {
             lblTitle.text = data.description
-            lblTime.text=data.sentOn
+
+
+            val parts = data.sentOn.split(" ")
+            val date = parts[0]
+            val time = parts[1] + " " + parts[2]
+
+            lblTime.text = time
+            lblDate.text = Constant.convertDateTimeFormat(date)
+
+            rlaSendVoice.visibility= View.VISIBLE
 
             getAudioDuration(data.url) { duration ->
                 lblEndDuration.text =

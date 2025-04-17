@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.Auth.OTP
 
 import android.content.Intent
+import android.graphics.Paint
 import android.os.CountDownTimer
 import android.text.Editable
 import android.text.TextWatcher
@@ -49,6 +50,8 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
         authViewModel!!.init()
 
         isOtpTitleLoad()
+        binding.lblContactUs.paintFlags = binding.lblContactUs.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+
 
 
         authViewModel!!.isOtpResponse?.observe(this) { response ->

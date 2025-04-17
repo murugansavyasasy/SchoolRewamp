@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/ten"
             android:gravity="center"
-            android:text="@string/your_password_has_been_securely_stored_and_encrypted_for_protection_for_security_reasons_it_cannot_be_displayed_in_plain_text"
+            android:text="@string/seamless_school_communication_anytime_anywhere_effortlessly_connecting_student_teachers_and_parents_at_all_times"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp">
 
@@ -57,6 +57,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="@string/login"
+                    style="@style/CustomTextStylePoppinsBold"
                     android:textColor="@color/white"
                     android:textSize="@dimen/eighteen_sp" />
 
@@ -65,6 +66,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/lblLogin"
+                    style="@style/CustomTextStylePoppinsBold"
+
                     android:layout_marginTop="@dimen/ten"
                     android:text="@string/lblMobileNumber"
                     android:textColor="@color/white"
@@ -117,6 +120,7 @@
                     android:id="@+id/lblPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    style="@style/CustomTextStylePoppinsBold"
                     android:layout_below="@+id/rytMobile"
                     android:layout_marginTop="@dimen/ten"
                     android:text="@string/lblPassword"
@@ -163,6 +167,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/rytPassword"
                     android:layout_alignParentEnd="true"
+                    style="@style/CustomTextStylePoppinsBold"
+
                     android:layout_marginTop="@dimen/twenty"
                     android:text="@string/lblForgotPassword"
                     android:textColor="@color/white"

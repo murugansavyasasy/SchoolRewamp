@@ -22,6 +22,7 @@
             android:id="@+id/lblEnter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_margin="@dimen/ten"
             android:gravity="center"
             android:text="@string/your_password_has_been_securely_stored_and_encrypted_for_protection_for_security_reasons_it_cannot_be_displayed_in_plain_text"
@@ -138,6 +139,8 @@
                 <TextView
                     android:id="@+id/lblDidNot"
                     android:layout_width="wrap_content"
+                    style="@style/CustomTextStylePoppinsMedium"
+
                     android:layout_height="wrap_content"
                     android:text="@string/lblDidntreceive"
                     android:textColor="@color/white"
@@ -163,7 +166,7 @@
                     android:layout_marginStart="@dimen/fifteen"
                     android:layout_toEndOf="@+id/lblDidNot"
                     android:text="Resend"
-                    android:textColor="@color/dark_orange"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/fifteen_sp"
                     android:visibility="gone" />
 
@@ -177,6 +180,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/ten"
                 android:gravity="center"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:text="@string/if_you_don_t_recive_the_otp_please_contact_any_of_the_below_number"
                 android:textColor="@color/white"
                 android:textSize="@dimen/thirteen_sp">
@@ -189,11 +193,12 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="@dimen/ten"
+                style="@style/CustomTextStylePoppinsBold"
                 android:gravity="center"
                 android:text="@string/contact_us"
                 android:textColor="@color/white"
                 android:textSize="@dimen/fifteen_sp"
-                android:textStyle="bold">
+               >
 
             </TextView>
 
