@@ -72,6 +72,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         binding = SchoolHomeFragmentBinding.inflate(layoutInflater)
         binding.imgNotification.setOnClickListener(this)
         binding.imgSearchClick.setOnClickListener(this)
+        binding.changeroll.setOnClickListener(this)
 
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel!!.init()
@@ -241,6 +242,10 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             R.id.imgNotification -> {
                 val intent = Intent(requireActivity(), Notification::class.java)
                 startActivity(intent)
+            }
+
+            R.id.changeroll -> {
+                requireActivity().onBackPressedDispatcher.onBackPressed()
             }
 
             R.id.imgSearchClick -> {
