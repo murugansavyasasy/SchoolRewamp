@@ -121,11 +121,15 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
         if (isClickingId == binding.lblTeacher) {
             binding.lblParent.background = null
             binding.lblParent.setTextColor(ContextCompat.getColor(this, R.color.dark_blue))
+<<<<<<< HEAD
             if (userDetails!!.staff_role == Constant.isStaffRole) {
                 binding.btnGo.visibility = View.GONE
             } else {
                 binding.btnGo.visibility = View.VISIBLE
             }
+=======
+            binding.btnGo.visibility = View.VISIBLE
+>>>>>>> 7ed920e71b0c12318db1a14f5a0275a929432a66
             isLoadData(true)
             Constant.isParentChoose = false
         }
