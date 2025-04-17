@@ -210,11 +210,9 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         changeLabel()
         binding.SwitchEmergencyVoice.setOnClickListener {
             if (binding.SwitchEmergencyVoice.isChecked()) {
-                Constant.isEmergencyVoiceNoticeBoard = true
                 Constant.isAccessType = Constant.isEmergency
                 isEmergency = 1
             } else {
-                Constant.isEmergencyVoiceNoticeBoard = false
                 Constant.isAccessType = Constant.isNonEmergency
                 isEmergency = 0
             }
@@ -326,23 +324,25 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
 
     private fun changeLabel() {
-        if (Constant.isEmergencyVoiceNoticeBoard == true) {
-            if (isMultipleSchool) {
-                binding.lblSend.text = resources.getString(R.string.NEXT)
-            } else {
-                if (isEmergency == 0) {
-                    binding.lblSend.text = resources.getString(R.string.NEXT)
-                } else {
-                    binding.lblSend.text = resources.getString(R.string.Send)
-                }
-            }
-        } else {
-            if (isEmergency == 0) {
-                binding.lblSend.text = resources.getString(R.string.NEXT)
-            } else {
-                binding.lblSend.text = resources.getString(R.string.Send)
-            }
-        }
+//        binding.lblSend.text = resources.getString(R.string.NEXT)
+
+//        if (Constant.isEmergencyVoiceNoticeBoard == true) {
+//            if (isMultipleSchool) {
+//                binding.lblSend.text = resources.getString(R.string.NEXT)
+//            } else {
+//                if (isEmergency == 0) {
+//                    binding.lblSend.text = resources.getString(R.string.NEXT)
+//                } else {
+//                    binding.lblSend.text = resources.getString(R.string.Send)
+//                }
+//            }
+//        } else {
+//            if (isEmergency == 0) {
+//                binding.lblSend.text = resources.getString(R.string.NEXT)
+//            } else {
+//                binding.lblSend.text = resources.getString(R.string.Send)
+//            }
+//        }
     }
 
     private fun startRecording() {
@@ -671,7 +671,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
 
             R.id.rlaScheduleCall -> {
-                Constant.isEmergencyVoiceNoticeBoard = false
                 Constant.isAccessType = Constant.isNonEmergency
                 isEmergency = 0
                 binding.SwitchEmergencyVoice.setChecked(false)
@@ -705,7 +704,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
 
             R.id.rlaTextMessage -> {
-                Constant.isEmergencyVoiceNoticeBoard = false
                 Constant.isAccessType = Constant.isNonEmergency
                 isEmergency = 0
                 binding.SwitchEmergencyVoice.setChecked(false)
@@ -786,13 +784,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             R.id.rlaSendVoice -> {
                 if (!Constant.isVoiceFile.equals("")) {
                     if (binding.edtTitle.text.toString() != "") {
-                        if (binding.lblSend.text.toString() == resources.getString(R.string.send)) {
-                            showSendConfirmationDialog(
-                                "Are you want send this voice to entire school?"
-                            )
-                        } else {
-                            isGoToRecipient()
-                        }
+                        isGoToRecipient()
+
                     } else {
                         Constant.showAlert("Alert!", "Enter the title", this)
                     }
@@ -967,26 +960,10 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 startActivity(intent)
             }
         } else {
-            if (isStaffRole.equals(Constant.isGroupHeadRole) || isStaffRole.equals(
-                    Constant.isPrincipalRole
-                ) || isStaffRole.equals(
-                    Constant.isAdminRole
-                )
-            ) {
-                if (Constant.isEmergencyVoiceNoticeBoard == true) {
-                    //send api call here itself
-                } else {
-                    val intent = Intent(this, RecipientActivity::class.java)
-                    isSaveTheVoiceData()
-                    isSaveTheTextData()
-                    startActivity(intent)
-                }
-            } else {
-                val intent = Intent(this, RecipientActivity::class.java)
-                isSaveTheVoiceData()
-                isSaveTheTextData()
-                startActivity(intent)
-            }
+            val intent = Intent(this, RecipientActivity::class.java)
+            isSaveTheVoiceData()
+            isSaveTheTextData()
+            startActivity(intent)
         }
     }
 

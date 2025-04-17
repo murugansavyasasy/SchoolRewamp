@@ -81,7 +81,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         tabLayout.addTab(tabLayout.newTab().setText("Entire School"))
         tabLayout.addTab(tabLayout.newTab().setText("Standards"))
         tabLayout.addTab(tabLayout.newTab().setText("Section/Student"))
-        tabLayout.addTab(tabLayout.newTab().setText("Staffs"))
+        tabLayout.addTab(tabLayout.newTab().setText("Staff"))
         tabLayout.addTab(tabLayout.newTab().setText("Groups"))
 
         isStaffDetails = SharedPreference.getStaffDetails(this)
@@ -137,8 +137,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
                     1 -> {
 
-
-
                         isSelectedType = 2
                         binding.chAllSelect.visibility = View.VISIBLE
                         binding.chAllSelect.isChecked = false
@@ -160,8 +158,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         } else {
                             binding.recyclerView.visibility = View.GONE
                         }
-
-
                     }
 
                     2 -> {
