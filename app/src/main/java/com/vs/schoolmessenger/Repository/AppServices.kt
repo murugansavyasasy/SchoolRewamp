@@ -2,8 +2,10 @@ package com.vs.schoolmessenger.Repository
 
 import android.app.Activity
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.airbnb.lottie.LottieAnimationView
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.CommonScreens.Ads.AdsResponse
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
@@ -12,6 +14,7 @@ import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsRespo
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
 import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
 import com.vs.schoolmessenger.Parent.Communication.VoiceDataResponse
+import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Communication.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.VoiceDetails
@@ -435,6 +438,8 @@ class AppServices {
                     call: Call<TextSendResponse?>,
                     response: Response<TextSendResponse?>
                 ) {
+                    val lottieLoader = activity.findViewById<LottieAnimationView>(R.id.lottie_loader)
+                    lottieLoader.visibility = View.GONE
                     Log.d(
                         "isGetCountryList",
                         response.code().toString() + " - " + response.toString()
@@ -454,6 +459,8 @@ class AppServices {
                 }
 
                 override fun onFailure(call: Call<TextSendResponse?>, t: Throwable) {
+                    val lottieLoader = activity.findViewById<LottieAnimationView>(R.id.lottie_loader)
+                    lottieLoader.visibility = View.GONE
                     isSendText.postValue(null)
                     t.printStackTrace()
                 }

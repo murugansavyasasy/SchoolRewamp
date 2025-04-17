@@ -136,15 +136,13 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
 
         checkAndRequestPermissions(this)
-<<<<<<< HEAD
         mediaRecorder = MediaRecorder()
 //        mediaRecorder!!.setAudioSource(MediaRecorder.AudioSource.MIC)
 //        mediaRecorder!!.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
 //        mediaRecorder!!.setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
         audioFilePath = "${externalCacheDir?.absolutePath}/audiorecord.m4a"
         mediaRecorder!!.setOutputFile(audioFilePath)
-=======
->>>>>>> 6497069e0f629fdfb7427581689eddf96a9bd779
+
 
         isAwsUploadingPreSigned = AwsUploadingPreSigned()
         isFileExtensionFromContentUri = FileExtensionFromContentUri()
@@ -722,7 +720,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 if (mAdapter != null) {
                     mAdapter!!.releaseMediaPlayer()
                 }
-                binding.lblBackToVoiceMessage.text = "Back to text message"
+                binding.lblBackToVoiceMessage.text = "Back to compose"
                 binding.rlaBackRecord.visibility = View.GONE
 //                binding.gridViewScheduleCall.visibility = View.GONE
                 binding.lnrHistoryList.visibility = View.VISIBLE

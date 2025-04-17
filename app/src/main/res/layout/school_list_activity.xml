@@ -93,44 +93,67 @@
         </TextView>
     </LinearLayout>
 
-    <RelativeLayout
-        android:id="@+id/rlaAcademicYear"
+
+
+    <LinearLayout
+        android:id="@+id/linearlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/lnrTab"
         android:layout_marginStart="@dimen/fifteen"
         android:layout_marginTop="@dimen/ten"
         android:layout_marginEnd="@dimen/fifteen"
-        android:background="@drawable/bg_stroke_rect_black"
         android:padding="@dimen/ten"
-        android:visibility="visible">
-
-
-        <ImageView
-            android:id="@+id/imgAcademicYear"
-            android:layout_width="@dimen/twenty_five"
-            android:layout_height="@dimen/twenty_five"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/ten"
-            android:src="@drawable/ic_down_arrow">
-
-        </ImageView>
+        android:visibility="visible"
+        android:gravity="center_vertical">
 
         <TextView
-            android:id="@+id/lblAcademicYear"
+            android:id="@+id/tvAcademicYearLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/fifteen"
-            android:fontFamily="@font/poppins_bold"
-            android:text=""
+            android:text="Choose academic year :"
             android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"
-            android:textStyle="bold">
+            android:textSize="14sp"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_marginEnd="@dimen/ten"/>
 
-        </TextView>
-    </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rlaAcademicYear"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_stroke_rect_black"
+            android:padding="@dimen/ten"
+            android:visibility="visible">
+
+
+
+            <ImageView
+                android:id="@+id/imgAcademicYear"
+                android:layout_width="@dimen/twenty_five"
+                android:layout_height="@dimen/twenty_five"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/ten"
+                android:src="@drawable/ic_down_arrow">
+
+            </ImageView>
+
+            <TextView
+                android:id="@+id/lblAcademicYear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/fifteen"
+                android:fontFamily="@font/poppins_bold"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"
+                android:textStyle="bold">
+
+            </TextView>
+        </RelativeLayout>
+    </LinearLayout>
 
 
 
@@ -139,7 +162,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/lblSend"
-        android:layout_below="@+id/rlaAcademicYear"
+        android:layout_below="@+id/linearlayout"
         android:layout_marginBottom="@dimen/ten"
         android:padding="@dimen/ten"
         tools:listitem="@layout/schools_list_item" />
@@ -162,5 +185,18 @@
         android:textStyle="normal">
 
     </TextView>
+
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottie_loader"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        app:lottie_rawRes="@raw/loader"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true" />
+
+
 
 </RelativeLayout>

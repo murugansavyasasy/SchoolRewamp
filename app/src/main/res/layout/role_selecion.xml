@@ -79,12 +79,25 @@
 
         </LinearLayout>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Click Proceed To Continue"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:layout_below="@+id/lnrParent"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="@dimen/ten"
+            android:id="@+id/proceedlabel"
+            style="@style/CustomTextStylePoppinsMedium"/>
+
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViews"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/lnrParent"
-            android:layout_marginTop="@dimen/ten"
+            android:layout_below="@+id/proceedlabel"
+            android:layout_marginTop="@dimen/five"
             tools:listitem="@layout/school_details_list_item" />
 
     </RelativeLayout>
@@ -92,18 +105,18 @@
 
     <TextView
         android:id="@+id/btnGo"
-        android:layout_width="@dimen/eighty"
+        android:layout_width="200dp"
         android:layout_height="@dimen/thirty_five"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
         android:layout_marginEnd="@dimen/twenty_five"
         android:layout_marginBottom="@dimen/twenty_five"
         android:background="@drawable/bg_blue"
         android:gravity="center"
-        android:text="@string/lblNext"
+        android:text="Proceed"
         android:textColor="@color/white"
         android:textSize="@dimen/thirteen_sp"
-        style="@style/CustomTextStylePoppinsBold"/>
+        style="@style/CustomTextStylePoppinsMedium"/>
 
 
     <!-- OLD  -->

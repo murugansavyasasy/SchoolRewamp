@@ -57,6 +57,7 @@
                     android:layout_height="wrap_content"
                     android:text="Savyasasy sofwiewieisefvwibtware solutions pvt Ltd.,"
                     android:textSize="14sp"
+                    android:layout_marginTop="@dimen/twenty"
                     style="@style/CustomTextStylePoppinsBold" />
 
                 <TextView
@@ -77,11 +78,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/changeroll"
-                android:text="Change Roll >"
+                android:text="Change Role >"
                 style="@style/CustomTextStylePoppinsRegular"
                 android:textColor="@color/navi_blue2"
                 android:textSize="@dimen/fifteen_sp"
                 android:visibility="visible"
+                android:layout_marginTop="@dimen/twenty"
                 android:layout_alignParentEnd="true"/>
 
 
@@ -231,20 +233,23 @@
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/thirty_five"
                 android:text="Categories"
+                android:visibility="gone"
                 android:textSize="15sp"
                  style="@style/CustomTextStylePoppinsBold">
 
             </TextView>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewMenus"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@id/lblCategories"
-                android:background="@color/white"
-                tools:listitem="@layout/menu_item_card" />
 
         </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewMenus"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/rlaAttendanceReport"
+            android:background="@color/white"
+            android:layout_marginTop="@dimen/five"
+            tools:listitem="@layout/menu_item_card" />
     </RelativeLayout>
 
 

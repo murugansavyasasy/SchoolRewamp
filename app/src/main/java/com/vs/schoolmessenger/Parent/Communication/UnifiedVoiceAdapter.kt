@@ -24,6 +24,9 @@ import com.vs.schoolmessenger.School.Communication.TextHistoryAdapter.DataViewHo
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 import com.vs.schoolmessenger.Utils.WaveformSeekBar
 import kotlin.math.max
+import android.view.ViewTreeObserver
+
+
 
 class UnifiedVoiceAdapter(
     private var itemList: ArrayList<VoiceData>? = null,
@@ -112,8 +115,7 @@ class UnifiedVoiceAdapter(
         private val lblnewiconText: ImageView = itemView.findViewById(R.id.lblnewiconText)
         private val rlaSendVoice: View = itemView.findViewById(R.id.rlaSendVoice)
         private val rlaSelectText: View = itemView.findViewById(R.id.rlaSelectText)
-
-        private var isExpanded = false
+        private  var isExpanded = false
         private lateinit var mediaPlayer: MediaPlayer
         private var isPrepared = false
         private var isPlayingVoice = false
@@ -139,20 +141,32 @@ class UnifiedVoiceAdapter(
             if (data.type.equals("VOICE", ignoreCase = true)) {
                 rlaVoice.visibility = View.VISIBLE
                 rlaText.visibility = View.GONE
-
                 lblTitle.text = data.description ?: ""
                 lblDate.text = data.date ?: ""
                 lblTime.text = data.time ?: ""
-
                 lblnewiconVoice.visibility = if (data.is_unread) View.VISIBLE else View.GONE
                 lblnewiconText.visibility = View.GONE
-
                 rlaSendVoice.visibility = View.GONE
+                lblContentText.text = data.content ?: ""
                 isSeeMoreVisibility(lblContentText, lblSeeMore)
+
 
                 getAudioDuration(data.content ?: "") { duration ->
                     lblEndDuration.text = formatTime(duration)
                 }
+
+
+                lblviewtext.setOnClickListener {
+                    listener.onItemClick(data, this@DataViewHolder)
+                    lblviewtext.visibility = View.GONE
+
+                    if (data.is_archive) {
+                        listener.onUpdateArchiveStatus(data.type, data.id)
+                    } else {
+                        listener.onUpdateCommunicationStatus(data.type, data.id)
+                    }
+                }
+
 
                 imgVoicePlay.setOnClickListener {
                     listener.onItemClick(data, this@DataViewHolder)
@@ -184,24 +198,34 @@ class UnifiedVoiceAdapter(
             } else {
                 rlaVoice.visibility = View.GONE
                 rlaText.visibility = View.VISIBLE
-
                 lblTitleText.text = data.description ?: ""
                 lblContentText.text = data.content ?: ""
                 lblDateText.text = data.date ?: ""
                 lblTimeText.text = data.time ?: ""
-
                 rlaSelectText.visibility = View.GONE
                 rlaSendVoice.visibility = View.GONE
-
                 lblnewiconText.visibility = if (data.is_unread) View.VISIBLE else View.GONE
                 lblnewiconVoice.visibility = View.GONE
+
+                lblviewtext.visibility = if (data.is_unread) View.VISIBLE else View.GONE
+                lblviewtext.visibility = View.GONE
+
             }
 
             lblSeeMore.setOnClickListener {
                 isExpanded = !isExpanded
                 updateTextView()
             }
+
         }
+
+        private fun updateTextView() {
+            lblContentText.maxLines = if (isExpanded) Int.MAX_VALUE else 3
+            lblSeeMore.text = if (isExpanded) "See Less" else "See More"
+        }
+
+
+
 
         private fun initializeMediaPlayer(audioUrl: String) {
             mediaPlayer = MediaPlayer().apply {
@@ -291,23 +315,22 @@ class UnifiedVoiceAdapter(
             }
         }
 
-        private fun updateTextView() {
-            lblContentText.maxLines = if (isExpanded) Int.MAX_VALUE else 3
-            lblSeeMore.text = if (isExpanded) "See Less" else "See More"
-        }
-
         private fun isSeeMoreVisibility(lblContent: TextView, tvSeeMore: TextView) {
-            lblContent.post {
-                if (lblContent.lineCount > 3) {
+//            lblContent.post {
+                if (lblContent.lineCount > 1) {
                     tvSeeMore.visibility = View.VISIBLE
                     lblContent.maxLines = 3
                     lblContent.ellipsize = TextUtils.TruncateAt.END
                 } else {
                     tvSeeMore.visibility = View.GONE
                 }
-            }
+//            }
         }
+
+
+
     }
+
 
     fun releaseMediaPlayer() {
         currentlyPlayingHolder?.stopAudioPlayback()

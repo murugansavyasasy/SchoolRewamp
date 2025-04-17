@@ -78,8 +78,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         val tabLayout = binding.tabLayout
         tabLayout.addTab(tabLayout.newTab().setText("Entire School"))
         tabLayout.addTab(tabLayout.newTab().setText("Groups"))
-        tabLayout.addTab(tabLayout.newTab().setText("Standards"))
-        tabLayout.addTab(tabLayout.newTab().setText("Staffs"))
+        tabLayout.addTab(tabLayout.newTab().setText("Standard"))
+        tabLayout.addTab(tabLayout.newTab().setText("Staff"))
         tabLayout.addTab(tabLayout.newTab().setText("Section/Student"))
 
         isStaffDetails = SharedPreference.getStaffDetails(this)
@@ -119,6 +119,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         binding.grouplabel.visibility = View.GONE
                         binding.recyclerView.visibility = View.GONE
                         binding.rlaSubject.visibility = View.GONE
+                        binding.chAllSelect.visibility = View.GONE
                         binding.textdesc.visibility = View.VISIBLE
                         binding.btnSpecificStudent.visibility = View.GONE
                     }
@@ -134,6 +135,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         binding.btnSpecificStudent.visibility = View.GONE
                         binding.recyclerView.visibility = View.VISIBLE
                         binding.rlaSubject.visibility = View.GONE
+                        binding.chAllSelect.visibility = View.VISIBLE
                         binding.textdesc.visibility = View.GONE
                         if (isAcademicYearId != -1) {
                             isGetGroupList()
@@ -151,6 +153,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         binding.rlaStandard.visibility = View.GONE
                         binding.grouplabel.text = "Standard"
                         binding.grouplabel.visibility = View.VISIBLE
+                        binding.chAllSelect.visibility = View.VISIBLE
                         binding.rlaSubject.visibility = View.GONE
                         binding.textdesc.visibility = View.GONE
                         binding.btnSpecificStudent.visibility = View.GONE
@@ -173,6 +176,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         binding.grouplabel.text = "Staff's"
                         binding.grouplabel.visibility = View.VISIBLE
                         binding.rlaSubject.visibility = View.GONE
+                        binding.chAllSelect.visibility = View.VISIBLE
                         binding.textdesc.visibility = View.GONE
                         binding.btnSpecificStudent.visibility = View.GONE
                         Log.d("isDropDown", isDropDown.toString())
@@ -201,6 +205,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         binding.textdesc.visibility = View.GONE
                         binding.grouplabel.visibility = View.GONE
                         binding.recyclerView.visibility = View.GONE
+                        binding.chAllSelect.visibility = View.VISIBLE
                         binding.rlaSubject.visibility = View.GONE
                         binding.btnSpecificStudent.visibility = View.VISIBLE
                         binding.btnSpecificStudent.isEnabled = false
@@ -497,8 +502,9 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
         val isTextData = Constant.isTextSendingData
 
-        AlertDialog.Builder(this).setTitle("Send Confirmation!").setMessage(isMessage)
-            .setPositiveButton("Yes") { dialog, _ ->
+        AlertDialog.Builder(this)
+            .setTitle("Confirmation").setMessage(isMessage)
+            .setPositiveButton("Yes,Send") { dialog, _ ->
                 if (Constant.isClickType == 3) {
                     val jsonObject = ApiCallRequest.isSendText(
                         isAcademicYearId = isAcademicYearId,

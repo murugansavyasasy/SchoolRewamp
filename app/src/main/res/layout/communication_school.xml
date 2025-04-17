@@ -122,7 +122,7 @@
                         android:textSize="13sp"
                         style="@style/CustomTextStylePoppinsBold"
                         android:paddingBottom="@dimen/ten"
-                        android:text="Voice"
+                        android:text="Instant Call"
                         android:textColor="@color/white">
 
                     </TextView>
@@ -155,7 +155,7 @@
                         android:paddingStart="@dimen/five"
                         android:paddingEnd="@dimen/five"
                         android:textSize="13sp"
-                       style="@style/CustomTextStylePoppinsBold"
+                        style="@style/CustomTextStylePoppinsBold"
                         android:paddingBottom="@dimen/ten"
                         android:text="@string/schedule_call"
                         android:textColor="@color/black">
@@ -191,7 +191,7 @@
                         android:paddingEnd="@dimen/five"
                         android:paddingBottom="@dimen/ten"
                         android:textSize="13sp"
-                        android:text="@string/text"
+                        android:text="Text Message"
                         style="@style/CustomTextStylePoppinsBold"
                         android:textColor="@color/black">
 
@@ -212,10 +212,58 @@
                     android:visibility="gone"
                     android:layout_height="wrap_content">
 
+
+                    <LinearLayout
+                        android:id="@+id/lnrScheduleCall"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="@dimen/twenty"
+                            android:layout_weight="0.4"
+                            android:text="Schedule Date"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/thirteen_sp"
+                            style="@style/CustomTextStylePoppinsBold">
+
+                        </TextView>
+
+                        <TextView
+                            android:layout_width="@dimen/twenty"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text=" :  "
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/thirteen_sp"
+                            android:textStyle="bold">
+
+                        </TextView>
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/twenty"
+                            android:layout_gravity="end"
+                            android:layout_weight="0.6"
+                            android:src="@drawable/calender_icon">
+                        </ImageView>
+                    </LinearLayout>
+
+
+
+
                     <LinearLayout
                         android:id="@+id/lnrFromTime"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_below="@+id/lnrScheduleCall"
+                        android:layout_marginTop="@dimen/ten"
                         android:orientation="horizontal"
                         android:weightSum="1">
 
@@ -228,7 +276,7 @@
                             android:text="From Time"
                             android:textColor="@color/black"
                             android:textSize="@dimen/thirteen_sp"
-                           style="@style/CustomTextStylePoppinsBold">
+                            style="@style/CustomTextStylePoppinsBold">
 
                         </TextView>
 
@@ -291,7 +339,7 @@
                             android:text="Do not dial beyond"
                             android:textColor="@color/black"
                             android:textSize="@dimen/thirteen_sp"
-                           style="@style/CustomTextStylePoppinsBold">
+                            style="@style/CustomTextStylePoppinsBold">
 
                         </TextView>
 
@@ -336,47 +384,7 @@
                         </RelativeLayout>
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:id="@+id/lnrScheduleCall"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/lnrToTime"
-                        android:layout_marginTop="@dimen/ten"
-                        android:orientation="horizontal"
-                        android:weightSum="1">
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginStart="@dimen/twenty"
-                            android:layout_weight="0.4"
-                            android:text="Schedule Date"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/thirteen_sp"
-                           style="@style/CustomTextStylePoppinsBold">
-
-                        </TextView>
-
-                        <TextView
-                            android:layout_width="@dimen/twenty"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text=" :  "
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/thirteen_sp"
-                            android:textStyle="bold">
-
-                        </TextView>
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/twenty"
-                            android:layout_gravity="end"
-                            android:layout_weight="0.8"
-                            android:src="@drawable/calender_icon">
-                        </ImageView>
-                    </LinearLayout>
                 </RelativeLayout>
 
                 <com.vs.schoolmessenger.Utils.ExpandableGridView
@@ -449,7 +457,7 @@
                         android:id="@+id/lblHistoryList"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Send voice from history"
+                        android:text="Select from history?"
                         android:textColor="@color/navi_blue2"
                         style="@style/CustomTextStylePoppinsMedium"
                         android:textSize="@dimen/thirteen_sp">
@@ -506,7 +514,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/ten"
                         android:layout_marginTop="@dimen/ten"
-                        android:text="Content"
+                        android:text="Description"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp"
                         android:fontFamily="@font/poppins_bold"
@@ -523,7 +531,7 @@
                         android:layout_marginEnd="@dimen/ten"
                         android:background="@drawable/bg_outline_black"
                         android:gravity="start"
-                        android:hint="Content"
+                        android:hint="Description"
                         android:padding="@dimen/ten"
                         android:textSize="@dimen/thirteen_sp">
 
@@ -541,7 +549,7 @@
                     android:layout_marginEnd="@dimen/twele"
                     android:layout_marginBottom="@dimen/eight"
                     android:visibility="gone"
-                    android:background="@drawable/rect_blue_and_green_small_radious"
+                    android:background="@drawable/rect_green_light_radious"
                     android:padding="@dimen/ten">
 
                     <ImageView
@@ -560,7 +568,7 @@
                         android:layout_centerInParent="true"
                         android:layout_marginStart="@dimen/five"
                         android:layout_toEndOf="@+id/imgSend1"
-                        android:text="@string/NEXT"
+                        android:text="Send"
                         android:textColor="@color/white"
                         android:textSize="@dimen/thirteen_sp">
 
@@ -570,39 +578,41 @@
 
                 <RelativeLayout
                     android:id="@+id/rlaRecordVoice"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/lnrHistoryList"
                     android:visibility="visible">
 
-                    <com.vs.schoolmessenger.Utils.CustomSwitch
-                        android:id="@+id/SwitchEmergencyVoice"
-                        android:layout_width="@dimen/thirty"
-                        android:layout_height="@dimen/thirty"
-                        android:layout_marginStart="@dimen/ten"
-                        android:layout_marginTop="@dimen/twenty" />
-
-                    <TextView
-                        android:id="@+id/lblEmergencyVoice"
+                    <LinearLayout
+                        android:id="@+id/llEmergencyContainer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/twenty_five"
-                        android:layout_marginEnd="@dimen/ten"
-                        android:layout_marginStart="@dimen/ten"
-                        android:layout_toEndOf="@+id/SwitchEmergencyVoice"
-                        android:text="@string/emergency_voice_messages"
-                        android:textColor="@color/black"
-                      style="@style/CustomTextStylePoppinsRegular"
-                        android:textSize="@dimen/thirteen_sp">
+                        android:layout_centerHorizontal="true"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="@dimen/twenty">
 
-                    </TextView>
+                        <com.vs.schoolmessenger.Utils.CustomSwitch
+                            android:id="@+id/SwitchEmergencyVoice"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginEnd="@dimen/eight" />
+
+                        <TextView
+                            android:id="@+id/lblEmergencyVoice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Emergency Call ℹ️"
+                            android:textColor="@color/black"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:textSize="@dimen/thirteen_sp" />
+                    </LinearLayout>
 
 
                     <ImageView
                         android:id="@+id/imgVoiceRecord"
                         android:layout_width="@dimen/eighty"
                         android:layout_height="@dimen/eighty"
-                        android:layout_below="@+id/lblEmergencyVoice"
+                        android:layout_below="@+id/llEmergencyContainer"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="@dimen/twenty_five"
                         android:src="@drawable/record_voice_icon">
@@ -630,30 +640,20 @@
                         android:layout_below="@+id/lblDurationOfVoice"
                         android:layout_alignParentEnd="false"
                         android:layout_marginTop="@dimen/ten"
-                        android:layout_centerInParent="false"
+                        android:layout_centerInParent="true"
                         android:layout_marginEnd="@dimen/twenty"
                         android:layout_marginStart="15dp"
-                        android:background="@drawable/rect_light_blue_light_radious"
                         android:padding="@dimen/ten">
 
-                        <ImageView
-                            android:id="@+id/imgAddFile"
-                            android:layout_width="@dimen/fifteen"
-                            android:layout_height="@dimen/fifteen"
-                            android:layout_centerVertical="true"
-                            android:layout_marginEnd="@dimen/five"
-                            android:src="@drawable/add_icon">
-                        </ImageView>
+
 
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:layout_toEndOf="@+id/imgAddFile"
-                            android:text="@string/add_file"
-                          style="@style/CustomTextStylePoppinsRegular"
-                            android:textColor="@color/light_gray_"
+                            android:text="Choose pre recorded file"
+                            style="@style/CustomTextStylePoppinsMedium"
+                            android:textColor="@color/navi_blue1"
                             android:textSize="@dimen/thirteen_sp">
                         </TextView>
                     </RelativeLayout>
@@ -663,7 +663,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:visibility="gone"
-                        android:layout_below="@+id/rlaAddLocalFile">
+                        android:layout_below="@+id/rlaSendVoice">
 
                         <ImageView
                             android:id="@+id/imgClose"
@@ -759,7 +759,8 @@
                             android:layout_height="wrap_content"
                             android:textSize="@dimen/thirteen_sp"
                             android:hint="Enter the title here "
-                            android:layout_below="@+id/lblTitle"></EditText>
+                            android:layout_below="@+id/lblTitle">
+                        </EditText>
 
                     </RelativeLayout>
 
@@ -767,36 +768,38 @@
                         android:id="@+id/rlaSendVoice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/lblDurationOfVoice"
+                        android:layout_below="@+id/rlaAddLocalFile"
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="@dimen/ten"
                         android:layout_marginEnd="@dimen/twenty"
-                        android:background="@drawable/rect_blue_light_radious"
+                        android:background="@drawable/rect_green_light_radious"
                         android:padding="@dimen/ten">
 
-                        <ImageView
-                            android:id="@+id/imgSend"
-                            android:layout_width="@dimen/twenty"
-                            android:layout_height="@dimen/twenty"
-                            android:layout_centerVertical="true"
-                            android:layout_marginEnd="@dimen/five"
-                            android:src="@drawable/send_icon_white">
 
-                        </ImageView>
 
                         <TextView
                             android:id="@+id/lblSend"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:layout_marginStart="@dimen/five"
-                            android:layout_toEndOf="@+id/imgSend"
-                            android:text="@string/Send"
-                         style="@style/CustomTextStylePoppinsRegular"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="@dimen/ten"
+                            android:text="Next"
+                            style="@style/CustomTextStylePoppinsRegular"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/thirteen_sp">
-
+                            android:textSize="14sp">
                         </TextView>
+
+
+                        <ImageView
+                            android:id="@+id/imgSend"
+                            android:layout_width="@dimen/twenty"
+                            android:layout_height="@dimen/twenty"
+                            android:layout_centerInParent="true"
+                            android:layout_toEndOf="@+id/lblSend"
+                            android:layout_marginStart="10dp"
+                            android:src="@drawable/rightwhitearrow">
+
+                        </ImageView>
                     </RelativeLayout>
                 </RelativeLayout>
             </RelativeLayout>

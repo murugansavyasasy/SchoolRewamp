@@ -10,6 +10,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.airbnb.lottie.LottieAnimationView
 import com.vs.schoolmessenger.AWS.AwsUploadingPreSigned
 import com.vs.schoolmessenger.AWS.UploadCallback
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
@@ -75,7 +76,9 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         isGetAcademicYear()
 
         appViewModel!!.isVoiceSend?.observe(this) { response ->
+            val lottieLoader = findViewById<LottieAnimationView>(R.id.lottie_loader)
             if (response != null && response.status) {
+                lottieLoader.visibility = View.GONE
                 Constant.showAlert("Info!", response.message, this)
             }
         }
@@ -257,6 +260,10 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
     fun showSendConfirmationDialog(isMessage: String) {
         val isTextData = Constant.isTextSendingData
 
+        val lottieLoader = findViewById<LottieAnimationView>(R.id.lottie_loader)
+        lottieLoader.visibility = View.VISIBLE
+
+
         AlertDialog.Builder(this).setTitle("Send Confirmation!").setMessage(isMessage)
             .setPositiveButton("Yes") { dialog, _ ->
                 if (Constant.isClickType == 3) {
@@ -268,6 +275,8 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                         targetType = Constant.isSchool
                     )
                     appViewModel!!.isSendText(isAccessToken!!, jsonObject, this)
+                    lottieLoader.visibility = View.GONE
+
                 } else {
                     isFileUploadInAws(
                         Constant.isVoiceFile!!, isStaffDetails!!.school_id, "audio"
@@ -275,6 +284,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                 }
             }.setNegativeButton("Cancel") { dialog, _ ->
                 dialog.dismiss()
+                lottieLoader.visibility = View.GONE
             }.show()
     }
 }
