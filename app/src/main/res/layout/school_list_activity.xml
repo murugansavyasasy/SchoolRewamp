@@ -60,9 +60,23 @@
         android:padding="@dimen/one"
         android:weightSum="1">
 
+        <TextView
+            android:id="@+id/lblSelectReceipients"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="0.5"
+            android:fontFamily="@font/poppins_medium"
+            android:gravity="center"
+            android:text="@string/select_resipent"
+            android:textColor="@color/black"
+            android:textSize="13sp"
+            android:textStyle="normal">
+
+        </TextView>
 
         <TextView
-            android:id="@+id/lblMultipleSchool"
+            android:id="@+id/lblSendToMultipleSchool"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
@@ -77,20 +91,7 @@
 
         </TextView>
 
-        <TextView
-            android:id="@+id/lblSingleSchool"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_weight="0.5"
-            android:fontFamily="@font/poppins_medium"
-            android:gravity="center"
-            android:text="@string/select_resipent"
-            android:textColor="@color/black"
-            android:textSize="13sp"
-            android:textStyle="normal">
 
-        </TextView>
     </LinearLayout>
 
 
@@ -179,6 +180,7 @@
         android:fontFamily="@font/poppins_regular"
         android:gravity="center_horizontal"
         android:padding="@dimen/eight"
+        android:visibility="gone"
         android:text="@string/send_to_multiple_school"
         android:textColor="@color/white"
         android:textSize="@dimen/fifteen_sp"

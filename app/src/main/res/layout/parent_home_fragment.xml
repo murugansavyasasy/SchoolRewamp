@@ -67,8 +67,7 @@
                     android:shadowColor="@color/light_gray"
                     android:shadowDx="12"
                     android:shadowDy="7"
-                    android:shadowRadius="10"
-                    >
+                    android:shadowRadius="10">
 
                 </TextView>
 
@@ -81,7 +80,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/lblStudentName"
-                    android:text="Savyasasy software solutions pvt Ltd.,"
+                    android:text=""
                     android:textColor="@color/white"
                     android:textSize="@dimen/thirteen_sp"
                    style="@style/CustomTextStylePoppinsBold" />
@@ -91,7 +90,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/lblSchoolName"
-                    android:text="Savyasasy schools, Chennai  600043"
+                    android:text=""
                     android:textColor="@color/white"
                     android:textSize="@dimen/thirteen_sp" />
             </RelativeLayout>
@@ -100,7 +99,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/lblChangeRoll"
-                android:text="Change Roll >"
+                android:text="Change Role >"
                 style="@style/CustomTextStylePoppinsRegular"
                 android:textColor="@color/navi_blue2"
                 android:textSize="@dimen/fifteen_sp"

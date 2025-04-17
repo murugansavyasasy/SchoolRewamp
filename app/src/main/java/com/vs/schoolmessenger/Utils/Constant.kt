@@ -72,43 +72,52 @@ object Constant {
     var isAdminRole: String? = "p4"
     var isNonTeachingStaffRole: String? = "p5"
 
-    val stu_communication_id = 0
-    val stu_homework_id = 3
-    val stu_exam_id = 5
-    val stu_noticeboard_id = 7
-    val stu_event_id = 8
-    val stu_attendance_report_id = 9
-    val stu_leave_request_id = 10
-    val stu_fee_details_id = 11
-    val stu_interaction_with_staff_id = 14
-    val stu_assignment_id = 18
-    val stu_online_meeting_id = 20
-    val stu_quiz_id = 21
-    val stu_lsrw_id = 22
-    val stu_time_table_id = 23
-    val stu_certificate_request_id = 25
-
-    val sch_communication_id = 0
-    val sch_assignment_id = 22
-    val sch_homework_id = 9
-    val sch_attendance_marking_id = 12
-    val sch_absenteeism_report_id = 6
-    val sch_school_strength_id = 7
-    val sch_notice_board_id = 3
-    val sch_school_class_events_id = 4
-    val sch_schedule_exam_test_id = 11
-    val sch_messages_from_management_id = 13
-    val sch_conference_call_with_teachers_id = 16
-    val sch_online_meeting_id = 26
-    val sch_daily_collection_id = 28
-    val sch_student_report_id = 29
-    val sch_lesson_plan_id = 30
-    val sch_feedback_id = 14
-    val sch_very_important_info_id = 21
+    val STU_COMMUNICATION = 0
+    val STU_HOMEWORK = 3
+    val STU_EXAM = 5
+    val STU_NOTICEBOARD = 7
+    val STU_EVENTS = 8
+    val STU_ATTENDANCE_REPORT = 9
+    val STU_LEAVE_REQUEST = 10
+    val STU_FEE_DETAILS = 11
+    val STU_INTERACTION_WITH_STAFF = 14
+    val STU_ASSIGNMENT = 18
+    val STU_ONLINE_MEETING = 20
+    val STU_QUIZ = 21
+    val STU_LSRW = 22
+    val STU_TIME_TABLE = 23
+    val STU_CERTIFICATE_REQUEST = 25
 
 
-    var selected_school_menu_id = 0
-    var selected_parent_menu_id = 0
+    val SH_COMMUNICATION = 0
+    val SH_ASSIGNMENT = 22
+    val SH_HOMEWORK = 9
+    val SH_ATTENDANCE_MARKING = 12
+    val SH_ABSENTEEISM_REPORT = 6
+    val SH_SCHOOL_STRENGTH = 7
+    val SH_NOTICE_BOARD = 3
+    val SH_EVENTS = 4
+    val SH_SCHEDULE_EXAM_TEST = 11
+    val SH_MESSAGES_FROM_MANAGEMENT = 13
+    val SH_CONFERENCE_CALL_WITH_TEACHERS = 16
+    val SH_ONLINE_MEETING = 26
+    val SH_DAILY_COLLECTION = 28
+    val SH_STUDENT_REPORT = 29
+    val SH_LESSON_PLAN = 30
+    val SH_FEEDBACK = 14
+    val SH_IMPORTANT_INFO = 21
+    val SH_ATTACHMENTS = 0
+    val SH_SCHOOL_NEEDS = 0
+    val SH_FEE_PENDING_REPORT = 0
+    val SH_MARK_GEOMETRIC_ATTENDANCE = 0
+    val SH_STAFF_WISE_GEOMETRIC_ATTENDANCE_REPORT = 0
+    val SH_PTM = 0
+    val SH_INTERACTION_WITH_STUDENT = 16
+
+
+
+    var SELECTED_SCHOOL_MENU = 0
+    var SELECTED_PARENT_MENU = 0
 
     var isEmergencyVoiceNoticeBoard: Boolean? = false
     var isAccessType: Int? = null
@@ -130,6 +139,8 @@ object Constant {
     var group = "G"
     var student = "student"
     var staff = "staff"
+    var isPickingFileExtension=""
+
 
 
     var isVoiceFile: String? = null

@@ -11,7 +11,7 @@ import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIds
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
-class GroupListAdapter(
+class GroupStaffAdapter(
     var itemList: List<NameAndIds>?,
     private var listener: GroupListClickListener,
     private var context: Context,

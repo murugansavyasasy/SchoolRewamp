@@ -35,6 +35,7 @@ class StudentDetailAdapter(
     override fun onBindViewHolder(holder: GridViewHolder, position: Int) {
         val item = itemList!![position]
 
+        
         when (position) {
 
             0 -> {
