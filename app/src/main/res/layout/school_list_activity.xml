@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/fifteen"
             android:layout_toEndOf="@+id/imgBack"
-            android:text="@string/school_selection"
+            android:text="Recipient Selection"
             android:textColor="@color/white"
             android:textSize="@dimen/fifteen_sp"
             android:textStyle="bold" />
@@ -48,63 +48,13 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:id="@+id/lnrTab"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/fourty"
-        android:layout_below="@+id/rytHeader"
-        android:layout_marginStart="@dimen/two"
-        android:layout_marginTop="@dimen/ten"
-        android:layout_marginEnd="@dimen/two"
-        android:background="@drawable/rect_btn_grey"
-        android:orientation="horizontal"
-        android:padding="@dimen/one"
-        android:weightSum="1">
-
-        <TextView
-            android:id="@+id/lblSelectReceipients"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_weight="0.5"
-            android:fontFamily="@font/poppins_medium"
-            android:gravity="center"
-            android:text="@string/select_resipent"
-            android:textColor="@color/black"
-            android:textSize="13sp"
-            android:textStyle="normal">
-
-        </TextView>
-
-        <TextView
-            android:id="@+id/lblSendToMultipleSchool"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_weight="0.5"
-            android:background="@drawable/white_radious"
-            android:fontFamily="@font/poppins_medium"
-            android:gravity="center"
-            android:text="@string/send_to_multiple_school"
-            android:textColor="@color/black"
-            android:textSize="13sp"
-            android:textStyle="normal">
-
-        </TextView>
-
-
-    </LinearLayout>
-
-
-
-    <LinearLayout
         android:id="@+id/linearlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/lnrTab"
+        android:layout_below="@+id/rytHeader"
         android:layout_marginStart="@dimen/fifteen"
         android:layout_marginTop="@dimen/ten"
         android:layout_marginEnd="@dimen/fifteen"
-        android:padding="@dimen/ten"
         android:visibility="visible"
         android:gravity="center_vertical">
 
@@ -123,7 +73,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_stroke_rect_black"
+            android:background="@drawable/rect_white_light_radious"
             android:padding="@dimen/ten"
             android:visibility="visible">
 
@@ -131,12 +81,12 @@
 
             <ImageView
                 android:id="@+id/imgAcademicYear"
-                android:layout_width="@dimen/twenty_five"
-                android:layout_height="@dimen/twenty_five"
+                android:layout_width="@dimen/fifteen"
+                android:layout_height="@dimen/twenty"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/ten"
-                android:src="@drawable/ic_down_arrow">
+                android:src="@drawable/downarrow">
 
             </ImageView>
 
@@ -157,13 +107,60 @@
     </LinearLayout>
 
 
+    <LinearLayout
+        android:id="@+id/lnrTab"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fourty"
+        android:layout_below="@+id/linearlayout"
+        android:layout_marginStart="@dimen/five"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginEnd="@dimen/five"
+        android:background="@drawable/rect_btn_grey"
+        android:orientation="horizontal"
+        android:padding="@dimen/one"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/lblSelectReceipients"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="0.5"
+            android:background="@drawable/white_radious"
+            android:fontFamily="@font/poppins_medium"
+            android:gravity="center"
+            android:text="@string/select_resipent"
+            android:textColor="@color/black"
+            android:textSize="13sp"
+            android:textStyle="normal">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/lblSendToMultipleSchool"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="0.5"
+            android:fontFamily="@font/poppins_medium"
+            android:gravity="center"
+            android:text="@string/send_to_multiple_school"
+            android:textColor="@color/black"
+            android:textSize="13sp"
+            android:textStyle="normal">
+
+        </TextView>
+
+
+    </LinearLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleSchools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/lblSend"
-        android:layout_below="@+id/linearlayout"
+        android:layout_below="@+id/lnrTab"
         android:layout_marginBottom="@dimen/ten"
         android:padding="@dimen/ten"
         tools:listitem="@layout/schools_list_item" />
@@ -181,7 +178,7 @@
         android:gravity="center_horizontal"
         android:padding="@dimen/eight"
         android:visibility="gone"
-        android:text="@string/send_to_multiple_school"
+        android:text="@string/Send"
         android:textColor="@color/white"
         android:textSize="@dimen/fifteen_sp"
         android:textStyle="normal">

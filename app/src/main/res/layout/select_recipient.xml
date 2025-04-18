@@ -14,7 +14,7 @@
             android:id="@+id/imgBack"
             android:layout_width="@dimen/thirty_five"
             android:layout_height="@dimen/thirty_five"
-            android:src="@drawable/arrow_back_black">
+            android:src="@drawable/left_arrow_blue">
         </ImageView>
 
         <TextView
@@ -25,7 +25,7 @@
             android:layout_marginStart="@dimen/ten"
             android:layout_toEndOf="@+id/imgBack"
             android:text="@string/select_recipient"
-            android:textColor="@color/black"
+            android:textColor="@color/navi_blue2"
             android:textStyle="bold">
 
         </TextView>
@@ -52,7 +52,6 @@
         android:layout_marginStart="@dimen/fifteen"
         android:layout_marginTop="@dimen/ten"
         android:layout_marginEnd="@dimen/fifteen"
-        android:padding="@dimen/ten"
         android:visibility="visible"
         android:gravity="center_vertical">
 
@@ -61,7 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Choose academic year:"
-            android:textColor="@color/black"
+            android:textColor="@color/light_gray"
             android:textSize="14sp"
             style="@style/CustomTextStylePoppinsBold"
             android:layout_marginEnd="@dimen/ten"/>
@@ -71,7 +70,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_stroke_rect_black"
+            android:background="@drawable/rect_white_light_radious"
             android:padding="@dimen/ten"
             android:visibility="visible">
 
@@ -89,8 +88,8 @@
 
             <ImageView
                 android:id="@+id/imgAcademicYear"
-                android:layout_width="@dimen/twenty_five"
-                android:layout_height="@dimen/twenty_five"
+                android:layout_width="@dimen/fifteen"
+                android:layout_height="@dimen/twenty"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/ten"
@@ -159,7 +158,7 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/fifteen"
             android:fontFamily="@font/poppins_bold"
-            android:text="Select Standard"
+            android:text=""
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"
             android:textStyle="bold">
@@ -186,13 +185,13 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@+id/chAllSelect"
-        android:layout_marginStart="@dimen/ten"
+        android:layout_marginStart="@dimen/twenty"
         android:layout_marginTop="@dimen/ten"
-        android:layout_marginEnd="@dimen/ten"
+        android:layout_marginEnd="@dimen/twenty"
         android:layout_marginBottom="@dimen/fifty"
-        android:background="@drawable/rect_white_light_radious"
+        android:background="@drawable/rect_white"
         android:visibility="gone">
 
     </androidx.recyclerview.widget.RecyclerView>
@@ -248,7 +247,6 @@
         android:text="@string/click_the_send_button_to_send_an_important_announcement_from_entier_school"
         android:textColor="@color/black"
         android:textSize="17sp"
-        android:textStyle="bold"
         android:visibility="gone" />
 
     <LinearLayout
@@ -300,5 +298,18 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/lblNoRecord"
+        android:layout_width="match_parent"
+        android:textColor="@color/black"
+        android:visibility="gone"
+        android:textSize="@dimen/fifteen_sp"
+        style="@style/CustomTextStylePoppinsBold"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        android:layout_height="wrap_content">
+
+    </TextView>
 
 </RelativeLayout>

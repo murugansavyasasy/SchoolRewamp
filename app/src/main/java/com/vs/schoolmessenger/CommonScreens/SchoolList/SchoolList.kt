@@ -77,19 +77,19 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
 
         if(SELECTED_SCHOOL_MENU  == SH_COMMUNICATION || SELECTED_SCHOOL_MENU == SH_NOTICE_BOARD || SELECTED_SCHOOL_MENU == SH_ATTACHMENTS || SELECTED_SCHOOL_MENU == SH_SCHEDULE_EXAM_TEST || SELECTED_SCHOOL_MENU == SH_EVENTS
             || SELECTED_SCHOOL_MENU == SH_ONLINE_MEETING) {
-            isMultipleSchool  = true
+            isMultipleSchool  = false
             if (Constant.isEmergencyVoiceNoticeBoard!!) {
                 binding.lnrTab.visibility = View.GONE
-                binding.lblSend.visibility = View.VISIBLE
+//                binding.lblSend.visibility = View.GONE
             } else {
                 binding.lnrTab.visibility = View.VISIBLE
-                binding.lblSend.visibility = View.VISIBLE
+//                binding.lblSend.visibility = View.VISIBLE
             }
         }
         else{
-            isMultipleSchool  = false
+            isMultipleSchool  = true
             binding.lnrTab.visibility = View.GONE
-            binding.lblSend.visibility = View.GONE
+//            binding.lblSend.visibility = View.GONE
         }
 
         appViewModel = ViewModelProvider(this)[App::class.java]
@@ -135,7 +135,6 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
     }
 
     private fun isLoadData() {
-
         mAdapter = SchoolListAdapter(
             isMultipleSchool, selectedSchoolIds, null, this, this, Constant.isShimmerViewShow
         )
@@ -168,12 +167,14 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
 
             R.id.lblSelectReceipients -> {
                 binding.lblSend.visibility= View.GONE
+                binding.linearlayout.visibility= View.GONE
                 isMultipleSchool = false
                 isChangeBackRound(binding.lblSelectReceipients)
             }
 
             R.id.lblSendToMultipleSchool -> {
                 binding.lblSend.visibility= View.VISIBLE
+                binding.linearlayout.visibility= View.VISIBLE
                 isMultipleSchool = true
                 isChangeBackRound(binding.lblSendToMultipleSchool)
             }
