@@ -100,6 +100,14 @@ class StaffDetailAdapter(
         holder.binding.lblRole.text = item.role
         holder.binding.lblStaffName.text = item.name
         holder.binding.lblSchoolAddress.text = item.school_address
+
+        if (item.school_name_regional.equals("")){
+            holder.binding.lblSchoolRegionalName.visibility= View.GONE
+        }else{
+            holder.binding.lblSchoolRegionalName.visibility= View.VISIBLE
+        }
+        holder.binding.lblSchoolRegionalName.text=item.school_name_regional
+
         if (!item.city.isNullOrBlank()) {
             holder.binding.lblCity.text = item.city
             holder.binding.lblCity.visibility = View.VISIBLE

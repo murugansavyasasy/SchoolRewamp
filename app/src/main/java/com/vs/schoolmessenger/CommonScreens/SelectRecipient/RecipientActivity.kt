@@ -2,9 +2,13 @@ package com.vs.schoolmessenger.CommonScreens.SelectRecipient
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -63,6 +67,9 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     var isSelectedType = 0
     var isAcademicYearId = -1
     var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
+    var isCurrentAcademicYear = true
+    var isTargetType: Int? = null
+    var isCircularType: String? = null
 
     private var appViewModel: App? = null
     override fun setupViews() {
@@ -76,6 +83,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         binding.btnSend.setOnClickListener(this)
         binding.rlaAcademicYear.setOnClickListener(this)
         binding.btnSpecificStudent.setOnClickListener(this)
+        binding.imgBack.setOnClickListener(this)
 
         val tabLayout = binding.tabLayout
         tabLayout.addTab(tabLayout.newTab().setText("Entire School"))
@@ -84,11 +92,18 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         tabLayout.addTab(tabLayout.newTab().setText("Groups"))
         tabLayout.addTab(tabLayout.newTab().setText("Staff"))
 
-
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
 
         binding.lblSchoolName.text = isStaffDetails!!.school_name
+
+        if (isStaffDetails!!.school_name_regional != ""){
+            binding.lblSchoolRegionalName.visibility= View.VISIBLE
+            binding.lblSchoolRegionalName.text = isStaffDetails!!.school_name_regional
+        }else{
+            binding.lblSchoolRegionalName.visibility= View.GONE
+        }
+
         isAwsUploadingPreSigned = AwsUploadingPreSigned()
         isUserDetails = SharedPreference.getUserDetails(this)
         isGetAcademicYear()
@@ -190,7 +205,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     }
 
                     4 -> {
-
+                        binding.chAllSelect.isChecked = false
                         isSelectedType = 4
                         isGroupSelectedIds.clear()
                         isStandardSelectedIds.clear()
@@ -229,8 +244,11 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     isAcademicYear = reorderedList
                     binding.lblAcademicYear.text = isAcademicYear!![0].year
                     isAcademicYearId = isAcademicYear!![0].id
+                    isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
 //                    isGetGroupList()
-                    isGetStandardSection()
+                    if (isSelectedType != 0) {
+                        isGetStandardSection()
+                    }
                 }
             }
         }
@@ -266,7 +284,14 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 isGetStandard = response.data
                 if (isGetStandard!!.isNotEmpty()) {
                     binding.lblNoRecord.visibility = View.GONE
-                    binding.rlaStandard.visibility = View.VISIBLE
+                    if (isSelectedType != 1) {
+                        binding.rlaStandard.visibility = View.VISIBLE
+                        isSection = isGetStandard!!.get(0).sections
+                        binding.lblStandard.text = isGetStandard!![0].name
+                        binding.recyclerView.visibility = View.VISIBLE
+                        isLoadData(isSection)
+
+                    }
                     binding.chAllSelect.visibility = View.VISIBLE
                     binding.grouplabel.visibility = View.VISIBLE
                 } else {
@@ -283,9 +308,19 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         }
 
         appViewModel!!.isGetStaffList?.observe(this) { response ->
-            if (response != null && response.status) {
+            if (response != null) {
                 isGetStaffListData = response.data
 
+                if (isGetStaffListData!!.isNotEmpty()) {
+                    binding.lblNoRecord.visibility = View.GONE
+                    binding.chAllSelect.visibility = View.VISIBLE
+                    binding.grouplabel.visibility = View.VISIBLE
+                } else {
+                    binding.lblNoRecord.visibility = View.VISIBLE
+                    binding.chAllSelect.visibility = View.GONE
+                    binding.grouplabel.visibility = View.GONE
+                    binding.lblNoRecord.text = response.message
+                }
                 isLoadStaffData(response.data)
             }
         }
@@ -406,12 +441,17 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 //show send and specific student button
             }
             else{
-                tabLayout.post {
-                    tabLayout.getTabAt(0)?.view?.visibility = View.GONE
+                if (isUserDetails!!.staff_details.size > 1) {
+                    tabLayout.post {
+                        tabLayout.getTabAt(0)?.view?.visibility = View.GONE
+                    }
+                    tabLayout.getTabAt(1)?.select()
+                    isSelectedType = 1
+                    isGetAcademicYear()
+                } else {
+                    binding.textdesc.visibility = View.VISIBLE
                 }
-                tabLayout.getTabAt(1)?.select()
             }
-
         }
     }
     // Please don't delete by sathish
@@ -486,12 +526,12 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 isDropDownLoadData(
                     binding.rlaSubject, this, isGetSubjectListData
                 ) { selectedSubject ->
-                    binding.lblSuibject.text = selectedSubject.first // Set name
-                    Log.d(
-                        "DropdownMenu",
-                        "Selected Subject: Name = ${selectedSubject.first}, ID = ${selectedSubject.second}"
-                    )
+                    binding.lblSuibject.text = selectedSubject.first
                 }
+            }
+
+            R.id.imgBack -> {
+                onBackPressed()
             }
 
             R.id.btnSpecificStudent -> {
@@ -512,6 +552,20 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         "Clicked Academic Year: ID = ${selectedYear.id}, Year = ${selectedYear.year}, Current = ${selectedYear.current_academic_year}"
                     )
                     isAcademicYearId = selectedYear.id
+                    isCurrentAcademicYear = selectedYear.current_academic_year
+                    binding.chAllSelect.isChecked = false
+
+                    if (isSelectedType == 0) {
+
+                    } else if (isSelectedType == 1) {
+                        isGetStandardSection()
+                    } else if (isSelectedType == 2) {
+                        isGetStandardSection()
+                    } else if (isSelectedType == 3) {
+                        isGetGroupList()
+                    } else if (isSelectedType == 4) {
+                        isGetStaffList()
+                    }
                 }
             }
 
@@ -535,32 +589,55 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             R.id.btnSend -> {
                 var isTypeOfName = ""
                 if (isSelectedType == 0) {
-                    isTypeOfName = "School"
+                    isTargetType = Constant.isSchool
+                    isCircularType = Constant.school
+//                    isTypeOfName = "School"
                     isUserDetails?.staff_details?.get(0)?.school_id?.let {
                         selectedIds.add(it.toInt())
                     }
                 } else if (isSelectedType == 1) {
-                    isTypeOfName = "Group"
-                    selectedIds = isGroupSelectedIds.map { it.id }.toMutableList()
-                } else if (isSelectedType == 2) {
+                    isTargetType = Constant.isStandard
+                    isCircularType = Constant.standard
                     isTypeOfName = "Standard"
                     selectedIds = isStandardSelectedIds.map { it.id }.toMutableList()
+                } else if (isSelectedType == 2) {
+                    isTargetType = Constant.isSection
+                    isCircularType = Constant.section
+                    isTypeOfName = "Section"
+                    selectedIds = isSectionSelectedIds.map { it.id }.toMutableList()
                 } else if (isSelectedType == 3) {
                     selectedIds = isGroupSelectedIds.map { it.id }.toMutableList()
-                    isTypeOfName = "Staff"
+                    isTargetType = Constant.isGroup
+                    isCircularType = Constant.group
+                    isTypeOfName = "Groups"
                 } else if (isSelectedType == 4) {
-                    selectedIds = isSectionSelectedIds.map { it.id }.toMutableList()
-                    isTypeOfName = "Section"
+                    selectedIds = isGroupSelectedIds.map { it.id }.toMutableList()
+                    isTypeOfName = "Staff"
+                    isTargetType = Constant.isStaff
+                    isCircularType = Constant.staff
                 }
 
                 for (id in selectedIds) {
                     Log.d("isSelectedIds", id.toString())
                 }
                 if (selectedIds.isNotEmpty()) {
-                    if (Constant.isClickType == 3) {
-                        showSendConfirmationDialog("Are you want send this text to " + isTypeOfName + " school?")
+                    var isAcademicYearNote: String? = null
+                    if (!isCurrentAcademicYear) {
+                        isAcademicYearNote =
+                            "NOTE : This message is addressed to student in " + binding.lblAcademicYear.text.toString() + " which is not the communication academic year. Do you want to proceed?"
                     } else {
-                        showSendConfirmationDialog("Are you want send this voice to " + isTypeOfName + " school?")
+                        isAcademicYearNote = "Are you sure want to send this message?"
+                    }
+
+                    if (Constant.isClickType == 3) {
+                        showSendConfirmationDialog(
+                            "Selected target : " + selectedIds.size.toString(), isAcademicYearNote
+                        )
+                    } else {
+                        showSendConfirmationDialog(
+                            "Selected target : " + selectedIds.size.toString(),
+                            isAcademicYearNote.toString()
+                        )
                     }
                 } else {
                     Constant.showAlert("Alert!", "Select atleast one $isTypeOfName", this)
@@ -598,38 +675,63 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         )
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun showSendConfirmationDialog(isSelectTarget: String, isMessage: String) {
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.alert_popup, null)
+        val builder = AlertDialog.Builder(this)
+        builder.setView(dialogView)
+        val alertDialog = builder.create()
+        alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT)) // Transparent background
+        alertDialog.show()
+
+        val okButton = dialogView.findViewById<TextView>(R.id.btnOk)
+        val btnCancel = dialogView.findViewById<TextView>(R.id.btnCancel)
+        val alertMessage = dialogView.findViewById<TextView>(R.id.alertMessage)
+        val lblSelectTarget = dialogView.findViewById<TextView>(R.id.lblSelectTarget)
+
+
+        alertMessage.text = isMessage
+        lblSelectTarget.text = isSelectTarget
+
+        okButton.setOnClickListener {
+            alertDialog.dismiss()
+            val isTextData = Constant.isTextSendingData
+            if (Constant.isClickType == 3) {
+                val jsonObject = ApiCallRequest.isSendText(
+                    isAcademicYearId = isAcademicYearId,
+                    schoolId = selectedIds,
+                    message = isTextData!!.isTitle,
+                    description = isTextData.isContent,
+                    targetType = Constant.isSchool
+                )
+                appViewModel!!.isSendText(isAccessToken!!, jsonObject, this)
+            } else {
+
+                if (Constant.isVoiceType == 3) {
+                    val isVoiceData = Constant.isVoiceSendingData
+                    voiceSendApi(isVoiceData!!.isAwsUrl)
+                } else {
+                    isFileUploadInAws(
+                        Constant.isVoiceFile!!, isStaffDetails!!.school_id, "audio"
+                    )
+                }
+            }
+
+        }
+
+        btnCancel.setOnClickListener {
+            alertDialog.dismiss()
+        }
+    }
 
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun showSendConfirmationDialog(isMessage: String) {
-
-        var isTargetType: Int? = null
-        var isCircularType: String? = null
-        if (isSelectedType == 0) {
-            isTargetType = Constant.isSchool
-            isCircularType = Constant.school
-        } else if (isSelectedType == 1) {
-            isTargetType = Constant.isGroup
-            isCircularType = Constant.group
-            selectedIds = isGroupSelectedIds.map { it.id }.toMutableList()
-        } else if (isSelectedType == 2) {
-            isTargetType = Constant.isStandard
-            isCircularType = Constant.standard
-            selectedIds = isStandardSelectedIds.map { it.id }.toMutableList()
-        } else if (isSelectedType == 3) {
-            isTargetType = Constant.isStaff
-            isCircularType = Constant.staff
-            selectedIds = isGroupSelectedIds.map { it.id }.toMutableList()
-        } else if (isSelectedType == 4) {
-            isTargetType = Constant.isSection
-            isCircularType = Constant.section
-        }
-
         val isTextData = Constant.isTextSendingData
-
         AlertDialog.Builder(this)
             .setTitle("Confirmation").setMessage(isMessage)
             .setPositiveButton("Yes,Send") { dialog, _ ->
+
                 if (Constant.isClickType == 3) {
                     val jsonObject = ApiCallRequest.isSendText(
                         isAcademicYearId = isAcademicYearId,
@@ -650,6 +752,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         )
                     }
                 }
+
 
             }.setNegativeButton("Cancel") { dialog, _ ->
                 dialog.dismiss()
@@ -683,11 +786,9 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     override fun onIdUnchecked(isStandard: Standard) {
         isStandardSelectedIds.removeAll { it.id == isStandard.id }
         binding.chAllSelect.isChecked = false
-
     }
 
     override fun onIdCheck(data: Section) {
-
         if (!isSectionSelectedIds.any { it.id == data.id }) {
             isSectionSelectedIds.add(data)
         }
@@ -696,7 +797,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 //        isGetSubjectList(idString)
         binding.chAllSelect.isChecked = isSectionSelectedIds.size == isSection?.size
 
-        if (isSelectedType == 4) {
+        if (isSelectedType == 2) {
             if (isSectionSelectedIds.size == 1) {
                 binding.btnSpecificStudent.isEnabled = true
                 binding.btnSpecificStudent.background =
@@ -712,7 +813,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     override fun onIdUnchecked(data: Section) {
         isSectionSelectedIds.removeAll { it.id == data.id }
         binding.chAllSelect.isChecked = false
-        if (isSelectedType == 4) {
+        if (isSelectedType == 2) {
             if (isSectionSelectedIds.size == 1) {
                 binding.btnSpecificStudent.isEnabled = true
                 binding.btnSpecificStudent.background =
@@ -796,7 +897,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             fileName  = isVoiceData.isFileName
         )
         appViewModel!!.isVoiceSend(isAccessToken!!, jsonObject, this)
-
     }
 }
 

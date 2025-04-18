@@ -83,12 +83,11 @@ class SpecificStudentAdapter(
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
         private val lblName: TextView = itemView.findViewById(R.id.lblName)
+        private val lblRegNo: TextView = itemView.findViewById(R.id.lblRegNo)
         private val lblFirstLetter: TextView = itemView.findViewById(R.id.lblFirstLetter)
         private val fytFirstLetter: RelativeLayout = itemView.findViewById(R.id.fytFirstLetter)
         val ivArrow: View = itemView.findViewById(R.id.ivArrow)
         val cbSelect: CheckBox = itemView.findViewById(R.id.cbSelect)
-        private val rcyStudentRoleNumber: RecyclerView =
-            itemView.findViewById(R.id.rcyStudentRoleNumber)
         private val selectedItems = HashSet<Int>() // Track selected items
 
         @SuppressLint("UseCompatLoadingForDrawables")
@@ -100,6 +99,7 @@ class SpecificStudentAdapter(
             selectAll: Boolean
         ) {
             lblName.text = data.name
+            lblRegNo.text = data.admission_no
             lblFirstLetter.text = data.name.firstOrNull()?.uppercase() ?: "?"
             cbSelect.isChecked = selectAll
 
@@ -114,19 +114,6 @@ class SpecificStudentAdapter(
                 R.drawable.bg_circle_8
             )
             fytFirstLetter.setBackgroundResource(backgrounds[position % backgrounds.size])
-
-            // Update arrow rotation
-            // ivArrow.rotation = if (isExpanded) 180f else 0f
-
-//            // Expand/collapse child RecyclerView
-//            if (isExpanded) {
-//                rcyStudentRoleNumber.visibility = View.VISIBLE
-//                rcyStudentRoleNumber.layoutManager = LinearLayoutManager(context)
-//                rcyStudentRoleNumber.adapter = StudentRoleNumberAdapter(data.isStudentAddNoData)
-//            } else {
-//                rcyStudentRoleNumber.visibility = View.GONE
-//            }
-
             cbSelect.setOnCheckedChangeListener(null) // Prevent unwanted callback
             cbSelect.isChecked = selectAll
             cbSelect.setOnCheckedChangeListener { _, isChecked ->

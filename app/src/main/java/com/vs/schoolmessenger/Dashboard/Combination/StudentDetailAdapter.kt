@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -102,6 +103,12 @@ class StudentDetailAdapter(
 
         holder.binding.lblRegisterNumber.text = "Roll No : " + item.roll_number
         holder.binding.lblClassTeacher.text = "Class Teacher : " + item.class_teacher
+        if (item.school_name_regional == ""){
+            holder.binding.lblSchoolRegionalName.visibility= View.GONE
+        }else{
+            holder.binding.lblSchoolRegionalName.visibility= View.VISIBLE
+        }
+        holder.binding.lblSchoolRegionalName.text=item.school_name_regional
         holder.binding.lblName.text = item.name
         holder.binding.lblClass.text = item.standard_name + " - " + item.section_name
         holder.binding.lblSchoolName.text = item.school_name

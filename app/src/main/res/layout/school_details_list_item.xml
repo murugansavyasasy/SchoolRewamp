@@ -65,13 +65,27 @@
                 android:layout_marginTop="3dp"
                 style="@style/CustomTextStylePoppinsMedium"/>
 
+            <TextView
+                android:id="@+id/lblSchoolRegionalName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/ten"
+                android:layout_below="@+id/lblSchoolName"
+                android:visibility="gone"
+                android:text=""
+                android:textColor="@color/black"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:textSize="@dimen/thirteen_sp">
+
+            </TextView>
+
 
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/relative_layout2"
                 android:layout_marginTop="3dp"
-                android:layout_below="@+id/lblSchoolName">
+                android:layout_below="@+id/lblSchoolRegionalName">
 
                 <TextView
                     android:id="@+id/lblRole"

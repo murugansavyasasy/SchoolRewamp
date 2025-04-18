@@ -52,10 +52,24 @@
                style="@style/CustomTextStylePoppinsBold" />
 
             <TextView
+                android:id="@+id/lblSchoolRegionalName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/ten"
+                android:layout_below="@+id/lblSchoolName"
+                android:visibility="gone"
+                android:text=""
+                android:textColor="@color/black"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:textSize="@dimen/thirteen_sp">
+
+            </TextView>
+
+            <TextView
                 android:id="@+id/lblSchoolAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/lblSchoolName"
+                android:layout_below="@+id/lblSchoolRegionalName"
                 android:layout_marginTop="@dimen/five"
                 android:text="Chennai, Nungambakkam"
                 android:textColor="@color/grey"

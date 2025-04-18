@@ -60,6 +60,7 @@ class SchoolListAdapter(
         val imgSchoolLogo: ImageView = itemView.findViewById(R.id.imgSchoolLogo)
         val lblSchoolName: TextView = itemView.findViewById(R.id.lblSchoolName)
         val lblSchoolAddress: TextView = itemView.findViewById(R.id.lblSchoolAddress)
+        val lblSchoolRegionalName: TextView = itemView.findViewById(R.id.lblSchoolRegionalName)
         val rlaHeader: RelativeLayout = itemView.findViewById(R.id.rlaHeader)
         val chMultipleSchool: CheckBox = itemView.findViewById(R.id.chMultipleSchool)
         val imgSingleSchoolArrow: ImageView = itemView.findViewById(R.id.imgSingleSchoolArrow)
@@ -81,6 +82,12 @@ class SchoolListAdapter(
             }
 
             lblSchoolName.text = data.school_name
+            if (data!!.school_name_regional != "") {
+                lblSchoolRegionalName.visibility = View.VISIBLE
+                lblSchoolRegionalName.text = data!!.school_name_regional
+            } else {
+                lblSchoolRegionalName.visibility = View.GONE
+            }
             lblSchoolAddress.text = data.school_address
 
             Glide.with(context)

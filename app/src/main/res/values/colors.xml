@@ -35,13 +35,14 @@
     <color name="light_sky_blue">#c7eaff</color>
     <color name="light_gray">#616159</color>
 
-    <color name="white">#FFFFFF</color>
+    <color name="white">#fff</color>
     <color name="light_white">#f8f8f8</color>
     <color name="mild_grey0">#f4f3f0</color>
     <color name="mild_grey1">#cccccc</color>
     <color name="mild_grey2">#c9c9c9</color>
     <color name="mild_grey3">#ededf7</color>
     <color name="mild_grey4">#E5E4E2</color>
+    <color name="mild_grey5">#ebecee</color>
     <color name="violet1">#5856D6</color>
 
     <color name="grey">#ACACBA</color>

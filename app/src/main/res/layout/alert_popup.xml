@@ -1,0 +1,84 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/fourty_five"
+    android:layout_marginTop="@dimen/ten"
+    android:layout_marginEnd="@dimen/fourty_five"
+    android:background="@drawable/rect_white_light_radious"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/ten">
+
+    <TextView
+        android:id="@+id/alertTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/fifteen"
+        android:gravity="center"
+        android:text="Confirmation"
+        android:textColor="#000"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/lblSelectTarget"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:text="Selected target : 1"
+        android:textColor="#444"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/alertMessage"
+        android:layout_width="wrap_content"
+        android:layout_marginEnd="@dimen/fifteen"
+        android:layout_marginStart="@dimen/fifteen_sp"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:text="Are you sure want to send this message?"
+        android:textColor="#444"
+        android:textSize="@dimen/fifteen_sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="@dimen/twenty"
+        android:background="@color/mild_grey2" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fourty_five"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/ten"
+        android:weightSum="2">
+
+        <TextView
+            android:id="@+id/btnCancel"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            style="@style/CustomTextStylePoppinsBold"
+            android:gravity="center"
+            android:text="@string/Cancel"
+            android:textColor="@color/navi_blue2" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/mild_grey2" />
+
+        <TextView
+            android:id="@+id/btnOk"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            style="@style/CustomTextStylePoppinsBold"
+            android:text="Yes, Send"
+            android:textColor="@color/navi_blue2" />
+    </LinearLayout>
+
+</LinearLayout>

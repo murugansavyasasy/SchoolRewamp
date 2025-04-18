@@ -267,7 +267,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
             when {
                 allGranted -> {
-                    Toast.makeText(this, "All permissions granted", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(this, "All permissions granted", Toast.LENGTH_SHORT).show()
                 }
 
                 permanentlyDenied -> {
@@ -280,7 +280,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 }
 
                 else -> {
-                    Toast.makeText(this, "Permissions denied", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(this, "Permissions denied", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -361,22 +361,22 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     isRecording = true
                     recordingTime = 0
                     recordingHandler.post(recordingRunnable)
-                    Toast.makeText(
-                        this@CommunicationSchool,
-                        "Recording started",
-                        Toast.LENGTH_SHORT
-                    ).show()
+//                    Toast.makeText(
+//                        this@CommunicationSchool,
+//                        "Recording started",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
                 } catch (e: IOException) {
                     e.printStackTrace()
-                    Toast.makeText(this@CommunicationSchool, "Recording failed", Toast.LENGTH_SHORT)
-                        .show()
+//                    Toast.makeText(this@CommunicationSchool, "Recording failed", Toast.LENGTH_SHORT)
+//                        .show()
                 }
             }
 
         } else {
             // checkAndRequestPermissions(this)
-            Toast.makeText(this@CommunicationSchool, "Allow the permission", Toast.LENGTH_SHORT)
-                .show()
+//            Toast.makeText(this@CommunicationSchool, "Allow the permission", Toast.LENGTH_SHORT)
+//                .show()
             openAppSettings()
         }
     }
@@ -415,26 +415,26 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     Constant.isVoiceFile = audioFilePath
                     binding.rlaSeekBarAndTitle.visibility = View.VISIBLE
                     binding.rlaTitle.visibility = View.VISIBLE
-                    Toast.makeText(
-                        this@CommunicationSchool,
-                        "Recording stopped",
-                        Toast.LENGTH_SHORT
-                    ).show()
+//                    Toast.makeText(
+//                        this@CommunicationSchool,
+//                        "Recording stopped",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
                 } else {
-                    Toast.makeText(
-                        this@CommunicationSchool,
-                        "Recording failed: File not valid",
-                        Toast.LENGTH_SHORT
-                    ).show()
+//                    Toast.makeText(
+//                        this@CommunicationSchool,
+//                        "Recording failed: File not valid",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
                 }
 
             } catch (e: Exception) {
                 e.printStackTrace()
-                Toast.makeText(
-                    this@CommunicationSchool,
-                    "Failed to stop recording",
-                    Toast.LENGTH_SHORT
-                ).show()
+//                Toast.makeText(
+//                    this@CommunicationSchool,
+//                    "Failed to stop recording",
+//                    Toast.LENGTH_SHORT
+//                ).show()
             }
         }
     }
@@ -1172,7 +1172,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         mediaRecorder = null
         isRecording = false
         recordingHandler.removeCallbacks(recordingRunnable) // Stop updating time
-        Toast.makeText(this@CommunicationSchool, "Recording stopped", Toast.LENGTH_SHORT).show()
+//        Toast.makeText(this@CommunicationSchool, "Recording stopped", Toast.LENGTH_SHORT).show()
         Log.d(
             "RecordingFilePath", "Recording stopped. File Path: $audioFilePath"
         ) // Print the file path when recording stops

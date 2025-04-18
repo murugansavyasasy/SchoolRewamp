@@ -84,9 +84,15 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
         Log.d("school_logo",staffDetails!!.school_logo)
 
-        if(userDetails!!.staff_role.equals(Constant.isStaffRole)){
+        if(userDetails!!.staff_role == Constant.isStaffRole){
             access_token = staffDetails!!.access_token
             binding.lblSchoolName.text = staffDetails!!.school_name
+            if (staffDetails!!.school_name_regional != ""){
+                binding.lblSchoolRegionalName.visibility= View.VISIBLE
+                binding.lblSchoolRegionalName.text = staffDetails!!.school_name_regional
+            }else{
+                binding.lblSchoolRegionalName.visibility= View.GONE
+            }
             binding.lblSchoolAddress.text = staffDetails!!.school_address
             binding.lblSchoolAddress.visibility = View.VISIBLE
             Glide.with(requireActivity()).load(staffDetails!!.school_logo)
@@ -101,6 +107,12 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             } else {
                 binding.lblSchoolAddress.visibility = View.VISIBLE
                 binding.lblSchoolName.text = userDetails!!.staff_details[0].school_name
+                if (staffDetails!!.school_name_regional != ""){
+                    binding.lblSchoolRegionalName.visibility= View.VISIBLE
+                    binding.lblSchoolRegionalName.text = staffDetails!!.school_name_regional
+                }else{
+                    binding.lblSchoolRegionalName.visibility= View.GONE
+                }
                 binding.lblSchoolAddress.text = userDetails!!.staff_details[0].school_address
                 Glide.with(requireActivity()).load(userDetails!!.staff_details[0].school_logo)
                     .into(binding.imgSchoolLogo)

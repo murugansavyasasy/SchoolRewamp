@@ -1,5 +1,6 @@
 package com.vs.schoolmessenger.Dashboard.Combination
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.view.View
 import android.widget.TextView
@@ -135,6 +136,7 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
         }
     }
 
+    @SuppressLint("SuspiciousIndentation")
     private fun isBackRoundChange(isClickingId: TextView) {
         when (isClickingId) {
             binding.lblParent -> {

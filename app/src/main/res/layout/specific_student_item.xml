@@ -16,8 +16,8 @@
         <!-- Circular Initial Avatar -->
         <RelativeLayout
             android:id="@+id/fytFirstLetter"
-            android:layout_width="@dimen/fourty"
-            android:layout_height="@dimen/fourty"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
             android:layout_marginEnd="@dimen/ten"
             android:gravity="center">
 
@@ -26,15 +26,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="A"
+                android:text="S"
                 android:textColor="@android:color/black"
-                android:textSize="20sp"
+                android:textSize="@dimen/thirteen_sp"
                 android:fontFamily="@font/poppins_bold"
                 android:textStyle="bold" />
         </RelativeLayout>
 
         <!-- Name and Details Section -->
         <LinearLayout
+            android:id="@+id/lnrDetails"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -42,13 +43,23 @@
 
             <TextView
                 android:id="@+id/lblName"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Ajith Kumar"
+                android:text="Sathish"
+                style="@style/CustomTextStylePoppinsBold"
                 android:textColor="@android:color/black"
-                android:textSize="@dimen/fifteen_sp"
-                android:fontFamily="@font/poppins_bold"
-                android:textStyle="bold" />
+                android:textSize="@dimen/thirteen_sp"
+                />
+
+            <TextView
+                android:id="@+id/lblRegNo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ajith"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:textColor="@color/light_gray"
+                android:textSize="@dimen/thirteen_sp"
+                 />
 
         </LinearLayout>
 
@@ -65,25 +76,16 @@
         <!-- Custom Checkbox -->
         <CheckBox
             android:id="@+id/cbSelect"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
             android:layout_marginEnd="@dimen/fifteen"
-            android:button="@drawable/custom_checkbox" />
+            android:button="@drawable/ch_square" />
     </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcyStudentRoleNumber"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/lytName"
-        android:layout_marginStart="@dimen/fifty"
-        android:layout_marginEnd="@dimen/thirty"
-        android:visibility="gone"></androidx.recyclerview.widget.RecyclerView>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_below="@+id/rcyStudentRoleNumber"
+        android:layout_height="0.3dp"
+        android:layout_below="@+id/lytName"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginEnd="@dimen/ten"
         android:background="@color/light_gray_">

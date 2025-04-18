@@ -55,7 +55,7 @@
         android:layout_marginStart="@dimen/fifteen"
         android:layout_marginTop="@dimen/ten"
         android:layout_marginEnd="@dimen/fifteen"
-        android:visibility="visible"
+        android:visibility="gone"
         android:gravity="center_vertical">
 
         <TextView
