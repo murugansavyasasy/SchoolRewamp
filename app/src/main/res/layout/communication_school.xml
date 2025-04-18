@@ -601,10 +601,24 @@ android:visibility="gone"                        android:layout_width="@dimen/tw
                             android:id="@+id/lblEmergencyVoice"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Emergency Call   ℹ️"
+                            android:text="Emergency Call"
                             android:textColor="@color/black"
                             style="@style/CustomTextStylePoppinsBold"
                             android:textSize="@dimen/thirteen_sp" />
+
+                        <TextView
+                            android:id="@+id/infosymbol"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="ℹ️"
+                            android:layout_marginStart="10dp"
+                            android:textColor="@color/black"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:textSize="@dimen/thirteen_sp" />
+
+
+
+
                     </LinearLayout>
 
 
@@ -629,8 +643,10 @@ android:visibility="gone"                        android:layout_width="@dimen/tw
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp"
                         style="@style/CustomTextStylePoppinsBold">
-
                     </TextView>
+
+
+
 
 
                     <RelativeLayout
@@ -721,8 +737,10 @@ android:visibility="gone"                        android:layout_width="@dimen/tw
                                 android:layout_alignParentEnd="true"
                                 android:layout_marginEnd="@dimen/ten"
                                 android:text="00:00"
+                                android:visibility="gone"
                                 android:textColor="@color/black"
-                                android:textSize="@dimen/thirteen_sp"></TextView>
+                                android:textSize="@dimen/thirteen_sp">
+                            </TextView>
 
                         </RelativeLayout>
                     </RelativeLayout>
@@ -800,6 +818,9 @@ android:visibility="gone"                        android:layout_width="@dimen/tw
                     </RelativeLayout>
                 </RelativeLayout>
             </RelativeLayout>
+
         </RelativeLayout>
+
     </ScrollView>
+
 </RelativeLayout>

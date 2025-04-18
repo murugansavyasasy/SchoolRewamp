@@ -87,11 +87,11 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
                         "ID: ${Constant.country_details!!.id}, Name: ${Constant.country_details!!.name}"
                     )
 
-                    Toast.makeText(
-                        this@CountryScreen,
-                        "Selected: ${Constant.country_details!!.name}",
-                        Toast.LENGTH_SHORT
-                    ).show()
+//                    Toast.makeText(
+//                        this@CountryScreen,
+//                        "Selected: ${Constant.country_details!!.name}",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
                 }
 
             }
@@ -119,7 +119,7 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
                             .show()
                     }
                 } else {
-                    Toast.makeText(this, "Please select a country before proceeding", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(this, "Please select a country before proceeding", Toast.LENGTH_SHORT).show()
                 }
             }
         }

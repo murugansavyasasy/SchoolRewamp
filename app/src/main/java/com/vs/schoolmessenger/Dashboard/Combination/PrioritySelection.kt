@@ -164,11 +164,14 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
                 }
                 isLoadData(true)
                 Constant.isParentChoose = false
-            }
-        }
 
-            isClickingId.background = ContextCompat.getDrawable(this, R.drawable.bg_blue)
-                    isClickingId.setTextColor(ContextCompat.getColor(this, R.color.white))
+            }
+
+
+        }
+        isClickingId.background = ContextCompat.getDrawable(this, R.drawable.bg_blue)
+        isClickingId.setTextColor(ContextCompat.getColor(this, R.color.white))
+
         }
 
         override fun onItemClick(data: ChildDetails) {
