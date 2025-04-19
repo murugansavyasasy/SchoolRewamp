@@ -684,7 +684,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         if (checkAndRequestPermissions(this)) {
             println("Permissions granted after returning from settings.") // Debug log
         } else {
-            // openAppSettings()
+//             openAppSettings()
         }
         // Consider restoring playback or UI state if necessary
     }
