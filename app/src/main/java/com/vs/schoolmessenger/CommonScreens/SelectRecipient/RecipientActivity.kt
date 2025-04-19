@@ -640,7 +640,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         )
                     }
                 } else {
-                    Constant.showAlert("Alert!", "Select atleast one $isTypeOfName", this)
+                    Constant.showAlert("Alert!", "Please select at least one $isTypeOfName" + " to send the message.", this)
                 }
             }
         }

@@ -8,6 +8,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
+        android:layout_above="@+id/btnGo"
+
         android:layout_height="match_parent">
 
         <ImageView
@@ -83,6 +85,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Click proceed to continue"
+            android:visibility="gone"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"
             android:layout_below="@+id/lnrParent"
@@ -96,6 +99,7 @@
             android:id="@+id/recyclerViews"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/five"
             android:layout_below="@+id/proceedlabel"
             android:layout_marginTop="@dimen/five"
             tools:listitem="@layout/school_details_list_item" />
@@ -109,8 +113,8 @@
         android:layout_height="@dimen/thirty_five"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
+        android:layout_marginBottom="@dimen/five"
         android:layout_marginEnd="@dimen/twenty_five"
-        android:layout_marginBottom="@dimen/twenty_five"
         android:background="@drawable/bg_blue"
         android:gravity="center"
         android:text="Proceed"

@@ -492,9 +492,8 @@ android:visibility="gone"                        android:layout_width="@dimen/tw
                         android:layout_marginTop="@dimen/ten"
                         android:text="Title"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp"
-                        android:fontFamily="@font/poppins_bold"
-                        android:textStyle="bold">
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:textSize="@dimen/thirteen_sp">
 
                     </TextView>
 
@@ -513,12 +512,11 @@ android:visibility="gone"                        android:layout_width="@dimen/tw
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/ten"
+                        style="@style/CustomTextStylePoppinsBold"
                         android:layout_marginTop="@dimen/ten"
                         android:text="Description"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp"
-                        android:fontFamily="@font/poppins_bold"
-                        android:textStyle="bold">
+                        android:textSize="@dimen/thirteen_sp">
 
                     </TextView>
 
@@ -699,10 +697,10 @@ android:visibility="gone"                        android:layout_width="@dimen/tw
 
                             <ImageView
                                 android:id="@+id/imgVoicePlay"
-                                android:layout_width="@dimen/fourty_five"
-                                android:layout_height="@dimen/fourty_five"
+                                android:layout_width="@dimen/fourty"
+                                android:layout_height="@dimen/fourty"
                                 android:layout_marginStart="@dimen/five"
-                                android:layout_marginTop="@dimen/ten"
+                                android:layout_marginTop="@dimen/thirteen"
                                 android:src="@drawable/play_icon_voice">
 
                             </ImageView>
@@ -734,10 +732,23 @@ android:visibility="gone"                        android:layout_width="@dimen/tw
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/imgVoicePlay"
-                                android:layout_alignParentEnd="true"
                                 android:layout_marginEnd="@dimen/ten"
                                 android:text="00:00"
-                                android:visibility="gone"
+                                android:layout_marginStart="@dimen/ten"
+                                android:layout_toEndOf="@+id/lblStartDuration"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/thirteen_sp">
+                            </TextView>
+
+                            <TextView
+                                android:id="@+id/lblTime"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/imgVoicePlay"
+                                android:layout_marginEnd="@dimen/ten"
+                                android:text="00:00"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginStart="@dimen/ten"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/thirteen_sp">
                             </TextView>
@@ -818,9 +829,6 @@ android:visibility="gone"                        android:layout_width="@dimen/tw
                     </RelativeLayout>
                 </RelativeLayout>
             </RelativeLayout>
-
         </RelativeLayout>
-
     </ScrollView>
-
 </RelativeLayout>

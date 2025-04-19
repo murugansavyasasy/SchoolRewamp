@@ -78,6 +78,7 @@
             android:id="@+id/cbSelect"
             android:layout_width="@dimen/thirty"
             android:layout_height="@dimen/thirty"
+            style="@style/CustomCheckBox"
             android:layout_marginEnd="@dimen/fifteen"
             android:button="@drawable/ch_square" />
     </LinearLayout>

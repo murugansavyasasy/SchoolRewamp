@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/fifteen"
         android:layout_marginTop="@dimen/ten"
-        android:background="@drawable/rect_shadow_white">
+        android:background="@drawable/rect_white_light_radious">
 
         <TextView
             android:id="@+id/lblScheduleDate"

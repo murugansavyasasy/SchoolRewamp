@@ -158,7 +158,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 //        }
 
         binding.lblStartTime.text = Constant.getCurrentTime()
-        binding.lblEndTime.text = Constant.getCurrentTime()
+        binding.lblEndTime.text = Constant.getTimeAfter20Minutes()
 
         appViewModel!!.isGetVoiceHistory?.observe(this) { response ->
             if (response != null && response.status) {
@@ -247,6 +247,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 }
             }
         }
+
+        binding.lblTime.text= Constant.getCurrentTime()
 
     }
 
@@ -816,7 +818,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 if (mAdapter != null) {
                     mAdapter!!.releaseMediaPlayer()
                 }
-                binding.lblBackToVoiceMessage.text = "Back to voice message"
+                binding.lblBackToVoiceMessage.text = "<<Back to compose"
 
                 binding.rlaBackRecord.visibility = View.GONE
                 binding.lnrHistoryList.visibility = View.VISIBLE
@@ -843,14 +845,13 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 binding.SwitchEmergencyVoice.setChecked(false)
                 changeLabel()
 
-
                 binding.llEmergencyContainer.visibility = View.GONE
                 isScheduleCall = false
                 Constant.isClickType = 3
                 if (mAdapter != null) {
                     mAdapter!!.releaseMediaPlayer()
                 }
-                binding.lblBackToVoiceMessage.text = "Back to compose"
+                binding.lblBackToVoiceMessage.text = "<<Back to compose"
                 binding.rlaBackRecord.visibility = View.GONE
 //                binding.gridViewScheduleCall.visibility = View.GONE
                 binding.lnrHistoryList.visibility = View.VISIBLE

@@ -153,7 +153,7 @@
                     android:layout_marginStart="@dimen/fifteen"
                     android:layout_toEndOf="@+id/lblDidNot"
                     android:text="@string/_00_00"
-                    android:textColor="@color/dark_orange"
+                    android:textColor="@color/system_pink"
                     android:textSize="@dimen/fifteen_sp"
                     android:visibility="visible">
 

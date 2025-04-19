@@ -84,4 +84,11 @@
     </style>
 
 
+    <!-- res/values/styles.xml -->
+    <style name="CustomCheckBox" parent="Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="android:buttonTint">@color/black</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+
 </resources>

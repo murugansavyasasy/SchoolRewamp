@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Communication.TextHistoryAdapter.DataViewHolder.ShimmerViewHolder
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class TextHistoryAdapter(
@@ -55,6 +56,7 @@ class TextHistoryAdapter(
         RecyclerView.ViewHolder(itemView) {
         private val lblTitle: TextView = itemView.findViewById(R.id.lblTitle)
         private val lblDate: TextView = itemView.findViewById(R.id.lblDate)
+        private val lblTime: TextView = itemView.findViewById(R.id.lblTime)
         private val lblContent: TextView = itemView.findViewById(R.id.lblContent)
         private val lblSeeMore: TextView = itemView.findViewById(R.id.lblSeeMore)
         private val rlaSelectText: RelativeLayout = itemView.findViewById(R.id.rlaSelectText)
@@ -68,7 +70,12 @@ class TextHistoryAdapter(
             adapter: TextHistoryAdapter
         ) {
             lblTitle.text = data.content
-            lblDate.text = data.date
+            val parts = data.date.split(" ")
+            val date = parts[0]
+            val time = parts[1] + " " + parts[2]
+
+            lblTime.text = time
+            lblDate.text = Constant.convertDateTimeFormat(date)
             lblContent.text = data.description
 
             lblSeeMore.setOnClickListener {

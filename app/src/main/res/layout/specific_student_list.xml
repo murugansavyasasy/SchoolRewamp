@@ -96,6 +96,7 @@
 
             <CheckBox
                 android:layout_width="wrap_content"
+                style="@style/CustomCheckBox"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@+id/vw" />

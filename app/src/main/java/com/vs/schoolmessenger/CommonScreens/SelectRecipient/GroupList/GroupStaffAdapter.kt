@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIds
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class GroupStaffAdapter(
@@ -53,10 +54,17 @@ class GroupStaffAdapter(
 
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val lblGroupName: TextView = itemView.findViewById(R.id.lblgroupname)
+        private val lblCreated: TextView = itemView.findViewById(R.id.lblCreated)
         private val chMultipleSchool: CheckBox = itemView.findViewById(R.id.chMultipleSchool)
 
         fun bind(data: NameAndIds, position: Int) {
             lblGroupName.text = data.name
+//            if (data.created_on.isNotEmpty()) {
+//                lblCreated.visibility = View.VISIBLE
+//                lblCreated.text = "Created on : " + Constant.convertDateTimeFormat(data.created_on)
+//            }else{
+//                lblCreated.visibility = View.GONE
+//            }
 
             chMultipleSchool.setOnCheckedChangeListener(null)
             chMultipleSchool.isChecked = selectedIds.contains(data.id)

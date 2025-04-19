@@ -39,6 +39,7 @@ import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
+import java.util.Calendar
 import java.util.Locale
 
 object Constant {
@@ -391,6 +392,13 @@ object Constant {
         } catch (e: Exception) {
             input // return original if there's a parsing error
         }
+
+    }
+    fun getTimeAfter20Minutes(): String {
+        val dateFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
+        val calendar = Calendar.getInstance()
+        calendar.add(Calendar.MINUTE, 20)
+        return dateFormat.format(calendar.time)
     }
 
 }

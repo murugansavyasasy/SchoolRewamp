@@ -7,9 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.compose.runtime.ControlledComposition
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
 
 class DateAdapter(
     private val context: Context,
@@ -59,7 +61,7 @@ class DateAdapter(
                 dateBox.isClickable = false
                 dateBox.setBackgroundResource(0)
             } else {
-                // Display day only
+
                 dateBox.text = dateItem.day.toString() // Display just the day
                 dateBox.isClickable = dateItem.isSelectable
 

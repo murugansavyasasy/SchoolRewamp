@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.BaseAdapter
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
 
 class SelectedDatesAdapter(
     private val context: Context,
@@ -31,7 +32,7 @@ class SelectedDatesAdapter(
 
         val dateTextView: TextView = view.findViewById(R.id.lblScheduleDate)
         val date = selectedDates[position]
-        dateTextView.text = date
+        dateTextView.text = Constant.convertDateTimeFormat(date)
 
         dateTextView.setOnClickListener {
             // Remove the date from the list
