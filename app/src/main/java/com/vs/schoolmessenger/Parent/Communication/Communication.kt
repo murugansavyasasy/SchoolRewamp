@@ -61,7 +61,7 @@ class Communication : BaseActivity<CommunicationBinding>(), View.OnClickListener
             }
         }
 
-        binding.txtSearchMenu.addTextChangedListener(object : TextWatcher {
+        binding.txtSearchMenu.addTextChangedListener(object : android.text.TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 currentSearchQuery = s.toString()

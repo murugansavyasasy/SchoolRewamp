@@ -113,6 +113,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 when (tab?.position) {
                     0 -> {
+                        binding.nomessage.visibility =View.GONE
+                        binding.txtNoData.visibility = View.GONE
                         binding.chAllSelect.isChecked = false
                         binding.chAllSelect.visibility = View.GONE
                         isSelectedType = 0
@@ -129,7 +131,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     }
 
                     1 -> {
-
+                        binding.nomessage.visibility =View.GONE
+                        binding.txtNoData.visibility = View.GONE
                         isSelectedType = 1
                         binding.chAllSelect.visibility = View.GONE
                         binding.chAllSelect.isChecked = false
@@ -154,6 +157,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     }
 
                     2 -> {
+                        binding.nomessage.visibility =View.GONE
+                        binding.txtNoData.visibility = View.GONE
                         binding.chAllSelect.isChecked = false
                         isSelectedType = 2
                         isGroupSelectedIds.clear()
@@ -183,7 +188,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     }
 
                     3 -> {
-
+                        binding.nomessage.visibility =View.GONE
+                        binding.txtNoData.visibility = View.GONE
                         binding.chAllSelect.visibility = View.GONE
                         binding.chAllSelect.isChecked = false
                         isSelectedType = 3
@@ -205,6 +211,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     }
 
                     4 -> {
+                        binding.nomessage.visibility =View.GONE
+                        binding.txtNoData.visibility = View.GONE
                         binding.chAllSelect.isChecked = false
                         isSelectedType = 4
                         isGroupSelectedIds.clear()
@@ -257,14 +265,16 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             if (response != null) {
                 isGetGroupListData = response.data
                 if (isGetGroupListData!!.isNotEmpty()) {
-                    binding.lblNoRecord.visibility = View.GONE
+                    binding.txtNoData.visibility = View.GONE
                     binding.chAllSelect.visibility = View.VISIBLE
                     binding.grouplabel.visibility = View.VISIBLE
+                    binding.nomessage.visibility =View.GONE
                 } else {
-                    binding.lblNoRecord.visibility = View.VISIBLE
+                    binding.txtNoData.visibility = View.VISIBLE
                     binding.chAllSelect.visibility = View.GONE
                     binding.grouplabel.visibility = View.GONE
-                    binding.lblNoRecord.text = response.message
+                    binding.txtNoData.text = response.message
+                    binding.nomessage.visibility =View.VISIBLE
                 }
                 isLoadGroupData(isGetGroupListData)
             }
@@ -283,23 +293,27 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             if (response != null) {
                 isGetStandard = response.data
                 if (isGetStandard!!.isNotEmpty()) {
-                    binding.lblNoRecord.visibility = View.GONE
+                    binding.txtNoData.visibility = View.GONE
                     if (isSelectedType != 1) {
                         binding.rlaStandard.visibility = View.VISIBLE
                         isSection = isGetStandard!!.get(0).sections
                         binding.lblStandard.text = isGetStandard!![0].name
                         binding.recyclerView.visibility = View.VISIBLE
+                        binding.nomessage.visibility =View.GONE
                         isLoadData(isSection)
 
                     }
                     binding.chAllSelect.visibility = View.VISIBLE
                     binding.grouplabel.visibility = View.VISIBLE
+
                 } else {
-                    binding.lblNoRecord.visibility = View.VISIBLE
+                    binding.txtNoData.visibility = View.VISIBLE
                     binding.rlaStandard.visibility = View.GONE
                     binding.chAllSelect.visibility = View.GONE
                     binding.grouplabel.visibility = View.GONE
-                    binding.lblNoRecord.text = response.message
+                    binding.txtNoData.text = response.message
+                    binding.nomessage.visibility =View.VISIBLE
+
                 }
                 if (!isDropDown) {
                     isLoadTheStandardData(isGetStandard)
@@ -307,19 +321,23 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             }
         }
 
+
+
         appViewModel!!.isGetStaffList?.observe(this) { response ->
             if (response != null) {
                 isGetStaffListData = response.data
 
                 if (isGetStaffListData!!.isNotEmpty()) {
-                    binding.lblNoRecord.visibility = View.GONE
+                    binding.txtNoData.visibility = View.GONE
                     binding.chAllSelect.visibility = View.VISIBLE
                     binding.grouplabel.visibility = View.VISIBLE
+                    binding.nomessage.visibility =View.GONE
                 } else {
-                    binding.lblNoRecord.visibility = View.VISIBLE
+                    binding.txtNoData.visibility = View.VISIBLE
                     binding.chAllSelect.visibility = View.GONE
                     binding.grouplabel.visibility = View.GONE
-                    binding.lblNoRecord.text = response.message
+                    binding.txtNoData.text = response.message
+                    binding.nomessage.visibility =View.VISIBLE
                 }
                 isLoadStaffData(response.data)
             }
@@ -388,6 +406,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             }
         }
     }
+
+
 
     private fun tapVisibility(tabLayout: TabLayout) {
 
@@ -471,6 +491,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             )
             binding.recyclerView.adapter = isGroupStaffAdapter
         }
+
     }
 
     private fun isLoadGroupData(isGetGroupListData: List<NameAndIds>?) {
@@ -485,6 +506,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             )
             binding.recyclerView.adapter = isGroupStaffAdapter
         }
+
     }
 
     private fun isLoadData(isSection: List<Section>?) {
@@ -501,6 +523,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             binding.recyclerView.adapter = isSectionAdapter
             binding.chAllSelect.visibility = View.VISIBLE
         }
+
     }
 
     private fun isLoadTheStandardData(isGetStandard: List<Standard>?) {
@@ -516,7 +539,9 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             binding.recyclerView.adapter = isStandardListAdapter
 
         }
+
     }
+
 
 
     @RequiresApi(Build.VERSION_CODES.O)

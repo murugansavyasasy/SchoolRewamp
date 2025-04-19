@@ -337,4 +337,33 @@
 
     </TextView>
 
+    <TextView
+        android:id="@+id/txtNoData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No data found"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_gravity="center"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        android:layout_below="@+id/nomessage"
+        android:layout_marginTop="20dp" />
+
+
+
+    <ImageView
+        android:id="@+id/nomessage"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:src="@drawable/nodataimage"
+        android:layout_gravity="center"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        android:layout_marginTop="20dp" />
+
+
 </RelativeLayout>

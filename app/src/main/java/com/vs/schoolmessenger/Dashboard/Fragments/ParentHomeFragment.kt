@@ -229,28 +229,28 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     }
 
     override fun onClick(data: MenuDetail) {
-//        val intent = when (data.id) {
+        val intent = when (data.id) {
 
-//            Constant.stu_communication_id -> Intent(requireActivity(), Communication::class.java)
-//            Constant.stu_homework_id -> Intent(requireActivity(), HomeWork::class.java)
-//            Constant.stu_exam_id -> Intent(requireActivity(), Exam::class.java)
-//            Constant.stu_noticeboard_id -> Intent(requireActivity(), NoticeBoard::class.java)
-//            Constant.stu_event_id -> Intent(requireActivity(), Event::class.java)
-//            Constant.stu_attendance_report_id -> Intent(requireActivity(), AttendanceReport::class.java)
-//            Constant.stu_leave_request_id -> Intent(requireActivity(), LeaveRequest::class.java)
-//            Constant.stu_fee_details_id -> Intent(requireActivity(), FeeDetails::class.java)
-//            Constant.stu_interaction_with_staff_id -> Intent(requireActivity(), InteractionWithStaff::class.java)
-////            15 -> Intent(requireActivity(), OnlineTextBook::class.java)
-//            Constant.stu_assignment_id -> Intent(requireActivity(), Assignment::class.java)
-////            19 -> Intent(requireActivity(), Attachments::class.java)
-//            Constant.stu_online_meeting_id -> Intent(requireActivity(), OnlineMeeting::class.java)
-//            Constant.stu_quiz_id -> Intent(requireActivity(), Quiz::class.java)
-//            Constant.stu_lsrw_id -> Intent(requireActivity(), LSRW::class.java)
-//            Constant.stu_time_table_id -> Intent(requireActivity(), TimeTable::class.java)
-////            24 -> Intent(requireActivity(), UserProfile::class.java)
-//            Constant.stu_certificate_request_id -> Intent(requireActivity(), CertificateRequest::class.java)
-//            else -> null
-//        }
-//        intent?.let { requireActivity().startActivity(it) }
+            Constant.STU_COMMUNICATION -> Intent(requireActivity(), Communication::class.java)
+            Constant.STU_HOMEWORK -> Intent(requireActivity(), HomeWork::class.java)
+            Constant.STU_EXAM -> Intent(requireActivity(), Exam::class.java)
+            Constant.STU_NOTICEBOARD -> Intent(requireActivity(), NoticeBoard::class.java)
+            Constant.STU_EVENTS -> Intent(requireActivity(), Event::class.java)
+            Constant.STU_ATTENDANCE_REPORT -> Intent(requireActivity(), AttendanceReport::class.java)
+            Constant.STU_LEAVE_REQUEST -> Intent(requireActivity(), LeaveRequest::class.java)
+            Constant.STU_FEE_DETAILS -> Intent(requireActivity(), FeeDetails::class.java)
+            Constant.STU_INTERACTION_WITH_STAFF -> Intent(requireActivity(), InteractionWithStaff::class.java)
+//            15 -> Intent(requireActivity(), OnlineTextBook::class.java)
+            Constant.STU_ASSIGNMENT -> Intent(requireActivity(), Assignment::class.java)
+//            19 -> Intent(requireActivity(), Attachments::class.java)
+            Constant.STU_ONLINE_MEETING -> Intent(requireActivity(), OnlineMeeting::class.java)
+            Constant.STU_QUIZ -> Intent(requireActivity(), Quiz::class.java)
+            Constant.STU_LSRW -> Intent(requireActivity(), LSRW::class.java)
+            Constant.STU_TIME_TABLE -> Intent(requireActivity(), TimeTable::class.java)
+//            24 -> Intent(requireActivity(), UserProfile::class.java)
+            Constant.STU_CERTIFICATE_REQUEST -> Intent(requireActivity(), CertificateRequest::class.java)
+            else -> null
+        }
+        intent?.let { requireActivity().startActivity(it) }
     }
 }
