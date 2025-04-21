@@ -19,11 +19,13 @@ import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.CommonScreens.Ads.AdItem
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuClickListener
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuDetail
+import com.vs.schoolmessenger.Dashboard.School.SchoolMenuAdapter.ShimmerViewHolder
 import com.vs.schoolmessenger.Parent.Assignment.Assignment
 import com.vs.schoolmessenger.Parent.Homework.HomeWork
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequest
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.ShimmerUtil
 import java.util.Timer
 import java.util.TimerTask
 
@@ -53,9 +55,10 @@ class ChildMenuAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             TYPE_SHIMMER -> {
-                val view = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.shimmer_dashboard_item, parent, false)
-                ShimmerViewHolder(view)
+                val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.menu_item_card)
+                ShimmerViewHolder(
+                    shimmerView
+                )
             }
 
             TYPE_AD -> {
@@ -79,6 +82,10 @@ class ChildMenuAdapter(
                 isMenuDetails?.get(position)?.let { menuDetail ->
                     holder.bind(menuDetail, position, listener)
                 }
+            }
+
+            is  ShimmerViewHolder -> {
+                holder.startShimmer()
             }
 
             is AdViewHolder -> {
@@ -367,11 +374,8 @@ class ChildMenuAdapter(
 //    }
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val shimmerLayout: ShimmerFrameLayout =
-            itemView.findViewById(R.id.shimmer_view_container)
-
-        init {
-            shimmerLayout.startShimmer()
+        fun startShimmer() {
+            ShimmerUtil.startShimmer(itemView)
         }
     }
 }

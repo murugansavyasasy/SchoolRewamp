@@ -133,6 +133,29 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     }
 
     private fun isLoadData() {
+        val gridLayoutManager = GridLayoutManager(requireContext(), 3)
+
+//        Constant.executeAfterDelay {
+            val isAdapter = ChildMenuAdapter(
+                requireActivity(), this, isMenuDetails, null, Constant.isShimmerViewDisable
+            )
+//            Log.d("aditems", aditems.size.toString())
+            // Adjust span count again for the updated adapter
+            gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                override fun getSpanSize(position: Int): Int {
+                    return when (isAdapter.getItemViewType(position)) {
+                        2 -> 3 // TYPE_AD: Span across all 3 columns
+                        else -> 1 // Default: 1 span per item
+                    }
+                }
+            }
+            binding.recyclerViewMenus.layoutManager = gridLayoutManager
+            binding.recyclerViewMenus.adapter = isAdapter
+//        }
+    }
+
+    private fun isDashBoardData() {
+
         val adapter =
             ChildMenuAdapter(requireActivity(), this, null, null, Constant.isShimmerViewShow)
         val gridLayoutManager = GridLayoutManager(requireContext(), 3)
@@ -150,26 +173,8 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         binding.recyclerViewMenus.layoutManager = gridLayoutManager
         binding.recyclerViewMenus.adapter = adapter
 
-        Constant.executeAfterDelay {
-            val isAdapter = ChildMenuAdapter(
-                requireActivity(), this, isMenuDetails, null, Constant.isShimmerViewDisable
-            )
-//            Log.d("aditems", aditems.size.toString())
-            // Adjust span count again for the updated adapter
-            gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-                override fun getSpanSize(position: Int): Int {
-                    return when (isAdapter.getItemViewType(position)) {
-                        2 -> 3 // TYPE_AD: Span across all 3 columns
-                        else -> 1 // Default: 1 span per item
-                    }
-                }
-            }
-            binding.recyclerViewMenus.layoutManager = gridLayoutManager
-            binding.recyclerViewMenus.adapter = isAdapter
-        }
-    }
 
-    private fun isDashBoardData() {
+
         Log.d("isToken", childDetails!!.access_token)
         appViewModel!!.isDashBoardData(
             childDetails!!.access_token, "parent", requireActivity()

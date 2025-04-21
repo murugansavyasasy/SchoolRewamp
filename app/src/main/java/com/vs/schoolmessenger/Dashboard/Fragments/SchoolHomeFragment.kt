@@ -201,13 +201,10 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
     private fun isLoadData() {
 
-
         val isAdapter = SchoolMenuAdapter(
             requireActivity(), this, isMenuDetails, isAdItem, Constant.isShimmerViewDisable
         )
-
         val gridLayoutManager = GridLayoutManager(requireContext(), 3)
-
         // Adjust span count again for the updated adapter
         gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {

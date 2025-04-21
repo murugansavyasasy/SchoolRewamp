@@ -150,6 +150,18 @@ class UnifiedVoiceAdapter(
                     lblEndDuration.text = formatTime(duration)
                 }
 
+                lblSeeMore.setOnClickListener {
+                    listener.onItemClick(data, this@DataViewHolder)
+                    lblSeeMore.visibility = View.GONE
+
+                    if (data.is_archive) {
+                        listener.onUpdateArchiveStatus(data.type, data.id)
+                    } else {
+                        listener.onUpdateCommunicationStatus(data.type, data.id)
+                    }
+                }
+
+
                 imgVoicePlay.setOnClickListener {
                     listener.onItemClick(data, this@DataViewHolder)
                     lblnewiconVoice.visibility = View.GONE
@@ -177,9 +189,7 @@ class UnifiedVoiceAdapter(
                     }
                     adapter.currentlyPlayingHolder = this
                 }
-
             } else {
-
                 rlaVoice.visibility = View.GONE
                 rlaText.visibility = View.VISIBLE
                 lblTitleText.text = data.description ?: ""
@@ -193,6 +203,10 @@ class UnifiedVoiceAdapter(
                     ViewTreeObserver.OnGlobalLayoutListener {
                     override fun onGlobalLayout() {
                         lblContentText.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                        lblnewiconText.visibility = if (data.is_unread) View.VISIBLE else View.GONE
+                        lblnewiconVoice.visibility = View.GONE
+                        lblSeeMore.visibility = if (data.is_unread) View.VISIBLE else View.GONE
+                        lblSeeMore.visibility = View.GONE
 
                         if (lblContentText.lineCount > 3) {
                             lblSeeMore.visibility = View.VISIBLE
