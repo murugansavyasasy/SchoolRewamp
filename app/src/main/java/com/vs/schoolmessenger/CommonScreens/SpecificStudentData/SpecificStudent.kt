@@ -1,9 +1,13 @@
 package com.vs.schoolmessenger.CommonScreens.SpecificStudentData
 
 import android.app.AlertDialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -35,6 +39,8 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
 
     //    var isAcademicYear: List<AcademicYear>? = null
     var isAcademicYearId = -1
+    var isCurrentAcademicYear=false
+    var isAcademicYear: String?=null
     var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
 
 
@@ -54,6 +60,8 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
 
         val isSelectedId = intent.getIntegerArrayListExtra("isSelectedId") ?: arrayListOf()
         isAcademicYearId = intent.getIntExtra("isAcademicYearId", -1)
+        isCurrentAcademicYear = intent.getBooleanExtra("isCurrentAcademicYear", false)
+        isAcademicYear = intent.getStringExtra("lblAcademicYear")
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
         isGetStudentList(isSelectedId, isAcademicYearId)
@@ -188,7 +196,18 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun showSendConfirmationDialog(isMessage: String) {
+    fun showSendConfirmationDialog(isSelectTarget: String, isMessage: String) {
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.alert_popup, null)
+        val builder = AlertDialog.Builder(this)
+        builder.setView(dialogView)
+        val alertDialog = builder.create()
+        alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT)) // Transparent background
+        alertDialog.show()
+
+        val okButton = dialogView.findViewById<TextView>(R.id.btnOk)
+        val btnCancel = dialogView.findViewById<TextView>(R.id.btnCancel)
+        val alertMessage = dialogView.findViewById<TextView>(R.id.alertMessage)
+        val lblSelectTarget = dialogView.findViewById<TextView>(R.id.lblSelectTarget)
 
         var isTargetType: Int? = null
         var isCircularType: String? = null
@@ -196,9 +215,13 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
         isCircularType = Constant.student
         val isTextData = Constant.isTextSendingData
 
-        AlertDialog.Builder(this).setTitle("Send Confirmation!").setMessage(isMessage)
-            .setPositiveButton("Yes") { dialog, _ ->
-                if (Constant.isClickType == 3) {
+        alertMessage.text = isMessage
+        lblSelectTarget.text = isSelectTarget
+
+        okButton.setOnClickListener {
+            alertDialog.dismiss()
+
+            if (Constant.isClickType == 3) {
                     val jsonObject = ApiCallRequest.isSendText(
                         isAcademicYearId = isAcademicYearId,
                         schoolId = selectedIds,
@@ -219,9 +242,12 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                     }
 
                 }
-            }.setNegativeButton("Cancel") { dialog, _ ->
-                dialog.dismiss()
-            }.show()
+
+        }
+
+        btnCancel.setOnClickListener {
+            alertDialog.dismiss()
+        }
     }
 
 
@@ -259,13 +285,33 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                     Log.d("isSelectedIds", id.toString())
                 }
                 if (selectedIds.isNotEmpty()) {
-                    if (Constant.isClickType == 3) {
-                        showSendConfirmationDialog("Are you want send this text to entire school?")
+
+                    var isAcademicYearNote: String? = null
+                    if (!isCurrentAcademicYear) {
+                        isAcademicYearNote =
+                            "NOTE : This message is addressed to student in " + isAcademicYear + " which is not the communication academic year. Do you want to proceed?"
                     } else {
-                        showSendConfirmationDialog("Are you want send this voice to entire school?")
+                        isAcademicYearNote = "Are you sure want to send this message?"
+                    }
+
+                    if (Constant.isClickType == 3) {
+                        showSendConfirmationDialog(
+                            "Selected target : " + selectedIds.size.toString(),
+                            isAcademicYearNote.toString()
+                        )
+                    } else {
+                        showSendConfirmationDialog(
+                            "Selected target : " + selectedIds.size.toString(),
+                            isAcademicYearNote.toString()
+                        )
                     }
                 } else {
-                    Constant.showAlert("Alert!", "Select atleast one student", this)
+                    Constant.showAlert(
+                        "Alert!",
+                        "Please select at least one student to send the message.",
+                        this
+                    )
+
                 }
             }
         }

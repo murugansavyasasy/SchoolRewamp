@@ -8,11 +8,25 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
+import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.biometric.BiometricPrompt
+import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.snackbar.Snackbar
+import com.google.android.play.core.appupdate.AppUpdateManager
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.google.android.play.core.appupdate.AppUpdateOptions
+import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.Country.CountryScreen
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.Login
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.MobileNumber
 import com.vs.schoolmessenger.Auth.OTP.OTP
 import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
@@ -29,21 +43,6 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import android.widget.TextView
-import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.biometric.BiometricManager
-import androidx.biometric.BiometricPrompt
-import androidx.cardview.widget.CardView
-import androidx.core.content.ContextCompat
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.play.core.appupdate.AppUpdateManager
-import com.google.android.play.core.appupdate.AppUpdateManagerFactory
-import com.google.android.play.core.appupdate.AppUpdateOptions
-import com.google.android.play.core.install.model.AppUpdateType
-import com.google.android.play.core.install.model.UpdateAvailability
-import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.MobileNumber
 
 
 class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
@@ -285,6 +284,8 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
     private fun autoLoginFlowCheck(isVersionData: List<VersionData>) {
         val mobile_number = SharedPreference.getMobileNumber(this)
         val password = SharedPreference.getPassWord(this)
+        Log.d("mobile_number", mobile_number.toString())
+        Log.d("password", password.toString())
         if (!mobile_number.equals("") && !password.equals("")) {
             isValidateUser()
         } else {
@@ -298,7 +299,6 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
             }
         }
     }
-
 
     fun showBottomPopup(context: Context) {
         val dialog = BottomSheetDialog(context)

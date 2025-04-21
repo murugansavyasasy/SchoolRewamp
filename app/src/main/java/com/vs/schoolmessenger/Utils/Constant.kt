@@ -372,7 +372,7 @@ object Constant {
     @RequiresApi(Build.VERSION_CODES.O)
     fun getCurrentTime(): String {
         val currentTime = LocalTime.now()
-        val formatter = DateTimeFormatter.ofPattern("HH:mm:ss") // or "hh:mm a" for AM/PM
+        val formatter = DateTimeFormatter.ofPattern("HH:mm a") // or "hh:mm a" for AM/PM
         return currentTime.format(formatter)
     }
 

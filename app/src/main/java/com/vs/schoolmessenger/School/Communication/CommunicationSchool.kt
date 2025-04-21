@@ -246,6 +246,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     }
 
     private fun loadTextHistoryData(isTextHistoryDetails: List<TextDetail>) {
+        binding.rcyHistoryDataVoiceAndText.visibility = View.VISIBLE
         mTextAdapter = TextHistoryAdapter(null, this, this, Constant.isShimmerViewShow)
         binding.rcyHistoryDataVoiceAndText.layoutManager = LinearLayoutManager(this)
         binding.rcyHistoryDataVoiceAndText.isNestedScrollingEnabled = false;
@@ -319,14 +320,14 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 if (isEmergency == 0) {
                     binding.lblSend.text = resources.getString(R.string.NEXT)
                 } else {
-                    binding.lblSend.text = resources.getString(R.string.Send)
+                    binding.lblSend.text = resources.getString(R.string.NEXT)
                 }
             }
         } else {
             if (isEmergency == 0) {
                 binding.lblSend.text = resources.getString(R.string.NEXT)
             } else {
-                binding.lblSend.text = resources.getString(R.string.Send)
+                binding.lblSend.text = resources.getString(R.string.NEXT)
             }
         }
     }
@@ -377,7 +378,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         val parts = binding.lblDurationOfVoice.text.toString().split(" / ")
         if (parts.isNotEmpty()) {
             val currentDuration = parts[0]
-            binding.lblEndDuration.text = currentDuration
+            binding.lblEndDuration.text = "/ " +currentDuration
         }
 
         mediaRecorder?.apply {
@@ -478,7 +479,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     )
 
                     // Initialize with 00:00 / totalDuration
-                    binding.lblStartDuration.text = "00:00 / $totalFormatted"
+//                    binding.lblStartDuration.text = "00:00 / $totalFormatted"
+                    binding.lblEndDuration.text ="/ " +totalFormatted
                 }
 
 
@@ -492,7 +494,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     binding.imgVoicePlay.setImageDrawable(
                         ContextCompat.getDrawable(this@CommunicationSchool, R.drawable.video_play)
                     )
-                    binding.lblStartDuration.text = "00:00 / 00:00"
+                    binding.lblStartDuration.text = "00:00"
+//                    binding.lblEndDuration.text = "/ 00:00"
                     binding.waveformSeekBar.updateWithLevel(0f)
                     Log.d("AudioDebug", "Playback completed.")
                 }
@@ -517,8 +520,10 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     if (player.isPlaying) {
                         val currentPosition = player.currentPosition
                         val currentFormatted = formatDuration(currentPosition)
+                        Log.d("currentFormatted",currentFormatted.toString())
                         val totalFormatted = formatDuration(totalDurationMillis)
-                        binding.lblStartDuration.text = "$currentFormatted / $totalFormatted"
+//                        binding.lblStartDuration.text = "$currentFormatted / $totalFormatted"
+                        binding.lblStartDuration.text =  currentFormatted
                         handler.postDelayed(this, 1000)
                     }
                 }
@@ -918,26 +923,59 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 onBackPressed()
             }
 
-            R.id.lnrScheduleCall -> {
+//            R.id.lnrScheduleCall -> {
+//
+//                val dateAdapter = DateAdapter(this) { updatedList -> }
+//                selectedDatesAdapter = SelectedDatesAdapter(
+//                    this, selectedDates.toMutableList(), dateAdapter
+//                ) { removedDate ->
+//                    dateAdapter.removeSelectedDate(removedDate)
+//                }
+//                binding.gridViewScheduleCall.adapter = selectedDatesAdapter
+//                val datePickerPopup = CustomDatePicker(
+//                    context = this,
+//                    preSelectedDates = selectedDates.toList(),
+//                    dateAdapter = dateAdapter
+//                ) { newSelectedDates ->
+//                    selectedDates.clear()
+//                    selectedDates.addAll(newSelectedDates)
+//                    selectedDatesAdapter.submitSelectedDates(selectedDates.toList())
+//                }
+//                datePickerPopup.show(window.decorView.rootView)
+//            }
 
-                val dateAdapter = DateAdapter(this) { updatedList -> }
+            R.id.lnrScheduleCall -> {
+                val dateAdapter = DateAdapter(this) { updatedList ->
+                    // Optional callback when dates are clicked inside calendar
+                }
+
                 selectedDatesAdapter = SelectedDatesAdapter(
-                    this, selectedDates.toMutableList(), dateAdapter
+                    context = this,
+                    selectedDates = selectedDates.toMutableList(),
+                    dateAdapter = dateAdapter
                 ) { removedDate ->
+                    // Properly update the selectedDates list
+                    selectedDates.remove(removedDate)
+
+                    // Update the DateAdapter too
                     dateAdapter.removeSelectedDate(removedDate)
                 }
+
                 binding.gridViewScheduleCall.adapter = selectedDatesAdapter
+
                 val datePickerPopup = CustomDatePicker(
                     context = this,
-                    preSelectedDates = selectedDates.toList(),
+                    preSelectedDates = selectedDates.toList(), // now synced
                     dateAdapter = dateAdapter
                 ) { newSelectedDates ->
                     selectedDates.clear()
                     selectedDates.addAll(newSelectedDates)
                     selectedDatesAdapter.submitSelectedDates(selectedDates.toList())
                 }
+
                 datePickerPopup.show(window.decorView.rootView)
             }
+
 
             R.id.rlaBackRecord -> {
                 if (mAdapter != null) {
@@ -977,7 +1015,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 stopAudioProgressUpdate()
                 when (Constant.isClickType) {
                     1 -> {
-                        binding.rcyHistoryDataVoiceAndText.visibility = View.VISIBLE
+                        binding.rcyHistoryDataVoiceAndText.visibility = View.GONE
                         binding.lnrHistoryList.visibility = View.GONE
                         binding.rlaBackRecord.visibility = View.VISIBLE
                         binding.gridViewScheduleCall.visibility = View.GONE
@@ -988,7 +1026,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     }
 
                     2 -> {
-                        binding.rcyHistoryDataVoiceAndText.visibility = View.VISIBLE
+                        binding.rcyHistoryDataVoiceAndText.visibility = View.GONE
                         binding.lnrHistoryList.visibility = View.GONE
                         binding.rlaBackRecord.visibility = View.VISIBLE
                         binding.gridViewScheduleCall.visibility = View.VISIBLE
@@ -999,7 +1037,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     }
 
                     else -> {
-                        binding.rcyHistoryDataVoiceAndText.visibility = View.VISIBLE
+                        binding.rcyHistoryDataVoiceAndText.visibility = View.GONE
                         binding.lnrHistoryList.visibility = View.GONE
                         binding.rlaBackRecord.visibility = View.VISIBLE
                         binding.gridViewScheduleCall.visibility = View.GONE
@@ -1157,6 +1195,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
     private fun loadVoiceData(isVoiceHistoryData: List<VoiceHistoryDetails>) {
         Log.d("isVoiceHistory", "isVoiceHistory")
+        binding.rcyHistoryDataVoiceAndText.visibility = View.VISIBLE
         mAdapter = VoiceHistoryAdapter(null, this, this, Constant.isShimmerViewShow)
         binding.rcyHistoryDataVoiceAndText.layoutManager = LinearLayoutManager(this)
         binding.rcyHistoryDataVoiceAndText.isNestedScrollingEnabled = false
@@ -1225,7 +1264,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         binding.rlaSeekBarAndTitle.visibility = View.VISIBLE
         binding.rlaTitle.visibility = View.VISIBLE
         binding.edtTitle.setText(data.description.toString())
-        binding.lblEndDuration.setText(data.duration.toString())
+        binding.lblEndDuration.text = "/ "+data.duration.toString()
         Constant.isVoiceType = 3
         // Get the URL or file path from the clicked item
         val voiceUrlOrPath =
@@ -1244,39 +1283,39 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     }
 
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun showSendConfirmationDialog(isMessage: String) {
-
-        val isSchoolId = mutableListOf(isStaffDetails!!.school_id.toInt())
-        Log.d("DialogDebug", "Dialog function called")
-
-        runOnUiThread {
-            AlertDialog.Builder(this).setTitle("Send Confirmation!").setMessage(isMessage)
-                .setPositiveButton("Yes") { dialog, _ ->
-                    if (Constant.isClickType == 3) {
-                        val jsonObject = ApiCallRequest.isSendText(
-                            isAcademicYearId = isAcademicYearId,
-                            schoolId = isSchoolId,
-                            message = binding.edtTitleTextMessage.text.toString(),
-                            description = binding.edtContentTextMessage.text.toString(),
-                            targetType = Constant.isSchool
-                        )
-                        appViewModel!!.isSendText(isAccessToken!!, jsonObject, this)
-                    } else {
-                        if (Constant.isVoiceType == 3) {
-                            voiceSendApi(audioFilePath)
-                        } else {
-                            isFileUploadInAws(
-                                Constant.isVoiceFile!!, isStaffDetails!!.school_id, "audio"
-                            )
-                        }
-
-                    }
-                }.setNegativeButton("Cancel") { dialog, _ ->
-                    dialog.dismiss()
-                }.show()
-        }
-    }
+//    @RequiresApi(Build.VERSION_CODES.O)
+//    fun showSendConfirmationDialog(isMessage: String) {
+//
+//        val isSchoolId = mutableListOf(isStaffDetails!!.school_id.toInt())
+//        Log.d("DialogDebug", "Dialog function called")
+//
+//        runOnUiThread {
+//            AlertDialog.Builder(this).setTitle("Send Confirmation!").setMessage(isMessage)
+//                .setPositiveButton("Yes") { dialog, _ ->
+//                    if (Constant.isClickType == 3) {
+//                        val jsonObject = ApiCallRequest.isSendText(
+//                            isAcademicYearId = isAcademicYearId,
+//                            schoolId = isSchoolId,
+//                            message = binding.edtTitleTextMessage.text.toString(),
+//                            description = binding.edtContentTextMessage.text.toString(),
+//                            targetType = Constant.isSchool
+//                        )
+//                        appViewModel!!.isSendText(isAccessToken!!, jsonObject, this)
+//                    } else {
+//                        if (Constant.isVoiceType == 3) {
+//                            voiceSendApi(audioFilePath)
+//                        } else {
+//                            isFileUploadInAws(
+//                                Constant.isVoiceFile!!, isStaffDetails!!.school_id, "audio"
+//                            )
+//                        }
+//
+//                    }
+//                }.setNegativeButton("Cancel") { dialog, _ ->
+//                    dialog.dismiss()
+//                }.show()
+//        }
+//    }
 
 
     private fun openAudioFilePicker() {
@@ -1343,7 +1382,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     binding.lblDurationOfVoice.visibility = View.GONE
 
                     // Set duration label before playing
-                    binding.lblStartDuration.text = "00:00 / $formattedDuration"
+//                    binding.lblStartDuration.text = "00:00 / $formattedDuration"
+                    binding.lblEndDuration.text = "/ " +formattedDuration
 
                     // initializeMediaPlayer() // Uncomment if you want to auto-play
 

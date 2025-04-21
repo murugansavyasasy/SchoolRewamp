@@ -7,11 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.compose.runtime.ControlledComposition
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.Utils.Constant
 
 class DateAdapter(
     private val context: Context,
@@ -21,7 +19,7 @@ class DateAdapter(
     private val dates = mutableListOf<DateItem>()
     private val selectedDates = mutableSetOf<String>() // Set to track selected dates
     private val selectedBackgroundDrawable =
-        ContextCompat.getDrawable(context, R.drawable.rect_shadow_light_green)
+        ContextCompat.getDrawable(context, R.drawable.rect_round_light_green)
 
     fun submitDates(newDates: List<DateItem>) {
         dates.clear()
@@ -29,14 +27,13 @@ class DateAdapter(
         notifyDataSetChanged()
         Log.d("DateAdapter", "Dates submitted: $dates")
     }
-
-    fun removeSelectedDate(date: String) {
-        if (selectedDates.contains(date)) {
-            selectedDates.remove(date)
+    fun removeSelectedDate(dateStr: String) {
+        if (selectedDates.contains(dateStr)) {
+            selectedDates.remove(dateStr)
             notifyDataSetChanged()
-            Log.d("DateAdapter", "Removed selected date: $date. Current selected dates: $selectedDates")
         }
     }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DateViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -56,57 +53,45 @@ class DateAdapter(
 
         fun bind(dateItem: DateItem) {
             if (dateItem.day == null) {
-                // Empty cell
                 dateBox.text = ""
                 dateBox.isClickable = false
                 dateBox.setBackgroundResource(0)
-            } else {
+                return
+            }
 
-                dateBox.text = dateItem.day.toString() // Display just the day
-                dateBox.isClickable = dateItem.isSelectable
+            dateBox.text = dateItem.day.toString()
+            dateBox.isClickable = dateItem.isSelectable
+            dateBox.setBackgroundColor(Color.TRANSPARENT)
 
-                // Reset background color for all items
-                dateBox.setBackgroundColor(Color.TRANSPARENT)
+            if (dateItem.isSelectable) {
+                dateBox.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary))
 
-                // Style based on whether the date is selectable
-                if (dateItem.isSelectable) {
-                    dateBox.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary))
-                    dateBox.setOnClickListener {
-                        val dateStr = dateItem.getFormattedDate() ?: return@setOnClickListener
-                        if (selectedDates.contains(dateStr)) {
-                            // Deselect the date
-                            selectedDates.remove(dateStr)
-                            Log.d("DateAdapter", "Deselected date: $dateStr. Current selected dates: $selectedDates")
-                            dateBox.setBackgroundColor(Color.TRANSPARENT) // Reset background
-                        } else {
-                            // Select the date
-                            selectedDates.add(dateStr)
-                            Log.d("DateAdapter", "Selected date: $dateStr. Current selected dates: $selectedDates")
-                            dateBox.background = selectedBackgroundDrawable // Set selected color
-                        }
-                        // Notify the listener about the current selection
-                        onDateClick(selectedDates.toList())
-                    }
+                dateBox.setOnClickListener {
+                    val dateStr = dateItem.getFormattedDate() ?: return@setOnClickListener
 
-                    // Change background if this date is selected
-                    if (selectedDates.contains(dateItem.getFormattedDate())) {
+                    if (selectedDates.contains(dateStr)) {
+                        selectedDates.remove(dateStr)
+                        dateBox.setBackgroundColor(Color.TRANSPARENT)
+                    } else {
+                        selectedDates.add(dateStr)
                         dateBox.background = selectedBackgroundDrawable
                     }
-                } else {
-                    dateBox.setTextColor(ContextCompat.getColor(context, R.color.grey))
-                    dateBox.setBackgroundColor(Color.TRANSPARENT)
-                    dateBox.setOnClickListener(null)
+
+                    // Notify parent of updated selection
+                    onDateClick(selectedDates.toList())
                 }
+
+                if (selectedDates.contains(dateItem.getFormattedDate())) {
+                    dateBox.background = selectedBackgroundDrawable
+                }
+            } else {
+                dateBox.setTextColor(ContextCompat.getColor(context, R.color.grey))
+                dateBox.setBackgroundColor(Color.TRANSPARENT)
+                dateBox.setOnClickListener(null)
             }
         }
     }
 
-
-    fun selectDate(date: String) {
-        selectedDates.add(date)
-        Log.d("DateAdapter", "Selected date added: $date. Current selected dates: $selectedDates")
-        notifyDataSetChanged()
-    }
 
     fun setSelectedDates(selectedDates: List<String>) {
         this.selectedDates.clear()
@@ -114,6 +99,7 @@ class DateAdapter(
         Log.d("DateAdapter", "Selected dates set: $selectedDates")
         notifyDataSetChanged() // Notify that data has changed
     }
+
 
     fun getSelectedDates(): List<String> {
         return selectedDates.toList() // Ensure this returns a List<String>

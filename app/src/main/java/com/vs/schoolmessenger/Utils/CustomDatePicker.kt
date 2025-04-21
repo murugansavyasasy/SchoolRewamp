@@ -74,9 +74,26 @@ class CustomDatePicker(
             popupWindow.dismiss()
         }
 
+        val parentView = anchorView.rootView as ViewGroup
+        val dimView = View(context).apply {
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+            setBackgroundColor(Color.parseColor("#80000000"))
+            isClickable = true // Intercept clicks
+        }
+        parentView.addView(dimView)
+
         popupWindow.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        popupWindow.isOutsideTouchable = true
+        popupWindow.setOnDismissListener {
+            parentView.removeView(dimView)
+        }
+
         popupWindow.showAtLocation(anchorView, Gravity.CENTER, 0, 0)
     }
+
 
     private fun loadDates(currentMonthText: TextView) {
         val dateFormat = SimpleDateFormat("MMMM yyyy", Locale.getDefault())

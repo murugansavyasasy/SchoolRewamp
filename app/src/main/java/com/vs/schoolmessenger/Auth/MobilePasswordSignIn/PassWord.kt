@@ -3,6 +3,7 @@ package com.vs.schoolmessenger.Auth.MobilePasswordSignIn
 import android.content.Intent
 import android.graphics.Paint
 import android.text.InputType
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
@@ -56,16 +57,24 @@ class PassWord : BaseActivity<PassWordBinding>(), View.OnClickListener {
 
                     if (isValidateUser[0].is_password_updated) {
 
+                        SharedPreference.putMobileNumberPassWord(
+                            this@PassWord,
+                            Constant.isMobileNumber,
+                            binding.txtPassword.text.toString()
+                        )
+
                         if (isValidateUser[0].otp_sent) {
                             val intent = Intent(this@PassWord, OTP::class.java)
                             Constant.pageType = Constant.PasswordScreen
                             startActivity(intent)
                         } else {
-                            SharedPreference.putMobileNumberPassWord(
-                                this@PassWord,
-                                Constant.isMobileNumber,
-                                binding.txtPassword.text.toString()
-                            )
+//                            SharedPreference.putMobileNumberPassWord(
+//                                this@PassWord,
+//                                Constant.isMobileNumber,
+//                                binding.txtPassword.text.toString()
+//                            )
+//                            Log.d("isMobileNumberChecking", SharedPreference.getMobileNumber(this).toString())
+//                            Log.d("isPasswordChecking", SharedPreference.getPassWord(this).toString())
                             if (Constant.user_data!![0].user_details.is_staff && Constant.user_data!![0].user_details.is_parent) {
                                 val intent = Intent(this@PassWord, PrioritySelection::class.java)
                                 startActivity(intent)

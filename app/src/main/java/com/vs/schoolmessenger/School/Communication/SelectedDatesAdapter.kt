@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.BaseAdapter
+import android.widget.ImageView
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 
@@ -31,21 +32,32 @@ class SelectedDatesAdapter(
             .inflate(R.layout.schedule_call_date_data, parent, false)
 
         val dateTextView: TextView = view.findViewById(R.id.lblScheduleDate)
+        val imgRemoveDate: ImageView = view.findViewById(R.id.imgRemoveDate)
         val date = selectedDates[position]
         dateTextView.text = Constant.convertDateTimeFormat(date)
 
-        dateTextView.setOnClickListener {
-            // Remove the date from the list
+//        imgRemoveDate.setOnClickListener {
+//            // Remove the date from the list
+//            val removedDate = selectedDates[position]
+//            selectedDates.removeAt(position)
+//            notifyDataSetChanged()
+//
+//            // Notify the parent activity/fragment that a date was removed
+//            onDateRemoved(removedDate)
+//
+//            // Update the DateAdapter to reflect the removal
+//            dateAdapter.removeSelectedDate(removedDate) // Update DateAdapter directly
+//        }
+        imgRemoveDate.setOnClickListener {
             val removedDate = selectedDates[position]
             selectedDates.removeAt(position)
             notifyDataSetChanged()
 
-            // Notify the parent activity/fragment that a date was removed
+            // Notify parent (e.g., Activity or Fragment)
             onDateRemoved(removedDate)
-
-            // Update the DateAdapter to reflect the removal
-            dateAdapter.removeSelectedDate(removedDate) // Update DateAdapter directly
         }
+
+
 
 //        dateTextView.setOnClickListener {
 //            // Remove the date from the list

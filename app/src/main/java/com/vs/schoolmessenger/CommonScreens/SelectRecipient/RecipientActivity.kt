@@ -39,6 +39,7 @@ import com.vs.schoolmessenger.Utils.Constant.SH_ASSIGNMENT
 import com.vs.schoolmessenger.Utils.Constant.SH_HOMEWORK
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SelectRecipientBinding
+import kotlin.toString
 
 class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickListener,
     SectionListClickListener, StandardListClickListener, GroupListClickListener {
@@ -87,7 +88,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
         val tabLayout = binding.tabLayout
         tabLayout.addTab(tabLayout.newTab().setText("Entire School"))
-        tabLayout.addTab(tabLayout.newTab().setText("Standard"))
+        tabLayout.addTab(tabLayout.newTab().setText("Standard's"))
         tabLayout.addTab(tabLayout.newTab().setText("Section/Student"))
         tabLayout.addTab(tabLayout.newTab().setText("Groups"))
         tabLayout.addTab(tabLayout.newTab().setText("Staff"))
@@ -127,6 +128,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         binding.recyclerView.visibility = View.GONE
                         binding.rlaSubject.visibility = View.GONE
                         binding.textdesc.visibility = View.VISIBLE
+                        binding.bottomLayout.visibility = View.VISIBLE
                         binding.btnSpecificStudent.visibility = View.GONE
                     }
 
@@ -148,12 +150,12 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         binding.rlaSubject.visibility = View.GONE
                         binding.textdesc.visibility = View.GONE
                         binding.btnSpecificStudent.visibility = View.GONE
-                        Log.d("isDropDown", isDropDown.toString())
-                        if (!isDropDown) {
-                            binding.recyclerView.visibility = View.VISIBLE
-                        } else {
-                            binding.recyclerView.visibility = View.GONE
-                        }
+//                        Log.d("isDropDown", isDropDown.toString())
+//                        if (!isDropDown) {
+//                            binding.recyclerView.visibility = View.VISIBLE
+//                        } else {
+//                            binding.recyclerView.visibility = View.GONE
+//                        }
                     }
 
                     2 -> {
@@ -178,7 +180,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
                         binding.textdesc.visibility = View.GONE
                         binding.grouplabel.visibility = View.GONE
-                        binding.recyclerView.visibility = View.GONE
                         binding.chAllSelect.visibility = View.GONE
                         binding.rlaSubject.visibility = View.GONE
                         binding.btnSpecificStudent.visibility = View.VISIBLE
@@ -201,7 +202,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         binding.rlaStandard.visibility = View.GONE
                         binding.grouplabel.visibility = View.VISIBLE
                         binding.btnSpecificStudent.visibility = View.GONE
-                        binding.recyclerView.visibility = View.VISIBLE
+                        binding.recyclerView.visibility = View.GONE
                         binding.rlaSubject.visibility = View.GONE
                         binding.textdesc.visibility = View.GONE
                         if (isAcademicYearId != -1) {
@@ -212,6 +213,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
                     4 -> {
                         binding.nomessage.visibility =View.GONE
+                        binding.recyclerView.visibility = View.GONE
                         binding.txtNoData.visibility = View.GONE
                         binding.chAllSelect.isChecked = false
                         isSelectedType = 4
@@ -229,11 +231,11 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         binding.textdesc.visibility = View.GONE
                         binding.btnSpecificStudent.visibility = View.GONE
                         Log.d("isDropDown", isDropDown.toString())
-                        if (!isDropDown) {
-                            binding.recyclerView.visibility = View.VISIBLE
-                        } else {
-                            binding.recyclerView.visibility = View.GONE
-                        }
+//                        if (!isDropDown) {
+//                            binding.recyclerView.visibility = View.VISIBLE
+//                        } else {
+//                            binding.recyclerView.visibility = View.GONE
+//                        }
 
 
                     }
@@ -265,16 +267,19 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             if (response != null) {
                 isGetGroupListData = response.data
                 if (isGetGroupListData!!.isNotEmpty()) {
+                    binding.recyclerView.visibility = View.VISIBLE
                     binding.txtNoData.visibility = View.GONE
                     binding.chAllSelect.visibility = View.VISIBLE
                     binding.grouplabel.visibility = View.VISIBLE
                     binding.nomessage.visibility =View.GONE
+                    binding.bottomLayout.visibility = View.VISIBLE
                 } else {
                     binding.txtNoData.visibility = View.VISIBLE
                     binding.chAllSelect.visibility = View.GONE
                     binding.grouplabel.visibility = View.GONE
                     binding.txtNoData.text = response.message
                     binding.nomessage.visibility =View.VISIBLE
+                    binding.bottomLayout.visibility = View.GONE
                 }
                 isLoadGroupData(isGetGroupListData)
             }
@@ -294,29 +299,43 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 isGetStandard = response.data
                 if (isGetStandard!!.isNotEmpty()) {
                     binding.txtNoData.visibility = View.GONE
-                    if (isSelectedType != 1) {
-                        binding.rlaStandard.visibility = View.VISIBLE
-                        isSection = isGetStandard!!.get(0).sections
-                        binding.lblStandard.text = isGetStandard!![0].name
-                        binding.recyclerView.visibility = View.VISIBLE
-                        binding.nomessage.visibility =View.GONE
-                        isLoadData(isSection)
-
-                    }
+                    binding.recyclerView.visibility = View.VISIBLE
                     binding.chAllSelect.visibility = View.VISIBLE
                     binding.grouplabel.visibility = View.VISIBLE
+                    if (isSelectedType != 1) {
+                        binding.rlaStandard.visibility = View.VISIBLE
+                        binding.bottomLayout.visibility = View.VISIBLE
+                        isSection = isGetStandard!!.get(0).sections
+                        binding.lblStandard.text = isGetStandard!![0].name
+                        binding.nomessage.visibility =View.GONE
+                        isLoadData(isSection)
+                        binding.grouplabel.text = "Section"
+                    } else {
+                        isLoadTheStandardData(isGetStandard)
+                        binding.bottomLayout.visibility = View.VISIBLE
+                        binding.grouplabel.text = "Standard's"
+                    }
+
+//                    if (!isDropDown) {
+//                        binding.recyclerView.visibility = View.VISIBLE
+//                    } else {
+//                        Log.d("0000000000000","--------------")
+//                        binding.recyclerView.visibility = View.GONE
+//                    }
+//                    if (!isDropDown) {
+//                        isLoadTheStandardData(isGetStandard)
+//                    }
 
                 } else {
+                    binding.recyclerView.visibility = View.GONE
                     binding.txtNoData.visibility = View.VISIBLE
                     binding.rlaStandard.visibility = View.GONE
                     binding.chAllSelect.visibility = View.GONE
                     binding.grouplabel.visibility = View.GONE
+                    binding.bottomLayout.visibility = View.GONE
                     binding.txtNoData.text = response.message
                     binding.nomessage.visibility =View.VISIBLE
 
-                }
-                if (!isDropDown) {
-                    isLoadTheStandardData(isGetStandard)
                 }
             }
         }
@@ -329,13 +348,16 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
                 if (isGetStaffListData!!.isNotEmpty()) {
                     binding.txtNoData.visibility = View.GONE
+                    binding.recyclerView.visibility = View.VISIBLE
                     binding.chAllSelect.visibility = View.VISIBLE
                     binding.grouplabel.visibility = View.VISIBLE
+                    binding.bottomLayout.visibility = View.VISIBLE
                     binding.nomessage.visibility =View.GONE
                 } else {
                     binding.txtNoData.visibility = View.VISIBLE
                     binding.chAllSelect.visibility = View.GONE
                     binding.grouplabel.visibility = View.GONE
+                    binding.bottomLayout.visibility = View.GONE
                     binding.txtNoData.text = response.message
                     binding.nomessage.visibility =View.VISIBLE
                 }
@@ -563,6 +585,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 selectedIds = isSectionSelectedIds.map { it.id }.toMutableList()
                 val intent = Intent(this@RecipientActivity, SpecificStudent::class.java)
                 intent.putExtra("isAcademicYearId", isAcademicYearId)
+                intent.putExtra("isCurrentAcademicYear", isCurrentAcademicYear)
+                intent.putExtra("lblAcademicYear", binding.lblAcademicYear.text.toString())
                 intent.putIntegerArrayListExtra("isSelectedId", ArrayList(selectedIds))
                 startActivity(intent)
             }
