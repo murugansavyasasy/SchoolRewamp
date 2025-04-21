@@ -1,8 +1,7 @@
 package com.vs.schoolmessenger.Parent.Communication
 
 import android.text.Editable
-import android.util.Log
-import android. text. TextWatcher
+import android.text.TextWatcher
 import android.view.View
 import android.widget.ImageView
 import android.widget.PopupMenu
@@ -11,7 +10,6 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
@@ -51,17 +49,25 @@ class Communication : BaseActivity<CommunicationBinding>(), View.OnClickListener
         isAccessToken = isChildDetails?.access_token
         showShimmer()
 
-        binding.recyclerMore.post {
-            binding.recyclerMore.requestFocus()
-            binding.recyclerMore.layoutManager?.let { layoutManager ->
-                val itemCount = adapter?.itemCount ?: 0
-                if (itemCount > 0 && layoutManager is LinearLayoutManager) {
-                    layoutManager.scrollToPositionWithOffset(itemCount - 1, 0)
-                }
-            }
+        binding.toolbarLayout.imgBack.setOnClickListener {
+            onBackPressed()
         }
 
-        binding.txtSearchMenu.addTextChangedListener(object : android.text.TextWatcher {
+        binding.toolbarLayout.lblStudentName.text = isChildDetails!!.name
+        binding.toolbarLayout.lblParentToolBar.text = "Communication"
+        binding.toolbarLayout.lblStudentSection.text =
+            isChildDetails.standard_name + " - " + isChildDetails.section_name
+//        binding.recyclerMore.post {
+//            binding.recyclerMore.requestFocus()
+//            binding.recyclerMore.layoutManager?.let { layoutManager ->
+//                val itemCount = adapter?.itemCount ?: 0
+//                if (itemCount > 0 && layoutManager is LinearLayoutManager) {
+//                    layoutManager.scrollToPositionWithOffset(itemCount - 1, 0)
+//                }
+//            }
+//        }
+
+        binding.txtSearchMenu.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 currentSearchQuery = s.toString()
@@ -220,7 +226,6 @@ class Communication : BaseActivity<CommunicationBinding>(), View.OnClickListener
             addProperty("type", type)
             addProperty("detail_id", id)
         }
-
         isAccessToken?.let {
             appViewModel?.isUpdateStatusArchive(it, jsonObject, this)
         }

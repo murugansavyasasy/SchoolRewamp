@@ -148,22 +148,21 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerInitial"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/ten"
         android:padding="@dimen/five"
-        android:layout_above="@+id/seeMoreLabel"
         android:layout_marginBottom="@dimen/ten"
         android:layout_below="@+id/linearlayout1">
     </androidx.recyclerview.widget.RecyclerView>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerMore"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/ten"
-        android:padding="@dimen/five"
-        android:layout_marginBottom="@dimen/ten"
-        android:layout_below="@+id/recyclerInitial"/>
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/recyclerMore"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_marginTop="@dimen/ten"-->
+<!--        android:padding="@dimen/five"-->
+<!--        android:layout_marginBottom="@dimen/ten"-->
+<!--        android:layout_below="@+id/recyclerInitial"/>-->
 
     <TextView
         android:id="@+id/seeMoreLabel"
@@ -171,8 +170,8 @@
         android:layout_height="wrap_content"
         android:text="@string/see_more"
         android:textColor="@color/navi_blue2"
+        android:layout_below="@+id/recyclerInitial"
         android:textSize="15sp"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="50dp"
@@ -183,7 +182,7 @@
         android:id="@+id/txtNoData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No data found"
+        android:text="No list found"
         android:textColor="@color/black"
         android:textSize="18sp"
         style="@style/CustomTextStylePoppinsBold"
