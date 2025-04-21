@@ -156,9 +156,9 @@ class UnifiedVoiceAdapter(
                 }
 
 
-                lblviewtext.setOnClickListener {
+                lblSeeMore.setOnClickListener {
                     listener.onItemClick(data, this@DataViewHolder)
-                    lblviewtext.visibility = View.GONE
+                    lblSeeMore.visibility = View.GONE
 
                     if (data.is_archive) {
                         listener.onUpdateArchiveStatus(data.type, data.id)
@@ -206,9 +206,8 @@ class UnifiedVoiceAdapter(
                 rlaSendVoice.visibility = View.GONE
                 lblnewiconText.visibility = if (data.is_unread) View.VISIBLE else View.GONE
                 lblnewiconVoice.visibility = View.GONE
-
-                lblviewtext.visibility = if (data.is_unread) View.VISIBLE else View.GONE
-                lblviewtext.visibility = View.GONE
+                lblSeeMore.visibility = if (data.is_unread) View.VISIBLE else View.GONE
+                lblSeeMore.visibility = View.GONE
 
             }
 
