@@ -3,7 +3,9 @@ package com.vs.schoolmessenger.CommonScreens.SpecificStudentData
 import android.app.AlertDialog
 import android.os.Build
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -51,6 +53,8 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
         binding.toolbarLayout.rytFilter.visibility = View.VISIBLE
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
+        val rootView = findViewById<ViewGroup>(android.R.id.content)
+        val loader = rootView.findViewById<View>(R.id.loader_root)
 
         val isSelectedId = intent.getIntegerArrayListExtra("isSelectedId") ?: arrayListOf()
         isAcademicYearId = intent.getIntExtra("isAcademicYearId", -1)
@@ -93,11 +97,17 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
 
 
         appViewModel!!.isVoiceSend?.observe(this) { response ->
+            val rootView = findViewById<ViewGroup>(android.R.id.content)
+            val loader = rootView.findViewById<View>(R.id.loader_root)
+            loader?.let { rootView.removeView(it) }
             if (response != null && response.status) {
                 Constant.showAlert("Info!", response.message, this)
             }
         }
         appViewModel!!.isSendText?.observe(this) { response ->
+            val rootView = findViewById<ViewGroup>(android.R.id.content)
+            val loader = rootView.findViewById<View>(R.id.loader_root)
+            loader?.let { rootView.removeView(it) }
             if (response != null && response.status) {
                 Constant.showAlert("Info!", response.message, this)
             }
@@ -195,9 +205,13 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
         isTargetType = Constant.isStudent
         isCircularType = Constant.student
         val isTextData = Constant.isTextSendingData
+        val rootView = findViewById<ViewGroup>(android.R.id.content)
+        val loaderView = LayoutInflater.from(this).inflate(R.layout.lottie_loader, rootView, false)
+
 
         AlertDialog.Builder(this).setTitle("Send Confirmation!").setMessage(isMessage)
             .setPositiveButton("Yes") { dialog, _ ->
+                rootView.addView(loaderView)
                 if (Constant.isClickType == 3) {
                     val jsonObject = ApiCallRequest.isSendText(
                         isAcademicYearId = isAcademicYearId,

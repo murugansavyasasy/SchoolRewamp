@@ -4,7 +4,9 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.os.Build
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
@@ -104,13 +106,19 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         isGetAcademicYear()
 
         appViewModel!!.isVoiceSend?.observe(this) { response ->
-            val lottieLoader = findViewById<LottieAnimationView>(R.id.lottie_loader)
+            val rootView = findViewById<ViewGroup>(android.R.id.content)
+            val loader = rootView.findViewById<View>(R.id.loader_root)
+            loader?.let { rootView.removeView(it) }
+
             if (response != null && response.status) {
-                lottieLoader.visibility = View.GONE
                 Constant.showAlert("Info!", response.message, this)
             }
         }
+
         appViewModel!!.isSendText?.observe(this) { response ->
+            val rootView = findViewById<ViewGroup>(android.R.id.content)
+            val loader = rootView.findViewById<View>(R.id.loader_root)
+            loader?.let { rootView.removeView(it) }
             if (response != null && response.status) {
                 Constant.showAlert("Info!", response.message, this)
             }
@@ -331,12 +339,16 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
     fun showSendConfirmationDialog(isMessage: String) {
         val isTextData = Constant.isTextSendingData
 
-        val lottieLoader = findViewById<LottieAnimationView>(R.id.lottie_loader)
-        lottieLoader.visibility = View.VISIBLE
+        val rootView = findViewById<ViewGroup>(android.R.id.content)
+        val loaderView = LayoutInflater.from(this).inflate(R.layout.lottie_loader, rootView, false)
 
 
-        AlertDialog.Builder(this).setTitle("Send Confirmation!").setMessage(isMessage)
+
+        AlertDialog.Builder(this)
+            .setTitle("Send Confirmation!")
+            .setMessage(isMessage)
             .setPositiveButton("Yes") { dialog, _ ->
+                rootView.addView(loaderView)
                 if (Constant.isClickType == 3) {
                     val jsonObject = ApiCallRequest.isSendText(
                         isAcademicYearId = isAcademicYearId,
@@ -346,8 +358,6 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                         targetType = Constant.isSchool
                     )
                     appViewModel!!.isSendText(isAccessToken!!, jsonObject, this)
-                    lottieLoader.visibility = View.GONE
-
                 } else {
                     if (Constant.isVoiceType == 3) {
                         val isVoiceData = Constant.isVoiceSendingData
@@ -360,7 +370,6 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                 }
             }.setNegativeButton("Cancel") { dialog, _ ->
                 dialog.dismiss()
-                lottieLoader.visibility = View.GONE
             }.show()
     }
 }
