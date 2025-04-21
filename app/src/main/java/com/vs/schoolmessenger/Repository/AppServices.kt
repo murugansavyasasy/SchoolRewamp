@@ -3,9 +3,11 @@ package com.vs.schoolmessenger.Repository
 import android.app.Activity
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
+import android.view.LayoutInflater
+
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.airbnb.lottie.LottieAnimationView
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.CommonScreens.Ads.AdsResponse
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
@@ -431,41 +433,29 @@ class AppServices {
 
 
 
-    fun isSendText(isToken:String,jsonObject: JsonObject, activity: Activity) {
-        RestClient.apiInterfaces.isSendText(isToken,jsonObject)
+    fun isSendText(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        RestClient.apiInterfaces.isSendText(isToken, jsonObject)
             ?.enqueue(object : Callback<TextSendResponse?> {
                 override fun onResponse(
                     call: Call<TextSendResponse?>,
                     response: Response<TextSendResponse?>
                 ) {
-                    val lottieLoader = activity.findViewById<LottieAnimationView>(R.id.lottie_loader)
-                    lottieLoader.visibility = View.GONE
-                    Log.d(
-                        "isGetCountryList",
-                        response.code().toString() + " - " + response.toString()
-                    )
-                    if (response.code() == 200) {
-                        if (response.body() != null) {
-                            val status = response.body()!!.status
-                            if (status) {
-                                isSendText.postValue(response.body())
-                            } else {
-                                isSendText.postValue(response.body())
-                            }
-                        }
+                    if (response.code() == 200 && response.body() != null) {
+                        isSendText.postValue(response.body())
                     } else {
-
+                        isSendText.postValue(null)
                     }
+
+                    Log.d("isGetCountryList", "${response.code()} - ${response}")
                 }
 
                 override fun onFailure(call: Call<TextSendResponse?>, t: Throwable) {
-                    val lottieLoader = activity.findViewById<LottieAnimationView>(R.id.lottie_loader)
-                    lottieLoader.visibility = View.GONE
                     isSendText.postValue(null)
                     t.printStackTrace()
                 }
             })
     }
+
 
     val isSendTextLiveData: LiveData<TextSendResponse?>
         get() = isSendText
@@ -546,18 +536,19 @@ class AppServices {
                         "isGetCountryList",
                         response.code().toString() + " - " + response.toString()
                     )
-                    if (response.code() == 200) {
-                        if (response.body() != null) {
-                            val status = response.body()!!.status
-                            if (status) {
-                                isSendVoice.postValue(response.body())
-                            } else {
-                                isSendVoice.postValue(response.body())
-                            }
-                        }
-                    } else {
-
-                    }
+                    isSendVoice.postValue(response.body())
+//                    if (response.code() == 200) {
+//                        if (response.body() != null) {
+//                            val status = response.body()!!.status
+//                            if (status) {
+//
+//                            } else {
+//                                isSendVoice.postValue(response.body())
+//                            }
+//                        }
+//                    } else {
+//
+//                    }
                 }
 
                 override fun onFailure(call: Call<TextSendResponse?>, t: Throwable) {

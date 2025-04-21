@@ -8,6 +8,7 @@ import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
@@ -92,6 +93,9 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         tabLayout.addTab(tabLayout.newTab().setText("Section/Student"))
         tabLayout.addTab(tabLayout.newTab().setText("Groups"))
         tabLayout.addTab(tabLayout.newTab().setText("Staff"))
+
+        val rootView = findViewById<ViewGroup>(android.R.id.content)
+        val loader = rootView.findViewById<View>(R.id.loader_root)
 
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
@@ -366,11 +370,18 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         }
 
         appViewModel!!.isVoiceSend?.observe(this) { response ->
-            if (response != null && response.status) {
+            if (response != null) {
+                val rootView = findViewById<ViewGroup>(android.R.id.content)
+                val loader = rootView.findViewById<View>(R.id.loader_root)
+                loader?.let { rootView.removeView(it) }
+                Log.d("Response",response.status.toString())
                 Constant.showAlert("Info!", response.message, this)
             }
         }
         appViewModel!!.isSendText?.observe(this) { response ->
+            val rootView = findViewById<ViewGroup>(android.R.id.content)
+            val loader = rootView.findViewById<View>(R.id.loader_root)
+            loader?.let { rootView.removeView(it) }
             if (response != null && response.status) {
                 Constant.showAlert("Info!", response.message, this)
             }
@@ -733,6 +744,10 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT)) // Transparent background
         alertDialog.show()
 
+        val rootView = findViewById<ViewGroup>(android.R.id.content)
+        val loaderView = LayoutInflater.from(this).inflate(R.layout.lottie_loader, rootView, false)
+
+
         val okButton = dialogView.findViewById<TextView>(R.id.btnOk)
         val btnCancel = dialogView.findViewById<TextView>(R.id.btnCancel)
         val alertMessage = dialogView.findViewById<TextView>(R.id.alertMessage)
@@ -744,6 +759,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
         okButton.setOnClickListener {
             alertDialog.dismiss()
+            rootView.addView(loaderView)
             val isTextData = Constant.isTextSendingData
             if (Constant.isClickType == 3) {
                 val jsonObject = ApiCallRequest.isSendText(
