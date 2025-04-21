@@ -95,11 +95,12 @@ class Communication : BaseActivity<CommunicationBinding>(), View.OnClickListener
 
             R.id.imgFilter -> {
                 val popupMenu = PopupMenu(this, v)
+                popupMenu.menu.add("ALL")
                 popupMenu.menu.add("TEXT")
                 popupMenu.menu.add("VOICE")
                 popupMenu.menu.add("READ")
                 popupMenu.menu.add("UNREAD")
-                popupMenu.menu.add("ALL")
+
 
                 popupMenu.setOnMenuItemClickListener { item ->
                     currentFilter = item.title.toString()
