@@ -16,7 +16,7 @@ import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class SchoolListAdapter(
     private var isMultipleSchool: Boolean,
-    private val selectedIds: MutableList<Int>,
+    private val selectedIds: MutableList<String>,
     private var itemList: List<StaffDetails>?,
     private var listener: SchoolListClickListener,
     private var context: Context,
@@ -70,7 +70,7 @@ class SchoolListAdapter(
             position: Int,
             listener: SchoolListClickListener,
             isMultipleSchool: Boolean,
-            selectedIds: MutableList<Int>
+            selectedIds: MutableList<String>
         ) {
 
             if (isMultipleSchool) {
@@ -103,9 +103,9 @@ class SchoolListAdapter(
             chMultipleSchool.setOnClickListener {
                 val schoolId = data.school_id.toInt()
                 if (chMultipleSchool.isChecked) {
-                    selectedIds.add(schoolId)
+                    selectedIds.add(schoolId.toString())
                 } else {
-                    selectedIds.remove(schoolId)
+                    selectedIds.remove(schoolId.toString())
                 }
             }
 

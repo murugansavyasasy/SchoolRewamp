@@ -14,6 +14,8 @@ import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
@@ -45,7 +47,11 @@ import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.Utils.TimeSelectedListener
 import com.vs.schoolmessenger.databinding.CommunicationSchoolBinding
 import java.io.File
+import java.io.FileOutputStream
 import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import kotlin.math.max
 
 class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnClickListener,
@@ -106,7 +112,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         super.setupViews()
         setupToolbar()
 
-        // Underline text for labels
         binding.lblHistoryList.paintFlags =
             binding.lblHistoryList.paintFlags or Paint.UNDERLINE_TEXT_FLAG
         binding.lblBackToVoiceMessage.paintFlags =
@@ -153,8 +158,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             isMultipleSchool = false
         }
 
-
-
         binding.lblStartTime.text = Constant.getCurrentTime()
         binding.lblEndTime.text = Constant.getTimeAfter20Minutes()
 
@@ -173,31 +176,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 loadTextHistoryData(isTextHistoryData)
             }
         }
-
-        appViewModel!!.isSendText?.observe(this) { response ->
-            if (response != null && response.status) {
-                Constant.showAlert("Info!", response.message, this)
-            }
-        }
-
-        appViewModel!!.isVoiceSend?.observe(this) { response ->
-            if (response != null && response.status) {
-                Constant.showAlert("Info!", response.message, this)
-            }
-        }
-
-        appViewModel!!.isGetAcademicList?.observe(this) { response ->
-            if (response != null && response.status) {
-                response.data.let { academicList ->
-                    val reorderedList = academicList.sortedByDescending { it.current_academic_year }
-                    isAcademicYear = reorderedList
-                    binding.lblAcademicYear.text = isAcademicYear!![0].year
-                    isAcademicYearId = isAcademicYear!![0].id
-                }
-            }
-        }
-
-
 
         changeLabel()
         binding.SwitchEmergencyVoice.setOnClickListener {
@@ -243,18 +221,23 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         val isCurrentTime = Constant.getCurrentTime()
         binding.lblTime.text = isCurrentTime
 
+        binding.edtContentTextMessage.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val length = s?.length ?: 0
+                binding.lblCountOfDescription.text = "$length/500"
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+            }
+        })
     }
 
     private fun loadTextHistoryData(isTextHistoryDetails: List<TextDetail>) {
-
-
-        Constant.executeAfterDelay {
-            // Once data is loaded, stop shimmer and pass the actual data
             mTextAdapter =
                 TextHistoryAdapter(isTextHistoryDetails, this, this, Constant.isShimmerViewDisable)
-            // Set GridLayoutManager (2 columns in this case)
             binding.rcyHistoryDataVoiceAndText.adapter = mTextAdapter
-        }
     }
 
     override fun onRequestPermissionsResult(
@@ -327,12 +310,18 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
         }
     }
-
     private fun startRecording() {
         if (checkAndRequestPermissions(this)) {
 
             val dir = externalCacheDir ?: cacheDir
-            audioFilePath = "${dir.absolutePath}/audiorecord.m4a"
+            val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+            val fileName = "SSS_Communication_$timeStamp.mp3"
+            val filePath = "${dir.absolutePath}/$fileName"
+
+            audioFilePath = filePath
+            isFileName = fileName // <-- Store if needed elsewhere
+            Constant.isVoiceType = 1
+            Constant.isVoiceFile = audioFilePath
 
             mediaRecorder = MediaRecorder().apply {
                 setAudioSource(MediaRecorder.AudioSource.MIC)
@@ -349,39 +338,23 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     isRecording = true
                     recordingTime = 0
                     recordingHandler.post(recordingRunnable)
-//                    Toast.makeText(
-//                        this@CommunicationSchool,
-//                        "Recording started",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
+
+                    binding.lblDurationOfVoice.visibility = View.VISIBLE
+                    binding.lblDurationOfVoice.text = "Recording: $fileName"
+
                 } catch (e: IOException) {
                     e.printStackTrace()
-//                    Toast.makeText(this@CommunicationSchool, "Recording failed", Toast.LENGTH_SHORT)
-//                        .show()
                 }
             }
 
         } else {
-            // checkAndRequestPermissions(this)
-//            Toast.makeText(this@CommunicationSchool, "Allow the permission", Toast.LENGTH_SHORT)
-//                .show()
             openAppSettings()
         }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun stopRecording() {
-        val parts = binding.lblDurationOfVoice.text.toString().split(" / ")
-        if (parts.isNotEmpty()) {
-            val currentDuration = parts[0]
-            binding.lblEndDuration.text = "/ " +currentDuration
-        }
-
         mediaRecorder?.apply {
-            binding.imgVoiceRecord.setImageDrawable(
-                ContextCompat.getDrawable(this@CommunicationSchool, R.drawable.record_icon)
-            )
-            binding.rlaAddLocalFile.visibility = View.GONE
             try {
                 stop()
                 release()
@@ -389,11 +362,12 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 isRecording = false
                 recordingHandler.removeCallbacks(recordingRunnable)
 
-                val file = File(audioFilePath)
-                val currentDate: String? = Constant.getCurrentDate()
-                val isFileExtension = getFileExtensionFromAwsUrl(audioFilePath.toString())
-                isFileName = "sss_" + currentDate + "." + isFileExtension
+                binding.imgVoiceRecord.setImageDrawable(
+                    ContextCompat.getDrawable(this@CommunicationSchool, R.drawable.record_icon)
+                )
+                binding.rlaAddLocalFile.visibility = View.GONE
 
+                val file = File(audioFilePath)
                 Log.d(
                     "RecordingFilePath",
                     "Stopped. Path: $audioFilePath, Exists: ${file.exists()}, Size: ${file.length()} bytes"
@@ -401,28 +375,33 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
                 if (file.exists() && file.length() > 0L) {
                     Constant.isVoiceFile = audioFilePath
+                    Constant.isVoiceType = 1
+
+                    // Get duration using MediaPlayer
+                    val mediaPlayer = MediaPlayer()
+                    mediaPlayer.setDataSource(audioFilePath)
+                    mediaPlayer.prepare()
+                    val durationInMs = mediaPlayer.duration
+                    mediaPlayer.release()
+
+                    val formattedDuration = formatDuration(durationInMs)
+                    binding.lblEndDuration.text = "/ $formattedDuration"
+
                     binding.rlaSeekBarAndTitle.visibility = View.VISIBLE
                     binding.rlaTitle.visibility = View.VISIBLE
-//                    Toast.makeText(
-//                        this@CommunicationSchool,
-//                        "Recording stopped",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
+
                 } else {
-//                    Toast.makeText(
-//                        this@CommunicationSchool,
-//                        "Recording failed: File not valid",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
+                    Toast.makeText(this@CommunicationSchool, "Recording failed", Toast.LENGTH_SHORT)
+                        .show()
                 }
 
             } catch (e: Exception) {
                 e.printStackTrace()
-//                Toast.makeText(
-//                    this@CommunicationSchool,
-//                    "Failed to stop recording",
-//                    Toast.LENGTH_SHORT
-//                ).show()
+                Toast.makeText(
+                    this@CommunicationSchool,
+                    "Failed to stop recording",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
@@ -473,9 +452,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     binding.imgVoicePlay.setImageDrawable(
                         ContextCompat.getDrawable(this@CommunicationSchool, R.drawable.pause_icon)
                     )
-
-                    // Initialize with 00:00 / totalDuration
-//                    binding.lblStartDuration.text = "00:00 / $totalFormatted"
                     binding.lblEndDuration.text ="/ " +totalFormatted
                 }
 
@@ -491,7 +467,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                         ContextCompat.getDrawable(this@CommunicationSchool, R.drawable.video_play)
                     )
                     binding.lblStartDuration.text = "00:00"
-//                    binding.lblEndDuration.text = "/ 00:00"
                     binding.waveformSeekBar.updateWithLevel(0f)
                     Log.d("AudioDebug", "Playback completed.")
                 }
@@ -517,8 +492,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                         val currentPosition = player.currentPosition
                         val currentFormatted = formatDuration(currentPosition)
                         Log.d("currentFormatted",currentFormatted.toString())
-                        val totalFormatted = formatDuration(totalDurationMillis)
-//                        binding.lblStartDuration.text = "$currentFormatted / $totalFormatted"
                         binding.lblStartDuration.text =  currentFormatted
                         handler.postDelayed(this, 1000)
                     }
@@ -583,12 +556,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         startActivity(intent)
     }
 
-
-
-
-
-
-
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onResume() {
         super.onResume()
@@ -639,55 +606,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         stopAudioProgressUpdate()
     }
 
-    private fun isFileUploadInAws(
-        isFilePath: String, schoolId: String, isFileType: String?
-    ) {
-        val isCountryId = SharedPreference.getCountryId(this)
-        isAwsUploadingPreSigned!!.getPreSignedUrl(
-            Constant.isPickingFileExtension,
-            isFilePath,
-            schoolId,
-            isFileType!!,
-            this,
-            isCountryId!!,
-            true,
-            false,
-            object : UploadCallback {
-                @RequiresApi(Build.VERSION_CODES.O)
-                override fun onUploadSuccess(
-                    response: String?, isFileUploaded: String?
-                ) {
-                    voiceSendApi(isFileUploaded)
-                    Log.d("isSuccessFullUpload", "isSuccessFullUpload")
-                }
-
-                override fun onUploadError(error: String?) {
-                    TODO("Not yet implemented")
-                }
-            })
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun voiceSendApi(isFileUploadedUrl: String?) {
-        val isSchoolId = mutableListOf(isStaffDetails!!.school_id.toInt())
-        val jsonObject = ApiCallRequest.isVoiceSend(
-            isAcademicYearId = isAcademicYearId,
-            isFileUploaded = isFileUploadedUrl,
-            isClickType = Constant.isClickType,
-            selectedDates = selectedDates,
-            isStartTimeText = binding.lblStartTime.text.toString(),
-            isEndTimeText = binding.lblEndTime.text.toString(),
-            title = binding.edtTitle.text.toString(),
-            isEmergency = isEmergency,
-            isScheduleCall = isScheduleCall,
-            schoolId = isSchoolId,
-            targetType = Constant.isSchool,
-            circularType = Constant.school,
-            fileName = isFileName.toString()
-        )
-        appViewModel!!.isVoiceSend(isAccessToken!!, jsonObject, this)
-
-    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onClick(p0: View?) {
@@ -709,7 +627,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
                 binding.rlaBackRecord.visibility = View.GONE
                 binding.gridViewScheduleCall.visibility = View.GONE
-//                binding.lnrHistoryList.visibility = View.VISIBLE
                 if (Constant.isClickType == 2) {
                     binding.rlaScheduleCallPickDate.visibility = View.VISIBLE
                     binding.gridViewScheduleCall.visibility = View.VISIBLE
@@ -743,7 +660,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
                 binding.rlaBackRecord.visibility = View.GONE
                 binding.lnrHistoryList.visibility = View.VISIBLE
-//                binding.gridViewScheduleCall.visibility = View.VISIBLE
                 if (Constant.isClickType == 2) {
                     binding.rlaScheduleCallPickDate.visibility = View.VISIBLE
                     binding.gridViewScheduleCall.visibility = View.VISIBLE
@@ -774,7 +690,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 }
                 binding.lblBackToVoiceMessage.text = "<<Back to compose"
                 binding.rlaBackRecord.visibility = View.GONE
-//                binding.gridViewScheduleCall.visibility = View.GONE
                 binding.lnrHistoryList.visibility = View.VISIBLE
                 binding.rlaMessageFromText.visibility = View.VISIBLE
                 binding.rlaSendText.visibility = View.VISIBLE
@@ -854,7 +769,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
             R.id.imgVoicePlay -> {
                 if (isPlayingVoice && mediaPlayer != null && mediaPlayer!!.isPlaying) {
-                    // 🔁 Pause logic
                     mediaPlayer?.pause()
                     stopAudioProgressUpdate()
                     lastPosition = mediaPlayer!!.currentPosition
@@ -863,7 +777,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                         ContextCompat.getDrawable(this, R.drawable.video_play)
                     )
                 } else {
-                    // 🔁 Play logic
                     Log.d("AudioDebug", "Play button clicked, isPrepared=$isPrepared")
                     Log.d("AudioDebug", "audioFilePath = $audioFilePath")
 
@@ -918,27 +831,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             R.id.imgBack -> {
                 onBackPressed()
             }
-
-//            R.id.lnrScheduleCall -> {
-//
-//                val dateAdapter = DateAdapter(this) { updatedList -> }
-//                selectedDatesAdapter = SelectedDatesAdapter(
-//                    this, selectedDates.toMutableList(), dateAdapter
-//                ) { removedDate ->
-//                    dateAdapter.removeSelectedDate(removedDate)
-//                }
-//                binding.gridViewScheduleCall.adapter = selectedDatesAdapter
-//                val datePickerPopup = CustomDatePicker(
-//                    context = this,
-//                    preSelectedDates = selectedDates.toList(),
-//                    dateAdapter = dateAdapter
-//                ) { newSelectedDates ->
-//                    selectedDates.clear()
-//                    selectedDates.addAll(newSelectedDates)
-//                    selectedDatesAdapter.submitSelectedDates(selectedDates.toList())
-//                }
-//                datePickerPopup.show(window.decorView.rootView)
-//            }
 
             R.id.lnrScheduleCall -> {
                 val dateAdapter = DateAdapter(this) { updatedList ->
@@ -1205,12 +1097,9 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
 
     private fun loadVoiceData(isVoiceHistoryData: List<VoiceHistoryDetails>) {
-
-//        Constant.executeAfterDelay {
-            mAdapter =
+         mAdapter =
                 VoiceHistoryAdapter(isVoiceHistoryData, this, this, Constant.isShimmerViewDisable)
             binding.rcyHistoryDataVoiceAndText.adapter = mAdapter
-//        }
     }
 
     override fun onItemClick(data: TextDetail, holder: TextHistoryAdapter.DataViewHolder) {
@@ -1236,7 +1125,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         data: VoiceHistoryDetails, holder: VoiceHistoryAdapter.DataViewHolder
     ) {
         // UI setup
-//        binding.gridViewScheduleCall.visibility = View.GONE
         if (Constant.isClickType == 2) {
             binding.rlaScheduleCallPickDate.visibility = View.VISIBLE
             binding.gridViewScheduleCall.visibility = View.VISIBLE
@@ -1261,10 +1149,9 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         mediaRecorder = null
         isRecording = false
         recordingHandler.removeCallbacks(recordingRunnable) // Stop updating time
-//        Toast.makeText(this@CommunicationSchool, "Recording stopped", Toast.LENGTH_SHORT).show()
         Log.d(
             "RecordingFilePath", "Recording stopped. File Path: $audioFilePath"
-        ) // Print the file path when recording stops
+        )
         Constant.isVoiceFile = audioFilePath
         binding.rlaSeekBarAndTitle.visibility = View.VISIBLE
         binding.rlaTitle.visibility = View.VISIBLE
@@ -1282,45 +1169,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         val currentDate: String? = Constant.getCurrentDate()
         val isFileExtension = getFileExtensionFromAwsUrl(data.url)
         isFileName = "sss_" + currentDate + "." + isFileExtension
-
-        // Initialize and play
-        //  initializeMediaPlayer()
     }
-
-
-//    @RequiresApi(Build.VERSION_CODES.O)
-//    fun showSendConfirmationDialog(isMessage: String) {
-//
-//        val isSchoolId = mutableListOf(isStaffDetails!!.school_id.toInt())
-//        Log.d("DialogDebug", "Dialog function called")
-//
-//        runOnUiThread {
-//            AlertDialog.Builder(this).setTitle("Send Confirmation!").setMessage(isMessage)
-//                .setPositiveButton("Yes") { dialog, _ ->
-//                    if (Constant.isClickType == 3) {
-//                        val jsonObject = ApiCallRequest.isSendText(
-//                            isAcademicYearId = isAcademicYearId,
-//                            schoolId = isSchoolId,
-//                            message = binding.edtTitleTextMessage.text.toString(),
-//                            description = binding.edtContentTextMessage.text.toString(),
-//                            targetType = Constant.isSchool
-//                        )
-//                        appViewModel!!.isSendText(isAccessToken!!, jsonObject, this)
-//                    } else {
-//                        if (Constant.isVoiceType == 3) {
-//                            voiceSendApi(audioFilePath)
-//                        } else {
-//                            isFileUploadInAws(
-//                                Constant.isVoiceFile!!, isStaffDetails!!.school_id, "audio"
-//                            )
-//                        }
-//
-//                    }
-//                }.setNegativeButton("Cancel") { dialog, _ ->
-//                    dialog.dismiss()
-//                }.show()
-//        }
-//    }
 
 
     private fun openAudioFilePicker() {
@@ -1347,50 +1196,37 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
                 val mediaPlayer = MediaPlayer()
                 try {
+                    // Set data source to get duration
                     mediaPlayer.setDataSource(this, uri)
                     mediaPlayer.prepare()
                     val durationInMillis = mediaPlayer.duration
-                    val durationInSeconds = durationInMillis / 1000
                     val formattedDuration = formatDuration(durationInMillis)
                     mediaPlayer.release()
+                    val timeStamp =
+                        SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+                 var   isFileExtension = "mp3"
+                    val fileName = "SSS_Communication_${timeStamp}.$isFileExtension"
+                    isFileName = fileName
 
-                    // Check duration limit
-                    val maxAllowedSeconds = if (isEmergency == 1) 30 else 180
-                    if (durationInSeconds > maxAllowedSeconds) {
-                        val limitFormatted = String.format(
-                            "%02d:%02d", maxAllowedSeconds / 60, maxAllowedSeconds % 60
-                        )
-                        Toast.makeText(
-                            this,
-                            "Selected audio exceeds max allowed duration of $limitFormatted",
-                            Toast.LENGTH_LONG
-                        ).show()
-                        return
-                    }
+                    // Copy file to app cache
+                    val inputStream = contentResolver.openInputStream(uri)
+                    val outputFile = File(cacheDir, fileName)
+                    val outputStream = FileOutputStream(outputFile)
+                    inputStream?.copyTo(outputStream)
+                    inputStream?.close()
+                    outputStream.close()
 
-                    // Valid file - Proceed
-                    val isFileExtension =
-                        isFileExtensionFromContentUri!!.getFileExtensionFromContentUri(this, uri)
-                    Log.d("isFileExtension++", isFileExtension.toString())
-                    Constant.isPickingFileExtension = isFileExtension.toString()
-                    val currentDate: String? = Constant.getCurrentDate()
-                    isFileName = "sss_" + currentDate + "." + isFileExtension
-
-                    audioFilePath = uri.toString()
+                    // Store local path for upload/use
+                    audioFilePath = outputFile.absolutePath
                     Constant.isVoiceType = 2
                     Constant.isVoiceFile = audioFilePath
 
-                    // Show audio info
+                    // Update UI
                     binding.rlaSeekBarAndTitle.visibility = View.VISIBLE
                     binding.rlaTitle.visibility = View.VISIBLE
                     binding.imgVoiceRecord.visibility = View.GONE
                     binding.lblDurationOfVoice.visibility = View.GONE
-
-                    // Set duration label before playing
-//                    binding.lblStartDuration.text = "00:00 / $formattedDuration"
-                    binding.lblEndDuration.text = "/ " +formattedDuration
-
-                    // initializeMediaPlayer() // Uncomment if you want to auto-play
+                    binding.lblEndDuration.text = "/ $formattedDuration"
 
                 } catch (e: Exception) {
                     mediaPlayer.release()
@@ -1399,13 +1235,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 }
             }
         }
-    }
-
-
-    private fun isGetAcademicYear() {
-        appViewModel!!.isGetAcademicYear(
-            isAccessToken!!, this
-        )
     }
 
     fun getFileExtensionFromAwsUrl(url: String): String? {

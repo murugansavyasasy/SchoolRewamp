@@ -50,7 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/ten"
-                android:layout_toStartOf="@+id/imgSearchClick"
+                android:layout_toStartOf="@+id/lblChangeRoll"
                 android:layout_toEndOf="@+id/imgSchoolLogo">
 
 

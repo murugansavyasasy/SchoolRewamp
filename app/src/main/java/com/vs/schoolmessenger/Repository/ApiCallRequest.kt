@@ -19,13 +19,13 @@ object ApiCallRequest {
         title: String,
         isEmergency: Int,
         isScheduleCall: Boolean,
-        schoolId: MutableList<Int>,
+        schoolId: MutableList<String>,
         targetType: Int,
         circularType: String,
         fileName: String
     ): JsonObject {
         val jsonObject = JsonObject()
-        jsonObject.addProperty("isAcademicYearId", isAcademicYearId)
+        jsonObject.addProperty("academic_year_id", isAcademicYearId)
         jsonObject.addProperty("voice_link", isFileUploaded)
         jsonObject.addProperty("target_type", targetType)
         jsonObject.addProperty("circular_type", circularType)
@@ -67,7 +67,7 @@ object ApiCallRequest {
 
     fun isSendText(
         isAcademicYearId: Int,
-        schoolId: MutableList<Int>,
+        schoolId: MutableList<String>,
         message: String,
         description: String,
         targetType: Int
@@ -75,7 +75,7 @@ object ApiCallRequest {
         val jsonObject = JsonObject()
         val jsonArray = JsonArray()
         schoolId.forEach { jsonArray.add(it) }
-        jsonObject.addProperty("isAcademicYearId", isAcademicYearId)
+        jsonObject.addProperty("academic_year_id", isAcademicYearId)
         jsonObject.add("target_code", jsonArray)
         jsonObject.addProperty("target_type", targetType)
         jsonObject.addProperty("message", message)

@@ -127,7 +127,9 @@
         android:background="@drawable/rect_light_gray"
         app:tabBackground="@drawable/tab_selector"
         app:tabIndicatorHeight="0dp"
-        app:tabMode="fixed"
+        app:tabMode="scrollable"
+        app:tabGravity="center"
+        app:tabIndicatorFullWidth="false"
         app:tabRippleColor="@color/mild_grey1"
         app:tabTextAppearance="@style/TabTextStyle" />
 
