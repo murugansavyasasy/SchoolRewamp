@@ -240,17 +240,13 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 }
             }
         }
-
-        binding.lblTime.text= Constant.getCurrentTime()
+        val isCurrentTime = Constant.getCurrentTime()
+        binding.lblTime.text = isCurrentTime
 
     }
 
     private fun loadTextHistoryData(isTextHistoryDetails: List<TextDetail>) {
-        binding.rcyHistoryDataVoiceAndText.visibility = View.VISIBLE
-        mTextAdapter = TextHistoryAdapter(null, this, this, Constant.isShimmerViewShow)
-        binding.rcyHistoryDataVoiceAndText.layoutManager = LinearLayoutManager(this)
-        binding.rcyHistoryDataVoiceAndText.isNestedScrollingEnabled = false;
-        binding.rcyHistoryDataVoiceAndText.adapter = mTextAdapter
+
 
         Constant.executeAfterDelay {
             // Once data is loaded, stop shimmer and pass the actual data
@@ -820,10 +816,10 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     if (binding.edtContentTextMessage.text.toString() != "") {
                         isGoToRecipient()
                     } else {
-                        Constant.showAlert("Alert", "Enter the Content", this)
+                        Constant.showAlert("Alert", "Voice and title is required", this)
                     }
                 } else {
-                    Constant.showAlert("Alert", "Enter the title", this)
+                    Constant.showAlert("Alert", "Voice and title is required", this)
                 }
             }
 
@@ -1185,15 +1181,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     }
 
     private fun isGetVoiceHistory() {
-        appViewModel!!.isGetVoiceHistory(isAccessToken!!, "0", this)
-    }
 
-    private fun isGetTextHistory() {
-        appViewModel!!.isGetTextHistory(isAccessToken!!, this)
-    }
-
-
-    private fun loadVoiceData(isVoiceHistoryData: List<VoiceHistoryDetails>) {
         Log.d("isVoiceHistory", "isVoiceHistory")
         binding.rcyHistoryDataVoiceAndText.visibility = View.VISIBLE
         mAdapter = VoiceHistoryAdapter(null, this, this, Constant.isShimmerViewShow)
@@ -1201,11 +1189,28 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         binding.rcyHistoryDataVoiceAndText.isNestedScrollingEnabled = false
         binding.rcyHistoryDataVoiceAndText.adapter = mAdapter
 
-        Constant.executeAfterDelay {
+        appViewModel!!.isGetVoiceHistory(isAccessToken!!, "0", this)
+    }
+
+    private fun isGetTextHistory() {
+
+        binding.rcyHistoryDataVoiceAndText.visibility = View.VISIBLE
+        mTextAdapter = TextHistoryAdapter(null, this, this, Constant.isShimmerViewShow)
+        binding.rcyHistoryDataVoiceAndText.layoutManager = LinearLayoutManager(this)
+        binding.rcyHistoryDataVoiceAndText.isNestedScrollingEnabled = false;
+        binding.rcyHistoryDataVoiceAndText.adapter = mTextAdapter
+
+        appViewModel!!.isGetTextHistory(isAccessToken!!, this)
+    }
+
+
+    private fun loadVoiceData(isVoiceHistoryData: List<VoiceHistoryDetails>) {
+
+//        Constant.executeAfterDelay {
             mAdapter =
                 VoiceHistoryAdapter(isVoiceHistoryData, this, this, Constant.isShimmerViewDisable)
             binding.rcyHistoryDataVoiceAndText.adapter = mAdapter
-        }
+//        }
     }
 
     override fun onItemClick(data: TextDetail, holder: TextHistoryAdapter.DataViewHolder) {

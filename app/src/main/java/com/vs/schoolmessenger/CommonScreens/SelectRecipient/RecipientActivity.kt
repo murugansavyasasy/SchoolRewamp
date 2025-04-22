@@ -40,7 +40,6 @@ import com.vs.schoolmessenger.Utils.Constant.SH_ASSIGNMENT
 import com.vs.schoolmessenger.Utils.Constant.SH_HOMEWORK
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SelectRecipientBinding
-import kotlin.toString
 
 class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickListener,
     SectionListClickListener, StandardListClickListener, GroupListClickListener {
@@ -153,6 +152,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         binding.grouplabel.visibility = View.VISIBLE
                         binding.rlaSubject.visibility = View.GONE
                         binding.textdesc.visibility = View.GONE
+                        binding.bottomLayout.visibility = View.GONE
                         binding.btnSpecificStudent.visibility = View.GONE
 //                        Log.d("isDropDown", isDropDown.toString())
 //                        if (!isDropDown) {
@@ -183,6 +183,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         binding.rlaStandard.visibility = View.GONE
 
                         binding.textdesc.visibility = View.GONE
+                        binding.bottomLayout.visibility = View.GONE
                         binding.grouplabel.visibility = View.GONE
                         binding.chAllSelect.visibility = View.GONE
                         binding.rlaSubject.visibility = View.GONE
@@ -209,6 +210,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         binding.recyclerView.visibility = View.GONE
                         binding.rlaSubject.visibility = View.GONE
                         binding.textdesc.visibility = View.GONE
+                        binding.bottomLayout.visibility = View.GONE
                         if (isAcademicYearId != -1) {
                             isGetGroupList()
                         }
@@ -233,6 +235,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         binding.rlaSubject.visibility = View.GONE
                         binding.chAllSelect.visibility = View.GONE
                         binding.textdesc.visibility = View.GONE
+                        binding.bottomLayout.visibility = View.GONE
                         binding.btnSpecificStudent.visibility = View.GONE
                         Log.d("isDropDown", isDropDown.toString())
 //                        if (!isDropDown) {
@@ -319,16 +322,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         binding.bottomLayout.visibility = View.VISIBLE
                         binding.grouplabel.text = "Standard's"
                     }
-
-//                    if (!isDropDown) {
-//                        binding.recyclerView.visibility = View.VISIBLE
-//                    } else {
-//                        Log.d("0000000000000","--------------")
-//                        binding.recyclerView.visibility = View.GONE
-//                    }
-//                    if (!isDropDown) {
-//                        isLoadTheStandardData(isGetStandard)
-//                    }
 
                 } else {
                     binding.recyclerView.visibility = View.GONE
@@ -503,6 +496,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     isGetAcademicYear()
                 } else {
                     binding.textdesc.visibility = View.VISIBLE
+                    binding.bottomLayout.visibility = View.VISIBLE
                 }
             }
         }
@@ -572,7 +566,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             binding.recyclerView.adapter = isStandardListAdapter
 
         }
-
     }
 
 
@@ -760,6 +753,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         okButton.setOnClickListener {
             alertDialog.dismiss()
             rootView.addView(loaderView)
+
             val isTextData = Constant.isTextSendingData
             if (Constant.isClickType == 3) {
                 val jsonObject = ApiCallRequest.isSendText(
@@ -817,7 +811,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         )
                     }
                 }
-
 
             }.setNegativeButton("Cancel") { dialog, _ ->
                 dialog.dismiss()
@@ -931,15 +924,15 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         } else if (isSelectedType == 1) {
             isTargetType = Constant.isGroup
             isCircularType = Constant.group
-            selectedIds = isGroupSelectedIds.map { it.id }.toMutableList()
+            // selectedIds = isGroupSelectedIds.map { it.id }.toMutableList()
         } else if (isSelectedType == 2) {
             isTargetType = Constant.isStandard
             isCircularType = Constant.standard
-            selectedIds = isStandardSelectedIds.map { it.id }.toMutableList()
+            //  selectedIds = isStandardSelectedIds.map { it.id }.toMutableList()
         } else if (isSelectedType == 3) {
             isTargetType = Constant.isStaff
             isCircularType = Constant.staff
-            selectedIds = isGroupSelectedIds.map { it.id }.toMutableList()
+            //  selectedIds = isGroupSelectedIds.map { it.id }.toMutableList()
         } else if (isSelectedType == 4) {
             isTargetType = Constant.isSection
             isCircularType = Constant.section
