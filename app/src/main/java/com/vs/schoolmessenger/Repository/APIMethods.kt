@@ -30,4 +30,16 @@ object APIMethods {
     const val isUpdateStatusArchive = "comm/communication/read-status-update-archive"
     const val isGetAcademicYear = "comm/recipient/get-academic-year-list"
 
+
+    const val punch_giometric_attendance =  "staff-attd/geometric/entry-using-app"
+    const val add_giometric_location =  "staff-attd/geometric/set-geometric-location"
+    const val giometric_location_history =  "staff-attd/geometric/get-geometric-location-history"
+    const val staff_locations =  "staff-attd/geometric/get-staff-geometric-location"
+    const val remove_location =  "staff-attd/geometric/remove-geometric-location"
+    const val update_location =  "staff-attd/geometric/update-geometric-location"
+    const val giometric_staff_attendance_report =  "staff-attd/geometric/geometric-staff-attendance-report"
+    const val giometric_principal_attendance_report =  "staff-attd/geometric/geometric-principal-attendance-report"
+    const val punch_history =  "staff-attd/geometric/geometric-punch-history"
+
+
 }

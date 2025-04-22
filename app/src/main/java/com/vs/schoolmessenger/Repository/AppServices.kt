@@ -20,6 +20,10 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Communication.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.VoiceDetails
+import com.vs.schoolmessenger.School.MarkYourAttendance.LocationHistoryResponse
+import com.vs.schoolmessenger.School.MarkYourAttendance.PunchHistoryResponse
+import com.vs.schoolmessenger.School.MarkYourAttendance.StaffAttendanceReportResponse
+import com.vs.schoolmessenger.School.MarkYourAttendance.StaffLocationResponse
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import retrofit2.Call
@@ -47,6 +51,19 @@ class AppServices {
     var isUpdateStatusCommunication: MutableLiveData<StatusArchiveResponse?>
 
 
+
+    var isPunchAttendance: MutableLiveData<StatusMessageModel?>
+    var isAddLocation: MutableLiveData<StatusMessageModel?>
+    var isRemoveLocation: MutableLiveData<StatusMessageModel?>
+    var isUpdateLocation: MutableLiveData<StatusMessageModel?>
+    var isLocationHistory: MutableLiveData<LocationHistoryResponse?>
+    var isStaffLocations: MutableLiveData<StaffLocationResponse?>
+    var isPunchHistory: MutableLiveData<PunchHistoryResponse?>
+    var isStaffAttendanceReport: MutableLiveData<StaffAttendanceReportResponse?>
+    var isStaffWiseAttendanceReport: MutableLiveData<StaffAttendanceReportResponse?>
+
+
+
     init {
         client_auth = RestClient()
         isDashBoard = MutableLiveData()
@@ -65,6 +82,17 @@ class AppServices {
         isUpdateStatusArchive = MutableLiveData()
         isAcademicYear = MutableLiveData()
         isUpdateStatusCommunication = MutableLiveData()
+
+        isPunchAttendance = MutableLiveData()
+        isAddLocation = MutableLiveData()
+        isRemoveLocation = MutableLiveData()
+        isUpdateLocation = MutableLiveData()
+        isLocationHistory = MutableLiveData()
+        isStaffLocations = MutableLiveData()
+        isPunchHistory = MutableLiveData()
+        isStaffAttendanceReport = MutableLiveData()
+        isStaffWiseAttendanceReport = MutableLiveData()
+
     }
 
 
@@ -594,5 +622,311 @@ class AppServices {
 
     val isGetAcademicLiveData: LiveData<AcademicYearResponse?>
         get() = isAcademicYear
+
+
+    fun punchAttendance(isToken:String,jsonObject: JsonObject, activity: Activity) {
+        RestClient.apiInterfaces.punchGiometricAttendance(isToken,jsonObject)
+            ?.enqueue(object : Callback<StatusMessageModel?> {
+                override fun onResponse(
+                    call: Call<StatusMessageModel?>,
+                    response: Response<StatusMessageModel?>
+                ) {
+                    Log.d(
+                        "isGetCountryList",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isPunchAttendance.postValue(response.body())
+                            } else {
+                                isPunchAttendance.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<StatusMessageModel?>, t: Throwable) {
+                    isPunchAttendance.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isPunchAttendanceLiveData: LiveData<StatusMessageModel?>
+        get() = isPunchAttendance
+
+
+
+
+    fun addLocation(isToken:String,jsonObject: JsonObject, activity: Activity) {
+        RestClient.apiInterfaces.addGiometricLocation(isToken,jsonObject)
+            ?.enqueue(object : Callback<StatusMessageModel?> {
+                override fun onResponse(
+                    call: Call<StatusMessageModel?>,
+                    response: Response<StatusMessageModel?>
+                ) {
+                    Log.d(
+                        "addLocation_res",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isAddLocation.postValue(response.body())
+                            } else {
+                                isAddLocation.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<StatusMessageModel?>, t: Throwable) {
+                    isAddLocation.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isAddLocationLiveData: LiveData<StatusMessageModel?>
+        get() = isAddLocation
+
+
+    fun removeLocation(isToken:String,jsonObject: JsonObject, activity: Activity) {
+        RestClient.apiInterfaces.removeLocation(isToken,jsonObject)
+            ?.enqueue(object : Callback<StatusMessageModel?> {
+                override fun onResponse(
+                    call: Call<StatusMessageModel?>,
+                    response: Response<StatusMessageModel?>
+                ) {
+                    Log.d(
+                        "remove_location_res",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isRemoveLocation.postValue(response.body())
+                            } else {
+                                isRemoveLocation.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<StatusMessageModel?>, t: Throwable) {
+                    isRemoveLocation.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isRemoveLocationLiveData: LiveData<StatusMessageModel?>
+        get() = isRemoveLocation
+
+
+    fun updateLocation(isToken:String,jsonObject: JsonObject, activity: Activity) {
+        RestClient.apiInterfaces.updateLocation(isToken,jsonObject)
+            ?.enqueue(object : Callback<StatusMessageModel?> {
+                override fun onResponse(
+                    call: Call<StatusMessageModel?>,
+                    response: Response<StatusMessageModel?>
+                ) {
+                    Log.d(
+                        "update_location_res",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isUpdateLocation.postValue(response.body())
+                            } else {
+                                isUpdateLocation.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<StatusMessageModel?>, t: Throwable) {
+                    isUpdateLocation.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isUpdateLocationLiveData: LiveData<StatusMessageModel?>
+        get() = isUpdateLocation
+
+
+    fun getStaffLocations(isToken:String, activity: Activity) {
+        RestClient.apiInterfaces.getStaffLocations(isToken)
+            ?.enqueue(object : Callback<StaffLocationResponse?> {
+                override fun onResponse(
+                    call: Call<StaffLocationResponse?>,
+                    response: Response<StaffLocationResponse?>
+                ) {
+                    Log.d(
+                        "staff_locations_res",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isStaffLocations.postValue(response.body())
+                            } else {
+                                isStaffLocations.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<StaffLocationResponse?>, t: Throwable) {
+                    isStaffLocations.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isStaffLocationsLiveData: LiveData<StaffLocationResponse?>
+        get() = isStaffLocations
+
+    fun getLocationHistory(isToken:String, activity: Activity) {
+        RestClient.apiInterfaces.getLocationHistory(isToken)
+            ?.enqueue(object : Callback<LocationHistoryResponse?> {
+                override fun onResponse(
+                    call: Call<LocationHistoryResponse?>,
+                    response: Response<LocationHistoryResponse?>
+                ) {
+                    Log.d(
+                        "location_history_res",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isLocationHistory.postValue(response.body())
+                            } else {
+                                isLocationHistory.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<LocationHistoryResponse?>, t: Throwable) {
+                    isLocationHistory.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isLocationHistoryLiveData: LiveData<LocationHistoryResponse?>
+        get() = isLocationHistory
+
+
+    fun getPunchHistory(isToken:String, activity: Activity) {
+        RestClient.apiInterfaces.getPunchHistory(isToken,"","")
+            ?.enqueue(object : Callback<PunchHistoryResponse?> {
+                override fun onResponse(
+                    call: Call<PunchHistoryResponse?>,
+                    response: Response<PunchHistoryResponse?>
+                ) {
+                    Log.d(
+                        "punch_history_res",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isPunchHistory.postValue(response.body())
+                            } else {
+                                isPunchHistory.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<PunchHistoryResponse?>, t: Throwable) {
+                    isPunchHistory.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isPunchHistoryLiveData: LiveData<PunchHistoryResponse?>
+        get() = isPunchHistory
+
+
+    fun getGiometricStaffAttendancereport(isToken:String, activity: Activity) {
+        RestClient.apiInterfaces.getStaffAttendanceReport(isToken)
+            ?.enqueue(object : Callback<StaffAttendanceReportResponse?> {
+                override fun onResponse(
+                    call: Call<StaffAttendanceReportResponse?>,
+                    response: Response<StaffAttendanceReportResponse?>
+                ) {
+                    Log.d(
+                        "staff_attendance_report",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isStaffAttendanceReport.postValue(response.body())
+                            } else {
+                                isStaffAttendanceReport.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<StaffAttendanceReportResponse?>, t: Throwable) {
+                    isStaffAttendanceReport.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isGiometricStaffAttendanceReportLiveData: LiveData<StaffAttendanceReportResponse?>
+        get() = isStaffAttendanceReport
+
+
+    fun getGiometricStaffWiseAttendancereport(isToken:String, activity: Activity) {
+        RestClient.apiInterfaces.getStaffWiseAttendanceReport(isToken)
+            ?.enqueue(object : Callback<StaffAttendanceReportResponse?> {
+                override fun onResponse(
+                    call: Call<StaffAttendanceReportResponse?>,
+                    response: Response<StaffAttendanceReportResponse?>
+                ) {
+                    Log.d(
+                        "staffwise_attendance_report",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isStaffWiseAttendanceReport.postValue(response.body())
+                            } else {
+                                isStaffWiseAttendanceReport.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+                override fun onFailure(call: Call<StaffAttendanceReportResponse?>, t: Throwable) {
+                    isStaffWiseAttendanceReport.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isGiometricStaffWiseAttendanceReportLiveData: LiveData<StaffAttendanceReportResponse?>
+        get() = isStaffWiseAttendanceReport
 
 }

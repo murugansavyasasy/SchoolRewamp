@@ -20,7 +20,7 @@
             android:layout_weight="1"
             android:background="@drawable/rect_btn_blue"
             android:gravity="center"
-            android:text="Mark Attendance"
+            android:text="@string/mark_attendance"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="14dp" />
@@ -33,7 +33,7 @@
             android:layout_weight="1"
             android:background="@drawable/bg_stroke_rect_black"
             android:gravity="center"
-            android:text="Your Attendance Details"
+            android:text="@string/your_attendance_details"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="14dp" />
@@ -67,7 +67,7 @@
             android:layout_centerInParent="true"
             android:layout_margin="5dp"
             android:gravity="center"
-            android:text="Fetching Location.!!"
+            android:text="@string/fetching_location"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="15sp"
@@ -105,7 +105,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/imgLocationIllustrate"
                 android:layout_marginTop="10dp"
-                android:text="Allow location access to mark your attendance!"
+                android:text="@string/allow_location_access_to_mark_your_attendance"
                 android:textColor="@color/black"
                 android:textSize="20dp"
                 android:textStyle="bold" />
@@ -132,7 +132,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="10dp"
                     android:layout_toRightOf="@+id/imgLocation"
-                    android:text="To enhance your experience and provide accurate location-based features, please enable GPS."
+                    android:text="@string/to_enhance_your_experience_and_provide_accurate_location_based_features_please_enable_gps"
                     android:textColor="@color/grey"
                     android:textSize="15dp" />
 
@@ -147,7 +147,7 @@
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/rect_btn_blue"
                 android:gravity="center"
-                android:text="Enable Location"
+                android:text="@string/enable_location"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="15dp"
@@ -192,7 +192,7 @@
                 android:layout_marginTop="20dp"
                 android:background="@drawable/bg_green_gradient"
                 android:padding="10dp"
-                android:text="Punch"
+                android:text="@string/punch"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:visibility="visible" />
@@ -211,7 +211,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:text="Fingerprint   " />
+                    android:text="@string/fingerprint" />
 
             </RelativeLayout>
         </RelativeLayout>
@@ -374,7 +374,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/rytAdd"
-            android:text="Add punch location"
+            android:text="@string/add_punch_location"
             android:textColor="@color/black"
             android:textSize="15dp"/>
 
