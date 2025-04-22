@@ -1350,23 +1350,23 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     mediaPlayer.setDataSource(this, uri)
                     mediaPlayer.prepare()
                     val durationInMillis = mediaPlayer.duration
-                    val durationInSeconds = durationInMillis / 1000
+//                    val durationInSeconds = durationInMillis / 1000
                     val formattedDuration = formatDuration(durationInMillis)
                     mediaPlayer.release()
 
                     // Check duration limit
-                    val maxAllowedSeconds = if (isEmergency == 1) 30 else 180
-                    if (durationInSeconds > maxAllowedSeconds) {
-                        val limitFormatted = String.format(
-                            "%02d:%02d", maxAllowedSeconds / 60, maxAllowedSeconds % 60
-                        )
-                        Toast.makeText(
-                            this,
-                            "Selected audio exceeds max allowed duration of $limitFormatted",
-                            Toast.LENGTH_LONG
-                        ).show()
-                        return
-                    }
+//                    val maxAllowedSeconds = if (isEmergency == 1) 30 else 180
+//                    if (durationInSeconds > maxAllowedSeconds) {
+////                        val limitFormatted = String.format(
+////                            "%02d:%02d", maxAllowedSeconds / 60, maxAllowedSeconds % 60
+////                        )
+////                        Toast.makeText(
+////                            this,
+////                            "Selected audio exceeds max allowed duration of $limitFormatted",
+////                            Toast.LENGTH_LONG
+////                        ).show()
+//                        return
+//                    }
 
                     // Valid file - Proceed
                     val isFileExtension =
