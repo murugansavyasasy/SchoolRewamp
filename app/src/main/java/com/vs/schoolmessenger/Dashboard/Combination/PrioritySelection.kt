@@ -73,13 +73,13 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
             }
         }
 
-         if (staffRole == Constant.isStaffRole || staffRole.isEmpty()) {
-             binding.btnGo.visibility =View.GONE
-             binding.proceedlabel.visibility = View.GONE
-         } else {
-             binding.btnGo.visibility = View.VISIBLE
-             binding.proceedlabel.visibility = View.VISIBLE
-         }
+        if (staffRole == Constant.isStaffRole || staffRole.isEmpty()) {
+            binding.btnGo.visibility = View.GONE
+            binding.proceedlabel.visibility = View.GONE
+        } else {
+            binding.btnGo.visibility = View.VISIBLE
+            binding.proceedlabel.visibility = View.VISIBLE
+        }
 
         if (isStaff) {
             binding.lblTeacher.text = roleName
