@@ -98,7 +98,7 @@ class AwsUploadingPreSigned {
         val apiService = RestClient.apiInterfaces
 
         val isFileName = getFileNameFromPath(isFilePathUrl)
-
+        Log.d("isFileName", isFileName.toString())
         val call = apiService.getPreSignedUrl(isBucket, isFileName, bucketPath, mediaType.toString())
         call!!.enqueue(object : retrofit2.Callback<PreSignedUrl?> {
             @RequiresApi(Build.VERSION_CODES.O)

@@ -178,9 +178,6 @@ interface ApiInterfaces {
     ): Call<StatusArchiveResponse>?
 
 
-
-
-
     @POST(APIMethods.isUpdateStatusArchive)
     fun isUpdateStatusArchive(
         @Header("Authorization") token: String,

@@ -230,39 +230,68 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
 
         okButton.setOnClickListener {
             alertDialog.dismiss()
+            rootView.addView(loaderView)
 
+            val isTextData = Constant.isTextSendingData
             if (Constant.isClickType == 3) {
-                AlertDialog.Builder(this).setTitle("Send Confirmation!").setMessage(isMessage)
-                    .setPositiveButton("Yes") { dialog, _ ->
-                        rootView.addView(loaderView)
-                        if (Constant.isClickType == 3) {
-                            val jsonObject = ApiCallRequest.isSendText(
-                                isAcademicYearId = isAcademicYearId,
-                                schoolId = selectedIds,
-                                message = isTextData!!.isTitle,
-                                description = isTextData.isContent,
-                                targetType = Constant.isStudent
-                            )
-                            appViewModel!!.isSendText(isAccessToken!!, jsonObject, this)
-                        } else {
+                val jsonObject = ApiCallRequest.isSendText(
+                    isAcademicYearId = isAcademicYearId,
+                    schoolId = selectedIds,
+                    message = isTextData!!.isTitle,
+                    description = isTextData.isContent,
+                    targetType = Constant.isSchool
+                )
+                appViewModel!!.isSendText(isAccessToken!!, jsonObject, this)
+            } else {
 
-                            if (Constant.isVoiceType == 3) {
-                                val isVoiceData = Constant.isVoiceSendingData
-                                voiceSendApi(isVoiceData!!.isAwsUrl)
-                            } else {
-                                isFileUploadInAws(
-                                    Constant.isVoiceFile!!, isStaffDetails!!.school_id, "audio"
-                                )
-                            }
+                if (Constant.isVoiceType == 3) {
+                    val isVoiceData = Constant.isVoiceSendingData
+                    voiceSendApi(isVoiceData!!.isAwsUrl)
+                } else {
+                    isFileUploadInAws(
+                        Constant.isVoiceFile!!, isStaffDetails!!.school_id, "audio"
+                    )
+                }
+            }
 
-                        }
+        }
 
-                    }
+
+//        okButton.setOnClickListener {
+//            alertDialog.dismiss()
+//
+////            if (Constant.isClickType == 3) {
+//                AlertDialog.Builder(this).setTitle("Send Confirmation!").setMessage(isMessage)
+//                    .setPositiveButton("Yes") { dialog, _ ->
+//                        rootView.addView(loaderView)
+//                        if (Constant.isClickType == 3) {
+//                            val jsonObject = ApiCallRequest.isSendText(
+//                                isAcademicYearId = isAcademicYearId,
+//                                schoolId = selectedIds,
+//                                message = isTextData!!.isTitle,
+//                                description = isTextData.isContent,
+//                                targetType = Constant.isStudent
+//                            )
+//                            appViewModel!!.isSendText(isAccessToken!!, jsonObject, this)
+//                        } else {
+//Log.d("isVoiceType", Constant.isVoiceType.toString())
+//                            if (Constant.isVoiceType == 3) {
+//                                val isVoiceData = Constant.isVoiceSendingData
+//                                voiceSendApi(isVoiceData!!.isAwsUrl)
+//                            } else {
+//                                isFileUploadInAws(
+//                                    Constant.isVoiceFile!!, isStaffDetails!!.school_id, "audio"
+//                                )
+//                            }
+//
+////                        }
+//
+//                    }
 
                 btnCancel.setOnClickListener {
                     alertDialog.dismiss()
-                }
-            }
+          //      }
+        //    }
         }
     }
 
