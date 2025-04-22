@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.Utils
 
 import android.app.Activity
+import android.util.TypedValue
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
@@ -353,35 +354,106 @@ object Constant {
 
         val messageText = view.findViewById<TextView>(R.id.alertMessage)
         val okButton = view.findViewById<TextView>(R.id.btnOk)
-
         messageText.text = message
 
         val rootView = activity.findViewById<ViewGroup>(android.R.id.content)
-        val layoutParams = FrameLayout.LayoutParams(
+
+        val dimView = View(activity).apply {
+            setBackgroundColor(Color.parseColor("#80000000"))
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+            isClickable = true // prevent clicks on background
+        }
+
+        val marginInPx = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            20f,
+            activity.resources.displayMetrics
+        ).toInt()
+
+        val popupLayoutParams = FrameLayout.LayoutParams(
             FrameLayout.LayoutParams.MATCH_PARENT,
             FrameLayout.LayoutParams.WRAP_CONTENT
-        )
-        layoutParams.gravity = Gravity.CENTER
-        rootView.addView(view, layoutParams)
+        ).apply {
+            gravity = Gravity.CENTER
+            setMargins(marginInPx, 0, marginInPx, 0)
+        }
+
+        rootView.addView(dimView)
+        rootView.addView(view, popupLayoutParams)
+
+        val closePopup = {
+            rootView.removeView(view)
+            rootView.removeView(dimView)
+        }
 
         okButton.setOnClickListener {
             if (isType == isCommunication) {
                 val intent = Intent(activity, CommunicationSchool::class.java)
                 activity.startActivity(intent)
             }
-            rootView.removeView(view)
+            closePopup()
+        }
+        dimView.setOnClickListener {
+            closePopup()
         }
     }
 
-    fun showAlert(title: String, message: String, activity: Activity) {
-        AlertDialog.Builder(activity)
-            .setTitle(title)
-            .setMessage(message)
-            .setPositiveButton("OK") { dialog, _ ->
-                dialog.dismiss()
-            }
-            .show()
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun showValidationAlertPopup(message: String, activity: Activity) {
+        val inflater = LayoutInflater.from(activity)
+        val view = inflater.inflate(R.layout.success_popup, null)
+
+        val messageText = view.findViewById<TextView>(R.id.alertMessage)
+        val okButton = view.findViewById<TextView>(R.id.btnOk)
+        messageText.text = message
+
+        val rootView = activity.findViewById<ViewGroup>(android.R.id.content)
+
+        val dimView = View(activity).apply {
+            setBackgroundColor(Color.parseColor("#80000000"))
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+            isClickable = true
+        }
+
+        val marginInPx = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            20f,
+            activity.resources.displayMetrics
+        ).toInt()
+
+        val popupLayoutParams = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT,
+            FrameLayout.LayoutParams.WRAP_CONTENT
+        ).apply {
+            gravity = Gravity.CENTER
+            setMargins(marginInPx, 0, marginInPx, 0)
+        }
+
+        rootView.addView(dimView)
+        rootView.addView(view, popupLayoutParams)
+
+        val closePopup = {
+            rootView.removeView(view)
+            rootView.removeView(dimView)
+        }
+
+        okButton.setOnClickListener {
+            closePopup()
+        }
+
+        dimView.setOnClickListener {
+            closePopup()
+        }
     }
+
 
     fun getAudioDurationInMinutes(url: String): Int {
         val retriever = MediaMetadataRetriever()

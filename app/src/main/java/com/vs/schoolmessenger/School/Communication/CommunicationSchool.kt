@@ -30,7 +30,6 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.AWS.AwsUploadingPreSigned
-import com.vs.schoolmessenger.AWS.UploadCallback
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
@@ -38,7 +37,6 @@ import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolList
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.Repository.ApiCallRequest
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.CustomDatePicker
@@ -227,6 +225,30 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 val length = s?.length ?: 0
                 binding.lblCountOfDescription.text = "$length/500"
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+            }
+        })
+
+        binding.edtTitleTextMessage.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val length = s?.length ?: 0
+                binding.lblCountOfTitle.text = "$length/50"
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+            }
+        })
+
+        binding.edtTitle.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val length = s?.length ?: 0
+                binding.lblCountOfTitleVoice.text = "$length/50"
             }
 
             override fun afterTextChanged(p0: Editable?) {
@@ -731,10 +753,10 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     if (binding.edtContentTextMessage.text.toString() != "") {
                         isGoToRecipient()
                     } else {
-                        Constant.showAlert("Alert", "Voice and title is required", this)
+                        Constant.showValidationAlertPopup("Enter title and description", this)
                     }
                 } else {
-                    Constant.showAlert("Alert", "Voice and title is required", this)
+                    Constant.showValidationAlertPopup("Enter title and description", this)
                 }
             }
 
@@ -760,10 +782,10 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     if (binding.edtTitle.text.toString() != "") {
                         isGoToRecipient()
                     } else {
-                        Constant.showAlert("Alert!", "Enter the title", this)
+                        Constant.showValidationAlertPopup("Voice and title is required.", this)
                     }
                 } else {
-                    Constant.showAlert("Alert!", "Record or pick the voice file!", this)
+                    Constant.showValidationAlertPopup("Voice and title is required.", this)
                 }
             }
 

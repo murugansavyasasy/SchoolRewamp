@@ -12,7 +12,7 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
-class GroupStaffAdapter(
+class GroupStaffAdapter(private var isGroup: Boolean,
     var itemList: List<NameAndIds>?,
     private var listener: GroupListClickListener,
     private var context: Context,
@@ -59,12 +59,16 @@ class GroupStaffAdapter(
 
         fun bind(data: NameAndIds, position: Int) {
             lblGroupName.text = data.name
-//            if (data.created_on.isNotEmpty()) {
-//                lblCreated.visibility = View.VISIBLE
-//                lblCreated.text = "Created on : " + Constant.convertDateTimeFormat(data.created_on)
-//            }else{
-//                lblCreated.visibility = View.GONE
-//            }
+
+            if (isGroup){
+                data.created_on.takeIf { it.isNotEmpty() }?.let {
+                    lblCreated.visibility = View.VISIBLE
+                    lblCreated.text = Constant.convertDateTimeFormat(it)
+                } ?: run {
+                    lblCreated.visibility = View.GONE
+                }
+            }
+
 
             chMultipleSchool.setOnCheckedChangeListener(null)
             chMultipleSchool.isChecked = selectedIds.contains(data.id)

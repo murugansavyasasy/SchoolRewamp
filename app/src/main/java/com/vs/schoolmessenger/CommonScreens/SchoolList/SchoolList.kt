@@ -12,7 +12,6 @@ import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.airbnb.lottie.LottieAnimationView
 import com.vs.schoolmessenger.AWS.AwsUploadingPreSigned
 import com.vs.schoolmessenger.AWS.UploadCallback
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
@@ -208,7 +207,10 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                         showSendConfirmationDialog("Are you want send this voice to entire school?")
                     }
                 } else {
-                    Constant.showAlert("Alert!", "Select the school", this)
+                    Constant.showValidationAlertPopup(
+                        "Please select at least one school to send the message.",
+                        this
+                    )
                 }
             }
         }

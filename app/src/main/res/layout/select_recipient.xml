@@ -202,12 +202,26 @@
 
     </CheckBox>
 
+    <TextView
+        android:id="@+id/lblCreatedOn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/chAllSelect"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/twenty_five"
+        android:text="Group Created"
+        android:textColor="@color/grey"
+        android:textSize="@dimen/thirteen_sp"
+        android:visibility="gone">
+
+    </TextView>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/chAllSelect"
+        android:layout_below="@+id/lblCreatedOn"
         android:layout_marginStart="@dimen/twenty"
         android:layout_marginTop="@dimen/ten"
         android:layout_above="@+id/bottomLayout"
@@ -262,11 +276,11 @@
         android:id="@+id/textdesc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tabLayout"
+        android:layout_below="@+id/nomessage"
         style="@style/CustomTextStylePoppinsBold"
         android:gravity="center"
         android:padding="16dp"
-        android:text="@string/click_the_send_button_to_send_an_important_announcement_from_entier_school"
+        android:text="@string/Tap_share_message_everyone_school"
         android:textColor="@color/black"
         android:textSize="@dimen/fifteen_sp"
         android:visibility="gone" />
@@ -354,8 +368,6 @@
         android:layout_below="@+id/nomessage"
         android:layout_marginTop="20dp" />
 
-
-
     <ImageView
         android:id="@+id/nomessage"
         android:layout_width="250dp"
@@ -367,6 +379,44 @@
         android:layout_centerInParent="true"
         android:visibility="gone"
         android:layout_marginTop="20dp" />
+
+    <LinearLayout
+        android:id="@+id/rytAcademicYear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/twenty_five"
+            android:layout_marginEnd="@dimen/twenty_five"
+            android:gravity="center"
+            android:text="Your academic year configuration are incorrect. Please contact School Chimes."
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/lblSupportMail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/twenty_five"
+            android:layout_marginTop="@dimen/twenty"
+            android:layout_marginEnd="@dimen/twenty_five"
+            android:gravity="center"
+            android:text="support@savyasasy.com"
+            android:textColor="@color/navi_blue6"
+            android:textSize="@dimen/thirteen_sp"
+            android:textStyle="bold">
+
+        </TextView>
+
+    </LinearLayout>
 
 
 </RelativeLayout>
