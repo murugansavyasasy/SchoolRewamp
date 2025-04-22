@@ -1,6 +1,8 @@
 package com.vs.schoolmessenger.Repository
 
 object RequestKeys {
+
+    const val Authorization = "Authorization"
     const val Req_device_type = "device_type"
     const val Req_version_code = "version_code"
     const val Req_country_id = "country_id"
@@ -11,6 +13,9 @@ object RequestKeys {
     const val Req_old_password = "old_password"
     const val Req_new_password = "new_password"
     const val Req_device_token = "device_token"
+
+    const val from_date = "from_date"
+    const val to_date = "to_date"
 
 
 }

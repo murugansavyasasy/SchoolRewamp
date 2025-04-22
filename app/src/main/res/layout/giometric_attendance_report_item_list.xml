@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="10dp"
+    android:layout_marginVertical="7dp">
+
+    <RelativeLayout
+        android:id="@+id/rytParentCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_rect_white"
+        android:paddingBottom="0dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/lnrDate"
+            android:layout_width="80dp"
+            android:layout_centerVertical="true"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/lblMonth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/clr_month_blue"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text=""
+                android:textColor="@color/white"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/lblDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/card_blue"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="12"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/lblDay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/clr_day_blue"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="13dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/lblStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="-5dp"
+            android:background="@drawable/btn_green"
+            android:paddingHorizontal="5dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="5dp"
+            android:text="@string/present"
+            android:textColor="@color/white"
+            android:textSize="12dp" />
+
+
+        <RelativeLayout
+            android:layout_toLeftOf="@+id/imgPunchHistory"
+            android:id="@+id/rytDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@+id/lblStatus"
+            android:layout_toRightOf="@+id/lnrDate"
+            android:padding="0dp">
+
+
+            <TextView
+                android:id="@+id/lblStaffName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/bpBlue"
+                android:textSize="13dp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/lblName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblStaffName"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="13dp"
+                android:textStyle="bold" />
+
+            <RelativeLayout
+                android:id="@+id/rytCheckInTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblName">
+
+                <TextView
+                    android:id="@+id/lblCheckInTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="First in - 9:30 am"
+                    android:visibility="gone"
+                    android:textColor="@color/black"
+                    android:textSize="13dp"
+                    android:textStyle="normal" />
+
+                <TextView
+                    android:id="@+id/lblCheckoutTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:visibility="gone"
+                    android:layout_below="@+id/lblCheckInTime"
+                    android:text="First in - 9:30 am"
+                    android:textColor="@color/black"
+                    android:textSize="13dp"
+                    android:textStyle="normal" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/lblWorkingHours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rytCheckInTime"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="13dp"
+                android:textStyle="normal" />
+
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/imgPunchHistory"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/rightarrrow"/>
+
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
