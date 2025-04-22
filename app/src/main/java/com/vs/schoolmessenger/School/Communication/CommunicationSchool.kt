@@ -1207,7 +1207,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                  var   isFileExtension = "mp3"
                     val fileName = "SSS_Communication_${timeStamp}.$isFileExtension"
                     isFileName = fileName
-
                     // Copy file to app cache
                     val inputStream = contentResolver.openInputStream(uri)
                     val outputFile = File(cacheDir, fileName)

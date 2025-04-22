@@ -31,9 +31,12 @@ import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.Standar
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardListAdapter
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardListClickListener
 import com.vs.schoolmessenger.CommonScreens.SpecificStudentData.SpecificStudent
+import com.vs.schoolmessenger.Dashboard.Fragments.SchoolHomeFragment
+import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.ApiCallRequest
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.Communication.CommunicationSchool
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.SELECTED_SCHOOL_MENU
 import com.vs.schoolmessenger.Utils.Constant.SH_ASSIGNMENT
@@ -348,16 +351,16 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 Constant.showTopAlertPopup(response.message, Constant.isCommunication,this)
             }
         }
+
         appViewModel!!.isSendText?.observe(this) { response ->
             val rootView = findViewById<ViewGroup>(android.R.id.content)
             val loader = rootView.findViewById<View>(R.id.loader_root)
             loader?.let { rootView.removeView(it) }
+
             if (response != null && response.status) {
                 Constant.showTopAlertPopup(response.message, Constant.isCommunication,this)
-
             }
         }
-
         binding.chAllSelect.setOnClickListener {
             if (isSelectedType == 1) {
                 if (binding.chAllSelect.isChecked) {
