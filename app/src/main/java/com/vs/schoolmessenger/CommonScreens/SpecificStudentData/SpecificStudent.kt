@@ -30,27 +30,26 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
     override fun getViewBinding(): SpecificStudentBinding {
         return SpecificStudentBinding.inflate(layoutInflater)
     }
+
     private var isAccessToken: String? = null
     private var appViewModel: App? = null
-    private var selectedIds = mutableListOf<Int>()
+    private var selectedIds = mutableListOf<String>()
     lateinit var mAdapter: SpecificStudentAdapter
     val isSpecificStudent = mutableListOf<NameAndIds>()
     var isStudentData: List<NameAndIds>? = null
     private var isStaffDetails: StaffDetails? = null
-
-    //    var isAcademicYear: List<AcademicYear>? = null
     var isAcademicYearId = -1
-    var isCurrentAcademicYear=false
-    var isAcademicYear: String?=null
+    var isCurrentAcademicYear = false
+    var isAcademicYear: String? = null
     var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
         setupToolbar()
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.btnSend.setOnClickListener(this)
-//        binding.rlaAcademicYear.setOnClickListener(this)
 
         binding.toolbarLayout.lblParentToolBar.text = "Specific Student"
         binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
@@ -58,9 +57,8 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
         binding.toolbarLayout.rytFilter.visibility = View.VISIBLE
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
-        val rootView = findViewById<ViewGroup>(android.R.id.content)
 
-        val isSelectedId = intent.getIntegerArrayListExtra("isSelectedId") ?: arrayListOf()
+        val isSelectedId = intent.getStringArrayListExtra("isSelectedId") ?: arrayListOf()
         isAcademicYearId = intent.getIntExtra("isAcademicYearId", -1)
         isCurrentAcademicYear = intent.getBooleanExtra("isCurrentAcademicYear", false)
         isAcademicYear = intent.getStringExtra("lblAcademicYear")
@@ -69,7 +67,6 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
         isGetStudentList(isSelectedId, isAcademicYearId)
         isAwsUploadingPreSigned = AwsUploadingPreSigned()
 
-//        isGetAcademicYear()
         appViewModel!!.isStudentList!!.observe(this) { response ->
             if (response != null && response.status) {
                 isStudentData = response.data
@@ -89,25 +86,12 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
             }
         }
 
-//        appViewModel!!.isGetAcademicList?.observe(this) { response ->
-//            if (response != null && response.status) {
-//                response.data.let { academicList ->
-//                    val reorderedList = academicList.sortedByDescending { it.current_academic_year }
-//                    isAcademicYear = reorderedList
-//                    binding.lblAcademicYear.text = isAcademicYear!![0].year
-//                    isAcademicYearId = isAcademicYear!![0].id
-//                    isGetGroupList()
-//                }
-//            }
-//        }
-
-
         appViewModel!!.isVoiceSend?.observe(this) { response ->
             val rootView = findViewById<ViewGroup>(android.R.id.content)
             val loader = rootView.findViewById<View>(R.id.loader_root)
             loader?.let { rootView.removeView(it) }
             if (response != null && response.status) {
-                Constant.showAlert("Info!", response.message, this)
+                Constant.showTopAlertPopup(response.message, Constant.isCommunication,this)
             }
         }
         appViewModel!!.isSendText?.observe(this) { response ->
@@ -115,16 +99,11 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
             val loader = rootView.findViewById<View>(R.id.loader_root)
             loader?.let { rootView.removeView(it) }
             if (response != null && response.status) {
-                Constant.showAlert("Info!", response.message, this)
+                Constant.showTopAlertPopup(response.message, Constant.isCommunication,this)
+
             }
         }
     }
-
-//    private fun isGetAcademicYear() {
-//        appViewModel!!.isGetAcademicYear(
-//            isAccessToken!!, this
-//        )
-//    }
 
     private fun isStudentData() {
 
@@ -143,7 +122,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
         }
     }
 
-    private fun isGetStudentList(isSelectedId: ArrayList<Int>, isAcademicYearId: Int) {
+    private fun isGetStudentList(isSelectedId: ArrayList<String>, isAcademicYearId: Int) {
         appViewModel!!.isGetStudentList(
             isAccessToken!!,
             isSelectedId[0].toString(), isAcademicYearId, this
@@ -155,7 +134,6 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
     ) {
         val isCountryId = SharedPreference.getCountryId(this)
         isAwsUploadingPreSigned!!.getPreSignedUrl(
-            Constant.isPickingFileExtension,
             isFilePath, schoolId, isFileType!!,
             this, isCountryId!!,
             true,
@@ -239,7 +217,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                     schoolId = selectedIds,
                     message = isTextData!!.isTitle,
                     description = isTextData.isContent,
-                    targetType = Constant.isSchool
+                    targetType = isTargetType
                 )
                 appViewModel!!.isSendText(isAccessToken!!, jsonObject, this)
             } else {
@@ -253,45 +231,10 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                     )
                 }
             }
-
         }
 
-
-//        okButton.setOnClickListener {
-//            alertDialog.dismiss()
-//
-////            if (Constant.isClickType == 3) {
-//                AlertDialog.Builder(this).setTitle("Send Confirmation!").setMessage(isMessage)
-//                    .setPositiveButton("Yes") { dialog, _ ->
-//                        rootView.addView(loaderView)
-//                        if (Constant.isClickType == 3) {
-//                            val jsonObject = ApiCallRequest.isSendText(
-//                                isAcademicYearId = isAcademicYearId,
-//                                schoolId = selectedIds,
-//                                message = isTextData!!.isTitle,
-//                                description = isTextData.isContent,
-//                                targetType = Constant.isStudent
-//                            )
-//                            appViewModel!!.isSendText(isAccessToken!!, jsonObject, this)
-//                        } else {
-//Log.d("isVoiceType", Constant.isVoiceType.toString())
-//                            if (Constant.isVoiceType == 3) {
-//                                val isVoiceData = Constant.isVoiceSendingData
-//                                voiceSendApi(isVoiceData!!.isAwsUrl)
-//                            } else {
-//                                isFileUploadInAws(
-//                                    Constant.isVoiceFile!!, isStaffDetails!!.school_id, "audio"
-//                                )
-//                            }
-//
-////                        }
-//
-//                    }
-
-                btnCancel.setOnClickListener {
-                    alertDialog.dismiss()
-          //      }
-        //    }
+        btnCancel.setOnClickListener {
+            alertDialog.dismiss()
         }
     }
 
@@ -312,20 +255,8 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                 onBackPressed()
             }
 
-//            R.id.rlaAcademicYear -> {
-//                showAcademicDropdown(
-//                    binding.rlaAcademicYear, this, isAcademicYear
-//                ) { selectedYear ->
-//                    binding.lblAcademicYear.text = selectedYear.year
-//                    Log.d(
-//                        "DropdownMenu",
-//                        "Clicked Academic Year: ID = ${selectedYear.id}, Year = ${selectedYear.year}, Current = ${selectedYear.current_academic_year}"
-//                    )
-//                }
-//            }
-
             R.id.btnSend -> {
-                selectedIds = isSpecificStudent.map { it.id }.toMutableList()
+                selectedIds = isSpecificStudent.map { it.id.toString() }.toMutableList()
                 for (id in selectedIds) {
                     Log.d("isSelectedIds", id.toString())
                 }

@@ -67,7 +67,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     private var isAccessToken: String? = null
     private var isUserDetails: UserDetails? = null
     private var isStaffDetails: StaffDetails? = null
-    private var selectedIds = mutableListOf<Int>()
+    private var selectedIds = mutableListOf<String>()
     var isSelectedType = 0
     var isAcademicYearId = -1
     var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
@@ -76,6 +76,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     var isCircularType: String? = null
 
     private var appViewModel: App? = null
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
         setupToolbar()
@@ -91,13 +92,10 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
         val tabLayout = binding.tabLayout
         tabLayout.addTab(tabLayout.newTab().setText("Entire School"))
-        tabLayout.addTab(tabLayout.newTab().setText("Standard's"))
+        tabLayout.addTab(tabLayout.newTab().setText("Standards"))
         tabLayout.addTab(tabLayout.newTab().setText("Section/Student"))
         tabLayout.addTab(tabLayout.newTab().setText("Groups"))
         tabLayout.addTab(tabLayout.newTab().setText("Staff"))
-
-        val rootView = findViewById<ViewGroup>(android.R.id.content)
-        val loader = rootView.findViewById<View>(R.id.loader_root)
 
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
@@ -157,12 +155,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         binding.textdesc.visibility = View.GONE
                         binding.bottomLayout.visibility = View.GONE
                         binding.btnSpecificStudent.visibility = View.GONE
-//                        Log.d("isDropDown", isDropDown.toString())
-//                        if (!isDropDown) {
-//                            binding.recyclerView.visibility = View.VISIBLE
-//                        } else {
-//                            binding.recyclerView.visibility = View.GONE
-//                        }
+
                     }
 
                     2 -> {
@@ -176,13 +169,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         selectedIds.clear()
                         isDropDown = true
                         isGetStandardSection()
-//                        if (isDropDown) {
-//                            binding.rlaStandard.visibility = View.VISIBLE
-//                        } else {
-//                            binding.rlaStandard.visibility = View.GONE
-//                        }
                         binding.recyclerView.visibility = View.GONE
-//                        binding.rlaStandard.visibility = View.VISIBLE
                         binding.rlaStandard.visibility = View.GONE
 
                         binding.textdesc.visibility = View.GONE
@@ -241,13 +228,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         binding.bottomLayout.visibility = View.GONE
                         binding.btnSpecificStudent.visibility = View.GONE
                         Log.d("isDropDown", isDropDown.toString())
-//                        if (!isDropDown) {
-//                            binding.recyclerView.visibility = View.VISIBLE
-//                        } else {
-//                            binding.recyclerView.visibility = View.GONE
-//                        }
-
-
                     }
                 }
             }
@@ -265,7 +245,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     binding.lblAcademicYear.text = isAcademicYear!![0].year
                     isAcademicYearId = isAcademicYear!![0].id
                     isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
-//                    isGetGroupList()
                     if (isSelectedType != 0) {
                         isGetStandardSection()
                     }
@@ -340,8 +319,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             }
         }
 
-
-
         appViewModel!!.isGetStaffList?.observe(this) { response ->
             if (response != null) {
                 isGetStaffListData = response.data
@@ -370,20 +347,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 val rootView = findViewById<ViewGroup>(android.R.id.content)
                 val loader = rootView.findViewById<View>(R.id.loader_root)
                 loader?.let { rootView.removeView(it) }
-
-                Log.d("Response", response.status.toString())
-
-                AlertDialog.Builder(this)
-                    .setTitle("Info!")
-                    .setMessage(response.message)
-                    .setCancelable(false)
-                    .setPositiveButton("OK") { dialog, _ ->
-                        dialog.dismiss()
-                        val intent = Intent(this, CommunicationSchool::class.java)
-                        startActivity(intent)
-                        finish()
-                    }
-                    .show()
+                Log.d("Response",response.status.toString())
+                Constant.showTopAlertPopup(response.message, Constant.isCommunication,this)
             }
         }
 
@@ -393,17 +358,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             loader?.let { rootView.removeView(it) }
 
             if (response != null && response.status) {
-                AlertDialog.Builder(this)
-                    .setTitle("Info!")
-                    .setMessage(response.message)
-                    .setCancelable(false)
-                    .setPositiveButton("OK") { dialog, _ ->
-                        dialog.dismiss()
-                        val intent = Intent(this, CommunicationSchool::class.java)
-                        startActivity(intent)
-                        finish()
-                    }
-                    .show()
+                Constant.showTopAlertPopup(response.message, Constant.isCommunication,this)
             }
         }
         binding.chAllSelect.setOnClickListener {
@@ -612,12 +567,12 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             }
 
             R.id.btnSpecificStudent -> {
-                selectedIds = isSectionSelectedIds.map { it.id }.toMutableList()
+                selectedIds = isSectionSelectedIds.map { it.id.toString() }.toMutableList()
                 val intent = Intent(this@RecipientActivity, SpecificStudent::class.java)
                 intent.putExtra("isAcademicYearId", isAcademicYearId)
                 intent.putExtra("isCurrentAcademicYear", isCurrentAcademicYear)
                 intent.putExtra("lblAcademicYear", binding.lblAcademicYear.text.toString())
-                intent.putIntegerArrayListExtra("isSelectedId", ArrayList(selectedIds))
+                intent.putStringArrayListExtra("isSelectedId", ArrayList(selectedIds))
                 startActivity(intent)
             }
 
@@ -670,27 +625,26 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 if (isSelectedType == 0) {
                     isTargetType = Constant.isSchool
                     isCircularType = Constant.school
-//                    isTypeOfName = "School"
                     isUserDetails?.staff_details?.get(0)?.school_id?.let {
-                        selectedIds.add(it.toInt())
+                        selectedIds.add(it)
                     }
                 } else if (isSelectedType == 1) {
                     isTargetType = Constant.isStandard
                     isCircularType = Constant.standard
                     isTypeOfName = "Standard"
-                    selectedIds = isStandardSelectedIds.map { it.id }.toMutableList()
+                    selectedIds = isStandardSelectedIds.map { it.id.toString() }.toMutableList()
                 } else if (isSelectedType == 2) {
                     isTargetType = Constant.isSection
                     isCircularType = Constant.section
                     isTypeOfName = "Section"
-                    selectedIds = isSectionSelectedIds.map { it.id }.toMutableList()
+                    selectedIds = isSectionSelectedIds.map { it.id.toString() }.toMutableList()
                 } else if (isSelectedType == 3) {
-                    selectedIds = isGroupSelectedIds.map { it.id }.toMutableList()
+                    selectedIds = isGroupSelectedIds.map { it.id.toString() }.toMutableList()
                     isTargetType = Constant.isGroup
                     isCircularType = Constant.group
                     isTypeOfName = "Groups"
                 } else if (isSelectedType == 4) {
-                    selectedIds = isGroupSelectedIds.map { it.id }.toMutableList()
+                    selectedIds = isGroupSelectedIds.map { it.id.toString() }.toMutableList()
                     isTypeOfName = "Staff"
                     isTargetType = Constant.isStaff
                     isCircularType = Constant.staff
@@ -787,7 +741,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     schoolId = selectedIds,
                     message = isTextData!!.isTitle,
                     description = isTextData.isContent,
-                    targetType = Constant.isSchool
+                    targetType = isTargetType!!
                 )
                 appViewModel!!.isSendText(isAccessToken!!, jsonObject, this)
             } else {
@@ -807,40 +761,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         btnCancel.setOnClickListener {
             alertDialog.dismiss()
         }
-    }
-
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun showSendConfirmationDialog(isMessage: String) {
-        val isTextData = Constant.isTextSendingData
-        AlertDialog.Builder(this)
-            .setTitle("Confirmation").setMessage(isMessage)
-            .setPositiveButton("Yes,Send") { dialog, _ ->
-
-                if (Constant.isClickType == 3) {
-                    val jsonObject = ApiCallRequest.isSendText(
-                        isAcademicYearId = isAcademicYearId,
-                        schoolId = selectedIds,
-                        message = isTextData!!.isTitle,
-                        description = isTextData.isContent,
-                        targetType = Constant.isSchool
-                    )
-                    appViewModel!!.isSendText(isAccessToken!!, jsonObject, this)
-                } else {
-
-                    if (Constant.isVoiceType == 3) {
-                        val isVoiceData = Constant.isVoiceSendingData
-                        voiceSendApi(isVoiceData!!.isAwsUrl)
-                    } else {
-                        isFileUploadInAws(
-                            Constant.isVoiceFile!!, isStaffDetails!!.school_id, "audio"
-                        )
-                    }
-                }
-
-            }.setNegativeButton("Cancel") { dialog, _ ->
-                dialog.dismiss()
-            }.show()
     }
 
     override fun onIdCheck(group: NameAndIds) {
@@ -918,7 +838,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         isFilePath: String, schoolId: String, isFileType: String?
     ) {
         val isCountryId = SharedPreference.getCountryId(this)
-        isAwsUploadingPreSigned!!.getPreSignedUrl(Constant.isPickingFileExtension,
+        isAwsUploadingPreSigned!!.getPreSignedUrl(
             isFilePath, schoolId, isFileType!!,
             this, isCountryId!!,
             true,
@@ -941,28 +861,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun voiceSendApi(isFileUploadedUrl: String?) {
-
-        var isTargetType: Int? = null
-        var isCircularType: String? = null
-        if (isSelectedType == 0) {
-            isTargetType = Constant.isSchool
-            isCircularType = Constant.school
-        } else if (isSelectedType == 1) {
-            isTargetType = Constant.isGroup
-            isCircularType = Constant.group
-            // selectedIds = isGroupSelectedIds.map { it.id }.toMutableList()
-        } else if (isSelectedType == 2) {
-            isTargetType = Constant.isStandard
-            isCircularType = Constant.standard
-            //  selectedIds = isStandardSelectedIds.map { it.id }.toMutableList()
-        } else if (isSelectedType == 3) {
-            isTargetType = Constant.isStaff
-            isCircularType = Constant.staff
-            //  selectedIds = isGroupSelectedIds.map { it.id }.toMutableList()
-        } else if (isSelectedType == 4) {
-            isTargetType = Constant.isSection
-            isCircularType = Constant.section
-        }
 
         val isVoiceData = Constant.isVoiceSendingData
         val jsonObject = ApiCallRequest.isVoiceSend(

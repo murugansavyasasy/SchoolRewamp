@@ -54,7 +54,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         return SchoolListActivityBinding.inflate(layoutInflater)
     }
 
-    private val selectedSchoolIds = mutableListOf<Int>()
+    private val selectedSchoolIds = mutableListOf<String>()
     var isMultipleSchool = false
     private lateinit var mAdapter: SchoolListAdapter
 
@@ -67,6 +67,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
     var isAcademicYear: List<AcademicYear>? = null
     var isAcademicYearId = -1
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
         setupToolbar()
@@ -82,16 +83,13 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             isMultipleSchool  = false
             if (Constant.isEmergencyVoiceNoticeBoard!!) {
                 binding.lnrTab.visibility = View.GONE
-//                binding.lblSend.visibility = View.GONE
             } else {
                 binding.lnrTab.visibility = View.VISIBLE
-//                binding.lblSend.visibility = View.VISIBLE
             }
         }
         else{
             isMultipleSchool  = true
             binding.lnrTab.visibility = View.GONE
-//            binding.lblSend.visibility = View.GONE
         }
 
         appViewModel = ViewModelProvider(this)[App::class.java]
@@ -111,7 +109,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             loader?.let { rootView.removeView(it) }
 
             if (response != null && response.status) {
-                Constant.showAlert("Info!", response.message, this)
+                Constant.showTopAlertPopup(response.message, Constant.isCommunication,this)
             }
         }
 
@@ -120,7 +118,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             val loader = rootView.findViewById<View>(R.id.loader_root)
             loader?.let { rootView.removeView(it) }
             if (response != null && response.status) {
-                Constant.showAlert("Info!", response.message, this)
+                Constant.showTopAlertPopup(response.message, Constant.isCommunication,this)
             }
         }
 
@@ -134,7 +132,6 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                 }
             }
         }
-
     }
 
     override fun onResume() {
@@ -292,8 +289,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         isFilePath: String, schoolId: String, isFileType: String?
     ) {
         val isCountryId = SharedPreference.getCountryId(this)
-        isAwsUploadingPreSigned!!.getPreSignedUrl(Constant.isPickingFileExtension,
-            isFilePath, schoolId, isFileType!!,
+        isAwsUploadingPreSigned!!.getPreSignedUrl(isFilePath, schoolId, isFileType!!,
             this, isCountryId!!,
             true,
             false,
@@ -341,8 +337,6 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
 
         val rootView = findViewById<ViewGroup>(android.R.id.content)
         val loaderView = LayoutInflater.from(this).inflate(R.layout.lottie_loader, rootView, false)
-
-
 
         AlertDialog.Builder(this)
             .setTitle("Send Confirmation!")

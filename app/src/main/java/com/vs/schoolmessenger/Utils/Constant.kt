@@ -16,11 +16,14 @@ import android.os.Looper
 import android.provider.Settings
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.EditText
+import android.widget.FrameLayout
 import android.widget.GridView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
@@ -33,6 +36,7 @@ import com.vs.schoolmessenger.Auth.OTP.ForgetOtpData
 import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolList
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.Communication.CommunicationSchool
 import com.vs.schoolmessenger.School.Communication.TextSendingData
 import com.vs.schoolmessenger.School.Communication.VoiceSendingData
 import java.text.SimpleDateFormat
@@ -142,9 +146,8 @@ object Constant {
     var group = "G"
     var student = "student"
     var staff = "staff"
-    var isPickingFileExtension=""
 
-
+    var isCommunication = "isCommunication"
 
     var isVoiceFile: String? = null
     var isVoiceSendingData: VoiceSendingData? = null
@@ -343,7 +346,34 @@ object Constant {
         }
     }
 
-    fun showAlert(title: String, message: String,activity: Activity) {
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun showTopAlertPopup(message: String, isType: String, activity: Activity) {
+        val inflater = LayoutInflater.from(activity)
+        val view = inflater.inflate(R.layout.success_popup, null)
+
+        val messageText = view.findViewById<TextView>(R.id.alertMessage)
+        val okButton = view.findViewById<TextView>(R.id.btnOk)
+
+        messageText.text = message
+
+        val rootView = activity.findViewById<ViewGroup>(android.R.id.content)
+        val layoutParams = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT,
+            FrameLayout.LayoutParams.WRAP_CONTENT
+        )
+        layoutParams.gravity = Gravity.CENTER
+        rootView.addView(view, layoutParams)
+
+        okButton.setOnClickListener {
+            if (isType == isCommunication) {
+                val intent = Intent(activity, CommunicationSchool::class.java)
+                activity.startActivity(intent)
+            }
+            rootView.removeView(view)
+        }
+    }
+
+    fun showAlert(title: String, message: String, activity: Activity) {
         AlertDialog.Builder(activity)
             .setTitle(title)
             .setMessage(message)
@@ -353,10 +383,10 @@ object Constant {
             .show()
     }
 
-    fun getAudioDurationInMinutes(filePath: String): Int {
+    fun getAudioDurationInMinutes(url: String): Int {
         val retriever = MediaMetadataRetriever()
         return try {
-            retriever.setDataSource(filePath)
+            retriever.setDataSource(url, HashMap())  // For network sources, use empty headers map
             val durationStr =
                 retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
             val durationMs = durationStr?.toLongOrNull() ?: 0L
@@ -368,6 +398,7 @@ object Constant {
             retriever.release()
         }
     }
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun getCurrentTime(): String {
