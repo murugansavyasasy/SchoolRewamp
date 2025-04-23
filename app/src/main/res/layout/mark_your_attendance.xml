@@ -29,7 +29,7 @@
             android:id="@+id/btnAttendanceHistory"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:layout_weight="1"
             android:background="@drawable/bg_stroke_rect_black"
             android:gravity="center"
@@ -129,9 +129,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
-                    android:layout_toRightOf="@+id/imgLocation"
+                    android:layout_toEndOf="@+id/imgLocation"
                     android:text="@string/to_enhance_your_experience_and_provide_accurate_location_based_features_please_enable_gps"
                     android:textColor="@color/grey"
                     android:textSize="15dp" />
@@ -261,17 +261,17 @@
                     android:layout_height="match_parent"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center"
-                    android:layout_toLeftOf="@+id/imgYearDropDown"
+                    android:layout_toStartOf="@+id/imgYearDropDown"
                     android:background="@android:color/transparent"
-                    android:gravity="left"
-                    android:paddingLeft="10dp"
+                    android:gravity="start"
+                    android:paddingStart="10dp"
                     android:spinnerMode="dropdown" />
 
                 <ImageView
                     android:id="@+id/imgYearDropDown"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center"
                     android:src="@drawable/ic_drop_down" />
@@ -282,8 +282,8 @@
                 android:id="@+id/rytMonths"
                 android:layout_width="140dp"
                 android:layout_height="40dp"
-                android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@+id/rytYears"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@+id/rytYears"
                 android:background="@drawable/bg_spinner_rect">
 
                 <Spinner
@@ -292,17 +292,17 @@
                     android:layout_height="match_parent"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center"
-                    android:layout_toLeftOf="@+id/imgMonthDropDown"
+                    android:layout_toStartOf="@+id/imgMonthDropDown"
                     android:background="@android:color/transparent"
-                    android:gravity="left"
-                    android:paddingLeft="10dp"
+                    android:gravity="start"
+                    android:paddingStart="10dp"
                     android:spinnerMode="dropdown" />
 
                 <ImageView
                     android:id="@+id/imgMonthDropDown"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center"
                     android:src="@drawable/ic_drop_down" />
@@ -343,7 +343,7 @@
         android:id="@+id/rytAddLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_margin="15dp"
         android:visibility="gone">
@@ -353,8 +353,8 @@
             android:id="@+id/rytAdd"
             android:layout_width="55dp"
             android:layout_height="55dp"
-            android:layout_marginRight="30dp"
-            android:layout_alignParentRight="true"
+            android:layout_marginEnd="30dp"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:background="@drawable/bg_circle_add_location">
 
@@ -372,7 +372,7 @@
             android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_below="@+id/rytAdd"
             android:text="@string/add_punch_location"
             android:textColor="@color/black"

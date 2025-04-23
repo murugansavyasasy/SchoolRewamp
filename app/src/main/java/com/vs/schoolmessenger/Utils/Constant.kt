@@ -1,13 +1,13 @@
 package com.vs.schoolmessenger.Utils
 
 import android.app.Activity
-import android.util.TypedValue
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
+import android.location.LocationManager
 import android.media.MediaMetadataRetriever
 import android.net.ConnectivityManager
 import android.net.Uri
@@ -17,6 +17,7 @@ import android.os.Looper
 import android.provider.Settings
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -155,6 +156,8 @@ object Constant {
     var isTextSendingData: TextSendingData? = null
     var isClickType = 1
     var isVoiceType = 1
+
+    var isBioMetricEnable: Int = -1
 
 
     fun isInternetAvailable(activity: Activity): Boolean {
@@ -502,6 +505,11 @@ object Constant {
         val calendar = Calendar.getInstance()
         calendar.add(Calendar.MINUTE, 20)
         return dateFormat.format(calendar.time)
+    }
+
+    fun isGPSEnabled(context: Context): Boolean {
+        val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
     }
 
 }

@@ -50,7 +50,7 @@ object ShimmerUtil {
                         }
 
                         child.setTextColor(Color.TRANSPARENT)
-                        child.setBackgroundColor("#DDDDDD".toColorInt())
+                        child.setBackgroundColor("#ACACBA".toColorInt())
                     }
 
                     is ViewGroup -> hideViewsDuringShimmer(child)
