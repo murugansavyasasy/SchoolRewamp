@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.vs.schoolmessenger.AWS.S3Uploader.UploadCallbackResponse
 import com.vs.schoolmessenger.Repository.RestClient
-import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -74,7 +73,8 @@ class AwsUploadingPreSigned {
         var fileExtension: String?
 
         isBucket = AWSKeys.SCHOOL_CHIMES_COMMUNICATION
-        bucketPath = "$instituteID/$currentDate"
+        val isFolderName = "communication"
+        bucketPath = "$isFolderName/$instituteID/$currentDate"
 
         Log.d("isBucket", isBucket)
 

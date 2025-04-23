@@ -45,7 +45,7 @@ import com.vs.schoolmessenger.databinding.ParentHomeFragmentBinding
 
 class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
-    private lateinit var binding: ParentHomeFragmentBinding // Automatically generated binding class
+    private lateinit var binding: ParentHomeFragmentBinding
     lateinit var isMenuAdapter: ChildMenuAdapter
     private lateinit var aditems: List<AdItem>
     private var isSearchVisible = false

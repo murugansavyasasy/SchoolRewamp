@@ -276,7 +276,7 @@
         android:id="@+id/textdesc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/nomessage"
+        android:layout_below="@+id/nomessageEntire"
         style="@style/CustomTextStylePoppinsBold"
         android:gravity="center"
         android:padding="16dp"
@@ -375,6 +375,18 @@
         android:textColor="@color/black"
         android:textSize="18sp"
         android:src="@drawable/nodataimage"
+        android:layout_gravity="center"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        android:layout_marginTop="20dp" />
+
+    <ImageView
+        android:id="@+id/nomessageEntire"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:src="@drawable/ic_entire_school_send"
         android:layout_gravity="center"
         android:layout_centerInParent="true"
         android:visibility="gone"

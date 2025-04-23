@@ -454,15 +454,13 @@ object Constant {
         }
     }
 
-
-    fun getAudioDurationInMinutes(url: String): Int {
+    fun getAudioDurationInSeconds(url: String): Int {
         val retriever = MediaMetadataRetriever()
         return try {
-            retriever.setDataSource(url, HashMap())  // For network sources, use empty headers map
-            val durationStr =
-                retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
+            retriever.setDataSource(url, HashMap()) // For network sources, use empty headers map
+            val durationStr = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
             val durationMs = durationStr?.toLongOrNull() ?: 0L
-            (durationMs / 1000 / 60).toInt()
+            (durationMs / 1000).toInt()
         } catch (e: Exception) {
             e.printStackTrace()
             0
@@ -470,6 +468,27 @@ object Constant {
             retriever.release()
         }
     }
+
+
+
+    fun getAudioDurationInMinutes(url: String): String {
+        val retriever = MediaMetadataRetriever()
+        return try {
+            retriever.setDataSource(url, HashMap()) // For network sources, use empty headers map
+            val durationStr = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
+            val durationMs = durationStr?.toLongOrNull() ?: 0L
+            val totalSeconds = durationMs / 1000
+            val minutes = totalSeconds / 60
+            val seconds = totalSeconds % 60
+            String.format("%02d:%02d", minutes, seconds)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            "00:00"
+        } finally {
+            retriever.release()
+        }
+    }
+
 
 
     @RequiresApi(Build.VERSION_CODES.O)

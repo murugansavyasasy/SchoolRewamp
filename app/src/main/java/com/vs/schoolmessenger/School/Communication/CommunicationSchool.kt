@@ -64,8 +64,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     private var mediaRecorder: MediaRecorder? = null
     private var isRecording = false
     private var audioFilePath: String? = null
-    private var isPlayingVoice = false // Track the playback state
-    private var lastPosition: Int = 0 // Variable to hold the last playback position
+    private var isPlayingVoice = false
+    private var lastPosition: Int = 0
     var mediaPlayer: MediaPlayer? = null
     private val REQUEST_PERMISSIONS = 100
     var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
@@ -109,6 +109,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     override fun setupViews() {
         super.setupViews()
         setupToolbar()
+        setUpGradientSchool()
 
         binding.lblHistoryList.paintFlags =
             binding.lblHistoryList.paintFlags or Paint.UNDERLINE_TEXT_FLAG
@@ -158,6 +159,12 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
         binding.lblStartTime.text = Constant.getCurrentTime()
         binding.lblEndTime.text = Constant.getTimeAfter20Minutes()
+
+        if (isUserDetails!!.staff_role == "p3") {
+            binding.rlaScheduleCall.visibility = View.GONE
+        } else {
+            binding.rlaScheduleCall.visibility = View.VISIBLE
+        }
 
         appViewModel!!.isGetVoiceHistory?.observe(this) { response ->
             if (response != null && response.status) {
@@ -337,7 +344,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
             val dir = externalCacheDir ?: cacheDir
             val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
-            val fileName = "SSS_Communication_$timeStamp.mp3"
+            val fileName = "Communication_$timeStamp.mp3"
             val filePath = "${dir.absolutePath}/$fileName"
 
             audioFilePath = filePath
@@ -1178,7 +1185,10 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         binding.rlaSeekBarAndTitle.visibility = View.VISIBLE
         binding.rlaTitle.visibility = View.VISIBLE
         binding.edtTitle.setText(data.description.toString())
-        binding.lblEndDuration.text = "/ "+data.duration.toString()
+
+//        binding.lblEndDuration.text = "/ "+data.duration.toString()
+        binding.lblEndDuration.text = "/ " + Constant.getAudioDurationInMinutes(data.url)
+
         Constant.isVoiceType = 3
         // Get the URL or file path from the clicked item
         val voiceUrlOrPath =
@@ -1227,7 +1237,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     val timeStamp =
                         SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
                  var   isFileExtension = "mp3"
-                    val fileName = "SSS_Communication_${timeStamp}.$isFileExtension"
+                    val fileName = "Communication_${timeStamp}.$isFileExtension"
                     isFileName = fileName
                     // Copy file to app cache
                     val inputStream = contentResolver.openInputStream(uri)

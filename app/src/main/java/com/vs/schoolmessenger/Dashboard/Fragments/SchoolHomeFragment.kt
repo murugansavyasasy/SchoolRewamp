@@ -61,7 +61,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     var isMenuDetails: List<MenuDetail>? = null
     var isAdItem: List<AdItem>? = null
     var isAdsDisplayOptions: AdsDisplayOptions? = null
-
     var access_token = ""
 
 
@@ -97,14 +96,13 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             binding.lblSchoolAddress.visibility = View.VISIBLE
             Glide.with(requireActivity()).load(staffDetails!!.school_logo)
                 .into(binding.imgSchoolLogo)
-
         } else {
             access_token = userDetails!!.staff_details[0].access_token
             if (userDetails!!.staff_details.size > 1) {
                 binding.lblSchoolName.text = userDetails!!.role_name
-                binding.lblSchoolAddress.visibility = View.GONE
+//                binding.lblSchoolAddress.visibility = View.GONE
             } else {
-                binding.lblSchoolAddress.visibility = View.VISIBLE
+//                binding.lblSchoolAddress.visibility = View.VISIBLE
                 binding.lblSchoolName.text = userDetails!!.staff_details[0].school_name
                 if (staffDetails!!.school_name_regional != ""){
                     binding.lblSchoolRegionalName.visibility= View.VISIBLE
@@ -117,9 +115,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     .into(binding.imgSchoolLogo)
             }
         }
-
-
-
 
         if (userDetails!!.is_parent && userDetails!!.is_staff) {
             binding.changeroll.visibility = View.VISIBLE
@@ -146,7 +141,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         appViewModel!!.isDashBoardData?.observe(requireActivity()) { response ->
             if (response != null) {
                 val status = response.status
-                val message = response.message
+                response.message
                 if (status) {
                     val isDashboardResponse = response.data
                     isDashBoardData = isDashboardResponse
@@ -160,7 +155,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         appViewModel!!.isGetAds?.observe(requireActivity()) { response ->
             if (response != null) {
                 val status = response.status
-                val message = response.message
+                response.message
                 if (status) {
                     isAdItem = response.data
 //

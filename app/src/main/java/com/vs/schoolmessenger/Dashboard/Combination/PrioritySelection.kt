@@ -50,7 +50,11 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
                 binding.lblTeacher.visibility = View.VISIBLE
                 binding.lblParent.visibility = View.VISIBLE
                 binding.lblLoginTeacherOrParent.visibility = View.VISIBLE
-                binding.lblLoginTeacherOrParent.text = "Login As $roleName or Student"
+                if (staffRole == Constant.isPrincipalRole) {
+                    binding.lblLoginTeacherOrParent.text = "Login As Management or Student / Parent"
+                } else {
+                    binding.lblLoginTeacherOrParent.text = "Login As $roleName or Student / Parent"
+                }
                 isLoadData(true)
             }
 
@@ -86,7 +90,7 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
         }
 
         if (isParent) {
-            binding.lblParent.text = "Student"
+            binding.lblParent.text = "Student / Parent"
         }
 
         binding.btnGo.setOnClickListener {

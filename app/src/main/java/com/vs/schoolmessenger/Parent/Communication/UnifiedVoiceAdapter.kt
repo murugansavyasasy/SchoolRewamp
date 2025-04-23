@@ -165,13 +165,13 @@ class UnifiedVoiceAdapter(
                 imgVoicePlay.setOnClickListener {
                     listener.onItemClick(data, this@DataViewHolder)
                     lblnewiconVoice.visibility = View.GONE
-
                     if (data.is_unread) {
                         if (data.is_archive) {
                             listener.onUpdateArchiveStatus(data.type, data.id)
                         } else {
                             listener.onUpdateCommunicationStatus(data.type, data.id)
                         }
+                        data.is_unread = false
                     }
 
                     if (adapter.currentlyPlayingHolder != null && adapter.currentlyPlayingHolder != this) {
@@ -217,6 +217,7 @@ class UnifiedVoiceAdapter(
                             } else {
                                 lblnewiconText.visibility = View.GONE
                             }
+                            data.is_unread = false
                         } else {
                             if (data.is_unread) {
                                 lblSeeMore.visibility = View.VISIBLE
@@ -225,6 +226,7 @@ class UnifiedVoiceAdapter(
                                 lblSeeMore.visibility = View.GONE
                                 lblnewiconText.visibility = View.GONE
                             }
+                            data.is_unread = false
                         }
                     }
                 })

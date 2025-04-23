@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
     android:layout_height="match_parent">
 
     <ScrollView
@@ -89,13 +90,13 @@
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/ten"
-                android:orientation="horizontal"
-                android:weightSum="3">
+                android:orientation="horizontal">
 
 
-                <RelativeLayout
+
+            <RelativeLayout
                     android:id="@+id/rlaVoiceMessage"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/rect_sky_blue_shadow">
@@ -131,7 +132,8 @@
 
                 <RelativeLayout
                     android:id="@+id/rlaScheduleCall"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
+                    android:visibility="visible"
                     android:layout_height="wrap_content"
                     android:layout_weight="1">
 
@@ -166,7 +168,7 @@
 
                 <RelativeLayout
                     android:id="@+id/rlaTextMessage"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1">
 

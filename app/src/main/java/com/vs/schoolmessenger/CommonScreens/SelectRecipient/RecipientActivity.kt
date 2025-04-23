@@ -117,7 +117,9 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 when (tab?.position) {
                     0 -> {
-                        binding.nomessage.visibility = View.VISIBLE
+
+                        binding.nomessageEntire.visibility = View.VISIBLE
+                        binding.nomessage.visibility = View.GONE
                         binding.txtNoData.visibility = View.GONE
                         binding.lblCreatedOn.visibility = View.GONE
                         binding.chAllSelect.isChecked = false
@@ -138,6 +140,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
                     1 -> {
                         binding.nomessage.visibility =View.GONE
+                        binding.nomessageEntire.visibility =View.GONE
                         binding.lblCreatedOn.visibility = View.GONE
                         binding.txtNoData.visibility = View.GONE
                         isSelectedType = 1
@@ -161,6 +164,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
                     2 -> {
                         binding.nomessage.visibility =View.GONE
+                        binding.nomessageEntire.visibility =View.GONE
                         binding.txtNoData.visibility = View.GONE
                         binding.lblCreatedOn.visibility = View.GONE
                         binding.chAllSelect.isChecked = false
@@ -187,6 +191,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
                     3 -> {
                         binding.nomessage.visibility =View.GONE
+                        binding.nomessageEntire.visibility =View.GONE
                         binding.txtNoData.visibility = View.GONE
                         binding.chAllSelect.visibility = View.GONE
                         binding.chAllSelect.isChecked = false
@@ -212,6 +217,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
                     4 -> {
                         binding.nomessage.visibility =View.GONE
+                        binding.nomessageEntire.visibility =View.GONE
                         binding.lblCreatedOn.visibility = View.GONE
                         binding.recyclerView.visibility = View.GONE
                         binding.txtNoData.visibility = View.GONE
@@ -263,9 +269,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         isGetStandardSection()
                     }
                     tapVisibility(tabLayout)
-                    binding.nomessage.visibility =
-                        if (isUserDetails!!.staff_role.toString()
-                                .equals(Constant.isStaff.toString())
+                    binding.nomessageEntire.visibility =
+                        if (isUserDetails!!.staff_role.toString() == Constant.isStaff.toString()
                         ) View.GONE else View.VISIBLE
                 } else {
                     binding.lblSupportMail.paintFlags =
@@ -275,45 +280,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 }
             }
         }
-
-
-//        appViewModel!!.isGetAcademicList?.observe(this) { response ->
-//            if (response != null) {
-//                response.data.let { academicList ->
-//                    val reorderedList = academicList.sortedByDescending { it.current_academic_year }
-//                    isAcademicYear = reorderedList
-//
-//                    for (item in isAcademicYear.orEmpty()) {
-//                        if (item.current_academic_year == true) {
-//                            isValidAcademicYear = true
-//                            break
-//                        }
-//                    }
-//                    binding.lblAcademicYear.text = isAcademicYear!![0].year
-//                    isAcademicYearId = isAcademicYear!![0].id
-//                    isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
-//
-//                    if (isValidAcademicYear) {
-//                        binding.rytAcademicYear.visibility = View.GONE
-//                        binding.tabLayout.visibility = View.VISIBLE
-//                        if (isSelectedType != 0) {
-//                            isGetStandardSection()
-//                        }
-//                        tapVisibility(tabLayout)
-//                        if (isUserDetails!!.staff_role.equals(Constant.isStaff)) {
-//                            binding.nomessage.visibility = View.GONE
-//                        } else {
-//                            binding.nomessage.visibility = View.VISIBLE
-//                        }
-//                    } else {
-//                        binding.lblSupportMail.paintFlags =
-//                            binding.lblSupportMail.paintFlags or Paint.UNDERLINE_TEXT_FLAG
-//                        binding.rytAcademicYear.visibility = View.VISIBLE
-//                        binding.tabLayout.visibility = View.GONE
-//                    }
-//                }
-//            }
-//        }
 
         appViewModel!!.isGetGroupList?.observe(this) { response ->
             if (response != null) {
@@ -485,27 +451,40 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
         if(isUserDetails!!.staff_role == Constant.isStaffRole){
             if(SELECTED_SCHOOL_MENU == SH_HOMEWORK){
-                tabLayout.getTabAt(0)?.view?.visibility = View.GONE
-                tabLayout.getTabAt(1)?.view?.visibility = View.GONE
-                tabLayout.getTabAt(3)?.view?.visibility = View.GONE
-                tabLayout.getTabAt(4)?.view?.visibility = View.GONE
-                tabLayout.getTabAt(2)?.select()
+                tabLayout.post {
+                    tabLayout.getTabAt(0)?.view?.visibility = View.GONE
+                    binding.nomessage.visibility = View.GONE
+                    binding.nomessageEntire.visibility = View.GONE
+                    tabLayout.getTabAt(1)?.view?.visibility = View.GONE
+                    tabLayout.getTabAt(3)?.view?.visibility = View.GONE
+                    tabLayout.getTabAt(4)?.view?.visibility = View.GONE
+                    tabLayout.getTabAt(2)?.select()
 
+                }
                //show send button only
 
             }
             else if(SELECTED_SCHOOL_MENU == SH_ASSIGNMENT){
-                tabLayout.getTabAt(0)?.view?.visibility = View.GONE
-                tabLayout.getTabAt(1)?.view?.visibility = View.GONE
-                tabLayout.getTabAt(3)?.view?.visibility = View.GONE
-                tabLayout.getTabAt(4)?.view?.visibility = View.GONE
-                tabLayout.getTabAt(2)?.select()
+                tabLayout.post {
+                    tabLayout.getTabAt(0)?.view?.visibility = View.GONE
+                    binding.nomessage.visibility = View.GONE
+                    binding.nomessageEntire.visibility = View.GONE
+                    tabLayout.getTabAt(1)?.view?.visibility = View.GONE
+                    tabLayout.getTabAt(3)?.view?.visibility = View.GONE
+                    tabLayout.getTabAt(4)?.view?.visibility = View.GONE
+                    tabLayout.getTabAt(2)?.select()
+                }
 
                 //show send and specific student button
             }
             else {
-                tabLayout.getTabAt(0)?.view?.visibility = View.GONE
-                tabLayout.getTabAt(4)?.view?.visibility = View.GONE
+                tabLayout.post {
+                    binding.nomessage.visibility = View.GONE
+                    binding.nomessageEntire.visibility = View.GONE
+                    tabLayout.getTabAt(0)?.view?.visibility = View.GONE
+                    tabLayout.getTabAt(4)?.view?.visibility = View.GONE
+                }
+
                 tabLayout.getTabAt(1)?.select()
 
             }
@@ -513,32 +492,38 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         }
         else{
             if(SELECTED_SCHOOL_MENU == SH_HOMEWORK){
-                tabLayout.getTabAt(0)?.view?.visibility = View.GONE
-                tabLayout.getTabAt(1)?.view?.visibility = View.GONE
-                tabLayout.getTabAt(3)?.view?.visibility = View.GONE
-                tabLayout.getTabAt(4)?.view?.visibility = View.GONE
-                tabLayout.getTabAt(2)?.select()
-
+                tabLayout.post {
+                    binding.nomessage.visibility = View.GONE
+                    binding.nomessageEntire.visibility = View.GONE
+                    tabLayout.getTabAt(0)?.view?.visibility = View.GONE
+                    tabLayout.getTabAt(1)?.view?.visibility = View.GONE
+                    tabLayout.getTabAt(3)?.view?.visibility = View.GONE
+                    tabLayout.getTabAt(4)?.view?.visibility = View.GONE
+                    tabLayout.getTabAt(2)?.select()
+                }
 
                 //show send button only
 
             }
             else if(SELECTED_SCHOOL_MENU == SH_ASSIGNMENT){
-                tabLayout.getTabAt(0)?.view?.visibility = View.GONE
-                tabLayout.getTabAt(1)?.view?.visibility = View.GONE
-                tabLayout.getTabAt(3)?.view?.visibility = View.GONE
-                tabLayout.getTabAt(4)?.view?.visibility = View.GONE
-                tabLayout.getTabAt(2)?.select()
+                tabLayout.post {
+                    binding.nomessage.visibility = View.GONE
+                    binding.nomessageEntire.visibility = View.GONE
+                    tabLayout.getTabAt(0)?.view?.visibility = View.GONE
+                    tabLayout.getTabAt(1)?.view?.visibility = View.GONE
+                    tabLayout.getTabAt(3)?.view?.visibility = View.GONE
+                    tabLayout.getTabAt(4)?.view?.visibility = View.GONE
+                    tabLayout.getTabAt(2)?.select()
+                }
 
                 //show send and specific student button
             }
             else{
                 if (isUserDetails!!.staff_details.size > 1) {
                     tabLayout.post {
-                        tabLayout.getTabAt(0)?.view?.visibility = View.GONE
-                        binding.nomessage.visibility = View.GONE
+                        binding.nomessageEntire.visibility = View.VISIBLE
+                        tabLayout.getTabAt(0)?.view?.visibility = View.VISIBLE
                     }
-                    tabLayout.getTabAt(1)?.select()
                     isSelectedType = 1
                     isGetAcademicYear()
                 } else {
@@ -678,6 +663,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
 
             R.id.rlaStandard -> {
+                binding.chAllSelect.isChecked=false
                 isSectionId.clear()
                 isSectionSelectedIds.clear()
                 showStandardDropdown(

@@ -30,7 +30,7 @@ object ApiCallRequest {
         jsonObject.addProperty("target_type", targetType)
         jsonObject.addProperty("circular_type", circularType)
         jsonObject.addProperty(
-            "duration", Constant.getAudioDurationInMinutes(isFileUploaded.toString())
+            "duration", Constant.getAudioDurationInSeconds(isFileUploaded.toString())
         )
 
         val startTime: String
