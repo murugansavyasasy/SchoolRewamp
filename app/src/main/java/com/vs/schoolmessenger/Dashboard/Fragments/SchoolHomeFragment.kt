@@ -74,7 +74,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         binding.imgSearchClick.setOnClickListener(this)
         binding.changeroll.setOnClickListener(this)
 
-        appViewModel = ViewModelProvider(this).get(App::class.java)
+        appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
         binding.changeroll.paintFlags = binding.changeroll.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
