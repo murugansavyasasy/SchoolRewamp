@@ -18,9 +18,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/twenty"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
         android:layout_marginTop="@dimen/five"
-        android:layout_marginEnd="@dimen/twenty"
         android:background="@drawable/rect_shadow_white">
 
         <TextView

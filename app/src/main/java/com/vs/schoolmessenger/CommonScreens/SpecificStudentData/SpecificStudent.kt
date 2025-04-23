@@ -282,8 +282,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                         )
                     }
                 } else {
-                    Constant.showAlert(
-                        "Alert!",
+                    Constant.showValidationAlertPopup(
                         "Please select at least one student to send the message.",
                         this
                     )

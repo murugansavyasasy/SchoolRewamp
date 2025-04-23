@@ -207,6 +207,7 @@
     <string name="send_to">Send To :</string>
     <string name="click_the_send_button_to_send_an_important_announcement_from_entier_school">Click the SEND button to send an important announcement from Entier School</string>
     <string name="send">Send</string>
+    <string name="Tap_share_message_everyone_school">Tap "SEND" to share this message with everyone in the school.</string>
     <string name="specific_student">Specific Student</string>
     <string name="admission_no">Admission No</string>
     <string name="role_no">Role No</string>

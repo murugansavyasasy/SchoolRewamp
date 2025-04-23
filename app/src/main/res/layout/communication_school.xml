@@ -497,15 +497,36 @@ android:visibility="gone"                        android:layout_width="@dimen/tw
 
                     </TextView>
 
-                    <EditText
-                        android:id="@+id/edtTitleTextMessage"
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/thirteen_sp"
-                        android:layout_marginStart="@dimen/ten"
-                        android:layout_marginEnd="@dimen/ten">
+                        android:layout_height="wrap_content">
 
-                    </EditText>
+                        <TextView
+                            android:id="@+id/lblCountOfTitle"
+                            android:layout_width="wrap_content"
+                            android:textColor="@color/grey"
+                            android:textSize="@dimen/thirteen_sp"
+                            android:text="0/50"
+                            android:layout_marginEnd="@dimen/ten"
+                            android:layout_below="@+id/edtTitleTextMessage"
+                            android:layout_alignParentEnd="true"
+                            android:layout_height="wrap_content">
+
+                        </TextView>
+                        <EditText
+                            android:id="@+id/edtTitleTextMessage"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLength="50"
+                            android:textSize="@dimen/thirteen_sp"
+                            android:layout_marginStart="@dimen/ten"
+                            android:layout_marginEnd="@dimen/ten">
+
+                        </EditText>
+
+                    </RelativeLayout>
+
+
 
                     <TextView
 
@@ -532,7 +553,7 @@ android:visibility="gone"                        android:layout_width="@dimen/tw
                         <TextView
                             android:id="@+id/lblCountOfDescription"
                             android:layout_width="wrap_content"
-                            android:text="12 / 500"
+                            android:text="0/500"
                             android:layout_alignParentEnd="true"
                             android:padding="@dimen/ten"
                             android:textSize="@dimen/thirteen_sp"
@@ -665,9 +686,6 @@ android:visibility="gone"                        android:layout_width="@dimen/tw
                         android:textSize="@dimen/thirteen_sp"
                         style="@style/CustomTextStylePoppinsBold">
                     </TextView>
-
-
-
 
 
                     <RelativeLayout
@@ -803,13 +821,35 @@ android:visibility="gone"                        android:layout_width="@dimen/tw
 
                         </TextView>
 
-                        <EditText
-                            android:id="@+id/edtTitle"
+
+
+                        <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="@dimen/thirteen_sp"
-                            android:layout_below="@+id/lblTitle">
-                        </EditText>
+                            android:layout_below="@+id/lblTitle"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/lblCountOfTitleVoice"
+                                android:layout_width="wrap_content"
+                                android:textColor="@color/grey"
+                                android:textSize="@dimen/thirteen_sp"
+                                android:text="0/50"
+                                android:layout_marginEnd="@dimen/ten"
+                                android:layout_below="@+id/edtTitle"
+                                android:layout_alignParentEnd="true"
+                                android:layout_height="wrap_content">
+
+                            </TextView>
+                            <EditText
+                                android:id="@+id/edtTitle"
+                                android:layout_width="match_parent"
+                                android:maxLength="50"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/thirteen_sp"
+                               >
+                            </EditText>
+                        </RelativeLayout>
+
 
                     </RelativeLayout>
 
