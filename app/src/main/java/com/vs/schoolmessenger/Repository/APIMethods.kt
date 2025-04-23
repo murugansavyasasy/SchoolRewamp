@@ -30,6 +30,14 @@ object APIMethods {
     const val isUpdateStatusArchive = "comm/communication/read-status-update-archive"
     const val isGetAcademicYear = "comm/recipient/get-academic-year-list"
 
+    const val send_homework = "comm/homework/send-homework"
+    const val homework_reports = "comm/homework/get-homework-report"
+    const val homework_list = "comm/homework/get-homework-list"
+    const val homework_list_archive = "comm/homework/get-homework-list-archive"
+    const val send_attachments = "comm/attachment/send-attachment"
+    const val attachments_list = "comm/communication/attachment-list"
+    const val attachments_list_archive = "comm/communication/attachment-list-archive"
+
 
     const val punch_giometric_attendance =  "staff-attd/geometric/entry-using-app"
     const val add_giometric_location =  "staff-attd/geometric/set-geometric-location"
