@@ -24,6 +24,8 @@ object SharedPreference {
     private const val SH_LOGOUT = "isLogout"
     private const val SH_TOKEN = "isToken"
     private const val SH_BASEURL = "isBaseUrl"
+    private const val SH_BIOMETRIC_ENABLED = "isBiometricEnabled"
+    private const val SH_BIOMETRIC_SKIP = "isBiometricSkip"
 
     val masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
 
@@ -249,5 +251,52 @@ object SharedPreference {
         )
         return sharedPreferences.getString(SH_BASEURL, "")
     }
+
+    fun putBiometricEnabled(activity: Activity, isEnable : Boolean) {
+        val sharedPreferences = EncryptedSharedPreferences.create(
+            SH_PREF,
+            masterKeyAlias,
+            activity,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
+        sharedPreferences.edit() { putBoolean(SH_BIOMETRIC_ENABLED, isEnable) }
+    }
+
+    fun getBiometricEnabled(activity: Context): Boolean? {
+
+        val sharedPreferences = EncryptedSharedPreferences.create(
+            SH_PREF,
+            masterKeyAlias,
+            activity,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
+        return sharedPreferences.getBoolean(SH_BIOMETRIC_ENABLED, false)
+    }
+
+    fun putBiometricSkip(activity: Activity, isEnable : Boolean) {
+        val sharedPreferences = EncryptedSharedPreferences.create(
+            SH_PREF,
+            masterKeyAlias,
+            activity,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
+        sharedPreferences.edit() { putBoolean(SH_BIOMETRIC_SKIP, isEnable) }
+    }
+
+    fun getBiometricSkip(activity: Context): Boolean? {
+
+        val sharedPreferences = EncryptedSharedPreferences.create(
+            SH_PREF,
+            masterKeyAlias,
+            activity,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
+        return sharedPreferences.getBoolean(SH_BIOMETRIC_SKIP, false)
+    }
+
 
 }

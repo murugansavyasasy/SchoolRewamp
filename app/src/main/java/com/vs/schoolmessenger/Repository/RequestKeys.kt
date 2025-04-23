@@ -16,6 +16,19 @@ object RequestKeys {
 
     const val from_date = "from_date"
     const val to_date = "to_date"
+    const val date = "date"
+    const val duration = "duration"
+    const val is_emergency = "is_emergency"
+
+    const val title = "title"
+    const val description = "description"
+    const val target_type = "target_type"
+    const val target_code = "target_code"
+    const val circular_type = "circular_type"
+    const val academic_year_id = "academic_year_id"
+    const val section_code = "section_code"
+    const val subject_id = "subject_id"
+    const val file_path = "file_path"
 
 
 }

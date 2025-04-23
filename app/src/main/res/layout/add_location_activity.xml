@@ -54,9 +54,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
-                android:layout_toRightOf="@+id/imgLocation"
+                android:layout_toEndOf="@+id/imgLocation"
                 android:text="@string/to_enhance_your_experience_and_provide_accurate_location_based_features_please_enable_gps"
                 android:textColor="@color/grey"
                 android:textSize="15dp" />
@@ -160,7 +160,7 @@
                         android:layout_below="@+id/lblNote"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="left"
+                        android:gravity="start"
                         android:text="@string/location_add_instructions_attendance"
                         android:textColor="@color/black"
                         android:textSize="13dp"
@@ -182,7 +182,7 @@
                     android:id="@+id/txtLocationName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:hint="@string/enter_location_name"
                     android:inputType="text"
                     android:textColorHint="@color/grey_light"
@@ -202,7 +202,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp">
 
 
@@ -219,7 +219,7 @@
                             android:layout_height="match_parent"
                             android:layout_centerVertical="true"
                             android:layout_gravity="center"
-                            android:layout_toLeftOf="@+id/imgDropCountry"
+                            android:layout_toStartOf="@+id/imgDropCountry"
                             android:background="@android:color/transparent"
                             android:gravity="left"
                             android:paddingLeft="10dp"
@@ -229,7 +229,7 @@
                             android:id="@+id/imgDropCountry"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:layout_gravity="center"
                             android:src="@drawable/ic_drop_down" />
@@ -241,9 +241,9 @@
                         android:id="@+id/txtMeters"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
                         android:layout_marginTop="10dp"
-                        android:layout_toRightOf="@+id/rytSpinnertMetres"
+                        android:layout_toEndOf="@+id/rytSpinnertMetres"
                         android:hint=""
                         android:inputType="number"
                         android:textColor="@color/black"
@@ -319,7 +319,7 @@
 
                     android:id="@+id/btnViewLocations"
                     android:layout_marginTop="10dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"
                     android:gravity="center"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
