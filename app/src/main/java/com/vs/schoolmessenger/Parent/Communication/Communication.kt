@@ -150,7 +150,7 @@ class Communication : BaseActivity<CommunicationBinding>(), View.OnClickListener
 
         if (currentSearchQuery.isNotEmpty()) {
             filteredList = filteredList.filter {
-                it.description?.contains(currentSearchQuery, ignoreCase = true) == true ||
+                it.content?.contains(currentSearchQuery, ignoreCase = true) == true ||
                         it.content?.contains(currentSearchQuery, ignoreCase = true) == true
             }
         }

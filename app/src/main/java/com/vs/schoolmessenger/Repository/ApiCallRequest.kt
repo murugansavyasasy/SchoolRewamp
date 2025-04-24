@@ -25,12 +25,12 @@ object ApiCallRequest {
         fileName: String
     ): JsonObject {
         val jsonObject = JsonObject()
-        jsonObject.addProperty("academic_year_id", isAcademicYearId)
-        jsonObject.addProperty("voice_link", isFileUploaded)
-        jsonObject.addProperty("target_type", targetType)
-        jsonObject.addProperty("circular_type", circularType)
+        jsonObject.addProperty(RequestKeys.academic_year_id, isAcademicYearId)
+        jsonObject.addProperty(RequestKeys.voice_link, isFileUploaded)
+        jsonObject.addProperty(RequestKeys.target_type, targetType)
+        jsonObject.addProperty(RequestKeys.circular_type, circularType)
         jsonObject.addProperty(
-            "duration", Constant.getAudioDurationInSeconds(isFileUploaded.toString())
+            RequestKeys.duration, Constant.getAudioDurationInSeconds(isFileUploaded.toString())
         )
 
         val startTime: String
@@ -43,12 +43,12 @@ object ApiCallRequest {
             endTime = Constant.getCurrentTime()
         }
 
-        jsonObject.addProperty("description", title)
-        jsonObject.addProperty("is_emergency", isEmergency)
-        jsonObject.addProperty("is_schedule", isScheduleCall)
-        jsonObject.addProperty("start_time", startTime)
-        jsonObject.addProperty("end_time", endTime)
-        jsonObject.addProperty("file_name", fileName)
+        jsonObject.addProperty(RequestKeys.title, title)
+        jsonObject.addProperty(RequestKeys.is_emergency, isEmergency)
+        jsonObject.addProperty(RequestKeys.is_schedule, isScheduleCall)
+        jsonObject.addProperty(RequestKeys.start_time, startTime)
+        jsonObject.addProperty(RequestKeys.end_time, endTime)
+        jsonObject.addProperty(RequestKeys.file_name, fileName)
 
         val jsonArray = JsonArray()
         if (isClickType == 2) {
@@ -56,11 +56,11 @@ object ApiCallRequest {
         } else {
             jsonArray.add(Constant.getCurrentDate())
         }
-        jsonObject.add("schedule_date", jsonArray)
+        jsonObject.add(RequestKeys.schedule_date, jsonArray)
 
         val jsonArray1 = JsonArray()
         schoolId.forEach { jsonArray1.add(it) }
-        jsonObject.add("target_code", jsonArray1)
+        jsonObject.add(RequestKeys.target_code, jsonArray1)
 
         return jsonObject
     }
@@ -75,11 +75,11 @@ object ApiCallRequest {
         val jsonObject = JsonObject()
         val jsonArray = JsonArray()
         schoolId.forEach { jsonArray.add(it) }
-        jsonObject.addProperty("academic_year_id", isAcademicYearId)
-        jsonObject.add("target_code", jsonArray)
-        jsonObject.addProperty("target_type", targetType)
-        jsonObject.addProperty("message", message)
-        jsonObject.addProperty("description", description)
+        jsonObject.addProperty(RequestKeys.academic_year_id, isAcademicYearId)
+        jsonObject.add(RequestKeys.target_code, jsonArray)
+        jsonObject.addProperty(RequestKeys.target_type, targetType)
+        jsonObject.addProperty(RequestKeys.title, message)
+        jsonObject.addProperty(RequestKeys.content, description)
 
         return jsonObject
     }

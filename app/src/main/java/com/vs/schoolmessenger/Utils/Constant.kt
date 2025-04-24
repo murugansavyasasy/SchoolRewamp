@@ -118,8 +118,8 @@ object Constant {
     val SH_ATTACHMENTS = 0
     val SH_SCHOOL_NEEDS = 0
     val SH_FEE_PENDING_REPORT = 0
-    val SH_MARK_GEOMETRIC_ATTENDANCE = 0
-    val SH_STAFF_WISE_GEOMETRIC_ATTENDANCE_REPORT = 0
+    val SH_MARK_GEOMETRIC_ATTENDANCE = 1021
+    val SH_STAFF_WISE_GEOMETRIC_ATTENDANCE_REPORT = 1022
     val SH_PTM = 0
     val SH_INTERACTION_WITH_STUDENT = 16
 
@@ -200,12 +200,12 @@ object Constant {
         context.startActivity(intent)
     }
 
-    fun redirectToMail(context: Context, mail: String) {
+    fun redirectToMail(context: Context, mail: String,sub : String , body : String) {
         val intent = Intent(Intent.ACTION_SENDTO).apply {
             data = Uri.parse("mailto:") // Ensures only email apps handle this
             putExtra(Intent.EXTRA_EMAIL, arrayOf(mail)) // Recipient email address
-            putExtra(Intent.EXTRA_SUBJECT, "") // Subject
-            putExtra(Intent.EXTRA_TEXT, "") // Email body
+            putExtra(Intent.EXTRA_SUBJECT, sub) // Subject
+            putExtra(Intent.EXTRA_TEXT, body) // Email body
         }
 // Verify that there is an email app to handle the intent
         val emailApps = context.packageManager.queryIntentActivities(intent, 0)
@@ -529,6 +529,19 @@ object Constant {
     fun isGPSEnabled(context: Context): Boolean {
         val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+    }
+
+    fun hideLoading(context: Activity) {
+        val rootView = context.findViewById<ViewGroup>(android.R.id.content)
+        val loader = rootView.findViewById<View>(R.id.loader_root)
+        loader?.let { rootView.removeView(it) }
+    }
+
+    fun showLoading(context: Activity) {
+        val rootView = context.findViewById<ViewGroup>(android.R.id.content)
+        val loaderView = LayoutInflater.from(context).inflate(R.layout.lottie_loader, rootView, false)
+        rootView.addView(loaderView)
+
     }
 
 }

@@ -17,18 +17,27 @@ object RequestKeys {
     const val from_date = "from_date"
     const val to_date = "to_date"
     const val date = "date"
+    const val schedule_date = "schedule_date"
+    const val start_time = "start_time"
+    const val end_time = "end_time"
+    const val file_name = "file_name"
+    const val is_schedule = "is_schedule"
     const val duration = "duration"
     const val is_emergency = "is_emergency"
 
     const val title = "title"
+    const val content = "content"
+    const val message = "message"
     const val description = "description"
     const val target_type = "target_type"
     const val target_code = "target_code"
+    const val voice_link = "voice_link"
     const val circular_type = "circular_type"
     const val academic_year_id = "academic_year_id"
     const val section_code = "section_code"
     const val subject_id = "subject_id"
     const val file_path = "file_path"
+    const val url = "url"
 
 
 }

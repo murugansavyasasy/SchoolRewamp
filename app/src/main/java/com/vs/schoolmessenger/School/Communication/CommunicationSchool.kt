@@ -1140,8 +1140,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         binding.rlaRecordVoice.visibility = View.GONE
         binding.rlaMessageFromText.visibility = View.VISIBLE
         binding.rlaSendText.visibility = View.VISIBLE
-        binding.edtTitleTextMessage.setText(data.content.toString())
-        binding.edtContentTextMessage.setText(data.description.toString())
+        binding.edtTitleTextMessage.setText(data.title.toString())
+        binding.edtContentTextMessage.setText(data.content.toString())
     }
 
     override fun onTimeSelected(hour: Int, minute: Int, amPm: String) {
@@ -1184,7 +1184,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         Constant.isVoiceFile = audioFilePath
         binding.rlaSeekBarAndTitle.visibility = View.VISIBLE
         binding.rlaTitle.visibility = View.VISIBLE
-        binding.edtTitle.setText(data.description.toString())
+        binding.edtTitle.setText(data.title.toString())
 
 //        binding.lblEndDuration.text = "/ "+data.duration.toString()
         binding.lblEndDuration.text = "/ " + Constant.getAudioDurationInMinutes(data.url)

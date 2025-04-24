@@ -250,7 +250,7 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
     }
 
     override fun onMailClick(data: StudentReportData) {
-        Constant.redirectToMail(this, data.email)
+        Constant.redirectToMail(this, data.email,"","")
     }
 
     override fun onPhoneClick(data: StudentReportData) {

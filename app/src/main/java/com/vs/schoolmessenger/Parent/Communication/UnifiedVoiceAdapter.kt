@@ -138,7 +138,7 @@ class UnifiedVoiceAdapter(
                 rlaVoice.visibility = View.VISIBLE
                 rlaText.visibility = View.GONE
 
-                lblTitle.text = data.description ?: ""
+                lblTitle.text = data.title ?: ""
                 lblDate.text = Constant.convertDateTimeFormat(data.date.toString())
                 lblTime.text = data.time ?: ""
                 lblnewiconVoice.visibility = if (data.is_unread) View.VISIBLE else View.GONE
@@ -192,7 +192,7 @@ class UnifiedVoiceAdapter(
             } else {
                 rlaVoice.visibility = View.GONE
                 rlaText.visibility = View.VISIBLE
-                lblTitleText.text = data.description ?: ""
+                lblTitleText.text = data.title ?: ""
                 lblContentText.text = data.content ?: ""
                 lblDateText.text = Constant.convertDateTimeFormat(data.date.toString())
                 lblTimeText.text = data.time ?: ""

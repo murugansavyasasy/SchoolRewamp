@@ -1,9 +1,10 @@
 package com.vs.schoolmessenger.Parent.Communication
 
 import com.google.gson.annotations.SerializedName
+import com.vs.schoolmessenger.Repository.ResponseKeys
 
 data class StatusArchiveResponse (
-    @SerializedName("status") val status: Boolean,
-    @SerializedName("message") val message: String,
-    @SerializedName("data") val data: List<Any>
+    @SerializedName(ResponseKeys.status) val status: Boolean,
+    @SerializedName(ResponseKeys.message) val message: String,
+    @SerializedName(ResponseKeys.data) val data: List<Any>
 )

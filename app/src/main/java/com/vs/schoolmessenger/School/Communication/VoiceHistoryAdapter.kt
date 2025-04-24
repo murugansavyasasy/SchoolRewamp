@@ -97,7 +97,7 @@ class VoiceHistoryAdapter(
             listener: VoiceHistoryClickListener,
             adapter: VoiceHistoryAdapter
         ) {
-            lblTitle.text = data.description
+            lblTitle.text = data.title
 
 
             val parts = data.sentOn.split(" ")

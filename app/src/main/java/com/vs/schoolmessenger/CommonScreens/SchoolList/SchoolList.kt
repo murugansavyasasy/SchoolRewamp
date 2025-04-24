@@ -103,19 +103,14 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         isGetAcademicYear()
 
         appViewModel!!.isVoiceSend?.observe(this) { response ->
-            val rootView = findViewById<ViewGroup>(android.R.id.content)
-            val loader = rootView.findViewById<View>(R.id.loader_root)
-            loader?.let { rootView.removeView(it) }
-
+            Constant.hideLoading(this@SchoolList)
             if (response != null && response.status) {
                 Constant.showTopAlertPopup(response.message, Constant.isCommunication,this)
             }
         }
 
         appViewModel!!.isSendText?.observe(this) { response ->
-            val rootView = findViewById<ViewGroup>(android.R.id.content)
-            val loader = rootView.findViewById<View>(R.id.loader_root)
-            loader?.let { rootView.removeView(it) }
+            Constant.hideLoading(this@SchoolList)
             if (response != null && response.status) {
                 Constant.showTopAlertPopup(response.message, Constant.isCommunication,this)
             }
@@ -139,12 +134,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
     }
 
     private fun isLoadData() {
-//        mAdapter = SchoolListAdapter(
-//            isMultipleSchool, selectedSchoolIds, null, this, this, Constant.isShimmerViewShow
-//        )
         binding.recycleSchools.layoutManager = LinearLayoutManager(this)
-//        binding.recycleSchools.adapter = mAdapter
-//        Constant.executeAfterDelay {
             mAdapter = SchoolListAdapter(
                 isMultipleSchool,
                 selectedSchoolIds,
@@ -154,7 +144,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                 Constant.isShimmerViewDisable
             )
             binding.recycleSchools.adapter = mAdapter
-      //  }
+
     }
 
     override fun onPause() {
@@ -336,15 +326,15 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
     @RequiresApi(Build.VERSION_CODES.O)
     fun showSendConfirmationDialog(isMessage: String) {
         val isTextData = Constant.isTextSendingData
+//        val rootView = findViewById<ViewGroup>(android.R.id.content)
+//        val loaderView = LayoutInflater.from(this).inflate(R.layout.lottie_loader, rootView, false)
 
-        val rootView = findViewById<ViewGroup>(android.R.id.content)
-        val loaderView = LayoutInflater.from(this).inflate(R.layout.lottie_loader, rootView, false)
-
+        Constant.showLoading(this@SchoolList)
         AlertDialog.Builder(this)
             .setTitle("Send Confirmation!")
             .setMessage(isMessage)
             .setPositiveButton("Yes") { dialog, _ ->
-                rootView.addView(loaderView)
+//                rootView.addView(loaderView)
                 if (Constant.isClickType == 3) {
                     val jsonObject = ApiCallRequest.isSendText(
                         isAcademicYearId = isAcademicYearId,

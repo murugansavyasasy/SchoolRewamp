@@ -24,6 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/ten"
+            android:layout_centerVertical="true"
             android:layout_toEndOf="@+id/imgBack"
             android:text="@string/select_recipient"
             android:textColor="@color/navi_blue2"
@@ -313,12 +314,13 @@
                 android:layout_weight="0.5"
                 android:background="@drawable/bg_gray"
                 android:gravity="center"
+                android:paddingHorizontal="@dimen/three"
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginEnd="@dimen/twenty"
                 android:enabled="false"
                 android:text="@string/specific_student"
                 android:textColor="@color/white"
-                android:textSize="@dimen/thirteen_sp"
+                android:textSize="@dimen/twele_sp"
                 android:textStyle="bold"
                 android:visibility="gone" />
 

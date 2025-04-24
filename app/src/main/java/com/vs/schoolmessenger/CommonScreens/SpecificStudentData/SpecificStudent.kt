@@ -68,6 +68,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
         isAwsUploadingPreSigned = AwsUploadingPreSigned()
 
         appViewModel!!.isStudentList!!.observe(this) { response ->
+            Constant.hideLoading(this@SpecificStudent)
             if (response != null && response.status) {
                 isStudentData = response.data
                 isStudentData()
@@ -87,17 +88,13 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
         }
 
         appViewModel!!.isVoiceSend?.observe(this) { response ->
-            val rootView = findViewById<ViewGroup>(android.R.id.content)
-            val loader = rootView.findViewById<View>(R.id.loader_root)
-            loader?.let { rootView.removeView(it) }
+            Constant.hideLoading(this@SpecificStudent)
             if (response != null && response.status) {
                 Constant.showTopAlertPopup(response.message, Constant.isCommunication,this)
             }
         }
         appViewModel!!.isSendText?.observe(this) { response ->
-            val rootView = findViewById<ViewGroup>(android.R.id.content)
-            val loader = rootView.findViewById<View>(R.id.loader_root)
-            loader?.let { rootView.removeView(it) }
+            Constant.hideLoading(this@SpecificStudent)
             if (response != null && response.status) {
                 Constant.showTopAlertPopup(response.message, Constant.isCommunication,this)
 
@@ -107,10 +104,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
 
     private fun isStudentData() {
 
-        mAdapter = SpecificStudentAdapter(null, this, this, Constant.isShimmerViewShow)
         binding.rcySpecificStudent.layoutManager = LinearLayoutManager(this)
-        binding.rcySpecificStudent.adapter = mAdapter
-        Constant.executeAfterDelay {
             mAdapter =
                 SpecificStudentAdapter(
                     isStudentData,
@@ -119,10 +113,11 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                     Constant.isShimmerViewDisable
                 )
             binding.rcySpecificStudent.adapter = mAdapter
-        }
+
     }
 
     private fun isGetStudentList(isSelectedId: ArrayList<String>, isAcademicYearId: Int) {
+        Constant.showLoading(this@SpecificStudent)
         appViewModel!!.isGetStudentList(
             isAccessToken!!,
             isSelectedId[0].toString(), isAcademicYearId, this
@@ -200,15 +195,13 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
         isTargetType = Constant.isStudent
         isCircularType = Constant.student
         val isTextData = Constant.isTextSendingData
-        val rootView = findViewById<ViewGroup>(android.R.id.content)
-        val loaderView = LayoutInflater.from(this).inflate(R.layout.lottie_loader, rootView, false)
 
         alertMessage.text = isMessage
         lblSelectTarget.text = isSelectTarget
 
         okButton.setOnClickListener {
             alertDialog.dismiss()
-            rootView.addView(loaderView)
+            Constant.showLoading(this@SpecificStudent)
 
             val isTextData = Constant.isTextSendingData
             if (Constant.isClickType == 3) {
@@ -272,12 +265,12 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
 
                     if (Constant.isClickType == 3) {
                         showSendConfirmationDialog(
-                            "Selected target : " + selectedIds.size.toString(),
+                            "Selected target : " + selectedIds.size.toString() +" Student (S)",
                             isAcademicYearNote.toString()
                         )
                     } else {
                         showSendConfirmationDialog(
-                            "Selected target : " + selectedIds.size.toString(),
+                            "Selected target : " + selectedIds.size.toString()+" Student (S)",
                             isAcademicYearNote.toString()
                         )
                     }

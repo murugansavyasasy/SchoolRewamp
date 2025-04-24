@@ -18,6 +18,8 @@ object ResponseKeys {
     const val date = "date"
     const val time = "time"
     const val duration = "duration"
+    const val content = "content"
+    const val subject = "subject"
     const val is_emergency = "is_emergency"
     const val is_archive = "is_archive"
     const val is_unread = "is_unread"
@@ -40,6 +42,9 @@ object ResponseKeys {
     const val subject_name = "subject_name"
     const val path = "path"
     const val type = "type"
+    const val sent_on = "sent_on"
+    const val school_id = "school_id"
+    const val header_id = "header_id"
 
 
 }
