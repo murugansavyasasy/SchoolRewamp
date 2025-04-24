@@ -38,6 +38,7 @@ import com.vs.schoolmessenger.School.Homework.HomeWork
 import com.vs.schoolmessenger.School.ImportantInfo.ImportantInfo
 import com.vs.schoolmessenger.School.InteractionWithStudent.InteractionWithStudent
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlan
+import com.vs.schoolmessenger.School.MarkYourAttendance.MarkYourAttendance
 import com.vs.schoolmessenger.School.MessageFromManagement.MessageFromManagement
 import com.vs.schoolmessenger.School.NoticeBoard.CreateNoticeBoard
 import com.vs.schoolmessenger.School.OnlineMeeting.OnlineMeeting
@@ -430,13 +431,13 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             Constant.SH_MARK_GEOMETRIC_ATTENDANCE -> {
                 if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
                     //go to geometric mark attendance page
-                    LessonPlan::class.java
+                    MarkYourAttendance::class.java
                 } else {
                     if (userDetails!!.staff_details.size > 1) {
                         SchoolList::class.java
                     } else {
                         //go to geometric mark attendance page
-                        LessonPlan::class.java
+                        MarkYourAttendance::class.java
                     }
                 }
             }

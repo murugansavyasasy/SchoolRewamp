@@ -144,7 +144,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         )
         binding.recycleSchools.layoutManager = LinearLayoutManager(this)
         binding.recycleSchools.adapter = mAdapter
-        Constant.executeAfterDelay {
+//        Constant.executeAfterDelay {
             mAdapter = SchoolListAdapter(
                 isMultipleSchool,
                 selectedSchoolIds,
@@ -154,7 +154,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                 Constant.isShimmerViewDisable
             )
             binding.recycleSchools.adapter = mAdapter
-        }
+//        }
     }
 
     override fun onPause() {

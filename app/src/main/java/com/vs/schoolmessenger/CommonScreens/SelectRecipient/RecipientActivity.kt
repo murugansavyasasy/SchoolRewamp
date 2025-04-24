@@ -446,7 +446,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     }
 
 
-
     private fun tapVisibility(tabLayout: TabLayout) {
 
         if(isUserDetails!!.staff_role == Constant.isStaffRole){
@@ -579,13 +578,13 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         )
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = isSectionAdapter
-        Constant.executeAfterDelay {
+//        Constant.executeAfterDelay {
             isSectionAdapter = SectionListAdapter(
                 isSection, this@RecipientActivity, this, Constant.isShimmerViewDisable
             )
             binding.recyclerView.adapter = isSectionAdapter
             binding.chAllSelect.visibility = View.VISIBLE
-        }
+//        }
 
     }
 
