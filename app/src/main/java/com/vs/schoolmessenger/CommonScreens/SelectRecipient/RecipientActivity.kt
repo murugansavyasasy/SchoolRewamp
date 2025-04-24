@@ -105,7 +105,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
 
         if (isStaffDetails!!.school_name_regional != ""){
-            binding.lblSchoolRegionalName.visibility= View.VISIBLE
+            binding.lblSchoolRegionalName.visibility= View.GONE
             binding.lblSchoolRegionalName.text = isStaffDetails!!.school_name_regional
         }else{
             binding.lblSchoolRegionalName.visibility= View.GONE
@@ -153,7 +153,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         isDropDown = false
                         isGetStandardSection()
                         binding.rlaStandard.visibility = View.GONE
-                        binding.grouplabel.text = "Standard"
+                        binding.grouplabel.text = "Standards"
                         binding.grouplabel.visibility = View.VISIBLE
                         binding.rlaSubject.visibility = View.GONE
                         binding.textdesc.visibility = View.GONE
@@ -333,7 +333,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     } else {
                         isLoadTheStandardData(isGetStandard)
                         binding.bottomLayout.visibility = View.VISIBLE
-                        binding.grouplabel.text = "Standard's"
+                        binding.grouplabel.text = "Standards"
                     }
 
                 } else {

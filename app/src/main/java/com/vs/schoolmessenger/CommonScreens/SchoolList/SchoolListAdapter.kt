@@ -83,7 +83,7 @@ class SchoolListAdapter(
 
             lblSchoolName.text = data.school_name
             if (data.school_name_regional != "") {
-                lblSchoolRegionalName.visibility = View.VISIBLE
+                lblSchoolRegionalName.visibility = View.GONE
                 lblSchoolRegionalName.text = data!!.school_name_regional
             } else {
                 lblSchoolRegionalName.visibility = View.GONE

@@ -87,7 +87,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             access_token = staffDetails!!.access_token
             binding.lblSchoolName.text = staffDetails!!.school_name
             if (staffDetails!!.school_name_regional != ""){
-                binding.lblSchoolRegionalName.visibility= View.VISIBLE
+                binding.lblSchoolRegionalName.visibility= View.GONE
                 binding.lblSchoolRegionalName.text = staffDetails!!.school_name_regional
             }else{
                 binding.lblSchoolRegionalName.visibility= View.GONE

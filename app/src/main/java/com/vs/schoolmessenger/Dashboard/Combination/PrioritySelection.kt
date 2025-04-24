@@ -51,9 +51,9 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
                 binding.lblParent.visibility = View.VISIBLE
                 binding.lblLoginTeacherOrParent.visibility = View.VISIBLE
                 if (staffRole == Constant.isPrincipalRole) {
-                    binding.lblLoginTeacherOrParent.text = "Login As Management or Student / Parent"
+                    binding.lblLoginTeacherOrParent.text = "Login As Management"
                 } else {
-                    binding.lblLoginTeacherOrParent.text = "Login As $roleName or Student / Parent"
+                    binding.lblLoginTeacherOrParent.text = "Login As Student/Parent"
                 }
                 isLoadData(true)
             }
@@ -90,7 +90,7 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
         }
 
         if (isParent) {
-            binding.lblParent.text = "Student / Parent"
+            binding.lblParent.text = "Student/Parent"
         }
 
         binding.btnGo.setOnClickListener {
@@ -146,6 +146,7 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
     private fun isBackRoundChange(isClickingId: TextView) {
         when (isClickingId) {
             binding.lblParent -> {
+                binding.lblLoginTeacherOrParent.text = "Login As Student/Parent"
                 binding.lblTeacher.background = null
                 binding.lblTeacher.setTextColor(ContextCompat.getColor(this, R.color.dark_blue))
                 binding.btnGo.visibility = View.GONE
@@ -155,6 +156,10 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
             }
 
             binding.lblTeacher -> {
+
+                if (userDetails!!.staff_role == Constant.isPrincipalRole) {
+                    binding.lblLoginTeacherOrParent.text = "Login As Management"
+                }
                 binding.lblParent.background = null
                 binding.lblParent.setTextColor(ContextCompat.getColor(this, R.color.dark_blue))
 

@@ -139,12 +139,12 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
     }
 
     private fun isLoadData() {
-        mAdapter = SchoolListAdapter(
-            isMultipleSchool, selectedSchoolIds, null, this, this, Constant.isShimmerViewShow
-        )
+//        mAdapter = SchoolListAdapter(
+//            isMultipleSchool, selectedSchoolIds, null, this, this, Constant.isShimmerViewShow
+//        )
         binding.recycleSchools.layoutManager = LinearLayoutManager(this)
-        binding.recycleSchools.adapter = mAdapter
-        Constant.executeAfterDelay {
+//        binding.recycleSchools.adapter = mAdapter
+//        Constant.executeAfterDelay {
             mAdapter = SchoolListAdapter(
                 isMultipleSchool,
                 selectedSchoolIds,
@@ -154,7 +154,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                 Constant.isShimmerViewDisable
             )
             binding.recycleSchools.adapter = mAdapter
-        }
+      //  }
     }
 
     override fun onPause() {
