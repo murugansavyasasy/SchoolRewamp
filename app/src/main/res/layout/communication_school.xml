@@ -506,7 +506,7 @@ android:visibility="gone"                        android:layout_width="@dimen/tw
                         <TextView
                             android:id="@+id/lblCountOfTitle"
                             android:layout_width="wrap_content"
-                            android:textColor="@color/grey"
+                            android:textColor="@color/black"
                             android:textSize="@dimen/thirteen_sp"
                             android:text="0/50"
                             android:layout_marginEnd="@dimen/ten"
@@ -548,9 +548,7 @@ android:visibility="gone"                        android:layout_width="@dimen/tw
                         android:layout_height="@dimen/two_hundred"
                         android:layout_marginStart="@dimen/ten"
                         android:layout_marginTop="@dimen/ten"
-                        android:layout_marginEnd="@dimen/ten"
-
-                       >
+                        android:layout_marginEnd="@dimen/ten">
 
                         <TextView
                             android:id="@+id/lblCountOfDescription"
@@ -559,7 +557,7 @@ android:visibility="gone"                        android:layout_width="@dimen/tw
                             android:layout_alignParentEnd="true"
                             android:padding="@dimen/ten"
                             android:textSize="@dimen/thirteen_sp"
-                            android:textColor="@color/grey"
+                            android:textColor="@color/black"
                             android:layout_alignParentBottom="true"
                             android:layout_height="wrap_content">
 
@@ -594,29 +592,31 @@ android:visibility="gone"                        android:layout_width="@dimen/tw
                     android:layout_marginBottom="@dimen/eight"
                     android:visibility="gone"
                     android:background="@drawable/rect_green_light_radious"
-                    android:padding="@dimen/ten">
+                    android:padding="@dimen/seven">
 
-                    <ImageView
-                        android:id="@+id/imgSend1"
-                        android:layout_width="@dimen/fifteen"
-                        android:layout_height="@dimen/fifteen"
-                        android:layout_centerVertical="true"
-                        android:layout_marginEnd="@dimen/five"
-                        android:src="@drawable/send_icon_white">
 
-                    </ImageView>
 
                     <TextView
+                        android:id="@+id/lblNExt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
                         android:layout_marginStart="@dimen/five"
-                        android:layout_toEndOf="@+id/imgSend1"
                         android:text="@string/NEXT"
+                        android:layout_centerVertical="true"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/thirteen_sp">
+                        android:textSize="@dimen/thirteen_sp"/>
 
-                    </TextView>
+                        <ImageView
+                            android:layout_toEndOf="@+id/lblNExt"
+                            android:id="@+id/imgSend1"
+                            android:layout_width="@dimen/fifteen"
+                            android:layout_height="@dimen/fifteen"
+                            android:layout_marginEnd="@dimen/five"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/rightwhitearrow"/>
+
+
+
                 </RelativeLayout>
 
 
@@ -807,9 +807,7 @@ android:visibility="gone"                        android:layout_width="@dimen/tw
                         android:layout_marginStart="@dimen/twenty"
                         android:layout_marginTop="@dimen/twenty"
                         android:visibility="gone"
-                        android:layout_marginEnd="@dimen/twenty"
-
-                        >
+                        android:layout_marginEnd="@dimen/twenty">
 
                         <TextView
                             android:id="@+id/lblTitle"
@@ -833,7 +831,7 @@ android:visibility="gone"                        android:layout_width="@dimen/tw
                             <TextView
                                 android:id="@+id/lblCountOfTitleVoice"
                                 android:layout_width="wrap_content"
-                                android:textColor="@color/grey"
+                                android:textColor="@color/black"
                                 android:textSize="@dimen/thirteen_sp"
                                 android:text="0/50"
                                 android:layout_marginEnd="@dimen/ten"

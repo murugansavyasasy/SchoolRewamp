@@ -63,7 +63,7 @@
         android:textStyle="normal" />
 
     <LinearLayout
-        android:id="@+id/linearlayout"
+        android:id="@+id/lnrAcademicYearView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/sendlabel"
@@ -117,23 +117,91 @@
     </LinearLayout>
 
 
-    <com.google.android.material.tabs.TabLayout
+
+    <LinearLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/linearlayout"
+        android:layout_height="@dimen/fourty"
+        android:layout_below="@+id/lnrAcademicYearView"
+        android:layout_marginStart="@dimen/five"
         android:layout_marginTop="@dimen/ten"
-        android:layout_marginStart="@dimen/ten"
-        android:layout_marginEnd="@dimen/ten"
+        android:layout_marginEnd="@dimen/five"
         android:background="@drawable/rect_light_gray"
-        app:tabBackground="@drawable/tab_selector"
-        app:tabIndicatorHeight="0dp"
-        app:tabMode="scrollable"
-        app:tabGravity="center"
-        app:tabIndicatorFullWidth="false"
-        app:tabRippleColor="@color/mild_grey1"
-        app:tabTextAppearance="@style/TabTextStyle" />
+        android:orientation="horizontal"
+        android:padding="@dimen/one">
 
+        <TextView
+            android:id="@+id/tapEntireSchool"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@drawable/white_radious"
+            android:fontFamily="@font/poppins_bold"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:text="Entire School"
+            android:textColor="@color/black"
+            android:textSize="@dimen/ten">
+        </TextView>
+
+        <TextView
+            android:id="@+id/tapStandards"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:fontFamily="@font/poppins_bold"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textSize="@dimen/ten"
+            android:text="Standards"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/tabSectionsStudent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:fontFamily="@font/poppins_bold"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textSize="@dimen/ten"
+            android:text="Section/Student"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/tabGroups"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:fontFamily="@font/poppins_bold"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textSize="@dimen/ten"
+            android:text="Groups"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/tapStaffs"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:fontFamily="@font/poppins_bold"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textSize="@dimen/ten"
+            android:text="Staff"
+            android:textColor="@color/black">
+
+
+        </TextView>
+
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/grouplabel"
@@ -157,7 +225,7 @@
         android:layout_marginTop="@dimen/ten"
         android:layout_marginEnd="@dimen/fifteen"
         android:background="@drawable/rect_white_light_radious"
-        android:padding="@dimen/ten"
+        android:padding="@dimen/fifteen"
         android:visibility="gone">
 
 
@@ -324,8 +392,10 @@
                 android:textStyle="bold"
                 android:visibility="gone" />
 
-            <Button
-                android:id="@+id/btnSend"
+
+
+            <RelativeLayout
+                android:id="@+id/rytSend"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginStart="@dimen/twenty_five"
@@ -333,10 +403,37 @@
                 android:layout_weight="0.5"
                 android:background="@drawable/bg_orange"
                 android:gravity="center"
-                android:text="@string/send"
-                android:textColor="@color/white"
-                android:textSize="@dimen/thirteen_sp"
-                android:textStyle="bold" />
+                android:padding="@dimen/eight">
+
+
+                <TextView
+                    android:id="@+id/lblSend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_regular"
+                    android:gravity="center_horizontal"
+                    android:visibility="visible"
+                    android:text="@string/Send"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/fifteen_sp"
+                    android:textStyle="normal">
+
+                </TextView>
+
+
+                <ImageView
+                    android:layout_toEndOf="@+id/lblSend"
+                    android:id="@+id/imgSend1"
+                    android:layout_width="@dimen/twenty"
+                    android:layout_height="@dimen/twenty"
+                    android:layout_marginStart="@dimen/five"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/five"
+                    android:src="@drawable/send_icon_white" />
+
+
+            </RelativeLayout>
 
 
         </LinearLayout>

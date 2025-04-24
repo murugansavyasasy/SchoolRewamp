@@ -49,12 +49,12 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
         super.setupViews()
         setupToolbar()
         binding.toolbarLayout.imgBack.setOnClickListener(this)
-        binding.btnSend.setOnClickListener(this)
+        binding.rytSend.setOnClickListener(this)
 
-        binding.toolbarLayout.lblParentToolBar.text = "Specific Student"
+        binding.toolbarLayout.lblParentToolBar.text = "Students"
         binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
         binding.toolbarLayout.cbSelect.visibility = View.VISIBLE
-        binding.toolbarLayout.rytFilter.visibility = View.VISIBLE
+        binding.toolbarLayout.rytFilter.visibility = View.GONE
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
 
@@ -68,7 +68,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
         isAwsUploadingPreSigned = AwsUploadingPreSigned()
 
         appViewModel!!.isStudentList!!.observe(this) { response ->
-            Constant.hideLoading(this@SpecificStudent)
+//            Constant.hideLoading(this@SpecificStudent)
             if (response != null && response.status) {
                 isStudentData = response.data
                 isStudentData()
@@ -117,7 +117,18 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
     }
 
     private fun isGetStudentList(isSelectedId: ArrayList<String>, isAcademicYearId: Int) {
-        Constant.showLoading(this@SpecificStudent)
+//        Constant.showLoading(this@SpecificStudent)
+        binding.rcySpecificStudent.layoutManager = LinearLayoutManager(this)
+        mAdapter =
+            SpecificStudentAdapter(
+                null,
+                this,
+                this,
+                Constant.isShimmerViewShow
+            )
+        binding.rcySpecificStudent.adapter = mAdapter
+
+
         appViewModel!!.isGetStudentList(
             isAccessToken!!,
             isSelectedId[0].toString(), isAcademicYearId, this
@@ -248,7 +259,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                 onBackPressed()
             }
 
-            R.id.btnSend -> {
+            R.id.rytSend -> {
                 selectedIds = isSpecificStudent.map { it.id.toString() }.toMutableList()
                 for (id in selectedIds) {
                     Log.d("isSelectedIds", id.toString())

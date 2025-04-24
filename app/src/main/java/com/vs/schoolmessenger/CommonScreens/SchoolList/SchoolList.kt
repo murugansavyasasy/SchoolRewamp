@@ -2,6 +2,8 @@ package com.vs.schoolmessenger.CommonScreens.SchoolList
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
@@ -73,7 +75,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         binding.imgBack.setOnClickListener(this)
         binding.lblSendToMultipleSchool.setOnClickListener(this)
         binding.lblSelectReceipients.setOnClickListener(this)
-        binding.lblSend.setOnClickListener(this)
+        binding.rytSend.setOnClickListener(this)
         binding.rlaAcademicYear.setOnClickListener(this)
 
 
@@ -160,14 +162,14 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             }
 
             R.id.lblSelectReceipients -> {
-                binding.lblSend.visibility= View.GONE
+                binding.rytSend.visibility= View.GONE
                 binding.linearlayout.visibility= View.GONE
                 isMultipleSchool = false
                 isChangeBackRound(binding.lblSelectReceipients)
             }
 
             R.id.lblSendToMultipleSchool -> {
-                binding.lblSend.visibility= View.VISIBLE
+                binding.rytSend.visibility= View.VISIBLE
                 binding.linearlayout.visibility= View.VISIBLE
                 isMultipleSchool = true
                 isChangeBackRound(binding.lblSendToMultipleSchool)
@@ -186,15 +188,15 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                 }
             }
 
-            R.id.lblSend -> {
+            R.id.rytSend -> {
                 for (i in selectedSchoolIds.indices) {
                     Log.d("SelectedSchoolId", selectedSchoolIds[i].toString())
                 }
                 if (selectedSchoolIds.isNotEmpty()) {
                     if (Constant.isClickType == 3) {
-                        showSendConfirmationDialog("Are you want send this text to entire school?")
+                        showConfirmationAlert("Selected target : "+selectedSchoolIds.size.toString(),"Are you sure want to send this message?")
                     } else {
-                        showSendConfirmationDialog("Are you want send this voice to entire school?")
+                        showConfirmationAlert("Selected target : "+selectedSchoolIds.size.toString(),"Are you sure want to send this message?")
                     }
                 } else {
                     Constant.showValidationAlertPopup(
@@ -326,15 +328,13 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
     @RequiresApi(Build.VERSION_CODES.O)
     fun showSendConfirmationDialog(isMessage: String) {
         val isTextData = Constant.isTextSendingData
-//        val rootView = findViewById<ViewGroup>(android.R.id.content)
-//        val loaderView = LayoutInflater.from(this).inflate(R.layout.lottie_loader, rootView, false)
 
-        Constant.showLoading(this@SchoolList)
         AlertDialog.Builder(this)
             .setTitle("Send Confirmation!")
             .setMessage(isMessage)
             .setPositiveButton("Yes") { dialog, _ ->
-//                rootView.addView(loaderView)
+                Constant.showLoading(this@SchoolList)
+
                 if (Constant.isClickType == 3) {
                     val jsonObject = ApiCallRequest.isSendText(
                         isAcademicYearId = isAcademicYearId,
@@ -357,5 +357,54 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             }.setNegativeButton("Cancel") { dialog, _ ->
                 dialog.dismiss()
             }.show()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun showConfirmationAlert(isSelectTarget: String, isMessage: String){
+        val isTextData = Constant.isTextSendingData
+
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.alert_popup, null)
+        val builder = AlertDialog.Builder(this)
+        builder.setView(dialogView)
+        val alertDialog = builder.create()
+        alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT)) // Transparent background
+        alertDialog.show()
+        val okButton = dialogView.findViewById<TextView>(R.id.btnOk)
+        val btnCancel = dialogView.findViewById<TextView>(R.id.btnCancel)
+        val alertMessage = dialogView.findViewById<TextView>(R.id.alertMessage)
+        val lblSelectTarget = dialogView.findViewById<TextView>(R.id.lblSelectTarget)
+
+        alertMessage.text = isMessage
+        lblSelectTarget.text = isSelectTarget
+        if (isSelectTarget.equals("")) {
+            lblSelectTarget.visibility = View.GONE
+        }
+        okButton.setOnClickListener {
+            alertDialog.dismiss()
+            Constant.showLoading(this@SchoolList)
+
+            if (Constant.isClickType == 3) {
+                val jsonObject = ApiCallRequest.isSendText(
+                    isAcademicYearId = isAcademicYearId,
+                    schoolId = selectedSchoolIds,
+                    message = isTextData!!.isTitle,
+                    description = isTextData.isContent,
+                    targetType = Constant.isSchool
+                )
+                appViewModel!!.isSendText(isAccessToken!!, jsonObject, this)
+            } else {
+                if (Constant.isVoiceType == 3) {
+                    val isVoiceData = Constant.isVoiceSendingData
+                    voiceSendApi(isVoiceData!!.isAwsUrl)
+                } else {
+                    isFileUploadInAws(
+                        Constant.isVoiceFile!!, isStaffDetails!!.school_id, "audio"
+                    )
+                }
+            }
+        }
+        btnCancel.setOnClickListener {
+            alertDialog.dismiss()
+        }
     }
 }

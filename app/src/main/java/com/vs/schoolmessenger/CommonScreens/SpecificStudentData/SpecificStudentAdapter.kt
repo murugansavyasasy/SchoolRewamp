@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIds
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.Communication.VoiceHistoryAdapter.ShimmerViewHolder
+import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class SpecificStudentAdapter(
     private var itemList: List<NameAndIds>?,
@@ -33,9 +35,10 @@ class SpecificStudentAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-            val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.shimmer_view_small_list, parent, false)
-            ShimmerViewHolder(view)
+            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.specific_student_item)
+            com.vs.schoolmessenger.School.Communication.VoiceHistoryAdapter.ShimmerViewHolder(
+                shimmerView
+            )
         } else {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.specific_student_item, parent, false)

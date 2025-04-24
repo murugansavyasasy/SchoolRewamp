@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import com.bumptech.glide.Glide
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.CommonScreens.Ads.AdItem
@@ -72,6 +73,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         binding.lblStudentName.text = "Hello, " + childDetails!!.name
         binding.lblSchoolName.text =childDetails!!.school_name
         binding.lblSchoolAddress.text = childDetails!!.student_address
+
 
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel!!.init()

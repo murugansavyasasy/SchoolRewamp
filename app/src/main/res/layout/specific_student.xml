@@ -12,15 +12,31 @@
         android:id="@+id/rcySpecificStudent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/btnSend"
+        android:layout_above="@+id/rytSend"
         android:layout_below="@+id/toolbarLayout"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginEnd="@dimen/ten">
 
     </androidx.recyclerview.widget.RecyclerView>
 
-    <Button
-        android:id="@+id/btnSend"
+<!--    <Button-->
+<!--        android:id="@+id/btnSend"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="40dp"-->
+<!--        android:layout_weight="0.5"-->
+<!--        android:background="@drawable/bg_orange"-->
+<!--        android:gravity="center"-->
+<!--        android:layout_marginBottom="@dimen/ten"-->
+<!--        android:layout_marginEnd="@dimen/fifty"-->
+<!--        android:layout_marginStart="@dimen/fifty"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:text="@string/send"-->
+<!--        android:textColor="@color/white"-->
+<!--        android:textSize="@dimen/thirteen_sp"-->
+<!--        android:textStyle="bold" />-->
+
+    <RelativeLayout
+        android:id="@+id/rytSend"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_weight="0.5"
@@ -30,8 +46,40 @@
         android:layout_marginEnd="@dimen/fifty"
         android:layout_marginStart="@dimen/fifty"
         android:layout_alignParentBottom="true"
-        android:text="@string/send"
-        android:textColor="@color/white"
-        android:textSize="@dimen/thirteen_sp"
-        android:textStyle="bold" />
+        android:visibility="visible"
+        android:padding="@dimen/eight">
+
+
+        <TextView
+            android:id="@+id/lblSend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:gravity="center_horizontal"
+            android:visibility="visible"
+            android:text="@string/Send"
+            android:layout_centerVertical="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/fifteen_sp"
+            android:textStyle="normal">
+
+        </TextView>
+
+
+        <ImageView
+            android:layout_toEndOf="@+id/lblSend"
+            android:id="@+id/imgSend1"
+            android:layout_width="@dimen/twenty"
+            android:layout_height="@dimen/twenty"
+            android:layout_marginStart="@dimen/five"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/five"
+            android:src="@drawable/send_icon_white" />
+
+
+    </RelativeLayout>
+
+
+
+
 </RelativeLayout>

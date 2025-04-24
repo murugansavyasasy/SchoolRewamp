@@ -64,7 +64,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Choose academic year :"
-            android:textColor="@color/black"
+            android:textColor="@color/light_gray"
             android:textSize="14sp"
             style="@style/CustomTextStylePoppinsBold"
             android:layout_marginEnd="@dimen/ten"/>
@@ -157,14 +157,15 @@
         android:id="@+id/recycleSchools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/lblSend"
+        android:layout_above="@+id/rytSend"
         android:layout_below="@+id/lnrTab"
         android:layout_marginBottom="@dimen/ten"
         android:padding="@dimen/ten"
         tools:listitem="@layout/schools_list_item" />
 
-    <TextView
-        android:id="@+id/lblSend"
+
+    <RelativeLayout
+        android:id="@+id/rytSend"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -172,16 +173,45 @@
         android:layout_marginEnd="@dimen/twenty"
         android:layout_marginBottom="@dimen/ten"
         android:background="@drawable/rect_btn_orange"
-        android:fontFamily="@font/poppins_regular"
         android:gravity="center_horizontal"
-        android:padding="@dimen/eight"
         android:visibility="gone"
-        android:text="@string/Send"
-        android:textColor="@color/white"
-        android:textSize="@dimen/fifteen_sp"
-        android:textStyle="normal">
+        android:padding="@dimen/eight">
 
-    </TextView>
+
+        <TextView
+            android:id="@+id/lblSend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:gravity="center_horizontal"
+            android:visibility="visible"
+            android:text="@string/Send"
+            android:layout_centerVertical="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/fifteen_sp"
+            android:textStyle="normal">
+
+        </TextView>
+
+
+        <ImageView
+            android:layout_toEndOf="@+id/lblSend"
+            android:id="@+id/imgSend1"
+            android:layout_width="@dimen/twenty"
+            android:layout_height="@dimen/twenty"
+            android:layout_marginStart="@dimen/five"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/five"
+            android:src="@drawable/send_icon_white" />
+
+
+    </RelativeLayout>
+
+
+
+
+
+
 
 
 

@@ -86,18 +86,18 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
         binding.rlaSubject.setOnClickListener(this)
         binding.rlaStandard.setOnClickListener(this)
-        binding.btnSend.setOnClickListener(this)
+        binding.rytSend.setOnClickListener(this)
         binding.rlaAcademicYear.setOnClickListener(this)
         binding.btnSpecificStudent.setOnClickListener(this)
         binding.imgBack.setOnClickListener(this)
         binding.rytAcademicYear.setOnClickListener(this)
 
-        val tabLayout = binding.tabLayout
-        tabLayout.addTab(tabLayout.newTab().setText("Entire School"))
-        tabLayout.addTab(tabLayout.newTab().setText("Standards"))
-        tabLayout.addTab(tabLayout.newTab().setText("Section/Student"))
-        tabLayout.addTab(tabLayout.newTab().setText("Groups"))
-        tabLayout.addTab(tabLayout.newTab().setText("Staff"))
+        binding.tapEntireSchool.setOnClickListener(this)
+        binding.tapStandards.setOnClickListener(this)
+        binding.tabSectionsStudent.setOnClickListener(this)
+        binding.tabGroups.setOnClickListener(this)
+        binding.tapStaffs.setOnClickListener(this)
+
 
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
@@ -115,167 +115,24 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
         isGetAcademicYear()
 
-        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                when (tab?.position) {
-                    0 -> {
-
-                        binding.nomessageEntire.visibility = View.VISIBLE
-                        binding.nomessage.visibility = View.GONE
-                        binding.txtNoData.visibility = View.GONE
-                        binding.lblCreatedOn.visibility = View.GONE
-                        binding.chAllSelect.isChecked = false
-                        binding.chAllSelect.visibility = View.GONE
-                        isSelectedType = 0
-                        isGroupSelectedIds.clear()
-                        isStandardSelectedIds.clear()
-                        isSectionSelectedIds.clear()
-                        selectedIds.clear()
-                        binding.rlaStandard.visibility = View.GONE
-                        binding.grouplabel.visibility = View.GONE
-                        binding.recyclerView.visibility = View.GONE
-                        binding.rlaSubject.visibility = View.GONE
-                        binding.textdesc.visibility = View.VISIBLE
-                        binding.bottomLayout.visibility = View.VISIBLE
-                        binding.btnSpecificStudent.visibility = View.GONE
-                    }
-
-                    1 -> {
-                        binding.nomessage.visibility = View.GONE
-                        binding.nomessageEntire.visibility = View.GONE
-                        binding.lblCreatedOn.visibility = View.GONE
-                        binding.txtNoData.visibility = View.GONE
-                        isSelectedType = 1
-                        binding.chAllSelect.visibility = View.GONE
-                        binding.chAllSelect.isChecked = false
-                        isGroupSelectedIds.clear()
-                        isStandardSelectedIds.clear()
-                        isSectionSelectedIds.clear()
-                        selectedIds.clear()
-                        isDropDown = false
-                        isGetStandardSection()
-                        binding.rlaStandard.visibility = View.GONE
-                        binding.grouplabel.text = "Standards"
-                        binding.grouplabel.visibility = View.VISIBLE
-                        binding.rlaSubject.visibility = View.GONE
-                        binding.textdesc.visibility = View.GONE
-                        binding.bottomLayout.visibility = View.GONE
-                        binding.btnSpecificStudent.visibility = View.GONE
-
-                    }
-
-                    2 -> {
-                        binding.nomessage.visibility = View.GONE
-                        binding.nomessageEntire.visibility = View.GONE
-                        binding.txtNoData.visibility = View.GONE
-                        binding.lblCreatedOn.visibility = View.GONE
-                        binding.chAllSelect.isChecked = false
-                        isSelectedType = 2
-                        isGroupSelectedIds.clear()
-                        isStandardSelectedIds.clear()
-                        isSectionSelectedIds.clear()
-                        selectedIds.clear()
-                        isDropDown = true
-                        isGetStandardSection()
-                        binding.recyclerView.visibility = View.GONE
-                        binding.rlaStandard.visibility = View.GONE
-
-                        binding.textdesc.visibility = View.GONE
-                        binding.bottomLayout.visibility = View.GONE
-                        binding.grouplabel.visibility = View.GONE
-                        binding.chAllSelect.visibility = View.GONE
-                        binding.rlaSubject.visibility = View.GONE
-                        binding.btnSpecificStudent.visibility = View.VISIBLE
-                        binding.btnSpecificStudent.isEnabled = false
-                        binding.btnSpecificStudent.background =
-                            ContextCompat.getDrawable(this@RecipientActivity, R.drawable.bg_gray)
-                    }
-
-                    3 -> {
-                        binding.nomessage.visibility = View.GONE
-                        binding.nomessageEntire.visibility = View.GONE
-                        binding.txtNoData.visibility = View.GONE
-                        binding.chAllSelect.visibility = View.GONE
-                        binding.chAllSelect.isChecked = false
-                        isSelectedType = 3
-                        isGroupSelectedIds.clear()
-                        isStandardSelectedIds.clear()
-                        isSectionSelectedIds.clear()
-                        binding.grouplabel.text = "Groups"
-                        selectedIds.clear()
-                        binding.rlaStandard.visibility = View.GONE
-                        binding.grouplabel.visibility = View.VISIBLE
-                        binding.lblCreatedOn.visibility = View.VISIBLE
-                        binding.btnSpecificStudent.visibility = View.GONE
-                        binding.recyclerView.visibility = View.GONE
-                        binding.rlaSubject.visibility = View.GONE
-                        binding.textdesc.visibility = View.GONE
-                        binding.bottomLayout.visibility = View.GONE
-                        if (isAcademicYearId != -1) {
-                            isGetGroupList()
-                        }
-
-                    }
-
-                    4 -> {
-                        binding.nomessage.visibility = View.GONE
-                        binding.nomessageEntire.visibility = View.GONE
-                        binding.lblCreatedOn.visibility = View.GONE
-                        binding.recyclerView.visibility = View.GONE
-                        binding.txtNoData.visibility = View.GONE
-                        binding.chAllSelect.isChecked = false
-                        isSelectedType = 4
-                        isGroupSelectedIds.clear()
-                        isStandardSelectedIds.clear()
-                        isSectionSelectedIds.clear()
-                        selectedIds.clear()
-                        isDropDown = false
-                        isGetStaffList()
-                        binding.rlaStandard.visibility = View.GONE
-                        binding.grouplabel.text = "Staff"
-                        binding.grouplabel.visibility = View.VISIBLE
-                        binding.rlaSubject.visibility = View.GONE
-                        binding.chAllSelect.visibility = View.GONE
-                        binding.textdesc.visibility = View.GONE
-                        binding.bottomLayout.visibility = View.GONE
-                        binding.btnSpecificStudent.visibility = View.GONE
-                        Log.d("isDropDown", isDropDown.toString())
-                    }
-                }
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab?) {}
-
-            override fun onTabReselected(tab: TabLayout.Tab?) {}
-        })
-
         appViewModel!!.isGetAcademicList?.observe(this) { response ->
             Constant.hideLoading(this@RecipientActivity)
-            Log.d("academic year","changed")
-
             response?.data?.let { academicList ->
                 val reorderedList = academicList.sortedByDescending { it.current_academic_year }
-
                 if (isAcademicYear == reorderedList) return@observe  // Skip if same
-
                 isAcademicYear = reorderedList
 
-                isValidAcademicYear =
-                    isAcademicYear?.any { it.current_academic_year == true } == true
-
+                isValidAcademicYear = isAcademicYear?.any { it.current_academic_year == true } == true
                 binding.lblAcademicYear.text = isAcademicYear!![0].year
                 isAcademicYearId = isAcademicYear!![0].id
                 isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
-
-
-
                 if (isValidAcademicYear) {
                     binding.rytAcademicYear.visibility = View.GONE
                     binding.tabLayout.visibility = View.VISIBLE
                     if (isSelectedType != 0) {
                         isGetStandardSection()
                     }
-                    tapVisibility(tabLayout)
+                    tapVisibility()
                     binding.nomessageEntire.visibility =
                         if (isUserDetails!!.staff_role.toString() == Constant.isStaff.toString()
                         ) View.GONE else View.VISIBLE
@@ -342,7 +199,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         binding.lblStandard.text = isGetStandard!![0].name
                         binding.nomessage.visibility = View.GONE
                         isLoadData(isSection)
-                        binding.grouplabel.text = "Section"
+                        binding.grouplabel.text = "Section/Students"
                     } else {
                         isLoadTheStandardData(isGetStandard)
                         binding.bottomLayout.visibility = View.VISIBLE
@@ -365,7 +222,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
         appViewModel!!.isGetStaffList?.observe(this) { response ->
             Constant.hideLoading(this@RecipientActivity)
-
             if (response != null) {
                 isGetStaffListData = response.data
 
@@ -456,92 +312,85 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         }
     }
 
-
-    private fun tapVisibility(tabLayout: TabLayout) {
-
+    private fun tapVisibility() {
         if (isUserDetails!!.staff_role == Constant.isStaffRole) {
             if (SELECTED_SCHOOL_MENU == SH_HOMEWORK) {
-                tabLayout.post {
-                    tabLayout.getTabAt(0)?.view?.visibility = View.GONE
+
                     binding.nomessage.visibility = View.GONE
                     binding.nomessageEntire.visibility = View.GONE
-                    tabLayout.getTabAt(1)?.view?.visibility = View.GONE
-                    tabLayout.getTabAt(3)?.view?.visibility = View.GONE
-                    tabLayout.getTabAt(4)?.view?.visibility = View.GONE
-                    tabLayout.getTabAt(2)?.select()
+                    binding.tapEntireSchool.visibility = View.GONE
+                    binding.tapStandards.visibility = View.GONE
+                    binding.tabSectionsStudent.visibility = View.VISIBLE
+                    binding.tabGroups.visibility = View.GONE
+                    binding.tapStaffs.visibility = View.GONE
+                    changeTapBg(Constant.isSection)
 
-                }
-                //show send button only
+                   //show send button only
 
             } else if (SELECTED_SCHOOL_MENU == SH_ASSIGNMENT) {
-                tabLayout.post {
-                    tabLayout.getTabAt(0)?.view?.visibility = View.GONE
+
                     binding.nomessage.visibility = View.GONE
                     binding.nomessageEntire.visibility = View.GONE
-                    tabLayout.getTabAt(1)?.view?.visibility = View.GONE
-                    tabLayout.getTabAt(3)?.view?.visibility = View.GONE
-                    tabLayout.getTabAt(4)?.view?.visibility = View.GONE
-                    tabLayout.getTabAt(2)?.select()
-                }
+                    binding.tapEntireSchool.visibility = View.GONE
+                    binding.tapStandards.visibility = View.GONE
+                    binding.tabSectionsStudent.visibility = View.VISIBLE
+                    binding.tabGroups.visibility = View.GONE
+                    binding.tapStaffs.visibility = View.GONE
+                    changeTapBg(Constant.isSection)
 
-                //show send and specific student button
+                   //show send and specific student button
             } else {
-                tabLayout.post {
+
                     binding.nomessage.visibility = View.GONE
                     binding.nomessageEntire.visibility = View.GONE
-                    tabLayout.getTabAt(0)?.view?.visibility = View.GONE
-                    tabLayout.getTabAt(4)?.view?.visibility = View.GONE
-                }
-
-                tabLayout.getTabAt(1)?.select()
+                    binding.tapEntireSchool.visibility = View.GONE
+                    binding.tapStandards.visibility = View.VISIBLE
+                    binding.tabSectionsStudent.visibility = View.VISIBLE
+                    binding.tabGroups.visibility = View.VISIBLE
+                    binding.tapStaffs.visibility = View.GONE
+                    changeTapBg(Constant.isStandard)
 
             }
 
         } else {
             if (SELECTED_SCHOOL_MENU == SH_HOMEWORK) {
-                tabLayout.post {
+
                     binding.nomessage.visibility = View.GONE
                     binding.nomessageEntire.visibility = View.GONE
-                    tabLayout.getTabAt(0)?.view?.visibility = View.GONE
-                    tabLayout.getTabAt(1)?.view?.visibility = View.GONE
-                    tabLayout.getTabAt(3)?.view?.visibility = View.GONE
-                    tabLayout.getTabAt(4)?.view?.visibility = View.GONE
-                    tabLayout.getTabAt(2)?.select()
-                }
+                    binding.tapEntireSchool.visibility = View.GONE
+                    binding.tapStandards.visibility = View.GONE
+                    binding.tabSectionsStudent.visibility = View.VISIBLE
+                    binding.tabGroups.visibility = View.GONE
+                    binding.tapStaffs.visibility = View.GONE
+                    changeTapBg(Constant.isSection)
 
-                //show send button only
+                   //show send button only
 
             } else if (SELECTED_SCHOOL_MENU == SH_ASSIGNMENT) {
-                tabLayout.post {
                     binding.nomessage.visibility = View.GONE
                     binding.nomessageEntire.visibility = View.GONE
-                    tabLayout.getTabAt(0)?.view?.visibility = View.GONE
-                    tabLayout.getTabAt(1)?.view?.visibility = View.GONE
-                    tabLayout.getTabAt(3)?.view?.visibility = View.GONE
-                    tabLayout.getTabAt(4)?.view?.visibility = View.GONE
-                    tabLayout.getTabAt(2)?.select()
-                }
+                    binding.tapEntireSchool.visibility = View.GONE
+                    binding.tapStandards.visibility = View.GONE
+                    binding.tabSectionsStudent.visibility = View.VISIBLE
+                    binding.tabGroups.visibility = View.GONE
+                    binding.tapStaffs.visibility = View.GONE
+                    changeTapBg(Constant.isSection)
 
-                //show send and specific student button
+                   //show send and specific student button
             } else {
                 binding.textdesc.visibility = View.VISIBLE
                 binding.bottomLayout.visibility = View.VISIBLE
                 binding.nomessageEntire.visibility = View.VISIBLE
-                tabLayout.getTabAt(0)?.view?.visibility = View.VISIBLE
+
+                binding.tapEntireSchool.visibility = View.VISIBLE
+                binding.tapStandards.visibility = View.VISIBLE
+                binding.tabSectionsStudent.visibility = View.VISIBLE
+                binding.tabGroups.visibility = View.VISIBLE
+                binding.tapStaffs.visibility = View.VISIBLE
+                changeTapBg(Constant.isSchool)
                 isSelectedType = 0
                 isGetAcademicYear()
 
-//                if (isUserDetails!!.staff_details.size > 1) {
-//                    tabLayout.post {
-//                        binding.nomessageEntire.visibility = View.VISIBLE
-//                        tabLayout.getTabAt(0)?.view?.visibility = View.VISIBLE
-//                    }
-//                    isSelectedType = 1
-//                    isGetAcademicYear()
-//                } else {
-//                    binding.textdesc.visibility = View.VISIBLE
-//                    binding.bottomLayout.visibility = View.VISIBLE
-//                }
             }
         }
     }
@@ -559,7 +408,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         )
         binding.recyclerView.adapter = isGroupStaffAdapter
 
-
     }
 
     private fun isLoadGroupData(isGetGroupListData: List<NameAndIds>?) {
@@ -571,12 +419,9 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         )
         binding.recyclerView.adapter = isGroupStaffAdapter
 
-
     }
 
     private fun isLoadData(isSection: List<Section>?) {
-
-
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
 
         isSectionAdapter = SectionListAdapter(
@@ -585,21 +430,15 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         binding.recyclerView.adapter = isSectionAdapter
         binding.chAllSelect.visibility = View.VISIBLE
 
-
     }
 
     private fun isLoadTheStandardData(isGetStandard: List<Standard>?) {
-
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         isStandardListAdapter = StandardListAdapter(
             isGetStandard, this, this, Constant.isShimmerViewDisable
         )
         binding.recyclerView.adapter = isStandardListAdapter
-
-
     }
-
-
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onClick(p0: View?) {
         when (p0?.id) {
@@ -628,7 +467,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 """.trimIndent()
                 Constant.redirectToMail(this, binding.lblSupportMail.text.toString(), sub, body)
             }
-
             R.id.btnSpecificStudent -> {
                 selectedIds = isSectionSelectedIds.map { it.id.toString() }.toMutableList()
                 val intent = Intent(this@RecipientActivity, SpecificStudent::class.java)
@@ -644,8 +482,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     binding.rlaAcademicYear, this, isAcademicYear
                 ) { selectedYear ->
                     binding.lblAcademicYear.text = selectedYear.year
-
-
                     isSectionSelectedIds.clear()
                     isStandardSelectedIds.clear()
                     isGroupSelectedIds.clear()
@@ -676,7 +512,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 }
             }
 
-
             R.id.rlaStandard -> {
                 binding.chAllSelect.isChecked = false
                 isSectionId.clear()
@@ -695,7 +530,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 }
             }
 
-            R.id.btnSend -> {
+            R.id.rytSend -> {
                 var isTypeOfName = ""
                 if (isSelectedType == 0) {
                     isTargetType = Constant.isSchool
@@ -738,13 +573,12 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         isAcademicYearNote = "Are you sure want to send this message?"
                     }
 
-                    if(isSelectedType == 0){
+                    if (isSelectedType == 0) {
                         showSendConfirmationDialog(
                             "",
                             isAcademicYearNote
                         )
-                    }
-                    else {
+                    } else {
                         if (Constant.isClickType == 3) {
                             showSendConfirmationDialog(
                                 "Selected target : " + selectedIds.size.toString() + " " + isTypeOfName + " (S)",
@@ -765,7 +599,183 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     )
                 }
             }
+            R.id.tapEntireSchool -> {
+                changeTapBg(Constant.isSchool)
+            }
+
+            R.id.tapStandards -> {
+                changeTapBg(Constant.isStandard)
+            }
+
+            R.id.tabSectionsStudent -> {
+                changeTapBg(Constant.isSection)
+            }
+
+            R.id.tabGroups -> {
+                changeTapBg(Constant.isGroup)
+            }
+
+            R.id.tapStaffs -> {
+                changeTapBg(Constant.isStaff)
+            }
         }
+    }
+
+    private fun changeTapBg(type: Int) {
+
+        when (type) {
+            Constant.isSchool -> {
+                binding.tapEntireSchool.background = ContextCompat.getDrawable(this@RecipientActivity, R.drawable.white_radious)
+                binding.tapStandards.background = null
+                binding.tabSectionsStudent.background = null
+                binding.tabGroups.background = null
+                binding.tapStaffs.background = null
+
+                binding.nomessageEntire.visibility = View.VISIBLE
+                binding.nomessage.visibility = View.GONE
+                binding.txtNoData.visibility = View.GONE
+                binding.lblCreatedOn.visibility = View.GONE
+                binding.chAllSelect.isChecked = false
+                binding.chAllSelect.visibility = View.GONE
+                isSelectedType = 0
+                isGroupSelectedIds.clear()
+                isStandardSelectedIds.clear()
+                isSectionSelectedIds.clear()
+                selectedIds.clear()
+                binding.rlaStandard.visibility = View.GONE
+                binding.grouplabel.visibility = View.GONE
+                binding.recyclerView.visibility = View.GONE
+                binding.rlaSubject.visibility = View.GONE
+                binding.textdesc.visibility = View.VISIBLE
+                binding.bottomLayout.visibility = View.VISIBLE
+                binding.btnSpecificStudent.visibility = View.GONE
+
+            }
+            Constant.isStandard -> {
+                binding.tapEntireSchool.background = null
+                binding.tapStandards.background = ContextCompat.getDrawable(this@RecipientActivity, R.drawable.white_radious)
+                binding.tabSectionsStudent.background = null
+                binding.tabGroups.background = null
+                binding.tapStaffs.background = null
+
+                binding.nomessage.visibility = View.GONE
+                binding.nomessageEntire.visibility = View.GONE
+                binding.lblCreatedOn.visibility = View.GONE
+                binding.txtNoData.visibility = View.GONE
+                isSelectedType = 1
+                binding.chAllSelect.visibility = View.GONE
+                binding.chAllSelect.isChecked = false
+                isGroupSelectedIds.clear()
+                isStandardSelectedIds.clear()
+                isSectionSelectedIds.clear()
+                selectedIds.clear()
+                isDropDown = false
+                isGetStandardSection()
+                binding.rlaStandard.visibility = View.GONE
+                binding.grouplabel.text = "Standards"
+                binding.grouplabel.visibility = View.VISIBLE
+                binding.rlaSubject.visibility = View.GONE
+                binding.textdesc.visibility = View.GONE
+                binding.bottomLayout.visibility = View.GONE
+                binding.btnSpecificStudent.visibility = View.GONE
+
+            }
+            Constant.isSection -> {
+                binding.tapEntireSchool.background = null
+                binding.tapStandards.background = null
+                binding.tabSectionsStudent.background = ContextCompat.getDrawable(this@RecipientActivity, R.drawable.white_radious)
+                binding.tabGroups.background = null
+                binding.tapStaffs.background = null
+
+                binding.nomessage.visibility = View.GONE
+                binding.nomessageEntire.visibility = View.GONE
+                binding.txtNoData.visibility = View.GONE
+                binding.lblCreatedOn.visibility = View.GONE
+                binding.chAllSelect.isChecked = false
+                isSelectedType = 2
+                isGroupSelectedIds.clear()
+                isStandardSelectedIds.clear()
+                isSectionSelectedIds.clear()
+                selectedIds.clear()
+                isDropDown = true
+                isGetStandardSection()
+                binding.recyclerView.visibility = View.GONE
+                binding.rlaStandard.visibility = View.GONE
+                binding.textdesc.visibility = View.GONE
+                binding.bottomLayout.visibility = View.GONE
+                binding.grouplabel.visibility = View.VISIBLE
+                binding.grouplabel.text = "Section/Students"
+
+                binding.chAllSelect.visibility = View.GONE
+                binding.rlaSubject.visibility = View.GONE
+                binding.btnSpecificStudent.visibility = View.VISIBLE
+                binding.btnSpecificStudent.isEnabled = false
+                binding.btnSpecificStudent.background = ContextCompat.getDrawable(this@RecipientActivity, R.drawable.bg_gray)
+
+            }
+            Constant.isGroup -> {
+                binding.tapEntireSchool.background = null
+                binding.tapStandards.background = null
+                binding.tabSectionsStudent.background = null
+                binding.tabGroups.background = ContextCompat.getDrawable(this@RecipientActivity, R.drawable.white_radious)
+                binding.tapStaffs.background = null
+
+                binding.nomessage.visibility = View.GONE
+                binding.nomessageEntire.visibility = View.GONE
+                binding.txtNoData.visibility = View.GONE
+                binding.chAllSelect.visibility = View.GONE
+                binding.chAllSelect.isChecked = false
+                isSelectedType = 3
+                isGroupSelectedIds.clear()
+                isStandardSelectedIds.clear()
+                isSectionSelectedIds.clear()
+                binding.grouplabel.text = "Groups"
+                selectedIds.clear()
+                binding.rlaStandard.visibility = View.GONE
+                binding.grouplabel.visibility = View.VISIBLE
+                binding.lblCreatedOn.visibility = View.VISIBLE
+                binding.btnSpecificStudent.visibility = View.GONE
+                binding.recyclerView.visibility = View.GONE
+                binding.rlaSubject.visibility = View.GONE
+                binding.textdesc.visibility = View.GONE
+                binding.bottomLayout.visibility = View.GONE
+                if (isAcademicYearId != -1) {
+                    isGetGroupList()
+                }
+
+            }
+            Constant.isStaff -> {
+                binding.tapEntireSchool.background = null
+                binding.tapStandards.background = null
+                binding.tabSectionsStudent.background = null
+                binding.tabGroups.background = null
+                binding.tapStaffs.background = ContextCompat.getDrawable(this@RecipientActivity, R.drawable.white_radious)
+
+                binding.nomessage.visibility = View.GONE
+                binding.nomessageEntire.visibility = View.GONE
+                binding.lblCreatedOn.visibility = View.GONE
+                binding.recyclerView.visibility = View.GONE
+                binding.txtNoData.visibility = View.GONE
+                binding.chAllSelect.isChecked = false
+                isSelectedType = 4
+                isGroupSelectedIds.clear()
+                isStandardSelectedIds.clear()
+                isSectionSelectedIds.clear()
+                selectedIds.clear()
+                isDropDown = false
+                isGetStaffList()
+                binding.rlaStandard.visibility = View.GONE
+                binding.grouplabel.text = "Staff"
+                binding.grouplabel.visibility = View.VISIBLE
+                binding.rlaSubject.visibility = View.GONE
+                binding.chAllSelect.visibility = View.GONE
+                binding.textdesc.visibility = View.GONE
+                binding.bottomLayout.visibility = View.GONE
+                binding.btnSpecificStudent.visibility = View.GONE
+                Log.d("isDropDown", isDropDown.toString())
+            }
+        }
+
     }
 
     private fun isGetGroupList() {
@@ -783,13 +793,11 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
     private fun isGetStandardSection() {
         Constant.showLoading(this@RecipientActivity)
-
         appViewModel!!.isGetStandardSection(isAccessToken!!.toString(), isAcademicYearId, this)
     }
 
     private fun isGetStaffList() {
         Constant.showLoading(this@RecipientActivity)
-
         appViewModel!!.isGetStaffList(
             isAccessToken!!, this
         )
@@ -797,7 +805,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
     private fun isGetAcademicYear() {
         Constant.showLoading(this@RecipientActivity)
-
         appViewModel!!.isGetAcademicYear(
             isAccessToken!!, this
         )
@@ -812,17 +819,14 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         val alertDialog = builder.create()
         alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT)) // Transparent background
         alertDialog.show()
-
-
         val okButton = dialogView.findViewById<TextView>(R.id.btnOk)
         val btnCancel = dialogView.findViewById<TextView>(R.id.btnCancel)
         val alertMessage = dialogView.findViewById<TextView>(R.id.alertMessage)
         val lblSelectTarget = dialogView.findViewById<TextView>(R.id.lblSelectTarget)
 
-
         alertMessage.text = isMessage
         lblSelectTarget.text = isSelectTarget
-        if(isSelectTarget.equals("")){
+        if (isSelectTarget.equals("")) {
             lblSelectTarget.visibility = View.GONE
         }
         okButton.setOnClickListener {
@@ -849,9 +853,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     )
                 }
             }
-
         }
-
         btnCancel.setOnClickListener {
             alertDialog.dismiss()
         }
@@ -894,7 +896,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 //        val idString = isSectionSelectedIds.joinToString(",") { it.id.toString() }
 //        isGetSubjectList(idString)
         binding.chAllSelect.isChecked = isSectionSelectedIds.size == isSection?.size
-
         if (isSelectedType == 2) {
             if (isSectionSelectedIds.size == 1) {
                 binding.btnSpecificStudent.isEnabled = true
