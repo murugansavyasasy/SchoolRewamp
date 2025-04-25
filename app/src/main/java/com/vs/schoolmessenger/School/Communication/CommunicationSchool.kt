@@ -1257,6 +1257,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     binding.rlaTitle.visibility = View.VISIBLE
                     binding.imgVoiceRecord.visibility = View.GONE
                     binding.lblDurationOfVoice.visibility = View.GONE
+                    binding.rlaAddLocalFile.visibility = View.GONE
                     binding.lblEndDuration.text = "/ $formattedDuration"
 
                 } catch (e: Exception) {

@@ -12,11 +12,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIds
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.Communication.VoiceHistoryAdapter.ShimmerViewHolder
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class SpecificStudentAdapter(
-    private var itemList: List<NameAndIds>?,
+    private var itemList: List<NameAndIds>? = null,
     private var listener: SpecificStudentSelectClickListener,
     private var context: Context,
     private var isLoading: Boolean
@@ -26,6 +25,7 @@ class SpecificStudentAdapter(
     private val TYPE_DATA = 1
     private var selectAll = false
     private val selectedIds = mutableSetOf<String>()
+    private var fullItemList: List<NameAndIds>? = null
 
     private var expandedPosition: Int = RecyclerView.NO_POSITION
 
@@ -74,6 +74,11 @@ class SpecificStudentAdapter(
 
     fun getSelectedItems(): List<NameAndIds> {
         return itemList?.filter { selectedIds.contains(it.id.toString()) } ?: emptyList()
+    }
+
+    fun updateList(newList: List<NameAndIds>) {
+        this.itemList = newList
+        notifyDataSetChanged()
     }
 
     class DataViewHolder(itemView: View, private val context: Context) :
@@ -128,7 +133,9 @@ class SpecificStudentAdapter(
             itemView.findViewById(R.id.shimmer_view_container)
 
         init {
-            shimmerLayout.startShimmer()
+            shimmerLayout?.startShimmer()
         }
     }
 }
+
+

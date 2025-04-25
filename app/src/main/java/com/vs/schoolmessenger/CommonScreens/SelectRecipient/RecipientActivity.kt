@@ -9,13 +9,11 @@ import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.tabs.TabLayout
 import com.vs.schoolmessenger.AWS.AwsUploadingPreSigned
 import com.vs.schoolmessenger.AWS.UploadCallback
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
@@ -122,7 +120,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 if (isAcademicYear == reorderedList) return@observe  // Skip if same
                 isAcademicYear = reorderedList
 
-                isValidAcademicYear = isAcademicYear?.any { it.current_academic_year == true } == true
+                isValidAcademicYear =
+                    isAcademicYear?.any { it.current_academic_year == true } == true
                 binding.lblAcademicYear.text = isAcademicYear!![0].year
                 isAcademicYearId = isAcademicYear!![0].id
                 isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
@@ -199,7 +198,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         binding.lblStandard.text = isGetStandard!![0].name
                         binding.nomessage.visibility = View.GONE
                         isLoadData(isSection)
-                        binding.grouplabel.text = "Section/Students"
+                        binding.grouplabel.text = "Section"
                     } else {
                         isLoadTheStandardData(isGetStandard)
                         binding.bottomLayout.visibility = View.VISIBLE
@@ -316,67 +315,67 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         if (isUserDetails!!.staff_role == Constant.isStaffRole) {
             if (SELECTED_SCHOOL_MENU == SH_HOMEWORK) {
 
-                    binding.nomessage.visibility = View.GONE
-                    binding.nomessageEntire.visibility = View.GONE
-                    binding.tapEntireSchool.visibility = View.GONE
-                    binding.tapStandards.visibility = View.GONE
-                    binding.tabSectionsStudent.visibility = View.VISIBLE
-                    binding.tabGroups.visibility = View.GONE
-                    binding.tapStaffs.visibility = View.GONE
-                    changeTapBg(Constant.isSection)
+                binding.nomessage.visibility = View.GONE
+                binding.nomessageEntire.visibility = View.GONE
+                binding.tapEntireSchool.visibility = View.GONE
+                binding.tapStandards.visibility = View.GONE
+                binding.tabSectionsStudent.visibility = View.VISIBLE
+                binding.tabGroups.visibility = View.GONE
+                binding.tapStaffs.visibility = View.GONE
+                changeTapBg(Constant.isSection)
 
-                   //show send button only
+                //show send button only
 
             } else if (SELECTED_SCHOOL_MENU == SH_ASSIGNMENT) {
 
-                    binding.nomessage.visibility = View.GONE
-                    binding.nomessageEntire.visibility = View.GONE
-                    binding.tapEntireSchool.visibility = View.GONE
-                    binding.tapStandards.visibility = View.GONE
-                    binding.tabSectionsStudent.visibility = View.VISIBLE
-                    binding.tabGroups.visibility = View.GONE
-                    binding.tapStaffs.visibility = View.GONE
-                    changeTapBg(Constant.isSection)
+                binding.nomessage.visibility = View.GONE
+                binding.nomessageEntire.visibility = View.GONE
+                binding.tapEntireSchool.visibility = View.GONE
+                binding.tapStandards.visibility = View.GONE
+                binding.tabSectionsStudent.visibility = View.VISIBLE
+                binding.tabGroups.visibility = View.GONE
+                binding.tapStaffs.visibility = View.GONE
+                changeTapBg(Constant.isSection)
 
-                   //show send and specific student button
+                //show send and specific student button
             } else {
 
-                    binding.nomessage.visibility = View.GONE
-                    binding.nomessageEntire.visibility = View.GONE
-                    binding.tapEntireSchool.visibility = View.GONE
-                    binding.tapStandards.visibility = View.VISIBLE
-                    binding.tabSectionsStudent.visibility = View.VISIBLE
-                    binding.tabGroups.visibility = View.VISIBLE
-                    binding.tapStaffs.visibility = View.GONE
-                    changeTapBg(Constant.isStandard)
+                binding.nomessage.visibility = View.GONE
+                binding.nomessageEntire.visibility = View.GONE
+                binding.tapEntireSchool.visibility = View.GONE
+                binding.tapStandards.visibility = View.VISIBLE
+                binding.tabSectionsStudent.visibility = View.VISIBLE
+                binding.tabGroups.visibility = View.VISIBLE
+                binding.tapStaffs.visibility = View.GONE
+                changeTapBg(Constant.isStandard)
 
             }
 
         } else {
             if (SELECTED_SCHOOL_MENU == SH_HOMEWORK) {
 
-                    binding.nomessage.visibility = View.GONE
-                    binding.nomessageEntire.visibility = View.GONE
-                    binding.tapEntireSchool.visibility = View.GONE
-                    binding.tapStandards.visibility = View.GONE
-                    binding.tabSectionsStudent.visibility = View.VISIBLE
-                    binding.tabGroups.visibility = View.GONE
-                    binding.tapStaffs.visibility = View.GONE
-                    changeTapBg(Constant.isSection)
+                binding.nomessage.visibility = View.GONE
+                binding.nomessageEntire.visibility = View.GONE
+                binding.tapEntireSchool.visibility = View.GONE
+                binding.tapStandards.visibility = View.GONE
+                binding.tabSectionsStudent.visibility = View.VISIBLE
+                binding.tabGroups.visibility = View.GONE
+                binding.tapStaffs.visibility = View.GONE
+                changeTapBg(Constant.isSection)
 
-                   //show send button only
+                //show send button only
 
             } else if (SELECTED_SCHOOL_MENU == SH_ASSIGNMENT) {
-                    binding.nomessage.visibility = View.GONE
-                    binding.nomessageEntire.visibility = View.GONE
-                    binding.tapEntireSchool.visibility = View.GONE
-                    binding.tapStandards.visibility = View.GONE
-                    binding.tabSectionsStudent.visibility = View.VISIBLE
-                    binding.tabGroups.visibility = View.GONE
-                    binding.tapStaffs.visibility = View.GONE
-                    changeTapBg(Constant.isSection)
+                binding.nomessage.visibility = View.GONE
+                binding.nomessageEntire.visibility = View.GONE
+                binding.tapEntireSchool.visibility = View.GONE
+                binding.tapStandards.visibility = View.GONE
+                binding.tabSectionsStudent.visibility = View.VISIBLE
+                binding.tabGroups.visibility = View.GONE
+                binding.tapStaffs.visibility = View.GONE
+                changeTapBg(Constant.isSection)
 
-                   //show send and specific student button
+                //show send and specific student button
             } else {
                 binding.textdesc.visibility = View.VISIBLE
                 binding.bottomLayout.visibility = View.VISIBLE
@@ -439,6 +438,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         )
         binding.recyclerView.adapter = isStandardListAdapter
     }
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onClick(p0: View?) {
         when (p0?.id) {
@@ -467,6 +467,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 """.trimIndent()
                 Constant.redirectToMail(this, binding.lblSupportMail.text.toString(), sub, body)
             }
+
             R.id.btnSpecificStudent -> {
                 selectedIds = isSectionSelectedIds.map { it.id.toString() }.toMutableList()
                 val intent = Intent(this@RecipientActivity, SpecificStudent::class.java)
@@ -599,6 +600,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     )
                 }
             }
+
             R.id.tapEntireSchool -> {
                 changeTapBg(Constant.isSchool)
             }
@@ -625,7 +627,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
         when (type) {
             Constant.isSchool -> {
-                binding.tapEntireSchool.background = ContextCompat.getDrawable(this@RecipientActivity, R.drawable.white_radious)
+                binding.tapEntireSchool.background =
+                    ContextCompat.getDrawable(this@RecipientActivity, R.drawable.white_radious)
                 binding.tapStandards.background = null
                 binding.tabSectionsStudent.background = null
                 binding.tabGroups.background = null
@@ -651,9 +654,11 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 binding.btnSpecificStudent.visibility = View.GONE
 
             }
+
             Constant.isStandard -> {
                 binding.tapEntireSchool.background = null
-                binding.tapStandards.background = ContextCompat.getDrawable(this@RecipientActivity, R.drawable.white_radious)
+                binding.tapStandards.background =
+                    ContextCompat.getDrawable(this@RecipientActivity, R.drawable.white_radious)
                 binding.tabSectionsStudent.background = null
                 binding.tabGroups.background = null
                 binding.tapStaffs.background = null
@@ -680,10 +685,12 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 binding.btnSpecificStudent.visibility = View.GONE
 
             }
+
             Constant.isSection -> {
                 binding.tapEntireSchool.background = null
                 binding.tapStandards.background = null
-                binding.tabSectionsStudent.background = ContextCompat.getDrawable(this@RecipientActivity, R.drawable.white_radious)
+                binding.tabSectionsStudent.background =
+                    ContextCompat.getDrawable(this@RecipientActivity, R.drawable.white_radious)
                 binding.tabGroups.background = null
                 binding.tapStaffs.background = null
 
@@ -704,20 +711,23 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 binding.textdesc.visibility = View.GONE
                 binding.bottomLayout.visibility = View.GONE
                 binding.grouplabel.visibility = View.VISIBLE
-                binding.grouplabel.text = "Section/Students"
+                binding.grouplabel.text = "Section"
 
                 binding.chAllSelect.visibility = View.GONE
                 binding.rlaSubject.visibility = View.GONE
                 binding.btnSpecificStudent.visibility = View.VISIBLE
                 binding.btnSpecificStudent.isEnabled = false
-                binding.btnSpecificStudent.background = ContextCompat.getDrawable(this@RecipientActivity, R.drawable.bg_gray)
+                binding.btnSpecificStudent.background =
+                    ContextCompat.getDrawable(this@RecipientActivity, R.drawable.bg_gray)
 
             }
+
             Constant.isGroup -> {
                 binding.tapEntireSchool.background = null
                 binding.tapStandards.background = null
                 binding.tabSectionsStudent.background = null
-                binding.tabGroups.background = ContextCompat.getDrawable(this@RecipientActivity, R.drawable.white_radious)
+                binding.tabGroups.background =
+                    ContextCompat.getDrawable(this@RecipientActivity, R.drawable.white_radious)
                 binding.tapStaffs.background = null
 
                 binding.nomessage.visibility = View.GONE
@@ -744,12 +754,14 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 }
 
             }
+
             Constant.isStaff -> {
                 binding.tapEntireSchool.background = null
                 binding.tapStandards.background = null
                 binding.tabSectionsStudent.background = null
                 binding.tabGroups.background = null
-                binding.tapStaffs.background = ContextCompat.getDrawable(this@RecipientActivity, R.drawable.white_radious)
+                binding.tapStaffs.background =
+                    ContextCompat.getDrawable(this@RecipientActivity, R.drawable.white_radious)
 
                 binding.nomessage.visibility = View.GONE
                 binding.nomessageEntire.visibility = View.GONE
@@ -880,7 +892,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             isStandardSelectedIds.add(isStandard)
         }
         binding.chAllSelect.isChecked = isStandardSelectedIds.size == isGetStandard?.size
-
     }
 
     override fun onIdUnchecked(isStandard: Standard) {

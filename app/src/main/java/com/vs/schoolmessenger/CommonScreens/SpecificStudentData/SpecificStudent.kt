@@ -4,10 +4,11 @@ import android.app.AlertDialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
@@ -42,6 +43,8 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
     var isCurrentAcademicYear = false
     var isAcademicYear: String? = null
     var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
+    private var isStudentList: List<NameAndIds> = listOf() // full list for filtering
+
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -68,12 +71,13 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
         isAwsUploadingPreSigned = AwsUploadingPreSigned()
 
         appViewModel!!.isStudentList!!.observe(this) { response ->
-//            Constant.hideLoading(this@SpecificStudent)
             if (response != null && response.status) {
-                isStudentData = response.data
+                isStudentList = response.data
+                isStudentData = isStudentList
                 isStudentData()
             }
         }
+
         binding.toolbarLayout.cbSelect.setOnClickListener {
             if (binding.toolbarLayout.cbSelect.isChecked) {
                 isSpecificStudent.clear()
@@ -100,10 +104,35 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
 
             }
         }
+
+
+        binding.toolbarLayout.txtSearch.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {}
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                filter(s.toString())
+            }
+        })
+
+
     }
 
-    private fun isStudentData() {
+    private fun filter(query: String) {
+        isStudentData = if (query.isEmpty()) {
+            isStudentList
+        } else {
+            isStudentList.filter {
+                it.name.contains(query, ignoreCase = true) ||
+                        it.admission_no.contains(query, ignoreCase = true)
+            }
+        }
+        mAdapter.updateList(isStudentData ?: listOf())
+    }
 
+
+    private fun isStudentData() {
         binding.rcySpecificStudent.layoutManager = LinearLayoutManager(this)
             mAdapter =
                 SpecificStudentAdapter(

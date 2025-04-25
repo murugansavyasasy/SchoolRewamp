@@ -11,8 +11,8 @@ data class VoiceData(
     @SerializedName(ResponseKeys.date) val date: String?,
     @SerializedName(ResponseKeys.time) var time: String?,
     @SerializedName(ResponseKeys.subject) var subject: String?,
-    @SerializedName(ResponseKeys.is_unread) var is_unread: Boolean = false,
-    @SerializedName(ResponseKeys.is_archive) var is_archive: Boolean = false
+    @SerializedName(ResponseKeys.is_unread) var is_unread: Boolean? = null,
+    @SerializedName(ResponseKeys.is_archive) var is_archive: Boolean? = null
 )
 
 

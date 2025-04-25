@@ -77,7 +77,15 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         binding.lblSelectReceipients.setOnClickListener(this)
         binding.rytSend.setOnClickListener(this)
         binding.rlaAcademicYear.setOnClickListener(this)
+        appViewModel = ViewModelProvider(this)[App::class.java]
+        appViewModel!!.init()
 
+        isStaffDetails = SharedPreference.getStaffDetails(this)
+        isAccessToken = isStaffDetails!!.access_token
+
+        isAwsUploadingPreSigned = AwsUploadingPreSigned()
+
+        isUserDetails = SharedPreference.getUserDetails(this)
 
         if(SELECTED_SCHOOL_MENU  == SH_COMMUNICATION || SELECTED_SCHOOL_MENU == SH_NOTICE_BOARD || SELECTED_SCHOOL_MENU == SH_ATTACHMENTS || SELECTED_SCHOOL_MENU == SH_SCHEDULE_EXAM_TEST || SELECTED_SCHOOL_MENU == SH_EVENTS
             || SELECTED_SCHOOL_MENU == SH_ONLINE_MEETING) {
@@ -93,15 +101,6 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             binding.lnrTab.visibility = View.GONE
         }
 
-        appViewModel = ViewModelProvider(this)[App::class.java]
-        appViewModel!!.init()
-
-        isStaffDetails = SharedPreference.getStaffDetails(this)
-        isAccessToken = isStaffDetails!!.access_token
-
-        isAwsUploadingPreSigned = AwsUploadingPreSigned()
-
-        isUserDetails = SharedPreference.getUserDetails(this)
         isGetAcademicYear()
 
         appViewModel!!.isVoiceSend?.observe(this) { response ->

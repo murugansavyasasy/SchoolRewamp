@@ -3,7 +3,9 @@ package com.vs.schoolmessenger.School.MarkYourAttendance
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.ActionBar
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
@@ -14,6 +16,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.CompoundButton
+import android.widget.ImageView
 import android.widget.PopupWindow
 import android.widget.TextView
 import android.widget.Toast
@@ -155,7 +158,6 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
         }
     }
 
-
     private fun getCurentLocation(type: String) {
        binding.rytProgressBar.visibility = View.VISIBLE
         val locationHelper = LocationHelper(this, this, "current")
@@ -207,9 +209,83 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
     }
 
     private fun showFingerPrintDisablepopup() {
+        val alertDialog = AlertDialog.Builder(this@MarkYourAttendance)
+        alertDialog.setTitle(R.string.Disable_Fingerprint)
+        alertDialog.setMessage(R.string.disable_fingerprint_authentication)
+        alertDialog.setNegativeButton("Yes", object : DialogInterface.OnClickListener {
+            override fun onClick(dialog: DialogInterface, which: Int) {
+                dialog.cancel()
+                binding.enableSwitch.isChecked = false
+//                TeacherUtil_SharedPreference.putBiometricEnabled(
+//                    this@PunchStaffAttendanceUsingFinger,
+//                    false
+//                )
+            }
+        })
+        alertDialog.setPositiveButton(
+            "Cancel", object : DialogInterface.OnClickListener {
+                override fun onClick(dialog: DialogInterface, which: Int) {
+                    dialog.cancel()
+
+//                    val enabled: Boolean =
+//                        TeacherUtil_SharedPreference.getBiometricEnabled(this@PunchStaffAttendanceUsingFinger)
+//                    enableSwitch.setChecked(enabled)
+                }
+            })
+        val dialog = alertDialog.create()
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.show()
     }
 
     private fun enableLocalFingerPrint() {
+        val inflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val layout = inflater.inflate(R.layout.biometric_permission_enable_popup, null)
+        enableBiometricPopup = PopupWindow(
+            layout, ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT, true
+        )
+        enableBiometricPopup!!.contentView = layout
+        binding.rytParent.post(object : Runnable {
+            override fun run() {
+                enableBiometricPopup!!.showAtLocation(binding.rytParent, Gravity.CENTER, 0, 0)
+            }
+        })
+        val btnAllow = layout.findViewById<View?>(R.id.btnAllow) as TextView
+        val btnSkip = layout.findViewById<View?>(R.id.btnSkip) as TextView
+        val imgClose = layout.findViewById<View?>(R.id.imgClose) as ImageView
+        btnAllow.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View?) {
+//                TeacherUtil_SharedPreference.putBiometricSkip(
+//                    this@PunchStaffAttendanceUsingFinger,
+//                    false
+//                )
+//                TeacherUtil_SharedPreference.putBiometricEnabled(
+//                    this@PunchStaffAttendanceUsingFinger,
+//                    true
+//                )
+                binding.enableSwitch.setChecked(true)
+                enableBiometricPopup!!.dismiss()
+            }
+        })
+
+        btnSkip.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View?) {
+//                TeacherUtil_SharedPreference.putBiometricSkip(
+//                    this@PunchStaffAttendanceUsingFinger,
+//                    true
+//                )
+                binding.enableSwitch.setChecked(false)
+                enableBiometricPopup!!.dismiss()
+            }
+        })
+
+        imgClose.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View?) {
+                enableBiometricPopup!!.dismiss()
+//                val isEnabled: Boolean =
+//                    TeacherUtil_SharedPreference.getBiometricEnabled(this@PunchStaffAttendanceUsingFinger)
+//                binding.enableSwitch.setChecked(isEnabled)
+            }
+        })
 
     }
 
@@ -302,27 +378,24 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
 
     private fun againAuthenticatePopup() {
 
-//        val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-//        val layout = inflater.inflate(R.layout.authenticate_alert_popup, null)
-//
-//        val authenticateAlertPopupWindow = PopupWindow(
-//            layout,
-//            ActionBar.LayoutParams.MATCH_PARENT,
-//            ActionBar.LayoutParams.MATCH_PARENT,
-//            true
-//        )
-//
-//        authenticateAlertPopupWindow.contentView = layout
-//
-//        binding.rytParent.post {
-//            authenticateAlertPopupWindow.showAtLocation(binding.rytParent, Gravity.CENTER, 0, 0)
-//        }
-//
-//        val lblAuthenticate = layout.findViewById<TextView>(R.id.lblAuthenticate)
-//        lblAuthenticate.setOnClickListener {
-//            authenticateAlertPopupWindow.dismiss()
-//            authenticatStart()
-//        }
+        val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val layout = inflater.inflate(R.layout.authenticate_alert_popup, null)
+
+        val authenticateAlertPopupWindow = PopupWindow(
+            layout, ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT, true
+        )
+
+        authenticateAlertPopupWindow.contentView = layout
+
+        binding.rytParent.post {
+            authenticateAlertPopupWindow.showAtLocation(binding.rytParent, Gravity.CENTER, 0, 0)
+        }
+
+        val lblAuthenticate = layout.findViewById<TextView>(R.id.lblAuthenticate)
+        lblAuthenticate.setOnClickListener {
+            authenticateAlertPopupWindow.dismiss()
+            authenticatStart()
+        }
     }
 
     private fun redirectToEnableGPS() {

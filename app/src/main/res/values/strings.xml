@@ -342,6 +342,9 @@
     <string name="Biometric_Authentications">Biometric Authentications</string>
     <string name="Mark_attendance_biometric_credential">Mark attendance using your biometric credential</string>
     <string name="cancel">Cancel</string>
+    <string name="biometric_authentications">Biometric authentications</string>
+    <string name="biometric_authentication_is_required_to_present">Biometric authentication is required to present</string>
+    <string name="authenticate_again">Authenticate again</string>
 
 
 </resources>
