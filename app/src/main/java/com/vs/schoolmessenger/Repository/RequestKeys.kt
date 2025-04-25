@@ -9,6 +9,7 @@ object RequestKeys {
     const val Req_mobile_number = "mobile_number"
     const val Req_password = "password"
     const val Req_secure_id = "secure_id"
+    const val device_info = "device_info"
     const val Req_otp = "otp"
     const val Req_old_password = "old_password"
     const val Req_new_password = "new_password"

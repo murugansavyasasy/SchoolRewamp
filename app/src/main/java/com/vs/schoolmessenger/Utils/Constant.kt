@@ -29,6 +29,7 @@ import android.widget.FrameLayout
 import android.widget.GridView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import com.google.mlkit.common.sdkinternal.CommonUtils.getAppVersion
 import com.vs.schoolmessenger.Auth.Country.Country
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
@@ -492,7 +493,30 @@ object Constant {
         }
     }
 
+    fun getDeviceDetails(context: Activity) : String{
+        val deviceDetails = mapOf(
+            "manufacturer" to Build.MANUFACTURER,
+            "model" to Build.MODEL,
+            "device" to Build.DEVICE,
+            "brand" to Build.BRAND,
+            "hardware" to Build.HARDWARE,
+            "product" to Build.PRODUCT,
+            "os_version" to Build.VERSION.RELEASE,
+            "sdk_int" to Build.VERSION.SDK_INT.toString(),
+            "app_version" to getAppVersion(context)
+        )
+        return deviceDetails.toString()
+    }
 
+
+    fun getAppVersion(context: Activity): String {
+        return try {
+            val pInfo = context.packageManager.getPackageInfo(context.packageName, 0)
+            pInfo.versionName ?: "Unknown"
+        } catch (e: Exception) {
+            "Unknown"
+        }
+    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun getCurrentTime(): String {

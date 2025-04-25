@@ -90,6 +90,7 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
         jsonObject.addProperty(RequestKeys.Req_device_type, Constant.isDeviceType)
         jsonObject.addProperty(RequestKeys.Req_device_token, token)
         jsonObject.addProperty(RequestKeys.Req_secure_id, isSecureId)
+        jsonObject.addProperty(RequestKeys.device_info, Constant.getDeviceDetails(this@SchoolDashboard))
         authViewModel!!.isDeviceToken(jsonObject, this)
     }
 
