@@ -200,52 +200,49 @@ class UnifiedVoiceAdapter(
                 rlaSelectText.visibility = View.GONE
                 rlaSendVoice.visibility = View.GONE
 
-                lblContentText.viewTreeObserver.addOnGlobalLayoutListener(object :
-                    ViewTreeObserver.OnGlobalLayoutListener {
-                    override fun onGlobalLayout() {
-                        lblContentText.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                        lblnewiconText.visibility =
-                            if (data.is_unread!!) View.VISIBLE else View.GONE
-                        lblnewiconVoice.visibility = View.GONE
-                        lblSeeMore.visibility = if (data.is_unread!!) View.VISIBLE else View.GONE
-                        lblSeeMore.visibility = View.GONE
-
-                        if (lblContentText.lineCount > 3) {
-                            lblSeeMore.visibility = View.VISIBLE
-                            lblContentText.maxLines = 3
-                            lblContentText.ellipsize = TextUtils.TruncateAt.END
-                            if (data.is_unread!!) {
-                                lblnewiconText.visibility = View.VISIBLE
-                            } else {
-                                lblnewiconText.visibility = View.GONE
-                            }
-                            data.is_unread = false
-                        } else {
-                            if (data.is_unread!!) {
-                                lblSeeMore.visibility = View.VISIBLE
-                                lblnewiconText.visibility = View.VISIBLE
-                            } else {
-                                lblSeeMore.visibility = View.GONE
-                                lblnewiconText.visibility = View.GONE
-                            }
-                            data.is_unread = false
-                        }
-                    }
-                })
+//                lblContentText.viewTreeObserver.addOnGlobalLayoutListener(object :
+//                    ViewTreeObserver.OnGlobalLayoutListener {
+//                    override fun onGlobalLayout() {
+//                        lblContentText.viewTreeObserver.removeOnGlobalLayoutListener(this)
+//                        lblnewiconText.visibility =
+//                            if (data.is_unread!!) View.VISIBLE else View.GONE
+//                        lblnewiconVoice.visibility = View.GONE
+//                        lblSeeMore.visibility = if (data.is_unread!!) View.VISIBLE else View.GONE
+//                        lblSeeMore.visibility = View.GONE
+//
+//                        if (lblContentText.lineCount > 3) {
+//                            lblSeeMore.visibility = View.VISIBLE
+//                            lblContentText.maxLines = 3
+//                            lblContentText.ellipsize = TextUtils.TruncateAt.END
+//                            if (data.is_unread!!) {
+//                                lblnewiconText.visibility = View.VISIBLE
+//                            } else {
+//                                lblnewiconText.visibility = View.GONE
+//                            }
+//                        } else {
+//                            if (data.is_unread!!) {
+//                                lblSeeMore.visibility = View.VISIBLE
+//                                lblnewiconText.visibility = View.VISIBLE
+//                            } else {
+//                                lblSeeMore.visibility = View.GONE
+//                                lblnewiconText.visibility = View.GONE
+//                            }
+//                        }
+//                    }
+//                })
 
                 rlaText.setOnClickListener {
-                    Log.d("isClicked", "isClicked")
-//                    isExpanded = !isExpanded
-//                    lblviewtext.visibility = View.GONE
-//                    lblnewiconText.visibility = View.GONE
-//                    lblContentText.maxLines = if (isExpanded) Int.MAX_VALUE else 3
-                    Log.d("data.is_unread!!", data.is_unread!!.toString())
+                    isExpanded = !isExpanded
+                    lblviewtext.visibility = View.GONE
+                    lblnewiconText.visibility = View.GONE
+                    lblContentText.maxLines = if (isExpanded) Int.MAX_VALUE else 3
                     if (data.is_unread!!) {
                         if (data.is_archive!!) {
                             listener.onUpdateArchiveStatus(data.type, data.id)
                         } else {
                             listener.onUpdateCommunicationStatus(data.type, data.id)
                         }
+                        data.is_unread=false
                     }
                     listener.onItemClick(data, this@DataViewHolder)
                 }

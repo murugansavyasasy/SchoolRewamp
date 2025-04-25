@@ -206,7 +206,7 @@
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="-19dp"
+            android:layout_marginTop="-14dp"
             android:layout_marginEnd="@dimen/twenty_five"
             android:elevation="10dp"
             android:src="@drawable/new_icon">

@@ -149,9 +149,10 @@ class Communication : BaseActivity<CommunicationBinding>(), View.OnClickListener
     }
 
     private fun isChangeBackgroundFilter(isSelectedFilter: TextView) {
-        binding.lblAll.background = null
-        binding.lblUnread.background = null
-        binding.lblRead.background = null
+        binding.lblAll.setBackgroundResource(R.drawable.bg_gray_radious)
+        binding.lblUnread.setBackgroundResource(R.drawable.bg_gray_radious)
+        binding.lblRead.setBackgroundResource(R.drawable.bg_gray_radious)
+
         isSelectedFilter.setBackgroundResource(R.drawable.bg_light_green_radious)
 
         if (isSelectedFilter == binding.lblAll) {
