@@ -250,91 +250,53 @@
         </LinearLayout>
     </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_below="@+id/rytFilter"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerInitial"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="false" />
-
-            <TextView
-                android:id="@+id/seeMoreLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginTop="@dimen/five"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="@dimen/fifty"
-                android:text="@string/see_more"
-                android:textColor="@color/navi_blue2"
-                android:textSize="@dimen/fifteen_sp"
-                android:visibility="visible" />
-        </LinearLayout>
-
-
-    <!--    <androidx.recyclerview.widget.RecyclerView-->
-    <!--        android:id="@+id/recyclerInitial"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_below="@+id/rytFilter"-->
-    <!--        android:layout_marginTop="@dimen/ten">-->
-    <!--    </androidx.recyclerview.widget.RecyclerView>-->
-
-    <!--    <TextView-->
-    <!--        android:id="@+id/seeMoreLabel"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_below="@+id/recyclerInitial"-->
-    <!--        android:layout_alignParentEnd="true"-->
-    <!--        android:layout_marginTop="@dimen/five"-->
-    <!--        android:layout_marginEnd="20dp"-->
-    <!--        android:text="@string/see_more"-->
-    <!--        android:textColor="@color/navi_blue2"-->
-    <!--        android:textSize="@dimen/fifteen_sp"-->
-    <!--        android:visibility="visible" />-->
-
-
-    <!--    <androidx.recyclerview.widget.RecyclerView-->
-    <!--        android:id="@+id/recyclerMore"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent"-->
-    <!--        android:layout_marginTop="@dimen/ten"-->
-    <!--        android:padding="@dimen/five"-->
-    <!--        android:layout_marginBottom="@dimen/ten"-->
-    <!--        android:layout_below="@+id/recyclerInitial"/>-->
-
-
-    <TextView
-        android:id="@+id/txtNoData"
-        style="@style/CustomTextStylePoppinsBold"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/nomessage"
-        android:layout_centerInParent="true"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:text="No list found"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        android:visibility="gone" />
+        android:layout_below="@+id/rytFilter"
+        android:orientation="vertical">
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerInitial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-    <ImageView
-        android:id="@+id/nomessage"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:layout_centerInParent="true"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:src="@drawable/nomessages"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        android:visibility="gone" />
+        <ImageView
+            android:id="@+id/nomessage"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/nomessages"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:visibility="gone" />
 
+        <TextView
+            android:id="@+id/txtNoData"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:text="No list found"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:visibility="gone" />
 
+        <TextView
+            android:id="@+id/seeMoreLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="@dimen/five"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="@dimen/hundred"
+            android:text="@string/see_more"
+            android:textColor="@color/navi_blue2"
+            android:textSize="@dimen/fifteen_sp"
+            android:visibility="visible" />
+    </LinearLayout>
 </RelativeLayout>

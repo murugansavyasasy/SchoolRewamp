@@ -297,6 +297,7 @@ class Communication : BaseActivity<CommunicationBinding>(), View.OnClickListener
                     archiveFlag
                 )
                 binding.recyclerInitial.layoutManager = LinearLayoutManager(this)
+                binding.recyclerInitial.isNestedScrollingEnabled = false
                 binding.recyclerInitial.adapter = adapter
             } else {
                 adapter?.setIsFromArchive(archiveFlag)
@@ -329,6 +330,7 @@ class Communication : BaseActivity<CommunicationBinding>(), View.OnClickListener
             isFromArchive
         )
         binding.recyclerInitial.layoutManager = LinearLayoutManager(this)
+        binding.recyclerInitial.isNestedScrollingEnabled = false
         binding.recyclerInitial.adapter = shimmerAdapter
     }
 

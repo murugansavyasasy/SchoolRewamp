@@ -62,7 +62,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
     private var isUserDetails: UserDetails? = null
-    private var isStaffDetails: StaffDetails? = null
+    private var isStaffData: StaffDetails? = null
     var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
 
     var isAcademicYear: List<AcademicYear>? = null
@@ -80,8 +80,8 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
 
-        isStaffDetails = SharedPreference.getStaffDetails(this)
-        isAccessToken = isStaffDetails!!.access_token
+        isStaffData = SharedPreference.getStaffDetails(this)
+        isAccessToken = isStaffData!!.access_token
 
         isAwsUploadingPreSigned = AwsUploadingPreSigned()
 
@@ -139,7 +139,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             mAdapter = SchoolListAdapter(
                 isMultipleSchool,
                 selectedSchoolIds,
-                Constant.isStaffDetails,
+                isUserDetails!!.staff_details,
                 this,
                 this,
                 Constant.isShimmerViewDisable
@@ -349,7 +349,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                         voiceSendApi(isVoiceData!!.isAwsUrl)
                     } else {
                         isFileUploadInAws(
-                            Constant.isVoiceFile!!, isStaffDetails!!.school_id, "audio"
+                            Constant.isVoiceFile!!, isStaffData!!.school_id, "audio"
                         )
                     }
                 }
@@ -397,7 +397,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                     voiceSendApi(isVoiceData!!.isAwsUrl)
                 } else {
                     isFileUploadInAws(
-                        Constant.isVoiceFile!!, isStaffDetails!!.school_id, "audio"
+                        Constant.isVoiceFile!!, isStaffData!!.school_id, "audio"
                     )
                 }
             }

@@ -19,9 +19,38 @@
             android:id="@+id/lblgroupname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Group Name"
+            android:text="Group name"
+            android:layout_centerVertical="true"
             android:textSize="@dimen/fifteen_sp"
+            android:layout_toStartOf="@+id/lblCreated"
             android:textColor="@color/black"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="@dimen/five"
+            android:layout_toEndOf="@+id/chMultipleSchool"/>
+
+        <TextView
+            android:id="@+id/lblEmployeeId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Employee id :"
+            android:textSize="@dimen/fifteen_sp"
+            android:visibility="gone"
+            android:layout_marginTop="@dimen/ten"
+            android:textColor="@color/black"
+            android:layout_below="@+id/lblgroupname"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/chMultipleSchool"/>
+
+
+        <TextView
+            android:id="@+id/lblDestination"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Destination :"
+            android:textSize="@dimen/fifteen_sp"
+            android:visibility="gone"
+            android:textColor="@color/black"
+            android:layout_below="@+id/lblEmployeeId"
             android:layout_marginStart="10dp"
             android:layout_marginTop="@dimen/five"
             android:layout_toEndOf="@+id/chMultipleSchool"/>
@@ -30,6 +59,7 @@
             android:id="@+id/chMultipleSchool"
             android:layout_width="wrap_content"
             style="@style/CustomCheckBox"
+            android:layout_centerVertical="true"
             android:layout_height="wrap_content" />
 
         <TextView
@@ -37,8 +67,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
+            android:layout_centerVertical="true"
             android:text="Created on : "
-            android:layout_below="@+id/chMultipleSchool"
+            android:layout_marginTop="@dimen/five"
             android:layout_alignParentEnd="true"
             android:textSize="@dimen/thirteen_sp"
             android:textColor="@color/grey"

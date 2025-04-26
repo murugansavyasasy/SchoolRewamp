@@ -49,9 +49,6 @@ class AppServices {
     var isUpdateStatusArchive: MutableLiveData<StatusArchiveResponse?>
     var isAcademicYear: MutableLiveData<AcademicYearResponse?>
     var isUpdateStatusCommunication: MutableLiveData<StatusArchiveResponse?>
-
-
-
     var isPunchAttendance: MutableLiveData<StatusMessageModel?>
     var isAddLocation: MutableLiveData<StatusMessageModel?>
     var isRemoveLocation: MutableLiveData<StatusMessageModel?>
@@ -61,8 +58,6 @@ class AppServices {
     var isPunchHistory: MutableLiveData<PunchHistoryResponse?>
     var isStaffAttendanceReport: MutableLiveData<StaffAttendanceReportResponse?>
     var isStaffWiseAttendanceReport: MutableLiveData<StaffAttendanceReportResponse?>
-
-
 
     init {
         client_auth = RestClient()
@@ -82,7 +77,6 @@ class AppServices {
         isUpdateStatusArchive = MutableLiveData()
         isAcademicYear = MutableLiveData()
         isUpdateStatusCommunication = MutableLiveData()
-
         isPunchAttendance = MutableLiveData()
         isAddLocation = MutableLiveData()
         isRemoveLocation = MutableLiveData()

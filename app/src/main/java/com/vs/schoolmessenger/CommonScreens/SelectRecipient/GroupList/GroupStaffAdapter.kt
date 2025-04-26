@@ -69,7 +69,6 @@ class GroupStaffAdapter(private var isGroup: Boolean,
                 }
             }
 
-
             chMultipleSchool.setOnCheckedChangeListener(null)
             chMultipleSchool.isChecked = selectedIds.contains(data.id)
 
