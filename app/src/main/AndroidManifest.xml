@@ -75,6 +75,15 @@
             </intent-filter>
         </activity>
 
+        <!-- Register broadcast receiver -->
+        <receiver
+            android:name=".Utils.MySMSBroadcastReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.android.gms.auth.api.phone.SMS_RETRIEVED" />
+            </intent-filter>
+        </receiver>
+
         <activity
             android:name=".CommonScreens.SelectRecipient.RecipientActivity"
             android:theme="@style/AppTheme"
