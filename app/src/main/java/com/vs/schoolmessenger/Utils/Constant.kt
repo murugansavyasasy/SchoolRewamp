@@ -130,6 +130,7 @@ object Constant {
     var isText = 102
 
     var isSchool = 1
+
     var isStandard = 2
     var isSection = 3
     var isGroup = 4

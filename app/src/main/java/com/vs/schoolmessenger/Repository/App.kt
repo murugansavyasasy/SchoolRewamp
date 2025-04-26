@@ -14,6 +14,8 @@ import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.Standar
 import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
 import com.vs.schoolmessenger.Parent.Communication.VoiceData
 import com.vs.schoolmessenger.Parent.Communication.VoiceDataResponse
+import com.vs.schoolmessenger.Parent.Homework.GetHomeworkData
+import com.vs.schoolmessenger.Parent.Homework.HomeworkResponse
 import com.vs.schoolmessenger.School.Communication.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.VoiceDetails
@@ -71,6 +73,9 @@ class App(application: Application) : AndroidViewModel(application) {
     var isUpdateStatusCommunication: LiveData<StatusArchiveResponse?>? = null
         private set
 
+    var isHomeWorkDetails: LiveData<GetHomeworkData?>? = null
+        private set
+
 
 
 
@@ -92,6 +97,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isUpdateStatusArchive = apiRepositories!!.isUpdateStatusArchiveLiveData
         isGetAcademicList = apiRepositories!!.isGetAcademicLiveData
         isUpdateStatusCommunication = apiRepositories!!.isUpdateStatusCommunicationLiveData
+        isHomeWorkDetails=apiRepositories!!.isHomeWorkDetailsLiveData
     }
 
     fun isDashBoardData(isToken: String, isMemberType: String, activity: Activity) {
@@ -160,6 +166,11 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun isUpdateStatusCommunication(isToken: String, jsonObject: JsonObject, activity: Activity) {
         apiRepositories?.isUpdateStatusCommunication(isToken, jsonObject, activity)
+    }
+
+    //get homework details
+    fun isHomeWorkDetails(isToken: String, activity: Activity) {
+        apiRepositories?.isHomeWorkDetails(isToken, activity)
     }
 
 

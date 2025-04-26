@@ -46,7 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/ten"
         android:background="@drawable/rect_shadow_light_gray"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <TextView
             android:id="@+id/lblTitleImage"

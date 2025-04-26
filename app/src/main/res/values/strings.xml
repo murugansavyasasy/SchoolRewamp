@@ -307,6 +307,9 @@
     <string name="star">**********</string>
     <string name="logintext">Login</string>
     <string name="see_less">see less</string>
+    <string name="academic_year">Academic Year</string>
+    <string name="search">Search</string>
+    <string name="today">Today</string>
 
 
 </resources>

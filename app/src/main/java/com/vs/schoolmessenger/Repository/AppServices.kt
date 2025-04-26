@@ -16,6 +16,9 @@ import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsRespo
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
 import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
 import com.vs.schoolmessenger.Parent.Communication.VoiceDataResponse
+import com.vs.schoolmessenger.Parent.Homework.GetHomeworkData
+import com.vs.schoolmessenger.Parent.Homework.HomeWorkDateData
+import com.vs.schoolmessenger.Parent.Homework.HomeworkResponse
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Communication.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.TextSendResponse
@@ -45,6 +48,8 @@ class AppServices {
     var isUpdateStatusArchive: MutableLiveData<StatusArchiveResponse?>
     var isAcademicYear: MutableLiveData<AcademicYearResponse?>
     var isUpdateStatusCommunication: MutableLiveData<StatusArchiveResponse?>
+    var isHomeWorkDetails: MutableLiveData<GetHomeworkData?>
+
 
 
     init {
@@ -65,6 +70,7 @@ class AppServices {
         isUpdateStatusArchive = MutableLiveData()
         isAcademicYear = MutableLiveData()
         isUpdateStatusCommunication = MutableLiveData()
+        isHomeWorkDetails=MutableLiveData()
     }
 
 
@@ -594,5 +600,40 @@ class AppServices {
 
     val isGetAcademicLiveData: LiveData<AcademicYearResponse?>
         get() = isAcademicYear
+
+
+    //get HomeworkDetails
+    fun isHomeWorkDetails(isToken: String, activity: Activity) {
+        RestClient.apiInterfaces.isHomeWorkDetails(isToken)
+            ?.enqueue(object : Callback<GetHomeworkData?> {
+                override fun onResponse(
+                    call: Call<GetHomeworkData?>,
+                    response: Response<GetHomeworkData?>
+                ) {
+                    Log.d(
+                        "isHomeWorkDetails",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isHomeWorkDetails.postValue(response.body())
+                            } else {
+                                isHomeWorkDetails.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<GetHomeworkData?>, t: Throwable) {
+                    isHomeWorkDetails.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isHomeWorkDetailsLiveData: LiveData<GetHomeworkData?>
+        get() = isHomeWorkDetails
 
 }
