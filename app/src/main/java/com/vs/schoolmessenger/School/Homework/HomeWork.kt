@@ -182,7 +182,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
 
         }
 
-        isClickingId.background = ContextCompat.getDrawable(this, R.drawable.bg_blue)
+        isClickingId.background = ContextCompat.getDrawable(this, R.drawable.custom_bg_blue)
         isClickingId.setTextColor(ContextCompat.getColor(this, R.color.white))
 
     }
