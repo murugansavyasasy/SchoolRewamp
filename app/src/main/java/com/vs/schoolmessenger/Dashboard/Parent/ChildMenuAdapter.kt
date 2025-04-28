@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -41,13 +42,10 @@ class ChildMenuAdapter(
     private val TYPE_DATA = 1
     private val TYPE_AD = 2
 
-    private var isSeeMore = false
-    private var seeMoreMenus = 0
-
     override fun getItemViewType(position: Int): Int {
         return when {
             isLoading -> TYPE_SHIMMER
-            position == 6 -> TYPE_AD
+            position == 9 -> TYPE_AD
             else -> TYPE_DATA
         }
     }
@@ -89,8 +87,8 @@ class ChildMenuAdapter(
             }
 
             is AdViewHolder -> {
-                if (position == 6) {
-//                    holder.bind(specialImages!!, context)
+                if (position == 9) {
+                    holder.bind(specialImages!!, context)
                 } else {
                     holder.bind(emptyList(), context)
                 }
@@ -237,11 +235,11 @@ class ChildMenuAdapter(
         @SuppressLint("ClickableViewAccessibility")
         fun bind(images: List<AdItem>, context: Context) {
             // Initialize layoutManager
+            Log.d("isComing","isLoadingNow")
             layoutManager =
                 LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
             recyclerView.layoutManager = layoutManager
             recyclerView.adapter = AdImageAdapter(images)
-            rlaMenuExample.visibility = View.VISIBLE
 //            lblSeeMore.setOnClickListener {
 //                adapter.toggleMoreItems(lblSeeMore, rlaMenuExample)
 //            }
@@ -353,25 +351,6 @@ class ChildMenuAdapter(
             }
         }
     }
-
-//    private fun getMoreItems(): ArrayList<GridItem> {
-//        return arrayListOf(
-//
-//            GridItem(R.drawable.timetable_icon, "Class Timetable"),
-//            GridItem(R.drawable.noticeboard_icon, "Notice Board"),
-//            GridItem(R.drawable.attendance_report_icon, "Attendance Report"),
-//            GridItem(R.drawable.fee_details, "Fee Details"),
-//            GridItem(R.drawable.leave_request_icon, "Leave Requests"),
-//            GridItem(R.drawable.assignment_icon, "Assignment"),
-//            GridItem(R.drawable.chat_icon, "Interaction with student"),
-//            GridItem(R.drawable.online_meeting_icon, "Online Meeting"),
-//            GridItem(R.drawable.ptm_icon, "PTM"),
-//            GridItem(R.drawable.lsrw_icon, "LSRW"),
-//            GridItem(R.drawable.quiz_icon, "Quiz"),
-//            GridItem(R.drawable.exam_mark_icon, "Exam Marks"),
-//            GridItem(R.drawable.exam_mark_icon, "Certificate Request"),
-//        )
-//    }
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun startShimmer() {

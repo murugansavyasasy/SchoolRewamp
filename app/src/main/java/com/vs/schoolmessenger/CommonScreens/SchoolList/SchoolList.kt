@@ -236,6 +236,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             || SELECTED_SCHOOL_MENU == SH_EVENTS || SELECTED_SCHOOL_MENU == SH_SCHEDULE_EXAM_TEST) {
             val intent = Intent(this, RecipientActivity::class.java)
             SharedPreference.putStaffDetails(this, data)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             startActivity(intent)
         }
         else{

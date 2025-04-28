@@ -471,6 +471,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             R.id.btnSpecificStudent -> {
                 selectedIds = isSectionSelectedIds.map { it.id.toString() }.toMutableList()
                 val intent = Intent(this@RecipientActivity, SpecificStudent::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 intent.putExtra("isAcademicYearId", isAcademicYearId)
                 intent.putExtra("isCurrentAcademicYear", isCurrentAcademicYear)
                 intent.putExtra("lblAcademicYear", binding.lblAcademicYear.text.toString())
@@ -582,12 +583,12 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     } else {
                         if (Constant.isClickType == 3) {
                             showSendConfirmationDialog(
-                                "Selected target : " + selectedIds.size.toString() + " " + isTypeOfName + " (S)",
+                                "Selected target : " + selectedIds.size.toString() + " " + isTypeOfName + " (s)",
                                 isAcademicYearNote
                             )
                         } else {
                             showSendConfirmationDialog(
-                                "Selected target : " + selectedIds.size.toString() + " " + isTypeOfName + " (S)",
+                                "Selected target : " + selectedIds.size.toString() + " " + isTypeOfName + " (s)",
                                 isAcademicYearNote.toString()
                             )
                         }

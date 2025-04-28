@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.Dashboard.Fragments
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Paint
 import android.os.Bundle
@@ -10,6 +11,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -23,6 +25,7 @@ import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardData
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuClickListener
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuDetail
 import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolList
+import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.Dashboard.School.SchoolMenuAdapter
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.Notification
 import com.vs.schoolmessenger.R
@@ -192,6 +195,21 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 //   filter(s.toString())
             }
         })
+
+
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (userDetails!!.is_parent && userDetails!!.is_staff) {
+                    val intent = Intent(requireActivity(), PrioritySelection::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                }else {
+                    handleBackPress()
+                }
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+
         return binding.root
     }
 
@@ -252,6 +270,18 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 }
             }
         }
+    }
+
+
+    private fun handleBackPress() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Go Back?")
+            .setMessage("Do you want to Exit?")
+            .setPositiveButton("Yes") { _, _ ->
+               requireActivity().finishAffinity()
+            }
+            .setNegativeButton("No", null)
+            .show()
     }
 
 
