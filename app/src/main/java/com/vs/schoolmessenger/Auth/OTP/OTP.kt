@@ -186,8 +186,6 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
 
                     }
                     isOtpValidate(otp)
-
-
                 }
             }
         }

@@ -318,7 +318,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     }
 
 
-
     private fun changeLabel() {
         binding.lblSend.text = resources.getString(R.string.NEXT)
 
@@ -492,7 +491,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     )
                     binding.lblEndDuration.text ="/ " +totalFormatted
                 }
-
 
 
                 setOnCompletionListener {
@@ -1233,7 +1231,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         startActivityForResult(intent, PICK_AUDIO_REQUEST)
     }
 
-
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -1247,18 +1244,34 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
                 val mediaPlayer = MediaPlayer()
                 try {
-                    // Set data source to get duration
                     mediaPlayer.setDataSource(this, uri)
                     mediaPlayer.prepare()
+
                     val durationInMillis = mediaPlayer.duration
                     val formattedDuration = formatDuration(durationInMillis)
+                    if (binding.SwitchEmergencyVoice.isChecked() == true) {
+                        if (durationInMillis > 30000) {
+                            mediaPlayer.release()
+                            showDurationLimitDialog("Audio duration must be at least 30 seconds.")
+                            return
+                        }
+                    } else {
+                        if (durationInMillis > 180000) {
+                            mediaPlayer.release()
+                            showDurationLimitDialog("Audio duration must be below 3 minutes.")
+                            return
+                        }
+                    }
+
+
                     mediaPlayer.release()
+
                     val timeStamp =
                         SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
-                 var   isFileExtension = "mp3"
+                    var isFileExtension = "mp3"
                     val fileName = "Communication_${timeStamp}.$isFileExtension"
                     isFileName = fileName
-                    // Copy file to app cache
+
                     val inputStream = contentResolver.openInputStream(uri)
                     val outputFile = File(cacheDir, fileName)
                     val outputStream = FileOutputStream(outputFile)
@@ -1274,7 +1287,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     // Update UI
                     binding.rlaSeekBarAndTitle.visibility = View.VISIBLE
                     binding.rlaTitle.visibility = View.VISIBLE
-//                    binding.imgVoiceRecord.visibility = View.GONE
                     binding.rytVoiceRecord.visibility = View.GONE
                     binding.lblDurationOfVoice.visibility = View.GONE
                     binding.rlaAddLocalFile.visibility = View.GONE
@@ -1288,6 +1300,73 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
         }
     }
+
+    private fun showDurationLimitDialog(message: String) {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Invalid Duration")
+        builder.setMessage(message)
+        builder.setPositiveButton("OK") { dialog, _ ->
+            dialog.dismiss()  // Dismiss the dialog when "OK" is clicked
+        }
+        builder.setCancelable(false)  // Make the dialog non-cancelable
+        builder.show()
+    }
+
+
+//    @RequiresApi(Build.VERSION_CODES.O)
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//
+//        if (requestCode == PICK_AUDIO_REQUEST && resultCode == RESULT_OK) {
+//            val uri = data?.data
+//            if (uri != null) {
+//                contentResolver.takePersistableUriPermission(
+//                    uri, Intent.FLAG_GRANT_READ_URI_PERMISSION
+//                )
+//
+//                val mediaPlayer = MediaPlayer()
+//                try {
+//                    // Set data source to get duration
+//                    mediaPlayer.setDataSource(this, uri)
+//                    mediaPlayer.prepare()
+//                    val durationInMillis = mediaPlayer.duration
+//                    val formattedDuration = formatDuration(durationInMillis)
+//                    mediaPlayer.release()
+//                    val timeStamp =
+//                        SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+//                 var   isFileExtension = "mp3"
+//                    val fileName = "Communication_${timeStamp}.$isFileExtension"
+//                    isFileName = fileName
+//                    // Copy file to app cache
+//                    val inputStream = contentResolver.openInputStream(uri)
+//                    val outputFile = File(cacheDir, fileName)
+//                    val outputStream = FileOutputStream(outputFile)
+//                    inputStream?.copyTo(outputStream)
+//                    inputStream?.close()
+//                    outputStream.close()
+//
+//                    // Store local path for upload/use
+//                    audioFilePath = outputFile.absolutePath
+//                    Constant.isVoiceType = 2
+//                    Constant.isVoiceFile = audioFilePath
+//
+//                    // Update UI
+//                    binding.rlaSeekBarAndTitle.visibility = View.VISIBLE
+//                    binding.rlaTitle.visibility = View.VISIBLE
+////                    binding.imgVoiceRecord.visibility = View.GONE
+//                    binding.rytVoiceRecord.visibility = View.GONE
+//                    binding.lblDurationOfVoice.visibility = View.GONE
+//                    binding.rlaAddLocalFile.visibility = View.GONE
+//                    binding.lblEndDuration.text = "/ $formattedDuration"
+//
+//                } catch (e: Exception) {
+//                    mediaPlayer.release()
+//                    e.printStackTrace()
+//                    Toast.makeText(this, "Failed to load audio", Toast.LENGTH_SHORT).show()
+//                }
+//            }
+//        }
+//    }
 
     fun getFileExtensionFromAwsUrl(url: String): String? {
         val fileName = url.substringAfterLast("/")
