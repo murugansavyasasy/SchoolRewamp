@@ -305,12 +305,12 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
 
                     if (Constant.isClickType == 3) {
                         showSendConfirmationDialog(
-                            "Selected target : " + selectedIds.size.toString() +" Student (S)",
+                            "Selected target : " + selectedIds.size.toString() +" Student (s)",
                             isAcademicYearNote.toString()
                         )
                     } else {
                         showSendConfirmationDialog(
-                            "Selected target : " + selectedIds.size.toString()+" Student (S)",
+                            "Selected target : " + selectedIds.size.toString()+" Student (s)",
                             isAcademicYearNote.toString()
                         )
                     }

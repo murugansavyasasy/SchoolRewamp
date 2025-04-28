@@ -133,7 +133,6 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
                         startActivity(intent)
                     }
                     // }
-
                 } else {
                     Log.e("Network Error", "No Internet Connection")
                 }

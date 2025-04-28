@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/white"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -31,14 +32,14 @@
                 </ImageView>
 
                 <TextView
+                    style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/fifteen"
                     android:layout_marginTop="@dimen/twenty"
                     android:text="@string/Communication"
                     android:textColor="@color/black"
-                    android:textSize="20sp"
-                    style="@style/CustomTextStylePoppinsBold">
+                    android:textSize="20sp">
 
                 </TextView>
             </LinearLayout>
@@ -69,14 +70,14 @@
 
                 <TextView
                     android:id="@+id/lblAcademicYear"
+                    style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/fifteen"
                     android:text=""
                     android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"
-                    style="@style/CustomTextStylePoppinsBold">
+                    android:textSize="@dimen/thirteen_sp">
 
                 </TextView>
             </RelativeLayout>
@@ -93,8 +94,7 @@
                 android:orientation="horizontal">
 
 
-
-            <RelativeLayout
+                <RelativeLayout
                     android:id="@+id/rlaVoiceMessage"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -113,6 +113,7 @@
 
                     <TextView
                         android:id="@+id/lblVoiceMessage"
+                        style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/imgVoiceMessage"
@@ -120,11 +121,10 @@
                         android:gravity="center"
                         android:paddingStart="@dimen/five"
                         android:paddingEnd="@dimen/five"
-                        android:textSize="13sp"
-                        style="@style/CustomTextStylePoppinsBold"
                         android:paddingBottom="@dimen/ten"
                         android:text="Instant Call"
-                        android:textColor="@color/white">
+                        android:textColor="@color/white"
+                        android:textSize="13sp">
 
                     </TextView>
 
@@ -133,22 +133,23 @@
                 <RelativeLayout
                     android:id="@+id/rlaScheduleCall"
                     android:layout_width="0dp"
-                    android:visibility="visible"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:visibility="visible">
 
                     <ImageView
                         android:id="@+id/imgScheduleCall"
                         android:layout_width="@dimen/fifty"
                         android:layout_height="@dimen/fifty"
-                        android:paddingTop="@dimen/ten"
                         android:layout_centerHorizontal="true"
+                        android:paddingTop="@dimen/ten"
                         android:src="@drawable/call_schedule_icon_black">
 
                     </ImageView>
 
                     <TextView
                         android:id="@+id/lblScheduleCall"
+                        style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/imgScheduleCall"
@@ -156,11 +157,10 @@
                         android:gravity="center"
                         android:paddingStart="@dimen/five"
                         android:paddingEnd="@dimen/five"
-                        android:textSize="13sp"
-                        style="@style/CustomTextStylePoppinsBold"
                         android:paddingBottom="@dimen/ten"
                         android:text="@string/schedule_call"
-                        android:textColor="@color/black">
+                        android:textColor="@color/black"
+                        android:textSize="13sp">
 
                     </TextView>
 
@@ -176,14 +176,15 @@
                         android:id="@+id/imgTextMessage"
                         android:layout_width="@dimen/fifty"
                         android:layout_height="@dimen/fifty"
-                        android:paddingTop="@dimen/ten"
                         android:layout_centerHorizontal="true"
+                        android:paddingTop="@dimen/ten"
                         android:src="@drawable/text_icon_black">
 
                     </ImageView>
 
                     <TextView
                         android:id="@+id/lblTextMessage"
+                        style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/imgTextMessage"
@@ -192,10 +193,9 @@
                         android:paddingStart="@dimen/five"
                         android:paddingEnd="@dimen/five"
                         android:paddingBottom="@dimen/ten"
-                        android:textSize="13sp"
                         android:text="Text Message"
-                        style="@style/CustomTextStylePoppinsBold"
-                        android:textColor="@color/black">
+                        android:textColor="@color/black"
+                        android:textSize="13sp">
 
                     </TextView>
                 </RelativeLayout>
@@ -211,8 +211,8 @@
                 <RelativeLayout
                     android:id="@+id/rlaScheduleCallPickDate"
                     android:layout_width="match_parent"
-                    android:visibility="gone"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
 
 
                     <LinearLayout
@@ -223,8 +223,8 @@
                         android:weightSum="1">
 
 
-
                         <TextView
+                            style="@style/CustomTextStylePoppinsBold"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -232,8 +232,7 @@
                             android:layout_weight="0.4"
                             android:text="Schedule Date"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/thirteen_sp"
-                            style="@style/CustomTextStylePoppinsBold">
+                            android:textSize="@dimen/thirteen_sp">
 
                         </TextView>
 
@@ -253,11 +252,8 @@
                             android:layout_height="@dimen/twenty"
                             android:layout_gravity="end"
                             android:layout_weight="0.6"
-                            android:src="@drawable/calender_icon">
-                        </ImageView>
+                            android:src="@drawable/calender_icon"></ImageView>
                     </LinearLayout>
-
-
 
 
                     <LinearLayout
@@ -270,6 +266,7 @@
                         android:weightSum="1">
 
                         <TextView
+                            style="@style/CustomTextStylePoppinsBold"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -277,8 +274,7 @@
                             android:layout_weight="0.4"
                             android:text="From Time"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/thirteen_sp"
-                            style="@style/CustomTextStylePoppinsBold">
+                            android:textSize="@dimen/thirteen_sp">
 
                         </TextView>
 
@@ -309,8 +305,7 @@
                                 android:layout_height="wrap_content"
                                 android:text=""
                                 android:textColor="@color/black"
-                                android:textSize="@dimen/thirteen_sp">
-                            </TextView>
+                                android:textSize="@dimen/thirteen_sp"></TextView>
 
                             <ImageView
                                 android:layout_width="@dimen/twenty"
@@ -333,6 +328,7 @@
                         android:weightSum="1">
 
                         <TextView
+                            style="@style/CustomTextStylePoppinsBold"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -340,8 +336,7 @@
                             android:layout_weight="0.4"
                             android:text="Do not dial beyond"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/thirteen_sp"
-                            style="@style/CustomTextStylePoppinsBold">
+                            android:textSize="@dimen/thirteen_sp">
 
                         </TextView>
 
@@ -408,8 +403,7 @@
                     android:layout_below="@+id/gridViewScheduleCall"
                     android:layout_marginTop="@dimen/ten"
                     android:visibility="gone"
-                    tools:listitem="@layout/history_from_text_message">
-                </androidx.recyclerview.widget.RecyclerView>
+                    tools:listitem="@layout/history_from_text_message"></androidx.recyclerview.widget.RecyclerView>
 
                 <RelativeLayout
                     android:id="@+id/rlaBackRecord"
@@ -425,8 +419,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/five"
                         android:layout_marginTop="@dimen/twenty"
-                        android:layout_toEndOf="@+id/imgEndArrow1"
                         android:layout_marginEnd="@dimen/five"
+                        android:layout_toEndOf="@+id/imgEndArrow1"
                         android:text="&lt;&lt;Back to compose"
                         android:textColor="@color/navi_blue2"
                         android:textSize="@dimen/thirteen_sp">
@@ -436,11 +430,12 @@
                     <ImageView
                         android:id="@+id/imgEndArrow1"
 
-android:visibility="gone"                        android:layout_width="@dimen/twenty"
+                        android:layout_width="@dimen/twenty"
                         android:layout_height="@dimen/twenty"
                         android:layout_marginStart="@dimen/fifteen"
                         android:layout_marginTop="@dimen/twenty"
-                        android:src="@drawable/right_arrow_round">
+                        android:src="@drawable/right_arrow_round"
+                        android:visibility="gone">
 
                     </ImageView>
 
@@ -457,11 +452,11 @@ android:visibility="gone"                        android:layout_width="@dimen/tw
 
                     <TextView
                         android:id="@+id/lblHistoryList"
+                        style="@style/CustomTextStylePoppinsMedium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Select from history?"
+                        android:text="Select from history"
                         android:textColor="@color/navi_blue2"
-                        style="@style/CustomTextStylePoppinsMedium"
                         android:textSize="@dimen/thirteen_sp">
 
                     </TextView>
@@ -488,13 +483,13 @@ android:visibility="gone"                        android:layout_width="@dimen/tw
 
                     <TextView
 
+                        style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/ten"
                         android:layout_marginTop="@dimen/ten"
                         android:text="Title"
                         android:textColor="@color/black"
-                        style="@style/CustomTextStylePoppinsBold"
                         android:textSize="@dimen/thirteen_sp">
 
                     </TextView>
@@ -506,36 +501,36 @@ android:visibility="gone"                        android:layout_width="@dimen/tw
                         <TextView
                             android:id="@+id/lblCountOfTitle"
                             android:layout_width="wrap_content"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/thirteen_sp"
-                            android:text="0/50"
-                            android:layout_marginEnd="@dimen/ten"
+                            android:layout_height="wrap_content"
                             android:layout_below="@+id/edtTitleTextMessage"
                             android:layout_alignParentEnd="true"
-                            android:layout_height="wrap_content">
+                            android:layout_marginEnd="@dimen/ten"
+                            android:text="0/50"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/thirteen_sp">
 
                         </TextView>
+
                         <EditText
                             android:id="@+id/edtTitleTextMessage"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLength="50"
-                            android:textSize="@dimen/thirteen_sp"
                             android:layout_marginStart="@dimen/ten"
-                            android:layout_marginEnd="@dimen/ten">
+                            android:layout_marginEnd="@dimen/ten"
+                            android:maxLength="50"
+                            android:textSize="@dimen/thirteen_sp">
 
                         </EditText>
 
                     </RelativeLayout>
 
 
-
                     <TextView
 
+                        style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/ten"
-                        style="@style/CustomTextStylePoppinsBold"
                         android:layout_marginTop="@dimen/ten"
                         android:text="Description"
                         android:textColor="@color/black"
@@ -553,13 +548,13 @@ android:visibility="gone"                        android:layout_width="@dimen/tw
                         <TextView
                             android:id="@+id/lblCountOfDescription"
                             android:layout_width="wrap_content"
-                            android:text="0/500"
+                            android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
-                            android:padding="@dimen/ten"
-                            android:textSize="@dimen/thirteen_sp"
-                            android:textColor="@color/black"
                             android:layout_alignParentBottom="true"
-                            android:layout_height="wrap_content">
+                            android:padding="@dimen/ten"
+                            android:text="0/500"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/thirteen_sp">
 
                         </TextView>
 
@@ -567,14 +562,13 @@ android:visibility="gone"                        android:layout_width="@dimen/tw
                             android:id="@+id/edtContentTextMessage"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:background="@drawable/bg_outline_black"
                             android:gravity="start|top"
                             android:hint="Description"
-                            android:padding="@dimen/ten"
-                            android:textSize="@dimen/thirteen_sp"
-                            android:maxLength="500"
-                            android:background="@drawable/bg_outline_black"
                             android:inputType="textMultiLine"
-                            />
+                            android:maxLength="500"
+                            android:padding="@dimen/ten"
+                            android:textSize="@dimen/thirteen_sp" />
 
                     </RelativeLayout>
 
@@ -590,31 +584,29 @@ android:visibility="gone"                        android:layout_width="@dimen/tw
                     android:layout_marginTop="@dimen/eleven"
                     android:layout_marginEnd="@dimen/twele"
                     android:layout_marginBottom="@dimen/eight"
-                    android:visibility="gone"
                     android:background="@drawable/rect_green_light_radious"
-                    android:padding="@dimen/seven">
-
+                    android:padding="@dimen/seven"
+                    android:visibility="gone">
 
 
                     <TextView
                         android:id="@+id/lblNExt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
                         android:layout_marginStart="@dimen/five"
                         android:text="@string/NEXT"
-                        android:layout_centerVertical="true"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/thirteen_sp"/>
+                        android:textSize="@dimen/thirteen_sp" />
 
-                        <ImageView
-                            android:layout_toEndOf="@+id/lblNExt"
-                            android:id="@+id/imgSend1"
-                            android:layout_width="@dimen/fifteen"
-                            android:layout_height="@dimen/fifteen"
-                            android:layout_marginEnd="@dimen/five"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/rightwhitearrow"/>
-
+                    <ImageView
+                        android:id="@+id/imgSend1"
+                        android:layout_width="@dimen/fifteen"
+                        android:layout_height="@dimen/fifteen"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/five"
+                        android:layout_toEndOf="@+id/lblNExt"
+                        android:src="@drawable/rightwhitearrow" />
 
 
                 </RelativeLayout>
@@ -632,8 +624,8 @@ android:visibility="gone"                        android:layout_width="@dimen/tw
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="@dimen/twenty">
+                        android:layout_marginTop="@dimen/twenty"
+                        android:orientation="horizontal">
 
                         <com.vs.schoolmessenger.Utils.CustomSwitch
                             android:id="@+id/SwitchEmergencyVoice"
@@ -643,51 +635,69 @@ android:visibility="gone"                        android:layout_width="@dimen/tw
 
                         <TextView
                             android:id="@+id/lblEmergencyVoice"
+                            style="@style/CustomTextStylePoppinsBold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Emergency Call"
                             android:textColor="@color/black"
-                            style="@style/CustomTextStylePoppinsBold"
                             android:textSize="@dimen/thirteen_sp" />
 
                         <TextView
                             android:id="@+id/infosymbol"
+                            style="@style/CustomTextStylePoppinsBold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="ℹ️"
                             android:layout_marginStart="10dp"
+                            android:text="ℹ️"
                             android:textColor="@color/black"
-                            style="@style/CustomTextStylePoppinsBold"
                             android:textSize="@dimen/thirteen_sp" />
-
-
 
 
                     </LinearLayout>
 
-
-                    <ImageView
-                        android:id="@+id/imgVoiceRecord"
-                        android:layout_width="@dimen/eighty"
-                        android:layout_height="@dimen/eighty"
+                    <RelativeLayout
+                        android:id="@+id/rytVoiceRecord"
+                        android:layout_width="@dimen/hundred"
                         android:layout_below="@+id/llEmergencyContainer"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="@dimen/twenty_five"
-                        android:src="@drawable/record_voice_icon">
-                    </ImageView>
+                        android:layout_height="@dimen/hundred">
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/lottieAnimationView"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_centerInParent="true"
+                            app:lottie_autoPlay="true"
+                            app:lottie_loop="true"
+                            android:visibility="gone"
+                            app:lottie_rawRes="@raw/voice_record"
+                            android:src="@drawable/record"
+                            android:layout_marginTop="@dimen/twenty_five"
+                            ></com.airbnb.lottie.LottieAnimationView>
+
+
+                        <ImageView
+                            android:id="@+id/imgVoiceRecord"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_centerInParent="true"
+                            android:layout_marginTop="@dimen/twenty_five"
+                            android:src="@drawable/record_voice_icon"></ImageView>
+
+                    </RelativeLayout>
+
 
                     <TextView
                         android:id="@+id/lblDurationOfVoice"
+                        style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/imgVoiceRecord"
+                        android:layout_below="@+id/rytVoiceRecord"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="@dimen/ten"
                         android:text="00:00 / 03:00"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp"
-                        style="@style/CustomTextStylePoppinsBold">
-                    </TextView>
+                        android:textSize="@dimen/thirteen_sp"></TextView>
 
 
                     <RelativeLayout
@@ -696,46 +706,43 @@ android:visibility="gone"                        android:layout_width="@dimen/tw
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/lblDurationOfVoice"
                         android:layout_alignParentEnd="false"
-                        android:layout_marginTop="@dimen/ten"
                         android:layout_centerInParent="true"
-                        android:layout_marginEnd="@dimen/twenty"
                         android:layout_marginStart="15dp"
+                        android:layout_marginTop="@dimen/ten"
+                        android:layout_marginEnd="@dimen/twenty"
                         android:padding="@dimen/ten">
 
                         <TextView
+                            style="@style/CustomTextStylePoppinsMedium"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Choose pre recorded file"
-                            style="@style/CustomTextStylePoppinsMedium"
                             android:textColor="@color/navi_blue1"
-                            android:textSize="@dimen/thirteen_sp">
-                        </TextView>
+                            android:textSize="@dimen/thirteen_sp"></TextView>
                     </RelativeLayout>
 
                     <RelativeLayout
                         android:id="@+id/rlaSeekBarAndTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_below="@+id/rlaAddLocalFile"
                         android:layout_marginTop="@dimen/ten"
-                        android:visibility="gone"
-                        android:layout_below="@+id/rlaAddLocalFile">
+                        android:visibility="gone">
 
                         <ImageView
                             android:id="@+id/imgClose"
                             android:layout_width="@dimen/twenty_five"
                             android:layout_height="@dimen/twenty_five"
                             android:layout_alignParentEnd="true"
-                            android:elevation="10dp"
                             android:layout_marginEnd="@dimen/thirteen"
-                            android:src="@drawable/close_red_color">
-                        </ImageView>
+                            android:elevation="10dp"
+                            android:src="@drawable/close_red_color"></ImageView>
 
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/twenty"
-                            android:layout_marginEnd="@dimen/twenty"
-                            android:layout_marginTop="@dimen/ten"
+                            android:layout_marginStart="@dimen/fifteen"
+                            android:layout_marginEnd="@dimen/fifteen"
                             android:background="@drawable/rect_shadow_white">
 
                             <ImageView
@@ -752,8 +759,8 @@ android:visibility="gone"                        android:layout_width="@dimen/tw
                                 android:id="@+id/waveformSeekBar"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/thirty"
-                                android:layout_marginTop="@dimen/eighteen"
                                 android:layout_marginStart="@dimen/ten"
+                                android:layout_marginTop="@dimen/eighteen"
                                 android:layout_marginEnd="@dimen/ten"
                                 android:layout_toEndOf="@+id/imgVoicePlay" />
 
@@ -763,38 +770,35 @@ android:visibility="gone"                        android:layout_width="@dimen/tw
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/imgVoicePlay"
                                 android:layout_marginStart="@dimen/ten"
-                                android:layout_toEndOf="@+id/imgVoicePlay"
                                 android:layout_marginBottom="@dimen/five"
+                                android:layout_toEndOf="@+id/imgVoicePlay"
                                 android:text="00:00"
                                 android:textColor="@color/black"
-                                android:textSize="@dimen/thirteen_sp">
-                            </TextView>
+                                android:textSize="@dimen/thirteen_sp"></TextView>
 
                             <TextView
                                 android:id="@+id/lblEndDuration"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/imgVoicePlay"
-                                android:layout_marginEnd="@dimen/ten"
-                                android:text="00:00"
                                 android:layout_marginStart="@dimen/ten"
+                                android:layout_marginEnd="@dimen/ten"
                                 android:layout_toEndOf="@+id/lblStartDuration"
+                                android:text="00:00"
                                 android:textColor="@color/black"
-                                android:textSize="@dimen/thirteen_sp">
-                            </TextView>
+                                android:textSize="@dimen/thirteen_sp"></TextView>
 
                             <TextView
                                 android:id="@+id/lblTime"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/imgVoicePlay"
-                                android:layout_marginEnd="@dimen/ten"
-                                android:text="00:00"
                                 android:layout_alignParentEnd="true"
                                 android:layout_marginStart="@dimen/ten"
+                                android:layout_marginEnd="@dimen/ten"
+                                android:text="00:00"
                                 android:textColor="@color/black"
-                                android:textSize="@dimen/thirteen_sp">
-                            </TextView>
+                                android:textSize="@dimen/thirteen_sp"></TextView>
 
                         </RelativeLayout>
                     </RelativeLayout>
@@ -806,48 +810,46 @@ android:visibility="gone"                        android:layout_width="@dimen/tw
                         android:layout_below="@+id/rlaSeekBarAndTitle"
                         android:layout_marginStart="@dimen/twenty"
                         android:layout_marginTop="@dimen/twenty"
-                        android:visibility="gone"
-                        android:layout_marginEnd="@dimen/twenty">
+                        android:layout_marginEnd="@dimen/twenty"
+                        android:visibility="gone">
 
                         <TextView
                             android:id="@+id/lblTitle"
+                            style="@style/CustomTextStylePoppinsBold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/title"
                             android:textColor="@color/black"
                             android:textSize="@dimen/fifteen_sp"
-                            android:visibility="visible"
-                            style="@style/CustomTextStylePoppinsBold">
+                            android:visibility="visible">
 
                         </TextView>
 
 
-
                         <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_below="@+id/lblTitle"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/lblTitle">
 
                             <TextView
                                 android:id="@+id/lblCountOfTitleVoice"
                                 android:layout_width="wrap_content"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/thirteen_sp"
-                                android:text="0/50"
-                                android:layout_marginEnd="@dimen/ten"
+                                android:layout_height="wrap_content"
                                 android:layout_below="@+id/edtTitle"
                                 android:layout_alignParentEnd="true"
-                                android:layout_height="wrap_content">
+                                android:layout_marginEnd="@dimen/ten"
+                                android:text="0/50"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/thirteen_sp">
 
                             </TextView>
+
                             <EditText
                                 android:id="@+id/edtTitle"
                                 android:layout_width="match_parent"
-                                android:maxLength="50"
                                 android:layout_height="wrap_content"
-                                android:textSize="@dimen/thirteen_sp"
-                               >
-                            </EditText>
+                                android:maxLength="50"
+                                android:textSize="@dimen/thirteen_sp"></EditText>
                         </RelativeLayout>
 
 
@@ -865,18 +867,16 @@ android:visibility="gone"                        android:layout_width="@dimen/tw
                         android:padding="@dimen/seven">
 
 
-
                         <TextView
                             android:id="@+id/lblSend"
+                            style="@style/CustomTextStylePoppinsRegular"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginStart="@dimen/five"
                             android:text="@string/NEXT"
-                            style="@style/CustomTextStylePoppinsRegular"
                             android:textColor="@color/white"
-                            android:textSize="14sp">
-                        </TextView>
+                            android:textSize="14sp"></TextView>
 
 
                         <ImageView
@@ -884,8 +884,8 @@ android:visibility="gone"                        android:layout_width="@dimen/tw
                             android:layout_width="@dimen/twenty"
                             android:layout_height="@dimen/twenty"
                             android:layout_centerInParent="true"
-                            android:layout_toEndOf="@+id/lblSend"
                             android:layout_marginStart="10dp"
+                            android:layout_toEndOf="@+id/lblSend"
                             android:src="@drawable/rightwhitearrow">
 
                         </ImageView>

@@ -203,7 +203,7 @@ class App(application: Application) : AndroidViewModel(application) {
         apiRepositories?.updateLocation(isToken, jsonObject, activity)
     }
 
-    fun getStaffLocations(isToken: String, jsonObject: JsonObject, activity: Activity) {
+    fun getStaffLocations(isToken: String, activity: Activity) {
         apiRepositories?.getStaffLocations(isToken, activity)
     }
 

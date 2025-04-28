@@ -1,9 +1,11 @@
 package com.vs.schoolmessenger.Auth.OTP
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Paint
+import android.os.Build
 import android.os.CountDownTimer
 import android.text.Editable
 import android.text.TextWatcher
@@ -12,8 +14,8 @@ import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
@@ -29,6 +31,7 @@ import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.MySMSBroadcastReceiver
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.OtpScreenBinding
+import com.google.android.gms.auth.api.phone.SmsRetriever
 
 
 class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
@@ -43,6 +46,7 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
     private lateinit var smsBroadcastReceiver: MySMSBroadcastReceiver
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
         // Access a specific view using its ID
@@ -51,6 +55,7 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
         binding.lblResend.setOnClickListener(this)
         binding.btnNext.setOnClickListener(this)
         binding.lblContactUs.setOnClickListener(this)
+
         startSmsRetriever()
         authViewModel = ViewModelProvider(this).get(Auth::class.java)
         authViewModel!!.init()
@@ -149,6 +154,7 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
         startOtpTimer()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("UnspecifiedRegisterReceiverFlag")
     override fun onResume() {
         super.onResume()
@@ -185,8 +191,10 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
                 }
             }
         }
+
+        smsBroadcastReceiver = MySMSBroadcastReceiver()
         val filter = IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION)
-        registerReceiver(smsBroadcastReceiver, filter)
+        registerReceiver(smsBroadcastReceiver, filter,RECEIVER_NOT_EXPORTED)
     }
 
     override fun onPause() {

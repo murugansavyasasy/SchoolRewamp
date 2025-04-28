@@ -18,7 +18,7 @@ import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.CommunicationBinding
 
-class Communication : BaseActivity<CommunicationBinding>(), View.OnClickListener, VoiceClickListener {
+class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickListener, VoiceClickListener {
 
     override fun getViewBinding() = CommunicationBinding.inflate(layoutInflater)
 
@@ -80,7 +80,6 @@ class Communication : BaseActivity<CommunicationBinding>(), View.OnClickListener
 
         appViewModel?.isGetCommmunicationlist?.observe(this) { response ->
             if (response?.status == true) {
-
                 appendData(response.data, archiveFlag = true)
             } else {
                 checkAndShowNoData()
@@ -149,9 +148,9 @@ class Communication : BaseActivity<CommunicationBinding>(), View.OnClickListener
     }
 
     private fun isChangeBackgroundFilter(isSelectedFilter: TextView) {
-        binding.lblAll.setBackgroundResource(R.drawable.bg_gray_radious)
-        binding.lblUnread.setBackgroundResource(R.drawable.bg_gray_radious)
-        binding.lblRead.setBackgroundResource(R.drawable.bg_gray_radious)
+        binding.lblAll.setBackgroundResource(R.drawable.bg_gray_light_radiuos)
+        binding.lblUnread.setBackgroundResource(R.drawable.bg_gray_light_radiuos)
+        binding.lblRead.setBackgroundResource(R.drawable.bg_gray_light_radiuos)
 
         isSelectedFilter.setBackgroundResource(R.drawable.bg_light_green_radious)
 
@@ -228,19 +227,6 @@ class Communication : BaseActivity<CommunicationBinding>(), View.OnClickListener
 
             R.id.imgFilter -> {
                 binding.rytFilter.visibility = View.VISIBLE
-//                val popupMenu = PopupMenu(this, v)
-//                popupMenu.menu.add("ALL")
-//                popupMenu.menu.add("TEXT")
-//                popupMenu.menu.add("VOICE")
-//                popupMenu.menu.add("READ")
-//                popupMenu.menu.add("UNREAD")
-//                popupMenu.setOnMenuItemClickListener { item ->
-//                    currentFilter = item.title.toString()
-//                    applyCombinedFilter()
-//                    true
-//                }
-//
-//                popupMenu.show()
             }
 
             R.id.rlaTextMessage -> {
@@ -277,13 +263,9 @@ class Communication : BaseActivity<CommunicationBinding>(), View.OnClickListener
 
     private fun appendData(newData: List<VoiceData>?, archiveFlag: Boolean) {
         if (isInitialLoad) allVoiceData.clear()
-        if (newData!!.size > 1) {
-            binding.linearlayout1.visibility = View.VISIBLE
-        } else {
-            binding.linearlayout1.visibility = View.GONE
-        }
+
         newData.let {
-            val processedData = it.map { item -> item.copy(is_archive = archiveFlag) }
+            val processedData = it!!.map { item -> item.copy(is_archive = archiveFlag) }
             allVoiceData.addAll(processedData)
 
             if (adapter == null) {

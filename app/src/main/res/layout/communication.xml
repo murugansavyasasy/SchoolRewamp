@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@color/white">
 
     <include
@@ -197,9 +197,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/thirty_five"
-            android:layout_marginStart="@dimen/thirty"
+            android:layout_marginStart="@dimen/fifty"
             android:layout_marginTop="@dimen/ten"
-            android:layout_marginEnd="@dimen/thirty"
+            android:layout_marginEnd="@dimen/fifty"
             android:orientation="horizontal">
 
             <TextView
@@ -224,7 +224,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginEnd="@dimen/ten"
                 android:layout_weight="1"
-                android:background="@drawable/bg_gray_radious"
+                android:background="@drawable/bg_gray_light_radiuos"
                 android:gravity="center"
                 android:text="Unread"
                 android:textColor="@color/navi_blue2"
@@ -239,7 +239,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginEnd="@dimen/ten"
                 android:layout_weight="1"
-                android:background="@drawable/bg_gray_radious"
+                android:background="@drawable/bg_gray_light_radiuos"
                 android:gravity="center"
                 android:text="Read"
                 android:textColor="@color/navi_blue2"
@@ -253,6 +253,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/seeMoreLabel"
         android:layout_below="@+id/rytFilter"
         android:orientation="vertical">
 
@@ -286,17 +287,20 @@
             android:textSize="18sp"
             android:visibility="gone" />
 
-        <TextView
-            android:id="@+id/seeMoreLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginTop="@dimen/five"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="@dimen/hundred"
-            android:text="@string/see_more"
-            android:textColor="@color/navi_blue2"
-            android:textSize="@dimen/fifteen_sp"
-            android:visibility="visible" />
+
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/seeMoreLabel"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="@dimen/fifteen"
+        android:text="@string/see_more"
+        android:textColor="@color/navi_blue2"
+        android:textSize="@dimen/fifteen_sp"
+        android:visibility="visible" />
 </RelativeLayout>

@@ -105,17 +105,6 @@
                 android:textSize="@dimen/fifteen_sp"
                 android:layout_alignParentEnd="true"/>
 
-            <View
-                android:layout_width="@dimen/hundred"
-                android:layout_marginTop="@dimen/three"
-                android:layout_height="1dp"
-                android:layout_below="@+id/lblChangeRoll"
-                android:layout_alignParentEnd="true"
-                android:background="@color/sky_blue0">
-
-            </View>
-
-
             <ImageView
                 android:id="@+id/imgSearchClick"
                 android:layout_width="@dimen/thirty"
@@ -216,8 +205,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="-20dp"
             android:layout_below="@+id/rlaAttendanceReport"
-            android:layout_marginTop="0dp"
             android:background="@drawable/rounded_top_corners">
 
 
@@ -269,6 +258,7 @@
                 android:id="@+id/recyclerViewMenus"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/twenty"
                 android:layout_below="@id/lblCategories"
                 android:background="@color/white"
                 tools:listitem="@layout/menu_item_card" />

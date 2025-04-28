@@ -124,6 +124,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         binding.rlaToTime.setOnClickListener(this)
         binding.imgVoicePlay.setOnClickListener(this)
         binding.imgVoiceRecord.setOnClickListener(this)
+        binding.lottieAnimationView.setOnClickListener(this)
         binding.lnrHistoryList.setOnClickListener(this)
         binding.rlaBackRecord.setOnClickListener(this)
         binding.imgBack.setOnClickListener(this)
@@ -359,9 +360,15 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 setOutputFile(audioFilePath)
 
                 try {
-                    binding.imgVoiceRecord.setImageDrawable(
-                        ContextCompat.getDrawable(this@CommunicationSchool, R.drawable.record_voice)
-                    )
+//                    binding.imgVoiceRecord.setImageDrawable(
+//                        ContextCompat.getDrawable(this@CommunicationSchool, R.drawable.record_voice)
+//                    )
+                    binding.lottieAnimationView.visibility = View.VISIBLE
+                    binding.imgVoiceRecord.visibility = View.GONE
+                    binding.lottieAnimationView.setAnimation(R.raw.voice_record)
+                    binding.lottieAnimationView.loop(true)
+                    binding.lottieAnimationView.playAnimation()
+
                     prepare()
                     start()
                     isRecording = true
@@ -391,6 +398,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 isRecording = false
                 recordingHandler.removeCallbacks(recordingRunnable)
 
+                binding.imgVoiceRecord.visibility = View.VISIBLE
+                binding.lottieAnimationView.visibility = View.GONE
                 binding.imgVoiceRecord.setImageDrawable(
                     ContextCompat.getDrawable(this@CommunicationSchool, R.drawable.record_icon)
                 )
@@ -751,7 +760,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 binding.rlaTitle.visibility = View.GONE
                 Constant.isVoiceFile = ""
                 binding.rlaAddLocalFile.visibility = View.VISIBLE
-                binding.imgVoiceRecord.visibility = View.VISIBLE
+//                binding.imgVoiceRecord.visibility = View.VISIBLE
+                binding.rytVoiceRecord.visibility = View.VISIBLE
                 binding.lblDurationOfVoice.visibility = View.VISIBLE
             }
 
@@ -831,12 +841,17 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
             R.id.imgVoiceRecord -> {
                 stopAudioProgressUpdate()
-                if (!isRecording) {
+//                if (!isRecording) {
                     Constant.isVoiceType = 1
                     startRecording()
-                } else {
-                    stopRecording()
-                }
+//                } else {
+//                    stopRecording()
+//                }
+            }
+
+            R.id.lottieAnimationView -> {
+                stopAudioProgressUpdate()
+                stopRecording()
             }
 
             R.id.infosymbol -> {
@@ -968,7 +983,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         }
     }
 
-
     private fun infosymbolload(): PopupWindow {
         val popupView = layoutInflater.inflate(R.layout.custom_tooltip, null)
 
@@ -996,17 +1010,20 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 )
             ) {
                 val intent = Intent(this, SchoolList::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 isSaveTheVoiceData()
                 isSaveTheTextData()
                 startActivity(intent)
             } else {
                 val intent = Intent(this, RecipientActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 isSaveTheVoiceData()
                 isSaveTheTextData()
                 startActivity(intent)
             }
         } else {
             val intent = Intent(this, RecipientActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             isSaveTheVoiceData()
             isSaveTheTextData()
             startActivity(intent)
@@ -1168,9 +1185,11 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         binding.rlaBackRecord.visibility = View.GONE
         binding.lnrHistoryList.visibility = View.VISIBLE
 
-        binding.imgVoiceRecord.visibility = View.GONE
+//        binding.imgVoiceRecord.visibility = View.GONE
+        binding.rytVoiceRecord.visibility = View.GONE
         binding.lblDurationOfVoice.visibility = View.GONE
         binding.rlaAddLocalFile.visibility = View.GONE
+
 
         binding.imgVoiceRecord.setImageDrawable(
             ContextCompat.getDrawable(this@CommunicationSchool, R.drawable.record_icon)
@@ -1255,7 +1274,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     // Update UI
                     binding.rlaSeekBarAndTitle.visibility = View.VISIBLE
                     binding.rlaTitle.visibility = View.VISIBLE
-                    binding.imgVoiceRecord.visibility = View.GONE
+//                    binding.imgVoiceRecord.visibility = View.GONE
+                    binding.rytVoiceRecord.visibility = View.GONE
                     binding.lblDurationOfVoice.visibility = View.GONE
                     binding.rlaAddLocalFile.visibility = View.GONE
                     binding.lblEndDuration.text = "/ $formattedDuration"

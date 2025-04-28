@@ -25,8 +25,11 @@ import androidx.biometric.BiometricPrompt
 import androidx.biometric.BiometricPrompt.PromptInfo
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.GPSStatusReceiver
 import com.vs.schoolmessenger.Utils.LocationHelper
@@ -39,6 +42,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
     override fun getViewBinding(): MarkYourAttendanceBinding {
         return MarkYourAttendanceBinding.inflate(layoutInflater)
     }
+    private var appViewModel: App? = null
 
     var ifBiometricAvailable: Boolean = false
     private lateinit var gpsStatusReceiver: GPSStatusReceiver
@@ -47,6 +51,11 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
 
     private var authenticatealertpopupWindow: PopupWindow? = null
     private var enableBiometricPopup: PopupWindow? = null
+    private var isStaffDetails: StaffDetails? = null
+    private var isStaffLocationData: StaffLocationData? = null
+    private var isAccessToken: String? = null
+    private var isLatitude: Double? = null
+    private var isLongitude: Double? = null
 
 
     override fun setupViews() {
@@ -64,6 +73,11 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
         } else {
             binding.rytAddLocation.visibility = View.GONE
         }
+
+        appViewModel = ViewModelProvider(this).get(App::class.java)
+        appViewModel?.init()
+        isStaffDetails = SharedPreference.getStaffDetails(this)
+        isAccessToken = isStaffDetails!!.access_token
 
         val isEnabled = SharedPreference.getBiometricEnabled(this@MarkYourAttendance)
         binding.enableSwitch.setChecked(isEnabled!!)
@@ -119,6 +133,13 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
 
         gpsStatusReceiver = GPSStatusReceiver(this)
 
+
+        appViewModel!!.isStaffLocations?.observe(this) { response ->
+            if (response != null && response.status) {
+                val isStaffLocation = response.data
+                punchHiddenShow(isStaffLocation)
+            }
+        }
     }
 
     @SuppressLint("UnspecifiedRegisterReceiverFlag")
@@ -130,7 +151,6 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
         registerReceiver(gpsStatusReceiver, filter)
 
         Log.d("onResume", "onResume")
-        getStaffLocations()
         getLocationPermissions()
     }
 
@@ -146,7 +166,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 if (Constant.isGPSEnabled(this)) {
                     binding.rytGPSRedirect.visibility = View.GONE
-                    getCurentLocation("new")
+                    getCurrentLocation("new")
                 } else {
                     binding.rytGPSRedirect.visibility = View.VISIBLE
                     binding.rytPresentlayout.visibility = View.GONE
@@ -158,13 +178,17 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
         }
     }
 
-    private fun getCurentLocation(type: String) {
+    private fun getCurrentLocation(type: String) {
        binding.rytProgressBar.visibility = View.VISIBLE
         val locationHelper = LocationHelper(this, this, "current")
         locationHelper.getFreshLocation()
     }
 
-    private fun getStaffLocations() {
+
+    fun isGetGeoMetricStaffLocations() {
+        isAccessToken?.let {
+            appViewModel?.getStaffLocations(it, this)
+        }
     }
 
     private fun getLocationPermissions() {
@@ -188,7 +212,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
         } else {
             if (Constant.isGPSEnabled(this)) {
                 binding.rytGPSRedirect.setVisibility(View.GONE)
-                getCurentLocation("new")
+                getCurrentLocation("new")
             } else {
                 binding.rytGPSRedirect.setVisibility(View.VISIBLE)
                 binding.lblErrorMessage.setVisibility(View.GONE)
@@ -410,8 +434,47 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
     }
 
     override fun onLocationReturn(latitude: Double, longitude: Double, type: String?) {
-
+        Log.d("isLatitude", latitude.toString())
+        Log.d("isLongitude", longitude.toString())
+        if (latitude.toString() != "" || longitude.toString() != "") {
+            isLatitude = latitude
+            isLongitude = longitude
+            binding.rytProgressBar.visibility = View.GONE
+            isGetGeoMetricStaffLocations()
+        }
     }
 
+    private fun punchHiddenShow(isStaffLocation: List<StaffLocationData>) {
+        var isDistanceCalculation: LocationDistanceCalculator? = null
+        isDistanceCalculation = LocationDistanceCalculator()
+        var isStaffNearByLocation: Boolean? = false
+        try {
+            for (i in isStaffLocation.indices) {
+                if (isStaffLocation[i].latitude.toString() != "" && isStaffLocation[i].longitude.toString() != "" && isStaffLocation[i].distance != "") {
+                    val isGetDistance: Float = isDistanceCalculation.calculateDistance(
+                        isLatitude!!.toDouble(),
+                        isLongitude!!.toDouble(),
+                        isStaffLocation[i].latitude.toDouble(),
+                        isStaffLocation[i].longitude.toDouble()
+                    )
+                    if (isGetDistance <= isStaffLocation[i].distance.toDouble()) {
+                        isStaffNearByLocation = true
+                    }
+                    break
+                }
+            }
+        } catch (e: NumberFormatException) {
+            e.printStackTrace()
+            Log.e("MarkYourAttendance", "Error parsing number: ${e.message}")
+            // Maybe show an error or skip this step
+        }
 
+        if (isStaffNearByLocation!!) {
+            binding.lblErrorMessage.visibility = View.GONE
+            binding.rytPresentlayout.visibility = View.VISIBLE
+        } else {
+            binding.lblErrorMessage.visibility = View.VISIBLE
+            binding.rytPresentlayout.visibility = View.GONE
+        }
+    }
 }

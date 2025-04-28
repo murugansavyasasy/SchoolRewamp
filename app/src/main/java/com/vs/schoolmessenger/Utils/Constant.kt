@@ -82,7 +82,7 @@ object Constant {
     var isAdminRole: String? = "p4"
     var isNonTeachingStaffRole: String? = "p5"
 
-    val STU_COMMUNICATION = 0
+    val STU_COMMUNICATION = 7
     val STU_HOMEWORK = 3
     val STU_EXAM = 5
     val STU_NOTICEBOARD = 7
@@ -99,7 +99,7 @@ object Constant {
     val STU_CERTIFICATE_REQUEST = 25
 
 
-    val SH_COMMUNICATION = 0
+    val SH_COMMUNICATION = 7
     val SH_ASSIGNMENT = 22
     val SH_HOMEWORK = 9
     val SH_ATTENDANCE_MARKING = 12
@@ -119,7 +119,7 @@ object Constant {
     val SH_ATTACHMENTS = 0
     val SH_SCHOOL_NEEDS = 0
     val SH_FEE_PENDING_REPORT = 0
-    val SH_MARK_GEOMETRIC_ATTENDANCE = 1021
+    val SH_MARK_GEOMETRIC_ATTENDANCE = 21
     val SH_STAFF_WISE_GEOMETRIC_ATTENDANCE_REPORT = 1022
     val SH_PTM = 0
     val SH_INTERACTION_WITH_STUDENT = 16
@@ -396,6 +396,7 @@ object Constant {
         okButton.setOnClickListener {
             if (isType == isCommunication) {
                 val intent = Intent(activity, CommunicationSchool::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 activity.startActivity(intent)
             }
             closePopup()
