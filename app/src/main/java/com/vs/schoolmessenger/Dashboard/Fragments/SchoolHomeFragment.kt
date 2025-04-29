@@ -331,16 +331,16 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     override fun onClick(data: MenuDetail) {
 
         val activityClass = when (data.id) {
-            Constant.SH_COMMUNICATION -> CommunicationSchool::class.java
-            Constant.SH_ASSIGNMENT -> {
+            Constant.M_COMMUNICATION -> CommunicationSchool::class.java
+            Constant.M_ASSIGNMENT -> {
                 Assignment::class.java
             }
 
-            Constant.SH_HOMEWORK -> {
+            Constant.M_HOMEWORK -> {
                 HomeWork::class.java
             }
 
-            Constant.SH_ATTENDANCE_MARKING -> {
+            Constant.M_ATTENDANCE_MARKING -> {
                 if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
                     AttendanceMark::class.java
                 } else {
@@ -352,7 +352,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 }
             }
 
-            Constant.SH_ABSENTEEISM_REPORT -> {
+            Constant.M_ABSENTEES_REPORT -> {
                 if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
                     AbsenteesReport::class.java
                 } else {
@@ -364,7 +364,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 }
             }
 
-            Constant.SH_SCHOOL_STRENGTH -> {
+            Constant.M_SCHOOL_STRENGTH -> {
                 if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
                     SchoolStrength::class.java
                 } else {
@@ -376,11 +376,11 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 }
             }
 
-            Constant.SH_NOTICE_BOARD -> CreateNoticeBoard::class.java
-            Constant.SH_EVENTS -> CreateEvent::class.java
-            Constant.SH_SCHEDULE_EXAM_TEST -> Exam::class.java
+            Constant.M_NOTICEBOARD -> CreateNoticeBoard::class.java
+            Constant.M_EVENTS_HOLIDAYS -> CreateEvent::class.java
+            Constant.M_SCHEDULE_EXAM_TEST -> Exam::class.java
 
-            Constant.SH_MESSAGES_FROM_MANAGEMENT -> {
+            Constant.M_MESSAGES_FROM_MANAGEMENT -> {
                 if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
                     MessageFromManagement::class.java
                 } else {
@@ -393,7 +393,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
             }
 
-            Constant.SH_INTERACTION_WITH_STUDENT -> {
+            Constant.M_INTERACTION_WITH_STUDENT -> {
                 if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
                     InteractionWithStudent::class.java
                 } else {
@@ -405,8 +405,8 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 }
             }
 
-            Constant.SH_ONLINE_MEETING -> OnlineMeeting::class.java
-            Constant.SH_DAILY_COLLECTION -> {
+            Constant.M_ONLINE_MEETING -> OnlineMeeting::class.java
+            Constant.M_DAILY_COLLECTION -> {
                 if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
                     DailyCollection::class.java
                 } else {
@@ -419,7 +419,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
             }
 
-            Constant.SH_STUDENT_REPORT -> {
+            Constant.M_STUDENT_REPORT -> {
                 if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
                     StudentReport::class.java
                 } else {
@@ -431,7 +431,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 }
             }
 
-            Constant.SH_LESSON_PLAN -> {
+            Constant.M_LESSON_PLAN -> {
 
                 if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
                     LessonPlan::class.java
@@ -444,7 +444,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 }
             }
 
-            Constant.SH_FEE_PENDING_REPORT -> {
+            Constant.M_FEE_PENDING_REPORT -> {
                 if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
                     //go to fee pending report
                     LessonPlan::class.java
@@ -458,7 +458,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 }
             }
 
-            Constant.SH_MARK_GEOMETRIC_ATTENDANCE -> {
+            Constant.M_MARK_YOUR_ATTENDANCE -> {
                 if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
                     //go to geometric mark attendance page
                     MarkYourAttendance::class.java
@@ -472,7 +472,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 }
             }
 
-            Constant.SH_STAFF_WISE_GEOMETRIC_ATTENDANCE_REPORT -> {
+            Constant.M_STAFF_WISE_ATTENDANCE_REPORT -> {
                 if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
                     //go to staff wise geometric attendance report page
                     LessonPlan::class.java
@@ -486,7 +486,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 }
             }
 
-            Constant.SH_PTM -> {
+            Constant.M_PTM -> {
                 if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
                     //go to ptm page
                     LessonPlan::class.java
@@ -500,8 +500,8 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 }
             }
 
-            Constant.SH_IMPORTANT_INFO -> ImportantInfo::class.java
-            Constant.SH_FEEDBACK -> ImportantInfo::class.java
+            Constant.M_VERY_IMPORTANT_INFO -> ImportantInfo::class.java
+            Constant.M_FEEDBACK -> ImportantInfo::class.java
 
             // Constant.sch_feedback_id -> ImportantInfo::class.java
             else -> null

@@ -34,9 +34,9 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.ApiCallRequest
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
+import com.vs.schoolmessenger.Utils.Constant.M_HOMEWORK
 import com.vs.schoolmessenger.Utils.Constant.SELECTED_SCHOOL_MENU
-import com.vs.schoolmessenger.Utils.Constant.SH_ASSIGNMENT
-import com.vs.schoolmessenger.Utils.Constant.SH_HOMEWORK
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SelectRecipientBinding
 
@@ -313,7 +313,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
     private fun tapVisibility() {
         if (isUserDetails!!.staff_role == Constant.isStaffRole) {
-            if (SELECTED_SCHOOL_MENU == SH_HOMEWORK) {
+            if (SELECTED_SCHOOL_MENU == M_HOMEWORK) {
 
                 binding.nomessage.visibility = View.GONE
                 binding.nomessageEntire.visibility = View.GONE
@@ -326,7 +326,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
                 //show send button only
 
-            } else if (SELECTED_SCHOOL_MENU == SH_ASSIGNMENT) {
+            } else if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT) {
 
                 binding.nomessage.visibility = View.GONE
                 binding.nomessageEntire.visibility = View.GONE
@@ -352,7 +352,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             }
 
         } else {
-            if (SELECTED_SCHOOL_MENU == SH_HOMEWORK) {
+            if (SELECTED_SCHOOL_MENU == M_HOMEWORK) {
 
                 binding.nomessage.visibility = View.GONE
                 binding.nomessageEntire.visibility = View.GONE
@@ -365,7 +365,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
                 //show send button only
 
-            } else if (SELECTED_SCHOOL_MENU == SH_ASSIGNMENT) {
+            } else if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT) {
                 binding.nomessage.visibility = View.GONE
                 binding.nomessageEntire.visibility = View.GONE
                 binding.tapEntireSchool.visibility = View.GONE

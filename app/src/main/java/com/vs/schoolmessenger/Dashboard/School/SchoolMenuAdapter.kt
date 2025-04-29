@@ -107,78 +107,76 @@ class SchoolMenuAdapter(
             lblMenuName.text = data.name
 
             when (data.id) {
-                Constant.SH_COMMUNICATION -> {
+                Constant.M_COMMUNICATION -> {
                     imgMenu.setImageResource(R.drawable.communication_icon_dashboard)
                 }
 
-                Constant.SH_ASSIGNMENT -> {
+                Constant.M_ASSIGNMENT -> {
                     imgMenu.setImageResource(R.drawable.assignment_icon_school)
                 }
 
-                Constant.SH_HOMEWORK-> {
+                Constant.M_HOMEWORK-> {
                     imgMenu.setImageResource(R.drawable.home_work_icon_school)
                 }
 
-                Constant.SH_ATTENDANCE_MARKING -> {
+                Constant.M_ATTENDANCE_MARKING -> {
                     imgMenu.setImageResource(R.drawable.attendance_marking)
                 }
 
-                Constant.SH_ABSENTEEISM_REPORT -> {
+                Constant.M_ABSENTEES_REPORT -> {
                     imgMenu.setImageResource(R.drawable.absentees_report)
                 }
 
-                Constant.SH_SCHOOL_STRENGTH -> {
+                Constant.M_SCHOOL_STRENGTH -> {
                     imgMenu.setImageResource(R.drawable.school_strength)
                 }
 
-                Constant.SH_NOTICE_BOARD -> {
+                Constant.M_NOTICEBOARD -> {
                     imgMenu.setImageResource(R.drawable.noticeboard_icon)
                 }
 
-                Constant.SH_EVENTS -> {
+                Constant.M_EVENTS_HOLIDAYS -> {
                     imgMenu.setImageResource(R.drawable.event_icon_school)
                 }
 
-                Constant.SH_SCHEDULE_EXAM_TEST -> {
+                Constant.M_SCHEDULE_EXAM_TEST -> {
                     imgMenu.setImageResource(R.drawable.exam_icon)
                 }
 
-                Constant.SH_MESSAGES_FROM_MANAGEMENT -> {
+                Constant.M_MESSAGES_FROM_MANAGEMENT -> {
                     imgMenu.setImageResource(R.drawable.message_f_management)
                 }
 
-                Constant.SH_CONFERENCE_CALL_WITH_TEACHERS -> {
-                    imgMenu.setImageResource(R.drawable.interact_with_student)
-                }
 
-                Constant.SH_ONLINE_MEETING -> {
+
+                Constant.M_ONLINE_MEETING -> {
                     imgMenu.setImageResource(R.drawable.online_meeting_icon)
                 }
 
-                Constant.SH_DAILY_COLLECTION -> {
+                Constant.M_DAILY_COLLECTION -> {
                     imgMenu.setImageResource(R.drawable.daily_collection)
                 }
 
-                Constant.SH_STUDENT_REPORT -> {
+                Constant.M_STUDENT_REPORT -> {
                     imgMenu.setImageResource(R.drawable.student_report)
                 }
 
-                Constant.SH_LESSON_PLAN -> {
+                Constant.M_LESSON_PLAN -> {
                     imgMenu.setImageResource(R.drawable.lesson_plan)
                 }
 
-                Constant.SH_FEEDBACK -> {
+                Constant.M_FEEDBACK -> {
                     imgMenu.setImageResource(R.drawable.fee_pending_reports)
                 }
 
-                Constant.SH_IMPORTANT_INFO -> {
+                Constant.M_VERY_IMPORTANT_INFO -> {
                     imgMenu.setImageResource(R.drawable.importent_info)
                 }
-                Constant.SH_MARK_GEOMETRIC_ATTENDANCE -> {
+                Constant.M_MARK_YOUR_ATTENDANCE -> {
                     imgMenu.setImageResource(R.drawable.fee_pending_reports)
                 }
 
-                Constant.SH_STAFF_WISE_GEOMETRIC_ATTENDANCE_REPORT -> {
+                Constant.M_STAFF_WISE_ATTENDANCE_REPORT -> {
                     imgMenu.setImageResource(R.drawable.importent_info)
                 }
             }
