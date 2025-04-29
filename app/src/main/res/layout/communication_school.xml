@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
     android:layout_height="match_parent">
 
     <ScrollView
@@ -89,13 +90,13 @@
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/ten"
-                android:orientation="horizontal"
-                android:weightSum="3">
+                android:orientation="horizontal">
 
 
-                <RelativeLayout
+
+            <RelativeLayout
                     android:id="@+id/rlaVoiceMessage"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/rect_sky_blue_shadow">
@@ -131,7 +132,8 @@
 
                 <RelativeLayout
                     android:id="@+id/rlaScheduleCall"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
+                    android:visibility="visible"
                     android:layout_height="wrap_content"
                     android:layout_weight="1">
 
@@ -166,7 +168,7 @@
 
                 <RelativeLayout
                     android:id="@+id/rlaTextMessage"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1">
 
@@ -497,15 +499,36 @@ android:visibility="gone"                        android:layout_width="@dimen/tw
 
                     </TextView>
 
-                    <EditText
-                        android:id="@+id/edtTitleTextMessage"
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/thirteen_sp"
-                        android:layout_marginStart="@dimen/ten"
-                        android:layout_marginEnd="@dimen/ten">
+                        android:layout_height="wrap_content">
 
-                    </EditText>
+                        <TextView
+                            android:id="@+id/lblCountOfTitle"
+                            android:layout_width="wrap_content"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/thirteen_sp"
+                            android:text="0/50"
+                            android:layout_marginEnd="@dimen/ten"
+                            android:layout_below="@+id/edtTitleTextMessage"
+                            android:layout_alignParentEnd="true"
+                            android:layout_height="wrap_content">
+
+                        </TextView>
+                        <EditText
+                            android:id="@+id/edtTitleTextMessage"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLength="50"
+                            android:textSize="@dimen/thirteen_sp"
+                            android:layout_marginStart="@dimen/ten"
+                            android:layout_marginEnd="@dimen/ten">
+
+                        </EditText>
+
+                    </RelativeLayout>
+
+
 
                     <TextView
 
@@ -520,20 +543,41 @@ android:visibility="gone"                        android:layout_width="@dimen/tw
 
                     </TextView>
 
-                    <EditText
-                        android:id="@+id/edtContentTextMessage"
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/two_hundred"
                         android:layout_marginStart="@dimen/ten"
                         android:layout_marginTop="@dimen/ten"
-                        android:layout_marginEnd="@dimen/ten"
-                        android:background="@drawable/bg_outline_black"
-                        android:gravity="start"
-                        android:hint="Description"
-                        android:padding="@dimen/ten"
-                        android:textSize="@dimen/thirteen_sp">
+                        android:layout_marginEnd="@dimen/ten">
 
-                    </EditText>
+                        <TextView
+                            android:id="@+id/lblCountOfDescription"
+                            android:layout_width="wrap_content"
+                            android:text="0/500"
+                            android:layout_alignParentEnd="true"
+                            android:padding="@dimen/ten"
+                            android:textSize="@dimen/thirteen_sp"
+                            android:textColor="@color/black"
+                            android:layout_alignParentBottom="true"
+                            android:layout_height="wrap_content">
+
+                        </TextView>
+
+                        <EditText
+                            android:id="@+id/edtContentTextMessage"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="start|top"
+                            android:hint="Description"
+                            android:padding="@dimen/ten"
+                            android:textSize="@dimen/thirteen_sp"
+                            android:maxLength="500"
+                            android:background="@drawable/bg_outline_black"
+                            android:inputType="textMultiLine"
+                            />
+
+                    </RelativeLayout>
+
 
                 </LinearLayout>
 
@@ -548,29 +592,31 @@ android:visibility="gone"                        android:layout_width="@dimen/tw
                     android:layout_marginBottom="@dimen/eight"
                     android:visibility="gone"
                     android:background="@drawable/rect_green_light_radious"
-                    android:padding="@dimen/ten">
+                    android:padding="@dimen/seven">
 
-                    <ImageView
-                        android:id="@+id/imgSend1"
-                        android:layout_width="@dimen/fifteen"
-                        android:layout_height="@dimen/fifteen"
-                        android:layout_centerVertical="true"
-                        android:layout_marginEnd="@dimen/five"
-                        android:src="@drawable/send_icon_white">
 
-                    </ImageView>
 
                     <TextView
+                        android:id="@+id/lblNExt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
                         android:layout_marginStart="@dimen/five"
-                        android:layout_toEndOf="@+id/imgSend1"
                         android:text="@string/NEXT"
+                        android:layout_centerVertical="true"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/thirteen_sp">
+                        android:textSize="@dimen/thirteen_sp"/>
 
-                    </TextView>
+                        <ImageView
+                            android:layout_toEndOf="@+id/lblNExt"
+                            android:id="@+id/imgSend1"
+                            android:layout_width="@dimen/fifteen"
+                            android:layout_height="@dimen/fifteen"
+                            android:layout_marginEnd="@dimen/five"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/rightwhitearrow"/>
+
+
+
                 </RelativeLayout>
 
 
@@ -642,9 +688,6 @@ android:visibility="gone"                        android:layout_width="@dimen/tw
                         android:textSize="@dimen/thirteen_sp"
                         style="@style/CustomTextStylePoppinsBold">
                     </TextView>
-
-
-
 
 
                     <RelativeLayout
@@ -764,9 +807,7 @@ android:visibility="gone"                        android:layout_width="@dimen/tw
                         android:layout_marginStart="@dimen/twenty"
                         android:layout_marginTop="@dimen/twenty"
                         android:visibility="gone"
-                        android:layout_marginEnd="@dimen/twenty"
-
-                        >
+                        android:layout_marginEnd="@dimen/twenty">
 
                         <TextView
                             android:id="@+id/lblTitle"
@@ -780,13 +821,35 @@ android:visibility="gone"                        android:layout_width="@dimen/tw
 
                         </TextView>
 
-                        <EditText
-                            android:id="@+id/edtTitle"
+
+
+                        <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="@dimen/thirteen_sp"
-                            android:layout_below="@+id/lblTitle">
-                        </EditText>
+                            android:layout_below="@+id/lblTitle"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/lblCountOfTitleVoice"
+                                android:layout_width="wrap_content"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/thirteen_sp"
+                                android:text="0/50"
+                                android:layout_marginEnd="@dimen/ten"
+                                android:layout_below="@+id/edtTitle"
+                                android:layout_alignParentEnd="true"
+                                android:layout_height="wrap_content">
+
+                            </TextView>
+                            <EditText
+                                android:id="@+id/edtTitle"
+                                android:layout_width="match_parent"
+                                android:maxLength="50"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/thirteen_sp"
+                               >
+                            </EditText>
+                        </RelativeLayout>
+
 
                     </RelativeLayout>
 

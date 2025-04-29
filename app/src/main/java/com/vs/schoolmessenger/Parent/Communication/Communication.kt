@@ -1,17 +1,15 @@
 package com.vs.schoolmessenger.Parent.Communication
 
 import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
-import android. text. TextWatcher
 import android.view.View
 import android.widget.ImageView
-import android.widget.PopupMenu
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
@@ -31,7 +29,9 @@ class Communication : BaseActivity<CommunicationBinding>(), View.OnClickListener
     private var isInitialLoad = true
     private var isFromArchive = false
     private var hasFetchedMore = false
-    private var currentFilter: String = "ALL"
+    private var isFilterType: String = "ALL"
+    private var isCommunicationType = 1
+
     private var currentSearchQuery: String = ""
 
     override fun setupViews() {
@@ -51,17 +51,25 @@ class Communication : BaseActivity<CommunicationBinding>(), View.OnClickListener
         isAccessToken = isChildDetails?.access_token
         showShimmer()
 
-        binding.recyclerMore.post {
-            binding.recyclerMore.requestFocus()
-            binding.recyclerMore.layoutManager?.let { layoutManager ->
-                val itemCount = adapter?.itemCount ?: 0
-                if (itemCount > 0 && layoutManager is LinearLayoutManager) {
-                    layoutManager.scrollToPositionWithOffset(itemCount - 1, 0)
-                }
-            }
+        binding.toolbarLayout.imgBack.setOnClickListener {
+            onBackPressed()
         }
 
-        binding.txtSearchMenu.addTextChangedListener(object : android.text.TextWatcher {
+        binding.toolbarLayout.lblStudentName.text = isChildDetails!!.name
+        binding.toolbarLayout.lblParentToolBar.text = "Communication"
+        binding.toolbarLayout.lblStudentSection.text =
+            isChildDetails.standard_name + " - " + isChildDetails.section_name
+//        binding.recyclerMore.post {
+//            binding.recyclerMore.requestFocus()
+//            binding.recyclerMore.layoutManager?.let { layoutManager ->
+//                val itemCount = adapter?.itemCount ?: 0
+//                if (itemCount > 0 && layoutManager is LinearLayoutManager) {
+//                    layoutManager.scrollToPositionWithOffset(itemCount - 1, 0)
+//                }
+//            }
+//        }
+
+        binding.txtSearchMenu.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 currentSearchQuery = s.toString()
@@ -72,6 +80,7 @@ class Communication : BaseActivity<CommunicationBinding>(), View.OnClickListener
 
         appViewModel?.isGetCommmunicationlist?.observe(this) { response ->
             if (response?.status == true) {
+
                 appendData(response.data, archiveFlag = true)
             } else {
                 checkAndShowNoData()
@@ -86,28 +95,152 @@ class Communication : BaseActivity<CommunicationBinding>(), View.OnClickListener
             }
         }
 
+        binding.rdgCommunication.setOnCheckedChangeListener { group, checkedId ->
+            when (checkedId) {
+                R.id.RdbAll -> {
+
+                    if (isCommunicationType == 1) {
+                        isFilterType = "ALL"
+                    } else if (isCommunicationType == 2) {
+                        isFilterType = "UNREAD"
+                    } else if (isCommunicationType == 3) {
+                        isFilterType = "READ"
+                    }
+
+                    applyCombinedFilter()
+                }
+
+                R.id.RdbVoice -> {
+                    if (isCommunicationType == 1) {
+                        isFilterType = "VOICE"
+                    } else if (isCommunicationType == 2) {
+                        isFilterType = "VOICE_UNREAD"
+                    } else if (isCommunicationType == 3) {
+                        isFilterType = "VOICE_READ"
+                    }
+                    applyCombinedFilter()
+                }
+
+                R.id.RdbText -> {
+                    if (isCommunicationType == 1) {
+                        isFilterType = "TEXT"
+                    } else if (isCommunicationType == 2) {
+                        isFilterType = "TEXT_UNREAD"
+                    } else if (isCommunicationType == 3) {
+                        isFilterType = "TEXT_READ"
+                    }
+                    applyCombinedFilter()
+                }
+            }
+        }
+        binding.lblAll.setOnClickListener {
+            isChangeBackgroundFilter(binding.lblAll)
+        }
+
+        binding.lblUnread.setOnClickListener {
+            isChangeBackgroundFilter(binding.lblUnread)
+        }
+
+        binding.lblRead.setOnClickListener {
+            isChangeBackgroundFilter(binding.lblRead)
+        }
+
         fetchInitialData()
     }
+
+    private fun isChangeBackgroundFilter(isSelectedFilter: TextView) {
+        binding.lblAll.setBackgroundResource(R.drawable.bg_gray_radious)
+        binding.lblUnread.setBackgroundResource(R.drawable.bg_gray_radious)
+        binding.lblRead.setBackgroundResource(R.drawable.bg_gray_radious)
+
+        isSelectedFilter.setBackgroundResource(R.drawable.bg_light_green_radious)
+
+        if (isSelectedFilter == binding.lblAll) {
+            isCommunicationType = 1
+            if (binding.RdbAll.isChecked == true) {
+                isFilterType = "ALL"
+            } else if (binding.RdbText.isChecked == true) {
+                isFilterType = "TEXT_ALL"
+            } else if (binding.RdbVoice.isChecked == true) {
+                isFilterType = "VOICE_ALL"
+            }
+        } else if (isSelectedFilter == binding.lblUnread) {
+            isCommunicationType = 2
+            if (binding.RdbAll.isChecked == true) {
+                isFilterType = "UNREAD"
+            } else if (binding.RdbText.isChecked == true) {
+                isFilterType = "TEXT_UNREAD"
+            } else if (binding.RdbVoice.isChecked == true) {
+                isFilterType = "VOICE_UNREAD"
+            }
+        } else if (isSelectedFilter == binding.lblRead) {
+            isCommunicationType = 3
+            if (binding.RdbAll.isChecked == true) {
+                isFilterType = "READ"
+            } else if (binding.RdbText.isChecked == true) {
+                isFilterType = "TEXT_READ"
+            } else if (binding.RdbVoice.isChecked == true) {
+                isFilterType = "VOICE_READ"
+            }
+        }
+
+        applyCombinedFilter()
+    }
+
+
+    private fun applyCombinedFilter() {
+        Log.d("isFilterType", isFilterType)
+
+        var filteredList = when (isFilterType) {
+
+            "TEXT", "TEXT_ALL" -> allVoiceData.filter { it.type == "TEXT" }
+            "VOICE", "VOICE_ALL" -> allVoiceData.filter { it.type == "VOICE" }
+
+            "READ" -> allVoiceData.filter { !it.is_unread!! }
+            "UNREAD" -> allVoiceData.filter { it.is_unread!! }
+
+            "TEXT_READ" -> allVoiceData.filter { it.type == "TEXT" && !it.is_unread!! }
+            "VOICE_READ" -> allVoiceData.filter { it.type == "VOICE" && !it.is_unread!! }
+
+            "TEXT_UNREAD" -> allVoiceData.filter { it.type == "TEXT" && it.is_unread!! }
+            "VOICE_UNREAD" -> allVoiceData.filter { it.type == "VOICE" && it.is_unread!! }
+
+            else -> allVoiceData
+        }
+
+        if (currentSearchQuery.isNotEmpty()) {
+            filteredList = filteredList.filter {
+                it.content?.contains(
+                    currentSearchQuery,
+                    ignoreCase = true
+                ) == true || it.content?.contains(currentSearchQuery, ignoreCase = true) == true
+            }
+        }
+
+        adapter?.updateList(filteredList)
+        checkAndShowNoData(filteredList)
+    }
+
 
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.imgBack -> onBackPressed()
 
             R.id.imgFilter -> {
-                val popupMenu = PopupMenu(this, v)
-                popupMenu.menu.add("TEXT")
-                popupMenu.menu.add("VOICE")
-                popupMenu.menu.add("READ")
-                popupMenu.menu.add("UNREAD")
-                popupMenu.menu.add("ALL")
-
-                popupMenu.setOnMenuItemClickListener { item ->
-                    currentFilter = item.title.toString()
-                    applyCombinedFilter()
-                    true
-                }
-
-                popupMenu.show()
+                binding.rytFilter.visibility = View.VISIBLE
+//                val popupMenu = PopupMenu(this, v)
+//                popupMenu.menu.add("ALL")
+//                popupMenu.menu.add("TEXT")
+//                popupMenu.menu.add("VOICE")
+//                popupMenu.menu.add("READ")
+//                popupMenu.menu.add("UNREAD")
+//                popupMenu.setOnMenuItemClickListener { item ->
+//                    currentFilter = item.title.toString()
+//                    applyCombinedFilter()
+//                    true
+//                }
+//
+//                popupMenu.show()
             }
 
             R.id.rlaTextMessage -> {
@@ -132,26 +265,6 @@ class Communication : BaseActivity<CommunicationBinding>(), View.OnClickListener
         }
     }
 
-    private fun applyCombinedFilter() {
-        var filteredList = when (currentFilter) {
-            "TEXT" -> allVoiceData.filter { it.type.equals("TEXT", ignoreCase = true) }
-            "VOICE" -> allVoiceData.filter { it.type.equals("VOICE", ignoreCase = true) }
-            "READ" -> allVoiceData.filter { it.is_unread == false }
-            "UNREAD" -> allVoiceData.filter { it.is_unread == true }
-            else -> allVoiceData
-        }
-
-        if (currentSearchQuery.isNotEmpty()) {
-            filteredList = filteredList.filter {
-                it.description?.contains(currentSearchQuery, ignoreCase = true) == true ||
-                        it.content?.contains(currentSearchQuery, ignoreCase = true) == true
-            }
-        }
-
-        adapter?.updateList(filteredList)
-        checkAndShowNoData(filteredList)
-    }
-
     private fun fetchInitialData() {
         isInitialLoad = true
         appViewModel?.isGetCommmunicationlistload(isAccessToken.orEmpty(), this)
@@ -164,8 +277,12 @@ class Communication : BaseActivity<CommunicationBinding>(), View.OnClickListener
 
     private fun appendData(newData: List<VoiceData>?, archiveFlag: Boolean) {
         if (isInitialLoad) allVoiceData.clear()
-
-        newData?.let {
+        if (newData!!.size > 1) {
+            binding.linearlayout1.visibility = View.VISIBLE
+        } else {
+            binding.linearlayout1.visibility = View.GONE
+        }
+        newData.let {
             val processedData = it.map { item -> item.copy(is_archive = archiveFlag) }
             allVoiceData.addAll(processedData)
 
@@ -220,7 +337,6 @@ class Communication : BaseActivity<CommunicationBinding>(), View.OnClickListener
             addProperty("type", type)
             addProperty("detail_id", id)
         }
-
         isAccessToken?.let {
             appViewModel?.isUpdateStatusArchive(it, jsonObject, this)
         }
@@ -238,7 +354,7 @@ class Communication : BaseActivity<CommunicationBinding>(), View.OnClickListener
     }
 
     override fun onItemClick(data: VoiceData, holder: UnifiedVoiceAdapter.DataViewHolder) {
-        // Handle item click here
+
     }
 
     private fun isChangeBackRoundCommunicationType(

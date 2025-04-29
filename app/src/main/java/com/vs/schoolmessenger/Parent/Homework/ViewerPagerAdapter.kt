@@ -1,0 +1,51 @@
+package com.vs.schoolmessenger.Parent.Homework
+
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
+import com.vs.schoolmessenger.R
+
+class ViewerPagerAdapter(
+    private val fileList: ArrayList<GetFilePathDetails>,
+    private val context: Context
+) : RecyclerView.Adapter<ViewerPagerAdapter.PagerViewHolder>() {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PagerViewHolder {
+        val view = LayoutInflater.from(context).inflate(R.layout.homework_view_image_document_item, parent, false)
+        return PagerViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: PagerViewHolder, position: Int) {
+        val file = fileList[position]
+        when (file.type.uppercase()) {
+            "IMAGE" -> {
+                Glide.with(context)
+                    .load(file.path)
+                    .into(holder.imageView)
+            }
+            "PDF" -> {
+                holder.imageView.setImageResource(R.drawable.hw_pdf_img)
+            }
+            "DOC", "DOCX" -> {
+                holder.imageView.setImageResource(R.drawable.microsoft_word_img)
+            }
+            "PPT", "PPTX" -> {
+                holder.imageView.setImageResource(R.drawable.ppt_img)
+            }
+            "TXT" -> {
+                holder.imageView.setImageResource(R.drawable.txt_file_img)
+            }
+        }
+    }
+
+    override fun getItemCount(): Int = fileList.size
+
+    inner class PagerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val imageView: ImageView = itemView.findViewById(R.id.fullScreenImageView)
+    }
+}

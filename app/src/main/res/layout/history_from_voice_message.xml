@@ -206,7 +206,7 @@
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="-19dp"
+            android:layout_marginTop="-14dp"
             android:layout_marginEnd="@dimen/twenty_five"
             android:elevation="10dp"
             android:src="@drawable/new_icon">
@@ -243,7 +243,7 @@
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginTop="@dimen/fifteen"
                 android:layout_marginEnd="@dimen/ten"
-                android:fontFamily="@font/poppins_medium"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:maxLines="3"
                 android:text="Dear (Recipient's Name), I am writing to request leave from school for (number of days) days, starting from (start date) to (end date). The reason for my leave is (briefly state the reason, e.g., a family function, medical treatment, personal reasons)."
                 android:textColor="@color/black"
@@ -275,7 +275,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblContentText"
                 android:layout_marginStart="@dimen/ten"
-                android:text="@string/see_more"
+                android:text="View"
                 android:textColor="@color/navi_blue2"
                 android:textSize="@dimen/thirteen_sp"
                 android:visibility="gone"
@@ -291,9 +291,6 @@
                 android:padding="@dimen/ten">
 
 
-
-
-
                 <TextView
                     android:id="@+id/lblTimeText"
                     android:layout_width="wrap_content"
@@ -302,7 +299,7 @@
                     android:layout_marginEnd="16dp"
                     style="@style/CustomTextStylePoppinsMedium"
                     android:text="10:56 AM"
-                    android:textColor="@color/black"
+                    android:textColor="@color/grey"
                     android:textSize="12sp">
                 </TextView>
 

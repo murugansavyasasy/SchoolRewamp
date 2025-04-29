@@ -142,5 +142,12 @@
 <!--    <color name="dash_board_icon_color_school">#FF16C7DF</color>-->
     <color name="dash_board_icon_color_school">#0097B2</color>
 
+    <color name="clr_month_blue">#32ADE6</color>
+    <color name="clr_day_blue">#D7EAE8</color>
+    <color name="light_shadow_yellow">#EFE7CE</color>
+    <color name="bpBlue">#33b5e5</color>
+    <color name="bpTransparent_black">#7f000000</color>
+
+
 
 </resources>

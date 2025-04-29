@@ -50,7 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/ten"
-                android:layout_toStartOf="@+id/imgSearchClick"
+                android:layout_toStartOf="@+id/lblChangeRoll"
                 android:layout_toEndOf="@+id/imgSchoolLogo">
 
 
@@ -217,7 +217,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/rlaAttendanceReport"
-            android:layout_marginTop="-30dp"
+            android:layout_marginTop="0dp"
             android:background="@drawable/rounded_top_corners">
 
 
@@ -225,7 +225,7 @@
                 android:id="@+id/rytSearch"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/thirty_five"
-                android:layout_marginTop="@dimen/thirty_five"
+                android:layout_marginTop="@dimen/ten"
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginEnd="@dimen/twenty"
                 android:background="@drawable/rect_grey"
@@ -256,10 +256,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rytSearch"
-                android:layout_marginTop="@dimen/thirty_five"
+                android:layout_marginTop="@dimen/ten"
                 android:text="@string/categories"
                 android:layout_marginStart="@dimen/twenty"
-
+                android:visibility="gone"
                 android:textSize="@dimen/fifteen_sp"
                 style="@style/CustomTextStylePoppinsBold">
 

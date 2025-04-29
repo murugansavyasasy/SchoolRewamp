@@ -30,7 +30,7 @@
             android:text=""
             android:textColor="@color/black"
             android:textSize="@dimen/fifteen_sp"
-            android:textStyle="bold">
+            style="@style/CustomTextStylePoppinsBold">
 
         </TextView>
 
@@ -47,6 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
+                style="@style/CustomTextStylePoppinsMedium"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp">
 
@@ -59,6 +60,7 @@
                 android:layout_below="@+id/lblStudentName"
                 android:text=""
                 android:textColor="@color/black"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:textSize="@dimen/thirteen_sp">
 
             </TextView>

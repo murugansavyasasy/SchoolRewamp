@@ -12,8 +12,6 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.util.Util
-import com.masoudss.lib.utils.Utils
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
@@ -99,7 +97,7 @@ class VoiceHistoryAdapter(
             listener: VoiceHistoryClickListener,
             adapter: VoiceHistoryAdapter
         ) {
-            lblTitle.text = data.description
+            lblTitle.text = data.title
 
 
             val parts = data.sentOn.split(" ")

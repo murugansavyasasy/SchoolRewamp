@@ -7,6 +7,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
+import android.location.LocationManager
 import android.media.MediaMetadataRetriever
 import android.net.ConnectivityManager
 import android.net.Uri
@@ -16,14 +17,19 @@ import android.os.Looper
 import android.provider.Settings
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.TypedValue
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.EditText
+import android.widget.FrameLayout
 import android.widget.GridView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import com.google.mlkit.common.sdkinternal.CommonUtils.getAppVersion
 import com.vs.schoolmessenger.Auth.Country.Country
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
@@ -33,6 +39,7 @@ import com.vs.schoolmessenger.Auth.OTP.ForgetOtpData
 import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolList
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.Communication.CommunicationSchool
 import com.vs.schoolmessenger.School.Communication.TextSendingData
 import com.vs.schoolmessenger.School.Communication.VoiceSendingData
 import java.text.SimpleDateFormat
@@ -75,8 +82,8 @@ object Constant {
     var isAdminRole: String? = "p4"
     var isNonTeachingStaffRole: String? = "p5"
 
-    val STU_COMMUNICATION = 0
-    val STU_HOMEWORK = 3
+    val STU_COMMUNICATION = 7
+    val STU_HOMEWORK = 15
     val STU_EXAM = 5
     val STU_NOTICEBOARD = 7
     val STU_EVENTS = 8
@@ -84,7 +91,7 @@ object Constant {
     val STU_LEAVE_REQUEST = 10
     val STU_FEE_DETAILS = 11
     val STU_INTERACTION_WITH_STAFF = 14
-    val STU_ASSIGNMENT = 18
+    val STU_ASSIGNMENT = 2
     val STU_ONLINE_MEETING = 20
     val STU_QUIZ = 21
     val STU_LSRW = 22
@@ -92,9 +99,9 @@ object Constant {
     val STU_CERTIFICATE_REQUEST = 25
 
 
-    val SH_COMMUNICATION = 0
-    val SH_ASSIGNMENT = 22
-    val SH_HOMEWORK = 9
+    val SH_COMMUNICATION = 7
+    val SH_ASSIGNMENT = 2
+    val SH_HOMEWORK = 15
     val SH_ATTENDANCE_MARKING = 12
     val SH_ABSENTEEISM_REPORT = 6
     val SH_SCHOOL_STRENGTH = 7
@@ -112,8 +119,8 @@ object Constant {
     val SH_ATTACHMENTS = 0
     val SH_SCHOOL_NEEDS = 0
     val SH_FEE_PENDING_REPORT = 0
-    val SH_MARK_GEOMETRIC_ATTENDANCE = 0
-    val SH_STAFF_WISE_GEOMETRIC_ATTENDANCE_REPORT = 0
+    val SH_MARK_GEOMETRIC_ATTENDANCE = 1021
+    val SH_STAFF_WISE_GEOMETRIC_ATTENDANCE_REPORT = 1022
     val SH_PTM = 0
     val SH_INTERACTION_WITH_STUDENT = 16
 
@@ -143,15 +150,16 @@ object Constant {
     var group = "G"
     var student = "student"
     var staff = "staff"
-    var isPickingFileExtension=""
 
-
+    var isCommunication = "isCommunication"
 
     var isVoiceFile: String? = null
     var isVoiceSendingData: VoiceSendingData? = null
     var isTextSendingData: TextSendingData? = null
     var isClickType = 1
     var isVoiceType = 1
+
+    var isBioMetricEnable: Int = -1
 
 
     fun isInternetAvailable(activity: Activity): Boolean {
@@ -194,12 +202,12 @@ object Constant {
         context.startActivity(intent)
     }
 
-    fun redirectToMail(context: Context, mail: String) {
+    fun redirectToMail(context: Context, mail: String,sub : String , body : String) {
         val intent = Intent(Intent.ACTION_SENDTO).apply {
             data = Uri.parse("mailto:") // Ensures only email apps handle this
             putExtra(Intent.EXTRA_EMAIL, arrayOf(mail)) // Recipient email address
-            putExtra(Intent.EXTRA_SUBJECT, "") // Subject
-            putExtra(Intent.EXTRA_TEXT, "") // Email body
+            putExtra(Intent.EXTRA_SUBJECT, sub) // Subject
+            putExtra(Intent.EXTRA_TEXT, body) // Email body
         }
 // Verify that there is an email app to handle the intent
         val emailApps = context.packageManager.queryIntentActivities(intent, 0)
@@ -344,24 +352,120 @@ object Constant {
         }
     }
 
-    fun showAlert(title: String, message: String,activity: Activity) {
-        AlertDialog.Builder(activity)
-            .setTitle(title)
-            .setMessage(message)
-            .setPositiveButton("OK") { dialog, _ ->
-                dialog.dismiss()
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun showTopAlertPopup(message: String, isType: String, activity: Activity) {
+        val inflater = LayoutInflater.from(activity)
+        val view = inflater.inflate(R.layout.success_popup, null)
+
+        val messageText = view.findViewById<TextView>(R.id.alertMessage)
+        val okButton = view.findViewById<TextView>(R.id.btnOk)
+        messageText.text = message
+
+        val rootView = activity.findViewById<ViewGroup>(android.R.id.content)
+
+        val dimView = View(activity).apply {
+            setBackgroundColor(Color.parseColor("#80000000"))
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+            isClickable = true // prevent clicks on background
+        }
+
+        val marginInPx = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            20f,
+            activity.resources.displayMetrics
+        ).toInt()
+
+        val popupLayoutParams = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT,
+            FrameLayout.LayoutParams.WRAP_CONTENT
+        ).apply {
+            gravity = Gravity.CENTER
+            setMargins(marginInPx, 0, marginInPx, 0)
+        }
+
+        rootView.addView(dimView)
+        rootView.addView(view, popupLayoutParams)
+
+        val closePopup = {
+            rootView.removeView(view)
+            rootView.removeView(dimView)
+        }
+
+        okButton.setOnClickListener {
+            if (isType == isCommunication) {
+                val intent = Intent(activity, CommunicationSchool::class.java)
+                activity.startActivity(intent)
             }
-            .show()
+            closePopup()
+        }
+        dimView.setOnClickListener {
+            closePopup()
+        }
     }
 
-    fun getAudioDurationInMinutes(filePath: String): Int {
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun showValidationAlertPopup(message: String, activity: Activity) {
+        val inflater = LayoutInflater.from(activity)
+        val view = inflater.inflate(R.layout.success_popup, null)
+
+        val messageText = view.findViewById<TextView>(R.id.alertMessage)
+        val okButton = view.findViewById<TextView>(R.id.btnOk)
+        messageText.text = message
+
+        val rootView = activity.findViewById<ViewGroup>(android.R.id.content)
+
+        val dimView = View(activity).apply {
+            setBackgroundColor(Color.parseColor("#80000000"))
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+            isClickable = true
+        }
+
+        val marginInPx = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            20f,
+            activity.resources.displayMetrics
+        ).toInt()
+
+        val popupLayoutParams = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT,
+            FrameLayout.LayoutParams.WRAP_CONTENT
+        ).apply {
+            gravity = Gravity.CENTER
+            setMargins(marginInPx, 0, marginInPx, 0)
+        }
+
+        rootView.addView(dimView)
+        rootView.addView(view, popupLayoutParams)
+
+        val closePopup = {
+            rootView.removeView(view)
+            rootView.removeView(dimView)
+        }
+
+        okButton.setOnClickListener {
+            closePopup()
+        }
+
+        dimView.setOnClickListener {
+            closePopup()
+        }
+    }
+
+    fun getAudioDurationInSeconds(url: String): Int {
         val retriever = MediaMetadataRetriever()
         return try {
-            retriever.setDataSource(filePath)
-            val durationStr =
-                retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
+            retriever.setDataSource(url, HashMap()) // For network sources, use empty headers map
+            val durationStr = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
             val durationMs = durationStr?.toLongOrNull() ?: 0L
-            (durationMs / 1000 / 60).toInt()
+            (durationMs / 1000).toInt()
         } catch (e: Exception) {
             e.printStackTrace()
             0
@@ -370,10 +474,55 @@ object Constant {
         }
     }
 
+
+
+    fun getAudioDurationInMinutes(url: String): String {
+        val retriever = MediaMetadataRetriever()
+        return try {
+            retriever.setDataSource(url, HashMap()) // For network sources, use empty headers map
+            val durationStr = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
+            val durationMs = durationStr?.toLongOrNull() ?: 0L
+            val totalSeconds = durationMs / 1000
+            val minutes = totalSeconds / 60
+            val seconds = totalSeconds % 60
+            String.format("%02d:%02d", minutes, seconds)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            "00:00"
+        } finally {
+            retriever.release()
+        }
+    }
+
+    fun getDeviceDetails(context: Activity) : String{
+        val deviceDetails = mapOf(
+            "manufacturer" to Build.MANUFACTURER,
+            "model" to Build.MODEL,
+            "device" to Build.DEVICE,
+            "brand" to Build.BRAND,
+            "hardware" to Build.HARDWARE,
+            "product" to Build.PRODUCT,
+            "os_version" to Build.VERSION.RELEASE,
+            "sdk_int" to Build.VERSION.SDK_INT.toString(),
+            "app_version" to getAppVersion(context)
+        )
+        return deviceDetails.toString()
+    }
+
+
+    fun getAppVersion(context: Activity): String {
+        return try {
+            val pInfo = context.packageManager.getPackageInfo(context.packageName, 0)
+            pInfo.versionName ?: "Unknown"
+        } catch (e: Exception) {
+            "Unknown"
+        }
+    }
+
     @RequiresApi(Build.VERSION_CODES.O)
     fun getCurrentTime(): String {
         val currentTime = LocalTime.now()
-        val formatter = DateTimeFormatter.ofPattern("HH:mm a") // or "hh:mm a" for AM/PM
+        val formatter = DateTimeFormatter.ofPattern("hh:mm a") // or "hh:mm a" for AM/PM
         return currentTime.format(formatter)
     }
 
@@ -400,6 +549,24 @@ object Constant {
         val calendar = Calendar.getInstance()
         calendar.add(Calendar.MINUTE, 20)
         return dateFormat.format(calendar.time)
+    }
+
+    fun isGPSEnabled(context: Context): Boolean {
+        val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+    }
+
+    fun hideLoading(context: Activity) {
+        val rootView = context.findViewById<ViewGroup>(android.R.id.content)
+        val loader = rootView.findViewById<View>(R.id.loader_root)
+        loader?.let { rootView.removeView(it) }
+    }
+
+    fun showLoading(context: Activity) {
+        val rootView = context.findViewById<ViewGroup>(android.R.id.content)
+        val loaderView = LayoutInflater.from(context).inflate(R.layout.lottie_loader, rootView, false)
+        rootView.addView(loaderView)
+
     }
 
 }

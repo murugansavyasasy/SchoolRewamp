@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services")
 }
+
 android {
     namespace = "com.vs.schoolmessenger"
     compileSdk = 35
@@ -111,4 +112,7 @@ dependencies {
     implementation("androidx.compose.foundation:foundation:1.7.8")
     implementation("androidx.biometric:biometric:1.1.0")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.15.1")
+//    implementation("com.google.android.gms:play-services-location:21.3.0")
+    implementation("com.google.android.gms:play-services-location:21.0.1")
+
 }

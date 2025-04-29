@@ -12,11 +12,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
+import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetDateWiseHomeworkData
+import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
+import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 
 class HomeWorkAdapter (
-    private var DateWiseHomeworkData: ArrayList<GetHomeworkData.GetDateWiseHomeworkData>?,
+    private var DateWiseHomeworkData: ArrayList<GetDateWiseHomeworkData>?,
     private var listener: HomeWorkDateClickListener,
     private var context: Context,
     private var isLoading: Boolean
@@ -45,7 +48,7 @@ class HomeWorkAdapter (
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
             // Bind actual data when loading is complete
-            holder.bind(DateWiseHomeworkData!![position], position, this) // Pass adapter reference
+            holder.bind(DateWiseHomeworkData!![position],position, this,) // Pass adapter reference
         }
     }
 
@@ -63,24 +66,28 @@ class HomeWorkAdapter (
         private val imgDown: ImageView = itemView.findViewById(R.id.imgDown)
         var mHomeWorkItemAdapter: HomeWorkItemAdapter? = null
         private lateinit var isHomeWorkReportList: List<HomeWorkList>
-        private lateinit var DateWiseHomeworkDetailsData: ArrayList<GetHomeworkData.GetDateWiseHomeworkData.GetHomeworkDetails>
+        private lateinit var DateWiseHomeWorkdata: ArrayList<GetDateWiseHomeworkData>
+        private lateinit var DateWiseHomeworkDetailsData: ArrayList<GetHomeworkDetails>
+        private lateinit var GetFilePathDetailsData: ArrayList<GetFilePathDetails>
+
         var isPosition = -1
         private fun getRecyclerView(): RecyclerView {
             return rcyHomeWorkItem
         }
 
         fun bind(
-            DateWiseHomeWorkdata: GetHomeworkData.GetDateWiseHomeworkData,
+            item: GetDateWiseHomeworkData,
             position: Int,
-            adapter: HomeWorkAdapter
+            adapter: HomeWorkAdapter,
+
 
             ) {
-            lblDate.text = DateWiseHomeWorkdata.date
+            lblDate.text = item.date
 
             rlaDateItem.setOnClickListener {
                 if (isPosition != position) {
                     rcyHomeWorkItem.visibility = View.VISIBLE
-                    loadData(DateWiseHomeWorkdata.homework)
+                    loadData(item.homework,item)
                     isPosition = position
                     imgDown.setImageResource(R.drawable.arrow_up_round)
                 } else {
@@ -89,75 +96,80 @@ class HomeWorkAdapter (
                     imgDown.setImageResource(R.drawable.arrow_down_round)
                 }
             }
+
         }
 
-        private fun loadData(HomeworkDetailsdata: ArrayList<GetHomeworkData.GetDateWiseHomeworkData.GetHomeworkDetails>) {
-            isHomeWorkReportList = listOf(
-                HomeWorkList(
-                    "Annual Day celebrartions",
-                    "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                    "15 Nov 2024",
-                    "isVoice", "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-                    ""
-                ),
-                HomeWorkList(
-                    "Annual Day celebrartions",
-                    "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                    "15 Nov 2024",
-                    "isPDF",
-                    "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
-                    ""
-                ),
-                HomeWorkList(
-                    "Annual Day celebrartions",
-                    "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                    "15 Nov 2024",
-                    "isImage", "",
-                    ""
-                ),
-                HomeWorkList(
-                    "Annual Day celebrartions",
-                    "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                    "15 Nov 2024",
-                    "isVoice", "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-                    ""
-                ),
-                HomeWorkList(
-                    "Annual Day celebrartions",
-                    "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                    "15 Nov 2024",
-                    "isVideo", "https://vimeo.com/76979871", "76979871"
-                ),
-                HomeWorkList(
-                    "Annual Day celebrartions",
-                    "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                    "15 Nov 2024",
-                    "isText", "", ""
-                ),
-                HomeWorkList(
-                    "Annual Day celebrartions",
-                    "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                    "15 Nov 2024",
-                    "isImage", "", ""
-                ),
-                HomeWorkList(
-                    "Annual Day celebrartions",
-                    "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                    "15 Nov 2024",
-                    "isVideo", "https://vimeo.com/76979871", "76979871"
-                ),
-                HomeWorkList(
-                    "Annual Day celebrartions",
-                    "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                    "15 Nov 2024",
-                    "isText", "", ""
-                )
-            )
+
+        private fun loadData(
+            homeworkDetails: ArrayList<GetHomeworkDetails>,
+            DateWiseHomeWorkdata: GetDateWiseHomeworkData
+        ) {
+//            isHomeWorkReportList = listOf(
+//                HomeWorkList(
+//                    "Annual Day celebrartions",
+//                    "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
+//                    "15 Nov 2024",
+//                    "isVoice", "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+//                    ""
+//                ),
+//                HomeWorkList(
+//                    "Annual Day celebrartions",
+//                    "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
+//                    "15 Nov 2024",
+//                    "isPDF",
+//                    "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+//                    ""
+//                ),
+//                HomeWorkList(
+//                    "Annual Day celebrartions",
+//                    "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
+//                    "15 Nov 2024",
+//                    "isImage", "",
+//                    ""
+//                ),
+//                HomeWorkList(
+//                    "Annual Day celebrartions",
+//                    "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
+//                    "15 Nov 2024",
+//                    "isVoice", "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+//                    ""
+//                ),
+//                HomeWorkList(
+//                    "Annual Day celebrartions",
+//                    "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
+//                    "15 Nov 2024",
+//                    "isVideo", "https://vimeo.com/76979871", "76979871"
+//                ),
+//                HomeWorkList(
+//                    "Annual Day celebrartions",
+//                    "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
+//                    "15 Nov 2024",
+//                    "isText", "", ""
+//                ),
+//                HomeWorkList(
+//                    "Annual Day celebrartions",
+//                    "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
+//                    "15 Nov 2024",
+//                    "isImage", "", ""
+//                ),
+//                HomeWorkList(
+//                    "Annual Day celebrartions",
+//                    "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
+//                    "15 Nov 2024",
+//                    "isVideo", "https://vimeo.com/76979871", "76979871"
+//                ),
+//                HomeWorkList(
+//                    "Annual Day celebrartions",
+//                    "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
+//                    "15 Nov 2024",
+//                    "isText", "", ""
+//                )
+//            )
 
             val rcyView = getRecyclerView()
 
             mHomeWorkItemAdapter =
-                HomeWorkItemAdapter(null, context, Constant.isShimmerViewShow)
+                HomeWorkItemAdapter(null,null,context, Constant.isShimmerViewShow,)
             rcyView.layoutManager = LinearLayoutManager(context)
             rcyView.adapter = mHomeWorkItemAdapter
 
@@ -165,9 +177,10 @@ class HomeWorkAdapter (
                 // Once data is loaded, stop shimmer and pass the actual data
                 mHomeWorkItemAdapter =
                     HomeWorkItemAdapter(
-                        isHomeWorkReportList,
+                        DateWiseHomeWorkdata,
+                        homeworkDetails,
                         context,
-                        Constant.isShimmerViewDisable
+                        Constant.isShimmerViewDisable,
                     )
                 // Set GridLayoutManager (2 columns in this case)
                 rcyView.adapter = mHomeWorkItemAdapter

@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/flagImageView"
-        android:layout_width="@dimen/thirty_five"
-        android:layout_height="@dimen/twenty_five"
+        android:layout_width="@dimen/twenty_two"
+        android:layout_height="@dimen/twenty"
         android:layout_marginEnd="@dimen/ten"
         android:scaleType="fitXY" />
 

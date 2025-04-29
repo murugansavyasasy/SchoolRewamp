@@ -28,7 +28,7 @@ class ContactUs : BaseActivity<ContactSupportBinding>(), View.OnClickListener {
                 Constant.redirectToDialPad(this,binding.lblContactNo.text.toString())
             }
             R.id.rytMail -> {
-                Constant.redirectToMail(this,binding.lblContacttMail.text.toString())
+                Constant.redirectToMail(this,binding.lblContacttMail.text.toString(),"","")
             }
         }
     }

@@ -38,6 +38,7 @@ import com.vs.schoolmessenger.School.Homework.HomeWork
 import com.vs.schoolmessenger.School.ImportantInfo.ImportantInfo
 import com.vs.schoolmessenger.School.InteractionWithStudent.InteractionWithStudent
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlan
+import com.vs.schoolmessenger.School.MarkYourAttendance.MarkYourAttendance
 import com.vs.schoolmessenger.School.MessageFromManagement.MessageFromManagement
 import com.vs.schoolmessenger.School.NoticeBoard.CreateNoticeBoard
 import com.vs.schoolmessenger.School.OnlineMeeting.OnlineMeeting
@@ -61,7 +62,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     var isMenuDetails: List<MenuDetail>? = null
     var isAdItem: List<AdItem>? = null
     var isAdsDisplayOptions: AdsDisplayOptions? = null
-
     var access_token = ""
 
 
@@ -74,7 +74,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         binding.imgSearchClick.setOnClickListener(this)
         binding.changeroll.setOnClickListener(this)
 
-        appViewModel = ViewModelProvider(this).get(App::class.java)
+        appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
         binding.changeroll.paintFlags = binding.changeroll.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
@@ -88,7 +88,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             access_token = staffDetails!!.access_token
             binding.lblSchoolName.text = staffDetails!!.school_name
             if (staffDetails!!.school_name_regional != ""){
-                binding.lblSchoolRegionalName.visibility= View.VISIBLE
+                binding.lblSchoolRegionalName.visibility= View.GONE
                 binding.lblSchoolRegionalName.text = staffDetails!!.school_name_regional
             }else{
                 binding.lblSchoolRegionalName.visibility= View.GONE
@@ -97,17 +97,16 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             binding.lblSchoolAddress.visibility = View.VISIBLE
             Glide.with(requireActivity()).load(staffDetails!!.school_logo)
                 .into(binding.imgSchoolLogo)
-
         } else {
             access_token = userDetails!!.staff_details[0].access_token
             if (userDetails!!.staff_details.size > 1) {
                 binding.lblSchoolName.text = userDetails!!.role_name
-                binding.lblSchoolAddress.visibility = View.GONE
+//                binding.lblSchoolAddress.visibility = View.GONE
             } else {
-                binding.lblSchoolAddress.visibility = View.VISIBLE
+//                binding.lblSchoolAddress.visibility = View.VISIBLE
                 binding.lblSchoolName.text = userDetails!!.staff_details[0].school_name
                 if (staffDetails!!.school_name_regional != ""){
-                    binding.lblSchoolRegionalName.visibility= View.VISIBLE
+                    binding.lblSchoolRegionalName.visibility= View.GONE
                     binding.lblSchoolRegionalName.text = staffDetails!!.school_name_regional
                 }else{
                     binding.lblSchoolRegionalName.visibility= View.GONE
@@ -117,9 +116,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     .into(binding.imgSchoolLogo)
             }
         }
-
-
-
 
         if (userDetails!!.is_parent && userDetails!!.is_staff) {
             binding.changeroll.visibility = View.VISIBLE
@@ -146,7 +142,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         appViewModel!!.isDashBoardData?.observe(requireActivity()) { response ->
             if (response != null) {
                 val status = response.status
-                val message = response.message
+                response.message
                 if (status) {
                     val isDashboardResponse = response.data
                     isDashBoardData = isDashboardResponse
@@ -160,7 +156,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         appViewModel!!.isGetAds?.observe(requireActivity()) { response ->
             if (response != null) {
                 val status = response.status
-                val message = response.message
+                response.message
                 if (status) {
                     isAdItem = response.data
 //
@@ -201,13 +197,10 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
     private fun isLoadData() {
 
-
         val isAdapter = SchoolMenuAdapter(
             requireActivity(), this, isMenuDetails, isAdItem, Constant.isShimmerViewDisable
         )
-
         val gridLayoutManager = GridLayoutManager(requireContext(), 3)
-
         // Adjust span count again for the updated adapter
         gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
@@ -438,13 +431,13 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             Constant.SH_MARK_GEOMETRIC_ATTENDANCE -> {
                 if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
                     //go to geometric mark attendance page
-                    LessonPlan::class.java
+                    MarkYourAttendance::class.java
                 } else {
                     if (userDetails!!.staff_details.size > 1) {
                         SchoolList::class.java
                     } else {
                         //go to geometric mark attendance page
-                        LessonPlan::class.java
+                        MarkYourAttendance::class.java
                     }
                 }
             }

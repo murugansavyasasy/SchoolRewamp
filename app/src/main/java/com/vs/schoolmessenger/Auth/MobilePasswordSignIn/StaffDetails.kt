@@ -11,7 +11,7 @@ data class StaffDetails(
     val role: String,
     val is_payment_pending: String,
     val schedule_call_type: Int,
-    val biometric_enable: Int,
+    val biometric_enable: Boolean,
     val access_token: String,
     val allow_video_download: Boolean,
     val school_address: String

@@ -69,14 +69,14 @@ class TextHistoryAdapter(
             listener: TextHistoryClickListener,
             adapter: TextHistoryAdapter
         ) {
-            lblTitle.text = data.content
+            lblTitle.text = data.title
             val parts = data.date.split(" ")
             val date = parts[0]
             val time = parts[1] + " " + parts[2]
 
             lblTime.text = time
             lblDate.text = Constant.convertDateTimeFormat(date)
-            lblContent.text = data.description
+            lblContent.text = data.content
 
             lblSeeMore.setOnClickListener {
                 isExpanded = !isExpanded

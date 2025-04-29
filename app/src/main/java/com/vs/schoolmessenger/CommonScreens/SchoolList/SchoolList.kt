@@ -2,6 +2,8 @@ package com.vs.schoolmessenger.CommonScreens.SchoolList
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,7 +14,6 @@ import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.airbnb.lottie.LottieAnimationView
 import com.vs.schoolmessenger.AWS.AwsUploadingPreSigned
 import com.vs.schoolmessenger.AWS.UploadCallback
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
@@ -54,7 +55,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         return SchoolListActivityBinding.inflate(layoutInflater)
     }
 
-    private val selectedSchoolIds = mutableListOf<Int>()
+    private val selectedSchoolIds = mutableListOf<String>()
     var isMultipleSchool = false
     private lateinit var mAdapter: SchoolListAdapter
 
@@ -67,33 +68,15 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
     var isAcademicYear: List<AcademicYear>? = null
     var isAcademicYearId = -1
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
         setupToolbar()
         binding.imgBack.setOnClickListener(this)
         binding.lblSendToMultipleSchool.setOnClickListener(this)
         binding.lblSelectReceipients.setOnClickListener(this)
-        binding.lblSend.setOnClickListener(this)
+        binding.rytSend.setOnClickListener(this)
         binding.rlaAcademicYear.setOnClickListener(this)
-
-
-        if(SELECTED_SCHOOL_MENU  == SH_COMMUNICATION || SELECTED_SCHOOL_MENU == SH_NOTICE_BOARD || SELECTED_SCHOOL_MENU == SH_ATTACHMENTS || SELECTED_SCHOOL_MENU == SH_SCHEDULE_EXAM_TEST || SELECTED_SCHOOL_MENU == SH_EVENTS
-            || SELECTED_SCHOOL_MENU == SH_ONLINE_MEETING) {
-            isMultipleSchool  = false
-            if (Constant.isEmergencyVoiceNoticeBoard!!) {
-                binding.lnrTab.visibility = View.GONE
-//                binding.lblSend.visibility = View.GONE
-            } else {
-                binding.lnrTab.visibility = View.VISIBLE
-//                binding.lblSend.visibility = View.VISIBLE
-            }
-        }
-        else{
-            isMultipleSchool  = true
-            binding.lnrTab.visibility = View.GONE
-//            binding.lblSend.visibility = View.GONE
-        }
-
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
 
@@ -103,24 +86,34 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         isAwsUploadingPreSigned = AwsUploadingPreSigned()
 
         isUserDetails = SharedPreference.getUserDetails(this)
+
+        if(SELECTED_SCHOOL_MENU  == SH_COMMUNICATION || SELECTED_SCHOOL_MENU == SH_NOTICE_BOARD || SELECTED_SCHOOL_MENU == SH_ATTACHMENTS || SELECTED_SCHOOL_MENU == SH_SCHEDULE_EXAM_TEST || SELECTED_SCHOOL_MENU == SH_EVENTS
+            || SELECTED_SCHOOL_MENU == SH_ONLINE_MEETING) {
+            isMultipleSchool  = false
+            if (Constant.isEmergencyVoiceNoticeBoard!!) {
+                binding.lnrTab.visibility = View.GONE
+            } else {
+                binding.lnrTab.visibility = View.VISIBLE
+            }
+        }
+        else{
+            isMultipleSchool  = true
+            binding.lnrTab.visibility = View.GONE
+        }
+
         isGetAcademicYear()
 
         appViewModel!!.isVoiceSend?.observe(this) { response ->
-            val rootView = findViewById<ViewGroup>(android.R.id.content)
-            val loader = rootView.findViewById<View>(R.id.loader_root)
-            loader?.let { rootView.removeView(it) }
-
+            Constant.hideLoading(this@SchoolList)
             if (response != null && response.status) {
-                Constant.showAlert("Info!", response.message, this)
+                Constant.showTopAlertPopup(response.message, Constant.isCommunication,this)
             }
         }
 
         appViewModel!!.isSendText?.observe(this) { response ->
-            val rootView = findViewById<ViewGroup>(android.R.id.content)
-            val loader = rootView.findViewById<View>(R.id.loader_root)
-            loader?.let { rootView.removeView(it) }
+            Constant.hideLoading(this@SchoolList)
             if (response != null && response.status) {
-                Constant.showAlert("Info!", response.message, this)
+                Constant.showTopAlertPopup(response.message, Constant.isCommunication,this)
             }
         }
 
@@ -134,7 +127,6 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                 }
             }
         }
-
     }
 
     override fun onResume() {
@@ -143,12 +135,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
     }
 
     private fun isLoadData() {
-        mAdapter = SchoolListAdapter(
-            isMultipleSchool, selectedSchoolIds, null, this, this, Constant.isShimmerViewShow
-        )
         binding.recycleSchools.layoutManager = LinearLayoutManager(this)
-        binding.recycleSchools.adapter = mAdapter
-        Constant.executeAfterDelay {
             mAdapter = SchoolListAdapter(
                 isMultipleSchool,
                 selectedSchoolIds,
@@ -158,7 +145,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                 Constant.isShimmerViewDisable
             )
             binding.recycleSchools.adapter = mAdapter
-        }
+
     }
 
     override fun onPause() {
@@ -174,14 +161,14 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             }
 
             R.id.lblSelectReceipients -> {
-                binding.lblSend.visibility= View.GONE
+                binding.rytSend.visibility= View.GONE
                 binding.linearlayout.visibility= View.GONE
                 isMultipleSchool = false
                 isChangeBackRound(binding.lblSelectReceipients)
             }
 
             R.id.lblSendToMultipleSchool -> {
-                binding.lblSend.visibility= View.VISIBLE
+                binding.rytSend.visibility= View.VISIBLE
                 binding.linearlayout.visibility= View.VISIBLE
                 isMultipleSchool = true
                 isChangeBackRound(binding.lblSendToMultipleSchool)
@@ -200,18 +187,21 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                 }
             }
 
-            R.id.lblSend -> {
+            R.id.rytSend -> {
                 for (i in selectedSchoolIds.indices) {
                     Log.d("SelectedSchoolId", selectedSchoolIds[i].toString())
                 }
                 if (selectedSchoolIds.isNotEmpty()) {
                     if (Constant.isClickType == 3) {
-                        showSendConfirmationDialog("Are you want send this text to entire school?")
+                        showConfirmationAlert("Selected target : "+selectedSchoolIds.size.toString(),"Are you sure want to send this message?")
                     } else {
-                        showSendConfirmationDialog("Are you want send this voice to entire school?")
+                        showConfirmationAlert("Selected target : "+selectedSchoolIds.size.toString(),"Are you sure want to send this message?")
                     }
                 } else {
-                    Constant.showAlert("Alert!", "Select the school", this)
+                    Constant.showValidationAlertPopup(
+                        "Please select at least one school to send the message.",
+                        this
+                    )
                 }
             }
         }
@@ -292,8 +282,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         isFilePath: String, schoolId: String, isFileType: String?
     ) {
         val isCountryId = SharedPreference.getCountryId(this)
-        isAwsUploadingPreSigned!!.getPreSignedUrl(Constant.isPickingFileExtension,
-            isFilePath, schoolId, isFileType!!,
+        isAwsUploadingPreSigned!!.getPreSignedUrl(isFilePath, schoolId, isFileType!!,
             this, isCountryId!!,
             true,
             false,
@@ -339,16 +328,12 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
     fun showSendConfirmationDialog(isMessage: String) {
         val isTextData = Constant.isTextSendingData
 
-        val rootView = findViewById<ViewGroup>(android.R.id.content)
-        val loaderView = LayoutInflater.from(this).inflate(R.layout.lottie_loader, rootView, false)
-
-
-
         AlertDialog.Builder(this)
             .setTitle("Send Confirmation!")
             .setMessage(isMessage)
             .setPositiveButton("Yes") { dialog, _ ->
-                rootView.addView(loaderView)
+                Constant.showLoading(this@SchoolList)
+
                 if (Constant.isClickType == 3) {
                     val jsonObject = ApiCallRequest.isSendText(
                         isAcademicYearId = isAcademicYearId,
@@ -371,5 +356,54 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             }.setNegativeButton("Cancel") { dialog, _ ->
                 dialog.dismiss()
             }.show()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun showConfirmationAlert(isSelectTarget: String, isMessage: String){
+        val isTextData = Constant.isTextSendingData
+
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.alert_popup, null)
+        val builder = AlertDialog.Builder(this)
+        builder.setView(dialogView)
+        val alertDialog = builder.create()
+        alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT)) // Transparent background
+        alertDialog.show()
+        val okButton = dialogView.findViewById<TextView>(R.id.btnOk)
+        val btnCancel = dialogView.findViewById<TextView>(R.id.btnCancel)
+        val alertMessage = dialogView.findViewById<TextView>(R.id.alertMessage)
+        val lblSelectTarget = dialogView.findViewById<TextView>(R.id.lblSelectTarget)
+
+        alertMessage.text = isMessage
+        lblSelectTarget.text = isSelectTarget
+        if (isSelectTarget.equals("")) {
+            lblSelectTarget.visibility = View.GONE
+        }
+        okButton.setOnClickListener {
+            alertDialog.dismiss()
+            Constant.showLoading(this@SchoolList)
+
+            if (Constant.isClickType == 3) {
+                val jsonObject = ApiCallRequest.isSendText(
+                    isAcademicYearId = isAcademicYearId,
+                    schoolId = selectedSchoolIds,
+                    message = isTextData!!.isTitle,
+                    description = isTextData.isContent,
+                    targetType = Constant.isSchool
+                )
+                appViewModel!!.isSendText(isAccessToken!!, jsonObject, this)
+            } else {
+                if (Constant.isVoiceType == 3) {
+                    val isVoiceData = Constant.isVoiceSendingData
+                    voiceSendApi(isVoiceData!!.isAwsUrl)
+                } else {
+                    isFileUploadInAws(
+                        Constant.isVoiceFile!!, isStaffDetails!!.school_id, "audio"
+                    )
+                }
+            }
+        }
+        btnCancel.setOnClickListener {
+            alertDialog.dismiss()
+        }
     }
 }

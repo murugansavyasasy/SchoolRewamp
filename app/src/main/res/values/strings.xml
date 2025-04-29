@@ -207,6 +207,7 @@
     <string name="send_to">Send To :</string>
     <string name="click_the_send_button_to_send_an_important_announcement_from_entier_school">Click the SEND button to send an important announcement from Entier School</string>
     <string name="send">Send</string>
+    <string name="Tap_share_message_everyone_school">Tap "SEND" to share this message with everyone in the school.</string>
     <string name="specific_student">Specific Student</string>
     <string name="admission_no">Admission No</string>
     <string name="role_no">Role No</string>
@@ -310,6 +311,43 @@
     <string name="academic_year">Academic Year</string>
     <string name="search">Search</string>
     <string name="today">Today</string>
+
+    <string name="mark_attendance_instruction">Tap on the <b>\"Punch\"</b> button to record your attendance for the day. A confirmation message will appear once your attendance is successfully marked.</string>
+    <string name="outside_of_the_location">Note : You are outside the institutes boundary. you will not be able to mark your attendance.\n\nPlease try again when you are within the designated area.</string>
+    <string name="mark_attendance">Mark Attendance</string>
+    <string name="your_attendance_details">Your Attendance Details</string>
+    <string name="fetching_location">Fetching Location.!!</string>
+    <string name="allow_location_access_to_mark_your_attendance">Allow location access to mark your attendance!</string>
+    <string name="to_enhance_your_experience_and_provide_accurate_location_based_features_please_enable_gps">To enhance your experience and provide accurate location-based features, please enable GPS.</string>
+    <string name="enable_location">Enable Location</string>
+    <string name="punch">Punch</string>
+    <string name="fingerprint">Fingerprint</string>
+    <string name="add_punch_location">Add punch location</string>
+    <string name="location_add_instructions_attendance">Accurate location settings are crucial for ensuring that attendance is only marked when users are within the designated area of the institute. Please double-check the location before submitting.\n\nOnce saved, this location will be used to verify the proximity of users when they mark their attendance. Ensure that the location is correct as it will directly impact attendance functionality.</string>
+    <string name="pin_your_location_name">Pin your location name *</string>
+    <string name="enter_location_name">Enter location name</string>
+    <string name="drop_your_boundary_location_distance_in_meters">Drop your boundary location distance in meters *</string>
+    <string name="your_address">Your Address *</string>
+    <string name="current_latitude_and_longitude_is">Current latitude and longitude is :</string>
+    <string name="pick_your_location">PICK YOUR LOCATION</string>
+    <string name="tap_to_view_your_existing_punch_locations">Tap to view your existing punch locations.</string>
+    <string name="submit_your_location">SUBMIT YOUR LOCATION</string>
+
+    <string name="fingerprint_authentication">Fingerprint Authentication</string>
+    <string name="please_allow_school_chimes_to_make_use_of_your_fingerprint_authentication_to_enable_seamless_attendance_registration">Please allow School Chimes to make use of your fingerprint authentication to enable seamless attendance registration.</string>
+    <string name="yes_enable_seamless_attendance">Yes. Enable seamless attendance</string>
+    <string name="no_i_ll_continue_with_the_conventional_method">No. I\'ll continue with the conventional method</string>
+    <string name="close">Close</string>
+    <string name="Permission_denied">Permission denied</string>
+
+    <string name="Disable_Fingerprint">Disable Fingerprint !!</string>
+    <string name="disable_fingerprint_authentication">Are you sure you want to disable fingerprint authentication?</string>
+    <string name="Biometric_Authentications">Biometric Authentications</string>
+    <string name="Mark_attendance_biometric_credential">Mark attendance using your biometric credential</string>
+    <string name="cancel">Cancel</string>
+    <string name="biometric_authentications">Biometric authentications</string>
+    <string name="biometric_authentication_is_required_to_present">Biometric authentication is required to present</string>
+    <string name="authenticate_again">Authenticate again</string>
 
 
 </resources>

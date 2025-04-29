@@ -10,9 +10,10 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginTop="10dp">
+        android:layout_marginStart="@dimen/fifteen"
+        android:layout_marginEnd="@dimen/fifteen_sp"
+        android:padding="@dimen/five"
+        android:layout_marginTop="@dimen/five">
 
         <TextView
             android:id="@+id/lblgroupname"
@@ -41,14 +42,15 @@
             android:layout_alignParentEnd="true"
             android:textSize="@dimen/thirteen_sp"
             android:textColor="@color/grey"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="@dimen/ten"
            />
 
         <View
             android:layout_width="match_parent"
             android:layout_below="@+id/lblCreated"
-            android:layout_height="0.5dp"
-            android:background="@color/grey"
+            android:layout_marginTop="@dimen/five"
+            android:layout_height="0.6dp"
+            android:background="@color/grey_mild"
             >
 
         </View>

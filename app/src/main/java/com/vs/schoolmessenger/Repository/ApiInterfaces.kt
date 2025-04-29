@@ -17,11 +17,14 @@ import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsRespo
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
 import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
 import com.vs.schoolmessenger.Parent.Communication.VoiceDataResponse
-import com.vs.schoolmessenger.Parent.Homework.GetHomeworkData
-import com.vs.schoolmessenger.Parent.Homework.HomeworkResponse
+import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
 import com.vs.schoolmessenger.School.Communication.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.VoiceDetails
+import com.vs.schoolmessenger.School.MarkYourAttendance.LocationHistoryResponse
+import com.vs.schoolmessenger.School.MarkYourAttendance.PunchHistoryResponse
+import com.vs.schoolmessenger.School.MarkYourAttendance.StaffAttendanceReportResponse
+import com.vs.schoolmessenger.School.MarkYourAttendance.StaffLocationResponse
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -180,9 +183,6 @@ interface ApiInterfaces {
     ): Call<StatusArchiveResponse>?
 
 
-
-
-
     @POST(APIMethods.isUpdateStatusArchive)
     fun isUpdateStatusArchive(
         @Header("Authorization") token: String,
@@ -204,4 +204,48 @@ interface ApiInterfaces {
 
 
 //    @Body request: StatusArchiveModelRequest
+
+    @POST(APIMethods.punch_giometric_attendance)
+    fun punchGiometricAttendance(
+        @Header(RequestKeys.Authorization) token: String,
+        @Body request: JsonObject
+    ): Call<StatusMessageModel>?
+
+    @POST(APIMethods.add_giometric_location)
+    fun addGiometricLocation(
+        @Header(RequestKeys.Authorization) token: String,
+        @Body request: JsonObject
+    ): Call<StatusMessageModel>?
+
+    @POST(APIMethods.remove_location)
+    fun removeLocation(
+        @Header(RequestKeys.Authorization) token: String,
+        @Body request: JsonObject
+    ): Call<StatusMessageModel>?
+
+    @POST(APIMethods.update_location)
+    fun updateLocation(
+        @Header(RequestKeys.Authorization) token: String,
+        @Body request: JsonObject
+    ): Call<StatusMessageModel>?
+
+    @GET(APIMethods.giometric_location_history)
+    fun getLocationHistory(@Header(RequestKeys.Authorization) token: String): Call<LocationHistoryResponse?>?
+
+    @GET(APIMethods.staff_locations)
+    fun getStaffLocations( @Header(RequestKeys.Authorization) token: String): Call<StaffLocationResponse?>?
+
+    @GET(APIMethods.giometric_staff_attendance_report)
+    fun getStaffAttendanceReport( @Header(RequestKeys.Authorization) token: String): Call<StaffAttendanceReportResponse?>?
+
+    @GET(APIMethods.giometric_principal_attendance_report)
+    fun getStaffWiseAttendanceReport( @Header(RequestKeys.Authorization) token: String): Call<StaffAttendanceReportResponse?>?
+
+    @GET(APIMethods.punch_history)
+    fun getPunchHistory(
+        @Header(RequestKeys.Authorization) token: String,
+        @Query(RequestKeys.from_date) bucket: String?,
+        @Query(RequestKeys.to_date) fileName: String?
+    ): Call<PunchHistoryResponse?>?
+
 }

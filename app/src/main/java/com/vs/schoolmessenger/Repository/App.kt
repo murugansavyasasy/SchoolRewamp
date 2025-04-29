@@ -9,16 +9,17 @@ import com.vs.schoolmessenger.CommonScreens.Ads.AdsResponse
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYearResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
-import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.StaffListResponse
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
 import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
-import com.vs.schoolmessenger.Parent.Communication.VoiceData
 import com.vs.schoolmessenger.Parent.Communication.VoiceDataResponse
-import com.vs.schoolmessenger.Parent.Homework.GetHomeworkData
-import com.vs.schoolmessenger.Parent.Homework.HomeworkResponse
+import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
 import com.vs.schoolmessenger.School.Communication.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.VoiceDetails
+import com.vs.schoolmessenger.School.MarkYourAttendance.LocationHistoryResponse
+import com.vs.schoolmessenger.School.MarkYourAttendance.PunchHistoryResponse
+import com.vs.schoolmessenger.School.MarkYourAttendance.StaffAttendanceReportResponse
+import com.vs.schoolmessenger.School.MarkYourAttendance.StaffLocationResponse
 
 class App(application: Application) : AndroidViewModel(application) {
 
@@ -76,6 +77,15 @@ class App(application: Application) : AndroidViewModel(application) {
     var isHomeWorkDetails: LiveData<GetHomeworkData?>? = null
         private set
 
+    var isPunchAttendance: LiveData<StatusMessageModel?>? = null
+    var isAddLocation: LiveData<StatusMessageModel?>? = null
+    var isRemoveLocation: LiveData<StatusMessageModel?>? = null
+    var isUpdateLocation: LiveData<StatusMessageModel?>? = null
+    var isLocationHistory: LiveData<LocationHistoryResponse?>? = null
+    var isStaffLocations: LiveData<StaffLocationResponse?>? = null
+    var isPunchHistory: LiveData<PunchHistoryResponse?>? = null
+    var isStaffAttendanceReport: LiveData<StaffAttendanceReportResponse?>? = null
+    var isStaffWiseAttendanceReport: LiveData<StaffAttendanceReportResponse?>? = null
 
 
 
@@ -98,6 +108,15 @@ class App(application: Application) : AndroidViewModel(application) {
         isGetAcademicList = apiRepositories!!.isGetAcademicLiveData
         isUpdateStatusCommunication = apiRepositories!!.isUpdateStatusCommunicationLiveData
         isHomeWorkDetails=apiRepositories!!.isHomeWorkDetailsLiveData
+        isPunchAttendance = apiRepositories!!.isPunchAttendanceLiveData
+        isAddLocation = apiRepositories!!.isAddLocationLiveData
+        isRemoveLocation = apiRepositories!!.isRemoveLocationLiveData
+        isUpdateLocation = apiRepositories!!.isUpdateLocationLiveData
+        isLocationHistory = apiRepositories!!.isLocationHistoryLiveData
+        isStaffLocations = apiRepositories!!.isStaffLocationsLiveData
+        isPunchHistory = apiRepositories!!.isPunchHistoryLiveData
+        isStaffAttendanceReport = apiRepositories!!.isGiometricStaffAttendanceReportLiveData
+        isStaffWiseAttendanceReport = apiRepositories!!.isGiometricStaffWiseAttendanceReportLiveData
     }
 
     fun isDashBoardData(isToken: String, isMemberType: String, activity: Activity) {
@@ -173,6 +192,40 @@ class App(application: Application) : AndroidViewModel(application) {
         apiRepositories?.isHomeWorkDetails(isToken, activity)
     }
 
+    fun punchAttendance(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        apiRepositories?.punchAttendance(isToken, jsonObject, activity)
+    }
+
+    fun addLocation(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        apiRepositories?.addLocation(isToken, jsonObject, activity)
+    }
+
+    fun removeLocation(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        apiRepositories?.removeLocation(isToken, jsonObject, activity)
+    }
+
+    fun updateLocation(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        apiRepositories?.updateLocation(isToken, jsonObject, activity)
+    }
+
+    fun getStaffLocations(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        apiRepositories?.getStaffLocations(isToken, activity)
+    }
+
+    fun getPunchHistory(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        apiRepositories?.getPunchHistory(isToken, activity)
+    }
+
+    fun getLocationHistory(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        apiRepositories?.getLocationHistory(isToken, activity)
+    }
+
+    fun getStaffAttendanceReport(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        apiRepositories?.getGiometricStaffAttendancereport(isToken, activity)
+    }
+    fun getStaffWiseAttendanceReport(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        apiRepositories?.getGiometricStaffWiseAttendancereport(isToken, activity)
+    }
 
 
 }

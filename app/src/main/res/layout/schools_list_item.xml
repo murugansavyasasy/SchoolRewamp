@@ -37,9 +37,12 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/fifteen"
             android:layout_centerVertical="true"
-            android:layout_toStartOf="@+id/rytRight"
-            android:layout_toEndOf="@+id/cardSchoolLogo">
+            android:layout_toStartOf="@+id/imgSingleSchoolArrow"
+            android:layout_toEndOf="@+id/chMultipleSchool"
+
+            >
 
             <TextView
                 android:id="@+id/lblSchoolName"
@@ -79,35 +82,25 @@
 
         </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/rytRight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true">
-
-            <ImageView
-                android:id="@+id/imgSingleSchoolArrow"
-                android:layout_width="@dimen/twenty"
-                android:layout_height="@dimen/twenty"
-                android:visibility="gone"
-                android:layout_centerVertical="true"
-                android:src="@drawable/arrow_right_gray" />
-
-
             <CheckBox
                 android:id="@+id/chMultipleSchool"
                 android:layout_width="wrap_content"
-                android:layout_centerVertical="true"
                 android:visibility="visible"
                 style="@style/CustomCheckBox"
+                android:layout_centerVertical="true"
                 android:layout_height="wrap_content">
 
             </CheckBox>
 
+        <ImageView
+            android:id="@+id/imgSingleSchoolArrow"
+            android:layout_width="@dimen/twenty"
+            android:layout_height="@dimen/twenty"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/arrow_right_gray"
+            android:visibility="gone" />
+
 
         </RelativeLayout>
-
-    </RelativeLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

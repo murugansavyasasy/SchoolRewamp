@@ -174,6 +174,13 @@ class SchoolMenuAdapter(
                 Constant.SH_IMPORTANT_INFO -> {
                     imgMenu.setImageResource(R.drawable.importent_info)
                 }
+                Constant.SH_MARK_GEOMETRIC_ATTENDANCE -> {
+                    imgMenu.setImageResource(R.drawable.fee_pending_reports)
+                }
+
+                Constant.SH_STAFF_WISE_GEOMETRIC_ATTENDANCE_REPORT -> {
+                    imgMenu.setImageResource(R.drawable.importent_info)
+                }
             }
 
 

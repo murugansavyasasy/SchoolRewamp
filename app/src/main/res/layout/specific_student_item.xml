@@ -45,7 +45,7 @@
                 android:id="@+id/lblName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Sathish"
+                android:text="sathish             "
                 style="@style/CustomTextStylePoppinsBold"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/thirteen_sp"
@@ -74,22 +74,30 @@
             android:src="@drawable/ic_down_round" />
 
         <!-- Custom Checkbox -->
+<!--        <CheckBox-->
+<!--            android:id="@+id/cbSelect"-->
+<!--            android:layout_width="@dimen/thirty"-->
+<!--            android:layout_height="@dimen/thirty"-->
+<!--            style="@style/CustomCheckBox"-->
+<!--            android:layout_marginEnd="@dimen/fifteen"-->
+<!--            android:button="@drawable/ch_square" />-->
+
         <CheckBox
             android:id="@+id/cbSelect"
-            android:layout_width="@dimen/thirty"
-            android:layout_height="@dimen/thirty"
+            android:layout_width="wrap_content"
             style="@style/CustomCheckBox"
-            android:layout_marginEnd="@dimen/fifteen"
-            android:button="@drawable/ch_square" />
+            android:layout_height="wrap_content" />
+
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="0.3dp"
+        android:layout_height="0.5dp"
         android:layout_below="@+id/lytName"
+        android:layout_marginTop="@dimen/five"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginEnd="@dimen/ten"
-        android:background="@color/light_gray_">
+        android:background="@color/grey_mild">
 
     </View>
 </RelativeLayout>

@@ -9,23 +9,20 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.recyclerview.widget.RecyclerView
-import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
-import com.vs.schoolmessenger.School.Communication.TextHistoryAdapter
-import com.vs.schoolmessenger.School.Communication.TextHistoryAdapter.DataViewHolder.ShimmerViewHolder
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 import com.vs.schoolmessenger.Utils.WaveformSeekBar
-import kotlin.math.max
-import android.view.ViewTreeObserver
-
 
 
 class UnifiedVoiceAdapter(
@@ -107,7 +104,7 @@ class UnifiedVoiceAdapter(
         private val lblDateText: TextView = itemView.findViewById(R.id.lblDateText)
         private val lblTimeText: TextView = itemView.findViewById(R.id.lblTimeText)
         private val rlaVoice: View = itemView.findViewById(R.id.rlaVoice)
-        private val rlaText: View = itemView.findViewById(R.id.rlaText)
+        private val rlaText: RelativeLayout = itemView.findViewById(R.id.rlaText)
         private val imgVoicePlay: ImageView = itemView.findViewById(R.id.imgVoicePlay)
         private val waveformSeekBar: WaveformSeekBar = itemView.findViewById(R.id.waveformSeekBar)
         private val lblnewiconVoice: ImageView = itemView.findViewById(R.id.lblnewiconVoice)
@@ -138,29 +135,27 @@ class UnifiedVoiceAdapter(
             listener: VoiceClickListener,
             adapter: UnifiedVoiceAdapter
         ) {
-            if (data.type.equals("VOICE", ignoreCase = true)) {
+            if (data.type.equals("VOICE")) {
                 rlaVoice.visibility = View.VISIBLE
                 rlaText.visibility = View.GONE
-                lblTitle.text = data.description ?: ""
-                lblDate.text = data.date ?: ""
+
+                lblTitle.text = data.title ?: ""
+                lblDate.text = Constant.convertDateTimeFormat(data.date.toString())
                 lblTime.text = data.time ?: ""
-                lblnewiconVoice.visibility = if (data.is_unread) View.VISIBLE else View.GONE
+                lblnewiconVoice.visibility = if (data.is_unread!!) View.VISIBLE else View.GONE
                 lblnewiconText.visibility = View.GONE
                 rlaSendVoice.visibility = View.GONE
                 lblContentText.text = data.content ?: ""
-                isSeeMoreVisibility(lblContentText, lblSeeMore)
-
 
                 getAudioDuration(data.content ?: "") { duration ->
                     lblEndDuration.text = formatTime(duration)
                 }
 
-
-                lblviewtext.setOnClickListener {
+                lblSeeMore.setOnClickListener {
                     listener.onItemClick(data, this@DataViewHolder)
-                    lblviewtext.visibility = View.GONE
+                    lblSeeMore.visibility = View.GONE
 
-                    if (data.is_archive) {
+                    if (data.is_archive!!) {
                         listener.onUpdateArchiveStatus(data.type, data.id)
                     } else {
                         listener.onUpdateCommunicationStatus(data.type, data.id)
@@ -171,11 +166,13 @@ class UnifiedVoiceAdapter(
                 imgVoicePlay.setOnClickListener {
                     listener.onItemClick(data, this@DataViewHolder)
                     lblnewiconVoice.visibility = View.GONE
-
-                    if (data.is_archive) {
-                        listener.onUpdateArchiveStatus(data.type, data.id)
-                    } else {
-                        listener.onUpdateCommunicationStatus(data.type, data.id)
+                    if (data.is_unread!!) {
+                        if (data.is_archive!!) {
+                            listener.onUpdateArchiveStatus(data.type, data.id)
+                        } else {
+                            listener.onUpdateCommunicationStatus(data.type, data.id)
+                        }
+                        data.is_unread = false
                     }
 
                     if (adapter.currentlyPlayingHolder != null && adapter.currentlyPlayingHolder != this) {
@@ -191,41 +188,66 @@ class UnifiedVoiceAdapter(
                             resumeAudio()
                         }
                     }
-
                     adapter.currentlyPlayingHolder = this
                 }
-
             } else {
                 rlaVoice.visibility = View.GONE
                 rlaText.visibility = View.VISIBLE
-                lblTitleText.text = data.description ?: ""
+                lblTitleText.text = data.title ?: ""
                 lblContentText.text = data.content ?: ""
-                lblDateText.text = data.date ?: ""
+                lblDateText.text = Constant.convertDateTimeFormat(data.date.toString())
                 lblTimeText.text = data.time ?: ""
                 rlaSelectText.visibility = View.GONE
                 rlaSendVoice.visibility = View.GONE
-                lblnewiconText.visibility = if (data.is_unread) View.VISIBLE else View.GONE
-                lblnewiconVoice.visibility = View.GONE
 
-                lblviewtext.visibility = if (data.is_unread) View.VISIBLE else View.GONE
-                lblviewtext.visibility = View.GONE
+//                lblContentText.viewTreeObserver.addOnGlobalLayoutListener(object :
+//                    ViewTreeObserver.OnGlobalLayoutListener {
+//                    override fun onGlobalLayout() {
+//                        lblContentText.viewTreeObserver.removeOnGlobalLayoutListener(this)
+//                        lblnewiconText.visibility =
+//                            if (data.is_unread!!) View.VISIBLE else View.GONE
+//                        lblnewiconVoice.visibility = View.GONE
+//                        lblSeeMore.visibility = if (data.is_unread!!) View.VISIBLE else View.GONE
+//                        lblSeeMore.visibility = View.GONE
+//
+//                        if (lblContentText.lineCount > 3) {
+//                            lblSeeMore.visibility = View.VISIBLE
+//                            lblContentText.maxLines = 3
+//                            lblContentText.ellipsize = TextUtils.TruncateAt.END
+//                            if (data.is_unread!!) {
+//                                lblnewiconText.visibility = View.VISIBLE
+//                            } else {
+//                                lblnewiconText.visibility = View.GONE
+//                            }
+//                        } else {
+//                            if (data.is_unread!!) {
+//                                lblSeeMore.visibility = View.VISIBLE
+//                                lblnewiconText.visibility = View.VISIBLE
+//                            } else {
+//                                lblSeeMore.visibility = View.GONE
+//                                lblnewiconText.visibility = View.GONE
+//                            }
+//                        }
+//                    }
+//                })
 
+                rlaText.setOnClickListener {
+                    isExpanded = !isExpanded
+                    lblviewtext.visibility = View.GONE
+                    lblnewiconText.visibility = View.GONE
+                    lblContentText.maxLines = if (isExpanded) Int.MAX_VALUE else 3
+                    if (data.is_unread!!) {
+                        if (data.is_archive!!) {
+                            listener.onUpdateArchiveStatus(data.type, data.id)
+                        } else {
+                            listener.onUpdateCommunicationStatus(data.type, data.id)
+                        }
+                        data.is_unread=false
+                    }
+                    listener.onItemClick(data, this@DataViewHolder)
+                }
             }
-
-            lblSeeMore.setOnClickListener {
-                isExpanded = !isExpanded
-                updateTextView()
-            }
-
         }
-
-        private fun updateTextView() {
-            lblContentText.maxLines = if (isExpanded) Int.MAX_VALUE else 3
-            lblSeeMore.text = if (isExpanded) "See Less" else "See More"
-        }
-
-
-
 
         private fun initializeMediaPlayer(audioUrl: String) {
             mediaPlayer = MediaPlayer().apply {
@@ -314,21 +336,6 @@ class UnifiedVoiceAdapter(
                 tempMediaPlayer.release()
             }
         }
-
-        private fun isSeeMoreVisibility(lblContent: TextView, tvSeeMore: TextView) {
-//            lblContent.post {
-                if (lblContent.lineCount > 1) {
-                    tvSeeMore.visibility = View.VISIBLE
-                    lblContent.maxLines = 3
-                    lblContent.ellipsize = TextUtils.TruncateAt.END
-                } else {
-                    tvSeeMore.visibility = View.GONE
-                }
-//            }
-        }
-
-
-
     }
 
 

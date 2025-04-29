@@ -4,8 +4,6 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
-
     <RelativeLayout
         android:id="@+id/rytHeader"
         android:layout_width="match_parent"

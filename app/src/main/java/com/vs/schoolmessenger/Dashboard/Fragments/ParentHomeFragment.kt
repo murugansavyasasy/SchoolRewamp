@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import com.bumptech.glide.Glide
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.CommonScreens.Ads.AdItem
@@ -45,7 +46,7 @@ import com.vs.schoolmessenger.databinding.ParentHomeFragmentBinding
 
 class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
-    private lateinit var binding: ParentHomeFragmentBinding // Automatically generated binding class
+    private lateinit var binding: ParentHomeFragmentBinding
     lateinit var isMenuAdapter: ChildMenuAdapter
     private lateinit var aditems: List<AdItem>
     private var isSearchVisible = false
@@ -72,6 +73,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         binding.lblStudentName.text = "Hello, " + childDetails!!.name
         binding.lblSchoolName.text =childDetails!!.school_name
         binding.lblSchoolAddress.text = childDetails!!.student_address
+
 
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel!!.init()
@@ -133,6 +135,29 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     }
 
     private fun isLoadData() {
+        val gridLayoutManager = GridLayoutManager(requireContext(), 3)
+
+//        Constant.executeAfterDelay {
+            val isAdapter = ChildMenuAdapter(
+                requireActivity(), this, isMenuDetails, null, Constant.isShimmerViewDisable
+            )
+//            Log.d("aditems", aditems.size.toString())
+            // Adjust span count again for the updated adapter
+            gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                override fun getSpanSize(position: Int): Int {
+                    return when (isAdapter.getItemViewType(position)) {
+                        2 -> 3 // TYPE_AD: Span across all 3 columns
+                        else -> 1 // Default: 1 span per item
+                    }
+                }
+            }
+            binding.recyclerViewMenus.layoutManager = gridLayoutManager
+            binding.recyclerViewMenus.adapter = isAdapter
+//        }
+    }
+
+    private fun isDashBoardData() {
+
         val adapter =
             ChildMenuAdapter(requireActivity(), this, null, null, Constant.isShimmerViewShow)
         val gridLayoutManager = GridLayoutManager(requireContext(), 3)
@@ -150,26 +175,8 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         binding.recyclerViewMenus.layoutManager = gridLayoutManager
         binding.recyclerViewMenus.adapter = adapter
 
-        Constant.executeAfterDelay {
-            val isAdapter = ChildMenuAdapter(
-                requireActivity(), this, isMenuDetails, null, Constant.isShimmerViewDisable
-            )
-//            Log.d("aditems", aditems.size.toString())
-            // Adjust span count again for the updated adapter
-            gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-                override fun getSpanSize(position: Int): Int {
-                    return when (isAdapter.getItemViewType(position)) {
-                        2 -> 3 // TYPE_AD: Span across all 3 columns
-                        else -> 1 // Default: 1 span per item
-                    }
-                }
-            }
-            binding.recyclerViewMenus.layoutManager = gridLayoutManager
-            binding.recyclerViewMenus.adapter = isAdapter
-        }
-    }
 
-    private fun isDashBoardData() {
+
         Log.d("isToken", childDetails!!.access_token)
         appViewModel!!.isDashBoardData(
             childDetails!!.access_token, "parent", requireActivity()

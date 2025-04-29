@@ -78,7 +78,7 @@
                     android:layout_below="@+id/lblSchoolRegionalName"
                     android:text=""
                     android:textColor="@color/black"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     android:textSize="@dimen/thirteen_sp" />
             </RelativeLayout>
 
