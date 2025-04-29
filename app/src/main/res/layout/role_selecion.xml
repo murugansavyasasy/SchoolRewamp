@@ -142,7 +142,7 @@
         android:layout_centerInParent="true"
         android:layout_marginEnd="@dimen/twenty_five"
         android:background="@drawable/bg_blue"
-        android:layout_marginBottom="@dimen/ten"
+        android:layout_marginBottom="@dimen/thirty"
         android:gravity="center"
         android:text="Proceed"
         android:textColor="@color/white"

@@ -97,6 +97,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         binding.tapStaffs.setOnClickListener(this)
 
 
+
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
         isAwsUploadingPreSigned = AwsUploadingPreSigned()
@@ -359,6 +360,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 binding.tapEntireSchool.visibility = View.GONE
                 binding.tapStandards.visibility = View.GONE
                 binding.tabSectionsStudent.visibility = View.VISIBLE
+                binding.tabLayout.visibility = View.GONE
                 binding.tabGroups.visibility = View.GONE
                 binding.tapStaffs.visibility = View.GONE
                 changeTapBg(Constant.isSection)
