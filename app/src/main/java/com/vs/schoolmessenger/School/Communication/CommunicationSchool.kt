@@ -77,10 +77,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     private lateinit var isTextHistoryData: List<TextDetail>
     private var MAX_RECORDING_TIME = 180
     private val handler = Handler(Looper.getMainLooper())
-
     private var hasRequestedPermissions = false
     private var returnedFromSettings = false
-
     var isEmergency = 0
     var isScheduleCall = false
     private val PICK_AUDIO_REQUEST = 101

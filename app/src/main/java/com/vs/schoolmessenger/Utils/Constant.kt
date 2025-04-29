@@ -29,7 +29,6 @@ import android.widget.FrameLayout
 import android.widget.GridView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
-import com.google.mlkit.common.sdkinternal.CommonUtils.getAppVersion
 import com.vs.schoolmessenger.Auth.Country.Country
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
@@ -42,6 +41,7 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Communication.CommunicationSchool
 import com.vs.schoolmessenger.School.Communication.TextSendingData
 import com.vs.schoolmessenger.School.Communication.VoiceSendingData
+import com.vs.schoolmessenger.School.MarkYourAttendance.MarkYourAttendance
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalTime
@@ -151,6 +151,7 @@ object Constant {
     var staff = "staff"
 
     var isCommunication = "isCommunication"
+    var isGioMetric = "isGioMetric"
 
     var isVoiceFile: String? = null
     var isVoiceSendingData: VoiceSendingData? = null
@@ -398,6 +399,10 @@ object Constant {
                 val intent = Intent(activity, CommunicationSchool::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 activity.startActivity(intent)
+            } else if (isType == isGioMetric) {
+                val intent = Intent(activity, MarkYourAttendance::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                activity.startActivity(intent)
             }
             closePopup()
         }
@@ -568,5 +573,19 @@ object Constant {
         rootView.addView(loaderView)
 
     }
+
+    fun getDateDetails(input: String): Triple<String, Int, String> {
+        val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+        val date = sdf.parse(input) ?: return Triple("", -1, "")
+
+        val calendar = Calendar.getInstance().apply { time = date }
+
+        val month = SimpleDateFormat("MMMM", Locale.getDefault()).format(date) // "April"
+        val day = calendar.get(Calendar.DAY_OF_MONTH) // 29
+        val dayOfWeek = SimpleDateFormat("EEEE", Locale.getDefault()).format(date) // "Tuesday"
+
+        return Triple(month, day, dayOfWeek)
+    }
+
 
 }

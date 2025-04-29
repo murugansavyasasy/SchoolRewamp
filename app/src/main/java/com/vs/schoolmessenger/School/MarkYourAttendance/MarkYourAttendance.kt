@@ -4,7 +4,6 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.ActionBar
 import android.app.AlertDialog
-import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.IntentFilter
@@ -15,6 +14,8 @@ import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.CompoundButton
 import android.widget.ImageView
 import android.widget.PopupWindow
@@ -26,6 +27,7 @@ import androidx.biometric.BiometricPrompt.PromptInfo
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
@@ -35,13 +37,17 @@ import com.vs.schoolmessenger.Utils.GPSStatusReceiver
 import com.vs.schoolmessenger.Utils.LocationHelper
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.MarkYourAttendanceBinding
+import java.util.Calendar
 
 class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
-    View.OnClickListener,GPSStatusListener,LocationLatLongListener {
+    View.OnClickListener, GPSStatusListener, LocationLatLongListener,
+    AttendanceReportClickListener {
 
     override fun getViewBinding(): MarkYourAttendanceBinding {
         return MarkYourAttendanceBinding.inflate(layoutInflater)
     }
+    var isStaffAttendanceReportAdapter: StaffAttendanceReportAdapter? = null
+
     private var appViewModel: App? = null
 
     var ifBiometricAvailable: Boolean = false
@@ -52,7 +58,6 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
     private var authenticatealertpopupWindow: PopupWindow? = null
     private var enableBiometricPopup: PopupWindow? = null
     private var isStaffDetails: StaffDetails? = null
-    private var isStaffLocationData: StaffLocationData? = null
     private var isAccessToken: String? = null
     private var isLatitude: Double? = null
     private var isLongitude: Double? = null
@@ -64,17 +69,13 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
 
         binding.btnEnableLocation.setOnClickListener(this)
         binding.btnPresent.setOnClickListener(this)
-        binding. btnMarkAttendance.setOnClickListener(this)
-        binding.btnAttendanceHistory.setOnClickListener(this)
-        binding.rytAddLocation.setOnClickListener(this)
+        binding.btnCreate.setOnClickListener(this)
+        binding.btnHistory.setOnClickListener(this)
 
-        if (Constant.isBioMetricEnable == 1) {
-            binding.rytAddLocation.visibility = View.VISIBLE
-        } else {
-            binding.rytAddLocation.visibility = View.GONE
-        }
+        binding.toolbarLayout.rytAddLocation.visibility = View.VISIBLE
 
-        appViewModel = ViewModelProvider(this).get(App::class.java)
+
+        appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel?.init()
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
@@ -95,10 +96,16 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
             }
         })
 
+        binding.toolbarLayout.rytAddLocation.setOnClickListener {
+            val intent = Intent(this@MarkYourAttendance, AddLocationActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            startActivity(intent)
+        }
+
         val biometricManager = BiometricManager.from(this)
         when (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG)) {
             BiometricManager.BIOMETRIC_SUCCESS -> {
-                binding.rytEnableFingerPrint.visibility = View.VISIBLE
+//                binding.rytEnableFingerPrint.visibility = View.VISIBLE
                 ifBiometricAvailable = true
 
                 Log.d(
@@ -109,21 +116,21 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
 
             BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> {
                 ifBiometricAvailable = false
-                binding.rytEnableFingerPrint.visibility = View.GONE
+//                binding.rytEnableFingerPrint.visibility = View.GONE
 
                 Log.d("BIOMETRIC_STATUS", "No biometric hardware available on this device")
             }
 
             BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
                 ifBiometricAvailable = false
-                binding.rytEnableFingerPrint.visibility = View.GONE
+//                binding.rytEnableFingerPrint.visibility = View.GONE
 
                 Log.d("BIOMETRIC_STATUS", "Biometric hardware is currently unavailable")
             }
 
             BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
                 ifBiometricAvailable = false
-                binding.rytEnableFingerPrint.visibility = View.GONE
+//                binding.rytEnableFingerPrint.visibility = View.GONE
                 Log.d(
                     "BIOMETRIC_STATUS",
                     "No biometric data enrolled; prompt the user to set up biometrics"
@@ -133,14 +140,86 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
 
         gpsStatusReceiver = GPSStatusReceiver(this)
 
-
         appViewModel!!.isStaffLocations?.observe(this) { response ->
             if (response != null && response.status) {
                 val isStaffLocation = response.data
                 punchHiddenShow(isStaffLocation)
             }
         }
+
+        appViewModel!!.isStaffAttendanceReport?.observe(this) { response ->
+            if (response != null && response.status) {
+                val isStaffReport = response.data
+                isLoadData(isStaffReport)
+            }
+        }
+
+        val years = (2025 downTo 2001).map { it.toString() }
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, years)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spinnerYears.adapter = adapter
+        binding.spinnerYears.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                val selectedYear = parent.getItemAtPosition(position).toString()
+                isLoadMonth(selectedYear)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+            }
+        }
     }
+
+    private fun isLoadData(isStaffReport: List<StaffAttendanceReportData>) {
+        if (isStaffReport.isNotEmpty()) {
+            Constant.executeAfterDelay {
+
+                isStaffAttendanceReportAdapter =
+                    StaffAttendanceReportAdapter(
+                        isStaffReport,
+                        this,
+                        this,
+                        Constant.isShimmerViewDisable
+                    )
+                binding.recycleAttendanceReports.adapter = isStaffAttendanceReportAdapter
+            }
+        } else {
+            binding.recycleAttendanceReports.visibility = View.GONE
+        }
+    }
+
+    fun isLoadMonth(selectedYear: String) {
+        val months = listOf(
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        )
+        val monthAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, months)
+        monthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        binding.spinnerMonths.adapter = monthAdapter
+
+        val currentMonthIndex = Calendar.getInstance().get(Calendar.MONTH)
+        binding.spinnerMonths.setSelection(currentMonthIndex)
+
+        binding.spinnerMonths.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                val selectedMonthNumber = String.format("%02d", position + 1)
+                getStaffAttendanceReport(selectedYear, selectedMonthNumber)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
+    }
+
 
     @SuppressLint("UnspecifiedRegisterReceiverFlag")
     override fun onResume() {
@@ -188,6 +267,18 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
     fun isGetGeoMetricStaffLocations() {
         isAccessToken?.let {
             appViewModel?.getStaffLocations(it, this)
+        }
+    }
+
+    fun getStaffAttendanceReport(selectedYear: String, selectedMonth: String) {
+        binding.recycleAttendanceReports.visibility = View.VISIBLE
+        isStaffAttendanceReportAdapter =
+            StaffAttendanceReportAdapter(null, this, this, Constant.isShimmerViewShow)
+        binding.recycleAttendanceReports.layoutManager = LinearLayoutManager(this)
+        binding.recycleAttendanceReports.adapter = isStaffAttendanceReportAdapter
+
+        isAccessToken?.let {
+            appViewModel?.getStaffAttendanceReport(it, "$selectedYear-$selectedMonth", this)
         }
     }
 
@@ -323,18 +414,38 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
                 enableBiometric()
             }
 
-            R.id.btnMarkAttendance -> {
-
-            }
-            R.id.btnAttendanceHistory -> {
-
-            }
             R.id.rytAddLocation -> {
 
             }
 
+            R.id.btnHistory -> {
+                isBackgroundChange(binding.btnHistory)
+            }
+
+            R.id.btnCreate -> {
+                isBackgroundChange(binding.btnCreate)
+            }
         }
     }
+
+    private fun isBackgroundChange(btnClick: TextView) {
+        binding.btnCreate.background = null
+        binding.btnHistory.background = null
+
+        binding.lnrParent.setBackgroundResource(R.drawable.bg_light_blue)
+        btnClick.setBackgroundResource(R.drawable.white_bg_radius)
+
+        if (btnClick == binding.btnCreate) {
+            binding.rytMarkAttendanceSceen.visibility = View.VISIBLE
+            binding.rytAttendanceHistorySceen.visibility = View.GONE
+        }
+
+        if (btnClick == binding.btnHistory) {
+            binding.rytMarkAttendanceSceen.visibility = View.GONE
+            binding.rytAttendanceHistorySceen.visibility = View.VISIBLE
+        }
+    }
+
 
     private fun enableBiometric() {
         val isEnab = SharedPreference.getBiometricEnabled(this@MarkYourAttendance)
@@ -402,7 +513,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
 
     private fun againAuthenticatePopup() {
 
-        val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val inflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val layout = inflater.inflate(R.layout.authenticate_alert_popup, null)
 
         val authenticateAlertPopupWindow = PopupWindow(
@@ -424,7 +535,6 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
 
     private fun redirectToEnableGPS() {
         this@MarkYourAttendance.startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
-
     }
 
     override fun onGPSStatusChanged(isGPSEnabled: Boolean) {
@@ -476,5 +586,9 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
             binding.lblErrorMessage.visibility = View.VISIBLE
             binding.rytPresentlayout.visibility = View.GONE
         }
+    }
+
+    override fun onItemClick(data: StaffAttendanceReportData) {
+
     }
 }

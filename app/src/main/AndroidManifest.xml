@@ -75,7 +75,6 @@
             </intent-filter>
         </activity>
 
-        <!-- Register broadcast receiver -->
         <receiver
             android:name=".Utils.MySMSBroadcastReceiver"
             android:exported="true">
@@ -84,12 +83,9 @@
             </intent-filter>
         </receiver>
 
-        <activity
-            android:name=".CommonScreens.SelectRecipient.RecipientActivity"
-            android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize">
-
-        </activity>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAZ5wb8hjNzcJv1roqNb09QFchIiELVSK4" />
 
         <activity
             android:name=".Parent.ExamMarks.ExamMarkResults"
@@ -99,9 +95,19 @@
         </activity>
 
         <activity
-            android:name=".CommonScreens.SelectRecipient.RecipientActivity"
+            android:name=".School.MarkYourAttendance.AddLocationActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
+
+
+
+        <activity
+            android:name=".CommonScreens.SelectRecipient.RecipientActivity"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize"
+            tools:ignore="DuplicateActivity">
 
         </activity>
 

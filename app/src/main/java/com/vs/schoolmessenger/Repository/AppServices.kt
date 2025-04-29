@@ -857,8 +857,8 @@ class AppServices {
         get() = isPunchHistory
 
 
-    fun getGiometricStaffAttendancereport(isToken:String, activity: Activity) {
-        RestClient.apiInterfaces.getStaffAttendanceReport(isToken)
+    fun getGiometricStaffAttendancereport(isToken:String, attendance_dt: String, activity: Activity) {
+        RestClient.apiInterfaces.getStaffAttendanceReport(isToken,attendance_dt)
             ?.enqueue(object : Callback<StaffAttendanceReportResponse?> {
                 override fun onResponse(
                     call: Call<StaffAttendanceReportResponse?>,

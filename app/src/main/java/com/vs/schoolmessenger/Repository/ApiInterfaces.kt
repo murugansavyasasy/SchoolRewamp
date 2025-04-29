@@ -227,7 +227,9 @@ interface ApiInterfaces {
     fun getStaffLocations( @Header(RequestKeys.Authorization) token: String): Call<StaffLocationResponse?>?
 
     @GET(APIMethods.giometric_staff_attendance_report)
-    fun getStaffAttendanceReport( @Header(RequestKeys.Authorization) token: String): Call<StaffAttendanceReportResponse?>?
+    fun getStaffAttendanceReport(
+        @Header(RequestKeys.Authorization) token: String, @Query("attendance_dt") isAttendanceDt: String?,
+    ): Call<StaffAttendanceReportResponse?>?
 
     @GET(APIMethods.giometric_principal_attendance_report)
     fun getStaffWiseAttendanceReport( @Header(RequestKeys.Authorization) token: String): Call<StaffAttendanceReportResponse?>?

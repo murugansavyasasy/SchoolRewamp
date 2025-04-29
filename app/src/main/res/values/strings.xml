@@ -325,8 +325,10 @@
     <string name="enter_location_name">Enter location name</string>
     <string name="drop_your_boundary_location_distance_in_meters">Drop your boundary location distance in meters *</string>
     <string name="your_address">Your Address *</string>
+    <string name="check_radius">Check-in Radious*</string>
     <string name="current_latitude_and_longitude_is">Current latitude and longitude is :</string>
     <string name="pick_your_location">PICK YOUR LOCATION</string>
+    <string name="get_your_location">Get your location*</string>
     <string name="tap_to_view_your_existing_punch_locations">Tap to view your existing punch locations.</string>
     <string name="submit_your_location">SUBMIT YOUR LOCATION</string>
 

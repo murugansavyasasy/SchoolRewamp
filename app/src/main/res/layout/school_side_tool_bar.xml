@@ -76,6 +76,42 @@
 
         </RelativeLayout>
 
+        <LinearLayout
+            android:id="@+id/rytAddLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:visibility="gone"
+            android:orientation="horizontal"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/ten">
+
+            <TextView
+                android:id="@+id/lblAddLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add location"
+                style="@style/Base.CardView"
+                android:layout_marginEnd="@dimen/five"
+                android:textColor="@color/navi_blue3"
+                android:textSize="@dimen/thirteen_sp">
+
+            </TextView>
+
+            <ImageView
+                android:id="@+id/imgAddLocation"
+                android:layout_width="@dimen/twenty"
+                android:layout_height="@dimen/twenty"
+               android:src="@drawable/ic_plus">
+
+            </ImageView>
+
+
+
+
+        </LinearLayout>
+
+
     </RelativeLayout>
 
     <LinearLayout
