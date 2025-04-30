@@ -78,6 +78,7 @@ class AppServices {
         isUpdateStatusCommunication = MutableLiveData()
         isHomeWorkDetails = MutableLiveData()
 
+
         isPunchAttendance = MutableLiveData()
         isAddLocation = MutableLiveData()
         isRemoveLocation = MutableLiveData()
@@ -907,74 +908,82 @@ class AppServices {
 
     fun getGiometricStaffAttendancereport(isToken: String, activity: Activity) {
         RestClient.apiInterfaces.getStaffAttendanceReport(isToken)
-            ?.enqueue(object : Callback<StaffAttendanceReportResponse?> {
-                override fun onResponse(
-                    call: Call<StaffAttendanceReportResponse?>,
-                    response: Response<StaffAttendanceReportResponse?>
-                ) {
-                    Log.d(
-                        "staff_attendance_report",
-                        response.code().toString() + " - " + response.toString()
-                    )
-                    if (response.code() == 200) {
-                        if (response.body() != null) {
-                            val status = response.body()!!.status
-                            if (status) {
-                                isStaffAttendanceReport.postValue(response.body())
-                            } else {
-                                isStaffAttendanceReport.postValue(response.body())
+        fun getGiometricStaffAttendancereport(
+            isToken: String,
+            attendance_dt: String,
+            activity: Activity
+        ) {
+            RestClient.apiInterfaces.getStaffAttendanceReport(isToken, attendance_dt)
+                ?.enqueue(object : Callback<StaffAttendanceReportResponse?> {
+                    override fun onResponse(
+                        call: Call<StaffAttendanceReportResponse?>,
+                        response: Response<StaffAttendanceReportResponse?>
+                    ) {
+                        Log.d(
+                            "staff_attendance_report",
+                            response.code().toString() + " - " + response.toString()
+                        )
+                        if (response.code() == 200) {
+                            if (response.body() != null) {
+                                val status = response.body()!!.status
+                                if (status) {
+                                    isStaffAttendanceReport.postValue(response.body())
+                                } else {
+                                    isStaffAttendanceReport.postValue(response.body())
+                                }
                             }
                         }
                     }
-                }
 
-                override fun onFailure(
-                    call: Call<StaffAttendanceReportResponse?>,
-                    t: Throwable
-                ) {
-                    isStaffAttendanceReport.postValue(null)
-                    t.printStackTrace()
-                }
-            })
+                    override fun onFailure(
+                        call: Call<StaffAttendanceReportResponse?>,
+                        t: Throwable
+                    ) {
+                        isStaffAttendanceReport.postValue(null)
+                        t.printStackTrace()
+                    }
+                })
+        }
     }
 
-    val isGiometricStaffAttendanceReportLiveData: LiveData<StaffAttendanceReportResponse?>
+        val isGiometricStaffAttendanceReportLiveData: LiveData<StaffAttendanceReportResponse?>
         get() = isStaffAttendanceReport
 
 
-    fun getGiometricStaffWiseAttendancereport(isToken: String, activity: Activity) {
-        RestClient.apiInterfaces.getStaffWiseAttendanceReport(isToken)
-            ?.enqueue(object : Callback<StaffAttendanceReportResponse?> {
-                override fun onResponse(
-                    call: Call<StaffAttendanceReportResponse?>,
-                    response: Response<StaffAttendanceReportResponse?>
-                ) {
-                    Log.d(
-                        "staffwise_attendance_report",
-                        response.code().toString() + " - " + response.toString()
-                    )
-                    if (response.code() == 200) {
-                        if (response.body() != null) {
-                            val status = response.body()!!.status
-                            if (status) {
-                                isStaffWiseAttendanceReport.postValue(response.body())
-                            } else {
-                                isStaffWiseAttendanceReport.postValue(response.body())
+        fun getGiometricStaffWiseAttendancereport(isToken: String, activity: Activity) {
+            RestClient.apiInterfaces.getStaffWiseAttendanceReport(isToken)
+                ?.enqueue(object : Callback<StaffAttendanceReportResponse?> {
+                    override fun onResponse(
+                        call: Call<StaffAttendanceReportResponse?>,
+                        response: Response<StaffAttendanceReportResponse?>
+                    ) {
+                        Log.d(
+                            "staffwise_attendance_report",
+                            response.code().toString() + " - " + response.toString()
+                        )
+                        if (response.code() == 200) {
+                            if (response.body() != null) {
+                                val status = response.body()!!.status
+                                if (status) {
+                                    isStaffWiseAttendanceReport.postValue(response.body())
+                                } else {
+                                    isStaffWiseAttendanceReport.postValue(response.body())
+                                }
                             }
                         }
                     }
-                }
 
-                override fun onFailure(
-                    call: Call<StaffAttendanceReportResponse?>,
-                    t: Throwable
-                ) {
-                    isStaffWiseAttendanceReport.postValue(null)
-                    t.printStackTrace()
-                }
-            })
-    }
+                    override fun onFailure(
+                        call: Call<StaffAttendanceReportResponse?>,
+                        t: Throwable
+                    ) {
+                        isStaffWiseAttendanceReport.postValue(null)
+                        t.printStackTrace()
+                    }
+                })
+        }
 
-    val isGiometricStaffWiseAttendanceReportLiveData: LiveData<StaffAttendanceReportResponse?>
+        val isGiometricStaffWiseAttendanceReportLiveData: LiveData<StaffAttendanceReportResponse?>
         get() = isStaffWiseAttendanceReport
+
 }

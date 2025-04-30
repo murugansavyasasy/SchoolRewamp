@@ -75,12 +75,17 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".CommonScreens.SelectRecipient.RecipientActivity"
-            android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize">
+        <receiver
+            android:name=".Utils.MySMSBroadcastReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.android.gms.auth.api.phone.SMS_RETRIEVED" />
+            </intent-filter>
+        </receiver>
 
-        </activity>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAZ5wb8hjNzcJv1roqNb09QFchIiELVSK4" />
 
         <activity
             android:name=".Parent.ExamMarks.ExamMarkResults"
@@ -89,12 +94,26 @@
 
         </activity>
 
+
 <!--        <activity-->
 <!--            android:name=".CommonScreens.SelectRecipient.RecipientActivity"-->
 <!--            android:theme="@style/AppTheme"-->
 <!--            android:windowSoftInputMode="adjustPan|adjustResize">-->
+        <activity
+            android:name=".School.MarkYourAttendance.AddLocationActivity"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize">
+        </activity>
 
-<!--        </activity>-->
+
+
+        <activity
+            android:name=".CommonScreens.SelectRecipient.RecipientActivity"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize"
+            tools:ignore="DuplicateActivity">
+
+        </activity>
 
         <activity
             android:name=".Parent.QuizExam.QuizExam"
@@ -472,7 +491,7 @@
 
         <activity
 
-            android:name=".Parent.Communication.Communication"
+            android:name=".Parent.Communication.CommunicationParent"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize">
 

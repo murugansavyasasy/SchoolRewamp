@@ -22,6 +22,8 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.CommonScreens.ImagePickingData
 import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
+import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
+import com.vs.schoolmessenger.CommonScreens.SpecificStudentData.SpecificStudent
 import com.vs.schoolmessenger.CommonScreens.WebView
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
@@ -78,6 +80,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
         binding.lblDatePick.setOnClickListener(this)
         binding.btnCreate.setOnClickListener(this)
         binding.btnHistory.setOnClickListener(this)
+        binding.btnChooseRecipient.setOnClickListener(this)
 
 
         imageList = mutableListOf(
@@ -87,11 +90,9 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
             ImagePickingData(R.drawable.image_file),
             ImagePickingData(R.drawable.pause_icon)
         )
-
         // Set up RecyclerView with a GridLayoutManager
         binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
         binding.rcyImages.adapter = ImagePickingAdapter(imageList, this, this)
-
     }
 
     override fun onClick(v: View?) {
@@ -138,6 +139,10 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
                 loadData()
             }
 
+            R.id.btnChooseRecipient -> {
+                RedirectToSectionStudents()
+            }
+
         }
     }
 
@@ -149,6 +154,11 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
 // -----------------------
     private fun canAddMoreFiles(): Boolean {
         return imageList.size < 5
+    }
+
+    private fun RedirectToSectionStudents() {
+        val intent = Intent(this@HomeWork, RecipientActivity::class.java)
+        startActivity(intent)
     }
 
     private fun showBottomDialog() {
@@ -279,8 +289,11 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
 
         }
 
+
         isClickingId.background = ContextCompat.getDrawable(this, R.drawable.white_bg_radius)
         isClickingId.setTextColor(ContextCompat.getColor(this, R.color.dark_blue))
+        isClickingId.background = ContextCompat.getDrawable(this, R.drawable.custom_bg_blue)
+        isClickingId.setTextColor(ContextCompat.getColor(this, R.color.white))
 
     }
 

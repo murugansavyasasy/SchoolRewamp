@@ -25,26 +25,26 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.ApiCallRequest
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.Constant.M_ABSENTEES_REPORT
+import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
+import com.vs.schoolmessenger.Utils.Constant.M_ATTACHMENTS
+import com.vs.schoolmessenger.Utils.Constant.M_ATTENDANCE_MARKING
+import com.vs.schoolmessenger.Utils.Constant.M_COMMUNICATION
+import com.vs.schoolmessenger.Utils.Constant.M_DAILY_COLLECTION
+import com.vs.schoolmessenger.Utils.Constant.M_EVENTS_HOLIDAYS
+import com.vs.schoolmessenger.Utils.Constant.M_FEE_PENDING_REPORT
+import com.vs.schoolmessenger.Utils.Constant.M_HOMEWORK
+import com.vs.schoolmessenger.Utils.Constant.M_LESSON_PLAN
+import com.vs.schoolmessenger.Utils.Constant.M_MARK_YOUR_ATTENDANCE
+import com.vs.schoolmessenger.Utils.Constant.M_MESSAGES_FROM_MANAGEMENT
+import com.vs.schoolmessenger.Utils.Constant.M_NOTICEBOARD
+import com.vs.schoolmessenger.Utils.Constant.M_ONLINE_MEETING
+import com.vs.schoolmessenger.Utils.Constant.M_PTM
+import com.vs.schoolmessenger.Utils.Constant.M_SCHEDULE_EXAM_TEST
+import com.vs.schoolmessenger.Utils.Constant.M_SCHOOL_STRENGTH
+import com.vs.schoolmessenger.Utils.Constant.M_STAFF_WISE_ATTENDANCE_REPORT
+import com.vs.schoolmessenger.Utils.Constant.M_STUDENT_REPORT
 import com.vs.schoolmessenger.Utils.Constant.SELECTED_SCHOOL_MENU
-import com.vs.schoolmessenger.Utils.Constant.SH_ABSENTEEISM_REPORT
-import com.vs.schoolmessenger.Utils.Constant.SH_ASSIGNMENT
-import com.vs.schoolmessenger.Utils.Constant.SH_ATTACHMENTS
-import com.vs.schoolmessenger.Utils.Constant.SH_ATTENDANCE_MARKING
-import com.vs.schoolmessenger.Utils.Constant.SH_COMMUNICATION
-import com.vs.schoolmessenger.Utils.Constant.SH_DAILY_COLLECTION
-import com.vs.schoolmessenger.Utils.Constant.SH_EVENTS
-import com.vs.schoolmessenger.Utils.Constant.SH_FEE_PENDING_REPORT
-import com.vs.schoolmessenger.Utils.Constant.SH_HOMEWORK
-import com.vs.schoolmessenger.Utils.Constant.SH_LESSON_PLAN
-import com.vs.schoolmessenger.Utils.Constant.SH_MARK_GEOMETRIC_ATTENDANCE
-import com.vs.schoolmessenger.Utils.Constant.SH_MESSAGES_FROM_MANAGEMENT
-import com.vs.schoolmessenger.Utils.Constant.SH_NOTICE_BOARD
-import com.vs.schoolmessenger.Utils.Constant.SH_ONLINE_MEETING
-import com.vs.schoolmessenger.Utils.Constant.SH_PTM
-import com.vs.schoolmessenger.Utils.Constant.SH_SCHEDULE_EXAM_TEST
-import com.vs.schoolmessenger.Utils.Constant.SH_SCHOOL_STRENGTH
-import com.vs.schoolmessenger.Utils.Constant.SH_STAFF_WISE_GEOMETRIC_ATTENDANCE_REPORT
-import com.vs.schoolmessenger.Utils.Constant.SH_STUDENT_REPORT
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SchoolListActivityBinding
 
@@ -62,7 +62,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
     private var isUserDetails: UserDetails? = null
-    private var isStaffDetails: StaffDetails? = null
+    private var isStaffData: StaffDetails? = null
     var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
 
     var isAcademicYear: List<AcademicYear>? = null
@@ -80,15 +80,15 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
 
-        isStaffDetails = SharedPreference.getStaffDetails(this)
-        isAccessToken = isStaffDetails!!.access_token
+        isStaffData = SharedPreference.getStaffDetails(this)
+        isAccessToken = isStaffData!!.access_token
 
         isAwsUploadingPreSigned = AwsUploadingPreSigned()
 
         isUserDetails = SharedPreference.getUserDetails(this)
 
-        if(SELECTED_SCHOOL_MENU  == SH_COMMUNICATION || SELECTED_SCHOOL_MENU == SH_NOTICE_BOARD || SELECTED_SCHOOL_MENU == SH_ATTACHMENTS || SELECTED_SCHOOL_MENU == SH_SCHEDULE_EXAM_TEST || SELECTED_SCHOOL_MENU == SH_EVENTS
-            || SELECTED_SCHOOL_MENU == SH_ONLINE_MEETING) {
+        if(SELECTED_SCHOOL_MENU  == M_COMMUNICATION || SELECTED_SCHOOL_MENU == M_NOTICEBOARD || SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_SCHEDULE_EXAM_TEST || SELECTED_SCHOOL_MENU == M_EVENTS_HOLIDAYS
+            || SELECTED_SCHOOL_MENU == M_ONLINE_MEETING) {
             isMultipleSchool  = false
             if (Constant.isEmergencyVoiceNoticeBoard!!) {
                 binding.lnrTab.visibility = View.GONE
@@ -139,7 +139,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             mAdapter = SchoolListAdapter(
                 isMultipleSchool,
                 selectedSchoolIds,
-                Constant.isStaffDetails,
+                isUserDetails!!.staff_details,
                 this,
                 this,
                 Constant.isShimmerViewDisable
@@ -232,47 +232,48 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
 
     override fun onItemClick(data: StaffDetails) {
 
-        if(SELECTED_SCHOOL_MENU == SH_COMMUNICATION || SELECTED_SCHOOL_MENU == SH_ATTACHMENTS || SELECTED_SCHOOL_MENU == SH_HOMEWORK || SELECTED_SCHOOL_MENU == SH_ASSIGNMENT || SELECTED_SCHOOL_MENU == SH_ONLINE_MEETING
-            || SELECTED_SCHOOL_MENU == SH_EVENTS || SELECTED_SCHOOL_MENU == SH_SCHEDULE_EXAM_TEST) {
+        if(SELECTED_SCHOOL_MENU == M_COMMUNICATION || SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == M_ASSIGNMENT || SELECTED_SCHOOL_MENU == M_ONLINE_MEETING
+            || SELECTED_SCHOOL_MENU == M_EVENTS_HOLIDAYS || SELECTED_SCHOOL_MENU == M_SCHEDULE_EXAM_TEST) {
             val intent = Intent(this, RecipientActivity::class.java)
             SharedPreference.putStaffDetails(this, data)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             startActivity(intent)
         }
         else{
 
-            if(SELECTED_SCHOOL_MENU == SH_ATTENDANCE_MARKING){
+            if(SELECTED_SCHOOL_MENU == M_ATTENDANCE_MARKING){
                 //go to attendance marking screen
             }
-            else if(SELECTED_SCHOOL_MENU == SH_ABSENTEEISM_REPORT){
+            else if(SELECTED_SCHOOL_MENU == M_ABSENTEES_REPORT){
                 //go to absenteeism report screen
 
             }
-            else if(SELECTED_SCHOOL_MENU == SH_SCHOOL_STRENGTH){
+            else if(SELECTED_SCHOOL_MENU == M_SCHOOL_STRENGTH){
                 //go to school strength  screen
             }
 
-            else if(SELECTED_SCHOOL_MENU == SH_MESSAGES_FROM_MANAGEMENT){
+            else if(SELECTED_SCHOOL_MENU == M_MESSAGES_FROM_MANAGEMENT){
                 //go to messages from management  screen
             }
-            else if(SELECTED_SCHOOL_MENU == SH_DAILY_COLLECTION){
+            else if(SELECTED_SCHOOL_MENU == M_DAILY_COLLECTION){
                 //go to daily collection screen
             }
-            else if(SELECTED_SCHOOL_MENU == SH_STUDENT_REPORT){
+            else if(SELECTED_SCHOOL_MENU == M_STUDENT_REPORT){
                 //go to student report screen
             }
-            else if(SELECTED_SCHOOL_MENU == SH_LESSON_PLAN){
+            else if(SELECTED_SCHOOL_MENU == M_LESSON_PLAN){
                 //go to lesson plan screen
             }
-            else if(SELECTED_SCHOOL_MENU == SH_FEE_PENDING_REPORT){
+            else if(SELECTED_SCHOOL_MENU == M_FEE_PENDING_REPORT){
                 //go to fee pending report screen
             }
-            else if(SELECTED_SCHOOL_MENU == SH_MARK_GEOMETRIC_ATTENDANCE){
+            else if(SELECTED_SCHOOL_MENU == M_MARK_YOUR_ATTENDANCE){
                 //go to mark gio metric attendance screen
             }
-            else if(SELECTED_SCHOOL_MENU == SH_STAFF_WISE_GEOMETRIC_ATTENDANCE_REPORT){
+            else if(SELECTED_SCHOOL_MENU == M_STAFF_WISE_ATTENDANCE_REPORT){
                 //go to staff wise gio metric attendanc report screen
             }
-            else if(SELECTED_SCHOOL_MENU == SH_PTM){
+            else if(SELECTED_SCHOOL_MENU == M_PTM){
                 //go to ptm  screen
             }
         }
@@ -349,7 +350,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                         voiceSendApi(isVoiceData!!.isAwsUrl)
                     } else {
                         isFileUploadInAws(
-                            Constant.isVoiceFile!!, isStaffDetails!!.school_id, "audio"
+                            Constant.isVoiceFile!!, isStaffData!!.school_id, "audio"
                         )
                     }
                 }
@@ -397,7 +398,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                     voiceSendApi(isVoiceData!!.isAwsUrl)
                 } else {
                     isFileUploadInAws(
-                        Constant.isVoiceFile!!, isStaffDetails!!.school_id, "audio"
+                        Constant.isVoiceFile!!, isStaffData!!.school_id, "audio"
                     )
                 }
             }

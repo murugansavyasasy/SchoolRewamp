@@ -13,10 +13,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import com.bumptech.glide.Glide
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.CommonScreens.Ads.AdItem
+import com.vs.schoolmessenger.CommonScreens.Ads.AdsDisplayOptions
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.ContactDetails
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardData
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuClickListener
@@ -26,7 +26,7 @@ import com.vs.schoolmessenger.Dashboard.Settings.Notification.Notification
 import com.vs.schoolmessenger.Parent.Assignment.Assignment
 import com.vs.schoolmessenger.Parent.Attendance.AttendanceReport
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificateRequest
-import com.vs.schoolmessenger.Parent.Communication.Communication
+import com.vs.schoolmessenger.Parent.Communication.CommunicationParent
 import com.vs.schoolmessenger.Parent.EventsHolidays.Event
 import com.vs.schoolmessenger.Parent.FeeDetails.FeeDetails
 import com.vs.schoolmessenger.Parent.Homework.HomeWork
@@ -56,6 +56,8 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     var isDashBoardData: List<DashboardData>? = null
     var isContactDetails: ContactDetails? = null
     var isMenuDetails: List<MenuDetail>? = null
+    var isAdItem: List<AdItem>? = null
+    var isAdsDisplayOptions: AdsDisplayOptions? = null
 
 
     @SuppressLint("ClickableViewAccessibility", "SetTextI18n")
@@ -73,7 +75,8 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         binding.lblStudentName.text = "Hello, " + childDetails!!.name
         binding.lblSchoolName.text =childDetails!!.school_name
         binding.lblSchoolAddress.text = childDetails!!.student_address
-
+        binding.lblChangeRoll.paintFlags =
+            binding.lblChangeRoll.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel!!.init()
@@ -126,7 +129,29 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     isContactDetails = isDashBoardData!![0].contactDetails
                     isMenuDetails = isDashBoardData!![0].menuDetails
                     Log.d("isMenuDetails", isMenuDetails!!.size.toString())
-                    isLoadData()
+                    isGetAds()
+                }
+            }
+        }
+
+        appViewModel!!.isGetAds?.observe(requireActivity()) { response ->
+            if (response != null) {
+                val status = response.status
+                response.message
+                if (status) {
+                    isAdItem = response.data
+
+                    if (status) {
+                        val filteredAds = response.data.filter { it.id != null }
+                        isAdsDisplayOptions = isAdItem!![0].ads_display_options
+                        val adList: List<AdItem> = filteredAds.map { ad ->
+                            AdItem(
+                                ad.id!!, ad.name ?: "", ad.content_url ?: "", ad.redirect_url ?: ""
+                            )
+                        }
+                        isAdItem = adList
+                        isLoadData()
+                    }
                 }
             }
         }
@@ -139,7 +164,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
 //        Constant.executeAfterDelay {
             val isAdapter = ChildMenuAdapter(
-                requireActivity(), this, isMenuDetails, null, Constant.isShimmerViewDisable
+                requireActivity(), this, isMenuDetails, isAdItem, Constant.isShimmerViewDisable
             )
 //            Log.d("aditems", aditems.size.toString())
             // Adjust span count again for the updated adapter
@@ -223,10 +248,13 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         }
     }
 
+    private fun isGetAds() {
+        activity?.let { safeActivity ->
+            appViewModel?.isGetAds(childDetails!!.access_token, "102", safeActivity)
+        }
+    }
+
     override fun onResume() {
-
-
-
         super.onResume()
     }
 
@@ -238,24 +266,24 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     override fun onClick(data: MenuDetail) {
         val intent = when (data.id) {
 
-            Constant.STU_COMMUNICATION -> Intent(requireActivity(), Communication::class.java)
-            Constant.STU_HOMEWORK -> Intent(requireActivity(), HomeWork::class.java)
-            Constant.STU_EXAM -> Intent(requireActivity(), Exam::class.java)
-            Constant.STU_NOTICEBOARD -> Intent(requireActivity(), NoticeBoard::class.java)
-            Constant.STU_EVENTS -> Intent(requireActivity(), Event::class.java)
-            Constant.STU_ATTENDANCE_REPORT -> Intent(requireActivity(), AttendanceReport::class.java)
-            Constant.STU_LEAVE_REQUEST -> Intent(requireActivity(), LeaveRequest::class.java)
-            Constant.STU_FEE_DETAILS -> Intent(requireActivity(), FeeDetails::class.java)
-            Constant.STU_INTERACTION_WITH_STAFF -> Intent(requireActivity(), InteractionWithStaff::class.java)
+            Constant.M_COMMUNICATION -> Intent(requireActivity(), CommunicationParent::class.java)
+            Constant.M_HOMEWORK -> Intent(requireActivity(), HomeWork::class.java)
+            Constant.M_EXAM -> Intent(requireActivity(), Exam::class.java)
+            Constant.M_NOTICEBOARD -> Intent(requireActivity(), NoticeBoard::class.java)
+            Constant.M_EVENTS_HOLIDAYS -> Intent(requireActivity(), Event::class.java)
+            Constant.M_ATTENDANCE_REPORT -> Intent(requireActivity(), AttendanceReport::class.java)
+            Constant.M_LEAVE_REQUEST -> Intent(requireActivity(), LeaveRequest::class.java)
+            Constant.M_FEE_DETAILS -> Intent(requireActivity(), FeeDetails::class.java)
+            Constant.M_INTERACTION_WITH_STAFF -> Intent(requireActivity(), InteractionWithStaff::class.java)
 //            15 -> Intent(requireActivity(), OnlineTextBook::class.java)
-            Constant.STU_ASSIGNMENT -> Intent(requireActivity(), Assignment::class.java)
+            Constant.M_ASSIGNMENT -> Intent(requireActivity(), Assignment::class.java)
 //            19 -> Intent(requireActivity(), Attachments::class.java)
-            Constant.STU_ONLINE_MEETING -> Intent(requireActivity(), OnlineMeeting::class.java)
-            Constant.STU_QUIZ -> Intent(requireActivity(), Quiz::class.java)
-            Constant.STU_LSRW -> Intent(requireActivity(), LSRW::class.java)
-            Constant.STU_TIME_TABLE -> Intent(requireActivity(), TimeTable::class.java)
+            Constant.M_ONLINE_MEETING -> Intent(requireActivity(), OnlineMeeting::class.java)
+            Constant.M_QUIZ_EXAM -> Intent(requireActivity(), Quiz::class.java)
+            Constant.M_LSRW -> Intent(requireActivity(), LSRW::class.java)
+            Constant.M_CLASS_TIME_TABLE -> Intent(requireActivity(), TimeTable::class.java)
 //            24 -> Intent(requireActivity(), UserProfile::class.java)
-            Constant.STU_CERTIFICATE_REQUEST -> Intent(requireActivity(), CertificateRequest::class.java)
+            Constant.M_CERTIFICATE_REQUEST -> Intent(requireActivity(), CertificateRequest::class.java)
             else -> null
         }
         intent?.let { requireActivity().startActivity(it) }

@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rytParent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".School.MarkYourAttendance.AddLocationActivity"
-    tools:ignore="MissingDefaultResource">
-
+    android:background="@color/white">
 
     <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <RelativeLayout
         android:id="@+id/rytGPSRedirect"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -86,7 +87,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="15dp"
-        android:background="@drawable/bg_shadow_radious"
         android:visibility="visible">
 
         <ImageView
@@ -145,26 +145,35 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
+                    <ImageView
+                        android:id="@+id/imgBack"
+                        android:layout_width="@dimen/twenty"
+                        android:layout_height="@dimen/twenty"
+                        android:src="@drawable/arrow_back_black">
+
+                    </ImageView>
+
                     <TextView
                         android:id="@+id/lblNote"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_toEndOf="@+id/imgBack"
                         android:text="Important Note"
                         android:textColor="@color/bpBlue"
-                        android:textSize="15dp"
-                        android:textStyle="normal" />
+                        android:textSize="15dp" />
 
                     <TextView
-                        android:layout_marginTop="5dp"
+                        style="@style/CustomTextStylePoppinsMedium"
                         android:layout_below="@+id/lblNote"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="start"
                         android:text="@string/location_add_instructions_attendance"
                         android:textColor="@color/black"
-                        android:textSize="13dp"
-                        android:textStyle="normal" />
+                        android:layout_marginTop="@dimen/ten"
+                        android:textSize="@dimen/thirteen_sp" />
 
                 </RelativeLayout>
 
@@ -173,19 +182,22 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:text="@string/pin_your_location_name"
+                    style="@style/CustomTextStylePoppinsBold"
                     android:textColor="@color/black"
                     android:textSize="15dp"
-                    android:textStyle="bold" />
+                    android:text="@string/enter_location_name" />
 
                 <EditText
                     android:id="@+id/txtLocationName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ten"
                     android:layout_marginStart="10dp"
+                    android:background="@drawable/outline_gray"
+                    android:padding="@dimen/eight"
                     android:hint="@string/enter_location_name"
                     android:inputType="text"
-                    android:textColorHint="@color/grey_light"
+                    android:textColorHint="@color/jumbo"
                     android:textSize="15dp" />
 
                 <TextView
@@ -193,23 +205,24 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="@string/drop_your_boundary_location_distance_in_meters"
+                    style="@style/CustomTextStylePoppinsBold"
                     android:textColor="@color/black"
                     android:textSize="15dp"
-                    android:textStyle="bold" />
+                    android:text="@string/check_radius" />
 
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp">
+                    android:layout_height="@dimen/fourty"
+                    android:layout_marginStart="@dimen/ten"
+                    android:layout_marginTop="@dimen/five"
+                    android:background="@drawable/outline_gray">
 
 
                     <RelativeLayout
                         android:id="@+id/rytSpinnertMetres"
-                        android:layout_width="130dp"
-                        android:layout_height="45dp"
+                        android:layout_width="@dimen/hundred"
+                        android:layout_height="match_parent"
                         android:layout_centerVertical="true"
                         android:background="@drawable/bg_spinner_rect">
 
@@ -240,9 +253,10 @@
                     <EditText
                         android:id="@+id/txtMeters"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="10dp"
+                        android:layout_toStartOf="@+id/lblMeter"
                         android:layout_toEndOf="@+id/rytSpinnertMetres"
                         android:hint=""
                         android:inputType="number"
@@ -250,14 +264,74 @@
                         android:textColorHint="@color/grey_light"
                         android:textSize="15dp" />
 
+
+                    <TextView
+                        android:id="@+id/lblMeter"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="@dimen/ten"
+                        android:gravity="center"
+                        android:text="Meters"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/fifteen_sp">
+
+                    </TextView>
+
                 </RelativeLayout>
+
+
+                <TextView
+                    android:id="@+id/lblGetLocation"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="30dp"
+                    android:text="@string/get_your_location"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:visibility="visible" />
+
+                <androidx.fragment.app.FragmentContainerView
+                    android:id="@+id/mapFragment"
+                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/one_fifty" />
+
+                <TextView
+
+                    android:id="@+id/btnViewLocations"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/rect_blue_and_green_small_radious"
+                    android:gravity="center"
+                    android:text="@string/tap_to_view_your_existing_punch_locations"
+                    android:textColor="@color/white"
+                    android:textSize="15dp"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/btnPickLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="30dp"
+                    android:gravity="center"
+                    android:text="@string/pick_your_location"
+                    android:textColor="@color/white"
+                    android:textSize="15dp"
+                    android:visibility="gone" />
+
 
                 <LinearLayout
                     android:id="@+id/lnrAddressLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <TextView
                         android:id="@+id/lblAddressTitle"
@@ -287,6 +361,7 @@
                         android:text="@string/current_latitude_and_longitude_is"
                         android:textColor="@color/black"
                         android:textSize="15dp"
+                        android:visibility="gone"
                         android:textStyle="bold" />
 
                     <TextView
@@ -295,6 +370,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:text=""
+                        android:visibility="gone"
                         android:textColor="@color/black"
                         android:textSize="15dp"
                         android:textStyle="normal" />
@@ -303,38 +379,15 @@
 
 
                 <TextView
-                    android:id="@+id/btnPickLocation"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="30dp"
-                    android:background="@drawable/bg_rect_location"
-                    android:gravity="center"
-                    android:text="@string/pick_your_location"
-                    android:textColor="@color/white"
-                    android:textSize="15dp"
-                    android:visibility="gone" />
-
-
-                <TextView
-
-                    android:id="@+id/btnViewLocations"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:gravity="center"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/tap_to_view_your_existing_punch_locations"
-                    android:textSize="15dp"
-                    android:textColor="@color/clr_month_blue"/>
-
-                <TextView
                     android:id="@+id/btnAddLocation"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginTop="20dp"
-                    android:background="@drawable/bg_rect_location"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:background="@drawable/rect_blue_and_green_small_radious"
                     android:gravity="center"
-                    android:text="@string/submit_your_location"
+                    android:text="SAVE"
+                    android:visibility="visible"
                     android:textColor="@color/white"
                     android:textSize="15dp" />
 
@@ -344,5 +397,7 @@
         </ScrollView>
 
     </FrameLayout>
+    </RelativeLayout>
 
-</RelativeLayout>
+
+</ScrollView>

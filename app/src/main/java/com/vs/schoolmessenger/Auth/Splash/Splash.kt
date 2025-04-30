@@ -34,6 +34,7 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.Auth
 import com.vs.schoolmessenger.Repository.RequestKeys
 import com.vs.schoolmessenger.Repository.RestClient
+import com.vs.schoolmessenger.Utils.AppSignatureHelper
 import com.vs.schoolmessenger.Utils.ChangeLanguage
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -82,6 +83,13 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
 
         appUpdateManager = AppUpdateManagerFactory.create(this)
 
+        val appSignatureHelper = AppSignatureHelper(this)
+        val appSignatures = appSignatureHelper.getAppSignatures()
+
+        for (signature in appSignatures) {
+            Log.d("AppHash", signature)
+        }
+
 //        val biometricManager = BiometricManager.from(this)
 //        when (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG)) {
 //            BiometricManager.BIOMETRIC_SUCCESS -> {
@@ -125,7 +133,6 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
                         startActivity(intent)
                     }
                     // }
-
                 } else {
                     Log.e("Network Error", "No Internet Connection")
                 }

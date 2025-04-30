@@ -7,38 +7,46 @@
     android:layout_height="match_parent"
     tools:context=".School.MarkYourAttendance.MarkYourAttendance">
 
+    <include
+        android:id="@+id/toolbarLayout"
+        layout="@layout/school_side_tool_bar" />
+
     <LinearLayout
-        android:id="@+id/rytTap"
+        android:id="@+id/lnrParent"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_margin="10dp"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbarLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="@dimen/ten"
+        android:layout_marginStart="@dimen/fifteen"
+        android:layout_marginTop="@dimen/fifteen"
+        android:layout_marginEnd="@dimen/fifteen"
+        android:background="@drawable/bg_light_blue"
+        android:padding="@dimen/one">
 
         <TextView
-            android:id="@+id/btnMarkAttendance"
-            android:layout_width="0dp"
+            android:id="@+id/btnCreate"
+            style="@style/CustomTextStylePoppinsMedium"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/rect_btn_blue"
+            android:layout_width="match_parent"
             android:gravity="center"
-            android:text="@string/mark_attendance"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="14dp" />
-
-        <TextView
-            android:id="@+id/btnAttendanceHistory"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
-            android:layout_weight="1"
-            android:background="@drawable/bg_stroke_rect_black"
-            android:gravity="center"
-            android:text="@string/your_attendance_details"
-            android:textAlignment="center"
+            android:background="@drawable/white_bg_radius"
+            android:text="Punch In"
             android:textColor="@color/black"
-            android:textSize="14dp" />
+            android:textSize="@dimen/thirteen_sp" />
 
+        <TextView
+            android:id="@+id/btnHistory"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:padding="@dimen/eight"
+            android:text="@string/Reports"
+            android:textColor="@color/dark_blue"
+            android:textSize="@dimen/thirteen_sp" />
 
     </LinearLayout>
 
@@ -80,8 +88,7 @@
         android:id="@+id/rytMarkAttendanceSceen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/rytAddLocation"
-        android:layout_below="@+id/rytTap">
+        android:layout_below="@+id/lnrParent">
 
 
         <RelativeLayout
@@ -97,7 +104,7 @@
                 android:id="@+id/imgLocationIllustrate"
                 android:layout_width="wrap_content"
                 android:layout_height="150dp"
-                android:src="@drawable/password_illustrate" />
+                android:src="@drawable/geometric" />
 
 
             <TextView
@@ -180,7 +187,7 @@
                 android:layout_height="200dp"
                 android:layout_below="@+id/lblInstruction"
                 android:paddingHorizontal="20dp"
-                android:src="@drawable/password_illustrate" />
+                android:src="@drawable/geometric" />
 
 
             <TextView
@@ -191,7 +198,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginHorizontal="50dp"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/bg_green_gradient"
+                android:background="@drawable/rect_blue_light_radious"
                 android:padding="10dp"
                 android:text="@string/punch"
                 android:textAlignment="center"
@@ -234,14 +241,13 @@
 
     </RelativeLayout>
 
-
     <RelativeLayout
         android:id="@+id/rytAttendanceHistorySceen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/rytTap"
+        android:layout_below="@+id/lnrParent"
+        android:layout_marginTop="@dimen/fifteen"
         android:visibility="gone">
-
 
         <LinearLayout
             android:id="@+id/lnrSpinners"
@@ -252,60 +258,54 @@
 
             <RelativeLayout
                 android:id="@+id/rytYears"
-                android:layout_width="130dp"
-                android:layout_height="40dp"
-                android:background="@drawable/bg_spinner_rect">
+                android:layout_width="@dimen/one_fifty"
+                android:layout_height="@dimen/fifty"
+                android:layout_marginStart="@dimen/thirty"
+                android:background="@drawable/rect_shadow_white"
+                android:gravity="center">
 
                 <Spinner
                     android:id="@+id/spinnerYears"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_gravity="center"
-                    android:layout_toStartOf="@+id/imgYearDropDown"
                     android:background="@android:color/transparent"
-                    android:gravity="start"
-                    android:paddingStart="10dp"
                     android:spinnerMode="dropdown" />
 
                 <ImageView
                     android:id="@+id/imgYearDropDown"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:layout_gravity="center"
+                    android:layout_toEndOf="@+id/spinnerYears"
                     android:src="@drawable/ic_drop_down" />
 
             </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/rytMonths"
-                android:layout_width="140dp"
-                android:layout_height="40dp"
-                android:layout_marginStart="5dp"
-                android:layout_toEndOf="@+id/rytYears"
-                android:background="@drawable/bg_spinner_rect">
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/fifty"
+                android:layout_marginStart="@dimen/five"
+                android:layout_marginEnd="@dimen/thirty"
+                android:background="@drawable/rect_shadow_white"
+                android:gravity="center">
 
                 <Spinner
                     android:id="@+id/spinnerMonths"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="@dimen/hundred"
+                    android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_gravity="center"
-                    android:layout_toStartOf="@+id/imgMonthDropDown"
+                    android:gravity="center"
                     android:background="@android:color/transparent"
-                    android:gravity="start"
-                    android:paddingStart="10dp"
                     android:spinnerMode="dropdown" />
 
                 <ImageView
                     android:id="@+id/imgMonthDropDown"
                     android:layout_width="30dp"
+                    android:layout_toEndOf="@+id/spinnerMonths"
                     android:layout_height="30dp"
-                    android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:layout_gravity="center"
                     android:src="@drawable/ic_drop_down" />
 
             </RelativeLayout>
@@ -314,12 +314,12 @@
 
         <RelativeLayout
             android:layout_below="@+id/lnrSpinners"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycleAttendanceReports"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
                 tools:listitem="@layout/giometric_attendance_report_item_list" />
@@ -338,48 +338,5 @@
         </RelativeLayout>
 
     </RelativeLayout>
-
-
-    <RelativeLayout
-        android:id="@+id/rytAddLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="15dp"
-        android:visibility="gone">
-
-
-        <RelativeLayout
-            android:id="@+id/rytAdd"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:layout_marginEnd="30dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:background="@drawable/bg_circle_add_location">
-
-            <ImageView
-                android:id="@+id/imgAdd"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/ic_add_symbol" />
-
-        </RelativeLayout>
-
-        <TextView
-            android:layout_marginTop="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_below="@+id/rytAdd"
-            android:text="@string/add_punch_location"
-            android:textColor="@color/black"
-            android:textSize="15dp"/>
-
-    </RelativeLayout>
-
 
 </RelativeLayout>

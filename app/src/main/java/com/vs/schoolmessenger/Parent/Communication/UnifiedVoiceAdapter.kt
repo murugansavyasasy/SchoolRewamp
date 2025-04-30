@@ -4,12 +4,10 @@ import android.content.Context
 import android.media.MediaPlayer
 import android.os.Handler
 import android.os.Looper
-import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -108,7 +106,6 @@ class UnifiedVoiceAdapter(
         private val imgVoicePlay: ImageView = itemView.findViewById(R.id.imgVoicePlay)
         private val waveformSeekBar: WaveformSeekBar = itemView.findViewById(R.id.waveformSeekBar)
         private val lblnewiconVoice: ImageView = itemView.findViewById(R.id.lblnewiconVoice)
-        private val lblviewtext: TextView = itemView.findViewById(R.id.lblviewtext)
         private val lblnewiconText: ImageView = itemView.findViewById(R.id.lblnewiconText)
         private val rlaSendVoice: View = itemView.findViewById(R.id.rlaSendVoice)
         private val rlaSelectText: View = itemView.findViewById(R.id.rlaSelectText)
@@ -154,7 +151,6 @@ class UnifiedVoiceAdapter(
                 lblSeeMore.setOnClickListener {
                     listener.onItemClick(data, this@DataViewHolder)
                     lblSeeMore.visibility = View.GONE
-
                     if (data.is_archive!!) {
                         listener.onUpdateArchiveStatus(data.type, data.id)
                     } else {
@@ -200,40 +196,16 @@ class UnifiedVoiceAdapter(
                 rlaSelectText.visibility = View.GONE
                 rlaSendVoice.visibility = View.GONE
 
-//                lblContentText.viewTreeObserver.addOnGlobalLayoutListener(object :
-//                    ViewTreeObserver.OnGlobalLayoutListener {
-//                    override fun onGlobalLayout() {
-//                        lblContentText.viewTreeObserver.removeOnGlobalLayoutListener(this)
-//                        lblnewiconText.visibility =
-//                            if (data.is_unread!!) View.VISIBLE else View.GONE
-//                        lblnewiconVoice.visibility = View.GONE
-//                        lblSeeMore.visibility = if (data.is_unread!!) View.VISIBLE else View.GONE
-//                        lblSeeMore.visibility = View.GONE
-//
-//                        if (lblContentText.lineCount > 3) {
-//                            lblSeeMore.visibility = View.VISIBLE
-//                            lblContentText.maxLines = 3
-//                            lblContentText.ellipsize = TextUtils.TruncateAt.END
-//                            if (data.is_unread!!) {
-//                                lblnewiconText.visibility = View.VISIBLE
-//                            } else {
-//                                lblnewiconText.visibility = View.GONE
-//                            }
-//                        } else {
-//                            if (data.is_unread!!) {
-//                                lblSeeMore.visibility = View.VISIBLE
-//                                lblnewiconText.visibility = View.VISIBLE
-//                            } else {
-//                                lblSeeMore.visibility = View.GONE
-//                                lblnewiconText.visibility = View.GONE
-//                            }
-//                        }
-//                    }
-//                })
+                Log.d("data.is_unread!!", data.is_unread!!.toString())
+                if (data.is_unread!!) {
+                    lblnewiconText.visibility = View.VISIBLE
+                } else {
+                    lblnewiconText.visibility = View.GONE
+                }
 
                 rlaText.setOnClickListener {
                     isExpanded = !isExpanded
-                    lblviewtext.visibility = View.GONE
+                    lblSeeMore.visibility = View.GONE
                     lblnewiconText.visibility = View.GONE
                     lblContentText.maxLines = if (isExpanded) Int.MAX_VALUE else 3
                     if (data.is_unread!!) {
@@ -242,7 +214,7 @@ class UnifiedVoiceAdapter(
                         } else {
                             listener.onUpdateCommunicationStatus(data.type, data.id)
                         }
-                        data.is_unread=false
+                          data.is_unread=false
                     }
                     listener.onItemClick(data, this@DataViewHolder)
                 }

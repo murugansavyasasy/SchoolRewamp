@@ -107,78 +107,76 @@ class SchoolMenuAdapter(
             lblMenuName.text = data.name
 
             when (data.id) {
-                Constant.SH_COMMUNICATION -> {
+                Constant.M_COMMUNICATION -> {
                     imgMenu.setImageResource(R.drawable.communication_icon_dashboard)
                 }
 
-                Constant.SH_ASSIGNMENT -> {
+                Constant.M_ASSIGNMENT -> {
                     imgMenu.setImageResource(R.drawable.assignment_icon_school)
                 }
 
-                Constant.SH_HOMEWORK-> {
+                Constant.M_HOMEWORK-> {
                     imgMenu.setImageResource(R.drawable.home_work_icon_school)
                 }
 
-                Constant.SH_ATTENDANCE_MARKING -> {
+                Constant.M_ATTENDANCE_MARKING -> {
                     imgMenu.setImageResource(R.drawable.attendance_marking)
                 }
 
-                Constant.SH_ABSENTEEISM_REPORT -> {
+                Constant.M_ABSENTEES_REPORT -> {
                     imgMenu.setImageResource(R.drawable.absentees_report)
                 }
 
-                Constant.SH_SCHOOL_STRENGTH -> {
+                Constant.M_SCHOOL_STRENGTH -> {
                     imgMenu.setImageResource(R.drawable.school_strength)
                 }
 
-                Constant.SH_NOTICE_BOARD -> {
+                Constant.M_NOTICEBOARD -> {
                     imgMenu.setImageResource(R.drawable.noticeboard_icon)
                 }
 
-                Constant.SH_EVENTS -> {
+                Constant.M_EVENTS_HOLIDAYS -> {
                     imgMenu.setImageResource(R.drawable.event_icon_school)
                 }
 
-                Constant.SH_SCHEDULE_EXAM_TEST -> {
+                Constant.M_SCHEDULE_EXAM_TEST -> {
                     imgMenu.setImageResource(R.drawable.exam_icon)
                 }
 
-                Constant.SH_MESSAGES_FROM_MANAGEMENT -> {
+                Constant.M_MESSAGES_FROM_MANAGEMENT -> {
                     imgMenu.setImageResource(R.drawable.message_f_management)
                 }
 
-                Constant.SH_CONFERENCE_CALL_WITH_TEACHERS -> {
-                    imgMenu.setImageResource(R.drawable.interact_with_student)
-                }
 
-                Constant.SH_ONLINE_MEETING -> {
+
+                Constant.M_ONLINE_MEETING -> {
                     imgMenu.setImageResource(R.drawable.online_meeting_icon)
                 }
 
-                Constant.SH_DAILY_COLLECTION -> {
+                Constant.M_DAILY_COLLECTION -> {
                     imgMenu.setImageResource(R.drawable.daily_collection)
                 }
 
-                Constant.SH_STUDENT_REPORT -> {
+                Constant.M_STUDENT_REPORT -> {
                     imgMenu.setImageResource(R.drawable.student_report)
                 }
 
-                Constant.SH_LESSON_PLAN -> {
+                Constant.M_LESSON_PLAN -> {
                     imgMenu.setImageResource(R.drawable.lesson_plan)
                 }
 
-                Constant.SH_FEEDBACK -> {
+                Constant.M_FEEDBACK -> {
                     imgMenu.setImageResource(R.drawable.fee_pending_reports)
                 }
 
-                Constant.SH_IMPORTANT_INFO -> {
+                Constant.M_VERY_IMPORTANT_INFO -> {
                     imgMenu.setImageResource(R.drawable.importent_info)
                 }
-                Constant.SH_MARK_GEOMETRIC_ATTENDANCE -> {
+                Constant.M_MARK_YOUR_ATTENDANCE -> {
                     imgMenu.setImageResource(R.drawable.fee_pending_reports)
                 }
 
-                Constant.SH_STAFF_WISE_GEOMETRIC_ATTENDANCE_REPORT -> {
+                Constant.M_STAFF_WISE_ATTENDANCE_REPORT -> {
                     imgMenu.setImageResource(R.drawable.importent_info)
                 }
             }
@@ -191,33 +189,6 @@ class SchoolMenuAdapter(
             }
         }
     }
-
-//    fun toggleMoreItems(lblSeeMore: TextView, rlaMenuExample: LinearLayout) {
-//        if (isSeeMore) {
-//            lblSeeMore.text = context.getString(R.string.SeeAll)
-//            rlaMenuExample.visibility = View.GONE
-//            val startPosition = itemList!!.size - seeMoreMenus
-////            itemList!!.subList(startPosition, itemList!!.size).clear()
-//            notifyItemRangeRemoved(startPosition, seeMoreMenus)
-//            seeMoreMenus = 0
-//        } else {
-//            rlaMenuExample.visibility = View.GONE
-//            lblSeeMore.text = context.getString(R.string.SeeLess)
-//            val moreItems = getMoreItems()
-//            seeMoreMenus = moreItems.size
-//            val startPosition = itemList!!.size
-////            itemList!!.addAll(moreItems)
-//            notifyItemRangeInserted(startPosition, seeMoreMenus)
-//        }
-//        isSeeMore = !isSeeMore
-//    }
-
-//    fun toggleMoreItems() {
-//        seeMoreMenus = 0
-//        val moreItems = getMenu()
-//        seeMoreMenus = moreItems.size
-////        itemList!!.addAll(moreItems)
-//    }
 
     class AdViewHolder(itemView: View, private val adapter: SchoolMenuAdapter) :
         RecyclerView.ViewHolder(itemView) {
@@ -242,141 +213,7 @@ class SchoolMenuAdapter(
             recyclerView.layoutManager = layoutManager
             recyclerView.adapter = AdImageAdapter(isAds)
             rlaMenuExample.visibility = View.GONE
-
-//            lblSeeMore.setOnClickListener {
-//                adapter.toggleMoreItems(lblSeeMore, rlaMenuExample)
-//            }
-
-//            lnrAssignment.setOnClickListener {
-//                context.startActivity(Intent(context, Assignment::class.java))
-//            }
-//            lnrLeaveRequest.setOnClickListener {
-//                context.startActivity(
-//                    Intent(
-//                        context, LeaveRequests::class.java
-//                    )
-//                )
-//            }
-//            lnrHomeWork.setOnClickListener {
-//                context.startActivity(
-//                    Intent(
-//                        context, com.vs.schoolmessenger.Parent.Homework.HomeWork::class.java
-//                    )
-//                )
-//            }
-
-//            runAutoScrollBanner(images)
-//            if (isFirstTime) {
-//                isFirstTime = false
-//                setupDots(images.size, context)
-//            } else {
-//                setupDots(images.size + 1, context)
-//            }
-
-//            recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-//                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-//                    super.onScrollStateChanged(recyclerView, newState)
-//                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-//                        if (isFirstTime) {
-//                            isFirstTime = false
-//                            position =
-//                                layoutManager.findFirstCompletelyVisibleItemPosition() % images.size + 1
-//                        } else {
-//                            position =
-//                                layoutManager.findFirstCompletelyVisibleItemPosition() % images.size
-//                        }
-//                        updateDots(position)
-//                    }
-//                }
-//            })
-//
-//            // Delay the auto-scroll for better user experience (start scrolling after 2 seconds)
-//            handler.postDelayed({ runAutoScrollBanner(images) }, 3000)
-//
-//            recyclerView.setOnTouchListener { _, event ->
-//                when (event.action) {
-//                    MotionEvent.ACTION_DOWN -> {
-//                        isTouching = true
-//                        stopAutoScrollBanner()
-//                    }
-//
-//                    MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
-//                        isTouching = false
-//                        handler.postDelayed({ if (!isTouching) runAutoScrollBanner(images) }, 500)
-//                    }
-//                }
-//                false
-//            }
-//
-//            adapter.toggleMoreItems()
         }
-
-//        private fun setupDots(count: Int, context: Context) {
-//            dotContainer.removeAllViews()
-//            for (i in 0 until count) {
-//                val dot = ImageView(context).apply {
-//                    setImageResource(if (i == position) R.drawable.active_dot else R.drawable.inactive_dot)
-//                    val params = LinearLayout.LayoutParams(20, 20)
-//                    params.setMargins(8, 0, 8, 0)
-//                    layoutParams = params
-//                }
-//                dotContainer.addView(dot)
-//            }
-//        }
-
-//        private fun updateDots(activePosition: Int) {
-//            for (i in 0 until dotContainer.childCount) {
-//                val dot = dotContainer.getChildAt(i) as ImageView
-//                dot.setImageResource(if (i == activePosition) R.drawable.active_dot else R.drawable.inactive_dot)
-//            }
-//        }
-
-//        private fun stopAutoScrollBanner() {
-//            timerTask?.cancel()
-//            timer?.cancel()
-//            timer = null
-//            timerTask = null
-//            position = layoutManager.findFirstCompletelyVisibleItemPosition()
-//        }
-
-//        private fun runAutoScrollBanner(images: List<AdItem>) {
-//            if (timer == null && timerTask == null) {
-//                timer = Timer()
-//                timerTask = object : TimerTask() {
-//                    override fun run() {
-//                        handler.post {
-//                            position++
-//                            if (isFirstTime) {
-//                                isFirstTime = false
-//                                recyclerView.smoothScrollToPosition(position % images.size + 1) // Loop within the list size
-//                            } else {
-//                                recyclerView.smoothScrollToPosition(position % images.size) // Loop within the list size
-//                            }
-//                        }
-//                    }
-//                }
-//                timer?.schedule(timerTask, 3000, 3000)
-//            }
-//        }
-//        private fun runAutoScrollBanner(images: List<AdItem>) {
-//            if (timer == null && timerTask == null) {
-//                timer = Timer()
-//                timerTask = object : TimerTask() {
-//                    override fun run() {
-//                        handler.post {
-//                            position++
-//                            if (isFirstTime) {
-//                                isFirstTime = false
-//                                recyclerView.smoothScrollToPosition(position % images.size + 1) // Loop within the list size
-//                            } else {
-//                                recyclerView.smoothScrollToPosition(position % images.size) // Loop within the list size
-//                            }
-//                        }
-//                    }
-//                }
-//                timer?.schedule(timerTask, 3000, 3000)
-//            }
-//        }
     }
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

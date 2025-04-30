@@ -1,7 +1,11 @@
 package com.vs.schoolmessenger.Auth.OTP
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Paint
+import android.os.Build
 import android.os.CountDownTimer
 import android.text.Editable
 import android.text.TextWatcher
@@ -10,6 +14,7 @@ import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.JsonObject
@@ -23,8 +28,11 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.Auth
 import com.vs.schoolmessenger.Repository.RequestKeys
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.MySMSBroadcastReceiver
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.OtpScreenBinding
+import com.google.android.gms.auth.api.phone.SmsRetriever
+
 
 class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
 
@@ -35,7 +43,10 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
     }
 
     var authViewModel: Auth? = null
+    private lateinit var smsBroadcastReceiver: MySMSBroadcastReceiver
 
+
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
         // Access a specific view using its ID
@@ -45,15 +56,11 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
         binding.btnNext.setOnClickListener(this)
         binding.lblContactUs.setOnClickListener(this)
 
-
+        startSmsRetriever()
         authViewModel = ViewModelProvider(this).get(Auth::class.java)
         authViewModel!!.init()
-
         isOtpTitleLoad()
         binding.lblContactUs.paintFlags = binding.lblContactUs.paintFlags or Paint.UNDERLINE_TEXT_FLAG
-
-
-
         authViewModel!!.isOtpResponse?.observe(this) { response ->
             if (response != null) {
                 val status = response.status
@@ -145,6 +152,65 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
         setOtpInputListener(binding.txtOtp6, null, binding.txtOtp5)
 
         startOtpTimer()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    @SuppressLint("UnspecifiedRegisterReceiverFlag")
+    override fun onResume() {
+        super.onResume()
+        smsBroadcastReceiver = MySMSBroadcastReceiver().apply {
+            otpListener = { otp ->
+                runOnUiThread {
+                    Log.d("YOUR OTP" ,otp)
+                    otp.forEachIndexed { index, char ->
+                        when (index){
+                            0 -> {
+                                binding.txtOtp1.setText(char.toString())
+                            }
+                            1 -> {
+                                binding.txtOtp2.setText(char.toString())
+                            }
+                            2 -> {
+                                binding.txtOtp3.setText(char.toString())
+                            }
+                            3 -> {
+                                binding.txtOtp4.setText(char.toString())
+                            }
+                            4 -> {
+                                binding.txtOtp5.setText(char.toString())
+                            }
+                            5 -> {
+                                binding.txtOtp6.setText(char.toString())
+                            }
+                            }
+
+                    }
+                    isOtpValidate(otp)
+                }
+            }
+        }
+
+        smsBroadcastReceiver = MySMSBroadcastReceiver()
+        val filter = IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION)
+        registerReceiver(smsBroadcastReceiver, filter,RECEIVER_NOT_EXPORTED)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        unregisterReceiver(smsBroadcastReceiver)
+    }
+
+    private fun startSmsRetriever() {
+        val client = SmsRetriever.getClient(this)
+        val task = client.startSmsRetriever()
+
+        task.addOnSuccessListener {
+            Log.d("OTP", "SMS Retriever started")
+        }
+
+        task.addOnFailureListener {
+            Log.e("OTP", "Failed to start SMS Retriever")
+        }
     }
 
     private fun isOtpValidate(isOpt: String) {

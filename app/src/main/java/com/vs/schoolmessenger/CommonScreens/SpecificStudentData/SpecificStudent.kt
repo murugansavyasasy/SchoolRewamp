@@ -43,7 +43,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
     var isCurrentAcademicYear = false
     var isAcademicYear: String? = null
     var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
-    private var isStudentList: List<NameAndIds> = listOf() // full list for filtering
+    private var isStudentList: List<NameAndIds> = listOf()
 
 
 
@@ -107,7 +107,9 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
 
 
         binding.toolbarLayout.txtSearch.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {}
+            override fun afterTextChanged(s: Editable?) {
+
+            }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
@@ -305,12 +307,12 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
 
                     if (Constant.isClickType == 3) {
                         showSendConfirmationDialog(
-                            "Selected target : " + selectedIds.size.toString() +" Student (S)",
+                            "Selected target : " + selectedIds.size.toString() +" Student (s)",
                             isAcademicYearNote.toString()
                         )
                     } else {
                         showSendConfirmationDialog(
-                            "Selected target : " + selectedIds.size.toString()+" Student (S)",
+                            "Selected target : " + selectedIds.size.toString()+" Student (s)",
                             isAcademicYearNote.toString()
                         )
                     }

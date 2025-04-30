@@ -2,13 +2,22 @@ package com.vs.schoolmessenger.Dashboard.Combination
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.util.Log
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.widget.PopupWindow
+import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Auth.CreateResetChangePassword.PasswordGeneration
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.Login
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SchoolClickListener
@@ -37,6 +46,8 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
         binding.lblParent.setOnClickListener(this)
         binding.lblTeacher.setOnClickListener(this)
         binding.btnGo.setOnClickListener(this)
+        binding.lytLogout.setOnClickListener(this)
+
 
         userDetails = SharedPreference.getUserDetails(this@PrioritySelection)
 
@@ -99,11 +110,16 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
             if (staffDetails != null) {
                 SharedPreference.putStaffDetails(this, staffDetails)
                 val intent = Intent(this, SchoolDashboard::class.java)
+                intent.flags =Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
             } else {
                 Toast.makeText(this, "Staff details not available", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    override fun onBackPressed() {
+        finishAffinity()
     }
 
     private fun isLoadData(isStaff: Boolean) {
@@ -139,9 +155,45 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
         when (p0?.id) {
             R.id.lblTeacher -> isBackRoundChange(binding.lblTeacher)
             R.id.lblParent -> isBackRoundChange(binding.lblParent)
+            R.id.lytLogout -> isShowLogoutPopup()
         }
     }
 
+    private fun isShowLogoutPopup() {
+        val inflater = LayoutInflater.from(this)
+        val popupView = inflater.inflate(R.layout.logout_popup, null)
+
+        val popupWindow = PopupWindow(
+            popupView,
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            true
+        )
+
+        dimBehind(popupWindow)
+        val btnCancel: TextView = popupView.findViewById(R.id.btnCancel)
+        val rlaLogout: RelativeLayout = popupView.findViewById(R.id.rlaLogout)
+        btnCancel.setOnClickListener {
+            clearDim()
+            popupWindow.dismiss()
+        }
+
+        rlaLogout.setOnClickListener {
+            SharedPreference.putMobileNumberPassWord(this, "", "")
+            SharedPreference.putLogout(this, true)
+            val intent = Intent(this, Login::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+
+        }
+
+        val rootView = this.window.decorView.rootView
+        popupWindow.showAtLocation(rootView, Gravity.CENTER, 0, 0)
+
+        popupWindow.setOnDismissListener {
+            clearDim()
+        }
+    }
     @SuppressLint("SuspiciousIndentation")
     private fun isBackRoundChange(isClickingId: TextView) {
         when (isClickingId) {
@@ -188,10 +240,14 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
         override fun onItemClick(data: ChildDetails) {
             SharedPreference.putChildDetails(this, data)
             startActivity(Intent(this, ParentDashboard::class.java))
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+
         }
 
         override fun onItemClick(data: StaffDetails) {
             SharedPreference.putStaffDetails(this, data)
             startActivity(Intent(this, SchoolDashboard::class.java))
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+
         }
     }

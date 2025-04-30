@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.Dashboard.Fragments
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Paint
 import android.os.Bundle
@@ -10,6 +11,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -23,6 +25,7 @@ import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardData
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuClickListener
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuDetail
 import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolList
+import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.Dashboard.School.SchoolMenuAdapter
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.Notification
 import com.vs.schoolmessenger.R
@@ -192,6 +195,21 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 //   filter(s.toString())
             }
         })
+
+
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (userDetails!!.is_parent && userDetails!!.is_staff) {
+                    val intent = Intent(requireActivity(), PrioritySelection::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                }else {
+                    handleBackPress()
+                }
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+
         return binding.root
     }
 
@@ -255,6 +273,18 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     }
 
 
+    private fun handleBackPress() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Go Back?")
+            .setMessage("Do you want to Exit?")
+            .setPositiveButton("Yes") { _, _ ->
+               requireActivity().finishAffinity()
+            }
+            .setNegativeButton("No", null)
+            .show()
+    }
+
+
     private fun isDashBoardData() {
 
         val adapter =
@@ -301,16 +331,16 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     override fun onClick(data: MenuDetail) {
 
         val activityClass = when (data.id) {
-            Constant.SH_COMMUNICATION -> CommunicationSchool::class.java
-            Constant.SH_ASSIGNMENT -> {
+            Constant.M_COMMUNICATION -> CommunicationSchool::class.java
+            Constant.M_ASSIGNMENT -> {
                 Assignment::class.java
             }
 
-            Constant.SH_HOMEWORK -> {
+            Constant.M_HOMEWORK -> {
                 HomeWork::class.java
             }
 
-            Constant.SH_ATTENDANCE_MARKING -> {
+            Constant.M_ATTENDANCE_MARKING -> {
                 if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
                     AttendanceMark::class.java
                 } else {
@@ -322,7 +352,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 }
             }
 
-            Constant.SH_ABSENTEEISM_REPORT -> {
+            Constant.M_ABSENTEES_REPORT -> {
                 if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
                     AbsenteesReport::class.java
                 } else {
@@ -334,7 +364,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 }
             }
 
-            Constant.SH_SCHOOL_STRENGTH -> {
+            Constant.M_SCHOOL_STRENGTH -> {
                 if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
                     SchoolStrength::class.java
                 } else {
@@ -346,11 +376,11 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 }
             }
 
-            Constant.SH_NOTICE_BOARD -> CreateNoticeBoard::class.java
-            Constant.SH_EVENTS -> CreateEvent::class.java
-            Constant.SH_SCHEDULE_EXAM_TEST -> Exam::class.java
+            Constant.M_NOTICEBOARD -> CreateNoticeBoard::class.java
+            Constant.M_EVENTS_HOLIDAYS -> CreateEvent::class.java
+            Constant.M_SCHEDULE_EXAM_TEST -> Exam::class.java
 
-            Constant.SH_MESSAGES_FROM_MANAGEMENT -> {
+            Constant.M_MESSAGES_FROM_MANAGEMENT -> {
                 if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
                     MessageFromManagement::class.java
                 } else {
@@ -363,7 +393,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
             }
 
-            Constant.SH_INTERACTION_WITH_STUDENT -> {
+            Constant.M_INTERACTION_WITH_STUDENT -> {
                 if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
                     InteractionWithStudent::class.java
                 } else {
@@ -375,8 +405,8 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 }
             }
 
-            Constant.SH_ONLINE_MEETING -> OnlineMeeting::class.java
-            Constant.SH_DAILY_COLLECTION -> {
+            Constant.M_ONLINE_MEETING -> OnlineMeeting::class.java
+            Constant.M_DAILY_COLLECTION -> {
                 if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
                     DailyCollection::class.java
                 } else {
@@ -389,7 +419,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
             }
 
-            Constant.SH_STUDENT_REPORT -> {
+            Constant.M_STUDENT_REPORT -> {
                 if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
                     StudentReport::class.java
                 } else {
@@ -401,7 +431,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 }
             }
 
-            Constant.SH_LESSON_PLAN -> {
+            Constant.M_LESSON_PLAN -> {
 
                 if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
                     LessonPlan::class.java
@@ -414,7 +444,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 }
             }
 
-            Constant.SH_FEE_PENDING_REPORT -> {
+            Constant.M_FEE_PENDING_REPORT -> {
                 if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
                     //go to fee pending report
                     LessonPlan::class.java
@@ -428,7 +458,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 }
             }
 
-            Constant.SH_MARK_GEOMETRIC_ATTENDANCE -> {
+            Constant.M_MARK_YOUR_ATTENDANCE -> {
                 if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
                     //go to geometric mark attendance page
                     MarkYourAttendance::class.java
@@ -442,7 +472,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 }
             }
 
-            Constant.SH_STAFF_WISE_GEOMETRIC_ATTENDANCE_REPORT -> {
+            Constant.M_STAFF_WISE_ATTENDANCE_REPORT -> {
                 if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
                     //go to staff wise geometric attendance report page
                     LessonPlan::class.java
@@ -456,7 +486,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 }
             }
 
-            Constant.SH_PTM -> {
+            Constant.M_PTM -> {
                 if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
                     //go to ptm page
                     LessonPlan::class.java
@@ -470,8 +500,8 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 }
             }
 
-            Constant.SH_IMPORTANT_INFO -> ImportantInfo::class.java
-            Constant.SH_FEEDBACK -> ImportantInfo::class.java
+            Constant.M_VERY_IMPORTANT_INFO -> ImportantInfo::class.java
+            Constant.M_FEEDBACK -> ImportantInfo::class.java
 
             // Constant.sch_feedback_id -> ImportantInfo::class.java
             else -> null

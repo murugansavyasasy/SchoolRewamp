@@ -29,7 +29,6 @@ import android.widget.FrameLayout
 import android.widget.GridView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
-import com.google.mlkit.common.sdkinternal.CommonUtils.getAppVersion
 import com.vs.schoolmessenger.Auth.Country.Country
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
@@ -42,6 +41,7 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Communication.CommunicationSchool
 import com.vs.schoolmessenger.School.Communication.TextSendingData
 import com.vs.schoolmessenger.School.Communication.VoiceSendingData
+import com.vs.schoolmessenger.School.MarkYourAttendance.MarkYourAttendance
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalTime
@@ -125,6 +125,46 @@ object Constant {
     val SH_INTERACTION_WITH_STUDENT = 16
 
 
+    val M_ABSENTEES_REPORT = 1
+    val M_ASSIGNMENT = 2
+    val M_ATTENDANCE_MARKING = 3
+    val M_ATTENDANCE_REPORT = 4
+    val M_CERTIFICATE_REQUEST = 5
+    val M_CLASS_TIME_TABLE = 6
+    val M_COMMUNICATION = 7
+    val M_DAILY_COLLECTION = 8
+    val M_EVENTS_HOLIDAYS = 9
+    val M_EXAM = 10
+    val M_FEEDBACK = 11
+    val M_FEE_DETAILS = 12
+    val M_FEE_PAYMENT = 13
+    val M_FEE_PENDING_REPORT = 14
+    val M_HOMEWORK = 15
+    val M_INTERACTION_WITH_STAFF = 16
+    val M_INTERACTION_WITH_STUDENT = 17
+    val M_LEAVE_REQUEST = 18
+    val M_LESSON_PLAN = 19
+    val M_LSRW = 20
+    val M_MARK_YOUR_ATTENDANCE = 21
+    val M_MESSAGES_FROM_MANAGEMENT = 22
+    val M_NOTICEBOARD = 23
+    val M_ONLINE_MEETING = 24
+    val M_ONLINE_TEXT_BOOK = 25
+    val M_PTM = 26
+    val M_QUIZ_EXAM = 27
+    val M_REQUEST_LEAVE = 28
+    val M_SCHOOL_CLASS_EVENTS = 29
+    val M_SCHOOL_NEEDS = 30
+    val M_SCHOOL_STRENGTH = 31
+    val M_STAFF_LIST = 32
+    val M_STAFF_WISE_ATTENDANCE_REPORT = 33
+    val M_STUDENT_LIST = 34
+    val M_STUDENT_REPORT = 35
+    val M_VERY_IMPORTANT_INFO = 36
+    val M_YOUR_PROFILE = 37
+    val M_SCHEDULE_EXAM_TEST = 38
+    val M_ATTACHMENTS = 39
+
 
     var SELECTED_SCHOOL_MENU = 0
     var SELECTED_PARENT_MENU = 0
@@ -152,6 +192,7 @@ object Constant {
     var staff = "staff"
 
     var isCommunication = "isCommunication"
+    var isGioMetric = "isGioMetric"
 
     var isVoiceFile: String? = null
     var isVoiceSendingData: VoiceSendingData? = null
@@ -209,7 +250,6 @@ object Constant {
             putExtra(Intent.EXTRA_SUBJECT, sub) // Subject
             putExtra(Intent.EXTRA_TEXT, body) // Email body
         }
-// Verify that there is an email app to handle the intent
         val emailApps = context.packageManager.queryIntentActivities(intent, 0)
         if (emailApps.isNotEmpty()) {
             context.startActivity(intent)
@@ -397,6 +437,11 @@ object Constant {
         okButton.setOnClickListener {
             if (isType == isCommunication) {
                 val intent = Intent(activity, CommunicationSchool::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                activity.startActivity(intent)
+            } else if (isType == isGioMetric) {
+                val intent = Intent(activity, MarkYourAttendance::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 activity.startActivity(intent)
             }
             closePopup()
@@ -568,5 +613,19 @@ object Constant {
         rootView.addView(loaderView)
 
     }
+
+    fun getDateDetails(input: String): Triple<String, Int, String> {
+        val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+        val date = sdf.parse(input) ?: return Triple("", -1, "")
+
+        val calendar = Calendar.getInstance().apply { time = date }
+
+        val month = SimpleDateFormat("MMMM", Locale.getDefault()).format(date) // "April"
+        val day = calendar.get(Calendar.DAY_OF_MONTH) // 29
+        val dayOfWeek = SimpleDateFormat("EEEE", Locale.getDefault()).format(date) // "Tuesday"
+
+        return Triple(month, day, dayOfWeek)
+    }
+
 
 }

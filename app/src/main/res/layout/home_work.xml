@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:background="@color/white">
 
 
     <LinearLayout
@@ -41,7 +41,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginHorizontal="@dimen/ten"
         android:layout_marginTop="@dimen/fifteen"
-        android:padding="@dimen/three"
+        android:padding="@dimen/one"
         android:layout_marginStart="@dimen/fifteen"
         android:layout_marginEnd="@dimen/fifteen"
         android:background="@drawable/bg_light_blue">
@@ -54,11 +54,12 @@
             android:background="@drawable/white_bg_radius"
             android:gravity="center"
             android:padding="@dimen/eight"
+            android:textStyle="bold"
+            android:fontFamily="@font/poppins_medium"
             android:text="@string/HomeWork"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"
-            android:textStyle="bold"
-            android:fontFamily="@font/poppins_medium"
+            style="@style/CustomTextStylePoppinsMedium"
             />
 
         <TextView
@@ -73,6 +74,7 @@
             android:textSize="@dimen/thirteen_sp"
             android:fontFamily="@font/poppins_medium"
             android:textStyle="bold"
+            style="@style/CustomTextStylePoppinsMedium"
             />
 
     </LinearLayout>
@@ -99,10 +101,11 @@
                 android:text="@string/Title"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
-                android:fontFamily="@font/poppins_bold"
-                android:textStyle="bold">
+               style="@style/CustomTextStylePoppinsBold">
 
             </TextView>
+
+
 
             <EditText
                 android:id="@+id/edtTitle"
@@ -115,8 +118,7 @@
                 android:hint="@string/Entertitle"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
-                android:fontFamily="@font/poppins_regular"
-                android:textStyle="normal">
+           style="@style/CustomTextStylePoppinsMedium">
 
             </EditText>
 
@@ -130,8 +132,7 @@
                 android:text="@string/Description"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
-                android:fontFamily="@font/poppins_bold"
-                android:textStyle="bold">
+                style="@style/CustomTextStylePoppinsBold">
 
             </TextView>
 
@@ -153,8 +154,7 @@
                 android:padding="@dimen/ten"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
-                android:fontFamily="@font/poppins_regular"
-                android:textStyle="normal">
+              style="@style/CustomTextStylePoppinsMedium">
 
             </EditText>
 
@@ -170,8 +170,7 @@
                 android:text="0 / 100"
                 android:textColor="@color/light_gray"
                 android:textSize="@dimen/thirteen_sp"
-                android:fontFamily="@font/poppins_regular"
-                android:textStyle="normal">
+               style="@style/CustomTextStylePoppinsMedium">
 
             </TextView>
 
@@ -194,8 +193,7 @@
                 android:text="@string/UploadAttachment"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
-                android:fontFamily="@font/poppins_bold"
-                android:textStyle="bold">
+                style="@style/CustomTextStylePoppinsBold">
 
             </TextView>
 
@@ -223,10 +221,10 @@
                 android:gravity="center"
                 android:padding="@dimen/ten"
                 android:text="@string/TOSTANDARDORSECTION"
-                android:fontFamily="@font/poppins_bold"
+                style="@style/CustomTextStylePoppinsBold"
                 android:textColor="@color/white"
                 android:textSize="@dimen/thirteen_sp"
-                android:textStyle="bold">
+              >
 
             </TextView>
 
@@ -316,13 +314,27 @@
 
 
             </LinearLayout>
-            <ImageView
-                android:id="@+id/lblDatePick"
-                android:src="@drawable/calendar"
-                android:layout_weight="0.05"
-                android:layout_width="@dimen/twenty"
-                android:layout_height="@dimen/twenty">
-            </ImageView>
+
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/imgCalendar"
+                    android:src="@drawable/calendar"
+                    android:layout_width="@dimen/twenty"
+                    android:layout_height="@dimen/twenty" />
+
+                <TextView
+                    android:id="@+id/lblDatePick"
+                    android:text="Select Date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="8dp" />
+            </LinearLayout>
+
         </LinearLayout>
         <LinearLayout
             android:id="@+id/lnrClasses"
@@ -467,424 +479,4 @@
 
 </RelativeLayout>
 
-<!--<?xml version="1.0" encoding="utf-8"?>-->
-<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent"-->
-<!--    xmlns:app="http://schemas.android.com/apk/res-auto">-->
 
-
-<!--    <LinearLayout-->
-<!--        android:id="@+id/rytHeader"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:background="@color/primary_light"-->
-<!--        android:paddingTop="@dimen/twenty"-->
-<!--        >-->
-
-<!--        <ImageView-->
-<!--            android:id="@+id/imgBack"-->
-<!--            android:layout_width="@dimen/thirty"-->
-<!--            android:layout_height="@dimen/thirty"-->
-<!--            android:layout_marginStart="@dimen/twenty"-->
-<!--            android:src="@drawable/arrow_back_black" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/lblCreateNoticeBoard"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginStart="@dimen/ten"-->
-<!--            android:text="@string/HomeWork"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:textSize="20sp"-->
-<!--            android:textStyle="bold" />-->
-
-<!--    </LinearLayout>-->
-
-<!--    <LinearLayout-->
-<!--        android:id="@+id/lnrParent"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_below="@+id/rytHeader"-->
-<!--        android:layout_centerHorizontal="true"-->
-<!--        android:layout_marginHorizontal="@dimen/ten"-->
-<!--        android:layout_marginTop="@dimen/fifteen"-->
-<!--        android:padding="@dimen/three"-->
-<!--        android:layout_marginStart="@dimen/fifteen"-->
-<!--        android:layout_marginEnd="@dimen/fifteen"-->
-<!--        android:background="@drawable/bg_light_blue">-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/btnCreate"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_weight="1"-->
-<!--            android:background="@drawable/white_bg_radius"-->
-<!--            android:gravity="center"-->
-<!--            android:padding="@dimen/eight"-->
-<!--            android:text="@string/HomeWork"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:textSize="@dimen/thirteen_sp"-->
-<!--            android:fontFamily="@font/poppins_bold"-->
-<!--            android:textStyle="bold" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/btnHistory"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_weight="1"-->
-<!--            android:gravity="center"-->
-<!--            android:padding="@dimen/eight"-->
-<!--            android:text="@string/Reports"-->
-<!--            android:textColor="@color/dark_blue"-->
-<!--            android:textSize="@dimen/thirteen_sp"-->
-<!--            android:fontFamily="@font/poppins_bold"-->
-<!--            android:textStyle="bold" />-->
-
-<!--    </LinearLayout>-->
-
-
-<!--    <RelativeLayout-->
-<!--        android:id="@+id/rlaHomework"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_below="@+id/lnrParent"-->
-<!--        android:visibility="gone">-->
-
-<!--        <RelativeLayout-->
-<!--            android:id="@+id/rlaTitleDescription"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content">-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/lblTitle"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginStart="@dimen/twenty"-->
-<!--                android:layout_marginTop="@dimen/twenty"-->
-<!--                android:text="@string/Title"-->
-<!--                android:textColor="@color/black"-->
-<!--                android:textSize="@dimen/thirteen_sp"-->
-<!--                android:fontFamily="@font/poppins_bold"-->
-<!--                android:textStyle="bold">-->
-
-<!--            </TextView>-->
-
-<!--            <EditText-->
-<!--                android:id="@+id/edtTitle"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_below="@+id/lblTitle"-->
-<!--                android:layout_marginStart="@dimen/fifteen"-->
-<!--                android:layout_marginTop="@dimen/ten"-->
-<!--                android:layout_marginEnd="@dimen/fifteen"-->
-<!--                android:hint="@string/Entertitle"-->
-<!--                android:textColor="@color/black"-->
-<!--                android:textSize="@dimen/thirteen_sp"-->
-<!--                android:fontFamily="@font/poppins_regular"-->
-<!--                android:textStyle="normal">-->
-
-<!--            </EditText>-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/lblDescription"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_below="@+id/edtTitle"-->
-<!--                android:layout_marginStart="@dimen/twenty"-->
-<!--                android:layout_marginTop="@dimen/ten"-->
-<!--                android:text="@string/Description"-->
-<!--                android:textColor="@color/black"-->
-<!--                android:textSize="@dimen/thirteen_sp"-->
-<!--                android:fontFamily="@font/poppins_bold"-->
-<!--                android:textStyle="bold">-->
-
-<!--            </TextView>-->
-
-<!--            <EditText-->
-<!--                android:id="@+id/edtDescription"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="@dimen/hundred"-->
-<!--                android:layout_below="@+id/lblDescription"-->
-<!--                android:layout_marginStart="@dimen/fifteen"-->
-<!--                android:layout_marginTop="@dimen/ten"-->
-<!--                android:layout_marginEnd="@dimen/fifteen"-->
-<!--                android:background="@drawable/bg_stroke_rect_black"-->
-<!--                android:editable="true"-->
-<!--                android:focusable="true"-->
-<!--                android:focusableInTouchMode="true"-->
-<!--                android:gravity="start"-->
-<!--                android:hint="@string/Enterdescription"-->
-<!--                android:maxLength="100"-->
-<!--                android:padding="@dimen/ten"-->
-<!--                android:textColor="@color/black"-->
-<!--                android:textSize="@dimen/thirteen_sp"-->
-<!--                android:fontFamily="@font/poppins_regular"-->
-<!--                android:textStyle="normal">-->
-
-<!--            </EditText>-->
-
-
-<!--            <TextView-->
-<!--                android:id="@+id/lblTextCount"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_below="@+id/edtDescription"-->
-<!--                android:layout_alignParentEnd="true"-->
-<!--                android:layout_marginTop="@dimen/ten"-->
-<!--                android:layout_marginEnd="@dimen/fifteen"-->
-<!--                android:text="0 / 100"-->
-<!--                android:textColor="@color/light_gray"-->
-<!--                android:textSize="@dimen/thirteen_sp"-->
-<!--                android:fontFamily="@font/poppins_regular"-->
-<!--                android:textStyle="normal">-->
-
-<!--            </TextView>-->
-
-
-<!--        </RelativeLayout>-->
-
-<!--        <RelativeLayout-->
-<!--            android:id="@+id/rlaFilePicking"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_below="@+id/rlaTitleDescription"-->
-<!--            android:layout_marginTop="@dimen/five">-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/lblAddPhoto"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginStart="@dimen/fifteen"-->
-<!--                android:layout_marginTop="@dimen/ten"-->
-<!--                android:text="@string/UploadAttachment"-->
-<!--                android:textColor="@color/black"-->
-<!--                android:textSize="@dimen/thirteen_sp"-->
-<!--                android:fontFamily="@font/poppins_bold"-->
-<!--                android:textStyle="bold">-->
-
-<!--            </TextView>-->
-
-<!--            <androidx.recyclerview.widget.RecyclerView-->
-<!--                android:id="@+id/rcyImages"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_below="@+id/lblAddPhoto"-->
-<!--                android:layout_marginTop="@dimen/ten"-->
-<!--                android:orientation="vertical">-->
-
-<!--            </androidx.recyclerview.widget.RecyclerView>-->
-
-
-<!--            <TextView-->
-<!--                android:id="@+id/btnChooseRecipient"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_below="@+id/rcyImages"-->
-<!--                android:layout_marginStart="@dimen/twenty_five"-->
-<!--                android:layout_marginTop="@dimen/fifteen"-->
-<!--                android:layout_marginEnd="@dimen/twenty_five"-->
-<!--                android:layout_marginBottom="@dimen/ten"-->
-<!--                android:background="@drawable/rect_btn_orange"-->
-<!--                android:gravity="center"-->
-<!--                android:padding="@dimen/ten"-->
-<!--                android:text="@string/TOSTANDARDORSECTION"-->
-<!--                android:fontFamily="@font/poppins_bold"-->
-<!--                android:textColor="@color/white"-->
-<!--                android:textSize="@dimen/thirteen_sp"-->
-<!--                android:textStyle="bold">-->
-
-<!--            </TextView>-->
-
-
-<!--        </RelativeLayout>-->
-<!--    </RelativeLayout>-->
-
-<!--&lt;!&ndash;Reports activity is here which is keep as gone&ndash;&gt;-->
-<!--    <RelativeLayout-->
-<!--        android:id="@+id/rlaHomeWorkReport"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_below="@+id/lnrParent"-->
-<!--        android:layout_marginStart="@dimen/ten"-->
-<!--        android:layout_marginTop="@dimen/twenty"-->
-<!--        android:visibility="visible">-->
-
-
-<!--        <androidx.cardview.widget.CardView-->
-<!--            android:id="@+id/cardStart"-->
-<!--            android:layout_width="50dp"-->
-<!--            android:layout_height="50dp"-->
-<!--            app:cardCornerRadius="@dimen/ten"-->
-<!--            android:layout_marginStart="@dimen/fifteen"-->
-<!--            app:cardElevation="0dp">-->
-
-<!--            <LinearLayout-->
-<!--                android:id="@+id/lnrStartCalendar"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"-->
-
-<!--                android:background="@drawable/bg_stroke_rect_black"-->
-<!--                android:orientation="vertical">-->
-
-<!--                <TextView-->
-<!--                    android:id="@+id/lblDay"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_gravity="center_horizontal"-->
-<!--                    android:layout_marginTop="@dimen/five"-->
-<!--                    android:text="Fri"-->
-<!--                    android:textColor="@color/grey"-->
-<!--                    android:textSize="@dimen/fifteen_sp"-->
-<!--                    android:textStyle="bold" />-->
-
-<!--                <TextView-->
-<!--                    android:id="@+id/lblDate"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="match_parent"-->
-<!--                    android:background="@color/primary_light"-->
-<!--                    android:gravity="center"-->
-<!--                    android:text="12"-->
-<!--                    android:textColor="@color/black"-->
-<!--                    android:textSize="@dimen/fifteen_sp"-->
-<!--                    android:textStyle="bold" />-->
-
-<!--            </LinearLayout>-->
-<!--        </androidx.cardview.widget.CardView>-->
-
-
-<!--        <RelativeLayout-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_toEndOf="@+id/cardStart"-->
-<!--            android:id="@+id/relative_layout">-->
-<!--            <TextView-->
-<!--                android:id="@+id/lblDatePick"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginStart="@dimen/ten"-->
-<!--                android:layout_marginTop="@dimen/ten"-->
-<!--                android:drawablePadding="@dimen/ten"-->
-<!--                android:text="Select Date"-->
-<!--                android:textColor="@color/black"-->
-<!--                android:textSize="@dimen/thirteen_sp"-->
-<!--                android:textStyle="normal">-->
-<!--            </TextView>-->
-<!--             <ImageView-->
-<!--               android:layout_width="20dp"-->
-<!--               android:layout_height="20dp"-->
-<!--               android:id="@+id/image_downarrow"-->
-<!--                 android:layout_alignBottom="@+id/lblDatePick"-->
-<!--                 android:layout_toEndOf="@+id/lblDatePick"-->
-<!--                 android:layout_marginStart="@dimen/eight"-->
-<!--                 android:layout_marginTop="@dimen/ten"-->
-<!--               android:src="@drawable/ic_down_arrow"/>-->
-<!--        </RelativeLayout>-->
-
-
-<!--        <View-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="0.5dp"-->
-<!--            android:layout_below="@+id/cardStart"-->
-<!--            android:layout_toEndOf="@+id/cardStart"-->
-<!--            android:layout_marginEnd="@dimen/fourty"-->
-<!--            android:layout_marginStart="@dimen/ten"-->
-<!--            android:background="@color/grey"/>-->
-
-
-
-<!--        <LinearLayout-->
-<!--            android:id="@+id/lnrClasses"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_below="@+id/cardStart"-->
-<!--            android:layout_marginTop="@dimen/ten"-->
-<!--            android:gravity="center"-->
-<!--            android:weightSum="0">-->
-
-
-<!--            <RelativeLayout-->
-<!--                android:id="@+id/rlaStandard"-->
-<!--                android:layout_width="120dp"-->
-<!--                android:layout_height="35dp"-->
-<!--                android:layout_marginStart="@dimen/fifteen"-->
-<!--                android:layout_marginEnd="@dimen/fifteen"-->
-<!--                android:layout_weight="0"-->
-<!--                android:background="@drawable/rect_light_blue"-->
-<!--                >-->
-
-
-<!--                <ImageView-->
-<!--                    android:id="@+id/imgStandard"-->
-<!--                    android:layout_width="@dimen/eighteen"-->
-<!--                    android:layout_height="@dimen/eighteen"-->
-<!--                    android:layout_alignParentEnd="true"-->
-<!--                    android:layout_centerVertical="true"-->
-<!--                    android:layout_marginEnd="@dimen/ten"-->
-<!--                    android:src="@drawable/downarrow">-->
-
-<!--                </ImageView>-->
-
-<!--                <TextView-->
-<!--                    android:id="@+id/lblStandard"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_centerVertical="true"-->
-<!--                    android:layout_marginStart="@dimen/fifteen"-->
-<!--                    android:text="STANDARD"-->
-<!--                    android:textColor="@color/black"-->
-<!--                    android:textSize="@dimen/thirteen_sp"-->
-<!--                    android:textStyle="bold">-->
-<!--                </TextView>-->
-<!--            </RelativeLayout>-->
-
-
-<!--            <RelativeLayout-->
-<!--                android:id="@+id/rlaSection"-->
-<!--                android:layout_width="120dp"-->
-<!--                android:layout_height="35dp"-->
-<!--                android:layout_marginStart="@dimen/fifteen"-->
-<!--                android:layout_marginEnd="@dimen/fifteen"-->
-<!--                android:layout_weight="0"-->
-<!--                android:background="@drawable/rect_light_blue"-->
-<!--                android:padding="@dimen/five">-->
-
-
-<!--                <ImageView-->
-<!--                    android:id="@+id/imgSection"-->
-<!--                    android:layout_width="@dimen/eighteen"-->
-<!--                    android:layout_height="@dimen/eighteen"-->
-<!--                    android:layout_alignParentEnd="true"-->
-<!--                    android:layout_centerVertical="true"-->
-<!--                    android:layout_marginEnd="@dimen/ten"-->
-<!--                    android:src="@drawable/downarrow">-->
-
-<!--                </ImageView>-->
-
-<!--                <TextView-->
-<!--                    android:id="@+id/lblSection"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_centerVertical="true"-->
-<!--                    android:layout_marginStart="@dimen/thirty"-->
-<!--                    android:text="A"-->
-<!--                    android:textColor="@color/black"-->
-<!--                    android:textSize="@dimen/thirteen_sp"-->
-<!--                    android:textStyle="bold">-->
-<!--                </TextView>-->
-<!--            </RelativeLayout>-->
-
-<!--        </LinearLayout>-->
-
-<!--        <androidx.recyclerview.widget.RecyclerView-->
-<!--            android:id="@+id/rcyHomeWorkReport"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_below="@+id/lnrClasses">-->
-<!--        </androidx.recyclerview.widget.RecyclerView>-->
-
-
-<!--    </RelativeLayout>-->
-
-
-<!--</RelativeLayout>-->

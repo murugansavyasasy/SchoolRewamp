@@ -208,7 +208,7 @@ class App(application: Application) : AndroidViewModel(application) {
         apiRepositories?.updateLocation(isToken, jsonObject, activity)
     }
 
-    fun getStaffLocations(isToken: String, jsonObject: JsonObject, activity: Activity) {
+    fun getStaffLocations(isToken: String, activity: Activity) {
         apiRepositories?.getStaffLocations(isToken, activity)
     }
 
@@ -220,8 +220,8 @@ class App(application: Application) : AndroidViewModel(application) {
         apiRepositories?.getLocationHistory(isToken, activity)
     }
 
-    fun getStaffAttendanceReport(isToken: String, jsonObject: JsonObject, activity: Activity) {
-        apiRepositories?.getGiometricStaffAttendancereport(isToken, activity)
+    fun getStaffAttendanceReport(isToken: String,attendance_dt: String, activity: Activity) {
+        apiRepositories?.getGiometricStaffAttendancereport(isToken,attendance_dt, activity)
     }
     fun getStaffWiseAttendanceReport(isToken: String, jsonObject: JsonObject, activity: Activity) {
         apiRepositories?.getGiometricStaffWiseAttendancereport(isToken, activity)

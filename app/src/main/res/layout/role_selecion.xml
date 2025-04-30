@@ -6,10 +6,37 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
+
+    <LinearLayout
+        android:id="@+id/lytLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/twenty"
+        android:layout_marginEnd="@dimen/twenty"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="@dimen/thirty_five"
+            android:layout_height="@dimen/thirty_five"
+            android:src="@drawable/logout"></ImageView>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lblLogout">
+
+        </TextView>
+
+    </LinearLayout>
+
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_above="@+id/btnGo"
-
+        android:layout_below="@+id/lytLogout"
         android:layout_height="match_parent">
 
         <ImageView
@@ -115,7 +142,7 @@
         android:layout_centerInParent="true"
         android:layout_marginEnd="@dimen/twenty_five"
         android:background="@drawable/bg_blue"
-        android:layout_marginBottom="@dimen/fourty"
+        android:layout_marginBottom="@dimen/thirty"
         android:gravity="center"
         android:text="Proceed"
         android:textColor="@color/white"
