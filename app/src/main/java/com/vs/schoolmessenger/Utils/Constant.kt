@@ -584,5 +584,16 @@ object Constant {
         return Triple(month, day, dayOfWeek)
     }
 
+    fun getDeviceName(): String {
+        val manufacturer = android.os.Build.MANUFACTURER
+        val model = android.os.Build.MODEL
+        return if (model.startsWith(manufacturer, ignoreCase = true)) {
+            model
+        } else {
+            "$manufacturer $model"
+        }
+    }
+
+
 
 }

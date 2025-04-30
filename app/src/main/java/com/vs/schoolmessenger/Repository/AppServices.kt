@@ -20,10 +20,10 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Communication.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.VoiceDetails
-import com.vs.schoolmessenger.School.MarkYourAttendance.LocationHistoryResponse
-import com.vs.schoolmessenger.School.MarkYourAttendance.PunchHistoryResponse
-import com.vs.schoolmessenger.School.MarkYourAttendance.StaffAttendanceReportResponse
-import com.vs.schoolmessenger.School.MarkYourAttendance.StaffLocationResponse
+import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistoryResponse
+import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchHistoryResponse
+import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffAttendanceReportResponse
+import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffLocationResponse
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import retrofit2.Call
@@ -823,8 +823,8 @@ class AppServices {
         get() = isLocationHistory
 
 
-    fun getPunchHistory(isToken:String, activity: Activity) {
-        RestClient.apiInterfaces.getPunchHistory(isToken,"","")
+    fun getPunchHistory(isToken:String, isDate: String, activity: Activity) {
+        RestClient.apiInterfaces.getPunchHistory(isToken,isDate,isDate)
             ?.enqueue(object : Callback<PunchHistoryResponse?> {
                 override fun onResponse(
                     call: Call<PunchHistoryResponse?>,

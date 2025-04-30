@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.School.MarkYourAttendance
+package com.vs.schoolmessenger.Utils
 
 import android.location.Location
 

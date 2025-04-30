@@ -13,7 +13,7 @@ import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
-import com.vs.schoolmessenger.School.MarkYourAttendance.LocationLatLongListener
+import com.vs.schoolmessenger.School.MarkYourAttendance.Interface.LocationLatLongListener
 
 class LocationHelper(
     private val context: Context,

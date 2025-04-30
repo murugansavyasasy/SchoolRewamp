@@ -4,16 +4,19 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.ActionBar
 import android.app.AlertDialog
+import android.app.Dialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.location.LocationManager
+import android.os.Build
 import android.provider.Settings
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
+import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.CompoundButton
@@ -21,6 +24,7 @@ import android.widget.ImageView
 import android.widget.PopupWindow
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.biometric.BiometricPrompt.PromptInfo
@@ -28,12 +32,24 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.Repository.ResponseKeys
+import com.vs.schoolmessenger.School.MarkYourAttendance.Adapter.PunchHistoryAdapter
+import com.vs.schoolmessenger.School.MarkYourAttendance.Adapter.StaffAttendanceReportAdapter
+import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchTimingsData
+import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffAttendanceReportData
+import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffLocationData
+import com.vs.schoolmessenger.School.MarkYourAttendance.Interface.AttendanceReportClickListener
+import com.vs.schoolmessenger.School.MarkYourAttendance.Interface.GPSStatusListener
+import com.vs.schoolmessenger.School.MarkYourAttendance.Interface.LocationLatLongListener
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.GPSStatusReceiver
+import com.vs.schoolmessenger.Utils.LocationDistanceCalculator
 import com.vs.schoolmessenger.Utils.LocationHelper
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.MarkYourAttendanceBinding
@@ -47,6 +63,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
         return MarkYourAttendanceBinding.inflate(layoutInflater)
     }
     var isStaffAttendanceReportAdapter: StaffAttendanceReportAdapter? = null
+    var isPunchHistoryAdapter: PunchHistoryAdapter? = null
 
     private var appViewModel: App? = null
 
@@ -61,8 +78,10 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
     private var isAccessToken: String? = null
     private var isLatitude: Double? = null
     private var isLongitude: Double? = null
+    private var rcyPunchList: RecyclerView? = null
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
         setupToolbar()
@@ -147,12 +166,33 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
             }
         }
 
+        appViewModel!!.isPunchAttendance?.observe(this) { response ->
+            if (response != null && response.status) {
+                Constant.hideLoading(this)
+                Constant.showTopAlertPopup(response.message, Constant.isGioMetric, this)
+            }
+        }
+
+
         appViewModel!!.isStaffAttendanceReport?.observe(this) { response ->
             if (response != null && response.status) {
                 val isStaffReport = response.data
                 isLoadData(isStaffReport)
             }
         }
+
+        appViewModel!!.isPunchHistory?.observe(this) { response ->
+            if (response != null && response.status) {
+                val historyList = response.data
+                if (!historyList.isNullOrEmpty()) {
+                    val isPunchTiming = historyList.flatMap { it.timings }
+                    isLoadPunchHistoryData(isPunchTiming)
+                }
+            }
+        }
+
+
+
 
         val years = (2025 downTo 2001).map { it.toString() }
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, years)
@@ -170,6 +210,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
+
             }
         }
     }
@@ -269,6 +310,21 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
             appViewModel?.getStaffLocations(it, this)
         }
     }
+    fun isPunchAttendance() {
+
+        val jsonObject = JsonObject()
+        jsonObject.addProperty(ResponseKeys.staff_or_student, "staff")
+        jsonObject.addProperty(ResponseKeys.device_id, Constant.getAndroidSecureId(this))
+        jsonObject.addProperty(ResponseKeys.punch_type, 1)
+        jsonObject.addProperty(ResponseKeys.device_model, Constant.getDeviceName())
+
+
+        isAccessToken?.let {
+            appViewModel?.punchAttendance(it, jsonObject, this)
+        }
+    }
+
+
 
     fun getStaffAttendanceReport(selectedYear: String, selectedMonth: String) {
         binding.recycleAttendanceReports.visibility = View.VISIBLE
@@ -411,7 +467,9 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
             }
 
             R.id.btnPresent -> {
-                enableBiometric()
+                Constant.showLoading(this)
+                isPunchAttendance()
+                //   enableBiometric()
             }
 
             R.id.rytAddLocation -> {
@@ -576,7 +634,6 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
         } catch (e: NumberFormatException) {
             e.printStackTrace()
             Log.e("MarkYourAttendance", "Error parsing number: ${e.message}")
-            // Maybe show an error or skip this step
         }
 
         if (isStaffNearByLocation!!) {
@@ -589,6 +646,57 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
     }
 
     override fun onItemClick(data: StaffAttendanceReportData) {
+        isLocationHistory(data)
+    }
 
+    private fun isLocationHistory(data: StaffAttendanceReportData) {
+        val dialog = Dialog(this)
+        val view = LayoutInflater.from(this).inflate(R.layout.punch_history, null)
+
+        rcyPunchList = view.findViewById<RecyclerView>(R.id.rcyPunchList)
+        val imgBack = view.findViewById<ImageView>(R.id.imgBack)
+        isPunchHistory(data)
+
+        dialog.setContentView(view)
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        val width = (resources.displayMetrics.widthPixels * 0.96).toInt()
+        val params = WindowManager.LayoutParams()
+        params.copyFrom(dialog.window?.attributes)
+        params.width = width - (2 * dpToPx(10))
+        params.height = WindowManager.LayoutParams.MATCH_PARENT
+        dialog.window?.attributes = params
+
+        imgBack.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
+    }
+
+    private fun dpToPx(dp: Int): Int {
+        val density = resources.displayMetrics.density
+        return (dp * density).toInt()
+    }
+
+    fun isPunchHistory(data: StaffAttendanceReportData) {
+
+        isAccessToken?.let {
+            appViewModel?.getPunchHistory(it, data.date, this)
+        }
+    }
+
+    fun isLoadPunchHistoryData(data: List<PunchTimingsData>) {
+        if (data.isNotEmpty()) {
+            rcyPunchList!!.visibility = View.VISIBLE
+//            Constant.executeAfterDelay {
+            isPunchHistoryAdapter = PunchHistoryAdapter(
+                data, this, Constant.isShimmerViewDisable
+            )
+            rcyPunchList!!.layoutManager = LinearLayoutManager(this)
+            rcyPunchList!!.adapter = isPunchHistoryAdapter
+//            }
+        } else {
+            rcyPunchList!!.visibility = View.GONE
+        }
     }
 }
