@@ -102,7 +102,7 @@
                 android:id="@+id/imgAddLocation"
                 android:layout_width="@dimen/twenty"
                 android:layout_height="@dimen/twenty"
-               android:src="@drawable/ic_plus">
+               android:src="@drawable/plus_circle">
 
             </ImageView>
 

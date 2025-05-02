@@ -14,6 +14,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.webkit.WebViewClient
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
@@ -27,14 +28,9 @@ import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
@@ -52,13 +48,14 @@ import java.util.Locale
 
 
 class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnClickListener,
-    OnMapReadyCallback, LocationHistoryClickListener {
+    LocationHistoryClickListener {
 
     override fun getViewBinding(): AddLocationActivityBinding {
         return AddLocationActivityBinding.inflate(layoutInflater)
     }
+
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private lateinit var googleMap: GoogleMap
+
     var isLatitude: Double? = null
     var isLongitude: Double? = null
     var isDistance: String? = null
@@ -68,7 +65,6 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
     private var recyleLocations: RecyclerView? = null
     var isLocationHistoryAdapter: LocationHistoryAdapter? = null
     var isDeletedId: Int? = null
-
     private lateinit var dialog: Dialog
     private lateinit var view: View
     private lateinit var dialogRootView: ConstraintLayout
@@ -80,6 +76,7 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
         setupToolbar()
         binding.btnAddLocation.setOnClickListener(this)
         binding.btnViewLocations.setOnClickListener(this)
+        binding.webViewMap.setOnClickListener(this)
         binding.imgBack.setOnClickListener(this)
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel?.init()
@@ -176,7 +173,7 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
             rootView.removeView(dimView)
         }
 
-        if (id == -1 && isStatus && isDeleteLocation == "isDRemove") {
+        if (id == -1 && isStatus && isDeleteLocation == "isRemove") {
             isLocationHistoryAdapter?.removeItemById(isDeletedId!!)
         }
 
@@ -222,25 +219,10 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
                 val longitude = location.longitude
                 isLatitude = latitude
                 isLongitude = longitude
-                val mapFragment = supportFragmentManager
-                    .findFragmentById(binding.mapFragment.id) as SupportMapFragment
-                mapFragment.getMapAsync(this)
+                val isLocationName = getAddressFromLocation(isLatitude!!, isLongitude!!)
+                binding.lblAddress.text = isLocationName
             } else {
                 println("Location is null. Try again later or enable location.")
-            }
-        }
-    }
-
-    override fun onMapReady(map: GoogleMap) {
-        googleMap = map
-        if (isLatitude != null && isLongitude != null) {
-            val location = LatLng(isLatitude!!, isLongitude!!)
-            val isLocationName = getAddressFromLocation(isLatitude!!, isLongitude!!)
-            googleMap.addMarker(MarkerOptions().position(location).title(isLocationName))
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15f))
-            binding.lblAddress.text = isLocationName
-            googleMap.setOnMapClickListener {
-                openInGoogleMaps(it.latitude, it.longitude, isLocationName)
             }
         }
     }
@@ -252,7 +234,6 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
         intent.setPackage("com.google.android.apps.maps")
         startActivity(intent)
     }
-
 
     private fun getAddressFromLocation(latitude: Double, longitude: Double): String {
         val geocoder = Geocoder(this, Locale.getDefault())
@@ -270,7 +251,7 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
         }
     }
 
-    fun isLoadMeter() {
+    private fun isLoadMeter() {
         val months = listOf(
             "10", "15", "20", "25", "30", "35",
             "40", "45", "50", "55", "60", "75"
@@ -279,10 +260,6 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
         monthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
         binding.spinnerMetres.adapter = monthAdapter
-
-        val currentMonthIndex = Calendar.getInstance().get(Calendar.MONTH)
-        binding.spinnerMetres.setSelection(currentMonthIndex)
-
         binding.spinnerMetres.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>,
@@ -292,6 +269,7 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
             ) {
                 val selectedMeter = parent.getItemAtPosition(position).toString()
                 isDistance = selectedMeter
+                binding.txtMeters.setText(selectedMeter)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {}
@@ -304,12 +282,19 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
             R.id.btnAddLocation -> {
                 isCheckValidation()
             }
+
             R.id.btnViewLocations -> {
                 isLocationHistory()
             }
 
             R.id.imgBack -> {
                 onBackPressed()
+            }
+
+            R.id.webViewMap -> {
+                val isLocationName = getAddressFromLocation(isLatitude!!, isLongitude!!)
+                binding.lblAddress.text = isLocationName
+                openInGoogleMaps(isLatitude!!, isLongitude!!, isLocationName)
             }
         }
     }
@@ -374,15 +359,13 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
         recyleLocations = view.findViewById<RecyclerView>(R.id.recyleLocations)
         val imgClose = view.findViewById<ImageView>(R.id.imgClose)
         isShowLocationHistory()
-
         imgClose.setOnClickListener {
             dialog.dismiss()
         }
         dialog.show()
     }
 
-    fun isShowLocationHistory() {
-
+    private fun isShowLocationHistory() {
         isLocationHistoryAdapter =
             LocationHistoryAdapter(null, this, this, Constant.isShimmerViewShow)
         recyleLocations!!.layoutManager = LinearLayoutManager(this)
@@ -408,7 +391,7 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
         }
     }
 
-    fun showEditLocationPopup(id: Int, rootView: ViewGroup) {
+    private fun showEditLocationPopup(id: Int, rootView: ViewGroup) {
         val inflater = LayoutInflater.from(this)
         val popupView = inflater.inflate(R.layout.edit_location, null)
 
@@ -480,7 +463,7 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
             showTopAlertPopup(
                 "Are you sure want to delete this location?",
                 dialogRootView,
-                data.id, false, "isEmpty"
+                data.id, false, "isRemove"
             )
         } else {
             showEditLocationPopup(data.id, dialogRootView)

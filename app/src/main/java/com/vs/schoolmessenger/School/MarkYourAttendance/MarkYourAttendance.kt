@@ -62,6 +62,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
     override fun getViewBinding(): MarkYourAttendanceBinding {
         return MarkYourAttendanceBinding.inflate(layoutInflater)
     }
+
     var isStaffAttendanceReportAdapter: StaffAttendanceReportAdapter? = null
     var isPunchHistoryAdapter: PunchHistoryAdapter? = null
 
@@ -69,7 +70,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
 
     var ifBiometricAvailable: Boolean = false
     private lateinit var gpsStatusReceiver: GPSStatusReceiver
-    private  val locationRequestCode = 1000
+    private val locationRequestCode = 1000
     private var biometricPrompt: BiometricPrompt? = null
 
     private var authenticatealertpopupWindow: PopupWindow? = null
@@ -79,6 +80,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
     private var isLatitude: Double? = null
     private var isLongitude: Double? = null
     private var rcyPunchList: RecyclerView? = null
+    private var lblNoRecordsFound: TextView? = null
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -93,7 +95,8 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
 
         binding.toolbarLayout.rytAddLocation.visibility = View.VISIBLE
 
-
+        binding.toolbarLayout.lblParentToolBar.text = "GeoMetric Attendance"
+        binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel?.init()
         isStaffDetails = SharedPreference.getStaffDetails(this)
@@ -161,8 +164,18 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
 
         appViewModel!!.isStaffLocations?.observe(this) { response ->
             if (response != null && response.status) {
+                binding.rytNoLocationList.visibility = View.GONE
                 val isStaffLocation = response.data
-                punchHiddenShow(isStaffLocation)
+                if (isStaffLocation.isNotEmpty()) {
+                    binding.rytErrorMessage.visibility = View.GONE
+                    punchHiddenShow(isStaffLocation)
+                } else {
+                    binding.rytErrorMessage.visibility = View.VISIBLE
+                    binding.rytNoLocationList.visibility = View.GONE
+                }
+            } else {
+                binding.rytNoLocationList.visibility = View.VISIBLE
+                binding.lblNoLocation.text = response!!.message
             }
         }
 
@@ -178,22 +191,28 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
             if (response != null && response.status) {
                 val isStaffReport = response.data
                 isLoadData(isStaffReport)
+            } else {
+                binding.recycleAttendanceReports.visibility = View.GONE
+                binding.lblNoRecords.visibility = View.VISIBLE
             }
         }
 
         appViewModel!!.isPunchHistory?.observe(this) { response ->
             if (response != null && response.status) {
                 val historyList = response.data
-                if (!historyList.isNullOrEmpty()) {
+                if (historyList.isNotEmpty()) {
                     val isPunchTiming = historyList.flatMap { it.timings }
                     isLoadPunchHistoryData(isPunchTiming)
                 }
+            } else {
+                rcyPunchList!!.visibility = View.GONE
+                lblNoRecordsFound!!.visibility = View.VISIBLE
+                lblNoRecordsFound!!.text = response!!.message
             }
         }
+    }
 
-
-
-
+    private fun isLoadYear() {
         val years = (2025 downTo 2001).map { it.toString() }
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, years)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -218,7 +237,8 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
     private fun isLoadData(isStaffReport: List<StaffAttendanceReportData>) {
         if (isStaffReport.isNotEmpty()) {
             Constant.executeAfterDelay {
-
+                binding.recycleAttendanceReports.visibility = View.VISIBLE
+                binding.lblNoRecords.visibility = View.GONE
                 isStaffAttendanceReportAdapter =
                     StaffAttendanceReportAdapter(
                         isStaffReport,
@@ -230,6 +250,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
             }
         } else {
             binding.recycleAttendanceReports.visibility = View.GONE
+            binding.lblNoRecords.visibility = View.VISIBLE
         }
     }
 
@@ -290,7 +311,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
                 } else {
                     binding.rytGPSRedirect.visibility = View.VISIBLE
                     binding.rytPresentlayout.visibility = View.GONE
-                    binding.lblErrorMessage.visibility = View.GONE
+                    binding.rytErrorMessage.visibility = View.GONE
                 }
             } else {
                 Toast.makeText(this, R.string.Permission_denied, Toast.LENGTH_SHORT).show()
@@ -299,7 +320,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
     }
 
     private fun getCurrentLocation(type: String) {
-       binding.rytProgressBar.visibility = View.VISIBLE
+        binding.rytProgressBar.visibility = View.VISIBLE
         val locationHelper = LocationHelper(this, this, "current")
         locationHelper.getFreshLocation()
     }
@@ -310,6 +331,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
             appViewModel?.getStaffLocations(it, this)
         }
     }
+
     fun isPunchAttendance() {
 
         val jsonObject = JsonObject()
@@ -323,7 +345,6 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
             appViewModel?.punchAttendance(it, jsonObject, this)
         }
     }
-
 
 
     fun getStaffAttendanceReport(selectedYear: String, selectedMonth: String) {
@@ -362,7 +383,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
                 getCurrentLocation("new")
             } else {
                 binding.rytGPSRedirect.setVisibility(View.VISIBLE)
-                binding.lblErrorMessage.setVisibility(View.GONE)
+                binding.rytErrorMessage.setVisibility(View.GONE)
                 binding.rytPresentlayout.setVisibility(View.GONE)
             }
         }
@@ -477,6 +498,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
             }
 
             R.id.btnHistory -> {
+                isLoadYear()
                 isBackgroundChange(binding.btnHistory)
             }
 
@@ -528,6 +550,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
     private fun putAttendanceDataAPI(b: Boolean) {
 
     }
+
     private fun authenticatStart() {
 
         val executor = ContextCompat.getMainExecutor(this)
@@ -598,7 +621,6 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
     override fun onGPSStatusChanged(isGPSEnabled: Boolean) {
         getLocationPermissions()
         Toast.makeText(this, "GPS Enabled: $isGPSEnabled", Toast.LENGTH_SHORT).show()
-
     }
 
     override fun onLocationReturn(latitude: Double, longitude: Double, type: String?) {
@@ -618,7 +640,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
         var isStaffNearByLocation: Boolean? = false
         try {
             for (i in isStaffLocation.indices) {
-                if (isStaffLocation[i].latitude.toString() != "" && isStaffLocation[i].longitude.toString() != "" && isStaffLocation[i].distance != "") {
+                if (isStaffLocation[i].latitude != "" && isStaffLocation[i].longitude != "" && isStaffLocation[i].distance != "") {
                     val isGetDistance: Float = isDistanceCalculation.calculateDistance(
                         isLatitude!!.toDouble(),
                         isLongitude!!.toDouble(),
@@ -637,10 +659,10 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
         }
 
         if (isStaffNearByLocation!!) {
-            binding.lblErrorMessage.visibility = View.GONE
+            binding.rytErrorMessage.visibility = View.GONE
             binding.rytPresentlayout.visibility = View.VISIBLE
         } else {
-            binding.lblErrorMessage.visibility = View.VISIBLE
+            binding.rytErrorMessage.visibility = View.VISIBLE
             binding.rytPresentlayout.visibility = View.GONE
         }
     }
@@ -654,6 +676,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
         val view = LayoutInflater.from(this).inflate(R.layout.punch_history, null)
 
         rcyPunchList = view.findViewById<RecyclerView>(R.id.rcyPunchList)
+        lblNoRecordsFound = view.findViewById<TextView>(R.id.lblNoRecordsFound)
         val imgBack = view.findViewById<ImageView>(R.id.imgBack)
         isPunchHistory(data)
 
@@ -678,7 +701,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
         return (dp * density).toInt()
     }
 
-    fun isPunchHistory(data: StaffAttendanceReportData) {
+    private fun isPunchHistory(data: StaffAttendanceReportData) {
 
         isAccessToken?.let {
             appViewModel?.getPunchHistory(it, data.date, this)
@@ -688,6 +711,8 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
     fun isLoadPunchHistoryData(data: List<PunchTimingsData>) {
         if (data.isNotEmpty()) {
             rcyPunchList!!.visibility = View.VISIBLE
+            lblNoRecordsFound!!.visibility = View.GONE
+            lblNoRecordsFound!!.text = "No Punch History found!"
 //            Constant.executeAfterDelay {
             isPunchHistoryAdapter = PunchHistoryAdapter(
                 data, this, Constant.isShimmerViewDisable
@@ -697,6 +722,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
 //            }
         } else {
             rcyPunchList!!.visibility = View.GONE
+            lblNoRecordsFound!!.visibility = View.VISIBLE
         }
     }
 }
