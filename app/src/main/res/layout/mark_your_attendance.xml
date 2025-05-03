@@ -2,9 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rytParent"
-    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".School.MarkYourAttendance.MarkYourAttendance">
 
     <include
@@ -27,11 +27,11 @@
         <TextView
             android:id="@+id/btnCreate"
             style="@style/CustomTextStylePoppinsMedium"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:gravity="center"
             android:background="@drawable/white_bg_radius"
+            android:gravity="center"
             android:text="Punch In"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp" />
@@ -39,10 +39,10 @@
         <TextView
             android:id="@+id/btnHistory"
             style="@style/CustomTextStylePoppinsMedium"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:layout_width="match_parent"
             android:padding="@dimen/eight"
             android:text="@string/Reports"
             android:textColor="@color/dark_blue"
@@ -163,6 +163,33 @@
 
         </RelativeLayout>
 
+        <RelativeLayout
+            android:id="@+id/rytNoLocationList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/imgLocationNeeded"
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"
+                android:paddingHorizontal="20dp"
+                android:src="@drawable/need_location_access" />
+
+            <TextView
+                android:id="@+id/lblNoLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imgLocationNeeded"
+                android:gravity="center"
+                android:padding="20dp"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="15dp" />
+
+        </RelativeLayout>
+
 
         <RelativeLayout
             android:id="@+id/rytPresentlayout"
@@ -171,35 +198,35 @@
             android:layout_centerInParent="true"
             android:visibility="gone">
 
+            <ImageView
+                android:id="@+id/imgMarkAttendance"
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"
+                android:paddingHorizontal="20dp"
+                android:src="@drawable/geometric" />
+
             <TextView
                 android:id="@+id/lblInstruction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/imgMarkAttendance"
                 android:gravity="center"
                 android:padding="20dp"
                 android:text="@string/mark_attendance_instruction"
                 android:textColor="@color/black"
                 android:textSize="15dp" />
 
-            <ImageView
-                android:id="@+id/imgMarkAttendance"
-                android:layout_width="wrap_content"
-                android:layout_height="200dp"
-                android:layout_below="@+id/lblInstruction"
-                android:paddingHorizontal="20dp"
-                android:src="@drawable/geometric" />
-
 
             <TextView
                 android:id="@+id/btnPresent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/imgMarkAttendance"
+                android:layout_below="@+id/lblInstruction"
                 android:layout_centerHorizontal="true"
-                android:layout_marginHorizontal="50dp"
+                android:layout_marginHorizontal="@dimen/hundred"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/rect_blue_light_radious"
-                android:padding="10dp"
+                android:background="@drawable/btn_green"
+                android:padding="@dimen/seven"
                 android:text="@string/punch"
                 android:textAlignment="center"
                 android:textColor="@color/white"
@@ -224,20 +251,38 @@
             </RelativeLayout>
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/lblErrorMessage"
+        <RelativeLayout
+            android:id="@+id/rytErrorMessage"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginHorizontal="10dp"
+            android:visibility="gone"
             android:background="@drawable/rect_btn_red"
-            android:padding="20dp"
-            android:text="@string/outside_of_the_location"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="15dp"
-            android:textStyle="bold"
-            android:visibility="gone" />
+            android:layout_height="wrap_content">
+
+
+            <ImageView
+                android:id="@+id/imgNotInDistance"
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"
+                android:paddingHorizontal="20dp"
+                android:src="@drawable/need_location_access" />
+
+            <TextView
+                android:id="@+id/lblErrorMessage"
+                android:layout_width="wrap_content"
+                android:layout_below="@+id/imgNotInDistance"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:text="@string/outside_of_the_location"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                 />
+
+        </RelativeLayout>
+
 
     </RelativeLayout>
 
@@ -270,6 +315,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:background="@android:color/transparent"
+                    android:gravity="center"
                     android:spinnerMode="dropdown" />
 
                 <ImageView
@@ -284,7 +330,7 @@
 
             <RelativeLayout
                 android:id="@+id/rytMonths"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/one_fifty"
                 android:layout_height="@dimen/fifty"
                 android:layout_marginStart="@dimen/five"
                 android:layout_marginEnd="@dimen/thirty"
@@ -293,19 +339,19 @@
 
                 <Spinner
                     android:id="@+id/spinnerMonths"
-                    android:layout_width="@dimen/hundred"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:gravity="center"
                     android:background="@android:color/transparent"
+                    android:gravity="center"
                     android:spinnerMode="dropdown" />
 
                 <ImageView
                     android:id="@+id/imgMonthDropDown"
                     android:layout_width="30dp"
-                    android:layout_toEndOf="@+id/spinnerMonths"
                     android:layout_height="30dp"
                     android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/spinnerMonths"
                     android:src="@drawable/ic_drop_down" />
 
             </RelativeLayout>
@@ -313,9 +359,9 @@
         </LinearLayout>
 
         <RelativeLayout
-            android:layout_below="@+id/lnrSpinners"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lnrSpinners">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycleAttendanceReports"
@@ -327,13 +373,13 @@
 
             <TextView
                 android:id="@+id/lblNoRecords"
-                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:textSize="15dp"
+                android:text=""
                 android:textColor="@color/black"
-                android:text=""/>
+                android:textSize="15dp"
+                android:visibility="gone" />
 
         </RelativeLayout>
 

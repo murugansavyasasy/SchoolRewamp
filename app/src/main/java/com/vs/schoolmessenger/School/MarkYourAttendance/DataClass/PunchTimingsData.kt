@@ -1,7 +1,8 @@
-package com.vs.schoolmessenger.School.MarkYourAttendance
+package com.vs.schoolmessenger.School.MarkYourAttendance.DataClass
 
 import com.google.gson.annotations.SerializedName
 import com.vs.schoolmessenger.Repository.ResponseKeys
+import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchTypes
 
 data class PunchTimingsData(
     @SerializedName(ResponseKeys.time) val time: String,
@@ -9,6 +10,3 @@ data class PunchTimingsData(
     @SerializedName(ResponseKeys.device_id) val device_id: String,
     @SerializedName(ResponseKeys.punch_type) val punch_type: PunchTypes
 )
-
-
-

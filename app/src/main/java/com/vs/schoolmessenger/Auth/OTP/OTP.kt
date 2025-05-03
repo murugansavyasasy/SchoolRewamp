@@ -60,7 +60,8 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
         authViewModel = ViewModelProvider(this).get(Auth::class.java)
         authViewModel!!.init()
         isOtpTitleLoad()
-        binding.lblContactUs.paintFlags = binding.lblContactUs.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+        binding.lblContactUs.paintFlags =
+            binding.lblContactUs.paintFlags or Paint.UNDERLINE_TEXT_FLAG
         authViewModel!!.isOtpResponse?.observe(this) { response ->
             if (response != null) {
                 val status = response.status
@@ -110,7 +111,7 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
                                     startActivity(intent)
                                 }
                             } else if (Constant.user_data!![0].user_details.is_parent) {
-                                Constant.isParentChoose=true
+                                Constant.isParentChoose = true
                                 if (Constant.user_data!![0].user_details.child_details.size > 1) {
                                     val intent = Intent(this@OTP, PrioritySelection::class.java)
                                     startActivity(intent)
@@ -161,28 +162,33 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
         smsBroadcastReceiver = MySMSBroadcastReceiver().apply {
             otpListener = { otp ->
                 runOnUiThread {
-                    Log.d("YOUR OTP" ,otp)
+                    Log.d("YOUR OTP", otp)
                     otp.forEachIndexed { index, char ->
-                        when (index){
+                        when (index) {
                             0 -> {
                                 binding.txtOtp1.setText(char.toString())
                             }
+
                             1 -> {
                                 binding.txtOtp2.setText(char.toString())
                             }
+
                             2 -> {
                                 binding.txtOtp3.setText(char.toString())
                             }
+
                             3 -> {
                                 binding.txtOtp4.setText(char.toString())
                             }
+
                             4 -> {
                                 binding.txtOtp5.setText(char.toString())
                             }
+
                             5 -> {
                                 binding.txtOtp6.setText(char.toString())
                             }
-                            }
+                        }
 
                     }
                     isOtpValidate(otp)
@@ -192,7 +198,7 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
 
         smsBroadcastReceiver = MySMSBroadcastReceiver()
         val filter = IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION)
-        registerReceiver(smsBroadcastReceiver, filter,RECEIVER_NOT_EXPORTED)
+        registerReceiver(smsBroadcastReceiver, filter, RECEIVER_NOT_EXPORTED)
     }
 
     override fun onPause() {
@@ -315,7 +321,6 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
                 isSecondNumber = numberList[1]
             }
         }
-
 
         val dialog = BottomSheetDialog(this)
         val view = layoutInflater.inflate(R.layout.bottom_textview_showing, null)

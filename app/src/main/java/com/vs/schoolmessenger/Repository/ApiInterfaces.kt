@@ -21,10 +21,10 @@ import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
 import com.vs.schoolmessenger.School.Communication.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.VoiceDetails
-import com.vs.schoolmessenger.School.MarkYourAttendance.LocationHistoryResponse
-import com.vs.schoolmessenger.School.MarkYourAttendance.PunchHistoryResponse
-import com.vs.schoolmessenger.School.MarkYourAttendance.StaffAttendanceReportResponse
-import com.vs.schoolmessenger.School.MarkYourAttendance.StaffLocationResponse
+import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistoryResponse
+import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchHistoryResponse
+import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffAttendanceReportResponse
+import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffLocationResponse
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET

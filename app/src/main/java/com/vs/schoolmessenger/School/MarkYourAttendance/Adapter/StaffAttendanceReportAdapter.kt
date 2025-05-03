@@ -1,7 +1,6 @@
-package com.vs.schoolmessenger.School.MarkYourAttendance
+package com.vs.schoolmessenger.School.MarkYourAttendance.Adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +9,9 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.Communication.TextHistoryAdapter.DataViewHolder.ShimmerViewHolder
+import com.vs.schoolmessenger.School.Communication.TextHistoryAdapter
+import com.vs.schoolmessenger.School.MarkYourAttendance.Interface.AttendanceReportClickListener
+import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffAttendanceReportData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
@@ -32,7 +33,7 @@ class StaffAttendanceReportAdapter(
         return if (viewType == TYPE_SHIMMER) {
             val shimmerView =
                 ShimmerUtil.wrapWithShimmer(parent, R.layout.giometric_attendance_report_item_list)
-            ShimmerViewHolder(shimmerView)
+            TextHistoryAdapter.DataViewHolder.ShimmerViewHolder(shimmerView)
         } else {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.giometric_attendance_report_item_list, parent, false)
@@ -43,7 +44,7 @@ class StaffAttendanceReportAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
             holder.bind(itemList!![position], position, listener, this) // Pass adapter reference
-        } else if (holder is ShimmerViewHolder) {
+        } else if (holder is TextHistoryAdapter.DataViewHolder.ShimmerViewHolder) {
             holder.startShimmer()
         }
     }

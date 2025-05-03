@@ -16,10 +16,12 @@ import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
 import com.vs.schoolmessenger.School.Communication.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.VoiceDetails
-import com.vs.schoolmessenger.School.MarkYourAttendance.LocationHistoryResponse
-import com.vs.schoolmessenger.School.MarkYourAttendance.PunchHistoryResponse
-import com.vs.schoolmessenger.School.MarkYourAttendance.StaffAttendanceReportResponse
-import com.vs.schoolmessenger.School.MarkYourAttendance.StaffLocationResponse
+
+import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistoryResponse
+import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchHistoryResponse
+import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffAttendanceReportResponse
+import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffLocationResponse
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import retrofit2.Call
 import retrofit2.Callback
@@ -869,45 +871,53 @@ class AppServices {
         get() = isLocationHistory
 
 
-    fun getPunchHistory(isToken: String, activity: Activity) {
-        RestClient.apiInterfaces.getPunchHistory(isToken, "", "")
-            ?.enqueue(object : Callback<PunchHistoryResponse?> {
-                override fun onResponse(
-                    call: Call<PunchHistoryResponse?>,
-                    response: Response<PunchHistoryResponse?>
-                ) {
-                    Log.d(
-                        "punch_history_res",
-                        response.code().toString() + " - " + response.toString()
-                    )
-                    if (response.code() == 200) {
-                        if (response.body() != null) {
-                            val status = response.body()!!.status
-                            if (status) {
-                                isPunchHistory.postValue(response.body())
-                            } else {
-                                isPunchHistory.postValue(response.body())
+//    fun getPunchHistory(isToken: String, activity: Activity) {
+//        RestClient.apiInterfaces.getPunchHistory(isToken)
+
+        fun getPunchHistory(isToken: String, isDate: String, activity: Activity) {
+            RestClient.apiInterfaces.getPunchHistory(isToken, isDate, isDate)
+                ?.enqueue(object : Callback<PunchHistoryResponse?> {
+                    override fun onResponse(
+                        call: Call<PunchHistoryResponse?>,
+                        response: Response<PunchHistoryResponse?>
+                    ) {
+                        Log.d(
+                            "punch_history_res",
+                            response.code().toString() + " - " + response.toString()
+                        )
+                        if (response.code() == 200) {
+                            if (response.body() != null) {
+                                val status = response.body()!!.status
+                                if (status) {
+                                    isPunchHistory.postValue(response.body())
+                                } else {
+                                    isPunchHistory.postValue(response.body())
+                                }
                             }
                         }
                     }
-                }
 
-                override fun onFailure(
-                    call: Call<PunchHistoryResponse?>,
-                    t: Throwable
-                ) {
-                    isPunchHistory.postValue(null)
-                    t.printStackTrace()
-                }
-            })
-    }
+                    override fun onFailure(
+                        call: Call<PunchHistoryResponse?>,
+                        t: Throwable
+                    ) {
+                        isPunchHistory.postValue(null)
+                        t.printStackTrace()
+                    }
+                })
+        }
+    
 
     val isPunchHistoryLiveData: LiveData<PunchHistoryResponse?>
         get() = isPunchHistory
 
 
-    fun getGiometricStaffAttendancereport(isToken: String,attendance_dt:String, activity: Activity) {
-        RestClient.apiInterfaces.getStaffAttendanceReport(isToken,attendance_dt)
+    fun getGiometricStaffAttendancereport(
+        isToken: String,
+        attendance_dt: String,
+        activity: Activity
+    ) {
+        RestClient.apiInterfaces.getStaffAttendanceReport(isToken, attendance_dt)
         fun getGiometricStaffAttendancereport(
             isToken: String,
             attendance_dt: String,
@@ -946,44 +956,44 @@ class AppServices {
         }
     }
 
-        val isGiometricStaffAttendanceReportLiveData: LiveData<StaffAttendanceReportResponse?>
+    val isGiometricStaffAttendanceReportLiveData: LiveData<StaffAttendanceReportResponse?>
         get() = isStaffAttendanceReport
 
 
-        fun getGiometricStaffWiseAttendancereport(isToken: String, activity: Activity) {
-            RestClient.apiInterfaces.getStaffWiseAttendanceReport(isToken)
-                ?.enqueue(object : Callback<StaffAttendanceReportResponse?> {
-                    override fun onResponse(
-                        call: Call<StaffAttendanceReportResponse?>,
-                        response: Response<StaffAttendanceReportResponse?>
-                    ) {
-                        Log.d(
-                            "staffwise_attendance_report",
-                            response.code().toString() + " - " + response.toString()
-                        )
-                        if (response.code() == 200) {
-                            if (response.body() != null) {
-                                val status = response.body()!!.status
-                                if (status) {
-                                    isStaffWiseAttendanceReport.postValue(response.body())
-                                } else {
-                                    isStaffWiseAttendanceReport.postValue(response.body())
-                                }
+    fun getGiometricStaffWiseAttendancereport(isToken: String, activity: Activity) {
+        RestClient.apiInterfaces.getStaffWiseAttendanceReport(isToken)
+            ?.enqueue(object : Callback<StaffAttendanceReportResponse?> {
+                override fun onResponse(
+                    call: Call<StaffAttendanceReportResponse?>,
+                    response: Response<StaffAttendanceReportResponse?>
+                ) {
+                    Log.d(
+                        "staffwise_attendance_report",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isStaffWiseAttendanceReport.postValue(response.body())
+                            } else {
+                                isStaffWiseAttendanceReport.postValue(response.body())
                             }
                         }
                     }
+                }
 
-                    override fun onFailure(
-                        call: Call<StaffAttendanceReportResponse?>,
-                        t: Throwable
-                    ) {
-                        isStaffWiseAttendanceReport.postValue(null)
-                        t.printStackTrace()
-                    }
-                })
-        }
+                override fun onFailure(
+                    call: Call<StaffAttendanceReportResponse?>,
+                    t: Throwable
+                ) {
+                    isStaffWiseAttendanceReport.postValue(null)
+                    t.printStackTrace()
+                }
+            })
 
-        val isGiometricStaffWiseAttendanceReportLiveData: LiveData<StaffAttendanceReportResponse?>
+    }
+
+    val isGiometricStaffWiseAttendanceReportLiveData: LiveData<StaffAttendanceReportResponse?>
         get() = isStaffWiseAttendanceReport
-
 }

@@ -16,10 +16,10 @@ import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
 import com.vs.schoolmessenger.School.Communication.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.VoiceDetails
-import com.vs.schoolmessenger.School.MarkYourAttendance.LocationHistoryResponse
-import com.vs.schoolmessenger.School.MarkYourAttendance.PunchHistoryResponse
-import com.vs.schoolmessenger.School.MarkYourAttendance.StaffAttendanceReportResponse
-import com.vs.schoolmessenger.School.MarkYourAttendance.StaffLocationResponse
+import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistoryResponse
+import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchHistoryResponse
+import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffAttendanceReportResponse
+import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffLocationResponse
 
 class App(application: Application) : AndroidViewModel(application) {
 
@@ -212,11 +212,11 @@ class App(application: Application) : AndroidViewModel(application) {
         apiRepositories?.getStaffLocations(isToken, activity)
     }
 
-    fun getPunchHistory(isToken: String, jsonObject: JsonObject, activity: Activity) {
-        apiRepositories?.getPunchHistory(isToken, activity)
+    fun getPunchHistory(isToken: String, isDate: String, activity: Activity) {
+        apiRepositories?.getPunchHistory(isToken,isDate, activity)
     }
 
-    fun getLocationHistory(isToken: String, jsonObject: JsonObject, activity: Activity) {
+    fun getLocationHistory(isToken: String, activity: Activity) {
         apiRepositories?.getLocationHistory(isToken, activity)
     }
 

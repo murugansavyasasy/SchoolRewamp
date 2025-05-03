@@ -30,6 +30,7 @@ object ResponseKeys {
     const val out_time = "out_time"
     const val working_hours = "working_hours"
     const val timings = "timings"
+    const val staff_or_student = "staff_or_student"
     const val punch_type = "punch_type"
     const val value = "value"
     const val device_model = "device_model"
@@ -45,6 +46,7 @@ object ResponseKeys {
     const val sent_on = "sent_on"
     const val school_id = "school_id"
     const val header_id = "header_id"
+    const val location_id = "location_id"
 
     const val homework = "homework"
     const val file_path = "file_path"
