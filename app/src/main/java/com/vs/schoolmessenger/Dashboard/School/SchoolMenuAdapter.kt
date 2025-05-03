@@ -140,12 +140,29 @@ class SchoolMenuAdapter(
                 }
 
                 Constant.M_SCHEDULE_EXAM_TEST -> {
-                    imgMenu.setImageResource(R.drawable.exam_icon)
+                    imgMenu.setImageResource(R.drawable.schedule_exam_icon)
                 }
 
                 Constant.M_MESSAGES_FROM_MANAGEMENT -> {
                     imgMenu.setImageResource(R.drawable.message_f_management)
                 }
+
+                Constant.M_FINANCE -> {
+                    imgMenu.setImageResource(R.drawable.finance_icon)
+                }
+
+                Constant.M_SCHOOL_CLASS_EVENTS -> {
+                    imgMenu.setImageResource(R.drawable.finance_icon)
+                }
+
+
+                Constant.M_ATTACHMENTS -> {
+                    imgMenu.setImageResource(R.drawable.attachement_icon)
+                }
+
+
+
+
 
 
 
@@ -170,7 +187,7 @@ class SchoolMenuAdapter(
                 }
 
                 Constant.M_VERY_IMPORTANT_INFO -> {
-                    imgMenu.setImageResource(R.drawable.importent_info)
+                    imgMenu.setImageResource(R.drawable.very_important_icon)
                 }
                 Constant.M_MARK_YOUR_ATTENDANCE -> {
                     imgMenu.setImageResource(R.drawable.fee_pending_reports)

@@ -6,7 +6,6 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
-    <color name="gray">#e6e5eb</color>
     <color name="black1">#646060</color>
     <color name="jumbo">#87878a</color>
     <color name="teal">#53c0bd</color>
@@ -115,6 +114,7 @@
     <color name="navi_blue4">#c7eaff</color>
     <color name="navi_blue5">#2972b6</color>
     <color name="navi_blue6">#3f87f2</color>
+    <color name="gray">#e6e5eb</color>
 
     <color name="system_blue">#9DD6FD</color>
     <color name="light_violet">#E3F1FB</color>

@@ -1,3 +1,7 @@
 package com.vs.schoolmessenger.CommonScreens
 
-data class ImagePickingData(val isImage: Int)
+import android.net.Uri
+
+
+data class ImagePickingData(val isImage: Int
+)

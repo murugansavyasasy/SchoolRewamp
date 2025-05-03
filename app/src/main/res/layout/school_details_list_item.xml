@@ -18,8 +18,8 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardImage"
-            android:layout_width="70dp"
-            android:layout_height="80dp"
+            android:layout_width="@dimen/fifty"
+            android:layout_height="@dimen/fifty"
             app:cardCornerRadius="@dimen/ten"
             android:layout_centerVertical="true"
             android:layout_gravity="center"
@@ -27,8 +27,8 @@
 
             <ImageView
                 android:id="@+id/imgSchool"
-                android:layout_width="@dimen/seventy"
-                android:layout_height="@dimen/hundred"
+                android:layout_width="@dimen/fifty"
+                android:layout_height="@dimen/fifty"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"
                 android:src="@drawable/splash_icon1" />

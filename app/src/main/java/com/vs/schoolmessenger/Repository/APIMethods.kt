@@ -29,6 +29,7 @@ object APIMethods {
     const val isSendVoice = "comm/voice/send-voice"
     const val isUpdateStatusArchive = "comm/communication/read-status-update-archive"
     const val isGetAcademicYear = "comm/recipient/get-academic-year-list"
+    const val isHomeWorkDetails="comm/homework/get-homework-list"
 
     const val send_homework = "comm/homework/send-homework"
     const val homework_reports = "comm/homework/get-homework-report"

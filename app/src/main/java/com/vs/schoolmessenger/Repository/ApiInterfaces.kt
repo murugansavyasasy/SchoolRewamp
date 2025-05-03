@@ -20,6 +20,7 @@ import com.vs.schoolmessenger.Parent.Communication.VoiceDataResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
+import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffAttendanceReportResponse
@@ -192,6 +193,14 @@ interface ApiInterfaces {
     fun isGetAcademicYear(
         @Header("Authorization") token: String,
     ): Call<AcademicYearResponse?>
+
+
+
+    //get Homeworkdetails
+    @GET(APIMethods.isHomeWorkDetails)
+    fun isHomeWorkDetails(
+        @Header("Authorization") token: String,
+    ): Call<GetHomeworkData?>
 
 
 //    @Body request: StatusArchiveModelRequest

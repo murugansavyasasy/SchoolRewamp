@@ -308,6 +308,9 @@
     <string name="star">**********</string>
     <string name="logintext">Login</string>
     <string name="see_less">see less</string>
+    <string name="academic_year">Academic Year</string>
+    <string name="search">Search</string>
+    <string name="today">Today</string>
 
     <string name="mark_attendance_instruction">Tap on the <b>\"Punch\"</b> button to record your attendance for the day. A confirmation message will appear once your attendance is successfully marked.</string>
     <string name="outside_of_the_location">Note : You are outside the institutes boundary. you will not be able to mark your attendance.\n\nPlease try again when you are within the designated area.</string>

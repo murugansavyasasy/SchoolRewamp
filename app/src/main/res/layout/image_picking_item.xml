@@ -5,6 +5,7 @@
     android:padding="@dimen/ten">
 
     <RelativeLayout
+
         android:layout_width="@dimen/eighty"
         android:layout_height="@dimen/eighty">
 
@@ -15,13 +16,14 @@
             android:src="@drawable/add_image"></ImageView>
 
         <ImageView
-
+            android:background="@drawable/white_circle_bg"
             android:id="@+id/imgDelete"
+            android:padding="@dimen/five"
             android:layout_width="@dimen/twenty_five"
             android:layout_height="@dimen/twenty_five"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:src="@drawable/delete_icon">
+            android:layout_alignParentTop="true"
+            android:src="@drawable/del_icon">
 
         </ImageView>
 

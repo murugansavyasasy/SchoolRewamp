@@ -2,7 +2,6 @@ package com.vs.schoolmessenger.Repository
 
 import android.app.Activity
 import android.util.Log
-
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.JsonObject
@@ -16,6 +15,7 @@ import com.vs.schoolmessenger.Parent.Communication.VoiceDataResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
+import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffAttendanceReportResponse
@@ -44,6 +44,9 @@ class AppServices {
     var isUpdateStatusArchive: MutableLiveData<StatusArchiveResponse?>
     var isAcademicYear: MutableLiveData<AcademicYearResponse?>
     var isUpdateStatusCommunication: MutableLiveData<StatusArchiveResponse?>
+    var isHomeWorkDetails: MutableLiveData<GetHomeworkData?>
+
+
     var isPunchAttendance: MutableLiveData<StatusMessageModel?>
     var isAddLocation: MutableLiveData<StatusMessageModel?>
     var isRemoveLocation: MutableLiveData<StatusMessageModel?>
@@ -53,6 +56,7 @@ class AppServices {
     var isPunchHistory: MutableLiveData<PunchHistoryResponse?>
     var isStaffAttendanceReport: MutableLiveData<StaffAttendanceReportResponse?>
     var isStaffWiseAttendanceReport: MutableLiveData<StaffAttendanceReportResponse?>
+
 
     init {
         client_auth = RestClient()
@@ -72,6 +76,9 @@ class AppServices {
         isUpdateStatusArchive = MutableLiveData()
         isAcademicYear = MutableLiveData()
         isUpdateStatusCommunication = MutableLiveData()
+        isHomeWorkDetails = MutableLiveData()
+
+
         isPunchAttendance = MutableLiveData()
         isAddLocation = MutableLiveData()
         isRemoveLocation = MutableLiveData()
@@ -183,8 +190,13 @@ class AppServices {
     val isGetStaffListLiveData: LiveData<NameAndIdsResponse?>
         get() = isGetStaffList
 
-    fun isGetSubjectList(isToken: String, isAcademicYearId: Int, isSection: String, activity: Activity) {
-        RestClient.apiInterfaces.getSubjectList(isToken,isAcademicYearId,isSection)
+    fun isGetSubjectList(
+        isToken: String,
+        isAcademicYearId: Int,
+        isSection: String,
+        activity: Activity
+    ) {
+        RestClient.apiInterfaces.getSubjectList(isToken, isAcademicYearId, isSection)
             ?.enqueue(object : Callback<NameAndIdsResponse?> {
                 override fun onResponse(
                     call: Call<NameAndIdsResponse?>, response: Response<NameAndIdsResponse?>
@@ -216,7 +228,7 @@ class AppServices {
 
 
     fun isGetStandardSection(isToken: String, isAcademicYearId: Int, activity: Activity) {
-        RestClient.apiInterfaces.getStandard(isToken,isAcademicYearId)
+        RestClient.apiInterfaces.getStandard(isToken, isAcademicYearId)
             ?.enqueue(object : Callback<StandardResponse?> {
                 override fun onResponse(
                     call: Call<StandardResponse?>, response: Response<StandardResponse?>
@@ -247,8 +259,13 @@ class AppServices {
         get() = isGetStandardSection
 
 
-    fun isGetStudentList(isToken: String, isSection: String, isAcademicYearId: Int, activity: Activity) {
-        RestClient.apiInterfaces.getStudentList(isToken, isSection,isAcademicYearId)
+    fun isGetStudentList(
+        isToken: String,
+        isSection: String,
+        isAcademicYearId: Int,
+        activity: Activity
+    ) {
+        RestClient.apiInterfaces.getStudentList(isToken, isSection, isAcademicYearId)
             ?.enqueue(object : Callback<NameAndIdsResponse?> {
                 override fun onResponse(
                     call: Call<NameAndIdsResponse?>, response: Response<NameAndIdsResponse?>
@@ -347,7 +364,7 @@ class AppServices {
 
 
     fun isGetGroupList(isToken: String, isAcademicYearId: Int, activity: Activity) {
-        RestClient.apiInterfaces.isGroupList(isToken,isAcademicYearId)
+        RestClient.apiInterfaces.isGroupList(isToken, isAcademicYearId)
             ?.enqueue(object : Callback<NameAndIdsResponse?> {
                 override fun onResponse(
                     call: Call<NameAndIdsResponse?>,
@@ -378,8 +395,6 @@ class AppServices {
 
     val isGetGroupLiveData: LiveData<NameAndIdsResponse?>
         get() = isGetGroupList
-
-
 
 
     fun isGetVoiceHistory(isToken: String, isEmergency: String, activity: Activity) {
@@ -449,7 +464,6 @@ class AppServices {
         get() = isGetTextHistory
 
 
-
     fun isSendText(isToken: String, jsonObject: JsonObject, activity: Activity) {
         RestClient.apiInterfaces.isSendText(isToken, jsonObject)
             ?.enqueue(object : Callback<TextSendResponse?> {
@@ -476,7 +490,6 @@ class AppServices {
 
     val isSendTextLiveData: LiveData<TextSendResponse?>
         get() = isSendText
-
 
 
     fun isUpdateStatusArchive(isToken: String, jsonObject: JsonObject, activity: Activity) {
@@ -539,11 +552,10 @@ class AppServices {
         get() = isUpdateStatusCommunication
 
 
-
-    fun isSendVoice(isToken:String,jsonObject: JsonObject, activity: Activity) {
+    fun isSendVoice(isToken: String, jsonObject: JsonObject, activity: Activity) {
 
         RestClient.changeApiBaseUrl(SharedPreference.getBaseUrl(activity).toString())
-        RestClient.apiInterfaces.isSendVoice(isToken,jsonObject)
+        RestClient.apiInterfaces.isSendVoice(isToken, jsonObject)
             ?.enqueue(object : Callback<TextSendResponse?> {
                 override fun onResponse(
                     call: Call<TextSendResponse?>,
@@ -613,8 +625,38 @@ class AppServices {
         get() = isAcademicYear
 
 
-    fun punchAttendance(isToken:String,jsonObject: JsonObject, activity: Activity) {
-        RestClient.apiInterfaces.punchGiometricAttendance(isToken,jsonObject)
+    //    //get HomeworkDetails
+    fun isHomeWorkDetails(isToken: String, activity: Activity) {
+        RestClient.apiInterfaces.isHomeWorkDetails(isToken)
+            ?.enqueue(object : Callback<GetHomeworkData?> {
+                override fun onResponse(
+                    call: Call<GetHomeworkData?>,
+                    response: Response<GetHomeworkData?>
+                ) {
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isHomeWorkDetails.postValue(response.body())
+                            } else {
+                                isHomeWorkDetails.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<GetHomeworkData?>, t: Throwable) {
+                    isHomeWorkDetails.postValue(null)
+
+                }
+            })
+    }
+
+    val isHomeWorkDetailsLiveData: LiveData<GetHomeworkData?>
+        get() = isHomeWorkDetails
+
+    fun punchAttendance(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        RestClient.apiInterfaces.punchGiometricAttendance(isToken, jsonObject)
             ?.enqueue(object : Callback<StatusMessageModel?> {
                 override fun onResponse(
                     call: Call<StatusMessageModel?>,
@@ -628,9 +670,13 @@ class AppServices {
                         if (response.body() != null) {
                             val status = response.body()!!.status
                             if (status) {
-                                isPunchAttendance.postValue(response.body())
+//                                isHomeWorkDetails.postValue(response.body())
                             } else {
+//                                isHomeWorkDetails.postValue(response.body())
                                 isPunchAttendance.postValue(response.body())
+//                            } else {
+//                                isPunchAttendance.postValue(response.body())
+//                            }
                             }
                         }
                     }
@@ -639,6 +685,7 @@ class AppServices {
                 override fun onFailure(call: Call<StatusMessageModel?>, t: Throwable) {
                     isPunchAttendance.postValue(null)
                     t.printStackTrace()
+                    //   }
                 }
             })
     }
@@ -647,10 +694,8 @@ class AppServices {
         get() = isPunchAttendance
 
 
-
-
-    fun addLocation(isToken:String,jsonObject: JsonObject, activity: Activity) {
-        RestClient.apiInterfaces.addGiometricLocation(isToken,jsonObject)
+    fun addLocation(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        RestClient.apiInterfaces.addGiometricLocation(isToken, jsonObject)
             ?.enqueue(object : Callback<StatusMessageModel?> {
                 override fun onResponse(
                     call: Call<StatusMessageModel?>,
@@ -683,8 +728,8 @@ class AppServices {
         get() = isAddLocation
 
 
-    fun removeLocation(isToken:String,jsonObject: JsonObject, activity: Activity) {
-        RestClient.apiInterfaces.removeLocation(isToken,jsonObject)
+    fun removeLocation(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        RestClient.apiInterfaces.removeLocation(isToken, jsonObject)
             ?.enqueue(object : Callback<StatusMessageModel?> {
                 override fun onResponse(
                     call: Call<StatusMessageModel?>,
@@ -717,8 +762,8 @@ class AppServices {
         get() = isRemoveLocation
 
 
-    fun updateLocation(isToken:String,jsonObject: JsonObject, activity: Activity) {
-        RestClient.apiInterfaces.updateLocation(isToken,jsonObject)
+    fun updateLocation(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        RestClient.apiInterfaces.updateLocation(isToken, jsonObject)
             ?.enqueue(object : Callback<StatusMessageModel?> {
                 override fun onResponse(
                     call: Call<StatusMessageModel?>,
@@ -751,7 +796,7 @@ class AppServices {
         get() = isUpdateLocation
 
 
-    fun getStaffLocations(isToken:String, activity: Activity) {
+    fun getStaffLocations(isToken: String, activity: Activity) {
         RestClient.apiInterfaces.getStaffLocations(isToken)
             ?.enqueue(object : Callback<StaffLocationResponse?> {
                 override fun onResponse(
@@ -774,7 +819,10 @@ class AppServices {
                     }
                 }
 
-                override fun onFailure(call: Call<StaffLocationResponse?>, t: Throwable) {
+                override fun onFailure(
+                    call: Call<StaffLocationResponse?>,
+                    t: Throwable
+                ) {
                     isStaffLocations.postValue(null)
                     t.printStackTrace()
                 }
@@ -784,7 +832,7 @@ class AppServices {
     val isStaffLocationsLiveData: LiveData<StaffLocationResponse?>
         get() = isStaffLocations
 
-    fun getLocationHistory(isToken:String, activity: Activity) {
+    fun getLocationHistory(isToken: String, activity: Activity) {
         RestClient.apiInterfaces.getLocationHistory(isToken)
             ?.enqueue(object : Callback<LocationHistoryResponse?> {
                 override fun onResponse(
@@ -807,7 +855,10 @@ class AppServices {
                     }
                 }
 
-                override fun onFailure(call: Call<LocationHistoryResponse?>, t: Throwable) {
+                override fun onFailure(
+                    call: Call<LocationHistoryResponse?>,
+                    t: Throwable
+                ) {
                     isLocationHistory.postValue(null)
                     t.printStackTrace()
                 }
@@ -818,8 +869,11 @@ class AppServices {
         get() = isLocationHistory
 
 
-    fun getPunchHistory(isToken:String, isDate: String, activity: Activity) {
-        RestClient.apiInterfaces.getPunchHistory(isToken,isDate,isDate)
+//    fun getPunchHistory(isToken: String, activity: Activity) {
+//        RestClient.apiInterfaces.getPunchHistory(isToken)
+
+    fun getPunchHistory(isToken: String, isDate: String, activity: Activity) {
+        RestClient.apiInterfaces.getPunchHistory(isToken, isDate, isDate)
             ?.enqueue(object : Callback<PunchHistoryResponse?> {
                 override fun onResponse(
                     call: Call<PunchHistoryResponse?>,
@@ -841,19 +895,28 @@ class AppServices {
                     }
                 }
 
-                override fun onFailure(call: Call<PunchHistoryResponse?>, t: Throwable) {
+                override fun onFailure(
+                    call: Call<PunchHistoryResponse?>,
+                    t: Throwable
+                ) {
                     isPunchHistory.postValue(null)
                     t.printStackTrace()
                 }
             })
     }
 
+
     val isPunchHistoryLiveData: LiveData<PunchHistoryResponse?>
         get() = isPunchHistory
 
 
-    fun getGiometricStaffAttendancereport(isToken:String, attendance_dt: String, activity: Activity) {
-        RestClient.apiInterfaces.getStaffAttendanceReport(isToken,attendance_dt)
+    fun getGiometricStaffAttendancereport(
+        isToken: String,
+        attendance_dt: String,
+        activity: Activity
+    ) {
+
+        RestClient.apiInterfaces.getStaffAttendanceReport(isToken, attendance_dt)
             ?.enqueue(object : Callback<StaffAttendanceReportResponse?> {
                 override fun onResponse(
                     call: Call<StaffAttendanceReportResponse?>,
@@ -875,18 +938,22 @@ class AppServices {
                     }
                 }
 
-                override fun onFailure(call: Call<StaffAttendanceReportResponse?>, t: Throwable) {
+                override fun onFailure(
+                    call: Call<StaffAttendanceReportResponse?>,
+                    t: Throwable
+                ) {
                     isStaffAttendanceReport.postValue(null)
                     t.printStackTrace()
                 }
             })
     }
 
+
     val isGiometricStaffAttendanceReportLiveData: LiveData<StaffAttendanceReportResponse?>
         get() = isStaffAttendanceReport
 
 
-    fun getGiometricStaffWiseAttendancereport(isToken:String, activity: Activity) {
+    fun getGiometricStaffWiseAttendancereport(isToken: String, activity: Activity) {
         RestClient.apiInterfaces.getStaffWiseAttendanceReport(isToken)
             ?.enqueue(object : Callback<StaffAttendanceReportResponse?> {
                 override fun onResponse(
@@ -908,7 +975,11 @@ class AppServices {
                         }
                     }
                 }
-                override fun onFailure(call: Call<StaffAttendanceReportResponse?>, t: Throwable) {
+
+                override fun onFailure(
+                    call: Call<StaffAttendanceReportResponse?>,
+                    t: Throwable
+                ) {
                     isStaffWiseAttendanceReport.postValue(null)
                     t.printStackTrace()
                 }
@@ -917,5 +988,4 @@ class AppServices {
 
     val isGiometricStaffWiseAttendanceReportLiveData: LiveData<StaffAttendanceReportResponse?>
         get() = isStaffWiseAttendanceReport
-
 }

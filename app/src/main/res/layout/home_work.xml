@@ -53,6 +53,9 @@
             android:layout_weight="1"
             android:background="@drawable/white_bg_radius"
             android:gravity="center"
+            android:padding="@dimen/eight"
+            android:textStyle="bold"
+            android:fontFamily="@font/poppins_medium"
             android:text="@string/HomeWork"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"
@@ -69,7 +72,9 @@
             android:text="@string/Reports"
             android:textColor="@color/dark_blue"
             android:textSize="@dimen/thirteen_sp"
-           style="@style/CustomTextStylePoppinsMedium"
+            android:fontFamily="@font/poppins_medium"
+            android:textStyle="bold"
+            style="@style/CustomTextStylePoppinsMedium"
             />
 
     </LinearLayout>
@@ -80,7 +85,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/lnrParent"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <RelativeLayout
             android:id="@+id/rlaTitleDescription"
@@ -236,7 +241,7 @@
         android:layout_marginEnd="@dimen/fifteen"
         android:layout_marginStart="@dimen/fifteen"
         android:layout_marginTop="@dimen/twenty"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <LinearLayout
             android:orientation="horizontal"
@@ -250,7 +255,7 @@
             <TextView
                 android:layout_width="match_parent"
                 style="@style/CustomTextStylePoppinsMedium"
-                android:text="Academic Year"
+                android:text="@string/academic_year"
                 android:layout_weight="0.4"
                 android:textSize=   "@dimen/thirteen"
                 android:layout_height="wrap_content">
@@ -261,7 +266,7 @@
                 style="@style/CustomTextStylePoppinsMedium"
                 android:text="2024-2025"
                 android:paddingEnd="@dimen/fifteen"
-                android:drawableRight="@drawable/downarrow"
+                android:drawableEnd="@drawable/down_arrow"
                 android:layout_weight="0.6"
                 android:textSize="@dimen/ten_sp"
                 android:layout_height="wrap_content">
@@ -287,7 +292,7 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:text="Today"
+                    android:text="@string/today"
                     android:layout_marginStart="@dimen/ten"
                     android:textSize="@dimen/ten_sp"
                     android:textColor="@color/black"
@@ -309,6 +314,8 @@
 
 
             </LinearLayout>
+
+
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="wrap_content"
@@ -438,7 +445,7 @@
             </ImageView>
             <TextView
                 android:layout_width="match_parent"
-                android:hint="Search"
+                android:hint="@string/search"
                 android:text=""
                 android:layout_marginStart="@dimen/five"
                 android:textSize="@dimen/fifteen_sp"
@@ -471,4 +478,5 @@
 
 
 </RelativeLayout>
+
 

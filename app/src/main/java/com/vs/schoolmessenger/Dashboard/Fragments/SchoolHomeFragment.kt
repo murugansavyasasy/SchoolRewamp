@@ -500,6 +500,24 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 }
             }
 
+            //
+            Constant.M_ATTACHMENTS -> {
+                if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
+                    //go to ptm page
+                    LessonPlan::class.java
+                } else {
+                    if (userDetails!!.staff_details.size > 1) {
+                        SchoolList::class.java
+                    } else {
+                        //go to ptm page
+                        LessonPlan::class.java
+                    }
+                }
+            }
+
+
+
+
             Constant.M_VERY_IMPORTANT_INFO -> ImportantInfo::class.java
             Constant.M_FEEDBACK -> ImportantInfo::class.java
 
