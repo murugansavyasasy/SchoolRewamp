@@ -41,26 +41,17 @@ class StudentDetailAdapter(
 
             0 -> {
 
-                holder.binding.rlaStudent.setBackgroundDrawable(
-                    ContextCompat.getDrawable(
-                        context, R.drawable.bg_blue_gradient
+
+                holder.binding.rlaSchoolName.setBackgroundColor(
+                    ContextCompat.getColor(
+                        context, R.color.light_bg_blue
                     )
                 )
-//
-//                holder.binding.rlaSchoolName.setBackgroundColor(
-//                    ContextCompat.getColor(
-//                        context, R.color.light_bg_blue
-//                    )
-//                )
             }
 
             1 -> {
 
-                holder.binding.rlaStudent.setBackgroundDrawable(
-                    ContextCompat.getDrawable(
-                        context, R.drawable.bg_purple_gradient
-                    )
-                )
+
 
                 holder.binding.rlaSchoolName.setBackgroundColor(
                     ContextCompat.getColor(
@@ -70,11 +61,8 @@ class StudentDetailAdapter(
             }
 
             2 -> {
-                holder.binding.rlaStudent.setBackgroundDrawable(
-                    ContextCompat.getDrawable(
-                        context, R.drawable.bg_orange_gradient
-                    )
-                )
+
+
                 holder.binding.rlaSchoolName.setBackgroundColor(
                     ContextCompat.getColor(
                         context, R.color.light_bg_orange
@@ -83,12 +71,6 @@ class StudentDetailAdapter(
             }
 
             3 -> {
-
-                holder.binding.rlaStudent.setBackgroundDrawable(
-                    ContextCompat.getDrawable(
-                        context, R.drawable.bg_green_gradient
-                    )
-                )
                 holder.binding.rlaSchoolName.setBackgroundColor(
                     ContextCompat.getColor(
                         context, R.color.light_bg_green

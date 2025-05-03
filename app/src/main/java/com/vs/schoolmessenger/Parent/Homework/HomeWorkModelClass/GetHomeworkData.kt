@@ -6,8 +6,8 @@ import com.vs.schoolmessenger.Repository.ResponseKeys
 data class GetHomeworkData(
     @SerializedName(ResponseKeys.status)
     val status :Boolean,
-    @SerializedName("message")
+    @SerializedName(ResponseKeys.message)
     val message :String,
-    @SerializedName("data")
+    @SerializedName(ResponseKeys.data)
     val data: ArrayList<GetDateWiseHomeworkData>
 )

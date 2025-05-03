@@ -1,13 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/one_fifty"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="@dimen/ten"
     android:layout_height="@dimen/one_fifty">
-    <ImageView
-        android:id="@+id/ImgPDF"
-        android:layout_width="match_parent"
-        android:scaleType="fitXY"
-        android:layout_margin="@dimen/ten"
-        android:layout_height="match_parent">
-    </ImageView>
+    <androidx.cardview.widget.CardView
 
-</LinearLayout>
+        app:cardCornerRadius="@dimen/ten"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <WebView
+            android:id="@+id/WVThumbnaildocument"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:scaleType="fitXY"
+            android:layout_margin="@dimen/ten"
+            android:layout_height="match_parent">
+
+        </WebView>
+        <ImageView
+            android:id="@+id/ImgPDF"
+            android:layout_width="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/microsoft_word_img"
+            android:layout_margin="@dimen/ten"
+            android:layout_height="match_parent">
+        </ImageView>
+        <ImageView
+            android:id="@+id/imageOrDocumentType"
+            android:layout_gravity="end"
+            android:src="@drawable/pdf"
+            android:layout_marginTop="-30dp"
+            android:layout_width="@dimen/fourty"
+            android:layout_height="@dimen/thirty">
+        </ImageView>
+    </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+</RelativeLayout>

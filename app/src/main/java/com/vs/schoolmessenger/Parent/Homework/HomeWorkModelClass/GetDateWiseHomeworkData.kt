@@ -1,10 +1,11 @@
 package com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass
 
 import com.google.gson.annotations.SerializedName
+import com.vs.schoolmessenger.Repository.ResponseKeys
 
 data class GetDateWiseHomeworkData(
-    @SerializedName("date")
+    @SerializedName(ResponseKeys.date)
     val date:String,
-    @SerializedName("homework")
+    @SerializedName(ResponseKeys.homework)
     val homework:ArrayList<GetHomeworkDetails>
 )

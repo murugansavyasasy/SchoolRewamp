@@ -46,5 +46,12 @@ object ResponseKeys {
     const val school_id = "school_id"
     const val header_id = "header_id"
 
+    const val homework = "homework"
+    const val file_path = "file_path"
+
+
+
+
+
 
 }

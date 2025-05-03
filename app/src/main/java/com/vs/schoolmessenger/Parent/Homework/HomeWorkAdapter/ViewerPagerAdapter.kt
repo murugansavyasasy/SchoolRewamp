@@ -1,18 +1,20 @@
-package com.vs.schoolmessenger.Parent.Homework
+package com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.vs.schoolmessenger.Parent.Homework.FullScreenViewerActivity
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
 import com.vs.schoolmessenger.R
 
 class ViewerPagerAdapter(
     private val fileList: ArrayList<GetFilePathDetails>,
-    private val context: Context
+    private val context: Context,
 ) : RecyclerView.Adapter<ViewerPagerAdapter.PagerViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PagerViewHolder {
@@ -41,7 +43,15 @@ class ViewerPagerAdapter(
                 holder.imageView.setImageResource(R.drawable.txt_file_img)
             }
         }
+//        holder.itemView.setOnClickListener {
+//            val intent = Intent(context, FullScreenViewerActivity::class.java)
+//            intent.putExtra("path", file.path)
+//            intent.putExtra("type", file.type)
+//            context.startActivity(intent)
+//        }
+
     }
+
 
     override fun getItemCount(): Int = fileList.size
 

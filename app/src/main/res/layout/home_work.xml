@@ -85,7 +85,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/lnrParent"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <RelativeLayout
             android:id="@+id/rlaTitleDescription"
@@ -241,7 +241,7 @@
         android:layout_marginEnd="@dimen/fifteen"
         android:layout_marginStart="@dimen/fifteen"
         android:layout_marginTop="@dimen/twenty"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <LinearLayout
             android:orientation="horizontal"
@@ -266,7 +266,7 @@
                 style="@style/CustomTextStylePoppinsMedium"
                 android:text="2024-2025"
                 android:paddingEnd="@dimen/fifteen"
-                android:drawableRight="@drawable/down_arrow"
+                android:drawableEnd="@drawable/down_arrow"
                 android:layout_weight="0.6"
                 android:textSize="@dimen/ten_sp"
                 android:layout_height="wrap_content">

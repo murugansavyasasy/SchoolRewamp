@@ -32,10 +32,8 @@
             android:layout_marginStart="@dimen/ten"
             android:layout_toStartOf="@+id/imgDown"
             android:layout_toEndOf="@+id/imgCalender"
-            android:text=""
             android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"
-            android:textStyle="bold">
+            android:textSize="@dimen/thirteen_sp">
 
         </TextView>
 

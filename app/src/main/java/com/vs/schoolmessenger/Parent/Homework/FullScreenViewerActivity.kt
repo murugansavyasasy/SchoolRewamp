@@ -1,39 +1,149 @@
 package com.vs.schoolmessenger.Parent.Homework
 
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.webkit.WebView
+import android.webkit.WebViewClient
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.ViewerPagerAdapter
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.databinding.HomeWorkParentBinding
+import com.vs.schoolmessenger.databinding.HomeworkViewImageDocumentBinding
+import com.vs.schoolmessenger.databinding.HomeworkViewImageDocumentItemBinding
 
-class FullScreenViewerActivity : AppCompatActivity() {
 
-    private lateinit var viewPager: ViewPager2
+class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>() {
+
+
+    //    private lateinit var viewPager: ViewPager2
     private lateinit var adapter: ViewerPagerAdapter
     private lateinit var fileList: ArrayList<GetFilePathDetails>
     private var position: Int = 0
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.homework_view_image_document)
+    //    private lateinit var webView: WebView
+//    private lateinit var textView: TextView
+    private lateinit var filePath: String
+    private lateinit var fileType: String
+    override fun getViewBinding(): HomeworkViewImageDocumentBinding {
+        return HomeworkViewImageDocumentBinding.inflate(layoutInflater)
+    }
 
-        // Retrieve the file list and position passed from the adapter
+
+    override fun setupViews() {
+        super.setupViews()
+        setUpGradientParent()
+//        appViewModel = ViewModelProvider(this).get(App::class.java)
+//        appViewModel?.init()
+
+
+        filePath = intent.getStringExtra("SelectedDocumentPath") ?: ""
+        Log.d("knowing FilePath", filePath)
+        fileType = intent.getStringExtra("SelectedDocumentType") ?: ""
+        Log.d("knowing FileType", fileType)
+
+
+//        textView = findViewById(R.id.documentTextView)
+
+//        when (fileType.uppercase()) {
+//            "PDF", "DOC", "DOCX", "PPT", "PPTX" -> {
+        binding.documentWebView.visibility = View.VISIBLE
+//                textView.visibility = View.GONE
+        openDocumentInWebView(filePath)
+//            }
+//
+//            "TXT" -> {
+//                webView.visibility = View.GONE
+//                textView.visibility = View.VISIBLE
+//                openTextFile(filePath)
+//            }
+
+//            else -> {
+//                textView.text = "Unsupported file type: $fileType"
+//                textView.visibility = View.VISIBLE
+//                webView.visibility = View.GONE
+//            }
+//        }
         val dataJson = intent.getStringExtra("dataList")
         position = intent.getIntExtra("position", 0)
 
-        // Convert the JSON back to the file list using Gson
-        val gson = Gson()
-        val type = object : TypeToken<ArrayList<GetFilePathDetails>>() {}.type
-        fileList = gson.fromJson(dataJson, type)
+        if (!dataJson.isNullOrEmpty()) {
+            val gson = Gson()
+            val type = object : TypeToken<ArrayList<GetFilePathDetails>>() {}.type
+            fileList = gson.fromJson(dataJson, type)
 
-        // Initialize the ViewPager2
-        viewPager = findViewById(R.id.viewPager)
-        adapter = ViewerPagerAdapter(fileList, this)
-        viewPager.adapter = adapter
+//            viewPager = findViewById(R.id.viewPager)
+//            adapter = ViewerPagerAdapter(fileList, this)
+//            viewPager.adapter = adapter
+//            viewPager.setCurrentItem(position, false)
+        } else {
+            // Hide or disable the ViewPager since this is a non-image document
+//            findViewById<ViewPager2>(R.id.viewPager)?.visibility = View.GONE
 
-        // Set the current position of the ViewPager
-        viewPager.setCurrentItem(position, false)
+
+        }
+
+
+        //3
+//        val dataJson = intent.getStringExtra("dataList")
+//        position = intent.getIntExtra("position", 0)
+//
+//            val gson = Gson()
+//            val type = object : TypeToken<ArrayList<GetFilePathDetails>>() {}.type
+//            fileList = gson.fromJson(dataJson, type)
+//
+//            viewPager = findViewById(R.id.viewPager)
+//            adapter = ViewerPagerAdapter(fileList, this)
+//            viewPager.adapter = adapter
+//            viewPager.setCurrentItem(position, false)
+
+
+    }
+
+    private fun openDocumentInWebView(path: String) {
+        Log.d("knowing FilePath", path)
+
+        val googleDocsUrl = "https://docs.google.com/gview?embedded=true&url=$path"
+
+        binding.documentWebView.settings.javaScriptEnabled = true
+        binding.documentWebView.settings.setSupportZoom(true)
+        binding.documentWebView.webViewClient = WebViewClient()
+        binding.documentWebView.settings.allowFileAccess = true
+        binding.documentWebView.settings.domStorageEnabled = true
+        binding.documentWebView.settings.loadWithOverviewMode = true
+        binding.documentWebView.settings.useWideViewPort = true
+        binding.documentWebView.getSettings().allowFileAccess = true;
+        binding.documentWebView.loadUrl(googleDocsUrl);
+        Log.d("After Loading FilePath", googleDocsUrl)
+
+        // Encode the URL
+//        val encodedUrl = Uri.encode(path)
+//        val googleViewerUrl = "https://docs.google.com/gview?embedded=true&url=$encodedUrl"
+//
+//        webView.settings.javaScriptEnabled = true
+//        webView.loadUrl(googleViewerUrl)
+    }
+
+    private fun openTextFile(path: String) {
+//        try {
+//            val file = File(path)
+//            val content = file.readText()
+//            textView.text = content
+//        } catch (e: Exception) {
+//            textView.text = "Unable to open file"
+//        }
+
+
     }
 }
+
