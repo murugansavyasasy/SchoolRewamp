@@ -109,7 +109,6 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
             }
         }
 
-
         appViewModel!!.isRemoveLocation?.observe(this) { response ->
             if (response != null && response.status) {
                 Constant.hideLoading(this)
