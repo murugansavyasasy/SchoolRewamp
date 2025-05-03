@@ -24,6 +24,7 @@ import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.ApiCallRequest
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.MarkYourAttendance.MarkYourAttendance
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.M_ABSENTEES_REPORT
 import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
@@ -87,17 +88,20 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
 
         isUserDetails = SharedPreference.getUserDetails(this)
 
-        if(SELECTED_SCHOOL_MENU  == M_COMMUNICATION || SELECTED_SCHOOL_MENU == M_NOTICEBOARD || SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_SCHEDULE_EXAM_TEST || SELECTED_SCHOOL_MENU == M_EVENTS_HOLIDAYS
-            || SELECTED_SCHOOL_MENU == M_ONLINE_MEETING) {
-            isMultipleSchool  = false
+        if (SELECTED_SCHOOL_MENU == M_COMMUNICATION || SELECTED_SCHOOL_MENU == M_NOTICEBOARD || SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_SCHEDULE_EXAM_TEST || SELECTED_SCHOOL_MENU == M_EVENTS_HOLIDAYS
+            || SELECTED_SCHOOL_MENU == M_ONLINE_MEETING
+        ) {
+            isMultipleSchool = false
             if (Constant.isEmergencyVoiceNoticeBoard!!) {
                 binding.lnrTab.visibility = View.GONE
             } else {
                 binding.lnrTab.visibility = View.VISIBLE
             }
-        }
-        else{
-            isMultipleSchool  = true
+        } else if (SELECTED_SCHOOL_MENU == M_MARK_YOUR_ATTENDANCE) {
+            isMultipleSchool = false
+            binding.lnrTab.visibility = View.GONE
+        } else {
+            isMultipleSchool = true
             binding.lnrTab.visibility = View.GONE
         }
 
@@ -106,14 +110,14 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         appViewModel!!.isVoiceSend?.observe(this) { response ->
             Constant.hideLoading(this@SchoolList)
             if (response != null && response.status) {
-                Constant.showTopAlertPopup(response.message, Constant.isCommunication,this)
+                Constant.showTopAlertPopup(response.message, Constant.isCommunication, this)
             }
         }
 
         appViewModel!!.isSendText?.observe(this) { response ->
             Constant.hideLoading(this@SchoolList)
             if (response != null && response.status) {
-                Constant.showTopAlertPopup(response.message, Constant.isCommunication,this)
+                Constant.showTopAlertPopup(response.message, Constant.isCommunication, this)
             }
         }
 
@@ -136,15 +140,15 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
 
     private fun isLoadData() {
         binding.recycleSchools.layoutManager = LinearLayoutManager(this)
-            mAdapter = SchoolListAdapter(
-                isMultipleSchool,
-                selectedSchoolIds,
-                isUserDetails!!.staff_details,
-                this,
-                this,
-                Constant.isShimmerViewDisable
-            )
-            binding.recycleSchools.adapter = mAdapter
+        mAdapter = SchoolListAdapter(
+            isMultipleSchool,
+            selectedSchoolIds,
+            isUserDetails!!.staff_details,
+            this,
+            this,
+            Constant.isShimmerViewDisable
+        )
+        binding.recycleSchools.adapter = mAdapter
 
     }
 
@@ -161,15 +165,15 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             }
 
             R.id.lblSelectReceipients -> {
-                binding.rytSend.visibility= View.GONE
-                binding.linearlayout.visibility= View.GONE
+                binding.rytSend.visibility = View.GONE
+                binding.linearlayout.visibility = View.GONE
                 isMultipleSchool = false
                 isChangeBackRound(binding.lblSelectReceipients)
             }
 
             R.id.lblSendToMultipleSchool -> {
-                binding.rytSend.visibility= View.VISIBLE
-                binding.linearlayout.visibility= View.VISIBLE
+                binding.rytSend.visibility = View.VISIBLE
+                binding.linearlayout.visibility = View.VISIBLE
                 isMultipleSchool = true
                 isChangeBackRound(binding.lblSendToMultipleSchool)
             }
@@ -193,9 +197,15 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                 }
                 if (selectedSchoolIds.isNotEmpty()) {
                     if (Constant.isClickType == 3) {
-                        showConfirmationAlert("Selected target : "+selectedSchoolIds.size.toString(),"Are you sure want to send this message?")
+                        showConfirmationAlert(
+                            "Selected target : " + selectedSchoolIds.size.toString(),
+                            "Are you sure want to send this message?"
+                        )
                     } else {
-                        showConfirmationAlert("Selected target : "+selectedSchoolIds.size.toString(),"Are you sure want to send this message?")
+                        showConfirmationAlert(
+                            "Selected target : " + selectedSchoolIds.size.toString(),
+                            "Are you sure want to send this message?"
+                        )
                     }
                 } else {
                     Constant.showValidationAlertPopup(
@@ -231,49 +241,41 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
     }
 
     override fun onItemClick(data: StaffDetails) {
+        Log.d("SELECTED_SCHOOL_MENU", SELECTED_SCHOOL_MENU.toString())
+        SharedPreference.putStaffDetails(this, data)
 
-        if(SELECTED_SCHOOL_MENU == M_COMMUNICATION || SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == M_ASSIGNMENT || SELECTED_SCHOOL_MENU == M_ONLINE_MEETING
-            || SELECTED_SCHOOL_MENU == M_EVENTS_HOLIDAYS || SELECTED_SCHOOL_MENU == M_SCHEDULE_EXAM_TEST) {
+        if (SELECTED_SCHOOL_MENU == M_COMMUNICATION || SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == M_ASSIGNMENT || SELECTED_SCHOOL_MENU == M_ONLINE_MEETING
+            || SELECTED_SCHOOL_MENU == M_EVENTS_HOLIDAYS || SELECTED_SCHOOL_MENU == M_SCHEDULE_EXAM_TEST
+        ) {
             val intent = Intent(this, RecipientActivity::class.java)
-            SharedPreference.putStaffDetails(this, data)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             startActivity(intent)
-        }
-        else{
+        } else {
 
-            if(SELECTED_SCHOOL_MENU == M_ATTENDANCE_MARKING){
-                //go to attendance marking screen
-            }
-            else if(SELECTED_SCHOOL_MENU == M_ABSENTEES_REPORT){
+            if (SELECTED_SCHOOL_MENU == M_ATTENDANCE_MARKING) {
+
+            } else if (SELECTED_SCHOOL_MENU == M_ABSENTEES_REPORT) {
                 //go to absenteeism report screen
 
-            }
-            else if(SELECTED_SCHOOL_MENU == M_SCHOOL_STRENGTH){
+            } else if (SELECTED_SCHOOL_MENU == M_SCHOOL_STRENGTH) {
                 //go to school strength  screen
-            }
-
-            else if(SELECTED_SCHOOL_MENU == M_MESSAGES_FROM_MANAGEMENT){
+            } else if (SELECTED_SCHOOL_MENU == M_MESSAGES_FROM_MANAGEMENT) {
                 //go to messages from management  screen
-            }
-            else if(SELECTED_SCHOOL_MENU == M_DAILY_COLLECTION){
+            } else if (SELECTED_SCHOOL_MENU == M_DAILY_COLLECTION) {
                 //go to daily collection screen
-            }
-            else if(SELECTED_SCHOOL_MENU == M_STUDENT_REPORT){
+            } else if (SELECTED_SCHOOL_MENU == M_STUDENT_REPORT) {
                 //go to student report screen
-            }
-            else if(SELECTED_SCHOOL_MENU == M_LESSON_PLAN){
+            } else if (SELECTED_SCHOOL_MENU == M_LESSON_PLAN) {
                 //go to lesson plan screen
-            }
-            else if(SELECTED_SCHOOL_MENU == M_FEE_PENDING_REPORT){
+            } else if (SELECTED_SCHOOL_MENU == M_FEE_PENDING_REPORT) {
                 //go to fee pending report screen
-            }
-            else if(SELECTED_SCHOOL_MENU == M_MARK_YOUR_ATTENDANCE){
-                //go to mark gio metric attendance screen
-            }
-            else if(SELECTED_SCHOOL_MENU == M_STAFF_WISE_ATTENDANCE_REPORT){
+            } else if (SELECTED_SCHOOL_MENU == M_MARK_YOUR_ATTENDANCE) {
+                val intent = Intent(this, MarkYourAttendance::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                startActivity(intent)
+            } else if (SELECTED_SCHOOL_MENU == M_STAFF_WISE_ATTENDANCE_REPORT) {
                 //go to staff wise gio metric attendanc report screen
-            }
-            else if(SELECTED_SCHOOL_MENU == M_PTM){
+            } else if (SELECTED_SCHOOL_MENU == M_PTM) {
                 //go to ptm  screen
             }
         }
@@ -283,7 +285,8 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         isFilePath: String, schoolId: String, isFileType: String?
     ) {
         val isCountryId = SharedPreference.getCountryId(this)
-        isAwsUploadingPreSigned!!.getPreSignedUrl(isFilePath, schoolId, isFileType!!,
+        isAwsUploadingPreSigned!!.getPreSignedUrl(
+            isFilePath, schoolId, isFileType!!,
             this, isCountryId!!,
             true,
             false,
@@ -360,7 +363,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun showConfirmationAlert(isSelectTarget: String, isMessage: String){
+    fun showConfirmationAlert(isSelectTarget: String, isMessage: String) {
         val isTextData = Constant.isTextSendingData
 
         val dialogView = LayoutInflater.from(this).inflate(R.layout.alert_popup, null)

@@ -36,7 +36,8 @@ class PassWord : BaseActivity<PassWordBinding>(), View.OnClickListener {
         binding.btnLoginContinue.setOnClickListener(this)
         binding.lblForgetPassword.setOnClickListener(this)
         isToolBarWhiteTheme()
-        binding.lblForgetPassword.paintFlags = binding.lblForgetPassword.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+        binding.lblForgetPassword.paintFlags =
+            binding.lblForgetPassword.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
         authViewModel = ViewModelProvider(this).get(Auth::class.java)
         authViewModel!!.init()
@@ -54,7 +55,11 @@ class PassWord : BaseActivity<PassWordBinding>(), View.OnClickListener {
                     Constant.isChildDetails = Constant.user_data!![0].user_details.child_details
 
                     SharedPreference.putUserDetails(this@PassWord, Constant.user_details!!)
-
+                    SharedPreference.putMobileNumberPassWord(
+                        this@PassWord,
+                        Constant.isMobileNumber,
+                        binding.txtPassword.text.toString()
+                    )
                     if (isValidateUser[0].is_password_updated) {
 
                         SharedPreference.putMobileNumberPassWord(
@@ -68,13 +73,6 @@ class PassWord : BaseActivity<PassWordBinding>(), View.OnClickListener {
                             Constant.pageType = Constant.PasswordScreen
                             startActivity(intent)
                         } else {
-//                            SharedPreference.putMobileNumberPassWord(
-//                                this@PassWord,
-//                                Constant.isMobileNumber,
-//                                binding.txtPassword.text.toString()
-//                            )
-//                            Log.d("isMobileNumberChecking", SharedPreference.getMobileNumber(this).toString())
-//                            Log.d("isPasswordChecking", SharedPreference.getPassWord(this).toString())
                             if (Constant.user_data!![0].user_details.is_staff && Constant.user_data!![0].user_details.is_parent) {
                                 val intent = Intent(this@PassWord, PrioritySelection::class.java)
                                 startActivity(intent)
@@ -111,7 +109,7 @@ class PassWord : BaseActivity<PassWordBinding>(), View.OnClickListener {
                                         Intent(this@PassWord, PrioritySelection::class.java)
                                     startActivity(intent)
                                 } else {
-                                    Constant.isParentChoose=true
+                                    Constant.isParentChoose = true
                                     val intent = Intent(
                                         this@PassWord,
                                         com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard::class.java

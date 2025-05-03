@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.Communication.TextHistoryAdapter
+import com.vs.schoolmessenger.School.Communication.Adapter.TextHistoryAdapter
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchTimingsData
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 

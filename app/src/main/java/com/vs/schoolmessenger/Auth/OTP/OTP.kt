@@ -57,16 +57,23 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
         binding.lblContactUs.setOnClickListener(this)
 
         startSmsRetriever()
-        authViewModel = ViewModelProvider(this).get(Auth::class.java)
+        authViewModel = ViewModelProvider(this)[Auth::class.java]
         authViewModel!!.init()
         isOtpTitleLoad()
         binding.lblContactUs.paintFlags =
             binding.lblContactUs.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+
         authViewModel!!.isOtpResponse?.observe(this) { response ->
             if (response != null) {
                 val status = response.status
                 val message = response.message
                 if (status) {
+
+//                    SharedPreference.putMobileNumberPassWord(
+//                        this@OTP,
+//                        Constant.isMobileNumber,
+//                        password
+//                    )
 
                     if (Constant.isForgotPassword!!) {
                         val intent = Intent(this@OTP, PasswordGeneration::class.java)
@@ -78,7 +85,6 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
                             val intent = Intent(this@OTP, PassWord::class.java)
                             startActivity(intent)
                         } else {
-
 
                             if (Constant.user_data!![0].user_details.is_staff && Constant.user_data!![0].user_details.is_parent) {
                                 val intent = Intent(this@OTP, PrioritySelection::class.java)

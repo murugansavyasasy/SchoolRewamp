@@ -38,6 +38,16 @@ import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolList
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.Communication.Adapter.DateAdapter
+import com.vs.schoolmessenger.School.Communication.Adapter.SelectedDatesAdapter
+import com.vs.schoolmessenger.School.Communication.Adapter.TextHistoryAdapter
+import com.vs.schoolmessenger.School.Communication.Adapter.VoiceHistoryAdapter
+import com.vs.schoolmessenger.School.Communication.DataClass.TextDetail
+import com.vs.schoolmessenger.School.Communication.DataClass.TextSendingData
+import com.vs.schoolmessenger.School.Communication.DataClass.VoiceHistoryDetails
+import com.vs.schoolmessenger.School.Communication.DataClass.VoiceSendingData
+import com.vs.schoolmessenger.School.Communication.Interface.TextHistoryClickListener
+import com.vs.schoolmessenger.School.Communication.Interface.VoiceHistoryClickListener
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.CustomDatePicker
 import com.vs.schoolmessenger.Utils.FileExtensionFromContentUri

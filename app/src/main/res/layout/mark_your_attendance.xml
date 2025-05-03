@@ -104,7 +104,7 @@
                 android:id="@+id/imgLocationIllustrate"
                 android:layout_width="wrap_content"
                 android:layout_height="150dp"
-                android:src="@drawable/geometric" />
+                android:src="@drawable/boy_doing_biometric_finger_scanning" />
 
 
             <TextView
@@ -203,7 +203,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="200dp"
                 android:paddingHorizontal="20dp"
-                android:src="@drawable/geometric" />
+                android:src="@drawable/boy_doing_biometric_finger_scanning" />
 
             <TextView
                 android:id="@+id/lblInstruction"
@@ -254,11 +254,11 @@
         <RelativeLayout
             android:id="@+id/rytErrorMessage"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginHorizontal="10dp"
-            android:visibility="gone"
             android:background="@drawable/rect_btn_red"
-            android:layout_height="wrap_content">
+            android:visibility="gone">
 
 
             <ImageView
@@ -271,15 +271,14 @@
             <TextView
                 android:id="@+id/lblErrorMessage"
                 android:layout_width="wrap_content"
-                android:layout_below="@+id/imgNotInDistance"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/imgNotInDistance"
                 android:padding="20dp"
                 android:text="@string/outside_of_the_location"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="15dp"
-                android:textStyle="bold"
-                 />
+                android:textStyle="bold" />
 
         </RelativeLayout>
 
@@ -360,7 +359,7 @@
 
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_below="@+id/lnrSpinners">
 
             <androidx.recyclerview.widget.RecyclerView
@@ -371,11 +370,24 @@
                 tools:listitem="@layout/giometric_attendance_report_item_list" />
 
 
+            <ImageView
+                android:id="@+id/imgNorecord"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/two_hundred"
+                android:layout_centerInParent="true"
+                android:src="@drawable/man_doing_fingerprint_research"
+                android:visibility="gone">
+
+            </ImageView>
+
             <TextView
                 android:id="@+id/lblNoRecords"
-                android:layout_width="wrap_content"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
+                android:layout_below="@+id/imgNorecord"
+                android:layout_centerVertical="true"
+                android:gravity="center"
                 android:text=""
                 android:textColor="@color/black"
                 android:textSize="15dp"
