@@ -35,9 +35,9 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_above="@+id/btnGo"
-        android:layout_below="@+id/lytLogout"
-        android:layout_height="match_parent">
+        android:layout_below="@+id/lytLogout">
 
         <ImageView
             android:id="@+id/imgTeaching"
@@ -49,18 +49,19 @@
 
         <TextView
             android:id="@+id/lblChooseRole"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/imgTeaching"
             android:gravity="center"
-            android:text="@string/lblChooseyourrole"
-            style="@style/CustomTextStylePoppinsBold">
+            android:text="@string/lblChooseyourrole">
 
         </TextView>
 
 
         <TextView
             android:id="@+id/lblLoginTeacherOrParent"
+            style="@style/CustomTextStylePoppinsRegular"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/lblChooseRole"
@@ -68,8 +69,7 @@
             android:gravity="center"
             android:text="@string/lblLoginteacherparent"
             android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"
-            style="@style/CustomTextStylePoppinsRegular">
+            android:textSize="@dimen/thirteen_sp">
 
         </TextView>
 
@@ -85,6 +85,7 @@
 
             <TextView
                 android:id="@+id/lblTeacher"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -92,43 +93,42 @@
                 android:gravity="center"
                 android:padding="@dimen/ten"
                 android:textColor="@color/white"
-                android:textSize="@dimen/thirteen_sp"
-                style="@style/CustomTextStylePoppinsMedium"/>
+                android:textSize="@dimen/thirteen_sp" />
 
             <TextView
                 android:id="@+id/lblParent"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:padding="@dimen/ten"
                 android:textColor="@color/dark_blue"
-                android:textSize="@dimen/thirteen_sp"
-                style="@style/CustomTextStylePoppinsMedium" />
+                android:textSize="@dimen/thirteen_sp" />
 
         </LinearLayout>
 
         <TextView
+            android:id="@+id/proceedlabel"
+            style="@style/CustomTextStylePoppinsMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Click proceed to continue"
-            android:visibility="gone"
-            android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"
             android:layout_below="@+id/lnrParent"
             android:layout_centerInParent="true"
             android:layout_marginTop="@dimen/ten"
-            android:id="@+id/proceedlabel"
-            style="@style/CustomTextStylePoppinsMedium"/>
+            android:text="Click proceed to continue"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp"
+            android:visibility="gone" />
 
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViews"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="@dimen/five"
             android:layout_below="@+id/proceedlabel"
             android:layout_marginTop="@dimen/five"
+            android:layout_marginBottom="@dimen/five"
             tools:listitem="@layout/school_details_list_item" />
 
     </RelativeLayout>
@@ -136,18 +136,18 @@
 
     <TextView
         android:id="@+id/btnGo"
+        style="@style/CustomTextStylePoppinsMedium"
         android:layout_width="200dp"
         android:layout_height="@dimen/thirty_five"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
         android:layout_marginEnd="@dimen/twenty_five"
-        android:background="@drawable/bg_blue"
         android:layout_marginBottom="@dimen/thirty"
+        android:background="@drawable/bg_blue"
         android:gravity="center"
         android:text="Proceed"
         android:textColor="@color/white"
-        android:textSize="@dimen/thirteen_sp"
-        style="@style/CustomTextStylePoppinsMedium"/>
+        android:textSize="@dimen/thirteen_sp" />
 
 
     <!-- OLD  -->
@@ -235,9 +235,7 @@
         </RelativeLayout>
 
 
-
     </RelativeLayout>
-
 
 
 </RelativeLayout>

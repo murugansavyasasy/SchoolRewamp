@@ -53,9 +53,11 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
     private var appViewModel: App? = null
     private var isStaffDetails: StaffDetails? = null
     private var recyleLocations: RecyclerView? = null
+    private var lblNoRecords: TextView? = null
     var isLocationHistoryAdapter: LocationHistoryAdapter? = null
     var isDeletedId: Int? = null
     private lateinit var view: View
+    private var isFirstTime = false
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
@@ -82,10 +84,10 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
         }
 
         appViewModel!!.isLocationHistory?.observe(this) { response ->
-            if (response != null && response.status) {
-                val isLocationHistory = response.data
-                isLoadLocationHistory(isLocationHistory)
-            }
+//            if (response != null && response.status) {
+            val isLocationHistory = response!!.data
+            isLoadLocationHistory(isLocationHistory, response.message)
+//            }
         }
 
         appViewModel!!.isUpdateLocation?.observe(this) { response ->
@@ -108,15 +110,12 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
     private fun getCurrentLocation() {
         if (ActivityCompat.checkSelfPermission(
                 this, Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED &&
-            ActivityCompat.checkSelfPermission(
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
                 this, Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                1001
+                this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1001
             )
             return
         }
@@ -127,6 +126,7 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
                 isLongitude = location.longitude
                 val isLocationName = getAddressFromLocation(isLatitude!!, isLongitude!!)
                 binding.lblAddress.text = isLocationName
+                binding.lbllatLong.text = "Lat : " + isLatitude + ", " + "Long : " + isLongitude
             } else {
                 println("Location is null. Try again later or enable location.")
             }
@@ -154,15 +154,26 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
     }
 
     private fun isLoadMeter() {
-        val distances = listOf("10", "15", "20", "25", "30", "35", "40", "45", "50", "55", "60", "75")
+        val distances =
+            listOf("10", "15", "20", "25", "30", "35", "40", "45", "50", "55", "60", "75", "Custom")
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, distances)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spinnerMetres.adapter = adapter
         binding.spinnerMetres.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>, view: View?, position: Int, id: Long
+            ) {
                 isDistance = parent.getItemAtPosition(position).toString()
-                binding.txtMeters.setText(isDistance)
+                if (!isDistance.equals("Custom")) {
+                    binding.txtMeters.setText(isDistance)
+                } else {
+                    binding.txtMeters.setText("")
+                }
+//                if (isFirstTime) {
+//                    isFirstTime = true
+//                }
             }
+
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
     }
@@ -183,22 +194,28 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
     private fun isCheckValidation() {
         if (isLatitude != null && isLongitude != null && isValidLatLng(isLatitude, isLongitude)) {
             when {
-                binding.txtLocationName.text.toString().isEmpty() ->
-                    showInvalidLocationDialog("Alert", "Enter the location name")
-                isDistance.isNullOrEmpty() ->
-                    showInvalidLocationDialog("Alert", "Choose or enter the distance")
+                binding.txtLocationName.text.toString()
+                    .isEmpty() -> showInvalidLocationDialog(
+                    "Alert",
+                    "Enter your location name and distance, Distance should be above 10 Meter(s)"
+                )
+
+                isDistance.isNullOrEmpty() -> showInvalidLocationDialog(
+                    "Alert",
+                    "Choose or enter the distance"
+                )
+
                 else -> isSaveLocation()
             }
         } else {
-            showInvalidLocationDialog("Location Error", "Location unavailable. Ensure GPS is enabled.")
+            showInvalidLocationDialog(
+                "Location Error", "Location unavailable. Ensure GPS is enabled."
+            )
         }
     }
 
     private fun showInvalidLocationDialog(title: String, message: String) {
-        AlertDialog.Builder(this)
-            .setTitle(title)
-            .setMessage(message)
-            .setPositiveButton("OK", null)
+        AlertDialog.Builder(this).setTitle(title).setMessage(message).setPositiveButton("OK", null)
             .show()
     }
 
@@ -219,6 +236,7 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
         view = LayoutInflater.from(this).inflate(R.layout.locations_history, null) // FIXED HERE
 
         recyleLocations = view.findViewById(R.id.recyleLocations)
+        lblNoRecords = view.findViewById(R.id.lblNoRecords)
         val imgBack = view.findViewById<ImageView>(R.id.imgClose)
 
         isShowLocationHistory()
@@ -241,19 +259,24 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
     private fun dpToPx(dp: Int): Int = (dp * resources.displayMetrics.density).toInt()
 
     private fun isShowLocationHistory() {
-        isLocationHistoryAdapter = LocationHistoryAdapter(null, this, this, Constant.isShimmerViewShow)
+        isLocationHistoryAdapter =
+            LocationHistoryAdapter(null, this, this, Constant.isShimmerViewShow)
         recyleLocations?.layoutManager = LinearLayoutManager(this)
         recyleLocations?.adapter = isLocationHistoryAdapter
         appViewModel?.getLocationHistory(isAccessToken!!, this)
     }
 
-    private fun isLoadLocationHistory(data: List<LocationHistoryData>) {
+    private fun isLoadLocationHistory(data: List<LocationHistoryData>, isMessage: String) {
         if (data.isNotEmpty()) {
             recyleLocations?.visibility = View.VISIBLE
-            isLocationHistoryAdapter = LocationHistoryAdapter(data, this, this, Constant.isShimmerViewDisable)
+            lblNoRecords?.visibility = View.GONE
+            isLocationHistoryAdapter =
+                LocationHistoryAdapter(data, this, this, Constant.isShimmerViewDisable)
             recyleLocations?.adapter = isLocationHistoryAdapter
         } else {
             recyleLocations?.visibility = View.GONE
+            lblNoRecords?.visibility = View.VISIBLE
+            lblNoRecords?.text = isMessage
         }
     }
 
@@ -266,13 +289,14 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
 
         val dimView = View(this).apply {
             setBackgroundColor(Color.parseColor("#80000000"))
-            layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
+            )
             isClickable = true
         }
 
         val layoutParams = ConstraintLayout.LayoutParams(
-            ConstraintLayout.LayoutParams.MATCH_PARENT,
-            ConstraintLayout.LayoutParams.WRAP_CONTENT
+            ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT
         ).apply {
             val marginInPx = resources.getDimensionPixelSize(R.dimen.ten)
             setMargins(marginInPx, marginInPx, marginInPx, marginInPx)
@@ -317,7 +341,13 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
     override fun onItemClick(data: LocationHistoryData, isType: String) {
         val dialogRootView = view as ViewGroup
         if (isType == "isDelete") {
-            showTopAlertPopup("Are you sure want to delete this location?", dialogRootView, data.id, false, "isRemove")
+            showTopAlertPopup(
+                "Are you sure want to delete this location?",
+                dialogRootView,
+                data.id,
+                false,
+                "isRemove"
+            )
         } else {
             showEditLocationPopup(data.id, dialogRootView)
         }
@@ -325,11 +355,7 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun showTopAlertPopup(
-        message: String,
-        rootView: ViewGroup,
-        id: Int,
-        isStatus: Boolean,
-        isDeleteLocation: String
+        message: String, rootView: ViewGroup, id: Int, isStatus: Boolean, isDeleteLocation: String
     ) {
         val popupView = LayoutInflater.from(this).inflate(R.layout.success_popup, null)
         val messageText = popupView.findViewById<TextView>(R.id.alertMessage)
@@ -346,12 +372,13 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
 
         val dimView = View(this).apply {
             setBackgroundColor(Color.parseColor("#80000000"))
-            layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
+            )
             isClickable = true
         }
         val layoutParams = ConstraintLayout.LayoutParams(
-            ConstraintLayout.LayoutParams.MATCH_PARENT,
-            ConstraintLayout.LayoutParams.WRAP_CONTENT
+            ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT
         ).apply {
             val marginInPx = resources.getDimensionPixelSize(R.dimen.fourty_five)
             setMargins(marginInPx, marginInPx, marginInPx, marginInPx)

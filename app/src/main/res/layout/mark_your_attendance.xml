@@ -179,14 +179,15 @@
 
             <TextView
                 android:id="@+id/lblNoLocation"
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/imgLocationNeeded"
                 android:gravity="center"
-                android:padding="20dp"
+                android:padding="@dimen/twenty"
                 android:text=""
                 android:textColor="@color/black"
-                android:textSize="15dp" />
+                android:textSize="@dimen/fifteen_sp" />
 
         </RelativeLayout>
 
@@ -195,7 +196,7 @@
             android:id="@+id/rytPresentlayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_marginTop="@dimen/hundred"
             android:visibility="gone">
 
             <ImageView
@@ -207,6 +208,7 @@
 
             <TextView
                 android:id="@+id/lblInstruction"
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/imgMarkAttendance"
@@ -305,7 +307,7 @@
                 android:layout_width="@dimen/one_fifty"
                 android:layout_height="@dimen/fifty"
                 android:layout_marginStart="@dimen/thirty"
-                android:background="@drawable/rect_shadow_white"
+                android:background="@drawable/bg_white_light_radious"
                 android:gravity="center">
 
                 <Spinner
@@ -333,7 +335,7 @@
                 android:layout_height="@dimen/fifty"
                 android:layout_marginStart="@dimen/five"
                 android:layout_marginEnd="@dimen/thirty"
-                android:background="@drawable/rect_shadow_white"
+                android:background="@drawable/bg_white_light_radious"
                 android:gravity="center">
 
                 <Spinner
@@ -387,6 +389,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/imgNorecord"
                 android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/twenty_five"
+                android:layout_marginEnd="@dimen/twenty_five"
                 android:gravity="center"
                 android:text=""
                 android:textColor="@color/black"

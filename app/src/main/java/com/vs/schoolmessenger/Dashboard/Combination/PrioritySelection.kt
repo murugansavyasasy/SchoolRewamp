@@ -110,7 +110,7 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
             if (staffDetails != null) {
                 SharedPreference.putStaffDetails(this, staffDetails)
                 val intent = Intent(this, SchoolDashboard::class.java)
-                intent.flags =Intent.FLAG_ACTIVITY_CLEAR_TASK
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
             } else {
                 Toast.makeText(this, "Staff details not available", Toast.LENGTH_SHORT).show()
@@ -124,7 +124,7 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
 
     private fun isLoadData(isStaff: Boolean) {
         if (isStaff) {
-            val staffDetails = Constant.isStaffDetails
+            val staffDetails = userDetails!!.staff_details
             if (!staffDetails.isNullOrEmpty()) {
                 val staffRole = Constant.user_details?.staff_role.orEmpty()
                 isStaffDetailAdapter = StaffDetailAdapter(
@@ -140,7 +140,7 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
                 Toast.makeText(this, "No staff data found", Toast.LENGTH_SHORT).show()
             }
         } else {
-            val childDetails = Constant.isChildDetails
+            val childDetails = userDetails!!.child_details
             if (!childDetails.isNullOrEmpty()) {
                 isStudentDetailAdapter = StudentDetailAdapter(childDetails, this, this)
                 binding.recyclerViews.layoutManager = LinearLayoutManager(this)
@@ -194,6 +194,7 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
             clearDim()
         }
     }
+
     @SuppressLint("SuspiciousIndentation")
     private fun isBackRoundChange(isClickingId: TextView) {
         when (isClickingId) {
@@ -235,19 +236,19 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
         isClickingId.background = ContextCompat.getDrawable(this, R.drawable.bg_blue)
         isClickingId.setTextColor(ContextCompat.getColor(this, R.color.white))
 
-        }
-
-        override fun onItemClick(data: ChildDetails) {
-            SharedPreference.putChildDetails(this, data)
-            startActivity(Intent(this, ParentDashboard::class.java))
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-
-        }
-
-        override fun onItemClick(data: StaffDetails) {
-            SharedPreference.putStaffDetails(this, data)
-            startActivity(Intent(this, SchoolDashboard::class.java))
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-
-        }
     }
+
+    override fun onItemClick(data: ChildDetails) {
+        SharedPreference.putChildDetails(this, data)
+        startActivity(Intent(this, ParentDashboard::class.java))
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+
+    }
+
+    override fun onItemClick(data: StaffDetails) {
+        SharedPreference.putStaffDetails(this, data)
+        startActivity(Intent(this, SchoolDashboard::class.java))
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+
+    }
+}

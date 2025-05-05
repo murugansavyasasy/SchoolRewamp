@@ -381,7 +381,6 @@
                     android:id="@+id/half_radiobutton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="@dimen/ten">
 
@@ -409,7 +408,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Select Session"
+            android:text="@string/select_session"
             android:textColor="@color/black"
             android:textStyle="bold"
             android:layout_below="@+id/lnrClasses1"

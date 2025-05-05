@@ -670,13 +670,9 @@ class AppServices {
                         if (response.body() != null) {
                             val status = response.body()!!.status
                             if (status) {
-//                                isHomeWorkDetails.postValue(response.body())
-                            } else {
-//                                isHomeWorkDetails.postValue(response.body())
                                 isPunchAttendance.postValue(response.body())
-//                            } else {
-//                                isPunchAttendance.postValue(response.body())
-//                            }
+                            } else {
+                                isPunchAttendance.postValue(response.body())
                             }
                         }
                     }
@@ -685,7 +681,6 @@ class AppServices {
                 override fun onFailure(call: Call<StatusMessageModel?>, t: Throwable) {
                     isPunchAttendance.postValue(null)
                     t.printStackTrace()
-                    //   }
                 }
             })
     }

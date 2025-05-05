@@ -110,8 +110,8 @@ class HomeWorkReportAdapter(
         private val lblDateImage: TextView = itemView.findViewById(R.id.lblDateImage)
         private val lblTitleImage: TextView = itemView.findViewById(R.id.lblTitleImage)
         private val lblContentImage: TextView = itemView.findViewById(R.id.lblContentImage)
-        private val viewpager: ViewPager = itemView.findViewById(R.id.viewpager)
-        private val indicator: CircleIndicator = itemView.findViewById(R.id.indicator)
+//        private val viewpager: ViewPager = itemView.findViewById(R.id.viewpager)
+//        private val indicator: CircleIndicator = itemView.findViewById(R.id.indicator)
         private val tvSeeMoreImage: TextView = itemView.findViewById(R.id.tvSeeMoreImage)
 
 
@@ -301,10 +301,10 @@ class HomeWorkReportAdapter(
                         "https://picsum.photos/600/400?random=5"  // Random Image 5
                     )
 
-                    // Set up the adapter
-                    val viewPagerAdapter = ImageSliderAdapter(context, imageUrls)
-                    viewpager.adapter = viewPagerAdapter
-                    indicator.setViewPager(viewpager)
+//                    // Set up the adapter
+//                    val viewPagerAdapter = ImageSliderAdapter(context, imageUrls)
+//                    viewpager.adapter = viewPagerAdapter
+//                    indicator.setViewPager(viewpager)
                 }
             }
 

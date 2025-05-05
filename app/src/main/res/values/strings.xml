@@ -350,6 +350,17 @@
     <string name="biometric_authentications">Biometric authentications</string>
     <string name="biometric_authentication_is_required_to_present">Biometric authentication is required to present</string>
     <string name="authenticate_again">Authenticate again</string>
+    <string name="absentees_students">Absentees Students</string>
+    <string name="important">Important</string>
+    <string name="distance">Distance *</string>
+    <string name="drop_your_location">Drop your location</string>
+    <string name="meter_s">Meter(s)</string>
+    <string name="confirmation">Confirmation</string>
+    <string name="selected_target_1">Selected target : 1</string>
+    <string name="are_you_sure_want_to_send_this_message">Are you sure want to send this message?</string>
+    <string name="yes_send">Yes, Send</string>
+    <string name="select_session">Select Session</string>
+    <string name="absent">Absent</string>
 
 
 </resources>

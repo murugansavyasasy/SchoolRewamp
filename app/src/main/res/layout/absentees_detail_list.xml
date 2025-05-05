@@ -10,7 +10,7 @@
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:background="@drawable/circle_background"
-        android:text="3"
+        android:text=""
         android:textSize="12sp"
         android:elevation="10dp"
         android:textColor="@color/black"
@@ -35,7 +35,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-
             <LinearLayout
                 android:id="@+id/content_layout"
                 android:layout_width="wrap_content"
@@ -48,7 +47,7 @@
                     android:id="@+id/grade_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="10th Grade"
+                    android:text=""
                     android:textSize="17sp"
                     android:textStyle="bold"
                     android:layout_marginTop="@dimen/ten"
@@ -59,7 +58,7 @@
                     android:id="@+id/date_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="21 Jan 2024"
+                    android:text=""
                     android:textSize="17sp"
                     android:textColor="@color/black"
                     android:textStyle="normal"

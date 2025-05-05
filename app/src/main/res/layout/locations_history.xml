@@ -37,7 +37,7 @@
                     android:id="@+id/imgClose"
                     android:layout_width="@dimen/thirty"
                     android:layout_height="@dimen/thirty"
-                    android:src="@drawable/close_icon_red">
+                    android:src="@drawable/close_red_color">
 
                 </ImageView>
 
@@ -69,7 +69,7 @@
                 android:gravity="center"
                 android:text=""
                 android:textColor="@color/black"
-                android:textSize="15dp"
+                android:textSize="@dimen/fifteen_sp"
                 android:visibility="gone" />
         </LinearLayout>
 
