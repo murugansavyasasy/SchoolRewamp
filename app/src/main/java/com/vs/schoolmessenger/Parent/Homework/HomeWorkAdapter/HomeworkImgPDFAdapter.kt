@@ -98,9 +98,6 @@ class HomeworkImgPDFAdapter(
 
                 }
             }
-
-
-
             DefaultImage.setOnClickListener {
                 val selectedItem = adapter.GetFilePathDetailsData!![position]
                 val context = itemView.context
@@ -112,23 +109,58 @@ class HomeworkImgPDFAdapter(
                     }
 
                     val selectedImageIndex = imageList.indexOfFirst { it.path == selectedItem.path }
-                    Log.d("HomeworkPDFAdapter,Imaged Clicked!","HomeworkPDFAdapter,Image Clicked!")
+                    Log.d("HomeworkPDFAdapter,Imaged Clicked!", "HomeworkPDFAdapter,Image Clicked!")
 
                     val intent = Intent(context, FullScreenViewerActivity::class.java)
                     val dataJson = Gson().toJson(imageList)
+                    Log.d("JsonImageList",dataJson.toString())
                     intent.putExtra("data", dataJson)
                     intent.putExtra("position", selectedImageIndex)
                     context.startActivity(intent)
-
-                } else {
-                    Log.d("HomeworkPDFAdapter,Document Clicked!","HomeworkPDFAdapter,Document Clicked!")
+                }
+            }
+            WebViewThumbnail.setOnClickListener{
+                val selectedItem = adapter.GetFilePathDetailsData!![position]
+                val context = itemView.context
+                Log.d("HomeworkPDFAdapter,Document Clicked!","HomeworkPDFAdapter,Document Clicked!")
                     // Open document viewer (PDF, DOCX, etc.)
                     val intent = Intent(context, FullScreenViewerActivity::class.java)
                     intent.putExtra("SelectedDocumentPath", selectedItem.path)
                     intent.putExtra("SelectedDocumentType", selectedItem.type)
                     context.startActivity(intent)
-                }
+
             }
+
+
+
+//            DefaultImage.setOnClickListener {
+//                val selectedItem = adapter.GetFilePathDetailsData!![position]
+//                val context = itemView.context
+//
+//                if (selectedItem.type.equals("IMAGE", ignoreCase = true)) {
+//                    // Filter only image items
+//                    val imageList = adapter.GetFilePathDetailsData!!.filter {
+//                        it.type.equals("IMAGE", ignoreCase = true)
+//                    }
+//
+//                    val selectedImageIndex = imageList.indexOfFirst { it.path == selectedItem.path }
+//                    Log.d("HomeworkPDFAdapter,Imaged Clicked!","HomeworkPDFAdapter,Image Clicked!")
+//
+//                    val intent = Intent(context, FullScreenViewerActivity::class.java)
+//                    val dataJson = Gson().toJson(imageList)
+//                    intent.putExtra("data", dataJson)
+//                    intent.putExtra("position", selectedImageIndex)
+//                    context.startActivity(intent)
+//
+//                } else {
+//                    Log.d("HomeworkPDFAdapter,Document Clicked!","HomeworkPDFAdapter,Document Clicked!")
+//                    // Open document viewer (PDF, DOCX, etc.)
+//                    val intent = Intent(context, FullScreenViewerActivity::class.java)
+//                    intent.putExtra("SelectedDocumentPath", selectedItem.path)
+//                    intent.putExtra("SelectedDocumentType", selectedItem.type)
+//                    context.startActivity(intent)
+//                }
+//            }
         }
         private fun openDocumentInWebView(urlpath: String) {
             DefaultImage.visibility=View.GONE
