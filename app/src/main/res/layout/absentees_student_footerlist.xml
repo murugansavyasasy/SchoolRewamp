@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="wrap_content">
 
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        app:cardCornerRadius="7dp"
-        app:cardElevation="4dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/ten"
-        android:layout_marginEnd="@dimen/ten"
         android:layout_marginTop="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
         android:padding="12dp"
-        android:layout_height="wrap_content">
+        app:cardCornerRadius="7dp"
+        app:cardElevation="4dp">
 
         <LinearLayout
             android:id="@+id/linear_layout"
@@ -22,56 +21,54 @@
             android:layout_height="wrap_content">
 
             <ImageView
+                android:id="@+id/Image_value"
                 android:layout_width="75dp"
                 android:layout_height="match_parent"
-                android:id="@+id/Image_value"
-                android:textStyle="bold"
+                android:src="@drawable/schoolboy"
                 android:textColor="@color/black"
-                android:src="@drawable/schoolboy">
-            </ImageView>
+                android:textStyle="bold"></ImageView>
 
 
             <LinearLayout
+                android:id="@+id/relative_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/relative_layout"
                 android:layout_marginStart="@dimen/fifteen"
                 android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="John Doe"
-                android:id="@+id/student_name"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:fontFamily="@font/poppins_bold"
-                android:layout_marginTop="@dimen/twenty"
-                android:textSize="17sp">
-            </TextView>
 
                 <TextView
+                    android:id="@+id/student_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="10th A"
-                    android:id="@+id/section_value"
-                    android:textStyle="normal"
+                    android:layout_marginTop="@dimen/twenty"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text=""
                     android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/poppins_regular"
-                    android:layout_marginTop="@dimen/fifteen">
-                </TextView>
+                    android:textSize="17sp"
+                    android:textStyle="bold"></TextView>
+
                 <TextView
+                    android:id="@+id/section_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="AD1234"
-                    android:id="@+id/register_number"
-                    android:textStyle="normal"
+                    android:layout_marginTop="@dimen/fifteen"
                     android:fontFamily="@font/poppins_regular"
+                    android:text=""
                     android:textColor="@color/black"
                     android:textSize="16sp"
+                    android:textStyle="normal"></TextView>
+
+                <TextView
+                    android:id="@+id/register_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/five"
-                    android:layout_marginBottom="@dimen/ten">
-                </TextView>
+                    android:layout_marginBottom="@dimen/ten"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="normal"></TextView>
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>

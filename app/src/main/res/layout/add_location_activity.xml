@@ -160,7 +160,7 @@
                             android:layout_height="wrap_content"
                             android:layout_toEndOf="@+id/imgBack"
                             android:gravity="center"
-                            android:text="Important"
+                            android:text="@string/important"
                             android:textColor="@color/red"
                             android:textSize="15dp" />
 
@@ -194,19 +194,6 @@
                         </RelativeLayout>
 
 
-                        <!--                        <TextView-->
-                        <!--                            style="@style/CustomTextStylePoppinsMedium"-->
-                        <!--                            android:layout_width="match_parent"-->
-                        <!--                            android:layout_height="wrap_content"-->
-                        <!--                            android:layout_below="@+id/lblNote"-->
-                        <!--                            android:background="@drawable/outline_gray"-->
-                        <!--                            android:layout_marginTop="@dimen/ten"-->
-                        <!--                            android:padding="@dimen/five"-->
-                        <!--                            android:gravity="start"-->
-                        <!--                            android:text="@string/location_add_instructions_attendance"-->
-                        <!--                            android:textColor="@color/black"-->
-                        <!--                            android:textSize="@dimen/thirteen_sp" />-->
-
                     </RelativeLayout>
 
                     <TextView
@@ -226,7 +213,7 @@
                         android:layout_marginStart="@dimen/five"
                         android:layout_marginTop="@dimen/ten"
                         android:background="@drawable/outline_gray"
-                        android:hint="Pin your location name"
+                        android:hint="@string/pin_your_location_name"
                         android:inputType="text"
                         android:padding="@dimen/eight"
                         android:textColorHint="@color/jumbo"
@@ -238,7 +225,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="Distance *"
+                        android:text="@string/distance"
                         android:textColor="@color/black"
                         android:textSize="15dp" />
 
@@ -291,7 +278,7 @@
                             android:layout_toEndOf="@+id/rytSpinnertMetres"
                             android:background="@null"
                             android:gravity="center"
-                            android:hint="Drop your location"
+                            android:hint="@string/drop_your_location"
                             android:inputType="number"
                             android:textColor="@color/black"
                             android:textSize="@dimen/thirteen_sp" />
@@ -305,7 +292,7 @@
                             android:layout_alignParentEnd="true"
                             android:layout_marginEnd="@dimen/ten"
                             android:gravity="center"
-                            android:text="Meter(s)"
+                            android:text="@string/meter_s"
                             android:textColor="@color/black"
                             android:textSize="@dimen/thirteen_sp">
 
@@ -409,7 +396,7 @@
                             android:layout_marginTop="@dimen/ten"
                             android:text=""
                             android:layout_marginStart="@dimen/ten"
-                            android:textColor="@color/grey"
+                            android:textColor="@color/jumbo"
                             android:textSize="@dimen/thirteen_sp"
                             android:textStyle="normal"
                             android:visibility="visible" />
@@ -426,7 +413,7 @@
                         android:layout_marginTop="@dimen/twenty"
                         android:background="@drawable/rect_brown"
                         android:gravity="center"
-                        android:text="Submit"
+                        android:text="@string/lblSubmit"
                         android:textColor="@color/white"
                         android:textSize="@dimen/fifteen_sp"
                         android:visibility="visible" />

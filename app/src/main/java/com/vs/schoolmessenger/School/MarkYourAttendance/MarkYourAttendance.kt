@@ -163,6 +163,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
 
         appViewModel!!.isStaffLocations?.observe(this) { response ->
             if (response != null && response.status) {
+                binding.rytProgressBar.visibility=View.GONE
                 binding.rytNoLocationList.visibility = View.GONE
                 val isStaffLocation = response.data
                 if (isStaffLocation.isNotEmpty()) {
@@ -488,6 +489,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
 
     }
 
+    @SuppressLint("UnspecifiedRegisterReceiverFlag")
     override fun onClick(p0: View?) {
         when (p0?.id) {
             R.id.btnEnableLocation -> {
@@ -506,7 +508,13 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
 
             R.id.btnCreate -> {
                 binding.rytProgressBar.visibility=View.VISIBLE
+                binding.rytPresentlayout.visibility=View.GONE
                 isBackgroundChange(binding.btnCreate)
+                val filter = IntentFilter(LocationManager.PROVIDERS_CHANGED_ACTION).apply {
+                    addAction(Intent.ACTION_PROVIDER_CHANGED) // Optional extra compatibility
+                }
+                registerReceiver(gpsStatusReceiver, filter)
+                getLocationPermissions()
             }
         }
     }

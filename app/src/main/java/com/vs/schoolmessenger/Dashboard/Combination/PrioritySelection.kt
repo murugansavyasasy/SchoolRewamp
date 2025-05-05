@@ -124,7 +124,7 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
 
     private fun isLoadData(isStaff: Boolean) {
         if (isStaff) {
-            val staffDetails = Constant.isStaffDetails
+            val staffDetails = userDetails!!.staff_details
             if (!staffDetails.isNullOrEmpty()) {
                 val staffRole = Constant.user_details?.staff_role.orEmpty()
                 isStaffDetailAdapter = StaffDetailAdapter(
@@ -140,7 +140,7 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
                 Toast.makeText(this, "No staff data found", Toast.LENGTH_SHORT).show()
             }
         } else {
-            val childDetails = Constant.isChildDetails
+            val childDetails = userDetails!!.child_details
             if (!childDetails.isNullOrEmpty()) {
                 isStudentDetailAdapter = StudentDetailAdapter(childDetails, this, this)
                 binding.recyclerViews.layoutManager = LinearLayoutManager(this)

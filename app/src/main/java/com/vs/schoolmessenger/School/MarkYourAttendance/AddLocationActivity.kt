@@ -57,6 +57,7 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
     var isLocationHistoryAdapter: LocationHistoryAdapter? = null
     var isDeletedId: Int? = null
     private lateinit var view: View
+    private var isFirstTime = false
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
@@ -84,8 +85,8 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
 
         appViewModel!!.isLocationHistory?.observe(this) { response ->
 //            if (response != null && response.status) {
-                val isLocationHistory = response!!.data
-                isLoadLocationHistory(isLocationHistory, response.message)
+            val isLocationHistory = response!!.data
+            isLoadLocationHistory(isLocationHistory, response.message)
 //            }
         }
 
@@ -154,7 +155,7 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
 
     private fun isLoadMeter() {
         val distances =
-            listOf("10", "15", "20", "25", "30", "35", "40", "45", "50", "55", "60", "75")
+            listOf("10", "15", "20", "25", "30", "35", "40", "45", "50", "55", "60", "75", "Custom")
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, distances)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spinnerMetres.adapter = adapter
@@ -163,7 +164,14 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
                 parent: AdapterView<*>, view: View?, position: Int, id: Long
             ) {
                 isDistance = parent.getItemAtPosition(position).toString()
-                binding.txtMeters.setText(isDistance)
+                if (!isDistance.equals("Custom")) {
+                    binding.txtMeters.setText(isDistance)
+                } else {
+                    binding.txtMeters.setText("")
+                }
+//                if (isFirstTime) {
+//                    isFirstTime = true
+//                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {}
@@ -187,7 +195,10 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
         if (isLatitude != null && isLongitude != null && isValidLatLng(isLatitude, isLongitude)) {
             when {
                 binding.txtLocationName.text.toString()
-                    .isEmpty() -> showInvalidLocationDialog("Alert", "Enter your location name and distance, Distance should be above 10 Meter(s)")
+                    .isEmpty() -> showInvalidLocationDialog(
+                    "Alert",
+                    "Enter your location name and distance, Distance should be above 10 Meter(s)"
+                )
 
                 isDistance.isNullOrEmpty() -> showInvalidLocationDialog(
                     "Alert",

@@ -221,7 +221,7 @@ class App(application: Application) : AndroidViewModel(application) {
     fun getStaffAttendanceReport(isToken: String,attendance_dt: String, activity: Activity) {
         apiRepositories?.getGiometricStaffAttendancereport(isToken,attendance_dt, activity)
     }
-    fun getStaffWiseAttendanceReport(isToken: String, jsonObject: JsonObject, activity: Activity) {
+    fun getStaffWiseAttendanceReport(isToken: String, activity: Activity) {
         apiRepositories?.getGiometricStaffWiseAttendancereport(isToken, activity)
     }
 }
