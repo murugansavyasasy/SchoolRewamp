@@ -123,7 +123,6 @@ object Constant {
     val SH_PTM = 0
     val SH_INTERACTION_WITH_STUDENT = 16
 
-
     val M_ABSENTEES_REPORT = 1
     val M_ASSIGNMENT = 2
     val M_ATTENDANCE_MARKING = 3
@@ -165,7 +164,7 @@ object Constant {
     val M_ATTACHMENTS = 39
 
 
-    val M_FINANCE=194
+    val M_FINANCE = 194
 
 
     var SELECTED_SCHOOL_MENU = 0
@@ -245,7 +244,7 @@ object Constant {
         context.startActivity(intent)
     }
 
-    fun redirectToMail(context: Context, mail: String,sub : String , body : String) {
+    fun redirectToMail(context: Context, mail: String, sub: String, body: String) {
         val intent = Intent(Intent.ACTION_SENDTO).apply {
             data = Uri.parse("mailto:") // Ensures only email apps handle this
             putExtra(Intent.EXTRA_EMAIL, arrayOf(mail)) // Recipient email address
@@ -442,9 +441,9 @@ object Constant {
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 activity.startActivity(intent)
             } else if (isType == isGioMetric) {
-                val intent = Intent(activity, MarkYourAttendance::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                activity.startActivity(intent)
+//                val intent = Intent(activity, MarkYourAttendance::class.java)
+//                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+//                activity.startActivity(intent)
             }
             closePopup()
         }
@@ -452,7 +451,6 @@ object Constant {
             closePopup()
         }
     }
-
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -510,7 +508,8 @@ object Constant {
         val retriever = MediaMetadataRetriever()
         return try {
             retriever.setDataSource(url, HashMap()) // For network sources, use empty headers map
-            val durationStr = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
+            val durationStr =
+                retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
             val durationMs = durationStr?.toLongOrNull() ?: 0L
             (durationMs / 1000).toInt()
         } catch (e: Exception) {
@@ -522,12 +521,12 @@ object Constant {
     }
 
 
-
     fun getAudioDurationInMinutes(url: String): String {
         val retriever = MediaMetadataRetriever()
         return try {
             retriever.setDataSource(url, HashMap()) // For network sources, use empty headers map
-            val durationStr = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
+            val durationStr =
+                retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
             val durationMs = durationStr?.toLongOrNull() ?: 0L
             val totalSeconds = durationMs / 1000
             val minutes = totalSeconds / 60
@@ -541,7 +540,7 @@ object Constant {
         }
     }
 
-    fun getDeviceDetails(context: Activity) : String{
+    fun getDeviceDetails(context: Activity): String {
         val deviceDetails = mapOf(
             "manufacturer" to Build.MANUFACTURER,
             "model" to Build.MODEL,
@@ -591,6 +590,7 @@ object Constant {
         }
 
     }
+
     fun getTimeAfter20Minutes(): String {
         val dateFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
         val calendar = Calendar.getInstance()
@@ -611,7 +611,8 @@ object Constant {
 
     fun showLoading(context: Activity) {
         val rootView = context.findViewById<ViewGroup>(android.R.id.content)
-        val loaderView = LayoutInflater.from(context).inflate(R.layout.lottie_loader, rootView, false)
+        val loaderView =
+            LayoutInflater.from(context).inflate(R.layout.lottie_loader, rootView, false)
         rootView.addView(loaderView)
 
     }
@@ -638,7 +639,6 @@ object Constant {
             "$manufacturer $model"
         }
     }
-
 
 
 }

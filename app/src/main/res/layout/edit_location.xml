@@ -11,56 +11,70 @@
 
     <TextView
         android:id="@+id/txtTitle"
+        style="@style/CustomTextStylePoppinsBold"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Edit Location"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:textColor="#000"
+        android:layout_marginBottom="@dimen/fifteen"
         android:gravity="center"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:text="Update"
+        android:textColor="#000"
+        android:textSize="@dimen/fifteen_sp"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="@dimen/fifteen" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtContant"
+        style="@style/CustomTextStylePoppinsMedium"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/fifteen"
+        android:gravity="center"
+        android:text="Update"
+        android:textColor="#000"
+        android:textSize="@dimen/thirteen_sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtTitle" />
 
     <EditText
         android:id="@+id/edtLocationName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Enter location name"
+        android:layout_marginTop="@dimen/ten"
         android:background="@null"
+        android:hint="Enter location name"
         android:padding="12dp"
         android:textColor="#000"
         android:textSize="14sp"
-        app:layout_constraintTop_toBottomOf="@id/txtTitle"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="@dimen/ten" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtTitle" />
 
     <EditText
         android:id="@+id/edtDistance"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ten"
+        android:background="@null"
         android:hint="Enter distance"
         android:inputType="number"
-        android:background="@null"
         android:padding="12dp"
         android:textColor="#000"
         android:textSize="14sp"
-        app:layout_constraintTop_toBottomOf="@id/edtLocationName"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="@dimen/ten" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edtLocationName" />
 
     <LinearLayout
         android:id="@+id/buttonContainer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginTop="@dimen/twenty"
-        app:layout_constraintTop_toBottomOf="@id/edtDistance"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/edtDistance">
 
         <Button
             android:id="@+id/btnCancel"
@@ -68,20 +82,18 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/rect_blue_light_radious"
-            android:text="Cancel"
-            android:textColor="@color/navi_blue2"
             android:backgroundTint="@android:color/transparent"
-            />
+            android:text="Cancel"
+            android:textColor="@color/navi_blue2" />
 
         <Button
             android:id="@+id/btnUpdate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Update"
-            android:textColor="@android:color/white"
             android:backgroundTint="@color/navi_blue2"
-            />
+            android:text="Update"
+            android:textColor="@android:color/white" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
