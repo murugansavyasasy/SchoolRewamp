@@ -44,7 +44,7 @@ class AppServices {
     var isUpdateStatusArchive: MutableLiveData<StatusArchiveResponse?>
     var isAcademicYear: MutableLiveData<AcademicYearResponse?>
     var isUpdateStatusCommunication: MutableLiveData<StatusArchiveResponse?>
-    var isHomeWorkDetails: MutableLiveData<GetHomeworkData?>
+    var isHomeWorkDetailsData: MutableLiveData<GetHomeworkData?>
 
 
     var isPunchAttendance: MutableLiveData<StatusMessageModel?>
@@ -56,6 +56,7 @@ class AppServices {
     var isPunchHistory: MutableLiveData<PunchHistoryResponse?>
     var isStaffAttendanceReport: MutableLiveData<StaffAttendanceReportResponse?>
     var isStaffWiseAttendanceReport: MutableLiveData<StaffAttendanceReportResponse?>
+    var isStaffWiseAttendanceReportList: MutableLiveData<StaffAttendanceReportResponse?>
 
 
     init {
@@ -76,7 +77,7 @@ class AppServices {
         isUpdateStatusArchive = MutableLiveData()
         isAcademicYear = MutableLiveData()
         isUpdateStatusCommunication = MutableLiveData()
-        isHomeWorkDetails = MutableLiveData()
+        isHomeWorkDetailsData = MutableLiveData()
 
 
         isPunchAttendance = MutableLiveData()
@@ -88,6 +89,7 @@ class AppServices {
         isPunchHistory = MutableLiveData()
         isStaffAttendanceReport = MutableLiveData()
         isStaffWiseAttendanceReport = MutableLiveData()
+        isStaffWiseAttendanceReportList = MutableLiveData()
 
     }
 
@@ -635,33 +637,20 @@ class AppServices {
                 ) {
                     if (response.code() == 200) {
                         if (response.body() != null) {
-                            val status = response.body()!!.status
-                            if (status) {
-                                Log.d(
-                                    "GetHomeWorkDatails",
-                                    response.code().toString() + " - " + response.toString()
-                                )
-                                isHomeWorkDetails.postValue(response.body())
-                            } else {
-                                isHomeWorkDetails.postValue(response.body())
-                                Log.d(
-                                    "GetHomeWorkDatails",
-                                    response.code().toString() + " - " + response.toString()
-                                )
-                            }
+                            isHomeWorkDetailsData.postValue(response.body())
                         }
                     }
                 }
 
                 override fun onFailure(call: Call<GetHomeworkData?>, t: Throwable) {
-                    isHomeWorkDetails.postValue(null)
                     t.printStackTrace()
+                    isHomeWorkDetailsData.postValue(null)
                 }
             })
     }
 
     val isHomeWorkDetailsLiveData: LiveData<GetHomeworkData?>
-        get() = isHomeWorkDetails
+        get() = isHomeWorkDetailsData
 
     fun punchAttendance(isToken: String, jsonObject: JsonObject, activity: Activity) {
         RestClient.apiInterfaces.punchGiometricAttendance(isToken, jsonObject)
@@ -684,7 +673,6 @@ class AppServices {
                 override fun onFailure(call: Call<StatusMessageModel?>, t: Throwable) {
                     isPunchAttendance.postValue(null)
                     t.printStackTrace()
-                    //   }
                 }
             })
     }
@@ -952,8 +940,12 @@ class AppServices {
         get() = isStaffAttendanceReport
 
 
-    fun getGiometricStaffWiseAttendancereport(isToken: String, activity: Activity) {
-        RestClient.apiInterfaces.getStaffWiseAttendanceReport(isToken)
+    fun getGiometricStaffWiseAttendancereport(
+        isToken: String,
+        isCurrentDate: String,
+        activity: Activity
+    ) {
+        RestClient.apiInterfaces.getStaffWiseAttendanceReport(isToken, isCurrentDate)
             ?.enqueue(object : Callback<StaffAttendanceReportResponse?> {
                 override fun onResponse(
                     call: Call<StaffAttendanceReportResponse?>,
@@ -987,4 +979,49 @@ class AppServices {
 
     val isGiometricStaffWiseAttendanceReportLiveData: LiveData<StaffAttendanceReportResponse?>
         get() = isStaffWiseAttendanceReport
+
+    fun getGiometricStaffWiseAttendancereportStaffList(
+        isToken: String,
+        isSelectedDate: String,
+        isStaffId: Int,
+        activity: Activity
+    ) {
+        RestClient.apiInterfaces.getStaffWiseAttendanceReportStaffList(
+            isToken,
+            isSelectedDate,
+            isStaffId
+        )
+            ?.enqueue(object : Callback<StaffAttendanceReportResponse?> {
+                override fun onResponse(
+                    call: Call<StaffAttendanceReportResponse?>,
+                    response: Response<StaffAttendanceReportResponse?>
+                ) {
+                    Log.d(
+                        "staffwise_attendance_report",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isStaffWiseAttendanceReportList.postValue(response.body())
+                            } else {
+                                isStaffWiseAttendanceReportList.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<StaffAttendanceReportResponse?>,
+                    t: Throwable
+                ) {
+                    isStaffWiseAttendanceReportList.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isGiometricStaffWiseAttendanceReportLiveDataList: LiveData<StaffAttendanceReportResponse?>
+        get() = isStaffWiseAttendanceReportList
 }

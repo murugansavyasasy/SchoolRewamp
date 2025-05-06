@@ -14,8 +14,6 @@ class ImportantInfo : BaseActivity<LeaveRequestsBinding>(),
     override fun setupViews() {
         super.setupViews()
         setupToolbar()
-
-
     }
 
     override fun onClick(p0: View?) {

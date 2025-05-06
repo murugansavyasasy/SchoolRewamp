@@ -46,6 +46,7 @@ import com.vs.schoolmessenger.School.MessageFromManagement.MessageFromManagement
 import com.vs.schoolmessenger.School.NoticeBoard.CreateNoticeBoard
 import com.vs.schoolmessenger.School.OnlineMeeting.OnlineMeeting
 import com.vs.schoolmessenger.School.SchoolStrength.SchoolStrength
+import com.vs.schoolmessenger.School.StaffWiseAttendanceReport.StaffWiseAttendanceReport
 import com.vs.schoolmessenger.School.StudentReport.StudentReport
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -474,14 +475,12 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
             Constant.M_STAFF_WISE_ATTENDANCE_REPORT -> {
                 if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
-                    //go to staff wise geometric attendance report page
-                    LessonPlan::class.java
+                    StaffWiseAttendanceReport::class.java
                 } else {
                     if (userDetails!!.staff_details.size > 1) {
                         SchoolList::class.java
                     } else {
-                        //go to staff wise geometric attendance report page
-                        LessonPlan::class.java
+                        StaffWiseAttendanceReport::class.java
                     }
                 }
             }
@@ -514,8 +513,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     }
                 }
             }
-
-
 
 
             Constant.M_VERY_IMPORTANT_INFO -> ImportantInfo::class.java

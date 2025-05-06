@@ -45,7 +45,6 @@
             android:textSize="@dimen/thirteen_sp"
             android:layout_marginStart="@dimen/two"
             android:background="@drawable/bg_radiantwhite"
-
             android:textStyle="bold" />
 
     </LinearLayout>

@@ -4,6 +4,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -66,6 +68,7 @@ class StaffAttendanceReportAdapter(
         private val lblDay: TextView = itemView.findViewById(R.id.lblDay)
         private val rytParentCard: RelativeLayout = itemView.findViewById(R.id.rytParentCard)
         private val lblAttendanceType: TextView = itemView.findViewById(R.id.lblAttendanceType)
+        private val lnrDate: LinearLayout = itemView.findViewById(R.id.lnrDate)
 
         fun bind(
             data: StaffAttendanceReportData,
@@ -75,16 +78,26 @@ class StaffAttendanceReportAdapter(
         ) {
             lblStatus.text = data.leave_type
 
-            if (data.leave_type.equals("Present")){
-                lblStatus.background = ContextCompat.getDrawable(context, R.drawable.rounded_top_right_bottom_end_green)
-            }else{
-                lblStatus.background = ContextCompat.getDrawable(context, R.drawable.rounded_top_right_bottom_end_red)
+            if (data.leave_type.equals("Present")) {
+                lblStatus.background = ContextCompat.getDrawable(
+                    context,
+                    R.drawable.rounded_top_right_bottom_end_green
+                )
+            } else {
+                lblStatus.background =
+                    ContextCompat.getDrawable(context, R.drawable.rounded_top_right_bottom_end_red)
             }
 
+
             lblStaffName.text = data.name
-            lblCheckInTime.text = "Check in time : " + data.in_time
-            lblCheckoutTime.text = "Check out time " + data.out_time
-            lblWorkingHours.text = "Working hours " + data.working_hours
+            lblCheckInTime.text = "First in - " + data.in_time
+            if (data.out_time != "") {
+                lblCheckoutTime.visibility = View.VISIBLE
+                lblCheckoutTime.text = "Last in - " + data.out_time
+            } else {
+                lblCheckoutTime.visibility = View.GONE
+            }
+            lblWorkingHours.text = "Working hours - " + data.working_hours
             lblAttendanceType.text = data.attendance_type
 
             val result = Constant.getDateDetails(data.date)
