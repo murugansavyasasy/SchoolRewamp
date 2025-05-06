@@ -86,6 +86,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var isPunchHistory: LiveData<PunchHistoryResponse?>? = null
     var isStaffAttendanceReport: LiveData<StaffAttendanceReportResponse?>? = null
     var isStaffWiseAttendanceReport: LiveData<StaffAttendanceReportResponse?>? = null
+    var isStaffWiseAttendanceReportList: LiveData<StaffAttendanceReportResponse?>? = null
 
 
 
@@ -117,6 +118,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isPunchHistory = apiRepositories!!.isPunchHistoryLiveData
         isStaffAttendanceReport = apiRepositories!!.isGiometricStaffAttendanceReportLiveData
         isStaffWiseAttendanceReport = apiRepositories!!.isGiometricStaffWiseAttendanceReportLiveData
+        isStaffWiseAttendanceReportList = apiRepositories!!.isGiometricStaffWiseAttendanceReportLiveDataList
     }
 
     fun isDashBoardData(isToken: String, isMemberType: String, activity: Activity) {
@@ -221,8 +223,12 @@ class App(application: Application) : AndroidViewModel(application) {
     fun getStaffAttendanceReport(isToken: String,attendance_dt: String, activity: Activity) {
         apiRepositories?.getGiometricStaffAttendancereport(isToken,attendance_dt, activity)
     }
-    fun getStaffWiseAttendanceReport(isToken: String, activity: Activity) {
-        apiRepositories?.getGiometricStaffWiseAttendancereport(isToken, activity)
+    fun getStaffWiseAttendanceReport(isToken: String,isCurrentDate:String, activity: Activity) {
+        apiRepositories?.getGiometricStaffWiseAttendancereport(isToken,isCurrentDate, activity)
+    }
+
+    fun getStaffWiseAttendanceReportList(isToken: String,isSelectedDate:String,isStaffId:Int, activity: Activity) {
+        apiRepositories?.getGiometricStaffWiseAttendancereportStaffList(isToken,isSelectedDate,isStaffId, activity)
     }
 }
 
