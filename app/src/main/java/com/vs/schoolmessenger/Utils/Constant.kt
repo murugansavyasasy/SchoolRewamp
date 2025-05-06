@@ -41,6 +41,7 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Communication.CommunicationSchool
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendingData
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceSendingData
+import com.vs.schoolmessenger.School.Homework.HomeWork
 import com.vs.schoolmessenger.School.MarkYourAttendance.MarkYourAttendance
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -193,6 +194,7 @@ object Constant {
     var staff = "staff"
 
     var isCommunication = "isCommunication"
+    var isHomeWork = "isHomeWork"
     var isGioMetric = "isGioMetric"
 
     var isVoiceFile: String? = null
@@ -444,6 +446,11 @@ object Constant {
 //                val intent = Intent(activity, MarkYourAttendance::class.java)
 //                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
 //                activity.startActivity(intent)
+            }  else if (isType == isHomeWork) {
+                val intent = Intent(activity, HomeWork::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                activity.startActivity(intent)
+
             }
             closePopup()
         }

@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Paint
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.provider.MediaStore
@@ -16,18 +17,27 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.CommonScreens.ImagePickingData
 import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
+import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
+import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SectionList.Section
+import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SectionList.SectionListAdapter
+import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.Standard
 import com.vs.schoolmessenger.CommonScreens.SpecificStudentData.SpecificStudent
 import com.vs.schoolmessenger.CommonScreens.WebView
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIMethods.isGetAcademicYear
+import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.OnDateSelectedListener
+import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.Utils.VimeoVideoPlay
 import com.vs.schoolmessenger.databinding.HomeWorkBinding
 
@@ -49,39 +59,38 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
     private lateinit var imageList: MutableList<ImagePickingData>
     lateinit var mAdapter: HomeWorkReportAdapter
     private lateinit var isHomeWorkReport: List<HomeWorkReport>
+    var isAcademicYear: List<AcademicYear>? = null
+    private var appViewModel: App? = null
+    private var isAccessToken: String? = null
+    var isValidAcademicYear = false
+    var isAcademicYearId = -1
+    var isCurrentAcademicYear = true
+    private var isStaffDetails: StaffDetails? = null
+    var isSection: List<Section>? = null
+    var isGetStandard: List<Standard>? = null
 
-    private val itemsSection = listOf(
-        "A",
-        "B",
-        "C",
-        "D",
-        "E",
-        "F",
-        "G",
-        "H",
-    )
-    private val itemsStandard = listOf(
-        "V",
-        "VI",
-        "VII",
-        "VIII",
-        "IX",
-        "X",
-        "XI",
-        "XII"
-    )
+    private var itemsSection: List<String> = emptyList()
+
+
 
     override fun setupViews() {
         super.setupViews()
         setupToolbar()
+
+        appViewModel = ViewModelProvider(this)[App::class.java]
+        appViewModel!!.init()
+
         binding.imgBack.setOnClickListener(this)
         binding.rlaSection.setOnClickListener(this)
         binding.rlaStandard.setOnClickListener(this)
         binding.lblDatePick.setOnClickListener(this)
         binding.btnCreate.setOnClickListener(this)
         binding.btnHistory.setOnClickListener(this)
+        binding.AcademicYear.setOnClickListener(this)
         binding.btnChooseRecipient.setOnClickListener(this)
 
+        isStaffDetails = SharedPreference.getStaffDetails(this)
+        isAccessToken = isStaffDetails!!.access_token
 
         imageList = mutableListOf(
             ImagePickingData(R.drawable.add_image),
@@ -90,10 +99,37 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
             ImagePickingData(R.drawable.image_file),
             ImagePickingData(R.drawable.pause_icon)
         )
-        // Set up RecyclerView with a GridLayoutManager
+
         binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
         binding.rcyImages.adapter = ImagePickingAdapter(imageList, this, this)
+
+        appViewModel!!.isGetAcademicList?.observe(this) { response ->
+            Constant.hideLoading(this@HomeWork)
+            response?.data?.let { academicList ->
+                val reorderedList = academicList.sortedByDescending { it.current_academic_year }
+                if (isAcademicYear == reorderedList) return@observe
+                isAcademicYear = reorderedList
+                isValidAcademicYear = isAcademicYear?.any { it.current_academic_year == true } == true
+                binding.lblAcademicYear.text = isAcademicYear!![0].year
+                isAcademicYearId = isAcademicYear!![0].id
+                isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
+
+                isGetStandardSection()
+            }
+        }
+
+        appViewModel!!.isStandardSectionList?.observe(this) { response ->
+            Constant.hideLoading(this@HomeWork)
+            if (response != null) {
+                isGetStandard = response.data
+            }
+        }
+
+        isGetAcademicYear()
     }
+
+
+
 
     override fun onClick(v: View?) {
         when (v?.id) {
@@ -101,13 +137,20 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
                 onBackPressed()
             }
 
+
             R.id.rlaStandard -> {
-                showDropdownMenuSort(
-                    binding.lblStandard,
-                    this,
-                    itemsStandard
-                ) { selectedOption ->
-                    binding.lblStandard.text = selectedOption
+                showStandardDropdown(
+                    binding.rlaStandard, this, isGetStandard
+                ) { selectStandard, position ->
+                    binding.lblStandard.text = selectStandard.name
+                    itemsSection = selectStandard.sections?.map { it.name ?: "" } ?: emptyList()
+                    binding.lblSection.text = itemsSection.firstOrNull() ?: ""
+
+
+                    Log.d(
+                        "DropdownMenu",
+                        "Selected Standard: Name = ${selectStandard.name}, ID = ${selectStandard.id}, Position = $position"
+                    )
                 }
             }
 
@@ -120,6 +163,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
                     binding.lblSection.text = selectedOption
                 }
             }
+
 
             R.id.lblDatePick -> {
                 showDatePickerDialog(this, this)
@@ -136,6 +180,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
                 isBackRoundChange(binding.btnHistory)
                 binding.rlaHomeWorkReport.visibility = View.VISIBLE
                 binding.rlaHomework.visibility = View.GONE
+                isGetAcademicYear()
                 loadData()
             }
 
@@ -143,7 +188,25 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
                 RedirectToSectionStudents()
             }
 
+            R.id.AcademicYear -> {
+                showAcademicDropdown(
+                    binding.AcademicYear, this, isAcademicYear
+                ) { selectedYear ->
+                    binding.lblAcademicYear.text = selectedYear.year
+                    isGetStandardSection()
+                    Log.d(
+                        "DropdownMenu",
+                        "Clicked Academic Year: ID = ${selectedYear.id}, Year = ${selectedYear.year}, Current = ${selectedYear.current_academic_year}"
+                    )
+                }
+            }
+
         }
+    }
+
+    private fun isGetStandardSection() {
+        Constant.showLoading(this@HomeWork)
+        appViewModel!!.isGetStandardSection(isAccessToken!!.toString(), isAcademicYearId, this)
     }
 
     override fun onImageClick(position: Int) {
@@ -156,10 +219,34 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
         return imageList.size < 5
     }
 
+    private fun isGetAcademicYear() {
+        Constant.showLoading(this@HomeWork)
+        appViewModel!!.isGetAcademicYear(
+            isAccessToken!!, this
+        )
+    }
+
+
     private fun RedirectToSectionStudents() {
-        val intent = Intent(this@HomeWork, RecipientActivity::class.java)
+        val title = binding.edtTitle.text.toString().trim()
+        val description = binding.edtDescription.text.toString().trim()
+        if (title.isEmpty()) {
+            binding.edtTitle.error = "Title is required"
+            binding.edtTitle.requestFocus()
+            return
+        }
+        if (description.isEmpty()) {
+            binding.edtDescription.error = "Title is required"
+            binding.edtDescription.requestFocus()
+            return
+        }
+        val sectionDetails = SectionDetails(title, description)
+        val intent = Intent(this, RecipientActivity::class.java)
+        intent.putExtra("section_data", sectionDetails)
         startActivity(intent)
     }
+
+
 
     private fun showBottomDialog() {
         val dialog = Dialog(this)

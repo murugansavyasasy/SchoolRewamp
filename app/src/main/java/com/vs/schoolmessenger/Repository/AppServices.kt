@@ -16,6 +16,7 @@ import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
+import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffAttendanceReportResponse
@@ -40,6 +41,7 @@ class AppServices {
     var isGetVoiceHistory: MutableLiveData<VoiceDetails?>
     var isGetTextHistory: MutableLiveData<TextDetailsResponse?>
     var isSendText: MutableLiveData<TextSendResponse?>
+    var isSendHomeWork: MutableLiveData<HomeWorkSendResponse?>
     var isSendVoice: MutableLiveData<TextSendResponse?>
     var isUpdateStatusArchive: MutableLiveData<StatusArchiveResponse?>
     var isAcademicYear: MutableLiveData<AcademicYearResponse?>
@@ -73,6 +75,7 @@ class AppServices {
         isGetVoiceHistory = MutableLiveData()
         isGetTextHistory = MutableLiveData()
         isSendText = MutableLiveData()
+        isSendHomeWork = MutableLiveData()
         isSendVoice = MutableLiveData()
         isUpdateStatusArchive = MutableLiveData()
         isAcademicYear = MutableLiveData()
@@ -494,6 +497,36 @@ class AppServices {
         get() = isSendText
 
 
+    fun isSendHomeWork(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        RestClient.apiInterfaces.isSendHomeWork(isToken, jsonObject)
+            ?.enqueue(object : Callback<HomeWorkSendResponse?> {
+                override fun onResponse(
+                    call: Call<HomeWorkSendResponse?>,
+                    response: Response<HomeWorkSendResponse?>
+                ) {
+                    if (response.code() == 200 && response.body() != null) {
+                        isSendHomeWork.postValue(response.body())
+                    } else {
+                        isSendHomeWork.postValue(null)
+                    }
+
+                    Log.d("isGetCountryList", "${response.code()} - ${response}")
+                }
+
+                override fun onFailure(call: Call<HomeWorkSendResponse?>, t: Throwable) {
+                    isSendHomeWork.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+
+    val isSendHomeWorkLiveData: LiveData<HomeWorkSendResponse?>
+        get() = isSendHomeWork
+
+
+
+
     fun isUpdateStatusArchive(isToken: String, jsonObject: JsonObject, activity: Activity) {
 //        val request = StatusArchiveModelRequest(isToken, jsonObject)
 
@@ -637,17 +670,13 @@ class AppServices {
                 ) {
                     if (response.code() == 200) {
                         if (response.body() != null) {
-                            val status = response.body()!!.status
-                            if (status) {
-                                isHomeWorkDetailsData.postValue(response.body())
-                            } else {
-                                isHomeWorkDetailsData.postValue(response.body())
-                            }
+                            isHomeWorkDetailsData.postValue(response.body())
                         }
                     }
                 }
 
                 override fun onFailure(call: Call<GetHomeworkData?>, t: Throwable) {
+                    t.printStackTrace()
                     isHomeWorkDetailsData.postValue(null)
                 }
             })
@@ -669,12 +698,7 @@ class AppServices {
                     )
                     if (response.code() == 200) {
                         if (response.body() != null) {
-                            val status = response.body()!!.status
-                            if (status) {
-                                isPunchAttendance.postValue(response.body())
-                            } else {
-                                isPunchAttendance.postValue(response.body())
-                            }
+                            isPunchAttendance.postValue(response.body())
                         }
                     }
                 }
@@ -949,8 +973,12 @@ class AppServices {
         get() = isStaffAttendanceReport
 
 
-    fun getGiometricStaffWiseAttendancereport(isToken: String,isCurrentDate:String, activity: Activity) {
-        RestClient.apiInterfaces.getStaffWiseAttendanceReport(isToken,isCurrentDate)
+    fun getGiometricStaffWiseAttendancereport(
+        isToken: String,
+        isCurrentDate: String,
+        activity: Activity
+    ) {
+        RestClient.apiInterfaces.getStaffWiseAttendanceReport(isToken, isCurrentDate)
             ?.enqueue(object : Callback<StaffAttendanceReportResponse?> {
                 override fun onResponse(
                     call: Call<StaffAttendanceReportResponse?>,
@@ -985,8 +1013,17 @@ class AppServices {
     val isGiometricStaffWiseAttendanceReportLiveData: LiveData<StaffAttendanceReportResponse?>
         get() = isStaffWiseAttendanceReport
 
-    fun getGiometricStaffWiseAttendancereportStaffList(isToken: String,isSelectedDate:String,isStaffId:Int, activity: Activity) {
-        RestClient.apiInterfaces.getStaffWiseAttendanceReportStaffList(isToken,isSelectedDate,isStaffId)
+    fun getGiometricStaffWiseAttendancereportStaffList(
+        isToken: String,
+        isSelectedDate: String,
+        isStaffId: Int,
+        activity: Activity
+    ) {
+        RestClient.apiInterfaces.getStaffWiseAttendanceReportStaffList(
+            isToken,
+            isSelectedDate,
+            isStaffId
+        )
             ?.enqueue(object : Callback<StaffAttendanceReportResponse?> {
                 override fun onResponse(
                     call: Call<StaffAttendanceReportResponse?>,

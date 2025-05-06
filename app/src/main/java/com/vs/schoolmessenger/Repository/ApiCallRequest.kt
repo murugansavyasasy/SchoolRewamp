@@ -83,4 +83,26 @@ object ApiCallRequest {
 
         return jsonObject
     }
+
+    fun isSendHomeWork(
+        isAcademicYearId: Int,
+        selectedIds: MutableList<String>,
+        title: String,
+        description: String,
+        subjectId: Int,
+        file_path: String
+    ): JsonObject {
+        val jsonObject = JsonObject()
+        val jsonArray = JsonArray()
+        selectedIds.forEach { jsonArray.add(it) }
+        jsonObject.addProperty(RequestKeys.academic_year_id, isAcademicYearId)
+        jsonObject.add(RequestKeys.section_code, jsonArray)
+        jsonObject.addProperty(RequestKeys.title, title)
+        jsonObject.addProperty(RequestKeys.description, description)
+        jsonObject.addProperty(RequestKeys.subject_id, subjectId)
+        jsonObject.addProperty(RequestKeys.file_path, file_path)
+
+
+        return jsonObject
+    }
 }

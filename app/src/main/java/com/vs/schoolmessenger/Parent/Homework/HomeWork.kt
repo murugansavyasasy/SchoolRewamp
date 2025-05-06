@@ -48,7 +48,6 @@ class HomeWork : BaseActivity<HomeWorkParentBinding>(), View.OnClickListener,
         binding.toolbarLayout.lblStudentSection.text =
             isStudentStandardName + " " + isStudentSectionName
 
-
 //        appViewModel?.isHomeWorkDetailsList?.observe(this) { response ->
 //            Log.d("response++",response.toString())
 //            if (response!!.status) {

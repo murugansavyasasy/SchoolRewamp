@@ -44,7 +44,7 @@ class StudentDetailAdapter(
 
                 holder.binding.rlaSchoolName.setBackgroundColor(
                     ContextCompat.getColor(
-                        context, R.color.light_bg_blue
+                        context, R.color.dark_bg_blue
                     )
                 )
             }
@@ -55,7 +55,7 @@ class StudentDetailAdapter(
 
                 holder.binding.rlaSchoolName.setBackgroundColor(
                     ContextCompat.getColor(
-                        context, R.color.light_bg_purple
+                        context, R.color.dark_bg_purple
                     )
                 )
             }
@@ -65,7 +65,7 @@ class StudentDetailAdapter(
 
                 holder.binding.rlaSchoolName.setBackgroundColor(
                     ContextCompat.getColor(
-                        context, R.color.light_bg_orange
+                        context, R.color.dark_bg_orange
                     )
                 )
             }
@@ -73,7 +73,7 @@ class StudentDetailAdapter(
             3 -> {
                 holder.binding.rlaSchoolName.setBackgroundColor(
                     ContextCompat.getColor(
-                        context, R.color.light_bg_green
+                        context, R.color.dark_bg_green
                     )
                 )
             }

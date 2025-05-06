@@ -16,6 +16,7 @@ import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
+import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffAttendanceReportResponse
@@ -62,6 +63,9 @@ class App(application: Application) : AndroidViewModel(application) {
     var isSendText: LiveData<TextSendResponse?>? = null
         private set
 
+    var isSendHomeWork: LiveData<HomeWorkSendResponse?>? = null
+        private set
+
     var isVoiceSend: LiveData<TextSendResponse?>? = null
         private set
 
@@ -101,6 +105,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isGetVoiceHistory = apiRepositories!!.isGetVoiceHistoryLiveData
         isGetTextHistory = apiRepositories!!.isGetTextHistoryLiveData
         isSendText = apiRepositories!!.isSendTextLiveData
+        isSendHomeWork = apiRepositories!!.isSendHomeWorkLiveData
         isVoiceSend = apiRepositories!!.isSendVoiceLiveData
         isUpdateStatusArchive = apiRepositories!!.isUpdateStatusArchiveLiveData
         isGetAcademicList = apiRepositories!!.isGetAcademicLiveData
@@ -177,6 +182,10 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun isSendText(isToken: String, josnObject: JsonObject, activity: Activity) {
         apiRepositories!!.isSendText(isToken, josnObject, activity)
+    }
+
+    fun isSendHomeWork(isToken: String, josnObject: JsonObject, activity: Activity) {
+        apiRepositories!!.isSendHomeWork(isToken, josnObject, activity)
     }
 
     fun isVoiceSend(isToken: String, josnObject: JsonObject, activity: Activity) {

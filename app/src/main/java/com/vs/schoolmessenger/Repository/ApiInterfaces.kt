@@ -21,6 +21,7 @@ import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
+import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffAttendanceReportResponse
@@ -160,6 +161,12 @@ interface ApiInterfaces {
         @Header("Authorization") token: String,
         @Body jsonObject: JsonObject
     ): Call<TextSendResponse>?
+
+    @POST(APIMethods.isSendHomeWork)
+    fun isSendHomeWork(
+        @Header("Authorization") token: String,
+        @Body jsonObject: JsonObject
+    ): Call<HomeWorkSendResponse>?
 
     @POST(APIMethods.isSendVoice)
     fun isSendVoice(
