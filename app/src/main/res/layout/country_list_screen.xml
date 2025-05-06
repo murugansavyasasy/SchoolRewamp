@@ -11,7 +11,7 @@
         android:id="@+id/conCountry"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/twenty"
         app:layout_constraintTop_toTopOf="parent">
 
 
@@ -54,7 +54,7 @@
         <View
             android:id="@+id/vw"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="@dimen/one"
             android:layout_marginStart="@dimen/twenty"
             android:layout_marginEnd="@dimen/twenty"
             android:background="@color/black"
@@ -68,7 +68,7 @@
             android:padding="@dimen/five"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/ten"
             app:layout_constraintTop_toBottomOf="@+id/vw">
 
             <CheckBox
@@ -103,7 +103,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginStart="@dimen/ten"
-                    android:layout_marginTop="2dp"
+                    android:layout_marginTop="@dimen/two"
                     android:background="@color/navi_blue3" />
             </LinearLayout>
 
@@ -116,7 +116,7 @@
             android:layout_centerInParent="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/ten"
             app:layout_constraintTop_toBottomOf="@+id/rytTerms"
             android:src="@drawable/right_arrow1">
         </ImageView>
@@ -142,10 +142,10 @@
 
             <LinearLayout
                 android:id="@+id/lnrFirst"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
+                android:layout_width="@dimen/one_twenty"
+                android:layout_height="@dimen/one_twenty"
                 android:layout_alignParentStart="true"
-                android:layout_marginStart="-20dp"
+                android:layout_marginStart="@dimen/minus_twenty"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:background="@drawable/country_shape_one"
@@ -173,11 +173,11 @@
 
             <LinearLayout
                 android:id="@+id/lnrSecound"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
+                android:layout_width="@dimen/two_hundred"
+                android:layout_height="@dimen/two_hundred"
                 android:layout_centerHorizontal="true"
                 android:layout_marginStart="@dimen/twenty"
-                android:layout_marginTop="-30dp"
+                android:layout_marginTop="@dimen/minus_thirty"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:background="@drawable/country_shape_four"
@@ -205,11 +205,11 @@
 
             <LinearLayout
                 android:id="@+id/lnrThird"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
+                android:layout_width="@dimen/one_twenty"
+                android:layout_height="@dimen/one_twenty"
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="@dimen/twenty"
-                android:layout_marginEnd="-20dp"
+                android:layout_marginEnd="@dimen/minus_twenty"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:background="@drawable/country_shape_two"
@@ -242,15 +242,15 @@
             android:id="@+id/rytShape2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="-40dp"
+            android:layout_marginTop="@dimen/minus_fourty"
             app:layout_constraintTop_toBottomOf="@+id/rytShape1">
 
             <LinearLayout
                 android:id="@+id/lnrFourth"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
+                android:layout_width="@dimen/two_hundred"
+                android:layout_height="@dimen/two_hundred"
                 android:layout_alignParentStart="true"
-                android:layout_marginStart="-60dp"
+                android:layout_marginStart="@dimen/minus_sixty"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:background="@drawable/country_shape_five"
@@ -268,7 +268,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:layout_marginTop="@dimen/ten"
-                    android:text="Australia"
+                    android:text="@string/lblaustralia"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins_bold"
                     android:textColor="@color/white"
@@ -278,12 +278,12 @@
 
             <LinearLayout
                 android:id="@+id/lnrFifth"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
+                android:layout_width="@dimen/one_twenty"
+                android:layout_height="@dimen/one_twenty"
                 android:layout_centerHorizontal="true"
                 android:layout_marginStart="@dimen/twenty"
                 android:gravity="center"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="@dimen/thirty"
                 android:layout_weight="1"
                 android:background="@drawable/country_shape_three"
                 android:orientation="vertical">
@@ -300,7 +300,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/ten"
                     android:gravity="center"
-                    android:text="Zimbabwe"
+                    android:text="@string/lblzimbabwe"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins_bold"
                     android:textColor="@color/white"
@@ -310,11 +310,11 @@
 
             <LinearLayout
                 android:id="@+id/lnrSixth"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
+                android:layout_width="@dimen/two_hundred"
+                android:layout_height="@dimen/two_hundred"
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="@dimen/twenty"
-                android:layout_marginEnd="-60dp"
+                android:layout_marginEnd="@dimen/minus_sixty"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:background="@drawable/country_shape_six"
@@ -331,7 +331,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Finland"
+                    android:text="@string/lblfinland"
                     android:layout_marginTop="@dimen/ten"
                     android:fontFamily="@font/poppins_bold"
                     android:textStyle="bold"

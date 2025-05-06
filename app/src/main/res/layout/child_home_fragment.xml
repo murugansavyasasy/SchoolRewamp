@@ -36,7 +36,7 @@
                         android:id="@+id/lblSchoolName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Savyasasy schools"
+                        android:text="@string/savyasasy_schools"
                         android:textColor="@color/black"
                         android:textSize="@dimen/fifteen_sp"/>
 
@@ -45,7 +45,7 @@
                         android:layout_below="@+id/lblSchoolName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Savyasasy schools,Chennai - 600043"
+                        android:text="@string/savyasasy_schools_chennai_600043"
                         android:textColor="@color/grey"
                         android:textSize="@dimen/thirteen_sp"/>
 

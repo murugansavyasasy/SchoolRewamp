@@ -45,7 +45,7 @@
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
+        android:padding="@dimen/eight"
         android:layout_below="@+id/rytSearch"
         android:layout_marginTop="@dimen/five"
         android:layout_marginBottom="16dp"/>

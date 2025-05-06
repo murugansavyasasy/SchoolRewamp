@@ -29,7 +29,7 @@
             android:layout_marginStart="@dimen/ten"
             android:text="@string/NoticeBoard"
             android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textSize="@dimen/twenty_sp"
             android:textStyle="bold" />
 
 
@@ -454,7 +454,7 @@
 
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="1dp"
+                            android:layout_height="@dimen/one"
                             android:layout_alignParentBottom="true"
                             android:layout_marginStart="@dimen/sixty"
                             android:background="@color/grey" />
@@ -584,7 +584,7 @@
 
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="1dp"
+                            android:layout_height="@dimen/one"
                             android:layout_alignParentBottom="true"
                             android:layout_marginStart="@dimen/sixty"
                             android:background="@color/grey" />

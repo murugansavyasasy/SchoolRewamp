@@ -23,17 +23,17 @@
         <!-- Home Icon -->
         <LinearLayout
             android:id="@+id/nav_home"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="8dp">
+            android:padding="@dimen/eight">
 
             <ImageView
                 android:id="@+id/icon_home"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="@dimen/twenty_four"
+                android:layout_height="@dimen/twenty_four"
                 android:src="@drawable/ic_home" />
 
             <TextView
@@ -47,17 +47,17 @@
         <!-- Search Icon -->
         <LinearLayout
             android:id="@+id/nav_help"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="8dp">
+            android:padding="@dimen/eight">
 
             <ImageView
                 android:id="@+id/icon_help"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="@dimen/twenty_four"
+                android:layout_height="@dimen/twenty_four"
                 android:src="@drawable/ic_help" />
 
             <TextView
@@ -70,17 +70,17 @@
 
         <LinearLayout
             android:id="@+id/nav_settings"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="8dp">
+            android:padding="@dimen/eight">
 
             <ImageView
                 android:id="@+id/icon_settings"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="@dimen/twenty_four"
+                android:layout_height="@dimen/twenty_four"
                 android:src="@drawable/ic_settings" />
 
             <TextView
@@ -95,17 +95,17 @@
         <!-- Profile Icon -->
         <LinearLayout
             android:id="@+id/nav_profile"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="8dp">
+            android:padding="@dimen/eight">
 
             <ImageView
                 android:id="@+id/icon_profile"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="@dimen/twenty_four"
+                android:layout_height="@dimen/twenty_four"
                 android:src="@drawable/ic_account" />
 
             <TextView

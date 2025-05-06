@@ -12,11 +12,11 @@
     <TextView
         android:id="@+id/txtTitle"
         style="@style/CustomTextStylePoppinsBold"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/fifteen"
         android:gravity="center"
-        android:text="Update"
+        android:text="@string/Update"
         android:textColor="#000"
         android:textSize="@dimen/fifteen_sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -26,11 +26,11 @@
     <TextView
         android:id="@+id/txtContant"
         style="@style/CustomTextStylePoppinsMedium"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/fifteen"
         android:gravity="center"
-        android:text="Update"
+        android:text="@string/please_update_your_details"
         android:textColor="#000"
         android:textSize="@dimen/thirteen_sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -42,31 +42,31 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/ten"
-        android:hint="Enter location name"
-        android:padding="12dp"
+        android:hint="@string/edit_location_enter_location_name"
+        android:padding="@dimen/twele"
         android:textColor="#000"
-        android:textSize="14sp"
+        android:textSize="@dimen/fourteen_sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txtTitle" />
 
     <EditText
         android:id="@+id/edtDistance"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/ten"
-        android:hint="Enter distance"
+        android:hint="@string/enter_distance"
         android:inputType="number"
-        android:padding="12dp"
+        android:padding="@dimen/twele"
         android:textColor="#000"
-        android:textSize="14sp"
+        android:textSize="@dimen/fourteen_sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/edtLocationName" />
 
     <LinearLayout
         android:id="@+id/buttonContainer"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/twenty"
         android:orientation="horizontal"
@@ -76,21 +76,21 @@
 
         <Button
             android:id="@+id/btnCancel"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/rect_blue_light_radious"
             android:backgroundTint="@android:color/transparent"
-            android:text="Cancel"
+            android:text="@string/Cancel"
             android:textColor="@color/navi_blue2" />
 
         <Button
             android:id="@+id/btnUpdate"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="@color/navi_blue2"
-            android:text="Update"
+            android:text="@string/Update"
             android:textColor="@android:color/white" />
     </LinearLayout>
 

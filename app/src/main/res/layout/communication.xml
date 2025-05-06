@@ -48,7 +48,7 @@
                 android:paddingStart="@dimen/five"
                 android:paddingEnd="@dimen/five"
                 android:paddingBottom="@dimen/ten"
-                android:text="Voice"
+                android:text="@string/voice"
                 android:textColor="@color/white"
                 android:textSize="@dimen/fifteen_sp"
                 android:textStyle="bold">
@@ -82,7 +82,7 @@
                 android:paddingStart="@dimen/five"
                 android:paddingEnd="@dimen/five"
                 android:paddingBottom="@dimen/ten"
-                android:text="Text"
+                android:text="@string/text"
                 android:textColor="@color/black"
                 android:textSize="@dimen/fifteen_sp"
                 android:textStyle="bold">
@@ -111,7 +111,7 @@
 
         <RelativeLayout
             android:id="@+id/rytSearch"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero"
             android:layout_height="@dimen/thirty_five"
             android:layout_margin="@dimen/ten"
             android:layout_weight="1"
@@ -119,8 +119,8 @@
 
             <ImageView
                 android:id="@+id/imgSearch"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="@dimen/twenty_five"
+                android:layout_height="@dimen/twenty_five"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/ten"
                 android:src="@drawable/ic_search" />
@@ -133,7 +133,7 @@
                 android:background="@android:color/transparent"
                 android:hint="@string/lblSearch"
                 android:textColor="@color/black"
-                android:textSize="13sp" />
+                android:textSize="@dimen/thirteen_sp" />
 
         </RelativeLayout>
 
@@ -164,7 +164,7 @@
                 android:background="@drawable/bg_gray_radious"
                 android:checked="true"
                 android:gravity="center"
-                android:text="All">
+                android:text="@string/all">
 
             </RadioButton>
 
@@ -176,7 +176,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/bg_gray_radious"
                 android:gravity="center"
-                android:text="Voice">
+                android:text="@string/voice">
 
             </RadioButton>
 
@@ -188,7 +188,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/bg_gray_radious"
                 android:gravity="center"
-                android:text="Text">
+                android:text="@string/text">
 
             </RadioButton>
 
@@ -211,7 +211,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/bg_light_green_radious"
                 android:gravity="center"
-                android:text="All"
+                android:text="@string/all"
                 android:textColor="@color/navi_blue2"
                 android:textSize="@dimen/thirteen_sp">
 
@@ -226,7 +226,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/bg_gray_light_radiuos"
                 android:gravity="center"
-                android:text="Unread"
+                android:text="@string/unread"
                 android:textColor="@color/navi_blue2"
                 android:textSize="@dimen/thirteen_sp">
 
@@ -241,7 +241,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/bg_gray_light_radiuos"
                 android:gravity="center"
-                android:text="Read"
+                android:text="@string/read"
                 android:textColor="@color/navi_blue2"
                 android:textSize="@dimen/thirteen_sp">
 
@@ -264,14 +264,14 @@
 
         <ImageView
             android:id="@+id/nomessage"
-            android:layout_width="250dp"
-            android:layout_height="250dp"
+            android:layout_width="@dimen/two_fifty"
+            android:layout_height="@dimen/two_fifty"
             android:layout_centerInParent="true"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/twenty"
             android:src="@drawable/nomessages"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textSize="@dimen/eighteen"
             android:visibility="gone" />
 
         <TextView
@@ -281,10 +281,10 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:text="No list found"
+            android:layout_marginTop="@dimen/twenty"
+            android:text="@string/no_list_found"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textSize="@dimen/eighteen"
             android:visibility="gone" />
 
 
@@ -297,7 +297,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_below="@+id/lytList"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="@dimen/twenty"
         android:layout_marginBottom="@dimen/fifteen"
         android:text="@string/see_more"
         android:textColor="@color/navi_blue2"

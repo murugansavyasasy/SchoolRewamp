@@ -16,7 +16,7 @@
         android:gravity="center"
         android:text="@string/confirmation"
         android:textColor="#000"
-        android:textSize="18sp"
+        android:textSize="@dimen/eighteen_sp"
         android:textStyle="bold" />
 
     <TextView
@@ -24,10 +24,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/ten"
         android:text="@string/selected_target_1"
         android:textColor="#444"
-        android:textSize="16sp" />
+        android:textSize="@dimen/sixteen_sp" />
 
     <TextView
         android:id="@+id/alertMessage"
@@ -37,14 +37,14 @@
         android:gravity="center"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/ten"
         android:text="@string/are_you_sure_want_to_send_this_message"
         android:textColor="#444"
         android:textSize="@dimen/fifteen_sp" />
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
+        android:layout_height="@dimen/point_five"
         android:layout_marginTop="@dimen/twenty"
         android:background="@color/mild_grey2" />
 
@@ -57,7 +57,7 @@
 
         <TextView
             android:id="@+id/btnCancel"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero"
             android:layout_height="match_parent"
             android:layout_weight="1"
             style="@style/CustomTextStylePoppinsBold"
@@ -66,13 +66,13 @@
             android:textColor="@color/navi_blue2" />
 
         <View
-            android:layout_width="1dp"
+            android:layout_width="@dimen/one"
             android:layout_height="match_parent"
             android:background="@color/mild_grey2" />
 
         <TextView
             android:id="@+id/btnOk"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"

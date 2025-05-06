@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="minus_sixty">-60dp</dimen>
+    <dimen name="minus_fourty">-40dp</dimen>
+    <dimen name="minus_thirty">-30dp</dimen>
+    <dimen name="minus_twenty">-20dp</dimen>
+    <dimen name="minus_ten">-10dp</dimen>
+    <dimen name="minus_five">-5dp</dimen>
+    <dimen name="zero">0dp</dimen>
+    <dimen name="point_five">0.5dp</dimen>
     <dimen name="one">1dp</dimen>
     <dimen name="two">2dp</dimen>
     <dimen name="three">3dp</dimen>
@@ -26,6 +34,8 @@
     <dimen name="fourty">40dp</dimen>
     <dimen name="fourty_five">45dp</dimen>
     <dimen name="fifty">50dp</dimen>
+    <dimen name="fifty_five">55dp</dimen>
+    <dimen name="fifty_six">56dp</dimen>
     <dimen name="sixty">60dp</dimen>
     <dimen name="seventy">70dp</dimen>
     <dimen name="seventy_five">75dp</dimen>
@@ -34,18 +44,22 @@
     <dimen name="hundred">100dp</dimen>
     <dimen name="one_ten">110dp</dimen>
     <dimen name="one_twenty">120dp</dimen>
+    <dimen name="one_twenty_five">125dp</dimen>
     <dimen name="one_thirty">130dp</dimen>
     <dimen name="one_fourty">140dp</dimen>
     <dimen name="hundred_thirty">120dp</dimen>
     <dimen name="one_fifty">150dp</dimen>
     <dimen name="one_seventy">170dp</dimen>
+    <dimen name="one_seventy_two">172dp</dimen>
     <dimen name="two_hundred">200dp</dimen>
     <dimen name="two_fifty">250dp</dimen>
     <dimen name="two_sixty">260dp</dimen>
     <dimen name="three_hundred">300dp</dimen>
+    <dimen name="four_hundred">400dp</dimen>
 
 
-<!--    SP-->
+
+    <!--    SP-->
 
 
     <dimen name="fab_margin_sp">16sp</dimen>
@@ -55,9 +69,14 @@
     <dimen name="five_sp">5sp</dimen>
     <dimen name="seven_sp">7sp</dimen>
     <dimen name="ten_sp">10sp</dimen>
+    <dimen name="eleven_sp">11sp</dimen>
+
     <dimen name="twele_sp">12sp</dimen>
     <dimen name="thirteen_sp">13sp</dimen>
+    <dimen name="fourteen_sp">14sp</dimen>
     <dimen name="fifteen_sp">15sp</dimen>
+    <dimen name="sixteen_sp">16sp</dimen>
+    <dimen name="seventeen_sp">17sp</dimen>
     <dimen name="eighteen_sp">18sp</dimen>
     <dimen name="twenty_sp">20sp</dimen>
     <dimen name="twenty_five_sp">25sp</dimen>

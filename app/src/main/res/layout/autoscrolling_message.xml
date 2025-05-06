@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/ten"
             android:layout_toStartOf="@+id/lblTime"
-            android:text="Images"
+            android:text="@string/images"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"
             android:textStyle="bold">
