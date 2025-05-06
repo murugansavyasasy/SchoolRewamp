@@ -39,8 +39,8 @@ import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolList
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Communication.CommunicationSchool
-import com.vs.schoolmessenger.School.Communication.TextSendingData
-import com.vs.schoolmessenger.School.Communication.VoiceSendingData
+import com.vs.schoolmessenger.School.Communication.DataClass.TextSendingData
+import com.vs.schoolmessenger.School.Communication.DataClass.VoiceSendingData
 import com.vs.schoolmessenger.School.MarkYourAttendance.MarkYourAttendance
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -81,7 +81,6 @@ object Constant {
     var isStaffRole: String? = "p3"
     var isAdminRole: String? = "p4"
     var isNonTeachingStaffRole: String? = "p5"
-
     val STU_COMMUNICATION = 7
     val STU_HOMEWORK = 15
     val STU_EXAM = 5

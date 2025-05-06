@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.School.Communication
+package com.vs.schoolmessenger.School.Communication.DataClass
 
 import com.google.gson.annotations.SerializedName
 import com.vs.schoolmessenger.Repository.RequestKeys

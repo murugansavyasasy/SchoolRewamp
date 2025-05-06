@@ -50,6 +50,7 @@ class HomeWork : BaseActivity<HomeWorkParentBinding>(), View.OnClickListener,
 
 
         appViewModel?.isHomeWorkDetails?.observe(this) { response ->
+            Log.d("GetHomework-response",response.toString())
             if (response?.status == true) {
                 isloadhomeworkData(response.data)
                 Log.d("GetHomeWorkDetails", response.data.toString())

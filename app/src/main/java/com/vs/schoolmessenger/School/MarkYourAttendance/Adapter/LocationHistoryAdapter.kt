@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.Communication.TextHistoryAdapter
+import com.vs.schoolmessenger.School.Communication.Adapter.TextHistoryAdapter
 import com.vs.schoolmessenger.School.MarkYourAttendance.Interface.LocationHistoryClickListener
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistoryData
 import com.vs.schoolmessenger.Utils.ShimmerUtil
@@ -77,8 +77,8 @@ class LocationHistoryAdapter(
             adapter: LocationHistoryAdapter
         ) {
             lblPlaceName.text = data.location
-            lblLatLong.text = data.latitude + "-" + data.longitude
-            lblDistance.text = data.distance
+            lblLatLong.text = data.latitude + " - " + data.longitude
+            lblDistance.text = data.distance + " Meters"
 
             imgDelete.setOnClickListener {
                 listener.onItemClick(data, "isDelete")

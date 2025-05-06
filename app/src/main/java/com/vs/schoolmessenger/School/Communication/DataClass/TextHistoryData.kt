@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.School.Communication
+package com.vs.schoolmessenger.School.Communication.DataClass
 
 data class TextHistoryData(
 

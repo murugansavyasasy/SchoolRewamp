@@ -57,6 +57,12 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener {
                     Constant.isChildDetails = Constant.user_data!![0].user_details.child_details
                     SharedPreference.putUserDetails(this@Login, Constant.user_details!!)
 
+                    SharedPreference.putMobileNumberPassWord(
+                        this@Login,
+                        binding.txtMobileNumber.text.toString(),
+                        binding.txtPassword.text.toString()
+                    )
+
                     if (Constant.user_data!![0].is_number_exists) {
                         if (isValidateUser[0].is_password_updated) {
                             if (isValidateUser[0].otp_sent) {
@@ -64,11 +70,6 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener {
                                 Constant.pageType = Constant.SignInScreen
                                 startActivity(intent)
                             } else {
-                                SharedPreference.putMobileNumberPassWord(
-                                    this@Login,
-                                    binding.txtMobileNumber.text.toString(),
-                                    binding.txtPassword.text.toString()
-                                )
 
                                 if (Constant.user_data!![0].user_details.is_staff && Constant.user_data!![0].user_details.is_parent) {
                                     val intent = Intent(this@Login, PrioritySelection::class.java)

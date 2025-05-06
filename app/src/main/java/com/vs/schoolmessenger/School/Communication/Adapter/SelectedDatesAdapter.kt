@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.School.Communication
+package com.vs.schoolmessenger.School.Communication.Adapter
 
 import android.content.Context
 import android.view.LayoutInflater

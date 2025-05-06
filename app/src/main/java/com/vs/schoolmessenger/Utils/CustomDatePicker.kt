@@ -13,8 +13,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.Communication.DateAdapter
-import com.vs.schoolmessenger.School.Communication.DateItem
+import com.vs.schoolmessenger.School.Communication.Adapter.DateAdapter
+import com.vs.schoolmessenger.School.Communication.DataClass.DateItem
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale

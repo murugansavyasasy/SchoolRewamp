@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.School.Communication
+package com.vs.schoolmessenger.School.Communication.DataClass
 
 import java.text.SimpleDateFormat
 import java.util.Calendar

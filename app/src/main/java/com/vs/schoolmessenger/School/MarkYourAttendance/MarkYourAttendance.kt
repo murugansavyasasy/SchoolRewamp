@@ -101,7 +101,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
         appViewModel?.init()
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
-
+        authenticatStart()
         val isEnabled = SharedPreference.getBiometricEnabled(this@MarkYourAttendance)
         binding.enableSwitch.setChecked(isEnabled!!)
         binding.enableSwitch.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView: CompoundButton?, isChecked: Boolean ->
@@ -123,6 +123,8 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             startActivity(intent)
         }
+
+
 
         val biometricManager = BiometricManager.from(this)
         when (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG)) {
@@ -194,6 +196,8 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
             } else {
                 binding.recycleAttendanceReports.visibility = View.GONE
                 binding.lblNoRecords.visibility = View.VISIBLE
+                binding.imgNorecord.visibility = View.VISIBLE
+                binding.lblNoRecords.text = response!!.message
             }
         }
 
@@ -239,6 +243,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
             Constant.executeAfterDelay {
                 binding.recycleAttendanceReports.visibility = View.VISIBLE
                 binding.lblNoRecords.visibility = View.GONE
+                binding.imgNorecord.visibility = View.GONE
                 isStaffAttendanceReportAdapter =
                     StaffAttendanceReportAdapter(
                         isStaffReport,
@@ -251,6 +256,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
         } else {
             binding.recycleAttendanceReports.visibility = View.GONE
             binding.lblNoRecords.visibility = View.VISIBLE
+            binding.imgNorecord.visibility = View.VISIBLE
         }
     }
 
@@ -490,7 +496,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
             R.id.btnPresent -> {
                 Constant.showLoading(this)
                 isPunchAttendance()
-                //   enableBiometric()
+//                   enableBiometric()
             }
 
             R.id.rytAddLocation -> {
@@ -568,7 +574,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
                                 authenticatealertpopupWindow!!.dismiss()
                             }
                         }
-                        againAuthenticatePopup()
+                      //  againAuthenticatePopup()
                     }
                 }
 
@@ -591,6 +597,8 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
         biometricPrompt!!.authenticate(promptInfo)
 
     }
+
+
 
     private fun againAuthenticatePopup() {
 
@@ -712,7 +720,6 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
         if (data.isNotEmpty()) {
             rcyPunchList!!.visibility = View.VISIBLE
             lblNoRecordsFound!!.visibility = View.GONE
-            lblNoRecordsFound!!.text = "No Punch History found!"
 //            Constant.executeAfterDelay {
             isPunchHistoryAdapter = PunchHistoryAdapter(
                 data, this, Constant.isShimmerViewDisable
@@ -722,6 +729,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
 //            }
         } else {
             rcyPunchList!!.visibility = View.GONE
+            lblNoRecordsFound!!.text = "No Punch History found!"
             lblNoRecordsFound!!.visibility = View.VISIBLE
         }
     }

@@ -129,6 +129,14 @@
     <color name="light_dark_blue">#7ac6dc</color>
 
 
+
+    <color name="dark_bg_blue">#A1E3F9</color>
+    <color name="dark_bg_green">#8EFBCC</color>
+    <color name="dark_bg_purple">#D4ABFD</color>
+    <color name="dark_bg_orange">#F89F75</color>
+
+
+
     <color name="light_bg_blue">#CFE8F6</color>
     <color name="light_bg_orange">#FAECE0</color>
     <color name="light_bg_green">#BAE4DC</color>

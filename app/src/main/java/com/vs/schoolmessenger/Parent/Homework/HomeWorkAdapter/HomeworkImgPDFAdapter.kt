@@ -166,13 +166,7 @@ class HomeworkImgPDFAdapter(
             DefaultImage.visibility=View.GONE
             WebViewThumbnail.visibility=View.VISIBLE
             val googleDocsUrl = "https://docs.google.com/gview?embedded=true&url=$urlpath"
-            WebViewThumbnail.settings.javaScriptEnabled = true
-            WebViewThumbnail.settings.setSupportZoom(true)
             WebViewThumbnail.webViewClient = WebViewClient()
-            WebViewThumbnail.settings.domStorageEnabled = true
-            WebViewThumbnail.settings.loadWithOverviewMode = true
-            WebViewThumbnail.settings.useWideViewPort = true
-            WebViewThumbnail.getSettings().allowFileAccess = true;
             WebViewThumbnail.loadUrl(googleDocsUrl);
             Log.d("After Loading FilePath", googleDocsUrl)
         }
