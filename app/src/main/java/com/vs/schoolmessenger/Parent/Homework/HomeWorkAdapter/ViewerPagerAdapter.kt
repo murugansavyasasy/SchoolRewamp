@@ -30,25 +30,7 @@ class ViewerPagerAdapter(
                     .load(file.path)
                     .into(holder.imageView)
             }
-            "PDF" -> {
-                holder.imageView.setImageResource(R.drawable.hw_pdf_img)
-            }
-            "DOC", "DOCX" -> {
-                holder.imageView.setImageResource(R.drawable.microsoft_word_img)
-            }
-            "PPT", "PPTX" -> {
-                holder.imageView.setImageResource(R.drawable.ppt_img)
-            }
-            "TXT" -> {
-                holder.imageView.setImageResource(R.drawable.txt_file_img)
-            }
         }
-//        holder.itemView.setOnClickListener {
-//            val intent = Intent(context, FullScreenViewerActivity::class.java)
-//            intent.putExtra("path", file.path)
-//            intent.putExtra("type", file.type)
-//            context.startActivity(intent)
-//        }
 
     }
 

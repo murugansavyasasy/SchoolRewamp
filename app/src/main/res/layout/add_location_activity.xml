@@ -160,20 +160,39 @@
                             android:layout_height="wrap_content"
                             android:layout_toEndOf="@+id/imgBack"
                             android:gravity="center"
-                            android:text="Important Note"
-                            android:textColor="@color/bpBlue"
+                            android:text="@string/important"
+                            android:textColor="@color/red"
                             android:textSize="15dp" />
 
-                        <TextView
-                            style="@style/CustomTextStylePoppinsMedium"
+                        <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/lblNote"
                             android:layout_marginTop="@dimen/ten"
-                            android:gravity="start"
-                            android:text="@string/location_add_instructions_attendance"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/thirteen_sp" />
+                            android:background="@drawable/outline_gray">
+
+                            <View
+                                android:id="@+id/stripe"
+                                android:layout_width="@dimen/eight"
+                                android:layout_height="match_parent"
+                                android:layout_alignTop="@id/instructionText"
+                                android:layout_alignBottom="@id/instructionText"
+                                android:layout_alignParentStart="true"
+                                android:background="@drawable/bg_start_side_radious" />
+
+                            <TextView
+                                android:id="@+id/instructionText"
+                                style="@style/CustomTextStylePoppinsBold"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_toEndOf="@id/stripe"
+                                android:gravity="start"
+                                android:padding="@dimen/five"
+                                android:text="@string/location_add_instructions_attendance"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/thirteen_sp" />
+                        </RelativeLayout>
+
 
                     </RelativeLayout>
 
@@ -191,10 +210,10 @@
                         android:id="@+id/txtLocationName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginStart="@dimen/five"
                         android:layout_marginTop="@dimen/ten"
                         android:background="@drawable/outline_gray"
-                        android:hint="Pin your location name"
+                        android:hint="@string/pin_your_location_name"
                         android:inputType="text"
                         android:padding="@dimen/eight"
                         android:textColorHint="@color/jumbo"
@@ -206,7 +225,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="Distance *"
+                        android:text="@string/distance"
                         android:textColor="@color/black"
                         android:textSize="15dp" />
 
@@ -214,7 +233,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/fourty"
-                        android:layout_marginStart="@dimen/ten"
+                        android:layout_marginStart="@dimen/five"
                         android:layout_marginTop="@dimen/five"
                         android:background="@drawable/outline_gray">
 
@@ -222,8 +241,9 @@
                         <RelativeLayout
                             android:id="@+id/rytSpinnertMetres"
                             android:layout_width="@dimen/hundred"
-                            android:layout_height="match_parent"
+                            android:layout_height="@dimen/thirty_five"
                             android:layout_centerVertical="true"
+                            android:layout_marginStart="@dimen/two"
                             android:background="@color/gray">
 
                             <Spinner
@@ -258,7 +278,7 @@
                             android:layout_toEndOf="@+id/rytSpinnertMetres"
                             android:background="@null"
                             android:gravity="center"
-                            android:hint="Drop your location"
+                            android:hint="@string/drop_your_location"
                             android:inputType="number"
                             android:textColor="@color/black"
                             android:textSize="@dimen/thirteen_sp" />
@@ -272,9 +292,9 @@
                             android:layout_alignParentEnd="true"
                             android:layout_marginEnd="@dimen/ten"
                             android:gravity="center"
-                            android:text="Meter(s)"
+                            android:text="@string/meter_s"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/fifteen_sp">
+                            android:textSize="@dimen/thirteen_sp">
 
                         </TextView>
 
@@ -295,30 +315,23 @@
                     <ImageView
                         android:id="@+id/webViewMap"
                         android:layout_width="match_parent"
-                        android:src="@drawable/map"
-                        android:layout_height="@dimen/one_fifty">
+                        android:layout_height="@dimen/one_fifty"
+                        android:src="@drawable/map">
 
                     </ImageView>
-
-                    <!--                    <androidx.fragment.app.FragmentContainerView-->
-                    <!--                        android:id="@+id/mapFragment"-->
-                    <!--                        android:name="com.google.android.gms.maps.SupportMapFragment"-->
-                    <!--                        android:layout_width="match_parent"-->
-                    <!--                        android:layout_height="@dimen/one_fifty" />-->
 
                     <TextView
 
                         android:id="@+id/btnViewLocations"
                         style="@style/CustomTextStylePoppinsMedium"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginEnd="10dp"
+                        android:layout_height="@dimen/fourty"
+                        android:layout_marginTop="@dimen/ten"
                         android:background="@drawable/rect_skyblue"
                         android:gravity="center"
                         android:text="@string/tap_to_view_your_existing_punch_locations"
                         android:textColor="@color/white"
-                        android:textSize="15dp"
+                        android:textSize="@dimen/fifteen_sp"
                         android:visibility="visible" />
 
                     <TextView
@@ -337,6 +350,8 @@
                         android:id="@+id/lnrAddressLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ten"
+                        android:background="@drawable/gray_bg_radius"
                         android:orientation="vertical"
                         android:visibility="visible">
 
@@ -348,16 +363,19 @@
                             android:text="@string/your_address"
                             android:textColor="@color/black"
                             android:textSize="15dp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/lblAddress"
+                            style="@style/CustomTextStylePoppinsMedium"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="@dimen/ten"
                             android:text=""
+                            android:layout_marginStart="@dimen/ten"
                             android:textColor="@color/black"
-                            android:textSize="15dp"
+                            android:textSize="@dimen/thirteen_sp"
                             android:textStyle="normal" />
 
                         <TextView
@@ -375,12 +393,13 @@
                             android:id="@+id/lbllatLong"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="@dimen/ten"
                             android:text=""
-                            android:textColor="@color/black"
-                            android:textSize="15dp"
+                            android:layout_marginStart="@dimen/ten"
+                            android:textColor="@color/jumbo"
+                            android:textSize="@dimen/thirteen_sp"
                             android:textStyle="normal"
-                            android:visibility="gone" />
+                            android:visibility="visible" />
 
                     </LinearLayout>
 
@@ -394,7 +413,7 @@
                         android:layout_marginTop="@dimen/twenty"
                         android:background="@drawable/rect_brown"
                         android:gravity="center"
-                        android:text="SAVE"
+                        android:text="@string/lblSubmit"
                         android:textColor="@color/white"
                         android:textSize="@dimen/fifteen_sp"
                         android:visibility="visible" />

@@ -75,7 +75,7 @@
                 android:layout_marginStart="@dimen/ten"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Present"
+                android:text="@string/present"
                 android:textColor="@color/green"
                 android:textStyle="normal"
                 android:fontFamily="@font/poppins_regular"
@@ -100,7 +100,7 @@
                 android:id="@+id/lblAbsent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Absent"
+                android:text="@string/absent"
                 android:textColor="@color/red"
                 android:textSize="@dimen/twele_sp" />
 

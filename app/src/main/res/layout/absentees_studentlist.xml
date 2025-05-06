@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/sixty"
             android:layout_marginTop="@dimen/twenty_five"
-            android:text="Absentees Students"
+            android:text="@string/absentees_students"
             android:textColor="@color/black"
             android:textSize="@dimen/eighteen"
             android:textStyle="normal">

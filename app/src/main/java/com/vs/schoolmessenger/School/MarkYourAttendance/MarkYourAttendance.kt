@@ -63,8 +63,8 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
         return MarkYourAttendanceBinding.inflate(layoutInflater)
     }
 
-    var isStaffAttendanceReportAdapter: StaffAttendanceReportAdapter? = null
-    var isPunchHistoryAdapter: PunchHistoryAdapter? = null
+    private var isStaffAttendanceReportAdapter: StaffAttendanceReportAdapter? = null
+    private var isPunchHistoryAdapter: PunchHistoryAdapter? = null
 
     private var appViewModel: App? = null
 
@@ -92,39 +92,36 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
         binding.btnPresent.setOnClickListener(this)
         binding.btnCreate.setOnClickListener(this)
         binding.btnHistory.setOnClickListener(this)
-
         binding.toolbarLayout.rytAddLocation.visibility = View.VISIBLE
-
-        binding.toolbarLayout.lblParentToolBar.text = "GeoMetric Attendance"
+        binding.toolbarLayout.lblParentToolBar.text = "Geometric Attendance"
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel?.init()
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
-        authenticatStart()
-        val isEnabled = SharedPreference.getBiometricEnabled(this@MarkYourAttendance)
-        binding.enableSwitch.setChecked(isEnabled!!)
-        binding.enableSwitch.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView: CompoundButton?, isChecked: Boolean ->
-            if (isChecked) {
-                val enabled = SharedPreference.getBiometricEnabled(this@MarkYourAttendance)
-                if (!enabled!!) {
-                    enableLocalFingerPrint()
-                }
-            } else {
-                val enabled = SharedPreference.getBiometricEnabled(this@MarkYourAttendance)
-                if (enabled!!) {
-                    showFingerPrintDisablepopup()
-                }
-            }
-        })
+
+
+//        val isEnabled = SharedPreference.getBiometricEnabled(this@MarkYourAttendance)
+//        binding.enableSwitch.setChecked(isEnabled!!)
+//        binding.enableSwitch.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView: CompoundButton?, isChecked: Boolean ->
+//            if (isChecked) {
+//                val enabled = SharedPreference.getBiometricEnabled(this@MarkYourAttendance)
+//                if (!enabled!!) {
+//                    enableLocalFingerPrint()
+//                }
+//            } else {
+//                val enabled = SharedPreference.getBiometricEnabled(this@MarkYourAttendance)
+//                if (enabled!!) {
+//                    showFingerPrintDisablepopup()
+//                }
+//            }
+//        })
 
         binding.toolbarLayout.rytAddLocation.setOnClickListener {
             val intent = Intent(this@MarkYourAttendance, AddLocationActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             startActivity(intent)
         }
-
-
 
         val biometricManager = BiometricManager.from(this)
         when (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG)) {
@@ -166,6 +163,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
 
         appViewModel!!.isStaffLocations?.observe(this) { response ->
             if (response != null && response.status) {
+                binding.rytProgressBar.visibility=View.GONE
                 binding.rytNoLocationList.visibility = View.GONE
                 val isStaffLocation = response.data
                 if (isStaffLocation.isNotEmpty()) {
@@ -182,7 +180,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
         }
 
         appViewModel!!.isPunchAttendance?.observe(this) { response ->
-            if (response != null && response.status) {
+            if (response!!.status) {
                 Constant.hideLoading(this)
                 Constant.showTopAlertPopup(response.message, Constant.isGioMetric, this)
             }
@@ -228,6 +226,8 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
                 position: Int,
                 id: Long
             ) {
+                binding.lblNoRecords.visibility = View.GONE
+                binding.imgNorecord.visibility = View.GONE
                 val selectedYear = parent.getItemAtPosition(position).toString()
                 isLoadMonth(selectedYear)
             }
@@ -280,6 +280,8 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
                 position: Int,
                 id: Long
             ) {
+                binding.lblNoRecords.visibility = View.GONE
+                binding.imgNorecord.visibility = View.GONE
                 val selectedMonthNumber = String.format("%02d", position + 1)
                 getStaffAttendanceReport(selectedYear, selectedMonthNumber)
             }
@@ -487,6 +489,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
 
     }
 
+    @SuppressLint("UnspecifiedRegisterReceiverFlag")
     override fun onClick(p0: View?) {
         when (p0?.id) {
             R.id.btnEnableLocation -> {
@@ -494,22 +497,24 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
             }
 
             R.id.btnPresent -> {
-                Constant.showLoading(this)
-                isPunchAttendance()
-//                   enableBiometric()
-            }
-
-            R.id.rytAddLocation -> {
-
+                authenticatStart()
             }
 
             R.id.btnHistory -> {
+                binding.rytProgressBar.visibility=View.GONE
                 isLoadYear()
                 isBackgroundChange(binding.btnHistory)
             }
 
             R.id.btnCreate -> {
+                binding.rytProgressBar.visibility=View.VISIBLE
+                binding.rytPresentlayout.visibility=View.GONE
                 isBackgroundChange(binding.btnCreate)
+                val filter = IntentFilter(LocationManager.PROVIDERS_CHANGED_ACTION).apply {
+                    addAction(Intent.ACTION_PROVIDER_CHANGED) // Optional extra compatibility
+                }
+                registerReceiver(gpsStatusReceiver, filter)
+                getLocationPermissions()
             }
         }
     }
@@ -533,29 +538,23 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
     }
 
 
-    private fun enableBiometric() {
-        val isEnab = SharedPreference.getBiometricEnabled(this@MarkYourAttendance)
-        val isBiometricSkip = SharedPreference.getBiometricSkip(this@MarkYourAttendance)
+//    private fun enableBiometric() {
+//        val isEnab = SharedPreference.getBiometricEnabled(this@MarkYourAttendance)
+//        val isBiometricSkip = SharedPreference.getBiometricSkip(this@MarkYourAttendance)
+//
+//        if (isBiometricSkip!!) {
+//        } else {
+//            if (!isEnab!! && ifBiometricAvailable) {
+//                enableLocalFingerPrint()
+//            } else {
+//                val isEnabled = SharedPreference.getBiometricEnabled(this@MarkYourAttendance)
+//                if (isEnabled!!) {
+//                    authenticatStart()
+//                }
+//            }
+//        }
+//    }
 
-        if (isBiometricSkip!!) {
-            putAttendanceDataAPI(false)
-        } else {
-            if (!isEnab!! && ifBiometricAvailable) {
-                enableLocalFingerPrint()
-            } else {
-                val isEnabled = SharedPreference.getBiometricEnabled(this@MarkYourAttendance)
-                if (isEnabled!!) {
-                    authenticatStart()
-                } else {
-                    putAttendanceDataAPI(false)
-                }
-            }
-        }
-    }
-
-    private fun putAttendanceDataAPI(b: Boolean) {
-
-    }
 
     private fun authenticatStart() {
 
@@ -564,38 +563,44 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
             this@MarkYourAttendance,
             executor,
             object : BiometricPrompt.AuthenticationCallback() {
+
                 override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                     super.onAuthenticationError(errorCode, errString)
-                    //               if (errorCode == BiometricPrompt.ERROR_NEGATIVE_BUTTON) {
-//                }
+
+                    Log.d("BiometricAuth", "Authentication error: $errString")
+                    Constant.showLoading(this@MarkYourAttendance)
+                    isPunchAttendance()
                     if (ifBiometricAvailable) {
-                        if (authenticatealertpopupWindow != null) {
-                            if (authenticatealertpopupWindow!!.isShowing()) {
-                                authenticatealertpopupWindow!!.dismiss()
-                            }
+                        authenticatealertpopupWindow?.let {
+                            if (it.isShowing) it.dismiss()
                         }
-                      //  againAuthenticatePopup()
                     }
                 }
 
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                     super.onAuthenticationSucceeded(result)
-                    putAttendanceDataAPI(true)
-                    // Handle successful authentication here
-                }
+
+                    // Success
+                    Log.d("BiometricAuth", "Authentication succeeded")
+                    Constant.showLoading(this@MarkYourAttendance)
+                    isPunchAttendance()                 }
 
                 override fun onAuthenticationFailed() {
                     super.onAuthenticationFailed()
+
+                    // Failed attempt
+                    Log.d("BiometricAuth", "Authentication failed")
+                    Toast.makeText(applicationContext, "Authentication failed", Toast.LENGTH_SHORT).show()
                 }
             })
 
         val promptInfo = PromptInfo.Builder()
             .setTitle(resources.getString(R.string.Biometric_Authentications))
             .setSubtitle(resources.getString(R.string.Mark_attendance_biometric_credential))
-            .setNegativeButtonText(resources.getString(R.string.cancel))
+            .setNegativeButtonText(resources.getString(R.string.cancel)) // Clicking this triggers onAuthenticationError
             .build()
-        biometricPrompt!!.authenticate(promptInfo)
 
+        biometricPrompt?.authenticate(promptInfo)
     }
 
 

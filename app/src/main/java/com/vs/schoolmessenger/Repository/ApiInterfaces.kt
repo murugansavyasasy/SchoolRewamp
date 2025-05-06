@@ -248,7 +248,10 @@ interface ApiInterfaces {
     ): Call<StaffAttendanceReportResponse?>?
 
     @GET(APIMethods.giometric_principal_attendance_report)
-    fun getStaffWiseAttendanceReport( @Header(RequestKeys.Authorization) token: String): Call<StaffAttendanceReportResponse?>?
+    fun getStaffWiseAttendanceReport( @Header(RequestKeys.Authorization) token: String,@Query("attendance_dt") isAttendanceDt: String?,): Call<StaffAttendanceReportResponse?>?
+
+    @GET(APIMethods.giometric_principal_attendance_report)
+    fun getStaffWiseAttendanceReportStaffList( @Header(RequestKeys.Authorization) token: String,@Query("attendance_month") attendance_month: String?,@Query("staff_id") isStaffId: Int?): Call<StaffAttendanceReportResponse?>?
 
     @GET(APIMethods.punch_history)
     fun getPunchHistory(

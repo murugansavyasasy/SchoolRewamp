@@ -291,15 +291,10 @@ class HomeWorkReportAdapter(
                     isSeeMoreVisibility(lblContentImage, tvSeeMoreImage)
 
 
-                    val imageUrls = listOf(
-                        "https://picsum.photos/600/400?random=1", // Random Image 1
-                        "https://picsum.photos/600/400?random=2", // Random Image 2
-                        "https://picsum.photos/600/400?random=3", // Random Image 3
-                        "https://picsum.photos/600/400?random=4", // Random Image 4
-                        "https://picsum.photos/600/400?random=5"  // Random Image 5
-                    )
 
 //                    Set up the adapter
+
+//                    // Set up the adapter
 //                    val viewPagerAdapter = ImageSliderAdapter(context, imageUrls)
 //                    viewpager.adapter = viewPagerAdapter
 //                    indicator.setViewPager(viewpager)

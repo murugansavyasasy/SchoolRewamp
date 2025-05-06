@@ -31,6 +31,7 @@ class HomeWorkAdapter (
     private val TYPE_DATA = 1
 
 
+
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
     }
@@ -49,7 +50,6 @@ class HomeWorkAdapter (
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
-            // Bind actual data when loading is complete
             holder.bind(DateWiseHomeworkData!![position],position, this,) // Pass adapter reference
         }
     }
@@ -102,6 +102,8 @@ class HomeWorkAdapter (
             homeworkDetails: ArrayList<GetHomeworkDetails>,
             DateWiseHomeWorkdata: GetDateWiseHomeworkData
         ) {
+
+
 
             val rcyView = getRecyclerView()
 

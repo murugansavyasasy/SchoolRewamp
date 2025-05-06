@@ -54,7 +54,6 @@ class App(application: Application) : AndroidViewModel(application) {
         private set
 
 
-
     var isGetVoiceHistory: LiveData<VoiceDetails?>? = null
         private set
 
@@ -78,7 +77,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var isUpdateStatusCommunication: LiveData<StatusArchiveResponse?>? = null
         private set
 
-    var isHomeWorkDetails: LiveData<GetHomeworkData?>? = null
+    var isHomeWorkDetailsList: LiveData<GetHomeworkData?>? = null
         private set
 
     var isPunchAttendance: LiveData<StatusMessageModel?>? = null
@@ -90,8 +89,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var isPunchHistory: LiveData<PunchHistoryResponse?>? = null
     var isStaffAttendanceReport: LiveData<StaffAttendanceReportResponse?>? = null
     var isStaffWiseAttendanceReport: LiveData<StaffAttendanceReportResponse?>? = null
-
-
+    var isStaffWiseAttendanceReportList: LiveData<StaffAttendanceReportResponse?>? = null
 
 
     fun init() {
@@ -112,7 +110,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isUpdateStatusArchive = apiRepositories!!.isUpdateStatusArchiveLiveData
         isGetAcademicList = apiRepositories!!.isGetAcademicLiveData
         isUpdateStatusCommunication = apiRepositories!!.isUpdateStatusCommunicationLiveData
-        isHomeWorkDetails=apiRepositories!!.isHomeWorkDetailsLiveData
+        isHomeWorkDetailsList = apiRepositories!!.isHomeWorkDetailsLiveData
         isPunchAttendance = apiRepositories!!.isPunchAttendanceLiveData
         isAddLocation = apiRepositories!!.isAddLocationLiveData
         isRemoveLocation = apiRepositories!!.isRemoveLocationLiveData
@@ -122,6 +120,8 @@ class App(application: Application) : AndroidViewModel(application) {
         isPunchHistory = apiRepositories!!.isPunchHistoryLiveData
         isStaffAttendanceReport = apiRepositories!!.isGiometricStaffAttendanceReportLiveData
         isStaffWiseAttendanceReport = apiRepositories!!.isGiometricStaffWiseAttendanceReportLiveData
+        isStaffWiseAttendanceReportList =
+            apiRepositories!!.isGiometricStaffWiseAttendanceReportLiveDataList
     }
 
     fun isDashBoardData(isToken: String, isMemberType: String, activity: Activity) {
@@ -136,20 +136,31 @@ class App(application: Application) : AndroidViewModel(application) {
         apiRepositories!!.isGetStaffList(isToken, activity)
     }
 
-    fun isGetSubjectList(isToken: String, isAcademicYearId: Int, isSectionId: String, activity: Activity) {
-        apiRepositories.isGetSubjectList(isToken,isAcademicYearId,isSectionId, activity)
+    fun isGetSubjectList(
+        isToken: String,
+        isAcademicYearId: Int,
+        isSectionId: String,
+        activity: Activity
+    ) {
+        apiRepositories.isGetSubjectList(isToken, isAcademicYearId, isSectionId, activity)
     }
 
 
     fun isGetStandardSection(isToken: String, isAcademicYearId: Int, activity: Activity) {
-        apiRepositories.isGetStandardSection(isToken,isAcademicYearId, activity)
+        apiRepositories.isGetStandardSection(isToken, isAcademicYearId, activity)
     }
 
-    fun isGetStudentList(isToken: String, isSection: String,isAcademicYearId: Int, activity: Activity) {
-        apiRepositories.isGetStudentList(isToken,isSection,isAcademicYearId, activity)
+    fun isGetStudentList(
+        isToken: String,
+        isSection: String,
+        isAcademicYearId: Int,
+        activity: Activity
+    ) {
+        apiRepositories.isGetStudentList(isToken, isSection, isAcademicYearId, activity)
     }
+
     fun isGetGroupList(isToken: String, isAcademicYearId: Int, activity: Activity) {
-        apiRepositories!!.isGetGroupList(isToken,isAcademicYearId, activity)
+        apiRepositories!!.isGetGroupList(isToken, isAcademicYearId, activity)
     }
 
     fun isGetCommmunicationlistload(isToken: String, activity: Activity) {
@@ -220,18 +231,33 @@ class App(application: Application) : AndroidViewModel(application) {
     }
 
     fun getPunchHistory(isToken: String, isDate: String, activity: Activity) {
-        apiRepositories?.getPunchHistory(isToken,isDate, activity)
+        apiRepositories?.getPunchHistory(isToken, isDate, activity)
     }
 
     fun getLocationHistory(isToken: String, activity: Activity) {
         apiRepositories?.getLocationHistory(isToken, activity)
     }
 
-    fun getStaffAttendanceReport(isToken: String,attendance_dt: String, activity: Activity) {
-        apiRepositories?.getGiometricStaffAttendancereport(isToken,attendance_dt, activity)
+    fun getStaffAttendanceReport(isToken: String, attendance_dt: String, activity: Activity) {
+        apiRepositories?.getGiometricStaffAttendancereport(isToken, attendance_dt, activity)
     }
-    fun getStaffWiseAttendanceReport(isToken: String, jsonObject: JsonObject, activity: Activity) {
-        apiRepositories?.getGiometricStaffWiseAttendancereport(isToken, activity)
+
+    fun getStaffWiseAttendanceReport(isToken: String, isCurrentDate: String, activity: Activity) {
+        apiRepositories?.getGiometricStaffWiseAttendancereport(isToken, isCurrentDate, activity)
+    }
+
+    fun getStaffWiseAttendanceReportList(
+        isToken: String,
+        isSelectedDate: String,
+        isStaffId: Int,
+        activity: Activity
+    ) {
+        apiRepositories?.getGiometricStaffWiseAttendancereportStaffList(
+            isToken,
+            isSelectedDate,
+            isStaffId,
+            activity
+        )
     }
 }
 

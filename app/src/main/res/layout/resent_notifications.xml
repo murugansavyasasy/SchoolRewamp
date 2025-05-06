@@ -5,9 +5,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/ten"
-        android:layout_marginTop="@dimen/ten">
+        android:layout_height="wrap_content">
 
         <RelativeLayout
             android:id="@+id/fab"
@@ -109,7 +107,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:elevation="@dimen/ten"
-            android:src="@drawable/text_notification">
+        >
 
         </de.hdodenhof.circleimageview.CircleImageView>
 

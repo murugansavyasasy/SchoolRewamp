@@ -15,11 +15,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
+import com.vs.schoolmessenger.CommonScreens.ImageSliderAdapter
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetDateWiseHomeworkData
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
+import me.relex.circleindicator.CircleIndicator
 
 class HomeWorkItemAdapter(
     private var GetHomeworkData: GetDateWiseHomeworkData?,
@@ -86,6 +88,7 @@ class HomeWorkItemAdapter(
         private val lblContentImage: TextView = itemView.findViewById(R.id.lblContentImage)
         private val tvSeeMoreImage: TextView = itemView.findViewById(R.id.tvSeeMoreImage)
         private val RcyImgPdf: RecyclerView = itemView.findViewById(R.id.rcyImgPDF)
+        private val DotIndicator: CircleIndicator =itemView.findViewById(R.id.indicator)
         private val lblSubjectName: TextView = itemView.findViewById(R.id.LblHWSubjectName)
         var mHomeworkImgPDFAdapter: HomeworkImgPDFAdapter? = null
 
@@ -126,6 +129,9 @@ class HomeWorkItemAdapter(
                         Constant.isShimmerViewDisable,
                     )
                 homeworkImgPdf.adapter = mHomeworkImgPDFAdapter
+            val fileList: ArrayList<String> = ArrayList(homeworkData.file_path.map { it.path })
+
+
         }
 
         private fun isSeeMoreExpanded(tvSeeMore: TextView, lblContent: TextView) {
