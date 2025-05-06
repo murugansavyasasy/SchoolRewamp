@@ -57,37 +57,12 @@
         android:visibility="visible">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycleAttendanceReports"
+            android:id="@+id/recycleAttendanceReportsToday"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone"
             tools:listitem="@layout/giometric_attendance_report_item_list" />
 
-
-        <ImageView
-            android:id="@+id/imgNorecord"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/two_hundred"
-            android:layout_centerInParent="true"
-            android:src="@drawable/man_doing_fingerprint_research"
-            android:visibility="gone">
-
-        </ImageView>
-
-        <TextView
-            android:id="@+id/lblNoRecords"
-            style="@style/CustomTextStylePoppinsBold"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/imgNorecord"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/twenty_five"
-            android:layout_marginEnd="@dimen/twenty_five"
-            android:gravity="center"
-            android:text=""
-            android:textColor="@color/black"
-            android:textSize="15dp"
-            android:visibility="gone" />
 
     </RelativeLayout>
 
@@ -183,8 +158,8 @@
             android:layout_marginStart="@dimen/fifteen"
             android:layout_marginTop="@dimen/ten"
             android:layout_marginEnd="@dimen/fifteen"
-            android:background="@drawable/bg_stroke_rect_black"
-            android:padding="@dimen/ten">
+            android:background="@drawable/bg_white_light_radious"
+            android:padding="@dimen/fifteen">
 
 
             <ImageView
@@ -194,7 +169,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/ten"
-                android:src="@drawable/ic_down_arrow">
+                android:src="@drawable/ic_drop_down">
 
             </ImageView>
 
@@ -214,48 +189,51 @@
         </RelativeLayout>
 
 
-        <RelativeLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycleAttendanceReport"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rlaStaff"
             android:layout_marginTop="@dimen/ten"
-            android:layout_below="@+id/rlaStaff">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycleAttendanceReport"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                tools:listitem="@layout/giometric_attendance_report_item_list" />
-
-
-            <ImageView
-                android:id="@+id/imgNoRecord"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/two_hundred"
-                android:layout_centerInParent="true"
-                android:src="@drawable/man_doing_fingerprint_research"
-                android:visibility="gone">
-
-            </ImageView>
-
-            <TextView
-                android:id="@+id/lblNorecords"
-                style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/imgNoRecord"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/twenty_five"
-                android:layout_marginEnd="@dimen/twenty_five"
-                android:gravity="center"
-                android:text=""
-                android:textColor="@color/black"
-                android:textSize="15dp"
-                android:visibility="gone" />
-
-        </RelativeLayout>
+            android:visibility="gone"
+            tools:listitem="@layout/giometric_attendance_report_item_list" />
 
     </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/lytNoRecordFound"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/imgNorecord"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/two_hundred"
+            android:layout_centerInParent="true"
+            android:src="@drawable/man_doing_fingerprint_research"
+            android:visibility="visible">
+
+        </ImageView>
+
+        <TextView
+            android:id="@+id/lblNoRecords"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imgNorecord"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/twenty_five"
+            android:layout_marginEnd="@dimen/twenty_five"
+            android:gravity="center"
+            android:text=""
+            android:textColor="@color/black"
+            android:textSize="15dp"
+            android:visibility="visible" />
+
+    </LinearLayout>
 
 
 </RelativeLayout>

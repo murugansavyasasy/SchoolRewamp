@@ -44,7 +44,7 @@ class AppServices {
     var isUpdateStatusArchive: MutableLiveData<StatusArchiveResponse?>
     var isAcademicYear: MutableLiveData<AcademicYearResponse?>
     var isUpdateStatusCommunication: MutableLiveData<StatusArchiveResponse?>
-    var isHomeWorkDetails: MutableLiveData<GetHomeworkData?>
+    var isHomeWorkDetailsData: MutableLiveData<GetHomeworkData?>
 
 
     var isPunchAttendance: MutableLiveData<StatusMessageModel?>
@@ -77,7 +77,7 @@ class AppServices {
         isUpdateStatusArchive = MutableLiveData()
         isAcademicYear = MutableLiveData()
         isUpdateStatusCommunication = MutableLiveData()
-        isHomeWorkDetails = MutableLiveData()
+        isHomeWorkDetailsData = MutableLiveData()
 
 
         isPunchAttendance = MutableLiveData()
@@ -639,23 +639,22 @@ class AppServices {
                         if (response.body() != null) {
                             val status = response.body()!!.status
                             if (status) {
-                                isHomeWorkDetails.postValue(response.body())
+                                isHomeWorkDetailsData.postValue(response.body())
                             } else {
-                                isHomeWorkDetails.postValue(response.body())
+                                isHomeWorkDetailsData.postValue(response.body())
                             }
                         }
                     }
                 }
 
                 override fun onFailure(call: Call<GetHomeworkData?>, t: Throwable) {
-                    isHomeWorkDetails.postValue(null)
-
+                    isHomeWorkDetailsData.postValue(null)
                 }
             })
     }
 
     val isHomeWorkDetailsLiveData: LiveData<GetHomeworkData?>
-        get() = isHomeWorkDetails
+        get() = isHomeWorkDetailsData
 
     fun punchAttendance(isToken: String, jsonObject: JsonObject, activity: Activity) {
         RestClient.apiInterfaces.punchGiometricAttendance(isToken, jsonObject)
