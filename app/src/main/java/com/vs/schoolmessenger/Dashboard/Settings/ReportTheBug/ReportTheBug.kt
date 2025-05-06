@@ -80,7 +80,7 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
 
     private fun openGallery() {
         val intent1 = Intent(this, AlbumSelectActivity::class.java)
-        intent1.putExtra("Gallery", "Images")
+        intent1.putExtra(Constant.Gallery, Constant.Images)
         intent1.putExtra(Constants.INTENT_EXTRA_LIMIT, 4)
         startActivityForResult(intent1, REQUEST_IMAGE_GALLERY_CAPTURE)
 
@@ -94,7 +94,7 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
         } else if (requestCode == REQUEST_IMAGE_GALLERY_CAPTURE) {
             if (data != null) {
                 isImageSelected.clear()
-                isImageSelected = data.getStringArrayListExtra("images")!!
+                isImageSelected = data.getStringArrayListExtra(Constant.images)!!
                 isLoadTheReportImage(isImageSelected)
             }
         } else {

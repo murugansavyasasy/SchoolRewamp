@@ -14,8 +14,8 @@ import com.vs.schoolmessenger.Auth.Splash.Splash
 import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.Auth
-import com.vs.schoolmessenger.Repository.RequestKeys
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.PassWordBinding
@@ -149,7 +149,7 @@ class PassWord : BaseActivity<PassWordBinding>(), View.OnClickListener {
 
     private fun isForgetPassword() {
         val jsonObject = JsonObject()
-        jsonObject.addProperty(RequestKeys.Req_mobile_number, Constant.isMobileNumber)
+        jsonObject.addProperty(APIKeyNames.Req_mobile_number, Constant.isMobileNumber)
         authViewModel!!.isForgetPassword(jsonObject, this)
     }
 
@@ -171,10 +171,10 @@ class PassWord : BaseActivity<PassWordBinding>(), View.OnClickListener {
     private fun isValidateUser() {
         val jsonObject = JsonObject()
         val isSecureId = Constant.getAndroidSecureId(this@PassWord)
-        jsonObject.addProperty(RequestKeys.Req_mobile_number, Constant.isMobileNumber)
-        jsonObject.addProperty(RequestKeys.Req_device_type, Constant.isDeviceType)
-        jsonObject.addProperty(RequestKeys.Req_secure_id, isSecureId)
-        jsonObject.addProperty(RequestKeys.Req_password, binding.txtPassword.text.toString())
+        jsonObject.addProperty(APIKeyNames.Req_mobile_number, Constant.isMobileNumber)
+        jsonObject.addProperty(APIKeyNames.Req_device_type, Constant.isDeviceType)
+        jsonObject.addProperty(APIKeyNames.Req_secure_id, isSecureId)
+        jsonObject.addProperty(APIKeyNames.Req_password, binding.txtPassword.text.toString())
 
         authViewModel!!.isValidateUser(jsonObject, this)
     }
@@ -192,7 +192,7 @@ class PassWord : BaseActivity<PassWordBinding>(), View.OnClickListener {
                     isValidateUser()
                 } else {
                     Toast.makeText(
-                        this, "Enter the password", Toast.LENGTH_SHORT
+                        this, resources.getString(R.string.EnterThePassWord), Toast.LENGTH_SHORT
                     ).show()
                 }
             }

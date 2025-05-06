@@ -137,7 +137,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     tapVisibility()
                     binding.nomessageEntire.visibility =
                         if (isUserDetails!!.staff_role.toString() == Constant.isPrincipalRole.toString()
-                        ) View.GONE else View.VISIBLE
+                        ) View.VISIBLE else View.GONE
                 } else {
                     binding.lblSupportMail.paintFlags =
                         binding.lblSupportMail.paintFlags or Paint.UNDERLINE_TEXT_FLAG
@@ -175,12 +175,10 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
         appViewModel!!.isGetSubjectList?.observe(this) { response ->
             Constant.hideLoading(this@RecipientActivity)
-
             if (response != null) {
-                // Please don't delete by sathish
                 binding.rlaSubject.visibility = View.VISIBLE
                 isGetSubjectListData = response.data
-                isSubjectId= isGetSubjectListData!![0].id
+                isSubjectId = isGetSubjectListData!![0].id
                 isLoadSubjectData()
             }
         }
@@ -202,11 +200,11 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         binding.lblStandard.text = isGetStandard!![0].name
                         binding.nomessage.visibility = View.GONE
                         isLoadData(isSection)
-                        binding.grouplabel.text = "Section"
+                        binding.grouplabel.text = resources.getString(R.string.Section)
                     } else {
                         isLoadTheStandardData(isGetStandard)
                         binding.bottomLayout.visibility = View.VISIBLE
-                        binding.grouplabel.text = "Standards"
+                        binding.grouplabel.text = resources.getString(R.string.Standards)
                     }
 
                 } else {
@@ -459,7 +457,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     binding.rlaSubject, this, isGetSubjectListData
                 ) { selectedSubject ->
                     binding.lblSuibject.text = selectedSubject.first
-                    isSubjectId=selectedSubject.second
+                    isSubjectId = selectedSubject.second
                 }
             }
 
@@ -468,16 +466,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             }
 
             R.id.rytAcademicYear -> {
-                val sub = "Request to configure communication academic year"
-                val body = """
-    Dear School Chimes Team,
-
-    Please configure communication academic year  as 20xx - 20xx for any queries contact.
-    
-    Your name :
-    Mobile No :
-    
-""".trimIndent()
+                val sub = Constant.isMailTitle
+                val body = Constant.isMailSend
                 Constant.redirectToMail(this, binding.lblSupportMail.text.toString(), sub, body)
             }
 
@@ -485,10 +475,10 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 selectedIds = isSectionSelectedIds.map { it.id.toString() }.toMutableList()
                 val intent = Intent(this@RecipientActivity, SpecificStudent::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                intent.putExtra("isAcademicYearId", isAcademicYearId)
-                intent.putExtra("isCurrentAcademicYear", isCurrentAcademicYear)
-                intent.putExtra("lblAcademicYear", binding.lblAcademicYear.text.toString())
-                intent.putStringArrayListExtra("isSelectedId", ArrayList(selectedIds))
+                intent.putExtra(Constant.isAcademicYearId, isAcademicYearId)
+                intent.putExtra(Constant.isCurrentAcademicYear, isCurrentAcademicYear)
+                intent.putExtra(Constant.lblAcademicYear, binding.lblAcademicYear.text.toString())
+                intent.putStringArrayListExtra(Constant.isSelectedId, ArrayList(selectedIds))
                 startActivity(intent)
             }
 
@@ -557,21 +547,21 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 } else if (isSelectedType == 1) {
                     isTargetType = Constant.isStandard
                     isCircularType = Constant.standard
-                    isTypeOfName = "Standard"
+                    isTypeOfName = resources.getString(R.string.Standard)
                     selectedIds = isStandardSelectedIds.map { it.id.toString() }.toMutableList()
                 } else if (isSelectedType == 2) {
                     isTargetType = Constant.isSection
                     isCircularType = Constant.section
-                    isTypeOfName = "Section"
+                    isTypeOfName = resources.getString(R.string.Section)
                     selectedIds = isSectionSelectedIds.map { it.id.toString() }.toMutableList()
                 } else if (isSelectedType == 3) {
                     selectedIds = isGroupSelectedIds.map { it.id.toString() }.toMutableList()
                     isTargetType = Constant.isGroup
                     isCircularType = Constant.group
-                    isTypeOfName = "Group"
+                    isTypeOfName = resources.getString(R.string.Group)
                 } else if (isSelectedType == 4) {
                     selectedIds = isGroupSelectedIds.map { it.id.toString() }.toMutableList()
-                    isTypeOfName = "Staff"
+                    isTypeOfName = resources.getString(R.string.Staff)
                     isTargetType = Constant.isStaff
                     isCircularType = Constant.staff
                 }
@@ -583,9 +573,12 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     var isAcademicYearNote: String? = null
                     if (!isCurrentAcademicYear) {
                         isAcademicYearNote =
-                            "NOTE : This message is addressed to student in " + binding.lblAcademicYear.text.toString() + " which is not the communication academic year. Do you want to proceed?"
+                            resources.getString(R.string.NOTE_message_addressed) + binding.lblAcademicYear.text.toString() + resources.getString(
+                                R.string.which_communication_academic
+                            )
                     } else {
-                        isAcademicYearNote = "Are you sure want to send this message?"
+                        isAcademicYearNote =
+                            resources.getString(R.string.are_you_sure_want_to_send_this_message)
                     }
 
                     if (isSelectedType == 0) {
@@ -596,12 +589,16 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     } else {
                         if (Constant.isClickType == 3) {
                             showSendConfirmationDialog(
-                                "Selected target : " + selectedIds.size.toString() + " " + isTypeOfName + " (s)",
+                                resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + " " + isTypeOfName + resources.getString(
+                                    R.string._s
+                                ),
                                 isAcademicYearNote
                             )
                         } else {
                             showSendConfirmationDialog(
-                                "Selected target : " + selectedIds.size.toString() + " " + isTypeOfName + " (s)",
+                                resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + " " + isTypeOfName + resources.getString(
+                                    R.string._s
+                                ),
                                 isAcademicYearNote.toString()
                             )
                         }
@@ -609,8 +606,9 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
                 } else {
                     Constant.showValidationAlertPopup(
-                        "Please select at least one $isTypeOfName" + " to send the message.",
-                        this
+                        resources.getString(R.string.Please_select_leastone) + isTypeOfName + resources.getString(
+                            R.string.send_message
+                        ), this
                     )
                 }
             }
@@ -691,7 +689,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 isDropDown = false
                 isGetStandardSection()
                 binding.rlaStandard.visibility = View.GONE
-                binding.grouplabel.text = "Standards"
+                binding.grouplabel.text = resources.getString(R.string.Standards)
                 binding.grouplabel.visibility = View.VISIBLE
                 binding.rlaSubject.visibility = View.GONE
                 binding.textdesc.visibility = View.GONE
@@ -725,7 +723,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 binding.textdesc.visibility = View.GONE
                 binding.bottomLayout.visibility = View.GONE
                 binding.grouplabel.visibility = View.VISIBLE
-                binding.grouplabel.text = "Section"
+                binding.grouplabel.text = resources.getString(R.string.Section)
 
                 binding.chAllSelect.visibility = View.GONE
                 binding.rlaSubject.visibility = View.GONE
@@ -753,7 +751,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 isGroupSelectedIds.clear()
                 isStandardSelectedIds.clear()
                 isSectionSelectedIds.clear()
-                binding.grouplabel.text = "Groups"
+                binding.grouplabel.text = resources.getString(R.string.Groups)
                 selectedIds.clear()
                 binding.rlaStandard.visibility = View.GONE
                 binding.grouplabel.visibility = View.VISIBLE
@@ -791,7 +789,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 isDropDown = false
                 isGetStaffList()
                 binding.rlaStandard.visibility = View.GONE
-                binding.grouplabel.text = "Staff"
+                binding.grouplabel.text = resources.getString(R.string.Staff)
                 binding.grouplabel.visibility = View.VISIBLE
                 binding.rlaSubject.visibility = View.GONE
                 binding.chAllSelect.visibility = View.GONE
@@ -861,7 +859,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
 
             if (SELECTED_SCHOOL_MENU == M_HOMEWORK) {
-                val sectionDetails = intent.getParcelableExtra<SectionDetails>("section_data")
+                val sectionDetails = intent.getParcelableExtra<SectionDetails>(Constant.section_data)
                 sectionDetails?.let {
                     val jsonObject = ApiCallRequest.isSendHomeWork(
                         isAcademicYearId = isAcademicYearId,
@@ -873,21 +871,21 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     )
                     appViewModel!!.isSendHomeWork(isAccessToken!!, jsonObject, this)
                 } ?: run {
-                    Constant.showValidationAlertPopup("Section details are missing", this)
+                    Constant.showValidationAlertPopup(resources.getString(R.string.Section_details_missing), this)
                 }
             } else if (SELECTED_SCHOOL_MENU == Constant.M_COMMUNICATION) {
                 val isTextData = Constant.isTextSendingData
                 if (Constant.isClickType == 3) {
-                val jsonObject = ApiCallRequest.isSendText(
-                    isAcademicYearId = isAcademicYearId,
-                    schoolId = selectedIds,
-                    message = isTextData!!.isTitle,
-                    description = isTextData.isContent,
-                    targetType = isTargetType!!
-                )
-                appViewModel!!.isSendText(isAccessToken!!, jsonObject, this)
+                    val jsonObject = ApiCallRequest.isSendText(
+                        isAcademicYearId = isAcademicYearId,
+                        schoolId = selectedIds,
+                        message = isTextData!!.isTitle,
+                        description = isTextData.isContent,
+                        targetType = isTargetType!!
+                    )
+                    appViewModel!!.isSendText(isAccessToken!!, jsonObject, this)
 
-            } else {
+                } else {
                     if (Constant.isVoiceType == 3) {
                         val isVoiceData = Constant.isVoiceSendingData
                         voiceSendApi(isVoiceData!!.isAwsUrl)
@@ -945,7 +943,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         if (!isSectionSelectedIds.any { it.id == data.id }) {
             isSectionSelectedIds.add(data)
         }
-        // Please don't delete by sathish
+
         val idString = isSectionSelectedIds.joinToString(",") { it.id.toString() }
         isGetSubjectList(idString)
         binding.chAllSelect.isChecked = isSectionSelectedIds.size == isSection?.size

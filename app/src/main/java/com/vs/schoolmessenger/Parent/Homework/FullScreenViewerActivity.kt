@@ -18,6 +18,7 @@ import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.ViewerPagerAdapter
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.HomeWorkParentBinding
 import com.vs.schoolmessenger.databinding.HomeworkViewImageDocumentBinding
 import com.vs.schoolmessenger.databinding.HomeworkViewImageDocumentItemBinding
@@ -44,33 +45,33 @@ class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(
 
 
 
-        filePath = intent.getStringExtra("SelectedDocumentPath") ?: ""
+        filePath = intent.getStringExtra(Constant.SelectedDocumentPath) ?: ""
         Log.d("knowing FilePath", filePath)
-        fileType = intent.getStringExtra("SelectedDocumentType") ?: ""
+        fileType = intent.getStringExtra(Constant.SelectedDocumentType) ?: ""
         Log.d("knowing FileType", fileType)
 
 
                 when (fileType.uppercase()) {
-            "PDF", "DOC", "DOCX", "PPT", "PPTX" -> {
+            Constant.PDF, Constant.DOC, Constant.DOCX, Constant.PPT, Constant.PPTX -> {
         binding.documentWebView.visibility = View.VISIBLE
                 binding.documentTextView.visibility = View.GONE
         openDocumentInWebView(filePath)
             }
 
-            "TXT" -> {
+            Constant.TXT -> {
                 binding.documentWebView.visibility = View.GONE
                 binding.documentTextView.visibility = View.VISIBLE
                 openTextFile(filePath)
             }
 
             else -> {
-                binding.documentTextView.text = "Unsupported file type: $fileType"
+                binding.documentTextView.text = getString(R.string.Unsupported_file_type) +fileType
                 binding.documentTextView.visibility = View.VISIBLE
                 binding.documentWebView.visibility = View.GONE
             }
         }
-        val dataJson = intent.getStringExtra("data")
-        position = intent.getIntExtra("position", 0)
+        val dataJson = intent.getStringExtra(Constant.data)
+        position = intent.getIntExtra(Constant.position, 0)
 
         if (!dataJson.isNullOrEmpty()) {
             val gson = Gson()
@@ -137,7 +138,7 @@ class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(
             val content = file.readText()
             binding.documentTextView.text = content
         } catch (e: Exception) {
-            binding.documentTextView.text = "Unable to open file"
+            binding.documentTextView.text = getString(R.string.Unable_to_open_file)
         }
 
 

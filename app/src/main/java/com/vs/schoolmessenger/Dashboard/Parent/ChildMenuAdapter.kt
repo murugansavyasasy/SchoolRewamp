@@ -235,7 +235,6 @@ class ChildMenuAdapter(
         @SuppressLint("ClickableViewAccessibility")
         fun bind(images: List<AdItem>, context: Context) {
             // Initialize layoutManager
-            Log.d("isComing","isLoadingNow")
             layoutManager =
                 LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
             recyclerView.layoutManager = layoutManager

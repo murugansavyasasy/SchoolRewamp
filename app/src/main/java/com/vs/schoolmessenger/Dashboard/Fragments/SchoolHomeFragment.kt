@@ -276,12 +276,12 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
     private fun handleBackPress() {
         AlertDialog.Builder(requireContext())
-            .setTitle("Go Back?")
-            .setMessage("Do you want to Exit?")
-            .setPositiveButton("Yes") { _, _ ->
+            .setTitle(getString(R.string.Go_Back))
+            .setMessage(getString(R.string.Do_you_want_Exit))
+            .setPositiveButton(getString(R.string.Yes)) { _, _ ->
                requireActivity().finishAffinity()
             }
-            .setNegativeButton("No", null)
+            .setNegativeButton(getString(R.string.No), null)
             .show()
     }
 
@@ -306,7 +306,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         binding.recyclerViewMenus.adapter = adapter
 
         appViewModel!!.isDashBoardData(
-            access_token, "staff", requireActivity()
+            access_token, Constant.staff_, requireActivity()
 
         )
     }

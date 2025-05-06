@@ -25,12 +25,12 @@ object ApiCallRequest {
         fileName: String
     ): JsonObject {
         val jsonObject = JsonObject()
-        jsonObject.addProperty(RequestKeys.academic_year_id, isAcademicYearId)
-        jsonObject.addProperty(RequestKeys.voice_link, isFileUploaded)
-        jsonObject.addProperty(RequestKeys.target_type, targetType)
-        jsonObject.addProperty(RequestKeys.circular_type, circularType)
+        jsonObject.addProperty(APIKeyNames.academic_year_id, isAcademicYearId)
+        jsonObject.addProperty(APIKeyNames.voice_link, isFileUploaded)
+        jsonObject.addProperty(APIKeyNames.target_type, targetType)
+        jsonObject.addProperty(APIKeyNames.circular_type, circularType)
         jsonObject.addProperty(
-            RequestKeys.duration, Constant.getAudioDurationInSeconds(isFileUploaded.toString())
+            APIKeyNames.duration, Constant.getAudioDurationInSeconds(isFileUploaded.toString())
         )
 
         val startTime: String
@@ -43,12 +43,12 @@ object ApiCallRequest {
             endTime = Constant.getCurrentTime()
         }
 
-        jsonObject.addProperty(RequestKeys.title, title)
-        jsonObject.addProperty(RequestKeys.is_emergency, isEmergency)
-        jsonObject.addProperty(RequestKeys.is_schedule, isScheduleCall)
-        jsonObject.addProperty(RequestKeys.start_time, startTime)
-        jsonObject.addProperty(RequestKeys.end_time, endTime)
-        jsonObject.addProperty(RequestKeys.file_name, fileName)
+        jsonObject.addProperty(APIKeyNames.title, title)
+        jsonObject.addProperty(APIKeyNames.is_emergency, isEmergency)
+        jsonObject.addProperty(APIKeyNames.is_schedule, isScheduleCall)
+        jsonObject.addProperty(APIKeyNames.start_time, startTime)
+        jsonObject.addProperty(APIKeyNames.end_time, endTime)
+        jsonObject.addProperty(APIKeyNames.file_name, fileName)
 
         val jsonArray = JsonArray()
         if (isClickType == 2) {
@@ -56,11 +56,11 @@ object ApiCallRequest {
         } else {
             jsonArray.add(Constant.getCurrentDate())
         }
-        jsonObject.add(RequestKeys.schedule_date, jsonArray)
+        jsonObject.add(APIKeyNames.schedule_date, jsonArray)
 
         val jsonArray1 = JsonArray()
         schoolId.forEach { jsonArray1.add(it) }
-        jsonObject.add(RequestKeys.target_code, jsonArray1)
+        jsonObject.add(APIKeyNames.target_code, jsonArray1)
 
         return jsonObject
     }
@@ -75,11 +75,11 @@ object ApiCallRequest {
         val jsonObject = JsonObject()
         val jsonArray = JsonArray()
         schoolId.forEach { jsonArray.add(it) }
-        jsonObject.addProperty(RequestKeys.academic_year_id, isAcademicYearId)
-        jsonObject.add(RequestKeys.target_code, jsonArray)
-        jsonObject.addProperty(RequestKeys.target_type, targetType)
-        jsonObject.addProperty(RequestKeys.title, message)
-        jsonObject.addProperty(RequestKeys.content, description)
+        jsonObject.addProperty(APIKeyNames.academic_year_id, isAcademicYearId)
+        jsonObject.add(APIKeyNames.target_code, jsonArray)
+        jsonObject.addProperty(APIKeyNames.target_type, targetType)
+        jsonObject.addProperty(APIKeyNames.title, message)
+        jsonObject.addProperty(APIKeyNames.content, description)
 
         return jsonObject
     }
@@ -95,14 +95,12 @@ object ApiCallRequest {
         val jsonObject = JsonObject()
         val jsonArray = JsonArray()
         selectedIds.forEach { jsonArray.add(it) }
-        jsonObject.addProperty(RequestKeys.academic_year_id, isAcademicYearId)
-        jsonObject.add(RequestKeys.section_code, jsonArray)
-        jsonObject.addProperty(RequestKeys.title, title)
-        jsonObject.addProperty(RequestKeys.description, description)
-        jsonObject.addProperty(RequestKeys.subject_id, subjectId)
-        jsonObject.addProperty(RequestKeys.file_path, file_path)
-
-
+        jsonObject.addProperty(APIKeyNames.academic_year_id, isAcademicYearId)
+        jsonObject.add(APIKeyNames.section_code, jsonArray)
+        jsonObject.addProperty(APIKeyNames.title, title)
+        jsonObject.addProperty(APIKeyNames.description, description)
+        jsonObject.addProperty(APIKeyNames.subject_id, subjectId)
+        jsonObject.addProperty(APIKeyNames.file_path, file_path)
         return jsonObject
     }
 }

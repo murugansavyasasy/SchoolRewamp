@@ -9,8 +9,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.OTP.OTP
+import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.Auth
-import com.vs.schoolmessenger.Repository.RequestKeys
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.MobileNumberBinding
@@ -40,8 +41,7 @@ class MobileNumber : BaseActivity<MobileNumberBinding>(), View.OnClickListener {
             } else {
                 Toast.makeText(
                     this,
-                    "Enter the " + Constant.country_details!!.mobile_number_length + " Digit's Mobile Number",
-                    Toast.LENGTH_SHORT
+                    resources.getString(R.string.Enter_the) + Constant.country_details!!.mobile_number_length + resources.getString(R.string.digit_mobile_number), Toast.LENGTH_SHORT
                 ).show()
 
             }
@@ -94,11 +94,11 @@ class MobileNumber : BaseActivity<MobileNumberBinding>(), View.OnClickListener {
         val jsonObject = JsonObject()
         val isSecureId = Constant.getAndroidSecureId(this@MobileNumber)
         jsonObject.addProperty(
-            RequestKeys.Req_mobile_number,
+            APIKeyNames.Req_mobile_number,
             binding.txtMobileNumber.text.toString()
         )
-        jsonObject.addProperty(RequestKeys.Req_device_type, Constant.isDeviceType)
-        jsonObject.addProperty(RequestKeys.Req_secure_id, isSecureId)
+        jsonObject.addProperty(APIKeyNames.Req_device_type, Constant.isDeviceType)
+        jsonObject.addProperty(APIKeyNames.Req_secure_id, isSecureId)
         authViewModel!!.isValidateUser(jsonObject, this)
     }
 

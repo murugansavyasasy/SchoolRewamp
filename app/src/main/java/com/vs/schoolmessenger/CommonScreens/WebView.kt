@@ -7,6 +7,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.WebViewBinding
 
 class WebView : BaseActivity<WebViewBinding>(),
@@ -21,8 +22,8 @@ class WebView : BaseActivity<WebViewBinding>(),
         setUpGradientParent()
         binding.toolbarLayout.imgBack.setOnClickListener(this)
 
-        val title = intent.getStringExtra("isTitle") ?: "No Title"
-        val link = intent.getStringExtra("isWebLink") ?: "No Link"
+        val title = intent.getStringExtra(Constant.isTitle) ?: "No Title"
+        val link = intent.getStringExtra(Constant.isWebLink) ?: "No Link"
 
         binding.toolbarLayout.lblParentToolBar.text = title
         binding.toolbarLayout.lblStudentName.text = "Sathish Ganesan"

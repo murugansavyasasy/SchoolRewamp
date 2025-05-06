@@ -26,12 +26,12 @@ import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.Auth
-import com.vs.schoolmessenger.Repository.RequestKeys
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.MySMSBroadcastReceiver
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.OtpScreenBinding
 import com.google.android.gms.auth.api.phone.SmsRetriever
+import com.vs.schoolmessenger.Repository.APIKeyNames
 
 
 class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
@@ -227,8 +227,8 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
 
     private fun isOtpValidate(isOpt: String) {
         val jsonObject = JsonObject()
-        jsonObject.addProperty(RequestKeys.Req_mobile_number, Constant.isMobileNumber)
-        jsonObject.addProperty(RequestKeys.Req_otp, isOpt)
+        jsonObject.addProperty(APIKeyNames.Req_mobile_number, Constant.isMobileNumber)
+        jsonObject.addProperty(APIKeyNames.Req_otp, isOpt)
         authViewModel!!.isOtpResponse(jsonObject, this)
     }
 
@@ -261,11 +261,11 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
         object : CountDownTimer(otpTimeout, otpInterval) {
             override fun onTick(millisUntilFinished: Long) {
                 val secondsRemaining = millisUntilFinished / 1000
-                binding.lblOtpTimer.text = String.format("00:%02d", secondsRemaining)
+                binding.lblOtpTimer.text = String.format(Constant.time_forMate, secondsRemaining)
             }
 
             override fun onFinish() {
-                binding.lblOtpTimer.text = "00:00"
+                binding.lblOtpTimer.text = Constant.time_zero
                 binding.lblOtpTimer.visibility = View.GONE
                 binding.lblResend.visibility = View.VISIBLE
             }
@@ -274,7 +274,7 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
 
     private fun isForgetPassword() {
         val jsonObject = JsonObject()
-        jsonObject.addProperty(RequestKeys.Req_mobile_number, Constant.isMobileNumber)
+        jsonObject.addProperty(APIKeyNames.Req_mobile_number, Constant.isMobileNumber)
         authViewModel!!.isForgetPassword(jsonObject, this)
     }
 

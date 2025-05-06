@@ -78,9 +78,9 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_below="@+id/lblCreated"
-            android:layout_marginTop="@dimen/five"
+            android:layout_below="@+id/chMultipleSchool"
             android:layout_height="0.6dp"
+            android:layout_marginTop="@dimen/five"
             android:background="@color/grey_mild"
             >
 

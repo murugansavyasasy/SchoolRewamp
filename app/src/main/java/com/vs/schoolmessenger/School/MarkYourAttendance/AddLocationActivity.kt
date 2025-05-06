@@ -28,7 +28,7 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
-import com.vs.schoolmessenger.Repository.ResponseKeys
+import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.School.MarkYourAttendance.Adapter.LocationHistoryAdapter
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistoryData
 import com.vs.schoolmessenger.School.MarkYourAttendance.Interface.LocationHistoryClickListener
@@ -402,7 +402,7 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
         okButton.setOnClickListener {
             if (id != -1 && isDeleteLocation == "isRemove") {
                 val jsonObject = JsonObject().apply {
-                    addProperty(ResponseKeys.location_id, id)
+                    addProperty(APIKeyNames.location_id, id)
                 }
                 appViewModel?.removeLocation(isAccessToken!!, jsonObject, this)
             } else if (isDeleteLocation == "isUpdate") {

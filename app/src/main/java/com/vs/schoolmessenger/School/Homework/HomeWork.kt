@@ -242,7 +242,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
         }
         val sectionDetails = SectionDetails(title, description)
         val intent = Intent(this, RecipientActivity::class.java)
-        intent.putExtra("section_data", sectionDetails)
+        intent.putExtra(Constant.section_data, sectionDetails)
         startActivity(intent)
     }
 

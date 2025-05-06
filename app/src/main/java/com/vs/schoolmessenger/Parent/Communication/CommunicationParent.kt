@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -29,7 +30,7 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
     private var isInitialLoad = true
     private var isFromArchive = false
     private var hasFetchedMore = false
-    private var isFilterType: String = "ALL"
+    private var isFilterType: String = Constant.ALL
     private var isCommunicationType = 1
 
     private var currentSearchQuery: String = ""
@@ -43,7 +44,7 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
         binding.seeMoreLabel.setOnClickListener(this)
         binding.imgFilter.setOnClickListener(this)
 
-        isFromArchive = intent.getBooleanExtra("fromArchive", false)
+        isFromArchive = intent.getBooleanExtra(Constant.fromArchive, false)
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel?.init()
 
@@ -56,7 +57,7 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
         }
 
         binding.toolbarLayout.lblStudentName.text = isChildDetails!!.name
-        binding.toolbarLayout.lblParentToolBar.text = "Communication"
+        binding.toolbarLayout.lblParentToolBar.text = getString(R.string.Communication)
         binding.toolbarLayout.lblStudentSection.text =
             isChildDetails.standard_name + " - " + isChildDetails.section_name
 //        binding.recyclerMore.post {
@@ -99,11 +100,11 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
                 R.id.RdbAll -> {
 
                     if (isCommunicationType == 1) {
-                        isFilterType = "ALL"
+                        isFilterType = Constant.ALL
                     } else if (isCommunicationType == 2) {
-                        isFilterType = "UNREAD"
+                        isFilterType = Constant.UNREAD
                     } else if (isCommunicationType == 3) {
-                        isFilterType = "READ"
+                        isFilterType = Constant.READ
                     }
 
                     applyCombinedFilter()
@@ -111,22 +112,22 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
 
                 R.id.RdbVoice -> {
                     if (isCommunicationType == 1) {
-                        isFilterType = "VOICE"
+                        isFilterType = Constant.VOICE
                     } else if (isCommunicationType == 2) {
-                        isFilterType = "VOICE_UNREAD"
+                        isFilterType = Constant.VOICE_UNREAD
                     } else if (isCommunicationType == 3) {
-                        isFilterType = "VOICE_READ"
+                        isFilterType = Constant.VOICE_READ
                     }
                     applyCombinedFilter()
                 }
 
                 R.id.RdbText -> {
                     if (isCommunicationType == 1) {
-                        isFilterType = "TEXT"
+                        isFilterType = Constant.TEXT
                     } else if (isCommunicationType == 2) {
-                        isFilterType = "TEXT_UNREAD"
+                        isFilterType = Constant.TEXT_UNREAD
                     } else if (isCommunicationType == 3) {
-                        isFilterType = "TEXT_READ"
+                        isFilterType = Constant.TEXT_READ
                     }
                     applyCombinedFilter()
                 }
@@ -157,29 +158,29 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
         if (isSelectedFilter == binding.lblAll) {
             isCommunicationType = 1
             if (binding.RdbAll.isChecked == true) {
-                isFilterType = "ALL"
+                isFilterType = Constant.ALL
             } else if (binding.RdbText.isChecked == true) {
-                isFilterType = "TEXT_ALL"
+                isFilterType = Constant.TEXT_ALL
             } else if (binding.RdbVoice.isChecked == true) {
-                isFilterType = "VOICE_ALL"
+                isFilterType = Constant.VOICE_ALL
             }
         } else if (isSelectedFilter == binding.lblUnread) {
             isCommunicationType = 2
             if (binding.RdbAll.isChecked == true) {
-                isFilterType = "UNREAD"
+                isFilterType = Constant.UNREAD
             } else if (binding.RdbText.isChecked == true) {
-                isFilterType = "TEXT_UNREAD"
+                isFilterType = Constant.TEXT_UNREAD
             } else if (binding.RdbVoice.isChecked == true) {
-                isFilterType = "VOICE_UNREAD"
+                isFilterType = Constant.VOICE_UNREAD
             }
         } else if (isSelectedFilter == binding.lblRead) {
             isCommunicationType = 3
             if (binding.RdbAll.isChecked == true) {
-                isFilterType = "READ"
+                isFilterType = Constant.READ
             } else if (binding.RdbText.isChecked == true) {
-                isFilterType = "TEXT_READ"
+                isFilterType = Constant.TEXT_READ
             } else if (binding.RdbVoice.isChecked == true) {
-                isFilterType = "VOICE_READ"
+                isFilterType = Constant.VOICE_READ
             }
         }
 
@@ -192,17 +193,17 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
 
         var filteredList = when (isFilterType) {
 
-            "TEXT", "TEXT_ALL" -> allVoiceData.filter { it.type == "TEXT" }
-            "VOICE", "VOICE_ALL" -> allVoiceData.filter { it.type == "VOICE" }
+            Constant.TEXT, Constant.TEXT_ALL -> allVoiceData.filter { it.type == Constant.TEXT }
+            Constant.VOICE, Constant.VOICE_ALL -> allVoiceData.filter { it.type == Constant.VOICE }
 
-            "READ" -> allVoiceData.filter { !it.is_unread!! }
-            "UNREAD" -> allVoiceData.filter { it.is_unread!! }
+            Constant.READ -> allVoiceData.filter { !it.is_unread!! }
+            Constant.UNREAD -> allVoiceData.filter { it.is_unread!! }
 
-            "TEXT_READ" -> allVoiceData.filter { it.type == "TEXT" && !it.is_unread!! }
-            "VOICE_READ" -> allVoiceData.filter { it.type == "VOICE" && !it.is_unread!! }
+            Constant.TEXT_READ -> allVoiceData.filter { it.type == Constant.TEXT && !it.is_unread!! }
+            Constant.VOICE_READ -> allVoiceData.filter { it.type == Constant.VOICE && !it.is_unread!! }
 
-            "TEXT_UNREAD" -> allVoiceData.filter { it.type == "TEXT" && it.is_unread!! }
-            "VOICE_UNREAD" -> allVoiceData.filter { it.type == "VOICE" && it.is_unread!! }
+            Constant.TEXT_UNREAD -> allVoiceData.filter { it.type == Constant.TEXT && it.is_unread!! }
+            Constant.VOICE_UNREAD -> allVoiceData.filter { it.type == Constant.VOICE && it.is_unread!! }
 
             else -> allVoiceData
         }
@@ -318,8 +319,8 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
 
     override fun onUpdateArchiveStatus(type: String?, id: String?) {
         val jsonObject = JsonObject().apply {
-            addProperty("type", type)
-            addProperty("detail_id", id)
+            addProperty(APIKeyNames.type, type)
+            addProperty(APIKeyNames.detail_id, id)
         }
         isAccessToken?.let {
             appViewModel?.isUpdateStatusArchive(it, jsonObject, this)
@@ -328,8 +329,8 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
 
     override fun onUpdateCommunicationStatus(type: String?, id: String?) {
         val jsonObject = JsonObject().apply {
-            addProperty("type", type)
-            addProperty("detail_id", id)
+            addProperty(APIKeyNames.type, type)
+            addProperty(APIKeyNames.detail_id, id)
         }
 
         isAccessToken?.let {

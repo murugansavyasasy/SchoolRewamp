@@ -12,8 +12,8 @@ import com.vs.schoolmessenger.Auth.OTP.OTP
 import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.Auth
-import com.vs.schoolmessenger.Repository.RequestKeys
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.PasswordGenerationBinding
@@ -122,22 +122,11 @@ class PasswordGeneration : BaseActivity<PasswordGenerationBinding>(), View.OnCli
         }
     }
 
-    private fun isPasswordChange() {
-        val jsonObject = JsonObject()
-        jsonObject.addProperty(RequestKeys.Req_mobile_number, Constant.isMobileNumber)
-        jsonObject.addProperty(RequestKeys.Req_old_password, "12345")
-        jsonObject.addProperty(
-            RequestKeys.Req_new_password,
-            binding.txtConfirmPassword.text.toString()
-        )
-        authViewModel!!.isPasswordChange(jsonObject, this)
-    }
-
     private fun isPasswordReset() {
         val jsonObject = JsonObject()
-        jsonObject.addProperty(RequestKeys.Req_mobile_number, Constant.isMobileNumber)
+        jsonObject.addProperty(APIKeyNames.Req_mobile_number, Constant.isMobileNumber)
         jsonObject.addProperty(
-            RequestKeys.Req_new_password,
+            APIKeyNames.Req_new_password,
             binding.txtConfirmPassword.text.toString()
         )
         authViewModel!!.isPasswordReset(jsonObject, this)
@@ -145,9 +134,9 @@ class PasswordGeneration : BaseActivity<PasswordGenerationBinding>(), View.OnCli
 
     private fun isCreatePassword() {
         val jsonObject = JsonObject()
-        jsonObject.addProperty(RequestKeys.Req_mobile_number, Constant.isMobileNumber)
+        jsonObject.addProperty(APIKeyNames.Req_mobile_number, Constant.isMobileNumber)
         jsonObject.addProperty(
-            RequestKeys.Req_new_password,
+            APIKeyNames.Req_new_password,
             binding.txtConfirmPassword.text.toString()
         )
         authViewModel!!.isCreatePassword(jsonObject, this)

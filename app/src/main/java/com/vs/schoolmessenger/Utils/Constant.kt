@@ -54,6 +54,7 @@ object Constant {
 
     var isDeviceType = "Android"
     var isVersionId = 93
+    var terms_condition = "https://schoolchimes.com/vs_web/terms_conditions/"
     var isShimmerViewShow = true
     var isShimmerViewDisable = false
     var isShimmerViewDisablenew = false
@@ -176,7 +177,6 @@ object Constant {
 
     var isNonEmergency = 100
     var isEmergency = 101
-    var isText = 102
 
     var isSchool = 1
 
@@ -204,6 +204,75 @@ object Constant {
     var isVoiceType = 1
 
     var isBioMetricEnable: Int = -1
+
+
+    // String fields
+    var scaleX="scaleX"
+    var scaleY="scaleY"
+    var AM="AM"
+    var PM="PM"
+    var dd_MM_yyyy="dd/MM/yyyy"
+    var EEE_dd_MMM_yyyy="EEE dd MMM, yyyy"
+    var hh_mm_a="hh:mm a"
+    var time_forMate="00:%02d"
+    var time_zero="00:00"
+    var isMailSend= """
+    Dear School Chimes Team,
+
+    Please configure communication academic year  as 20xx - 20xx for any queries contact.
+    
+    Your name :
+    Mobile No :
+    
+""".trimIndent()
+    var isMailTitle="Request to configure communication academic year"
+    var isAcademicYearId="isAcademicYearId"
+    var isCurrentAcademicYear="isCurrentAcademicYear"
+    var lblAcademicYear="lblAcademicYear"
+    var isSelectedId="isSelectedId"
+    var section_data="section_data"
+    var isTitle="isTitle"
+    var isWebLink="isWebLink"
+    var parent="parent"
+    var staff_="staff"
+    var en="en"
+    var ta="ta"
+    var th="th"
+    var hi="hi"
+    var ar="ar"
+    var Gallery="Gallery"
+    var Images="Images"
+    var images="images"
+    var ALL="ALL"
+    var fromArchive="fromArchive"
+    var UNREAD="UNREAD"
+    var READ="READ"
+    var VOICE="VOICE"
+    var VOICE_UNREAD="VOICE_UNREAD"
+    var VOICE_READ="VOICE_READ"
+    var TEXT="TEXT"
+    var TEXT_UNREAD="TEXT_UNREAD"
+    var TEXT_READ="TEXT_READ"
+    var TEXT_ALL="TEXT_ALL"
+    var VOICE_ALL="VOICE_ALL"
+    var dateForMate="%02d:%02d"
+    var IMAGE="IMAGE"
+    var PDF="PDF"
+    var DOC="DOC"
+    var DOCX="DOCX"
+    var PPT="PPT"
+    var PPTX="PPTX"
+    var TXT="TXT"
+    var data="data"
+    var position="position"
+    var SelectedDocumentPath="SelectedDocumentPath"
+    var SelectedDocumentType="SelectedDocumentType"
+    var isText="isText"
+    var isVoice="isVoice"
+    var isVideo="isVideo"
+    var isPDF="isPDF"
+    var isImage="isImage"
+
 
 
     fun isInternetAvailable(activity: Activity): Boolean {

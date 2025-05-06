@@ -193,6 +193,7 @@
     <string name="Reports">Reports</string>
     <string name="UploadAttachment">Upload Attachment</string>
     <string name="TOSTANDARDORSECTION">TO STANDARD OR SECTION</string>
+
     <string name="SeeAll">See All</string>
     <string name="ImageOrPdf">Image/Pdf</string>
     <string name="Event">Event</string>
@@ -311,7 +312,6 @@
     <string name="academic_year">Academic Year</string>
     <string name="search">Search</string>
     <string name="today">Today</string>
-
     <string name="mark_attendance_instruction">Tap on the <b>\"Punch\"</b> button to record your attendance for the day. A confirmation message will appear once your attendance is successfully marked.</string>
     <string name="outside_of_the_location">Note : You are outside the institutes boundary. you will not be able to mark your attendance.\n\nPlease try again when you are within the designated area.</string>
     <string name="mark_attendance">Mark Attendance</string>
@@ -334,17 +334,14 @@
     <string name="get_your_location">Get location *</string>
     <string name="tap_to_view_your_existing_punch_locations">Tap to view locations history.</string>
     <string name="submit_your_location">SUBMIT YOUR LOCATION</string>
-
     <string name="fingerprint_authentication">Fingerprint Authentication</string>
     <string name="please_allow_school_chimes_to_make_use_of_your_fingerprint_authentication_to_enable_seamless_attendance_registration">Please allow School Chimes to make use of your fingerprint authentication to enable seamless attendance registration.</string>
     <string name="yes_enable_seamless_attendance">Yes. Enable seamless attendance</string>
     <string name="no_i_ll_continue_with_the_conventional_method">No. I\'ll continue with the conventional method</string>
     <string name="close">Close</string>
     <string name="Permission_denied">Permission denied</string>
-
     <string name="Disable_Fingerprint">Disable Fingerprint !!</string>
     <string name="disable_fingerprint_authentication">Are you sure you want to disable fingerprint authentication?</string>
-    <string name="Biometric_Authentications">Biometric Authentications</string>
     <string name="Mark_attendance_biometric_credential">Mark attendance using your biometric credential</string>
     <string name="cancel">Cancel</string>
     <string name="biometric_authentications">Biometric authentications</string>
@@ -356,11 +353,53 @@
     <string name="drop_your_location">Drop your location</string>
     <string name="meter_s">Meter(s)</string>
     <string name="confirmation">Confirmation</string>
-    <string name="selected_target_1">Selected target : 1</string>
+    <string name="selected_target_1">Selected target :</string>
     <string name="are_you_sure_want_to_send_this_message">Are you sure want to send this message?</string>
     <string name="yes_send">Yes, Send</string>
     <string name="select_session">Select Session</string>
     <string name="absent">Absent</string>
+    <string name="The_time_equal_Please_validtime">The to time is equal to the from time. Please select a valid time.</string>
+    <string name="The_time_before_Please_validtime">The to time is before the from time. Please select a valid time.</string>
+    <string name="The_time_is_valid">The to time is valid.</string>
+    <string name="digit_mobile_number">digit\'s mobile number</string>
+    <string name="Enter_the">Enter the </string>
+    <string name="Update_failed">Update failed!</string>
+    <string name="Authentication_Successful">Authentication Successful</string>
+    <string name="Authentication_Failed">Authentication Failed</string>
+    <string name="fingerprint_authenticate">Use your fingerprint or face to authenticate</string>
+    <string name="Please_select_least">Please select at least one school to send the message.</string>
+    <string name="Send_Confirmation">Send Confirmation!</string>
+    <string name="Yes">Yes</string>
+    <string name="No">No</string>
+    <string name="Section">Section</string>
+    <string name="Standards">Standards</string>
+    <string name="Standard">Standard</string>
+    <string name="Group">Group</string>
+    <string name="Staff">Staff</string>
+    <string name="NOTE_message_addressed">NOTE : This message is addressed to student in </string>
+    <string name="which_communication_academic"> which is not the communication academic year. Do you want to proceed?</string>
+    <string name="Please_select_leastone">Please select at least one </string>
+    <string name="_s"> (s)</string>
+    <string name="send_message"> to send the message.</string>
+    <string name="Groups">Groups</string>
+    <string name="Section_details_missing">Section details are missing</string>
+    <string name="Students">Students</string>
+    <string name="Student_s"> Student (s)</string>
+    <string name="Please_select_least_student">Please select at least one student to send the message.</string>
+    <string name="Login_Management">Login As Management</string>
+    <string name="Login_Student_Parent">Login As Student/Parent</string>
+    <string name="Invalid_role">Invalid user role</string>
+    <string name="Student_Parent">Student/Parent</string>
+    <string name="Staff_details_available">Staff details not available</string>
+    <string name="No_staff_data_ound">No staff data found</string>
+    <string name="No_student_data_found">No student data found</string>
+    <string name="Roll_No">Roll No : </string>
+    <string name="Class_Teacher">Class Teacher : </string>
+    <string name="Hello">Hello, </string>
+    <string name="Go_Back">Go Back?</string>
+    <string name="Do_you_want_Exit">Do you want to Exit?</string>
+    <string name="Unsupported_file_type">Unsupported file type: </string>
+    <string name="Unable_to_open_file">Unable to open file</string>
 
 
 </resources>

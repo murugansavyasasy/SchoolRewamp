@@ -204,7 +204,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
             isRemoveCheckBox()
             if (isChecked) {
                 isChecking = true
-                isSelectedLanguage = "en"
+                isSelectedLanguage = Constant.en
                 chEnglish.isChecked = true
                 isSelectedImageSetting(imgEnglish)
             } else {
@@ -216,7 +216,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
             isRemoveCheckBox()
             if (isChecked) {
                 isChecking = true
-                isSelectedLanguage = "ta"
+                isSelectedLanguage = Constant.ta
                 chTamil.isChecked = true
                 isSelectedImageSetting(imgTamil)
             } else {
@@ -228,7 +228,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
             isRemoveCheckBox()
             if (isChecked) {
                 isChecking = true
-                isSelectedLanguage = "th"
+                isSelectedLanguage = Constant.th
                 chThai.isChecked = true
                 isSelectedImageSetting(imgThai)
             } else {
@@ -240,7 +240,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
             isRemoveCheckBox()
             if (isChecked) {
                 isChecking = true
-                isSelectedLanguage = "hi"
+                isSelectedLanguage = Constant.hi
                 chHindi.isChecked = true
                 isSelectedImageSetting(imgHindi)
             } else {
@@ -252,7 +252,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
             isRemoveCheckBox()
             if (isChecked) {
                 isChecking = true
-                isSelectedLanguage = "ar"
+                isSelectedLanguage = Constant.ar
                 chArabic.isChecked = true
                 isSelectedImageSetting(imgHindi)
             } else {
@@ -263,17 +263,17 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         var isAppLanguage = SharedPreference.getLanguage(requireActivity())
         Log.d("isAppLanguage", isAppLanguage.toString())
         if (isAppLanguage.equals("")) {
-            isAppLanguage = "en"
+            isAppLanguage = Constant.en
         }
-        if (isAppLanguage.equals("ta")) {
+        if (isAppLanguage.equals(Constant.ta)) {
             chTamil.isChecked = true
-        } else if (isAppLanguage.equals("th")) {
+        } else if (isAppLanguage.equals(Constant.th)) {
             chThai.isChecked = true
-        } else if (isAppLanguage.equals("hi")) {
+        } else if (isAppLanguage.equals(Constant.hi)) {
             chHindi.isChecked = true
-        } else if (isAppLanguage.equals("en")) {
+        } else if (isAppLanguage.equals(Constant.en)) {
             chEnglish.isChecked = true
-        } else if (isAppLanguage.equals("ar")) {
+        } else if (isAppLanguage.equals(Constant.ar)) {
             chArabic.isChecked = true
         }
 

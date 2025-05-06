@@ -25,6 +25,7 @@ import com.bumptech.glide.Glide
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.CommonScreens.ImageSliderAdapter
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.WaveformSeekBar
 import com.vs.schoolmessenger.Utils.fetchVimeoThumbnail
 import me.relex.circleindicator.CircleIndicator
@@ -158,7 +159,7 @@ class HomeWorkItemAdapter (
         ) {
 
             when (data.isType) {
-                "isText" -> {
+                Constant.isText -> {
                     rlaReportText.visibility = View.VISIBLE
                     lblTitleText.text = data.isTitle
                     lblDateText.text = data.date
@@ -170,7 +171,7 @@ class HomeWorkItemAdapter (
                     isSeeMoreVisibility(lblContentText, tvSeeMoreText)
                 }
 
-                "isVoice" -> {
+                Constant.isVoice -> {
                     rlaVoiceReport.visibility = View.VISIBLE
                     lblTitleVoice.text = data.isTitle
                     lblVoiceContent.text = data.isDescription
@@ -207,7 +208,7 @@ class HomeWorkItemAdapter (
                     }
                 }
 
-                "isVideo" -> {
+                Constant.isVideo -> {
                     rlaReportVideo.visibility = View.VISIBLE
                     lblDateVideo.text = data.date
                     lblTitleVideo.text = data.isTitle
@@ -221,7 +222,7 @@ class HomeWorkItemAdapter (
 
                 }
 
-                "isPDF" -> {
+                Constant.isPDF -> {
                     rlaPdf.visibility = View.VISIBLE
                     rlaVoiceReport.visibility = View.GONE
                     rlaReportVideo.visibility = View.GONE
@@ -273,7 +274,7 @@ class HomeWorkItemAdapter (
                     }
                 }
 
-                "isImage" -> {
+                Constant.isImage -> {
                     rlaImageReport.visibility = View.VISIBLE
                     lblDateImage.text = data.date
                     lblTitleImage.text = data.isTitle
@@ -440,7 +441,7 @@ class HomeWorkItemAdapter (
         private fun formatTime(milliseconds: Int): String {
             val seconds = (milliseconds / 1000) % 60
             val minutes = (milliseconds / (1000 * 60)) % 60
-            return String.format("%02d:%02d", minutes, seconds)
+            return String.format(Constant.dateForMate, minutes, seconds)
         }
 
         // Get audio duration asynchronously
