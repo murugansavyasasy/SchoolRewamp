@@ -49,14 +49,14 @@ class HomeWork : BaseActivity<HomeWorkParentBinding>(), View.OnClickListener,
             isStudentStandardName + " " + isStudentSectionName
 
 
-        appViewModel?.isHomeWorkDetailsList?.observe(this) { response ->
-            Log.d("response++",response.toString())
-            if (response!!.status) {
-//                isloadhomeworkData(response.data)
-                Log.d("GetHomeWorkDetails", response.data.toString())
-                Log.d("Access Token",isAccessToken.toString())
-            }
-        }
+//        appViewModel?.isHomeWorkDetailsList?.observe(this) { response ->
+//            Log.d("response++",response.toString())
+//            if (response!!.status) {
+////                isloadhomeworkData(response.data)
+//                Log.d("GetHomeWorkDetails", response.data.toString())
+//                Log.d("Access Token",isAccessToken.toString())
+//            }
+//        }
     }
 
     private fun isloadhomeworkData(newData: ArrayList<GetDateWiseHomeworkData>?) {
