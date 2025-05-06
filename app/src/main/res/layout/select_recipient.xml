@@ -226,7 +226,7 @@
         android:layout_marginEnd="@dimen/fifteen"
         android:background="@drawable/rect_white_light_radious"
         android:padding="@dimen/fifteen"
-        android:visibility="gone">
+        android:visibility="visible">
 
 
         <ImageView
@@ -289,11 +289,10 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/lblCreatedOn"
         android:layout_marginStart="@dimen/twenty"
         android:layout_marginTop="@dimen/ten"
-        android:layout_above="@+id/bottomLayout"
         android:layout_marginEnd="@dimen/twenty"
         android:layout_marginBottom="@dimen/ten"
         android:background="@drawable/rect_white"
@@ -307,7 +306,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/recyclerView"
         android:layout_marginStart="@dimen/fifteen"
-        android:layout_marginTop="-40dp"
+        android:layout_marginTop="0dp"
         android:layout_marginEnd="@dimen/fifteen"
         android:background="@drawable/bg_stroke_rect_black"
         android:padding="@dimen/ten"

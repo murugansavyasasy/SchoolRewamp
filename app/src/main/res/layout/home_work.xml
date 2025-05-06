@@ -85,7 +85,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/lnrParent"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <RelativeLayout
             android:id="@+id/rlaTitleDescription"
@@ -241,13 +241,12 @@
         android:layout_marginEnd="@dimen/fifteen"
         android:layout_marginStart="@dimen/fifteen"
         android:layout_marginTop="@dimen/twenty"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <LinearLayout
             android:orientation="horizontal"
             android:id="@+id/AcademicYear"
             android:weightSum="1"
-
             android:background="@drawable/gray_bg_radius"
             android:padding="@dimen/ten"
             android:layout_width="match_parent"
@@ -257,11 +256,12 @@
                 style="@style/CustomTextStylePoppinsMedium"
                 android:text="@string/academic_year"
                 android:layout_weight="0.4"
-                android:textSize=   "@dimen/thirteen"
+                android:textSize="@dimen/thirteen"
                 android:layout_height="wrap_content">
             </TextView>
 
             <TextView
+                android:id="@id/lblAcademicYear"
                 android:layout_width="match_parent"
                 style="@style/CustomTextStylePoppinsMedium"
                 android:text="2024-2025"

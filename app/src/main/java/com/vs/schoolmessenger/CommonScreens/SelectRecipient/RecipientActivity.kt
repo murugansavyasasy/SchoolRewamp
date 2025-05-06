@@ -33,14 +33,11 @@ import com.vs.schoolmessenger.CommonScreens.SpecificStudentData.SpecificStudent
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.ApiCallRequest
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.Homework.SectionDetails
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
 import com.vs.schoolmessenger.Utils.Constant.M_HOMEWORK
 import com.vs.schoolmessenger.Utils.Constant.SELECTED_SCHOOL_MENU
-import com.vs.schoolmessenger.Utils.Constant.SH_ASSIGNMENT
-import com.vs.schoolmessenger.Utils.Constant.SH_HOMEWORK
-import com.vs.schoolmessenger.Utils.Constant.isSchool
-
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SelectRecipientBinding
 
@@ -71,6 +68,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     private var selectedIds = mutableListOf<String>()
     var isSelectedType = 0
     var isAcademicYearId = -1
+    var isSubjectId = -1
     var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
     var isCurrentAcademicYear = true
     var isTargetType: Int? = null
@@ -138,7 +136,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     }
                     tapVisibility()
                     binding.nomessageEntire.visibility =
-                        if (isUserDetails!!.staff_role.toString() == Constant.isStaff.toString()
+                        if (isUserDetails!!.staff_role.toString() == Constant.isPrincipalRole.toString()
                         ) View.GONE else View.VISIBLE
                 } else {
                     binding.lblSupportMail.paintFlags =
@@ -180,9 +178,10 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
             if (response != null) {
                 // Please don't delete by sathish
-//                binding.rlaSubject.visibility = View.VISIBLE
-//                isGetSubjectListData = response.data
-//                isLoadSubjectData()
+                binding.rlaSubject.visibility = View.VISIBLE
+                isGetSubjectListData = response.data
+                isSubjectId= isGetSubjectListData!![0].id
+                isLoadSubjectData()
             }
         }
 
@@ -263,6 +262,15 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 Constant.showTopAlertPopup(response.message, Constant.isCommunication, this)
             }
         }
+
+        appViewModel!!.isSendHomeWork?.observe(this) { response ->
+            Constant.hideLoading(this@RecipientActivity)
+
+            if (response != null) {
+                Log.d("Response", response.status.toString())
+                Constant.showTopAlertPopup(response.message, Constant.isHomeWork, this)
+            }
+        }
         binding.chAllSelect.setOnClickListener {
             if (isSelectedType == 1) {
                 if (binding.chAllSelect.isChecked) {
@@ -319,7 +327,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     private fun tapVisibility() {
         if (isUserDetails!!.staff_role == Constant.isStaffRole) {
             if (SELECTED_SCHOOL_MENU == M_HOMEWORK) {
-
                 binding.nomessage.visibility = View.GONE
                 binding.nomessageEntire.visibility = View.GONE
                 binding.tapEntireSchool.visibility = View.GONE
@@ -358,7 +365,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
         } else {
             if (SELECTED_SCHOOL_MENU == M_HOMEWORK) {
-
                 binding.nomessage.visibility = View.GONE
                 binding.nomessageEntire.visibility = View.GONE
                 binding.tapEntireSchool.visibility = View.GONE
@@ -368,7 +374,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 binding.tabGroups.visibility = View.GONE
                 binding.tapStaffs.visibility = View.GONE
                 changeTapBg(Constant.isSection)
-
                 //show send button only
 
             } else if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT) {
@@ -399,10 +404,11 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             }
         }
     }
-    // Please don't delete by sathish
-//    private fun isLoadSubjectData() {
-//        binding.rlaSubject.visibility = View.VISIBLE
-//    }
+
+    //     Please don't delete by sathish
+    private fun isLoadSubjectData() {
+        binding.rlaSubject.visibility = View.VISIBLE
+    }
 
     private fun isLoadStaffData(data: List<NameAndIds>) {
 
@@ -453,6 +459,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     binding.rlaSubject, this, isGetSubjectListData
                 ) { selectedSubject ->
                     binding.lblSuibject.text = selectedSubject.first
+                    isSubjectId=selectedSubject.second
                 }
             }
 
@@ -801,14 +808,14 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         appViewModel!!.isGetGroupList(isAccessToken!!, isAcademicYearId, this)
     }
 
-//    private fun isGetSubjectList(isSectionId: String) {
-//        appViewModel!!.isGetSubjectList(
-//            isAccessToken!!,
-//            isAcademicYearId,
-//            isSectionId.toString(),
-//            this
-//        )
-//    }
+    private fun isGetSubjectList(isSectionId: String) {
+        appViewModel!!.isGetSubjectList(
+            isAccessToken!!,
+            isAcademicYearId,
+            isSectionId.toString(),
+            this
+        )
+    }
 
     private fun isGetStandardSection() {
         Constant.showLoading(this@RecipientActivity)
@@ -851,8 +858,26 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         okButton.setOnClickListener {
             alertDialog.dismiss()
             Constant.showLoading(this@RecipientActivity)
-            val isTextData = Constant.isTextSendingData
-            if (Constant.isClickType == 3) {
+
+
+            if (SELECTED_SCHOOL_MENU == M_HOMEWORK) {
+                val sectionDetails = intent.getParcelableExtra<SectionDetails>("section_data")
+                sectionDetails?.let {
+                    val jsonObject = ApiCallRequest.isSendHomeWork(
+                        isAcademicYearId = isAcademicYearId,
+                        selectedIds = selectedIds,
+                        title = it.title,
+                        description = it.description,
+                        subjectId = isSubjectId!!,
+                        file_path = "https://api.schoolchimes.com/nodejs/institute/files/AU3394_ABSENT_1743571768546.wav",
+                    )
+                    appViewModel!!.isSendHomeWork(isAccessToken!!, jsonObject, this)
+                } ?: run {
+                    Constant.showValidationAlertPopup("Section details are missing", this)
+                }
+            } else if (SELECTED_SCHOOL_MENU == Constant.M_COMMUNICATION) {
+                val isTextData = Constant.isTextSendingData
+                if (Constant.isClickType == 3) {
                 val jsonObject = ApiCallRequest.isSendText(
                     isAcademicYearId = isAcademicYearId,
                     schoolId = selectedIds,
@@ -861,21 +886,31 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     targetType = isTargetType!!
                 )
                 appViewModel!!.isSendText(isAccessToken!!, jsonObject, this)
-            } else {
 
-                if (Constant.isVoiceType == 3) {
-                    val isVoiceData = Constant.isVoiceSendingData
-                    voiceSendApi(isVoiceData!!.isAwsUrl)
-                } else {
-                    isFileUploadInAws(
-                        Constant.isVoiceFile!!, isStaffDetails!!.school_id, "audio"
-                    )
+            } else {
+                    if (Constant.isVoiceType == 3) {
+                        val isVoiceData = Constant.isVoiceSendingData
+                        voiceSendApi(isVoiceData!!.isAwsUrl)
+                    } else {
+                        isFileUploadInAws(
+                            Constant.isVoiceFile!!,
+                            isStaffDetails!!.school_id,
+                            "audio"
+                        )
+                    }
+
                 }
             }
+//            else if () {
+//
+//            }
+
         }
+
         btnCancel.setOnClickListener {
             alertDialog.dismiss()
         }
+
     }
 
     override fun onIdCheck(group: NameAndIds) {
@@ -911,8 +946,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             isSectionSelectedIds.add(data)
         }
         // Please don't delete by sathish
-//        val idString = isSectionSelectedIds.joinToString(",") { it.id.toString() }
-//        isGetSubjectList(idString)
+        val idString = isSectionSelectedIds.joinToString(",") { it.id.toString() }
+        isGetSubjectList(idString)
         binding.chAllSelect.isChecked = isSectionSelectedIds.size == isSection?.size
         if (isSelectedType == 2) {
             if (isSectionSelectedIds.size == 1) {
@@ -943,8 +978,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         }
         // Please don't delete by sathish
 
-//        val idString = isSectionSelectedIds.joinToString(",") { it.id.toString() }
-//        isGetSubjectList(idString)
+        val idString = isSectionSelectedIds.joinToString(",") { it.id.toString() }
+        isGetSubjectList(idString)
     }
 
     private fun isFileUploadInAws(
