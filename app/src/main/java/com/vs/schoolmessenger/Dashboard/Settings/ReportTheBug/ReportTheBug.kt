@@ -88,13 +88,13 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
-            val file: File = File(imageFilePath)
+            val file = File(imageFilePath)
             val imageUri = Uri.fromFile(file)
 
         } else if (requestCode == REQUEST_IMAGE_GALLERY_CAPTURE) {
             if (data != null) {
                 isImageSelected.clear()
-                isImageSelected = data.getStringArrayListExtra(Constant.images)!!
+                isImageSelected = data.getStringArrayListExtra(Constant.images_)!!
                 isLoadTheReportImage(isImageSelected)
             }
         } else {

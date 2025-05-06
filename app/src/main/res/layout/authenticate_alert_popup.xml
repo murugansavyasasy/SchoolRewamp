@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="20dp"
+    android:layout_margin="@dimen/twenty"
     android:background="@color/bpTransparent_black"
     android:orientation="vertical">
 
@@ -10,10 +10,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginStart="@dimen/twenty"
+        android:layout_marginTop="@dimen/twenty"
+        android:layout_marginEnd="@dimen/twenty"
+        android:layout_marginBottom="@dimen/twenty"
         android:background="@drawable/rect_white_light_radious"
         android:orientation="vertical">
 
@@ -21,12 +21,12 @@
             android:id="@+id/lblTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="left"
-            android:padding="10dp"
+            android:layout_marginTop="@dimen/twenty"
+            android:gravity="start"
+            android:padding="@dimen/ten"
             android:text="@string/biometric_authentications"
             android:textColor="@color/bpBlue"
-            android:textSize="20dp"
+            android:textSize="@dimen/twenty_sp"
             android:textStyle="bold"
             android:visibility="visible" />
 
@@ -34,17 +34,17 @@
             android:id="@+id/lblHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="left"
-            android:padding="10dp"
+            android:gravity="start"
+            android:padding="@dimen/ten"
             android:text="@string/biometric_authentication_is_required_to_present"
             android:textColor="@color/black"
-            android:textSize="16dp"
+            android:textSize="@dimen/sixteen_sp"
             android:visibility="visible" />
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="10dp"
+            android:layout_height="@dimen/one"
+            android:layout_marginTop="@dimen/ten"
             android:background="@color/grey" />
 
 
@@ -52,12 +52,12 @@
             android:id="@+id/lblAuthenticate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/ten"
             android:gravity="center"
-            android:padding="10dp"
+            android:padding="@dimen/ten"
             android:text="@string/authenticate_again"
             android:textColor="@color/green"
-            android:textSize="20dp"
+            android:textSize="@dimen/twenty_sp"
             android:textStyle="bold"
             android:visibility="visible" />
 

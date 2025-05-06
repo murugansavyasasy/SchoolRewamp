@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="20dp"
+    android:padding="@dimen/twenty"
     android:background="@drawable/rect_white">
 
     <TextView
@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:text=""
         android:visibility="gone"
-        android:textSize="18sp"
+        android:textSize="@dimen/eighteen_sp"
         android:textStyle="bold"
         android:textColor="#000"/>
 
@@ -22,15 +22,15 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text=""
-        android:textSize="16sp"
-        android:layout_marginTop="10dp"
+        android:textSize="@dimen/sixteen_sp"
+        android:layout_marginTop="@dimen/ten"
         android:textColor="#444"/>
 
     <TextView
         android:id="@+id/btnOk"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="OK"
+        android:text="@string/permission_ok"
         android:layout_gravity="center"
         android:layout_marginTop="40dp"
         android:textColor="@color/black"/>

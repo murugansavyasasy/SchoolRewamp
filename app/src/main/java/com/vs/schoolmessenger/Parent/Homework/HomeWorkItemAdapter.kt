@@ -222,7 +222,7 @@ class HomeWorkItemAdapter (
 
                 }
 
-                Constant.isPDF -> {
+                Constant.isPDF_ -> {
                     rlaPdf.visibility = View.VISIBLE
                     rlaVoiceReport.visibility = View.GONE
                     rlaReportVideo.visibility = View.GONE

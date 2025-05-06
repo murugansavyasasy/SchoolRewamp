@@ -96,7 +96,7 @@
             <CalendarView
                 android:id="@+id/calendarView"
                 android:layout_width="match_parent"
-                android:layout_height="300dp" />
+                android:layout_height="@dimen/three_hundred" />
 
         </LinearLayout>
 
@@ -109,19 +109,19 @@
     android:textStyle="bold"
     android:layout_alignStart="@+id/cardStart"
     android:layout_marginTop="@dimen/fifteen"
-    android:textSize="13sp"
+    android:textSize="@dimen/thirteen_sp"
     android:fontFamily="@font/poppins_bold"
     android:id="@+id/date_header"/>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardStart"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/fifty"
+            android:layout_height="@dimen/fifty"
             app:cardCornerRadius="@dimen/ten"
             android:layout_marginStart="@dimen/fifteen"
             android:layout_below="@+id/date_header"
             android:layout_marginTop="@dimen/twele"
-            app:cardElevation="0dp">
+            app:cardElevation="@dimen/zero">
 
             <LinearLayout
                 android:id="@+id/lnrStartCalendar"
@@ -161,7 +161,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@+id/cardStart"
-            android:layout_marginTop="55dp"
+            android:layout_marginTop="@dimen/fifty_five"
             android:id="@+id/relative_layout">
             <TextView
                 android:id="@+id/lblDatePick"
@@ -177,8 +177,8 @@
                 android:textStyle="normal">
             </TextView>
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="@dimen/twenty"
+                android:layout_height="@dimen/twenty"
                 android:id="@+id/image_downarrow"
                 android:layout_alignBottom="@+id/lblDatePick"
                 android:layout_toEndOf="@+id/lblDatePick"
@@ -189,7 +189,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
+            android:layout_height="@dimen/point_five"
             android:layout_below="@+id/cardStart"
             android:layout_toEndOf="@+id/cardStart"
             android:layout_marginEnd="@dimen/fourty"
@@ -209,7 +209,7 @@
             android:layout_below="@+id/cardStart"
             android:layout_alignStart="@+id/cardStart"
             android:layout_marginTop="@dimen/fifteen"
-            android:textSize="13sp"
+            android:textSize="@dimen/thirteen_sp"
             android:fontFamily="@font/poppins_bold"
             android:id="@+id/sction_header"/>
 
@@ -228,7 +228,7 @@
             <RelativeLayout
                 android:id="@+id/rlaStandard"
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
+                android:layout_height="@dimen/thirty_five"
                 android:layout_marginStart="@dimen/fifteen"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/fifteen"
@@ -256,7 +256,7 @@
                     android:layout_marginStart="@dimen/fifteen"
                     android:text="@string/standard"
                     android:textColor="@color/black"
-                    android:textSize="12sp"
+                    android:textSize="@dimen/twele_sp"
                     android:fontFamily="@font/poppins_bold"
                     android:textStyle="bold">
                 </TextView>
@@ -266,7 +266,7 @@
             <RelativeLayout
                 android:id="@+id/rlaSection"
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
+                android:layout_height="@dimen/thirty_five"
                 android:layout_marginStart="@dimen/fifteen"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/fifteen"
@@ -294,7 +294,7 @@
                     android:layout_marginStart="@dimen/fifteen"
                     android:text="@string/section"
                     android:textColor="@color/black"
-                    android:textSize="12sp"
+                    android:textSize="@dimen/twele"
                     android:fontFamily="@font/poppins_bold"
                     android:textStyle="bold">
                 </TextView>
@@ -312,7 +312,7 @@
             android:layout_below="@+id/lnrClasses"
             android:layout_alignStart="@+id/cardStart"
             android:layout_marginTop="@dimen/fifteen"
-            android:textSize="13sp"
+            android:textSize="@dimen/thirteen_sp"
             android:fontFamily="@font/poppins_bold"
             android:id="@+id/attendancetype_header"/>
 
@@ -332,7 +332,7 @@
             <RelativeLayout
                 android:id="@+id/full_day"
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
+                android:layout_height="@dimen/thirty_five"
                 android:layout_marginStart="@dimen/fifteen"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/fifteen"
@@ -356,7 +356,7 @@
                     android:layout_centerVertical="true"
                     android:text="@string/full_day"
                     android:textColor="@color/black"
-                    android:textSize="13sp"
+                    android:textSize="@dimen/thirteen_sp"
                     android:layout_toEndOf="@+id/radio_button"
                     android:layout_marginEnd="@dimen/ten"
                     android:fontFamily="@font/poppins_medium"
@@ -368,7 +368,7 @@
             <RelativeLayout
                 android:id="@+id/half_day"
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
+                android:layout_height="@dimen/thirty_five"
                 android:layout_marginStart="@dimen/fifteen"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/fifteen"
@@ -393,7 +393,7 @@
                     android:layout_centerVertical="true"
                     android:text="@string/half_day"
                     android:textColor="@color/black"
-                    android:textSize="13sp"
+                    android:textSize="@dimen/thirteen_sp"
                     android:fontFamily="@font/poppins_medium"
                     android:layout_toEndOf="@+id/half_radiobutton"
                     android:textStyle="normal">
@@ -414,7 +414,7 @@
             android:layout_below="@+id/lnrClasses1"
             android:layout_alignStart="@+id/cardStart"
             android:layout_marginTop="@dimen/fifteen"
-            android:textSize="13sp"
+            android:textSize="@dimen/thirteen_sp"
             android:fontFamily="@font/poppins_bold"
             android:id="@+id/session_header"/>
 
@@ -434,7 +434,7 @@
             <RelativeLayout
                 android:id="@+id/first_half"
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
+                android:layout_height="@dimen/thirty_five"
                 android:layout_marginStart="@dimen/fifteen"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/fifteen"
@@ -458,7 +458,7 @@
                     android:layout_centerVertical="true"
                     android:text="@string/first_half"
                     android:textColor="@color/black"
-                    android:textSize="13sp"
+                    android:textSize="@dimen/thirteen_sp"
                     android:fontFamily="@font/poppins_medium"
                     android:layout_toEndOf="@+id/radio_button1"
                     android:layout_marginEnd="@dimen/ten"
@@ -470,7 +470,7 @@
             <RelativeLayout
                 android:id="@+id/second_half"
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
+                android:layout_height="@dimen/thirty_five"
                 android:layout_marginStart="@dimen/fifteen"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/fifteen"
@@ -496,7 +496,7 @@
                     android:layout_centerVertical="true"
                     android:text="@string/half_day"
                     android:textColor="@color/black"
-                    android:textSize="13sp"
+                    android:textSize="@dimen/thirteen_sp"
                     android:fontFamily="@font/poppins_medium"
                     android:layout_toEndOf="@+id/secondhalf_radiobutton1"
                     android:textStyle="normal">
@@ -546,7 +546,7 @@
         <TextView
             android:id="@+id/btnSelectPresent"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="@dimen/fourty_five"
             android:layout_below="@+id/lnrClasses2"
             android:layout_marginStart="@dimen/twenty"
             android:layout_marginTop="@dimen/twenty_five"
@@ -580,7 +580,7 @@
         <TextView
             android:id="@+id/btnAbsent"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="@dimen/fourty_five"
             android:layout_below="@+id/btnOr"
             android:layout_marginStart="@dimen/twenty"
             android:layout_marginTop="@dimen/ten"

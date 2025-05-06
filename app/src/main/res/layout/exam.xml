@@ -24,7 +24,7 @@
             android:layout_marginStart="@dimen/ten"
             android:text="@string/exam_creation"
             android:textColor="@color/black"
-            android:textSize="@dimen/twenty"
+            android:textSize="@dimen/twenty_sp"
             android:textStyle="bold" />
 
     </LinearLayout>

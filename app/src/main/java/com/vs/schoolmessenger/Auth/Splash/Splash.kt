@@ -282,7 +282,7 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
         val promptInfo = BiometricPrompt.PromptInfo.Builder()
             .setTitle(resources.getString(R.string.biometric_authentications))
             .setSubtitle(resources.getString(R.string.fingerprint_authenticate))
-            .setNegativeButtonText(resources.getString(R.string.cancel))
+            .setNegativeButtonText(resources.getString(R.string.Cancel))
             .build()
 
         biometricPrompt.authenticate(promptInfo);

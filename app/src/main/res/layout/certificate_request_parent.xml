@@ -70,12 +70,12 @@
             android:layout_marginTop="@dimen/twenty"
             android:layout_marginStart="@dimen/ten"
             android:fontFamily="@font/poppins_bold"
-            android:textSize="13sp"/>
+            android:textSize="@dimen/thirteen_sp"/>
 
         <Spinner
             android:id="@+id/spinner_text"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="@dimen/thirty_five"
             android:layout_below="@+id/header_text"
             android:layout_marginTop="@dimen/five"
             android:layout_marginStart="@dimen/ten"
@@ -94,7 +94,7 @@
             android:layout_marginStart="@dimen/ten"
             android:layout_below="@+id/spinner_text"
             android:fontFamily="@font/poppins_bold"
-            android:textSize="13sp"/>
+            android:textSize="@dimen/thirteen_sp"/>
 
         <RadioGroup
             android:id="@+id/radioGroup"
@@ -117,8 +117,8 @@
 
                 <ImageView
                     android:id="@+id/ivradio"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="@dimen/twenty_four"
+                    android:layout_height="@dimen/twenty_four"
                     android:layout_marginStart="@dimen/five"
                     android:src="@drawable/custom_radio_button"
                     android:layout_marginEnd="@dimen/five"/>
@@ -130,7 +130,7 @@
                     android:text="@string/not_urgent"
                     android:layout_marginStart="@dimen/five"
                     android:textColor="@android:color/black"
-                    android:textSize="13sp"
+                    android:textSize="@dimen/thirteen_sp"
                     android:textStyle="bold"
                     android:layout_gravity="center_vertical"
                     android:fontFamily="@font/poppins_medium"
@@ -138,7 +138,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="@dimen/zero"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/radio_button_background"
@@ -148,8 +148,8 @@
 
                 <ImageView
                     android:id="@+id/ivradio1"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="@dimen/twenty_four"
+                    android:layout_height="@dimen/twenty_four"
                     android:layout_marginStart="@dimen/five"
                     android:src="@drawable/custom_radio_button"
                     android:layout_marginEnd="@dimen/five"/>
@@ -161,7 +161,7 @@
                     android:button="@android:color/transparent"
                     android:text="@string/urgent"
                     android:layout_marginStart="@dimen/five"
-                    android:textSize="13sp"
+                    android:textSize="@dimen/thirteen_sp"
                     android:fontFamily="@font/poppins_medium"
                     android:layout_gravity="center_vertical"
                     android:textStyle="bold"
@@ -176,7 +176,7 @@
         <EditText
             android:id="@+id/edit_text"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="@dimen/two_hundred"
             android:gravity="top"
             android:hint="@string/enter_reason_for_certificate"
             android:padding="@dimen/five"
@@ -185,18 +185,18 @@
             android:layout_marginTop="@dimen/fifteen"
             android:layout_below="@+id/radioGroup"
             android:fontFamily="@font/poppins_medium"
-            android:textSize="13sp"
+            android:textSize="@dimen/thirteen_sp"
             android:background="@drawable/text_bg"/>
 
 
         <Button
-            android:layout_width="250dp"
-            android:layout_height="45dp"
+            android:layout_width="@dimen/two_fifty"
+            android:layout_height="@dimen/fourty_five"
             android:text="@string/request_certificate"
             android:layout_below="@+id/edit_text"
             android:background="@drawable/bg_orange"
             android:textColor="@color/white"
-            android:textSize="11sp"
+            android:textSize="@dimen/eleven_sp"
             android:layout_marginBottom="@dimen/twele"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/twenty_five"

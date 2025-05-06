@@ -242,7 +242,7 @@ object Constant {
     var ar="ar"
     var Gallery="Gallery"
     var Images="Images"
-    var images="images"
+    var images_="images"
     var ALL="ALL"
     var fromArchive="fromArchive"
     var UNREAD="UNREAD"
@@ -270,7 +270,7 @@ object Constant {
     var isText="isText"
     var isVoice="isVoice"
     var isVideo="isVideo"
-    var isPDF="isPDF"
+    var isPDF_="isPDF"
     var isImage="isImage"
 
 

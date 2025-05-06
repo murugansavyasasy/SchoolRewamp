@@ -12,30 +12,30 @@
     <LinearLayout
         android:id="@+id/search"
         android:layout_below="@+id/toolbarLayout"
-        android:layout_margin="25dp"
+        android:layout_margin="@dimen/twenty_five"
         android:background="@drawable/search_bg"
         android:weightSum="1"
         android:orientation="horizontal"
         android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="40dp">
+        android:layout_height="@dimen/fourty">
 
         <ImageView
-            android:layout_marginStart="0dp"
+            android:layout_marginStart="@dimen/zero"
             android:layout_weight="0.1"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero"
             android:src="@drawable/search_icon"
-            android:layout_height="25dp">
+            android:layout_height="@dimen/twenty_five">
         </ImageView>
 
         <EditText
             android:id="@+id/searchText"
-            android:textSize="16sp"
+            android:textSize="@dimen/sixteen_sp"
             android:background="@android:color/transparent"
             android:layout_weight="0.85"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero"
             android:hint="@string/lblSearch"
-            android:minHeight="50dp"
+            android:minHeight="@dimen/fifty"
             android:textStyle="normal"
             android:fontFamily="@font/poppins_medium"
             android:layout_height="wrap_content">
@@ -45,53 +45,53 @@
             android:id="@+id/close"
             android:clickable="true"
             android:visibility="gone"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="@dimen/ten"
             android:layout_weight="0.05"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero"
             android:src="@drawable/close_icon_red"
-            android:layout_height="30dp">
+            android:layout_height="@dimen/thirty">
         </ImageView>
     </LinearLayout>
     <ScrollView
         android:layout_below="@+id/search"
         android:layout_width="match_parent"
         android:background="@color/athens_gray"
-        android:layout_marginStart="10dp"
-        android:layout_marginBottom="25dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginBottom="@dimen/twenty_five"
+        android:layout_marginEnd="@dimen/ten"
         android:layout_height="match_parent">
 
         <RelativeLayout
-            android:layout_marginBottom="50dp"
+            android:layout_marginBottom="@dimen/fifty"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/ten"
                 android:id="@+id/examheading"
                 android:layout_width="match_parent"
                 android:text="@string/exam_mark"
                 android:textColor="@color/jumbo"
                 android:textStyle="bold"
-                android:textSize="13sp"
-                android:layout_marginStart="15dp"
+                android:textSize="@dimen/thirteen_sp"
+                android:layout_marginStart="@dimen/fifteen"
                 android:layout_height="wrap_content">
 
             </TextView>
             <androidx.cardview.widget.CardView
-                app:cardCornerRadius="10dp"
+                app:cardCornerRadius="@dimen/ten"
                 android:id="@+id/examMarkCard"
                 android:layout_width="match_parent"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginEnd="@dimen/fifteen"
+                android:layout_marginTop="@dimen/fifteen"
                 android:layout_below="@+id/examheading"
-                app:cardElevation="5dp"
+                app:cardElevation="@dimen/five"
                 android:layout_height="wrap_content">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:id="@+id/ExamMarkRV"
-                    android:layout_margin="10dp"
+                    android:layout_margin="@dimen/ten"
                     android:layout_height="wrap_content">
 
                 </androidx.recyclerview.widget.RecyclerView>
@@ -99,17 +99,17 @@
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
                 android:id="@+id/examRankCard"
-                app:cardCornerRadius="10dp"
+                app:cardCornerRadius="@dimen/ten"
                 android:layout_width="match_parent"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/five"
                 android:layout_below="@+id/examMarkCard"
-                app:cardElevation="5dp"
-                android:layout_marginBottom="10dp"
+                app:cardElevation="@dimen/five"
+                android:layout_marginBottom="@dimen/ten"
                 android:layout_alignStart="@+id/examMarkCard"
                 android:layout_alignEnd="@+id/examMarkCard"
                 android:layout_height="wrap_content">
                 <LinearLayout
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginBottom="@dimen/ten"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -118,13 +118,13 @@
                         android:orientation="horizontal"
                         android:weightSum="1"
                         android:gravity="center"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="@dimen/ten"
                         android:layout_height="wrap_content">
                         <TextView
-                            android:layout_marginStart="15dp"
+                            android:layout_marginStart="@dimen/fifteen"
                             android:layout_weight="0.25"
-                            android:text="Total"
-                            android:textSize="15sp"
+                            android:text="@string/total"
+                            android:textSize="@dimen/fifteen_sp"
                             android:textStyle="bold"
                             android:textColor="@color/black"
                             android:fontFamily="@font/poppins_medium"
@@ -137,7 +137,7 @@
                             android:layout_weight="0.75"
                             android:text="372 / 500"
                             android:textStyle="bold"
-                            android:textSize="15sp"
+                            android:textSize="@dimen/fifteen_sp"
                             android:layout_width="match_parent"
                             android:textColor="@color/black"
                             android:layout_height="wrap_content">
@@ -146,19 +146,19 @@
 
                     </LinearLayout>
                     <ProgressBar
-                        android:layout_marginTop="15dp"
+                        android:layout_marginTop="@dimen/fifteen"
                         android:id="@+id/progressBarOutOf500"
                         style="?android:attr/progressBarStyleHorizontal"
                         android:layout_width="match_parent"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginEnd="50dp"
-                        android:layout_height="10dp"
+                        android:layout_marginStart="@dimen/ten"
+                        android:layout_marginEnd="@dimen/fifty"
+                        android:layout_height="@dimen/ten"
                         android:max="100"
                         android:progress="0"
                         android:progressDrawable="@android:drawable/progress_horizontal"
                         android:progressTint="@color/azure_radiance" />
                     <LinearLayout
-                        android:layout_margin="10dp"
+                        android:layout_margin="@dimen/ten"
                         android:orientation="horizontal"
                         android:weightSum="1"
                         android:gravity="center"
@@ -166,7 +166,7 @@
                         android:layout_height="wrap_content">
                         <TextView
                             android:layout_weight="0.95"
-                            android:textSize="14sp"
+                            android:textSize="@dimen/fourteen_sp"
                             android:textStyle="bold"
                             android:textColor="@color/black"
                             android:fontFamily="@font/poppins_medium"
@@ -178,11 +178,11 @@
                         <TextView
                             android:layout_weight="0.05"
                             android:textStyle="bold"
-                            android:textSize="16sp"
+                            android:textSize="@dimen/sixteen_sp"
                             android:gravity="center"
                             android:background="@drawable/rank_medal_icon"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp">
+                            android:layout_width="@dimen/fourty"
+                            android:layout_height="@dimen/fourty">
 
                         </TextView>
 

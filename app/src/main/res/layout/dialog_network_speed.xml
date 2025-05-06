@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="20dp"
+    android:padding="@dimen/twenty"
     android:background="@drawable/dialog_background"
     android:orientation="vertical">
 
@@ -10,7 +10,7 @@
         android:id="@+id/titleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Network Speed"
+        android:text="@string/network_speed"
         android:textSize="@dimen/twenty_sp"
         android:textStyle="bold"
         android:textColor="@color/black"
@@ -22,7 +22,7 @@
         android:id="@+id/downloadSpeedText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Download Speed: --"
+        android:text="@string/download_speed"
         android:textSize="@dimen/fifteen_sp"
         android:textColor="@color/black"
         android:paddingBottom="@dimen/five"/>
@@ -31,7 +31,7 @@
         android:id="@+id/uploadSpeedText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Upload Speed: --"
+        android:text="@string/upload_speed"
         android:textSize="@dimen/fifteen_sp"
         android:textColor="@color/black"
         android:paddingBottom="@dimen/ten"/>
@@ -40,7 +40,7 @@
         android:id="@+id/closeButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Close"
+        android:text="@string/Close"
         android:background="@drawable/button_background"
         android:textColor="@color/white"/>
 </LinearLayout>

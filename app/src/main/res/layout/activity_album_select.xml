@@ -20,7 +20,7 @@
         android:paddingStart="@dimen/five"
         android:paddingEnd="@dimen/five"
         android:numColumns="auto_fit"
-        android:columnWidth="172dp"
+        android:columnWidth="@dimen/one_seventy_two"
         android:horizontalSpacing="@dimen/five"
         android:verticalSpacing="@dimen/five"
         android:gravity="center"

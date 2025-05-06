@@ -162,7 +162,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
 
         appViewModel!!.isStaffLocations?.observe(this) { response ->
             if (response != null && response.status) {
-                binding.rytProgressBar.visibility=View.GONE
+                binding.rytProgressBar.visibility = View.GONE
                 binding.rytNoLocationList.visibility = View.GONE
                 val isStaffLocation = response.data
                 if (isStaffLocation.isNotEmpty()) {
@@ -500,14 +500,14 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
             }
 
             R.id.btnHistory -> {
-                binding.rytProgressBar.visibility=View.GONE
+                binding.rytProgressBar.visibility = View.GONE
                 isLoadYear()
                 isBackgroundChange(binding.btnHistory)
             }
 
             R.id.btnCreate -> {
-                binding.rytProgressBar.visibility=View.VISIBLE
-                binding.rytPresentlayout.visibility=View.GONE
+                binding.rytProgressBar.visibility = View.VISIBLE
+                binding.rytPresentlayout.visibility = View.GONE
                 isBackgroundChange(binding.btnCreate)
                 val filter = IntentFilter(LocationManager.PROVIDERS_CHANGED_ACTION).apply {
                     addAction(Intent.ACTION_PROVIDER_CHANGED) // Optional extra compatibility
@@ -582,26 +582,27 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
                     // Success
                     Log.d("BiometricAuth", "Authentication succeeded")
                     Constant.showLoading(this@MarkYourAttendance)
-                    isPunchAttendance()                 }
+                    isPunchAttendance()
+                }
 
                 override fun onAuthenticationFailed() {
                     super.onAuthenticationFailed()
 
                     // Failed attempt
                     Log.d("BiometricAuth", "Authentication failed")
-                    Toast.makeText(applicationContext, "Authentication failed", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, "Authentication failed", Toast.LENGTH_SHORT)
+                        .show()
                 }
             })
 
         val promptInfo = PromptInfo.Builder()
             .setTitle(resources.getString(R.string.biometric_authentications))
             .setSubtitle(resources.getString(R.string.Mark_attendance_biometric_credential))
-            .setNegativeButtonText(resources.getString(R.string.cancel)) // Clicking this triggers onAuthenticationError
+            .setNegativeButtonText(resources.getString(R.string.Cancel)) // Clicking this triggers onAuthenticationError
             .build()
 
         biometricPrompt?.authenticate(promptInfo)
     }
-
 
 
     private fun againAuthenticatePopup() {

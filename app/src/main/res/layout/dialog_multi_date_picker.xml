@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
-        android:paddingVertical="8dp">
+        android:paddingVertical="@dimen/eight">
 
         <TextView
             android:layout_width="0dp"
@@ -60,7 +60,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
@@ -71,7 +71,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
@@ -82,7 +82,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
@@ -93,7 +93,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
@@ -104,7 +104,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
@@ -115,7 +115,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
@@ -143,7 +143,7 @@
         android:gravity="center"
         android:padding="@dimen/ten"
         android:textSize="@dimen/thirteen_sp"
-        android:text="Confirm"
+        android:text="@string/lblConfirm"
         android:textColor="@color/black" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>
