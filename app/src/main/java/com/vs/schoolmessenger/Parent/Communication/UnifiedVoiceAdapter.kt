@@ -132,7 +132,7 @@ class UnifiedVoiceAdapter(
             listener: VoiceClickListener,
             adapter: UnifiedVoiceAdapter
         ) {
-            if (data.type.equals("VOICE")) {
+            if (data.type.equals(Constant.VOICE)) {
                 rlaVoice.visibility = View.VISIBLE
                 rlaText.visibility = View.GONE
 
@@ -288,7 +288,7 @@ class UnifiedVoiceAdapter(
         private fun formatTime(milliseconds: Int): String {
             val seconds = (milliseconds / 1000) % 60
             val minutes = (milliseconds / (1000 * 60)) % 60
-            return String.format("%02d:%02d", minutes, seconds)
+            return String.format(Constant.dateForMate, minutes, seconds)
         }
 
         private fun getAudioDuration(audioUrl: String, callback: (Int) -> Unit) {

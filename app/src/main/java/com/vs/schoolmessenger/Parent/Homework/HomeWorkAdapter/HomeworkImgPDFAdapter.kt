@@ -19,6 +19,7 @@ import com.google.gson.Gson
 import com.vs.schoolmessenger.Parent.Homework.FullScreenViewerActivity
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
 
 class HomeworkImgPDFAdapter(
     private var GetFilePathDetailsData: ArrayList<GetFilePathDetails>?,
@@ -70,7 +71,7 @@ class HomeworkImgPDFAdapter(
 
             Log.d("GetFileDetails", data.toString())
             when (data?.type?.uppercase()) {
-                "IMAGE" -> {
+                Constant.IMAGE -> {
                     // Load the real image using Glide
                     Glide.with(context)
                         .load(data.path) // Your image URL
@@ -82,17 +83,17 @@ class HomeworkImgPDFAdapter(
                     WebViewThumbnail.visibility=View.GONE
 
                 }
-                "PDF" -> {ImgOrDocumentType.setBackgroundResource(R.drawable.hw_pdf_img)
+                Constant.PDF -> {ImgOrDocumentType.setBackgroundResource(R.drawable.hw_pdf_img)
                     openDocumentInWebView(data.path)
 
                 }
 
-                "DOC", "DOCX" ->{
+                Constant.DOC, Constant.DOCX ->{
                     ImgOrDocumentType.setBackgroundResource(R.drawable.microsoft_word_img)
                     openDocumentInWebView(data.path)
 
                 }
-                "TXT" -> {
+                Constant.TXT -> {
                     ImgOrDocumentType.setBackgroundResource(R.drawable.txt_file_img)
                     openDocumentInWebView(data.path)
 
@@ -102,10 +103,10 @@ class HomeworkImgPDFAdapter(
                 val selectedItem = adapter.GetFilePathDetailsData!![position]
                 val context = itemView.context
 
-                if (selectedItem.type.equals("IMAGE", ignoreCase = true)) {
+                if (selectedItem.type.equals(Constant.IMAGE, ignoreCase = true)) {
                     // Filter only image items
                     val imageList = adapter.GetFilePathDetailsData!!.filter {
-                        it.type.equals("IMAGE", ignoreCase = true)
+                        it.type.equals(Constant.IMAGE, ignoreCase = true)
                     }
 
                     val selectedImageIndex = imageList.indexOfFirst { it.path == selectedItem.path }
@@ -114,8 +115,8 @@ class HomeworkImgPDFAdapter(
                     val intent = Intent(context, FullScreenViewerActivity::class.java)
                     val dataJson = Gson().toJson(imageList)
                     Log.d("JsonImageList",dataJson.toString())
-                    intent.putExtra("data", dataJson)
-                    intent.putExtra("position", selectedImageIndex)
+                    intent.putExtra(Constant.data, dataJson)
+                    intent.putExtra(Constant.position, selectedImageIndex)
                     context.startActivity(intent)
                 }
             }
@@ -125,8 +126,8 @@ class HomeworkImgPDFAdapter(
                 Log.d("HomeworkPDFAdapter,Document Clicked!","HomeworkPDFAdapter,Document Clicked!")
                     // Open document viewer (PDF, DOCX, etc.)
                     val intent = Intent(context, FullScreenViewerActivity::class.java)
-                    intent.putExtra("SelectedDocumentPath", selectedItem.path)
-                    intent.putExtra("SelectedDocumentType", selectedItem.type)
+                    intent.putExtra(Constant.SelectedDocumentPath, selectedItem.path)
+                    intent.putExtra(Constant.SelectedDocumentType, selectedItem.type)
                     context.startActivity(intent)
 
             }

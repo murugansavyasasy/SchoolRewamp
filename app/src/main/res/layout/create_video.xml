@@ -27,7 +27,7 @@
             android:layout_marginStart="@dimen/ten"
             android:text="@string/UploadVideo"
             android:textColor="@color/black"
-            android:textSize="@dimen/twenty"
+            android:textSize="@dimen/twenty_sp"
             android:textStyle="bold" />
     </LinearLayout>
 

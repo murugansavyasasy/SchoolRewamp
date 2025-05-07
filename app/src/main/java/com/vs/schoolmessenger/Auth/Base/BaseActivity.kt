@@ -585,12 +585,12 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
     private fun zoomOutToZoomIn(imageView: ImageView, duration: Long = 500) {
         // Create ObjectAnimators for scaling down
-        val scaleDownX = ObjectAnimator.ofFloat(imageView, "scaleX", 0.7f) // Zoom out to 70%
-        val scaleDownY = ObjectAnimator.ofFloat(imageView, "scaleY", 0.7f) // Zoom out to 70%
+        val scaleDownX = ObjectAnimator.ofFloat(imageView, Constant.scaleX, 0.7f) // Zoom out to 70%
+        val scaleDownY = ObjectAnimator.ofFloat(imageView, Constant.scaleY, 0.7f) // Zoom out to 70%
 
         // Create ObjectAnimators for scaling up
-        val scaleUpX = ObjectAnimator.ofFloat(imageView, "scaleX", 1f) // Zoom back to 100%
-        val scaleUpY = ObjectAnimator.ofFloat(imageView, "scaleY", 1f) // Zoom back to 100%
+        val scaleUpX = ObjectAnimator.ofFloat(imageView, Constant.scaleX, 1f) // Zoom back to 100%
+        val scaleUpY = ObjectAnimator.ofFloat(imageView, Constant.scaleY, 1f) // Zoom back to 100%
 
         // Set durations for the animations
         scaleDownX.duration = duration / 2
@@ -667,7 +667,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         val timePickerDialog = TimePickerDialog(
             context,
             { _, selectedHour, selectedMinute ->
-                val amPm = if (selectedHour < 12) "AM" else "PM"
+                val amPm = if (selectedHour < 12) Constant.AM else Constant.PM
                 val hourIn12Format =
                     if (selectedHour == 0) 12 else if (selectedHour > 12) selectedHour - 12 else selectedHour
                 listener.onTimeSelected(hourIn12Format, selectedMinute, amPm)
@@ -704,10 +704,10 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
     fun changeDateFormat(inputDate: String): String {
         // Define the current format of the input date
-        val inputFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val inputFormat = SimpleDateFormat(Constant.dd_MM_yyyy, Locale.getDefault())
 
         // Define the desired output format
-        val outputFormat = SimpleDateFormat("EEE dd MMM, yyyy", Locale.getDefault())
+        val outputFormat = SimpleDateFormat(Constant.EEE_dd_MMM_yyyy, Locale.getDefault())
 
         // Parse the input date and reformat it
         val date = inputFormat.parse(inputDate)
@@ -735,7 +735,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
         val hours = (1..12).map { it.toString() }
         val minutes = (0..59).map { it.toString().padStart(2, '0') }
-        val ampm = listOf("AM", "PM")
+        val ampm = listOf(Constant.AM, Constant.PM)
 
         // Get the current time
         val calendar = Calendar.getInstance()
@@ -783,23 +783,23 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         dialog.show()
     }
 
-    fun validateTimeWithAmPmLegacy(fromTime: String, toTime: String): String {
-        val timeFormat = SimpleDateFormat("hh:mm a") // 12-hour format with AM/PM
-        val fromDate = timeFormat.parse(fromTime)
-        val toDate = timeFormat.parse(toTime)
-
-        return when {
-            fromDate == toDate -> {
-                "The 'to time' is equal to the 'from time'. Please select a valid time."
-            }
-
-            toDate!!.before(fromDate) -> {
-                "The 'to time' is before the 'from time'. Please select a valid time."
-            }
-
-            else -> {
-                "The 'to time' is valid."
-            }
-        }
-    }
+//    fun validateTimeWithAmPmLegacy(fromTime: String, toTime: String): String {
+//        val timeFormat = SimpleDateFormat(Constant.hh_mm_a) // 12-hour format with AM/PM
+//        val fromDate = timeFormat.parse(fromTime)
+//        val toDate = timeFormat.parse(toTime)
+//
+//        return when {
+//            fromDate == toDate -> {
+//                resources.getString(R.string.The_time_equal_Please_validtime)
+//            }
+//
+//            toDate!!.before(fromDate) -> {
+//                resources.getString(R.string.The_time_before_Please_validtime)
+//            }
+//
+//            else -> {
+//                resources.getString(R.string.The_time_is_valid)
+//            }
+//        }
+//    }
 }

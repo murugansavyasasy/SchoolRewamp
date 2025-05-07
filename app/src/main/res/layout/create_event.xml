@@ -28,7 +28,7 @@
             android:layout_marginStart="@dimen/ten"
             android:text="@string/CreateEvent"
             android:textColor="@color/black"
-            android:textSize="@dimen/twenty"
+            android:textSize="@dimen/twenty_sp"
             android:textStyle="bold" />
 
 
@@ -162,7 +162,7 @@
                 android:layout_below="@+id/lblLocation"
                 android:layout_marginTop="@dimen/fifteen"
                 android:background="@drawable/bg_edittext_view_line"
-                android:hint="eg. Chennai"
+                android:hint="@string/eg_chennai"
                 android:paddingBottom="@dimen/ten"
                 android:inputType="text"
                 android:fontFamily="@font/poppins_regular"
@@ -188,7 +188,7 @@
                 android:layout_below="@+id/lblEventTitle"
                 android:layout_marginTop="@dimen/fifteen"
                 android:background="@drawable/bg_edittext_view_line"
-                android:hint="eg. Yoga event"
+                android:hint="@string/eg_yoga_event"
                 android:paddingBottom="@dimen/ten"
                 android:inputType="text"
                 android:textColor="@color/black"
@@ -484,7 +484,7 @@
 
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="1dp"
+                            android:layout_height="@dimen/one"
                             android:layout_alignParentBottom="true"
                             android:layout_marginStart="@dimen/sixty"
                             android:background="@color/grey" />
@@ -608,7 +608,7 @@
 
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="1dp"
+                            android:layout_height="@dimen/one"
                             android:layout_alignParentBottom="true"
                             android:layout_marginStart="@dimen/sixty"
                             android:background="@color/grey" />

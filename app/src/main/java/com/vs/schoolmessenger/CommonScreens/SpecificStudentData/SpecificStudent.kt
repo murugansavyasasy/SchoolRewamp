@@ -46,7 +46,6 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
     private var isStudentList: List<NameAndIds> = listOf()
 
 
-
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
@@ -54,17 +53,17 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.rytSend.setOnClickListener(this)
 
-        binding.toolbarLayout.lblParentToolBar.text = "Students"
+        binding.toolbarLayout.lblParentToolBar.text = resources.getString(R.string.Students)
         binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
         binding.toolbarLayout.cbSelect.visibility = View.VISIBLE
         binding.toolbarLayout.rytFilter.visibility = View.GONE
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
 
-        val isSelectedId = intent.getStringArrayListExtra("isSelectedId") ?: arrayListOf()
-        isAcademicYearId = intent.getIntExtra("isAcademicYearId", -1)
-        isCurrentAcademicYear = intent.getBooleanExtra("isCurrentAcademicYear", false)
-        isAcademicYear = intent.getStringExtra("lblAcademicYear")
+        val isSelectedId = intent.getStringArrayListExtra(Constant.isSelectedId) ?: arrayListOf()
+        isAcademicYearId = intent.getIntExtra(Constant.isAcademicYearId, -1)
+        isCurrentAcademicYear = intent.getBooleanExtra(Constant.isCurrentAcademicYear, false)
+        isAcademicYear = intent.getStringExtra(Constant.lblAcademicYear)
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
         isGetStudentList(isSelectedId, isAcademicYearId)
@@ -94,13 +93,13 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
         appViewModel!!.isVoiceSend?.observe(this) { response ->
             Constant.hideLoading(this@SpecificStudent)
             if (response != null && response.status) {
-                Constant.showTopAlertPopup(response.message, Constant.isCommunication,this)
+                Constant.showTopAlertPopup(response.message, Constant.isCommunication, this)
             }
         }
         appViewModel!!.isSendText?.observe(this) { response ->
             Constant.hideLoading(this@SpecificStudent)
             if (response != null && response.status) {
-                Constant.showTopAlertPopup(response.message, Constant.isCommunication,this)
+                Constant.showTopAlertPopup(response.message, Constant.isCommunication, this)
 
             }
         }
@@ -136,14 +135,14 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
 
     private fun isStudentData() {
         binding.rcySpecificStudent.layoutManager = LinearLayoutManager(this)
-            mAdapter =
-                SpecificStudentAdapter(
-                    isStudentData,
-                    this,
-                    this,
-                    Constant.isShimmerViewDisable
-                )
-            binding.rcySpecificStudent.adapter = mAdapter
+        mAdapter =
+            SpecificStudentAdapter(
+                isStudentData,
+                this,
+                this,
+                Constant.isShimmerViewDisable
+            )
+        binding.rcySpecificStudent.adapter = mAdapter
 
     }
 
@@ -300,25 +299,25 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                     var isAcademicYearNote: String? = null
                     if (!isCurrentAcademicYear) {
                         isAcademicYearNote =
-                            "NOTE : This message is addressed to student in " + isAcademicYear + " which is not the communication academic year. Do you want to proceed?"
+                            resources.getString(R.string.NOTE_message_addressed) + isAcademicYear + resources.getString(R.string.which_communication_academic)
                     } else {
-                        isAcademicYearNote = "Are you sure want to send this message?"
+                        isAcademicYearNote = resources.getString(R.string.are_you_sure_want_to_send_this_message)
                     }
 
                     if (Constant.isClickType == 3) {
                         showSendConfirmationDialog(
-                            "Selected target : " + selectedIds.size.toString() +" Student (s)",
+                            resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + resources.getString(R.string.Student_s),
                             isAcademicYearNote.toString()
                         )
                     } else {
                         showSendConfirmationDialog(
-                            "Selected target : " + selectedIds.size.toString()+" Student (s)",
+                            resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + resources.getString(R.string.Student_s),
                             isAcademicYearNote.toString()
                         )
                     }
                 } else {
                     Constant.showValidationAlertPopup(
-                        "Please select at least one student to send the message.",
+                        resources.getString(R.string.Please_select_least_student),
                         this
                     )
 

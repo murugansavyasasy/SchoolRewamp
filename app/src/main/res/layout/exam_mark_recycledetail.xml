@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
-    android:padding="10dp"
+    android:padding="@dimen/ten"
     android:layout_height="wrap_content">
 
     <LinearLayout
@@ -19,8 +19,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="0dp"
             android:layout_weight="0.25"
-            android:text="Subject Name"
-            android:textSize="13sp"
+            android:text="@string/subject_name"
+            android:textSize="@dimen/thirteen_sp"
             android:textColor="@color/black"
             android:fontFamily="@font/poppins_medium"
             android:textStyle="bold">
@@ -33,7 +33,7 @@
             android:layout_weight="0.80"
             android:text="80 /100"
             android:textStyle="bold"
-            android:textSize="13sp"
+            android:textSize="@dimen/thirteen_sp"
             android:textColor="@color/black"
             android:fontFamily="@font/poppins_medium">
         </TextView>
@@ -46,15 +46,15 @@
         android:weightSum="1"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="@dimen/five"
         android:layout_height="wrap_content">
         <ProgressBar
             android:layout_weight="0.9"
             android:id="@+id/progressBarOutOf100"
             style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="0dp"
-            android:layout_marginStart="10dp"
-            android:layout_height="10dp"
+            android:layout_width="@dimen/zero"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_height="@dimen/ten"
             android:max="100"
             android:progress="0"
             android:progressDrawable="@android:drawable/progress_horizontal"
@@ -62,16 +62,16 @@
         <ImageView
             android:layout_weight="0.1"
             android:src="@drawable/arrow_down_round"
-            android:layout_width="20dp"
-            android:layout_height="20dp">
+            android:layout_width="@dimen/twenty"
+            android:layout_height="@dimen/twenty">
         </ImageView>
 
     </LinearLayout>
     <LinearLayout
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="@dimen/five"
         android:layout_width="match_parent"
         android:background="@color/iron"
-        android:layout_height="2dp">
+        android:layout_height="@dimen/two">
     </LinearLayout>
 
 

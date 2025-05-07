@@ -3,15 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="10dp"
-    android:layout_marginVertical="7dp">
+    android:layout_marginHorizontal="@dimen/ten"
+    android:layout_marginVertical="@dimen/seven">
 
     <RelativeLayout
         android:id="@+id/rytParentCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/rect_shadow_white"
-        android:paddingBottom="0dp"
+        android:paddingBottom="@dimen/zero"
         app:layout_constraintTop_toTopOf="parent">
 
         <!--        <LinearLayout-->
@@ -23,7 +23,7 @@
 
         <LinearLayout
             android:id="@+id/lnrDate"
-            android:layout_width="80dp"
+            android:layout_width="@dimen/eighty"
             android:layout_height="match_parent"
             android:layout_alignBottom="@id/rytDetails"
             android:layout_marginBottom="@dimen/eight"
@@ -39,10 +39,10 @@
                 android:layout_marginTop="@dimen/twenty"
                 android:background="@color/clr_month_blue"
                 android:gravity="center"
-                android:padding="10dp"
+                android:padding="@dimen/ten"
                 android:text="April"
                 android:textColor="@color/white"
-                android:textSize="15dp"
+                android:textSize="@dimen/fifteen_sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -51,10 +51,10 @@
                 android:layout_height="wrap_content"
                 android:background="@color/light_sky_blue5"
                 android:gravity="center"
-                android:padding="5dp"
+                android:padding="@dimen/five"
                 android:text="1"
                 android:textColor="@color/black"
-                android:textSize="20dp"
+                android:textSize="@dimen/twenty_sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -63,10 +63,10 @@
                 android:layout_height="match_parent"
                 android:background="@color/light_sky_blue5"
                 android:gravity="center"
-                android:padding="5dp"
+                android:padding="@dimen/five"
                 android:text="Monday"
                 android:textColor="@color/black"
-                android:textSize="13dp" />
+                android:textSize="@dimen/thirteen_sp" />
 
         </LinearLayout>
 
@@ -75,21 +75,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="-5dp"
+            android:layout_marginTop="@dimen/minus_five"
             android:background="@drawable/btn_green"
-            android:paddingHorizontal="5dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="5dp"
+            android:paddingHorizontal="@dimen/five"
+            android:paddingTop="@dimen/ten"
+            android:paddingBottom="@dimen/five"
             android:text="@string/present"
             android:textColor="@color/white"
-            android:textSize="12dp" />
+            android:textSize="@dimen/twele_sp" />
 
 
         <RelativeLayout
             android:id="@+id/rytDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/ten"
             android:layout_toStartOf="@+id/imgPunchHistory"
             android:layout_toEndOf="@+id/lnrDate">
@@ -113,7 +113,7 @@
                 android:layout_below="@+id/lblStaffName"
                 android:text=""
                 android:textColor="@color/black"
-                android:textSize="13dp" />
+                android:textSize="@dimen/thirteen_sp" />
 
             <RelativeLayout
                 android:id="@+id/rytCheckInTime"
@@ -125,10 +125,10 @@
                     android:id="@+id/lblCheckInTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="@dimen/five"
                     android:text="First in - 9:30 am"
                     android:textColor="@color/black"
-                    android:textSize="13dp"
+                    android:textSize="@dimen/thirteen_sp"
                     android:textStyle="normal"
                     android:visibility="visible" />
 
@@ -140,7 +140,7 @@
                     android:layout_marginTop="5dp"
                     android:text="First in - 9:30 am"
                     android:textColor="@color/black"
-                    android:textSize="13dp"
+                    android:textSize="@dimen/thirteen_sp"
                     android:textStyle="normal"
                     android:visibility="visible" />
 
@@ -151,7 +151,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rytCheckInTime"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/five"
                 android:layout_marginBottom="@dimen/twenty"
                 android:text=""
                 android:textColor="@color/black"
@@ -162,11 +162,11 @@
 
         <ImageView
             android:id="@+id/imgPunchHistory"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="@dimen/ten"
             android:src="@drawable/rightarrrow" />
 
 

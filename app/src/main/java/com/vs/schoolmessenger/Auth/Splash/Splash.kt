@@ -31,8 +31,8 @@ import com.vs.schoolmessenger.Auth.OTP.OTP
 import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.Auth
-import com.vs.schoolmessenger.Repository.RequestKeys
 import com.vs.schoolmessenger.Repository.RestClient
 import com.vs.schoolmessenger.Utils.AppSignatureHelper
 import com.vs.schoolmessenger.Utils.ChangeLanguage
@@ -61,7 +61,7 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
         if (result.resultCode != Activity.RESULT_OK) {
             Snackbar.make(
                 findViewById(android.R.id.content),
-                "Update failed!",
+                resources.getString(R.string.Update_failed),
                 Snackbar.LENGTH_LONG
             ).show()
         }
@@ -254,7 +254,7 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
                     super.onAuthenticationSucceeded(result)
                     Toast.makeText(
                         applicationContext,
-                        "Authentication Successful",
+                        resources.getString(R.string.Authentication_Successful),
                         Toast.LENGTH_LONG
                     ).show()
 
@@ -274,15 +274,15 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
 
                 override fun onAuthenticationFailed() {
                     super.onAuthenticationFailed()
-                    Toast.makeText(applicationContext, "Authentication Failed", Toast.LENGTH_LONG)
+                    Toast.makeText(applicationContext, resources.getString(R.string.Authentication_Failed), Toast.LENGTH_LONG)
                         .show()
                 }
             })
 
         val promptInfo = BiometricPrompt.PromptInfo.Builder()
-            .setTitle("Biometric Authentication")
-            .setSubtitle("Use your fingerprint or face to authenticate")
-            .setNegativeButtonText("Cancel")
+            .setTitle(resources.getString(R.string.biometric_authentications))
+            .setSubtitle(resources.getString(R.string.fingerprint_authenticate))
+            .setNegativeButtonText(resources.getString(R.string.Cancel))
             .build()
 
         biometricPrompt.authenticate(promptInfo);
@@ -325,20 +325,20 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
         val jsonObject = JsonObject()
         val isSecureId = Constant.getAndroidSecureId(this@Splash)
         val isMobileNumber = SharedPreference.getMobileNumber(this)
-        jsonObject.addProperty(RequestKeys.Req_mobile_number, isMobileNumber)
-        jsonObject.addProperty(RequestKeys.Req_device_type, Constant.isDeviceType)
-        jsonObject.addProperty(RequestKeys.Req_secure_id, isSecureId)
+        jsonObject.addProperty(APIKeyNames.Req_mobile_number, isMobileNumber)
+        jsonObject.addProperty(APIKeyNames.Req_device_type, Constant.isDeviceType)
+        jsonObject.addProperty(APIKeyNames.Req_secure_id, isSecureId)
         val isPassWord = SharedPreference.getPassWord(this)
-        jsonObject.addProperty(RequestKeys.Req_password, isPassWord)
+        jsonObject.addProperty(APIKeyNames.Req_password, isPassWord)
         Log.d("jsonObject", jsonObject.toString())
         authViewModel!!.isValidateUser(jsonObject, this)
     }
 
     private fun isVersionCheck() {
         val jsonObject = JsonObject()
-        jsonObject.addProperty(RequestKeys.Req_device_type, Constant.isDeviceType)
-        jsonObject.addProperty(RequestKeys.Req_version_code, Constant.isVersionId)
-        jsonObject.addProperty(RequestKeys.Req_country_id, SharedPreference.getCountryId(this))
+        jsonObject.addProperty(APIKeyNames.Req_device_type, Constant.isDeviceType)
+        jsonObject.addProperty(APIKeyNames.Req_version_code, Constant.isVersionId)
+        jsonObject.addProperty(APIKeyNames.Req_country_id, SharedPreference.getCountryId(this))
         authViewModel!!.isVersionCheck(jsonObject, this)
     }
 

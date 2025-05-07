@@ -1,19 +1,12 @@
 package com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass
 
 import com.google.gson.annotations.SerializedName
-import com.vs.schoolmessenger.Parent.Communication.VoiceData
-import com.vs.schoolmessenger.Repository.ResponseKeys
+import com.vs.schoolmessenger.Repository.APIKeyNames
 
 data class GetHomeworkData(
-//    @SerializedName(ResponseKeys.status)
-//    val status :Boolean,
-//    @SerializedName(ResponseKeys.message)
-//    val message :String,
-//    @SerializedName(ResponseKeys.data)
-//    val data: ArrayList<GetDateWiseHomeworkData>
 
-    @SerializedName(ResponseKeys.status) val status: Boolean,
-@SerializedName(ResponseKeys.message) val message: String,
-@SerializedName(ResponseKeys.data) val data: List<GetDateWiseHomeworkData>
+    @SerializedName(APIKeyNames.status) val status: Boolean,
+    @SerializedName(APIKeyNames.message) val message: String,
+    @SerializedName(APIKeyNames.data) val data: List<GetDateWiseHomeworkData>
 
 )

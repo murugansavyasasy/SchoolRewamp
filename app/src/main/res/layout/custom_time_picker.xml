@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:paddingBottom="@dimen/eight"
-            android:text="Select Time"
+            android:text="@string/select_time"
             android:layout_centerHorizontal="true"
             android:textColor="@color/dark_blue_and_green_"
             android:textSize="@dimen/fifteen_sp"
@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.7"
                 android:gravity="center"
-                android:text="Hour"
+                android:text="@string/hour"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/fifteen_sp"
                 android:textStyle="bold" />
@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.6"
                 android:gravity="center"
-                android:text="Minute"
+                android:text="@string/minute"
                 android:textSize="@dimen/fifteen_sp"
                 android:textColor="@color/colorPrimary"
                 android:textStyle="bold" />

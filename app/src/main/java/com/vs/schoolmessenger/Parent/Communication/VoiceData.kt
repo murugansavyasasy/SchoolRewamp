@@ -1,18 +1,18 @@
 package com.vs.schoolmessenger.Parent.Communication
 
 import com.google.gson.annotations.SerializedName
-import com.vs.schoolmessenger.Repository.ResponseKeys
+import com.vs.schoolmessenger.Repository.APIKeyNames
 
 data class VoiceData(
-    @SerializedName(ResponseKeys.type) val type: String?,
-    @SerializedName(ResponseKeys.id) val id: String?,
-    @SerializedName(ResponseKeys.content) val content: String?,
-    @SerializedName(ResponseKeys.title) var title: String?,
-    @SerializedName(ResponseKeys.date) val date: String?,
-    @SerializedName(ResponseKeys.time) var time: String?,
-    @SerializedName(ResponseKeys.subject) var subject: String?,
-    @SerializedName(ResponseKeys.is_unread) var is_unread: Boolean? = null,
-    @SerializedName(ResponseKeys.is_archive) var is_archive: Boolean? = null
+    @SerializedName(APIKeyNames.type) val type: String?,
+    @SerializedName(APIKeyNames.id) val id: String?,
+    @SerializedName(APIKeyNames.content) val content: String?,
+    @SerializedName(APIKeyNames.title) var title: String?,
+    @SerializedName(APIKeyNames.date) val date: String?,
+    @SerializedName(APIKeyNames.time) var time: String?,
+    @SerializedName(APIKeyNames.subject) var subject: String?,
+    @SerializedName(APIKeyNames.is_unread) var is_unread: Boolean? = null,
+    @SerializedName(APIKeyNames.is_archive) var is_archive: Boolean? = null
 )
 
 

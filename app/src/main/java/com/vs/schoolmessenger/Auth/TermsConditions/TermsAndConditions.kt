@@ -21,7 +21,7 @@ class TermsAndConditions  : BaseActivity<TermsAndConditionsBinding>(), View.OnCl
         Constant.loadWebView(
             this,
             binding.webView,
-            "https://schoolchimes.com/vs_web/terms_conditions/"
+            Constant.terms_condition
         )
 
     }

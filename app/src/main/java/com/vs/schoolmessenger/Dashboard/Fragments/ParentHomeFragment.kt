@@ -72,8 +72,8 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         childDetails = SharedPreference.getChildDetails(requireActivity())
         userDetails = SharedPreference.getUserDetails(requireActivity())
 
-        binding.lblStudentName.text = "Hello, " + childDetails!!.name
-        binding.lblSchoolName.text =childDetails!!.school_name
+        binding.lblStudentName.text = getString(R.string.Hello) + childDetails!!.name
+        binding.lblSchoolName.text = childDetails!!.school_name
         binding.lblSchoolAddress.text = childDetails!!.student_address
         binding.lblChangeRoll.paintFlags =
             binding.lblChangeRoll.paintFlags or Paint.UNDERLINE_TEXT_FLAG
@@ -82,10 +82,9 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         appViewModel!!.init()
         isDashBoardData()
 
-        if(userDetails!!.is_parent && userDetails!!.is_staff){
+        if (userDetails!!.is_parent && userDetails!!.is_staff) {
             binding.lblChangeRoll.visibility = View.VISIBLE
-        }
-        else{
+        } else {
             if (userDetails!!.child_details.size > 1) {
                 binding.lblChangeRoll.visibility = View.VISIBLE
             } else {
@@ -163,21 +162,21 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         val gridLayoutManager = GridLayoutManager(requireContext(), 3)
 
 //        Constant.executeAfterDelay {
-            val isAdapter = ChildMenuAdapter(
-                requireActivity(), this, isMenuDetails, isAdItem, Constant.isShimmerViewDisable
-            )
+        val isAdapter = ChildMenuAdapter(
+            requireActivity(), this, isMenuDetails, isAdItem, Constant.isShimmerViewDisable
+        )
 //            Log.d("aditems", aditems.size.toString())
-            // Adjust span count again for the updated adapter
-            gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-                override fun getSpanSize(position: Int): Int {
-                    return when (isAdapter.getItemViewType(position)) {
-                        2 -> 3 // TYPE_AD: Span across all 3 columns
-                        else -> 1 // Default: 1 span per item
-                    }
+        // Adjust span count again for the updated adapter
+        gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int {
+                return when (isAdapter.getItemViewType(position)) {
+                    2 -> 3 // TYPE_AD: Span across all 3 columns
+                    else -> 1 // Default: 1 span per item
                 }
             }
-            binding.recyclerViewMenus.layoutManager = gridLayoutManager
-            binding.recyclerViewMenus.adapter = isAdapter
+        }
+        binding.recyclerViewMenus.layoutManager = gridLayoutManager
+        binding.recyclerViewMenus.adapter = isAdapter
 //        }
     }
 
@@ -204,7 +203,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
         Log.d("isToken", childDetails!!.access_token)
         appViewModel!!.isDashBoardData(
-            childDetails!!.access_token, "parent", requireActivity()
+            childDetails!!.access_token, Constant.parent, requireActivity()
         )
     }
 
@@ -274,7 +273,10 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             Constant.M_ATTENDANCE_REPORT -> Intent(requireActivity(), AttendanceReport::class.java)
             Constant.M_LEAVE_REQUEST -> Intent(requireActivity(), LeaveRequest::class.java)
             Constant.M_FEE_DETAILS -> Intent(requireActivity(), FeeDetails::class.java)
-            Constant.M_INTERACTION_WITH_STAFF -> Intent(requireActivity(), InteractionWithStaff::class.java)
+            Constant.M_INTERACTION_WITH_STAFF -> Intent(
+                requireActivity(),
+                InteractionWithStaff::class.java
+            )
 //            15 -> Intent(requireActivity(), OnlineTextBook::class.java)
             Constant.M_ASSIGNMENT -> Intent(requireActivity(), Assignment::class.java)
 //            19 -> Intent(requireActivity(), Attachments::class.java)
@@ -283,7 +285,11 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             Constant.M_LSRW -> Intent(requireActivity(), LSRW::class.java)
             Constant.M_CLASS_TIME_TABLE -> Intent(requireActivity(), TimeTable::class.java)
 //            24 -> Intent(requireActivity(), UserProfile::class.java)
-            Constant.M_CERTIFICATE_REQUEST -> Intent(requireActivity(), CertificateRequest::class.java)
+            Constant.M_CERTIFICATE_REQUEST -> Intent(
+                requireActivity(),
+                CertificateRequest::class.java
+            )
+
             else -> null
         }
         intent?.let { requireActivity().startActivity(it) }

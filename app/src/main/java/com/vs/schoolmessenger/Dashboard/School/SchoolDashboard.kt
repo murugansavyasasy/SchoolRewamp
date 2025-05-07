@@ -13,8 +13,8 @@ import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.Login
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.Auth
-import com.vs.schoolmessenger.Repository.RequestKeys
 import com.vs.schoolmessenger.Utils.ChangeLanguage
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.SchoolDashboardBinding
@@ -86,11 +86,11 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
     private fun isUpdateDeviceToken(token: String) {
         val jsonObject = JsonObject()
         val isSecureId= Constant.getAndroidSecureId(this)
-        jsonObject.addProperty(RequestKeys.Req_mobile_number, Constant.isMobileNumber)
-        jsonObject.addProperty(RequestKeys.Req_device_type, Constant.isDeviceType)
-        jsonObject.addProperty(RequestKeys.Req_device_token, token)
-        jsonObject.addProperty(RequestKeys.Req_secure_id, isSecureId)
-        jsonObject.addProperty(RequestKeys.device_info, Constant.getDeviceDetails(this@SchoolDashboard))
+        jsonObject.addProperty(APIKeyNames.Req_mobile_number, Constant.isMobileNumber)
+        jsonObject.addProperty(APIKeyNames.Req_device_type, Constant.isDeviceType)
+        jsonObject.addProperty(APIKeyNames.Req_device_token, token)
+        jsonObject.addProperty(APIKeyNames.Req_secure_id, isSecureId)
+        jsonObject.addProperty(APIKeyNames.device_info, Constant.getDeviceDetails(this@SchoolDashboard))
         authViewModel!!.isDeviceToken(jsonObject, this)
     }
 

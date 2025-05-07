@@ -89,9 +89,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
 
         isUserDetails = SharedPreference.getUserDetails(this)
 
-        if (SELECTED_SCHOOL_MENU == M_COMMUNICATION || SELECTED_SCHOOL_MENU == M_NOTICEBOARD || SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_SCHEDULE_EXAM_TEST || SELECTED_SCHOOL_MENU == M_EVENTS_HOLIDAYS
-            || SELECTED_SCHOOL_MENU == M_ONLINE_MEETING
-        ) {
+        if (SELECTED_SCHOOL_MENU == M_COMMUNICATION || SELECTED_SCHOOL_MENU == M_NOTICEBOARD || SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_SCHEDULE_EXAM_TEST || SELECTED_SCHOOL_MENU == M_EVENTS_HOLIDAYS || SELECTED_SCHOOL_MENU == M_ONLINE_MEETING) {
             isMultipleSchool = false
             if (Constant.isEmergencyVoiceNoticeBoard!!) {
                 binding.lnrTab.visibility = View.GONE
@@ -199,19 +197,18 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                 if (selectedSchoolIds.isNotEmpty()) {
                     if (Constant.isClickType == 3) {
                         showConfirmationAlert(
-                            "Selected target : " + selectedSchoolIds.size.toString(),
-                            "Are you sure want to send this message?"
+                            resources.getString(R.string.selected_target_1) + selectedSchoolIds.size.toString(),
+                            resources.getString(R.string.are_you_sure_want_to_send_this_message)
                         )
                     } else {
                         showConfirmationAlert(
-                            "Selected target : " + selectedSchoolIds.size.toString(),
-                            "Are you sure want to send this message?"
+                            resources.getString(R.string.selected_target_1) + selectedSchoolIds.size.toString(),
+                            resources.getString(R.string.are_you_sure_want_to_send_this_message)
                         )
                     }
                 } else {
                     Constant.showValidationAlertPopup(
-                        "Please select at least one school to send the message.",
-                        this
+                        resources.getString(R.string.Please_select_least), this
                     )
                 }
             }
@@ -245,9 +242,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         Log.d("SELECTED_SCHOOL_MENU", SELECTED_SCHOOL_MENU.toString())
         SharedPreference.putStaffDetails(this, data)
 
-        if (SELECTED_SCHOOL_MENU == M_COMMUNICATION || SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == M_ASSIGNMENT || SELECTED_SCHOOL_MENU == M_ONLINE_MEETING
-            || SELECTED_SCHOOL_MENU == M_EVENTS_HOLIDAYS || SELECTED_SCHOOL_MENU == M_SCHEDULE_EXAM_TEST
-        ) {
+        if (SELECTED_SCHOOL_MENU == M_COMMUNICATION || SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == M_ASSIGNMENT || SELECTED_SCHOOL_MENU == M_ONLINE_MEETING || SELECTED_SCHOOL_MENU == M_EVENTS_HOLIDAYS || SELECTED_SCHOOL_MENU == M_SCHEDULE_EXAM_TEST) {
             val intent = Intent(this, RecipientActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             startActivity(intent)
@@ -289,15 +284,17 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
     ) {
         val isCountryId = SharedPreference.getCountryId(this)
         isAwsUploadingPreSigned!!.getPreSignedUrl(
-            isFilePath, schoolId, isFileType!!,
-            this, isCountryId!!,
+            isFilePath,
+            schoolId,
+            isFileType!!,
+            this,
+            isCountryId!!,
             true,
             false,
             object : UploadCallback {
                 @RequiresApi(Build.VERSION_CODES.O)
                 override fun onUploadSuccess(
-                    response: String?,
-                    isFileUploaded: String?
+                    response: String?, isFileUploaded: String?
                 ) {
                     voiceSendApi(isFileUploaded)
                     Log.d("isSuccessFullUpload", "isSuccessFullUpload")
@@ -335,10 +332,9 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
     fun showSendConfirmationDialog(isMessage: String) {
         val isTextData = Constant.isTextSendingData
 
-        AlertDialog.Builder(this)
-            .setTitle("Send Confirmation!")
+        AlertDialog.Builder(this).setTitle(resources.getString(R.string.Send_Confirmation))
             .setMessage(isMessage)
-            .setPositiveButton("Yes") { dialog, _ ->
+            .setPositiveButton(resources.getString(R.string.Yes)) { dialog, _ ->
                 Constant.showLoading(this@SchoolList)
 
                 if (Constant.isClickType == 3) {
@@ -360,7 +356,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                         )
                     }
                 }
-            }.setNegativeButton("Cancel") { dialog, _ ->
+            }.setNegativeButton(resources.getString(R.string.Cancel)) { dialog, _ ->
                 dialog.dismiss()
             }.show()
     }

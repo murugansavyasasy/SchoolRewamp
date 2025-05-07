@@ -9,7 +9,7 @@
     <fragment
         android:id="@+id/mapView"
         android:layout_width="match_parent"
-        android:layout_height="400dp" />
+        android:layout_height="@dimen/four_hundred" />
 
     <!-- Driver Info Card -->
     <LinearLayout
@@ -17,26 +17,26 @@
         android:layout_below="@id/mapView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
+        android:padding="@dimen/sixteen"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:background="@android:color/white"
-        android:elevation="4dp"
-        android:layout_marginTop="8dp">
+        android:elevation="@dimen/four"
+        android:layout_marginTop="@dimen/eight">
 
         <ImageView
             android:id="@+id/driverImage"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
+            android:layout_width="@dimen/fifty_six"
+            android:layout_height="@dimen/fifty_six"
             android:src="@drawable/profile"
             android:scaleType="centerCrop"
             android:background="@drawable/circle_background"
-            android:padding="4dp" />
+            android:padding="@dimen/four" />
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="@dimen/twele"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -46,15 +46,15 @@
                 android:layout_height="wrap_content"
                 android:text="John Doe"
                 android:textStyle="bold"
-                android:textSize="16sp"
+                android:textSize="@dimen/sixteen_sp"
                 android:textColor="#000000" />
 
             <TextView
                 android:id="@+id/driverStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Online - Location updating"
-                android:textSize="14sp"
+                android:text="@string/online_location_updating"
+                android:textSize="@dimen/fourteen_sp"
                 android:textColor="#4CAF50" />
         </LinearLayout>
 
@@ -62,7 +62,7 @@
             android:id="@+id/btnToggleStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Go Offline"
+            android:text="@string/go_offline"
             android:backgroundTint="#2196F3"
             android:textColor="@android:color/white" />
     </LinearLayout>

@@ -19,7 +19,6 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.CompoundButton
 import android.widget.ImageView
 import android.widget.PopupWindow
 import android.widget.TextView
@@ -38,7 +37,7 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
-import com.vs.schoolmessenger.Repository.ResponseKeys
+import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.School.MarkYourAttendance.Adapter.PunchHistoryAdapter
 import com.vs.schoolmessenger.School.MarkYourAttendance.Adapter.StaffAttendanceReportAdapter
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchTimingsData
@@ -163,7 +162,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
 
         appViewModel!!.isStaffLocations?.observe(this) { response ->
             if (response != null && response.status) {
-                binding.rytProgressBar.visibility=View.GONE
+                binding.rytProgressBar.visibility = View.GONE
                 binding.rytNoLocationList.visibility = View.GONE
                 val isStaffLocation = response.data
                 if (isStaffLocation.isNotEmpty()) {
@@ -343,10 +342,10 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
     fun isPunchAttendance() {
 
         val jsonObject = JsonObject()
-        jsonObject.addProperty(ResponseKeys.staff_or_student, "staff")
-        jsonObject.addProperty(ResponseKeys.device_id, Constant.getAndroidSecureId(this))
-        jsonObject.addProperty(ResponseKeys.punch_type, 1)
-        jsonObject.addProperty(ResponseKeys.device_model, Constant.getDeviceName())
+        jsonObject.addProperty(APIKeyNames.staff_or_student, "staff")
+        jsonObject.addProperty(APIKeyNames.device_id, Constant.getAndroidSecureId(this))
+        jsonObject.addProperty(APIKeyNames.punch_type, 1)
+        jsonObject.addProperty(APIKeyNames.device_model, Constant.getDeviceName())
 
 
         isAccessToken?.let {
@@ -501,14 +500,14 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
             }
 
             R.id.btnHistory -> {
-                binding.rytProgressBar.visibility=View.GONE
+                binding.rytProgressBar.visibility = View.GONE
                 isLoadYear()
                 isBackgroundChange(binding.btnHistory)
             }
 
             R.id.btnCreate -> {
-                binding.rytProgressBar.visibility=View.VISIBLE
-                binding.rytPresentlayout.visibility=View.GONE
+                binding.rytProgressBar.visibility = View.VISIBLE
+                binding.rytPresentlayout.visibility = View.GONE
                 isBackgroundChange(binding.btnCreate)
                 val filter = IntentFilter(LocationManager.PROVIDERS_CHANGED_ACTION).apply {
                     addAction(Intent.ACTION_PROVIDER_CHANGED) // Optional extra compatibility
@@ -583,26 +582,27 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
                     // Success
                     Log.d("BiometricAuth", "Authentication succeeded")
                     Constant.showLoading(this@MarkYourAttendance)
-                    isPunchAttendance()                 }
+                    isPunchAttendance()
+                }
 
                 override fun onAuthenticationFailed() {
                     super.onAuthenticationFailed()
 
                     // Failed attempt
                     Log.d("BiometricAuth", "Authentication failed")
-                    Toast.makeText(applicationContext, "Authentication failed", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, "Authentication failed", Toast.LENGTH_SHORT)
+                        .show()
                 }
             })
 
         val promptInfo = PromptInfo.Builder()
-            .setTitle(resources.getString(R.string.Biometric_Authentications))
+            .setTitle(resources.getString(R.string.biometric_authentications))
             .setSubtitle(resources.getString(R.string.Mark_attendance_biometric_credential))
-            .setNegativeButtonText(resources.getString(R.string.cancel)) // Clicking this triggers onAuthenticationError
+            .setNegativeButtonText(resources.getString(R.string.Cancel)) // Clicking this triggers onAuthenticationError
             .build()
 
         biometricPrompt?.authenticate(promptInfo)
     }
-
 
 
     private fun againAuthenticatePopup() {

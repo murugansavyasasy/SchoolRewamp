@@ -35,14 +35,14 @@
                 android:layout_marginTop="@dimen/ten"
                 android:text="@string/SeeAll"
                 android:textColor="@color/navi_blue1"
-                android:textSize="@dimen/fifteen"
+                android:textSize="@dimen/fifteen_sp"
                 android:textStyle="normal">
 
             </TextView>
 
             <View
                 android:layout_width="@dimen/sixty"
-                android:layout_height="1dp"
+                android:layout_height="@dimen/one"
                 android:layout_below="@+id/lblSeeMore"
                 android:layout_centerHorizontal="true"
                 android:background="@color/navi_blue1">
@@ -97,7 +97,7 @@
                     android:gravity="center"
                     android:maxLines="1"
                     android:padding="@dimen/five"
-                    android:text="Assignment"
+                    android:text="@string/Assignment"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
                     android:textStyle="bold">
@@ -127,7 +127,7 @@
                     android:gravity="center"
                     android:maxLines="1"
                     android:padding="@dimen/five"
-                    android:text="Leave Request"
+                    android:text="@string/Leave_Request"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
                     android:textStyle="bold">
@@ -159,7 +159,7 @@
                     android:gravity="center"
                     android:maxLines="1"
                     android:padding="@dimen/five"
-                    android:text="Home Work"
+                    android:text="@string/HomeWork"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
                     android:textStyle="bold">

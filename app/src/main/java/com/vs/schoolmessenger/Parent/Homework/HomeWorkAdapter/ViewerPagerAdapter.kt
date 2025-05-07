@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.vs.schoolmessenger.Parent.Homework.FullScreenViewerActivity
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
 
 class ViewerPagerAdapter(
     private val fileList: ArrayList<GetFilePathDetails>,
@@ -25,7 +26,7 @@ class ViewerPagerAdapter(
     override fun onBindViewHolder(holder: PagerViewHolder, position: Int) {
         val file = fileList[position]
         when (file.type.uppercase()) {
-            "IMAGE" -> {
+            Constant.IMAGE -> {
                 Glide.with(context)
                     .load(file.path)
                     .into(holder.imageView)

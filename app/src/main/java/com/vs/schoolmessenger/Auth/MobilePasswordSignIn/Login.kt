@@ -14,8 +14,8 @@ import com.vs.schoolmessenger.Auth.Splash.Splash
 import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.Auth
-import com.vs.schoolmessenger.Repository.RequestKeys
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.LoginBinding
@@ -158,7 +158,7 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener {
     private fun isForgetPassword() {
         val jsonObject = JsonObject()
         jsonObject.addProperty(
-            RequestKeys.Req_mobile_number, binding.txtMobileNumber.text.toString()
+            APIKeyNames.Req_mobile_number, binding.txtMobileNumber.text.toString()
         )
         authViewModel!!.isForgetPassword(jsonObject, this)
     }
@@ -185,12 +185,12 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener {
 
         Constant.isMobileNumber = binding.txtMobileNumber.text.toString()
         jsonObject.addProperty(
-            RequestKeys.Req_mobile_number,
+            APIKeyNames.Req_mobile_number,
             binding.txtMobileNumber.text.toString()
         )
-        jsonObject.addProperty(RequestKeys.Req_device_type, Constant.isDeviceType)
-        jsonObject.addProperty(RequestKeys.Req_secure_id, isSecureId)
-        jsonObject.addProperty(RequestKeys.Req_password, binding.txtPassword.text.toString())
+        jsonObject.addProperty(APIKeyNames.Req_device_type, Constant.isDeviceType)
+        jsonObject.addProperty(APIKeyNames.Req_secure_id, isSecureId)
+        jsonObject.addProperty(APIKeyNames.Req_password, binding.txtPassword.text.toString())
 
         authViewModel!!.isValidateUser(jsonObject, this)
     }
@@ -224,7 +224,7 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener {
             isValidation = true
         } else {
             binding.txtMobileNumber.error =
-                "Enter the " + Constant.country_details!!.mobile_number_length + " digit's mobile number"
+                resources.getString(R.string.Enter_the) + Constant.country_details!!.mobile_number_length + resources.getString(R.string.digit_mobile_number)
             isValidation = false
         }
         return isValidation

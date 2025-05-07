@@ -100,7 +100,7 @@
         <View
             android:id="@+id/view1"
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
+            android:layout_height="@dimen/point_five"
             android:layout_below="@+id/rlaEnglish"
             android:layout_marginStart="@dimen/fifteen"
             android:layout_marginTop="@dimen/ten"
@@ -169,7 +169,7 @@
         <View
             android:id="@+id/view2"
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
+            android:layout_height="@dimen/point_five"
             android:layout_below="@+id/rlaTamil"
             android:layout_marginStart="@dimen/fifteen"
             android:layout_marginTop="@dimen/ten"
@@ -236,7 +236,7 @@
         <View
             android:id="@+id/view3"
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
+            android:layout_height="@dimen/point_five"
             android:layout_below="@+id/rlaThai"
             android:layout_marginStart="@dimen/fifteen"
             android:layout_marginTop="@dimen/ten"
@@ -301,7 +301,7 @@
         <View
             android:id="@+id/view4"
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
+            android:layout_height="@dimen/point_five"
             android:layout_below="@+id/rlaHindi"
             android:layout_marginStart="@dimen/fifteen"
             android:layout_marginTop="@dimen/ten"

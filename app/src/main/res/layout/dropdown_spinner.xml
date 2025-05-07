@@ -4,8 +4,8 @@
     style="@style/Teacher_spinnerDropDownItemStyle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="2dp"
+    android:layout_marginTop="@dimen/two"
     android:maxLines="1"
-    android:padding="10dp"
-    android:textSize="12dp"
+    android:padding="@dimen/ten"
+    android:textSize="@dimen/twele_sp"
     android:textStyle="normal" />

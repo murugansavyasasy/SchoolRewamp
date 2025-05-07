@@ -62,9 +62,11 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
                 binding.lblParent.visibility = View.VISIBLE
                 binding.lblLoginTeacherOrParent.visibility = View.VISIBLE
                 if (staffRole == Constant.isPrincipalRole) {
-                    binding.lblLoginTeacherOrParent.text = "Login As Management"
+                    binding.lblLoginTeacherOrParent.text =
+                        resources.getString(R.string.Login_Management)
                 } else {
-                    binding.lblLoginTeacherOrParent.text = "Login As Student/Parent"
+                    binding.lblLoginTeacherOrParent.text =
+                        resources.getString(R.string.Login_Student_Parent)
                 }
                 isLoadData(true)
             }
@@ -84,7 +86,7 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
             }
 
             else -> {
-                Toast.makeText(this, "Invalid user role", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, resources.getString(R.string.Invalid_role), Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -101,7 +103,7 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
         }
 
         if (isParent) {
-            binding.lblParent.text = "Student/Parent"
+            binding.lblParent.text = resources.getString(R.string.Student_Parent)
         }
 
         binding.btnGo.setOnClickListener {
@@ -113,7 +115,7 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
             } else {
-                Toast.makeText(this, "Staff details not available", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, resources.getString(R.string.Staff_details_available), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -137,7 +139,7 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
                 binding.recyclerViews.layoutManager = LinearLayoutManager(this)
                 binding.recyclerViews.adapter = isStaffDetailAdapter
             } else {
-                Toast.makeText(this, "No staff data found", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, resources.getString(R.string.No_staff_data_ound), Toast.LENGTH_SHORT).show()
             }
         } else {
             val childDetails = userDetails!!.child_details
@@ -146,7 +148,7 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
                 binding.recyclerViews.layoutManager = LinearLayoutManager(this)
                 binding.recyclerViews.adapter = isStudentDetailAdapter
             } else {
-                Toast.makeText(this, "No student data found", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, resources.getString(R.string.No_student_data_found), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -199,7 +201,7 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
     private fun isBackRoundChange(isClickingId: TextView) {
         when (isClickingId) {
             binding.lblParent -> {
-                binding.lblLoginTeacherOrParent.text = "Login As Student/Parent"
+                binding.lblLoginTeacherOrParent.text = resources.getString(R.string.Login_Student_Parent)
                 binding.lblTeacher.background = null
                 binding.lblTeacher.setTextColor(ContextCompat.getColor(this, R.color.dark_blue))
                 binding.btnGo.visibility = View.GONE
@@ -211,7 +213,7 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
             binding.lblTeacher -> {
 
                 if (userDetails!!.staff_role == Constant.isPrincipalRole) {
-                    binding.lblLoginTeacherOrParent.text = "Login As Management"
+                    binding.lblLoginTeacherOrParent.text = resources.getString(R.string.Login_Management)
                 }
                 binding.lblParent.background = null
                 binding.lblParent.setTextColor(ContextCompat.getColor(this, R.color.dark_blue))
@@ -230,8 +232,6 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
                 Constant.isParentChoose = false
 
             }
-
-
         }
         isClickingId.background = ContextCompat.getDrawable(this, R.drawable.bg_blue)
         isClickingId.setTextColor(ContextCompat.getColor(this, R.color.white))

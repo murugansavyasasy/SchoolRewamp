@@ -1,14 +1,14 @@
 package com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass
 
 import com.google.gson.annotations.SerializedName
-import com.vs.schoolmessenger.Repository.ResponseKeys
+import com.vs.schoolmessenger.Repository.APIKeyNames
 
 data class GetHomeworkDetails(
-        @SerializedName(ResponseKeys.title)
+        @SerializedName(APIKeyNames.title)
         val title:String,
-        @SerializedName(ResponseKeys.description)
+        @SerializedName(APIKeyNames.description)
         val description:String,
-        @SerializedName(ResponseKeys.subject_name)
+        @SerializedName(APIKeyNames.subject_name)
         val subject_name:String,
-        @SerializedName(ResponseKeys.file_path)
+        @SerializedName(APIKeyNames.file_path)
         val file_path: ArrayList<GetFilePathDetails>)

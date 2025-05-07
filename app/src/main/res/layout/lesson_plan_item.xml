@@ -48,7 +48,7 @@
                 android:id="@+id/header_values"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/title"
+                android:text="@string/Title"
                 android:textStyle="bold"
                 android:textSize="12sp"
                 android:textColor="@color/black"
