@@ -497,7 +497,7 @@ class AppServices {
 
                 override fun onFailure(call: Call<HomeWorkReportApiResponse?>, t: Throwable) {
                     isGetHomeWorkReport.postValue(null)
-                    t.printStackTrace()
+                    Log.d("t.printStackTrace()",t.printStackTrace().toString())
                 }
             })
     }
