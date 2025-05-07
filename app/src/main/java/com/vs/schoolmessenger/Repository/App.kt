@@ -24,7 +24,7 @@ import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffLocationR
 
 class App(application: Application) : AndroidViewModel(application) {
 
-    private var apiRepositories: AppServices = AppServices() // ✅ Initialize here
+    private var apiRepositories: AppServices = AppServices()
 
 
     var isDashBoardData: LiveData<DashboardResponse?>? = null
