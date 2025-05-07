@@ -272,7 +272,38 @@ object Constant {
     var isVideo="isVideo"
     var isPDF_="isPDF"
     var isImage="isImage"
-
+    var ddMMyyyy="dd-MM-yyyy"
+    var content="content://"
+    var file="file://"
+    var http="http"
+    var packagename="package"
+    var timeForMateWithAMPM="%02d:%02d %s"
+    var yyyyMMdd_HHmmss="yyyyMMdd_HHmmss"
+    var image_star="image/*"
+    var Select_images="Select up to 5 images"
+    var unknown="unknown"
+    var tel="tel:"
+    var mailto="mailto:"
+    var sms="sms:"
+    var manufacturer="manufacturer"
+    var model="model"
+    var device="device"
+    var brand="brand"
+    var hardware="hardware"
+    var product="product"
+    var os_version="os_version"
+    var sdk_int="sdk_int"
+    var app_version="app_version"
+    var Unknown="Unknown"
+    var dd_MMM_yyyy="dd MMM yyyy"
+    var MMMM="MMMM"
+    var EEEE="EEEE"
+    var MMMM_yyyy="MMMM yyyy"
+    var Location_1="Location 1"
+    var Location_2="Location 2"
+    var hasCode="#.##"
+    var VIDEO_URL="VIDEO_URL"
+    var VIDEO_TITLE="VIDEO_TITLE"
 
 
     fun isInternetAvailable(activity: Activity): Boolean {
@@ -311,13 +342,13 @@ object Constant {
 
     fun redirectToDialPad(context: Context, contactNo: String) {
         val intent = Intent(Intent.ACTION_DIAL)
-        intent.data = Uri.parse("tel:" + contactNo) // Replace with the phone number
+        intent.data = Uri.parse(tel + contactNo) // Replace with the phone number
         context.startActivity(intent)
     }
 
     fun redirectToMail(context: Context, mail: String, sub: String, body: String) {
         val intent = Intent(Intent.ACTION_SENDTO).apply {
-            data = Uri.parse("mailto:") // Ensures only email apps handle this
+            data = Uri.parse(mailto) // Ensures only email apps handle this
             putExtra(Intent.EXTRA_EMAIL, arrayOf(mail)) // Recipient email address
             putExtra(Intent.EXTRA_SUBJECT, sub) // Subject
             putExtra(Intent.EXTRA_TEXT, body) // Email body
@@ -333,7 +364,7 @@ object Constant {
 
 
     fun redirectToMessage(context: Context, phoneNumber: String) {
-        val smsUri = Uri.parse("sms:" + phoneNumber)
+        val smsUri = Uri.parse(sms + phoneNumber)
         val intent = Intent(Intent.ACTION_VIEW, smsUri).apply {
             putExtra("", "")
         }
@@ -618,15 +649,15 @@ object Constant {
 
     fun getDeviceDetails(context: Activity): String {
         val deviceDetails = mapOf(
-            "manufacturer" to Build.MANUFACTURER,
-            "model" to Build.MODEL,
-            "device" to Build.DEVICE,
-            "brand" to Build.BRAND,
-            "hardware" to Build.HARDWARE,
-            "product" to Build.PRODUCT,
-            "os_version" to Build.VERSION.RELEASE,
-            "sdk_int" to Build.VERSION.SDK_INT.toString(),
-            "app_version" to getAppVersion(context)
+            manufacturer to Build.MANUFACTURER,
+            model to Build.MODEL,
+            device to Build.DEVICE,
+            brand to Build.BRAND,
+            hardware to Build.HARDWARE,
+            product to Build.PRODUCT,
+            os_version to Build.VERSION.RELEASE,
+            sdk_int to Build.VERSION.SDK_INT.toString(),
+            app_version to getAppVersion(context)
         )
         return deviceDetails.toString()
     }
@@ -635,30 +666,30 @@ object Constant {
     fun getAppVersion(context: Activity): String {
         return try {
             val pInfo = context.packageManager.getPackageInfo(context.packageName, 0)
-            pInfo.versionName ?: "Unknown"
+            pInfo.versionName ?: Unknown
         } catch (e: Exception) {
-            "Unknown"
+            Unknown
         }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun getCurrentTime(): String {
         val currentTime = LocalTime.now()
-        val formatter = DateTimeFormatter.ofPattern("hh:mm a") // or "hh:mm a" for AM/PM
+        val formatter = DateTimeFormatter.ofPattern(hh_mm_a) // or "hh:mm a" for AM/PM
         return currentTime.format(formatter)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun getCurrentDate(): String {
         val currentDate = LocalDate.now()
-        val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy") // or "dd/MM/yyyy", etc.
+        val formatter = DateTimeFormatter.ofPattern(ddMMyyyy) // or "dd/MM/yyyy", etc.
         return currentDate.format(formatter)
     }
 
     fun convertDateTimeFormat(input: String): String {
         return try {
-            val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-            val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+            val inputFormat = SimpleDateFormat(ddMMyyyy, Locale.getDefault())
+            val outputFormat = SimpleDateFormat(dd_MMM_yyyy, Locale.getDefault())
             val date = inputFormat.parse(input)
             outputFormat.format(date!!)
         } catch (e: Exception) {
@@ -668,7 +699,7 @@ object Constant {
     }
 
     fun getTimeAfter20Minutes(): String {
-        val dateFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
+        val dateFormat = SimpleDateFormat(hh_mm_a, Locale.getDefault())
         val calendar = Calendar.getInstance()
         calendar.add(Calendar.MINUTE, 20)
         return dateFormat.format(calendar.time)
@@ -694,14 +725,14 @@ object Constant {
     }
 
     fun getDateDetails(input: String): Triple<String, Int, String> {
-        val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+        val sdf = SimpleDateFormat(ddMMyyyy, Locale.getDefault())
         val date = sdf.parse(input) ?: return Triple("", -1, "")
 
         val calendar = Calendar.getInstance().apply { time = date }
 
-        val month = SimpleDateFormat("MMMM", Locale.getDefault()).format(date) // "April"
+        val month = SimpleDateFormat(MMMM, Locale.getDefault()).format(date) // "April"
         val day = calendar.get(Calendar.DAY_OF_MONTH) // 29
-        val dayOfWeek = SimpleDateFormat("EEEE", Locale.getDefault()).format(date) // "Tuesday"
+        val dayOfWeek = SimpleDateFormat(EEEE, Locale.getDefault()).format(date) // "Tuesday"
 
         return Triple(month, day, dayOfWeek)
     }

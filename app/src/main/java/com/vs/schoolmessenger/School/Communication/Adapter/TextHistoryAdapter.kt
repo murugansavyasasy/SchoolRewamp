@@ -94,11 +94,11 @@ class TextHistoryAdapter(
             if (isExpanded) {
                 // Expand the TextView to show all lines
                 lblContent.maxLines = Int.MAX_VALUE
-                lblSeeMore.text = "See Less" // Change button text to "See Less"
+                lblSeeMore.text =context.getString(R.string.see_less) // Change button text to "See Less"
             } else {
                 // Collapse the TextView to show a maximum of 3 lines
                 lblContent.maxLines = 3
-                lblSeeMore.text = "See More" // Change button text back to "See More"
+                lblSeeMore.text = context.getString(R.string.see_more) // Change button text back to "See More"
             }
         }
 

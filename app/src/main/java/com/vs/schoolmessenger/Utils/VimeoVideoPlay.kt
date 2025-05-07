@@ -45,8 +45,8 @@ class VimeoVideoPlay : BaseActivity<VimeoVideoPlayBinding>(), View.OnClickListen
     override fun setupViews() {
         super.setupViews()
         isToolBarWhiteTheme()
-        val videoUrl = intent.getStringExtra("VIDEO_URL")
-        val videoTitle = intent.getStringExtra("VIDEO_TITLE")
+        val videoUrl = intent.getStringExtra(Constant.VIDEO_URL)
+        val videoTitle = intent.getStringExtra(Constant.VIDEO_TITLE)
 
         binding.imgDownload.setOnClickListener(this)
         binding.imgBack.setOnClickListener(this)
@@ -124,7 +124,7 @@ class VimeoVideoPlay : BaseActivity<VimeoVideoPlayBinding>(), View.OnClickListen
                 downloadVideo(this, finalDownloadUrl)
             } else {
                 runOnUiThread {
-                    Toast.makeText(this, "Video is already downloaded!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.Video_already_downloaded), Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -149,7 +149,7 @@ class VimeoVideoPlay : BaseActivity<VimeoVideoPlayBinding>(), View.OnClickListen
         val alertDialog = AlertDialog.Builder(context)
             .setTitle(title)
             .setMessage(message)
-            .setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
+            .setPositiveButton(getString(R.string.permission_ok)) { dialog, _ -> dialog.dismiss() }
             .create()
         alertDialog.show()
     }
@@ -211,7 +211,7 @@ class VimeoVideoPlay : BaseActivity<VimeoVideoPlayBinding>(), View.OnClickListen
                                 progressDialog.dismiss()
                                 showAlert(
                                     context as Activity,
-                                    "Download successful!",
+                                    getString(R.string.Download_successful),
                                     "File stored in: $VIDEO_FOLDER/video_for_your_school.mp4"
                                 )
                             }
@@ -223,8 +223,8 @@ class VimeoVideoPlay : BaseActivity<VimeoVideoPlayBinding>(), View.OnClickListen
                                     isDownloadFailedShown = true
                                     showAlert(
                                         context as Activity,
-                                        "Download failed.",
-                                        "Please try again later."
+                                        getString(R.string.Download_failed),
+                                        getString(R.string.Please_again_later)
                                     )
                                 }
                             }
@@ -282,14 +282,14 @@ class VimeoVideoPlay : BaseActivity<VimeoVideoPlayBinding>(), View.OnClickListen
         if (requestCode == 100) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // Permission granted
-                Toast.makeText(this, "Permission granted!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.Permission_granted), Toast.LENGTH_SHORT).show()
                 // Call your download function here since permission is granted
                 // downloadVideo()
             } else {
                 // Permission denied
                 Toast.makeText(
                     this,
-                    "Permission denied, cannot download files.",
+                    getString(R.string.Permission_denied_download_files),
                     Toast.LENGTH_SHORT
                 ).show()
             }

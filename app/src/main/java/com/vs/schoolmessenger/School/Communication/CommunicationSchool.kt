@@ -169,7 +169,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         binding.lblStartTime.text = Constant.getCurrentTime()
         binding.lblEndTime.text = Constant.getTimeAfter20Minutes()
 
-        if (isUserDetails!!.staff_role == "p3") {
+        if (isUserDetails!!.staff_role == Constant.isStaffRole) {
             binding.rlaScheduleCall.visibility = View.GONE
         } else {
             binding.rlaScheduleCall.visibility = View.VISIBLE
@@ -273,9 +273,9 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     }
 
     private fun loadTextHistoryData(isTextHistoryDetails: List<TextDetail>) {
-            mTextAdapter =
-                TextHistoryAdapter(isTextHistoryDetails, this, this, Constant.isShimmerViewDisable)
-            binding.rcyHistoryDataVoiceAndText.adapter = mTextAdapter
+        mTextAdapter =
+            TextHistoryAdapter(isTextHistoryDetails, this, this, Constant.isShimmerViewDisable)
+        binding.rcyHistoryDataVoiceAndText.adapter = mTextAdapter
     }
 
     override fun onRequestPermissionsResult(
@@ -316,9 +316,9 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
     private fun showPermissionSettingsDialog() {
         AlertDialog.Builder(this)
-            .setTitle("Permissions Required")
-            .setMessage("Some permissions are permanently denied. Please enable them in app settings to proceed.")
-            .setPositiveButton("OK") { _, _ ->
+            .setTitle(getString(R.string.PermissionsRequired))
+            .setMessage(getString(R.string.permissions_permanently_denied_proceed))
+            .setPositiveButton(getString(R.string.permission_ok)) { _, _ ->
                 openAppSettings()
             }
             .setCancelable(false)
@@ -347,6 +347,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
         }
     }
+
     private fun startRecording() {
         if (checkAndRequestPermissions(this)) {
 
@@ -436,7 +437,11 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     binding.rlaTitle.visibility = View.VISIBLE
 
                 } else {
-                    Toast.makeText(this@CommunicationSchool, "Recording failed", Toast.LENGTH_SHORT)
+                    Toast.makeText(
+                        this@CommunicationSchool,
+                        getString(R.string.Recording_failed),
+                        Toast.LENGTH_SHORT
+                    )
                         .show()
                 }
 
@@ -444,7 +449,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 e.printStackTrace()
                 Toast.makeText(
                     this@CommunicationSchool,
-                    "Failed to stop recording",
+                    getString(R.string.Failed_recording),
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -475,9 +480,12 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             try {
                 val uri = Uri.parse(audioFilePath)
 
-                if (audioFilePath!!.startsWith("content://") || audioFilePath!!.startsWith("file://")) {
+                if (audioFilePath!!.startsWith(Constant.content) || audioFilePath!!.startsWith(
+                        Constant.file
+                    )
+                ) {
                     setDataSource(this@CommunicationSchool, uri)
-                } else if (audioFilePath!!.startsWith("http")) {
+                } else if (audioFilePath!!.startsWith(Constant.http)) {
                     setDataSource(audioFilePath)
                 } else {
                     // Use file path directly
@@ -497,7 +505,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     binding.imgVoicePlay.setImageDrawable(
                         ContextCompat.getDrawable(this@CommunicationSchool, R.drawable.pause_icon)
                     )
-                    binding.lblEndDuration.text ="/ " +totalFormatted
+                    binding.lblEndDuration.text = "/ " + totalFormatted
                 }
 
 
@@ -535,8 +543,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     if (player.isPlaying) {
                         val currentPosition = player.currentPosition
                         val currentFormatted = formatDuration(currentPosition)
-                        Log.d("currentFormatted",currentFormatted.toString())
-                        binding.lblStartDuration.text =  currentFormatted
+                        Log.d("currentFormatted", currentFormatted.toString())
+                        binding.lblStartDuration.text = currentFormatted
                         handler.postDelayed(this, 1000)
                     }
                 }
@@ -548,7 +556,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     private fun formatDuration(durationInMillis: Int): String {
         val minutes = (durationInMillis / 1000) / 60
         val seconds = (durationInMillis / 1000) % 60
-        return String.format("%02d:%02d", minutes, seconds)
+        return String.format(Constant.dateForMate, minutes, seconds)
     }
 
 
@@ -596,7 +604,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     private fun openAppSettings() {
         returnedFromSettings = true
         val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-        intent.data = Uri.fromParts("package", packageName, null)
+        intent.data = Uri.fromParts(Constant.packagename, packageName, null)
         startActivity(intent)
     }
 
@@ -620,8 +628,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         isInitialized = true
         setupViews()
     }
-
-
 
 
     override fun onPause() {
@@ -667,7 +673,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 if (mAdapter != null) {
                     mAdapter!!.releaseMediaPlayer()
                 }
-                binding.lblBackToVoiceMessage.text = "<<Back to compose"
+                binding.lblBackToVoiceMessage.text = getString(R.string.back_to_compose)
 
                 binding.rlaBackRecord.visibility = View.GONE
                 binding.gridViewScheduleCall.visibility = View.GONE
@@ -700,7 +706,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 if (mAdapter != null) {
                     mAdapter!!.releaseMediaPlayer()
                 }
-                binding.lblBackToVoiceMessage.text = "<<Back to compose"
+                binding.lblBackToVoiceMessage.text = getString(R.string.back_to_compose)
 
                 binding.rlaBackRecord.visibility = View.GONE
                 binding.lnrHistoryList.visibility = View.VISIBLE
@@ -732,7 +738,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 if (mAdapter != null) {
                     mAdapter!!.releaseMediaPlayer()
                 }
-                binding.lblBackToVoiceMessage.text = "<<Back to compose"
+                binding.lblBackToVoiceMessage.text = getString(R.string.back_to_compose)
                 binding.rlaBackRecord.visibility = View.GONE
                 binding.lnrHistoryList.visibility = View.VISIBLE
                 binding.rlaMessageFromText.visibility = View.VISIBLE
@@ -776,10 +782,10 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     if (binding.edtContentTextMessage.text.toString() != "") {
                         isGoToRecipient()
                     } else {
-                        Constant.showValidationAlertPopup("Enter title and description", this)
+                        Constant.showValidationAlertPopup(getString(R.string.Enter_title_description), this)
                     }
                 } else {
-                    Constant.showValidationAlertPopup("Enter title and description", this)
+                    Constant.showValidationAlertPopup(getString(R.string.Enter_title_description), this)
                 }
             }
 
@@ -805,10 +811,10 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     if (binding.edtTitle.text.toString() != "") {
                         isGoToRecipient()
                     } else {
-                        Constant.showValidationAlertPopup("Voice and title is required.", this)
+                        Constant.showValidationAlertPopup(getString(R.string.Voice_title_required), this)
                     }
                 } else {
-                    Constant.showValidationAlertPopup("Voice and title is required.", this)
+                    Constant.showValidationAlertPopup(getString(R.string.Voice_title_required), this)
                 }
             }
 
@@ -848,8 +854,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             R.id.imgVoiceRecord -> {
                 stopAudioProgressUpdate()
 //                if (!isRecording) {
-                    Constant.isVoiceType = 1
-                    startRecording()
+                Constant.isVoiceType = 1
+                startRecording()
 //                } else {
 //                    stopRecording()
 //                }
@@ -1149,9 +1155,9 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
 
     private fun loadVoiceData(isVoiceHistoryData: List<VoiceHistoryDetails>) {
-         mAdapter =
-                VoiceHistoryAdapter(isVoiceHistoryData, this, this, Constant.isShimmerViewDisable)
-            binding.rcyHistoryDataVoiceAndText.adapter = mAdapter
+        mAdapter =
+            VoiceHistoryAdapter(isVoiceHistoryData, this, this, Constant.isShimmerViewDisable)
+        binding.rcyHistoryDataVoiceAndText.adapter = mAdapter
     }
 
     override fun onItemClick(data: TextDetail, holder: TextHistoryAdapter.DataViewHolder) {
@@ -1168,8 +1174,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     }
 
     override fun onTimeSelected(hour: Int, minute: Int, amPm: String) {
-        binding.lblStartTime.text = String.format("%02d:%02d %s", hour, minute, amPm)
-        binding.lblEndTime.text = String.format("%02d:%02d %s", hour, minute, amPm)
+        binding.lblStartTime.text = String.format(Constant.timeForMateWithAMPM, hour, minute, amPm)
+        binding.lblEndTime.text = String.format(Constant.timeForMateWithAMPM, hour, minute, amPm)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -1260,13 +1266,13 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     if (binding.SwitchEmergencyVoice.isChecked() == true) {
                         if (durationInMillis > 30000) {
                             mediaPlayer.release()
-                            showDurationLimitDialog("Audio duration must be at least 30 seconds.")
+                            showDurationLimitDialog(getString(R.string.Audio_least_30_seconds))
                             return
                         }
                     } else {
                         if (durationInMillis > 180000) {
                             mediaPlayer.release()
-                            showDurationLimitDialog("Audio duration must be below 3 minutes.")
+                            showDurationLimitDialog(getString(R.string.Audio_below_3_minutes))
                             return
                         }
                     }
@@ -1275,7 +1281,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     mediaPlayer.release()
 
                     val timeStamp =
-                        SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+                        SimpleDateFormat(Constant.yyyyMMdd_HHmmss, Locale.getDefault()).format(Date())
                     var isFileExtension = "mp3"
                     val fileName = "Communication_${timeStamp}.$isFileExtension"
                     isFileName = fileName
@@ -1303,7 +1309,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 } catch (e: Exception) {
                     mediaPlayer.release()
                     e.printStackTrace()
-                    Toast.makeText(this, "Failed to load audio", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.Failed_load_audio), Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -1311,9 +1317,9 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
     private fun showDurationLimitDialog(message: String) {
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("Invalid Duration")
+        builder.setTitle(getString(R.string.Invalid_Duration))
         builder.setMessage(message)
-        builder.setPositiveButton("OK") { dialog, _ ->
+        builder.setPositiveButton(getString(R.string.permission_ok)) { dialog, _ ->
             dialog.dismiss()  // Dismiss the dialog when "OK" is clicked
         }
         builder.setCancelable(false)  // Make the dialog non-cancelable
