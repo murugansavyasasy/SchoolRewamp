@@ -281,7 +281,7 @@ object Constant {
     var yyyyMMdd_HHmmss="yyyyMMdd_HHmmss"
     var image_star="image/*"
     var Select_images="Select up to 5 images"
-    var unknown="unknown"
+    var unknown_="unknown"
     var tel="tel:"
     var mailto="mailto:"
     var sms="sms:"

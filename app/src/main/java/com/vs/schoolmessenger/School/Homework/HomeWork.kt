@@ -411,7 +411,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
     fun getFileExtension(uri: Uri): String {
         val contentResolver = contentResolver
         val type = contentResolver.getType(uri)
-        return type?.substringAfterLast("/") ?: Constant.unknown
+        return type?.substringAfterLast("/") ?: Constant.unknown_
     }
 
     override fun onDateSelected(date: String) {
