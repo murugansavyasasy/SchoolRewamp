@@ -22,7 +22,7 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 
 class HomeworkImgPDFAdapter(
-    private var GetFilePathDetailsData: ArrayList<GetFilePathDetails>?,
+    private var GetFilePathDetailsData: List<GetFilePathDetails>?,
     private var context: Context,
     private var isLoading: Boolean):RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     private val TYPE_SHIMMER = 0

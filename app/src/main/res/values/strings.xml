@@ -445,6 +445,27 @@
     <string name="does_the_school_offer_transportation_services">Does the school offer transportation services?</string>
     <string name="yes_the_school_provides_bus_transportation_for_students_across_various_routes">Yes, the school provides bus transportation for students across various routes.</string>
     <string name="we_offer_sports_music_drama_and_various_clubs_like_science_and_robotics">We offer sports, music, drama, and various clubs like science and robotics.</string>
+
+    <string name="group_name">Group name</string>
+    <string name="employee_id">Employee id :</string>
+    <string name="destination">Destination :</string>
+    <string name="created_on_colon">Created on :</string>
+    <string name="_14_day_money">14 - Day Money</string>
+    <string name="back_guarantee">Back Guarantee.</string>
+    <string name="item_name">Item Name</string>
+    <string name="leave_request_info">Leave Request Info</string>
+    <string name="if_you_re_working_in_a_collaborative_environment_stashing_and_pulling_is_often_the_safest_option_as_it_allows_you_to_integrate_your_work_with_the_latest_changes_without_losing_progress">If you\'re working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.</string>
+    <string name="Class">Class :</string>
+    <string name="update_logo">Update Logo</string>
+    <string name="punch_in">Punch In</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="resend">Resend</string>f
+    <string name="hello">Hello</string>
+    <string name="change_role"><![CDATA[Change Role >]]></string>
+    <string name="happy_to_have_you_with_us">Happy to have you with us!</string>
+    <string name="your_password_has_already_been_created_use_your_credentials_to_log_in_and_access_schoolchimes_for_seamless_school_communication_and_management">Your password has already been created. Use your credentials to log in and access SchoolChimes for seamless school communication and management.</string>
+    <string name="next">Next</string>
+
     <string name="PermissionsRequired">Permissions Required</string>
     <string name="Recording_failed">Recording failed</string>
     <string name="Failed_recording">Failed to stop recording</string>
@@ -465,6 +486,5 @@
     <string name="Permission_granted">Permission granted!</string>
     <string name="Permission_denied_download_files">Permission denied, cannot download files.</string>
     <string name="permissions_permanently_denied_proceed">Some permissions are permanently denied. Please enable them in app settings to proceed.</string>
-
 
 </resources>

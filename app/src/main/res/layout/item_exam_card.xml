@@ -3,15 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="8dp"
-    app:cardCornerRadius="12dp"
-    app:cardElevation="4dp">
+    android:layout_margin="@dimen/eight"
+    app:cardCornerRadius="@dimen/twele"
+    app:cardElevation="@dimen/four">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="12dp"
+        android:padding="@dimen/twele"
         android:gravity="center_horizontal">
 
 
@@ -19,35 +19,35 @@
             android:id="@+id/textExamTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="@dimen/fifteen"
             android:gravity="center"
             android:text="Half Yearly Exam"
             android:textColor="@color/black"
-            android:textSize="17sp"
+            android:textSize="@dimen/seventeen_sp"
             android:textStyle="bold" />
 
         <Button
             android:id="@+id/btnViewMarks"
-            android:layout_width="120dp"
-            android:layout_height="30dp"
+            android:layout_width="@dimen/one_twenty"
+            android:layout_height="@dimen/thirty"
             android:text="@string/view_marks"
             android:textStyle="bold"
             android:textColor="@color/white"
             android:background="@drawable/bg_orange"
-            android:textSize="12sp"
+            android:textSize="@dimen/twele"
             android:gravity="center"
-            android:layout_marginTop="25dp"/>
+            android:layout_marginTop="@dimen/twenty_five"/>
 
         <Button
             android:id="@+id/btnViewProgress"
-            android:layout_width="120dp"
-            android:layout_height="30dp"
+            android:layout_width="@dimen/one_twenty"
+            android:layout_height="@dimen/thirty"
             android:text="@string/view_progress"
             android:textStyle="bold"
             android:textColor="@color/white"
             android:background="@drawable/bg_orange"
-            android:textSize="12sp"
+            android:textSize="@dimen/twele"
             android:gravity="center"
-            android:layout_marginTop="8dp"/>
+            android:layout_marginTop="@dimen/eight"/>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

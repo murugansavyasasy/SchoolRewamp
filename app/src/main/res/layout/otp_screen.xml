@@ -47,7 +47,7 @@
 
                 <EditText
                     android:id="@+id/txtOtp1"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/zero"
                     android:layout_height="@dimen/fourty_five"
                     android:layout_margin="@dimen/five"
                     android:layout_weight="1"
@@ -60,7 +60,7 @@
 
                 <EditText
                     android:id="@+id/txtOtp2"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/zero"
                     android:layout_height="@dimen/fourty_five"
                     android:layout_margin="@dimen/five"
                     android:layout_marginStart="@dimen/five"
@@ -74,7 +74,7 @@
 
                 <EditText
                     android:id="@+id/txtOtp3"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/zero"
                     android:layout_height="@dimen/fourty_five"
                     android:layout_margin="@dimen/five"
                     android:layout_marginStart="@dimen/five"
@@ -89,7 +89,7 @@
 
                 <EditText
                     android:id="@+id/txtOtp4"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/zero"
                     android:layout_height="@dimen/fourty_five"
                     android:layout_margin="@dimen/five"
                     android:layout_marginStart="@dimen/five"
@@ -103,7 +103,7 @@
 
                 <EditText
                     android:id="@+id/txtOtp5"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/zero"
                     android:layout_height="@dimen/fourty_five"
                     android:layout_margin="@dimen/five"
                     android:layout_marginStart="@dimen/five"
@@ -117,7 +117,7 @@
 
                 <EditText
                     android:id="@+id/txtOtp6"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/zero"
                     android:layout_height="@dimen/fourty_five"
                     android:layout_margin="@dimen/five"
                     android:layout_marginStart="@dimen/five"
@@ -165,7 +165,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/fifteen"
                     android:layout_toEndOf="@+id/lblDidNot"
-                    android:text="Resend"
+                    android:text="@string/resend"
                     android:textColor="@color/white"
                     android:textSize="@dimen/fifteen_sp"
                     android:visibility="gone" />

@@ -25,7 +25,7 @@ import me.relex.circleindicator.CircleIndicator
 
 class HomeWorkItemAdapter(
     private var GetHomeworkData: GetDateWiseHomeworkData?,
-    private var HomeDetails: ArrayList<GetHomeworkDetails>?,
+    private var HomeDetails: List<GetHomeworkDetails>?,
     private var context: Context,
     private var isLoading: Boolean,
 

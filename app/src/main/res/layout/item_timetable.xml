@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="30dp">
+        android:layout_marginTop="@dimen/thirty">
         <LinearLayout
             android:id="@+id/time"
             android:layout_width="match_parent"
@@ -18,8 +18,8 @@
             android:gravity="center_vertical">
             <ImageView
                 android:id="@+id/statusImage"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="@dimen/twenty_four"
+                android:layout_height="@dimen/twenty_four"
                 android:src="@drawable/pending"/>
             <TextView
                 android:id="@+id/time_value"
@@ -27,9 +27,9 @@
                 android:layout_height="wrap_content"
                 android:text="08:00 AM"
                 android:textColor="@color/black"
-                android:textSize="18sp"
+                android:textSize="@dimen/eighteen_sp"
                 android:textStyle="bold"
-                android:layout_marginStart="8dp"/>
+                android:layout_marginStart="@dimen/eight"/>
         </LinearLayout>
 
         <LinearLayout
@@ -37,14 +37,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="@dimen/ten">
 
             <ProgressBar
                 android:id="@+id/progressBar"
-                android:layout_width="5dp"
-                android:layout_height="100dp"
+                android:layout_width="@dimen/five"
+                android:layout_height="@dimen/hundred"
                 android:layout_alignParentEnd="true"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="@dimen/ten"
                 android:indeterminate="false"
                 style="@android:style/Widget.ProgressBar.Horizontal"
                 android:progressDrawable="@drawable/vertical_progress"
@@ -55,43 +55,43 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                app:cardCornerRadius="8dp"
+                app:cardCornerRadius="@dimen/eight"
                 android:background="@color/white"
-                android:layout_marginStart="30dp"
-                android:layout_marginEnd="15dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp">
+                android:layout_marginStart="@dimen/thirty"
+                android:layout_marginEnd="@dimen/fifteen"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginBottom="@dimen/ten">
                 <LinearLayout
                     android:id="@+id/subjectname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_marginTop="8dp">
+                    android:layout_marginTop="@dimen/eight">
                     <TextView
                         android:id="@+id/subject_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Tamil"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/sixteen_sp"
                         android:textStyle="bold"
                         android:textColor="@color/black"
-                        android:layout_marginStart="5dp" />
+                        android:layout_marginStart="@dimen/five" />
                     <TextView
                         android:id="@+id/name_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Lakshmanan"
-                        android:textSize="14sp"
+                        android:textSize="@dimen/fourteen_sp"
                         android:textColor="@color/black"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginStart="8dp"/>
+                        android:layout_marginTop="@dimen/eight"
+                        android:layout_marginStart="@dimen/eight"/>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:weightSum="1"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp">
+                        android:layout_marginTop="@dimen/eight"
+                        android:layout_marginBottom="@dimen/eight">
                         <TextView
                             android:id="@+id/total_time"
                             android:layout_width="wrap_content"
@@ -99,8 +99,8 @@
                             android:text="8 AM - 9 AM"
                             android:textColor="@color/black"
                             android:layout_weight=".2"
-                            android:textSize="14sp"
-                            android:layout_marginStart="5dp"/>
+                            android:textSize="@dimen/fourteen_sp"
+                            android:layout_marginStart="@dimen/five"/>
                         <TextView
                             android:id="@+id/duration_value"
                             android:layout_width="wrap_content"
@@ -108,7 +108,7 @@
                             android:text="30 mins"
                             android:textColor="@color/black"
                             android:layout_weight=".8"
-                            android:textSize="14sp"/>
+                            android:textSize="@dimen/fourteen_sp"/>
                     </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>

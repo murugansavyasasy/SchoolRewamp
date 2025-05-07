@@ -51,14 +51,14 @@
         android:layout_marginEnd="@dimen/ten"
         android:layout_marginBottom="@dimen/ten"
         card_view:cardCornerRadius="@dimen/ten"
-        card_view:cardElevation="10dp">
+        card_view:cardElevation="@dimen/ten">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/rect_btn_blue"
             android:gravity="center"
-            android:text="OK"
+            android:text="@string/permission_ok"
             android:textColor="@color/white"
             android:textSize="@dimen/fifteen_sp"
             android:textStyle="bold" />

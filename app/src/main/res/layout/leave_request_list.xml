@@ -67,7 +67,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
-                    android:text="Class :"
+                    android:text="@string/Class"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
                     android:textStyle="bold" />
@@ -100,8 +100,8 @@
                     android:textStyle="bold" />
 
                 <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
+                    android:layout_width="@dimen/sixteen"
+                    android:layout_height="@dimen/sixteen"
                     android:layout_marginStart="@dimen/ninety"
                     android:src="@drawable/exchangearrow">
                 </ImageView>
@@ -113,7 +113,7 @@
                     android:layout_marginStart="120dp"
                     android:text="Apr 2 -2023"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/twele"
+                    android:textSize="@dimen/twele_sp"
                     android:textStyle="bold" />
             </RelativeLayout>
 
@@ -139,8 +139,8 @@
             android:orientation="horizontal">
 
             <RelativeLayout
-                android:layout_width="100dp"
-                android:layout_height="33dp"
+                android:layout_width="@dimen/hundred"
+                android:layout_height="@dimen/thirty_three"
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginEnd="@dimen/twenty"
                 android:layout_weight="0"
@@ -170,8 +170,8 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:layout_width="100dp"
-                android:layout_height="33dp"
+                android:layout_width="@dimen/hundred"
+                android:layout_height="@dimen/thirty_three"
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginEnd="@dimen/twenty"
                 android:layout_weight="0"
@@ -194,7 +194,7 @@
                     android:layout_toEndOf="@+id/imgReject"
                     android:text="@string/reject"
                     android:textColor="@color/white"
-                    android:textSize="13sp"
+                    android:textSize="@dimen/thirteen_sp"
                     android:textStyle="bold">
 
                 </TextView>

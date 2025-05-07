@@ -3,105 +3,105 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="@dimen/sixteen">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:src="@drawable/ad_1"
-        android:textSize="18sp"
+        android:textSize="@dimen/eighteen_sp"
         android:textColor="@android:color/black"/>
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Item Name"
-        android:textSize="18sp"
+        android:text="@string/item_name"
+        android:textSize="@dimen/eighteen_sp"
         android:textColor="@android:color/black"/>
 
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Item Name"
-        android:textSize="18sp"
+        android:text="@string/item_name"
+        android:textSize="@dimen/eighteen_sp"
         android:textColor="@android:color/black"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Item Name"
-        android:textSize="18sp"
-        android:textColor="@android:color/black"/>
-
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Item Name"
-        android:textSize="18sp"
+        android:text="@string/item_name"
+        android:textSize="@dimen/eighteen_sp"
         android:textColor="@android:color/black"/>
 
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Item Name"
-        android:textSize="18sp"
+        android:text="@string/item_name"
+        android:textSize="@dimen/eighteen_sp"
         android:textColor="@android:color/black"/>
 
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Item Name"
-        android:textSize="18sp"
-        android:textColor="@android:color/black"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Item Name"
-        android:textSize="18sp"
-        android:textColor="@android:color/black"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Item Name"
-        android:textSize="18sp"
-        android:textColor="@android:color/black"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Item Name"
-        android:textSize="18sp"
+        android:text="@string/item_name"
+        android:textSize="@dimen/eighteen_sp"
         android:textColor="@android:color/black"/>
 
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Item Name"
-        android:textSize="18sp"
+        android:text="@string/item_name"
+        android:textSize="@dimen/eighteen_sp"
+        android:textColor="@android:color/black"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/item_name"
+        android:textSize="@dimen/eighteen_sp"
+        android:textColor="@android:color/black"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/item_name"
+        android:textSize="@dimen/eighteen_sp"
+        android:textColor="@android:color/black"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/item_name"
+        android:textSize="@dimen/eighteen_sp"
         android:textColor="@android:color/black"/>
 
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Item Name"
-        android:textSize="18sp"
+        android:text="@string/item_name"
+        android:textSize="@dimen/eighteen_sp"
         android:textColor="@android:color/black"/>
 
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Item Name"
-        android:textSize="18sp"
+        android:text="@string/item_name"
+        android:textSize="@dimen/eighteen_sp"
+        android:textColor="@android:color/black"/>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/item_name"
+        android:textSize="@dimen/eighteen_sp"
         android:textColor="@android:color/black"/>
 
 
