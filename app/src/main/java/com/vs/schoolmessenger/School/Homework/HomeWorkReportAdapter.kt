@@ -32,6 +32,7 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.FilePath
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReport
 import com.vs.schoolmessenger.School.InteractionWithStudent.InteractionWithStudentAdapter.ShimmerViewHolder
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 import com.vs.schoolmessenger.Utils.WaveformSeekBar
 import com.vs.schoolmessenger.Utils.fetchVimeoThumbnail
@@ -167,10 +168,10 @@ class HomeWorkReportAdapter(
         ) {
             val filePaths = data.file_path.firstOrNull()
 
-            filePaths?.let {
-                Log.d("pathtype", it.type.toString())
-                when (it.type) {
-                "IMAGE" -> {
+
+            filePaths?.let  {
+            when (filePaths.type) {
+                Constant.IMAGE -> {
                     rlaReportText.visibility = View.VISIBLE
                     lblTitleText.text = data.title
 //                    lblDateText.text = data.date
@@ -182,7 +183,7 @@ class HomeWorkReportAdapter(
                     isSeeMoreVisibility(lblContentText, tvSeeMoreText)
                 }
 
-                "TEXT" -> {
+                Constant.TEXT -> {
                     rlaVoiceReport.visibility = View.VISIBLE
                     lblTitleVoice.text = data.title
                     lblVoiceContent.text = data.description
@@ -219,7 +220,7 @@ class HomeWorkReportAdapter(
                     }
                 }
 
-                "PDF" -> {
+                Constant.PDF -> {
                     rlaReportVideo.visibility = View.VISIBLE
 //                    lblDateVideo.text = data.date
                     lblTitleVideo.text = data.title
@@ -233,7 +234,7 @@ class HomeWorkReportAdapter(
 
                 }
 
-                "isPDF" -> {
+                Constant.isPDF_ -> {
                     rlaPdf.visibility = View.VISIBLE
                     rlaVoiceReport.visibility = View.GONE
                     rlaReportVideo.visibility = View.GONE
@@ -284,7 +285,7 @@ class HomeWorkReportAdapter(
                     }
                 }
 
-                "isImage" -> {
+                Constant.isImage-> {
                     rlaImageReport.visibility = View.VISIBLE
 //                    lblDateImage.text = data.date
                     lblTitleImage.text = data.title
@@ -454,7 +455,7 @@ class HomeWorkReportAdapter(
         private fun formatTime(milliseconds: Int): String {
             val seconds = (milliseconds / 1000) % 60
             val minutes = (milliseconds / (1000 * 60)) % 60
-            return String.format("%02d:%02d", minutes, seconds)
+            return String.format(Constant.dateForMate, minutes, seconds)
         }
 
         // Get audio duration asynchronously

@@ -46,6 +46,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
     override fun getViewBinding(): HomeWorkBinding {
         return HomeWorkBinding.inflate(layoutInflater)
     }
+
     private val PICK_IMAGES_REQUEST = 1
     private val maxImages = 5
     private val selectedImagePaths = mutableListOf<String>()
@@ -111,7 +112,8 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
                 val reorderedList = academicList.sortedByDescending { it.current_academic_year }
                 if (isAcademicYear == reorderedList) return@observe
                 isAcademicYear = reorderedList
-                isValidAcademicYear = isAcademicYear?.any { it.current_academic_year == true } == true
+                isValidAcademicYear =
+                    isAcademicYear?.any { it.current_academic_year == true } == true
                 binding.lblAcademicYear.text = isAcademicYear!![0].year
                 isAcademicYearId = isAcademicYear!![0].id
                 isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
@@ -125,14 +127,14 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
             if (response != null) {
                 isGetStandard = response.data
                 isGetStandard?.size?.let {
-                    if(it >0) {
+                    if (it > 0) {
                         isSectionId = isGetStandard!!.get(0).sections.get(0).id
                         binding.lblStandard.text = isGetStandard!!.get(0).name
                         if (isGetStandard!!.get(0).sections.size > 0) {
                             binding.lblSection.text = isGetStandard!!.get(0).sections.get(0).name
                             isSection = isGetStandard!!.get(0).sections
                         }
-                    }else{
+                    } else {
                         binding.rlaStandard.visibility = View.GONE
                         binding.rlaSection.visibility = View.GONE
                     }
@@ -156,8 +158,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
 
         }
     }
-
-
 
 
     override fun onClick(v: View?) {
@@ -269,7 +269,8 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
             showBottomDialog()
         }
     }
-// -----------------------
+
+    // -----------------------
     private fun canAddMoreFiles(): Boolean {
         return imageList.size < 5
     }
@@ -286,12 +287,12 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
         val title = binding.edtTitle.text.toString().trim()
         val description = binding.edtDescription.text.toString().trim()
         if (title.isEmpty()) {
-            binding.edtTitle.error = "Title is required"
+            binding.edtTitle.error = getString(R.string.Title_required)
             binding.edtTitle.requestFocus()
             return
         }
         if (description.isEmpty()) {
-            binding.edtDescription.error = "Title is required"
+            binding.edtDescription.error = getString(R.string.Title_required)
             binding.edtDescription.requestFocus()
             return
         }
@@ -300,7 +301,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
         intent.putExtra(Constant.section_data, sectionDetails)
         startActivity(intent)
     }
-
 
 
     private fun showBottomDialog() {
@@ -316,7 +316,8 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
             if (canAddMoreFiles()) {
                 pickImagesFromGallery()
             } else {
-                Toast.makeText(this, "You can upload a maximum of 5 files.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.upload_maximum_5_files), Toast.LENGTH_SHORT)
+                    .show()
             }
             dialog.dismiss()
         }
@@ -327,7 +328,8 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
             if (canAddMoreFiles()) {
 //                takePhoto()
             } else {
-                Toast.makeText(this, "You can upload a maximum of 5 files.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.upload_maximum_5_files), Toast.LENGTH_SHORT)
+                    .show()
             }
 
             dialog.dismiss()
@@ -337,7 +339,8 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
             if (canAddMoreFiles()) {
 //                pickDocument()
             } else {
-                Toast.makeText(this, "You can upload a maximum of 5 files.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.upload_maximum_5_files), Toast.LENGTH_SHORT)
+                    .show()
             }
             dialog.dismiss()
         }
@@ -357,10 +360,13 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
 
     private fun pickImagesFromGallery() {
         val intent = Intent()
-        intent.type = "image/*"
+        intent.type = Constant.image_star
         intent.action = Intent.ACTION_GET_CONTENT
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-        startActivityForResult(Intent.createChooser(intent, "Select up to 5 images"), PICK_IMAGES_REQUEST)
+        startActivityForResult(
+            Intent.createChooser(intent, Constant.Select_images),
+            PICK_IMAGES_REQUEST
+        )
 
     }
 
@@ -384,7 +390,9 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
                 }
 
                 if (clipData.itemCount > maxImages) {
-                    Toast.makeText(this, "You can only select up to $maxImages images.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        getString(R.string.You_can_only_select) + maxImages + getString(R.string.images_), Toast.LENGTH_SHORT).show()
                 }
             } else {
                 data?.data?.let { uri ->
@@ -398,6 +406,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
             // Do something with selectedImagePaths and selectedImageFormats
         }
     }
+
     fun getPathFromUri(uri: Uri): String {
         return uri.toString() // Or use ContentResolver if actual file path is needed
     }
@@ -405,7 +414,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
     fun getFileExtension(uri: Uri): String {
         val contentResolver = contentResolver
         val type = contentResolver.getType(uri)
-        return type?.substringAfterLast("/") ?: "unknown"
+        return type?.substringAfterLast("/") ?: Constant.unknown_
     }
 
     override fun onDateSelected(date: String) {
@@ -432,7 +441,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
         isClickingId.setTextColor(ContextCompat.getColor(this, R.color.white))
 
     }
-
 
 
     override fun onItemTextClick(data: HomeWorkReport) {

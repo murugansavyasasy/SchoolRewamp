@@ -7,8 +7,7 @@
     android:layout_marginEnd="@dimen/ten"
     app:cardCornerRadius="@dimen/fifteen"
     android:layout_height="@dimen/one_twenty"
-    android:padding="@dimen/five"
-    >
+    android:padding="@dimen/five">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/Rl_WV_Img"

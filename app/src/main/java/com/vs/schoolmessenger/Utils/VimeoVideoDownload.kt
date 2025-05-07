@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.util
 
 import android.util.Log
 import com.google.gson.JsonParser
+import com.vs.schoolmessenger.Repository.APIKeyNames
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.OkHttpClient
@@ -27,7 +28,7 @@ object VimeoVideoDownload {
         // Create request
         val request = Request.Builder()
             .url("$VIMEO_API_BASE_URL$videoId")
-            .addHeader("Authorization", "Bearer $ACCESS_TOKEN")
+            .addHeader(APIKeyNames.Authorization, APIKeyNames.Bearer + ACCESS_TOKEN)
             .build()
 
         // Send request
@@ -45,10 +46,10 @@ object VimeoVideoDownload {
                         try {
                             // Parse JSON response to extract download links
                             val jsonObject = JsonParser.parseString(jsonResponse).asJsonObject
-                            if (jsonObject.has("download")) {
-                                for (download in jsonObject["download"].asJsonArray) {
-                                    val quality = download.asJsonObject["quality"].asString
-                                    val downloadUrl = download.asJsonObject["link"].asString
+                            if (jsonObject.has(APIKeyNames.download)) {
+                                for (download in jsonObject[APIKeyNames.download].asJsonArray) {
+                                    val quality = download.asJsonObject[APIKeyNames.quality].asString
+                                    val downloadUrl = download.asJsonObject[APIKeyNames.link].asString
 
                                     Log.d("downloadUrl", downloadUrl)
 
