@@ -4,10 +4,9 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.Paint
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
-import android.provider.MediaStore
+import android.os.Build
 import android.util.Log
 import android.view.Gravity
 import android.view.View
@@ -16,10 +15,10 @@ import android.view.Window
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
@@ -28,20 +27,14 @@ import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SectionList.Section
-import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SectionList.SectionListAdapter
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.Standard
-import com.vs.schoolmessenger.CommonScreens.SpecificStudentData.SpecificStudent
-import com.vs.schoolmessenger.CommonScreens.WebView
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.Repository.APIMethods.isGetAcademicYear
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReport
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.OnDateSelectedListener
 import com.vs.schoolmessenger.Utils.SharedPreference
-import com.vs.schoolmessenger.Utils.VimeoVideoPlay
 import com.vs.schoolmessenger.databinding.HomeWorkBinding
-
-
 
 
 class HomeWork : BaseActivity<HomeWorkBinding>(),
@@ -66,13 +59,19 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
     var isAcademicYearId = -1
     var isCurrentAcademicYear = true
     private var isStaffDetails: StaffDetails? = null
+
+    //    var isSection: List<Section>? = null
     var isSection: List<Section>? = null
+
     var isGetStandard: List<Standard>? = null
+    private lateinit var isHomeWorkReportData: List<HomeWorkReport>
 
-    private var itemsSection: List<String> = emptyList()
+    //    private var itemsSection: List<String> = emptyList()
+    var mHomeWorkReportAdapter: HomeWorkReportAdapter? = null
+    var isSectionId = -1
 
 
-
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
         setupToolbar()
@@ -100,6 +99,8 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
             ImagePickingData(R.drawable.pause_icon)
         )
 
+        binding.selectdate.text = Constant.getCurrentDate()
+
         binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
         binding.rcyImages.adapter = ImagePickingAdapter(imageList, this, this)
 
@@ -122,10 +123,36 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
             Constant.hideLoading(this@HomeWork)
             if (response != null) {
                 isGetStandard = response.data
+                isGetStandard?.size?.let {
+                    if(it >0) {
+                        isSectionId = isGetStandard!!.get(0).sections.get(0).id
+                        binding.lblStandard.text = isGetStandard!!.get(0).name
+                        if (isGetStandard!!.get(0).sections.size > 0) {
+                            binding.lblSection.text = isGetStandard!!.get(0).sections.get(0).name
+                            isSection = isGetStandard!!.get(0).sections
+                        }
+                    }else{
+                        binding.rlaStandard.visibility = View.GONE
+                        binding.rlaSection.visibility = View.GONE
+                    }
+                }
             }
         }
 
         isGetAcademicYear()
+
+
+
+
+        appViewModel!!.isGetHomeWorkReport?.observe(this) { response ->
+            if (response != null && response.status) {
+                val isHomeWorkReport = response.data
+                isHomeWorkReportData = isHomeWorkReport
+                loadHomeWorkReportData(isHomeWorkReportData)
+            }
+
+
+        }
     }
 
 
@@ -143,25 +170,26 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
                     binding.rlaStandard, this, isGetStandard
                 ) { selectStandard, position ->
                     binding.lblStandard.text = selectStandard.name
-                    itemsSection = selectStandard.sections?.map { it.name ?: "" } ?: emptyList()
-                    binding.lblSection.text = itemsSection.firstOrNull() ?: ""
-
-
+                    isSection = selectStandard.sections
                     Log.d(
                         "DropdownMenu",
                         "Selected Standard: Name = ${selectStandard.name}, ID = ${selectStandard.id}, Position = $position"
                     )
+                    fetchHomeWorkReportData()
                 }
             }
 
             R.id.rlaSection -> {
-                showDropdownMenuSort(
+                isDropDownLoadDataSection(
                     binding.lblSection,
                     this,
-                    itemsSection
+                    isSection
                 ) { selectedOption ->
-                    binding.lblSection.text = selectedOption
+                    binding.lblSection.text = selectedOption.first
+                    isSectionId = selectedOption.second
+                    fetchHomeWorkReportData()
                 }
+
             }
 
 
@@ -181,7 +209,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
                 binding.rlaHomeWorkReport.visibility = View.VISIBLE
                 binding.rlaHomework.visibility = View.GONE
                 isGetAcademicYear()
-                loadData()
+                fetchHomeWorkReportData()
             }
 
             R.id.btnChooseRecipient -> {
@@ -198,11 +226,35 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
                         "DropdownMenu",
                         "Clicked Academic Year: ID = ${selectedYear.id}, Year = ${selectedYear.year}, Current = ${selectedYear.current_academic_year}"
                     )
+                    fetchHomeWorkReportData()
                 }
+
             }
 
         }
     }
+
+    private fun fetchHomeWorkReportData() {
+        appViewModel?.isGetHomeWorkReport(
+            isAccessToken!!,
+            isSectionId!!,
+            isAcademicYearId,
+            binding.selectdate.text.toString(),
+            this
+        )
+    }
+
+    private fun loadHomeWorkReportData(isHomeWorkReportDetails: List<HomeWorkReport>) {
+        mHomeWorkReportAdapter =
+            HomeWorkReportAdapter(
+                isHomeWorkReportDetails,
+                this,
+                this,
+                Constant.isShimmerViewDisable
+            )
+        binding.rcyHomeWorkReport.adapter = mHomeWorkReportAdapter
+    }
+
 
     private fun isGetStandardSection() {
         Constant.showLoading(this@HomeWork)
@@ -353,12 +405,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
         return type?.substringAfterLast("/") ?: "unknown"
     }
 
-
-
-
-
-
-
     override fun onDateSelected(date: String) {
         binding.selectdate.text = date
     }
@@ -384,81 +430,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
 
     }
 
-    private fun loadData() {
-        isHomeWorkReport = listOf(
-            HomeWorkReport(
-                "Annual Day celebrartions",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                "15 Nov 2024",
-                "isVoice", "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-                ""
-            ),
-            HomeWorkReport(
-                "Annual Day celebrartions",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                "15 Nov 2024",
-                "isPDF", "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
-                ""
-            ),
-            HomeWorkReport(
-                "Annual Day celebrartions",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                "15 Nov 2024",
-                "isImage", "",
-                ""
-            ),
-            HomeWorkReport(
-                "Annual Day celebrartions",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                "15 Nov 2024",
-                "isVoice", "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-                ""
-            ),
-            HomeWorkReport(
-                "Annual Day celebrartions",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                "15 Nov 2024",
-                "isVideo", "https://vimeo.com/76979871", "76979871"
-            ),
-            HomeWorkReport(
-                "Annual Day celebrartions",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                "15 Nov 2024",
-                "isText", "", ""
-            ),
-            HomeWorkReport(
-                "Annual Day celebrartions",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                "15 Nov 2024",
-                "isImage", "", ""
-            ),
-            HomeWorkReport(
-                "Annual Day celebrartions",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                "15 Nov 2024",
-                "isVideo", "https://vimeo.com/76979871", "76979871"
-            ),
-            HomeWorkReport(
-                "Annual Day celebrartions",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-                "15 Nov 2024",
-                "isText", "", ""
-            )
-        )
 
-        mAdapter = HomeWorkReportAdapter(null, this, this, Constant.isShimmerViewShow)
-        binding.rcyHomeWorkReport.layoutManager = LinearLayoutManager(this)
-        binding.rcyHomeWorkReport.adapter = mAdapter
-
-        Constant.executeAfterDelay {
-            // Once data is loaded, stop shimmer and pass the actual data
-            mAdapter =
-                HomeWorkReportAdapter(isHomeWorkReport, this, this, Constant.isShimmerViewDisable)
-            // Set GridLayoutManager (2 columns in this case)
-            binding.rcyHomeWorkReport.adapter = mAdapter
-        }
-
-    }
 
     override fun onItemTextClick(data: HomeWorkReport) {
         TODO("Not yet implemented")
@@ -469,10 +441,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
     }
 
     override fun onItemPDFClick(data: HomeWorkReport) {
-        val intent = Intent(this, WebView::class.java)
-        intent.putExtra("isTitle", data.isTitle)
-        intent.putExtra("isWebLink", data.isLink)
-        startActivity(intent)
+
     }
 
     override fun onItemVoiceClick(data: HomeWorkReport) {
@@ -480,10 +449,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
     }
 
     override fun onItemVideoClick(data: HomeWorkReport) {
-        val intent = Intent(this, VimeoVideoPlay::class.java)
-        val videoUrl = "https://vimeo.com/${data.isVideoId}"
-        intent.putExtra("VIDEO_URL", videoUrl)
-        intent.putExtra("VIDEO_TITLE", data.isTitle)
-        startActivity(intent)
+
     }
 }
