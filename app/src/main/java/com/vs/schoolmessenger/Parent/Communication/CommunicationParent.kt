@@ -295,7 +295,6 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
     private fun checkAndShowNoData(filteredList: List<VoiceData>? = null) {
         val listToCheck = filteredList ?: allVoiceData
         val isEmpty = listToCheck.isEmpty()
-
         binding.txtNoData.visibility = if (isEmpty) View.VISIBLE else View.GONE
         binding.nomessage.visibility = if (isEmpty) View.VISIBLE else View.GONE
         binding.recyclerInitial.visibility = if (isEmpty) View.GONE else View.VISIBLE

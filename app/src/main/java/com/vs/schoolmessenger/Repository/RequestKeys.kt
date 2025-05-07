@@ -38,6 +38,7 @@ object RequestKeys {
     const val section_code = "section_code"
     const val subject_id = "subject_id"
     const val file_path = "file_path"
+    const val type = "type"
     const val url = "url"
 
 

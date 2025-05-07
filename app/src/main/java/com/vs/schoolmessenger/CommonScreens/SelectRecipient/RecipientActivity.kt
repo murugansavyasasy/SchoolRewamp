@@ -870,6 +870,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         description = it.description,
                         subjectId = isSubjectId!!,
                         file_path = "https://api.schoolchimes.com/nodejs/institute/files/AU3394_ABSENT_1743571768546.wav",
+                        type = "IMAGE",
                     )
                     appViewModel!!.isSendHomeWork(isAccessToken!!, jsonObject, this)
                 } ?: run {

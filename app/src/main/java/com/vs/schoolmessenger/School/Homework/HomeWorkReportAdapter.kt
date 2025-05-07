@@ -28,6 +28,8 @@ import com.bumptech.glide.Glide
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.CommonScreens.ImageSliderAdapter
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.FilePath
+import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReport
 import com.vs.schoolmessenger.School.InteractionWithStudent.InteractionWithStudentAdapter.ShimmerViewHolder
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 import com.vs.schoolmessenger.Utils.WaveformSeekBar
@@ -52,12 +54,12 @@ class HomeWorkReportAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-            val shimmerView = ShimmerUtil.wrapWithShimmer(parent,R.layout.homeword_report_item)
+            val shimmerView = ShimmerUtil.wrapWithShimmer(parent,R.layout.homework_school_reportitem)
             ShimmerViewHolder(shimmerView)
         } else {
             val view =
                 LayoutInflater.from(parent.context)
-                    .inflate(R.layout.homeword_report_item, parent, false)
+                    .inflate(R.layout.homework_school_reportitem, parent, false)
             DataViewHolder(view, context) // Pass context to DataViewHolder
         }
     }
@@ -162,13 +164,15 @@ class HomeWorkReportAdapter(
             listener: HomeWorkReportClickListener,
             adapter: HomeWorkReportAdapter
         ) {
+            val filePaths = data.file_path.firstOrNull()
 
-            when (data.isType) {
-                "isText" -> {
+            filePaths?.let  {
+            when (filePaths.type) {
+                "IMAGE" -> {
                     rlaReportText.visibility = View.VISIBLE
-                    lblTitleText.text = data.isTitle
-                    lblDateText.text = data.date
-                    lblContentText.text = data.isDescription
+                    lblTitleText.text = data.title
+//                    lblDateText.text = data.date
+                    lblContentText.text = data.description
                     rlaVoiceReport.visibility = View.GONE
                     rlaReportVideo.visibility = View.GONE
                     rlaImageReport.visibility = View.GONE
@@ -176,11 +180,11 @@ class HomeWorkReportAdapter(
                     isSeeMoreVisibility(lblContentText, tvSeeMoreText)
                 }
 
-                "isVoice" -> {
+                "TEXT" -> {
                     rlaVoiceReport.visibility = View.VISIBLE
-                    lblTitleVoice.text = data.isTitle
-                    lblVoiceContent.text = data.isDescription
-                    lblDateVoice.text = data.date
+                    lblTitleVoice.text = data.title
+                    lblVoiceContent.text = data.description
+//                    lblDateVoice.text = data.date
                     rlaReportText.visibility = View.GONE
                     rlaReportVideo.visibility = View.GONE
                     rlaImageReport.visibility = View.GONE
@@ -188,13 +192,13 @@ class HomeWorkReportAdapter(
                     isSeeMoreVisibility(lblVoiceContent, tvSeeMoreVoice)
 
 
-                    getAudioDuration(data.isLink) { duration ->
+                    getAudioDuration(filePaths.path) { duration ->
                         lblEndDuration.text =
                             formatTime(duration) // Update the TextView with formatted duration
                     }
 
                     imgVoicePlay.setOnClickListener {
-                        isVoiceProgress.visibility=View.VISIBLE
+                        isVoiceProgress.visibility = View.VISIBLE
 
                         if (adapter.currentlyPlayingHolder != null && adapter.currentlyPlayingHolder != this) {
                             adapter.currentlyPlayingHolder?.stopAudioPlayback()
@@ -204,7 +208,7 @@ class HomeWorkReportAdapter(
                             pauseAudio()
                         } else {
                             if (!isPrepared) {
-                                initializeMediaPlayer(data.isLink)
+                                initializeMediaPlayer(filePaths.path)
                             } else {
                                 resumeAudio()
                             }
@@ -213,17 +217,17 @@ class HomeWorkReportAdapter(
                     }
                 }
 
-                "isVideo" -> {
+                "PDF" -> {
                     rlaReportVideo.visibility = View.VISIBLE
-                    lblDateVideo.text = data.date
-                    lblTitleVideo.text = data.isTitle
-                    lblVideoContent.text = data.isDescription
+//                    lblDateVideo.text = data.date
+                    lblTitleVideo.text = data.title
+                    lblVideoContent.text = data.description
                     rlaReportText.visibility = View.GONE
                     rlaVoiceReport.visibility = View.GONE
                     rlaImageReport.visibility = View.GONE
                     rlaPdf.visibility = View.GONE
                     isSeeMoreVisibility(lblVideoContent, tvSeeMoreVideo)
-                    isGetTheThumbnail(data.isVideoId)
+//                    isGetTheThumbnail(data.isVideoId)
 
                 }
 
@@ -234,9 +238,9 @@ class HomeWorkReportAdapter(
                     rlaImageReport.visibility = View.GONE
                     rlaReportText.visibility = View.GONE
 
-                    lblDatePdf.text = data.date
-                    lblTitlePdf.text = data.isTitle
-                    lblPdfContent.text = data.isDescription
+//                    lblDatePdf.text = data.date
+                    lblTitlePdf.text = data.title
+                    lblPdfContent.text = data.description
 
                     isSeeMoreVisibility(lblPdfContent, tvSeeMorePdf)
 
@@ -267,7 +271,7 @@ class HomeWorkReportAdapter(
                         webChromeClient = WebChromeClient()
 
                         // Use Google Drive viewer to load the PDF
-                        loadUrl("https://drive.google.com/viewerng/viewer?embedded=true&url=${data.isLink}")
+                        loadUrl("https://drive.google.com/viewerng/viewer?embedded=true&url=${filePaths.path}")
 
 
                         setOnTouchListener { _, event ->
@@ -281,15 +285,14 @@ class HomeWorkReportAdapter(
 
                 "isImage" -> {
                     rlaImageReport.visibility = View.VISIBLE
-                    lblDateImage.text = data.date
-                    lblTitleImage.text = data.isTitle
-                    lblContentImage.text = data.isDescription
+//                    lblDateImage.text = data.date
+                    lblTitleImage.text = data.title
+                    lblContentImage.text = data.description
                     rlaReportText.visibility = View.GONE
                     rlaVoiceReport.visibility = View.GONE
                     rlaReportVideo.visibility = View.GONE
                     rlaPdf.visibility = View.GONE
                     isSeeMoreVisibility(lblContentImage, tvSeeMoreImage)
-
 
 
 //                    Set up the adapter
@@ -299,7 +302,16 @@ class HomeWorkReportAdapter(
 //                    viewpager.adapter = viewPagerAdapter
 //                    indicator.setViewPager(viewpager)
                 }
+                else -> {
+                    rlaReportText.visibility = View.GONE
+                    rlaVoiceReport.visibility = View.GONE
+                    rlaReportVideo.visibility = View.GONE
+                    rlaImageReport.visibility = View.GONE
+                    rlaPdf.visibility = View.GONE
+                }
             }
+
+        }
 
             imgVideoPlay.setOnClickListener {
                 listener.onItemVideoClick(data)

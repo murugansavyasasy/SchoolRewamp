@@ -16,6 +16,7 @@ import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
+import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchHistoryResponse
@@ -40,6 +41,7 @@ class AppServices {
     var isGetCommmunicationlistload: MutableLiveData<VoiceDataResponse?>
     var isGetVoiceHistory: MutableLiveData<VoiceDetails?>
     var isGetTextHistory: MutableLiveData<TextDetailsResponse?>
+    var isGetHomeWorkReport: MutableLiveData<HomeWorkReportApiResponse?>
     var isSendText: MutableLiveData<TextSendResponse?>
     var isSendHomeWork: MutableLiveData<HomeWorkSendResponse?>
     var isSendVoice: MutableLiveData<TextSendResponse?>
@@ -74,6 +76,7 @@ class AppServices {
         isGetCommmunicationlistload = MutableLiveData()
         isGetVoiceHistory = MutableLiveData()
         isGetTextHistory = MutableLiveData()
+        isGetHomeWorkReport = MutableLiveData()
         isSendText = MutableLiveData()
         isSendHomeWork = MutableLiveData()
         isSendVoice = MutableLiveData()
@@ -247,7 +250,7 @@ class AppServices {
                             if (status) {
                                 isGetStandardSection.postValue(response.body())
                             } else {
-                                isGetStandardSection.postValue(response.body())
+                                isGetStandardSection.postValue(null)
                             }
                         }
                     }
@@ -467,6 +470,42 @@ class AppServices {
 
     val isGetTextHistoryLiveData: LiveData<TextDetailsResponse?>
         get() = isGetTextHistory
+
+
+    fun isGetHomeWorkReport(isToken: String, isSection: Int, isAcademicYearId: Int, isdate: String, activity: Activity)  {
+        RestClient.apiInterfaces.isGetHomeWorkReport(isToken,isSection,isAcademicYearId,isdate)
+            ?.enqueue(object : Callback<HomeWorkReportApiResponse?> {
+                override fun onResponse(
+                    call: Call<HomeWorkReportApiResponse?>,
+                    response: Response<HomeWorkReportApiResponse?>
+                ) {
+                    Log.d(
+                        "isGetCountryList",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isGetHomeWorkReport.postValue(response.body())
+                            } else {
+                                isGetHomeWorkReport.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<HomeWorkReportApiResponse?>, t: Throwable) {
+                    isGetHomeWorkReport.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isGetHomeWorkReportLiveData: LiveData<HomeWorkReportApiResponse?>
+        get() = isGetHomeWorkReport
+
+
 
 
     fun isSendText(isToken: String, jsonObject: JsonObject, activity: Activity) {

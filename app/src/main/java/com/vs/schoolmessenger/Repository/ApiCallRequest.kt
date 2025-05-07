@@ -90,19 +90,28 @@ object ApiCallRequest {
         title: String,
         description: String,
         subjectId: Int,
-        file_path: String
+        file_path: String,
+        type: String
     ): JsonObject {
         val jsonObject = JsonObject()
-        val jsonArray = JsonArray()
-        selectedIds.forEach { jsonArray.add(it) }
+        val sectionArray = JsonArray()
+        selectedIds.forEach { sectionArray.add(it) }
+
+        val filePathArray = JsonArray()
+        val fileObject = JsonObject().apply {
+            addProperty("path", file_path)
+            addProperty("type", type)
+        }
+        filePathArray.add(fileObject)
+
         jsonObject.addProperty(RequestKeys.academic_year_id, isAcademicYearId)
-        jsonObject.add(RequestKeys.section_code, jsonArray)
+        jsonObject.add(RequestKeys.section_code, sectionArray)
         jsonObject.addProperty(RequestKeys.title, title)
         jsonObject.addProperty(RequestKeys.description, description)
-        jsonObject.addProperty(RequestKeys.subject_id, subjectId)
-        jsonObject.addProperty(RequestKeys.file_path, file_path)
-
+        jsonObject.addProperty(RequestKeys.subject_id, subjectId.toString()) // convert to string as per API
+        jsonObject.add("file_path", filePathArray)
 
         return jsonObject
     }
+
 }

@@ -21,6 +21,7 @@ import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
+import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchHistoryResponse
@@ -154,6 +155,14 @@ interface ApiInterfaces {
     fun isGetTextHistory(
         @Header("Authorization") token: String
     ): Call<TextDetailsResponse?>
+
+    @GET(APIMethods.isGetHomeWorkReport)
+    fun isGetHomeWorkReport(
+        @Header("Authorization") token: String,
+        @Query("section_id") isSectionId: Int,
+        @Query("academic_year_id") isAcademicYearId: Int,
+        @Query("date") isdate: String
+    ): Call<HomeWorkReportApiResponse?>
 
 
     @POST(APIMethods.isSendText)

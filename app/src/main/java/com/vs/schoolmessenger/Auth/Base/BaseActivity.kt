@@ -303,6 +303,53 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         }
     }
 
+    fun isDropDownLoadDataSection(
+        anchor: View,
+        activity: Activity,
+        items: List<Section>?, // Pass full list, not just names
+        onItemSelected: (Pair<String, Int>) -> Unit // Return name + ID
+    ) {
+        if (activity.isFinishing || activity.isDestroyed) {
+            Log.e("DropdownMenu", "Activity is not valid for showing the popup.")
+            return
+        }
+
+        val inflater = LayoutInflater.from(anchor.context)
+        val dropdownView = inflater.inflate(R.layout.dropdown_menu, null)
+
+        val popupWindow = PopupWindow(
+            dropdownView,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            true
+        )
+        dimBehind(popupWindow)
+
+        val listView: ListView = dropdownView.findViewById(R.id.dropdownListView)
+
+        // Extract names for UI display
+        val subjectNames = items!!.map { it.name }
+        val adapter = ArrayAdapter(anchor.context, R.layout.dropdown_spinner, subjectNames)
+        listView.adapter = adapter
+
+        listView.setOnItemClickListener { _, _, position, _ ->
+            val selectedSubject = items[position] // Get full SubjectListData object
+            onItemSelected(Pair(selectedSubject.name, selectedSubject.id)) // Pass both name & ID
+            clearDim()
+            popupWindow.dismiss()
+        }
+
+        popupWindow.setOnDismissListener {
+            clearDim()
+        }
+
+        try {
+            popupWindow.showAsDropDown(anchor)
+        } catch (e: Exception) {
+            Log.e("DropdownMenu", "Failed to show dropdown menu", e)
+        }
+    }
+
 
     fun showStandardDropdown(
         anchor: View,
