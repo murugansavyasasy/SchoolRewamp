@@ -201,19 +201,21 @@
 
 
         <RelativeLayout
+            android:id="@+id/rytSearchParent"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/rlaAttendanceReport"
-            android:layout_marginTop="-30dp"
+            android:layout_marginTop="-20dp"
             android:background="@drawable/rounded_top_corners">
 
 
             <RelativeLayout
                 android:id="@+id/rytSearch"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/thirty_five"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/twenty"
-                android:layout_marginTop="@dimen/thirty_five"
+                android:padding="@dimen/five"
+                android:layout_marginTop="@dimen/twenty_five"
                 android:layout_marginEnd="@dimen/twenty"
                 android:background="@drawable/rect_grey"
                 android:visibility="gone">
@@ -229,8 +231,9 @@
                 <EditText
                     android:id="@+id/txtSearchMenu"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_toEndOf="@id/imgSearch"
+                    android:layout_centerVertical="true"
                     android:background="@android:color/transparent"
                     android:hint="@string/lblSearch"
                     android:textColor="@color/black"
@@ -259,8 +262,8 @@
             android:id="@+id/recyclerViewMenus"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/rlaAttendanceReport"
-            android:layout_marginTop="@dimen/five"
+            android:layout_below="@id/rytSearchParent"
+            android:visibility="visible"
             android:background="@color/white"
             tools:listitem="@layout/menu_item_card" />
     </RelativeLayout>

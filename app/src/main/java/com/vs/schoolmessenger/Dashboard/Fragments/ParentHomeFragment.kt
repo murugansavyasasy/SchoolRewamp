@@ -248,7 +248,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             allMenuItems
         } else {
             allMenuItems.filter {
-                it.name.lowercase(Locale.ROOT)?.contains(query) == true
+                it.name.lowercase(Locale.ROOT).contains(query) == true
             }
         }
         isMenuItems.clear()

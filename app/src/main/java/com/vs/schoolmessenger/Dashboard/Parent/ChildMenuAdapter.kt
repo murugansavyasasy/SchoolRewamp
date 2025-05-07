@@ -75,8 +75,8 @@ class ChildMenuAdapter(
     }
 
     fun updateList(newList: List<MenuDetail>) {
-        items.clear()
-        items.addAll(newList) // use a mutable list inside adapter
+        isMenuDetails = emptyList()
+        isMenuDetails=newList
         notifyDataSetChanged()
     }
 

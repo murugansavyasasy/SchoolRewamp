@@ -56,6 +56,7 @@ import com.vs.schoolmessenger.School.StudentReport.StudentReport
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SchoolHomeFragmentBinding
+import java.util.Locale
 import javax.sql.DataSource
 
 
@@ -73,6 +74,8 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     var isAdItem: List<AdItem>? = null
     var isAdsDisplayOptions: AdsDisplayOptions? = null
     var access_token = ""
+    private lateinit var allMenuItems: List<MenuDetail>
+    private val isMenuItems = mutableListOf<MenuDetail>()
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -216,6 +219,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     isDashBoardData = isDashboardResponse
                     isContactDetails = isDashBoardData!![0].contactDetails
                     isMenuDetails = isDashBoardData!![0].menuDetails
+                    allMenuItems=isMenuDetails!!
                     isGetAds()
                 }
             }
@@ -257,7 +261,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                //   filter(s.toString())
+                   filter(s.toString())
             }
         })
 
@@ -298,20 +302,20 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     }
 
 
-//    @SuppressLint("NotifyDataSetChanged")
-//    private fun filter(text: String) {
-//        isMenuDetails.clear()
-//        if (text.isEmpty()) {
-//            isMenuDetails.addAll(items)  // If search is empty, show all items
-//        } else {
-//            for (item in items) {
-//                if (item.title.toLowerCase(Locale.ROOT).contains(text.toLowerCase(Locale.ROOT))) {
-//                    isMenuItems.add(item)  // Add the matching GridItem to filteredList
-//                }
-//            }
-//        }
-//        isMenuAdapter.notifyDataSetChanged()
-//    }
+    @SuppressLint("NotifyDataSetChanged")
+    private fun filter(text: String) {
+        val query = text.lowercase(Locale.ROOT)
+        val filtered = if (query.isEmpty()) {
+            allMenuItems
+        } else {
+            allMenuItems.filter {
+                it.name.lowercase(Locale.ROOT).contains(query) == true
+            }
+        }
+        isMenuItems.clear()
+        isMenuItems.addAll(filtered)
+        isMenuAdapter.updateList(isMenuItems.toList())
+    }
 
     override fun onClick(p0: View?) {
         when (p0?.id) {
@@ -352,14 +356,14 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
     private fun isDashBoardData() {
 
-        val adapter =
+        isMenuAdapter =
             SchoolMenuAdapter(requireActivity(), this, null, null, Constant.isShimmerViewShow)
         val gridLayoutManager = GridLayoutManager(requireContext(), 3)
 
         // Adjust span count for special layout
         gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
-                return when (adapter.getItemViewType(position)) {
+                return when (isMenuAdapter.getItemViewType(position)) {
                     2 -> 3 // TYPE_AD: Span across all 3 columns
                     else -> 1 // Default: 1 span per item
                 }
@@ -367,7 +371,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         }
 
         binding.recyclerViewMenus.layoutManager = gridLayoutManager
-        binding.recyclerViewMenus.adapter = adapter
+        binding.recyclerViewMenus.adapter = isMenuAdapter
 
         appViewModel!!.isDashBoardData(
             access_token, Constant.staff_, requireActivity()
