@@ -218,8 +218,6 @@ interface ApiInterfaces {
     ): Call<GetHomeworkData?>
 
 
-//    @Body request: StatusArchiveModelRequest
-
     @POST(APIMethods.punch_giometric_attendance)
     fun punchGiometricAttendance(
         @Header(APIKeyNames.Authorization) token: String,

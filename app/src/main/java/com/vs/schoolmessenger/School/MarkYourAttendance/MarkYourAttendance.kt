@@ -71,7 +71,6 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
     private lateinit var gpsStatusReceiver: GPSStatusReceiver
     private val locationRequestCode = 1000
     private var biometricPrompt: BiometricPrompt? = null
-
     private var authenticatealertpopupWindow: PopupWindow? = null
     private var enableBiometricPopup: PopupWindow? = null
     private var isStaffDetails: StaffDetails? = null
@@ -91,7 +90,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
         binding.btnPresent.setOnClickListener(this)
         binding.btnCreate.setOnClickListener(this)
         binding.btnHistory.setOnClickListener(this)
-        binding.toolbarLayout.rytAddLocation.visibility = View.VISIBLE
+
         binding.toolbarLayout.lblParentToolBar.text = "Geometric Attendance"
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
         appViewModel = ViewModelProvider(this)[App::class.java]
@@ -99,23 +98,11 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
 
-
-//        val isEnabled = SharedPreference.getBiometricEnabled(this@MarkYourAttendance)
-//        binding.enableSwitch.setChecked(isEnabled!!)
-//        binding.enableSwitch.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView: CompoundButton?, isChecked: Boolean ->
-//            if (isChecked) {
-//                val enabled = SharedPreference.getBiometricEnabled(this@MarkYourAttendance)
-//                if (!enabled!!) {
-//                    enableLocalFingerPrint()
-//                }
-//            } else {
-//                val enabled = SharedPreference.getBiometricEnabled(this@MarkYourAttendance)
-//                if (enabled!!) {
-//                    showFingerPrintDisablepopup()
-//                }
-//            }
-//        })
-
+        if (isStaffDetails!!.biometric_enable) {
+            binding.toolbarLayout.rytAddLocation.visibility = View.VISIBLE
+        } else {
+            binding.toolbarLayout.rytAddLocation.visibility = View.GONE
+        }
         binding.toolbarLayout.rytAddLocation.setOnClickListener {
             val intent = Intent(this@MarkYourAttendance, AddLocationActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
@@ -125,7 +112,6 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
         val biometricManager = BiometricManager.from(this)
         when (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG)) {
             BiometricManager.BIOMETRIC_SUCCESS -> {
-//                binding.rytEnableFingerPrint.visibility = View.VISIBLE
                 ifBiometricAvailable = true
 
                 Log.d(
@@ -189,7 +175,9 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
         appViewModel!!.isStaffAttendanceReport?.observe(this) { response ->
             if (response != null && response.status) {
                 val isStaffReport = response.data
-                isLoadData(isStaffReport)
+                if (isStaffReport.isNotEmpty()) {
+                    isLoadData(isStaffReport)
+                }
             } else {
                 binding.recycleAttendanceReports.visibility = View.GONE
                 binding.lblNoRecords.visibility = View.VISIBLE
@@ -253,9 +241,9 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
                 binding.recycleAttendanceReports.adapter = isStaffAttendanceReportAdapter
             }
         } else {
-            binding.recycleAttendanceReports.visibility = View.GONE
-            binding.lblNoRecords.visibility = View.VISIBLE
-            binding.imgNorecord.visibility = View.VISIBLE
+//            binding.recycleAttendanceReports.visibility = View.GONE
+//            binding.lblNoRecords.visibility = View.VISIBLE
+//            binding.imgNorecord.visibility = View.VISIBLE
         }
     }
 
@@ -317,6 +305,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
                     getCurrentLocation("new")
                 } else {
                     binding.rytGPSRedirect.visibility = View.VISIBLE
+                    binding.rytNoLocationList.visibility = View.GONE
                     binding.rytPresentlayout.visibility = View.GONE
                     binding.rytErrorMessage.visibility = View.GONE
                 }
@@ -346,7 +335,6 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
         jsonObject.addProperty(APIKeyNames.device_id, Constant.getAndroidSecureId(this))
         jsonObject.addProperty(APIKeyNames.punch_type, 1)
         jsonObject.addProperty(APIKeyNames.device_model, Constant.getDeviceName())
-
 
         isAccessToken?.let {
             appViewModel?.punchAttendance(it, jsonObject, this)
@@ -390,6 +378,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
                 getCurrentLocation("new")
             } else {
                 binding.rytGPSRedirect.setVisibility(View.VISIBLE)
+                binding.rytNoLocationList.setVisibility(View.GONE)
                 binding.rytErrorMessage.setVisibility(View.GONE)
                 binding.rytPresentlayout.setVisibility(View.GONE)
             }
@@ -506,6 +495,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
             }
 
             R.id.btnCreate -> {
+
                 binding.rytProgressBar.visibility = View.VISIBLE
                 binding.rytPresentlayout.visibility = View.GONE
                 isBackgroundChange(binding.btnCreate)
@@ -521,7 +511,8 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
     private fun isBackgroundChange(btnClick: TextView) {
         binding.btnCreate.background = null
         binding.btnHistory.background = null
-
+        binding.lblNoRecords.visibility = View.GONE
+        binding.imgNorecord.visibility = View.GONE
         binding.lnrParent.setBackgroundResource(R.drawable.bg_light_blue)
         btnClick.setBackgroundResource(R.drawable.white_bg_radius)
 

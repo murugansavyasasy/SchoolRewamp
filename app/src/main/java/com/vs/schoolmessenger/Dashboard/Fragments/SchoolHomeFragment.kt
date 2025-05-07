@@ -4,7 +4,10 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Paint
+import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -16,6 +19,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.CommonScreens.Ads.AdItem
@@ -51,6 +56,7 @@ import com.vs.schoolmessenger.School.StudentReport.StudentReport
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SchoolHomeFragmentBinding
+import javax.sql.DataSource
 
 
 class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
@@ -99,8 +105,38 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             }
             binding.lblSchoolAddress.text = staffDetails!!.school_address
             binding.lblSchoolAddress.visibility = View.VISIBLE
-            Glide.with(requireActivity()).load(staffDetails!!.school_logo)
+            Glide.with(requireActivity())
+                .load(userDetails!!.staff_details[0].school_logo)
+                .listener(object : RequestListener<Drawable> {
+
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: com.bumptech.glide.request.target.Target<Drawable?>,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        Handler(Looper.getMainLooper()).post {
+                            Glide.with(requireActivity())
+                                .load(R.drawable.school_sample)
+                                .into(binding.imgSchoolLogo)
+                        }
+                        return false
+                    }
+
+
+                    override fun onResourceReady(
+                        resource: Drawable,
+                        model: Any,
+                        target: com.bumptech.glide.request.target.Target<Drawable?>?,
+                        dataSource: com.bumptech.glide.load.DataSource,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        Log.d("Glide", "Image load success")
+                        return false
+                    }
+                })
                 .into(binding.imgSchoolLogo)
+
         } else {
             access_token = userDetails!!.staff_details[0].access_token
             if (userDetails!!.staff_details.size > 1) {
@@ -116,7 +152,35 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     binding.lblSchoolRegionalName.visibility= View.GONE
                 }
                 binding.lblSchoolAddress.text = userDetails!!.staff_details[0].school_address
-                Glide.with(requireActivity()).load(userDetails!!.staff_details[0].school_logo)
+                Glide.with(requireActivity())
+                    .load(userDetails!!.staff_details[0].school_logo)
+                    .listener(object : RequestListener<Drawable> {
+
+                        override fun onLoadFailed(
+                            e: GlideException?,
+                            model: Any?,
+                            target: com.bumptech.glide.request.target.Target<Drawable?>,
+                            isFirstResource: Boolean
+                        ): Boolean {
+                            Handler(Looper.getMainLooper()).post {
+                                Glide.with(requireActivity())
+                                    .load(R.drawable.school_sample)
+                                    .into(binding.imgSchoolLogo)
+                            }
+                            return false
+                        }
+
+                        override fun onResourceReady(
+                            resource: Drawable,
+                            model: Any,
+                            target: com.bumptech.glide.request.target.Target<Drawable?>?,
+                            dataSource: com.bumptech.glide.load.DataSource,
+                            isFirstResource: Boolean
+                        ): Boolean {
+                            Log.d("Glide", "Image load success")
+                            return false
+                        }
+                    })
                     .into(binding.imgSchoolLogo)
             }
         }

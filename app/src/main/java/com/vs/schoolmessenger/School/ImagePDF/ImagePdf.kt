@@ -39,8 +39,8 @@ class ImagePdf : BaseActivity<ImagePdfBinding>(),
         )
 
         // Set up RecyclerView with a GridLayoutManager
-        binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
-        binding.rcyImages.adapter = ImagePickingAdapter(imageList, this, this)
+//        binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
+//        binding.rcyImages.adapter = ImagePickingAdapter(imageList, this, this)
 
 
 
