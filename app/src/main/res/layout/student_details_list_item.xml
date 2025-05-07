@@ -1,409 +1,190 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:shadowColor="#000"
-    android:shadowDx="0"
-    android:layout_marginStart="@dimen/thirty"
-    android:shadowDy="30"
-    android:layout_marginTop="@dimen/thirty"
-    android:layout_marginBottom="@dimen/twenty"
-    android:layout_marginEnd="@dimen/thirty"
-    android:shadowRadius="100"
-    app:cardCornerRadius="@dimen/ten"
-    android:layout_height="wrap_content">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:layout_width="match_parent"
+android:layout_marginStart="@dimen/thirty"
+android:layout_marginTop="@dimen/ten"
+android:id="@+id/rlaStudent"
+android:layout_marginEnd="@dimen/thirty"
+android:background="@drawable/rect_shadow_white"
+android:layout_height="wrap_content">
 
 <RelativeLayout
     android:layout_width="match_parent"
-    android:id="@+id/rlaStudent"
+    android:layout_height="wrap_content"
 
-    android:layout_height="wrap_content">
+    >
 
     <RelativeLayout
+        android:id="@+id/rlaStudentDetails"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="wrap_content">
 
-        >
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imgStudentProfile"
+            android:layout_width="@dimen/hundred"
+            android:layout_height="@dimen/hundred"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/ten"
+            android:scaleType="centerCrop"
+            android:src="@drawable/user_sample"
+            app:shapeAppearanceOverlay="@style/Circular">
+
+        </com.google.android.material.imageview.ShapeableImageView>
+
         <RelativeLayout
-            android:id="@+id/rlaSchoolName"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/system_blue"
-            >
+            android:id="@+id/relative_layout2"
+            android:layout_below="@+id/imgStudentProfile">
 
-            <ImageView
-                android:background="@drawable/white_circle_bg"
-                android:id="@+id/imgSchool"
-                android:layout_width="@dimen/fifty"
-                android:layout_height="@dimen/fifty"
-                android:layout_marginStart="@dimen/ten"
-                android:layout_marginTop="@dimen/ten"
-                android:layout_marginEnd="@dimen/ten"
-                android:layout_marginBottom="@dimen/ten"
-                android:padding="@dimen/five"
-                android:src="@drawable/splash_icon2">
 
-            </ImageView>
-
-            <RelativeLayout
+            <TextView
+                android:id="@+id/lblRegisterNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toEndOf="@+id/imgSchool">
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/ten"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="13sp"
+                style="@style/CustomTextStylePoppinsBold">
+            </TextView>
 
-                <TextView
-                    android:id="@+id/lblSchoolName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/ten"
-                    android:gravity="end"
-                    android:text="Kodaikanal International School"
-                    android:textColor="@color/black"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:textSize="@dimen/thirteen_sp">
-
-                </TextView>
-
-
-                <TextView
-                    android:id="@+id/lblSchoolRegionalName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/ten"
-                    android:layout_below="@+id/lblSchoolName"
-                    android:gravity="end"
-                    android:visibility="gone"
-                    android:text=""
-                    android:textColor="@color/black"
-                    style="@style/CustomTextStylePoppinsMedium"
-                    android:textSize="@dimen/thirteen_sp">
-
-                </TextView>
-
-                <TextView
-                    android:id="@+id/lblSchoolPlace"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/lblSchoolRegionalName"
-                    android:layout_marginEnd="@dimen/ten"
-                    android:gravity="end"
-                    android:text="Kodaikanal"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"
-                    style="@style/CustomTextStylePoppinsRegular">
-                </TextView>
-
-            </RelativeLayout>
-
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:id="@+id/squarearrow"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/ten"
+                android:src="@drawable/rightsquarearrow">
+            </ImageView>
 
         </RelativeLayout>
 
-        <LinearLayout
-            android:layout_below="@+id/rlaSchoolName"
-            android:id="@+id/rlaStudentDetails"
+
+        <TextView
+            android:id="@+id/lblName"
             android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/relative_layout2"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/eight"
+            android:gravity="center"
+            android:text="Sathish"
+            android:textColor="@color/black"
+            style="@style/CustomTextStylePoppinsBold"
+            android:textSize="@dimen/thirteen_sp">
+        </TextView>
 
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/imgStudentProfile"
-                android:layout_marginStart="@dimen/ten"
-                android:layout_width="@dimen/fifty"
-                android:layout_height="@dimen/fifty"
-                android:scaleType="centerCrop"
-                android:layout_gravity="center"
-                android:src="@drawable/user_sample"
-                app:shapeAppearanceOverlay="@style/Circular">
+        <TextView
+            android:id="@+id/lblClass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblName"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/eight"
+            android:gravity="center"
+            android:text="IIX - A"
+            android:textColor="@color/black"
+            android:layout_marginBottom="@dimen/ten"
+            android:textSize="@dimen/thirteen_sp"
+            style="@style/CustomTextStylePoppinsRegular">
 
-            </com.google.android.material.imageview.ShapeableImageView>
+        </TextView>
 
-            <LinearLayout
-                android:layout_marginStart="@dimen/twenty"
+        <TextView
+            android:id="@+id/lblClassTeacher"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblClass"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/eight"
+            android:gravity="center"
+            android:text="Sathish"
+            android:textColor="@color/black"
+            android:layout_marginBottom="@dimen/ten"
+            style="@style/CustomTextStylePoppinsRegular"
+            android:textSize="@dimen/thirteen_sp">
+
+        </TextView>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlaSchoolName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rlaStudentDetails"
+        android:background="@drawable/bg_school_name_rounded">
+
+        <ImageView
+            android:id="@+id/imgSchool"
+            android:layout_width="@dimen/fifty"
+            android:layout_height="@dimen/fifty"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/ten"
+            android:layout_marginBottom="@dimen/ten"
+            android:padding="@dimen/five"
+            android:src="@drawable/splash_icon2">
+
+        </ImageView>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/imgSchool">
+
+            <TextView
+                android:id="@+id/lblSchoolName"
                 android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/ten"
+                android:gravity="end"
+                android:text="Kodaikanal International School"
+                android:textColor="@color/black"
+                style="@style/CustomTextStylePoppinsBold"
+                android:textSize="@dimen/thirteen_sp">
 
-                <TextView
-                    android:id="@+id/lblName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/eight"
-                    android:text="Sathish"
-                    android:textStyle="bold"
-                    android:layout_marginEnd="@dimen/ten"
-                    android:textColor="@color/black"
-                    style="@style/CustomTextStylePoppinsRegular"
-                    android:textSize="@dimen/thirteen_sp">
-                </TextView>
+            </TextView>
 
 
+            <TextView
+                android:id="@+id/lblSchoolRegionalName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/ten"
+                android:layout_below="@+id/lblSchoolName"
+                android:gravity="end"
+                android:visibility="gone"
+                android:text=""
+                android:textColor="@color/black"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:textSize="@dimen/thirteen_sp">
 
-                <LinearLayout
-                    android:weightSum="1"
-                    android:layout_marginTop="@dimen/ten"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:gravity="center"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/relative_layout2"
-                    >
+            </TextView>
 
+            <TextView
+                android:id="@+id/lblSchoolPlace"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblSchoolRegionalName"
+                android:layout_marginEnd="@dimen/ten"
+                android:gravity="end"
+                android:text="Kodaikanal"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"
+                style="@style/CustomTextStylePoppinsRegular">
+            </TextView>
 
-                    <TextView
-                        android:layout_weight="0.9"
-                        android:id="@+id/lblRegisterNumber"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:textStyle="bold"
-                        android:textSize="13sp"
-                        style="@style/CustomTextStylePoppinsRegular">
-                    </TextView>
-
-                    <ImageView
-                        android:layout_weight="0.1"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:id="@+id/squarearrow"
-                        android:layout_marginEnd="@dimen/ten"
-                        android:src="@drawable/rightarrrow">
-                    </ImageView>
-
-                </LinearLayout>
-
-
-
-
-                <TextView
-                    android:id="@+id/lblClass"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/eight"
-                    android:text="IIX - A"
-                    android:layout_marginEnd="@dimen/ten"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:layout_marginBottom="@dimen/ten"
-                    android:textSize="@dimen/thirteen_sp"
-                    style="@style/CustomTextStylePoppinsRegular">
-
-                </TextView>
-
-                <TextView
-                    android:visibility="gone"
-                    android:id="@+id/lblClassTeacher"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/lblClass"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="@dimen/eight"
-                    android:gravity="center"
-                    android:text="Sathish"
-                    android:textColor="@color/black"
-                    android:layout_marginBottom="@dimen/ten"
-                    style="@style/CustomTextStylePoppinsRegular"
-                    android:textSize="@dimen/thirteen_sp">
-
-                </TextView>
-
-            </LinearLayout>
-            </LinearLayout>
-
-
+        </RelativeLayout>
 
 
     </RelativeLayout>
+
+
 </RelativeLayout>
-</androidx.cardview.widget.CardView>
-
-<!--Exixting design-->
-<!--    <?xml version="1.0" encoding="utf-8"?>-->
-<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--android:layout_width="match_parent"-->
-<!--android:layout_marginStart="@dimen/thirty"-->
-<!--android:layout_marginTop="@dimen/ten"-->
-<!--android:id="@+id/rlaStudent"-->
-<!--android:layout_marginEnd="@dimen/thirty"-->
-<!--android:background="@drawable/rect_shadow_white"-->
-<!--android:layout_height="wrap_content">-->
-
-<!--<RelativeLayout-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="wrap_content"-->
-
-<!--    >-->
-
-<!--    <RelativeLayout-->
-<!--        android:id="@+id/rlaStudentDetails"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content">-->
-
-<!--        <com.google.android.material.imageview.ShapeableImageView-->
-<!--            android:id="@+id/imgStudentProfile"-->
-<!--            android:layout_width="@dimen/hundred"-->
-<!--            android:layout_height="@dimen/hundred"-->
-<!--            android:layout_centerHorizontal="true"-->
-<!--            android:layout_marginTop="@dimen/ten"-->
-<!--            android:scaleType="centerCrop"-->
-<!--            android:src="@drawable/user_sample"-->
-<!--            app:shapeAppearanceOverlay="@style/Circular">-->
-
-<!--        </com.google.android.material.imageview.ShapeableImageView>-->
-
-<!--        <RelativeLayout-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:id="@+id/relative_layout2"-->
-<!--            android:layout_below="@+id/imgStudentProfile">-->
-
-
-<!--            <TextView-->
-<!--                android:id="@+id/lblRegisterNumber"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_centerHorizontal="true"-->
-<!--                android:layout_marginTop="@dimen/ten"-->
-<!--                android:gravity="center"-->
-<!--                android:textColor="@color/black"-->
-<!--                android:textSize="13sp"-->
-<!--                style="@style/CustomTextStylePoppinsBold">-->
-<!--            </TextView>-->
-
-<!--            <ImageView-->
-<!--                android:layout_width="20dp"-->
-<!--                android:layout_height="20dp"-->
-<!--                android:id="@+id/squarearrow"-->
-<!--                android:layout_alignParentEnd="true"-->
-<!--                android:layout_marginTop="@dimen/ten"-->
-<!--                android:layout_marginEnd="@dimen/ten"-->
-<!--                android:src="@drawable/rightsquarearrow">-->
-<!--            </ImageView>-->
-
-<!--        </RelativeLayout>-->
-
-
-<!--        <TextView-->
-<!--            android:id="@+id/lblName"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_below="@+id/relative_layout2"-->
-<!--            android:layout_centerHorizontal="true"-->
-<!--            android:layout_marginTop="@dimen/eight"-->
-<!--            android:gravity="center"-->
-<!--            android:text="Sathish"-->
-<!--            android:textColor="@color/black"-->
-<!--            style="@style/CustomTextStylePoppinsBold"-->
-<!--            android:textSize="@dimen/thirteen_sp">-->
-<!--        </TextView>-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/lblClass"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_below="@+id/lblName"-->
-<!--            android:layout_centerHorizontal="true"-->
-<!--            android:layout_marginTop="@dimen/eight"-->
-<!--            android:gravity="center"-->
-<!--            android:text="IIX - A"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:layout_marginBottom="@dimen/ten"-->
-<!--            android:textSize="@dimen/thirteen_sp"-->
-<!--            style="@style/CustomTextStylePoppinsRegular">-->
-
-<!--        </TextView>-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/lblClassTeacher"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_below="@+id/lblClass"-->
-<!--            android:layout_centerHorizontal="true"-->
-<!--            android:layout_marginTop="@dimen/eight"-->
-<!--            android:gravity="center"-->
-<!--            android:text="Sathish"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:layout_marginBottom="@dimen/ten"-->
-<!--            style="@style/CustomTextStylePoppinsRegular"-->
-<!--            android:textSize="@dimen/thirteen_sp">-->
-
-<!--        </TextView>-->
-
-<!--    </RelativeLayout>-->
-
-<!--    <RelativeLayout-->
-<!--        android:id="@+id/rlaSchoolName"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_below="@+id/rlaStudentDetails"-->
-<!--        android:background="@drawable/bg_school_name_rounded">-->
-
-<!--        <ImageView-->
-<!--            android:id="@+id/imgSchool"-->
-<!--            android:layout_width="@dimen/fifty"-->
-<!--            android:layout_height="@dimen/fifty"-->
-<!--            android:layout_marginStart="@dimen/ten"-->
-<!--            android:layout_marginTop="@dimen/ten"-->
-<!--            android:layout_marginEnd="@dimen/ten"-->
-<!--            android:layout_marginBottom="@dimen/ten"-->
-<!--            android:padding="@dimen/five"-->
-<!--            android:src="@drawable/splash_icon2">-->
-
-<!--        </ImageView>-->
-
-<!--        <RelativeLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_centerVertical="true"-->
-<!--            android:layout_toEndOf="@+id/imgSchool">-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/lblSchoolName"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginEnd="@dimen/ten"-->
-<!--                android:gravity="end"-->
-<!--                android:text="Kodaikanal International School"-->
-<!--                android:textColor="@color/black"-->
-<!--                style="@style/CustomTextStylePoppinsBold"-->
-<!--                android:textSize="@dimen/thirteen_sp">-->
-
-<!--            </TextView>-->
-
-
-<!--            <TextView-->
-<!--                android:id="@+id/lblSchoolRegionalName"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginEnd="@dimen/ten"-->
-<!--                android:layout_below="@+id/lblSchoolName"-->
-<!--                android:gravity="end"-->
-<!--                android:visibility="gone"-->
-<!--                android:text=""-->
-<!--                android:textColor="@color/black"-->
-<!--                style="@style/CustomTextStylePoppinsMedium"-->
-<!--                android:textSize="@dimen/thirteen_sp">-->
-
-<!--            </TextView>-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/lblSchoolPlace"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_below="@+id/lblSchoolRegionalName"-->
-<!--                android:layout_marginEnd="@dimen/ten"-->
-<!--                android:gravity="end"-->
-<!--                android:text="Kodaikanal"-->
-<!--                android:textColor="@color/black"-->
-<!--                android:textSize="@dimen/thirteen_sp"-->
-<!--                style="@style/CustomTextStylePoppinsRegular">-->
-<!--            </TextView>-->
-
-<!--        </RelativeLayout>-->
-
-
-<!--    </RelativeLayout>-->
-
-
-<!--</RelativeLayout>-->
-<!--</RelativeLayout>-->
+</RelativeLayout>
