@@ -662,15 +662,21 @@ class AppServices {
 
     //    //get HomeworkDetails
     fun isHomeWorkDetails(isToken: String, activity: Activity) {
+        Log.d("GetHomeworkData",isToken.toString())
+
         RestClient.apiInterfaces.isHomeWorkDetails(isToken)
             ?.enqueue(object : Callback<GetHomeworkData?> {
                 override fun onResponse(
                     call: Call<GetHomeworkData?>,
                     response: Response<GetHomeworkData?>
                 ) {
+                    Log.d("GetHomeworkData",response.body().toString())
+
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             isHomeWorkDetailsData.postValue(response.body())
+                            Log.d("GetHomeworkDataRespone", response.body().toString())
+
                         }
                     }
                 }
@@ -678,6 +684,7 @@ class AppServices {
                 override fun onFailure(call: Call<GetHomeworkData?>, t: Throwable) {
                     t.printStackTrace()
                     isHomeWorkDetailsData.postValue(null)
+                    Log.d("GetHomeworkData","Response,No Data Found")
                 }
             })
     }

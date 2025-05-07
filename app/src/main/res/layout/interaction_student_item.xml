@@ -27,7 +27,7 @@
             android:layout_marginTop="@dimen/ten"
             android:text="Sathish"
             android:textColor="@color/black"
-            android:textSize="15sp"
+            android:textSize="@dimen/fifteen_sp"
             android:fontFamily="@font/poppins_bold"
 
             android:textStyle="bold">
@@ -43,7 +43,7 @@
             android:layout_marginTop="@dimen/ten"
             android:text="English"
             android:textColor="@color/black"
-            android:textSize="13sp"
+            android:textSize="@dimen/thirteen_sp"
             android:fontFamily="@font/poppins_bold"
             android:textStyle="bold">
 
@@ -60,7 +60,7 @@
             android:gravity="center"
             android:padding="@dimen/five"
             android:textColor="@color/white"
-            android:textSize="15sp"
+            android:textSize="@dimen/fifteen_sp"
             android:fontFamily="@font/poppins_bold"
             android:textStyle="bold">
 

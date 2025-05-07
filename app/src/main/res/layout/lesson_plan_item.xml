@@ -8,8 +8,8 @@
     android:layout_height="wrap_content">
     <ImageView
         android:id="@+id/imgInProgress"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="@dimen/twenty_five"
+        android:layout_height="@dimen/twenty_five"
         android:layout_marginTop="@dimen/fourty"
         android:layout_marginStart="@dimen/twenty"
         android:layout_centerVertical="true"
@@ -19,12 +19,12 @@
     <!-- Vertical Line Below imgInProgress -->
     <View
         android:id="@+id/viewVerticalLine"
-        android:layout_width="2dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/two"
+        android:layout_height="@dimen/fifty"
         android:background="@color/green"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="@dimen/thirty_two"
         android:layout_below="@id/imgInProgress"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="@dimen/six"
         android:visibility="gone"/>
 
 
@@ -39,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/ten"
-            android:layout_marginStart="9dp"
+            android:layout_marginStart="@dimen/nine"
             android:layout_marginEnd="@dimen/twenty"
             android:background="@drawable/rect_shadow_white"
             android:backgroundTint="@color/custom_blue">
@@ -50,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/Title"
                 android:textStyle="bold"
-                android:textSize="12sp"
+                android:textSize="@dimen/twele_sp"
                 android:textColor="@color/black"
                 android:fontFamily="@font/poppins_bold"
                 android:layout_marginStart="@dimen/ten"
@@ -73,7 +73,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/unit"
-                android:textSize="11sp"
+                android:textSize="@dimen/eleven_sp"
                 android:textColor="@color/black"
                 android:layout_marginStart="@dimen/ten"
                 android:layout_below="@+id/date_values"

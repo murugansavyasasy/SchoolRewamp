@@ -6,14 +6,14 @@
 
     <TextView
         android:id="@+id/btnDay"
-        android:layout_width="130dp"
-        android:layout_height="70dp"
+        android:layout_width="@dimen/one_thirty"
+        android:layout_height="@dimen/seventy"
         android:textColor="@color/black"
         android:textStyle="bold"
         android:gravity="center"
-        android:textSize="16sp"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
+        android:textSize="@dimen/sixteen_sp"
+        android:layout_marginStart="@dimen/five"
+        android:layout_marginEnd="@dimen/five"
         android:background="@drawable/buttonradius"/>
 
 </RelativeLayout>

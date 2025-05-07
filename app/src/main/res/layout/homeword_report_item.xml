@@ -12,8 +12,8 @@
         android:layout_width="@dimen/eighty"
         android:layout_height="@dimen/eighty"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="-18dp"
-        android:elevation="10dp"
+        android:layout_marginTop="@dimen/minus_eighteen"
+        android:elevation="@dimen/ten"
         android:src="@drawable/new_icon"
         android:visibility="visible">
 
@@ -24,7 +24,7 @@
         android:layout_width="@dimen/thirty"
         android:layout_height="@dimen/thirty"
         android:layout_centerHorizontal="true"
-        android:elevation="10dp"
+        android:elevation="@dimen/ten"
         android:layout_marginStart="@dimen/twenty"
         android:src="@drawable/noticeboard_pin"
         android:visibility="gone">
@@ -36,7 +36,7 @@
         android:layout_height="@dimen/thirteen"
         android:layout_marginTop="@dimen/eighteen"
         android:layout_centerHorizontal="true"
-        android:elevation="10dp"
+        android:elevation="@dimen/ten"
         android:src="@drawable/circle_dark_blue"
         android:visibility="gone">
     </ImageView>
@@ -96,7 +96,7 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/thirty"
             style="@style/IndicatorStyle"
-            android:elevation="4dp"/>
+            android:elevation="@dimen/four"/>
 
         <TextView
             android:id="@+id/lblTitleImage"
@@ -365,13 +365,13 @@
         <RelativeLayout
             android:id="@+id/rlaVimeoThumbnail"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="@dimen/one_fifty"
             android:layout_below="@+id/lblTitleVideo">
 
             <ImageView
                 android:id="@+id/imgVimeoThumbnail"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="@dimen/one_fifty"
                 android:scaleType="centerCrop">
 
             </ImageView>

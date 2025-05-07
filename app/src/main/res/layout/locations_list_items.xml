@@ -16,8 +16,8 @@
             android:id="@+id/rytDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/ten"
-            android:layout_toLeftOf="@+id/rytActions">
+            android:layout_marginStart="@dimen/ten"
+            android:layout_toStartOf="@+id/rytActions">
 
             <TextView
 
@@ -37,7 +37,7 @@
                 android:layout_marginTop="@dimen/five"
                 android:text=""
                 android:textColor="@color/black"
-                android:textSize="15dp" />
+                android:textSize="@dimen/fifteen_sp" />
 
 
             <TextView
@@ -57,7 +57,7 @@
             android:id="@+id/rytActions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true">
 
             <ImageView
@@ -73,7 +73,7 @@
                 android:layout_width="@dimen/twenty_five"
                 android:layout_height="@dimen/twenty_five"
                 android:layout_marginEnd="@dimen/ten"
-                android:layout_toRightOf="@+id/imgEdit"
+                android:layout_toStartOf="@+id/imgEdit"
                 android:src="@drawable/delete_icon_blue" />
 
         </RelativeLayout>

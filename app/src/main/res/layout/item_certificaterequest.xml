@@ -42,7 +42,7 @@
                 android:layout_toEndOf="@id/icon"
                 android:layout_marginStart="@dimen/ten"
                 android:textColor="@color/white"
-                android:textSize="13sp"
+                android:textSize="@dimen/thirteen_sp"
                 android:textStyle="normal"/>
         </RelativeLayout>
 
@@ -58,22 +58,22 @@
 
             <TextView
                 android:id="@+id/certificatetype"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/zero"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/certificate_type"
                 android:textColor="@color/black"
-                android:textSize="13sp"
+                android:textSize="@dimen/thirteen_sp"
                 android:fontFamily="@font/poppins_medium" />
 
             <TextView
                 android:id="@+id/certificate_value"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/zero"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:text=": Attendance Type"
                 android:textColor="@color/black"
-                android:textSize="13sp"
+                android:textSize="@dimen/thirteen_sp"
                 android:fontFamily="@font/poppins_medium"
                 android:gravity="start"
                 android:maxLines="3"
@@ -96,17 +96,17 @@
                 android:layout_weight="1"
                 android:text="@string/reason"
                 android:textColor="@color/black"
-                android:textSize="13sp"
+                android:textSize="@dimen/thirteen_sp"
                 android:fontFamily="@font/poppins_medium" />
 
             <TextView
                 android:id="@+id/reason_value"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/zero"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:text=": I need this  to apply for the education loan for my studies"
                 android:textColor="@color/black"
-                android:textSize="13sp"
+                android:textSize="@dimen/thirteen_sp"
                 android:fontFamily="@font/poppins_medium"
                 android:gravity="start"
                 android:maxLines="100"
@@ -123,22 +123,22 @@
 
             <TextView
                 android:id="@+id/created_on"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/zero"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/created_on"
                 android:textColor="@color/black"
-                android:textSize="13sp"
+                android:textSize="@dimen/thirteen_sp"
                 android:fontFamily="@font/poppins_medium" />
 
             <TextView
                 android:id="@+id/created_value"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/zero"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:text=": 21 Jan 2024"
                 android:textColor="@color/black"
-                android:textSize="13sp"
+                android:textSize="@dimen/thirteen_sp"
                 android:fontFamily="@font/poppins_medium"
                 android:gravity="start"
                 android:maxLines="100"
@@ -156,8 +156,8 @@
 
             <ImageView
                 android:id="@+id/icon3"
-                android:layout_width="17dp"
-                android:layout_height="17dp"
+                android:layout_width="@dimen/seventeen"
+                android:layout_height="@dimen/seventeen"
                 android:src="@drawable/downloadicon"
                 android:layout_centerVertical="true"
                 android:layout_alignParentStart="true"/>
@@ -171,7 +171,7 @@
                 android:layout_toEndOf="@id/icon3"
                 android:layout_marginStart="@dimen/five"
                 android:textColor="@color/sky_blue0"
-                android:textSize="15sp"
+                android:textSize="@dimen/fifteen_sp"
                 android:textStyle="bold"/>
         </RelativeLayout>
 

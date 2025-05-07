@@ -25,23 +25,23 @@
 
             <TextView
                 android:id="@+id/lblattachment"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/zero"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/lblAttachment"
                 android:textColor="@color/sky_blue0"
-                android:textSize="13sp"
+                android:textSize="@dimen/thirteen_sp"
                 android:textStyle="bold"
                 android:fontFamily="@font/poppins_bold" />
 
             <TextView
                 android:id="@+id/attachment_value"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/zero"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:text=": Image"
                 android:textColor="@color/black"
-                android:textSize="13sp"
+                android:textSize="@dimen/thirteen_sp"
                 android:textStyle="bold"
                 android:fontFamily="@font/poppins_bold"
                 android:gravity="start"
@@ -61,23 +61,23 @@
 
             <TextView
                 android:id="@+id/lblReason"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/zero"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/reason"
                 android:textColor="@color/sky_blue0"
-                android:textSize="13sp"
+                android:textSize="@dimen/thirteen_sp"
                 android:textStyle="bold"
                 android:fontFamily="@font/poppins_bold" />
 
             <TextView
                 android:id="@+id/reason_value"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/zero"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:text=": Text"
                 android:textColor="@color/black"
-                android:textSize="13sp"
+                android:textSize="@dimen/thirteen_sp"
                 android:textStyle="bold"
                 android:fontFamily="@font/poppins_bold"
                 android:gravity="start"
@@ -109,7 +109,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/five"
                 android:textColor="@color/white"
-                android:textSize="15sp"
+                android:textSize="@dimen/fifteen_sp"
                 android:textStyle="bold"/>
         </RelativeLayout>
 

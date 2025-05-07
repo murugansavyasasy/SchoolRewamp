@@ -19,7 +19,7 @@
             android:layout_marginStart="@dimen/thirty"
             android:text="@string/lblHelp"
             android:textColor="@color/black"
-            android:textSize="@dimen/twenty"
+            android:textSize="@dimen/twenty_sp"
             android:textStyle="bold" />
 
     </RelativeLayout>
