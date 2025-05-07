@@ -444,6 +444,7 @@
     <string name="does_the_school_offer_transportation_services">Does the school offer transportation services?</string>
     <string name="yes_the_school_provides_bus_transportation_for_students_across_various_routes">Yes, the school provides bus transportation for students across various routes.</string>
     <string name="we_offer_sports_music_drama_and_various_clubs_like_science_and_robotics">We offer sports, music, drama, and various clubs like science and robotics.</string>
+
     <string name="group_name">Group name</string>
     <string name="employee_id">Employee id :</string>
     <string name="destination">Destination :</string>
@@ -463,5 +464,26 @@
     <string name="happy_to_have_you_with_us">Happy to have you with us!</string>
     <string name="your_password_has_already_been_created_use_your_credentials_to_log_in_and_access_schoolchimes_for_seamless_school_communication_and_management">Your password has already been created. Use your credentials to log in and access SchoolChimes for seamless school communication and management.</string>
     <string name="next">Next</string>
+
+    <string name="PermissionsRequired">Permissions Required</string>
+    <string name="Recording_failed">Recording failed</string>
+    <string name="Failed_recording">Failed to stop recording</string>
+    <string name="Enter_title_description">Enter title and description</string>
+    <string name="Voice_title_required">Voice and title is required.</string>
+    <string name="Audio_least_30_seconds">Audio duration must be at least 30 seconds.</string>
+    <string name="Audio_below_3_minutes">Audio duration must be below 3 minutes.</string>
+    <string name="Failed_load_audio">Failed to load audio</string>
+    <string name="Invalid_Duration">Invalid Duration</string>
+    <string name="Title_required">Title is required</string>
+    <string name="upload_maximum_5_files">You can upload a maximum of 5 files.</string>
+    <string name="You_can_only_select">You can only select up to</string>
+    <string name="images_">images.</string>
+    <string name="Download_successful">Download successful!</string>
+    <string name="Download_failed">Download failed.</string>
+    <string name="Please_again_later">Please try again later.</string>
+    <string name="Video_already_downloaded">Video is already downloaded!</string>
+    <string name="Permission_granted">Permission granted!</string>
+    <string name="Permission_denied_download_files">Permission denied, cannot download files.</string>
+    <string name="permissions_permanently_denied_proceed">Some permissions are permanently denied. Please enable them in app settings to proceed.</string>
 
 </resources>

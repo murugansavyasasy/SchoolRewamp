@@ -93,5 +93,10 @@ object APIKeyNames {
     const val attendance_dt = "attendance_dt"
     const val attendance_month = "attendance_month"
     const val staff_id = "staff_id"
+    const val thumbnail_url = "thumbnail_url"
+    const val Bearer = "Bearer "
+    const val download = "download"
+    const val quality = "quality"
+    const val link = "link"
 
 }

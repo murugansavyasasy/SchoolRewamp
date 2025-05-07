@@ -25,6 +25,7 @@ object APIMethods {
     const val isGetCommmunicationlistload = "comm/communication/list"
     const val isGetVoiceHistory = "comm/voice/get-voice-history"
     const val isGetTextHistory = "comm/text-message/get-text-history"
+    const val isGetHomeWorkReport = "comm/homework/get-homework-report"
     const val isSendText = "comm/text-message/send-text"
     const val isSendHomeWork = "comm/homework/send-homework"
     const val isSendVoice = "comm/voice/send-voice"

@@ -137,7 +137,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     tapVisibility()
                     binding.nomessageEntire.visibility =
                         if (isUserDetails!!.staff_role.toString() == Constant.isPrincipalRole.toString()
-                        ) View.VISIBLE else View.GONE
+                        ) View.GONE else View.VISIBLE
                 } else {
                     binding.lblSupportMail.paintFlags =
                         binding.lblSupportMail.paintFlags or Paint.UNDERLINE_TEXT_FLAG
@@ -868,6 +868,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         description = it.description,
                         subjectId = isSubjectId!!,
                         file_path = "https://api.schoolchimes.com/nodejs/institute/files/AU3394_ABSENT_1743571768546.wav",
+                        type = "IMAGE",
                     )
                     appViewModel!!.isSendHomeWork(isAccessToken!!, jsonObject, this)
                 } ?: run {

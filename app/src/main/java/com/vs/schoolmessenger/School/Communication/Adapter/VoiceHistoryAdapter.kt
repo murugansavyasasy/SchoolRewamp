@@ -221,7 +221,7 @@ class VoiceHistoryAdapter(
         private fun formatTime(milliseconds: Int): String {
             val seconds = (milliseconds / 1000) % 60
             val minutes = (milliseconds / (1000 * 60)) % 60
-            return String.format("%02d:%02d", minutes, seconds)
+            return String.format(Constant.dateForMate, minutes, seconds)
         }
 
         // Get audio duration asynchronously

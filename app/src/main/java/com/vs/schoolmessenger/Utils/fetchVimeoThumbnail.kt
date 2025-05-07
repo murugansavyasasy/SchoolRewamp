@@ -1,5 +1,6 @@
 package com.vs.schoolmessenger.Utils
 
+import com.vs.schoolmessenger.Repository.APIKeyNames
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -33,7 +34,7 @@ fun fetchVimeoThumbnail(videoUrl: String, callback: (String?) -> Unit) {
 
                 // Parse the response to extract the thumbnail URL
                 val jsonResponse = JSONObject(responseBody)
-                val thumbnailUrl = jsonResponse.optString("thumbnail_url", null)
+                val thumbnailUrl = jsonResponse.optString(APIKeyNames.thumbnail_url, null)
 
                 withContext(Dispatchers.Main) {
                     // Return the thumbnail URL to the callback

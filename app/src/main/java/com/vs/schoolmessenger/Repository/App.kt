@@ -16,6 +16,7 @@ import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
+import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchHistoryResponse
@@ -24,7 +25,7 @@ import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffLocationR
 
 class App(application: Application) : AndroidViewModel(application) {
 
-    private var apiRepositories: AppServices = AppServices() // ✅ Initialize here
+    private var apiRepositories: AppServices = AppServices()
 
 
     var isDashBoardData: LiveData<DashboardResponse?>? = null
@@ -58,6 +59,9 @@ class App(application: Application) : AndroidViewModel(application) {
         private set
 
     var isGetTextHistory: LiveData<TextDetailsResponse?>? = null
+        private set
+
+    var isGetHomeWorkReport: LiveData<HomeWorkReportApiResponse?>? = null
         private set
 
     var isSendText: LiveData<TextSendResponse?>? = null
@@ -104,6 +108,8 @@ class App(application: Application) : AndroidViewModel(application) {
         isGetCommmunicationlistload = apiRepositories!!.isGetCommunicationloadLiveData
         isGetVoiceHistory = apiRepositories!!.isGetVoiceHistoryLiveData
         isGetTextHistory = apiRepositories!!.isGetTextHistoryLiveData
+        isGetHomeWorkReport = apiRepositories!!.isGetHomeWorkReportLiveData
+
         isSendText = apiRepositories!!.isSendTextLiveData
         isSendHomeWork = apiRepositories!!.isSendHomeWorkLiveData
         isVoiceSend = apiRepositories!!.isSendVoiceLiveData
@@ -170,6 +176,10 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun isGetCommmunicationlist(isToken: String, activity: Activity) {
         apiRepositories!!.isGetCommmunicationlist(isToken, activity)
+    }
+
+    fun isGetHomeWorkReport(isToken: String,  isSectionId: Int, isAcademicYearId: Int ,isdate: String ,activity: Activity) {
+        apiRepositories!!.isGetHomeWorkReport(isToken, isSectionId, isAcademicYearId, isdate, activity )
     }
 
     fun isGetTextHistory(isToken: String, activity: Activity) {

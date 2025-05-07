@@ -24,7 +24,7 @@ object ChangeLanguage {
 
     // Retrieve the saved language
     fun getPersistedLanguage(context: Context): String {
-        return SharedPreference.getLanguage(context) ?: "en"
+        return SharedPreference.getLanguage(context) ?: Constant.en
     }
 
     @TargetApi(Build.VERSION_CODES.N)

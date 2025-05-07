@@ -1,6 +1,6 @@
 package com.vs.schoolmessenger.Parent.Homework
 
-import com.vs.schoolmessenger.School.Homework.HomeWorkReport
+import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReport
 
 interface HomeWorkItemClick {
     fun onItemTextClick(data: HomeWorkList)

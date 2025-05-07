@@ -38,8 +38,8 @@ class NetworkSpeedMonitor(private val context: Context) {
         val updateSpeedTask = object : Runnable {
             override fun run() {
                 val speed = getNetworkSpeed()
-                downloadText.text = "Download Speed: ${speed.first}"
-                uploadText.text = "Upload Speed: ${speed.second}"
+                downloadText.text = context.getString(R.string.download_speed) + speed.first
+                uploadText.text = context.getString(R.string.upload_speed)+ speed.second
                 handler.postDelayed(this, 1000) // Update every second
             }
         }
@@ -63,7 +63,7 @@ class NetworkSpeedMonitor(private val context: Context) {
     }
 
     private fun formatSpeed(speed: Double): String {
-        val df = DecimalFormat("#.##")
+        val df = DecimalFormat(Constant.hasCode)
         return when {
             speed > 1_000_000 -> "${df.format(speed / 1_000_000)} MB/s"
             speed > 1_000 -> "${df.format(speed / 1_000)} KB/s"
