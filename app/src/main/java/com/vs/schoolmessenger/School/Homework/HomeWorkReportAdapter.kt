@@ -8,6 +8,7 @@ import android.media.MediaPlayer
 import android.os.Handler
 import android.os.Looper
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -46,7 +47,7 @@ class HomeWorkReportAdapter(
 
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
-    private var currentlyPlayingHolder: DataViewHolder? = null // Track currently playing holder
+    private var currentlyPlayingHolder: DataViewHolder? = null
 
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
@@ -166,8 +167,9 @@ class HomeWorkReportAdapter(
         ) {
             val filePaths = data.file_path.firstOrNull()
 
-            filePaths?.let  {
-            when (filePaths.type) {
+            filePaths?.let {
+                Log.d("pathtype", it.type.toString())
+                when (it.type) {
                 "IMAGE" -> {
                     rlaReportText.visibility = View.VISIBLE
                     lblTitleText.text = data.title
@@ -270,7 +272,6 @@ class HomeWorkReportAdapter(
 
                         webChromeClient = WebChromeClient()
 
-                        // Use Google Drive viewer to load the PDF
                         loadUrl("https://drive.google.com/viewerng/viewer?embedded=true&url=${filePaths.path}")
 
 

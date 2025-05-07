@@ -19,6 +19,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
@@ -30,6 +31,7 @@ import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SectionList.Section
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.Standard
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.Communication.Adapter.VoiceHistoryAdapter
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReport
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.OnDateSelectedListener
@@ -50,7 +52,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
     private val selectedImageFormats = mutableListOf<String>()
 
     private lateinit var imageList: MutableList<ImagePickingData>
-    lateinit var mAdapter: HomeWorkReportAdapter
     private lateinit var isHomeWorkReport: List<HomeWorkReport>
     var isAcademicYear: List<AcademicYear>? = null
     private var appViewModel: App? = null
@@ -146,6 +147,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
 
         appViewModel!!.isGetHomeWorkReport?.observe(this) { response ->
             if (response != null && response.status) {
+                Log.d("statusadapter","statusadapter")
                 val isHomeWorkReport = response.data
                 isHomeWorkReportData = isHomeWorkReport
                 loadHomeWorkReportData(isHomeWorkReportData)
@@ -245,15 +247,16 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
     }
 
     private fun loadHomeWorkReportData(isHomeWorkReportDetails: List<HomeWorkReport>) {
-        mHomeWorkReportAdapter =
-            HomeWorkReportAdapter(
-                isHomeWorkReportDetails,
-                this,
-                this,
-                Constant.isShimmerViewDisable
-            )
+
+        binding.rcyHomeWorkReport.visibility = View.VISIBLE
+        mHomeWorkReportAdapter = HomeWorkReportAdapter(isHomeWorkReportDetails, this, this, Constant.isShimmerViewShow)
+        binding.rcyHomeWorkReport.layoutManager = LinearLayoutManager(this)
+        binding.rcyHomeWorkReport.isNestedScrollingEnabled = false
         binding.rcyHomeWorkReport.adapter = mHomeWorkReportAdapter
+
     }
+
+
 
 
     private fun isGetStandardSection() {
