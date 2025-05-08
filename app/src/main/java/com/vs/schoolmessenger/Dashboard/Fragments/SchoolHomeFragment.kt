@@ -485,7 +485,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                         DailyCollection::class.java
                     }
                 }
-
             }
 
             Constant.M_STUDENT_REPORT -> {

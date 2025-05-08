@@ -16,15 +16,18 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.vs.schoolmessenger.AlbumImage.AlbumSelectActivity
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
@@ -53,11 +56,25 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
         return HomeWorkBinding.inflate(layoutInflater)
     }
 
+    private val REQUEST_CODE = 1001
+//    private val fileType = "image"
+    private val fileType = "document"
+    private val selectedUris = mutableListOf<Uri>()
+
+    private val albumLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val uris = result.data?.getParcelableArrayListExtra<Uri>("selectedUris") ?: emptyList()
+            selectedUris.clear()
+            selectedUris.addAll(uris)
+          //  binding.selectedImagesCount.text = "Selected: ${selectedUris.size}"
+        }
+    }
+
+
     private val PICK_IMAGES_REQUEST = 1
     private val maxImages = 5
     private val selectedImagePaths = mutableListOf<String>()
     private val selectedImageFormats = mutableListOf<String>()
-    private lateinit var imageList: MutableList<ImagePickingData>
     var isAcademicYear: List<AcademicYear>? = null
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
@@ -167,6 +184,13 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
         }
         return file.absolutePath
+    }
+
+    private fun openAlbumSelectActivity() {
+        val intent = Intent(this, AlbumSelectActivity::class.java)
+        Log.d("fileType",fileType)
+        intent.putExtra("fileType", fileType)
+        albumLauncher.launch(intent)
     }
 
 
@@ -331,9 +355,10 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
         val rlaDocument = dialog.findViewById<RelativeLayout>(R.id.rlaVideo)
 
         rlaGallery.setOnClickListener {
+            openAlbumSelectActivity()
             //gallery
 //            if (canAddMoreFiles()) {
-            pickImagesFromGallery()
+          //  pickImagesFromGallery()
 //            } else {
 //                Toast.makeText(this, getString(R.string.upload_maximum_5_files), Toast.LENGTH_SHORT)
 //                    .show()
