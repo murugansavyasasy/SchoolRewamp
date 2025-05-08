@@ -24,6 +24,7 @@ import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.ApiCallRequest
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.AbsenteesMarking.AttendanceMark
 import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesReport
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollection
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReport
@@ -101,7 +102,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             } else {
                 binding.lnrTab.visibility = View.VISIBLE
             }
-        } else if (SELECTED_SCHOOL_MENU == M_MARK_YOUR_ATTENDANCE || SELECTED_SCHOOL_MENU == M_STAFF_WISE_ATTENDANCE_REPORT || SELECTED_SCHOOL_MENU == M_STUDENT_REPORT || SELECTED_SCHOOL_MENU == M_SCHOOL_STRENGTH || SELECTED_SCHOOL_MENU == M_ABSENTEES_REPORT || SELECTED_SCHOOL_MENU == M_DAILY_COLLECTION || SELECTED_SCHOOL_MENU == M_FEE_PENDING_REPORT) {
+        } else if (SELECTED_SCHOOL_MENU == M_MARK_YOUR_ATTENDANCE || SELECTED_SCHOOL_MENU == M_STAFF_WISE_ATTENDANCE_REPORT || SELECTED_SCHOOL_MENU == M_STUDENT_REPORT || SELECTED_SCHOOL_MENU == M_SCHOOL_STRENGTH || SELECTED_SCHOOL_MENU == M_ABSENTEES_REPORT || SELECTED_SCHOOL_MENU == M_DAILY_COLLECTION || SELECTED_SCHOOL_MENU == M_FEE_PENDING_REPORT || SELECTED_SCHOOL_MENU == M_ATTENDANCE_MARKING) {
             isMultipleSchool = false
             binding.lnrTab.visibility = View.GONE
         } else {
@@ -254,7 +255,9 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         } else {
 
             if (SELECTED_SCHOOL_MENU == M_ATTENDANCE_MARKING) {
-
+                val intent = Intent(this, AttendanceMark::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                startActivity(intent)
             } else if (SELECTED_SCHOOL_MENU == M_ABSENTEES_REPORT) {
                 val intent = Intent(this, AbsenteesReport::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
