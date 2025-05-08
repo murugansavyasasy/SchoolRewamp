@@ -1,15 +1,8 @@
 package com.vs.schoolmessenger.Parent.Homework
 
-import android.net.Uri
-import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -17,11 +10,8 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.ViewerPagerAdapter
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
-import com.vs.schoolmessenger.databinding.HomeWorkParentBinding
 import com.vs.schoolmessenger.databinding.HomeworkViewImageDocumentBinding
-import com.vs.schoolmessenger.databinding.HomeworkViewImageDocumentItemBinding
 import java.io.File
 
 
@@ -34,6 +24,8 @@ class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(
 
     private lateinit var filePath: String
     private lateinit var fileType: String
+    private lateinit var subjectName: String
+
     override fun getViewBinding(): HomeworkViewImageDocumentBinding {
         return HomeworkViewImageDocumentBinding.inflate(layoutInflater)
     }
@@ -44,7 +36,8 @@ class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(
         setUpGradientParent()
 
 
-
+        subjectName= intent.getStringExtra(Constant.subjectName) ?: ""
+        Log.d("knowing subjectName", subjectName)
         filePath = intent.getStringExtra(Constant.SelectedDocumentPath) ?: ""
         Log.d("knowing FilePath", filePath)
         fileType = intent.getStringExtra(Constant.SelectedDocumentType) ?: ""
@@ -79,7 +72,7 @@ class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(
             Log.d("JsonType", type.toString())
             fileList = gson.fromJson(dataJson, type)
             Log.d("JsonType", fileList.toString())
-            adapter = ViewerPagerAdapter(fileList, this)
+            adapter = ViewerPagerAdapter(fileList,subjectName, this)
             binding.viewPager.adapter = adapter
             binding.viewPager.setCurrentItem(position, false)
         } else {

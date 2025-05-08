@@ -7,5 +7,5 @@ data class GetDateWiseHomeworkData(
     @SerializedName(APIKeyNames.date)
     val date:String,
     @SerializedName(APIKeyNames.homework)
-    val homework:ArrayList<GetHomeworkDetails>
+    val homework:List<GetHomeworkDetails>
 )

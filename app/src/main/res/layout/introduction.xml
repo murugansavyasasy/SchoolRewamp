@@ -26,7 +26,7 @@
             android:layout_marginStart="@dimen/twenty_five"
             android:layout_marginTop="@dimen/fifty"
             android:layout_marginEnd="@dimen/twenty"
-            android:text="14 - Day Money"
+            android:text="@string/_14_day_money"
             android:textColor="@color/black"
             android:textSize="@dimen/twenty_sp"
             android:textStyle="bold">
@@ -41,7 +41,7 @@
             android:layout_marginStart="@dimen/thirty"
             android:layout_marginTop="@dimen/five"
             android:layout_marginEnd="@dimen/twenty"
-            android:text="Back Guarantee."
+            android:text="@string/back_guarantee"
             android:textColor="@color/black"
             android:textSize="@dimen/twenty_sp"
             android:textStyle="bold">
@@ -71,7 +71,7 @@
         <RelativeLayout
             android:id="@+id/rlaNextAndSkip"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="@dimen/fifty"
             android:layout_alignParentBottom="true">
 
             <TextView

@@ -28,7 +28,7 @@
             android:layout_marginStart="@dimen/ten"
             android:text="@string/HomeWork"
             android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textSize="@dimen/twenty_sp"
             android:textStyle="bold" />
 
     </LinearLayout>
@@ -256,7 +256,7 @@
                 style="@style/CustomTextStylePoppinsMedium"
                 android:text="@string/academic_year"
                 android:layout_weight="0.4"
-                android:textSize="@dimen/thirteen"
+                android:textSize="@dimen/thirteen_sp"
                 android:layout_height="wrap_content">
             </TextView>
 
@@ -286,7 +286,7 @@
             <LinearLayout
                 android:layout_weight="0.95"
                 android:orientation="vertical"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/zero"
 
                 android:layout_height="wrap_content">
 
@@ -332,7 +332,7 @@
                     android:text="Select Date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingStart="8dp" />
+                    android:paddingStart="@dimen/eight" />
             </LinearLayout>
 
         </LinearLayout>

@@ -9,7 +9,7 @@
     <LinearLayout
         android:id="@+id/rytHeader"
         android:layout_width="match_parent"
-        android:layout_height="240dp"
+        android:layout_height="@dimen/two_fourty"
         android:background="@drawable/gradient_theme_school" />
 
     <LinearLayout
@@ -62,14 +62,14 @@
                 android:layout_height="wrap_content"
                 android:text="@string/edit"
                 android:textColor="@color/navi_blue2"
-                android:textSize="16sp"
+                android:textSize="@dimen/sixteen_sp"
                 android:textStyle="bold"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:layout_marginEnd="16dp" />
+                android:layout_marginEnd="@dimen/sixteen" />
             <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
+                android:layout_width="@dimen/sixteen"
+                android:layout_height="@dimen/sixteen"
                 android:src="@drawable/pencilicon"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"/>
@@ -272,7 +272,7 @@
 
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="0.5dp"
+                            android:layout_height="@dimen/point_five"
                             android:layout_marginStart="@dimen/sixty"
                             android:layout_marginTop="@dimen/ten"
                             android:background="@color/grey">
@@ -449,7 +449,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="0.5"
-                                    android:text="Father name"
+                                    android:text="Fath"
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/thirteen_sp" />
 
@@ -464,7 +464,7 @@
 
                             <View
                                 android:layout_width="match_parent"
-                                android:layout_height="0.5dp"
+                                android:layout_height="@dimen/point_five"
                                 android:layout_marginTop="@dimen/ten"
                                 android:background="@color/grey">
 

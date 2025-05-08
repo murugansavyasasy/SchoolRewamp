@@ -8,18 +8,18 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_loader"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="@dimen/hundred"
+        android:layout_height="@dimen/hundred"
         android:layout_centerInParent="true"
-        android:layout_margin="16dp"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="8dp"
+        android:layout_margin="@dimen/sixteen"
+        app:cardCornerRadius="@dimen/sixteen"
+        app:cardElevation="@dimen/eight"
         app:cardBackgroundColor="@android:color/white">
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lottie_loader"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="@dimen/one_fifty"
+            android:layout_height="@dimen/one_fifty"
             android:layout_gravity="center"
             android:visibility="visible"
             app:lottie_rawRes="@raw/loader"

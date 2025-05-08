@@ -8,4 +8,6 @@ data class GetFilePathDetails(
     val type: String,
     @SerializedName(APIKeyNames.path)
     val path: String,
+    val subject_name: String? = null
+
 )

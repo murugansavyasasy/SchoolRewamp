@@ -21,7 +21,7 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 
 class HomeWorkAdapter (
-    private var DateWiseHomeworkData: ArrayList<GetDateWiseHomeworkData>?,
+    private var DateWiseHomeworkData: List<GetDateWiseHomeworkData>?,
     private var listener: HomeWorkDateClickListener,
     private var context: Context,
     private var isLoading: Boolean
@@ -99,7 +99,7 @@ class HomeWorkAdapter (
 
 
         private fun loadData(
-            homeworkDetails: ArrayList<GetHomeworkDetails>,
+            homeworkDetails: List<GetHomeworkDetails>,
             DateWiseHomeWorkdata: GetDateWiseHomeworkData
         ) {
 

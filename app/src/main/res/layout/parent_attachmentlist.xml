@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cardview"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
+        android:layout_marginEnd="20dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:id="@+id/imagebanner"
+            android:src="@drawable/biometric_security"/>
+
+
+
+
+    </androidx.cardview.widget.CardView>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/titletext"
+        android:text="Hello World"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_below="@+id/cardview"
+        android:layout_alignStart="@+id/cardview"
+        android:textSize="16sp"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/desctext"
+        android:text="Tamam abi ben sana yarın sabah atarım "
+        style="@style/CustomTextStylePoppinsMedium"
+        android:layout_below="@+id/titletext"
+        android:layout_alignStart="@+id/cardview"
+        android:layout_marginTop="10dp"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/datetext"
+        android:text="08-05-2025"
+        style="@style/CustomTextStylePoppinsMedium"
+        android:layout_below="@+id/desctext"
+        android:layout_alignStart="@+id/cardview"
+        android:layout_marginTop="10dp"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/timetext"
+        android:text="11:29 AM"
+        style="@style/CustomTextStylePoppinsMedium"
+        android:layout_below="@+id/datetext"
+        android:layout_alignStart="@+id/cardview"
+        android:layout_marginTop="10dp"
+        android:textSize="16sp"/>
+
+
+
+
+
+
+
+
+
+</RelativeLayout>

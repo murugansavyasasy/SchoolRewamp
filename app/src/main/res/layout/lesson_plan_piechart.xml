@@ -12,7 +12,7 @@
         android:layout_marginStart="@dimen/ten"
         android:layout_marginEnd="@dimen/ten"
         app:cardCornerRadius="@dimen/eight"
-        app:cardElevation="3dp"
+        app:cardElevation="@dimen/three"
         app:cardUseCompatPadding="true"
         app:cardBackgroundColor="@android:color/white">
 
@@ -171,8 +171,8 @@
 
                 <TextView
                     android:id="@+id/btnView"
-                    android:layout_width="140dp"
-                    android:layout_height="35dp"
+                    android:layout_width="@dimen/one_fourty"
+                    android:layout_height="@dimen/thirty_five"
                     android:layout_marginStart="@dimen/seven"
                     android:background="@drawable/rect_btn_skyblue"
                     android:gravity="center"

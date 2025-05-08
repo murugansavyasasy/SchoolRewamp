@@ -32,7 +32,7 @@
             android:layout_weight="1"
             android:background="@drawable/white_bg_radius"
             android:gravity="center"
-            android:text="Punch In"
+            android:text="@string/punch_in"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp" />
 
@@ -62,7 +62,7 @@
             android:id="@+id/custom_progress_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_margin="@dimen/five"
             android:indeterminate="true"
             android:indeterminateTint="@color/yellow"
             android:indeterminateTintMode="src_atop"
@@ -74,12 +74,12 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/custom_progress_bar"
             android:layout_centerInParent="true"
-            android:layout_margin="5dp"
+            android:layout_margin="@dimen/five"
             android:gravity="center"
             android:text="@string/fetching_location"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="15sp"
+            android:textSize="@dimen/fifteen_sp"
             android:textStyle="bold" />
 
     </RelativeLayout>
@@ -95,15 +95,15 @@
             android:id="@+id/rytGPSRedirect"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="15dp"
+            android:layout_margin="@dimen/fifteen"
             android:background="@drawable/bg_rect_location"
-            android:padding="20dp"
+            android:padding="@dimen/twenty"
             android:visibility="gone">
 
             <ImageView
                 android:id="@+id/imgLocationIllustrate"
                 android:layout_width="wrap_content"
-                android:layout_height="150dp"
+                android:layout_height="@dimen/one_fifty"
                 android:src="@drawable/boy_doing_biometric_finger_scanning" />
 
 
@@ -112,10 +112,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/imgLocationIllustrate"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/ten"
                 android:text="@string/allow_location_access_to_mark_your_attendance"
                 android:textColor="@color/black"
-                android:textSize="20dp"
+                android:textSize="@dimen/twenty_sp"
                 android:textStyle="bold" />
 
             <RelativeLayout
@@ -123,12 +123,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblTitle"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="@dimen/twenty">
 
                 <ImageView
                     android:id="@+id/imgLocation"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="@dimen/thirty"
+                    android:layout_height="@dimen/thirty"
                     android:layout_centerVertical="true"
                     android:src="@drawable/ic_location" />
 
@@ -137,12 +137,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="@dimen/twenty"
+                    android:layout_marginTop="@dimen/ten"
                     android:layout_toEndOf="@+id/imgLocation"
                     android:text="@string/to_enhance_your_experience_and_provide_accurate_location_based_features_please_enable_gps"
                     android:textColor="@color/grey"
-                    android:textSize="15dp" />
+                    android:textSize="@dimen/fifteen_sp" />
 
             </RelativeLayout>
 
@@ -150,15 +150,15 @@
             <TextView
                 android:id="@+id/btnEnableLocation"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="@dimen/fifty"
                 android:layout_alignParentBottom="true"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="@dimen/twenty"
                 android:background="@drawable/rect_btn_blue"
                 android:gravity="center"
                 android:text="@string/enable_location"
                 android:textAlignment="center"
                 android:textColor="@color/black"
-                android:textSize="15dp"
+                android:textSize="@dimen/fifteen_sp"
                 android:textStyle="bold" />
 
         </RelativeLayout>
@@ -173,8 +173,8 @@
             <ImageView
                 android:id="@+id/imgLocationNeeded"
                 android:layout_width="wrap_content"
-                android:layout_height="200dp"
-                android:paddingHorizontal="20dp"
+                android:layout_height="@dimen/two_hundred"
+                android:paddingHorizontal="@dimen/twenty"
                 android:src="@drawable/need_location_access" />
 
             <TextView
@@ -202,8 +202,8 @@
             <ImageView
                 android:id="@+id/imgMarkAttendance"
                 android:layout_width="wrap_content"
-                android:layout_height="200dp"
-                android:paddingHorizontal="20dp"
+                android:layout_height="@dimen/two_hundred"
+                android:paddingHorizontal="@dimen/twenty"
                 android:src="@drawable/boy_doing_biometric_finger_scanning" />
 
             <TextView
@@ -213,10 +213,10 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/imgMarkAttendance"
                 android:gravity="center"
-                android:padding="20dp"
+                android:padding="@dimen/twenty"
                 android:text="@string/mark_attendance_instruction"
                 android:textColor="@color/black"
-                android:textSize="15dp" />
+                android:textSize="@dimen/fifteen_sp" />
 
 
             <TextView
@@ -226,7 +226,7 @@
                 android:layout_below="@+id/lblInstruction"
                 android:layout_centerHorizontal="true"
                 android:layout_marginHorizontal="@dimen/hundred"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/twenty"
                 android:background="@drawable/btn_green"
                 android:padding="@dimen/seven"
                 android:text="@string/punch"
@@ -239,7 +239,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/btnPresent"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/ten"
                 android:visibility="gone">
 
 
@@ -258,7 +258,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_marginHorizontal="10dp"
+            android:layout_marginHorizontal="@dimen/ten"
             android:background="@drawable/rect_btn_red"
             android:visibility="gone">
 
@@ -266,8 +266,8 @@
             <ImageView
                 android:id="@+id/imgNotInDistance"
                 android:layout_width="wrap_content"
-                android:layout_height="200dp"
-                android:paddingHorizontal="20dp"
+                android:layout_height="@dimen/two_hundred"
+                android:paddingHorizontal="@dimen/twenty"
                 android:src="@drawable/need_location_access" />
 
             <TextView
@@ -279,7 +279,7 @@
                 android:text="@string/outside_of_the_location"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textSize="15dp"
+                android:textSize="@dimen/fifteen"
                 android:textStyle="bold" />
 
         </RelativeLayout>
@@ -321,8 +321,8 @@
 
                 <ImageView
                     android:id="@+id/imgYearDropDown"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="@dimen/thirty"
+                    android:layout_height="@dimen/thirty"
                     android:layout_centerVertical="true"
                     android:layout_toEndOf="@+id/spinnerYears"
                     android:src="@drawable/ic_drop_down" />
@@ -349,8 +349,8 @@
 
                 <ImageView
                     android:id="@+id/imgMonthDropDown"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="@dimen/thirty"
+                    android:layout_height="@dimen/thirty"
                     android:layout_centerVertical="true"
                     android:layout_toEndOf="@+id/spinnerMonths"
                     android:src="@drawable/ic_drop_down" />
@@ -394,7 +394,7 @@
                 android:gravity="center"
                 android:text=""
                 android:textColor="@color/black"
-                android:textSize="15dp"
+                android:textSize="@dimen/fifteen_sp"
                 android:visibility="gone" />
 
         </RelativeLayout>

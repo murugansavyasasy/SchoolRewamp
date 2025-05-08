@@ -32,6 +32,6 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/thirty"
         style="@style/IndicatorStyle"
-        android:elevation="4dp"/>
+        android:elevation="@dimen/four"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

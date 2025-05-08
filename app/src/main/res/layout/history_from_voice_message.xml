@@ -10,13 +10,13 @@
 
         <ImageView
             android:id="@+id/lblnewiconVoice"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="@dimen/eighty"
+            android:layout_height="@dimen/eighty"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="-22dp"
+            android:layout_marginTop="@dimen/minus_twenty_two"
             android:layout_marginEnd="@dimen/twenty_five"
             android:visibility="gone"
-            android:elevation="10dp"
+            android:elevation="@dimen/ten"
             android:src="@drawable/new_icon">
 
         </ImageView>
@@ -34,9 +34,9 @@
                 android:id="@+id/lblTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="13dp"
-                android:layout_marginTop="13dp"
-                android:layout_marginEnd="10sp"
+                android:layout_marginStart="@dimen/thirteen"
+                android:layout_marginTop="@dimen/thirteen"
+                android:layout_marginEnd="@dimen/ten_sp"
                 style="@style/CustomTextStylePoppinsBold"
                 android:text="Function Call"
                 android:textSize="@dimen/thirteen_sp">
@@ -55,9 +55,9 @@
 
                 <ImageView
                     android:id="@+id/imgVoicePlay"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="7dp"
+                    android:layout_width="@dimen/thirty"
+                    android:layout_height="@dimen/thirty"
+                    android:layout_marginTop="@dimen/seven"
                     android:src="@drawable/video_play">
 
                 </ImageView>
@@ -65,7 +65,7 @@
                 <com.vs.schoolmessenger.Utils.WaveformSeekBar
                     android:id="@+id/waveformSeekBar"
                     android:layout_width="match_parent"
-                    android:layout_height="25dp"
+                    android:layout_height="@dimen/twenty_five"
                     android:layout_marginStart="@dimen/ten"
                     android:layout_marginTop="@dimen/seven"
                     android:layout_marginEnd="@dimen/ten"
@@ -90,7 +90,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/imgVoicePlay"
-                    android:layout_marginStart="1dp"
+                    android:layout_marginStart="@dimen/one"
                     android:layout_toEndOf="@+id/lblStartDuration"
                     android:text="/"
                     android:textColor="@color/black"
@@ -120,7 +120,7 @@
                 android:id="@+id/relative_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="@dimen/ten"
                 android:layout_below="@+id/rlaVoiceHistory">
 
                 <TextView
@@ -128,7 +128,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginEnd="@dimen/sixteen"
                     style="@style/CustomTextStylePoppinsMedium"
                     android:text="10:56 AM"
                     android:textColor="@color/grey"
@@ -139,7 +139,7 @@
                     android:id="@+id/lblDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginEnd="@dimen/eight"
                     android:layout_toStartOf="@id/lblTime"
                     style="@style/CustomTextStylePoppinsMedium"
                     android:text="01 Apr 2024"
@@ -177,7 +177,7 @@
                     android:layout_centerInParent="true"
                     android:layout_toEndOf="@+id/imgSend"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="Select"
+                    android:text="@string/select"
                     android:textColor="@color/white"
                     android:textSize="@dimen/thirteen_sp"
                     android:textStyle="bold">
@@ -203,12 +203,12 @@
 
         <ImageView
             android:id="@+id/lblnewiconText"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="@dimen/seventy"
+            android:layout_height="@dimen/seventy"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="-14dp"
+            android:layout_marginTop="@dimen/minus_fourteen"
             android:layout_marginEnd="@dimen/twenty_five"
-            android:elevation="10dp"
+            android:elevation="@dimen/ten"
             android:src="@drawable/new_icon">
 
         </ImageView>
@@ -257,7 +257,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblContentText"
                 android:layout_marginStart="@dimen/ten"
-                android:text="View"
+                android:text="@string/View"
                 android:textColor="@color/navi_blue2"
                 android:textSize="@dimen/thirteen_sp"
                 android:visibility="visible"
@@ -278,24 +278,24 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginEnd="@dimen/sixteen"
                     style="@style/CustomTextStylePoppinsMedium"
                     android:text="10:56 AM"
                     android:textColor="@color/grey"
-                    android:textSize="12sp">
+                    android:textSize="@dimen/twele_sp">
                 </TextView>
 
                 <TextView
                     android:id="@+id/lblDateText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginEnd="@dimen/eight"
                     android:layout_toStartOf="@id/lblTimeText"
                     style="@style/CustomTextStylePoppinsMedium"
                     android:text="01 Apr 2024"
                     android:visibility="visible"
                     android:textColor="@color/black"
-                    android:textSize="12sp">
+                    android:textSize="@dimen/twele_sp">
                 </TextView>
 
                 <RelativeLayout
@@ -320,12 +320,12 @@
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:layout_marginStart="@dimen/five"
-                        android:layout_marginBottom="5dp"
+                        android:layout_marginBottom="@dimen/five"
                         android:layout_toEndOf="@+id/imgSendText"
                         android:fontFamily="@font/poppins_medium"
-                        android:text="Select"
+                        android:text="@string/select"
                         android:textColor="@color/white"
-                        android:textSize="15sp"
+                        android:textSize="@dimen/fifteen_sp"
                         android:textStyle="normal" />
                 </RelativeLayout>
 

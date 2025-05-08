@@ -4,13 +4,13 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="@dimen/seventy"
+        android:layout_height="@dimen/seventy"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="-19dp"
+        android:layout_marginTop="@dimen/minus_nineteen"
         android:layout_marginEnd="@dimen/twenty_five"
         android:visibility="gone"
-        android:elevation="10dp"
+        android:elevation="@dimen/ten"
         android:src="@drawable/new_icon">
 
     </ImageView>
@@ -129,7 +129,7 @@
                     android:layout_centerInParent="true"
                     android:layout_toEndOf="@+id/imgSend"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="Select"
+                    android:text="@string/select"
                     android:textColor="@color/white"
                     android:textSize="@dimen/thirteen_sp"
                     android:textStyle="bold">

@@ -48,17 +48,17 @@ class HomeWork : BaseActivity<HomeWorkParentBinding>(), View.OnClickListener,
         binding.toolbarLayout.lblStudentSection.text =
             isStudentStandardName + " " + isStudentSectionName
 
-//        appViewModel?.isHomeWorkDetailsList?.observe(this) { response ->
-//            Log.d("response++",response.toString())
-//            if (response!!.status) {
-////                isloadhomeworkData(response.data)
-//                Log.d("GetHomeWorkDetails", response.data.toString())
-//                Log.d("Access Token",isAccessToken.toString())
-//            }
-//        }
+        appViewModel?.isHomeWorkDetailsList?.observe(this) { response ->
+            Log.d("response++",response.toString())
+            if (response!!.status) {
+                isloadhomeworkData(response.data)
+                Log.d("GetHomeWorkDetails", response.data.toString())
+                Log.d("Access Token",isAccessToken.toString())
+            }
+        }
     }
 
-    private fun isloadhomeworkData(newData: ArrayList<GetDateWiseHomeworkData>?) {
+    private fun isloadhomeworkData(newData: List<GetDateWiseHomeworkData>?) {
 
         Log.d("GetHomeworkDataWise", newData.toString())
 

@@ -60,7 +60,7 @@
                     android:id="@+id/lblStudentName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Hello"
+                    android:text="@string/hello"
                     style="@style/CustomTextStyle"
                     android:textColor="@color/white"
                     android:textSize="@dimen/twenty_sp"
@@ -99,7 +99,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/lblChangeRoll"
-                android:text="Change Role >"
+                android:text="@string/change_role"
                 style="@style/CustomTextStylePoppinsRegular"
                 android:textColor="@color/navi_blue2"
                 android:textSize="@dimen/fifteen_sp"
@@ -205,7 +205,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="-20dp"
+            android:layout_marginTop="@dimen/minus_twenty"
             android:layout_below="@+id/rlaAttendanceReport"
             android:background="@drawable/rounded_top_corners">
 

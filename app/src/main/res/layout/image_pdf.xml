@@ -25,7 +25,7 @@
             android:layout_marginStart="@dimen/ten"
             android:text="@string/Uploadimagepdf"
             android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textSize="@dimen/twenty_sp"
             android:textStyle="bold" />
 
 

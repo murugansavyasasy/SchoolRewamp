@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ImageLayout"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="match_parent">
 
     <androidx.viewpager2.widget.ViewPager2
@@ -29,8 +30,8 @@
                 android:id="@+id/documentTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:textSize="16sp" />
+                android:padding="@dimen/sixteen"
+                android:textSize="@dimen/sixteen_sp" />
         </ScrollView>
 
     </RelativeLayout>

@@ -11,4 +11,5 @@ data class GetHomeworkDetails(
         @SerializedName(APIKeyNames.subject_name)
         val subject_name:String,
         @SerializedName(APIKeyNames.file_path)
-        val file_path: ArrayList<GetFilePathDetails>)
+        val file_path: List<GetFilePathDetails>
+)

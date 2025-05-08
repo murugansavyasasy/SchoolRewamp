@@ -89,7 +89,7 @@
             android:layout_marginTop="@dimen/ten"
             android:layout_marginEnd="@dimen/ten"
             android:maxLines="3"
-            android:text="If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress."
+            android:text="@string/if_you_re_working_in_a_collaborative_environment_stashing_and_pulling_is_often_the_safest_option_as_it_allows_you_to_integrate_your_work_with_the_latest_changes_without_losing_progress"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"
             android:textStyle="normal" />
