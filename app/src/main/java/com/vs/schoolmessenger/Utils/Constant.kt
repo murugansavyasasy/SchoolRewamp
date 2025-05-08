@@ -164,8 +164,6 @@ object Constant {
     val M_YOUR_PROFILE = 37
     val M_SCHEDULE_EXAM_TEST = 38
     val M_ATTACHMENTS = 39
-
-
     val M_FINANCE = 194
 
 

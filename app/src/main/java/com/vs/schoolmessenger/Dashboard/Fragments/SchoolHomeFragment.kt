@@ -42,6 +42,7 @@ import com.vs.schoolmessenger.School.Communication.CommunicationSchool
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollection
 import com.vs.schoolmessenger.School.Event.CreateEvent
 import com.vs.schoolmessenger.School.ExamSchedule.Exam
+import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReport
 import com.vs.schoolmessenger.School.Homework.HomeWork
 import com.vs.schoolmessenger.School.ImportantInfo.ImportantInfo
 import com.vs.schoolmessenger.School.InteractionWithStudent.InteractionWithStudent
@@ -515,13 +516,13 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             Constant.M_FEE_PENDING_REPORT -> {
                 if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
                     //go to fee pending report
-                    LessonPlan::class.java
+                    FeePendingReport::class.java
                 } else {
                     if (userDetails!!.staff_details.size > 1) {
                         SchoolList::class.java
                     } else {
                         //go to fee pending report
-                        LessonPlan::class.java
+                        FeePendingReport::class.java
                     }
                 }
             }
