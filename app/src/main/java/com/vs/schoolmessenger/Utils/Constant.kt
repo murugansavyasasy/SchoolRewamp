@@ -265,6 +265,7 @@ object Constant {
     var TXT="TXT"
     var data="data"
     var position="position"
+    var subjectName="subjectName"
     var SelectedDocumentPath="SelectedDocumentPath"
     var SelectedDocumentType="SelectedDocumentType"
     var isText="isText"

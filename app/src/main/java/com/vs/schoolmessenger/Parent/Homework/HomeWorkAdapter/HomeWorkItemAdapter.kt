@@ -15,7 +15,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
-import com.vs.schoolmessenger.CommonScreens.ImageSliderAdapter
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetDateWiseHomeworkData
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkDetails
@@ -117,6 +116,7 @@ class HomeWorkItemAdapter(
                 isSeeMoreExpanded(tvSeeMoreImage, lblContentImage)
             }
             mHomeworkImgPDFAdapter =
+
                 HomeworkImgPDFAdapter("",null, context, Constant.isShimmerViewShow)
             homeworkImgPdf.layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)

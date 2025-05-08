@@ -1,7 +1,6 @@
 package com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,13 +8,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.vs.schoolmessenger.Parent.Homework.FullScreenViewerActivity
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 
 class ViewerPagerAdapter(
     private val fileList: ArrayList<GetFilePathDetails>,
+    private val subjectName: String,
     private val context: Context,
 ) : RecyclerView.Adapter<ViewerPagerAdapter.PagerViewHolder>() {
 
@@ -26,6 +25,7 @@ class ViewerPagerAdapter(
 
     override fun onBindViewHolder(holder: PagerViewHolder, position: Int) {
         val file = fileList[position]
+
         when (file.type.uppercase()) {
             Constant.IMAGE -> {
                 Glide.with(context)
@@ -33,6 +33,8 @@ class ViewerPagerAdapter(
                     .into(holder.imageView)
             }
         }
+
+
 
     }
 
