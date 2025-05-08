@@ -24,8 +24,12 @@ import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.ApiCallRequest
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesReport
+import com.vs.schoolmessenger.School.DailyCollection.DailyCollection
 import com.vs.schoolmessenger.School.MarkYourAttendance.MarkYourAttendance
+import com.vs.schoolmessenger.School.SchoolStrength.SchoolStrength
 import com.vs.schoolmessenger.School.StaffWiseAttendanceReport.StaffWiseAttendanceReport
+import com.vs.schoolmessenger.School.StudentReport.StudentReport
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.M_ABSENTEES_REPORT
 import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
@@ -96,7 +100,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             } else {
                 binding.lnrTab.visibility = View.VISIBLE
             }
-        } else if (SELECTED_SCHOOL_MENU == M_MARK_YOUR_ATTENDANCE || SELECTED_SCHOOL_MENU == M_STAFF_WISE_ATTENDANCE_REPORT) {
+        } else if (SELECTED_SCHOOL_MENU == M_MARK_YOUR_ATTENDANCE || SELECTED_SCHOOL_MENU == M_STAFF_WISE_ATTENDANCE_REPORT || SELECTED_SCHOOL_MENU == M_STUDENT_REPORT || SELECTED_SCHOOL_MENU == M_SCHOOL_STRENGTH || SELECTED_SCHOOL_MENU == M_ABSENTEES_REPORT || SELECTED_SCHOOL_MENU == M_DAILY_COLLECTION) {
             isMultipleSchool = false
             binding.lnrTab.visibility = View.GONE
         } else {
@@ -251,16 +255,24 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             if (SELECTED_SCHOOL_MENU == M_ATTENDANCE_MARKING) {
 
             } else if (SELECTED_SCHOOL_MENU == M_ABSENTEES_REPORT) {
-                //go to absenteeism report screen
+                val intent = Intent(this, AbsenteesReport::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                startActivity(intent)
 
             } else if (SELECTED_SCHOOL_MENU == M_SCHOOL_STRENGTH) {
-                //go to school strength  screen
+                val intent = Intent(this, SchoolStrength::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                startActivity(intent)
             } else if (SELECTED_SCHOOL_MENU == M_MESSAGES_FROM_MANAGEMENT) {
                 //go to messages from management  screen
             } else if (SELECTED_SCHOOL_MENU == M_DAILY_COLLECTION) {
-                //go to daily collection screen
+                val intent = Intent(this, DailyCollection::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                startActivity(intent)
             } else if (SELECTED_SCHOOL_MENU == M_STUDENT_REPORT) {
-                //go to student report screen
+                val intent = Intent(this, StudentReport::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                startActivity(intent)
             } else if (SELECTED_SCHOOL_MENU == M_LESSON_PLAN) {
                 //go to lesson plan screen
             } else if (SELECTED_SCHOOL_MENU == M_FEE_PENDING_REPORT) {

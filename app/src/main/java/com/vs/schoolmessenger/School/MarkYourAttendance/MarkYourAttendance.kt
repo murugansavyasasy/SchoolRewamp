@@ -91,7 +91,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
         binding.btnCreate.setOnClickListener(this)
         binding.btnHistory.setOnClickListener(this)
 
-        binding.toolbarLayout.lblParentToolBar.text = "Geometric Attendance"
+        binding.toolbarLayout.lblParentToolBar.text = getString(R.string.Geometric_Attendance)
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel?.init()
@@ -302,7 +302,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 if (Constant.isGPSEnabled(this)) {
                     binding.rytGPSRedirect.visibility = View.GONE
-                    getCurrentLocation("new")
+                    getCurrentLocation(Constant.new)
                 } else {
                     binding.rytGPSRedirect.visibility = View.VISIBLE
                     binding.rytNoLocationList.visibility = View.GONE
@@ -317,7 +317,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
 
     private fun getCurrentLocation(type: String) {
         binding.rytProgressBar.visibility = View.VISIBLE
-        val locationHelper = LocationHelper(this, this, "current")
+        val locationHelper = LocationHelper(this, this, Constant.current)
         locationHelper.getFreshLocation()
     }
 
@@ -331,7 +331,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
     fun isPunchAttendance() {
 
         val jsonObject = JsonObject()
-        jsonObject.addProperty(APIKeyNames.staff_or_student, "staff")
+        jsonObject.addProperty(APIKeyNames.staff_or_student, Constant.staff)
         jsonObject.addProperty(APIKeyNames.device_id, Constant.getAndroidSecureId(this))
         jsonObject.addProperty(APIKeyNames.punch_type, 1)
         jsonObject.addProperty(APIKeyNames.device_model, Constant.getDeviceName())
@@ -375,7 +375,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
         } else {
             if (Constant.isGPSEnabled(this)) {
                 binding.rytGPSRedirect.setVisibility(View.GONE)
-                getCurrentLocation("new")
+                getCurrentLocation(Constant.new)
             } else {
                 binding.rytGPSRedirect.setVisibility(View.VISIBLE)
                 binding.rytNoLocationList.setVisibility(View.GONE)
@@ -400,7 +400,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
         val alertDialog = AlertDialog.Builder(this@MarkYourAttendance)
         alertDialog.setTitle(R.string.Disable_Fingerprint)
         alertDialog.setMessage(R.string.disable_fingerprint_authentication)
-        alertDialog.setNegativeButton("Yes", object : DialogInterface.OnClickListener {
+        alertDialog.setNegativeButton(getString(R.string.Yes), object : DialogInterface.OnClickListener {
             override fun onClick(dialog: DialogInterface, which: Int) {
                 dialog.cancel()
                 binding.enableSwitch.isChecked = false
@@ -411,7 +411,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
             }
         })
         alertDialog.setPositiveButton(
-            "Cancel", object : DialogInterface.OnClickListener {
+            getString(R.string.Cancel), object : DialogInterface.OnClickListener {
                 override fun onClick(dialog: DialogInterface, which: Int) {
                     dialog.cancel()
 
@@ -725,7 +725,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
 //            }
         } else {
             rcyPunchList!!.visibility = View.GONE
-            lblNoRecordsFound!!.text = "No Punch History found!"
+            lblNoRecordsFound!!.text = getString(R.string.Punch_History_found)
             lblNoRecordsFound!!.visibility = View.VISIBLE
         }
     }
