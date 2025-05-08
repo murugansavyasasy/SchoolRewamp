@@ -4,7 +4,10 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Paint
+import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -16,6 +19,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.CommonScreens.Ads.AdItem
@@ -51,6 +56,8 @@ import com.vs.schoolmessenger.School.StudentReport.StudentReport
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SchoolHomeFragmentBinding
+import java.util.Locale
+import javax.sql.DataSource
 
 
 class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
@@ -67,6 +74,8 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     var isAdItem: List<AdItem>? = null
     var isAdsDisplayOptions: AdsDisplayOptions? = null
     var access_token = ""
+    private lateinit var allMenuItems: List<MenuDetail>
+    private val isMenuItems = mutableListOf<MenuDetail>()
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -99,8 +108,38 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             }
             binding.lblSchoolAddress.text = staffDetails!!.school_address
             binding.lblSchoolAddress.visibility = View.VISIBLE
-            Glide.with(requireActivity()).load(staffDetails!!.school_logo)
+            Glide.with(requireActivity())
+                .load(userDetails!!.staff_details[0].school_logo)
+                .listener(object : RequestListener<Drawable> {
+
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: com.bumptech.glide.request.target.Target<Drawable?>,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        Handler(Looper.getMainLooper()).post {
+                            Glide.with(requireActivity())
+                                .load(R.drawable.school_sample)
+                                .into(binding.imgSchoolLogo)
+                        }
+                        return false
+                    }
+
+
+                    override fun onResourceReady(
+                        resource: Drawable,
+                        model: Any,
+                        target: com.bumptech.glide.request.target.Target<Drawable?>?,
+                        dataSource: com.bumptech.glide.load.DataSource,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        Log.d("Glide", "Image load success")
+                        return false
+                    }
+                })
                 .into(binding.imgSchoolLogo)
+
         } else {
             access_token = userDetails!!.staff_details[0].access_token
             if (userDetails!!.staff_details.size > 1) {
@@ -116,7 +155,35 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     binding.lblSchoolRegionalName.visibility= View.GONE
                 }
                 binding.lblSchoolAddress.text = userDetails!!.staff_details[0].school_address
-                Glide.with(requireActivity()).load(userDetails!!.staff_details[0].school_logo)
+                Glide.with(requireActivity())
+                    .load(userDetails!!.staff_details[0].school_logo)
+                    .listener(object : RequestListener<Drawable> {
+
+                        override fun onLoadFailed(
+                            e: GlideException?,
+                            model: Any?,
+                            target: com.bumptech.glide.request.target.Target<Drawable?>,
+                            isFirstResource: Boolean
+                        ): Boolean {
+                            Handler(Looper.getMainLooper()).post {
+                                Glide.with(requireActivity())
+                                    .load(R.drawable.school_sample)
+                                    .into(binding.imgSchoolLogo)
+                            }
+                            return false
+                        }
+
+                        override fun onResourceReady(
+                            resource: Drawable,
+                            model: Any,
+                            target: com.bumptech.glide.request.target.Target<Drawable?>?,
+                            dataSource: com.bumptech.glide.load.DataSource,
+                            isFirstResource: Boolean
+                        ): Boolean {
+                            Log.d("Glide", "Image load success")
+                            return false
+                        }
+                    })
                     .into(binding.imgSchoolLogo)
             }
         }
@@ -152,6 +219,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     isDashBoardData = isDashboardResponse
                     isContactDetails = isDashBoardData!![0].contactDetails
                     isMenuDetails = isDashBoardData!![0].menuDetails
+                    allMenuItems=isMenuDetails!!
                     isGetAds()
                 }
             }
@@ -193,7 +261,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                //   filter(s.toString())
+                   filter(s.toString())
             }
         })
 
@@ -234,20 +302,20 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     }
 
 
-//    @SuppressLint("NotifyDataSetChanged")
-//    private fun filter(text: String) {
-//        isMenuDetails.clear()
-//        if (text.isEmpty()) {
-//            isMenuDetails.addAll(items)  // If search is empty, show all items
-//        } else {
-//            for (item in items) {
-//                if (item.title.toLowerCase(Locale.ROOT).contains(text.toLowerCase(Locale.ROOT))) {
-//                    isMenuItems.add(item)  // Add the matching GridItem to filteredList
-//                }
-//            }
-//        }
-//        isMenuAdapter.notifyDataSetChanged()
-//    }
+    @SuppressLint("NotifyDataSetChanged")
+    private fun filter(text: String) {
+        val query = text.lowercase(Locale.ROOT)
+        val filtered = if (query.isEmpty()) {
+            allMenuItems
+        } else {
+            allMenuItems.filter {
+                it.name.lowercase(Locale.ROOT).contains(query) == true
+            }
+        }
+        isMenuItems.clear()
+        isMenuItems.addAll(filtered)
+        isMenuAdapter.updateList(isMenuItems.toList())
+    }
 
     override fun onClick(p0: View?) {
         when (p0?.id) {
@@ -288,14 +356,14 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
     private fun isDashBoardData() {
 
-        val adapter =
+        isMenuAdapter =
             SchoolMenuAdapter(requireActivity(), this, null, null, Constant.isShimmerViewShow)
         val gridLayoutManager = GridLayoutManager(requireContext(), 3)
 
         // Adjust span count for special layout
         gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
-                return when (adapter.getItemViewType(position)) {
+                return when (isMenuAdapter.getItemViewType(position)) {
                     2 -> 3 // TYPE_AD: Span across all 3 columns
                     else -> 1 // Default: 1 span per item
                 }
@@ -303,7 +371,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         }
 
         binding.recyclerViewMenus.layoutManager = gridLayoutManager
-        binding.recyclerViewMenus.adapter = adapter
+        binding.recyclerViewMenus.adapter = isMenuAdapter
 
         appViewModel!!.isDashBoardData(
             access_token, Constant.staff_, requireActivity()
@@ -417,7 +485,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                         DailyCollection::class.java
                     }
                 }
-
             }
 
             Constant.M_STUDENT_REPORT -> {

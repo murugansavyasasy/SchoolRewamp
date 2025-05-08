@@ -3,7 +3,10 @@ package com.vs.schoolmessenger.Dashboard.Fragments
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Paint
+import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -13,6 +16,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.CommonScreens.Ads.AdItem
@@ -43,6 +49,7 @@ import com.vs.schoolmessenger.School.ExamSchedule.Exam
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ParentHomeFragmentBinding
+import java.util.Locale
 
 class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
@@ -58,6 +65,9 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     var isMenuDetails: List<MenuDetail>? = null
     var isAdItem: List<AdItem>? = null
     var isAdsDisplayOptions: AdsDisplayOptions? = null
+    private lateinit var allMenuItems: List<MenuDetail>
+    private val isMenuItems = mutableListOf<MenuDetail>()
+
 
 
     @SuppressLint("ClickableViewAccessibility", "SetTextI18n")
@@ -72,7 +82,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         childDetails = SharedPreference.getChildDetails(requireActivity())
         userDetails = SharedPreference.getUserDetails(requireActivity())
 
-        binding.lblStudentName.text = getString(R.string.Hello) + childDetails!!.name
+        binding.lblStudentName.text = childDetails!!.name
         binding.lblSchoolName.text = childDetails!!.school_name
         binding.lblSchoolAddress.text = childDetails!!.student_address
         binding.lblChangeRoll.paintFlags =
@@ -92,6 +102,36 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             }
         }
 
+        Glide.with(requireActivity())
+            .load(childDetails!!.school_logo_url)
+            .listener(object : RequestListener<Drawable> {
+
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any?,
+                    target: com.bumptech.glide.request.target.Target<Drawable?>,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    Handler(Looper.getMainLooper()).post {
+                        Glide.with(requireActivity())
+                            .load(R.drawable.school_sample)
+                            .into(binding.imgSchoolLogo)
+                    }
+                    return false
+                }
+
+                override fun onResourceReady(
+                    resource: Drawable,
+                    model: Any,
+                    target: com.bumptech.glide.request.target.Target<Drawable?>?,
+                    dataSource: com.bumptech.glide.load.DataSource,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    Log.d("Glide", "Image load success")
+                    return false
+                }
+            })
+            .into(binding.imgSchoolLogo)
 
         binding.lblViewDetails.paintFlags =
             binding.lblViewDetails.paintFlags or Paint.UNDERLINE_TEXT_FLAG
@@ -114,7 +154,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                // filter(s.toString())
+                 filter(s.toString())
             }
         })
 
@@ -127,6 +167,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     isDashBoardData = isDashboardResponse
                     isContactDetails = isDashBoardData!![0].contactDetails
                     isMenuDetails = isDashBoardData!![0].menuDetails
+                    allMenuItems=isMenuDetails!!
                     Log.d("isMenuDetails", isMenuDetails!!.size.toString())
                     isGetAds()
                 }
@@ -160,24 +201,19 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
     private fun isLoadData() {
         val gridLayoutManager = GridLayoutManager(requireContext(), 3)
-
-//        Constant.executeAfterDelay {
-        val isAdapter = ChildMenuAdapter(
+        isMenuAdapter= ChildMenuAdapter(
             requireActivity(), this, isMenuDetails, isAdItem, Constant.isShimmerViewDisable
         )
-//            Log.d("aditems", aditems.size.toString())
-        // Adjust span count again for the updated adapter
         gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
-                return when (isAdapter.getItemViewType(position)) {
-                    2 -> 3 // TYPE_AD: Span across all 3 columns
-                    else -> 1 // Default: 1 span per item
+                return when (isMenuAdapter.getItemViewType(position)) {
+                    2 -> 3
+                    else -> 1
                 }
             }
         }
         binding.recyclerViewMenus.layoutManager = gridLayoutManager
-        binding.recyclerViewMenus.adapter = isAdapter
-//        }
+        binding.recyclerViewMenus.adapter = isMenuAdapter
     }
 
     private fun isDashBoardData() {
@@ -199,29 +235,29 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         binding.recyclerViewMenus.layoutManager = gridLayoutManager
         binding.recyclerViewMenus.adapter = adapter
 
-
-
         Log.d("isToken", childDetails!!.access_token)
         appViewModel!!.isDashBoardData(
             childDetails!!.access_token, Constant.parent, requireActivity()
         )
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    private fun filter(text: String) {
+        val query = text.lowercase(Locale.ROOT)
+        val filtered = if (query.isEmpty()) {
+            allMenuItems
+        } else {
+            allMenuItems.filter {
+                it.name.lowercase(Locale.ROOT).contains(query) == true
+            }
+        }
+        isMenuItems.clear()
+        isMenuItems.addAll(filtered)
+        isMenuAdapter.updateList(isMenuItems.toList())
 
-//    @SuppressLint("NotifyDataSetChanged")
-//    private fun filter(text: String) {
-//        isMenuItems.clear()
-//        if (text.isEmpty()) {
-//            isMenuItems.addAll(items)  // If search is empty, show all items
-//        } else {
-//            for (item in items) {
-//                if (item.title.toLowerCase(Locale.ROOT).contains(text.toLowerCase(Locale.ROOT))) {
-//                    isMenuItems.add(item)  // Add the matching GridItem to filteredList
-//                }
-//            }
-//        }
-//        isMenuAdapter.notifyDataSetChanged()
-//    }
+    }
+
+
 
     override fun onClick(p0: View?) {
         when (p0?.id) {

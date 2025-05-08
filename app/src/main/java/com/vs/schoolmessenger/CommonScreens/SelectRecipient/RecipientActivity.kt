@@ -137,7 +137,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     tapVisibility()
                     binding.nomessageEntire.visibility =
                         if (isUserDetails!!.staff_role.toString() == Constant.isPrincipalRole.toString()
-                        ) View.GONE else View.VISIBLE
+                        ) View.VISIBLE else View.GONE
                 } else {
                     binding.lblSupportMail.paintFlags =
                         binding.lblSupportMail.paintFlags or Paint.UNDERLINE_TEXT_FLAG

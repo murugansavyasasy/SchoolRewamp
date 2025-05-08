@@ -22,6 +22,7 @@
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.READ_MEDIA_DOCUMENTS" />
 
 
     <uses-permission
@@ -337,23 +338,6 @@
         </activity>
 
         <activity
-            android:name=".AlbumImage.AlbumSelectActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
-
-        <activity
-            android:name=".AlbumImage.ImageSelectActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
-
-        <activity
-            android:name=".AlbumImage.HelperActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
-
-        <activity
             android:name=".Dashboard.Settings.RateUs.RatingSuccess"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
@@ -654,6 +638,13 @@
             android:name=".Parent.Homework.FullScreenViewerActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize">
+        </activity>
+
+        <activity
+            android:name=".AlbumImage.AlbumSelectActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
         </activity>
 
     </application>

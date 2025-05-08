@@ -3,23 +3,31 @@ package com.vs.schoolmessenger.School.Homework
 import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.graphics.Color
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
+import android.provider.MediaStore
 import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.vs.schoolmessenger.AlbumImage.AlbumSelectActivity
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
@@ -31,12 +39,13 @@ import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SectionList.Section
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.Standard
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
-import com.vs.schoolmessenger.School.Communication.Adapter.VoiceHistoryAdapter
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReport
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.OnDateSelectedListener
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.HomeWorkBinding
+import java.io.File
+import java.io.FileOutputStream
 
 
 class HomeWork : BaseActivity<HomeWorkBinding>(),
@@ -47,13 +56,25 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
         return HomeWorkBinding.inflate(layoutInflater)
     }
 
+    private val REQUEST_CODE = 1001
+//    private val fileType = "image"
+    private val fileType = "document"
+    private val selectedUris = mutableListOf<Uri>()
+
+    private val albumLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val uris = result.data?.getParcelableArrayListExtra<Uri>("selectedUris") ?: emptyList()
+            selectedUris.clear()
+            selectedUris.addAll(uris)
+          //  binding.selectedImagesCount.text = "Selected: ${selectedUris.size}"
+        }
+    }
+
+
     private val PICK_IMAGES_REQUEST = 1
     private val maxImages = 5
     private val selectedImagePaths = mutableListOf<String>()
     private val selectedImageFormats = mutableListOf<String>()
-
-    private lateinit var imageList: MutableList<ImagePickingData>
-    private lateinit var isHomeWorkReport: List<HomeWorkReport>
     var isAcademicYear: List<AcademicYear>? = null
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
@@ -61,16 +82,13 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
     var isAcademicYearId = -1
     var isCurrentAcademicYear = true
     private var isStaffDetails: StaffDetails? = null
-
-    //    var isSection: List<Section>? = null
     var isSection: List<Section>? = null
-
     var isGetStandard: List<Standard>? = null
     private lateinit var isHomeWorkReportData: List<HomeWorkReport>
-
-    //    private var itemsSection: List<String> = emptyList()
     var mHomeWorkReportAdapter: HomeWorkReportAdapter? = null
     var isSectionId = -1
+    private val CAMERA_REQUEST_CODE = 1001
+    private var imageUri: Uri? = null
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -89,22 +107,17 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
         binding.btnHistory.setOnClickListener(this)
         binding.AcademicYear.setOnClickListener(this)
         binding.btnChooseRecipient.setOnClickListener(this)
-
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
 
-        imageList = mutableListOf(
-            ImagePickingData(R.drawable.add_image),
-            ImagePickingData(R.drawable.student_image),
-            ImagePickingData(R.drawable.circle_image),
-            ImagePickingData(R.drawable.image_file),
-            ImagePickingData(R.drawable.pause_icon)
-        )
+        val path = saveDrawableToCache(R.drawable.add_image)
+        path?.let { selectedImagePaths.add(it) }
+
 
         binding.selectdate.text = Constant.getCurrentDate()
 
         binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
-        binding.rcyImages.adapter = ImagePickingAdapter(imageList, this, this)
+        binding.rcyImages.adapter = ImagePickingAdapter(selectedImagePaths, this, this)
 
         appViewModel!!.isGetAcademicList?.observe(this) { response ->
             Constant.hideLoading(this@HomeWork)
@@ -149,7 +162,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
 
         appViewModel!!.isGetHomeWorkReport?.observe(this) { response ->
             if (response != null && response.status) {
-                Log.d("statusadapter","statusadapter")
                 val isHomeWorkReport = response.data
                 isHomeWorkReportData = isHomeWorkReport
                 loadHomeWorkReportData(isHomeWorkReportData)
@@ -157,6 +169,28 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
 
 
         }
+    }
+
+    fun saveDrawableToCache(drawableResId: Int): String? {
+        val drawable = ContextCompat.getDrawable(this, drawableResId) ?: return null
+        val width = drawable.intrinsicWidth.takeIf { it > 0 } ?: 100
+        val height = drawable.intrinsicHeight.takeIf { it > 0 } ?: 100
+        val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        drawable.setBounds(0, 0, canvas.width, canvas.height)
+        drawable.draw(canvas)
+        val file = File(cacheDir, "temp_image_${System.currentTimeMillis()}.png")
+        FileOutputStream(file).use { out ->
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
+        }
+        return file.absolutePath
+    }
+
+    private fun openAlbumSelectActivity() {
+        val intent = Intent(this, AlbumSelectActivity::class.java)
+        Log.d("fileType",fileType)
+        intent.putExtra("fileType", fileType)
+        albumLauncher.launch(intent)
     }
 
 
@@ -237,6 +271,12 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
     }
 
     private fun fetchHomeWorkReportData() {
+        binding.rcyHomeWorkReport.visibility = View.VISIBLE
+        mHomeWorkReportAdapter = HomeWorkReportAdapter(null, this, this, Constant.isShimmerViewShow)
+        binding.rcyHomeWorkReport.layoutManager = LinearLayoutManager(this)
+        binding.rcyHomeWorkReport.isNestedScrollingEnabled = false
+        binding.rcyHomeWorkReport.adapter = mHomeWorkReportAdapter
+
         appViewModel?.isGetHomeWorkReport(
             isAccessToken!!,
             isSectionId!!,
@@ -249,14 +289,17 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
     private fun loadHomeWorkReportData(isHomeWorkReportDetails: List<HomeWorkReport>) {
 
         binding.rcyHomeWorkReport.visibility = View.VISIBLE
-        mHomeWorkReportAdapter = HomeWorkReportAdapter(isHomeWorkReportDetails, this, this, Constant.isShimmerViewShow)
+        mHomeWorkReportAdapter = HomeWorkReportAdapter(
+            isHomeWorkReportDetails,
+            this,
+            this,
+            Constant.isShimmerViewDisable
+        )
         binding.rcyHomeWorkReport.layoutManager = LinearLayoutManager(this)
         binding.rcyHomeWorkReport.isNestedScrollingEnabled = false
         binding.rcyHomeWorkReport.adapter = mHomeWorkReportAdapter
 
     }
-
-
 
 
     private fun isGetStandardSection() {
@@ -271,9 +314,9 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
     }
 
     // -----------------------
-    private fun canAddMoreFiles(): Boolean {
-        return imageList.size < 5
-    }
+//    private fun canAddMoreFiles(): Boolean {
+//        return imageList.size < 5
+//    }
 
     private fun isGetAcademicYear() {
         Constant.showLoading(this@HomeWork)
@@ -312,36 +355,37 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
         val rlaDocument = dialog.findViewById<RelativeLayout>(R.id.rlaVideo)
 
         rlaGallery.setOnClickListener {
+            openAlbumSelectActivity()
             //gallery
-            if (canAddMoreFiles()) {
-                pickImagesFromGallery()
-            } else {
-                Toast.makeText(this, getString(R.string.upload_maximum_5_files), Toast.LENGTH_SHORT)
-                    .show()
-            }
+//            if (canAddMoreFiles()) {
+          //  pickImagesFromGallery()
+//            } else {
+//                Toast.makeText(this, getString(R.string.upload_maximum_5_files), Toast.LENGTH_SHORT)
+//                    .show()
+//            }
             dialog.dismiss()
         }
 
         rlaCamera.setOnClickListener {
 
             // camera
-            if (canAddMoreFiles()) {
-//                takePhoto()
-            } else {
-                Toast.makeText(this, getString(R.string.upload_maximum_5_files), Toast.LENGTH_SHORT)
-                    .show()
-            }
+//            if (canAddMoreFiles()) {
+            openCamera()
+//            } else {
+//                Toast.makeText(this, getString(R.string.upload_maximum_5_files), Toast.LENGTH_SHORT)
+//                    .show()
+//            }
 
             dialog.dismiss()
         }
         rlaDocument.setOnClickListener {
-            // document PDF,Word
-            if (canAddMoreFiles()) {
-//                pickDocument()
-            } else {
-                Toast.makeText(this, getString(R.string.upload_maximum_5_files), Toast.LENGTH_SHORT)
-                    .show()
-            }
+//            // document PDF,Word
+//            if (canAddMoreFiles()) {
+////                pickDocument()
+//            } else {
+//                Toast.makeText(this, getString(R.string.upload_maximum_5_files), Toast.LENGTH_SHORT)
+//                    .show()
+//            }
             dialog.dismiss()
         }
 
@@ -357,6 +401,16 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
         dialog.show()
 
     }
+
+    fun openCamera() {
+        val imageFile = File.createTempFile("camera_img", ".jpg", cacheDir)
+        imageUri = FileProvider.getUriForFile(this, "$packageName.provider", imageFile)
+
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
+        startActivityForResult(intent, CAMERA_REQUEST_CODE)
+    }
+
 
     private fun pickImagesFromGallery() {
         val intent = Intent()
@@ -374,9 +428,9 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == PICK_IMAGES_REQUEST && resultCode == Activity.RESULT_OK) {
-            selectedImagePaths.clear()
-            selectedImageFormats.clear()
+        if (requestCode == PICK_IMAGES_REQUEST && resultCode == RESULT_OK) {
+//            selectedImagePaths.clear()
+//            selectedImageFormats.clear()
 
             val clipData = data?.clipData
             if (clipData != null) {
@@ -388,12 +442,15 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
                     selectedImagePaths.add(path)
                     selectedImageFormats.add(format)
                 }
+                Log.d("selectedImagePaths", selectedImagePaths.size.toString())
+                binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
+                binding.rcyImages.adapter = ImagePickingAdapter(selectedImagePaths, this, this)
 
-                if (clipData.itemCount > maxImages) {
-                    Toast.makeText(
-                        this,
-                        getString(R.string.You_can_only_select) + maxImages + getString(R.string.images_), Toast.LENGTH_SHORT).show()
-                }
+//                if (clipData.itemCount > maxImages) {
+//                    Toast.makeText(
+//                        this,
+//                        getString(R.string.You_can_only_select) + maxImages + getString(R.string.images_), Toast.LENGTH_SHORT).show()
+//                }
             } else {
                 data?.data?.let { uri ->
                     val path = getPathFromUri(uri)
@@ -402,8 +459,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
                     selectedImageFormats.add(format)
                 }
             }
-
-            // Do something with selectedImagePaths and selectedImageFormats
         }
     }
 

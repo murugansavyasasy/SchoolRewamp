@@ -41,6 +41,7 @@ class ChildMenuAdapter(
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
     private val TYPE_AD = 2
+    private val items = mutableListOf<MenuDetail>()
 
     override fun getItemViewType(position: Int): Int {
         return when {
@@ -72,6 +73,13 @@ class ChildMenuAdapter(
             }
         }
     }
+
+    fun updateList(newList: List<MenuDetail>) {
+        isMenuDetails = emptyList()
+        isMenuDetails=newList
+        notifyDataSetChanged()
+    }
+
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
@@ -194,26 +202,6 @@ class ChildMenuAdapter(
             }
         }
     }
-
-//    fun toggleMoreItems(lblSeeMore: TextView,rlaMenuExample:LinearLayout) {
-//        if (isSeeMore) {
-//            lblSeeMore.text = context.getString(R.string.SeeAll)
-//            rlaMenuExample.visibility = View.VISIBLE
-//            val startPosition = itemList!!.size - seeMoreMenus
-//            itemList!!.subList(startPosition, itemList!!.size).clear()
-//            notifyItemRangeRemoved(startPosition, seeMoreMenus)
-//            seeMoreMenus = 0
-//        } else {
-//            rlaMenuExample.visibility=View.GONE
-//            lblSeeMore.text =context.getString(R.string.SeeLess)
-//            val moreItems = getMoreItems()
-//            seeMoreMenus = moreItems.size
-//            val startPosition = itemList!!.size
-//            itemList!!.addAll(moreItems)
-//            notifyItemRangeInserted(startPosition, seeMoreMenus)
-//        }
-//        isSeeMore = !isSeeMore
-//    }
 
     class AdViewHolder(itemView: View, private val adapter: ChildMenuAdapter) :
         RecyclerView.ViewHolder(itemView) {

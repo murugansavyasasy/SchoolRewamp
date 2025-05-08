@@ -90,7 +90,6 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/lnrParent">
 
-
         <RelativeLayout
             android:id="@+id/rytGPSRedirect"
             android:layout_width="match_parent"
@@ -141,8 +140,9 @@
                     android:layout_marginTop="@dimen/ten"
                     android:layout_toEndOf="@+id/imgLocation"
                     android:text="@string/to_enhance_your_experience_and_provide_accurate_location_based_features_please_enable_gps"
-                    android:textColor="@color/grey"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/fifteen_sp" />
+
 
             </RelativeLayout>
 
@@ -360,15 +360,15 @@
         </LinearLayout>
 
         <RelativeLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/lnrSpinners">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycleAttendanceReports"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
+                android:visibility="visible"
                 tools:listitem="@layout/giometric_attendance_report_item_list" />
 
 

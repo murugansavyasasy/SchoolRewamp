@@ -1,4 +1,3 @@
-
 package com.vs.schoolmessenger.School.Homework
 
 import android.annotation.SuppressLint
@@ -106,7 +105,7 @@ class HomeWorkReportAdapter(
         }
 
         private var isTextExpanded = false
-        private val imgNewImage: ImageView = itemView.findViewById(R.id.imgNewImage)
+//        private val imgNewImage: ImageView = itemView.findViewById(R.id.imgNewImage)
 
 
         // Image
