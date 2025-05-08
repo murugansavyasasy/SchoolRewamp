@@ -9,7 +9,7 @@
         android:id="@+id/imgRemoveDate"
         android:layout_width="@dimen/twenty"
         android:layout_height="@dimen/twenty"
-        android:elevation="10dp"
+        android:elevation="@dimen/ten"
         android:layout_marginStart="@dimen/five"
         android:src="@drawable/close_red_color">
 
@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:padding="10dp"
+            android:padding="@dimen/ten"
             style="@style/CustomTextStylePoppinsBold"
             android:text="01 Apr 2004"
             android:textColor="@color/black"

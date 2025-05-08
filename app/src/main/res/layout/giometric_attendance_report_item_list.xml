@@ -23,7 +23,7 @@
 
         <LinearLayout
             android:id="@+id/lnrDate"
-            android:layout_width="@dimen/eighty"
+            android:layout_width="@dimen/hundred"
             android:layout_height="match_parent"
             android:layout_alignBottom="@id/rytDetails"
             android:layout_marginBottom="@dimen/eight"

@@ -30,7 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/ten"
-                android:text="School Strength"
+                android:text="@string/lblSchoolStrength"
                 android:textColor="@color/black"
                 android:textSize="@dimen/twenty_sp"
                 android:textStyle="bold"/>
@@ -49,8 +49,8 @@
 
             <com.vs.schoolmessenger.Utils.PieChartView
                 android:id="@+id/customPieChart"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_width="@dimen/one_fifty"
+                android:layout_height="@dimen/one_fifty"
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_gravity="center_vertical"
                 android:layout_marginEnd="@dimen/ten"/>
@@ -71,10 +71,10 @@
                     android:gravity="center_vertical">
 
                     <View
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
+                        android:layout_width="@dimen/fifteen"
+                        android:layout_height="@dimen/fifteen"
                         android:background="@color/teal"
-                        android:layout_marginEnd="8dp"/>
+                        android:layout_marginEnd="@dimen/eight"/>
 
                     <TextView
                         android:id="@+id/students_data"
@@ -84,7 +84,7 @@
                         android:textStyle="bold"
                         android:textColor="@color/black"
                         android:fontFamily="@font/poppins_medium"
-                        android:textSize="13sp"/>
+                        android:textSize="@dimen/thirteen_sp"/>
                 </LinearLayout>
 
                 <!-- Staff -->
@@ -93,13 +93,13 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:layout_marginTop="15dp">
+                    android:layout_marginTop="@dimen/fifteen">
 
                     <View
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
+                        android:layout_width="@dimen/fifteen"
+                        android:layout_height="@dimen/fifteen"
                         android:background="@color/red"
-                        android:layout_marginEnd="8dp"/>
+                        android:layout_marginEnd="@dimen/eight"/>
 
                     <TextView
                         android:id="@+id/students_data1"
@@ -109,7 +109,7 @@
                         android:textStyle="bold"
                         android:textColor="@color/black"
                         android:fontFamily="@font/poppins_medium"
-                        android:textSize="13sp"/>
+                        android:textSize="@dimen/thirteen_sp"/>
                 </LinearLayout>
 
                 <!-- Total -->
@@ -118,13 +118,13 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:layout_marginTop="15dp">
+                    android:layout_marginTop="@dimen/fifteen">
 
                     <View
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
+                        android:layout_width="@dimen/fifteen"
+                        android:layout_height="@dimen/fifteen"
                         android:background="@color/yellow"
-                        android:layout_marginEnd="8dp"/>
+                        android:layout_marginEnd="@dimen/eight"/>
 
                     <TextView
                         android:id="@+id/students_data2"
@@ -134,7 +134,7 @@
                         android:textStyle="bold"
                         android:textColor="@color/black"
                         android:fontFamily="@font/poppins_medium"
-                        android:textSize="13sp"/>
+                        android:textSize="@dimen/thirteen_sp"/>
                 </LinearLayout>
 
             </LinearLayout>
@@ -158,19 +158,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="9th Standard"
-                android:textSize="14sp"
+                android:textSize="@dimen/fourteen_sp"
                 android:textStyle="bold"
                 android:textColor="@color/black"
                 android:fontFamily="@font/poppins_bold"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="@dimen/ten"
                 android:layout_marginStart="@dimen/ten"
                 android:layout_weight="1"/>
 
             <ImageView
                 android:id="@+id/header2"
-                android:layout_width="23dp"
-                android:layout_height="19dp"
+                android:layout_width="@dimen/twenty_three"
+                android:layout_height="@dimen/nineteen"
                 android:layout_gravity="center_vertical"
                 android:layout_marginTop="@dimen/five"
                 android:layout_marginEnd="@dimen/ten"
@@ -181,7 +181,7 @@
         <com.github.aachartmodel.aainfographics.aachartcreator.AAChartView
             android:id="@+id/aa_chart_view"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_height="@dimen/four_hundred"
             android:layout_below="@+id/linear_layout2"
             android:layout_marginTop="@dimen/three"
             android:layout_marginStart="@dimen/ten"

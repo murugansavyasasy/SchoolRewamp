@@ -14,9 +14,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/fifteen"
         android:gravity="center"
-        android:text="Alert!"
+        android:text="@string/alert"
         android:textColor="#000"
-        android:textSize="18sp"
+        android:textSize="@dimen/eighteen_sp"
         android:textStyle="bold" />
 
     <TextView
@@ -33,7 +33,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
+        android:layout_height="@dimen/point_five"
         android:layout_marginTop="@dimen/twenty"
         android:background="@color/mild_grey2" />
 
@@ -52,7 +52,7 @@
             android:padding="@dimen/ten"
             android:text="@string/Cancel"
             android:textColor="@color/navi_blue2"
-            android:textSize="@dimen/fifteen" />
+            android:textSize="@dimen/fifteen_sp" />
 
 
         <TextView
@@ -63,9 +63,9 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:padding="@dimen/ten"
-            android:text="OK"
+            android:text="@string/permission_ok"
             android:textColor="@color/navi_blue2"
-            android:textSize="@dimen/fifteen" />
+            android:textSize="@dimen/fifteen_sp" />
 
     </LinearLayout>
 

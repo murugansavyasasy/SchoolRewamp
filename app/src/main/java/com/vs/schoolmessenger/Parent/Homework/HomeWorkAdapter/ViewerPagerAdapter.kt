@@ -34,7 +34,6 @@ class ViewerPagerAdapter(
             }
         }
 
-        holder.subjectName.text=subjectName
 
 
     }
@@ -44,6 +43,6 @@ class ViewerPagerAdapter(
 
     inner class PagerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imageView: ImageView = itemView.findViewById(R.id.fullScreenImageView)
-        val subjectName: TextView = itemView.findViewById(R.id.lblsubject)
+
     }
 }

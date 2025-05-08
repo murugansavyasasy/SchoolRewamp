@@ -13,7 +13,6 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.vs.schoolmessenger.AlbumImage.AlbumSelectActivity
-import com.vs.schoolmessenger.AlbumImage.Constants
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
@@ -80,8 +79,8 @@ class ReportTheBug : BaseActivity<ReportBugBinding>(), View.OnClickListener {
 
     private fun openGallery() {
         val intent1 = Intent(this, AlbumSelectActivity::class.java)
-        intent1.putExtra(Constant.Gallery, Constant.Images)
-        intent1.putExtra(Constants.INTENT_EXTRA_LIMIT, 4)
+       // intent1.putExtra(Constant.Gallery, Constant.Images)
+       // intent1.putExtra(Constants.INTENT_EXTRA_LIMIT, 4)
         startActivityForResult(intent1, REQUEST_IMAGE_GALLERY_CAPTURE)
 
     }

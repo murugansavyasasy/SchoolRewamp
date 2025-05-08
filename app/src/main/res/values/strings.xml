@@ -384,6 +384,7 @@
     <string name="Student_s"> Student (s)</string>
     <string name="Please_select_least_student">Please select at least one student to send the message.</string>
     <string name="Login_Management">Login As Management</string>
+    <string name="Login_As">Login As Login As </string>
     <string name="Login_Student_Parent">Login As Student/Parent</string>
     <string name="Invalid_role">Invalid user role</string>
     <string name="Student_Parent">Student/Parent</string>
@@ -485,5 +486,30 @@
     <string name="Permission_granted">Permission granted!</string>
     <string name="Permission_denied_download_files">Permission denied, cannot download files.</string>
     <string name="permissions_permanently_denied_proceed">Some permissions are permanently denied. Please enable them in app settings to proceed.</string>
+    <string name="mother_name">Mother name</string>
+    <string name="father_occupation">Father occupation</string>
+    <string name="mother_occupation">Mother occupation</string>
+    <string name="secondary_phone_no">Secondary Phone no</string>
+    <string name="punch_history">Punch History</string>
+    <string name="view_"><![CDATA[View >>]]></string>
+    <string name="click_proceed_to_continue">Click proceed to continue</string>
+    <string name="proceed">Proceed</string>
+    <string name="login_as_parent">Login as Parent</string>
+    <string name="recipient_selection">Recipient Selection</string>
+    <string name="choose_academic_year">Choose academic year :</string>
+    <string name="add_location">Add location</string>
+    <string name="lblchoose_academic_year">Choose academic year:</string>
+    <string name="entire_school">Entire School</string>
+    <string name="section_student">Section/Student</string>
+    <string name="staff">Staff</string>
+    <string name="group_created">Group Created</string>
+    <string name="select_subject">Select Subject</string>
+    <string name="no_data_found">No data found</string>
+    <string name="your_academic_year_configuration_are_incorrect_please_contact_school_chimes">Your academic year configuration are incorrect. Please contact School Chimes.</string>
+    <string name="check_network_speed">Check network speed</string>
+    <string name="today_s_report">Today\'s Report</string>
+    <string name="staffwise_report">Staffwise Report</string>
+    <string name="select_staff">Select Staff</string>
+    <string name="alert">Alert!</string>
 
 </resources>

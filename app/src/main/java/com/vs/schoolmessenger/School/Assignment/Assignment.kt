@@ -64,8 +64,8 @@ class Assignment : BaseActivity<AssignmentBinding>(),
         )
 
         // Set up RecyclerView with a GridLayoutManager
-        binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
-        binding.rcyImages.adapter = ImagePickingAdapter(imageList, this, this)
+//        binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
+//        binding.rcyImages.adapter = ImagePickingAdapter(imageList, this, this)
 
         binding.edtDescription.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {

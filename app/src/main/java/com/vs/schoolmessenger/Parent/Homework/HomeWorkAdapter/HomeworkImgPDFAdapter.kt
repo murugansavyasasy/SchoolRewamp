@@ -18,9 +18,11 @@ import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDeta
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
+import javax.security.auth.Subject
+import kotlin.math.log
 
 class HomeworkImgPDFAdapter(
-    private var GetHomeWorkDetails: List<GetHomeworkDetails>?,
+    private var SubjectName:String ,
     private var GetFilePathDetailsData: List<GetFilePathDetails>?,
     private var context: Context,
     private var isLoading: Boolean
@@ -54,7 +56,8 @@ class HomeworkImgPDFAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
             // Bind actual data when loading is complete
-            holder.bind(GetHomeWorkDetails!![position],GetFilePathDetailsData!![position],position, this)
+
+            holder.bind(SubjectName,GetFilePathDetailsData!![position],position, this)
         }
     }
     class DataViewHolder(itemView: View, private val context: Context) :
@@ -65,7 +68,9 @@ class HomeworkImgPDFAdapter(
 
         @SuppressLint("ClickableViewAccessibility")
         fun bind(
-            item: GetHomeworkDetails?,
+
+            SubjectName: String,
+
             data: GetFilePathDetails?,
             position: Int,
             adapter: HomeworkImgPDFAdapter, ) {
@@ -100,9 +105,10 @@ class HomeworkImgPDFAdapter(
             }
 
             DefaultImage.setOnClickListener {
-                val subjectName=item?.subject_name
-                val selectedItem = adapter.GetFilePathDetailsData!![position]
+               val selectedItem = adapter.GetFilePathDetailsData!![position]
                 val context = itemView.context
+
+
 
                 if (selectedItem.type.equals(Constant.IMAGE, ignoreCase = true)) {
                     // Filter only image items
@@ -116,22 +122,29 @@ class HomeworkImgPDFAdapter(
                     val intent = Intent(context, FullScreenViewerActivity::class.java)
                     val dataJson = Gson().toJson(imageList)
                     Log.d("JsonImageList",dataJson.toString())
-                    intent.putExtra(Constant.subjectName, subjectName)
+
+                    intent.putExtra("SelectedSubjectName", SubjectName)
+                    Log.d("SelectedSubjectName",SubjectName)
                     intent.putExtra(Constant.data, dataJson)
                     intent.putExtra(Constant.position, selectedImageIndex)
                     context.startActivity(intent)
                 }
             }
+
+
             WebViewThumbnail.setOnClickListener{
-                val subjectName=item?.subject_name
                 val selectedItem = adapter.GetFilePathDetailsData!![position]
                 val context = itemView.context
                 Log.d("HomeworkPDFAdapter,Document Clicked!","HomeworkPDFAdapter,Document Clicked!")
 
                     val intent = Intent(context, FullScreenViewerActivity::class.java)
-                intent.putExtra(Constant.subjectName, subjectName)
+
+                intent.putExtra("SelectedSubjectName", SubjectName)
+                Log.d("SelectedSubjectName",SubjectName)
+//                intent.putExtra("SelectedSubjectName", item?.subject_name)
                 intent.putExtra(Constant.SelectedDocumentPath, selectedItem.path)
-                    intent.putExtra(Constant.SelectedDocumentType, selectedItem.type)
+                Log.d("SelectedDocumentpath",selectedItem.path)
+                intent.putExtra(Constant.SelectedDocumentType, selectedItem.type)
                     context.startActivity(intent)
 
             }
@@ -140,21 +153,17 @@ class HomeworkImgPDFAdapter(
 
 
         }
-        private fun openDocumentInWebView(url: String?) {
-            url?.let {
-                WebViewThumbnail.settings.javaScriptEnabled = true
-                WebViewThumbnail.settings.loadWithOverviewMode = true
-                WebViewThumbnail.settings.useWideViewPort = true
-                WebViewThumbnail.settings.setSupportZoom(true)
-                WebViewThumbnail.settings.builtInZoomControls = true
-                WebViewThumbnail.settings.displayZoomControls = false
 
-                val googleDocsViewerUrl = "https://docs.google.com/gview?embedded=true&url=$url"
-                WebViewThumbnail.loadUrl(googleDocsViewerUrl)
+        private fun openDocumentInWebView(urlpath: String) {
+            DefaultImage.visibility=View.GONE
+            WebViewThumbnail.isClickable = true
+            WebViewThumbnail.isFocusable = true
+            WebViewThumbnail.isFocusableInTouchMode = true
+            WebViewThumbnail.visibility=View.VISIBLE
+            val googleDocsUrl = "https://docs.google.com/gview?embedded=true&url=$urlpath"
+            WebViewThumbnail.loadUrl(googleDocsUrl);
+            Log.d("After Loading FilePath", googleDocsUrl)
 
-                WebViewThumbnail.visibility = View.VISIBLE
-                DefaultImage.visibility = View.GONE
-            }
         }
 
 

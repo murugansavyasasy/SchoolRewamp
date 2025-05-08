@@ -36,9 +36,6 @@ class SchoolMenuAdapter(
     private val TYPE_DATA = 1
     private val TYPE_AD = 2
 
-    private var isSeeMore = false
-    private var seeMoreMenus = 0
-
     override fun getItemViewType(position: Int): Int {
         return when {
             isLoading -> TYPE_SHIMMER
@@ -46,6 +43,8 @@ class SchoolMenuAdapter(
             else -> TYPE_DATA
         }
     }
+
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -68,11 +67,17 @@ class SchoolMenuAdapter(
         }
     }
 
+    fun updateList(newList: List<MenuDetail>) {
+        itemList = emptyList()
+        itemList=newList
+        notifyDataSetChanged()
+    }
+
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is DataViewHolder -> {
                 itemList?.get(position)?.let { menuDetail ->
-                    holder.bind(menuDetail, listener)
+                    holder.bind(menuDetail,position, listener)
                 }
             }
 
@@ -103,7 +108,7 @@ class SchoolMenuAdapter(
         private val lblMenuName: TextView = itemView.findViewById(R.id.lblMenuName)
         private val rlaMenu: RelativeLayout = itemView.findViewById(R.id.rlaMenu)
 
-        fun bind(data: MenuDetail, listener: MenuClickListener) {
+        fun bind(data: MenuDetail,position: Int, listener: MenuClickListener) {
             lblMenuName.text = data.name
 
             when (data.id) {

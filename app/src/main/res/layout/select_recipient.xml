@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:background="@color/mild_grey5"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/mild_grey5">
 
     <RelativeLayout
         android:id="@+id/rlaTitle"
@@ -16,15 +16,14 @@
             android:layout_width="@dimen/thirty_five"
             android:layout_height="@dimen/thirty_five"
             android:layout_centerVertical="true"
-            android:src="@drawable/left_arrow_blue">
-        </ImageView>
+            android:src="@drawable/left_arrow_blue"></ImageView>
 
         <TextView
             android:id="@+id/lblSchoolName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/ten"
             android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/ten"
             android:layout_toEndOf="@+id/imgBack"
             android:text="@string/select_recipient"
             android:textColor="@color/navi_blue2"
@@ -34,17 +33,17 @@
 
         <TextView
             android:id="@+id/lblSchoolRegionalName"
+            style="@style/CustomTextStylePoppinsMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/imgBack"
-            android:layout_marginEnd="@dimen/ten"
             android:layout_below="@+id/lblSchoolName"
-            android:visibility="gone"
             android:layout_marginStart="@dimen/twele"
+            android:layout_marginEnd="@dimen/ten"
+            android:layout_toEndOf="@+id/imgBack"
             android:text=""
             android:textColor="@color/black"
-            style="@style/CustomTextStylePoppinsMedium"
-            android:textSize="@dimen/thirteen_sp">
+            android:textSize="@dimen/thirteen_sp"
+            android:visibility="gone">
 
         </TextView>
 
@@ -59,8 +58,8 @@
         android:text="@string/send_to"
         android:textColor="@color/black"
         android:textSize="@dimen/fifteen_sp"
-        android:visibility="gone"
-        android:textStyle="normal" />
+        android:textStyle="normal"
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/lnrAcademicYearView"
@@ -70,22 +69,22 @@
         android:layout_marginStart="@dimen/fifteen"
         android:layout_marginTop="@dimen/five"
         android:layout_marginEnd="@dimen/fifteen"
-        android:visibility="visible"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:visibility="visible">
 
         <TextView
             android:id="@+id/tvAcademicYearLabel"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Choose academic year:"
+            android:text="@string/lblchoose_academic_year"
+            android:layout_marginEnd="@dimen/ten"
             android:textColor="@color/light_gray"
-            android:textSize="@dimen/thirteen_sp"
-            style="@style/CustomTextStylePoppinsBold"
-            android:layout_marginEnd="@dimen/ten"/>
+            android:textSize="@dimen/thirteen_sp" />
 
         <RelativeLayout
             android:id="@+id/rlaAcademicYear"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:background="@drawable/rect_white_light_radious"
@@ -96,8 +95,8 @@
                 android:id="@+id/lblAcademicYear"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
                 android:fontFamily="@font/poppins_bold"
                 android:text=""
                 android:textColor="@color/black"
@@ -115,7 +114,6 @@
 
         </RelativeLayout>
     </LinearLayout>
-
 
 
     <LinearLayout
@@ -140,9 +138,9 @@
             android:fontFamily="@font/poppins_bold"
             android:gravity="center"
             android:textStyle="bold"
-            android:text="Entire School"
+            android:text="@string/entire_school"
             android:textColor="@color/black"
-            android:textSize="@dimen/ten">
+            android:textSize="@dimen/ten_sp">
         </TextView>
 
         <TextView
@@ -152,10 +150,9 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:fontFamily="@font/poppins_bold"
-            android:textStyle="bold"
             android:gravity="center"
-            android:textSize="@dimen/ten"
-            android:text="Standards"
+            android:textSize="@dimen/ten_sp"
+            android:text="@string/Standards"
             android:textColor="@color/black"/>
 
         <TextView
@@ -165,10 +162,9 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:fontFamily="@font/poppins_bold"
-            android:textStyle="bold"
             android:gravity="center"
-            android:textSize="@dimen/ten"
-            android:text="Section/Student"
+            android:textSize="@dimen/ten_sp"
+            android:text="@string/section_student"
             android:textColor="@color/black"/>
 
         <TextView
@@ -178,11 +174,11 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:fontFamily="@font/poppins_bold"
-            android:textStyle="bold"
             android:gravity="center"
-            android:textSize="@dimen/ten"
-            android:text="Groups"
+            android:textSize="@dimen/ten_sp"
+            android:text="@string/Groups"
             android:textColor="@color/black"/>
+
 
         <TextView
             android:id="@+id/tapStaffs"
@@ -191,13 +187,10 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:fontFamily="@font/poppins_bold"
-            android:textStyle="bold"
             android:gravity="center"
-            android:textSize="@dimen/ten"
-            android:text="Staff"
+            android:textSize="@dimen/ten_sp"
+            android:text="@string/staff"
             android:textColor="@color/black">
-
-
         </TextView>
 
 
@@ -205,16 +198,14 @@
 
     <TextView
         android:id="@+id/grouplabel"
+        style="@style/CustomTextStylePoppinsBold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tabLayout"
-        style="@style/CustomTextStylePoppinsBold"
-        android:layout_marginTop="@dimen/twenty"
-        android:text="Group"
         android:layout_marginStart="@dimen/twenty"
-        android:textColor="@color/black"
-        android:textSize="@dimen/fifteen_sp"
-        android:visibility="gone" />
+        android:layout_marginTop="@dimen/twenty"
+        android:text="@string/Group"
+        ></TextView>
 
     <RelativeLayout
         android:id="@+id/rlaStandard"
@@ -257,17 +248,16 @@
 
     <CheckBox
         android:id="@+id/chAllSelect"
+        style="@style/CustomCheckBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rlaStandard"
-        android:layout_marginTop="@dimen/ten"
-        android:visibility="gone"
-        style="@style/CustomCheckBox"
         android:layout_marginStart="@dimen/fifteen"
-        android:text="Select all"
+        android:text="@string/Selectallaspresent"
         android:textColor="@color/black"
         android:textSize="@dimen/fifteen_sp"
-        android:textStyle="bold">
+        android:textStyle="bold"
+        android:visibility="gone">
 
     </CheckBox>
 
@@ -278,36 +268,45 @@
         android:layout_below="@+id/chAllSelect"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="@dimen/twenty_five"
-        android:text="Group Created"
+        android:text="@string/group_created"
         android:textColor="@color/grey"
         android:textSize="@dimen/thirteen_sp"
         android:visibility="gone">
 
     </TextView>
 
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <RelativeLayout
+        android:id="@+id/rytList"
         android:layout_width="match_parent"
+        android:layout_marginBottom="@dimen/fifty"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/lblCreatedOn"
-        android:layout_marginStart="@dimen/twenty"
-        android:layout_marginTop="@dimen/ten"
-        android:layout_marginEnd="@dimen/twenty"
-        android:layout_marginBottom="@dimen/ten"
-        android:background="@drawable/rect_white"
-        android:visibility="gone">
+        android:layout_below="@+id/lblCreatedOn">
 
-    </androidx.recyclerview.widget.RecyclerView>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/twenty"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/twenty"
+            android:layout_marginBottom="@dimen/ten"
+            android:background="@drawable/rect_white"
+            android:visibility="gone">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </RelativeLayout>
+
 
     <RelativeLayout
         android:id="@+id/rlaSubject"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/recyclerView"
+        android:layout_below="@+id/rytList"
         android:layout_marginStart="@dimen/fifteen"
         android:layout_marginTop="0dp"
         android:layout_marginEnd="@dimen/fifteen"
+        android:layout_marginBottom="@dimen/fifty"
         android:background="@drawable/bg_stroke_rect_black"
         android:padding="@dimen/ten"
         android:visibility="gone">
@@ -331,7 +330,7 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/fifteen"
             android:fontFamily="@font/poppins_bold"
-            android:text="Select Subject"
+            android:text="@string/select_subject"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"
             android:textStyle="bold">
@@ -342,12 +341,12 @@
 
     <TextView
         android:id="@+id/textdesc"
+        style="@style/CustomTextStylePoppinsBold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/nomessageEntire"
-        style="@style/CustomTextStylePoppinsBold"
         android:gravity="center"
-        android:padding="16dp"
+        android:padding="@dimen/sixteen"
         android:text="@string/Tap_share_message_everyone_school"
         android:textColor="@color/black"
         android:textSize="@dimen/fifteen_sp"
@@ -358,11 +357,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:visibility="gone"
         android:layout_marginBottom="@dimen/five"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="@dimen/five">
+        android:padding="@dimen/five"
+        android:visibility="gone">
 
 
         <LinearLayout
@@ -377,7 +376,7 @@
             <Button
                 android:id="@+id/btnSpecificStudent"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="@dimen/fourty"
                 android:layout_weight="0.5"
                 android:background="@drawable/bg_gray"
                 android:gravity="center"
@@ -392,11 +391,10 @@
                 android:visibility="gone" />
 
 
-
             <RelativeLayout
                 android:id="@+id/rytSend"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="@dimen/fourty"
                 android:layout_marginStart="@dimen/twenty_five"
                 android:layout_marginEnd="@dimen/twenty_five"
                 android:layout_weight="0.5"
@@ -409,26 +407,26 @@
                     android:id="@+id/lblSend"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:fontFamily="@font/poppins_regular"
                     android:gravity="center_horizontal"
-                    android:visibility="visible"
                     android:text="@string/Send"
-                    android:layout_centerVertical="true"
                     android:textColor="@color/white"
                     android:textSize="@dimen/fifteen_sp"
-                    android:textStyle="normal">
+                    android:textStyle="normal"
+                    android:visibility="visible">
 
                 </TextView>
 
 
                 <ImageView
-                    android:layout_toEndOf="@+id/lblSend"
                     android:id="@+id/imgSend1"
                     android:layout_width="@dimen/twenty"
                     android:layout_height="@dimen/twenty"
-                    android:layout_marginStart="@dimen/five"
                     android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/five"
                     android:layout_marginEnd="@dimen/five"
+                    android:layout_toEndOf="@+id/lblSend"
                     android:src="@drawable/send_icon_white" />
 
 
@@ -441,14 +439,14 @@
 
     <TextView
         android:id="@+id/lblNoRecord"
-        android:layout_width="match_parent"
-        android:textColor="@color/black"
-        android:visibility="gone"
-        android:textSize="@dimen/fifteen_sp"
         style="@style/CustomTextStylePoppinsBold"
-        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_height="wrap_content">
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/fifteen_sp"
+        android:visibility="gone">
 
     </TextView>
 
@@ -456,7 +454,7 @@
         android:id="@+id/txtNoData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No data found"
+        android:text="@string/no_data_found"
         android:textColor="@color/black"
         android:textSize="18sp"
         style="@style/CustomTextStylePoppinsBold"
@@ -464,31 +462,32 @@
         android:layout_centerInParent="true"
         android:visibility="gone"
         android:layout_below="@+id/nomessage"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="@dimen/twenty" />
+
 
     <ImageView
         android:id="@+id/nomessage"
         android:layout_width="250dp"
         android:layout_height="250dp"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/nodataimage"
         android:textColor="@color/black"
         android:textSize="18sp"
-        android:src="@drawable/nodataimage"
-        android:layout_gravity="center"
-        android:layout_centerInParent="true"
-        android:visibility="gone"
-        android:layout_marginTop="20dp" />
+        android:visibility="gone" />
 
     <ImageView
         android:id="@+id/nomessageEntire"
         android:layout_width="250dp"
         android:layout_height="250dp"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/ic_entire_school_send"
         android:textColor="@color/black"
         android:textSize="18sp"
-        android:src="@drawable/ic_entire_school_send"
-        android:layout_gravity="center"
-        android:layout_centerInParent="true"
-        android:visibility="gone"
-        android:layout_marginTop="20dp" />
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/rytAcademicYear"
@@ -499,10 +498,10 @@
         android:visibility="gone">
 
         <ImageView
-            android:layout_width="250dp"
-            android:layout_height="250dp"
+            android:layout_width="@dimen/two_fifty"
+            android:layout_height="@dimen/two_fifty"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textSize="@dimen/eighteen_sp"
             android:src="@drawable/customer_support"
             android:layout_gravity="center"
             android:layout_centerInParent="true"
@@ -516,7 +515,7 @@
             android:layout_marginStart="@dimen/twenty_five"
             android:layout_marginEnd="@dimen/twenty_five"
             android:gravity="center"
-            android:text="Your academic year configuration are incorrect. Please contact School Chimes."
+            android:text="@string/your_academic_year_configuration_are_incorrect_please_contact_school_chimes"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp">
 

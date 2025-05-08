@@ -23,13 +23,12 @@ class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(
     private var position: Int = 0
 
     private lateinit var filePath: String
-    private lateinit var fileType: String
     private lateinit var subjectName: String
+    private lateinit var fileType: String
 
     override fun getViewBinding(): HomeworkViewImageDocumentBinding {
         return HomeworkViewImageDocumentBinding.inflate(layoutInflater)
     }
-
 
     override fun setupViews() {
         super.setupViews()
@@ -37,14 +36,16 @@ class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(
 
 
         subjectName= intent.getStringExtra(Constant.subjectName) ?: ""
+
         Log.d("knowing subjectName", subjectName)
         filePath = intent.getStringExtra(Constant.SelectedDocumentPath) ?: ""
         Log.d("knowing FilePath", filePath)
         fileType = intent.getStringExtra(Constant.SelectedDocumentType) ?: ""
         Log.d("knowing FileType", fileType)
 
+        binding.lblSubject.setText(subjectName)
 
-                when (fileType.uppercase()) {
+        when (fileType.uppercase()) {
             Constant.PDF, Constant.DOC, Constant.DOCX, Constant.PPT, Constant.PPTX -> {
         binding.documentWebView.visibility = View.VISIBLE
                 binding.documentTextView.visibility = View.GONE
@@ -77,7 +78,6 @@ class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(
             binding.viewPager.setCurrentItem(position, false)
         } else {
             findViewById<ViewPager2>(R.id.viewPager)?.visibility = View.GONE
-
 
         }
 

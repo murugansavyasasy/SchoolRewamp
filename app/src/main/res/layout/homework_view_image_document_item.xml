@@ -1,44 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-   >
-    <RelativeLayout
-        android:id="@+id/rytHeader"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingVertical="@dimen/twenty">
-        <ImageView
-            android:id="@+id/imgBack"
-            android:layout_width="@dimen/thirty"
-            android:layout_height="@dimen/thirty"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/fifteen"
-            android:src="@drawable/arrow_back_black" />
-        <TextView
-            android:id="@+id/lblsubject"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="MATHS"
-            android:textColor="@color/black"
-            android:textSize="@dimen/twenty_sp"
-            android:textStyle="bold" />
-    </RelativeLayout>
-
 
     <ImageView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/fullScreenImageView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="@dimen/thirty"
-    android:layout_marginStart="@dimen/twenty"
-    android:layout_marginEnd="@dimen/twenty"
-    android:layout_marginBottom="@dimen/thirty"
-    android:layout_below="@+id/rytHeader"
     android:scaleType="centerInside" >
     </ImageView>
 
-</RelativeLayout>
+
+

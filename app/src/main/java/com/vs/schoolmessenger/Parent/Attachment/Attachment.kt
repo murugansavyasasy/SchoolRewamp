@@ -8,10 +8,12 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
     override fun getViewBinding(): ParentAttachmentBinding {
         return ParentAttachmentBinding.inflate(layoutInflater)
     }
+
     override fun setupViews() {
         super.setupViews()
         setUpGradientParent()
     }
+
     override fun onClick(p0: View?) {
 
     }

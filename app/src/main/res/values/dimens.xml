@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="minus_one_nineteen">-119dp</dimen>
     <dimen name="minus_sixty">-60dp</dimen>
     <dimen name="minus_fourty">-40dp</dimen>
     <dimen name="minus_thirty">-30dp</dimen>
     <dimen name="minus_twenty_five">-25dp</dimen>
+    <dimen name="minus_twenty_four">-24dp</dimen>
     <dimen name="minus_twenty_two">-22dp</dimen>
     <dimen name="minus_twenty">-20dp</dimen>
     <dimen name="minus_nineteen">-19dp</dimen>
@@ -13,6 +15,7 @@
     <dimen name="minus_ten">-10dp</dimen>
     <dimen name="minus_five">-5dp</dimen>
     <dimen name="zero">0dp</dimen>
+    <dimen name="point_one">0.1dp</dimen>
     <dimen name="point_five">0.5dp</dimen>
     <dimen name="point_six">0.6dp</dimen>
     <dimen name="point_seven">0.7dp</dimen>
@@ -33,10 +36,13 @@
     <dimen name="sixteen">16dp</dimen>
     <dimen name="seventeen">17dp</dimen>
     <dimen name="eighteen">18dp</dimen>
+    <dimen name="nineteen">19dp</dimen>
     <dimen name="twenty">20dp</dimen>
     <dimen name="twenty_two">22dp</dimen>
+    <dimen name="twenty_three">23dp</dimen>
     <dimen name="twenty_four">24dp</dimen>
     <dimen name="twenty_five">25dp</dimen>
+    <dimen name="twenty_seven">27dp</dimen>
     <dimen name="twenty_eight">28dp</dimen>
     <dimen name="thirty">30dp</dimen>
     <dimen name="thirty_two">32dp</dimen>
@@ -44,6 +50,8 @@
     <dimen name="thirty_five">35dp</dimen>
     <dimen name="fourty">40dp</dimen>
     <dimen name="fourty_five">45dp</dimen>
+    <dimen name="fourty_eight">48dp</dimen>
+    <dimen name="fourty_nine">49dp</dimen>
     <dimen name="fifty">50dp</dimen>
     <dimen name="fifty_five">55dp</dimen>
     <dimen name="fifty_six">56dp</dimen>
@@ -62,12 +70,15 @@
     <dimen name="one_fifty">150dp</dimen>
     <dimen name="one_seventy">170dp</dimen>
     <dimen name="one_seventy_two">172dp</dimen>
+    <dimen name="one_eighty">180dp</dimen>
     <dimen name="two_hundred">200dp</dimen>
     <dimen name="two_fourty">240dp</dimen>
     <dimen name="two_fifty">250dp</dimen>
     <dimen name="two_sixty">260dp</dimen>
     <dimen name="three_hundred">300dp</dimen>
     <dimen name="four_hundred">400dp</dimen>
+    <dimen name="four_fifty">450dp</dimen>
+
 
 
 

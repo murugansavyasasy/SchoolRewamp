@@ -31,7 +31,7 @@
             android:layout_weight="1"
             android:background="@drawable/white_bg_radius"
             android:gravity="center"
-            android:text="Today's Report"
+            android:text="@string/today_s_report"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp" />
 
@@ -43,7 +43,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:padding="@dimen/eight"
-            android:text="Staffwise Report"
+            android:text="@string/staffwise_report"
             android:textColor="@color/dark_blue"
             android:textSize="@dimen/thirteen_sp" />
 
@@ -146,7 +146,7 @@
             android:layout_below="@+id/lnrSpinners"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/five"
-            android:text="Select Staff">
+            android:text="@string/select_staff">
 
         </TextView>
 
@@ -230,7 +230,7 @@
             android:gravity="center"
             android:text=""
             android:textColor="@color/black"
-            android:textSize="15dp"
+            android:textSize="@dimen/fifteen_sp"
             android:visibility="visible" />
 
     </LinearLayout>

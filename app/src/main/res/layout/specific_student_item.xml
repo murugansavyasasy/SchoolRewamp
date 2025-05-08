@@ -36,7 +36,7 @@
         <!-- Name and Details Section -->
         <LinearLayout
             android:id="@+id/lnrDetails"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical">
@@ -92,7 +92,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
+        android:layout_height="@dimen/point_five"
         android:layout_below="@+id/lytName"
         android:layout_marginTop="@dimen/five"
         android:layout_marginStart="@dimen/ten"

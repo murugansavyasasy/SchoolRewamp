@@ -1,17 +1,17 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginBottom="15dp"
+    android:layout_marginBottom="@dimen/fifteen"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginStart="@dimen/fifteen"
+        android:layout_marginEnd="@dimen/ten"
         android:layout_marginBottom="@dimen/twenty"
-        app:cardCornerRadius="10dp">
+        app:cardCornerRadius="@dimen/ten">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -23,11 +23,11 @@
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="15dp"
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/fifteen"
                 android:text="@string/lblSearch"
-                android:textSize="14sp"
+                android:textSize="@dimen/fourteen_sp"
                 android:textColor="@color/black"
                 android:textStyle="bold">
             </TextView>
@@ -36,11 +36,11 @@
                 android:id="@+id/description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="6dp"
-                android:layout_marginEnd="15dp"
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginTop="@dimen/six"
+                android:layout_marginEnd="@dimen/fifteen"
                 android:text="@string/Description"
-                android:textSize="14sp"
+                android:textSize="@dimen/fourteen_sp"
                 android:textColor="@color/black"
                 android:textStyle="normal">
             </TextView>
@@ -48,24 +48,24 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginEnd="@dimen/ten"
                 android:layout_weight="1"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="@dimen/six"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/ten"
                     android:layout_weight="0.5"
                     android:gravity="center"
                     android:orientation="horizontal"
                     android:weightSum="1">
 
                     <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="@dimen/twenty"
+                        android:layout_height="@dimen/twenty"
                         android:layout_weight="0.1"
                         android:src="@drawable/book">
                     </ImageView>
@@ -74,10 +74,10 @@
                         android:id="@+id/subject"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
+                        android:layout_marginStart="@dimen/five"
                         android:layout_weight="0.9"
                         android:text="English"
-                        android:textSize="14sp"
+                        android:textSize="@dimen/fourteen_sp"
                         android:textColor="@color/black"
                         android:textStyle="normal">
                     </TextView>
@@ -86,15 +86,15 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/ten"
                     android:layout_weight="0.5"
                     android:gravity="center"
                     android:orientation="horizontal"
                     android:weightSum="1">
 
                     <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="@dimen/twenty"
+                        android:layout_height="@dimen/twenty"
                         android:layout_weight="0.1"
                         android:src="@drawable/calendar">
                     </ImageView>
@@ -103,11 +103,11 @@
                         android:id="@+id/scheduleDate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
+                        android:layout_marginStart="@dimen/five"
                         android:layout_weight="0.9"
                         android:text="2025-01-15"
                         android:textColor="@color/black"
-                        android:textSize="14sp"
+                        android:textSize="@dimen/fourteen_sp"
                         android:textStyle="normal">
                     </TextView>
                 </LinearLayout>
@@ -116,10 +116,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginEnd="@dimen/ten"
                 android:layout_weight="1"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="@dimen/fifteen"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -131,8 +131,8 @@
                     android:weightSum="1">
 
                     <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="@dimen/twenty"
+                        android:layout_height="@dimen/twenty"
                         android:layout_weight="0.1"
                         android:src="@drawable/profile">
 
@@ -146,7 +146,7 @@
                         android:layout_weight="0.9"
                         android:text="Lakshmanan"
                         android:textStyle="normal"
-                        android:textSize="14sp"
+                        android:textSize="@dimen/fourteen_sp"
                         android:textColor="@color/black">
 
                     </TextView>
@@ -161,8 +161,8 @@
                     android:weightSum="1">
 
                     <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="@dimen/twenty"
+                        android:layout_height="@dimen/twenty"
                         android:layout_weight="0.1"
                         android:src="@drawable/mic">
                     </ImageView>
@@ -171,11 +171,11 @@
                         android:id="@+id/voice"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
+                        android:layout_marginStart="@dimen/five"
                         android:layout_weight="0.9"
                         android:text="Speaking"
                         android:textStyle="normal"
-                        android:textSize="14sp"
+                        android:textSize="@dimen/fourteen_sp"
                         android:textColor="@color/black">
                     </TextView>
                 </LinearLayout>
@@ -186,8 +186,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="25dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginTop="@dimen/twenty_five"
+                android:layout_marginEnd="@dimen/ten"
                 android:id="@+id/relativelayout2">
 
                 <TextView
@@ -197,18 +197,18 @@
                     android:text="@string/Start"
                     android:textAllCaps="true"
                     android:textColor="@color/azure_radiance"
-                    android:textSize="14sp"
+                    android:textSize="@dimen/fourteen_sp"
                     android:id="@+id/start_button"
                     android:layout_toStartOf="@+id/image_view"
                     android:textStyle="bold">
                 </TextView>
 
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="@dimen/twenty"
+                    android:layout_height="@dimen/twenty"
                     android:layout_alignParentEnd="true"
                     android:id="@+id/image_view"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginEnd="@dimen/ten"
                     android:layout_alignTop="@+id/start_button"
                     android:src="@drawable/double_forward_arrow">
                 </ImageView>

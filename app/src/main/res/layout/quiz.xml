@@ -57,7 +57,7 @@
         android:fontFamily="@font/poppins_medium"
         android:layout_below="@+id/lnrParent"
         android:textColor="@color/black"
-        android:textSize="13sp"
+        android:textSize="@dimen/thirteen_sp"
         android:visibility="gone"
         android:layout_marginStart="@dimen/fifteen"
         android:layout_marginTop="@dimen/ten"/>
@@ -70,7 +70,7 @@
         android:fontFamily="@font/poppins_medium"
         android:layout_below="@+id/correctanswers"
         android:textColor="@color/black"
-        android:textSize="13sp"
+        android:textSize="@dimen/thirteen_sp"
         android:visibility="gone"
         android:layout_marginStart="@dimen/fifteen"
         android:layout_marginTop="@dimen/eight"/>
