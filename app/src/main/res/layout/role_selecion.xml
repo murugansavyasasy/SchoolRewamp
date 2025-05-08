@@ -42,7 +42,7 @@
         <ImageView
             android:id="@+id/imgTeaching"
             android:layout_width="match_parent"
-            android:layout_height="180dp"
+            android:layout_height="@dimen/one_eighty"
             android:src="@drawable/teaching">
 
         </ImageView>
@@ -76,7 +76,7 @@
 
         <LinearLayout
             android:id="@+id/lnrParent"
-            android:layout_width="300dp"
+            android:layout_width="@dimen/three_hundred"
             android:layout_height="wrap_content"
             android:layout_below="@+id/lblLoginTeacherOrParent"
             android:layout_centerHorizontal="true"
@@ -116,7 +116,7 @@
             android:layout_below="@+id/lnrParent"
             android:layout_centerInParent="true"
             android:layout_marginTop="@dimen/ten"
-            android:text="Click proceed to continue"
+            android:text="@string/click_proceed_to_continue"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"
             android:visibility="gone" />
@@ -137,7 +137,7 @@
     <TextView
         android:id="@+id/btnGo"
         style="@style/CustomTextStylePoppinsMedium"
-        android:layout_width="200dp"
+        android:layout_width="@dimen/two_hundred"
         android:layout_height="@dimen/thirty_five"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
@@ -145,7 +145,7 @@
         android:layout_marginBottom="@dimen/thirty"
         android:background="@drawable/bg_blue"
         android:gravity="center"
-        android:text="Proceed"
+        android:text="@string/proceed"
         android:textColor="@color/white"
         android:textSize="@dimen/thirteen_sp" />
 
@@ -169,9 +169,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:text="Choose Your Role"
+                android:text="@string/lblChooseyourrole"
                 android:textColor="@color/black"
-                android:textSize="@dimen/twenty"
+                android:textSize="@dimen/twenty_sp"
                 android:textStyle="bold" />
 
             <ImageView
@@ -188,7 +188,7 @@
             <View
                 android:id="@+id/vw"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="@dimen/one"
                 android:layout_below="@+id/imgLogo"
                 android:layout_marginHorizontal="@dimen/thirty"
                 android:layout_marginTop="@dimen/fifteen"
@@ -211,7 +211,7 @@
                     android:gravity="center"
                     android:paddingHorizontal="@dimen/ten"
                     android:paddingVertical="@dimen/ten"
-                    android:text="Login as principal"
+                    android:text="@string/lblLoginteacherparent"
                     android:textColor="@color/white"
                     android:textSize="@dimen/thirteen_sp" />
 
@@ -225,7 +225,7 @@
                     android:gravity="center"
                     android:paddingHorizontal="@dimen/ten"
                     android:paddingVertical="@dimen/ten"
-                    android:text="Login as Parent"
+                    android:text="@string/login_as_parent"
                     android:textColor="@color/white"
                     android:textSize="@dimen/thirteen_sp" />
 

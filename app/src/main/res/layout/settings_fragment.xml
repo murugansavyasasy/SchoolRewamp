@@ -12,7 +12,7 @@
         <RelativeLayout
             android:id="@+id/rlaLblSettings"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="@dimen/one_fifty"
             android:background="@drawable/gradient_theme_school"
             android:paddingBottom="@dimen/thirty">
 
@@ -112,7 +112,7 @@
                 <View
                     android:id="@+id/isViewNotification"
                     android:layout_width="match_parent"
-                    android:layout_height="0.1dp"
+                    android:layout_height="@dimen/point_one"
                     android:layout_below="@+id/lnrNotification"
                     android:layout_marginStart="@dimen/thirty"
                     android:layout_marginTop="@dimen/ten"
@@ -165,7 +165,7 @@
                 <View
                     android:id="@+id/isViewFaq"
                     android:layout_width="match_parent"
-                    android:layout_height="0.1dp"
+                    android:layout_height="@dimen/point_one"
                     android:layout_below="@+id/lnrFaq"
                     android:layout_marginStart="@dimen/thirty"
                     android:layout_marginTop="@dimen/ten"
@@ -219,7 +219,7 @@
                 <View
                     android:id="@+id/isViewContactUs"
                     android:layout_width="match_parent"
-                    android:layout_height="0.1dp"
+                    android:layout_height="@dimen/point_one"
                     android:layout_below="@+id/lnrContactUs"
                     android:layout_marginStart="@dimen/thirty"
                     android:layout_marginTop="@dimen/ten"
@@ -275,7 +275,7 @@
                 <View
                     android:id="@+id/isViewTermsConditions"
                     android:layout_width="match_parent"
-                    android:layout_height="0.1dp"
+                    android:layout_height="@dimen/point_one"
                     android:layout_below="@+id/lnrTermsConditions"
                     android:layout_marginStart="@dimen/thirty"
                     android:layout_marginTop="@dimen/ten"
@@ -332,7 +332,7 @@
                 <View
                     android:id="@+id/isViewAppLanguage"
                     android:layout_width="match_parent"
-                    android:layout_height="0.1dp"
+                    android:layout_height="@dimen/point_one"
                     android:layout_below="@+id/lnrLanguage"
                     android:layout_marginStart="@dimen/thirty"
                     android:layout_marginTop="@dimen/ten"
@@ -388,7 +388,7 @@
                 <View
                     android:id="@+id/isViewSaveContact"
                     android:layout_width="match_parent"
-                    android:layout_height="0.1dp"
+                    android:layout_height="@dimen/point_one"
                     android:layout_below="@+id/lnrChangePassword"
                     android:layout_marginStart="@dimen/thirty"
                     android:layout_marginTop="@dimen/ten"
@@ -443,7 +443,7 @@
                 <View
                     android:id="@+id/isViewSignalCheck"
                     android:layout_width="match_parent"
-                    android:layout_height="0.1dp"
+                    android:layout_height="@dimen/point_one"
                     android:layout_below="@+id/lnrSaveContact"
                     android:layout_marginStart="@dimen/thirty"
                     android:layout_marginTop="@dimen/ten"
@@ -478,7 +478,7 @@
                         android:layout_gravity="center"
                         android:layout_marginStart="@dimen/thirty"
                         android:layout_weight="0.8"
-                        android:text="Check network speed"
+                        android:text="@string/check_network_speed"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp"
                         android:fontFamily="@font/poppins_bold"
@@ -565,7 +565,7 @@
                 <View
                     android:id="@+id/isViewReportBug"
                     android:layout_width="match_parent"
-                    android:layout_height="0.1dp"
+                    android:layout_height="@dimen/point_one"
                     android:layout_below="@+id/lnrReportBug"
                     android:layout_marginStart="@dimen/thirty"
                     android:layout_marginTop="@dimen/ten"
@@ -616,7 +616,7 @@
                 <View
                     android:id="@+id/isViewFeedBack"
                     android:layout_width="match_parent"
-                    android:layout_height="0.1dp"
+                    android:layout_height="@dimen/point_one"
                     android:layout_below="@+id/lnrFeedBack"
                     android:layout_marginStart="@dimen/thirty"
                     android:layout_marginTop="@dimen/ten"
@@ -657,8 +657,8 @@
                     </TextView>
 
                     <ImageView
-                        android:layout_width="@dimen/twenty_five_sp"
-                        android:layout_height="@dimen/twenty_five_sp"
+                        android:layout_width="@dimen/twenty_five"
+                        android:layout_height="@dimen/twenty_five"
                         android:layout_weight="0.1"
                         android:src="@drawable/arrow_right_gray">
 
@@ -668,7 +668,7 @@
                 <View
                     android:id="@+id/isViewLogout"
                     android:layout_width="match_parent"
-                    android:layout_height="0.1dp"
+                    android:layout_height="@dimen/point_one"
                     android:layout_below="@+id/lnrFeedBack"
                     android:layout_marginStart="@dimen/twenty"
                     android:layout_marginTop="@dimen/ten"

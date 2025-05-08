@@ -3,12 +3,12 @@
     android:layout_height="wrap_content"
     android:background="@drawable/rect_shadow_white"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="@dimen/sixteen">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="@dimen/twele"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -32,7 +32,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="@dimen/twele"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -63,7 +63,7 @@
             android:id="@+id/image3"
             android:layout_width="@dimen/twenty_five"
             android:layout_height="@dimen/twenty_five"
-            android:layout_marginEnd="12dp"
+            android:layout_marginEnd="@dimen/twele"
             android:contentDescription="Image 3"
             android:src="@drawable/smartphone" />
 

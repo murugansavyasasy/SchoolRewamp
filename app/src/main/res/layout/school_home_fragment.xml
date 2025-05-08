@@ -53,7 +53,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text=""
-                    android:textSize="14sp"
+                    android:textSize="@dimen/fourteen_sp"
                     android:layout_marginTop="@dimen/twenty"
                     style="@style/CustomTextStylePoppinsBold" />
 
@@ -89,7 +89,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/changeroll"
-                android:text="Change Role >"
+                android:text="@string/change_role"
                 style="@style/CustomTextStylePoppinsRegular"
                 android:textColor="@color/navi_blue2"
                 android:textSize="@dimen/fifteen_sp"
@@ -127,7 +127,7 @@
                     android:layout_width="@dimen/twenty_five"
                     android:layout_height="@dimen/twenty_five"
                     android:layout_marginStart="@dimen/ten"
-                    android:layout_marginEnd="5dp"
+                    android:layout_marginEnd="@dimen/five"
                     android:background="@drawable/bg_red_small_size"
                     android:elevation="@dimen/ten"
                     android:gravity="center"
@@ -155,7 +155,7 @@
             android:layout_marginStart="@dimen/twenty"
             android:layout_marginEnd="@dimen/twenty"
             android:background="@drawable/rect_white_light_radious"
-            android:elevation="10dp"
+            android:elevation="@dimen/ten"
             android:padding="@dimen/fifteen">
 
             <TextView
@@ -188,7 +188,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:text="View Details"
+                android:text="@string/view_details"
                 android:gravity="center_vertical"
                 android:textColor="@color/navi_blue1"
                 android:textSize="@dimen/thirteen_sp"
@@ -244,9 +244,9 @@
                 android:layout_below="@+id/rytSearch"
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/thirty_five"
-                android:text="Categories"
+                android:text="@string/categories"
                 android:visibility="gone"
-                android:textSize="15sp"
+                android:textSize="@dimen/fifteen_sp"
                  style="@style/CustomTextStylePoppinsBold">
 
             </TextView>

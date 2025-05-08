@@ -87,7 +87,7 @@
 
             <View
                 android:id="@+id/vw"
-                android:layout_width="1dp"
+                android:layout_width="@dimen/one"
                 android:layout_height="@dimen/fourty"
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginEnd="@dimen/ten"
@@ -106,7 +106,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="@dimen/one"
         android:layout_marginHorizontal="@dimen/ten"
         android:layout_marginTop="@dimen/ten"
         android:background="@color/grey"

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.vs.schoolmessenger.Parent.Homework.FullScreenViewerActivity
@@ -40,5 +41,6 @@ class ViewerPagerAdapter(
 
     inner class PagerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imageView: ImageView = itemView.findViewById(R.id.fullScreenImageView)
+
     }
 }

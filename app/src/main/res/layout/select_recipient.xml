@@ -77,7 +77,7 @@
             android:id="@+id/tvAcademicYearLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Choose academic year:"
+            android:text="@string/lblchoose_academic_year"
             android:textColor="@color/light_gray"
             android:textSize="@dimen/thirteen_sp"
             style="@style/CustomTextStylePoppinsBold"
@@ -85,7 +85,7 @@
 
         <RelativeLayout
             android:id="@+id/rlaAcademicYear"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:background="@drawable/rect_white_light_radious"
@@ -140,9 +140,9 @@
             android:fontFamily="@font/poppins_bold"
             android:gravity="center"
             android:textStyle="bold"
-            android:text="Entire School"
+            android:text="@string/entire_school"
             android:textColor="@color/black"
-            android:textSize="@dimen/ten">
+            android:textSize="@dimen/ten_sp">
         </TextView>
 
         <TextView
@@ -154,8 +154,8 @@
             android:fontFamily="@font/poppins_bold"
             android:textStyle="bold"
             android:gravity="center"
-            android:textSize="@dimen/ten"
-            android:text="Standards"
+            android:textSize="@dimen/ten_sp"
+            android:text="@string/Standards"
             android:textColor="@color/black"/>
 
         <TextView
@@ -167,8 +167,8 @@
             android:fontFamily="@font/poppins_bold"
             android:textStyle="bold"
             android:gravity="center"
-            android:textSize="@dimen/ten"
-            android:text="Section/Student"
+            android:textSize="@dimen/ten_sp"
+            android:text="@string/section_student"
             android:textColor="@color/black"/>
 
         <TextView
@@ -180,8 +180,8 @@
             android:fontFamily="@font/poppins_bold"
             android:textStyle="bold"
             android:gravity="center"
-            android:textSize="@dimen/ten"
-            android:text="Groups"
+            android:textSize="@dimen/ten_sp"
+            android:text="@string/Groups"
             android:textColor="@color/black"/>
 
         <TextView
@@ -193,8 +193,8 @@
             android:fontFamily="@font/poppins_bold"
             android:textStyle="bold"
             android:gravity="center"
-            android:textSize="@dimen/ten"
-            android:text="Staff"
+            android:textSize="@dimen/ten_sp"
+            android:text="@string/staff"
             android:textColor="@color/black">
 
 
@@ -210,7 +210,7 @@
         android:layout_below="@+id/tabLayout"
         style="@style/CustomTextStylePoppinsBold"
         android:layout_marginTop="@dimen/twenty"
-        android:text="Group"
+        android:text="@string/Group"
         android:layout_marginStart="@dimen/twenty"
         android:textColor="@color/black"
         android:textSize="@dimen/fifteen_sp"
@@ -264,7 +264,7 @@
         android:visibility="gone"
         style="@style/CustomCheckBox"
         android:layout_marginStart="@dimen/fifteen"
-        android:text="Select all"
+        android:text="@string/Selectallaspresent"
         android:textColor="@color/black"
         android:textSize="@dimen/fifteen_sp"
         android:textStyle="bold">
@@ -278,7 +278,7 @@
         android:layout_below="@+id/chAllSelect"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="@dimen/twenty_five"
-        android:text="Group Created"
+        android:text="@string/group_created"
         android:textColor="@color/grey"
         android:textSize="@dimen/thirteen_sp"
         android:visibility="gone">
@@ -331,7 +331,7 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/fifteen"
             android:fontFamily="@font/poppins_bold"
-            android:text="Select Subject"
+            android:text="@string/select_subject"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"
             android:textStyle="bold">
@@ -347,7 +347,7 @@
         android:layout_below="@+id/nomessageEntire"
         style="@style/CustomTextStylePoppinsBold"
         android:gravity="center"
-        android:padding="16dp"
+        android:padding="@dimen/sixteen"
         android:text="@string/Tap_share_message_everyone_school"
         android:textColor="@color/black"
         android:textSize="@dimen/fifteen_sp"
@@ -377,7 +377,7 @@
             <Button
                 android:id="@+id/btnSpecificStudent"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="@dimen/fourty"
                 android:layout_weight="0.5"
                 android:background="@drawable/bg_gray"
                 android:gravity="center"
@@ -396,7 +396,7 @@
             <RelativeLayout
                 android:id="@+id/rytSend"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="@dimen/fourty"
                 android:layout_marginStart="@dimen/twenty_five"
                 android:layout_marginEnd="@dimen/twenty_five"
                 android:layout_weight="0.5"
@@ -456,7 +456,7 @@
         android:id="@+id/txtNoData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No data found"
+        android:text="@string/no_data_found"
         android:textColor="@color/black"
         android:textSize="18sp"
         style="@style/CustomTextStylePoppinsBold"
@@ -464,31 +464,31 @@
         android:layout_centerInParent="true"
         android:visibility="gone"
         android:layout_below="@+id/nomessage"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="@dimen/twenty" />
 
     <ImageView
         android:id="@+id/nomessage"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
+        android:layout_width="@dimen/two_fifty"
+        android:layout_height="@dimen/two_fifty"
         android:textColor="@color/black"
-        android:textSize="18sp"
+        android:textSize="@dimen/eighteen"
         android:src="@drawable/nodataimage"
         android:layout_gravity="center"
         android:layout_centerInParent="true"
         android:visibility="gone"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="@dimen/twenty" />
 
     <ImageView
         android:id="@+id/nomessageEntire"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
+        android:layout_width="@dimen/two_fifty"
+        android:layout_height="@dimen/two_fifty"
         android:textColor="@color/black"
-        android:textSize="18sp"
+        android:textSize="@dimen/eighteen_sp"
         android:src="@drawable/ic_entire_school_send"
         android:layout_gravity="center"
         android:layout_centerInParent="true"
         android:visibility="gone"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="@dimen/twenty" />
 
     <LinearLayout
         android:id="@+id/rytAcademicYear"
@@ -499,10 +499,10 @@
         android:visibility="gone">
 
         <ImageView
-            android:layout_width="250dp"
-            android:layout_height="250dp"
+            android:layout_width="@dimen/two_fifty"
+            android:layout_height="@dimen/two_fifty"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textSize="@dimen/eighteen_sp"
             android:src="@drawable/customer_support"
             android:layout_gravity="center"
             android:layout_centerInParent="true"
@@ -516,7 +516,7 @@
             android:layout_marginStart="@dimen/twenty_five"
             android:layout_marginEnd="@dimen/twenty_five"
             android:gravity="center"
-            android:text="Your academic year configuration are incorrect. Please contact School Chimes."
+            android:text="@string/your_academic_year_configuration_are_incorrect_please_contact_school_chimes"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp">
 

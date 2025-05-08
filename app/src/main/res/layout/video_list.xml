@@ -28,7 +28,7 @@
             android:layout_height="@dimen/seventy"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="@dimen/twenty"
-            android:layout_marginTop="-24dp"
+            android:layout_marginTop="@dimen/minus_twenty_four"
             android:src="@drawable/new_icon">
 
         </ImageView>
@@ -36,13 +36,13 @@
         <RelativeLayout
             android:id="@+id/rlaVimeoThumbnail"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="@dimen/one_fifty"
             android:layout_below="@+id/lblheader">
 
             <ImageView
                 android:id="@+id/imgVimeoThumbnail"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="@dimen/one_fifty"
                 android:scaleType="centerCrop"></ImageView>
 
             <ImageView

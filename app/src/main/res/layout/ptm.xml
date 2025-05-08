@@ -9,17 +9,17 @@
         android:id="@+id/nav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
         app:cardBackgroundColor="@color/athens_gray"
-        app:cardCornerRadius="20dp">
+        app:cardCornerRadius="@dimen/twenty">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginTop="@dimen/five"
+            android:layout_marginBottom="@dimen/five"
             android:gravity="center"
             android:weightSum="1">
 
@@ -27,8 +27,8 @@
                 android:id="@+id/smcardview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
+                android:layout_marginStart="@dimen/five"
+                android:layout_marginEnd="@dimen/five"
                 android:layout_weight="0.5"
                 app:cardBackgroundColor="@color/emerald"
                 app:cardCornerRadius="9dp">
@@ -38,9 +38,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:padding="15dp"
+                    android:padding="@dimen/fifteen"
                     android:text="@string/schedule_meeting"
-                    android:textSize="14sp"
+                    android:textSize="@dimen/fourteen_sp"
                     android:textStyle="bold">
                 </TextView>
             </androidx.cardview.widget.CardView>
@@ -49,19 +49,19 @@
                 android:id="@+id/mhcardview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
+                android:layout_marginStart="@dimen/five"
+                android:layout_marginEnd="@dimen/five"
                 android:layout_weight="0.5"
-                app:cardCornerRadius="9dp">
+                app:cardCornerRadius="@dimen/nine">
 
                 <TextView
                     android:id="@+id/mhtext"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:padding="15dp"
+                    android:padding="@dimen/fifteen"
                     android:text="@string/meeting_history"
-                    android:textSize="14sp"
+                    android:textSize="@dimen/fourteen_sp"
                     android:textStyle="bold">
 
                 </TextView>
@@ -77,24 +77,24 @@
         android:layout_below="@+id/nav"
         android:layout_above="@+id/book_slot_layout"
         android:id="@+id/schedule_meeting_fragment"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="@dimen/five"
         android:layout_height="wrap_content">
     </FrameLayout>
     <LinearLayout
         android:layout_alignParentBottom="true"
         android:id="@+id/book_slot_layout"
         android:layout_width="match_parent"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="@dimen/fifteen"
         android:gravity="end"
 
-        android:layout_marginEnd="30dp"
+        android:layout_marginEnd="@dimen/thirty"
         android:layout_height="wrap_content">
         <androidx.cardview.widget.CardView
             android:id="@+id/book_slot"
             app:cardBackgroundColor="@color/jaffa"
-            app:cardCornerRadius="10dp"
-            android:layout_width="140dp"
-            android:layout_height="50dp">
+            app:cardCornerRadius="@dimen/ten"
+            android:layout_width="@dimen/one_fourty"
+            android:layout_height="@dimen/fifty">
             <TextView
                 android:layout_width="match_parent"
                 android:text="@string/book_slot"

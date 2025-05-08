@@ -449,7 +449,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="0.5"
-                                    android:text="Fath"
+                                    android:text="@string/Fathername"
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/thirteen_sp" />
 
@@ -481,7 +481,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="0.5"
-                                    android:text="Mother name"
+                                    android:text="@string/mother_name"
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/thirteen_sp" />
 
@@ -496,7 +496,7 @@
 
                             <View
                                 android:layout_width="match_parent"
-                                android:layout_height="0.5dp"
+                                android:layout_height="@dimen/point_five"
                                 android:layout_marginTop="@dimen/ten"
                                 android:background="@color/grey">
 
@@ -513,7 +513,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="0.5"
-                                    android:text="Father occupation"
+                                    android:text="@string/father_occupation"
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/thirteen_sp" />
 
@@ -528,7 +528,7 @@
 
                             <View
                                 android:layout_width="match_parent"
-                                android:layout_height="0.5dp"
+                                android:layout_height="@dimen/point_five"
                                 android:layout_marginTop="@dimen/ten"
                                 android:background="@color/grey">
 
@@ -545,7 +545,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="0.5"
-                                    android:text="Mother occupation"
+                                    android:text="@string/mother_occupation"
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/thirteen_sp" />
 
@@ -560,7 +560,7 @@
 
                             <View
                                 android:layout_width="match_parent"
-                                android:layout_height="0.5dp"
+                                android:layout_height="@dimen/point_five"
                                 android:layout_marginTop="@dimen/ten"
                                 android:background="@color/grey">
 
@@ -577,7 +577,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="0.5"
-                                    android:text="Secondary  Phone no"
+                                    android:text="@string/secondary_phone_no"
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/thirteen_sp" />
 

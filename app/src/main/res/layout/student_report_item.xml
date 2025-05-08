@@ -13,7 +13,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="450dp"
+            android:layout_height="@dimen/four_fifty"
             android:background="@drawable/bg_student_report">
 
             <View
@@ -36,7 +36,7 @@
                     android:layout_width="@dimen/hundred"
                     android:layout_height="@dimen/hundred"
                     android:background="@drawable/rect_shadow_white"
-                    android:padding="5dp"
+                    android:padding="@dimen/five"
                     android:src="@drawable/student_image"></ImageView>
 
                 <RelativeLayout

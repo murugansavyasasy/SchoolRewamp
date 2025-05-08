@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="@dimen/sixteen">
 
             <LinearLayout
                 android:id="@+id/quiz_status"
@@ -31,15 +31,15 @@
                 android:visibility="gone">
 
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="@dimen/fifty"
+                    android:layout_height="@dimen/fifty"
                     android:src="@drawable/quiz_complete">
                 </ImageView>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/ten"
                     android:gravity="center"
                     android:shadowColor="@color/black"
                     android:shadowDx="2"
@@ -57,8 +57,8 @@
                 android:id="@+id/progressBar"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:layout_marginTop="20dp"
+                android:layout_height="@dimen/ten"
+                android:layout_marginTop="@dimen/twenty"
                 android:max="100"
                 android:progress="0"
                 android:progressDrawable="@android:drawable/progress_horizontal"
@@ -69,27 +69,27 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity=""
-                android:padding="8dp"
+                android:padding="@dimen/eight"
                 android:text="0/0"
-                android:textSize="16sp"
+                android:textSize="@dimen/sixteen_sp"
                 android:textStyle="bold" />
 
             <!-- Question Text -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/ten"
 
-                app:cardCornerRadius="15dp">
+                app:cardCornerRadius="@dimen/fifteen">
 
                 <TextView
                     android:id="@+id/questionText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/onahau"
-                    android:padding="16dp"
+                    android:padding="@dimen/sixteen"
                     android:text="@string/question_will_appear_here"
-                    android:textSize="15sp"
+                    android:textSize="@dimen/fifteen_sp"
                     android:gravity="center"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
@@ -100,12 +100,12 @@
                 android:id="@+id/option1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/ten"
                 android:background="@drawable/quiz_option_bg"
                 android:clickable="true"
                 android:gravity="center"
 
-                android:minHeight="49sp"
+                android:minHeight="@dimen/fourty_nine"
                 android:padding="10dp"
                 android:text="Option 1"
                 android:textColor="@color/azure_radiance"
@@ -116,43 +116,43 @@
                 android:id="@+id/option2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/ten"
                 android:background="@drawable/quiz_option_bg"
                 android:clickable="true"
                 android:gravity="center"
-                android:minHeight="49sp"
-                android:padding="10dp"
+                android:minHeight="@dimen/fourty_nine"
+                android:padding="@dimen/ten"
                 android:text="Option 2"
                 android:textColor="@color/azure_radiance"
-                android:textSize="16sp" />
+                android:textSize="@dimen/sixteen_sp" />
 
             <TextView
                 android:id="@+id/option3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/ten"
                 android:background="@drawable/quiz_option_bg"
                 android:clickable="true"
                 android:gravity="center"
-                android:minHeight="49sp"
-                android:padding="10dp"
+                android:minHeight="@dimen/fourty_nine"
+                android:padding="@dimen/ten"
                 android:text="Option 3"
                 android:textColor="@color/azure_radiance"
-                android:textSize="16sp" />
+                android:textSize="@dimen/sixteen_sp" />
 
             <TextView
                 android:id="@+id/option4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/ten"
                 android:background="@drawable/quiz_option_bg"
                 android:clickable="true"
                 android:gravity="center"
-                android:minHeight="49sp"
-                android:padding="10dp"
+                android:minHeight="@dimen/fourty_nine"
+                android:padding="@dimen/ten"
                 android:text="Option 4"
                 android:textColor="@color/azure_radiance"
-                android:textSize="16sp" />
+                android:textSize="@dimen/sixteen_sp" />
 
             <!--Next and Previous Button-->
             <LinearLayout
@@ -160,13 +160,13 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:paddingTop="25dp">
+                android:paddingTop="@dimen/twenty_five">
 
 
 
                 <Button
                     android:id="@+id/prevButton"
-                    android:layout_width="150dp"
+                    android:layout_width="@dimen/one_fifty"
                     android:layout_height="wrap_content"
                     android:enabled="false"
                     android:background="@drawable/bg_button_blue_color"
@@ -174,12 +174,12 @@
                     android:text="@string/lblPrevious" />
 
                 <View
-                    android:layout_width="16dp"
+                    android:layout_width="@dimen/sixteen"
                     android:layout_height="wrap_content" />
 
                 <Button
                     android:id="@+id/nextButton"
-                    android:layout_width="150dp"
+                    android:layout_width="@dimen/one_fifty"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
                     android:background="@drawable/bg_button_blue_color"

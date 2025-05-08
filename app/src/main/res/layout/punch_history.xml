@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/twenty_five"
-        android:text="Punch History"
+        android:text="@string/punch_history"
         android:textColor="@color/navi_blue2"
         android:textSize="@dimen/fifteen_sp">
 

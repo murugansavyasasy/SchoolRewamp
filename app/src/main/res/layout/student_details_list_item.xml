@@ -156,14 +156,14 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
                         android:textStyle="bold"
-                        android:textSize="13sp"
+                        android:textSize="@dimen/thirteen_sp"
                         style="@style/CustomTextStylePoppinsRegular">
                     </TextView>
 
                     <ImageView
                         android:layout_weight="0.1"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
+                        android:layout_width="@dimen/twenty_five"
+                        android:layout_height="@dimen/twenty_five"
                         android:id="@+id/squarearrow"
                         android:layout_marginEnd="@dimen/ten"
                         android:src="@drawable/rightarrrow">

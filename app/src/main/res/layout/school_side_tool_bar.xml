@@ -71,7 +71,7 @@
                 style="@style/CustomCheckBox"
                 android:button="@drawable/ch_square"
                 android:padding="@dimen/five"
-                android:text="Select all"
+                android:text="@string/Selectallaspresent"
                 android:visibility="gone" />
 
         </RelativeLayout>
@@ -90,7 +90,7 @@
                 android:id="@+id/lblAddLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Add location"
+                android:text="@string/add_location"
                 style="@style/Base.CardView"
                 android:layout_marginEnd="@dimen/five"
                 android:textColor="@color/navi_blue3"

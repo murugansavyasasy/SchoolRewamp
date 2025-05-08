@@ -117,13 +117,14 @@ class HomeWorkItemAdapter(
                 isSeeMoreExpanded(tvSeeMoreImage, lblContentImage)
             }
             mHomeworkImgPDFAdapter =
-                HomeworkImgPDFAdapter(null, context, Constant.isShimmerViewShow)
+                HomeworkImgPDFAdapter("",null, context, Constant.isShimmerViewShow)
             homeworkImgPdf.layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             homeworkImgPdf.adapter = mHomeworkImgPDFAdapter
 
                 mHomeworkImgPDFAdapter =
                     HomeworkImgPDFAdapter(
+                        homeworkData.subject_name,
                         homeworkData.file_path,
                         context,
                         Constant.isShimmerViewDisable,

@@ -13,7 +13,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
+        android:layout_height="@dimen/point_five"
         android:layout_above="@+id/customBottomNav"
         android:background="@color/grey">
 
@@ -31,7 +31,7 @@
         <!-- Home Icon -->
         <LinearLayout
             android:id="@+id/nav_home"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
@@ -57,7 +57,7 @@
         <!-- Search Icon -->
         <LinearLayout
             android:id="@+id/nav_help"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
@@ -84,7 +84,7 @@
 
         <LinearLayout
             android:id="@+id/nav_settings"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
@@ -111,7 +111,7 @@
         <!-- Profile Icon -->
         <LinearLayout
             android:id="@+id/nav_profile"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
