@@ -205,16 +205,16 @@ object Constant {
 
 
     // String fields
-    var scaleX="scaleX"
-    var scaleY="scaleY"
-    var AM="AM"
-    var PM="PM"
-    var dd_MM_yyyy="dd/MM/yyyy"
-    var EEE_dd_MMM_yyyy="EEE dd MMM, yyyy"
-    var hh_mm_a="hh:mm a"
-    var time_forMate="00:%02d"
-    var time_zero="00:00"
-    var isMailSend= """
+    var scaleX = "scaleX"
+    var scaleY = "scaleY"
+    var AM = "AM"
+    var PM = "PM"
+    var dd_MM_yyyy = "dd/MM/yyyy"
+    var EEE_dd_MMM_yyyy = "EEE dd MMM, yyyy"
+    var hh_mm_a = "hh:mm a"
+    var time_forMate = "00:%02d"
+    var time_zero = "00:00"
+    var isMailSend = """
     Dear School Chimes Team,
 
     Please configure communication academic year  as 20xx - 20xx for any queries contact.
@@ -223,96 +223,95 @@ object Constant {
     Mobile No :
     
 """.trimIndent()
-    var isMailTitle="Request to configure communication academic year"
-    var isAcademicYearId="isAcademicYearId"
-    var isCurrentAcademicYear="isCurrentAcademicYear"
-    var lblAcademicYear="lblAcademicYear"
-    var isSelectedId="isSelectedId"
-    var section_data="section_data"
-    var isTitle="isTitle"
-    var isWebLink="isWebLink"
-    var parent="parent"
-    var staff_="staff"
-    var en="en"
-    var ta="ta"
-    var th="th"
-    var hi="hi"
-    var ar="ar"
-    var Gallery="Gallery"
-    var Images="Images"
-    var images_="images"
-    var ALL="ALL"
-    var fromArchive="fromArchive"
-    var UNREAD="UNREAD"
-    var READ="READ"
-    var VOICE="VOICE"
-    var VOICE_UNREAD="VOICE_UNREAD"
-    var VOICE_READ="VOICE_READ"
-    var TEXT="TEXT"
-    var TEXT_UNREAD="TEXT_UNREAD"
-    var TEXT_READ="TEXT_READ"
-    var TEXT_ALL="TEXT_ALL"
-    var VOICE_ALL="VOICE_ALL"
-    var dateForMate="%02d:%02d"
-    var IMAGE="IMAGE"
-    var PDF="PDF"
-    var DOC="DOC"
-    var DOCX="DOCX"
-    var PPT="PPT"
-    var PPTX="PPTX"
-    var TXT="TXT"
-    var data="data"
-    var position="position"
-    var subjectName="subjectName"
-    var SelectedDocumentPath="SelectedDocumentPath"
-    var SelectedDocumentType="SelectedDocumentType"
-    var isText="isText"
-    var isVoice="isVoice"
-    var isVideo="isVideo"
-    var isPDF_="isPDF"
-    var isImage="isImage"
-    var ddMMyyyy="dd-MM-yyyy"
-    var content="content://"
-    var file="file://"
-    var http="http"
-    var packagename="package"
-    var timeForMateWithAMPM="%02d:%02d %s"
-    var yyyyMMdd_HHmmss="yyyyMMdd_HHmmss"
-    var image_star="image/*"
-    var Select_images="Select up to 5 images"
-    var unknown_="unknown"
-    var tel="tel:"
-    var mailto="mailto:"
-    var sms="sms:"
-    var manufacturer="manufacturer"
-    var model="model"
-    var device="device"
-    var brand="brand"
-    var hardware="hardware"
-    var product="product"
-    var os_version="os_version"
-    var sdk_int="sdk_int"
-    var app_version="app_version"
-    var Unknown="Unknown"
-    var dd_MMM_yyyy="dd MMM yyyy"
-    var MMMM="MMMM"
-    var EEEE="EEEE"
-    var MMMM_yyyy="MMMM yyyy"
-    var Location_1="Location 1"
-    var Location_2="Location 2"
-    var hasCode="#.##"
-    var VIDEO_URL="VIDEO_URL"
-    var VIDEO_TITLE="VIDEO_TITLE"
-    var isDelete="isDelete"
-    var isEdit="isEdit"
-    var Present="Present"
-    var googleMap="com.google.android.apps.maps"
-    var Custom="Custom"
-    var isRemove="isRemove"
-    var isUpdate="isUpdate"
-    var new="new"
-    var current="current"
-
+    var isMailTitle = "Request to configure communication academic year"
+    var isAcademicYearId = "isAcademicYearId"
+    var isCurrentAcademicYear = "isCurrentAcademicYear"
+    var lblAcademicYear = "lblAcademicYear"
+    var isSelectedId = "isSelectedId"
+    var section_data = "section_data"
+    var isTitle = "isTitle"
+    var isWebLink = "isWebLink"
+    var parent = "parent"
+    var staff_ = "staff"
+    var en = "en"
+    var ta = "ta"
+    var th = "th"
+    var hi = "hi"
+    var ar = "ar"
+    var Gallery = "Gallery"
+    var Images = "Images"
+    var images_ = "images"
+    var ALL = "ALL"
+    var fromArchive = "fromArchive"
+    var UNREAD = "UNREAD"
+    var READ = "READ"
+    var VOICE = "VOICE"
+    var VOICE_UNREAD = "VOICE_UNREAD"
+    var VOICE_READ = "VOICE_READ"
+    var TEXT = "TEXT"
+    var TEXT_UNREAD = "TEXT_UNREAD"
+    var TEXT_READ = "TEXT_READ"
+    var TEXT_ALL = "TEXT_ALL"
+    var VOICE_ALL = "VOICE_ALL"
+    var dateForMate = "%02d:%02d"
+    var IMAGE = "IMAGE"
+    var PDF = "PDF"
+    var DOC = "DOC"
+    var DOCX = "DOCX"
+    var PPT = "PPT"
+    var PPTX = "PPTX"
+    var TXT = "TXT"
+    var data = "data"
+    var position = "position"
+    var subjectName = "subjectName"
+    var SelectedDocumentPath = "SelectedDocumentPath"
+    var SelectedDocumentType = "SelectedDocumentType"
+    var isText = "isText"
+    var isVoice = "isVoice"
+    var isVideo = "isVideo"
+    var isPDF_ = "isPDF"
+    var isImage = "isImage"
+    var ddMMyyyy = "dd-MM-yyyy"
+    var content = "content://"
+    var file = "file://"
+    var http = "http"
+    var packagename = "package"
+    var timeForMateWithAMPM = "%02d:%02d %s"
+    var yyyyMMdd_HHmmss = "yyyyMMdd_HHmmss"
+    var image_star = "image/*"
+    var Select_images = "Select up to 5 images"
+    var unknown_ = "unknown"
+    var tel = "tel:"
+    var mailto = "mailto:"
+    var sms = "sms:"
+    var manufacturer = "manufacturer"
+    var model = "model"
+    var device = "device"
+    var brand = "brand"
+    var hardware = "hardware"
+    var product = "product"
+    var os_version = "os_version"
+    var sdk_int = "sdk_int"
+    var app_version = "app_version"
+    var Unknown = "Unknown"
+    var dd_MMM_yyyy = "dd MMM yyyy"
+    var MMMM = "MMMM"
+    var EEEE = "EEEE"
+    var MMMM_yyyy = "MMMM yyyy"
+    var Location_1 = "Location 1"
+    var Location_2 = "Location 2"
+    var hasCode = "#.##"
+    var VIDEO_URL = "VIDEO_URL"
+    var VIDEO_TITLE = "VIDEO_TITLE"
+    var isDelete = "isDelete"
+    var isEdit = "isEdit"
+    var Present = "Present"
+    var googleMap = "com.google.android.apps.maps"
+    var Custom = "Custom"
+    var isRemove = "isRemove"
+    var isUpdate = "isUpdate"
+    var new = "new"
+    var current = "current"
 
     fun isInternetAvailable(activity: Activity): Boolean {
         val connectivityManager =
@@ -380,27 +379,18 @@ object Constant {
     }
 
     fun editTextCounter(
-        context: Context,
-        editText: EditText,
-        maxLength: Int,
-        counterLabel: TextView
+        context: Context, editText: EditText, maxLength: Int, counterLabel: TextView
     ) {
 
         editText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(
-                charSequence: CharSequence?,
-                start: Int,
-                count: Int,
-                after: Int
+                charSequence: CharSequence?, start: Int, count: Int, after: Int
             ) {
                 // You can add logic here if needed
             }
 
             override fun onTextChanged(
-                charSequence: CharSequence?,
-                start: Int,
-                before: Int,
-                count: Int
+                charSequence: CharSequence?, start: Int, before: Int, count: Int
             ) {
                 // You can add logic here if needed
             }
@@ -459,8 +449,7 @@ object Constant {
 
     fun isDeveloperOptionsEnabled(context: Context): Boolean {
         return Settings.Global.getInt(
-            context.contentResolver,
-            Settings.Global.DEVELOPMENT_SETTINGS_ENABLED, 0
+            context.contentResolver, Settings.Global.DEVELOPMENT_SETTINGS_ENABLED, 0
         ) == 1
     }
 
@@ -517,21 +506,17 @@ object Constant {
         val dimView = View(activity).apply {
             setBackgroundColor(Color.parseColor("#80000000"))
             layoutParams = ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
             )
             isClickable = true // prevent clicks on background
         }
 
         val marginInPx = TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_DIP,
-            20f,
-            activity.resources.displayMetrics
+            TypedValue.COMPLEX_UNIT_DIP, 20f, activity.resources.displayMetrics
         ).toInt()
 
         val popupLayoutParams = FrameLayout.LayoutParams(
-            FrameLayout.LayoutParams.MATCH_PARENT,
-            FrameLayout.LayoutParams.WRAP_CONTENT
+            FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT
         ).apply {
             gravity = Gravity.CENTER
             setMargins(marginInPx, 0, marginInPx, 0)
@@ -554,7 +539,7 @@ object Constant {
 //                val intent = Intent(activity, MarkYourAttendance::class.java)
 //                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
 //                activity.startActivity(intent)
-            }  else if (isType == isHomeWork) {
+            } else if (isType == isHomeWork) {
                 val intent = Intent(activity, HomeWork::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 activity.startActivity(intent)
@@ -582,21 +567,17 @@ object Constant {
         val dimView = View(activity).apply {
             setBackgroundColor(Color.parseColor("#80000000"))
             layoutParams = ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
             )
             isClickable = true
         }
 
         val marginInPx = TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_DIP,
-            20f,
-            activity.resources.displayMetrics
+            TypedValue.COMPLEX_UNIT_DIP, 20f, activity.resources.displayMetrics
         ).toInt()
 
         val popupLayoutParams = FrameLayout.LayoutParams(
-            FrameLayout.LayoutParams.MATCH_PARENT,
-            FrameLayout.LayoutParams.WRAP_CONTENT
+            FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT
         ).apply {
             gravity = Gravity.CENTER
             setMargins(marginInPx, 0, marginInPx, 0)
