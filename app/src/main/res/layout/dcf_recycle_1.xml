@@ -15,12 +15,11 @@
             android:layout_height="wrap_content"
             android:text="@string/total"
             android:textColor="@color/black"
-            android:textStyle="bold"
             android:textSize="@dimen/fifteen_sp"
             android:layout_marginStart="@dimen/eight"
             android:layout_marginTop="@dimen/five"
             android:layout_marginBottom="@dimen/five"
-            android:fontFamily="@font/poppins_bold"
+            style="@style/CustomTextStylePoppinsMedium"
             android:id="@+id/total_label"/>
 
         <TextView
@@ -28,13 +27,12 @@
             android:layout_height="wrap_content"
             android:text="37,515"
             android:textColor="@color/black"
-            android:textStyle="bold"
             android:textSize="@dimen/fifteen_sp"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="@dimen/five"
             android:layout_marginBottom="@dimen/five"
             android:layout_marginEnd="@dimen/eight"
-            android:fontFamily="@font/poppins_bold"
+            style="@style/CustomTextStylePoppinsMedium"
             android:id="@+id/total_value"/>
     </RelativeLayout>
 

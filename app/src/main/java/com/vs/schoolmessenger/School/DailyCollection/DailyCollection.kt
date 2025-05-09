@@ -3,6 +3,7 @@ package com.vs.schoolmessenger.School.DailyCollection
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesClickListener
 import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesDateData
 import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesDetailClickListener
@@ -14,13 +15,10 @@ import com.vs.schoolmessenger.databinding.DailyCollectionBinding
 class DailyCollection : BaseActivity<DailyCollectionBinding>(),
     View.OnClickListener {
 
-
     private lateinit var adapter: DcfAdapter1
     private lateinit var adapter2: DcfAdapter2
-
     private val dcflist1 = mutableListOf<DcfData1>()
     private val dcflist2 = mutableListOf<DcfData2>()
-
 
     override fun getViewBinding(): DailyCollectionBinding {
         return DailyCollectionBinding.inflate(layoutInflater)
@@ -60,8 +58,6 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
                 holder: DcfAdapter2.DataViewHolder
             ) {
 
-
-                // Handle item click
             }
         }, this, false)
         binding.totalsummary2.layoutManager =
@@ -94,7 +90,23 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
 
     override fun onClick(p0: View?) {
         when (p0?.id) {
+            R.id.class_name -> {
+                binding.className.setBackgroundResource(R.drawable.custom_category_background)
+                binding.modeName.background = null
+                binding.categoryName.background = null
+            }
+            R.id.mode_name -> {
+                binding.modeName.setBackgroundResource(R.drawable.custom_category_background)
+                binding.className.background = null
+                binding.categoryName.background = null
+            }
 
+            R.id.category_name -> {
+                binding.categoryName.setBackgroundResource(R.drawable.custom_category_background)
+                binding.modeName.background = null
+                binding.className.background = null
+            }
         }
+
     }
-}
+    }

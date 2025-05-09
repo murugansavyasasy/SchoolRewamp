@@ -16,12 +16,14 @@ import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
+import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffAttendanceReportResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffLocationResponse
+import com.vs.schoolmessenger.School.SchoolStrength.SchoolStrengthResponse
 
 class App(application: Application) : AndroidViewModel(application) {
 
@@ -63,6 +65,14 @@ class App(application: Application) : AndroidViewModel(application) {
 
     var isGetHomeWorkReport: LiveData<HomeWorkReportApiResponse?>? = null
         private set
+
+    var isGetDailyCollectionReport: LiveData<DailyCollectionReportResponse?>? = null
+        private set
+
+    var isGetSchoolStrengthReport: LiveData<SchoolStrengthResponse?>? = null
+        private set
+
+
 
     var isSendText: LiveData<TextSendResponse?>? = null
         private set
@@ -109,6 +119,8 @@ class App(application: Application) : AndroidViewModel(application) {
         isGetVoiceHistory = apiRepositories!!.isGetVoiceHistoryLiveData
         isGetTextHistory = apiRepositories!!.isGetTextHistoryLiveData
         isGetHomeWorkReport = apiRepositories!!.isGetHomeWorkReportLiveData
+        isGetDailyCollectionReport = apiRepositories!!.isGetDailyCollectionReportLiveData
+        isGetSchoolStrengthReport = apiRepositories!!.isGetSchoolStrengthReportLiveData
 
         isSendText = apiRepositories!!.isSendTextLiveData
         isSendHomeWork = apiRepositories!!.isSendHomeWorkLiveData
@@ -181,6 +193,15 @@ class App(application: Application) : AndroidViewModel(application) {
     fun isGetHomeWorkReport(isToken: String,  isSectionId: Int, isAcademicYearId: Int ,isdate: String ,activity: Activity) {
         apiRepositories!!.isGetHomeWorkReport(isToken, isSectionId, isAcademicYearId, isdate, activity )
     }
+
+    fun isGetDailyCollectionReport(isToken: String,  istype: String, isfromdate: String ,istodate: String ,activity: Activity) {
+        apiRepositories!!.isGetDailyCollectionReport(isToken, istype, isfromdate, istodate, activity )
+    }
+
+    fun isGetSchoolStrengthReport(isToken: String,   isAcademicYearId: Int ,activity: Activity) {
+        apiRepositories!!.isGetSchoolStrengthReport(isToken, isAcademicYearId , activity )
+    }
+
 
     fun isGetTextHistory(isToken: String, activity: Activity) {
         apiRepositories!!.isGetTextHistory(isToken, activity)

@@ -2,6 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="match_parent">
 
 
@@ -58,11 +59,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/from_date"
-            android:textStyle="normal"
+            style="@style/CustomTextStylePoppinsMedium"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"
             android:layout_gravity="center"
-            android:fontFamily="@font/poppins_regular"
             android:layout_marginEnd="@dimen/ten"
             android:text="@string/FromDate"/>
 
@@ -80,13 +80,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/from_date2"
-                android:textStyle="normal"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
                 android:layout_marginEnd="@dimen/ten"
                 android:text="Feb 13,2025"
                 android:layout_marginStart="@dimen/ten"
-                android:fontFamily="@font/poppins_regular"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:layout_marginTop="@dimen/five"
                 android:gravity="center"
                 android:layout_gravity="center"
@@ -127,11 +126,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/from_date1"
-                android:textStyle="normal"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
                 android:layout_gravity="center"
-                android:fontFamily="@font/poppins_regular"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:layout_marginEnd="@dimen/ten"
                 android:text="@string/ToDate"/>
 
@@ -149,7 +147,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/from_date3"
-                    android:textStyle="normal"
+                    style="@style/CustomTextStylePoppinsMedium"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
                     android:layout_marginEnd="@dimen/ten"
@@ -158,7 +156,6 @@
                     android:layout_marginTop="@dimen/five"
                     android:gravity="center"
                     android:layout_gravity="center"
-                    android:fontFamily="@font/poppins_regular"
                     android:layout_marginBottom="@dimen/five"/>
 
 
@@ -202,12 +199,11 @@
             android:layout_marginTop="@dimen/five"
             android:layout_weight="1"
             android:background="@drawable/custom_category_background"
-            android:fontFamily="@font/poppins_bold"
             android:gravity="center"
             android:text="@string/DC_category"
             android:textColor="@color/white"
             android:textSize="@dimen/fifteen_sp"
-            android:textStyle="bold">
+            style="@style/CustomTextStylePoppinsMedium">
         </TextView>
 
         <TextView
@@ -220,12 +216,10 @@
             android:layout_marginTop="@dimen/five"
             android:layout_weight="1"
             android:layout_marginStart="@dimen/three"
-            android:fontFamily="@font/poppins_bold"
             android:background="@drawable/custom_rounded_background2"
             android:layout_marginEnd="@dimen/three"
             android:gravity="center"
-
-            android:textStyle="bold">
+            style="@style/CustomTextStylePoppinsMedium">
         </TextView>
 
 
@@ -239,9 +233,9 @@
             android:layout_marginTop="@dimen/five"
             android:layout_weight="1"
             android:gravity="center"
-            android:fontFamily="@font/poppins_bold"
+            style="@style/CustomTextStylePoppinsMedium"
             android:background="@drawable/custom_rounded_background2"
-            android:textStyle="bold">
+           >
         </TextView>
 
      </LinearLayout>
@@ -261,11 +255,10 @@
             android:layout_height="wrap_content"
             android:text="@string/total"
             android:textColor="@color/black"
-            android:textStyle="bold"
             android:textSize="@dimen/fifteen_sp"
             android:layout_marginStart="@dimen/eight"
             android:layout_marginTop="@dimen/five"
-            android:fontFamily="@font/poppins_bold"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_marginBottom="@dimen/five"
             android:id="@+id/total_label"/>
 
@@ -274,11 +267,11 @@
             android:layout_height="wrap_content"
             android:text="37,515"
             android:textColor="@color/black"
-            android:textStyle="bold"
+          style="@style/CustomTextStylePoppinsBold"
             android:textSize="@dimen/fifteen_sp"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="@dimen/five"
-            android:fontFamily="@font/poppins_bold"
+
             android:layout_marginBottom="@dimen/five"
             android:layout_marginEnd="@dimen/eight"
             android:id="@+id/total_value"/>
@@ -309,12 +302,12 @@
             android:layout_height="wrap_content"
             android:text="@string/total"
             android:textColor="@color/black"
-            android:textStyle="bold"
+
             android:textSize="@dimen/fifteen_sp"
             android:layout_marginStart="@dimen/eight"
             android:layout_marginTop="@dimen/five"
             android:layout_marginBottom="@dimen/five"
-            android:fontFamily="@font/poppins_bold"
+            style="@style/CustomTextStylePoppinsBold"
             android:id="@+id/total_label1"/>
 
         <TextView
@@ -322,12 +315,11 @@
             android:layout_height="wrap_content"
             android:text="37,515"
             android:textColor="@color/black"
-            android:textStyle="bold"
             android:textSize="@dimen/fifteen_sp"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="@dimen/five"
             android:layout_marginBottom="@dimen/five"
-            android:fontFamily="@font/poppins_bold"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_marginEnd="@dimen/eight"
             android:id="@+id/total_value1"/>
     </RelativeLayout>
