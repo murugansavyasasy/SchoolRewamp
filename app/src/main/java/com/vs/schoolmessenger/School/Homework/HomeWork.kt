@@ -75,7 +75,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
         private const val MAX_FILES = 10
     }
 
-    private val selectedFiles = mutableListOf<FileItem>()
     private var cameraImageUri: Uri? = null
     private var cameraImageFilePath: String? = null
     private val CAMERA_PERMISSION_REQUEST_CODE = 200
@@ -113,10 +112,10 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
         isAccessToken = isStaffDetails!!.access_token
 
         saveDrawableToCache(R.drawable.add_image)
-            ?.let { selectedFiles.add(FileItem(it, FileType.IMAGE)) }
+            ?.let { Constant.selectedFiles!!.add(FileItem(it, FileType.IMAGE)) }
 
         binding.rcyImages.visibility = View.VISIBLE
-        mAdapter = ImagePickingAdapter(this, selectedFiles, this)
+        mAdapter = ImagePickingAdapter(this, Constant.selectedFiles!!, this)
         binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
         binding.rcyImages.adapter = mAdapter
 
@@ -164,8 +163,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
                 isHomeWorkReportData = isHomeWorkReport
                 loadHomeWorkReportData(isHomeWorkReportData)
             }
-
-
         }
     }
 
@@ -222,7 +219,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
                 onBackPressed()
             }
 
-
             R.id.rlaStandard -> {
                 showStandardDropdown(
                     binding.rlaStandard, this, isGetStandard
@@ -247,9 +243,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
                     isSectionId = selectedOption.second
                     fetchHomeWorkReportData()
                 }
-
             }
-
 
             R.id.lblDatePick -> {
                 showDatePickerDialog(this, this)
@@ -357,6 +351,10 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
             binding.edtDescription.requestFocus()
             return
         }
+        if (Constant.selectedFiles!!.size == 1) {
+            Toast.makeText(this, "Choose atleast one file", Toast.LENGTH_SHORT).show()
+            return
+        }
         val sectionDetails = SectionDetails(title, description)
         val intent = Intent(this, RecipientActivity::class.java)
         intent.putExtra(Constant.section_data, sectionDetails)
@@ -459,13 +457,13 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
 
         if (resultCode != RESULT_OK) return
 
-        val remaining = MAX_FILES - selectedFiles.size
+        val remaining = MAX_FILES - Constant.selectedFiles!!.size
         if (remaining <= 0) {
             Toast.makeText(this, "Max $MAX_FILES files allowed", Toast.LENGTH_SHORT).show()
             return
         }
         fun addPath(uri: Uri) {
-            if (selectedFiles.size >= MAX_FILES) return
+            if (Constant.selectedFiles!!.size >= MAX_FILES) return
 
             // Skip only audio and video
             val mimeType = contentResolver.getType(uri)
@@ -498,7 +496,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
                 fileName.endsWith(".txt", true) -> FileType.TXT
                 else -> FileType.OTHER
             }
-            selectedFiles.add(FileItem(path, type))
+            Constant.selectedFiles!!.add(FileItem(path, type))
         }
 
         when (requestCode) {

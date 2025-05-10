@@ -48,9 +48,12 @@ import com.vs.schoolmessenger.School.Communication.DataClass.VoiceHistoryDetails
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceSendingData
 import com.vs.schoolmessenger.School.Communication.Interface.TextHistoryClickListener
 import com.vs.schoolmessenger.School.Communication.Interface.VoiceHistoryClickListener
+import com.vs.schoolmessenger.Utils.AwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.CustomDatePicker
 import com.vs.schoolmessenger.Utils.FileExtensionFromContentUri
+import com.vs.schoolmessenger.Utils.FileItem
+import com.vs.schoolmessenger.Utils.FileType
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.Utils.TimeSelectedListener
 import com.vs.schoolmessenger.databinding.CommunicationSchoolBinding
@@ -359,7 +362,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             audioFilePath = filePath
             isFileName = fileName // <-- Store if needed elsewhere
             Constant.isVoiceType = 1
-            Constant.isVoiceFile = audioFilePath
+//            Constant.isVoiceFile = audioFilePath
+            Constant.selectedFiles!!.add(FileItem(audioFilePath.toString(), FileType.AUDIO))
 
             mediaRecorder = MediaRecorder().apply {
                 setAudioSource(MediaRecorder.AudioSource.MIC)
@@ -420,7 +424,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 )
 
                 if (file.exists() && file.length() > 0L) {
-                    Constant.isVoiceFile = audioFilePath
+                    Constant.selectedFiles!!.add(FileItem(audioFilePath.toString(), FileType.AUDIO))
                     Constant.isVoiceType = 1
 
                     // Get duration using MediaPlayer
@@ -770,7 +774,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 binding.lblDurationOfVoice.text = "00:00 / 03:00"
                 binding.rlaSeekBarAndTitle.visibility = View.GONE
                 binding.rlaTitle.visibility = View.GONE
-                Constant.isVoiceFile = ""
+                Constant.selectedFiles.clear()
                 binding.rlaAddLocalFile.visibility = View.VISIBLE
 //                binding.imgVoiceRecord.visibility = View.VISIBLE
                 binding.rytVoiceRecord.visibility = View.VISIBLE
@@ -782,10 +786,16 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     if (binding.edtContentTextMessage.text.toString() != "") {
                         isGoToRecipient()
                     } else {
-                        Constant.showValidationAlertPopup(getString(R.string.Enter_title_description), this)
+                        Constant.showValidationAlertPopup(
+                            getString(R.string.Enter_title_description),
+                            this
+                        )
                     }
                 } else {
-                    Constant.showValidationAlertPopup(getString(R.string.Enter_title_description), this)
+                    Constant.showValidationAlertPopup(
+                        getString(R.string.Enter_title_description),
+                        this
+                    )
                 }
             }
 
@@ -807,14 +817,38 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
 
             R.id.rlaSendVoice -> {
-                if (!Constant.isVoiceFile.equals("")) {
-                    if (binding.edtTitle.text.toString() != "") {
-                        isGoToRecipient()
+                if (Constant.isVoiceType==3){
+                    if (Constant.isAwsUploadedFiles.isNotEmpty()) {
+                        if (binding.edtTitle.text.toString() != "") {
+                            isGoToRecipient()
+                        } else {
+                            Constant.showValidationAlertPopup(
+                                getString(R.string.Voice_title_required),
+                                this
+                            )
+                        }
                     } else {
-                        Constant.showValidationAlertPopup(getString(R.string.Voice_title_required), this)
+                        Constant.showValidationAlertPopup(
+                            getString(R.string.Voice_title_required),
+                            this
+                        )
                     }
-                } else {
-                    Constant.showValidationAlertPopup(getString(R.string.Voice_title_required), this)
+                }else{
+                    if (Constant.selectedFiles.isNotEmpty()) {
+                        if (binding.edtTitle.text.toString() != "") {
+                            isGoToRecipient()
+                        } else {
+                            Constant.showValidationAlertPopup(
+                                getString(R.string.Voice_title_required),
+                                this
+                            )
+                        }
+                    } else {
+                        Constant.showValidationAlertPopup(
+                            getString(R.string.Voice_title_required),
+                            this
+                        )
+                    }
                 }
             }
 
@@ -1044,7 +1078,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
     fun isSaveTheVoiceData() {
         val voiceData = VoiceSendingData(
-            isFilePath = Constant.isVoiceFile,
             isClickType = Constant.isClickType,
             selectedDates = selectedDates,
             isStartTimeText = binding.lblStartTime.text.toString(),
@@ -1212,7 +1245,13 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         Log.d(
             "RecordingFilePath", "Recording stopped. File Path: $audioFilePath"
         )
-        Constant.isVoiceFile = audioFilePath
+//        Constant.isVoiceFile = audioFilePath
+        Constant.isAwsUploadedFiles.add(
+            AwsUploadedFiles(
+                isFileUrl = data.url,
+                isFileType = FileType.AUDIO.toString()
+            )
+        )
         binding.rlaSeekBarAndTitle.visibility = View.VISIBLE
         binding.rlaTitle.visibility = View.VISIBLE
         binding.edtTitle.setText(data.title.toString())
@@ -1281,7 +1320,10 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     mediaPlayer.release()
 
                     val timeStamp =
-                        SimpleDateFormat(Constant.yyyyMMdd_HHmmss, Locale.getDefault()).format(Date())
+                        SimpleDateFormat(
+                            Constant.yyyyMMdd_HHmmss,
+                            Locale.getDefault()
+                        ).format(Date())
                     var isFileExtension = "mp3"
                     val fileName = "Communication_${timeStamp}.$isFileExtension"
                     isFileName = fileName
@@ -1296,7 +1338,9 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     // Store local path for upload/use
                     audioFilePath = outputFile.absolutePath
                     Constant.isVoiceType = 2
-                    Constant.isVoiceFile = audioFilePath
+//                    Constant.isVoiceFile = audioFilePath
+                    Constant.selectedFiles!!.add(FileItem(audioFilePath.toString(), FileType.AUDIO))
+
 
                     // Update UI
                     binding.rlaSeekBarAndTitle.visibility = View.VISIBLE
@@ -1309,7 +1353,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 } catch (e: Exception) {
                     mediaPlayer.release()
                     e.printStackTrace()
-                    Toast.makeText(this, getString(R.string.Failed_load_audio), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.Failed_load_audio), Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
         }
@@ -1326,61 +1371,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         builder.show()
     }
 
-
-//    @RequiresApi(Build.VERSION_CODES.O)
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//
-//        if (requestCode == PICK_AUDIO_REQUEST && resultCode == RESULT_OK) {
-//            val uri = data?.data
-//            if (uri != null) {
-//                contentResolver.takePersistableUriPermission(
-//                    uri, Intent.FLAG_GRANT_READ_URI_PERMISSION
-//                )
-//
-//                val mediaPlayer = MediaPlayer()
-//                try {
-//                    // Set data source to get duration
-//                    mediaPlayer.setDataSource(this, uri)
-//                    mediaPlayer.prepare()
-//                    val durationInMillis = mediaPlayer.duration
-//                    val formattedDuration = formatDuration(durationInMillis)
-//                    mediaPlayer.release()
-//                    val timeStamp =
-//                        SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
-//                 var   isFileExtension = "mp3"
-//                    val fileName = "Communication_${timeStamp}.$isFileExtension"
-//                    isFileName = fileName
-//                    // Copy file to app cache
-//                    val inputStream = contentResolver.openInputStream(uri)
-//                    val outputFile = File(cacheDir, fileName)
-//                    val outputStream = FileOutputStream(outputFile)
-//                    inputStream?.copyTo(outputStream)
-//                    inputStream?.close()
-//                    outputStream.close()
-//
-//                    // Store local path for upload/use
-//                    audioFilePath = outputFile.absolutePath
-//                    Constant.isVoiceType = 2
-//                    Constant.isVoiceFile = audioFilePath
-//
-//                    // Update UI
-//                    binding.rlaSeekBarAndTitle.visibility = View.VISIBLE
-//                    binding.rlaTitle.visibility = View.VISIBLE
-////                    binding.imgVoiceRecord.visibility = View.GONE
-//                    binding.rytVoiceRecord.visibility = View.GONE
-//                    binding.lblDurationOfVoice.visibility = View.GONE
-//                    binding.rlaAddLocalFile.visibility = View.GONE
-//                    binding.lblEndDuration.text = "/ $formattedDuration"
-//
-//                } catch (e: Exception) {
-//                    mediaPlayer.release()
-//                    e.printStackTrace()
-//                    Toast.makeText(this, "Failed to load audio", Toast.LENGTH_SHORT).show()
-//                }
-//            }
-//        }
-//    }
 
     fun getFileExtensionFromAwsUrl(url: String): String? {
         val fileName = url.substringAfterLast("/")

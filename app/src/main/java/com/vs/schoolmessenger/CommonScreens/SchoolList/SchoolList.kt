@@ -32,6 +32,7 @@ import com.vs.schoolmessenger.School.MarkYourAttendance.MarkYourAttendance
 import com.vs.schoolmessenger.School.SchoolStrength.SchoolStrength
 import com.vs.schoolmessenger.School.StaffWiseAttendanceReport.StaffWiseAttendanceReport
 import com.vs.schoolmessenger.School.StudentReport.StudentReport
+import com.vs.schoolmessenger.Utils.AwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.M_ABSENTEES_REPORT
 import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
@@ -53,6 +54,7 @@ import com.vs.schoolmessenger.Utils.Constant.M_SCHOOL_STRENGTH
 import com.vs.schoolmessenger.Utils.Constant.M_STAFF_WISE_ATTENDANCE_REPORT
 import com.vs.schoolmessenger.Utils.Constant.M_STUDENT_REPORT
 import com.vs.schoolmessenger.Utils.Constant.SELECTED_SCHOOL_MENU
+import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SchoolListActivityBinding
 
@@ -298,38 +300,73 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
     }
 
     private fun isFileUploadInAws(
-        isFilePath: String, schoolId: String, isFileType: String?
+        isSelectedFiles: MutableList<FileItem>, schoolId: String, isFileType: String?
     ) {
         val isCountryId = SharedPreference.getCountryId(this)
-        isAwsUploadingPreSigned!!.getPreSignedUrl(
-            isFilePath,
-            schoolId,
-            isFileType!!,
-            this,
-            isCountryId!!,
-            true,
-            false,
-            object : UploadCallback {
-                @RequiresApi(Build.VERSION_CODES.O)
-                override fun onUploadSuccess(
-                    response: String?, isFileUploaded: String?
-                ) {
-                    voiceSendApi(isFileUploaded)
-                    Log.d("isSuccessFullUpload", "isSuccessFullUpload")
-                }
+        for (i in isSelectedFiles.indices) {
+            isAwsUploadingPreSigned!!.getPreSignedUrl(
+                isSelectedFiles.get(i).path, schoolId, isFileType!!,
+                this, isCountryId!!,
+                true,
+                false,
+                object : UploadCallback {
+                    @RequiresApi(Build.VERSION_CODES.O)
+                    override fun onUploadSuccess(
+                        response: String?,
+                        isFileUploaded: String?
+                    ) {
+                        Constant.isAwsUploadedFiles.add(
+                            AwsUploadedFiles(
+                                isFileUrl = isFileUploaded!!,
+                                isFileType = isSelectedFiles[i].type.toString()
+                            )
+                        )
+                        if (Constant.isAwsUploadedFiles.size == isSelectedFiles.size) {
+                            voiceSendApi(isFileUploaded)
+                        }
+                        Log.d("isSuccessFullUpload", "isSuccessFullUpload")
+                    }
 
-                override fun onUploadError(error: String?) {
-                    TODO("Not yet implemented")
-                }
-            })
+                    override fun onUploadError(error: String?) {
+                        TODO("Not yet implemented")
+                    }
+                })
+        }
+
     }
+
+//    private fun isFileUploadInAws(
+//        isFilePath: String, schoolId: String, isFileType: String?
+//    ) {
+//        val isCountryId = SharedPreference.getCountryId(this)
+//        isAwsUploadingPreSigned!!.getPreSignedUrl(
+//            isFilePath,
+//            schoolId,
+//            isFileType!!,
+//            this,
+//            isCountryId!!,
+//            true,
+//            false,
+//            object : UploadCallback {
+//                @RequiresApi(Build.VERSION_CODES.O)
+//                override fun onUploadSuccess(
+//                    response: String?, isFileUploaded: String?
+//                ) {
+//                    voiceSendApi(isFileUploaded)
+//                    Log.d("isSuccessFullUpload", "isSuccessFullUpload")
+//                }
+//
+//                override fun onUploadError(error: String?) {
+//                    TODO("Not yet implemented")
+//                }
+//            })
+//    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun voiceSendApi(isFileUploadedUrl: String?) {
         val isVoiceData = Constant.isVoiceSendingData
         val jsonObject = ApiCallRequest.isVoiceSend(
             isAcademicYearId = isAcademicYearId,
-            isFileUploaded = isFileUploadedUrl,
             isClickType = isVoiceData!!.isClickType,
             selectedDates = isVoiceData.selectedDates,
             isStartTimeText = isVoiceData.isStartTimeText,
@@ -370,8 +407,13 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                         voiceSendApi(isVoiceData!!.isAwsUrl)
                     } else {
                         isFileUploadInAws(
-                            Constant.isVoiceFile!!, isStaffData!!.school_id, "audio"
+                            Constant.selectedFiles,
+                            isStaffData!!.school_id,
+                            "audio"
                         )
+//                        isFileUploadInAws(
+//                            Constant.selectedFiles.get(0).path!!, isStaffData!!.school_id, "audio"
+//                        )
                     }
                 }
             }.setNegativeButton(resources.getString(R.string.Cancel)) { dialog, _ ->
@@ -418,8 +460,13 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                     voiceSendApi(isVoiceData!!.isAwsUrl)
                 } else {
                     isFileUploadInAws(
-                        Constant.isVoiceFile!!, isStaffData!!.school_id, "audio"
+                        Constant.selectedFiles,
+                        isStaffData!!.school_id,
+                        "audio"
                     )
+//                    isFileUploadInAws(
+//                        Constant.selectedFiles.get(0).path!!, isStaffData!!.school_id, "audio"
+//                    )
                 }
             }
         }
