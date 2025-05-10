@@ -78,7 +78,7 @@ class StaffAttendanceReportAdapter(
         ) {
             lblStatus.text = data.leave_type
 
-            if (data.leave_type.equals("Present")) {
+            if (data.leave_type.equals(Constant.Present)) {
                 lblStatus.background = ContextCompat.getDrawable(
                     context,
                     R.drawable.rounded_top_right_bottom_end_green
@@ -90,14 +90,14 @@ class StaffAttendanceReportAdapter(
 
 
             lblStaffName.text = data.name
-            lblCheckInTime.text = "First in - " + data.in_time
+            lblCheckInTime.text = context.getString(R.string.Firstin) + data.in_time
             if (data.out_time != "") {
                 lblCheckoutTime.visibility = View.VISIBLE
-                lblCheckoutTime.text = "Last in - " + data.out_time
+                lblCheckoutTime.text = context.getString(R.string.Lastin) + data.out_time
             } else {
                 lblCheckoutTime.visibility = View.GONE
             }
-            lblWorkingHours.text = "Working hours - " + data.working_hours
+            lblWorkingHours.text = context.getString(R.string.Workinghours) + data.working_hours
             lblAttendanceType.text = data.attendance_type
 
             val result = Constant.getDateDetails(data.date)

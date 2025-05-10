@@ -193,7 +193,6 @@
     <string name="Reports">Reports</string>
     <string name="UploadAttachment">Upload Attachment</string>
     <string name="TOSTANDARDORSECTION">TO STANDARD OR SECTION</string>
-
     <string name="SeeAll">See All</string>
     <string name="ImageOrPdf">Image/Pdf</string>
     <string name="Event">Event</string>
@@ -445,7 +444,6 @@
     <string name="does_the_school_offer_transportation_services">Does the school offer transportation services?</string>
     <string name="yes_the_school_provides_bus_transportation_for_students_across_various_routes">Yes, the school provides bus transportation for students across various routes.</string>
     <string name="we_offer_sports_music_drama_and_various_clubs_like_science_and_robotics">We offer sports, music, drama, and various clubs like science and robotics.</string>
-
     <string name="group_name">Group name</string>
     <string name="employee_id">Employee id :</string>
     <string name="destination">Destination :</string>
@@ -465,7 +463,6 @@
     <string name="happy_to_have_you_with_us">Happy to have you with us!</string>
     <string name="your_password_has_already_been_created_use_your_credentials_to_log_in_and_access_schoolchimes_for_seamless_school_communication_and_management">Your password has already been created. Use your credentials to log in and access SchoolChimes for seamless school communication and management.</string>
     <string name="next">Next</string>
-
     <string name="PermissionsRequired">Permissions Required</string>
     <string name="Recording_failed">Recording failed</string>
     <string name="Failed_recording">Failed to stop recording</string>
@@ -511,5 +508,17 @@
     <string name="staffwise_report">Staffwise Report</string>
     <string name="select_staff">Select Staff</string>
     <string name="alert">Alert!</string>
+    <string name="Meters">Meters</string>
+    <string name="Firstin">First in - </string>
+    <string name="Lastin">Last in - </string>
+    <string name="Workinghours">Working hours - </string>
+    <string name="EnterLocation">Enter your location name and distance, Distance should be above 10 Meter(s)</string>
+    <string name="Choose_enter_distance">Choose or enter the distance</string>
+    <string name="Location_Error">Location Error</string>
+    <string name="Location_unavailable">Location unavailable. Ensure GPS is enabled.</string>
+    <string name="Please_enter_fields">Please enter all fields</string>
+    <string name="Are_to_location">Are you sure want to delete this location?</string>
+    <string name="Geometric_Attendance">Geometric Attendance</string>
+    <string name="Punch_History_found">No Punch History found!</string>
 
 </resources>

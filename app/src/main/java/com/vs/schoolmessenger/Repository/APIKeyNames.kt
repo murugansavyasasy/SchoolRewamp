@@ -98,5 +98,15 @@ object APIKeyNames {
     const val download = "download"
     const val quality = "quality"
     const val link = "link"
+    const val primary_mobile="primary_mobile"
+    const val gender="gender"
+    const val class_id="class_id"
+    const val dob="dob"
+    const val section_name="section_name"
+    const val father_name="father_name"
+    const val class_teacher="class_teacher"
+
+
+
 
 }

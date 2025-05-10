@@ -11,6 +11,7 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Communication.Adapter.TextHistoryAdapter
 import com.vs.schoolmessenger.School.MarkYourAttendance.Interface.LocationHistoryClickListener
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistoryData
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class LocationHistoryAdapter(
@@ -78,13 +79,13 @@ class LocationHistoryAdapter(
         ) {
             lblPlaceName.text = data.location
             lblLatLong.text = data.latitude + " - " + data.longitude
-            lblDistance.text = data.distance + " Meters"
+            lblDistance.text = data.distance + context.getString(R.string.Meters)
 
             imgDelete.setOnClickListener {
-                listener.onItemClick(data, "isDelete")
+                listener.onItemClick(data, Constant.isDelete)
             }
             imgEdit.setOnClickListener {
-                listener.onItemClick(data, "isEdit")
+                listener.onItemClick(data, Constant.isEdit)
             }
         }
 

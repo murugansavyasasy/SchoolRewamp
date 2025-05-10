@@ -21,6 +21,7 @@ import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.common.api.Api
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.gson.JsonObject
@@ -149,7 +150,7 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
     private fun openInGoogleMaps(lat: Double, lng: Double, isTitle: String) {
         val uri = Uri.parse("geo:$lat,$lng?q=$lat,$lng(${Uri.encode(isTitle)})")
         val intent = Intent(Intent.ACTION_VIEW, uri)
-        intent.setPackage("com.google.android.apps.maps")
+        intent.setPackage(Constant.googleMap)
         startActivity(intent)
     }
 
@@ -164,7 +165,7 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
                 parent: AdapterView<*>, view: View?, position: Int, id: Long
             ) {
                 isDistance = parent.getItemAtPosition(position).toString()
-                if (!isDistance.equals("Custom")) {
+                if (!isDistance.equals(Constant.Custom)) {
                     binding.txtMeters.setText(isDistance)
                 } else {
                     binding.txtMeters.setText("")
@@ -196,36 +197,36 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
             when {
                 binding.txtLocationName.text.toString()
                     .isEmpty() -> showInvalidLocationDialog(
-                    "Alert",
-                    "Enter your location name and distance, Distance should be above 10 Meter(s)"
+                    getString(R.string.alert),
+                    getString(R.string.EnterLocation)
                 )
 
                 isDistance.isNullOrEmpty() -> showInvalidLocationDialog(
-                    "Alert",
-                    "Choose or enter the distance"
+                    getString(R.string.alert),
+                    getString(R.string.Choose_enter_distance)
                 )
 
                 else -> isSaveLocation()
             }
         } else {
             showInvalidLocationDialog(
-                "Location Error", "Location unavailable. Ensure GPS is enabled."
+                getString(R.string.Location_Error), getString(R.string.Location_unavailable)
             )
         }
     }
 
     private fun showInvalidLocationDialog(title: String, message: String) {
-        AlertDialog.Builder(this).setTitle(title).setMessage(message).setPositiveButton("OK", null)
+        AlertDialog.Builder(this).setTitle(title).setMessage(message).setPositiveButton(getString(R.string.permission_ok), null)
             .show()
     }
 
     private fun isSaveLocation() {
         Constant.showLoading(this)
         val jsonObject = JsonObject().apply {
-            addProperty("location", binding.txtLocationName.text.toString())
-            addProperty("longitude", isLongitude)
-            addProperty("latitude", isLatitude)
-            addProperty("distance", isDistance)
+            addProperty(APIKeyNames.location, binding.txtLocationName.text.toString())
+            addProperty(APIKeyNames.longitude, isLongitude)
+            addProperty(APIKeyNames.latitude, isLatitude)
+            addProperty(APIKeyNames.distance, isDistance)
         }
         Log.d("jsonObject", jsonObject.toString())
         appViewModel?.addLocation(isAccessToken!!, jsonObject, this)
@@ -323,14 +324,14 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
             if (locationName.isNotEmpty() || distance.isNotEmpty()) {
                 Constant.showLoading(this)
                 val jsonObject = JsonObject().apply {
-                    addProperty("id", id)
-                    addProperty("location", locationName)
-                    addProperty("distance", distance)
+                    addProperty(APIKeyNames.id, id)
+                    addProperty(APIKeyNames.location, locationName)
+                    addProperty(APIKeyNames.distance, distance)
                 }
                 appViewModel?.updateLocation(isAccessToken!!, jsonObject, this)
                 closePopup()
             } else {
-                Toast.makeText(this, "Please enter all fields", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.Please_enter_fields), Toast.LENGTH_SHORT).show()
             }
         }
         dimView.setOnClickListener { closePopup() }
@@ -340,13 +341,13 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onItemClick(data: LocationHistoryData, isType: String) {
         val dialogRootView = view as ViewGroup
-        if (isType == "isDelete") {
+        if (isType == Constant.isDelete) {
             showTopAlertPopup(
-                "Are you sure want to delete this location?",
+                getString(R.string.Are_to_location),
                 dialogRootView,
                 data.id,
                 false,
-                "isRemove"
+                Constant.isRemove
             )
         } else {
             showEditLocationPopup(data.id, dialogRootView)
@@ -395,17 +396,17 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
             rootView.removeView(dimView)
         }
 
-        if (id == -1 && isStatus && isDeleteLocation == "isRemove") {
+        if (id == -1 && isStatus && isDeleteLocation == Constant.isRemove) {
             isLocationHistoryAdapter?.removeItemById(isDeletedId!!)
         }
 
         okButton.setOnClickListener {
-            if (id != -1 && isDeleteLocation == "isRemove") {
+            if (id != -1 && isDeleteLocation == Constant.isRemove) {
                 val jsonObject = JsonObject().apply {
                     addProperty(APIKeyNames.location_id, id)
                 }
                 appViewModel?.removeLocation(isAccessToken!!, jsonObject, this)
-            } else if (isDeleteLocation == "isUpdate") {
+            } else if (isDeleteLocation == Constant.isUpdate) {
                 isShowLocationHistory()
             }
             closePopup()

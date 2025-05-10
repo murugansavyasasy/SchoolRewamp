@@ -164,8 +164,6 @@ object Constant {
     val M_YOUR_PROFILE = 37
     val M_SCHEDULE_EXAM_TEST = 38
     val M_ATTACHMENTS = 39
-
-
     val M_FINANCE = 194
 
 
@@ -265,6 +263,7 @@ object Constant {
     var TXT="TXT"
     var data="data"
     var position="position"
+    var subjectName="subjectName"
     var SelectedDocumentPath="SelectedDocumentPath"
     var SelectedDocumentType="SelectedDocumentType"
     var isText="isText"
@@ -304,6 +303,15 @@ object Constant {
     var hasCode="#.##"
     var VIDEO_URL="VIDEO_URL"
     var VIDEO_TITLE="VIDEO_TITLE"
+    var isDelete="isDelete"
+    var isEdit="isEdit"
+    var Present="Present"
+    var googleMap="com.google.android.apps.maps"
+    var Custom="Custom"
+    var isRemove="isRemove"
+    var isUpdate="isUpdate"
+    var new="new"
+    var current="current"
 
 
     fun isInternetAvailable(activity: Activity): Boolean {

@@ -22,6 +22,7 @@ import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistor
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffAttendanceReportResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffLocationResponse
+import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
 
 class App(application: Application) : AndroidViewModel(application) {
 
@@ -95,6 +96,9 @@ class App(application: Application) : AndroidViewModel(application) {
     var isStaffWiseAttendanceReport: LiveData<StaffAttendanceReportResponse?>? = null
     var isStaffWiseAttendanceReportList: LiveData<StaffAttendanceReportResponse?>? = null
 
+    var isStudentReportList: LiveData<GetStudentReportData?>? = null
+
+
 
     fun init() {
         isDashBoardData = apiRepositories!!.isDashBoardLiveData
@@ -128,6 +132,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isStaffWiseAttendanceReport = apiRepositories!!.isGiometricStaffWiseAttendanceReportLiveData
         isStaffWiseAttendanceReportList =
             apiRepositories!!.isGiometricStaffWiseAttendanceReportLiveDataList
+        isStudentReportList = apiRepositories!!.isStudentReportLiveData
     }
 
     fun isDashBoardData(isToken: String, isMemberType: String, activity: Activity) {
@@ -268,6 +273,10 @@ class App(application: Application) : AndroidViewModel(application) {
             isStaffId,
             activity
         )
+    }
+    //Get Student Report Details
+    fun getStudentReportDetails(isToken: String, class_id: Int,section_id:Int, activity: Activity) {
+        apiRepositories?.getStudentReportList(isToken, class_id, section_id,activity)
     }
 }
 
