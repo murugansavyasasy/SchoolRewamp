@@ -1,37 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:background="@color/white">
 
 
     <include
         android:id="@+id/toolbarLayout"
-        layout="@layout/parent_side_tool_bar" />
+        layout="@layout/school_side_tool_bar" />
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewpager"
+    <ImageView
+        android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/two_hundred"
-        android:paddingStart="@dimen/thirty"
-        android:paddingEnd="@dimen/thirty"
-        android:clipToPadding="false"
-        android:clipChildren="false"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbarLayout">
 
-    <me.relex.circleindicator.CircleIndicator
-        app:layout_constraintTop_toBottomOf="@+id/viewpager"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:id="@+id/indicator"
+    </ImageView>
+
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbarLayout"
+        android:visibility="gone">
+
+    </WebView>
+
+    <ProgressBar
+        android:id="@+id/loadingBar"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/thirty"
-        style="@style/IndicatorStyle"
-        android:elevation="@dimen/four"/>
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="@dimen/fifty"
+        android:indeterminateDrawable="@drawable/progress_bar_white"
+        android:indeterminateOnly="true"
+        android:visibility="gone">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </ProgressBar>
+
+</RelativeLayout>

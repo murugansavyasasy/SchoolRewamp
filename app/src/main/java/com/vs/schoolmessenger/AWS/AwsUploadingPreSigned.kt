@@ -1,11 +1,14 @@
 package com.vs.schoolmessenger.AWS
 
 import android.app.Activity
+import android.content.Context
 import android.net.Uri
 import android.os.Build
+import android.provider.OpenableColumns
 import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.net.toUri
 import com.vs.schoolmessenger.AWS.S3Uploader.UploadCallbackResponse
 import com.vs.schoolmessenger.Repository.RestClient
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -79,7 +82,8 @@ class AwsUploadingPreSigned {
         Log.d("isBucket", isBucket)
 
         var mediaType: MediaType? = null
-            fileExtension=   getFileExtension(File(isFilePathUrl).name)
+//        fileExtension = getFileExtension(File(isFilePathUrl).name)
+        fileExtension = getFileExtensionFromUri(activity,isFilePathUrl.toUri())
         try {
             mediaType = getMediaType(fileExtension)
             Log.d("MediaType", mediaType.toString())
@@ -91,9 +95,10 @@ class AwsUploadingPreSigned {
         RestClient.changeApiBaseUrl(baseURL)
         val apiService = RestClient.apiInterfaces
 
-        val isFileName = getFileNameFromPath(isFilePathUrl)
+        val isFileName = getFileNameFromPath(activity,isFilePathUrl)
         Log.d("isFileName", isFileName.toString())
-        val call = apiService.getPreSignedUrl(isBucket, isFileName, bucketPath, mediaType.toString())
+        val call =
+            apiService.getPreSignedUrl(isBucket, isFileName, bucketPath, mediaType.toString())
         call!!.enqueue(object : retrofit2.Callback<PreSignedUrl?> {
             @RequiresApi(Build.VERSION_CODES.O)
             override fun onResponse(call: Call<PreSignedUrl?>, response: Response<PreSignedUrl?>) {
@@ -137,13 +142,30 @@ class AwsUploadingPreSigned {
         })
     }
 
-    fun getFileNameFromPath(filePath: String): String {
+    fun getFileNameFromPath(context: Context, filePath: String): String {
         return if (filePath.startsWith("content://")) {
-            "audiorecord.m4a"
+            try {
+                val uri = Uri.parse(filePath)
+                var result: String? = null
+                val cursor = context.contentResolver.query(uri, null, null, null, null)
+                cursor?.use {
+                    if (it.moveToFirst()) {
+                        val nameIndex = it.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+                        if (nameIndex != -1) {
+                            result = it.getString(nameIndex)
+                        }
+                    }
+                }
+                result ?: "unknown_file"
+            } catch (e: Exception) {
+                Log.e("FileNameError", "Error getting name: ${e.message}")
+                "unknown_file"
+            }
         } else {
             File(filePath).name
         }
     }
+
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -154,8 +176,11 @@ class AwsUploadingPreSigned {
         isFileUploadUrl: String?,
         uploadCallback: UploadCallback
     ) {
-        val imageData = getImageData(filePath, activity)
-            val   fileExtension=     getFileExtension(File(filePath).name)
+//        val imageData = getImageData(filePath, activity)
+//        val fileExtension = getFileExtensionFromUri(File(filePath).name)
+
+        val imageData = getImageData(activity,filePath)
+        val fileExtension = getFileExtensionFromUri(activity,filePath.toUri())
         var mediaType: MediaType? = null
         try {
             mediaType = getMediaType(fileExtension)
@@ -164,37 +189,60 @@ class AwsUploadingPreSigned {
         }
 
         val uploader = S3Uploader()
-        uploader.uploadImageToS3(presignedUrl, imageData, mediaType.toString(), object : UploadCallbackResponse {
-            override fun onSuccess(message: String?) {
-                Log.d("S3Upload", message ?: "Upload success")
-                uploadCallback.onUploadSuccess(message, isFileUploadUrl)
-            }
+        uploader.uploadImageToS3(
+            presignedUrl,
+            imageData,
+            mediaType.toString(),
+            object : UploadCallbackResponse {
+                override fun onSuccess(message: String?) {
+                    Log.d("S3Upload", message ?: "Upload success")
+                    uploadCallback.onUploadSuccess(message, isFileUploadUrl)
+                }
 
-            override fun onError(error: Exception?) {
-                Log.e("UploadError", error.toString())
-                uploadCallback.onUploadError(error?.message)
-            }
-        })
+                override fun onError(error: Exception?) {
+                    Log.e("UploadError", error.toString())
+                    uploadCallback.onUploadError(error?.message)
+                }
+            })
     }
 
-    private fun getFileExtension(fileName: String): String {
-        val lastIndexOfDot = fileName.lastIndexOf('.')
-        return if (lastIndexOfDot > 0 && lastIndexOfDot < fileName.length - 1) {
-            fileName.substring(lastIndexOfDot + 1).lowercase()
-        } else {
-            ""
+//    private fun getFileExtension(fileName: String): String {
+//        val lastIndexOfDot = fileName.lastIndexOf('.')
+//        return if (lastIndexOfDot > 0 && lastIndexOfDot < fileName.length - 1) {
+//            fileName.substring(lastIndexOfDot + 1).lowercase()
+//        } else {
+//            ""
+//        }
+//    }
+
+    fun getFileName(context: Context, uri: Uri): String {
+        var result: String? = null
+        if (uri.scheme == "content") {
+            val cursor = context.contentResolver.query(uri, null, null, null, null)
+            cursor?.use {
+                if (it.moveToFirst()) {
+                    result = it.getString(it.getColumnIndex(OpenableColumns.DISPLAY_NAME))
+                }
+            }
         }
+        if (result == null) {
+            result = uri.path
+            val cut = result?.lastIndexOf('/')
+            if (cut != -1 && cut != null) {
+                result = result?.substring(cut + 1)
+            }
+        }
+        return result ?: "unknown_file"
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun getImageData(filePath: String, activity: Activity): ByteArray? {
+    fun getImageData(context: Context, path: String): ByteArray? {
         return try {
-            if (filePath.startsWith("content://")) {
-                val uri = Uri.parse(filePath)
-                val inputStream = activity.contentResolver.openInputStream(uri)
-                inputStream?.readBytes()
+            if (path.startsWith("content://")) {
+                val uri = Uri.parse(path)
+                context.contentResolver.openInputStream(uri)?.readBytes()
             } else {
-                val file = File(filePath)
+                val file = File(path)
                 java.nio.file.Files.readAllBytes(file.toPath())
             }
         } catch (e: Exception) {
@@ -203,16 +251,106 @@ class AwsUploadingPreSigned {
         }
     }
 
+
+    fun getFileExtensionFromUri(context: Context, uri: Uri): String {
+        val fileName = getFileName(context, uri)
+        return fileName.substringAfterLast('.', "").lowercase()
+    }
+
+
+
+//    @RequiresApi(Build.VERSION_CODES.O)
+//    private fun getImageData(filePath: String, activity: Activity): ByteArray? {
+//        return try {
+//            if (filePath.startsWith("content://")) {
+//                val uri = Uri.parse(filePath)
+//                val inputStream = activity.contentResolver.openInputStream(uri)
+//                inputStream?.readBytes()
+//            } else {
+//                val file = File(filePath)
+//                java.nio.file.Files.readAllBytes(file.toPath())
+//            }
+//        } catch (e: Exception) {
+//            Log.e("FileReadError", "Error reading file data: ${e.message}")
+//            null
+//        }
+//    }
+
     fun getMediaType(fileExtension: String): MediaType? {
         return when (fileExtension.lowercase()) {
+            // Images
             "jpg", "jpeg" -> "image/jpeg".toMediaTypeOrNull()
             "png" -> "image/png".toMediaTypeOrNull()
-            "pdf" -> "application/pdf".toMediaTypeOrNull()
+            "bmp" -> "image/bmp".toMediaTypeOrNull()
+            "webp" -> "image/webp".toMediaTypeOrNull()
+
+            // Audio
             "mp3" -> "audio/mpeg".toMediaTypeOrNull()
             "wav" -> "audio/wav".toMediaTypeOrNull()
             "3gp" -> "audio/3gpp".toMediaTypeOrNull()
             "m4a" -> "audio/mp4".toMediaTypeOrNull()
-            else -> throw UnsupportedOperationException("Unsupported file type: $fileExtension")
+
+            // Documents
+            "pdf" -> "application/pdf".toMediaTypeOrNull()
+            "doc" -> "application/msword".toMediaTypeOrNull()
+            "docx" -> "application/vnd.openxmlformats-officedocument.wordprocessingml.document".toMediaTypeOrNull()
+            "ppt" -> "application/vnd.ms-powerpoint".toMediaTypeOrNull()
+            "pptx" -> "application/vnd.openxmlformats-officedocument.presentationml.presentation".toMediaTypeOrNull()
+            "xls" -> "application/vnd.ms-excel".toMediaTypeOrNull()
+            "xlsx" -> "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet".toMediaTypeOrNull()
+            "txt" -> "text/plain".toMediaTypeOrNull()
+
+            else -> {
+                Log.w("MediaTypeFallback", "Unknown type: $fileExtension, using fallback.")
+                "application/octet-stream".toMediaTypeOrNull()
+            }
         }
     }
+
+//    fun getMediaType(fileExtension: String): MediaType? {
+//        return when (fileExtension.lowercase()) {
+//            // Images
+//            "jpg", "jpeg" -> "image/jpeg".toMediaTypeOrNull()
+//            "png" -> "image/png".toMediaTypeOrNull()
+//            "bmp" -> "image/bmp".toMediaTypeOrNull()
+//            "webp" -> "image/webp".toMediaTypeOrNull()
+//
+//            // Audio
+//            "mp3" -> "audio/mpeg".toMediaTypeOrNull()
+//            "wav" -> "audio/wav".toMediaTypeOrNull()
+//            "3gp" -> "audio/3gpp".toMediaTypeOrNull()
+//            "m4a" -> "audio/mp4".toMediaTypeOrNull()
+//
+//            // Documents
+//            "pdf" -> "application/pdf".toMediaTypeOrNull()
+//            "doc" -> "application/msword".toMediaTypeOrNull()
+//            "docx" -> "application/vnd.openxmlformats-officedocument.wordprocessingml.document".toMediaTypeOrNull()
+//            "ppt" -> "application/vnd.ms-powerpoint".toMediaTypeOrNull()
+//            "pptx" -> "application/vnd.openxmlformats-officedocument.presentationml.presentation".toMediaTypeOrNull()
+//            "xls" -> "application/vnd.ms-excel".toMediaTypeOrNull()
+//            "xlsx" -> "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet".toMediaTypeOrNull()
+//            "txt" -> "text/plain".toMediaTypeOrNull()
+//
+//            // Fallback for unknown types
+//            else -> {
+//                Log.w("MediaTypeFallback", "Unknown file type: $fileExtension, using application/octet-stream")
+//                "application/octet-stream".toMediaTypeOrNull()
+//            }
+//        }
+//    }
+
+
+
+//    fun getMediaType(fileExtension: String): MediaType? {
+//        return when (fileExtension.lowercase()) {
+//            "jpg", "jpeg" -> "image/jpeg".toMediaTypeOrNull()
+//            "png" -> "image/png".toMediaTypeOrNull()
+//            "pdf" -> "application/pdf".toMediaTypeOrNull()
+//            "mp3" -> "audio/mpeg".toMediaTypeOrNull()
+//            "wav" -> "audio/wav".toMediaTypeOrNull()
+//            "3gp" -> "audio/3gpp".toMediaTypeOrNull()
+//            "m4a" -> "audio/mp4".toMediaTypeOrNull()
+//            else -> throw UnsupportedOperationException("Unsupported file type: $fileExtension")
+//        }
+//    }
 }

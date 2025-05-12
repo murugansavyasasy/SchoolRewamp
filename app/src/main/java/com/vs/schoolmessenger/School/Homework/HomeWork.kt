@@ -60,9 +60,8 @@ import java.util.Date
 import java.util.Locale
 
 
-class HomeWork : BaseActivity<HomeWorkBinding>(),
-    View.OnClickListener, OnImageClickListener, OnDateSelectedListener,
-    HomeWorkReportClickListener {
+class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageClickListener,
+    OnDateSelectedListener, HomeWorkReportClickListener {
 
     override fun getViewBinding(): HomeWorkBinding {
         return HomeWorkBinding.inflate(layoutInflater)
@@ -111,8 +110,14 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
 
-        saveDrawableToCache(R.drawable.add_image)
-            ?.let { Constant.selectedFiles!!.add(FileItem(it, FileType.IMAGE)) }
+        saveDrawableToCache(R.drawable.add_image)?.let {
+            Constant.selectedFiles!!.add(
+                FileItem(
+                    it,
+                    FileType.IMAGE
+                )
+            )
+        }
 
         binding.rcyImages.visibility = View.VISIBLE
         mAdapter = ImagePickingAdapter(this, Constant.selectedFiles!!, this)
@@ -122,7 +127,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
         binding.selectdate.text = Constant.getCurrentDate()
 
         appViewModel!!.isGetAcademicList?.observe(this) { response ->
-            Constant.hideLoading(this@HomeWork)
             response?.data?.let { academicList ->
                 val reorderedList = academicList.sortedByDescending { it.current_academic_year }
                 if (isAcademicYear == reorderedList) return@observe
@@ -132,13 +136,11 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
                 binding.lblAcademicYear.text = isAcademicYear!![0].year
                 isAcademicYearId = isAcademicYear!![0].id
                 isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
-
                 isGetStandardSection()
             }
         }
 
         appViewModel!!.isStandardSectionList?.observe(this) { response ->
-            Constant.hideLoading(this@HomeWork)
             if (response != null) {
                 isGetStandard = response.data
                 isGetStandard?.size?.let {
@@ -146,8 +148,9 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
                         isSectionId = isGetStandard!!.get(0).sections.get(0).id
                         binding.lblStandard.text = isGetStandard!!.get(0).name
                         if (isGetStandard!!.get(0).sections.size > 0) {
-                            binding.lblSection.text = isGetStandard!!.get(0).sections.get(0).name
+                            binding.lblSection.text = isGetStandard!![0].sections.get(0).name
                             isSection = isGetStandard!!.get(0).sections
+                            fetchHomeWorkReportData()
                         }
                     } else {
                         binding.rlaStandard.visibility = View.GONE
@@ -158,34 +161,37 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
         }
 
         appViewModel!!.isGetHomeWorkReport?.observe(this) { response ->
-            if (response != null && response.status) {
-                val isHomeWorkReport = response.data
-                isHomeWorkReportData = isHomeWorkReport
-                loadHomeWorkReportData(isHomeWorkReportData)
+            if (response != null) {
+                if (response.status) {
+                    binding.rcyHomeWorkReport.visibility = View.VISIBLE
+                    binding.lytNoDataFound.visibility = View.GONE
+                    val isHomeWorkReport = response.data
+                    isHomeWorkReportData = isHomeWorkReport
+                    loadHomeWorkReportData(isHomeWorkReportData)
+                } else {
+                    binding.rcyHomeWorkReport.visibility = View.GONE
+                    binding.lytNoDataFound.visibility = View.VISIBLE
+                    binding.noDataFound.text = response.message
+                }
             }
         }
     }
 
     private fun checkCameraPermissionAndOpenCamera() {
         if (ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.CAMERA
+                this, Manifest.permission.CAMERA
             ) == PackageManager.PERMISSION_GRANTED
         ) {
             showBottomDialog()
         } else {
             ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.CAMERA),
-                CAMERA_PERMISSION_REQUEST_CODE
+                this, arrayOf(Manifest.permission.CAMERA), CAMERA_PERMISSION_REQUEST_CODE
             )
         }
     }
 
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
+        requestCode: Int, permissions: Array<out String>, grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == CAMERA_PERMISSION_REQUEST_CODE) {
@@ -235,9 +241,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
 
             R.id.rlaSection -> {
                 isDropDownLoadDataSection(
-                    binding.lblSection,
-                    this,
-                    isSection
+                    binding.lblSection, this, isSection
                 ) { selectedOption ->
                     binding.lblSection.text = selectedOption.first
                     isSectionId = selectedOption.second
@@ -247,6 +251,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
 
             R.id.lblDatePick -> {
                 showDatePickerDialog(this, this)
+                fetchHomeWorkReportData()
             }
 
             R.id.btnCreate -> {
@@ -261,7 +266,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
                 binding.rlaHomeWorkReport.visibility = View.VISIBLE
                 binding.rlaHomework.visibility = View.GONE
                 isGetAcademicYear()
-                fetchHomeWorkReportData()
             }
 
             R.id.btnChooseRecipient -> {
@@ -280,9 +284,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
                     )
                     fetchHomeWorkReportData()
                 }
-
             }
-
         }
     }
 
@@ -292,24 +294,15 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
         binding.rcyHomeWorkReport.layoutManager = LinearLayoutManager(this)
         binding.rcyHomeWorkReport.isNestedScrollingEnabled = false
         binding.rcyHomeWorkReport.adapter = mHomeWorkReportAdapter
-
         appViewModel?.isGetHomeWorkReport(
-            isAccessToken!!,
-            isSectionId!!,
-            isAcademicYearId,
-            binding.selectdate.text.toString(),
-            this
+            isAccessToken!!, isSectionId, isAcademicYearId, binding.selectdate.text.toString(), this
         )
     }
 
     private fun loadHomeWorkReportData(isHomeWorkReportDetails: List<HomeWorkReport>) {
-
         binding.rcyHomeWorkReport.visibility = View.VISIBLE
         mHomeWorkReportAdapter = HomeWorkReportAdapter(
-            isHomeWorkReportDetails,
-            this,
-            this,
-            Constant.isShimmerViewDisable
+            isHomeWorkReportDetails, this, this, Constant.isShimmerViewDisable
         )
         binding.rcyHomeWorkReport.layoutManager = LinearLayoutManager(this)
         binding.rcyHomeWorkReport.isNestedScrollingEnabled = false
@@ -319,7 +312,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
 
 
     private fun isGetStandardSection() {
-        Constant.showLoading(this@HomeWork)
         appViewModel!!.isGetStandardSection(isAccessToken!!.toString(), isAcademicYearId, this)
     }
 
@@ -331,7 +323,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
 
 
     private fun isGetAcademicYear() {
-        Constant.showLoading(this@HomeWork)
         appViewModel!!.isGetAcademicYear(
             isAccessToken!!, this
         )
@@ -356,6 +347,8 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
             return
         }
         val sectionDetails = SectionDetails(title, description)
+        Constant.selectedFiles.removeAt(0)
+        Log.d("Constant.selectedFiles", Constant.selectedFiles.toString())
         val intent = Intent(this, RecipientActivity::class.java)
         intent.putExtra(Constant.section_data, sectionDetails)
         startActivity(intent)
@@ -387,8 +380,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
         dialog.window?.apply {
             setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT)) // Transparent background
             setLayout(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
             ) // Size
             setGravity(Gravity.BOTTOM) // Display at the bottom
             setWindowAnimations(R.style.PopupAnimation) // Apply the animation
@@ -412,8 +404,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
             addCategory(Intent.CATEGORY_OPENABLE)  // Important for file-only types
         }
         startActivityForResult(
-            Intent.createChooser(intent, "Select Documents"),
-            PICK_DOCUMENT_REQUEST
+            Intent.createChooser(intent, "Select Documents"), PICK_DOCUMENT_REQUEST
         )
     }
 
@@ -440,9 +431,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
         cameraImageFilePath = imgFile.absolutePath
 
         cameraImageUri = FileProvider.getUriForFile(
-            this,
-            "$packageName.provider",
-            imgFile
+            this, "$packageName.provider", imgFile
         )
 
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { it ->
@@ -487,8 +476,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
                 fileName.endsWith(".pdf", true) -> FileType.PDF
                 fileName.endsWith(".doc", true) || fileName.endsWith(".docx", true) -> FileType.DOC
                 fileName.endsWith(".xls", true) || fileName.endsWith(
-                    ".xlsx",
-                    true
+                    ".xlsx", true
                 ) -> FileType.EXCEL
 
                 fileName.endsWith(".ppt", true) || fileName.endsWith(".pptx", true) -> FileType.PPT
@@ -496,7 +484,11 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
                 fileName.endsWith(".txt", true) -> FileType.TXT
                 else -> FileType.OTHER
             }
-            Constant.selectedFiles!!.add(FileItem(path, type))
+            Constant.selectedFiles.add(FileItem(uri.toString(), type))
+            for (item in Constant.selectedFiles!!) {
+                Log.d("SelectedFile", "Path: ${item.path}, Type: ${item.type}")
+            }
+
         }
 
         when (requestCode) {
@@ -508,9 +500,14 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
                         addPath(uri) // Use the updated addPath that handles MIME type
                         if (uri.toString().contains("document")) copyDocumentToInternalStorage(uri)
                     }
-                    if (cd.itemCount > remaining)
-                        Toast.makeText(this, "Only $remaining added", Toast.LENGTH_SHORT).show()
+
+                    if (cd.itemCount > remaining) Toast.makeText(
+                        this,
+                        "Only $remaining added",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 } ?: data?.data?.let { uri ->
+
                     addPath(uri) // Use the updated addPath that handles MIME type
                     if (uri.toString().contains("document")) copyDocumentToInternalStorage(uri)
                 }
@@ -623,7 +620,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
     }
 
     private fun isBackRoundChange(isClickingId: TextView) {
-
+        binding.lytNoDataFound.visibility = View.GONE
         if (isClickingId == binding.btnCreate) {
             binding.btnHistory.background = null
             binding.btnHistory.setTextColor(ContextCompat.getColor(this, R.color.dark_blue))

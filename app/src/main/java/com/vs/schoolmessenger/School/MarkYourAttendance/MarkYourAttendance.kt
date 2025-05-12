@@ -278,13 +278,14 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("UnspecifiedRegisterReceiverFlag")
     override fun onResume() {
         super.onResume()
         val filter = IntentFilter(LocationManager.PROVIDERS_CHANGED_ACTION).apply {
             addAction(Intent.ACTION_PROVIDER_CHANGED) // Optional extra compatibility
         }
-        registerReceiver(gpsStatusReceiver, filter)
+        registerReceiver(gpsStatusReceiver, filter, RECEIVER_NOT_EXPORTED)
 
         Log.d("onResume", "onResume")
         getLocationPermissions()
@@ -400,16 +401,18 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
         val alertDialog = AlertDialog.Builder(this@MarkYourAttendance)
         alertDialog.setTitle(R.string.Disable_Fingerprint)
         alertDialog.setMessage(R.string.disable_fingerprint_authentication)
-        alertDialog.setNegativeButton(getString(R.string.Yes), object : DialogInterface.OnClickListener {
-            override fun onClick(dialog: DialogInterface, which: Int) {
-                dialog.cancel()
-                binding.enableSwitch.isChecked = false
+        alertDialog.setNegativeButton(
+            getString(R.string.Yes),
+            object : DialogInterface.OnClickListener {
+                override fun onClick(dialog: DialogInterface, which: Int) {
+                    dialog.cancel()
+                    binding.enableSwitch.isChecked = false
 //                TeacherUtil_SharedPreference.putBiometricEnabled(
 //                    this@PunchStaffAttendanceUsingFinger,
 //                    false
 //                )
-            }
-        })
+                }
+            })
         alertDialog.setPositiveButton(
             getString(R.string.Cancel), object : DialogInterface.OnClickListener {
                 override fun onClick(dialog: DialogInterface, which: Int) {
@@ -477,6 +480,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("UnspecifiedRegisterReceiverFlag")
     override fun onClick(p0: View?) {
         when (p0?.id) {
@@ -502,7 +506,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
                 val filter = IntentFilter(LocationManager.PROVIDERS_CHANGED_ACTION).apply {
                     addAction(Intent.ACTION_PROVIDER_CHANGED) // Optional extra compatibility
                 }
-                registerReceiver(gpsStatusReceiver, filter)
+                registerReceiver(gpsStatusReceiver, filter, RECEIVER_NOT_EXPORTED)
                 getLocationPermissions()
             }
         }

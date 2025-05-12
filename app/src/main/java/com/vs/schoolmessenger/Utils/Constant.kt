@@ -231,9 +231,12 @@ object Constant {
     var lblAcademicYear = "lblAcademicYear"
     var isSelectedId = "isSelectedId"
     var section_data = "section_data"
+    var isFileUrl = "isFileUrl"
+    var isFileType = "isFileType"
     var isTitle = "isTitle"
     var isWebLink = "isWebLink"
     var parent = "parent"
+    var isDocument = "isDocument"
     var staff_ = "staff"
     var en = "en"
     var ta = "ta"
@@ -263,6 +266,7 @@ object Constant {
     var PPT = "PPT"
     var PPTX = "PPTX"
     var TXT = "TXT"
+    var EXCEL = "EXCEL"
     var data = "data"
     var position = "position"
     var subjectName = "subjectName"
@@ -533,10 +537,11 @@ object Constant {
         }
 
         okButton.setOnClickListener {
+            isAwsUploadedFiles.clear()
+            selectedFiles.clear()
             if (isType == isCommunication) {
                 val intent = Intent(activity, CommunicationSchool::class.java)
-                isAwsUploadedFiles.clear()
-                selectedFiles.clear()
+
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 activity.startActivity(intent)
             } else if (isType == isGioMetric) {
@@ -547,13 +552,12 @@ object Constant {
                 val intent = Intent(activity, HomeWork::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 activity.startActivity(intent)
-
             }
             closePopup()
         }
-        dimView.setOnClickListener {
-            closePopup()
-        }
+        dimView.isFocusable = true
+        dimView.isFocusableInTouchMode = true
+
     }
 
 

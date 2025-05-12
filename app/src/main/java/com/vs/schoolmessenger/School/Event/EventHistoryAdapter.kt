@@ -77,10 +77,10 @@ class EventHistoryAdapter(
                 "https://s3.ap-south-1.amazonaws.com/schoolchimes-files-india/27-11-2024/File_vc_-5346401391801142838.png",
             )
 
-            // Set up the adapter
-            val viewPagerAdapter   = ImageSliderAdapter(context,imageUrls)
-            viewpager.adapter = viewPagerAdapter
-            indicator.setViewPager(viewpager)
+//            // Set up the adapter
+//            val viewPagerAdapter   = ImageSliderAdapter(context,imageUrls)
+//            viewpager.adapter = viewPagerAdapter
+//            indicator.setViewPager(viewpager)
 
             rytHeader.setOnClickListener {
                 listener.onItemClick(data)
