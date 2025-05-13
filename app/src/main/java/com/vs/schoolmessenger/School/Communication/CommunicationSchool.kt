@@ -7,6 +7,7 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Paint
+import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
 import android.media.MediaRecorder
 import android.net.Uri
@@ -27,6 +28,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.AWS.AwsUploadingPreSigned
@@ -436,14 +438,14 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     Constant.selectedFiles!!.add(FileItem(audioFilePath.toString(), FileType.AUDIO))
                     Constant.isVoiceType = 1
 
-                    // Get duration using MediaPlayer
-                    val mediaPlayer = MediaPlayer()
-                    mediaPlayer.setDataSource(audioFilePath)
-                    mediaPlayer.prepare()
-                    val durationInMs = mediaPlayer.duration
-                    mediaPlayer.release()
+                    // ✅ Use MediaMetadataRetriever for accurate duration
+                    val retriever = MediaMetadataRetriever()
+                    retriever.setDataSource(audioFilePath)
+                    val durationStr = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
+                    val durationInMillis = durationStr?.toLongOrNull() ?: 0L
+                    retriever.release()
 
-                    val formattedDuration = formatDuration(durationInMs)
+                    val formattedDuration = formatDurationFromMillis(durationInMillis)
                     binding.lblEndDuration.text = "/ $formattedDuration"
 
                     binding.rlaSeekBarAndTitle.visibility = View.VISIBLE
@@ -467,6 +469,17 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
         }
     }
+
+    private fun formatDurationFromMillis(durationInMillis: Long): String {
+        val adjustedDuration = durationInMillis + 1000
+        val totalSeconds = adjustedDuration / 1000
+        val minutes = totalSeconds / 60
+        val seconds = totalSeconds % 60
+        return String.format("%02d:%02d", minutes, seconds)
+    }
+
+
+
 
     private fun initializeMediaPlayer() {
         if (audioFilePath.isNullOrEmpty()) {
@@ -565,10 +578,10 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     }
 
 
-    private fun formatDuration(durationInMillis: Int): String {
-        val minutes = (durationInMillis / 1000) / 60
-        val seconds = (durationInMillis / 1000) % 60
-        return String.format(Constant.dateForMate, minutes, seconds)
+    private fun formatDuration(seconds: Int): String {
+        val minutes = seconds / 60
+        val remainingSeconds = seconds % 60
+        return String.format("%02d:%02d", minutes, remainingSeconds)
     }
 
 
@@ -780,7 +793,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
 
             R.id.imgClose -> {
-                binding.lblDurationOfVoice.text = "00:00 / 03:00"
+//                binding.lblDurationOfVoice.text = "00:00 / 03:00"
                 binding.rlaSeekBarAndTitle.visibility = View.GONE
                 binding.rlaTitle.visibility = View.GONE
                 Constant.selectedFiles.clear()
