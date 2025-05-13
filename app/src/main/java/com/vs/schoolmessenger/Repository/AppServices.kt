@@ -986,14 +986,14 @@ class AppServices {
                         response.code().toString() + " - " + response.toString()
                     )
                     if (response.code() == 200) {
-                        if (response.body() != null) {
+//                        if (response.body() != null) {
                             val status = response.body()!!.status
                             if (status) {
                                 isPunchHistory.postValue(response.body())
                             } else {
                                 isPunchHistory.postValue(response.body())
                             }
-                        }
+//                        }
                     }
                 }
 

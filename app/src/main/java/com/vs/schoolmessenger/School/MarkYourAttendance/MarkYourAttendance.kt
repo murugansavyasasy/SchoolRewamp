@@ -192,6 +192,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
                     isLoadPunchHistoryData(isPunchTiming)
                 }
             } else {
+                Log.d("isComing","isComing")
                 rcyPunchList!!.visibility = View.GONE
                 lblNoRecordsFound!!.visibility = View.VISIBLE
                 lblNoRecordsFound!!.text = response!!.message
@@ -737,6 +738,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
             rcyPunchList!!.adapter = isPunchHistoryAdapter
 //            }
         } else {
+            Log.d("isComing","isComing")
             rcyPunchList!!.visibility = View.GONE
             lblNoRecordsFound!!.text = getString(R.string.Punch_History_found)
             lblNoRecordsFound!!.visibility = View.VISIBLE
