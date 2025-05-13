@@ -138,7 +138,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     }
                     tapVisibility()
 //                    binding.nomessageEntire.visibility =
-//                        if (isUserDetails!!.staff_role== Constant.isPrincipalRole.toString()
+//                        if (isUserDetails!!.staff_role == Constant.isPrincipalRole.toString()
 //                        ) View.VISIBLE else View.GONE
                 } else {
                     binding.lblSupportMail.paintFlags =
@@ -178,7 +178,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         appViewModel!!.isGetSubjectList?.observe(this) { response ->
             Constant.hideLoading(this@RecipientActivity)
             if (response != null) {
-                binding.rlaSubject.visibility = View.VISIBLE
                 isGetSubjectListData = response.data
                 isSubjectId = isGetSubjectListData!![0].id
                 isLoadSubjectData()
@@ -189,27 +188,40 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             Constant.hideLoading(this@RecipientActivity)
 
             if (response != null) {
-                isGetStandard = response.data
-                if (isGetStandard!!.isNotEmpty()) {
-                    binding.txtNoData.visibility = View.GONE
-                    binding.recyclerView.visibility = View.VISIBLE
-                    binding.chAllSelect.visibility = View.VISIBLE
-                    binding.grouplabel.visibility = View.VISIBLE
-                    if (isSelectedType != 1) {
-                        binding.rlaStandard.visibility = View.VISIBLE
-                        binding.bottomLayout.visibility = View.VISIBLE
-                        isSection = isGetStandard!!.get(0).sections
-                        binding.lblStandard.text = isGetStandard!![0].name
-                        binding.nomessage.visibility = View.GONE
-                        isLoadData(isSection)
-                        binding.grouplabel.text = resources.getString(R.string.Section)
-                    } else {
-                        isLoadTheStandardData(isGetStandard)
-                        binding.bottomLayout.visibility = View.VISIBLE
-                        binding.grouplabel.text = resources.getString(R.string.Standards)
-                    }
+                if (response.status) {
+                    isGetStandard = response.data
+                    if (isGetStandard!!.isNotEmpty()) {
+                        binding.txtNoData.visibility = View.GONE
+                        binding.recyclerView.visibility = View.VISIBLE
+                        binding.chAllSelect.visibility = View.VISIBLE
+                        binding.grouplabel.visibility = View.VISIBLE
+                        if (isSelectedType != 1) {
+                            binding.rlaStandard.visibility = View.VISIBLE
+                            binding.bottomLayout.visibility = View.VISIBLE
+                            isSection = isGetStandard!!.get(0).sections
+                            binding.lblStandard.text = isGetStandard!![0].name
+                            binding.nomessage.visibility = View.GONE
+                            isLoadData(isSection)
+                            binding.grouplabel.text = resources.getString(R.string.Section)
+                        } else {
+                            isLoadTheStandardData(isGetStandard)
+                            binding.bottomLayout.visibility = View.VISIBLE
+                            binding.grouplabel.text = resources.getString(R.string.Standards)
+                        }
 
+                    } else {
+                        binding.recyclerView.visibility = View.GONE
+                        binding.txtNoData.visibility = View.VISIBLE
+                        binding.rlaStandard.visibility = View.GONE
+                        binding.chAllSelect.visibility = View.GONE
+                        binding.grouplabel.visibility = View.GONE
+                        binding.bottomLayout.visibility = View.GONE
+                        binding.txtNoData.text = response.message
+                        binding.nomessage.visibility = View.VISIBLE
+
+                    }
                 } else {
+                    Log.d("isComing","isComing")
                     binding.recyclerView.visibility = View.GONE
                     binding.txtNoData.visibility = View.VISIBLE
                     binding.rlaStandard.visibility = View.GONE
@@ -218,7 +230,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     binding.bottomLayout.visibility = View.GONE
                     binding.txtNoData.text = response.message
                     binding.nomessage.visibility = View.VISIBLE
-
                 }
             }
         }
@@ -929,7 +940,9 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         }
 
         val idString = isSectionSelectedIds.joinToString(",") { it.id.toString() }
-        isGetSubjectList(idString)
+        if (SELECTED_SCHOOL_MENU == M_HOMEWORK) {
+            isGetSubjectList(idString)
+        }
         binding.chAllSelect.isChecked = isSectionSelectedIds.size == isSection?.size
         if (isSelectedType == 2) {
             if (isSectionSelectedIds.size == 1) {
@@ -960,7 +973,9 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         }
 
         val idString = isSectionSelectedIds.joinToString(",") { it.id.toString() }
-        isGetSubjectList(idString)
+        if (SELECTED_SCHOOL_MENU == M_HOMEWORK) {
+            isGetSubjectList(idString)
+        }
     }
 
     private fun isFileUploadInAws(
@@ -994,8 +1009,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                             } else if (SELECTED_SCHOOL_MENU == Constant.M_COMMUNICATION) {
                                 voiceSendApi(isFileUploaded)
                             }
-                        }else{
-                            Log.d("isFileNotMatching","isFileNotMatching")
+                        } else {
+                            Log.d("isFileNotMatching", "isFileNotMatching")
                         }
 
                         Log.d("isSuccessFullUpload", "isSuccessFullUpload")

@@ -77,7 +77,7 @@ class ImageViewActivity : BaseActivity<ImageViewActivityBinding>(),
             binding.webView.webChromeClient = WebChromeClient()
             binding.webView.loadUrl(isFileUrl)
         } else {
-            Log.d("isFileURL",isFileUrl)
+            Log.d("isFileURL", isFileUrl)
             binding.webView.visibility = View.GONE
             binding.imageView.visibility = View.VISIBLE
             Glide.with(this)

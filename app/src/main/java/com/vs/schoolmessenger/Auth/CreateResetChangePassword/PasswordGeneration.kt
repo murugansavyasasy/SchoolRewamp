@@ -33,6 +33,7 @@ class PasswordGeneration : BaseActivity<PasswordGenerationBinding>(), View.OnCli
         // Access a specific view using its ID
         isToolBarWhiteTheme()
         binding.imgHide.setOnClickListener(this)
+        binding.imgHide1.setOnClickListener(this)
         binding.btnCreate.setOnClickListener(this)
         authViewModel = ViewModelProvider(this).get(Auth::class.java)
         authViewModel!!.init()
@@ -142,6 +143,21 @@ class PasswordGeneration : BaseActivity<PasswordGenerationBinding>(), View.OnCli
         authViewModel!!.isCreatePassword(jsonObject, this)
     }
 
+    private fun isPasswordViewAndHide1() {
+        if (isPasswordVisible) {
+            binding.txtCreatePassword.inputType =
+                InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            binding.imgHide1.setImageResource(R.drawable.password_hide)
+        } else {
+            binding.txtCreatePassword.inputType =
+                InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+            binding.imgHide1.setImageResource(R.drawable.password_view)
+        }
+        binding.txtCreatePassword.setSelection(binding.txtCreatePassword.text?.length ?: 0)
+        isPasswordVisible = !isPasswordVisible
+    }
+
+
 
     private fun isPasswordViewAndHide() {
         if (isPasswordVisible) {
@@ -161,6 +177,10 @@ class PasswordGeneration : BaseActivity<PasswordGenerationBinding>(), View.OnCli
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.imgHide -> {
+                isPasswordViewAndHide()
+            }
+
+            R.id.imgHide1 -> {
                 isPasswordViewAndHide()
             }
 

@@ -5,6 +5,7 @@
     android:layout_marginTop="@dimen/five"
     android:gravity="center_vertical"
     android:orientation="horizontal"
+    android:fitsSystemWindows="true"
     android:padding="@dimen/ten">
 
     <ImageView

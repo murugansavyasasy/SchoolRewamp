@@ -71,6 +71,8 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
 
         appViewModel!!.isStaffWiseAttendanceReport?.observe(this) { response ->
             if (response != null && response.status) {
+                binding.recycleAttendanceReportsToday.visibility = View.VISIBLE
+                binding.lytNoRecordFound.visibility = View.GONE
                 val isStaffReport = response.data
                 isLoadData(isStaffReport)
             } else {
@@ -82,6 +84,8 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
 
         appViewModel!!.isStaffWiseAttendanceReportList?.observe(this) { response ->
             if (response != null && response.status) {
+                binding.recycleAttendanceReportsToday.visibility = View.VISIBLE
+                binding.lytNoRecordFound.visibility = View.GONE
                 val isStaffReport = response.data
                 isLoadData(isStaffReport)
             } else {
@@ -142,19 +146,21 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
 
 
 
-
-
         appViewModel!!.isPunchHistory?.observe(this) { response ->
             if (response != null && response.status) {
                 val historyList = response.data
                 if (historyList.isNotEmpty()) {
                     val isPunchTiming = historyList.flatMap { it.timings }
                     isLoadPunchHistoryData(isPunchTiming)
+                } else {
+                    rcyPunchList!!.visibility = View.GONE
+                    lblNoRecordsFound!!.text =response!!.message
+                    lblNoRecordsFound!!.visibility = View.VISIBLE
                 }
             } else {
                 rcyPunchList!!.visibility = View.GONE
-                binding.lytNoRecordFound.visibility = View.VISIBLE
-                binding.lblNoRecords.text = response!!.message
+                lblNoRecordsFound!!.text =response!!.message
+                lblNoRecordsFound!!.visibility = View.VISIBLE
             }
         }
     }
@@ -338,10 +344,16 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
         dialog.window?.attributes = params
 
         imgBack.setOnClickListener {
-            dialog.dismiss()
+                dialog.dismiss()
+                binding.lytNoRecordFound.visibility = View.GONE
         }
 
-        dialog.show()
+        try {
+            dialog.show()
+        } catch (e: Exception) {
+            TODO("Not yet implemented")
+        } finally {
+        }
     }
 
     private fun isPunchHistory(data: StaffAttendanceReportData) {

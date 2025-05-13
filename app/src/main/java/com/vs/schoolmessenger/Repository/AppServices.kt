@@ -253,7 +253,7 @@ class AppServices {
                             if (status) {
                                 isGetStandardSection.postValue(response.body())
                             } else {
-                                isGetStandardSection.postValue(null)
+                                isGetStandardSection.postValue(response.body())
                             }
                         }
                     }
@@ -573,7 +573,7 @@ class AppServices {
                     if (response.code() == 200 && response.body() != null) {
                         isSendText.postValue(response.body())
                     } else {
-                        isSendText.postValue(null)
+                        isSendText.postValue(response.body())
                     }
 
                     Log.d("isGetCountryList", "${response.code()} - ${response}")
@@ -601,7 +601,7 @@ class AppServices {
                     if (response.code() == 200 && response.body() != null) {
                         isSendHomeWork.postValue(response.body())
                     } else {
-                        isSendHomeWork.postValue(null)
+                        isSendHomeWork.postValue(response.body())
                     }
 
                     Log.d("isGetCountryList", "${response.code()} - ${response}")
@@ -632,7 +632,7 @@ class AppServices {
                     if (response.code() == 200 && response.body() != null) {
                         isUpdateStatusArchive.postValue(response.body())
                     } else {
-                        isUpdateStatusArchive.postValue(null)
+                        isUpdateStatusArchive.postValue(response.body())
                     }
                 }
 
@@ -661,7 +661,7 @@ class AppServices {
                     if (response.code() == 200 && response.body() != null) {
                         isUpdateStatusCommunication.postValue(response.body())
                     } else {
-                        isUpdateStatusCommunication.postValue(null)
+                        isUpdateStatusCommunication.postValue(response.body())
                     }
                 }
 
@@ -986,14 +986,14 @@ class AppServices {
                         response.code().toString() + " - " + response.toString()
                     )
                     if (response.code() == 200) {
-                        if (response.body() != null) {
+//                        if (response.body() != null) {
                             val status = response.body()!!.status
                             if (status) {
                                 isPunchHistory.postValue(response.body())
                             } else {
                                 isPunchHistory.postValue(response.body())
                             }
-                        }
+//                        }
                     }
                 }
 

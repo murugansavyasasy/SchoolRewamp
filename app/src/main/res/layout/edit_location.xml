@@ -4,6 +4,7 @@
     android:id="@+id/constParent"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:fitsSystemWindows="true"
     android:layout_marginStart="@dimen/fourty_five"
     android:layout_marginEnd="@dimen/fourty_five"
     android:background="@drawable/rect_white_light_radious"

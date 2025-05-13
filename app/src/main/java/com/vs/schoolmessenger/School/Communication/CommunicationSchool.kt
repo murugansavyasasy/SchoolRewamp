@@ -180,17 +180,29 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
         appViewModel!!.isGetVoiceHistory?.observe(this) { response ->
             if (response != null && response.status) {
+                binding.rytNORecordFound.visibility= View.GONE
+                binding.rcyHistoryDataVoiceAndText.visibility= View.VISIBLE
                 val isGetHistory = response.data
                 isVoiceHistoryData = isGetHistory
                 loadVoiceData(isVoiceHistoryData)
+            } else {
+                binding.rcyHistoryDataVoiceAndText.visibility = View.GONE
+                binding.rytNORecordFound.visibility = View.VISIBLE
+                binding.lblNoRecordFound.text=response!!.message
             }
         }
 
         appViewModel!!.isGetTextHistory?.observe(this) { response ->
             if (response != null && response.status) {
+                binding.rcyHistoryDataVoiceAndText.visibility = View.VISIBLE
+                binding.rytNORecordFound.visibility = View.GONE
                 val isTextHistory = response.data
                 isTextHistoryData = isTextHistory
                 loadTextHistoryData(isTextHistoryData)
+            } else {
+                binding.rcyHistoryDataVoiceAndText.visibility = View.GONE
+                binding.rytNORecordFound.visibility = View.VISIBLE
+                binding.lblNoRecordFound.text=response!!.message
             }
         }
 
@@ -668,6 +680,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 changeLabel()
 
                 binding.llEmergencyContainer.visibility = View.VISIBLE
+                binding.rytNORecordFound.visibility = View.GONE
                 isScheduleCall = false
                 Constant.isClickType = 1
                 if (mAdapter != null) {
@@ -699,7 +712,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 isEmergency = 0
                 binding.SwitchEmergencyVoice.setChecked(false)
                 changeLabel()
-
+                binding.rytNORecordFound.visibility = View.GONE
                 binding.llEmergencyContainer.visibility = View.GONE
                 isScheduleCall = true
                 Constant.isClickType = 2
@@ -731,7 +744,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 isEmergency = 0
                 binding.SwitchEmergencyVoice.setChecked(false)
                 changeLabel()
-
+                binding.rytNORecordFound.visibility = View.GONE
                 binding.llEmergencyContainer.visibility = View.GONE
                 isScheduleCall = false
                 Constant.isClickType = 3
@@ -910,6 +923,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
             R.id.imgBack -> {
                 onBackPressed()
+                Constant.selectedFiles.clear()
+                Constant.isAwsUploadedFiles.clear()
             }
 
             R.id.lnrScheduleCall -> {
@@ -1016,6 +1031,12 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 }
             }
         }
+    }
+
+    override fun onBackPressed() {
+        Constant.selectedFiles.clear()
+        Constant.isAwsUploadedFiles.clear()
+        super.onBackPressed()
     }
 
     private fun infosymbolload(): PopupWindow {

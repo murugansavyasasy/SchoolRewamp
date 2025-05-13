@@ -103,11 +103,12 @@ class VoiceHistoryAdapter(
 
 
             val parts = data.sentOn.split(" ")
-            val date = parts[0]
-            val time = parts[1] + " " + parts[2]
-
-            lblTime.text = time
-            lblDate.text = Constant.convertDateTimeFormat(date)
+            if (parts.size >= 3) {
+                val date = parts[0]
+                val time = "${parts[1]} ${parts[2]}"
+                lblTime.text = time
+                lblDate.text = Constant.convertDateTimeFormat(date)
+            }
 
             rlaSendVoice.visibility= View.VISIBLE
 

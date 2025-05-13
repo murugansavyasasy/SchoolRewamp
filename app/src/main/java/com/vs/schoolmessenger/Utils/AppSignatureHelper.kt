@@ -22,22 +22,26 @@ class AppSignatureHelper(private val context: Context) {
                 packageManager.getPackageInfo(
                     packageName,
                     PackageManager.GET_SIGNING_CERTIFICATES
-                ).signingInfo!!
-                    .apkContentsSigners
+                ).signingInfo!!.apkContentsSigners
             } else {
-                TODO("VERSION.SDK_INT < P")
+                @Suppress("DEPRECATION")
+                packageManager.getPackageInfo(
+                    packageName,
+                    PackageManager.GET_SIGNATURES
+                ).signatures
             }
 
-            for (signature in signatures) {
-                val hash = hash(packageName, signature.toCharsString())
-                if (hash != null) {
-                    appCodes.add(hash)
+            if (signatures != null) {
+                for (signature in signatures) {
+                    val hash = hash(packageName, signature.toCharsString())
+                    if (hash != null) {
+                        appCodes.add(hash)
+                    }
                 }
             }
         } catch (e: Exception) {
             Log.e(TAG, "Package not found", e)
         }
-
         return appCodes
     }
 
@@ -49,7 +53,8 @@ class AppSignatureHelper(private val context: Context) {
             val hashSignature = messageDigest.digest()
 
             val truncatedHash = hashSignature.copyOfRange(0, 9)
-            val base64Hash = Base64.encodeToString(truncatedHash, Base64.NO_PADDING or Base64.NO_WRAP)
+            val base64Hash =
+                Base64.encodeToString(truncatedHash, Base64.NO_PADDING or Base64.NO_WRAP)
             base64Hash?.let {
                 Log.d(TAG, "Hash: $it")
             }
