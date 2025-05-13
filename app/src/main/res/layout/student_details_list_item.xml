@@ -11,7 +11,8 @@
     android:layout_marginEnd="@dimen/thirty"
     android:shadowRadius="100"
     app:cardCornerRadius="@dimen/ten"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:fitsSystemWindows="true">
 
     <RelativeLayout
         android:layout_width="match_parent"

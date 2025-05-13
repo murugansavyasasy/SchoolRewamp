@@ -9,8 +9,6 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.databinding.DailyCollectionBinding
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
-import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.HomeWorkAdapter
-import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetDateWiseHomeworkData
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.OnDateSelectedListener
@@ -26,10 +24,6 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(), View.OnClickList
     private var selectedType: String = "1"
     private var to_Date: String? = null
     private var from_Date: String? = null
-
-
-
-
 
     var mAdapter: DcfAdapter? = null
     override fun getViewBinding(): DailyCollectionBinding {
@@ -54,31 +48,72 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(), View.OnClickList
                 isLoadDailyCollectionData(response.data)
                 Log.d("GetDailyCollectionRespone", response.data.toString())
                 Log.d("Access Token",isAccessToken.toString())
+
             }
         }
 
 
     }
 
-    private fun isLoadDailyCollectionData(newData: List<DailyCollectionItem>?) {
+    private fun isLoadDailyCollectionData(data: List<DailyCollectionItem>?) {
+        val flatList = mutableListOf<DisplayItem>()
+        data?.forEach { item ->
+            flatList.add(DisplayItem.Header(item.category, item.total))
+            item.fee_data.forEach { fee ->
+                flatList.add(DisplayItem.Fee(fee.type_name, fee.amount))
+            }
+        }
 
-        Log.d("isLoadDailyCollectionData", newData.toString())
-
-//        mAdapter =
-//            DcfAdapter(newData, this, this, Constant.isShimmerViewDisable)
-//        binding.totalsummary1.adapter = mAdapter
-
+        mAdapter = DcfAdapter(flatList, this, Constant.isShimmerViewDisable)
+        binding.totalsummary1.adapter = mAdapter
     }
 
     fun isGetDailyCollection() {
+        if (from_Date.isNullOrEmpty() || to_Date.isNullOrEmpty()) return
+
+        mAdapter = DcfAdapter(emptyList(), this, Constant.isShimmerViewShow)
+        binding.totalsummary1.layoutManager = LinearLayoutManager(this)
+        binding.totalsummary1.isNestedScrollingEnabled = false
+        binding.totalsummary1.adapter = mAdapter
+
+        appViewModel!!.isGetDailyCollectionReport(
+            isAccessToken!!,
+            selectedType,
+            from_Date!!,
+            to_Date!!,
+            this
+        )
+    }
+
+//BS
+//    private fun isLoadDailyCollectionData(newData: List<DailyCollectionItem>?) {
+//        Log.d("isLoadDailyCollectionData", newData.toString())
+//
+//        if (!newData.isNullOrEmpty()) {
+//            // Load category and total into Activity layout
+//            val firstItem = newData[0]
+//            binding.totalValue.text = firstItem.total
+//
+//            // Load fee_data into RecyclerView
+//            mAdapter = DcfAdapter(firstItem.fee_data, this, this, Constant.isShimmerViewDisable)
+//            binding.totalsummary1.adapter = mAdapter
+//        }
+//    }
+//
+//
+//    fun isGetDailyCollection() {
+//        if (from_Date.isNullOrEmpty() || to_Date.isNullOrEmpty()) return
+//
 //        mAdapter = DcfAdapter(null, this, this, Constant.isShimmerViewShow)
 //        binding.totalsummary1.layoutManager = LinearLayoutManager(this)
 //        binding.totalsummary1.isNestedScrollingEnabled = false
 //        binding.totalsummary1.adapter = mAdapter
+//
 //        appViewModel!!.isGetDailyCollectionReport(
-//            isAccessToken!!, selectedType,from_Date!!,to_Date!!,this
+//            isAccessToken!!, selectedType, from_Date!!, to_Date!!, this
 //        )
-    }
+//    }
+
 
     override fun onClick(p0: View?) {
         when (p0?.id) {
@@ -147,7 +182,7 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(), View.OnClickList
     }
 }
 
-//Existing code
+//Existing code --Default
 //package com.vs.schoolmessenger.School.DailyCollection
 //
 //import android.graphics.Color

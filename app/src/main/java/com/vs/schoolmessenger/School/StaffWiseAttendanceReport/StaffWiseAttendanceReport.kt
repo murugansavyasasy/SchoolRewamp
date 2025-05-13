@@ -71,6 +71,8 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
 
         appViewModel!!.isStaffWiseAttendanceReport?.observe(this) { response ->
             if (response != null && response.status) {
+                binding.recycleAttendanceReportsToday.visibility = View.VISIBLE
+                binding.lytNoRecordFound.visibility = View.GONE
                 val isStaffReport = response.data
                 isLoadData(isStaffReport)
             } else {
@@ -82,6 +84,8 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
 
         appViewModel!!.isStaffWiseAttendanceReportList?.observe(this) { response ->
             if (response != null && response.status) {
+                binding.recycleAttendanceReportsToday.visibility = View.VISIBLE
+                binding.lytNoRecordFound.visibility = View.GONE
                 val isStaffReport = response.data
                 isLoadData(isStaffReport)
             } else {
@@ -142,14 +146,16 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
 
 
 
-
-
         appViewModel!!.isPunchHistory?.observe(this) { response ->
             if (response != null && response.status) {
                 val historyList = response.data
                 if (historyList.isNotEmpty()) {
                     val isPunchTiming = historyList.flatMap { it.timings }
                     isLoadPunchHistoryData(isPunchTiming)
+                } else {
+                    rcyPunchList!!.visibility = View.GONE
+                    binding.lytNoRecordFound.visibility = View.VISIBLE
+                    binding.lblNoRecords.text = response!!.message
                 }
             } else {
                 rcyPunchList!!.visibility = View.GONE
@@ -339,6 +345,7 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
 
         imgBack.setOnClickListener {
             dialog.dismiss()
+            binding.lytNoRecordFound.visibility = View.GONE
         }
 
         dialog.show()

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:fitsSystemWindows="true"
     android:layout_marginTop="@dimen/five">
 
     <ImageView
@@ -99,8 +100,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/one_fifty"
             android:layout_below="@+id/LblHWSubjectName"
-            android:layout_marginTop="@dimen/ten">
-        </androidx.recyclerview.widget.RecyclerView>
+            android:layout_marginTop="@dimen/ten"></androidx.recyclerview.widget.RecyclerView>
 
         <me.relex.circleindicator.CircleIndicator
             android:id="@+id/indicator"
