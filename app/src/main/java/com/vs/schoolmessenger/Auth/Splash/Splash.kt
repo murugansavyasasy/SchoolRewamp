@@ -4,10 +4,12 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -15,6 +17,7 @@ import androidx.biometric.BiometricPrompt
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.play.core.appupdate.AppUpdateManager
@@ -90,55 +93,6 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
             Log.d("AppHash", signature)
         }
 
-//        val biometricManager = BiometricManager.from(this)
-//        when (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG)) {
-//            BiometricManager.BIOMETRIC_SUCCESS -> {
-//                showBiometricPrompt()
-//            }
-//
-//            BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> {
-//                Toast.makeText(this, "No biometric hardware available", Toast.LENGTH_LONG).show()
-//            }
-//
-//            BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
-//                Toast.makeText(
-//                    this,
-//                    "Biometric features are currently unavailable",
-//                    Toast.LENGTH_LONG
-//                ).show()
-//            }
-//
-//            BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
-//                Toast.makeText(this, "No biometric data enrolled", Toast.LENGTH_LONG).show()
-//            }
-//        }
-
-
-        GlobalScope.launch {
-            delay(2000) // 2-second delay
-            withContext(Dispatchers.Main) {
-                if (Constant.isInternetAvailable(this@Splash)) {
-
-//                    val isEnabled = Constant.isDeveloperOptionsEnabled(this@Splash)
-//                    if (!isEnabled) {
-//                        showBottomPopup(this@Splash) // Call your popup function if needed
-//                    } else {
-
-                    val countryId = SharedPreference.getCountryId(this@Splash)
-                    Log.d("countryId", countryId.toString())
-                    if (!countryId.equals("")) {
-                        isVersionCheck()
-                    } else {
-                        val intent = Intent(this@Splash, CountryScreen::class.java)
-                        startActivity(intent)
-                    }
-                    // }
-                } else {
-                    Log.e("Network Error", "No Internet Connection")
-                }
-            }
-        }
-
         authViewModel!!.isUserValidation?.observe(this) { response ->
             if (response != null) {
                 val status = response.status
@@ -195,7 +149,7 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
                                     startActivity(intent)
                                 }
                             } else if (Constant.user_data!![0].user_details.is_parent) {
-                                Constant.isParentChoose=true
+                                Constant.isParentChoose = true
                                 if (Constant.user_data!![0].user_details.child_details.size > 1) {
                                     val intent = Intent(this@Splash, PrioritySelection::class.java)
                                     startActivity(intent)
@@ -236,10 +190,37 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
                     RestClient.changeApiBaseUrl(Constant.country_details!!.base_url)
                     if (isVersionData!![0].update_available) {
                         isShowUpdateAvailable(isVersionData!!)
-                    }
-                    else {
+                    } else {
                         autoLoginFlowCheck(isVersionData!!)
                     }
+                }
+            }
+        }
+    }
+
+    private fun isInterNetChecking() {
+        GlobalScope.launch {
+            delay(2000) // 2-second delay
+            withContext(Dispatchers.Main) {
+                if (Constant.isInternetAvailable(this@Splash)) {
+
+//                    val isEnabled = Constant.isDeveloperOptionsEnabled(this@Splash)
+//                    if (!isEnabled) {
+//                        showBottomPopup(this@Splash) // Call your popup function if needed
+//                    } else {
+
+                    val countryId = SharedPreference.getCountryId(this@Splash)
+                    Log.d("countryId", countryId.toString())
+                    if (!countryId.equals("")) {
+                        isVersionCheck()
+                    } else {
+                        val intent = Intent(this@Splash, CountryScreen::class.java)
+                        startActivity(intent)
+                    }
+                    // }
+                } else {
+                    Log.e("Network Error", "No Internet Connection")
+                    isNoInterNet()
                 }
             }
         }
@@ -274,7 +255,11 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
 
                 override fun onAuthenticationFailed() {
                     super.onAuthenticationFailed()
-                    Toast.makeText(applicationContext, resources.getString(R.string.Authentication_Failed), Toast.LENGTH_LONG)
+                    Toast.makeText(
+                        applicationContext,
+                        resources.getString(R.string.Authentication_Failed),
+                        Toast.LENGTH_LONG
+                    )
                         .show()
                 }
             })
@@ -409,7 +394,13 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
         }
     }
 
+    override fun onPause() {
+        isInterNetChecking()
+        super.onPause()
+    }
+
     override fun onResume() {
+        isInterNetChecking()
         super.onResume()
         appUpdateManager.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
             if (appUpdateInfo.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
@@ -421,4 +412,27 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
             }
         }
     }
+
+
+    fun isNoInterNet() {
+        val dialogView =
+            LayoutInflater.from(this).inflate(R.layout.no_internet_connection, null)
+        val lottieView = dialogView.findViewById<LottieAnimationView>(R.id.lottieAnimationView)
+        val tvMessage = dialogView.findViewById<TextView>(R.id.tvMessage)
+        val btnCreate = dialogView.findViewById<CardView>(R.id.btnCreate)
+
+        val alertDialog = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .setCancelable(false)
+            .create()
+
+        btnCreate.setOnClickListener {
+            val intent = Intent(Settings.ACTION_WIFI_SETTINGS)
+            this.startActivity(intent)
+            alertDialog.dismiss()
+        }
+        alertDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        alertDialog.show()
+    }
+
 }

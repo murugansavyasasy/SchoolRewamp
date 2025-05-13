@@ -3,8 +3,11 @@ package com.vs.schoolmessenger.School.MarkYourAttendance
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.ActionBar
+import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
+import android.app.KeyguardManager
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.IntentFilter
@@ -62,6 +65,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
         return MarkYourAttendanceBinding.inflate(layoutInflater)
     }
 
+
     private var isStaffAttendanceReportAdapter: StaffAttendanceReportAdapter? = null
     private var isPunchHistoryAdapter: PunchHistoryAdapter? = null
     private var appViewModel: App? = null
@@ -105,41 +109,6 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
             val intent = Intent(this@MarkYourAttendance, AddLocationActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             startActivity(intent)
-        }
-
-        val biometricManager = BiometricManager.from(this)
-        when (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG)) {
-            BiometricManager.BIOMETRIC_SUCCESS -> {
-                ifBiometricAvailable = true
-
-                Log.d(
-                    "BIOMETRIC_STATUS",
-                    "Biometric features are available and the user has enrolled biometric credentials"
-                )
-            }
-
-            BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> {
-                ifBiometricAvailable = false
-//                binding.rytEnableFingerPrint.visibility = View.GONE
-
-                Log.d("BIOMETRIC_STATUS", "No biometric hardware available on this device")
-            }
-
-            BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
-                ifBiometricAvailable = false
-//                binding.rytEnableFingerPrint.visibility = View.GONE
-
-                Log.d("BIOMETRIC_STATUS", "Biometric hardware is currently unavailable")
-            }
-
-            BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
-                ifBiometricAvailable = false
-//                binding.rytEnableFingerPrint.visibility = View.GONE
-                Log.d(
-                    "BIOMETRIC_STATUS",
-                    "No biometric data enrolled; prompt the user to set up biometrics"
-                )
-            }
         }
 
         gpsStatusReceiver = GPSStatusReceiver(this)
@@ -192,7 +161,6 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
                     isLoadPunchHistoryData(isPunchTiming)
                 }
             } else {
-                Log.d("isComing","isComing")
                 rcyPunchList!!.visibility = View.GONE
                 lblNoRecordsFound!!.visibility = View.VISIBLE
                 lblNoRecordsFound!!.text = response!!.message
@@ -239,12 +207,9 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
                     )
                 binding.recycleAttendanceReports.adapter = isStaffAttendanceReportAdapter
             }
-        } else {
-//            binding.recycleAttendanceReports.visibility = View.GONE
-//            binding.lblNoRecords.visibility = View.VISIBLE
-//            binding.imgNorecord.visibility = View.VISIBLE
         }
     }
+
 
     fun isLoadMonth(selectedYear: String) {
         val months = listOf(
@@ -284,7 +249,6 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
         val filter = IntentFilter(LocationManager.PROVIDERS_CHANGED_ACTION).apply {
             addAction(Intent.ACTION_PROVIDER_CHANGED) // Optional extra compatibility
         }
-        registerReceiver(gpsStatusReceiver, filter,RECEIVER_NOT_EXPORTED)
         registerReceiver(gpsStatusReceiver, filter, RECEIVER_NOT_EXPORTED)
 
         Log.d("onResume", "onResume")
@@ -311,7 +275,9 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
                     binding.rytErrorMessage.visibility = View.GONE
                 }
             } else {
-                Toast.makeText(this, R.string.Permission_denied, Toast.LENGTH_SHORT).show()
+                if (Constant.isGPSEnabled(this)) {
+                    binding.rytGPSRedirect.visibility = View.VISIBLE
+                }
             }
         }
     }
@@ -397,88 +363,6 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
         Log.d("onDestroy", "onDestroy")
     }
 
-    private fun showFingerPrintDisablepopup() {
-        val alertDialog = AlertDialog.Builder(this@MarkYourAttendance)
-        alertDialog.setTitle(R.string.Disable_Fingerprint)
-        alertDialog.setMessage(R.string.disable_fingerprint_authentication)
-        alertDialog.setNegativeButton(
-            getString(R.string.Yes),
-            object : DialogInterface.OnClickListener {
-                override fun onClick(dialog: DialogInterface, which: Int) {
-                    dialog.cancel()
-                    binding.enableSwitch.isChecked = false
-//                TeacherUtil_SharedPreference.putBiometricEnabled(
-//                    this@PunchStaffAttendanceUsingFinger,
-//                    false
-//                )
-                }
-            })
-        alertDialog.setPositiveButton(
-            getString(R.string.Cancel), object : DialogInterface.OnClickListener {
-                override fun onClick(dialog: DialogInterface, which: Int) {
-                    dialog.cancel()
-
-//                    val enabled: Boolean =
-//                        TeacherUtil_SharedPreference.getBiometricEnabled(this@PunchStaffAttendanceUsingFinger)
-//                    enableSwitch.setChecked(enabled)
-                }
-            })
-        val dialog = alertDialog.create()
-        dialog.setCanceledOnTouchOutside(false)
-        dialog.show()
-    }
-
-    private fun enableLocalFingerPrint() {
-        val inflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val layout = inflater.inflate(R.layout.biometric_permission_enable_popup, null)
-        enableBiometricPopup = PopupWindow(
-            layout, ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT, true
-        )
-        enableBiometricPopup!!.contentView = layout
-        binding.rytParent.post(object : Runnable {
-            override fun run() {
-                enableBiometricPopup!!.showAtLocation(binding.rytParent, Gravity.CENTER, 0, 0)
-            }
-        })
-        val btnAllow = layout.findViewById<View?>(R.id.btnAllow) as TextView
-        val btnSkip = layout.findViewById<View?>(R.id.btnSkip) as TextView
-        val imgClose = layout.findViewById<View?>(R.id.imgClose) as ImageView
-        btnAllow.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-//                TeacherUtil_SharedPreference.putBiometricSkip(
-//                    this@PunchStaffAttendanceUsingFinger,
-//                    false
-//                )
-//                TeacherUtil_SharedPreference.putBiometricEnabled(
-//                    this@PunchStaffAttendanceUsingFinger,
-//                    true
-//                )
-                binding.enableSwitch.setChecked(true)
-                enableBiometricPopup!!.dismiss()
-            }
-        })
-
-        btnSkip.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-//                TeacherUtil_SharedPreference.putBiometricSkip(
-//                    this@PunchStaffAttendanceUsingFinger,
-//                    true
-//                )
-                binding.enableSwitch.setChecked(false)
-                enableBiometricPopup!!.dismiss()
-            }
-        })
-
-        imgClose.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                enableBiometricPopup!!.dismiss()
-//                val isEnabled: Boolean =
-//                    TeacherUtil_SharedPreference.getBiometricEnabled(this@PunchStaffAttendanceUsingFinger)
-//                binding.enableSwitch.setChecked(isEnabled)
-            }
-        })
-
-    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("UnspecifiedRegisterReceiverFlag")
@@ -506,8 +390,8 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
                 val filter = IntentFilter(LocationManager.PROVIDERS_CHANGED_ACTION).apply {
                     addAction(Intent.ACTION_PROVIDER_CHANGED) // Optional extra compatibility
                 }
-                registerReceiver(gpsStatusReceiver, filter,RECEIVER_NOT_EXPORTED)
                 registerReceiver(gpsStatusReceiver, filter, RECEIVER_NOT_EXPORTED)
+                Log.d("isEnableLocation1111111111111", "isEnableLocation")
                 getLocationPermissions()
             }
         }
@@ -532,103 +416,99 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
         }
     }
 
-
-//    private fun enableBiometric() {
-//        val isEnab = SharedPreference.getBiometricEnabled(this@MarkYourAttendance)
-//        val isBiometricSkip = SharedPreference.getBiometricSkip(this@MarkYourAttendance)
-//
-//        if (isBiometricSkip!!) {
-//        } else {
-//            if (!isEnab!! && ifBiometricAvailable) {
-//                enableLocalFingerPrint()
-//            } else {
-//                val isEnabled = SharedPreference.getBiometricEnabled(this@MarkYourAttendance)
-//                if (isEnabled!!) {
-//                    authenticatStart()
-//                }
-//            }
-//        }
-//    }
-
-
     private fun authenticatStart() {
+        val biometricManager = BiometricManager.from(this)
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            val authenticators = BiometricManager.Authenticators.BIOMETRIC_STRONG or
+                    BiometricManager.Authenticators.DEVICE_CREDENTIAL
+
+            when (biometricManager.canAuthenticate(authenticators)) {
+                BiometricManager.BIOMETRIC_SUCCESS -> showBiometricPrompt(authenticators)
+                else -> {
+                    Log.d("BiometricAuth", "No biometric/PIN/PATTERN available. Proceeding...")
+                    isPunchAttendance()
+                }
+            }
+        } else {
+            // For Android 8.x (Oreo)
+            when (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_WEAK)) {
+                BiometricManager.BIOMETRIC_SUCCESS -> showLegacyBiometricPrompt()
+                else -> {
+                    Log.d("BiometricAuth", "Legacy biometric not available. Proceeding...")
+                    isPunchAttendance()
+                }
+            }
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.P)
+    private fun showBiometricPrompt(authenticators: Int) {
         val executor = ContextCompat.getMainExecutor(this)
+
         biometricPrompt = BiometricPrompt(
-            this@MarkYourAttendance,
-            executor,
+            this, executor,
             object : BiometricPrompt.AuthenticationCallback() {
+                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                    super.onAuthenticationSucceeded(result)
+                    Log.d("BiometricAuth", "Authentication succeeded")
+                    isPunchAttendance()
+                }
 
                 override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                     super.onAuthenticationError(errorCode, errString)
-
                     Log.d("BiometricAuth", "Authentication error: $errString")
 
-                    when (errorCode) {
-                        BiometricPrompt.ERROR_NEGATIVE_BUTTON,
-                        BiometricPrompt.ERROR_USER_CANCELED,
-                        BiometricPrompt.ERROR_CANCELED -> {
-                            Toast.makeText(applicationContext, "Authentication cancelled", Toast.LENGTH_SHORT).show()
-                        }
-                        else -> {
-                            Toast.makeText(applicationContext, "Authentication error: $errString", Toast.LENGTH_SHORT).show()
-                        }
+                    if (errorCode == BiometricPrompt.ERROR_NO_BIOMETRICS ||
+                        errorCode == BiometricPrompt.ERROR_HW_UNAVAILABLE ||
+                        errorCode == BiometricPrompt.ERROR_HW_NOT_PRESENT
+                    ) {
+                        isPunchAttendance()
                     }
-
-                    if (ifBiometricAvailable) {
-                        authenticatealertpopupWindow?.let {
-                            if (it.isShowing) it.dismiss()
-                        }
-                    }
-
-                    // Do NOT call isPunchAttendance() here
-                }
-
-                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                    super.onAuthenticationSucceeded(result)
-
-                    Log.d("BiometricAuth", "Authentication succeeded")
-                    Constant.showLoading(this@MarkYourAttendance)
-                    isPunchAttendance()
                 }
 
                 override fun onAuthenticationFailed() {
                     super.onAuthenticationFailed()
-
                     Log.d("BiometricAuth", "Authentication failed")
-                    Toast.makeText(applicationContext, "Authentication failed", Toast.LENGTH_SHORT).show()
                 }
             })
 
         val promptInfo = PromptInfo.Builder()
-            .setTitle(resources.getString(R.string.biometric_authentications))
-            .setSubtitle(resources.getString(R.string.Mark_attendance_biometric_credential))
-            .setNegativeButtonText(resources.getString(R.string.Cancel))
+            .setTitle("Authenticate")
+            .setSubtitle("Use fingerprint, face, PIN, or pattern")
+            .setAllowedAuthenticators(authenticators)
             .build()
 
         biometricPrompt?.authenticate(promptInfo)
     }
 
+    private fun showLegacyBiometricPrompt() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val keyguardManager = getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
 
-    private fun againAuthenticatePopup() {
-
-        val inflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val layout = inflater.inflate(R.layout.authenticate_alert_popup, null)
-
-        val authenticateAlertPopupWindow = PopupWindow(
-            layout, ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT, true
-        )
-
-        authenticateAlertPopupWindow.contentView = layout
-
-        binding.rytParent.post {
-            authenticateAlertPopupWindow.showAtLocation(binding.rytParent, Gravity.CENTER, 0, 0)
+            if (keyguardManager.isKeyguardSecure) {
+                val intent = keyguardManager.createConfirmDeviceCredentialIntent(
+                    "Authentication Required",
+                    "Please confirm your screen lock PIN or pattern"
+                )
+                startActivityForResult(intent, 1001)
+            } else {
+                isPunchAttendance()
+            }
+        } else {
+            isPunchAttendance()
         }
+    }
 
-        val lblAuthenticate = layout.findViewById<TextView>(R.id.lblAuthenticate)
-        lblAuthenticate.setOnClickListener {
-            authenticateAlertPopupWindow.dismiss()
-            authenticatStart()
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 1001) {
+            if (resultCode == Activity.RESULT_OK) {
+                Log.d("BiometricAuth", "PIN/Pattern auth succeeded")
+                isPunchAttendance()
+            } else {
+                Log.d("BiometricAuth", "PIN/Pattern auth cancelled or failed")
+            }
         }
     }
 
@@ -637,8 +517,8 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
     }
 
     override fun onGPSStatusChanged(isGPSEnabled: Boolean) {
+        Log.d("isEnableLocation", "isEnableLocation")
         getLocationPermissions()
-        Toast.makeText(this, "GPS Enabled: $isGPSEnabled", Toast.LENGTH_SHORT).show()
     }
 
     override fun onLocationReturn(latitude: Double, longitude: Double, type: String?) {
@@ -730,15 +610,12 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
         if (data.isNotEmpty()) {
             rcyPunchList!!.visibility = View.VISIBLE
             lblNoRecordsFound!!.visibility = View.GONE
-//            Constant.executeAfterDelay {
             isPunchHistoryAdapter = PunchHistoryAdapter(
                 data, this, Constant.isShimmerViewDisable
             )
             rcyPunchList!!.layoutManager = LinearLayoutManager(this)
             rcyPunchList!!.adapter = isPunchHistoryAdapter
-//            }
         } else {
-            Log.d("isComing","isComing")
             rcyPunchList!!.visibility = View.GONE
             lblNoRecordsFound!!.text = getString(R.string.Punch_History_found)
             lblNoRecordsFound!!.visibility = View.VISIBLE

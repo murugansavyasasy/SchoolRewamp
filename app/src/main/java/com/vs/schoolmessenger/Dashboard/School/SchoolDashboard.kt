@@ -50,7 +50,6 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
         authViewModel!!.init()
         FirebaseMessaging.getInstance().isAutoInitEnabled = true
         setUpGradientSchool()
-//        setupToolbar()
 
         accessChildView(
             binding,

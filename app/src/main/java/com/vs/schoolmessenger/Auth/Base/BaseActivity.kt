@@ -92,15 +92,6 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 //        }
 //    }
 
-    fun isToolBarWhiteTheme() {
-        if (Build.VERSION.SDK_INT >= 21) {
-            val window = this.window
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-            window.statusBarColor = this.resources.getColor(R.color.white)
-            window.navigationBarColor = this.resources.getColor(R.color.white)
-        }
-    }
 
     fun isToolBarBlackTheme() {
         if (Build.VERSION.SDK_INT >= 21) {
@@ -143,16 +134,25 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     }
 
     protected open fun setUpGradientSchool() {
-
         if (Build.VERSION.SDK_INT >= 21) {
             val window = this.window
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
             window.statusBarColor = Color.TRANSPARENT
             window.navigationBarColor = Color.TRANSPARENT
             window.setBackgroundDrawableResource(R.drawable.gradient_theme_school)
         }
     }
 
+    fun isToolBarWhiteTheme() {
+        if (Build.VERSION.SDK_INT >= 21) {
+            val window = this.window
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+            window.statusBarColor = this.resources.getColor(R.color.white)
+            window.navigationBarColor = this.resources.getColor(R.color.white)
+        }
+    }
 
     // Method to allow child activities to access specific views
     protected fun <T : ViewBinding> accessChildView(
@@ -510,7 +510,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 //                    R.color.sky_blue0,
 //                    R.color.sky_blue2
 //                )
-            //    setupToolbar()
+                //    setupToolbar()
                 if (Constant.isParentChoose) {
                     setUpGradientParent()
                 } else {
@@ -531,7 +531,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 //                    R.color.sky_blue0,
 //                    R.color.sky_blue2
 //                )
-          //      setupToolbar()
+                //      setupToolbar()
                 if (Constant.isParentChoose) {
                     setUpGradientParent()
                 } else {
@@ -573,7 +573,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 //                    R.color.sky_blue2
 //                )
 
-            //    setupToolbar()
+                //    setupToolbar()
                 if (Constant.isParentChoose) {
                     setUpGradientParent()
                 } else {

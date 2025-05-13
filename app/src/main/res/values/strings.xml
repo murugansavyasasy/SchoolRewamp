@@ -4,7 +4,7 @@
     <string name="isPasswordMisMatching">Password is mismatching</string>
     <string name="SuccessfullyPasswordCreation">Successfully creation your password</string>
     <string name="EnterTheNewPassword">Enter the new password</string>
-    <string name="EnterTheConformPassword">Enter the conform password</string>
+    <string name="EnterTheConformPassword">Enter the confirm password</string>
     <string name="EnterTheMobileNumber">Enter the 10 digit mobile number</string>
     <string name="EnterThePassWord">Enter the password</string>
     <string name="EnterTheOtp">Enter the otp</string>

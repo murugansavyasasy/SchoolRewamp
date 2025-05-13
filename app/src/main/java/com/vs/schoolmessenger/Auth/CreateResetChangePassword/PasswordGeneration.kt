@@ -94,7 +94,7 @@ class PasswordGeneration : BaseActivity<PasswordGenerationBinding>(), View.OnCli
                                 Intent(this@PasswordGeneration, PrioritySelection::class.java)
                             startActivity(intent)
                         } else {
-                            Constant.isParentChoose=true
+                            Constant.isParentChoose = true
                             val intent = Intent(
                                 this@PasswordGeneration,
                                 com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard::class.java
@@ -158,7 +158,6 @@ class PasswordGeneration : BaseActivity<PasswordGenerationBinding>(), View.OnCli
     }
 
 
-
     private fun isPasswordViewAndHide() {
         if (isPasswordVisible) {
             binding.txtConfirmPassword.inputType =
@@ -181,7 +180,7 @@ class PasswordGeneration : BaseActivity<PasswordGenerationBinding>(), View.OnCli
             }
 
             R.id.imgHide1 -> {
-                isPasswordViewAndHide()
+                isPasswordViewAndHide1()
             }
 
             R.id.btnCreate -> {

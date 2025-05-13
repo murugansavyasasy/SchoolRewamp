@@ -33,7 +33,6 @@ import com.vs.schoolmessenger.databinding.OtpScreenBinding
 import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.vs.schoolmessenger.Repository.APIKeyNames
 
-
 class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
 
     private val otpTimeout = 30000L
