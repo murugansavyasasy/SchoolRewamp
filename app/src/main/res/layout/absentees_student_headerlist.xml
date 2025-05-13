@@ -16,7 +16,8 @@
         <RelativeLayout
             android:id="@+id/cardview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@drawable/rect_white_light_radious">
 
             <TextView
                 android:id="@+id/badge_count"
@@ -29,7 +30,7 @@
                 android:elevation="@dimen/ten"
                 android:fontFamily="@font/poppins_bold"
                 android:gravity="center"
-                android:text=""
+                android:text="0"
                 android:textColor="@color/grey"
                 android:textSize="@dimen/twele_sp"
                 android:textStyle="bold" />
@@ -39,8 +40,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:fontFamily="@font/poppins_bold"
-                android:text=""
+                android:fontFamily="@font/futura_regular"
+                android:text="VII - A"
                 android:textColor="@color/grey"
                 android:textSize="@dimen/fifteen_sp"
                 android:textStyle="bold" />
@@ -51,3 +52,57 @@
 
 
 </RelativeLayout>
+
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    android:id="@+id/header_layout"-->
+<!--    android:layout_width="wrap_content"-->
+<!--    android:layout_height="wrap_content">-->
+
+<!--    <androidx.cardview.widget.CardView-->
+<!--        android:layout_width="@dimen/one_fifty"-->
+<!--        android:layout_height="@dimen/fifty"-->
+<!--        android:layout_margin="@dimen/eight"-->
+<!--        android:background="@color/grey"-->
+<!--        app:cardCornerRadius="@dimen/four"-->
+<!--        app:cardElevation="@dimen/four">-->
+
+<!--        <RelativeLayout-->
+<!--            android:id="@+id/cardview"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent">-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/badge_count"-->
+<!--                android:layout_width="@dimen/twenty_two"-->
+<!--                android:layout_height="@dimen/twenty_two"-->
+<!--                android:layout_alignParentEnd="true"-->
+<!--                android:layout_marginTop="@dimen/two"-->
+<!--                android:layout_marginEnd="@dimen/two"-->
+<!--                android:background="@drawable/circle_background1"-->
+<!--                android:elevation="@dimen/ten"-->
+<!--                android:fontFamily="@font/poppins_bold"-->
+<!--                android:gravity="center"-->
+<!--                android:text=""-->
+<!--                android:textColor="@color/grey"-->
+<!--                android:textSize="@dimen/twele_sp"-->
+<!--                android:textStyle="bold" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/section_values"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_centerInParent="true"-->
+<!--                android:fontFamily="@font/poppins_bold"-->
+<!--                android:text=""-->
+<!--                android:textColor="@color/grey"-->
+<!--                android:textSize="@dimen/fifteen_sp"-->
+<!--                android:textStyle="bold" />-->
+
+<!--        </RelativeLayout>-->
+
+<!--    </androidx.cardview.widget.CardView>-->
+
+
+<!--</RelativeLayout>-->

@@ -36,34 +36,26 @@ class StudentDetailAdapter(
     override fun onBindViewHolder(holder: GridViewHolder, position: Int) {
         val item = itemList!![position]
 
-        
+
         when (position) {
 
             0 -> {
-                holder.binding.rlaStudent.setBackgroundDrawable(
-                    ContextCompat.getDrawable(
-                        context, R.drawable.bg_blue_gradient
+
+
+                holder.binding.rlaSchoolName.setBackgroundColor(
+                    ContextCompat.getColor(
+                        context, R.color.dark_bg_blue
                     )
                 )
-
-//                holder.binding.rlaSchoolName.setBackgroundColor(
-//                    ContextCompat.getColor(
-//                        context, R.color.dark_bg_blue
-//                    )
-//                )
             }
 
             1 -> {
 
-                holder.binding.rlaStudent.setBackgroundDrawable(
-                    ContextCompat.getDrawable(
-                        context, R.drawable.bg_purple_gradient
-                    )
-                )
+
 
                 holder.binding.rlaSchoolName.setBackgroundColor(
                     ContextCompat.getColor(
-                        context, R.color.light_bg_purple
+                        context, R.color.dark_bg_purple
                     )
                 )
             }
@@ -71,27 +63,17 @@ class StudentDetailAdapter(
             2 -> {
 
 
-                holder.binding.rlaStudent.setBackgroundDrawable(
-                    ContextCompat.getDrawable(
-                        context, R.drawable.bg_orange_gradient
-                    )
-                )
                 holder.binding.rlaSchoolName.setBackgroundColor(
                     ContextCompat.getColor(
-                        context, R.color.light_bg_orange
+                        context, R.color.dark_bg_orange
                     )
                 )
             }
 
             3 -> {
-                holder.binding.rlaStudent.setBackgroundDrawable(
-                    ContextCompat.getDrawable(
-                        context, R.drawable.bg_green_gradient
-                    )
-                )
                 holder.binding.rlaSchoolName.setBackgroundColor(
                     ContextCompat.getColor(
-                        context, R.color.light_bg_green
+                        context, R.color.dark_bg_green
                     )
                 )
             }
@@ -101,8 +83,8 @@ class StudentDetailAdapter(
             listener.onItemClick(item)
         }
 
-        holder.binding.lblRegisterNumber.text = context.getString(R.string.Roll_No) + item.roll_number
-        holder.binding.lblClassTeacher.text = context.getString(R.string.Class_Teacher) + item.class_teacher
+        holder.binding.lblRegisterNumber.text = "Roll No : " + item.roll_number
+        holder.binding.lblClassTeacher.text = "Class Teacher : " + item.class_teacher
         if (item.school_name_regional == ""){
             holder.binding.lblSchoolRegionalName.visibility= View.GONE
         }else{

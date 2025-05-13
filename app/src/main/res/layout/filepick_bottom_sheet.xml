@@ -106,7 +106,7 @@
                     android:layout_width="@dimen/fourty"
                     android:layout_height="@dimen/fourty"
                     android:layout_centerHorizontal="true"
-                    android:src="@drawable/video_icon"></ImageView>
+                    android:src="@drawable/pdf_icon"></ImageView>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -115,7 +115,7 @@
                     android:layout_marginTop="@dimen/ten"
                     android:gravity="center"
                     android:paddingBottom="@dimen/ten"
-                    android:text="Video"
+                    android:text="Document"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
                     android:textStyle="bold">

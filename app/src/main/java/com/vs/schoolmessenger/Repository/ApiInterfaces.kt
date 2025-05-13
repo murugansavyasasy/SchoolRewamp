@@ -21,6 +21,7 @@ import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
+import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistoryResponse
@@ -28,6 +29,7 @@ import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchHistoryRe
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffAttendanceReportResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffLocationResponse
 import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
+import com.vs.schoolmessenger.School.SchoolStrength.SchoolStrengthResponse
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -159,10 +161,10 @@ interface ApiInterfaces {
 
     @GET(APIMethods.isGetHomeWorkReport)
     fun isGetHomeWorkReport(
-        @Header("Authorization") token: String,
-        @Query("section_id") isSectionId: Int,
-        @Query("academic_year_id") isAcademicYearId: Int,
-        @Query("date") isdate: String
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query(APIKeyNames.section_id) isSectionId: Int,
+        @Query(APIKeyNames.academic_year_id) isAcademicYearId: Int,
+        @Query(APIKeyNames.date) isdate: String
     ): Call<HomeWorkReportApiResponse?>
 
 
@@ -283,5 +285,21 @@ interface ApiInterfaces {
         @Query(APIKeyNames.section_id) section_id: Int?,
         @Query(APIKeyNames.class_id) class_id: Int?
     ): Call<GetStudentReportData?>?
+
+    @GET(APIMethods.isGetDailyCollectionReport)
+    fun isGetDailyCollectionReport(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query(APIKeyNames.type) istype: String,
+        @Query(APIKeyNames.from_date) isfromdate: String,
+        @Query(APIKeyNames.to_date) istodate: String
+    ): Call<DailyCollectionReportResponse?>
+
+
+    @GET(APIMethods.isGetSchoolStrengthReport)
+    fun isGetSchoolStrengthReport(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query(APIKeyNames.academic_year_id) isAcademicYearId: Int
+    ): Call<SchoolStrengthResponse?>
+
 
 }

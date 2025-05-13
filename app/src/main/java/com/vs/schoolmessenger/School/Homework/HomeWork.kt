@@ -1,8 +1,11 @@
 package com.vs.schoolmessenger.School.Homework
 
+import android.Manifest
 import android.app.Activity
 import android.app.Dialog
+import android.content.ContentResolver
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
@@ -10,7 +13,9 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
+import android.provider.DocumentsContract
 import android.provider.MediaStore
+import android.provider.OpenableColumns
 import android.util.Log
 import android.view.Gravity
 import android.view.View
@@ -22,6 +27,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModelProvider
@@ -41,11 +47,17 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReport
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.FileItem
+import com.vs.schoolmessenger.Utils.FileType
 import com.vs.schoolmessenger.Utils.OnDateSelectedListener
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.HomeWorkBinding
 import java.io.File
 import java.io.FileOutputStream
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 
 class HomeWork : BaseActivity<HomeWorkBinding>(),
@@ -56,25 +68,17 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
         return HomeWorkBinding.inflate(layoutInflater)
     }
 
-    private val REQUEST_CODE = 1001
-//    private val fileType = "image"
-    private val fileType = "document"
-    private val selectedUris = mutableListOf<Uri>()
-
-    private val albumLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            val uris = result.data?.getParcelableArrayListExtra<Uri>("selectedUris") ?: emptyList()
-            selectedUris.clear()
-            selectedUris.addAll(uris)
-          //  binding.selectedImagesCount.text = "Selected: ${selectedUris.size}"
-        }
+    companion object {
+        private const val PICK_DOCUMENT_REQUEST = 1003
+        private const val PICK_IMAGE_REQUEST = 1001
+        private const val CAMERA_IMAGE_REQUEST = 1004
+        private const val MAX_FILES = 10
     }
 
-
-    private val PICK_IMAGES_REQUEST = 1
-    private val maxImages = 5
-    private val selectedImagePaths = mutableListOf<String>()
-    private val selectedImageFormats = mutableListOf<String>()
+    private var cameraImageUri: Uri? = null
+    private var cameraImageFilePath: String? = null
+    private val CAMERA_PERMISSION_REQUEST_CODE = 200
+    private var mAdapter: ImagePickingAdapter? = null
     var isAcademicYear: List<AcademicYear>? = null
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
@@ -87,9 +91,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
     private lateinit var isHomeWorkReportData: List<HomeWorkReport>
     var mHomeWorkReportAdapter: HomeWorkReportAdapter? = null
     var isSectionId = -1
-    private val CAMERA_REQUEST_CODE = 1001
-    private var imageUri: Uri? = null
-
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
@@ -110,14 +111,15 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
 
-        val path = saveDrawableToCache(R.drawable.add_image)
-        path?.let { selectedImagePaths.add(it) }
+        saveDrawableToCache(R.drawable.add_image)
+            ?.let { Constant.selectedFiles!!.add(FileItem(it, FileType.IMAGE)) }
 
+        binding.rcyImages.visibility = View.VISIBLE
+        mAdapter = ImagePickingAdapter(this, Constant.selectedFiles!!, this)
+        binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
+        binding.rcyImages.adapter = mAdapter
 
         binding.selectdate.text = Constant.getCurrentDate()
-
-        binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
-        binding.rcyImages.adapter = ImagePickingAdapter(selectedImagePaths, this, this)
 
         appViewModel!!.isGetAcademicList?.observe(this) { response ->
             Constant.hideLoading(this@HomeWork)
@@ -155,19 +157,43 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
             }
         }
 
-        isGetAcademicYear()
-
-
-
-
         appViewModel!!.isGetHomeWorkReport?.observe(this) { response ->
             if (response != null && response.status) {
                 val isHomeWorkReport = response.data
                 isHomeWorkReportData = isHomeWorkReport
                 loadHomeWorkReportData(isHomeWorkReportData)
             }
+        }
+    }
 
+    private fun checkCameraPermissionAndOpenCamera() {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.CAMERA
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            showBottomDialog()
+        } else {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.CAMERA),
+                CAMERA_PERMISSION_REQUEST_CODE
+            )
+        }
+    }
 
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == CAMERA_PERMISSION_REQUEST_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                openCamera()
+            } else {
+                Toast.makeText(this, "Camera permission is required", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -186,20 +212,12 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
         return file.absolutePath
     }
 
-    private fun openAlbumSelectActivity() {
-        val intent = Intent(this, AlbumSelectActivity::class.java)
-        Log.d("fileType",fileType)
-        intent.putExtra("fileType", fileType)
-        albumLauncher.launch(intent)
-    }
-
 
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.imgBack -> {
                 onBackPressed()
             }
-
 
             R.id.rlaStandard -> {
                 showStandardDropdown(
@@ -225,9 +243,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
                     isSectionId = selectedOption.second
                     fetchHomeWorkReportData()
                 }
-
             }
-
 
             R.id.lblDatePick -> {
                 showDatePickerDialog(this, this)
@@ -239,7 +255,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
                 binding.rlaHomework.visibility = View.VISIBLE
 
             }
-//report button when it is cliked the entire report compnents will come and HomeWork components will be gone
+
             R.id.btnHistory -> {
                 isBackRoundChange(binding.btnHistory)
                 binding.rlaHomeWorkReport.visibility = View.VISIBLE
@@ -309,14 +325,10 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
 
     override fun onImageClick(position: Int) {
         if (position == 0) {
-            showBottomDialog()
+            checkCameraPermissionAndOpenCamera()
         }
     }
 
-    // -----------------------
-//    private fun canAddMoreFiles(): Boolean {
-//        return imageList.size < 5
-//    }
 
     private fun isGetAcademicYear() {
         Constant.showLoading(this@HomeWork)
@@ -339,6 +351,10 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
             binding.edtDescription.requestFocus()
             return
         }
+        if (Constant.selectedFiles!!.size == 1) {
+            Toast.makeText(this, "Choose atleast one file", Toast.LENGTH_SHORT).show()
+            return
+        }
         val sectionDetails = SectionDetails(title, description)
         val intent = Intent(this, RecipientActivity::class.java)
         intent.putExtra(Constant.section_data, sectionDetails)
@@ -355,37 +371,16 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
         val rlaDocument = dialog.findViewById<RelativeLayout>(R.id.rlaVideo)
 
         rlaGallery.setOnClickListener {
-            openAlbumSelectActivity()
-            //gallery
-//            if (canAddMoreFiles()) {
-          //  pickImagesFromGallery()
-//            } else {
-//                Toast.makeText(this, getString(R.string.upload_maximum_5_files), Toast.LENGTH_SHORT)
-//                    .show()
-//            }
+            onImageButtonClick()
             dialog.dismiss()
         }
 
         rlaCamera.setOnClickListener {
-
-            // camera
-//            if (canAddMoreFiles()) {
             openCamera()
-//            } else {
-//                Toast.makeText(this, getString(R.string.upload_maximum_5_files), Toast.LENGTH_SHORT)
-//                    .show()
-//            }
-
             dialog.dismiss()
         }
         rlaDocument.setOnClickListener {
-//            // document PDF,Word
-//            if (canAddMoreFiles()) {
-////                pickDocument()
-//            } else {
-//                Toast.makeText(this, getString(R.string.upload_maximum_5_files), Toast.LENGTH_SHORT)
-//                    .show()
-//            }
+            onPdfButtonClick()
             dialog.dismiss()
         }
 
@@ -402,74 +397,225 @@ class HomeWork : BaseActivity<HomeWorkBinding>(),
 
     }
 
-    fun openCamera() {
-        val imageFile = File.createTempFile("camera_img", ".jpg", cacheDir)
-        imageUri = FileProvider.getUriForFile(this, "$packageName.provider", imageFile)
+    fun onImageButtonClick() {
+        val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
+            type = "image/*"
+            putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+        }
+        startActivityForResult(Intent.createChooser(intent, "Select Images"), PICK_IMAGE_REQUEST)
+    }
 
-        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
-        startActivityForResult(intent, CAMERA_REQUEST_CODE)
+    fun onPdfButtonClick() {
+        val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
+            type = "*/*"
+            putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+            addCategory(Intent.CATEGORY_OPENABLE)  // Important for file-only types
+        }
+        startActivityForResult(
+            Intent.createChooser(intent, "Select Documents"),
+            PICK_DOCUMENT_REQUEST
+        )
+    }
+
+    private fun copyDocumentToInternalStorage(uri: Uri): File? {
+        val inputStream = contentResolver.openInputStream(uri)
+        val file = File(filesDir, "copied_document.pdf") // Save to app's internal storage
+
+        try {
+            inputStream?.copyTo(FileOutputStream(file))
+            return file
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            inputStream?.close()
+        }
+
+        return null
     }
 
 
-    private fun pickImagesFromGallery() {
-        val intent = Intent()
-        intent.type = Constant.image_star
-        intent.action = Intent.ACTION_GET_CONTENT
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-        startActivityForResult(
-            Intent.createChooser(intent, Constant.Select_images),
-            PICK_IMAGES_REQUEST
+    private fun openCamera() {
+        // create the temp file
+        val imgFile = createImageFile()
+        cameraImageFilePath = imgFile.absolutePath
+
+        cameraImageUri = FileProvider.getUriForFile(
+            this,
+            "$packageName.provider",
+            imgFile
         )
 
+        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { it ->
+            it.putExtra(MediaStore.EXTRA_OUTPUT, cameraImageUri)
+            it.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+            startActivityForResult(it, CAMERA_IMAGE_REQUEST)
+        }
     }
-
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == PICK_IMAGES_REQUEST && resultCode == RESULT_OK) {
-//            selectedImagePaths.clear()
-//            selectedImageFormats.clear()
+        if (resultCode != RESULT_OK) return
 
-            val clipData = data?.clipData
-            if (clipData != null) {
-                val count = minOf(clipData.itemCount, maxImages)
-                for (i in 0 until count) {
-                    val uri = clipData.getItemAt(i).uri
-                    val path = getPathFromUri(uri)
-                    val format = getFileExtension(uri)
-                    selectedImagePaths.add(path)
-                    selectedImageFormats.add(format)
+        val remaining = MAX_FILES - Constant.selectedFiles!!.size
+        if (remaining <= 0) {
+            Toast.makeText(this, "Max $MAX_FILES files allowed", Toast.LENGTH_SHORT).show()
+            return
+        }
+        fun addPath(uri: Uri) {
+            if (Constant.selectedFiles!!.size >= MAX_FILES) return
+
+            // Skip only audio and video
+            val mimeType = contentResolver.getType(uri)
+            if (mimeType?.startsWith("video/") == true || mimeType?.startsWith("audio/") == true) {
+                Log.d("SkipFile", "Skipping audio/video file: $uri (MIME: $mimeType)")
+                return
+            }
+
+            // Resolve path (optional, based on your needs)
+            val path: String? = when {
+                uri.scheme == "file" -> uri.path
+                else -> getPathFromUri(uri)
+            }
+
+            if (path == null) {
+                Log.w("addPath", "Could not resolve path from URI: $uri")
+                return
+            }
+            val fileName = getFileName(uri).ifEmpty { File(path).name }
+            val type = when {
+                fileName.endsWith(".pdf", true) -> FileType.PDF
+                fileName.endsWith(".doc", true) || fileName.endsWith(".docx", true) -> FileType.DOC
+                fileName.endsWith(".xls", true) || fileName.endsWith(
+                    ".xlsx",
+                    true
+                ) -> FileType.EXCEL
+
+                fileName.endsWith(".ppt", true) || fileName.endsWith(".pptx", true) -> FileType.PPT
+                fileName.matches(".*\\.(jpg|jpeg|png|webp)$".toRegex(RegexOption.IGNORE_CASE)) -> FileType.IMAGE
+                fileName.endsWith(".txt", true) -> FileType.TXT
+                else -> FileType.OTHER
+            }
+            Constant.selectedFiles!!.add(FileItem(path, type))
+        }
+
+        when (requestCode) {
+            PICK_IMAGE_REQUEST, PICK_DOCUMENT_REQUEST -> {
+                data?.clipData?.let { cd ->
+                    val toTake = minOf(cd.itemCount, remaining)
+                    for (i in 0 until toTake) {
+                        val uri = cd.getItemAt(i).uri
+                        addPath(uri) // Use the updated addPath that handles MIME type
+                        if (uri.toString().contains("document")) copyDocumentToInternalStorage(uri)
+                    }
+                    if (cd.itemCount > remaining)
+                        Toast.makeText(this, "Only $remaining added", Toast.LENGTH_SHORT).show()
+                } ?: data?.data?.let { uri ->
+                    addPath(uri) // Use the updated addPath that handles MIME type
+                    if (uri.toString().contains("document")) copyDocumentToInternalStorage(uri)
                 }
-                Log.d("selectedImagePaths", selectedImagePaths.size.toString())
-                binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
-                binding.rcyImages.adapter = ImagePickingAdapter(selectedImagePaths, this, this)
+            }
 
-//                if (clipData.itemCount > maxImages) {
-//                    Toast.makeText(
-//                        this,
-//                        getString(R.string.You_can_only_select) + maxImages + getString(R.string.images_), Toast.LENGTH_SHORT).show()
-//                }
-            } else {
-                data?.data?.let { uri ->
-                    val path = getPathFromUri(uri)
-                    val format = getFileExtension(uri)
-                    selectedImagePaths.add(path)
-                    selectedImageFormats.add(format)
+            CAMERA_IMAGE_REQUEST -> {
+                cameraImageFilePath?.let { filePath ->
+                    var file = File(filePath)
+
+                    if (file.exists()) {
+                        if (!file.name.endsWith(".jpg", true)) {
+                            val newFile = File(file.parent, file.nameWithoutExtension + ".jpg")
+                            if (file.renameTo(newFile)) {
+                                cameraImageFilePath = newFile.absolutePath
+                                file = newFile
+                            }
+                        }
+
+                        val uri = Uri.fromFile(file)
+                        addPath(uri)
+                    } else {
+                        Toast.makeText(this, "Camera image file not found.", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                } ?: run {
+                    Toast.makeText(this, "Camera image failed", Toast.LENGTH_SHORT).show()
                 }
             }
         }
+        mAdapter!!.notifyDataSetChanged()
     }
 
-    fun getPathFromUri(uri: Uri): String {
-        return uri.toString() // Or use ContentResolver if actual file path is needed
+    private fun getPathFromUri(uri: Uri): String? {
+        var path: String? = null
+
+        if (uri.scheme.equals("content", ignoreCase = true)) {
+            val cursor = contentResolver.query(uri, null, null, null, null)
+            cursor?.use {
+                if (it.moveToFirst()) {
+                    val columnIndex = it.getColumnIndex("_data")
+                    if (columnIndex != -1) {
+                        path = it.getString(columnIndex)
+                    }
+                }
+            }
+        }
+
+        if (path == null && DocumentsContract.isDocumentUri(this, uri)) {
+            if (uri.scheme == ContentResolver.SCHEME_CONTENT) {
+                try {
+                    val docId = DocumentsContract.getDocumentId(uri)
+                    val split = docId.split(":")
+                    val type = split[0]
+                    val filePath = split[1]
+
+                    // Handle specific file type based on URI
+                    path = getFilePathForDocument(filePath)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+        }
+
+        return path
     }
 
-    fun getFileExtension(uri: Uri): String {
-        val contentResolver = contentResolver
-        val type = contentResolver.getType(uri)
-        return type?.substringAfterLast("/") ?: Constant.unknown_
+    fun getFileName(uri: Uri): String {
+        var result: String? = null
+        if (uri.scheme == "content") {
+            val cursor = contentResolver.query(uri, null, null, null, null)
+            cursor?.use {
+                if (it.moveToFirst()) {
+                    val index = it.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+                    if (index >= 0) result = it.getString(index)
+                }
+            }
+        }
+        if (result == null) {
+            result = uri.path
+            val cut = result?.lastIndexOf('/')
+            if (cut != null && cut != -1) {
+                result = result?.substring(cut + 1)
+            }
+        }
+        return result ?: ""
+    }
+
+    private fun getFilePathForDocument(filePath: String): String? {
+        // Handle converting document path to actual file path if possible.
+        // For example, for a PDF, the file might be stored in external storage,
+        // so ensure you use the correct path conversion logic here if needed.
+        return filePath // This is just a placeholder; implement appropriate logic for your use case.
+    }
+
+
+    @Throws(IOException::class)
+    private fun createImageFile(): File {
+        val timeStamp: String =
+            SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+        val storageDir: File = cacheDir // Or getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(
+            "IMG_${timeStamp}_",  /* prefix */
+            ".jpg",               /* suffix */
+            storageDir            /* directory */
+        )
     }
 
     override fun onDateSelected(date: String) {

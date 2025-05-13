@@ -16,6 +16,7 @@ import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
+import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistoryResponse
@@ -23,6 +24,7 @@ import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchHistoryRe
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffAttendanceReportResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffLocationResponse
 import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
+import com.vs.schoolmessenger.School.SchoolStrength.SchoolStrengthResponse
 import com.vs.schoolmessenger.Utils.SharedPreference
 import retrofit2.Call
 import retrofit2.Callback
@@ -43,6 +45,7 @@ class AppServices {
     var isGetVoiceHistory: MutableLiveData<VoiceDetails?>
     var isGetTextHistory: MutableLiveData<TextDetailsResponse?>
     var isGetHomeWorkReport: MutableLiveData<HomeWorkReportApiResponse?>
+    var isGetDailyCollectionReport: MutableLiveData<DailyCollectionReportResponse?>
     var isSendText: MutableLiveData<TextSendResponse?>
     var isSendHomeWork: MutableLiveData<HomeWorkSendResponse?>
     var isSendVoice: MutableLiveData<TextSendResponse?>
@@ -50,6 +53,9 @@ class AppServices {
     var isAcademicYear: MutableLiveData<AcademicYearResponse?>
     var isUpdateStatusCommunication: MutableLiveData<StatusArchiveResponse?>
     var isHomeWorkDetailsData: MutableLiveData<GetHomeworkData?>
+
+    var isGetSchoolStrengthReport: MutableLiveData<SchoolStrengthResponse?>
+
 
 
     var isPunchAttendance: MutableLiveData<StatusMessageModel?>
@@ -79,6 +85,7 @@ class AppServices {
         isGetVoiceHistory = MutableLiveData()
         isGetTextHistory = MutableLiveData()
         isGetHomeWorkReport = MutableLiveData()
+        isGetDailyCollectionReport = MutableLiveData()
         isSendText = MutableLiveData()
         isSendHomeWork = MutableLiveData()
         isSendVoice = MutableLiveData()
@@ -87,7 +94,7 @@ class AppServices {
         isUpdateStatusCommunication = MutableLiveData()
         isHomeWorkDetailsData = MutableLiveData()
 
-
+        isGetSchoolStrengthReport = MutableLiveData()
         isPunchAttendance = MutableLiveData()
         isAddLocation = MutableLiveData()
         isRemoveLocation = MutableLiveData()
@@ -511,6 +518,76 @@ class AppServices {
 
 
 
+    fun isGetDailyCollectionReport(isToken: String, istype: String, isfromdate: String, istodate: String, activity: Activity)  {
+        RestClient.apiInterfaces.isGetDailyCollectionReport(isToken,istype,isfromdate,istodate)
+            ?.enqueue(object : Callback<DailyCollectionReportResponse?> {
+                override fun onResponse(
+                    call: Call<DailyCollectionReportResponse?>,
+                    response: Response<DailyCollectionReportResponse?>
+                ) {
+                    Log.d(
+                        "isGetCountryList",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code  () == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isGetDailyCollectionReport.postValue(response.body())
+                            } else {
+                                isGetDailyCollectionReport.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<DailyCollectionReportResponse?>, t: Throwable) {
+                    isGetDailyCollectionReport.postValue(null)
+                    Log.d("t.printStackTrace()",t.printStackTrace().toString())
+                }
+            })
+    }
+
+    val isGetDailyCollectionReportLiveData: LiveData<DailyCollectionReportResponse?>
+        get() = isGetDailyCollectionReport
+
+
+
+
+    fun isGetSchoolStrengthReport(isToken: String, isAcademicYearId: Int, activity: Activity)  {
+        RestClient.apiInterfaces.isGetSchoolStrengthReport(isToken,isAcademicYearId)
+            ?.enqueue(object : Callback<SchoolStrengthResponse?> {
+                override fun onResponse(
+                    call: Call<SchoolStrengthResponse?>,
+                    response: Response<SchoolStrengthResponse?>
+                ) {
+                    Log.d(
+                        "isGetCountryList",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code  () == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isGetSchoolStrengthReport.postValue(response.body())
+                            } else {
+                                isGetSchoolStrengthReport.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<SchoolStrengthResponse?>, t: Throwable) {
+                    isGetSchoolStrengthReport.postValue(null)
+                    Log.d("t.printStackTrace()",t.printStackTrace().toString())
+                }
+            })
+    }
+
+    val isGetSchoolStrengthReportLiveData: LiveData<SchoolStrengthResponse?>
+        get() = isGetSchoolStrengthReport
+
+
     fun isSendText(isToken: String, jsonObject: JsonObject, activity: Activity) {
         RestClient.apiInterfaces.isSendText(isToken, jsonObject)
             ?.enqueue(object : Callback<TextSendResponse?> {
@@ -540,6 +617,7 @@ class AppServices {
 
 
     fun isSendHomeWork(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        RestClient.changeApiBaseUrl(SharedPreference.getBaseUrl(activity).toString())
         RestClient.apiInterfaces.isSendHomeWork(isToken, jsonObject)
             ?.enqueue(object : Callback<HomeWorkSendResponse?> {
                 override fun onResponse(
