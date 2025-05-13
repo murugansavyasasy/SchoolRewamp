@@ -78,9 +78,9 @@ class SchoolNoticeBoardAdapter(
             )
 
             // Set up the adapter
-            val viewPagerAdapter   = ImageSliderAdapter(context,imageUrls)
-            viewpager.adapter = viewPagerAdapter
-            indicator.setViewPager(viewpager)
+//            val viewPagerAdapter   = ImageSliderAdapter(context,imageUrls)
+//            viewpager.adapter = viewPagerAdapter
+//            indicator.setViewPager(viewpager)
 
             rytHeader.setOnClickListener {
                 listener.onItemClick(data)
