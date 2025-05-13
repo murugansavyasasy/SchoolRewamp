@@ -294,5 +294,4 @@ interface ApiInterfaces {
         @Query(APIKeyNames.academic_year_id) isAcademicYearId: Int
     ): Call<SchoolStrengthResponse?>
 
-
 }

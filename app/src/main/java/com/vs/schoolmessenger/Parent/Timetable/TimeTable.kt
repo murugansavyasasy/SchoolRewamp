@@ -6,7 +6,6 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Parent.LSRW.LSRWAdapter
 import com.vs.schoolmessenger.Parent.LSRW.LSRWClickListener
 import com.vs.schoolmessenger.Parent.LSRW.LSRWData
-import com.vs.schoolmessenger.School.DailyCollection.DcfAdapter2
 import com.vs.schoolmessenger.databinding.LsrwBinding
 import com.vs.schoolmessenger.databinding.TimeTableBinding
 
