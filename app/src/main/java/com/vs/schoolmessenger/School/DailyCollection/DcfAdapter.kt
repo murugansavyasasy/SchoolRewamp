@@ -11,12 +11,12 @@ import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.R
 
 
-class DcfAdapter1 (
+class DcfAdapter (
+    private var itemList: List<DailyCollectionItem>?,
+    private val listener: DcfClickListener,
+    private val context: Context,
+    private val isLoading: Boolean
 
-    private var itemList: List<DcfData1>?,
-    private var listener: Dcf1ClickListener,
-    private var context: Context,
-    private var isLoading: Boolean
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder> () {
 
     private val TYPE_SHIMMER = 0
@@ -40,10 +40,7 @@ class DcfAdapter1 (
 
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is DataViewHolder) {
-            // Bind actual data when loading is complete
-            holder.bind(itemList!![position], position, listener, this) // Pass adapter reference
-        }
+
     }
 
 
@@ -60,13 +57,11 @@ class DcfAdapter1 (
         private val total_value: TextView = itemView.findViewById(R.id.total_value)
 
         fun bind(
-            data: DcfData1,
             position: Int,
-            listener: Dcf1ClickListener,
-            adapter: DcfAdapter1
+            listener: DcfClickListener,
+            adapter: DcfAdapter
         ) {
-            total_label.text = data.label
-            total_value.text = data.labelvalues
+
 
         }
 

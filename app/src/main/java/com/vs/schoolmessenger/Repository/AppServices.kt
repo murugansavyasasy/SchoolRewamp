@@ -57,7 +57,6 @@ class AppServices {
     var isGetSchoolStrengthReport: MutableLiveData<SchoolStrengthResponse?>
 
 
-
     var isPunchAttendance: MutableLiveData<StatusMessageModel?>
     var isAddLocation: MutableLiveData<StatusMessageModel?>
     var isRemoveLocation: MutableLiveData<StatusMessageModel?>
@@ -209,10 +208,7 @@ class AppServices {
         get() = isGetStaffList
 
     fun isGetSubjectList(
-        isToken: String,
-        isAcademicYearId: Int,
-        isSection: String,
-        activity: Activity
+        isToken: String, isAcademicYearId: Int, isSection: String, activity: Activity
     ) {
         RestClient.apiInterfaces.getSubjectList(isToken, isAcademicYearId, isSection)
             ?.enqueue(object : Callback<NameAndIdsResponse?> {
@@ -278,10 +274,7 @@ class AppServices {
 
 
     fun isGetStudentList(
-        isToken: String,
-        isSection: String,
-        isAcademicYearId: Int,
-        activity: Activity
+        isToken: String, isSection: String, isAcademicYearId: Int, activity: Activity
     ) {
         RestClient.apiInterfaces.getStudentList(isToken, isSection, isAcademicYearId)
             ?.enqueue(object : Callback<NameAndIdsResponse?> {
@@ -318,12 +311,10 @@ class AppServices {
         RestClient.apiInterfaces.isGetCommmunicationlist(isToken)
             ?.enqueue(object : Callback<VoiceDataResponse?> {
                 override fun onResponse(
-                    call: Call<VoiceDataResponse?>,
-                    response: Response<VoiceDataResponse?>
+                    call: Call<VoiceDataResponse?>, response: Response<VoiceDataResponse?>
                 ) {
                     Log.d(
-                        "isGetCountryList",
-                        response.code().toString() + " - " + response.toString()
+                        "isGetCountryList", response.code().toString() + " - " + response.toString()
                     )
                     if (response.code() == 200) {
                         if (response.body() != null) {
@@ -351,12 +342,10 @@ class AppServices {
         RestClient.apiInterfaces.isGetCommmunicationlistload(isToken)
             ?.enqueue(object : Callback<VoiceDataResponse?> {
                 override fun onResponse(
-                    call: Call<VoiceDataResponse?>,
-                    response: Response<VoiceDataResponse?>
+                    call: Call<VoiceDataResponse?>, response: Response<VoiceDataResponse?>
                 ) {
                     Log.d(
-                        "isGetCountryList",
-                        response.code().toString() + " - " + response.toString()
+                        "isGetCountryList", response.code().toString() + " - " + response.toString()
                     )
                     if (response.code() == 200) {
                         if (response.body() != null) {
@@ -385,12 +374,10 @@ class AppServices {
         RestClient.apiInterfaces.isGroupList(isToken, isAcademicYearId)
             ?.enqueue(object : Callback<NameAndIdsResponse?> {
                 override fun onResponse(
-                    call: Call<NameAndIdsResponse?>,
-                    response: Response<NameAndIdsResponse?>
+                    call: Call<NameAndIdsResponse?>, response: Response<NameAndIdsResponse?>
                 ) {
                     Log.d(
-                        "isGetCountryList",
-                        response.code().toString() + " - " + response.toString()
+                        "isGetCountryList", response.code().toString() + " - " + response.toString()
                     )
                     if (response.code() == 200) {
                         if (response.body() != null) {
@@ -419,12 +406,10 @@ class AppServices {
         RestClient.apiInterfaces.isGetVoiceHistory(isToken, isEmergency)
             ?.enqueue(object : Callback<VoiceDetails?> {
                 override fun onResponse(
-                    call: Call<VoiceDetails?>,
-                    response: Response<VoiceDetails?>
+                    call: Call<VoiceDetails?>, response: Response<VoiceDetails?>
                 ) {
                     Log.d(
-                        "isGetCountryList",
-                        response.code().toString() + " - " + response.toString()
+                        "isGetCountryList", response.code().toString() + " - " + response.toString()
                     )
                     if (response.code() == 200) {
                         if (response.body() != null) {
@@ -452,12 +437,10 @@ class AppServices {
         RestClient.apiInterfaces.isGetTextHistory(isToken)
             ?.enqueue(object : Callback<TextDetailsResponse?> {
                 override fun onResponse(
-                    call: Call<TextDetailsResponse?>,
-                    response: Response<TextDetailsResponse?>
+                    call: Call<TextDetailsResponse?>, response: Response<TextDetailsResponse?>
                 ) {
                     Log.d(
-                        "isGetCountryList",
-                        response.code().toString() + " - " + response.toString()
+                        "isGetCountryList", response.code().toString() + " - " + response.toString()
                     )
                     if (response.code() == 200) {
                         if (response.body() != null) {
@@ -482,16 +465,17 @@ class AppServices {
         get() = isGetTextHistory
 
 
-    fun isGetHomeWorkReport(isToken: String, isSection: Int, isAcademicYearId: Int, isdate: String, activity: Activity)  {
-        RestClient.apiInterfaces.isGetHomeWorkReport(isToken,isSection,isAcademicYearId,isdate)
+    fun isGetHomeWorkReport(
+        isToken: String, isSection: Int, isAcademicYearId: Int, isdate: String, activity: Activity
+    ) {
+        RestClient.apiInterfaces.isGetHomeWorkReport(isToken, isSection, isAcademicYearId, isdate)
             ?.enqueue(object : Callback<HomeWorkReportApiResponse?> {
                 override fun onResponse(
                     call: Call<HomeWorkReportApiResponse?>,
                     response: Response<HomeWorkReportApiResponse?>
                 ) {
                     Log.d(
-                        "isGetCountryList",
-                        response.code().toString() + " - " + response.toString()
+                        "isGetCountryList", response.code().toString() + " - " + response.toString()
                     )
                     if (response.code() == 200) {
                         if (response.body() != null) {
@@ -507,7 +491,7 @@ class AppServices {
 
                 override fun onFailure(call: Call<HomeWorkReportApiResponse?>, t: Throwable) {
                     isGetHomeWorkReport.postValue(null)
-                    Log.d("t.printStackTrace()",t.printStackTrace().toString())
+                    Log.d("t.printStackTrace()", t.printStackTrace().toString())
                 }
             })
     }
@@ -516,20 +500,19 @@ class AppServices {
         get() = isGetHomeWorkReport
 
 
-
-
-    fun isGetDailyCollectionReport(isToken: String, istype: String, isfromdate: String, istodate: String, activity: Activity)  {
-        RestClient.apiInterfaces.isGetDailyCollectionReport(isToken,istype,isfromdate,istodate)
+    fun isGetDailyCollectionReport(
+        isToken: String, istype: String, isfromdate: String, istodate: String, activity: Activity
+    ) {
+        RestClient.apiInterfaces.isGetDailyCollectionReport(isToken, istype, isfromdate, istodate)
             ?.enqueue(object : Callback<DailyCollectionReportResponse?> {
                 override fun onResponse(
                     call: Call<DailyCollectionReportResponse?>,
                     response: Response<DailyCollectionReportResponse?>
                 ) {
                     Log.d(
-                        "isGetCountryList",
-                        response.code().toString() + " - " + response.toString()
+                        "isGetCountryList", response.code().toString() + " - " + response.toString()
                     )
-                    if (response.code  () == 200) {
+                    if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
                             if (status) {
@@ -543,7 +526,7 @@ class AppServices {
 
                 override fun onFailure(call: Call<DailyCollectionReportResponse?>, t: Throwable) {
                     isGetDailyCollectionReport.postValue(null)
-                    Log.d("t.printStackTrace()",t.printStackTrace().toString())
+                    Log.d("t.printStackTrace()", t.printStackTrace().toString())
                 }
             })
     }
@@ -552,20 +535,16 @@ class AppServices {
         get() = isGetDailyCollectionReport
 
 
-
-
-    fun isGetSchoolStrengthReport(isToken: String, isAcademicYearId: Int, activity: Activity)  {
-        RestClient.apiInterfaces.isGetSchoolStrengthReport(isToken,isAcademicYearId)
+    fun isGetSchoolStrengthReport(isToken: String, isAcademicYearId: Int, activity: Activity) {
+        RestClient.apiInterfaces.isGetSchoolStrengthReport(isToken, isAcademicYearId)
             ?.enqueue(object : Callback<SchoolStrengthResponse?> {
                 override fun onResponse(
-                    call: Call<SchoolStrengthResponse?>,
-                    response: Response<SchoolStrengthResponse?>
+                    call: Call<SchoolStrengthResponse?>, response: Response<SchoolStrengthResponse?>
                 ) {
                     Log.d(
-                        "isGetCountryList",
-                        response.code().toString() + " - " + response.toString()
+                        "isGetCountryList", response.code().toString() + " - " + response.toString()
                     )
-                    if (response.code  () == 200) {
+                    if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
                             if (status) {
@@ -579,7 +558,7 @@ class AppServices {
 
                 override fun onFailure(call: Call<SchoolStrengthResponse?>, t: Throwable) {
                     isGetSchoolStrengthReport.postValue(null)
-                    Log.d("t.printStackTrace()",t.printStackTrace().toString())
+                    Log.d("t.printStackTrace()", t.printStackTrace().toString())
                 }
             })
     }
@@ -592,8 +571,7 @@ class AppServices {
         RestClient.apiInterfaces.isSendText(isToken, jsonObject)
             ?.enqueue(object : Callback<TextSendResponse?> {
                 override fun onResponse(
-                    call: Call<TextSendResponse?>,
-                    response: Response<TextSendResponse?>
+                    call: Call<TextSendResponse?>, response: Response<TextSendResponse?>
                 ) {
                     if (response.code() == 200 && response.body() != null) {
                         isSendText.postValue(response.body())
@@ -621,8 +599,7 @@ class AppServices {
         RestClient.apiInterfaces.isSendHomeWork(isToken, jsonObject)
             ?.enqueue(object : Callback<HomeWorkSendResponse?> {
                 override fun onResponse(
-                    call: Call<HomeWorkSendResponse?>,
-                    response: Response<HomeWorkSendResponse?>
+                    call: Call<HomeWorkSendResponse?>, response: Response<HomeWorkSendResponse?>
                 ) {
                     if (response.code() == 200 && response.body() != null) {
                         isSendHomeWork.postValue(response.body())
@@ -645,16 +622,13 @@ class AppServices {
         get() = isSendHomeWork
 
 
-
-
     fun isUpdateStatusArchive(isToken: String, jsonObject: JsonObject, activity: Activity) {
 //        val request = StatusArchiveModelRequest(isToken, jsonObject)
 
         RestClient.apiInterfaces.isUpdateStatusArchive(isToken, jsonObject)
             ?.enqueue(object : Callback<StatusArchiveResponse> {
                 override fun onResponse(
-                    call: Call<StatusArchiveResponse>,
-                    response: Response<StatusArchiveResponse>
+                    call: Call<StatusArchiveResponse>, response: Response<StatusArchiveResponse>
                 ) {
                     Log.d("isUpdateStatusArchive", "${response.code()} - ${response.body()}")
 
@@ -683,8 +657,7 @@ class AppServices {
         RestClient.apiInterfaces.isUpdateStatusCommunication(isToken, jsonObject)
             ?.enqueue(object : Callback<StatusArchiveResponse> {
                 override fun onResponse(
-                    call: Call<StatusArchiveResponse>,
-                    response: Response<StatusArchiveResponse>
+                    call: Call<StatusArchiveResponse>, response: Response<StatusArchiveResponse>
                 ) {
                     Log.d("isUpdateStatusArchive", "${response.code()} - ${response.body()}")
 
@@ -713,12 +686,10 @@ class AppServices {
         RestClient.apiInterfaces.isSendVoice(isToken, jsonObject)
             ?.enqueue(object : Callback<TextSendResponse?> {
                 override fun onResponse(
-                    call: Call<TextSendResponse?>,
-                    response: Response<TextSendResponse?>
+                    call: Call<TextSendResponse?>, response: Response<TextSendResponse?>
                 ) {
                     Log.d(
-                        "isGetCountryList",
-                        response.code().toString() + " - " + response.toString()
+                        "isGetCountryList", response.code().toString() + " - " + response.toString()
                     )
                     isSendVoice.postValue(response.body())
 //                    if (response.code() == 200) {
@@ -750,12 +721,10 @@ class AppServices {
         RestClient.apiInterfaces.isGetAcademicYear(isToken)
             ?.enqueue(object : Callback<AcademicYearResponse?> {
                 override fun onResponse(
-                    call: Call<AcademicYearResponse?>,
-                    response: Response<AcademicYearResponse?>
+                    call: Call<AcademicYearResponse?>, response: Response<AcademicYearResponse?>
                 ) {
                     Log.d(
-                        "isGetCountryList",
-                        response.code().toString() + " - " + response.toString()
+                        "isGetCountryList", response.code().toString() + " - " + response.toString()
                     )
                     if (response.code() == 200) {
                         if (response.body() != null) {
@@ -782,15 +751,14 @@ class AppServices {
 
     //    //get HomeworkDetails
     fun isHomeWorkDetails(isToken: String, activity: Activity) {
-        Log.d("GetHomeworkData",isToken.toString())
+        Log.d("GetHomeworkData", isToken.toString())
 
         RestClient.apiInterfaces.isHomeWorkDetails(isToken)
             ?.enqueue(object : Callback<GetHomeworkData?> {
                 override fun onResponse(
-                    call: Call<GetHomeworkData?>,
-                    response: Response<GetHomeworkData?>
+                    call: Call<GetHomeworkData?>, response: Response<GetHomeworkData?>
                 ) {
-                    Log.d("GetHomeworkData",response.body().toString())
+                    Log.d("GetHomeworkData", response.body().toString())
 
                     if (response.code() == 200) {
                         if (response.body() != null) {
@@ -804,7 +772,7 @@ class AppServices {
                 override fun onFailure(call: Call<GetHomeworkData?>, t: Throwable) {
                     t.printStackTrace()
                     isHomeWorkDetailsData.postValue(null)
-                    Log.d("GetHomeworkData","Response,No Data Found")
+                    Log.d("GetHomeworkData", "Response,No Data Found")
                 }
             })
     }
@@ -816,12 +784,10 @@ class AppServices {
         RestClient.apiInterfaces.punchGiometricAttendance(isToken, jsonObject)
             ?.enqueue(object : Callback<StatusMessageModel?> {
                 override fun onResponse(
-                    call: Call<StatusMessageModel?>,
-                    response: Response<StatusMessageModel?>
+                    call: Call<StatusMessageModel?>, response: Response<StatusMessageModel?>
                 ) {
                     Log.d(
-                        "isGetCountryList",
-                        response.code().toString() + " - " + response.toString()
+                        "isGetCountryList", response.code().toString() + " - " + response.toString()
                     )
                     if (response.code() == 200) {
                         if (response.body() != null) {
@@ -845,12 +811,10 @@ class AppServices {
         RestClient.apiInterfaces.addGiometricLocation(isToken, jsonObject)
             ?.enqueue(object : Callback<StatusMessageModel?> {
                 override fun onResponse(
-                    call: Call<StatusMessageModel?>,
-                    response: Response<StatusMessageModel?>
+                    call: Call<StatusMessageModel?>, response: Response<StatusMessageModel?>
                 ) {
                     Log.d(
-                        "addLocation_res",
-                        response.code().toString() + " - " + response.toString()
+                        "addLocation_res", response.code().toString() + " - " + response.toString()
                     )
                     if (response.code() == 200) {
                         if (response.body() != null) {
@@ -879,8 +843,7 @@ class AppServices {
         RestClient.apiInterfaces.removeLocation(isToken, jsonObject)
             ?.enqueue(object : Callback<StatusMessageModel?> {
                 override fun onResponse(
-                    call: Call<StatusMessageModel?>,
-                    response: Response<StatusMessageModel?>
+                    call: Call<StatusMessageModel?>, response: Response<StatusMessageModel?>
                 ) {
                     Log.d(
                         "remove_location_res",
@@ -913,8 +876,7 @@ class AppServices {
         RestClient.apiInterfaces.updateLocation(isToken, jsonObject)
             ?.enqueue(object : Callback<StatusMessageModel?> {
                 override fun onResponse(
-                    call: Call<StatusMessageModel?>,
-                    response: Response<StatusMessageModel?>
+                    call: Call<StatusMessageModel?>, response: Response<StatusMessageModel?>
                 ) {
                     Log.d(
                         "update_location_res",
@@ -947,8 +909,7 @@ class AppServices {
         RestClient.apiInterfaces.getStaffLocations(isToken)
             ?.enqueue(object : Callback<StaffLocationResponse?> {
                 override fun onResponse(
-                    call: Call<StaffLocationResponse?>,
-                    response: Response<StaffLocationResponse?>
+                    call: Call<StaffLocationResponse?>, response: Response<StaffLocationResponse?>
                 ) {
                     Log.d(
                         "staff_locations_res",
@@ -967,8 +928,7 @@ class AppServices {
                 }
 
                 override fun onFailure(
-                    call: Call<StaffLocationResponse?>,
-                    t: Throwable
+                    call: Call<StaffLocationResponse?>, t: Throwable
                 ) {
                     isStaffLocations.postValue(null)
                     t.printStackTrace()
@@ -1003,8 +963,7 @@ class AppServices {
                 }
 
                 override fun onFailure(
-                    call: Call<LocationHistoryResponse?>,
-                    t: Throwable
+                    call: Call<LocationHistoryResponse?>, t: Throwable
                 ) {
                     isLocationHistory.postValue(null)
                     t.printStackTrace()
@@ -1023,8 +982,7 @@ class AppServices {
         RestClient.apiInterfaces.getPunchHistory(isToken, isDate, isDate)
             ?.enqueue(object : Callback<PunchHistoryResponse?> {
                 override fun onResponse(
-                    call: Call<PunchHistoryResponse?>,
-                    response: Response<PunchHistoryResponse?>
+                    call: Call<PunchHistoryResponse?>, response: Response<PunchHistoryResponse?>
                 ) {
                     Log.d(
                         "punch_history_res",
@@ -1043,8 +1001,7 @@ class AppServices {
                 }
 
                 override fun onFailure(
-                    call: Call<PunchHistoryResponse?>,
-                    t: Throwable
+                    call: Call<PunchHistoryResponse?>, t: Throwable
                 ) {
                     isPunchHistory.postValue(null)
                     t.printStackTrace()
@@ -1058,9 +1015,7 @@ class AppServices {
 
 
     fun getGiometricStaffAttendancereport(
-        isToken: String,
-        attendance_dt: String,
-        activity: Activity
+        isToken: String, attendance_dt: String, activity: Activity
     ) {
 
         RestClient.apiInterfaces.getStaffAttendanceReport(isToken, attendance_dt)
@@ -1086,8 +1041,7 @@ class AppServices {
                 }
 
                 override fun onFailure(
-                    call: Call<StaffAttendanceReportResponse?>,
-                    t: Throwable
+                    call: Call<StaffAttendanceReportResponse?>, t: Throwable
                 ) {
                     isStaffAttendanceReport.postValue(null)
                     t.printStackTrace()
@@ -1101,9 +1055,7 @@ class AppServices {
 
 
     fun getGiometricStaffWiseAttendancereport(
-        isToken: String,
-        isCurrentDate: String,
-        activity: Activity
+        isToken: String, isCurrentDate: String, activity: Activity
     ) {
         RestClient.apiInterfaces.getStaffWiseAttendanceReport(isToken, isCurrentDate)
             ?.enqueue(object : Callback<StaffAttendanceReportResponse?> {
@@ -1128,8 +1080,7 @@ class AppServices {
                 }
 
                 override fun onFailure(
-                    call: Call<StaffAttendanceReportResponse?>,
-                    t: Throwable
+                    call: Call<StaffAttendanceReportResponse?>, t: Throwable
                 ) {
                     isStaffWiseAttendanceReport.postValue(null)
                     t.printStackTrace()
@@ -1141,17 +1092,11 @@ class AppServices {
         get() = isStaffWiseAttendanceReport
 
     fun getGiometricStaffWiseAttendancereportStaffList(
-        isToken: String,
-        isSelectedDate: String,
-        isStaffId: Int,
-        activity: Activity
+        isToken: String, isSelectedDate: String, isStaffId: Int, activity: Activity
     ) {
         RestClient.apiInterfaces.getStaffWiseAttendanceReportStaffList(
-            isToken,
-            isSelectedDate,
-            isStaffId
-        )
-            ?.enqueue(object : Callback<StaffAttendanceReportResponse?> {
+            isToken, isSelectedDate, isStaffId
+        )?.enqueue(object : Callback<StaffAttendanceReportResponse?> {
                 override fun onResponse(
                     call: Call<StaffAttendanceReportResponse?>,
                     response: Response<StaffAttendanceReportResponse?>
@@ -1173,8 +1118,7 @@ class AppServices {
                 }
 
                 override fun onFailure(
-                    call: Call<StaffAttendanceReportResponse?>,
-                    t: Throwable
+                    call: Call<StaffAttendanceReportResponse?>, t: Throwable
                 ) {
                     isStaffWiseAttendanceReportList.postValue(null)
                     t.printStackTrace()

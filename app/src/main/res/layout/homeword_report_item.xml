@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginTop="@dimen/five"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/five">
 
 
     <ImageView
@@ -24,22 +24,20 @@
         android:layout_width="@dimen/thirty"
         android:layout_height="@dimen/thirty"
         android:layout_centerHorizontal="true"
-        android:elevation="@dimen/ten"
         android:layout_marginStart="@dimen/twenty"
+        android:elevation="@dimen/ten"
         android:src="@drawable/noticeboard_pin"
-        android:visibility="gone">
-    </ImageView>
+        android:visibility="gone"></ImageView>
 
     <ImageView
         android:id="@+id/imgBgPin"
         android:layout_width="@dimen/thirteen"
         android:layout_height="@dimen/thirteen"
-        android:layout_marginTop="@dimen/eighteen"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/eighteen"
         android:elevation="@dimen/ten"
         android:src="@drawable/circle_dark_blue"
-        android:visibility="gone">
-    </ImageView>
+        android:visibility="gone"></ImageView>
 
     <RelativeLayout
         android:id="@+id/rlaImageReport"
@@ -56,10 +54,10 @@
             android:layout_centerHorizontal="true"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/fifteen"
+            android:fontFamily="@font/poppins_bold"
             android:text="Annual Day celebrations"
             android:textColor="@color/black"
             android:textSize="@dimen/eighteen_sp"
-            android:fontFamily="@font/poppins_bold"
             android:textStyle="bold" />
 
 
@@ -67,50 +65,76 @@
             android:id="@+id/lblDateImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/ten"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="@dimen/ten"
             android:layout_below="@+id/lblContentImage"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/ten"
+            android:fontFamily="@font/poppins_regular"
             android:text="15 Nov 2024"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"
-            android:fontFamily="@font/poppins_regular"
             android:textStyle="normal" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcyImgPDF"
+        <LinearLayout
+            android:id="@+id/lytRecyclerwview"
             android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/ten"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/LblHWSubjectName"
-            android:layout_height="@dimen/one_fifty">
+            android:orientation="vertical">
 
-        </androidx.recyclerview.widget.RecyclerView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcyImgPDF"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal" />
+
+            <LinearLayout
+                android:id="@+id/dotIndicatorLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal" />
+
+
+        </LinearLayout>
+
+
+        <!--        <androidx.recyclerview.widget.RecyclerView-->
+        <!--            android:id="@+id/rcyImgPDF"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_marginTop="@dimen/ten"-->
+        <!--            android:layout_below="@+id/LblHWSubjectName"-->
+        <!--            android:layout_height="@dimen/one_fifty">-->
+
+        <!--        </androidx.recyclerview.widget.RecyclerView>-->
 
         <me.relex.circleindicator.CircleIndicator
-            android:layout_below="@+id/rcyImgPDF"
-
-            android:layout_centerInParent="true"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:id="@+id/indicator"
+            style="@style/IndicatorStyle"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/thirty"
-            style="@style/IndicatorStyle"
-            android:elevation="@dimen/four"/>
+            android:layout_below="@+id/lytRecyclerwview"
+            android:layout_centerInParent="true"
+            android:elevation="@dimen/four"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/lblTitleImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/rcyImgPDF"
+            android:layout_below="@+id/lytRecyclerwview"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/fifteen"
+            android:fontFamily="@font/poppins_bold"
             android:text="Annual Day celebrations"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"
-            android:fontFamily="@font/poppins_bold"
             android:textStyle="bold" />
-
 
 
         <TextView
@@ -147,8 +171,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/ten"
-        android:padding="@dimen/ten"
         android:background="@drawable/rect_shadow_light_gray"
+        android:padding="@dimen/ten"
         android:visibility="gone">
 
 
@@ -156,10 +180,10 @@
             android:id="@+id/lblDateVoice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/fifteen"
-            android:layout_marginEnd="@dimen/ten"
             android:layout_below="@+id/lblVoiceContent"
             android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/fifteen"
+            android:layout_marginEnd="@dimen/ten"
             android:text="01 Apr 2024"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp">
@@ -274,8 +298,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/ten"
-        android:padding="@dimen/ten"
         android:background="@drawable/rect_shadow_light_gray"
+        android:padding="@dimen/ten"
         android:visibility="gone">
 
         <TextView
@@ -298,11 +322,11 @@
             android:id="@+id/lblDateText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/lblContentText"
+            android:layout_alignParentEnd="true"
             android:layout_marginTop="@dimen/fifteen"
             android:layout_marginEnd="@dimen/ten"
-            android:layout_alignParentEnd="true"
             android:text="01 Apr 2024"
-            android:layout_below="@+id/lblContentText"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp">
 
@@ -344,8 +368,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/ten"
-        android:padding="@dimen/ten"
         android:background="@drawable/rect_shadow_light_gray"
+        android:padding="@dimen/ten"
         android:visibility="gone">
 
         <TextView
@@ -354,8 +378,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/lblVideoContent"
             android:layout_alignParentEnd="true"
-            android:padding="@dimen/five"
             android:layout_marginEnd="@dimen/ten"
+            android:padding="@dimen/five"
             android:text="Sun 22 Mar,2020"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp">
@@ -447,8 +471,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/ten"
-        android:padding="@dimen/ten"
         android:background="@drawable/rect_shadow_light_gray"
+        android:padding="@dimen/ten"
         android:visibility="gone">
 
 
@@ -456,17 +480,16 @@
             android:id="@+id/lblDatePdf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/ten"
             android:layout_below="@+id/lblPdfContent"
             android:layout_alignParentEnd="true"
-            android:padding="@dimen/five"
+            android:layout_marginTop="@dimen/ten"
             android:layout_marginEnd="@dimen/ten"
+            android:padding="@dimen/five"
             android:text="Sun 22 Mar,2020"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp">
 
         </TextView>
-
 
 
         <TextView
@@ -475,9 +498,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/ten"
+            android:gravity="center"
             android:text="Nothing"
             android:textColor="@color/black"
-            android:gravity="center"
             android:textSize="@dimen/thirteen_sp"
             android:textStyle="bold" />
 

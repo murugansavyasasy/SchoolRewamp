@@ -1,25 +1,28 @@
 package com.vs.schoolmessenger.School.DailyCollection
 
+import android.graphics.Color
+import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesClickListener
-import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesDateData
-import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesDetailClickListener
-import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesDetailData
-import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesReportAdapter
-import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesReportDetailAdapter
 import com.vs.schoolmessenger.databinding.DailyCollectionBinding
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
+import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.HomeWorkAdapter
+import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetDateWiseHomeworkData
+import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.SharedPreference
 
-class DailyCollection : BaseActivity<DailyCollectionBinding>(),
-    View.OnClickListener {
 
-    private lateinit var adapter: DcfAdapter1
-    private lateinit var adapter2: DcfAdapter2
-    private val dcflist1 = mutableListOf<DcfData1>()
-    private val dcflist2 = mutableListOf<DcfData2>()
+class DailyCollection : BaseActivity<DailyCollectionBinding>(), View.OnClickListener {
 
+    private var isAccessToken: String? = null
+    private var appViewModel: App? = null
+
+
+    var mAdapter: DcfAdapter? = null
     override fun getViewBinding(): DailyCollectionBinding {
         return DailyCollectionBinding.inflate(layoutInflater)
     }
@@ -27,82 +30,66 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
     override fun setupViews() {
         super.setupViews()
         setupToolbar()
-        setupRecyclerView()
-        setupRecyclerView1()
-        loadHardcodedData()
-        loadHardcodedData1()
+        binding.className.setOnClickListener(this)
+        binding.modeName.setOnClickListener (this)
+        binding.categoryName.setOnClickListener(this)
+        appViewModel = ViewModelProvider(this).get(App::class.java)
+        appViewModel?.init()
+        val isChildDetails = SharedPreference.getChildDetails(this)
+        isAccessToken = isChildDetails?.access_token
+//        isGetDailyCollection()
+//        appViewModel?.isGetDailyCollectionReport?.observe(this) { response ->
+//            Log.d("response++",response.toString())
+//            if (response!!.status) {
+//                isloadhomeworkData(response.data)
+//                Log.d("GetHomeWorkDetails", response.data.toString())
+//                Log.d("Access Token",isAccessToken.toString())
+//            }
+//        }
+
 
     }
 
+//    private fun isloadhomeworkData(newData: List<DailyCollectionItem>?) {
+//
+//        Log.d("GetHomeworkDataWise", newData.toString())
+//
+//        mAdapter =
+//            DcfAdapter(newData, this, this, Constant.isShimmerViewDisable)
+//        binding.totalsummary1.adapter = mAdapter
+//
+//    }
 
-    private fun setupRecyclerView() {
-        adapter = DcfAdapter1(dcflist1, object : Dcf1ClickListener {
-            override fun onItemClick(data: DcfData1, holder: DcfAdapter1.DataViewHolder) {
-
-            }
-
-        }, this, false)
-
-        binding.totalsummary1.layoutManager =
-            LinearLayoutManager(this)
-
-        binding.totalsummary1.adapter = adapter
-    }
-
-
-    private fun setupRecyclerView1() {
-        adapter2 = DcfAdapter2(dcflist2, object :
-            Dcf2ClickListener {
-            override fun onItemClick(
-                data: DcfData2,
-                holder: DcfAdapter2.DataViewHolder
-            ) {
-
-            }
-        }, this, false)
-        binding.totalsummary2.layoutManager =
-            LinearLayoutManager(this)
-        binding.totalsummary2.adapter = adapter2
-
-    }
-
-
-    private fun loadHardcodedData() {
-        dcflist1.apply {
-            add(DcfData1("Tution", "300"))
-            add(DcfData1("Library", "700"))
-            add(DcfData1("Labroratory", "400"))
-            add(DcfData1("Sports", "1000"))
-        }
-        adapter.notifyDataSetChanged()
-    }
-
-    private fun loadHardcodedData1() {
-        dcflist2.apply {
-            add(DcfData2("Tution", "300"))
-            add(DcfData2("Library", "700"))
-            add(DcfData2("Labroratory", "400"))
-            add(DcfData2("Sports", "1000"))
-        }
-        adapter2.notifyDataSetChanged()
-    }
-
+//    fun isGetDailyCollection() {
+//        mAdapter = DcfAdapter(null, this, this, Constant.isShimmerViewShow)
+//        binding.totalsummary1.layoutManager = LinearLayoutManager(this)
+//        binding.totalsummary1.isNestedScrollingEnabled = false
+//        binding.totalsummary1.adapter = mAdapter
+//        appViewModel!!.isGetDailyCollectionReport(
+//            isAccessToken!!, this
+//        )
+//    }
 
     override fun onClick(p0: View?) {
         when (p0?.id) {
             R.id.class_name -> {
                 binding.className.setBackgroundResource(R.drawable.custom_category_background)
-                binding.modeName.background = null
-                binding.categoryName.background = null
+                binding.className.setTextColor(Color.WHITE)
+                binding.modeName.setBackgroundResource(R.drawable.custom_rounded_background2)
+                binding.categoryName.setBackgroundResource(R.drawable.custom_rounded_background2)
+
             }
             R.id.mode_name -> {
                 binding.modeName.setBackgroundResource(R.drawable.custom_category_background)
-                binding.className.background = null
-                binding.categoryName.background = null
+                binding.modeName.setTextColor(Color.WHITE)
+                binding.className.setBackgroundResource(R.drawable.custom_rounded_background2)
+                binding.categoryName.setBackgroundResource(R.drawable.custom_rounded_background2)
+                binding.className.setHintTextColor(ContextCompat.getColor(this, R.color.grey))
             }
 
             R.id.category_name -> {
                 binding.categoryName.setBackgroundResource(R.drawable.custom_category_background)
+                binding.categoryName.setTextColor(Color.WHITE)
                 binding.modeName.background = null
                 binding.className.background = null
             }

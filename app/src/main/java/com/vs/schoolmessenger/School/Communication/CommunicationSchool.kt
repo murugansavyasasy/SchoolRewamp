@@ -318,14 +318,11 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     }
 
     private fun showPermissionSettingsDialog() {
-        AlertDialog.Builder(this)
-            .setTitle(getString(R.string.PermissionsRequired))
+        AlertDialog.Builder(this).setTitle(getString(R.string.PermissionsRequired))
             .setMessage(getString(R.string.permissions_permanently_denied_proceed))
             .setPositiveButton(getString(R.string.permission_ok)) { _, _ ->
                 openAppSettings()
-            }
-            .setCancelable(false)
-            .show()
+            }.setCancelable(false).show()
     }
 
 
@@ -445,8 +442,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                         this@CommunicationSchool,
                         getString(R.string.Recording_failed),
                         Toast.LENGTH_SHORT
-                    )
-                        .show()
+                    ).show()
                 }
 
             } catch (e: Exception) {
@@ -787,14 +783,12 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                         isGoToRecipient()
                     } else {
                         Constant.showValidationAlertPopup(
-                            getString(R.string.Enter_title_description),
-                            this
+                            getString(R.string.Enter_title_description), this
                         )
                     }
                 } else {
                     Constant.showValidationAlertPopup(
-                        getString(R.string.Enter_title_description),
-                        this
+                        getString(R.string.Enter_title_description), this
                     )
                 }
             }
@@ -817,36 +811,32 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
 
             R.id.rlaSendVoice -> {
-                if (Constant.isVoiceType==3){
+                if (Constant.isVoiceType == 3) {
                     if (Constant.isAwsUploadedFiles.isNotEmpty()) {
                         if (binding.edtTitle.text.toString() != "") {
                             isGoToRecipient()
                         } else {
                             Constant.showValidationAlertPopup(
-                                getString(R.string.Voice_title_required),
-                                this
+                                getString(R.string.Voice_title_required), this
                             )
                         }
                     } else {
                         Constant.showValidationAlertPopup(
-                            getString(R.string.Voice_title_required),
-                            this
+                            getString(R.string.Voice_title_required), this
                         )
                     }
-                }else{
+                } else {
                     if (Constant.selectedFiles.isNotEmpty()) {
                         if (binding.edtTitle.text.toString() != "") {
                             isGoToRecipient()
                         } else {
                             Constant.showValidationAlertPopup(
-                                getString(R.string.Voice_title_required),
-                                this
+                                getString(R.string.Voice_title_required), this
                             )
                         }
                     } else {
                         Constant.showValidationAlertPopup(
-                            getString(R.string.Voice_title_required),
-                            this
+                            getString(R.string.Voice_title_required), this
                         )
                     }
                 }
@@ -942,8 +932,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 binding.gridViewScheduleCall.adapter = selectedDatesAdapter
 
                 val datePickerPopup = CustomDatePicker(
-                    context = this,
-                    preSelectedDates = selectedDates.toList(), // now synced
+                    context = this, preSelectedDates = selectedDates.toList(), // now synced
                     dateAdapter = dateAdapter
                 ) { newSelectedDates ->
                     selectedDates.clear()
@@ -1248,8 +1237,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 //        Constant.isVoiceFile = audioFilePath
         Constant.isAwsUploadedFiles.add(
             AwsUploadedFiles(
-                isFileUrl = data.url,
-                isFileType = FileType.AUDIO.toString()
+                isFileUrl = data.url, isFileType = FileType.AUDIO.toString()
             )
         )
         binding.rlaSeekBarAndTitle.visibility = View.VISIBLE
@@ -1260,14 +1248,9 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         binding.lblEndDuration.text = "/ " + Constant.getAudioDurationInMinutes(data.url)
 
         Constant.isVoiceType = 3
-        // Get the URL or file path from the clicked item
         val voiceUrlOrPath =
-            data.url  // Make sure this property exists in your VoiceHistoryDetails model
-
-        // Set the audio file path globally (assuming this is used in initializeMediaPlayer)
+            data.url
         audioFilePath = voiceUrlOrPath
-
-
         val currentDate: String? = Constant.getCurrentDate()
         val isFileExtension = getFileExtensionFromAwsUrl(data.url)
         isFileName = "sss_" + currentDate + "." + isFileExtension
@@ -1319,11 +1302,9 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
                     mediaPlayer.release()
 
-                    val timeStamp =
-                        SimpleDateFormat(
-                            Constant.yyyyMMdd_HHmmss,
-                            Locale.getDefault()
-                        ).format(Date())
+                    val timeStamp = SimpleDateFormat(
+                        Constant.yyyyMMdd_HHmmss, Locale.getDefault()
+                    ).format(Date())
                     var isFileExtension = "mp3"
                     val fileName = "Communication_${timeStamp}.$isFileExtension"
                     isFileName = fileName

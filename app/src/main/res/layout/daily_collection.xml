@@ -5,7 +5,6 @@
     android:background="@color/white"
     android:layout_height="match_parent">
 
-
     <RelativeLayout
         android:id="@+id/rlaLbCommunication"
         android:layout_width="match_parent"
@@ -104,18 +103,8 @@
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/three"
                     android:src="@drawable/calender_icon_color"/>
-
-
             </LinearLayout>
-
-
-
         </LinearLayout>
-
-
-
-
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -287,50 +276,6 @@
     </androidx.recyclerview.widget.RecyclerView>
 
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/fourty"
-        android:id="@+id/linear_layout1"
-        android:layout_below="@+id/totalsummary1"
-        android:layout_marginTop="@dimen/ten"
-        android:background="@color/custom_blue"
-        android:gravity="center"
-        android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/total"
-            android:textColor="@color/black"
-
-            android:textSize="@dimen/fifteen_sp"
-            android:layout_marginStart="@dimen/eight"
-            android:layout_marginTop="@dimen/five"
-            android:layout_marginBottom="@dimen/five"
-            style="@style/CustomTextStylePoppinsBold"
-            android:id="@+id/total_label1"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="37,515"
-            android:textColor="@color/black"
-            android:textSize="@dimen/fifteen_sp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="@dimen/five"
-            android:layout_marginBottom="@dimen/five"
-            style="@style/CustomTextStylePoppinsBold"
-            android:layout_marginEnd="@dimen/eight"
-            android:id="@+id/total_value1"/>
-    </RelativeLayout>
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/totalsummary2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/linear_layout1"
-        android:layout_marginTop="@dimen/ten">
-    </androidx.recyclerview.widget.RecyclerView>
 
 </RelativeLayout>
