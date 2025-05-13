@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white">
 
     <ScrollView
@@ -12,7 +12,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:id="@+id/rlaLbCommunication"
@@ -405,6 +405,33 @@
                     android:visibility="gone"
                     tools:listitem="@layout/history_from_text_message"></androidx.recyclerview.widget.RecyclerView>
 
+
+                <LinearLayout
+                    android:id="@+id/rytNORecordFound"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/hundred"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/two_hundred"
+                        android:src="@drawable/no_data_found"></ImageView>
+
+                    <TextView
+                        android:id="@+id/lblNoRecordFound"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/fifty"
+                        android:gravity="center">
+
+                    </TextView>
+
+                </LinearLayout>
+
                 <RelativeLayout
                     android:id="@+id/rlaBackRecord"
                     android:layout_width="wrap_content"
@@ -658,22 +685,21 @@
                     <RelativeLayout
                         android:id="@+id/rytVoiceRecord"
                         android:layout_width="@dimen/hundred"
+                        android:layout_height="@dimen/hundred"
                         android:layout_below="@+id/llEmergencyContainer"
-                        android:layout_centerHorizontal="true"
-                        android:layout_height="@dimen/hundred">
+                        android:layout_centerHorizontal="true">
 
                         <com.airbnb.lottie.LottieAnimationView
                             android:id="@+id/lottieAnimationView"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_centerInParent="true"
+                            android:layout_marginTop="@dimen/twenty_five"
+                            android:src="@drawable/record"
+                            android:visibility="gone"
                             app:lottie_autoPlay="true"
                             app:lottie_loop="true"
-                            android:visibility="gone"
-                            app:lottie_rawRes="@raw/voice_record"
-                            android:src="@drawable/record"
-                            android:layout_marginTop="@dimen/twenty_five"
-                            ></com.airbnb.lottie.LottieAnimationView>
+                            app:lottie_rawRes="@raw/voice_record"></com.airbnb.lottie.LottieAnimationView>
 
 
                         <ImageView
@@ -892,6 +918,8 @@
                     </RelativeLayout>
                 </RelativeLayout>
             </RelativeLayout>
+
+
         </RelativeLayout>
     </ScrollView>
 </RelativeLayout>

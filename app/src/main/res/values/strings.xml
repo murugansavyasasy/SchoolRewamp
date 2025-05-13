@@ -520,5 +520,7 @@
     <string name="Are_to_location">Are you sure want to delete this location?</string>
     <string name="Geometric_Attendance">Geometric Attendance</string>
     <string name="Punch_History_found">No Punch History found!</string>
+    <string name="Selectall">Select all</string>
+
 
 </resources>

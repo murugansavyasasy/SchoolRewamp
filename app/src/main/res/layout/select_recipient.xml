@@ -253,7 +253,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/rlaStandard"
         android:layout_marginStart="@dimen/fifteen"
-        android:text="@string/Selectallaspresent"
+        android:text="@string/Selectall"
         android:textColor="@color/black"
         android:textSize="@dimen/fifteen_sp"
         android:textStyle="bold"

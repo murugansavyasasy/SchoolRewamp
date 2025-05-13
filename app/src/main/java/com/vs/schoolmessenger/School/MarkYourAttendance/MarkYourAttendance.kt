@@ -64,9 +64,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
 
     private var isStaffAttendanceReportAdapter: StaffAttendanceReportAdapter? = null
     private var isPunchHistoryAdapter: PunchHistoryAdapter? = null
-
     private var appViewModel: App? = null
-
     var ifBiometricAvailable: Boolean = false
     private lateinit var gpsStatusReceiver: GPSStatusReceiver
     private val locationRequestCode = 1000

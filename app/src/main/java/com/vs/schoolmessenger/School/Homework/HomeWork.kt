@@ -218,10 +218,17 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         return file.absolutePath
     }
 
+    override fun onBackPressed() {
+        Constant.selectedFiles.clear()
+        Constant.isAwsUploadedFiles.clear()
+        super.onBackPressed()
+    }
 
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.imgBack -> {
+                Constant.selectedFiles.clear()
+                Constant.isAwsUploadedFiles.clear()
                 onBackPressed()
             }
 
@@ -488,7 +495,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
             for (item in Constant.selectedFiles!!) {
                 Log.d("SelectedFile", "Path: ${item.path}, Type: ${item.type}")
             }
-
         }
 
         when (requestCode) {
