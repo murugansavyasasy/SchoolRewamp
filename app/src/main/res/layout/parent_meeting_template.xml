@@ -6,7 +6,7 @@
     android:layout_marginStart="@dimen/ten"
     app:cardCornerRadius="@dimen/ten"
     android:layout_marginEnd="@dimen/ten"
-
+    android:fitsSystemWindows="true"
     android:layout_height="wrap_content">
     <LinearLayout
         android:layout_marginBottom="@dimen/five"

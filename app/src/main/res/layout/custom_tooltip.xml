@@ -3,6 +3,7 @@
     android:id="@+id/tooltipLayout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:fitsSystemWindows="true"
     android:orientation="vertical"
     android:background="@drawable/bg_tooltip_background"
     android:padding="@dimen/eight"

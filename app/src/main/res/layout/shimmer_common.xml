@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/shimmer_view_container"
     android:layout_width="match_parent"
+    android:fitsSystemWindows="true"
     android:layout_height="wrap_content"
     app:shimmer_auto_start="true"
     app:shimmer_duration="1000">
