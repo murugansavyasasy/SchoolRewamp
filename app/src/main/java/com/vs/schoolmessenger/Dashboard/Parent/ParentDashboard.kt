@@ -40,14 +40,15 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
             R.id.customBottomNav
         )
 
-        FirebaseMessaging.getInstance().token.addOnCompleteListener {
-            if (!it.isSuccessful) {
-                return@addOnCompleteListener
+        FirebaseMessaging.getInstance().token
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val token = task.result
+                    Log.d("FCM", "Token: $token")
+                    isUpdateDeviceToken(token)
+
+                }
             }
-            val token = it.result //this is the token retrieved
-            Log.d("isDeviceToken",token)
-            isUpdateDeviceToken(token)
-        }
 
         authViewModel!!.isDeviceToken?.observe(this) { response ->
             if (response != null) {
