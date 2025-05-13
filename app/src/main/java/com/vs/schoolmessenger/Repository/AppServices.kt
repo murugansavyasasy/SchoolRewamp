@@ -23,6 +23,7 @@ import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistor
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffAttendanceReportResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffLocationResponse
+import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
 import com.vs.schoolmessenger.School.SchoolStrength.SchoolStrengthResponse
 import com.vs.schoolmessenger.Utils.SharedPreference
 import retrofit2.Call
@@ -66,6 +67,7 @@ class AppServices {
     var isStaffAttendanceReport: MutableLiveData<StaffAttendanceReportResponse?>
     var isStaffWiseAttendanceReport: MutableLiveData<StaffAttendanceReportResponse?>
     var isStaffWiseAttendanceReportList: MutableLiveData<StaffAttendanceReportResponse?>
+    var isStudentReportList: MutableLiveData<GetStudentReportData?>
 
 
     init {
@@ -102,6 +104,7 @@ class AppServices {
         isStaffAttendanceReport = MutableLiveData()
         isStaffWiseAttendanceReport = MutableLiveData()
         isStaffWiseAttendanceReportList = MutableLiveData()
+        isStudentReportList=MutableLiveData()
 
     }
 
@@ -1125,4 +1128,45 @@ class AppServices {
 
     val isGiometricStaffWiseAttendanceReportLiveDataList: LiveData<StaffAttendanceReportResponse?>
         get() = isStaffWiseAttendanceReportList
+
+
+
+    fun getStudentReportList(isToken: String, class_id: Int,section_id:Int, activity: Activity) {
+        RestClient.apiInterfaces.getStudentReport(isToken, class_id, section_id)
+            ?.enqueue(object : Callback<GetStudentReportData?> {
+                override fun onResponse(
+                    call: Call<GetStudentReportData?>,
+                    response: Response<GetStudentReportData?>
+                ) {
+                    Log.d(
+                        "GetStudentReport Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetStudentReportData",response.body().toString())
+                                isStudentReportList.postValue(response.body())
+                            } else {
+                                Log.d("GetStudentReportData",response.body().toString())
+                                isStudentReportList.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<GetStudentReportData?>,
+                    t: Throwable
+                ) {
+                    isStudentReportList.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+
+    val isStudentReportLiveData: LiveData<GetStudentReportData?>
+        get() = isStudentReportList
 }

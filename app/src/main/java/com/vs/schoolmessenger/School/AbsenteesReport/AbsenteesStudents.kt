@@ -3,6 +3,8 @@ package com.vs.schoolmessenger.School.AbsenteesReport
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.AbsenteesReportBinding
 import com.vs.schoolmessenger.databinding.AbsenteesStudentlistBinding
 
@@ -23,6 +25,7 @@ class AbsenteesStudents : BaseActivity<AbsenteesStudentlistBinding>(),
     override fun setupViews() {
         super.setupViews()
         setupToolbar()
+        binding.toolbarLayout.lblParentToolBar.text = resources.getText(R.string.absentees_report)
         setupRecyclerView()
         loadHardcodedData()
         setupRecyclerView1()

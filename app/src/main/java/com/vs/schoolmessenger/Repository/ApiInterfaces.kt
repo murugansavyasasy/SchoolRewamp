@@ -28,6 +28,7 @@ import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistor
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffAttendanceReportResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffLocationResponse
+import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
 import com.vs.schoolmessenger.School.SchoolStrength.SchoolStrengthResponse
 import retrofit2.Call
 import retrofit2.http.Body
@@ -278,6 +279,12 @@ interface ApiInterfaces {
         @Query(APIKeyNames.to_date) fileName: String?
     ): Call<PunchHistoryResponse?>?
 
+    @GET(APIMethods.student_report)
+    fun getStudentReport(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query(APIKeyNames.section_id) section_id: Int?,
+        @Query(APIKeyNames.class_id) class_id: Int?
+    ): Call<GetStudentReportData?>?
 
     @GET(APIMethods.isGetDailyCollectionReport)
     fun isGetDailyCollectionReport(

@@ -181,27 +181,21 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/fifteen_sp" />
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/btnLoginContinue"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/lblForgetPassword"
-                    android:layout_margin="@dimen/ten"
-                    card_view:cardCornerRadius="@dimen/ten"
-                    card_view:cardElevation="@dimen/five">
+
 
                     <TextView
+                        android:layout_below="@+id/lblForgetPassword"
+                        android:id="@+id/btnLoginContinue"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:background="@drawable/rect_btn_blue"
                         android:gravity="center"
-                        android:padding="@dimen/ten"
+                        android:padding="@dimen/twenty"
                         android:text="@string/logintext"
                         android:textColor="@color/white"
                         android:textSize="@dimen/fifteen_sp"
                         android:textStyle="bold" />
 
-                </androidx.cardview.widget.CardView>
 
             </RelativeLayout>
         </RelativeLayout>

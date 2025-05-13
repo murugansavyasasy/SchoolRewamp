@@ -131,32 +131,24 @@
                     android:layout_marginEnd="@dimen/ten"/>
 
 
-
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/btnLoginContinue"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/lblForgetPassword"
-                    android:layout_marginStart="@dimen/ten"
-                    android:layout_marginTop="@dimen/thirty"
-                    android:layout_marginEnd="@dimen/ten"
-                    android:layout_marginBottom="@dimen/ten"
-                    card_view:cardCornerRadius="@dimen/ten"
-                    card_view:cardElevation="@dimen/five">
-
                     <TextView
+                        android:id="@+id/btnLoginContinue"
+                        android:layout_below="@+id/lblForgetPassword"
+                        android:layout_marginStart="@dimen/ten"
+                        android:layout_marginTop="@dimen/thirty"
+                        android:layout_marginEnd="@dimen/ten"
+                        android:layout_marginBottom="@dimen/ten"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:background="@drawable/rect_btn_blue"
                         android:gravity="center"
                         android:text="@string/lblValidate"
-                        android:padding="@dimen/ten"
+                        android:padding="@dimen/twenty"
                         android:textColor="@color/white"
                         android:textSize="@dimen/fifteen_sp"
                         style="@style/CustomTextStylePoppinsBold"
                         />
-                </androidx.cardview.widget.CardView>
+
             </RelativeLayout>
         </RelativeLayout>
     </LinearLayout>

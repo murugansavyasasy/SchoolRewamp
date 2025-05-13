@@ -230,49 +230,49 @@
 
      </LinearLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/fourty"
-        android:id="@+id/linear_layout"
-        android:layout_below="@+id/relative_layout8"
-        android:layout_marginTop="@dimen/twenty"
-        android:background="@color/custom_blue"
-        android:gravity="center"
-        android:orientation="horizontal">
+<!--    <RelativeLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="@dimen/fourty"-->
+<!--        android:id="@+id/linear_layout"-->
+<!--        android:layout_below="@+id/relative_layout8"-->
+<!--        android:layout_marginTop="@dimen/twenty"-->
+<!--        android:background="@color/custom_blue"-->
+<!--        android:gravity="center"-->
+<!--        android:orientation="horizontal">-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/total"
-            android:textColor="@color/black"
-            android:textSize="@dimen/fifteen_sp"
-            android:layout_marginStart="@dimen/eight"
-            android:layout_marginTop="@dimen/five"
-            style="@style/CustomTextStylePoppinsBold"
-            android:layout_marginBottom="@dimen/five"
-            android:id="@+id/total_label"/>
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="@string/total"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="@dimen/fifteen_sp"-->
+<!--            android:layout_marginStart="@dimen/eight"-->
+<!--            android:layout_marginTop="@dimen/five"-->
+<!--            style="@style/CustomTextStylePoppinsBold"-->
+<!--            android:layout_marginBottom="@dimen/five"-->
+<!--            android:id="@+id/total_label"/>-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="37,515"
-            android:textColor="@color/black"
-          style="@style/CustomTextStylePoppinsBold"
-            android:textSize="@dimen/fifteen_sp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="@dimen/five"
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="37,515"-->
+<!--            android:textColor="@color/black"-->
+<!--          style="@style/CustomTextStylePoppinsBold"-->
+<!--            android:textSize="@dimen/fifteen_sp"-->
+<!--            android:layout_alignParentEnd="true"-->
+<!--            android:layout_marginTop="@dimen/five"-->
 
-            android:layout_marginBottom="@dimen/five"
-            android:layout_marginEnd="@dimen/eight"
-            android:id="@+id/total_value"/>
-    </RelativeLayout>
+<!--            android:layout_marginBottom="@dimen/five"-->
+<!--            android:layout_marginEnd="@dimen/eight"-->
+<!--            android:id="@+id/total_value"/>-->
+<!--    </RelativeLayout>-->
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/totalsummary1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/linear_layout"
+        android:layout_below="@+id/relative_layout8"
         android:layout_marginTop="@dimen/ten">
     </androidx.recyclerview.widget.RecyclerView>
 

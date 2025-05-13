@@ -391,7 +391,6 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
                     addAction(Intent.ACTION_PROVIDER_CHANGED) // Optional extra compatibility
                 }
                 registerReceiver(gpsStatusReceiver, filter, RECEIVER_NOT_EXPORTED)
-                Log.d("isEnableLocation1111111111111", "isEnableLocation")
                 getLocationPermissions()
             }
         }

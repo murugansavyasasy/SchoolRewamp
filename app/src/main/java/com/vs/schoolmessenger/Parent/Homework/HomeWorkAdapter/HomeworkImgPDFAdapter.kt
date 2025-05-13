@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
@@ -13,11 +14,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.gson.Gson
+import com.vs.schoolmessenger.Parent.Communication.UnifiedVoiceAdapter.ShimmerViewHolder
 import com.vs.schoolmessenger.Parent.Homework.FullScreenViewerActivity
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.ShimmerUtil
 import javax.security.auth.Subject
 import kotlin.math.log
 
@@ -35,10 +38,12 @@ class HomeworkImgPDFAdapter(
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-            val view =
-                LayoutInflater.from(parent.context)
-                    .inflate(R.layout.shimmer_view_small_list, parent, false)
-            DataViewHolder.ShimmerViewHolder(view)
+            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.homework_img_pdf_item)
+            ShimmerViewHolder(shimmerView)
+//            val view =
+//                LayoutInflater.from(parent.context)
+//                    .inflate(R.layout.shimmer_view_small_list, parent, false)
+//            DataViewHolder.ShimmerViewHolder(view)
         } else {
             val view =
                 LayoutInflater.from(parent.context)
@@ -131,23 +136,38 @@ class HomeworkImgPDFAdapter(
                 }
             }
 
-
-            WebViewThumbnail.setOnClickListener{
-                val selectedItem = adapter.GetFilePathDetailsData!![position]
-                val context = itemView.context
-                Log.d("HomeworkPDFAdapter,Document Clicked!","HomeworkPDFAdapter,Document Clicked!")
-
+            WebViewThumbnail.setOnTouchListener { _, event ->
+                if (event.action == MotionEvent.ACTION_UP) {
+                    val selectedItem = adapter.GetFilePathDetailsData!![position]
+                    val context = itemView.context
+                    Log.d("HomeworkPDFAdapter,Document Clicked!","HomeworkPDFAdapter,Document Clicked!")
                     val intent = Intent(context, FullScreenViewerActivity::class.java)
-
-                intent.putExtra("SelectedSubjectName", SubjectName)
-                Log.d("SelectedSubjectName",SubjectName)
-//                intent.putExtra("SelectedSubjectName", item?.subject_name)
-                intent.putExtra(Constant.SelectedDocumentPath, selectedItem.path)
-                Log.d("SelectedDocumentpath",selectedItem.path)
-                intent.putExtra(Constant.SelectedDocumentType, selectedItem.type)
-                    context.startActivity(intent)
+                    intent.putExtra("SelectedSubjectName", SubjectName)
+                    Log.d("SelectedSubjectName",SubjectName)
+    //                intent.putExtra("SelectedSubjectName", item?.subject_name)
+                    intent.putExtra(Constant.SelectedDocumentPath, selectedItem.path)
+                    Log.d("SelectedDocumentpath",selectedItem.path)
+                    intent.putExtra(Constant.SelectedDocumentType, selectedItem.type)
+                        context.startActivity(intent)
+                }
+                true
 
             }
+//            WebViewThumbnail.setOnClickListener{
+//                val selectedItem = adapter.GetFilePathDetailsData!![position]
+//                val context = itemView.context
+//                Log.d("HomeworkPDFAdapter,Document Clicked!","HomeworkPDFAdapter,Document Clicked!")
+//                    // Open document viewer (PDF, DOCX, etc.)
+//                    val intent = Intent(context, FullScreenViewerActivity::class.java)
+//                intent.putExtra("SelectedSubjectName", SubjectName)
+//                Log.d("SelectedSubjectName",SubjectName)
+////                intent.putExtra("SelectedSubjectName", item?.subject_name)
+//                intent.putExtra(Constant.SelectedDocumentPath, selectedItem.path)
+//                Log.d("SelectedDocumentpath",selectedItem.path)
+//                intent.putExtra(Constant.SelectedDocumentType, selectedItem.type)
+//                    context.startActivity(intent)
+//
+//            }
 
 
 
@@ -156,9 +176,7 @@ class HomeworkImgPDFAdapter(
 
         private fun openDocumentInWebView(urlpath: String) {
             DefaultImage.visibility=View.GONE
-            WebViewThumbnail.isClickable = true
-            WebViewThumbnail.isFocusable = true
-            WebViewThumbnail.isFocusableInTouchMode = true
+            WebViewThumbnail.setOnTouchListener { _, _ -> true }
             WebViewThumbnail.visibility=View.VISIBLE
             val googleDocsUrl = "https://docs.google.com/gview?embedded=true&url=$urlpath"
             WebViewThumbnail.loadUrl(googleDocsUrl);
