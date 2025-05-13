@@ -34,10 +34,12 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.ApiCallRequest
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Homework.SectionDetails
+import com.vs.schoolmessenger.Utils.AwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
 import com.vs.schoolmessenger.Utils.Constant.M_HOMEWORK
 import com.vs.schoolmessenger.Utils.Constant.SELECTED_SCHOOL_MENU
+import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SelectRecipientBinding
 
@@ -135,9 +137,9 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         isGetStandardSection()
                     }
                     tapVisibility()
-                    binding.nomessageEntire.visibility =
-                        if (isUserDetails!!.staff_role== Constant.isPrincipalRole.toString()
-                        ) View.VISIBLE else View.GONE
+//                    binding.nomessageEntire.visibility =
+//                        if (isUserDetails!!.staff_role== Constant.isPrincipalRole.toString()
+//                        ) View.VISIBLE else View.GONE
                 } else {
                     binding.lblSupportMail.paintFlags =
                         binding.lblSupportMail.paintFlags or Paint.UNDERLINE_TEXT_FLAG
@@ -362,6 +364,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             }
 
         } else {
+            Log.d("SELECTED_SCHOOL_MENU", SELECTED_SCHOOL_MENU.toString())
             if (SELECTED_SCHOOL_MENU == M_HOMEWORK) {
                 binding.nomessage.visibility = View.GONE
                 binding.nomessageEntire.visibility = View.GONE
@@ -403,7 +406,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         }
     }
 
-    //     Please don't delete by sathish
     private fun isLoadSubjectData() {
         binding.rlaSubject.visibility = View.VISIBLE
     }
@@ -416,7 +418,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             data, this@RecipientActivity, this, Constant.isShimmerViewDisable
         )
         binding.recyclerView.adapter = isGroupStaffAdapter
-
     }
 
     private fun isLoadGroupData(isGetGroupListData: List<NameAndIds>?) {
@@ -850,7 +851,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
         alertMessage.text = isMessage
         lblSelectTarget.text = isSelectTarget
-        if (isSelectTarget.equals("")) {
+        if (isSelectTarget == "") {
             lblSelectTarget.visibility = View.GONE
         }
         okButton.setOnClickListener {
@@ -859,21 +860,11 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
 
             if (SELECTED_SCHOOL_MENU == M_HOMEWORK) {
-                val sectionDetails = intent.getParcelableExtra<SectionDetails>(Constant.section_data)
-                sectionDetails?.let {
-                    val jsonObject = ApiCallRequest.isSendHomeWork(
-                        isAcademicYearId = isAcademicYearId,
-                        selectedIds = selectedIds,
-                        title = it.title,
-                        description = it.description,
-                        subjectId = isSubjectId!!,
-                        file_path = "https://api.schoolchimes.com/nodejs/institute/files/AU3394_ABSENT_1743571768546.wav",
-                        type = "IMAGE",
-                    )
-                    appViewModel!!.isSendHomeWork(isAccessToken!!, jsonObject, this)
-                } ?: run {
-                    Constant.showValidationAlertPopup(resources.getString(R.string.Section_details_missing), this)
-                }
+                isFileUploadInAws(
+                    Constant.selectedFiles,
+                    isStaffDetails!!.school_id,
+                    "audio"
+                )
             } else if (SELECTED_SCHOOL_MENU == Constant.M_COMMUNICATION) {
                 val isTextData = Constant.isTextSendingData
                 if (Constant.isClickType == 3) {
@@ -892,7 +883,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         voiceSendApi(isVoiceData!!.isAwsUrl)
                     } else {
                         isFileUploadInAws(
-                            Constant.isVoiceFile!!,
+                            Constant.selectedFiles,
                             isStaffDetails!!.school_id,
                             "audio"
                         )
@@ -975,35 +966,66 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     ContextCompat.getDrawable(this, R.drawable.bg_gray)
             }
         }
-        // Please don't delete by sathish
 
         val idString = isSectionSelectedIds.joinToString(",") { it.id.toString() }
         isGetSubjectList(idString)
     }
 
     private fun isFileUploadInAws(
-        isFilePath: String, schoolId: String, isFileType: String?
+        isSelectedFiles: MutableList<FileItem>, schoolId: String, isFileType: String?
     ) {
         val isCountryId = SharedPreference.getCountryId(this)
-        isAwsUploadingPreSigned!!.getPreSignedUrl(
-            isFilePath, schoolId, isFileType!!,
-            this, isCountryId!!,
-            true,
-            false,
-            object : UploadCallback {
-                @RequiresApi(Build.VERSION_CODES.O)
-                override fun onUploadSuccess(
-                    response: String?,
-                    isFileUploaded: String?
-                ) {
-                    voiceSendApi(isFileUploaded)
-                    Log.d("isSuccessFullUpload", "isSuccessFullUpload")
-                }
+        Log.d("isSelectedFiles",isSelectedFiles.size.toString())
+        for (i in isSelectedFiles.indices) {
+            isAwsUploadingPreSigned!!.getPreSignedUrl(
+                isSelectedFiles[i].path.toString(), schoolId, isFileType!!,
+                this, isCountryId!!,
+                true,
+                false,
+                object : UploadCallback {
+                    @RequiresApi(Build.VERSION_CODES.O)
+                    override fun onUploadSuccess(
+                        response: String?,
+                        isFileUploaded: String?
+                    ) {
+                        Constant.isAwsUploadedFiles.add(
+                            AwsUploadedFiles(
+                                isFileUrl = isFileUploaded!!,
+                                isFileType = isSelectedFiles[i].type.toString()
+                            )
+                        )
+                        if (Constant.isAwsUploadedFiles.size.toString() == isSelectedFiles.size.toString()) {
+                            // voiceSendApi(isFileUploaded)
+                            isHomeWorkSend()
+                        }
+                        Log.d("isSuccessFullUpload", "isSuccessFullUpload")
+                    }
 
-                override fun onUploadError(error: String?) {
-                    TODO("Not yet implemented")
-                }
-            })
+                    override fun onUploadError(error: String?) {
+                        TODO("Not yet implemented")
+                    }
+                })
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun isHomeWorkSend() {
+        val sectionDetails = intent.getParcelableExtra<SectionDetails>(Constant.section_data)
+        sectionDetails?.let {
+            val jsonObject = ApiCallRequest.isSendHomeWork(
+                isAcademicYearId = isAcademicYearId,
+                selectedIds = selectedIds,
+                title = it.title,
+                description = it.description,
+                subjectId = isSubjectId!!,
+            )
+            appViewModel!!.isSendHomeWork(isAccessToken!!, jsonObject, this)
+        } ?: run {
+            Constant.showValidationAlertPopup(
+                resources.getString(R.string.Section_details_missing),
+                this
+            )
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -1012,7 +1034,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         val isVoiceData = Constant.isVoiceSendingData
         val jsonObject = ApiCallRequest.isVoiceSend(
             isAcademicYearId = isAcademicYearId,
-            isFileUploaded = isFileUploadedUrl,
             isClickType = isVoiceData!!.isClickType,
             selectedDates = isVoiceData.selectedDates,
             isStartTimeText = isVoiceData.isStartTimeText,

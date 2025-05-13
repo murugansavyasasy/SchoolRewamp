@@ -1,17 +1,18 @@
 package com.vs.schoolmessenger.Repository
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.FileItem
 
 object ApiCallRequest {
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun isVoiceSend(
         isAcademicYearId: Int,
-        isFileUploaded: String?,
         isClickType: Int,
         selectedDates: List<String>,
         isStartTimeText: String,
@@ -26,11 +27,11 @@ object ApiCallRequest {
     ): JsonObject {
         val jsonObject = JsonObject()
         jsonObject.addProperty(APIKeyNames.academic_year_id, isAcademicYearId)
-        jsonObject.addProperty(APIKeyNames.voice_link, isFileUploaded)
+        jsonObject.addProperty(APIKeyNames.voice_link, Constant.isAwsUploadedFiles[0].isFileUrl)
         jsonObject.addProperty(APIKeyNames.target_type, targetType)
         jsonObject.addProperty(APIKeyNames.circular_type, circularType)
         jsonObject.addProperty(
-            APIKeyNames.duration, Constant.getAudioDurationInSeconds(isFileUploaded.toString())
+            APIKeyNames.duration, Constant.getAudioDurationInSeconds(Constant.isAwsUploadedFiles[0].isFileUrl.toString())
         )
 
         val startTime: String
@@ -89,24 +90,28 @@ object ApiCallRequest {
         selectedIds: MutableList<String>,
         title: String,
         description: String,
-        subjectId: Int,
-        file_path: String,
-        type: String
-    ): JsonObject {
+        subjectId: Int): JsonObject {
+
         val jsonObject = JsonObject()
         val sectionArray = JsonArray()
         selectedIds.forEach { sectionArray.add(it) }
         val filePathArray = JsonArray()
-        val fileObject = JsonObject().apply {
-            addProperty(APIKeyNames.path, file_path)
-            addProperty(APIKeyNames.type, type)
+
+        for (i in Constant.isAwsUploadedFiles.indices) {
+            val isSelectedObject = JsonObject()
+            isSelectedObject.addProperty(APIKeyNames.path, Constant.isAwsUploadedFiles[i].isFileUrl)
+            isSelectedObject.addProperty(APIKeyNames.type, Constant.isAwsUploadedFiles[i].isFileType.toString())
+            filePathArray.add(isSelectedObject)
         }
-        filePathArray.add(fileObject)
+
         jsonObject.addProperty(APIKeyNames.academic_year_id, isAcademicYearId)
         jsonObject.add(APIKeyNames.section_code, sectionArray)
         jsonObject.addProperty(APIKeyNames.title, title)
         jsonObject.addProperty(APIKeyNames.description, description)
-        jsonObject.addProperty(APIKeyNames.subject_id, subjectId.toString()) // convert to string as per API
+        jsonObject.addProperty(
+            APIKeyNames.subject_id,
+            subjectId.toString()
+        )
         jsonObject.add(APIKeyNames.file_path, filePathArray)
         return jsonObject
     }

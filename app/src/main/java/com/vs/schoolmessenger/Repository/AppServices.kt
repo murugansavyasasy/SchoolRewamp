@@ -614,6 +614,7 @@ class AppServices {
 
 
     fun isSendHomeWork(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        RestClient.changeApiBaseUrl(SharedPreference.getBaseUrl(activity).toString())
         RestClient.apiInterfaces.isSendHomeWork(isToken, jsonObject)
             ?.enqueue(object : Callback<HomeWorkSendResponse?> {
                 override fun onResponse(

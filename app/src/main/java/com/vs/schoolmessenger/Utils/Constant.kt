@@ -66,11 +66,13 @@ object Constant {
     var user_details: UserDetails? = null
     var user_data: List<UserValidationData>? = null
     var isStaffDetails: List<StaffDetails>? = null
+    var isAwsUploadedFiles: MutableList<AwsUploadedFiles> = mutableListOf()
     var isChildDetails: List<ChildDetails>? = null
     var isPasswordCreation: Boolean? = false
     var forgotData: List<ForgetOtpData>? = null
     var isForgotPassword: Boolean? = false
     var isMobileNumber: String? = ""
+    var selectedFiles: MutableList<FileItem> = mutableListOf()
 
     var SplashScreen: Int? = 1
     var MobileNumberScreen: Int? = 2
@@ -195,7 +197,7 @@ object Constant {
     var isHomeWork = "isHomeWork"
     var isGioMetric = "isGioMetric"
 
-    var isVoiceFile: String? = null
+//    var isVoiceFile: String? = null
     var isVoiceSendingData: VoiceSendingData? = null
     var isTextSendingData: TextSendingData? = null
     var isClickType = 1
@@ -533,6 +535,8 @@ object Constant {
         okButton.setOnClickListener {
             if (isType == isCommunication) {
                 val intent = Intent(activity, CommunicationSchool::class.java)
+                isAwsUploadedFiles.clear()
+                selectedFiles.clear()
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 activity.startActivity(intent)
             } else if (isType == isGioMetric) {

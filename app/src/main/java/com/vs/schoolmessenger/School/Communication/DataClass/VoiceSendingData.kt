@@ -1,7 +1,6 @@
 package com.vs.schoolmessenger.School.Communication.DataClass
 
 data class VoiceSendingData(
-    val isFilePath: String?,
     val isClickType: Int,
     val selectedDates: List<String>,
     val isStartTimeText: String,

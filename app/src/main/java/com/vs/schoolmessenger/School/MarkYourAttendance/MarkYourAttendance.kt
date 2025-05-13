@@ -278,13 +278,14 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("UnspecifiedRegisterReceiverFlag")
     override fun onResume() {
         super.onResume()
         val filter = IntentFilter(LocationManager.PROVIDERS_CHANGED_ACTION).apply {
             addAction(Intent.ACTION_PROVIDER_CHANGED) // Optional extra compatibility
         }
-        registerReceiver(gpsStatusReceiver, filter)
+        registerReceiver(gpsStatusReceiver, filter,RECEIVER_NOT_EXPORTED)
 
         Log.d("onResume", "onResume")
         getLocationPermissions()
@@ -477,6 +478,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("UnspecifiedRegisterReceiverFlag")
     override fun onClick(p0: View?) {
         when (p0?.id) {
@@ -502,7 +504,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
                 val filter = IntentFilter(LocationManager.PROVIDERS_CHANGED_ACTION).apply {
                     addAction(Intent.ACTION_PROVIDER_CHANGED) // Optional extra compatibility
                 }
-                registerReceiver(gpsStatusReceiver, filter)
+                registerReceiver(gpsStatusReceiver, filter,RECEIVER_NOT_EXPORTED)
                 getLocationPermissions()
             }
         }
@@ -558,19 +560,30 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
                     super.onAuthenticationError(errorCode, errString)
 
                     Log.d("BiometricAuth", "Authentication error: $errString")
-                    Constant.showLoading(this@MarkYourAttendance)
-                    isPunchAttendance()
+
+                    when (errorCode) {
+                        BiometricPrompt.ERROR_NEGATIVE_BUTTON,
+                        BiometricPrompt.ERROR_USER_CANCELED,
+                        BiometricPrompt.ERROR_CANCELED -> {
+                            Toast.makeText(applicationContext, "Authentication cancelled", Toast.LENGTH_SHORT).show()
+                        }
+                        else -> {
+                            Toast.makeText(applicationContext, "Authentication error: $errString", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
                     if (ifBiometricAvailable) {
                         authenticatealertpopupWindow?.let {
                             if (it.isShowing) it.dismiss()
                         }
                     }
+
+                    // Do NOT call isPunchAttendance() here
                 }
 
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                     super.onAuthenticationSucceeded(result)
 
-                    // Success
                     Log.d("BiometricAuth", "Authentication succeeded")
                     Constant.showLoading(this@MarkYourAttendance)
                     isPunchAttendance()
@@ -579,17 +592,15 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
                 override fun onAuthenticationFailed() {
                     super.onAuthenticationFailed()
 
-                    // Failed attempt
                     Log.d("BiometricAuth", "Authentication failed")
-                    Toast.makeText(applicationContext, "Authentication failed", Toast.LENGTH_SHORT)
-                        .show()
+                    Toast.makeText(applicationContext, "Authentication failed", Toast.LENGTH_SHORT).show()
                 }
             })
 
         val promptInfo = PromptInfo.Builder()
             .setTitle(resources.getString(R.string.biometric_authentications))
             .setSubtitle(resources.getString(R.string.Mark_attendance_biometric_credential))
-            .setNegativeButtonText(resources.getString(R.string.Cancel)) // Clicking this triggers onAuthenticationError
+            .setNegativeButtonText(resources.getString(R.string.Cancel))
             .build()
 
         biometricPrompt?.authenticate(promptInfo)
