@@ -122,30 +122,22 @@
 
                 </RelativeLayout>
 
-                <androidx.cardview.widget.CardView
+                <TextView
                     android:id="@+id/btnLoginContinue"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:layout_below="@+id/rytMobile"
                     android:layout_marginStart="@dimen/ten"
                     android:layout_marginTop="@dimen/thirty"
                     android:layout_marginEnd="@dimen/ten"
                     android:layout_marginBottom="@dimen/ten"
-                    card_view:cardCornerRadius="@dimen/ten"
-                    card_view:cardElevation="@dimen/five">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/rect_btn_blue"
-                        android:gravity="center"
-                        android:text="@string/lblContinue"
-                        android:padding="@dimen/ten"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/fifteen_sp"
-                        style="@style/CustomTextStylePoppinsBold"/>
-
-                </androidx.cardview.widget.CardView>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rect_btn_blue"
+                    android:gravity="center"
+                    android:padding="@dimen/fifteen"
+                    android:text="@string/next"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/fifteen_sp"
+                    android:textStyle="bold" />
             </RelativeLayout>
         </RelativeLayout>
     </LinearLayout>
