@@ -793,7 +793,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
 
             R.id.imgClose -> {
-//                binding.lblDurationOfVoice.text = "00:00 / 03:00"
+                binding.lblDurationOfVoice.text = "00:00 / 00:00"
                 binding.rlaSeekBarAndTitle.visibility = View.GONE
                 binding.rlaTitle.visibility = View.GONE
                 Constant.selectedFiles.clear()

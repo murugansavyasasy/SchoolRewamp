@@ -13,6 +13,7 @@ object APIMethods {
     const val isResetPassword = "app/cred/reset-password"
     const val isCreateNewPassword = "app/cred/create-new-password"
     const val isDeviceToken = "app/auth/device-token"
+
     const val isGetDashBoard = "dashboard/dashboard/get-dashboard-details"
     const val isGetAds = "dashboard/dashboard/get-ads"
     const val getStaffList = "comm/recipient/get-staff-list"
