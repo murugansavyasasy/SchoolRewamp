@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.Auth.CreateResetChangePassword
 
 import android.content.Intent
 import android.text.InputType
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
@@ -21,6 +22,7 @@ import com.vs.schoolmessenger.databinding.PasswordGenerationBinding
 class PasswordGeneration : BaseActivity<PasswordGenerationBinding>(), View.OnClickListener {
 
     private var isPasswordVisible = false
+    private var isCreatePasswordVisible = false
 
     override fun getViewBinding(): PasswordGenerationBinding {
         return PasswordGenerationBinding.inflate(layoutInflater)
@@ -144,7 +146,7 @@ class PasswordGeneration : BaseActivity<PasswordGenerationBinding>(), View.OnCli
     }
 
     private fun isPasswordViewAndHide1() {
-        if (isPasswordVisible) {
+        if (isCreatePasswordVisible) {
             binding.txtCreatePassword.inputType =
                 InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
             binding.imgHide1.setImageResource(R.drawable.password_hide)
@@ -154,7 +156,7 @@ class PasswordGeneration : BaseActivity<PasswordGenerationBinding>(), View.OnCli
             binding.imgHide1.setImageResource(R.drawable.password_view)
         }
         binding.txtCreatePassword.setSelection(binding.txtCreatePassword.text?.length ?: 0)
-        isPasswordVisible = !isPasswordVisible
+        isCreatePasswordVisible = !isCreatePasswordVisible
     }
 
 

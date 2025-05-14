@@ -126,7 +126,6 @@
                     android:background="@drawable/rect_white"
                     android:inputType="number"
                     android:maxLength="1"
-
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textSize="@dimen/fifteen_sp" />
@@ -202,7 +201,6 @@
                >
 
             </TextView>
-
 
 
                 <TextView

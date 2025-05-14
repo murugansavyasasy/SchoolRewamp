@@ -65,7 +65,7 @@ object SharedPreference {
         return sharedPreferences.getString(SH_PASSWORD, "")
     }
 
-    fun putCountryId(activity: Activity, isCountryId: String?) {
+    fun putCountryId(activity: Activity, isCountryId: Int?) {
         val sharedPreferences = EncryptedSharedPreferences.create(
             SH_PREF,
             masterKeyAlias,
@@ -73,10 +73,10 @@ object SharedPreference {
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
-        sharedPreferences.edit() { putString(SH_COUNTRY_ID, isCountryId) }
+        sharedPreferences.edit() { putInt(SH_COUNTRY_ID, isCountryId!!) }
     }
 
-    fun getCountryId(activity: Context): String? {
+    fun getCountryId(activity: Context): Int? {
 
         val sharedPreferences = EncryptedSharedPreferences.create(
             SH_PREF,
@@ -85,7 +85,7 @@ object SharedPreference {
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
-        return sharedPreferences.getString(SH_COUNTRY_ID, "")
+        return sharedPreferences.getInt(SH_COUNTRY_ID, 0)
     }
 
     fun putLogout(activity: Activity, isLogout: Boolean?) {
