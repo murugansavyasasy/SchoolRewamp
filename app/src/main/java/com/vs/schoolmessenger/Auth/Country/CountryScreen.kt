@@ -105,7 +105,7 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
                     if (isAgree) {
                         SharedPreference.putCountryId(
                             this,
-                            Constant.country_details!!.id.toString()
+                            Constant.country_details!!.id
                         )
                         SharedPreference.putBaseUrl(this, Constant.country_details!!.base_url)
                         RestClient.changeApiBaseUrl(Constant.country_details!!.base_url)

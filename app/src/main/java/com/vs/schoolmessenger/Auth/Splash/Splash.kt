@@ -81,7 +81,7 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
         super.setupViews()
         isToolBarTheme()
 
-        authViewModel = ViewModelProvider(this).get(Auth::class.java)
+        authViewModel = ViewModelProvider(this)[Auth::class.java]
         authViewModel!!.init()
 
         appUpdateManager = AppUpdateManagerFactory.create(this)
@@ -185,7 +185,7 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
                     val isVersionCheckData = response.data
                     isVersionData = isVersionCheckData
                     Constant.country_details = isVersionData!![0].country_details
-                    SharedPreference.putCountryId(this, Constant.country_details!!.id.toString())
+                    SharedPreference.putCountryId(this, Constant.country_details!!.id)
                     SharedPreference.putBaseUrl(this, Constant.country_details!!.base_url)
                     RestClient.changeApiBaseUrl(Constant.country_details!!.base_url)
                     if (isVersionData!![0].update_available) {
@@ -211,7 +211,7 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
 
                     val countryId = SharedPreference.getCountryId(this@Splash)
                     Log.d("countryId", countryId.toString())
-                    if (!countryId.equals("")) {
+                    if (countryId != 0) {
                         isVersionCheck()
                     } else {
                         val intent = Intent(this@Splash, CountryScreen::class.java)
