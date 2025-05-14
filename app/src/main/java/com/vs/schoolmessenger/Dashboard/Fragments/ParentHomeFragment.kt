@@ -70,7 +70,6 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     private val isMenuItems = mutableListOf<MenuDetail>()
 
 
-
     @SuppressLint("ClickableViewAccessibility", "SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -89,7 +88,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         binding.lblChangeRoll.paintFlags =
             binding.lblChangeRoll.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
-        appViewModel = ViewModelProvider(this).get(App::class.java)
+        appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
         isDashBoardData()
 
@@ -155,7 +154,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                 filter(s.toString())
+                filter(s.toString())
             }
         })
 
@@ -168,7 +167,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     isDashBoardData = isDashboardResponse
                     isContactDetails = isDashBoardData!![0].contactDetails
                     isMenuDetails = isDashBoardData!![0].menuDetails
-                    allMenuItems=isMenuDetails!!
+                    allMenuItems = isMenuDetails!!
                     Log.d("isMenuDetails", isMenuDetails!!.size.toString())
                     isGetAds()
                 }
@@ -202,7 +201,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
     private fun isLoadData() {
         val gridLayoutManager = GridLayoutManager(requireContext(), 3)
-        isMenuAdapter= ChildMenuAdapter(
+        isMenuAdapter = ChildMenuAdapter(
             requireActivity(), this, isMenuDetails, isAdItem, Constant.isShimmerViewDisable
         )
         gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
@@ -257,7 +256,6 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         isMenuAdapter.updateList(isMenuItems.toList())
 
     }
-
 
 
     override fun onClick(p0: View?) {
