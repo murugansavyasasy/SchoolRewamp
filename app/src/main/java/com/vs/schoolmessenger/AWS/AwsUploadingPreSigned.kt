@@ -26,7 +26,7 @@ class AwsUploadingPreSigned {
         instituteID: String?,
         isFileType: String,
         activity: Activity,
-        isCountryId: String,
+        isCountryId: Int,
         isCommunication: Boolean,
         isProfilePage: Boolean,
         uploadCallback: UploadCallback

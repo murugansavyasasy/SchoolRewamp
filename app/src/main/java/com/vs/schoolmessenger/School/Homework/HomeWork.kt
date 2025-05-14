@@ -59,7 +59,6 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-
 class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageClickListener,
     OnDateSelectedListener, HomeWorkReportClickListener {
 
@@ -111,10 +110,9 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         isAccessToken = isStaffDetails!!.access_token
 
         saveDrawableToCache(R.drawable.add_image)?.let {
-            Constant.selectedFiles!!.add(
+            Constant.selectedFiles.add(
                 FileItem(
-                    it,
-                    FileType.IMAGE
+                    it, FileType.IMAGE
                 )
             )
         }
@@ -265,7 +263,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
                 isBackRoundChange(binding.btnCreate)
                 binding.rlaHomeWorkReport.visibility = View.GONE
                 binding.rlaHomework.visibility = View.VISIBLE
-
             }
 
             R.id.btnHistory -> {
@@ -508,9 +505,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
                     }
 
                     if (cd.itemCount > remaining) Toast.makeText(
-                        this,
-                        "Only $remaining added",
-                        Toast.LENGTH_SHORT
+                        this, "Only $remaining added", Toast.LENGTH_SHORT
                     ).show()
                 } ?: data?.data?.let { uri ->
 
