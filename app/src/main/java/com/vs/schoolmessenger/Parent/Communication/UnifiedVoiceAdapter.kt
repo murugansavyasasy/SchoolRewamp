@@ -36,15 +36,22 @@ class UnifiedVoiceAdapter(
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
     private var currentlyPlayingHolder: DataViewHolder? = null
-    private var appViewModel: App = ViewModelProvider(context as ViewModelStoreOwner)[App::class.java]
+    private var appViewModel: App =
+        ViewModelProvider(context as ViewModelStoreOwner)[App::class.java]
 
     init {
         appViewModel.init()
         appViewModel.isUpdateStatusArchive?.observe(lifecycleOwner) { response ->
-            Log.d("UnifiedVoiceAdapter", if (response?.status == true) "Archive API successful" else "Archive API failed or empty")
+            Log.d(
+                "UnifiedVoiceAdapter",
+                if (response?.status == true) "Archive API successful" else "Archive API failed or empty"
+            )
         }
         appViewModel.isUpdateStatusCommunication?.observe(lifecycleOwner) { response ->
-            Log.d("UnifiedVoiceAdapter", if (response?.status == true) "API successful" else "API failed or empty")
+            Log.d(
+                "UnifiedVoiceAdapter",
+                if (response?.status == true) "API successful" else "API failed or empty"
+            )
         }
     }
 
@@ -63,10 +70,12 @@ class UnifiedVoiceAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.history_from_voice_message)
+            val shimmerView =
+                ShimmerUtil.wrapWithShimmer(parent, R.layout.history_from_voice_message)
             ShimmerViewHolder(shimmerView)
         } else {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.history_from_voice_message, parent, false)
+            val view = LayoutInflater.from(parent.context)
+                .inflate(R.layout.history_from_voice_message, parent, false)
             DataViewHolder(view, context, appViewModel, isAccessToken, isFromArchive)
         }
     }
@@ -109,7 +118,7 @@ class UnifiedVoiceAdapter(
         private val lblnewiconText: ImageView = itemView.findViewById(R.id.lblnewiconText)
         private val rlaSendVoice: View = itemView.findViewById(R.id.rlaSendVoice)
         private val rlaSelectText: View = itemView.findViewById(R.id.rlaSelectText)
-        private  var isExpanded = false
+        private var isExpanded = false
         private lateinit var mediaPlayer: MediaPlayer
         private var isPrepared = false
         private var isPlayingVoice = false
@@ -214,7 +223,7 @@ class UnifiedVoiceAdapter(
                         } else {
                             listener.onUpdateCommunicationStatus(data.type, data.id)
                         }
-                          data.is_unread=false
+                        data.is_unread = false
                     }
                     listener.onItemClick(data, this@DataViewHolder)
                 }

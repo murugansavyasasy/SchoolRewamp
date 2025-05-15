@@ -38,7 +38,8 @@ class VoiceHistoryAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.history_from_voice_message)
+            val shimmerView =
+                ShimmerUtil.wrapWithShimmer(parent, R.layout.history_from_voice_message)
             ShimmerViewHolder(shimmerView)
         } else {
             val view = LayoutInflater.from(parent.context)
@@ -72,7 +73,6 @@ class VoiceHistoryAdapter(
         private val lblEndDuration: TextView = itemView.findViewById(R.id.lblEndDuration)
         private val lblTime: TextView = itemView.findViewById(R.id.lblTime)
         private val rlaSendVoice: RelativeLayout = itemView.findViewById(R.id.rlaSendVoice)
-
 
         private lateinit var mediaPlayer: MediaPlayer
         private var isPrepared = false
@@ -110,7 +110,7 @@ class VoiceHistoryAdapter(
                 lblDate.text = Constant.convertDateTimeFormat(date)
             }
 
-            rlaSendVoice.visibility= View.VISIBLE
+            rlaSendVoice.visibility = View.VISIBLE
 
             getAudioDuration(data.url) { duration ->
                 lblEndDuration.text =
@@ -121,25 +121,21 @@ class VoiceHistoryAdapter(
             }
 
             imgVoicePlay.setOnClickListener {
-//                listener.onItemClick(data, this@DataViewHolder)
-
-                imgVoicePlay.setOnClickListener {
-                    if (adapter.currentlyPlayingHolder != null && adapter.currentlyPlayingHolder != this) {
-                        adapter.currentlyPlayingHolder?.stopAudioPlayback()
-                    }
-
-                    if (isPlayingVoice) {
-                        pauseAudio()
-                    } else {
-                        if (!isPrepared) {
-                            initializeMediaPlayer(data.url)
-                        } else {
-                            resumeAudio()
-                        }
-                    }
-
-                    adapter.currentlyPlayingHolder = this
+                if (adapter.currentlyPlayingHolder != null && adapter.currentlyPlayingHolder != this) {
+                    adapter.currentlyPlayingHolder?.stopAudioPlayback()
                 }
+
+                if (isPlayingVoice) {
+                    pauseAudio()
+                } else {
+                    if (!isPrepared) {
+                        initializeMediaPlayer(data.url)
+                    } else {
+                        resumeAudio()
+                    }
+                }
+
+                adapter.currentlyPlayingHolder = this
             }
         }
 

@@ -399,6 +399,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun stopRecording() {
+
         mediaRecorder?.apply {
             try {
                 stop()
