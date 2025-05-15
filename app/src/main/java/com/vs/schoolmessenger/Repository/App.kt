@@ -16,7 +16,9 @@ import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
+import com.vs.schoolmessenger.Repository.APIMethods.isDetailedPendingReport
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionReportResponse
+import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistoryResponse
@@ -74,6 +76,10 @@ class App(application: Application) : AndroidViewModel(application) {
         private set
 
 
+    var isDetailedPendingReport: LiveData<FeePendingReportResponse?>? = null
+        private set
+
+
 
     var isSendText: LiveData<TextSendResponse?>? = null
         private set
@@ -125,7 +131,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isGetHomeWorkReport = apiRepositories!!.isGetHomeWorkReportLiveData
         isGetDailyCollectionReport = apiRepositories!!.isGetDailyCollectionReportLiveData
         isGetSchoolStrengthReport = apiRepositories!!.isGetSchoolStrengthReportLiveData
-
+        isDetailedPendingReport = apiRepositories!!.isDetailedPendingReportLiveData
         isSendText = apiRepositories!!.isSendTextLiveData
         isSendHomeWork = apiRepositories!!.isSendHomeWorkLiveData
         isVoiceSend = apiRepositories!!.isSendVoiceLiveData

@@ -6,6 +6,8 @@ import android.content.Context
 import android.content.Intent
 import android.provider.Settings
 import android.util.Log
+import androidx.lifecycle.lifecycleScope
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
@@ -17,6 +19,7 @@ import androidx.biometric.BiometricPrompt
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
@@ -198,9 +201,11 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
         }
     }
 
+
     private fun isInterNetChecking() {
-        GlobalScope.launch {
+        lifecycleScope.launch {
             delay(2000) // 2-second delay
+<<<<<<< HEAD
             withContext(Dispatchers.Main) {
                 if (Constant.isInternetAvailable(this@Splash)) {
 
@@ -218,10 +223,20 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
                         startActivity(intent)
                     }
                     // }
+=======
+            if (Constant.isInternetAvailable(this@Splash)) {
+                val countryId = SharedPreference.getCountryId(this@Splash)
+                Log.d("countryId", countryId.toString())
+                if (countryId != 0) {
+                    isVersionCheck()
+>>>>>>> 73a6e20229af74e618a5dbb46399cc323e4cd4b3
                 } else {
-                    Log.e("Network Error", "No Internet Connection")
-                    isNoInterNet()
+                    startActivity(Intent(this@Splash, CountryScreen::class.java))
+                    finish()
                 }
+            } else {
+                Log.e("Network Error", "No Internet Connection")
+                isNoInterNet()
             }
         }
     }

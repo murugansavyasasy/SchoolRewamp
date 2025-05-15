@@ -55,7 +55,8 @@ class AlbumSelectActivity : AppCompatActivity() {
                     if (docs.isNotEmpty()) {
                         adapter.submitList(docs)
                     } else {
-                        openDocumentPicker() // fallback if empty
+                        Log.d("isDocumentEmpty","isDocumentEmpty")
+                        openDocumentPicker()
                     }
                 } else {
                     openDocumentPicker()

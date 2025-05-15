@@ -224,9 +224,9 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
         Constant.showLoading(this)
         val jsonObject = JsonObject().apply {
             addProperty(APIKeyNames.location, binding.txtLocationName.text.toString())
-            addProperty(APIKeyNames.longitude, isLongitude)
-            addProperty(APIKeyNames.latitude, isLatitude)
-            addProperty(APIKeyNames.distance, isDistance)
+            addProperty(APIKeyNames.longitude, isLongitude.toString())
+            addProperty(APIKeyNames.latitude, isLatitude.toString())
+            addProperty(APIKeyNames.distance, isDistance.toString())
         }
         Log.d("jsonObject", jsonObject.toString())
         appViewModel?.addLocation(isAccessToken!!, jsonObject, this)
@@ -234,7 +234,7 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
 
     private fun isLocationHistory() {
         val dialog = Dialog(this)
-        view = LayoutInflater.from(this).inflate(R.layout.locations_history, null) // FIXED HERE
+        view = LayoutInflater.from(this).inflate(R.layout.locations_history, null)
 
         recyleLocations = view.findViewById(R.id.recyleLocations)
         lblNoRecords = view.findViewById(R.id.lblNoRecords)

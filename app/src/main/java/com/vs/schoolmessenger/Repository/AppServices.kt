@@ -17,6 +17,7 @@ import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionReportResponse
+import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistoryResponse
@@ -55,7 +56,7 @@ class AppServices {
     var isHomeWorkDetailsData: MutableLiveData<GetHomeworkData?>
 
     var isGetSchoolStrengthReport: MutableLiveData<SchoolStrengthResponse?>
-
+    var isDetailedPendingReport: MutableLiveData<FeePendingReportResponse?>
 
     var isPunchAttendance: MutableLiveData<StatusMessageModel?>
     var isAddLocation: MutableLiveData<StatusMessageModel?>
@@ -92,7 +93,7 @@ class AppServices {
         isAcademicYear = MutableLiveData()
         isUpdateStatusCommunication = MutableLiveData()
         isHomeWorkDetailsData = MutableLiveData()
-
+        isDetailedPendingReport = MutableLiveData()
         isGetSchoolStrengthReport = MutableLiveData()
         isPunchAttendance = MutableLiveData()
         isAddLocation = MutableLiveData()
@@ -565,6 +566,38 @@ class AppServices {
 
     val isGetSchoolStrengthReportLiveData: LiveData<SchoolStrengthResponse?>
         get() = isGetSchoolStrengthReport
+
+
+    fun isDetailedPendingReport(isToken: String, isAcademicYearId: Int, activity: Activity) {
+        RestClient.apiInterfaces.isDetailedPendingReport(isToken, isAcademicYearId)
+            ?.enqueue(object : Callback<FeePendingReportResponse?> {
+                override fun onResponse(
+                    call: Call<FeePendingReportResponse?>, response: Response<FeePendingReportResponse?>
+                ) {
+                    Log.d(
+                        "isGetCountryList", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isDetailedPendingReport.postValue(response.body())
+                            } else {
+                                isDetailedPendingReport.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<FeePendingReportResponse?>, t: Throwable) {
+                    isDetailedPendingReport.postValue(null)
+                    Log.d("t.printStackTrace()", t.printStackTrace().toString())
+                }
+            })
+    }
+
+    val isDetailedPendingReportLiveData: LiveData<FeePendingReportResponse?>
+        get() = isDetailedPendingReport
 
 
     fun isSendText(isToken: String, jsonObject: JsonObject, activity: Activity) {

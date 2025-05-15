@@ -154,12 +154,12 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
                     isLoadPunchHistoryData(isPunchTiming)
                 } else {
                     rcyPunchList!!.visibility = View.GONE
-                    lblNoRecordsFound!!.text =response!!.message
+                    lblNoRecordsFound!!.text = response!!.message
                     lblNoRecordsFound!!.visibility = View.VISIBLE
                 }
             } else {
                 rcyPunchList!!.visibility = View.GONE
-                lblNoRecordsFound!!.text =response!!.message
+                lblNoRecordsFound!!.text = response!!.message
                 lblNoRecordsFound!!.visibility = View.VISIBLE
             }
         }
@@ -344,8 +344,8 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
         dialog.window?.attributes = params
 
         imgBack.setOnClickListener {
-                dialog.dismiss()
-                binding.lytNoRecordFound.visibility = View.GONE
+            dialog.dismiss()
+            binding.lytNoRecordFound.visibility = View.GONE
         }
 
         try {
