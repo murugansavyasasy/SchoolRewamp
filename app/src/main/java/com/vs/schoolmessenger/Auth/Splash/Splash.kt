@@ -17,6 +17,7 @@ import androidx.biometric.BiometricPrompt
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
@@ -198,32 +199,27 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
         }
     }
 
+
     private fun isInterNetChecking() {
-        GlobalScope.launch {
+        lifecycleScope.launch {
             delay(2000) // 2-second delay
-            withContext(Dispatchers.Main) {
-                if (Constant.isInternetAvailable(this@Splash)) {
+            if (Constant.isInternetAvailable(this@Splash)) {
+                val countryId = SharedPreference.getCountryId(this@Splash)
+                Log.d("countryId", countryId.toString())
 
-//                    val isEnabled = Constant.isDeveloperOptionsEnabled(this@Splash)
-//                    if (!isEnabled) {
-//                        showBottomPopup(this@Splash) // Call your popup function if needed
-//                    } else {
-
-                    val countryId = SharedPreference.getCountryId(this@Splash)
-                    Log.d("countryId", countryId.toString())
-                    if (countryId != 0) {
-                        isVersionCheck()
-                    } else {
-                        val intent = Intent(this@Splash, CountryScreen::class.java)
-                        startActivity(intent)
-                    }
-                    // }
+                if (countryId != 0) {
+                    isVersionCheck()
                 } else {
-                    Log.e("Network Error", "No Internet Connection")
-                    isNoInterNet()
+                    startActivity(Intent(this@Splash, CountryScreen::class.java))
+                    finish()
                 }
+//            }
+            } else {
+                Log.e("Network Error", "No Internet Connection")
+                isNoInterNet()
             }
         }
+
     }
 
     private fun showBiometricPrompt() {

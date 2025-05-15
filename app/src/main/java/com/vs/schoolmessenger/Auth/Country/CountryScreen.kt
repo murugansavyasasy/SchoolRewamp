@@ -29,6 +29,8 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
         super.setupViews()
         binding.btnArrowNext.setOnClickListener(this)
         setupToolbar()
+        Log.d("CountryScreen", "onCreate triggered")
+
         authViewModel = ViewModelProvider(this).get(Auth::class.java)
         authViewModel!!.init()
 
@@ -68,7 +70,6 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
             Constant.country_details = isCountryList[0]
         }
 
-        // Handle selection event
         binding.isSpineer.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -83,12 +84,6 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
                         "SelectedCountry",
                         "ID: ${Constant.country_details!!.id}, Name: ${Constant.country_details!!.name}"
                     )
-
-//                    Toast.makeText(
-//                        this@CountryScreen,
-//                        "Selected: ${Constant.country_details!!.name}",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
                 }
 
             }
@@ -115,8 +110,6 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
                         Toast.makeText(this, R.string.AgreeTermsConditions, Toast.LENGTH_SHORT)
                             .show()
                     }
-                } else {
-//                    Toast.makeText(this, "Please select a country before proceeding", Toast.LENGTH_SHORT).show()
                 }
             }
         }
