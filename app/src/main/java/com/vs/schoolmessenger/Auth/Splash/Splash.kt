@@ -81,7 +81,7 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
         super.setupViews()
         isToolBarTheme()
 
-        authViewModel = ViewModelProvider(this).get(Auth::class.java)
+        authViewModel = ViewModelProvider(this)[Auth::class.java]
         authViewModel!!.init()
 
         appUpdateManager = AppUpdateManagerFactory.create(this)

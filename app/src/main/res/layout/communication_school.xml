@@ -743,9 +743,11 @@
                             style="@style/CustomTextStylePoppinsMedium"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Choose pre recorded file"
+                            android:text="@string/choose_pre_recorded_file"
                             android:textColor="@color/navi_blue1"
-                            android:textSize="@dimen/thirteen_sp"></TextView>
+                            android:textSize="@dimen/thirteen_sp">
+
+                        </TextView>
                     </RelativeLayout>
 
                     <RelativeLayout

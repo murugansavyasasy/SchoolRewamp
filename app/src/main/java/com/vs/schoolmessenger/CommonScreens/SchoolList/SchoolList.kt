@@ -305,7 +305,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         val isCountryId = SharedPreference.getCountryId(this)
         for (i in isSelectedFiles.indices) {
             isAwsUploadingPreSigned!!.getPreSignedUrl(
-                isSelectedFiles.get(i).path, schoolId, isFileType!!,
+                isSelectedFiles[i].path, schoolId, isFileType!!,
                 this, isCountryId!!,
                 true,
                 false,

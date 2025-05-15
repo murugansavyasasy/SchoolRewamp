@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.Repository
 
 object APIMethods {
 
+    // AUTH
     const val isCountryList = "app/api/setup/countries"
     const val isVersionCheck = "app/api/setup/version-check"
     const val isValidateUser = "app/api/auth/validate-user"
@@ -12,7 +13,7 @@ object APIMethods {
     const val isCreateNewPassword = "app/api/cred/create-new-password"
     const val isDeviceToken = "app/api/auth/device-token"
 
-    
+    // APP
     const val isGetDashBoard = "dashboard/dashboard/get-dashboard-details"
     const val isGetAds = "dashboard/dashboard/get-ads"
     const val getStaffList = "comm/recipient/get-staff-list"

@@ -101,11 +101,11 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
             access_token = staffDetails!!.access_token
             binding.lblSchoolName.text = staffDetails!!.school_name
-            if (staffDetails!!.school_name_regional != ""){
-                binding.lblSchoolRegionalName.visibility= View.GONE
+            if (staffDetails!!.school_name_regional != "") {
+                binding.lblSchoolRegionalName.visibility = View.GONE
                 binding.lblSchoolRegionalName.text = staffDetails!!.school_name_regional
-            }else{
-                binding.lblSchoolRegionalName.visibility= View.GONE
+            } else {
+                binding.lblSchoolRegionalName.visibility = View.GONE
             }
             binding.lblSchoolAddress.text = staffDetails!!.school_address
             binding.lblSchoolAddress.visibility = View.VISIBLE
@@ -149,11 +149,11 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             } else {
 //                binding.lblSchoolAddress.visibility = View.VISIBLE
                 binding.lblSchoolName.text = userDetails!!.staff_details[0].school_name
-                if (staffDetails!!.school_name_regional != ""){
-                    binding.lblSchoolRegionalName.visibility= View.GONE
+                if (staffDetails!!.school_name_regional != "") {
+                    binding.lblSchoolRegionalName.visibility = View.GONE
                     binding.lblSchoolRegionalName.text = staffDetails!!.school_name_regional
-                }else{
-                    binding.lblSchoolRegionalName.visibility= View.GONE
+                } else {
+                    binding.lblSchoolRegionalName.visibility = View.GONE
                 }
                 binding.lblSchoolAddress.text = userDetails!!.staff_details[0].school_address
                 Glide.with(requireActivity())
@@ -220,7 +220,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     isDashBoardData = isDashboardResponse
                     isContactDetails = isDashBoardData!![0].contactDetails
                     isMenuDetails = isDashBoardData!![0].menuDetails
-                    allMenuItems=isMenuDetails!!
+                    allMenuItems = isMenuDetails!!
                     isGetAds()
                 }
             }
@@ -262,7 +262,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                   filter(s.toString())
+                filter(s.toString())
             }
         })
 
@@ -273,7 +273,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     val intent = Intent(requireActivity(), PrioritySelection::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     startActivity(intent)
-                }else {
+                } else {
                     handleBackPress()
                 }
             }
@@ -348,7 +348,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             .setTitle(getString(R.string.Go_Back))
             .setMessage(getString(R.string.Do_you_want_Exit))
             .setPositiveButton(getString(R.string.Yes)) { _, _ ->
-               requireActivity().finishAffinity()
+                requireActivity().finishAffinity()
             }
             .setNegativeButton(getString(R.string.No), null)
             .show()
@@ -376,7 +376,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
         appViewModel!!.isDashBoardData(
             access_token, Constant.staff_, requireActivity()
-
         )
     }
 
@@ -435,7 +434,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             }
 
             Constant.M_SCHOOL_STRENGTH -> {
-                if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
+                if (userDetails!!.staff_role == Constant.isStaffRole) {
                     SchoolStrength::class.java
                 } else {
                     if (userDetails!!.staff_details.size > 1) {
@@ -449,9 +448,8 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             Constant.M_NOTICEBOARD -> CreateNoticeBoard::class.java
             Constant.M_EVENTS_HOLIDAYS -> CreateEvent::class.java
             Constant.M_SCHEDULE_EXAM_TEST -> Exam::class.java
-
             Constant.M_MESSAGES_FROM_MANAGEMENT -> {
-                if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
+                if (userDetails!!.staff_role == Constant.isStaffRole) {
                     MessageFromManagement::class.java
                 } else {
                     if (userDetails!!.staff_details.size > 1) {
@@ -460,11 +458,10 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                         MessageFromManagement::class.java
                     }
                 }
-
             }
 
             Constant.M_INTERACTION_WITH_STUDENT -> {
-                if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
+                if (userDetails!!.staff_role == Constant.isStaffRole) {
                     InteractionWithStudent::class.java
                 } else {
                     if (userDetails!!.staff_details.size > 1) {
