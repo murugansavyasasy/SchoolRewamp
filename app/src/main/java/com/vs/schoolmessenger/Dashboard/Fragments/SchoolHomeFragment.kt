@@ -63,7 +63,7 @@ import javax.sql.DataSource
 
 class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
-    private lateinit var binding: SchoolHomeFragmentBinding // Automatically generated binding class
+    private lateinit var binding: SchoolHomeFragmentBinding
     lateinit var isMenuAdapter: SchoolMenuAdapter
     private var isSearchVisible = false
     private var appViewModel: App? = null
@@ -94,8 +94,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
         userDetails = SharedPreference.getUserDetails(requireActivity())
         staffDetails = SharedPreference.getStaffDetails(requireActivity())
-
-
         Log.d("school_logo", staffDetails!!.school_logo)
 
         if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
@@ -109,8 +107,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             }
             binding.lblSchoolAddress.text = staffDetails!!.school_address
             binding.lblSchoolAddress.visibility = View.VISIBLE
-            Glide.with(requireActivity())
-                .load(userDetails!!.staff_details[0].school_logo)
+            Glide.with(requireActivity()).load(userDetails!!.staff_details[0].school_logo)
                 .listener(object : RequestListener<Drawable> {
 
                     override fun onLoadFailed(
@@ -120,8 +117,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                         isFirstResource: Boolean
                     ): Boolean {
                         Handler(Looper.getMainLooper()).post {
-                            Glide.with(requireActivity())
-                                .load(R.drawable.school_sample)
+                            Glide.with(requireActivity()).load(R.drawable.school_sample)
                                 .into(binding.imgSchoolLogo)
                         }
                         return false
@@ -138,8 +134,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                         Log.d("Glide", "Image load success")
                         return false
                     }
-                })
-                .into(binding.imgSchoolLogo)
+                }).into(binding.imgSchoolLogo)
 
         } else {
             access_token = userDetails!!.staff_details[0].access_token
@@ -156,8 +151,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     binding.lblSchoolRegionalName.visibility = View.GONE
                 }
                 binding.lblSchoolAddress.text = userDetails!!.staff_details[0].school_address
-                Glide.with(requireActivity())
-                    .load(userDetails!!.staff_details[0].school_logo)
+                Glide.with(requireActivity()).load(userDetails!!.staff_details[0].school_logo)
                     .listener(object : RequestListener<Drawable> {
 
                         override fun onLoadFailed(
@@ -167,8 +161,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                             isFirstResource: Boolean
                         ): Boolean {
                             Handler(Looper.getMainLooper()).post {
-                                Glide.with(requireActivity())
-                                    .load(R.drawable.school_sample)
+                                Glide.with(requireActivity()).load(R.drawable.school_sample)
                                     .into(binding.imgSchoolLogo)
                             }
                             return false
@@ -184,8 +177,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                             Log.d("Glide", "Image load success")
                             return false
                         }
-                    })
-                    .into(binding.imgSchoolLogo)
+                    }).into(binding.imgSchoolLogo)
             }
         }
 
@@ -232,25 +224,17 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 response.message
                 if (status) {
                     isAdItem = response.data
-//
 //                    isAdsDisplayOptions = isAdItem!![0].ads_display_options
 //                    isLoadData()
-
-                    if (status) {
-                        // Filter out the first item (which contains ads_display_options)
-                        val filteredAds = response.data.filter { it.id != null }
-                        isAdsDisplayOptions = isAdItem!![0].ads_display_options
-                        // Save the list of ads in a variable
-                        val adList: List<AdItem> = filteredAds.map { ad ->
-                            AdItem(
-                                ad.id!!, ad.name ?: "", ad.content_url ?: "", ad.redirect_url ?: ""
-                            )
-                        }
-
-                        // Now you can use `adList` anywhere in the activity/fragment
-                        isAdItem = adList
-                        isLoadData()
+                    val filteredAds = response.data.filter { it.id != null }
+                    isAdsDisplayOptions = isAdItem!![0].ads_display_options
+                    val adList: List<AdItem> = filteredAds.map { ad ->
+                        AdItem(
+                            ad.id!!, ad.name ?: "", ad.content_url ?: "", ad.redirect_url ?: ""
+                        )
                     }
+                    isAdItem = adList
+                    isLoadData()
                 }
             }
         }
@@ -344,14 +328,11 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
 
     private fun handleBackPress() {
-        AlertDialog.Builder(requireContext())
-            .setTitle(getString(R.string.Go_Back))
+        AlertDialog.Builder(requireContext()).setTitle(getString(R.string.Go_Back))
             .setMessage(getString(R.string.Do_you_want_Exit))
             .setPositiveButton(getString(R.string.Yes)) { _, _ ->
                 requireActivity().finishAffinity()
-            }
-            .setNegativeButton(getString(R.string.No), null)
-            .show()
+            }.setNegativeButton(getString(R.string.No), null).show()
     }
 
 

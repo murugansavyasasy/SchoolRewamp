@@ -196,6 +196,15 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
         changeLabel()
         binding.SwitchEmergencyVoice.setOnClickListener {
+            if (isRecording) {
+                stopRecording()
+            }
+            binding.rlaSeekBarAndTitle.visibility = View.GONE
+            binding.rlaTitle.visibility = View.GONE
+            Constant.selectedFiles.clear()
+            binding.rlaAddLocalFile.visibility = View.VISIBLE
+            binding.rytVoiceRecord.visibility = View.VISIBLE
+            binding.lblDurationOfVoice.visibility = View.VISIBLE
             if (binding.SwitchEmergencyVoice.isChecked()) {
                 Constant.isAccessType = Constant.isEmergency
                 binding.lblDurationOfVoice.text = "00:00 / 00:30"
@@ -207,7 +216,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     popupWindow.dismiss() // Dismiss the tooltip after 2 seconds
                 }, 2000)
             } else {
-
                 Constant.isAccessType = Constant.isNonEmergency
                 binding.lblDurationOfVoice.text = "00:00 / 03:00"
                 isEmergency = false

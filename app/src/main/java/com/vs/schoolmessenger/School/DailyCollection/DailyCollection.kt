@@ -40,6 +40,8 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(), View.OnClickList
         appViewModel?.init()
         val isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails?.access_token
+        from_Date=binding.fromDate2.text.toString()
+        to_Date=binding.fromDate3.text.toString()
 
         isGetDailyCollection()
         appViewModel?.isGetDailyCollectionReport?.observe(this) { response ->
