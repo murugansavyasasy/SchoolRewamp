@@ -48,32 +48,37 @@ class AlbumSelectActivity : AppCompatActivity() {
                     if (docs.isNotEmpty()) {
                         adapter.submitList(docs)
                     } else {
-                        Log.d("isDocumentEmpty","isDocumentEmpty")
+                        Log.d("isDocumentEmpty", "isDocumentEmpty")
                         openDocumentPicker()
                     }
                 } else {
                     openDocumentPicker()
                 }
             }
+
             else -> adapter.submitList(emptyList())
         }
     }
 
     private fun setupDocumentPicker() {
-        documentPickerLauncher = registerForActivityResult(ActivityResultContracts.OpenMultipleDocuments()) { uris ->
-            // Handle the selected documents here
-            if (uris != null) {
-                adapter.submitList(uris)
+        documentPickerLauncher =
+            registerForActivityResult(ActivityResultContracts.OpenMultipleDocuments()) { uris ->
+                // Handle the selected documents here
+                if (uris != null) {
+                    adapter.submitList(uris)
+                }
             }
-        }
     }
+
     private fun openDocumentPicker() {
-        documentPickerLauncher.launch(arrayOf(
-            "application/pdf",
-            "application/msword",
-            "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-            "application/vnd.ms-powerpoint"
-        ))
+        documentPickerLauncher.launch(
+            arrayOf(
+                "application/pdf",
+                "application/msword",
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                "application/vnd.ms-powerpoint"
+            )
+        )
     }
 
     private fun loadDocumentsFromMediaStore(): List<Uri> {
@@ -165,7 +170,6 @@ class AlbumSelectActivity : AppCompatActivity() {
         }
         return audioUris
     }
-
 
 
 //    private fun loadImages(context: Context): List<Uri> {
