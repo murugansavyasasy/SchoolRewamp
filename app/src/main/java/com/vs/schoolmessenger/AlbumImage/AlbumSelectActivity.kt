@@ -1,88 +1,251 @@
 package com.vs.schoolmessenger.AlbumImage
 
-
 import android.content.ContentUris
 import android.content.Context
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
+import com.vs.schoolmessenger.databinding.ActivityAlbumSelectBinding
 import com.vs.schoolmessenger.databinding.AlbumSelectActivityBinding
 
 class AlbumSelectActivity : AppCompatActivity() {
-    private lateinit var fileType: String
+
     private lateinit var binding: AlbumSelectActivityBinding
-    private val selectedUris = mutableListOf<Uri>()
+    private lateinit var adapter: FileGridAdapter
+
+    private lateinit var documentPickerLauncher: ActivityResultLauncher<Array<String>>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = AlbumSelectActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        fileType = intent.getStringExtra("fileType") ?: ""
-        fileType = "audio"
-        val files = loadFiles(this, fileType)
-        val adapter = FileGridAdapter(files) { uri, isSelected ->
-            if (isSelected) selectedUris.add(uri) else selectedUris.remove(uri)
+        adapter = FileGridAdapter(limit = 5) { selectedUris ->
+            // Print selected URIs
+            selectedUris.forEach {
+                println("Selected: $it")
+            }
         }
+        setupDocumentPicker()
 
+        binding.recyclerView.layoutManager = GridLayoutManager(this, 3)
+        binding.recyclerView.adapter = adapter
 
-        binding.albumRecyclerView.layoutManager = GridLayoutManager(this, 3)
-        binding.albumRecyclerView.adapter = adapter
-
-        binding.doneButton.setOnClickListener {
-            val resultIntent = intent
-            resultIntent.putParcelableArrayListExtra("selectedUris", ArrayList(selectedUris))
-            setResult(RESULT_OK, resultIntent)
-            finish()
+        val fileType = intent.getStringExtra("type") ?: "IMAGE"
+//        val files = when (type) {
+//            "IMAGE" -> loadImages(this)
+//            "VIDEO" -> loadVideos(this)
+//            "AUDIO" -> loadAudio(this)
+//            "DOCUMENT" -> loadDocuments(this)
+//            else -> emptyList()
+//        }
+        when (fileType.uppercase()) {
+            "IMAGE" -> adapter.submitList(loadImages())
+            "VIDEO" -> adapter.submitList(loadVideos())
+            "AUDIO" -> adapter.submitList(loadAudio())
+            "DOCUMENT" -> {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    val docs = loadDocumentsFromMediaStore()
+                    if (docs.isNotEmpty()) {
+                        adapter.submitList(docs)
+                    } else {
+                        openDocumentPicker() // fallback if empty
+                    }
+                } else {
+                    openDocumentPicker()
+                }
+            }
+            else -> adapter.submitList(emptyList())
         }
+//        Log.d("documentUris", files.size.toString())
+//        adapter.submitList(files)
     }
 
-    private fun loadFiles(context: Context, type: String): List<FileItem> {
-        val files = mutableListOf<FileItem>()
+    private fun setupDocumentPicker() {
+        documentPickerLauncher = registerForActivityResult(ActivityResultContracts.OpenMultipleDocuments()) { uris ->
+            // Handle the selected documents here
+            if (uris != null) {
+                adapter.submitList(uris)
+            }
+        }
+    }
+    private fun openDocumentPicker() {
+        documentPickerLauncher.launch(arrayOf(
+            "application/pdf",
+            "application/msword",
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            "application/vnd.ms-powerpoint"
+        ))
+    }
+
+    private fun loadDocumentsFromMediaStore(): List<Uri> {
+        val documentUris = mutableListOf<Uri>()
+        val collection = MediaStore.Files.getContentUri("external")
+
         val projection = arrayOf(
             MediaStore.Files.FileColumns._ID,
-            MediaStore.Files.FileColumns.DISPLAY_NAME,
             MediaStore.Files.FileColumns.MIME_TYPE
         )
+
+        val selection = ("${MediaStore.Files.FileColumns.MIME_TYPE} IN (?, ?, ?, ?)")
+
+        val selectionArgs = arrayOf(
+            "application/pdf",
+            "application/msword", // .doc
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // .docx
+            "application/vnd.ms-powerpoint" // .ppt
+        )
+
         val sortOrder = "${MediaStore.Files.FileColumns.DATE_ADDED} DESC"
 
-        val (uri, selection, selectionArgs) = when (type) {
-            "image" -> Triple(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, null, null)
-            "video" -> Triple(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, null, null)
-            "audio" -> Triple(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, null, null)
-            "document" -> {
-                val mimeTypes = arrayOf(
-                    "application/pdf", "application/msword",
-                    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-                    "application/vnd.ms-powerpoint",
-                    "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-                    "application/vnd.ms-excel",
-                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                )
-                val selection = mimeTypes.joinToString(" OR ") { "${MediaStore.Files.FileColumns.MIME_TYPE} = ?" }
-                Triple(MediaStore.Files.getContentUri("external"), selection, mimeTypes)
-            }
-            else -> return emptyList()
-        }
+        val cursor = contentResolver.query(
+            collection,
+            projection,
+            selection,
+            selectionArgs,
+            sortOrder
+        )
 
-        val cursor = context.contentResolver.query(uri, projection, selection, selectionArgs, sortOrder)
         cursor?.use {
             val idCol = it.getColumnIndexOrThrow(MediaStore.Files.FileColumns._ID)
-            val nameCol = it.getColumnIndexOrThrow(MediaStore.Files.FileColumns.DISPLAY_NAME)
-            val mimeCol = it.getColumnIndexOrThrow(MediaStore.Files.FileColumns.MIME_TYPE)
-
             while (it.moveToNext()) {
                 val id = it.getLong(idCol)
-                val name = it.getString(nameCol)
-                val mimeType = it.getString(mimeCol)
-                val fileUri = ContentUris.withAppendedId(uri, id)
-                files.add(FileItem(fileUri, name, mimeType))
+                val contentUri = Uri.withAppendedPath(collection, id.toString())
+                documentUris.add(contentUri)
             }
         }
-        return files
+
+        return documentUris
+    }
+
+    private fun loadImages(): List<Uri> {
+        val imageUris = mutableListOf<Uri>()
+        val collection = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+        val projection = arrayOf(MediaStore.Images.Media._ID)
+        val sortOrder = "${MediaStore.Images.Media.DATE_ADDED} DESC"
+
+        contentResolver.query(collection, projection, null, null, sortOrder)?.use { cursor ->
+            val idCol = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
+            while (cursor.moveToNext()) {
+                val id = cursor.getLong(idCol)
+                val uri = ContentUris.withAppendedId(collection, id)
+                imageUris.add(uri)
+            }
+        }
+        return imageUris
+    }
+
+    private fun loadVideos(): List<Uri> {
+        val videoUris = mutableListOf<Uri>()
+        val collection = MediaStore.Video.Media.EXTERNAL_CONTENT_URI
+        val projection = arrayOf(MediaStore.Video.Media._ID)
+        val sortOrder = "${MediaStore.Video.Media.DATE_ADDED} DESC"
+
+        contentResolver.query(collection, projection, null, null, sortOrder)?.use { cursor ->
+            val idCol = cursor.getColumnIndexOrThrow(MediaStore.Video.Media._ID)
+            while (cursor.moveToNext()) {
+                val id = cursor.getLong(idCol)
+                val uri = ContentUris.withAppendedId(collection, id)
+                videoUris.add(uri)
+            }
+        }
+        return videoUris
+    }
+
+    private fun loadAudio(): List<Uri> {
+        val audioUris = mutableListOf<Uri>()
+        val collection = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+        val projection = arrayOf(MediaStore.Audio.Media._ID)
+        val sortOrder = "${MediaStore.Audio.Media.DATE_ADDED} DESC"
+
+        contentResolver.query(collection, projection, null, null, sortOrder)?.use { cursor ->
+            val idCol = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media._ID)
+            while (cursor.moveToNext()) {
+                val id = cursor.getLong(idCol)
+                val uri = ContentUris.withAppendedId(collection, id)
+                audioUris.add(uri)
+            }
+        }
+        return audioUris
     }
 
 
+
+//    private fun loadImages(context: Context): List<Uri> {
+//        return loadMediaUris(context, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+//    }
+//
+//    private fun loadVideos(context: Context): List<Uri> {
+//        return loadMediaUris(context, MediaStore.Video.Media.EXTERNAL_CONTENT_URI)
+//    }
+//
+//    private fun loadAudio(context: Context): List<Uri> {
+//        return loadMediaUris(context, MediaStore.Audio.Media.EXTERNAL_CONTENT_URI)
+//    }
+//
+//    private fun loadMediaUris(context: Context, uri: Uri): List<Uri> {
+//        val mediaUris = mutableListOf<Uri>()
+//        val projection = arrayOf(MediaStore.MediaColumns._ID)
+//        val sortOrder = "${MediaStore.MediaColumns.DATE_ADDED} DESC"
+//
+//        val query = context.contentResolver.query(uri, projection, null, null, sortOrder)
+//        query?.use { cursor ->
+//            val idColumn = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns._ID)
+//            while (cursor.moveToNext()) {
+//                val id = cursor.getLong(idColumn)
+//                val contentUri = ContentUris.withAppendedId(uri, id)
+//                mediaUris.add(contentUri)
+//            }
+//        }
+//        return mediaUris
+//    }
+//
+//    private fun loadDocuments(context: Context): List<Uri> {
+//        val documentUris = mutableListOf<Uri>()
+//        val collection = MediaStore.Files.getContentUri("external")
+//
+//        val projection = arrayOf(
+//            MediaStore.Files.FileColumns._ID,
+//            MediaStore.Files.FileColumns.MIME_TYPE
+//        )
+//
+//        val selection = ("${MediaStore.Files.FileColumns.MIME_TYPE}=? OR " +
+//                "${MediaStore.Files.FileColumns.MIME_TYPE}=? OR " +
+//                "${MediaStore.Files.FileColumns.MIME_TYPE}=? OR " +
+//                "${MediaStore.Files.FileColumns.MIME_TYPE}=?")
+//
+//        val selectionArgs = arrayOf(
+//            "application/pdf",
+//            "application/msword",
+//            "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+//            "application/vnd.ms-powerpoint"
+//        )
+//
+//        val sortOrder = "${MediaStore.Files.FileColumns.DATE_ADDED} DESC"
+//
+//        val query = context.contentResolver.query(
+//            collection,
+//            projection,
+//            selection,
+//            selectionArgs,
+//            sortOrder
+//        )
+//
+//        query?.use { cursor ->
+//            val idColumn = cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns._ID)
+//            while (cursor.moveToNext()) {
+//                val id = cursor.getLong(idColumn)
+//                val contentUri = ContentUris.withAppendedId(collection, id)
+//                documentUris.add(contentUri)
+//            }
+//        }
+//
+//        return documentUris
+//    }
 }
