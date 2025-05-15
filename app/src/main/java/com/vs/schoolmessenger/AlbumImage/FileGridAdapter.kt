@@ -1,22 +1,30 @@
 package com.vs.schoolmessenger.AlbumImage
 
+import android.content.Context
 import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.databinding.ItemFileBinding
 
-// FileGridAdapter.kt
 class FileGridAdapter(
-    private val files: List<FileItem>,
-    private val onFileToggle: (Uri, Boolean) -> Unit
+    private val limit: Int,
+    private val onSelectionChanged: (List<Uri>) -> Unit
 ) : RecyclerView.Adapter<FileGridAdapter.FileViewHolder>() {
 
-    private val selectedItems = mutableSetOf<Uri>()
+    private val selected = mutableListOf<Uri>()
+    private val items = mutableListOf<Uri>()
+
+    fun submitList(list: List<Uri>) {
+        items.clear()
+        items.addAll(list)
+        notifyDataSetChanged()
+    }
 
     inner class FileViewHolder(val binding: ItemFileBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -26,28 +34,62 @@ class FileGridAdapter(
     }
 
     override fun onBindViewHolder(holder: FileViewHolder, position: Int) {
-        val item = files[position]
-        val uri = item.uri
-        val context = holder.binding.imageThumb.context
+        val uri = items[position]
+        val binding = holder.binding
+        val context = binding.root.context
 
-        if (item.mimeType!!.startsWith("image") || item.mimeType.startsWith("video")) {
-            Glide.with(context).load(uri).centerCrop().into(holder.binding.imageThumb)
-        } else if (item.mimeType == "application/pdf") {
-            holder.binding.imageThumb.setImageResource(R.drawable.hw_pdf_img)
+        // Reset visibility
+        binding.audioIcon.visibility = View.GONE
+        binding.videoIcon.visibility = View.GONE
+        binding.progressBar.visibility = View.VISIBLE
+        if (isImage(uri, context)) {
+            Glide.with(context)
+                .load(uri)
+                .into(binding.imageView)
+        } else if (isVideo(uri, context)) {
+            Glide.with(context)
+                .load(uri)
+                .into(binding.imageView)
+            binding.videoIcon.visibility = View.VISIBLE
+        } else if (isAudio(uri, context)) {
+            binding.imageView.setImageResource(R.drawable.voice)
+            binding.audioIcon.visibility = View.VISIBLE
         } else {
-            holder.binding.imageThumb.setImageResource(R.drawable.daily_collection)
+            binding.imageView.setImageResource(R.drawable.doc_icon)
         }
 
-        holder.binding.fileName.text = item.name
-        holder.binding.root.alpha = if (selectedItems.contains(uri)) 0.5f else 1.0f
+        binding.progressBar.visibility = View.GONE
+        binding.checkIcon.visibility = if (selected.contains(uri)) View.VISIBLE else View.GONE
 
-        holder.binding.root.setOnClickListener {
-            val isSelected = selectedItems.contains(uri)
-            if (isSelected) selectedItems.remove(uri) else selectedItems.add(uri)
+        binding.root.setOnClickListener {
+            if (selected.contains(uri)) {
+                selected.remove(uri)
+            } else {
+                if (selected.size >= limit) {
+                    Toast.makeText(context, "Limit is $limit", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+                selected.add(uri)
+            }
             notifyItemChanged(position)
-            onFileToggle(uri, !isSelected)
+            onSelectionChanged(selected)
         }
     }
 
-    override fun getItemCount() = files.size
+    override fun getItemCount(): Int = items.size
+
+    private fun isImage(uri: Uri, context: Context): Boolean {
+        val mimeType = context.contentResolver.getType(uri)
+        return mimeType?.startsWith("image/") == true
+    }
+
+    private fun isVideo(uri: Uri, context: Context): Boolean {
+        val mimeType = context.contentResolver.getType(uri)
+        return mimeType?.startsWith("video/") == true
+    }
+
+    private fun isAudio(uri: Uri, context: Context): Boolean {
+        val mimeType = context.contentResolver.getType(uri)
+        return mimeType?.startsWith("audio/") == true
+    }
 }

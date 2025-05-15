@@ -1,56 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="120dp"
-    android:fitsSystemWindows="true"
-    android:layout_margin="4dp">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_file_root"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:context=".AlbumImage.FileGridAdapter">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="@dimen/twenty"
+        android:layout_height="@dimen/twenty"
         android:layout_margin="8dp"
-        android:elevation="4dp">
+        android:indeterminate="true"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="8dp">
+    <!-- Image view for images -->
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_margin="8dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-            <!-- Image thumbnail -->
-            <ImageView
-                android:id="@+id/imageThumb"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center"
-                 />
+    <!-- Video icon visible when the item is a video -->
+    <ImageView
+        android:id="@+id/videoIcon"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_margin="8dp"
+        android:src="@drawable/video"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-            <!-- Label for PDFs (shown when it's a PDF) -->
-            <TextView
-                android:id="@+id/pdfLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="PDF"
-                android:textSize="12sp"
-                android:textColor="@android:color/black"
-                android:layout_marginTop="4dp"
-                android:visibility="gone"
-                android:layout_gravity="center" />
+    <!-- Audio icon visible when the item is an audio file -->
+    <ImageView
+        android:id="@+id/audioIcon"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_margin="8dp"
+        android:src="@drawable/voice"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-            <!-- File name displayed below the image -->
-            <TextView
-                android:id="@+id/fileName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="File Name"
-                android:textSize="12sp"
-                android:textColor="@android:color/black"
-                android:layout_marginTop="4dp"
-                android:layout_gravity="center" />
-        </LinearLayout>
+    <!-- Check Icon for item selection -->
+    <ImageView
+        android:id="@+id/checkIcon"
+        android:layout_width="@dimen/twenty"
+        android:layout_height="@dimen/twenty"
+        android:layout_margin="8dp"
+        android:src="@android:drawable/checkbox_on_background"
+        android:background="@android:color/transparent"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.cardview.widget.CardView>
-
-
-
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

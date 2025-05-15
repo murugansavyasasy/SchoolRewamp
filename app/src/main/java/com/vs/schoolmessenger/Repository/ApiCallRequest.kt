@@ -116,4 +116,28 @@ object ApiCallRequest {
         return jsonObject
     }
 
+
+//    fun isSendNotice(
+//        istitle: Int,
+//        iscontent: MutableList<String>,
+//        istargetcode: String,
+//        isintendedfor: String,
+//        isvisiblefrom: String,
+//        isvisibleto: String,
+//        subjectId: Int): JsonObject {
+//        val jsonObject = JsonObject()
+//        val filePathArray = JsonArray()
+//
+//
+//        jsonObject.addProperty(APIKeyNames.title, istitle)
+//        jsonObject.addProperty(APIKeyNames.content, iscontent)
+//        jsonObject.addProperty(APIKeyNames.target_code, istargetcode)
+//        jsonObject.addProperty(APIKeyNames.intended_for, isintendedfor)
+//        jsonObject.addProperty(APIKeyNames.visible_from, isvisiblefrom)
+//        jsonObject.addProperty(APIKeyNames.visible_to,isvisibleto)
+//        jsonObject.add(APIKeyNames.file_path, filePathArray)
+//        return jsonObject
+//    }
+
+
 }
