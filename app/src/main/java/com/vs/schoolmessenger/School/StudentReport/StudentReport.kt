@@ -7,15 +7,18 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
+import androidx.compose.ui.platform.LocalDensity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SectionList.Section
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.Standard
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.StudentReportBinding
 
 class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener,
@@ -27,6 +30,7 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
     var isSection: List<Section>? = null
     var isValidAcademicYear = false
     var isAcademicYear: List<AcademicYear>? = null
+    private var isStaffDetails: StaffDetails? = null
     var isAcademicYearId = -1
     var isCurrentAcademicYear = true
     var isSectionId = -1
@@ -78,11 +82,14 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
 //        binding.rlaStandard.setOnClickListener(this)
         binding.dropdownTextViewStandard.setOnClickListener(this)
         binding.dropdownTextViewSection.setOnClickListener(this)
+        isStaffDetails = SharedPreference.getStaffDetails(this)
+        isAccessToken = isStaffDetails!!.access_token
         isGetAcademicYear()
         isGetStudentReport()
 
         appViewModel!!.isGetAcademicList?.observe(this) { response ->
-            Constant.hideLoading(this@StudentReport)
+//            Constant.hideLoading(this@StudentReport)
+            Log.d("AcademicYearResponse",response?.data.toString())
             response?.data?.let { academicList ->
                 val reorderedList = academicList.sortedByDescending { it.current_academic_year }
                 if (isAcademicYear == reorderedList) return@observe
@@ -92,21 +99,24 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
                 binding.lblAcademicYear.text = isAcademicYear!![0].year
                 isAcademicYearId = isAcademicYear!![0].id
                 isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
-
+                Log.d("isAcademicYearId",isAcademicYearId.toString())
                 isGetStandardSection()
             }
         }
         appViewModel!!.isStandardSectionList?.observe(this) { response ->
-            Constant.hideLoading(this@StudentReport)
+//            Constant.hideLoading(this@StudentReport)
             if (response != null) {
                 isGetStandard = response.data
                 isGetStandard?.size?.let {
                     if (it > 0) {
+                        isClassID=isGetStandard!!.get(0).id
+                        Log.d("isClassID",isClassID.toString())
                         isSectionId = isGetStandard!!.get(0).sections.get(0).id
                         binding.dropdownTextViewStandard.text = isGetStandard!!.get(0).name
                         if (isGetStandard!!.get(0).sections.size > 0) {
                             binding.dropdownTextViewSection.text = isGetStandard!!.get(0).sections.get(0).name
                             isSection = isGetStandard!!.get(0).sections
+                            Log.d("isSectionID",isSection.toString())
                         }
                     } else {
                         binding.dropdownTextViewStandard.visibility = View.GONE
@@ -236,18 +246,21 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
             // Set GridLayoutManager (2 columns in this case)
             binding.rcyStudentReport.adapter = mAdapter
         }
+        Log.d("ClassAndSectionID",isClassID.toString()+isSectionID.toString())
         appViewModel!!.getStudentReportDetails(
             isAccessToken!!,isClassID!!,isSectionID!!, this
         )
     }
     private fun isGetAcademicYear() {
-        Constant.showLoading(this@StudentReport)
+//        Constant.showLoading(this@StudentReport)
+
         appViewModel!!.isGetAcademicYear(
             isAccessToken!!, this
         )
     }
     private fun isGetStandardSection() {
-        Constant.showLoading(this@StudentReport)
+        Log.d("isAcademicYearId",isAcademicYearId.toString())
+//        Constant.showLoading(this@StudentReport)
         appViewModel!!.isGetStandardSection(isAccessToken!!.toString(), isAcademicYearId, this)
     }
 
