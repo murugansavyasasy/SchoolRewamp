@@ -13,7 +13,9 @@ object APIMethods {
     const val isCreateNewPassword = "app/api/cred/create-new-password"
     const val isDeviceToken = "app/api/auth/device-token"
 
-    // APP
+
+
+
     const val isGetDashBoard = "dashboard/dashboard/get-dashboard-details"
     const val isGetAds = "dashboard/dashboard/get-ads"
     const val getStaffList = "comm/api/recipient/get-staff-list"
@@ -29,6 +31,7 @@ object APIMethods {
     const val isGetHomeWorkReport = "comm/api/homework/get-homework-report"
     const val isGetDailyCollectionReport = "api/fee-report/daily-collection"
     const val isGetSchoolStrengthReport = "api/get-school-strength"
+    const val isDetailedPendingReport = "admin/api/fee-report/detailed-pending-report"
     const val isSendText = "comm/api/text-message/send-text"
     const val isSendHomeWork = "comm/api/homework/send-homework"
     const val isSendVoice = "comm/api/voice/send-voice"

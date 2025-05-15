@@ -6,6 +6,8 @@ import android.content.Context
 import android.content.Intent
 import android.provider.Settings
 import android.util.Log
+import androidx.lifecycle.lifecycleScope
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
@@ -204,9 +206,21 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
         lifecycleScope.launch {
             delay(2000) // 2-second delay
             if (Constant.isInternetAvailable(this@Splash)) {
+<<<<<<< HEAD
                 val countryId = SharedPreference.getCountryId(this@Splash)
                 Log.d("countryId", countryId.toString())
 
+=======
+
+//            val isEnabled = Constant.isDeveloperOptionsEnabled(this@Splash)
+//            if (!isEnabled) {
+//                showBottomPopup(this@Splash)
+//            } else {
+
+                val countryId = SharedPreference.getCountryId(this@Splash)
+                Log.d("countryId", countryId.toString())
+
+>>>>>>> 0aa7d07b0e98aabe2dd8e868c1be4b8bc31d1477
                 if (countryId != 0) {
                     isVersionCheck()
                 } else {
@@ -220,7 +234,11 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
             }
         }
 
+<<<<<<< HEAD
     }
+=======
+}
+>>>>>>> 0aa7d07b0e98aabe2dd8e868c1be4b8bc31d1477
 
     private fun showBiometricPrompt() {
         val executor = ContextCompat.getMainExecutor(this)

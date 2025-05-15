@@ -22,6 +22,7 @@ import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionReportResponse
+import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistoryResponse
@@ -295,10 +296,18 @@ interface ApiInterfaces {
     ): Call<DailyCollectionReportResponse?>
 
 
+
+
     @GET(APIMethods.isGetSchoolStrengthReport)
     fun isGetSchoolStrengthReport(
         @Header(APIKeyNames.Authorization) token: String,
         @Query(APIKeyNames.academic_year_id) isAcademicYearId: Int
     ): Call<SchoolStrengthResponse?>
 
+
+    @GET(APIMethods.isDetailedPendingReport)
+    fun isDetailedPendingReport(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query(APIKeyNames.academic_year_id) academic_year_id: Int?
+    ): Call<FeePendingReportResponse?>?
 }
