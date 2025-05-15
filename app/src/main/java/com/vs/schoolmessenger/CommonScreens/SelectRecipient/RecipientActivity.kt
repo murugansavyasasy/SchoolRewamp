@@ -1017,7 +1017,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     }
 
                     override fun onUploadError(error: String?) {
-                        TODO("Not yet implemented")
                     }
                 })
         }

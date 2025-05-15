@@ -1,0 +1,16 @@
+[
+  {
+    "id": "SchoolChimesRewamp",
+    "name": "school Chimes Rewamp",
+    "package_suffix": ".SchoolChimesRewamp",
+    "color": "#FF5733",
+    "icon": "ic_school_a"
+  },
+  {
+    "id": "schoolB",
+    "name": "School B",
+    "package_suffix": ".schoolB",
+    "color": "#33A1FF",
+    "icon": "ic_school_b"
+  }
+]

@@ -18,7 +18,7 @@ object ApiCallRequest {
         isStartTimeText: String,
         isEndTimeText: String,
         title: String,
-        isEmergency: Int,
+        isEmergency: Boolean,
         isScheduleCall: Boolean,
         schoolId: MutableList<String>,
         targetType: Int,

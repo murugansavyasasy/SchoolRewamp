@@ -92,7 +92,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     private val handler = Handler(Looper.getMainLooper())
     private var hasRequestedPermissions = false
     private var returnedFromSettings = false
-    var isEmergency = 0
+    var isEmergency = false
     var isScheduleCall = false
     private val PICK_AUDIO_REQUEST = 101
     var isAcademicYearId = -1
@@ -199,7 +199,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             if (binding.SwitchEmergencyVoice.isChecked()) {
                 Constant.isAccessType = Constant.isEmergency
                 binding.lblDurationOfVoice.text = "00:00 / 00:30"
-                isEmergency = 1
+                isEmergency = true
                 MAX_RECORDING_TIME = 30
                 val popupWindow = infosymbolload()
 
@@ -210,7 +210,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
                 Constant.isAccessType = Constant.isNonEmergency
                 binding.lblDurationOfVoice.text = "00:00 / 03:00"
-                isEmergency = 0
+                isEmergency = false
                 MAX_RECORDING_TIME = 180
             }
             changeLabel()
@@ -333,14 +333,14 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             if (isMultipleSchool) {
                 binding.lblSend.text = resources.getString(R.string.NEXT)
             } else {
-                if (isEmergency == 0) {
+                if (!isEmergency) {
                     binding.lblSend.text = resources.getString(R.string.NEXT)
                 } else {
                     binding.lblSend.text = resources.getString(R.string.NEXT)
                 }
             }
         } else {
-            if (isEmergency == 0) {
+            if (!isEmergency) {
                 binding.lblSend.text = resources.getString(R.string.NEXT)
             } else {
                 binding.lblSend.text = resources.getString(R.string.NEXT)
@@ -663,7 +663,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             R.id.rlaVoiceMessage -> {
                 Constant.isEmergencyVoiceNoticeBoard = false
                 Constant.isAccessType = Constant.isNonEmergency
-                isEmergency = 0
+                isEmergency = false
                 if (binding.SwitchEmergencyVoice.isChecked() == true) {
                     binding.SwitchEmergencyVoice.setChecked(true)
                 } else {
@@ -705,7 +705,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     binding.SwitchEmergencyVoice.setChecked(false)
                 }
                 Constant.isAccessType = Constant.isNonEmergency
-                isEmergency = 0
+                isEmergency = false
                 changeLabel()
 
                 binding.llEmergencyContainer.visibility = View.GONE
@@ -736,7 +736,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
             R.id.rlaTextMessage -> {
                 Constant.isAccessType = Constant.isNonEmergency
-                isEmergency = 0
+                isEmergency = false
                 if (binding.SwitchEmergencyVoice.isChecked() == true) {
                     binding.SwitchEmergencyVoice.setChecked(true)
                 } else {

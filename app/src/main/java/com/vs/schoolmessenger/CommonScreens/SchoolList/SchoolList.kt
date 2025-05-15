@@ -255,7 +255,6 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             startActivity(intent)
         } else {
-
             if (SELECTED_SCHOOL_MENU == M_ATTENDANCE_MARKING) {
                 val intent = Intent(this, AttendanceMark::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
