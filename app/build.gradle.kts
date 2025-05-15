@@ -1,3 +1,6 @@
+import groovy.json.JsonSlurper
+import java.io.FileReader
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -46,6 +49,33 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
+    flavorDimensions += "school"
+
+    productFlavors {
+        create("defaultFlavor") {
+            dimension = "school"
+            applicationIdSuffix = "" // No suffix for the main app
+        }
+
+        // ✅ 2️⃣ Dynamically Generate Other Flavors
+        val schoolsFile = rootDir.resolve("app/schools.json")
+        if (schoolsFile.exists()) {
+            val jsonSlurper = JsonSlurper()
+            val schools = jsonSlurper.parse(FileReader(schoolsFile)) as List<Map<String, Any>>
+
+            schools.forEach { school ->
+                val id = school["id"] as String
+                val suffix = school["package_suffix"] as String
+
+                create(id) {
+                    dimension = "school"
+                    applicationIdSuffix = suffix
+                }
+            }
+        } else {
+            println("⚠️ Warning: schools.json file not found!")
         }
     }
 }

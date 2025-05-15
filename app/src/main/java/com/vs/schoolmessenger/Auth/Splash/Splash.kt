@@ -6,6 +6,8 @@ import android.content.Context
 import android.content.Intent
 import android.provider.Settings
 import android.util.Log
+import androidx.lifecycle.lifecycleScope
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
@@ -199,32 +201,32 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
     }
 
     private fun isInterNetChecking() {
-        GlobalScope.launch {
+        lifecycleScope.launch {
             delay(2000) // 2-second delay
-            withContext(Dispatchers.Main) {
-                if (Constant.isInternetAvailable(this@Splash)) {
+            if (Constant.isInternetAvailable(this@Splash)) {
 
-//                    val isEnabled = Constant.isDeveloperOptionsEnabled(this@Splash)
-//                    if (!isEnabled) {
-//                        showBottomPopup(this@Splash) // Call your popup function if needed
-//                    } else {
+//            val isEnabled = Constant.isDeveloperOptionsEnabled(this@Splash)
+//            if (!isEnabled) {
+//                showBottomPopup(this@Splash)
+//            } else {
 
-                    val countryId = SharedPreference.getCountryId(this@Splash)
-                    Log.d("countryId", countryId.toString())
-                    if (countryId != 0) {
-                        isVersionCheck()
-                    } else {
-                        val intent = Intent(this@Splash, CountryScreen::class.java)
-                        startActivity(intent)
-                    }
-                    // }
+                val countryId = SharedPreference.getCountryId(this@Splash)
+                Log.d("countryId", countryId.toString())
+
+                if (countryId != 0) {
+                    isVersionCheck()
                 } else {
-                    Log.e("Network Error", "No Internet Connection")
-                    isNoInterNet()
+                    startActivity(Intent(this@Splash, CountryScreen::class.java))
+                    finish()
                 }
+//            }
+            } else {
+                Log.e("Network Error", "No Internet Connection")
+                isNoInterNet()
             }
         }
-    }
+
+}
 
     private fun showBiometricPrompt() {
         val executor = ContextCompat.getMainExecutor(this)

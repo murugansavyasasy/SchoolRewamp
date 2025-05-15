@@ -6,7 +6,7 @@ data class VoiceSendingData(
     val isStartTimeText: String,
     val isEndTimeText: String,
     val title: String,
-    val isEmergency: Int,
+    val isEmergency: Boolean,
     val isScheduleCall: Boolean,
     val isAwsUrl: String,
     val isFileName: String,
