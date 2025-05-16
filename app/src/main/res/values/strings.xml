@@ -523,6 +523,7 @@
     <string name="Punch_History_found">No Punch History found!</string>
     <string name="Selectall">Select all</string>
     <string name="choose_pre_recorded_file">Choose pre recorded file</string>
+    <string name="isSuccess">Success!</string>
 
 
 </resources>

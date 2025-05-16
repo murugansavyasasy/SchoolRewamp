@@ -41,7 +41,6 @@ class ChildMenuAdapter(
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
     private val TYPE_AD = 2
-    private val items = mutableListOf<MenuDetail>()
 
     override fun getItemViewType(position: Int): Int {
         return when {
@@ -84,7 +83,6 @@ class ChildMenuAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is DataViewHolder -> {
-                // holder.bind(isMenuDetails!!, position)
                 isMenuDetails?.get(position)?.let { menuDetail ->
                     holder.bind(menuDetail, position, listener)
                 }

@@ -932,8 +932,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 }
             }
 
-
             R.id.imgVoiceRecord -> {
+                binding.lblStartDuration.text = "00:00"
                 stopAudioProgressUpdate()
 //                if (!isRecording) {
                 Constant.isVoiceType = 1
@@ -1149,6 +1149,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         imgTypeCommunication: ImageView,
         lblTypeCommunication: TextView
     ) {
+        binding.lnrHistoryList.visibility = View.VISIBLE
         binding.rytNORecordFound.visibility = View.GONE
         binding.rlaVoiceMessage.background = null
         binding.rlaScheduleCall.background = null
@@ -1230,7 +1231,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
         appViewModel!!.isGetTextHistory(isAccessToken!!, this)
     }
-
 
     private fun loadVoiceData(isVoiceHistoryData: List<VoiceHistoryDetails>) {
         mAdapter =

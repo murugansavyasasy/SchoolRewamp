@@ -296,8 +296,6 @@ interface ApiInterfaces {
     ): Call<DailyCollectionReportResponse?>
 
 
-
-
     @GET(APIMethods.isGetSchoolStrengthReport)
     fun isGetSchoolStrengthReport(
         @Header(APIKeyNames.Authorization) token: String,
