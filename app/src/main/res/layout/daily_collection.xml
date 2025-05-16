@@ -150,17 +150,17 @@
 
 
                 <ImageView
-                    android:layout_width="@dimen/eighteen"
-                    android:layout_height="@dimen/eighteen"
                     android:id="@+id/image_view1"
-                    android:textStyle="normal"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"
-                    android:layout_marginEnd="@dimen/ten"
-                    android:gravity="center"
+                    android:layout_width="13dp"
+                    android:layout_height="22dp"
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/three"
-                    android:src="@drawable/calender_icon_color"/>
+                    android:layout_marginEnd="@dimen/ten"
+                    android:gravity="center"
+                    android:src="@drawable/calender_icon_color"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:textStyle="normal" />
 
 
             </LinearLayout>
@@ -185,7 +185,7 @@
         <TextView
             android:id="@+id/category_name"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/fifty"
+            android:layout_height="match_parent"
             android:layout_marginTop="@dimen/five"
             android:layout_weight="1"
             android:background="@drawable/custom_category_background"
@@ -230,43 +230,12 @@
 
      </LinearLayout>
 
-<!--    <RelativeLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="@dimen/fourty"-->
-<!--        android:id="@+id/linear_layout"-->
-<!--        android:layout_below="@+id/relative_layout8"-->
-<!--        android:layout_marginTop="@dimen/twenty"-->
-<!--        android:background="@color/custom_blue"-->
-<!--        android:gravity="center"-->
-<!--        android:orientation="horizontal">-->
-
-<!--        <TextView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="@string/total"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:textSize="@dimen/fifteen_sp"-->
-<!--            android:layout_marginStart="@dimen/eight"-->
-<!--            android:layout_marginTop="@dimen/five"-->
-<!--            style="@style/CustomTextStylePoppinsBold"-->
-<!--            android:layout_marginBottom="@dimen/five"-->
-<!--            android:id="@+id/total_label"/>-->
-
-<!--        <TextView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="37,515"-->
-<!--            android:textColor="@color/black"-->
-<!--          style="@style/CustomTextStylePoppinsBold"-->
-<!--            android:textSize="@dimen/fifteen_sp"-->
-<!--            android:layout_alignParentEnd="true"-->
-<!--            android:layout_marginTop="@dimen/five"-->
-
-<!--            android:layout_marginBottom="@dimen/five"-->
-<!--            android:layout_marginEnd="@dimen/eight"-->
-<!--            android:id="@+id/total_value"/>-->
-<!--    </RelativeLayout>-->
-
+    <LinearLayout
+        android:id="@+id/lytList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relative_layout8"
+        android:orientation="vertical">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/totalsummary1"
@@ -276,6 +245,32 @@
         android:layout_marginTop="@dimen/ten">
     </androidx.recyclerview.widget.RecyclerView>
 
+    <ImageView
+        android:id="@+id/nomessage"
+        android:layout_width="@dimen/two_fifty"
+        android:layout_height="@dimen/two_fifty"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/twenty"
+        android:src="@drawable/nomessages"
+        android:textColor="@color/black"
+        android:textSize="@dimen/eighteen"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/txtNoData"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/twenty"
+        android:text="@string/no_list_found"
+        android:textColor="@color/black"
+        android:textSize="@dimen/eighteen"
+        android:visibility="gone" />
+
+    </LinearLayout>
 
 
 

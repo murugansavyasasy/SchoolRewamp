@@ -18,7 +18,7 @@
             android:text="Total"
             android:textColor="@color/black"
             android:textSize="@dimen/fifteen_sp"
-            style="@style/CustomTextStylePoppinsBold"
+            style="@style/CustomTextStylePoppinsMedium"
             android:layout_alignParentStart="true" />
 
         <TextView
@@ -28,7 +28,7 @@
             android:text="37,515"
             android:textColor="@color/black"
             android:textSize="@dimen/fifteen_sp"
-            style="@style/CustomTextStylePoppinsBold"
+            style="@style/CustomTextStylePoppinsMedium"
             android:layout_alignParentEnd="true" />
     </RelativeLayout>
 
