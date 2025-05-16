@@ -283,8 +283,8 @@ interface ApiInterfaces {
     @GET(APIMethods.student_report)
     fun getStudentReport(
         @Header(APIKeyNames.Authorization) token: String,
-        @Query(APIKeyNames.section_id) section_id: Int?,
-        @Query(APIKeyNames.class_id) class_id: Int?
+        @Query(APIKeyNames.class_id) class_id: Int?,
+        @Query(APIKeyNames.section_id) section_id: Int?
     ): Call<GetStudentReportData?>?
 
     @GET(APIMethods.isGetDailyCollectionReport)

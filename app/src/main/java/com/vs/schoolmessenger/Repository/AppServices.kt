@@ -1164,7 +1164,7 @@ class AppServices {
 
 
 
-    fun getStudentReportList(isToken: String, class_id: Int,section_id:Int, activity: Activity) {
+    fun getStudentReportList(isToken: String, class_id: Int?=null,section_id:Int?=null, activity: Activity) {
         RestClient.apiInterfaces.getStudentReport(isToken, class_id, section_id)
             ?.enqueue(object : Callback<GetStudentReportData?> {
                 override fun onResponse(

@@ -65,6 +65,9 @@ class StudentReportAdapter(
         private val lblFatherName: TextView = itemView.findViewById(R.id.lblFatherName)
         private val lblTeacherName: TextView = itemView.findViewById(R.id.lblTeacherName)
         private val lblMobileNumber: TextView = itemView.findViewById(R.id.lblMobileNumber)
+        private val lblStandard: TextView = itemView.findViewById(R.id.lblStandard)
+        private val lblSection: TextView = itemView.findViewById(R.id.lblSection)
+
         private val lblEmail: TextView = itemView.findViewById(R.id.lblEmail)
         private val lnrPhoneNumber: LinearLayout = itemView.findViewById(R.id.lnrPhoneNumber)
         private val lnrSms: LinearLayout = itemView.findViewById(R.id.lnrSms)
@@ -79,6 +82,10 @@ class StudentReportAdapter(
             lblFatherName.text = data.father_name
             lblTeacherName.text = data.class_teacher
             lblMobileNumber.text = data.primary_mobile
+            lblStandard.text = data.class_name
+            lblSection.text = data.section_name
+
+
 //        In Get Student Report API,We have not recived the Email-->10/05/2025
 //            lblEmail.text = data.email
 

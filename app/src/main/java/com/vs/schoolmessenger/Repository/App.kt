@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.Repository
 
 import android.app.Activity
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.google.gson.JsonObject
@@ -113,6 +114,8 @@ class App(application: Application) : AndroidViewModel(application) {
     var isStaffWiseAttendanceReportList: LiveData<StaffAttendanceReportResponse?>? = null
 
     var isStudentReportList: LiveData<GetStudentReportData?>? = null
+        private set
+
 
 
 
@@ -176,6 +179,7 @@ class App(application: Application) : AndroidViewModel(application) {
 
 
     fun isGetStandardSection(isToken: String, isAcademicYearId: Int, activity: Activity) {
+        Log.d("isAcademicYearIdData",isAcademicYearId.toString())
         apiRepositories.isGetStandardSection(isToken, isAcademicYearId, activity)
     }
 
@@ -302,7 +306,7 @@ class App(application: Application) : AndroidViewModel(application) {
         )
     }
     //Get Student Report Details
-    fun getStudentReportDetails(isToken: String, class_id: Int,section_id:Int, activity: Activity) {
+    fun getStudentReportDetails(isToken: String, class_id: Int?=null,section_id:Int?=null, activity: Activity) {
         apiRepositories?.getStudentReportList(isToken, class_id, section_id,activity)
     }
 }

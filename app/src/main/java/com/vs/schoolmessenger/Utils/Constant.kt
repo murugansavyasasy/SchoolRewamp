@@ -319,6 +319,13 @@ object Constant {
     var new = "new"
     var current = "current"
 
+    var GET_ALL_STUDENT="GET ALL STUDENT"
+    var STANDARD="STANDARD"
+    var STANDARD_AND_SECTION="STANDARD & SECTION"
+
+
+
+
     fun isInternetAvailable(activity: Activity): Boolean {
         val connectivityManager =
             activity.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager

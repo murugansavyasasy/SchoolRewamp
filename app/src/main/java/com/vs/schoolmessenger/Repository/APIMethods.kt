@@ -58,7 +58,7 @@ object APIMethods {
     const val giometric_principal_attendance_report =  "staff-attd/api/geometric/geometric-principal-attendance-report"
     const val punch_history =  "staff-attd/api/geometric/geometric-punch-history"
 
-    const val student_report= "api/get-student-report"
+    const val student_report= "admin/api/get-student-report"
 
 
 }
