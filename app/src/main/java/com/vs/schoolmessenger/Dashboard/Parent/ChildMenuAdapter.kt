@@ -41,7 +41,6 @@ class ChildMenuAdapter(
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
     private val TYPE_AD = 2
-    private val items = mutableListOf<MenuDetail>()
 
     override fun getItemViewType(position: Int): Int {
         return when {
@@ -76,7 +75,7 @@ class ChildMenuAdapter(
 
     fun updateList(newList: List<MenuDetail>) {
         isMenuDetails = emptyList()
-        isMenuDetails=newList
+        isMenuDetails = newList
         notifyDataSetChanged()
     }
 
@@ -84,13 +83,12 @@ class ChildMenuAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is DataViewHolder -> {
-                // holder.bind(isMenuDetails!!, position)
                 isMenuDetails?.get(position)?.let { menuDetail ->
                     holder.bind(menuDetail, position, listener)
                 }
             }
 
-            is  ShimmerViewHolder -> {
+            is ShimmerViewHolder -> {
                 holder.startShimmer()
             }
 
@@ -231,112 +229,112 @@ class ChildMenuAdapter(
 //                adapter.toggleMoreItems(lblSeeMore, rlaMenuExample)
 //            }
 
-            lnrAssignment.setOnClickListener {
-                context.startActivity(Intent(context, Assignment::class.java))
-            }
-            lnrLeaveRequest.setOnClickListener {
-                context.startActivity(
-                    Intent(
-                        context,
-                        LeaveRequest::class.java
-                    )
-                )
-            }
-            lnrHomeWork.setOnClickListener {
-                context.startActivity(Intent(context, HomeWork::class.java))
-            }
+//            lnrAssignment.setOnClickListener {
+//                context.startActivity(Intent(context, Assignment::class.java))
+//            }
+//            lnrLeaveRequest.setOnClickListener {
+//                context.startActivity(
+//                    Intent(
+//                        context,
+//                        LeaveRequest::class.java
+//                    )
+//                )
+//            }
+//            lnrHomeWork.setOnClickListener {
+//                context.startActivity(Intent(context, HomeWork::class.java))
+//            }
 
-            runAutoScrollBanner(images)
-            if (isFirstTime) {
-                isFirstTime = false
-                setupDots(images.size, context)
-            } else {
-                setupDots(images.size + 1, context)
-            }
+//            runAutoScrollBanner(images)
+//            if (isFirstTime) {
+//                isFirstTime = false
+//                setupDots(images.size, context)
+//            } else {
+//                setupDots(images.size + 1, context)
+//            }
 
-            recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                    super.onScrollStateChanged(recyclerView, newState)
-                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                        if (isFirstTime) {
-                            isFirstTime = false
-                            position =
-                                layoutManager.findFirstCompletelyVisibleItemPosition() % images.size + 1
-                        } else {
-                            position =
-                                layoutManager.findFirstCompletelyVisibleItemPosition() % images.size
-                        }
-                        updateDots(position)
-                    }
-                }
-            })
+//            recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+//                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+//                    super.onScrollStateChanged(recyclerView, newState)
+//                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+//                        if (isFirstTime) {
+//                            isFirstTime = false
+//                            position =
+//                                layoutManager.findFirstCompletelyVisibleItemPosition() % images.size + 1
+//                        } else {
+//                            position =
+//                                layoutManager.findFirstCompletelyVisibleItemPosition() % images.size
+//                        }
+//                        updateDots(position)
+//                    }
+//                }
+//            })
 
             // Delay the auto-scroll for better user experience (start scrolling after 2 seconds)
-            handler.postDelayed({ runAutoScrollBanner(images) }, 3000)
-
-            recyclerView.setOnTouchListener { _, event ->
-                when (event.action) {
-                    MotionEvent.ACTION_DOWN -> {
-                        isTouching = true
-                        stopAutoScrollBanner()
-                    }
-
-                    MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
-                        isTouching = false
-                        handler.postDelayed({ if (!isTouching) runAutoScrollBanner(images) }, 500)
-                    }
-                }
-                false
-            }
+//            handler.postDelayed({ runAutoScrollBanner(images) }, 3000)
+//
+//            recyclerView.setOnTouchListener { _, event ->
+//                when (event.action) {
+//                    MotionEvent.ACTION_DOWN -> {
+//                        isTouching = true
+//                        stopAutoScrollBanner()
+//                    }
+//
+//                    MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+//                        isTouching = false
+//                        handler.postDelayed({ if (!isTouching) runAutoScrollBanner(images) }, 500)
+//                    }
+//                }
+//                false
+//            }
         }
 
-        private fun setupDots(count: Int, context: Context) {
-            dotContainer.removeAllViews()
-            for (i in 0 until count) {
-                val dot = ImageView(context).apply {
-                    setImageResource(if (i == position) R.drawable.active_dot else R.drawable.inactive_dot)
-                    val params = LinearLayout.LayoutParams(20, 20)
-                    params.setMargins(8, 0, 8, 0)
-                    layoutParams = params
-                }
-                dotContainer.addView(dot)
-            }
-        }
+//        private fun setupDots(count: Int, context: Context) {
+//            dotContainer.removeAllViews()
+//            for (i in 0 until count) {
+//                val dot = ImageView(context).apply {
+//                    setImageResource(if (i == position) R.drawable.active_dot else R.drawable.inactive_dot)
+//                    val params = LinearLayout.LayoutParams(20, 20)
+//                    params.setMargins(8, 0, 8, 0)
+//                    layoutParams = params
+//                }
+//                dotContainer.addView(dot)
+//            }
+//        }
 
-        private fun updateDots(activePosition: Int) {
-            for (i in 0 until dotContainer.childCount) {
-                val dot = dotContainer.getChildAt(i) as ImageView
-                dot.setImageResource(if (i == activePosition) R.drawable.active_dot else R.drawable.inactive_dot)
-            }
-        }
+//        private fun updateDots(activePosition: Int) {
+//            for (i in 0 until dotContainer.childCount) {
+//                val dot = dotContainer.getChildAt(i) as ImageView
+//                dot.setImageResource(if (i == activePosition) R.drawable.active_dot else R.drawable.inactive_dot)
+//            }
+//        }
+//
+//        private fun stopAutoScrollBanner() {
+//            timerTask?.cancel()
+//            timer?.cancel()
+//            timer = null
+//            timerTask = null
+//            position = layoutManager.findFirstCompletelyVisibleItemPosition()
+//        }
 
-        private fun stopAutoScrollBanner() {
-            timerTask?.cancel()
-            timer?.cancel()
-            timer = null
-            timerTask = null
-            position = layoutManager.findFirstCompletelyVisibleItemPosition()
-        }
-
-        private fun runAutoScrollBanner(images: List<AdItem>) {
-            if (timer == null && timerTask == null) {
-                timer = Timer()
-                timerTask = object : TimerTask() {
-                    override fun run() {
-                        handler.post {
-                            position++
-                            if (isFirstTime) {
-                                isFirstTime = false
-                                recyclerView.smoothScrollToPosition(position % images.size + 1) // Loop within the list size
-                            } else {
-                                recyclerView.smoothScrollToPosition(position % images.size) // Loop within the list size
-                            }
-                        }
-                    }
-                }
-                timer?.schedule(timerTask, 3000, 3000)
-            }
-        }
+//        private fun runAutoScrollBanner(images: List<AdItem>) {
+//            if (timer == null && timerTask == null) {
+//                timer = Timer()
+//                timerTask = object : TimerTask() {
+//                    override fun run() {
+//                        handler.post {
+//                            position++
+//                            if (isFirstTime) {
+//                                isFirstTime = false
+//                                recyclerView.smoothScrollToPosition(position % images.size + 1) // Loop within the list size
+//                            } else {
+//                                recyclerView.smoothScrollToPosition(position % images.size) // Loop within the list size
+//                            }
+//                        }
+//                    }
+//                }
+//                timer?.schedule(timerTask, 3000, 3000)
+//            }
+//        }
     }
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

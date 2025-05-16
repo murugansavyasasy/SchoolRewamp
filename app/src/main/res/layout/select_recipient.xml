@@ -138,7 +138,7 @@
             android:background="@drawable/white_radious"
             android:fontFamily="@font/poppins_bold"
             android:gravity="center"
-            android:textStyle="bold"
+          style="@style/CustomTextStylePoppinsBold"
             android:text="@string/entire_school"
             android:textColor="@color/black"
             android:textSize="@dimen/ten_sp">
@@ -150,6 +150,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="1"
+            style="@style/CustomTextStylePoppinsBold"
             android:fontFamily="@font/poppins_bold"
             android:gravity="center"
             android:textSize="@dimen/ten_sp"
@@ -162,6 +163,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="1"
+            style="@style/CustomTextStylePoppinsBold"
             android:fontFamily="@font/poppins_bold"
             android:gravity="center"
             android:textSize="@dimen/ten_sp"
@@ -174,6 +176,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="1"
+            style="@style/CustomTextStylePoppinsBold"
             android:fontFamily="@font/poppins_bold"
             android:gravity="center"
             android:textSize="@dimen/ten_sp"
@@ -187,6 +190,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="1"
+            style="@style/CustomTextStylePoppinsBold"
             android:fontFamily="@font/poppins_bold"
             android:gravity="center"
             android:textSize="@dimen/ten_sp"
@@ -255,6 +259,7 @@
         android:layout_below="@+id/rlaStandard"
         android:layout_marginStart="@dimen/fifteen"
         android:text="@string/Selectall"
+        android:layout_marginTop="@dimen/ten"
         android:textColor="@color/black"
         android:textSize="@dimen/fifteen_sp"
         android:textStyle="bold"
@@ -266,10 +271,11 @@
         android:id="@+id/lblCreatedOn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/chAllSelect"
+        android:layout_below="@+id/rlaStandard"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="@dimen/twenty_five"
+        android:layout_marginEnd="@dimen/twenty"
         android:text="@string/group_created"
+        android:layout_marginTop="@dimen/ten"
         android:textColor="@color/grey"
         android:textSize="@dimen/thirteen_sp"
         android:visibility="gone">
@@ -281,7 +287,7 @@
         android:layout_width="match_parent"
         android:layout_marginBottom="@dimen/fifty"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/lblCreatedOn">
+        android:layout_below="@+id/chAllSelect">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"

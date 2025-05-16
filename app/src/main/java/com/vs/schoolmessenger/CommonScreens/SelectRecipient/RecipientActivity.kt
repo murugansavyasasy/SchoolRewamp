@@ -99,7 +99,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         binding.tabSectionsStudent.setOnClickListener(this)
         binding.tabGroups.setOnClickListener(this)
         binding.tapStaffs.setOnClickListener(this)
-
+        Constant.hideLoading(this)
 
 
         isStaffDetails = SharedPreference.getStaffDetails(this)
@@ -221,7 +221,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
                     }
                 } else {
-                    Log.d("isComing","isComing")
+                    Log.d("isComing", "isComing")
                     binding.recyclerView.visibility = View.GONE
                     binding.txtNoData.visibility = View.VISIBLE
                     binding.rlaStandard.visibility = View.GONE
@@ -260,7 +260,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
         appViewModel!!.isVoiceSend?.observe(this) { response ->
             Constant.hideLoading(this@RecipientActivity)
-
             if (response != null) {
                 Log.d("Response", response.status.toString())
                 Constant.showTopAlertPopup(response.message, Constant.isCommunication, this)
@@ -269,7 +268,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
         appViewModel!!.isSendText?.observe(this) { response ->
             Constant.hideLoading(this@RecipientActivity)
-            if (response != null && response.status) {
+            if (response != null) {
                 Constant.showTopAlertPopup(response.message, Constant.isCommunication, this)
             }
         }
@@ -613,7 +612,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
                 } else {
                     Constant.showValidationAlertPopup(
-                        resources.getString(R.string.Please_select_leastone) + isTypeOfName + resources.getString(
+                        resources.getString(R.string.Please_select_leastone) + " " + isTypeOfName + " " + resources.getString(
                             R.string.send_message
                         ), this
                     )

@@ -116,7 +116,7 @@
     <string name="SeeLess">See less</string>
     <string name="LogOut">Are you sure want to logout ?</string>
     <string name="Cancel">Cancel</string>
-    <string name="lblCountryNotes">Welcome to our school based application,designed to enchance communication and engagement among students,parents,and educators.This platform aims to streamline the exchange of important information,facilitate academic collaboration,and foster a supportive teaming environment.</string>
+    <string name="lblCountryNotes">Welcome to our school application,designed to enhance communication and engagement among students,parents,and educators.This platform aims to streamline the exchange of important information,facilitate academic collaboration,and foster a supportive teaming environment.</string>
     <string name="roll_no">Roll No</string>
     <string name="status">Status</string>
     <string name="name">Name</string>
@@ -368,11 +368,11 @@
     <string name="Send_Confirmation">Send Confirmation!</string>
     <string name="Yes">Yes</string>
     <string name="No">No</string>
-    <string name="Section">Section</string>
-    <string name="Standards">Standards</string>
-    <string name="Standard">Standard</string>
-    <string name="Group">Group</string>
-    <string name="Staff">Staff</string>
+    <string name="Section"> Section </string>
+    <string name="Standards"> Standards </string>
+    <string name="Standard"> Standard </string>
+    <string name="Group"> Group </string>
+    <string name="Staff"> Staff </string>
     <string name="NOTE_message_addressed">NOTE : This message is addressed to student in </string>
     <string name="which_communication_academic"> which is not the communication academic year. Do you want to proceed?</string>
     <string name="Please_select_leastone">Please select at least one </string>
@@ -384,7 +384,7 @@
     <string name="Student_s"> Student (s)</string>
     <string name="Please_select_least_student">Please select at least one student to send the message.</string>
     <string name="Login_Management">Login As Management</string>
-    <string name="Login_As">Login As Login As </string>
+    <string name="Login_As">Login As</string>
     <string name="Login_Student_Parent">Login As Student/Parent</string>
     <string name="Invalid_role">Invalid user role</string>
     <string name="Student_Parent">Student/Parent</string>
@@ -523,6 +523,8 @@
     <string name="Punch_History_found">No Punch History found!</string>
     <string name="Selectall">Select all</string>
     <string name="choose_pre_recorded_file">Choose pre recorded file</string>
+    <string name="isSuccess">Success!</string>
+    <string name="no_student_found">No student found!</string>
 
 
 </resources>

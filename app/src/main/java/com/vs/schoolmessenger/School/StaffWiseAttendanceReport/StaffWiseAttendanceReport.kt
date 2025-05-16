@@ -49,6 +49,8 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
     private var isTodayList = true
     private var isSelectedYear: String? = null
     private var selectedMonthNumber: String? = null
+    private var isMonthLoaded = ""
+    private var isLoadingFirstTime = true
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -104,6 +106,7 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
                 binding.lblStaff.text = isGetStaffListData!![0].name
                 isStaffId = isGetStaffListData!![0].id
                 isLoadYear()
+                isLoadMonth()
             }
         }
     }
@@ -188,19 +191,34 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
         }
     }
 
-
     fun isLoadMonth() {
         val months = listOf(
             "January", "February", "March", "April", "May", "June",
             "July", "August", "September", "October", "November", "December"
         )
-        val monthAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, months)
-        monthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-
-        binding.spinnerMonths.adapter = monthAdapter
 
         val currentMonthIndex = Calendar.getInstance().get(Calendar.MONTH)
-        binding.spinnerMonths.setSelection(currentMonthIndex)
+        val currentMonthName = months[currentMonthIndex]
+
+        val updatedMonths: List<String>
+        val selectedIndex: Int
+
+        if (isLoadingFirstTime) {
+            updatedMonths = months
+            selectedIndex = currentMonthIndex
+            isLoadingFirstTime = false
+        } else if (isMonthLoaded.isNotEmpty()) {
+            updatedMonths = listOf(isMonthLoaded) + months.filter { it != isMonthLoaded }
+            selectedIndex = 0
+        } else {
+            updatedMonths = months
+            selectedIndex = currentMonthIndex
+        }
+
+        val monthAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, updatedMonths)
+        monthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spinnerMonths.adapter = monthAdapter
+        binding.spinnerMonths.setSelection(selectedIndex)
 
         binding.spinnerMonths.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
@@ -209,8 +227,9 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
                 position: Int,
                 id: Long
             ) {
+                isMonthLoaded = updatedMonths[position]
                 binding.lytNoRecordFound.visibility = View.GONE
-                selectedMonthNumber = String.format("%02d", position + 1)
+                selectedMonthNumber = String.format("%02d", months.indexOf(isMonthLoaded) + 1)
                 getStaffAttendanceReport("", isSelectedYear!!, selectedMonthNumber!!)
             }
 
@@ -351,15 +370,13 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
         try {
             dialog.show()
         } catch (e: Exception) {
-            TODO("Not yet implemented")
         } finally {
         }
     }
 
     private fun isPunchHistory(data: StaffAttendanceReportData) {
-
         isAccessToken?.let {
-            appViewModel?.getPunchHistory(it, data.date, this)
+            appViewModel?.getPunchHistory(it, data.date, data.staff_id, this)
         }
     }
 

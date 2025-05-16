@@ -269,21 +269,20 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
     private fun isLoadData() {
 
-        val isAdapter = SchoolMenuAdapter(
+        isMenuAdapter = SchoolMenuAdapter(
             requireActivity(), this, isMenuDetails, isAdItem, Constant.isShimmerViewDisable
         )
         val gridLayoutManager = GridLayoutManager(requireContext(), 3)
-        // Adjust span count again for the updated adapter
         gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
-                return when (isAdapter.getItemViewType(position)) {
+                return when (isMenuAdapter.getItemViewType(position)) {
                     2 -> 3 // TYPE_AD: Span across all 3 columns
                     else -> 1 // Default: 1 span per item
                 }
             }
         }
         binding.recyclerViewMenus.layoutManager = gridLayoutManager
-        binding.recyclerViewMenus.adapter = isAdapter
+        binding.recyclerViewMenus.adapter = isMenuAdapter
     }
 
 

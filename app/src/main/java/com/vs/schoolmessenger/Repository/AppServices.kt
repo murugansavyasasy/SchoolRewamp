@@ -105,7 +105,7 @@ class AppServices {
         isStaffAttendanceReport = MutableLiveData()
         isStaffWiseAttendanceReport = MutableLiveData()
         isStaffWiseAttendanceReportList = MutableLiveData()
-        isStudentReportList=MutableLiveData()
+        isStudentReportList = MutableLiveData()
 
     }
 
@@ -446,11 +446,9 @@ class AppServices {
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
-                            if (status) {
-                                isGetTextHistory.postValue(response.body())
-                            } else {
-                                isGetTextHistory.postValue(response.body())
-                            }
+
+                            isGetTextHistory.postValue(response.body())
+
                         }
                     }
                 }
@@ -572,7 +570,8 @@ class AppServices {
         RestClient.apiInterfaces.isDetailedPendingReport(isToken, isAcademicYearId)
             ?.enqueue(object : Callback<FeePendingReportResponse?> {
                 override fun onResponse(
-                    call: Call<FeePendingReportResponse?>, response: Response<FeePendingReportResponse?>
+                    call: Call<FeePendingReportResponse?>,
+                    response: Response<FeePendingReportResponse?>
                 ) {
                     Log.d(
                         "isGetCountryList", response.code().toString() + " - " + response.toString()
@@ -725,18 +724,6 @@ class AppServices {
                         "isGetCountryList", response.code().toString() + " - " + response.toString()
                     )
                     isSendVoice.postValue(response.body())
-//                    if (response.code() == 200) {
-//                        if (response.body() != null) {
-//                            val status = response.body()!!.status
-//                            if (status) {
-//
-//                            } else {
-//                                isSendVoice.postValue(response.body())
-//                            }
-//                        }
-//                    } else {
-//
-//                    }
                 }
 
                 override fun onFailure(call: Call<TextSendResponse?>, t: Throwable) {
@@ -1011,8 +998,8 @@ class AppServices {
 //    fun getPunchHistory(isToken: String, activity: Activity) {
 //        RestClient.apiInterfaces.getPunchHistory(isToken)
 
-    fun getPunchHistory(isToken: String, isDate: String, activity: Activity) {
-        RestClient.apiInterfaces.getPunchHistory(isToken, isDate, isDate)
+    fun getPunchHistory(isToken: String, isDate: String, staff_id: String, activity: Activity) {
+        RestClient.apiInterfaces.getPunchHistory(isToken, isDate, isDate,staff_id)
             ?.enqueue(object : Callback<PunchHistoryResponse?> {
                 override fun onResponse(
                     call: Call<PunchHistoryResponse?>, response: Response<PunchHistoryResponse?>
@@ -1023,12 +1010,12 @@ class AppServices {
                     )
                     if (response.code() == 200) {
 //                        if (response.body() != null) {
-                            val status = response.body()!!.status
-                            if (status) {
-                                isPunchHistory.postValue(response.body())
-                            } else {
-                                isPunchHistory.postValue(response.body())
-                            }
+                        val status = response.body()!!.status
+                        if (status) {
+                            isPunchHistory.postValue(response.body())
+                        } else {
+                            isPunchHistory.postValue(response.body())
+                        }
 //                        }
                     }
                 }
@@ -1130,41 +1117,40 @@ class AppServices {
         RestClient.apiInterfaces.getStaffWiseAttendanceReportStaffList(
             isToken, isSelectedDate, isStaffId
         )?.enqueue(object : Callback<StaffAttendanceReportResponse?> {
-                override fun onResponse(
-                    call: Call<StaffAttendanceReportResponse?>,
-                    response: Response<StaffAttendanceReportResponse?>
-                ) {
-                    Log.d(
-                        "staffwise_attendance_report",
-                        response.code().toString() + " - " + response.toString()
-                    )
-                    if (response.code() == 200) {
-                        if (response.body() != null) {
-                            val status = response.body()!!.status
-                            if (status) {
-                                isStaffWiseAttendanceReportList.postValue(response.body())
-                            } else {
-                                isStaffWiseAttendanceReportList.postValue(response.body())
-                            }
+            override fun onResponse(
+                call: Call<StaffAttendanceReportResponse?>,
+                response: Response<StaffAttendanceReportResponse?>
+            ) {
+                Log.d(
+                    "staffwise_attendance_report",
+                    response.code().toString() + " - " + response.toString()
+                )
+                if (response.code() == 200) {
+                    if (response.body() != null) {
+                        val status = response.body()!!.status
+                        if (status) {
+                            isStaffWiseAttendanceReportList.postValue(response.body())
+                        } else {
+                            isStaffWiseAttendanceReportList.postValue(response.body())
                         }
                     }
                 }
+            }
 
-                override fun onFailure(
-                    call: Call<StaffAttendanceReportResponse?>, t: Throwable
-                ) {
-                    isStaffWiseAttendanceReportList.postValue(null)
-                    t.printStackTrace()
-                }
-            })
+            override fun onFailure(
+                call: Call<StaffAttendanceReportResponse?>, t: Throwable
+            ) {
+                isStaffWiseAttendanceReportList.postValue(null)
+                t.printStackTrace()
+            }
+        })
     }
 
     val isGiometricStaffWiseAttendanceReportLiveDataList: LiveData<StaffAttendanceReportResponse?>
         get() = isStaffWiseAttendanceReportList
 
 
-
-    fun getStudentReportList(isToken: String, class_id: Int,section_id:Int, activity: Activity) {
+    fun getStudentReportList(isToken: String, class_id: Int, section_id: Int, activity: Activity) {
         RestClient.apiInterfaces.getStudentReport(isToken, class_id, section_id)
             ?.enqueue(object : Callback<GetStudentReportData?> {
                 override fun onResponse(
@@ -1179,10 +1165,10 @@ class AppServices {
                         if (response.body() != null) {
                             val status = response.body()!!.status
                             if (status) {
-                                Log.d("GetStudentReportData",response.body().toString())
+                                Log.d("GetStudentReportData", response.body().toString())
                                 isStudentReportList.postValue(response.body())
                             } else {
-                                Log.d("GetStudentReportData",response.body().toString())
+                                Log.d("GetStudentReportData", response.body().toString())
                                 isStudentReportList.postValue(response.body())
                             }
                         }

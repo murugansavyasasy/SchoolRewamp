@@ -61,7 +61,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
         binding.toolbarLayout.rytFilter.visibility = View.GONE
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
-
+        Constant.hideLoading(this)
         val isSelectedId = intent.getStringArrayListExtra(Constant.isSelectedId) ?: arrayListOf()
         isAcademicYearId = intent.getIntExtra(Constant.isAcademicYearId, -1)
         isCurrentAcademicYear = intent.getBooleanExtra(Constant.isCurrentAcademicYear, false)
@@ -72,10 +72,20 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
         isAwsUploadingPreSigned = AwsUploadingPreSigned()
 
         appViewModel!!.isStudentList!!.observe(this) { response ->
-            if (response != null && response.status) {
-                isStudentList = response.data
-                isStudentData = isStudentList
-                isStudentData()
+            if (response != null) {
+                if (response.status) {
+                    binding.rcySpecificStudent.visibility = View.VISIBLE
+                    binding.lblNoRecordsFound.visibility = View.GONE
+                    isStudentList = response.data
+                    isStudentData = isStudentList
+                    isStudentData()
+                } else {
+                    binding.lblNoRecordsFound.visibility = View.VISIBLE
+                    binding.rcySpecificStudent.visibility = View.GONE
+                    binding.lblNoRecordsFound.text = response.message
+                }
+            } else {
+                binding.lblNoRecordsFound.visibility = View.VISIBLE
             }
         }
 
@@ -203,30 +213,6 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
 
     }
 
-//    private fun isFileUploadInAws(
-//        isFilePath: String, schoolId: String, isFileType: String?
-//    ) {
-//        val isCountryId = SharedPreference.getCountryId(this)
-//        isAwsUploadingPreSigned!!.getPreSignedUrl(
-//            isFilePath, schoolId, isFileType!!,
-//            this, isCountryId!!,
-//            true,
-//            false,
-//            object : UploadCallback {
-//                @RequiresApi(Build.VERSION_CODES.O)
-//                override fun onUploadSuccess(
-//                    response: String?,
-//                    isFileUploaded: String?
-//                ) {
-//                    voiceSendApi(isFileUploaded)
-//                    Log.d("isSuccessFullUpload", "isSuccessFullUpload")
-//                }
-//
-//                override fun onUploadError(error: String?) {
-//                }
-//            })
-//    }
-
     @RequiresApi(Build.VERSION_CODES.O)
     fun voiceSendApi(isFileUploadedUrl: String?) {
         val isVoiceData = Constant.isVoiceSendingData
@@ -340,19 +326,26 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                     var isAcademicYearNote: String? = null
                     if (!isCurrentAcademicYear) {
                         isAcademicYearNote =
-                            resources.getString(R.string.NOTE_message_addressed) + isAcademicYear + resources.getString(R.string.which_communication_academic)
+                            resources.getString(R.string.NOTE_message_addressed) + isAcademicYear + resources.getString(
+                                R.string.which_communication_academic
+                            )
                     } else {
-                        isAcademicYearNote = resources.getString(R.string.are_you_sure_want_to_send_this_message)
+                        isAcademicYearNote =
+                            resources.getString(R.string.are_you_sure_want_to_send_this_message)
                     }
 
                     if (Constant.isClickType == 3) {
                         showSendConfirmationDialog(
-                            resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + resources.getString(R.string.Student_s),
+                            resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + resources.getString(
+                                R.string.Student_s
+                            ),
                             isAcademicYearNote.toString()
                         )
                     } else {
                         showSendConfirmationDialog(
-                            resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + resources.getString(R.string.Student_s),
+                            resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + resources.getString(
+                                R.string.Student_s
+                            ),
                             isAcademicYearNote.toString()
                         )
                     }
