@@ -367,7 +367,6 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
         adapter!!.releaseMediaPlayer()
         super.onBackPressed()
     }
-
 }
 
 
