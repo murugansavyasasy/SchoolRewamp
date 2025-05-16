@@ -15,6 +15,7 @@ import com.vs.schoolmessenger.Repository.Auth
 import com.vs.schoolmessenger.Repository.RestClient
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
+import com.vs.schoolmessenger.Utils.ToastManager
 import com.vs.schoolmessenger.databinding.CountryListScreenBinding
 
 class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickListener {
@@ -25,6 +26,8 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
 
     var authViewModel: Auth? = null
     private var isAgree = false
+    var isCountrySelected: Boolean? = false
+
 
     override fun setupViews() {
         super.setupViews()
@@ -80,13 +83,14 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
                 id: Long
             ) {
                 if (position != 0) {
+                    isCountrySelected = true
                     Constant.country_details = isCountryList[position]
                     Log.d(
                         "SelectedCountry",
                         "ID: ${Constant.country_details!!.id}, Name: ${Constant.country_details!!.name}"
                     )
                 } else {
-                    Constant.country_details!!.id = -0
+                    isCountrySelected = false
                 }
             }
 
@@ -98,8 +102,9 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btnArrowNext -> {
-                if (Constant.country_details!!.id != -0) {
+                if (isCountrySelected == true) {
                     if (isAgree) {
+                        ToastManager.cancelToast()
                         SharedPreference.putCountryId(
                             this,
                             Constant.country_details!!.id
@@ -109,12 +114,11 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
                         val intent = Intent(this@CountryScreen, MobileNumber::class.java)
                         startActivity(intent)
                     } else {
-                        Toast.makeText(this, R.string.AgreeTermsConditions, Toast.LENGTH_SHORT)
-                            .show()
+                        ToastManager.showToast(this, R.string.AgreeTermsConditions)
+
                     }
                 } else {
-                    Toast.makeText(this, R.string.lblChoosecountry, Toast.LENGTH_SHORT)
-                        .show()
+                    ToastManager.showToast(this, R.string.lblChoosecountry)
                 }
             }
         }
