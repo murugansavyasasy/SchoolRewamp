@@ -226,6 +226,10 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
 
     private fun isOtpValidate(isOpt: String) {
         val jsonObject = JsonObject()
+//        val isSecureId = Constant.getAndroidSecureId(this)
+//        jsonObject.addProperty(APIKeyNames.Req_device_type, Constant.isDeviceType)
+//        jsonObject.addProperty(APIKeyNames.Req_secure_id, isSecureId)
+
         jsonObject.addProperty(APIKeyNames.Req_mobile_number, Constant.isMobileNumber)
         jsonObject.addProperty(APIKeyNames.Req_otp, isOpt)
         authViewModel!!.isOtpResponse(jsonObject, this)

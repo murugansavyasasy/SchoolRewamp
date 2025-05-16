@@ -1,7 +1,7 @@
 package com.vs.schoolmessenger.Auth.Country
 
 data class Country(
-    val id: Int,
+    var id: Int,
     val name: String,
     val code: Int,
     val mobile_number_length: Int,

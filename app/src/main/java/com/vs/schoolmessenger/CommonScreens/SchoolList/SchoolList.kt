@@ -327,39 +327,11 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                     }
 
                     override fun onUploadError(error: String?) {
-                        TODO("Not yet implemented")
                     }
                 })
         }
 
     }
-
-//    private fun isFileUploadInAws(
-//        isFilePath: String, schoolId: String, isFileType: String?
-//    ) {
-//        val isCountryId = SharedPreference.getCountryId(this)
-//        isAwsUploadingPreSigned!!.getPreSignedUrl(
-//            isFilePath,
-//            schoolId,
-//            isFileType!!,
-//            this,
-//            isCountryId!!,
-//            true,
-//            false,
-//            object : UploadCallback {
-//                @RequiresApi(Build.VERSION_CODES.O)
-//                override fun onUploadSuccess(
-//                    response: String?, isFileUploaded: String?
-//                ) {
-//                    voiceSendApi(isFileUploaded)
-//                    Log.d("isSuccessFullUpload", "isSuccessFullUpload")
-//                }
-//
-//                override fun onUploadError(error: String?) {
-//                    TODO("Not yet implemented")
-//                }
-//            })
-//    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun voiceSendApi(isFileUploadedUrl: String?) {

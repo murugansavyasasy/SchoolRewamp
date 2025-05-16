@@ -31,12 +31,10 @@ class CountrySpinnerAdapter(
         val countryNameTextView: TextView = view.findViewById(R.id.countryNameTextView)
 
         if (position == 0) {
-            // Load flag image using Glide
             Glide.with(context)
-                .load(R.drawable.select_country) // Use the drawable resource directly
+                .load(R.drawable.select_country)
                 .into(flagImageView)
         } else {
-            // Load flag image using Glide
             Glide.with(context)
                 .load(country.flag_url)
                 .into(flagImageView)

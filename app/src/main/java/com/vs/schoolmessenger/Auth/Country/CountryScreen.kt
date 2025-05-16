@@ -4,6 +4,7 @@ import android.content.Intent
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
@@ -62,7 +63,8 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
 
     private fun isLoadCountry(countryList: List<Country>) {
 
-        val isCountryList = listOf(Country(-0, "Select Your Country", -0, -0, "", "", "", "")) + countryList
+        val isCountryList =
+            listOf(Country(-0, "Select Your Country", -0, -0, "", "", "", "")) + countryList
         val adapter = CountrySpinnerAdapter(this@CountryScreen, isCountryList)
         binding.isSpineer.adapter = adapter
 
@@ -79,13 +81,13 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
             ) {
                 if (position != 0) {
                     Constant.country_details = isCountryList[position]
-
                     Log.d(
                         "SelectedCountry",
                         "ID: ${Constant.country_details!!.id}, Name: ${Constant.country_details!!.name}"
                     )
+                } else {
+                    Constant.country_details!!.id = -0
                 }
-
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -110,6 +112,9 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
                         Toast.makeText(this, R.string.AgreeTermsConditions, Toast.LENGTH_SHORT)
                             .show()
                     }
+                } else {
+                    Toast.makeText(this, R.string.lblChoosecountry, Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
         }
