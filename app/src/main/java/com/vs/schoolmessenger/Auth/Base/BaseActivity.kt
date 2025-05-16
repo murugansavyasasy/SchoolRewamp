@@ -684,23 +684,26 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         context: Context,
         listener: OnDateSelectedListener
     ) {
-
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)
         val day = calendar.get(Calendar.DAY_OF_MONTH)
 
-        // Show DatePickerDialog
         val datePickerDialog = DatePickerDialog(
             context,
             { _, selectedYear, selectedMonth, selectedDay ->
-                val formattedDate = "${selectedDay}/${selectedMonth + 1}/${selectedYear}"
+                val cal = Calendar.getInstance()
+                cal.set(selectedYear, selectedMonth, selectedDay)
+                val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                val formattedDate = sdf.format(cal.time)
                 listener.onDateSelected(formattedDate)
             },
             year, month, day
         )
         datePickerDialog.show()
     }
+
+
 
     fun changeDateFormat(inputDate: String): String {
         // Define the current format of the input date
