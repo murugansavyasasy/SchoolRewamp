@@ -85,7 +85,6 @@ class SchoolMenuAdapter(
 
             is AdViewHolder -> {
                 if (position == 9) {
-                    Log.d("isAddItem", isAdItem!!.size.toString())
                     holder.bind(isAdItem!!, context)
                 } else {
                     holder.bind(emptyList(), context)

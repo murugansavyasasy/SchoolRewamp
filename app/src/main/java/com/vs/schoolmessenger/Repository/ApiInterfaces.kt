@@ -277,7 +277,8 @@ interface ApiInterfaces {
     fun getPunchHistory(
         @Header(APIKeyNames.Authorization) token: String,
         @Query(APIKeyNames.from_date) bucket: String?,
-        @Query(APIKeyNames.to_date) fileName: String?
+        @Query(APIKeyNames.to_date) fileName: String?,
+        @Query(APIKeyNames.staff_id) staff_id: String?
     ): Call<PunchHistoryResponse?>?
 
     @GET(APIMethods.student_report)

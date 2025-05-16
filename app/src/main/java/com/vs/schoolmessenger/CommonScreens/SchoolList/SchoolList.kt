@@ -94,7 +94,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         isAccessToken = isStaffData!!.access_token
 
         isAwsUploadingPreSigned = AwsUploadingPreSigned()
-
+        Constant.hideLoading(this)
         isUserDetails = SharedPreference.getUserDetails(this)
 
         if (SELECTED_SCHOOL_MENU == M_COMMUNICATION || SELECTED_SCHOOL_MENU == M_NOTICEBOARD || SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_SCHEDULE_EXAM_TEST || SELECTED_SCHOOL_MENU == M_EVENTS_HOLIDAYS || SELECTED_SCHOOL_MENU == M_ONLINE_MEETING) {

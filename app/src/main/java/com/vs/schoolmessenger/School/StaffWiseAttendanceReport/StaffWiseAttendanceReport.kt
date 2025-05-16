@@ -375,9 +375,8 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
     }
 
     private fun isPunchHistory(data: StaffAttendanceReportData) {
-
         isAccessToken?.let {
-            appViewModel?.getPunchHistory(it, data.date, this)
+            appViewModel?.getPunchHistory(it, data.date, data.staff_id, this)
         }
     }
 

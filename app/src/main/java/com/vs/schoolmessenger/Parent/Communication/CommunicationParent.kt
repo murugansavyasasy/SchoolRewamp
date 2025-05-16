@@ -362,6 +362,12 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
             binding.imgTextMessage -> binding.imgTextMessage.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.text_icon))
         }
     }
+
+    override fun onBackPressed() {
+        adapter!!.releaseMediaPlayer()
+        super.onBackPressed()
+    }
+
 }
 
 

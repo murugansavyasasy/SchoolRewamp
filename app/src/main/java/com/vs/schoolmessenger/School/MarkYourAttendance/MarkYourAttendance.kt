@@ -601,7 +601,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
     private fun isPunchHistory(data: StaffAttendanceReportData) {
 
         isAccessToken?.let {
-            appViewModel?.getPunchHistory(it, data.date, this)
+            appViewModel?.getPunchHistory(it, data.date,data.staff_id, this)
         }
     }
 

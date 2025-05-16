@@ -1419,4 +1419,9 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             null
         }
     }
+
+    override fun onBackPressed() {
+        mAdapter!!.releaseMediaPlayer()
+        super.onBackPressed()
+    }
 }

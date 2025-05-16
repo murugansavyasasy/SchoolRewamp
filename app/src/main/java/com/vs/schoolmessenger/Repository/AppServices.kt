@@ -724,18 +724,6 @@ class AppServices {
                         "isGetCountryList", response.code().toString() + " - " + response.toString()
                     )
                     isSendVoice.postValue(response.body())
-//                    if (response.code() == 200) {
-//                        if (response.body() != null) {
-//                            val status = response.body()!!.status
-//                            if (status) {
-//
-//                            } else {
-//                                isSendVoice.postValue(response.body())
-//                            }
-//                        }
-//                    } else {
-//
-//                    }
                 }
 
                 override fun onFailure(call: Call<TextSendResponse?>, t: Throwable) {
@@ -1010,8 +998,8 @@ class AppServices {
 //    fun getPunchHistory(isToken: String, activity: Activity) {
 //        RestClient.apiInterfaces.getPunchHistory(isToken)
 
-    fun getPunchHistory(isToken: String, isDate: String, activity: Activity) {
-        RestClient.apiInterfaces.getPunchHistory(isToken, isDate, isDate)
+    fun getPunchHistory(isToken: String, isDate: String, staff_id: String, activity: Activity) {
+        RestClient.apiInterfaces.getPunchHistory(isToken, isDate, isDate,staff_id)
             ?.enqueue(object : Callback<PunchHistoryResponse?> {
                 override fun onResponse(
                     call: Call<PunchHistoryResponse?>, response: Response<PunchHistoryResponse?>

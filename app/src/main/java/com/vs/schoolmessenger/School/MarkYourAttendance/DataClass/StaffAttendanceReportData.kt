@@ -5,6 +5,7 @@ import com.vs.schoolmessenger.Repository.APIKeyNames
 
 data class StaffAttendanceReportData(
     @SerializedName(APIKeyNames.name) val name: String,
+    @SerializedName(APIKeyNames.staff_id) val staff_id: String,
     @SerializedName(APIKeyNames.date) val date: String,
     @SerializedName(APIKeyNames.leave_type) val leave_type: String,
     @SerializedName(APIKeyNames.attendance_type) val attendance_type: String,

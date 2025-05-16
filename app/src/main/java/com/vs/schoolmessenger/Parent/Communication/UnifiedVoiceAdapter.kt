@@ -119,17 +119,20 @@ class UnifiedVoiceAdapter(
         private val rlaSendVoice: View = itemView.findViewById(R.id.rlaSendVoice)
         private val rlaSelectText: View = itemView.findViewById(R.id.rlaSelectText)
         private var isExpanded = false
-        private lateinit var mediaPlayer: MediaPlayer
+//        private lateinit var mediaPlayer: MediaPlayer
+private var mediaPlayer: MediaPlayer? = null
+
         private var isPrepared = false
         private var isPlayingVoice = false
         private var lastPosition: Int = 0
         private val handler = Handler(Looper.getMainLooper())
 
+
         private val progressUpdater = object : Runnable {
             override fun run() {
-                if (isPrepared && mediaPlayer.isPlaying) {
+                if (isPrepared && mediaPlayer!!.isPlaying) {
                     waveformSeekBar.updateWithLevel(1f)
-                    lblStartDuration.text = formatTime(mediaPlayer.currentPosition)
+                    lblStartDuration.text = formatTime(mediaPlayer!!.currentPosition)
                     handler.postDelayed(this, 100)
                 }
             }
@@ -248,29 +251,49 @@ class UnifiedVoiceAdapter(
         }
 
         private fun pauseAudio() {
-            mediaPlayer.pause()
-            lastPosition = mediaPlayer.currentPosition
+            mediaPlayer!!.pause()
+            lastPosition = mediaPlayer!!.currentPosition
             isPlayingVoice = false
             updatePlayPauseIcon(false)
             waveformSeekBar.updateWithLevel(0f)
         }
 
         private fun resumeAudio() {
-            mediaPlayer.seekTo(lastPosition)
-            mediaPlayer.start()
+            mediaPlayer!!.seekTo(lastPosition)
+            mediaPlayer!!.start()
             isPlayingVoice = true
             startAudioProgressUpdate()
             updatePlayPauseIcon(true)
         }
 
+        fun releaseMediaPlayer() {
+            mediaPlayer?.let {
+                if (it.isPlaying) {
+                    it.stop()
+                }
+                it.release()
+            }
+            mediaPlayer = null
+        }
+
         fun stopAudioPlayback() {
-            if (::mediaPlayer.isInitialized) {
-                if (mediaPlayer.isPlaying) mediaPlayer.stop()
-                mediaPlayer.reset()
-                mediaPlayer.release()
+            mediaPlayer?.let {
+                if (it.isPlaying) it.stop()
+                it.reset()
+                it.release()
                 resetPlaybackState()
             }
+            mediaPlayer = null
         }
+
+//        fun stopAudioPlayback() {
+//            if (::mediaPlayer!!.isInitialized) {
+//                if (mediaPlayer!!.isPlaying) mediaPlayer!!.stop()
+//                mediaPlayer!!.reset()
+//                mediaPlayer!!.release()
+//                resetPlaybackState()
+//            }
+//        }
 
         private fun resetPlaybackState() {
             stopAudioProgressUpdate()

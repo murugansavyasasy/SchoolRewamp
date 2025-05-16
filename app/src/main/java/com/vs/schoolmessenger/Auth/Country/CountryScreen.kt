@@ -115,7 +115,6 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
                         startActivity(intent)
                     } else {
                         ToastManager.showToast(this, R.string.AgreeTermsConditions)
-
                     }
                 } else {
                     ToastManager.showToast(this, R.string.lblChoosecountry)
