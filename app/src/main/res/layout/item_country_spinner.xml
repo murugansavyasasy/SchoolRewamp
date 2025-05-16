@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/five"
-    android:gravity="center_vertical"
-    android:orientation="horizontal"
-    android:fitsSystemWindows="true"
+    android:fitsSystemWindows="false"
     android:padding="@dimen/ten">
 
     <ImageView
@@ -13,12 +11,15 @@
         android:layout_width="@dimen/twenty_two"
         android:layout_height="@dimen/twenty"
         android:layout_marginEnd="@dimen/ten"
+        android:layout_centerVertical="true"
         android:scaleType="fitXY" />
 
     <TextView
+        android:layout_toRightOf="@+id/flagImageView"
+        android:layout_centerVertical="true"
         android:id="@+id/countryNameTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
         android:textSize="@dimen/thirteen_sp" />
-</LinearLayout>
+</RelativeLayout>

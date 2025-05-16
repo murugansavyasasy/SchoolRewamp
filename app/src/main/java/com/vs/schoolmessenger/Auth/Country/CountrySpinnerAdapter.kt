@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.Auth.Country
 
 import android.content.Context
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,6 +30,7 @@ class CountrySpinnerAdapter(
 
         val flagImageView: ImageView = view.findViewById(R.id.flagImageView)
         val countryNameTextView: TextView = view.findViewById(R.id.countryNameTextView)
+
 
         if (position == 0) {
             Glide.with(context)

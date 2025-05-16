@@ -65,7 +65,7 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
                     binding.lblLoginTeacherOrParent.text =
                         resources.getString(R.string.Login_Management)
                 } else {
-                    binding.lblLoginTeacherOrParent.text = getString(R.string.Login_As)+userDetails!!.role_name
+                    binding.lblLoginTeacherOrParent.text = getString(R.string.Login_As)+" "+userDetails!!.role_name
                 }
                 isLoadData(true)
             }
@@ -214,7 +214,7 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
                 if (userDetails!!.staff_role == Constant.isPrincipalRole) {
                     binding.lblLoginTeacherOrParent.text = resources.getString(R.string.Login_Management)
                 }else{
-                    binding.lblLoginTeacherOrParent.text =  getString(R.string.Login_As)+userDetails!!.role_name
+                    binding.lblLoginTeacherOrParent.text =  getString(R.string.Login_As)+" "+userDetails!!.role_name
                 }
                 binding.lblParent.background = null
                 binding.lblParent.setTextColor(ContextCompat.getColor(this, R.color.dark_blue))
