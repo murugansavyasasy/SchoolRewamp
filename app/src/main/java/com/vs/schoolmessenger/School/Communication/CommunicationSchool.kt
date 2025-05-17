@@ -179,23 +179,48 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         }
 
         appViewModel!!.isGetVoiceHistory?.observe(this) { response ->
-            if (response != null && response.status) {
-                val isGetHistory = response.data
-                isVoiceHistoryData = isGetHistory
-                loadVoiceData(isVoiceHistoryData)
+            if (response != null) {
+                if (response.status) {
+                    binding.rytNORecordFound.visibility = View.GONE
+                    binding.rcyHistoryDataVoiceAndText.visibility = View.VISIBLE
+                    val isGetHistory = response.data
+                    isVoiceHistoryData = isGetHistory
+                    loadVoiceData(isVoiceHistoryData)
+                } else {
+                    binding.rytNORecordFound.visibility = View.VISIBLE
+                    binding.lblNoRecordFound.text = response.message
+                    binding.rcyHistoryDataVoiceAndText.visibility = View.GONE
+                }
             }
         }
 
         appViewModel!!.isGetTextHistory?.observe(this) { response ->
-            if (response != null && response.status) {
-                val isTextHistory = response.data
-                isTextHistoryData = isTextHistory
-                loadTextHistoryData(isTextHistoryData)
+            if (response != null) {
+                if (response.status) {
+                    binding.rytNORecordFound.visibility = View.GONE
+                    binding.rcyHistoryDataVoiceAndText.visibility = View.VISIBLE
+                    val isTextHistory = response.data
+                    isTextHistoryData = isTextHistory
+                    loadTextHistoryData(isTextHistoryData)
+                } else {
+                    binding.rytNORecordFound.visibility = View.VISIBLE
+                    binding.lblNoRecordFound.text = response.message
+                    binding.rcyHistoryDataVoiceAndText.visibility = View.GONE
+                }
             }
         }
 
         changeLabel()
         binding.SwitchEmergencyVoice.setOnClickListener {
+            if (isRecording) {
+                stopRecording()
+            }
+            binding.rlaSeekBarAndTitle.visibility = View.GONE
+            binding.rlaTitle.visibility = View.GONE
+            Constant.selectedFiles.clear()
+            binding.rlaAddLocalFile.visibility = View.VISIBLE
+            binding.rytVoiceRecord.visibility = View.VISIBLE
+            binding.lblDurationOfVoice.visibility = View.VISIBLE
             if (binding.SwitchEmergencyVoice.isChecked()) {
                 Constant.isAccessType = Constant.isEmergency
                 binding.lblDurationOfVoice.text = "00:00 / 00:30"
@@ -207,7 +232,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     popupWindow.dismiss() // Dismiss the tooltip after 2 seconds
                 }, 2000)
             } else {
-
                 Constant.isAccessType = Constant.isNonEmergency
                 binding.lblDurationOfVoice.text = "00:00 / 03:00"
                 isEmergency = false
@@ -399,6 +423,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun stopRecording() {
+
         mediaRecorder?.apply {
             try {
                 stop()
@@ -832,8 +857,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                                     isGoToRecipient()
                                 } else {
                                     Constant.showValidationAlertPopup(
-                                        "Select the schedule date",
-                                        this
+                                        "Select the schedule date", this
                                     )
                                 }
                             } else {
@@ -857,8 +881,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                                     isGoToRecipient()
                                 } else {
                                     Constant.showValidationAlertPopup(
-                                        "Select the schedule date",
-                                        this
+                                        "Select the schedule date", this
                                     )
                                 }
                             } else {
@@ -909,8 +932,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 }
             }
 
-
             R.id.imgVoiceRecord -> {
+                binding.lblStartDuration.text = "00:00"
                 stopAudioProgressUpdate()
 //                if (!isRecording) {
                 Constant.isVoiceType = 1
@@ -977,6 +1000,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
 
             R.id.rlaBackRecord -> {
+                binding.rytNORecordFound.visibility = View.GONE
                 if (mAdapter != null) {
                     mAdapter!!.releaseMediaPlayer()
                 }
@@ -1125,7 +1149,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         imgTypeCommunication: ImageView,
         lblTypeCommunication: TextView
     ) {
-        // Reset backgrounds and colors
+        binding.lnrHistoryList.visibility = View.VISIBLE
+        binding.rytNORecordFound.visibility = View.GONE
         binding.rlaVoiceMessage.background = null
         binding.rlaScheduleCall.background = null
         binding.rlaTextMessage.background = null
@@ -1207,7 +1232,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         appViewModel!!.isGetTextHistory(isAccessToken!!, this)
     }
 
-
     private fun loadVoiceData(isVoiceHistoryData: List<VoiceHistoryDetails>) {
         mAdapter =
             VoiceHistoryAdapter(isVoiceHistoryData, this, this, Constant.isShimmerViewDisable)
@@ -1280,8 +1304,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         binding.lblEndDuration.text = "/ " + Constant.getAudioDurationInMinutes(data.url)
 
         Constant.isVoiceType = 3
-        val voiceUrlOrPath =
-            data.url
+        val voiceUrlOrPath = data.url
         audioFilePath = voiceUrlOrPath
         val currentDate: String? = Constant.getCurrentDate()
         val isFileExtension = getFileExtensionFromAwsUrl(data.url)
@@ -1395,5 +1418,12 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         } else {
             null
         }
+    }
+
+    override fun onBackPressed() {
+        if (mAdapter != null) {
+            mAdapter!!.releaseMediaPlayer()
+        }
+        super.onBackPressed()
     }
 }

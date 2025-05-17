@@ -276,8 +276,8 @@ class App(application: Application) : AndroidViewModel(application) {
         apiRepositories?.getStaffLocations(isToken, activity)
     }
 
-    fun getPunchHistory(isToken: String, isDate: String, activity: Activity) {
-        apiRepositories?.getPunchHistory(isToken, isDate, activity)
+    fun getPunchHistory(isToken: String, isDate: String, staff_id: String, activity: Activity) {
+        apiRepositories?.getPunchHistory(isToken, isDate,staff_id, activity)
     }
 
     fun getLocationHistory(isToken: String, activity: Activity) {

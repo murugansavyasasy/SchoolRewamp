@@ -87,7 +87,6 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/fifteen_sp"
                 android:textStyle="bold">
-
             </TextView>
         </RelativeLayout>
     </LinearLayout>
@@ -99,13 +98,15 @@
         android:layout_below="@+id/lnrCommunicationIcon"
         android:layout_alignStart="@+id/lnrCommunicationIcon"
         android:layout_alignEnd="@+id/lnrCommunicationIcon"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/imgFilter"
-            android:layout_width="@dimen/thirty"
-            android:layout_height="@dimen/thirty"
+            android:layout_width="@dimen/twenty_five"
+            android:layout_height="@dimen/twenty_five"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginEnd="@dimen/ten"
             android:src="@drawable/filter_icon" />
@@ -296,8 +297,8 @@
         style="@style/CustomTextStylePoppinsBold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
         android:layout_below="@+id/lytList"
+        android:layout_alignParentEnd="true"
         android:layout_marginEnd="@dimen/twenty"
         android:layout_marginBottom="@dimen/fifteen"
         android:text="@string/see_more"

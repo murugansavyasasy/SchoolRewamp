@@ -74,7 +74,7 @@
                 android:layout_width="@dimen/twenty_five"
                 android:layout_height="@dimen/twenty_five"
                 android:layout_marginEnd="@dimen/ten"
-                android:layout_toStartOf="@+id/imgEdit"
+                android:layout_toEndOf="@+id/imgEdit"
                 android:src="@drawable/delete_icon_blue" />
 
         </RelativeLayout>

@@ -29,6 +29,7 @@ import android.widget.FrameLayout
 import android.widget.GridView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Country.Country
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
@@ -651,20 +652,35 @@ object Constant {
         }
     }
 
-    fun getDeviceDetails(context: Activity): String {
-        val deviceDetails = mapOf(
-            manufacturer to Build.MANUFACTURER,
-            model to Build.MODEL,
-            device to Build.DEVICE,
-            brand to Build.BRAND,
-            hardware to Build.HARDWARE,
-            product to Build.PRODUCT,
-            os_version to Build.VERSION.RELEASE,
-            sdk_int to Build.VERSION.SDK_INT.toString(),
-            app_version to getAppVersion(context)
-        )
-        return deviceDetails.toString()
+    fun getDeviceDetails(context: Activity): JsonObject {
+        val json = JsonObject()
+        json.addProperty("manufacturer", Build.MANUFACTURER)
+        json.addProperty("model", Build.MODEL)
+        json.addProperty("device", Build.DEVICE)
+        json.addProperty("brand", Build.BRAND)
+        json.addProperty("hardware", Build.HARDWARE)
+        json.addProperty("product", Build.PRODUCT)
+        json.addProperty("os_version", Build.VERSION.RELEASE)
+        json.addProperty("sdk_int", Build.VERSION.SDK_INT)
+        json.addProperty("app_version", getAppVersion(context))
+        return json
     }
+
+
+//    fun getDeviceDetails(context: Activity): String {
+//        val deviceDetails = mapOf(
+//            manufacturer to Build.MANUFACTURER,
+//            model to Build.MODEL,
+//            device to Build.DEVICE,
+//            brand to Build.BRAND,
+//            hardware to Build.HARDWARE,
+//            product to Build.PRODUCT,
+//            os_version to Build.VERSION.RELEASE,
+//            sdk_int to Build.VERSION.SDK_INT.toString(),
+//            app_version to getAppVersion(context)
+//        )
+//        return deviceDetails.toString()
+//    }
 
 
     fun getAppVersion(context: Activity): String {

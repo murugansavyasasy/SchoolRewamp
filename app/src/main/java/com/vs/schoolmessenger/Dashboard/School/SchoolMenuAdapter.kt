@@ -29,7 +29,7 @@ class SchoolMenuAdapter(
     private var listener: MenuClickListener,
     private var itemList: List<MenuDetail>?,
     private var isAdItem: List<AdItem>?,
-    private val isLoading: Boolean
+    private var isLoading: Boolean
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val TYPE_SHIMMER = 0
@@ -43,8 +43,6 @@ class SchoolMenuAdapter(
             else -> TYPE_DATA
         }
     }
-
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -87,7 +85,6 @@ class SchoolMenuAdapter(
 
             is AdViewHolder -> {
                 if (position == 9) {
-                    Log.d("isAddItem", isAdItem!!.size.toString())
                     holder.bind(isAdItem!!, context)
                 } else {
                     holder.bind(emptyList(), context)

@@ -38,13 +38,6 @@ class AlbumSelectActivity : AppCompatActivity() {
         binding.recyclerView.adapter = adapter
 
         val fileType = intent.getStringExtra("type") ?: "IMAGE"
-//        val files = when (type) {
-//            "IMAGE" -> loadImages(this)
-//            "VIDEO" -> loadVideos(this)
-//            "AUDIO" -> loadAudio(this)
-//            "DOCUMENT" -> loadDocuments(this)
-//            else -> emptyList()
-//        }
         when (fileType.uppercase()) {
             "IMAGE" -> adapter.submitList(loadImages())
             "VIDEO" -> adapter.submitList(loadVideos())
@@ -55,34 +48,37 @@ class AlbumSelectActivity : AppCompatActivity() {
                     if (docs.isNotEmpty()) {
                         adapter.submitList(docs)
                     } else {
-                        Log.d("isDocumentEmpty","isDocumentEmpty")
+                        Log.d("isDocumentEmpty", "isDocumentEmpty")
                         openDocumentPicker()
                     }
                 } else {
                     openDocumentPicker()
                 }
             }
+
             else -> adapter.submitList(emptyList())
         }
-//        Log.d("documentUris", files.size.toString())
-//        adapter.submitList(files)
     }
 
     private fun setupDocumentPicker() {
-        documentPickerLauncher = registerForActivityResult(ActivityResultContracts.OpenMultipleDocuments()) { uris ->
-            // Handle the selected documents here
-            if (uris != null) {
-                adapter.submitList(uris)
+        documentPickerLauncher =
+            registerForActivityResult(ActivityResultContracts.OpenMultipleDocuments()) { uris ->
+                // Handle the selected documents here
+                if (uris != null) {
+                    adapter.submitList(uris)
+                }
             }
-        }
     }
+
     private fun openDocumentPicker() {
-        documentPickerLauncher.launch(arrayOf(
-            "application/pdf",
-            "application/msword",
-            "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-            "application/vnd.ms-powerpoint"
-        ))
+        documentPickerLauncher.launch(
+            arrayOf(
+                "application/pdf",
+                "application/msword",
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                "application/vnd.ms-powerpoint"
+            )
+        )
     }
 
     private fun loadDocumentsFromMediaStore(): List<Uri> {
@@ -95,12 +91,11 @@ class AlbumSelectActivity : AppCompatActivity() {
         )
 
         val selection = ("${MediaStore.Files.FileColumns.MIME_TYPE} IN (?, ?, ?, ?)")
-
         val selectionArgs = arrayOf(
             "application/pdf",
-            "application/msword", // .doc
-            "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // .docx
-            "application/vnd.ms-powerpoint" // .ppt
+            "application/msword",
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            "application/vnd.ms-powerpoint"
         )
 
         val sortOrder = "${MediaStore.Files.FileColumns.DATE_ADDED} DESC"
@@ -177,7 +172,6 @@ class AlbumSelectActivity : AppCompatActivity() {
     }
 
 
-
 //    private fun loadImages(context: Context): List<Uri> {
 //        return loadMediaUris(context, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
 //    }
@@ -246,7 +240,6 @@ class AlbumSelectActivity : AppCompatActivity() {
 //                documentUris.add(contentUri)
 //            }
 //        }
-//
 //        return documentUris
 //    }
 }

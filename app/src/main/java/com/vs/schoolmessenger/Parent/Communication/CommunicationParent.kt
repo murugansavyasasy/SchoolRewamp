@@ -19,7 +19,8 @@ import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.CommunicationBinding
 
-class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickListener, VoiceClickListener {
+class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickListener,
+    VoiceClickListener {
 
     override fun getViewBinding() = CommunicationBinding.inflate(layoutInflater)
 
@@ -76,6 +77,7 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
                 currentSearchQuery = s.toString()
                 applyCombinedFilter()
             }
+
             override fun afterTextChanged(s: Editable?) {}
         })
 
@@ -233,13 +235,21 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
             R.id.rlaTextMessage -> {
                 adapter?.updateData()
                 adapter?.notifyDataSetChanged()
-                isChangeBackRoundCommunicationType(binding.rlaTextMessage, binding.imgTextMessage, binding.lblTextMessage)
+                isChangeBackRoundCommunicationType(
+                    binding.rlaTextMessage,
+                    binding.imgTextMessage,
+                    binding.lblTextMessage
+                )
             }
 
             R.id.rlaVoiceMessage -> {
                 adapter?.updateData()
                 adapter?.notifyDataSetChanged()
-                isChangeBackRoundCommunicationType(binding.rlaVoiceMessage, binding.imgVoiceMessage, binding.lblVoiceMessage)
+                isChangeBackRoundCommunicationType(
+                    binding.rlaVoiceMessage,
+                    binding.imgVoiceMessage,
+                    binding.lblVoiceMessage
+                )
             }
 
             R.id.seeMoreLabel -> {
@@ -348,19 +358,48 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
     ) {
         binding.rlaVoiceMessage.background = null
         binding.rlaTextMessage.background = null
-        isTypeCommunication.background = ContextCompat.getDrawable(this, R.drawable.bg_gradient_redious_parent)
+        isTypeCommunication.background =
+            ContextCompat.getDrawable(this, R.drawable.bg_gradient_redious_parent)
 
         binding.lblVoiceMessage.setTextColor(ContextCompat.getColor(this, R.color.black))
         binding.lblTextMessage.setTextColor(ContextCompat.getColor(this, R.color.black))
         lblTypeCommunication.setTextColor(ContextCompat.getColor(this, R.color.white))
 
-        binding.imgVoiceMessage.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.mic_icon_black))
-        binding.imgTextMessage.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.text_icon_black))
+        binding.imgVoiceMessage.setImageDrawable(
+            ContextCompat.getDrawable(
+                this,
+                R.drawable.mic_icon_black
+            )
+        )
+        binding.imgTextMessage.setImageDrawable(
+            ContextCompat.getDrawable(
+                this,
+                R.drawable.text_icon_black
+            )
+        )
 
         when (imgTypeCommunication) {
-            binding.imgVoiceMessage -> binding.imgVoiceMessage.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.mic_icon))
-            binding.imgTextMessage -> binding.imgTextMessage.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.text_icon))
+            binding.imgVoiceMessage -> binding.imgVoiceMessage.setImageDrawable(
+                ContextCompat.getDrawable(
+                    this,
+                    R.drawable.mic_icon
+                )
+            )
+
+            binding.imgTextMessage -> binding.imgTextMessage.setImageDrawable(
+                ContextCompat.getDrawable(
+                    this,
+                    R.drawable.text_icon
+                )
+            )
         }
+    }
+
+    override fun onBackPressed() {
+        if (adapter != null) {
+            adapter!!.releaseMediaPlayer()
+        }
+        super.onBackPressed()
     }
 }
 

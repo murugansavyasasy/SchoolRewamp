@@ -216,7 +216,8 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
     }
 
     private fun showInvalidLocationDialog(title: String, message: String) {
-        AlertDialog.Builder(this).setTitle(title).setMessage(message).setPositiveButton(getString(R.string.permission_ok), null)
+        AlertDialog.Builder(this).setTitle(title).setMessage(message)
+            .setPositiveButton(getString(R.string.permission_ok), null)
             .show()
     }
 
@@ -331,7 +332,8 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
                 appViewModel?.updateLocation(isAccessToken!!, jsonObject, this)
                 closePopup()
             } else {
-                Toast.makeText(this, getString(R.string.Please_enter_fields), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.Please_enter_fields), Toast.LENGTH_SHORT)
+                    .show()
             }
         }
         dimView.setOnClickListener { closePopup() }

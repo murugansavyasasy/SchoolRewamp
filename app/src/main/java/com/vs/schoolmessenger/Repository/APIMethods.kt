@@ -29,7 +29,7 @@ object APIMethods {
     const val isGetVoiceHistory = "comm/api/voice/get-voice-history"
     const val isGetTextHistory = "comm/api/text-message/get-text-history"
     const val isGetHomeWorkReport = "comm/api/homework/get-homework-report"
-    const val isGetDailyCollectionReport = "api/fee-report/daily-collection"
+    const val isGetDailyCollectionReport = "admin/api/fee-report/daily-collection"
     const val isGetSchoolStrengthReport = "api/get-school-strength"
     const val isDetailedPendingReport = "admin/api/fee-report/detailed-pending-report"
     const val isSendText = "comm/api/text-message/send-text"
