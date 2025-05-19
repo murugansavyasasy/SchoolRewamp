@@ -75,13 +75,11 @@ object Constant {
     var isForgotPassword: Boolean? = false
     var isMobileNumber: String? = ""
     var selectedFiles: MutableList<FileItem> = mutableListOf()
-
     var SplashScreen: Int? = 1
     var MobileNumberScreen: Int? = 2
     var SignInScreen: Int? = 3
     var PasswordScreen: Int? = 4
     var pageType: Int? = 0
-
     var isGroupHeadRole: String? = "p1"
     var isPrincipalRole: String? = "p2"
     var isStaffRole: String? = "p3"
@@ -261,6 +259,7 @@ object Constant {
     var TEXT_ALL = "TEXT_ALL"
     var VOICE_ALL = "VOICE_ALL"
     var dateForMate = "%02d:%02d"
+
     var IMAGE = "IMAGE"
     var PDF = "PDF"
     var DOC = "DOC"
@@ -269,6 +268,7 @@ object Constant {
     var PPTX = "PPTX"
     var TXT = "TXT"
     var EXCEL = "EXCEL"
+
     var data = "data"
     var position = "position"
     var subjectName = "subjectName"
@@ -324,6 +324,7 @@ object Constant {
     var GET_ALL_STUDENT = "GET ALL STUDENT"
     var STANDARD = "STANDARD"
     var STANDARD_AND_SECTION = "STANDARD & SECTION"
+
     var NO_DATA_FOUND = "No Data Found"
     var No_STANDARD_FOUND = "No Standard Found"
 

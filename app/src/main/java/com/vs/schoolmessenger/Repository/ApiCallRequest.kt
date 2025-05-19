@@ -99,7 +99,7 @@ object ApiCallRequest {
 
         for (i in Constant.isAwsUploadedFiles.indices) {
             val isSelectedObject = JsonObject()
-            isSelectedObject.addProperty(APIKeyNames.path, Constant.isAwsUploadedFiles[i].isFileUrl)
+            isSelectedObject.addProperty(APIKeyNames.url, Constant.isAwsUploadedFiles[i].isFileUrl)
             isSelectedObject.addProperty(APIKeyNames.type, Constant.isAwsUploadedFiles[i].isFileType.toString())
             filePathArray.add(isSelectedObject)
         }

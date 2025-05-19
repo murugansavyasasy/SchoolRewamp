@@ -1,11 +1,21 @@
 package com.vs.schoolmessenger.School.SchoolStrength
 
+import com.google.gson.annotations.SerializedName
+
 data class Section(
     val id: String,
     val name: String,
     val level: Int,
-    val boys_count: Int,
-    val girls_count: Int,
-    val other_count: Int,
-    val total_students: String
+
+    @SerializedName("boys_count")
+    val boysCount: Int,
+
+    @SerializedName("girls_count")
+    val girlsCount: Int,
+
+    @SerializedName("other_count")
+    val otherCount: Int,
+
+    @SerializedName("total_students")
+    val totalStudents: String
 )

@@ -114,6 +114,9 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     private var isAccessToken: String? = null
     private var isUserDetails: UserDetails? = null
     private var isStaffDetails: StaffDetails? = null
+    private var hasStartedRecording = false
+    private var recordingStartTime: Long = 0
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("ClickableViewAccessibility")
@@ -152,6 +155,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
+        recordingStartTime = System.currentTimeMillis()
 
         if (!checkAndRequestPermissions(this)) {
             return
@@ -373,6 +377,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     }
 
     private fun startRecording() {
+        Constant.selectedFiles.clear()
         if (checkAndRequestPermissions(this)) {
 
             val dir = externalCacheDir ?: cacheDir
@@ -381,10 +386,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             val filePath = "${dir.absolutePath}/$fileName"
 
             audioFilePath = filePath
-            isFileName = fileName // <-- Store if needed elsewhere
+            isFileName = fileName
             Constant.isVoiceType = 1
-//            Constant.isVoiceFile = audioFilePath
-            Constant.selectedFiles!!.add(FileItem(audioFilePath.toString(), FileType.AUDIO))
 
             mediaRecorder = MediaRecorder().apply {
                 setAudioSource(MediaRecorder.AudioSource.MIC)
@@ -393,20 +396,38 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 setOutputFile(audioFilePath)
 
                 try {
-//                    binding.imgVoiceRecord.setImageDrawable(
-//                        ContextCompat.getDrawable(this@CommunicationSchool, R.drawable.record_voice)
-//                    )
+                    prepare()
+                    start()
+                    isRecording = true
+                    recordingTime = 0
+                    recordingStartTime = System.currentTimeMillis()
+
+                    recordingRunnable = object : Runnable {
+                        @RequiresApi(Build.VERSION_CODES.O)
+                        override fun run() {
+                            if (isRecording) {
+                                recordingTime++
+                                binding.lblDurationOfVoice.text = String.format(
+                                    "%02d:%02d / %s",
+                                    recordingTime / 60,
+                                    recordingTime % 60,
+                                    if (MAX_RECORDING_TIME == 30) "00:30" else "03:00"
+                                )
+                                if (recordingTime >= MAX_RECORDING_TIME) {
+                                    stopRecording()
+                                } else {
+                                    recordingHandler.postDelayed(this, 1000)
+                                }
+                            }
+                        }
+                    }
+                    recordingHandler.post(recordingRunnable)
+
                     binding.lottieAnimationView.visibility = View.VISIBLE
                     binding.imgVoiceRecord.visibility = View.GONE
                     binding.lottieAnimationView.setAnimation(R.raw.voice_record)
                     binding.lottieAnimationView.loop(true)
                     binding.lottieAnimationView.playAnimation()
-
-                    prepare()
-                    start()
-                    isRecording = true
-                    recordingTime = 0
-                    recordingHandler.post(recordingRunnable)
 
                     binding.lblDurationOfVoice.visibility = View.VISIBLE
                     binding.lblDurationOfVoice.text = "Recording: $fileName"
@@ -423,6 +444,13 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun stopRecording() {
+        val elapsedTime = System.currentTimeMillis() - recordingStartTime
+        if (elapsedTime < 1000L) {
+            Handler(Looper.getMainLooper()).postDelayed({
+                stopRecording()
+            }, 1000L - elapsedTime)
+            return
+        }
 
         mediaRecorder?.apply {
             try {
@@ -440,16 +468,10 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 binding.rlaAddLocalFile.visibility = View.GONE
 
                 val file = File(audioFilePath)
-                Log.d(
-                    "RecordingFilePath",
-                    "Stopped. Path: $audioFilePath, Exists: ${file.exists()}, Size: ${file.length()} bytes"
-                )
-
                 if (file.exists() && file.length() > 0L) {
-                    Constant.selectedFiles!!.add(FileItem(audioFilePath.toString(), FileType.AUDIO))
+                    Constant.selectedFiles?.add(FileItem(audioFilePath.toString(), FileType.AUDIO))
                     Constant.isVoiceType = 1
 
-                    // Get duration using MediaPlayer
                     val mediaPlayer = MediaPlayer()
                     mediaPlayer.setDataSource(audioFilePath)
                     mediaPlayer.prepare()
@@ -461,7 +483,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
                     binding.rlaSeekBarAndTitle.visibility = View.VISIBLE
                     binding.rlaTitle.visibility = View.VISIBLE
-
                 } else {
                     Toast.makeText(
                         this@CommunicationSchool,
@@ -469,7 +490,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                         Toast.LENGTH_SHORT
                     ).show()
                 }
-
             } catch (e: Exception) {
                 e.printStackTrace()
                 Toast.makeText(
@@ -968,6 +988,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
             R.id.imgBack -> {
                 onBackPressed()
+                Constant.selectedFiles.clear()
             }
 
             R.id.lnrScheduleCall -> {
@@ -1424,6 +1445,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         if (mAdapter != null) {
             mAdapter!!.releaseMediaPlayer()
         }
+        Constant.selectedFiles.clear()
         super.onBackPressed()
     }
 }

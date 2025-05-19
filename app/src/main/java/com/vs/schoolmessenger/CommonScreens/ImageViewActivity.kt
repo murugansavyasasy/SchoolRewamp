@@ -41,7 +41,7 @@ class ImageViewActivity : BaseActivity<ImageViewActivityBinding>(),
         binding.toolbarLayout.lblStudentName.text = "Sathish Ganesan"
         binding.toolbarLayout.lblStudentSection.text = "XII - B"
 
-        if (isFileType == Constant.isDocument) {
+        if (isFileType != Constant.IMAGE) {
             binding.webView.visibility = View.VISIBLE
             binding.webView.visibility = View.VISIBLE
             binding.webView.settings.apply {

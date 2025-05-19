@@ -1,7 +1,6 @@
 package com.vs.schoolmessenger.School.Homework
 
 import android.Manifest
-import android.app.Activity
 import android.app.Dialog
 import android.content.ContentResolver
 import android.content.Intent
@@ -9,7 +8,6 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
-import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
@@ -21,11 +19,9 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -33,11 +29,9 @@ import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.vs.schoolmessenger.AlbumImage.AlbumSelectActivity
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
-import com.vs.schoolmessenger.CommonScreens.ImagePickingData
 import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
@@ -73,7 +67,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         private const val MAX_FILES = 10
     }
 
-    private var cameraImageUri: Uri? = null
     private var cameraImageFilePath: String? = null
     private val CAMERA_PERMISSION_REQUEST_CODE = 200
     private var mAdapter: ImagePickingAdapter? = null
@@ -106,6 +99,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         binding.btnHistory.setOnClickListener(this)
         binding.AcademicYear.setOnClickListener(this)
         binding.btnChooseRecipient.setOnClickListener(this)
+        binding.Calendar.setOnClickListener(this)
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
 
@@ -235,6 +229,8 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
                     binding.rlaStandard, this, isGetStandard
                 ) { selectStandard, position ->
                     binding.lblStandard.text = selectStandard.name
+                    binding.lblSection.text = selectStandard.sections[0].name
+                    isSectionId = selectStandard.sections[0].id
                     isSection = selectStandard.sections
                     Log.d(
                         "DropdownMenu",
@@ -275,7 +271,9 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
             R.id.btnChooseRecipient -> {
                 RedirectToSectionStudents()
             }
-
+            R.id.Calendar -> {
+                fetchHomeWorkReportData()
+            }
             R.id.AcademicYear -> {
                 showAcademicDropdown(
                     binding.AcademicYear, this, isAcademicYear
@@ -325,7 +323,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         }
     }
 
-
     private fun isGetAcademicYear() {
         appViewModel!!.isGetAcademicYear(
             isAccessToken!!, this
@@ -346,10 +343,10 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
             binding.edtDescription.requestFocus()
             return
         }
-        if (Constant.selectedFiles!!.size == 1) {
-            Toast.makeText(this, "Choose atleast one file", Toast.LENGTH_SHORT).show()
-            return
-        }
+//        if (Constant.selectedFiles.size == 1) {
+//            Toast.makeText(this, "Choose atleast one file", Toast.LENGTH_SHORT).show()
+//            return
+//        }
         val sectionDetails = SectionDetails(title, description)
         Constant.selectedFiles.removeAt(0)
         Log.d("Constant.selectedFiles", Constant.selectedFiles.toString())
@@ -428,20 +425,27 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         return null
     }
 
-
     private fun openCamera() {
-        // create the temp file
-        val imgFile = createImageFile()
-        cameraImageFilePath = imgFile.absolutePath
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
 
-        cameraImageUri = FileProvider.getUriForFile(
-            this, "$packageName.provider", imgFile
-        )
+        if (intent.resolveActivity(packageManager) != null) {
+            val photoFile: File? = try {
+                createImageFile()
+            } catch (ex: IOException) {
+                ex.printStackTrace()
+                null
+            }
 
-        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { it ->
-            it.putExtra(MediaStore.EXTRA_OUTPUT, cameraImageUri)
-            it.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
-            startActivityForResult(it, CAMERA_IMAGE_REQUEST)
+            photoFile?.also {
+                val photoURI: Uri = FileProvider.getUriForFile(
+                    this, "${applicationContext.packageName}.fileprovider", it
+                )
+                cameraImageFilePath = it.absolutePath
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                startActivityForResult(intent, CAMERA_IMAGE_REQUEST)
+            } ?: Toast.makeText(this, "Could not create file for photo", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, "No camera app found", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -450,7 +454,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
 
         if (resultCode != RESULT_OK) return
 
-        val remaining = MAX_FILES - Constant.selectedFiles!!.size
+        val remaining = MAX_FILES - Constant.selectedFiles.size
         if (remaining <= 0) {
             Toast.makeText(this, "Max $MAX_FILES files allowed", Toast.LENGTH_SHORT).show()
             return
@@ -640,25 +644,39 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         isClickingId.setTextColor(ContextCompat.getColor(this, R.color.white))
 
     }
+    override fun onClickListener(data: HomeWorkReport) {
+        Constant.isAwsUploadedFiles.clear()
+        Constant.selectedFiles.clear()
+        saveDrawableToCache(R.drawable.add_image)?.let {
+            Constant.selectedFiles.add(
+                FileItem(
+                    it, FileType.IMAGE
+                )
+            )
+        }
+        isBackRoundChange(binding.btnCreate)
+        binding.rlaHomeWorkReport.visibility = View.GONE
+        binding.rlaHomework.visibility = View.VISIBLE
+        binding.edtTitle.setText(data.title)
+        binding.edtDescription.setText(data.description)
 
+        if (data.file_path.isNotEmpty()) {
+            val mappedList = data.file_path.map { filePath ->
+                val fileType = try {
+                    FileType.valueOf(filePath.type.uppercase())
+                } catch (e: IllegalArgumentException) {
+                    FileType.OTHER
+                }
 
-    override fun onItemTextClick(data: HomeWorkReport) {
-        TODO("Not yet implemented")
-    }
+                FileItem(path = filePath.url, type = fileType)
+            }
+            Constant.selectedFiles.addAll(mappedList)
+        }
 
-    override fun onItemImageClick(data: HomeWorkReport) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onItemPDFClick(data: HomeWorkReport) {
-
-    }
-
-    override fun onItemVoiceClick(data: HomeWorkReport) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onItemVideoClick(data: HomeWorkReport) {
+        binding.rcyImages.visibility = View.VISIBLE
+        mAdapter = ImagePickingAdapter(this, Constant.selectedFiles!!, this)
+        binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
+        binding.rcyImages.adapter = mAdapter
 
     }
 }
