@@ -17,6 +17,7 @@ import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
+import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
 import com.vs.schoolmessenger.Repository.APIMethods.isDetailedPendingReport
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionReportResponse
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportResponse
@@ -77,14 +78,14 @@ class App(application: Application) : AndroidViewModel(application) {
         private set
 
 
+    var isNoticeBoardReport: LiveData<NoticeBoardResponse?>? = null
+        private set
+
     var isDetailedPendingReport: LiveData<FeePendingReportResponse?>? = null
         private set
 
     var isDetailedWisePendingReport: LiveData<FeePendingReportResponse?>? = null
         private set
-
-
-
 
     var isSendText: LiveData<TextSendResponse?>? = null
         private set
@@ -136,6 +137,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isGetVoiceHistory = apiRepositories!!.isGetVoiceHistoryLiveData
         isGetTextHistory = apiRepositories!!.isGetTextHistoryLiveData
         isGetHomeWorkReport = apiRepositories!!.isGetHomeWorkReportLiveData
+        isNoticeBoardReport = apiRepositories!!.isNoticeBoardReportLiveData
         isGetDailyCollectionReport = apiRepositories!!.isGetDailyCollectionReportLiveData
         isGetSchoolStrengthReport = apiRepositories!!.isGetSchoolStrengthReportLiveData
         isDetailedPendingReport = apiRepositories!!.isDetailedPendingReportLiveData
@@ -227,6 +229,10 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun isGetSchoolStrengthReport(isToken: String,   isAcademicYearId: Int ,activity: Activity) {
         apiRepositories!!.isGetSchoolStrengthReport(isToken, isAcademicYearId , activity )
+    }
+
+    fun isNoticeBoardReport(isToken: String ,activity: Activity) {
+        apiRepositories!!.isNoticeBoardReport(isToken , activity )
     }
 
 

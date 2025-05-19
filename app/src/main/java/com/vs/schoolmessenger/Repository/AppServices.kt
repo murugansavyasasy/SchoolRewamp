@@ -16,6 +16,8 @@ import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
+import com.vs.schoolmessenger.Parent.Noticeboard.Notice
+import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionReportResponse
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
@@ -54,11 +56,11 @@ class AppServices {
     var isAcademicYear: MutableLiveData<AcademicYearResponse?>
     var isUpdateStatusCommunication: MutableLiveData<StatusArchiveResponse?>
     var isHomeWorkDetailsData: MutableLiveData<GetHomeworkData?>
-
+    var isNoticeBoardReport: MutableLiveData<NoticeBoardResponse?>
     var isGetSchoolStrengthReport: MutableLiveData<SchoolStrengthResponse?>
     var isDetailedPendingReport: MutableLiveData<FeePendingReportResponse?>
 
-    var isDetailedWisePendingReport: MutableLiveData<FeePendingReportResponse>
+    var isDetailedWisePendingReport: MutableLiveData<FeePendingReportResponse?>
 
     var isPunchAttendance: MutableLiveData<StatusMessageModel?>
     var isAddLocation: MutableLiveData<StatusMessageModel?>
@@ -87,6 +89,7 @@ class AppServices {
         isGetVoiceHistory = MutableLiveData()
         isGetTextHistory = MutableLiveData()
         isGetHomeWorkReport = MutableLiveData()
+        isNoticeBoardReport = MutableLiveData()
         isGetDailyCollectionReport = MutableLiveData()
         isSendText = MutableLiveData()
         isSendHomeWork = MutableLiveData()
@@ -500,6 +503,45 @@ class AppServices {
 
     val isGetHomeWorkReportLiveData: LiveData<HomeWorkReportApiResponse?>
         get() = isGetHomeWorkReport
+
+
+
+    fun isNoticeBoardReport(
+        isToken: String,activity: Activity
+    ) {
+        RestClient.apiInterfaces.isNoticeBoardReport(isToken)
+            ?.enqueue(object : Callback<NoticeBoardResponse?> {
+                override fun onResponse(
+                    call: Call<NoticeBoardResponse?>,
+                    response: Response<NoticeBoardResponse?>
+                ) {
+                    Log.d(
+                        "isGetCountryList", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isNoticeBoardReport.postValue(response.body())
+                            } else {
+                                isNoticeBoardReport.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<NoticeBoardResponse?>, t: Throwable) {
+                    isNoticeBoardReport.postValue(null)
+                    Log.d("t.printStackTrace()", t.printStackTrace().toString())
+                }
+            })
+    }
+
+    val isNoticeBoardReportLiveData: LiveData<NoticeBoardResponse?>
+        get() = isNoticeBoardReport
+
+
+
 
 
     fun isGetDailyCollectionReport(

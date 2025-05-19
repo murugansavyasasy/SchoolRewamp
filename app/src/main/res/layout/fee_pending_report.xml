@@ -100,7 +100,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.4"
             android:text="@string/academic_year"
-            android:textSize="@dimen/thirteen_sp"></TextView>
+            android:textSize="@dimen/thirteen_sp">
+        </TextView>
 
         <TextView
             android:id="@id/lblAcademicYear"

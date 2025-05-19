@@ -23,7 +23,7 @@ import com.vs.schoolmessenger.R
 import me.relex.circleindicator.CircleIndicator
 
 class NoticeBoardAdapter(
-    private var itemList: List<NoticeBoardData>?,
+    private var itemList: List<Notice>?,
     private var listener: NoticeBoardClickListener,
     private var context: Context,
     private var isLoading: Boolean
@@ -92,19 +92,19 @@ class NoticeBoardAdapter(
 
         @SuppressLint("ClickableViewAccessibility")
         fun bind(
-            data: NoticeBoardData,
+            data: Notice,
             position: Int,
             listener: NoticeBoardClickListener,
             adapter: NoticeBoardAdapter
         ) {
             imgNoticeBoardPin.visibility = View.VISIBLE
-            when (data.isType) {
+            when (data.created_on) {
                 "isPDF" -> {
                     rlaPdf.visibility = View.VISIBLE
                     rlaImageReport.visibility = View.GONE
-                    lblDatePdf.text = data.date
-                    lblTitlePdf.text = data.isTitle
-                    lblPdfContent.text = data.isDescription
+                    lblDatePdf.text = data.created_on
+                    lblTitlePdf.text = data.title
+                    lblPdfContent.text = data.content
 
                     isSeeMoreVisibility(lblPdfContent, tvSeeMorePdf)
 
@@ -135,23 +135,23 @@ class NoticeBoardAdapter(
                         webChromeClient = WebChromeClient()
 
                         // Use Google Drive viewer to load the PDF
-                        loadUrl("https://drive.google.com/viewerng/viewer?embedded=true&url=${data.isLink}")
+                        loadUrl("https://drive.google.com/viewerng/viewer?embedded=true&url=${data.file_path}")
 
 
-                        setOnTouchListener { _, event ->
-                            if (event.action == MotionEvent.ACTION_UP) {
-                                listener.onItemPDFClick(data) // Trigger your custom listener
-                            }
-                            false // Let the WebView handle the touch event as well
-                        }
+//                        setOnTouchListener { _, event ->
+//                            if (event.action == MotionEvent.ACTION_UP) {
+//                                listener.onItemPDFClick(data) // Trigger your custom listener
+//                            }
+//                            false // Let the WebView handle the touch event as well
+//                        }
                     }
                 }
 
                 "isImage" -> {
                     rlaImageReport.visibility = View.VISIBLE
-                    lblDateImage.text = data.date
-                    lblTitleImage.text = data.isTitle
-                    lblContentImage.text = data.isDescription
+                    lblDateImage.text = data.created_on
+                    lblTitleImage.text = data.title
+                    lblContentImage.text = data.content
                     rlaPdf.visibility = View.GONE
                     isSeeMoreVisibility(lblContentImage, tvSeeMoreImage)
 
