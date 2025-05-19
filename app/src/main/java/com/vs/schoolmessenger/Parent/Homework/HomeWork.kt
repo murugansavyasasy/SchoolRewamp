@@ -77,7 +77,6 @@ class HomeWork : BaseActivity<HomeWorkParentBinding>(), View.OnClickListener,
         mAdapter =
             HomeWorkAdapter(newData, this, this, Constant.isShimmerViewDisable)
         binding.rcyHomework.adapter = mAdapter
-
     }
 
     fun isGetHomeWorkList() {

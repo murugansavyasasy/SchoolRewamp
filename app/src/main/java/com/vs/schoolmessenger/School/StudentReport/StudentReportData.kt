@@ -7,7 +7,9 @@ data class StudentReportData (
 
     @SerializedName(APIKeyNames.id) val id: Int,
     @SerializedName(APIKeyNames.name) val name: String,
+    @SerializedName(APIKeyNames.profile) val profile: String,
     @SerializedName(APIKeyNames.primary_mobile) val primary_mobile: String,
+    @SerializedName(APIKeyNames.email) val email: String,
     @SerializedName(APIKeyNames.admission_no) val admission_no: String,
     @SerializedName(APIKeyNames.roll_no) val roll_no: String,
     @SerializedName(APIKeyNames.gender) val gender: String,

@@ -6,7 +6,8 @@
     android:fitsSystemWindows="true">
 
 
-    <LinearLayout
+    <RelativeLayout
+        android:gravity="center"
         android:id="@+id/rytHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,12 +18,12 @@
             android:id="@+id/imgBack"
             android:layout_width="@dimen/thirty"
             android:layout_height="@dimen/thirty"
-            android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/ten"
-            android:layout_marginBottom="@dimen/ten"
             android:src="@drawable/left_arrow"></ImageView>
 
         <TextView
+            android:layout_toEndOf="@+id/imgBack"
+            android:id="@+id/NavStudentReport"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/ten"
@@ -32,45 +33,80 @@
             android:textStyle="bold">
 
         </TextView>
-    </LinearLayout>
-
-    <RelativeLayout
-        android:id="@+id/rytSearch"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/thirty_five"
-        android:layout_below="@+id/rytHeader"
-        android:layout_margin="@dimen/ten"
-        android:background="@drawable/rect_grey">
-
-
         <ImageView
-            android:id="@+id/imgSearch"
+            android:id="@+id/SearchNotification"
             android:layout_width="@dimen/thirty"
             android:layout_height="@dimen/thirty"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/ten"
-            android:alpha="0.34"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_alignParentEnd="true"
+            android:alpha="0.5"
+            android:layout_marginEnd="@dimen/ten"
             android:src="@drawable/ic_search" />
-
-        <EditText
-            android:id="@+id/txtSearchMenu"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_toEndOf="@+id/imgSearch"
-            android:background="@android:color/transparent"
-            android:fontFamily="@font/poppins_regular"
-            android:hint="@string/lblSearch"
-            android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp" />
-
     </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_marginTop="@dimen/five"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/rytHeader"
+        android:id="@+id/rytSearch"
+        android:visibility="gone"
+        android:layout_marginStart="@dimen/five"
+        android:layout_marginEnd="@dimen/five"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/thirty_five"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginEnd="@dimen/ten"
+            android:background="@drawable/rect_grey">
+
+
+            <ImageView
+                android:id="@+id/imgSearch"
+                android:layout_width="@dimen/thirty"
+                android:layout_height="@dimen/thirty"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/ten"
+                android:alpha="0.34"
+                android:src="@drawable/ic_search" />
+
+            <EditText
+                android:id="@+id/txtSearchMenu"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toEndOf="@+id/imgSearch"
+                android:background="@android:color/transparent"
+                android:fontFamily="@font/poppins_regular"
+                android:hint="@string/lblSearch"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp" />
+
+        </RelativeLayout>
+
+        <ImageView
+            android:background="@drawable/white_circle_bg"
+            android:id="@+id/imgDelete"
+            android:padding="@dimen/five"
+            android:layout_width="@dimen/twenty_five"
+            android:layout_height="@dimen/twenty_five"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/eight"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/del_icon">
+
+        </ImageView>
+    </RelativeLayout>
+
 
     <LinearLayout
         android:id="@+id/lnrSort"
+        android:layout_marginTop="@dimen/ten"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rytSearch"
-        android:layout_marginStart="@dimen/two"
+        android:layout_marginStart="@dimen/five"
         android:layout_marginEnd="@dimen/two"
         android:orientation="horizontal"
         android:weightSum="1">
@@ -103,10 +139,10 @@
                 android:layout_toEndOf="@+id/imgSort"
                 android:fontFamily="@font/poppins_regular"
                 android:gravity="center_vertical"
-                android:padding="@dimen/five"
+                android:padding="@dimen/seven"
                 android:text=""
                 android:textColor="@color/black"
-                android:textSize="@dimen/fifteen_sp"
+                android:textSize="@dimen/eleven_sp"
                 android:textStyle="bold" />
 
         </RelativeLayout>
@@ -127,14 +163,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableEnd="@drawable/down_arrow"
-                android:padding="@dimen/ten"
+                android:padding="@dimen/eight"
                 android:paddingEnd="@dimen/five"
                 android:text=""
-                android:textSize="@dimen/twele_sp"
+                android:textSize="@dimen/ten_sp"
                 android:textStyle="bold"></TextView>
         </RelativeLayout>
 
     </LinearLayout>
+
 
 
     <LinearLayout
@@ -143,11 +180,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:weightSum="1"
+        android:layout_marginEnd="@dimen/five"
+        android:layout_marginStart="@dimen/five"
         android:layout_below="@+id/lnrSort"
         android:visibility="visible">
 
         <LinearLayout
-            android:visibility="gone"
+            android:visibility="visible"
             android:id="@+id/lnrStandardDetails"
             android:layout_width="match_parent"
             android:orientation="vertical"
@@ -158,10 +197,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/twenty"
-                android:layout_marginTop="@dimen/ten"
+                android:layout_marginTop="@dimen/five"
                 android:text="@string/Standard"
                 android:textColor="@color/black"
-                android:textSize="@dimen/fifteen_sp"
+                android:textSize="@dimen/twele_sp"
                 android:textStyle="bold"></TextView>
 
             <TextView
@@ -177,13 +216,13 @@
                 android:padding="@dimen/fifteen"
                 android:text="XII"
                 android:textColor="@color/navi_blue2"
-                android:textSize="@dimen/thirteen_sp"
+                android:textSize="@dimen/eleven_sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
         <LinearLayout
             android:id="@+id/lnrSectionDetails"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_width="match_parent"
             android:orientation="vertical"
             android:layout_weight="0.5"
@@ -194,10 +233,10 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/dropdownTextViewStandard"
                 android:layout_marginStart="@dimen/twenty"
-                android:layout_marginTop="@dimen/ten"
+                android:layout_marginTop="@dimen/five"
                 android:text="@string/Section"
                 android:textColor="@color/black"
-                android:textSize="@dimen/fifteen_sp"
+                android:textSize="@dimen/twele_sp"
                 android:textStyle="bold"></TextView>
 
             <TextView
@@ -214,19 +253,90 @@
                 android:padding="@dimen/fifteen"
                 android:text="B"
                 android:textColor="@color/navi_blue2"
-                android:textSize="@dimen/thirteen_sp"
+                android:textSize="@dimen/eleven_sp"
                 android:textStyle="bold" />
         </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/thirty"
+        android:layout_below="@+id/rlaStandardPicking"
+        android:layout_marginStart="@dimen/fifteen"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginEnd="@dimen/fifteen"
+        android:layout_marginBottom="@dimen/five"
+        android:background="@drawable/rect_light_gray"
+        android:orientation="horizontal"
+        android:padding="@dimen/one">
+
+        <TextView
+            android:id="@+id/tapNameAsc"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+
+            android:fontFamily="@font/poppins_bold"
+            android:gravity="center"
+            style="@style/CustomTextStylePoppinsBold"
+            android:text="@string/nameasc"
+            android:textColor="@color/black"
+            android:textSize="@dimen/ten_sp">
+        </TextView>
+
+
+
+        <TextView
+            android:id="@+id/tapNameDsc"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            style="@style/CustomTextStylePoppinsBold"
+            android:fontFamily="@font/poppins_bold"
+            android:gravity="center"
+            android:textSize="@dimen/ten_sp"
+            android:text="@string/namedsc"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/tapNoAsc"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            style="@style/CustomTextStylePoppinsBold"
+            android:fontFamily="@font/poppins_bold"
+            android:gravity="center"
+            android:textSize="@dimen/ten_sp"
+            android:text="@string/no_asc"
+            android:textColor="@color/black"/>
+
+
+        <TextView
+            android:id="@+id/tapNoDsc"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            style="@style/CustomTextStylePoppinsBold"
+            android:fontFamily="@font/poppins_bold"
+            android:gravity="center"
+            android:textSize="@dimen/ten_sp"
+            android:text="@string/no_dsc"
+            android:textColor="@color/black">
+        </TextView>
 
 
     </LinearLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcyStudentReport"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rlaStandardPicking"
-        android:layout_marginTop="@dimen/ten">
+        android:layout_below="@+id/tabLayout">
     </androidx.recyclerview.widget.RecyclerView>
 
     <LinearLayout

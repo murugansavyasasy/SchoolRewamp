@@ -38,6 +38,7 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserValidationData
 import com.vs.schoolmessenger.Auth.OTP.ForgetOtpData
 import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolList
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
+import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Communication.CommunicationSchool
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendingData
@@ -324,6 +325,9 @@ object Constant {
     var STANDARD = "STANDARD"
     var STANDARD_AND_SECTION = "STANDARD & SECTION"
 
+    var NO_DATA_FOUND = "No Data Found"
+    var No_STANDARD_FOUND = "No Standard Found"
+
 
     fun isInternetAvailable(activity: Activity): Boolean {
         val connectivityManager =
@@ -563,6 +567,62 @@ object Constant {
         }
         dimView.isFocusable = true
         dimView.isFocusableInTouchMode = true
+
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun showDataValidation(title :String,message: String, activity: Activity) {
+        val inflater = LayoutInflater.from(activity)
+        val view = inflater.inflate(R.layout.success_popup, null)
+
+        val messageText = view.findViewById<TextView>(R.id.alertMessage)
+        val titleText = view.findViewById<TextView>(R.id.alertTitle)
+        val okButton = view.findViewById<TextView>(R.id.btnOk)
+        titleText.text=title
+        messageText.text = message
+
+        val rootView = activity.findViewById<ViewGroup>(android.R.id.content)
+
+        val dimView = View(activity).apply {
+            setBackgroundColor(Color.parseColor("#80000000"))
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
+            )
+            isClickable = true
+        }
+
+        val marginInPx = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP, 20f, activity.resources.displayMetrics
+        ).toInt()
+
+        val popupLayoutParams = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT
+        ).apply {
+            gravity = Gravity.CENTER
+            setMargins(marginInPx, 0, marginInPx, 0)
+        }
+
+        rootView.addView(dimView)
+        rootView.addView(view, popupLayoutParams)
+
+        val closePopup = {
+            rootView.removeView(view)
+            rootView.removeView(dimView)
+        }
+
+        okButton.setOnClickListener {
+            if (user_details!!.staff_details.size == 1) {
+                val intent = Intent(activity, SchoolDashboard::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                activity.startActivity(intent)
+            } else {
+                val intent = Intent(activity, SchoolList::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                activity.startActivity(intent)
+            }
+
+            closePopup()
+        }
 
     }
 
