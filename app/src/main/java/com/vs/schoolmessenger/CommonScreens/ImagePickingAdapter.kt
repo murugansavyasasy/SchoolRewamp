@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.CommonScreens
 
 import android.content.Context
+import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -35,54 +36,88 @@ class ImagePickingAdapter(
     override fun onBindViewHolder(holder: FileViewHolder, pos: Int) {
         val item = items[pos]
         Log.d("isFileType", item.type.toString())
+        Log.d("isFilePath", item.path.toString())
 
-        when (item.type) {
-            FileType.IMAGE -> {
-                Glide.with(context)
-                    .load(File(item.path))
-                    .placeholder(R.drawable.add_image)
-                    .into(holder.img)
-            }
-
-            FileType.PDF -> {
-                Glide.with(context)
-                    .load(File(item.path))
-                    .placeholder(R.drawable.pdf_icon)
-                    .into(holder.img)
-            }
-
-            FileType.DOC -> {
-                Glide.with(context)
-                    .load(File(item.path))
-                    .placeholder(R.drawable.doc_icon)
-                    .into(holder.img)
-            }
-
-            FileType.PPT -> {
-                Glide.with(context)
-                    .load(File(item.path))
-                    .placeholder(R.drawable.ppt_icon)
-                    .into(holder.img)
-            }
-
-            FileType.EXCEL -> {
-                Glide.with(context)
-                    .load(File(item.path))
-                    .placeholder(R.drawable.excel_icon)
-                    .into(holder.img)
-            }
-
-            FileType.TXT -> {
-                Glide.with(context)
-                    .load(File(item.path))
-                    .placeholder(R.drawable.txt_icon)
-                    .into(holder.img)
-            }
-
-            else -> {
-
-            }
+        val filePath = item.path
+        val fileUri = when {
+            filePath.startsWith("content://") || filePath.startsWith("file://") -> Uri.parse(filePath)
+            filePath.startsWith("http://") || filePath.startsWith("https://") -> filePath
+            else -> File(filePath)
         }
+
+        val placeholderRes = when (item.type) {
+            FileType.PDF -> R.drawable.pdf_icon
+            FileType.DOC, FileType.DOCX -> R.drawable.doc_icon
+            FileType.PPT -> R.drawable.ppt_icon
+            FileType.EXCEL -> R.drawable.excel_icon
+            FileType.TXT -> R.drawable.txt_icon
+            FileType.IMAGE -> R.drawable.image_placeholder
+            FileType.VIDEO -> R.drawable.video_icon
+            FileType.AUDIO -> R.drawable.voice
+            else -> R.drawable.address_icon
+        }
+
+        Glide.with(context)
+            .load(fileUri)
+            .placeholder(placeholderRes)
+            .error(placeholderRes)
+            .into(holder.img)
+
+
+//        when (item.type) {
+//            FileType.IMAGE -> {
+//                val imageSource =
+//                    if (item.path.startsWith("content://") || item.path.startsWith("file://")) {
+//                        Uri.parse(item.path)
+//                    } else {
+//                        File(item.path)
+//                    }
+//
+//                Glide.with(context)
+//                    .load(imageSource)
+//                    .into(holder.img)
+//
+//            }
+//
+//            FileType.PDF -> {
+//                Glide.with(context)
+//                    .load(File(item.path))
+//                    .placeholder(R.drawable.pdf_icon)
+//                    .into(holder.img)
+//            }
+//
+//            FileType.DOC -> {
+//                Glide.with(context)
+//                    .load(File(item.path))
+//                    .placeholder(R.drawable.doc_icon)
+//                    .into(holder.img)
+//            }
+//
+//            FileType.PPT -> {
+//                Glide.with(context)
+//                    .load(File(item.path))
+//                    .placeholder(R.drawable.ppt_icon)
+//                    .into(holder.img)
+//            }
+//
+//            FileType.EXCEL -> {
+//                Glide.with(context)
+//                    .load(File(item.path))
+//                    .placeholder(R.drawable.excel_icon)
+//                    .into(holder.img)
+//            }
+//
+//            FileType.TXT -> {
+//                Glide.with(context)
+//                    .load(File(item.path))
+//                    .placeholder(R.drawable.txt_icon)
+//                    .into(holder.img)
+//            }
+//
+//            else -> {
+//
+//            }
+//        }
 
         holder.del.visibility = if (pos == 0) GONE else VISIBLE
         holder.del.setOnClickListener {

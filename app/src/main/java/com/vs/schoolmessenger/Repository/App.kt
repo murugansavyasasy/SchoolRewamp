@@ -102,6 +102,9 @@ class App(application: Application) : AndroidViewModel(application) {
     var isHomeWorkDetailsList: LiveData<GetHomeworkData?>? = null
         private set
 
+    var isHomeWorkDetailsListArchive: LiveData<GetHomeworkData?>? = null
+        private set
+
     var isPunchAttendance: LiveData<StatusMessageModel?>? = null
     var isAddLocation: LiveData<StatusMessageModel?>? = null
     var isRemoveLocation: LiveData<StatusMessageModel?>? = null
@@ -142,6 +145,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isGetAcademicList = apiRepositories!!.isGetAcademicLiveData
         isUpdateStatusCommunication = apiRepositories!!.isUpdateStatusCommunicationLiveData
         isHomeWorkDetailsList = apiRepositories!!.isHomeWorkDetailsLiveData
+        isHomeWorkDetailsListArchive = apiRepositories!!.isHomeWorkDetailsListLiveData
         isPunchAttendance = apiRepositories!!.isPunchAttendanceLiveData
         isAddLocation = apiRepositories!!.isAddLocationLiveData
         isRemoveLocation = apiRepositories!!.isRemoveLocationLiveData
@@ -255,6 +259,12 @@ class App(application: Application) : AndroidViewModel(application) {
     fun isHomeWorkDetails(isToken: String, activity: Activity) {
         apiRepositories?.isHomeWorkDetails(isToken, activity)
     }
+
+    //get homework details
+    fun isHomeworkListArchive(isToken: String, activity: Activity) {
+        apiRepositories?.homework_list_archive(isToken, activity)
+    }
+
 
     fun punchAttendance(isToken: String, jsonObject: JsonObject, activity: Activity) {
         apiRepositories?.punchAttendance(isToken, jsonObject, activity)

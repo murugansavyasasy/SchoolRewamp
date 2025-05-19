@@ -61,15 +61,6 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
         binding.toolbarLayout.lblParentToolBar.text = getString(R.string.Communication)
         binding.toolbarLayout.lblStudentSection.text =
             isChildDetails.standard_name + " - " + isChildDetails.section_name
-//        binding.recyclerMore.post {
-//            binding.recyclerMore.requestFocus()
-//            binding.recyclerMore.layoutManager?.let { layoutManager ->
-//                val itemCount = adapter?.itemCount ?: 0
-//                if (itemCount > 0 && layoutManager is LinearLayoutManager) {
-//                    layoutManager.scrollToPositionWithOffset(itemCount - 1, 0)
-//                }
-//            }
-//        }
 
         binding.txtSearchMenu.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -297,7 +288,7 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
                 adapter?.updateList(allVoiceData)
             }
 
-            applyCombinedFilter() // Reapply filters after appending data
+            applyCombinedFilter()
         }
 
         checkAndShowNoData()

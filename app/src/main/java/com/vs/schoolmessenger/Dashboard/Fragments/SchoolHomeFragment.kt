@@ -388,7 +388,16 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             }
 
             Constant.M_HOMEWORK -> {
-                HomeWork::class.java
+
+                if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
+                    HomeWork::class.java
+                } else {
+                    if (userDetails!!.staff_details.size > 1) {
+                        SchoolList::class.java
+                    } else {
+                        HomeWork::class.java
+                    }
+                }
             }
 
             Constant.M_ATTENDANCE_MARKING -> {

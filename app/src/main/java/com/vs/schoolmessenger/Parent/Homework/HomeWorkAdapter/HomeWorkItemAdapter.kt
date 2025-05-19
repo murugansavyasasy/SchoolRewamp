@@ -2,21 +2,16 @@ package com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.os.Handler
-import android.os.Looper
 import android.text.TextUtils
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetDateWiseHomeworkData
-import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
@@ -32,7 +27,6 @@ class HomeWorkItemAdapter(
 
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
-    private var currentlyPlayingHolder: DataViewHolder? = null // Track currently playing holder
 
 
     override fun getItemViewType(position: Int): Int {
@@ -46,10 +40,13 @@ class HomeWorkItemAdapter(
                     .inflate(R.layout.shimmer_view_small_list, parent, false)
             DataViewHolder.ShimmerViewHolder(view)
         } else {
+
             val view =
                 LayoutInflater.from(parent.context)
-                    .inflate(R.layout.homeword_report_item, parent, false)
-            DataViewHolder(view, context) // Pass context to DataViewHolder
+                    .inflate(R.layout.homework_school_reportitem, parent, false)
+            DataViewHolder(view, context)
+
+
         }
     }
 
@@ -67,21 +64,9 @@ class HomeWorkItemAdapter(
 
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
-        private lateinit var GetFilePathDetailsData: ArrayList<GetFilePathDetails>
-        private var isPrepared = false
-        private lateinit var GetHomeworkDetails: ArrayList<GetHomeworkDetails>
-
-
-        private var lastPosition: Int = 0
-        private val handler = Handler(Looper.getMainLooper())
-
-
         private var isTextExpanded = false
-        private val imgNewImage: ImageView = itemView.findViewById(R.id.imgNewImage)
 
 
-        // Image
-        private val rlaImageReport: RelativeLayout = itemView.findViewById(R.id.rlaImageReport)
         private val lblDateImage: TextView = itemView.findViewById(R.id.lblDateImage)
         private val lblTitleImage: TextView = itemView.findViewById(R.id.lblTitleImage)
         private val lblContentImage: TextView = itemView.findViewById(R.id.lblContentImage)
@@ -89,6 +74,8 @@ class HomeWorkItemAdapter(
         private val RcyImgPdf: RecyclerView = itemView.findViewById(R.id.rcyImgPDF)
         private val DotIndicator: CircleIndicator =itemView.findViewById(R.id.indicator)
         private val lblSubjectName: TextView = itemView.findViewById(R.id.LblHWSubjectName)
+        private val rlaSelectText: RelativeLayout = itemView.findViewById(R.id.rlaSelectText)
+
         var mHomeworkImgPDFAdapter: HomeworkImgPDFAdapter? = null
 
 
@@ -105,15 +92,21 @@ class HomeWorkItemAdapter(
 
             ) {
             val homeworkImgPdf = getRecyclerView()
-            Log.d("GetDateWiseHomeworkData", data.toString())
-            Log.d("GetDateWiseHomeworkData", homeworkData.toString())
             lblTitleImage.text = homeworkData.title
             lblContentImage.text = homeworkData.description
             lblDateImage.text = data!!.date
             lblSubjectName.text = homeworkData.subject_name
+            rlaSelectText.visibility = View.GONE
+
             isSeeMoreVisibility(lblContentImage, tvSeeMoreImage)
             tvSeeMoreImage.setOnClickListener {
                 isSeeMoreExpanded(tvSeeMoreImage, lblContentImage)
+            }
+
+            if (homeworkData.file_path.size > 0) {
+                RcyImgPdf.visibility = View.VISIBLE
+            } else {
+                RcyImgPdf.visibility = View.GONE
             }
             mHomeworkImgPDFAdapter =
 
@@ -130,8 +123,6 @@ class HomeWorkItemAdapter(
                         Constant.isShimmerViewDisable,
                     )
                 homeworkImgPdf.adapter = mHomeworkImgPDFAdapter
-            val fileList: ArrayList<String> = ArrayList(homeworkData.file_path.map { it.path })
-
 
         }
 

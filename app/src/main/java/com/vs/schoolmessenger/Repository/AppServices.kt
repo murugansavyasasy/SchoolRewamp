@@ -772,7 +772,6 @@ class AppServices {
     //    //get HomeworkDetails
     fun isHomeWorkDetails(isToken: String, activity: Activity) {
         Log.d("GetHomeworkData", isToken.toString())
-
         RestClient.apiInterfaces.isHomeWorkDetails(isToken)
             ?.enqueue(object : Callback<GetHomeworkData?> {
                 override fun onResponse(
@@ -799,6 +798,38 @@ class AppServices {
 
     val isHomeWorkDetailsLiveData: LiveData<GetHomeworkData?>
         get() = isHomeWorkDetailsData
+
+
+    //    //get HomeworkDetails
+    fun homework_list_archive(isToken: String, activity: Activity) {
+        Log.d("GetHomeworkData", isToken.toString())
+        RestClient.apiInterfaces.homework_list_archive(isToken)
+            ?.enqueue(object : Callback<GetHomeworkData?> {
+                override fun onResponse(
+                    call: Call<GetHomeworkData?>, response: Response<GetHomeworkData?>
+                ) {
+                    Log.d("GetHomeworkData", response.body().toString())
+
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            isHomeWorkDetailsData.postValue(response.body())
+                            Log.d("GetHomeworkDataRespone", response.body().toString())
+
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<GetHomeworkData?>, t: Throwable) {
+                    t.printStackTrace()
+                    isHomeWorkDetailsData.postValue(null)
+                    Log.d("GetHomeworkData", "Response,No Data Found")
+                }
+            })
+    }
+
+    val isHomeWorkDetailsListLiveData: LiveData<GetHomeworkData?>
+        get() = isHomeWorkDetailsData
+
 
     fun punchAttendance(isToken: String, jsonObject: JsonObject, activity: Activity) {
         RestClient.apiInterfaces.punchGiometricAttendance(isToken, jsonObject)
@@ -999,7 +1030,7 @@ class AppServices {
 //        RestClient.apiInterfaces.getPunchHistory(isToken)
 
     fun getPunchHistory(isToken: String, isDate: String, staff_id: String, activity: Activity) {
-        RestClient.apiInterfaces.getPunchHistory(isToken, isDate, isDate,staff_id)
+        RestClient.apiInterfaces.getPunchHistory(isToken, isDate, isDate, staff_id)
             ?.enqueue(object : Callback<PunchHistoryResponse?> {
                 override fun onResponse(
                     call: Call<PunchHistoryResponse?>, response: Response<PunchHistoryResponse?>
@@ -1150,7 +1181,12 @@ class AppServices {
         get() = isStaffWiseAttendanceReportList
 
 
-    fun getStudentReportList(isToken: String, class_id: Int?=null,section_id:Int?=null, activity: Activity) {
+    fun getStudentReportList(
+        isToken: String,
+        class_id: Int? = null,
+        section_id: Int? = null,
+        activity: Activity
+    ) {
         RestClient.apiInterfaces.getStudentReport(isToken, class_id, section_id)
             ?.enqueue(object : Callback<GetStudentReportData?> {
                 override fun onResponse(

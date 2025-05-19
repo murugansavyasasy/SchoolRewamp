@@ -285,7 +285,6 @@
                     android:layout_width="@dimen/zero"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.95"
-
                     android:orientation="vertical">
 
                     <TextView
@@ -304,7 +303,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/ten"
-                        android:text="Tue 22 Apr 2025"
+                        android:text=""
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen"
                         android:textStyle="bold"></TextView>

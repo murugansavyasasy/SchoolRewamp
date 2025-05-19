@@ -2,44 +2,21 @@ package com.vs.schoolmessenger.School.Homework
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Bitmap
-import android.media.MediaPlayer
-import android.os.Handler
-import android.os.Looper
-import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebChromeClient
-import android.webkit.WebView
-import android.webkit.WebViewClient
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.TextView
-import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager.widget.ViewPager
-import com.airbnb.lottie.LottieAnimationView
-import com.bumptech.glide.Glide
-import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.CommonScreens.ImageSliderAdapter
-import com.vs.schoolmessenger.Dashboard.Parent.AdImageAdapter
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.FilePath
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReport
-import com.vs.schoolmessenger.School.InteractionWithStudent.InteractionWithStudentAdapter.ShimmerViewHolder
-import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
-import com.vs.schoolmessenger.Utils.WaveformSeekBar
-import com.vs.schoolmessenger.Utils.fetchVimeoThumbnail
 import me.relex.circleindicator.CircleIndicator
-import kotlin.math.max
 
 class HomeWorkReportAdapter(
     private var itemList: List<HomeWorkReport>?,
@@ -50,7 +27,6 @@ class HomeWorkReportAdapter(
 
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
-    private var currentlyPlayingHolder: DataViewHolder? = null
 
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
@@ -70,7 +46,6 @@ class HomeWorkReportAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
-            // Bind actual data when loading is complete
             holder.bind(itemList!![position], position, listener, this)
         } else if (holder is ShimmerViewHolder) {
             holder.startShimmer()
@@ -85,31 +60,6 @@ class HomeWorkReportAdapter(
 
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
-
-        private lateinit var mediaPlayer: MediaPlayer
-        private var isPrepared = false
-        private var isPlayingVoice = false
-        private var lastPosition: Int = 0
-        private val handler = Handler(Looper.getMainLooper())
-
-        // Progress updater for audio playback
-        private val progressUpdater = object : Runnable {
-            override fun run() {
-                if (isPrepared && mediaPlayer.isPlaying) {
-                    // Update SeekBar progress
-                    val normalizedPower = max(1f, (1f + 160) / 160)
-                    waveformSeekBar.updateWithLevel(normalizedPower)
-
-                    // Update elapsed time
-                    lblStartDuration.text = formatTime(mediaPlayer.currentPosition)
-                    handler.postDelayed(this, 100)
-                }
-            }
-        }
-
-        private var isTextExpanded = false
-//        private val imgNewImage: ImageView = itemView.findViewById(R.id.imgNewImage)
-
         // Image
         private val rlaImageReport: RelativeLayout = itemView.findViewById(R.id.rlaImageReport)
         private val lblDateImage: TextView = itemView.findViewById(R.id.lblDateImage)
@@ -119,48 +69,8 @@ class HomeWorkReportAdapter(
         private val rcyImgPDF: RecyclerView = itemView.findViewById(R.id.rcyImgPDF)
         private val indicator: CircleIndicator = itemView.findViewById(R.id.indicator)
         private val tvSeeMoreImage: TextView = itemView.findViewById(R.id.tvSeeMoreImage)
-
-        //Voice
-        private val rlaVoiceReport: RelativeLayout = itemView.findViewById(R.id.rlaVoiceReport)
-        private val imgVoicePlay: ImageView = itemView.findViewById(R.id.imgVoicePlay)
-        private val waveformSeekBar: WaveformSeekBar = itemView.findViewById(R.id.waveformSeekBar)
-        private val lblStartDuration: TextView = itemView.findViewById(R.id.lblStartDuration)
-        private val lblEndDuration: TextView = itemView.findViewById(R.id.lblEndDuration)
-        private val lblTitleVoice: TextView = itemView.findViewById(R.id.lblTitleVoice)
-        private val lblVoiceContent: TextView = itemView.findViewById(R.id.lblVoiceContent)
-        private val tvSeeMoreVoice: TextView = itemView.findViewById(R.id.tvSeeMoreVoice)
-        private val lblDateVoice: TextView = itemView.findViewById(R.id.lblDateVoice)
-        private val isVoiceProgress: ProgressBar = itemView.findViewById(R.id.isVoiceProgress)
-
-
-        //Text
-        private val rlaReportText: RelativeLayout = itemView.findViewById(R.id.rlaReportText)
-        private val lblTitleText: TextView = itemView.findViewById(R.id.lblTitleText)
-        private val lblDateText: TextView = itemView.findViewById(R.id.lblDateText)
-        private val lblContentText: TextView = itemView.findViewById(R.id.lblContentText)
-        private val tvSeeMoreText: TextView = itemView.findViewById(R.id.lblSeeMoreText)
-
-
-        //Video
-        private val rlaReportVideo: RelativeLayout = itemView.findViewById(R.id.rlaReportVideo)
-        private val lblDateVideo: TextView = itemView.findViewById(R.id.lblDateVideo)
-        private val imgVimeoThumbnail: ImageView = itemView.findViewById(R.id.imgVimeoThumbnail)
-        private val imgVideoPlay: ImageView = itemView.findViewById(R.id.imgVideoPlay)
-        private val customProgressBar: ProgressBar = itemView.findViewById(R.id.customProgressBar)
-        private val lblTitleVideo: TextView = itemView.findViewById(R.id.lblTitleVideo)
-        private val lblVideoContent: TextView = itemView.findViewById(R.id.lblVideoContent)
-        private val tvSeeMoreVideo: TextView = itemView.findViewById(R.id.tvSeeMoreVideo)
-        private lateinit var layoutManager: LinearLayoutManager
-
-
-        // Pdf
-        private val rlaPdf: RelativeLayout = itemView.findViewById(R.id.rlaPdf)
-        private val lblDatePdf: TextView = itemView.findViewById(R.id.lblDatePdf)
-        private val lblTitlePdf: TextView = itemView.findViewById(R.id.lblTitlePdf)
-        private val lblPdfContent: TextView = itemView.findViewById(R.id.lblPdfContent)
-        private val tvSeeMorePdf: TextView = itemView.findViewById(R.id.tvSeeMorePdf)
-        private val rcyFilesLoad: RecyclerView = itemView.findViewById(R.id.rcyFilesLoad)
-
+        private val LblHWSubjectName: TextView = itemView.findViewById(R.id.LblHWSubjectName)
+        private val rlaSelectText: RelativeLayout = itemView.findViewById(R.id.rlaSelectText)
         @SuppressLint("ClickableViewAccessibility")
         fun bind(
             data: HomeWorkReport,
@@ -168,141 +78,42 @@ class HomeWorkReportAdapter(
             listener: HomeWorkReportClickListener,
             adapter: HomeWorkReportAdapter
         ) {
-            val filePaths = data.file_path.firstOrNull()
+            rlaImageReport.visibility = View.VISIBLE
+            LblHWSubjectName.text = data.subject_name
+            lblTitleImage.text = data.title
+            lblContentImage.text = data.description
+            if (data.file_path.size > 0) {
+                rcyImgPDF.visibility = View.VISIBLE
+                indicator.visibility = View.VISIBLE
+            } else {
+                rcyImgPDF.visibility = View.GONE
+                indicator.visibility = View.GONE
+            }
+            Log.d("data.file_path", data.file_path.size.toString())
+            val layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            val adapter = ImageSliderAdapter(context, data.file_path)
+            rcyImgPDF.layoutManager = layoutManager
+            rcyImgPDF.adapter = adapter
 
-            filePaths?.let {
-                when (filePaths.type) {
-
-                    Constant.IMAGE -> {
-                        rlaImageReport.visibility = View.VISIBLE
-                        lblTitleText.text = data.title
-                        lblContentText.text = data.description
-                        rlaVoiceReport.visibility = View.GONE
-                        rlaReportVideo.visibility = View.GONE
-                        rlaReportText.visibility = View.GONE
-                        rlaPdf.visibility = View.GONE
-                        isSeeMoreVisibility(lblContentText, tvSeeMoreText)
-
-                        val layoutManager =
-                            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                        rcyImgPDF.layoutManager = layoutManager
-                        val adapter = ImageSliderAdapter(context, data.file_path)
-                        rcyImgPDF.adapter = adapter
-
-                        val dotsLayout =
-                            itemView.findViewById<LinearLayout?>(R.id.dotIndicatorLayout)
-                        dotsLayout?.let {
-                            updateDotIndicator(it, data.file_path.size, 0)
-                            rcyImgPDF.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                                override fun onScrolled(
-                                    recyclerView: RecyclerView, dx: Int, dy: Int
-                                ) {
-                                    val visiblePosition =
-                                        layoutManager.findFirstVisibleItemPosition()
-                                    updateDotIndicator(it, data.file_path.size, visiblePosition)
-                                }
-                            })
-                        }
-
+            val dotsLayout =
+                itemView.findViewById<LinearLayout?>(R.id.dotIndicatorLayout)
+            dotsLayout?.let {
+                updateDotIndicator(it, data.file_path.size, 0)
+                rcyImgPDF.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                    override fun onScrolled(
+                        recyclerView: RecyclerView, dx: Int, dy: Int
+                    ) {
+                        val visiblePosition =
+                            layoutManager.findFirstVisibleItemPosition()
+                        updateDotIndicator(it, data.file_path.size, visiblePosition)
                     }
-
-                    Constant.TEXT -> {
-                        rlaVoiceReport.visibility = View.VISIBLE
-                        lblTitleVoice.text = data.title
-                        lblVoiceContent.text = data.description
-                        rlaReportText.visibility = View.GONE
-                        rlaReportVideo.visibility = View.GONE
-                        rlaImageReport.visibility = View.GONE
-                        rlaPdf.visibility = View.GONE
-                        isSeeMoreVisibility(lblVoiceContent, tvSeeMoreVoice)
-
-
-                        getAudioDuration(filePaths.path) { duration ->
-                            lblEndDuration.text =
-                                formatTime(duration) // Update the TextView with formatted duration
-                        }
-
-                        imgVoicePlay.setOnClickListener {
-                            isVoiceProgress.visibility = View.VISIBLE
-
-                            if (adapter.currentlyPlayingHolder != null && adapter.currentlyPlayingHolder != this) {
-                                adapter.currentlyPlayingHolder?.stopAudioPlayback()
-                            }
-
-                            if (isPlayingVoice) {
-                                pauseAudio()
-                            } else {
-                                if (!isPrepared) {
-                                    initializeMediaPlayer(filePaths.path)
-                                } else {
-                                    resumeAudio()
-                                }
-                            }
-                            adapter.currentlyPlayingHolder = this
-                        }
-                    }
-
-
-                    Constant.PDF, Constant.DOC, Constant.DOCX, Constant.PPT, Constant.PPTX, Constant.TXT, Constant.EXCEL -> {
-                        rlaReportText.visibility = View.GONE
-                        rlaVoiceReport.visibility = View.GONE
-                        rlaReportVideo.visibility = View.GONE
-                        rlaImageReport.visibility = View.GONE
-                        rlaPdf.visibility = View.VISIBLE
-                        val layoutManager =
-                            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                        rcyFilesLoad.layoutManager = layoutManager
-                        val adapter = ImageSliderAdapter(context, data.file_path)
-                        rcyFilesLoad.adapter = adapter
-
-                        val dotsLayout =
-                            itemView.findViewById<LinearLayout?>(R.id.dotIndicatorLayout)
-                        dotsLayout?.let {
-                            updateDotIndicator(it, data.file_path.size, 0)
-                            rcyFilesLoad.addOnScrollListener(object :
-                                RecyclerView.OnScrollListener() {
-                                override fun onScrolled(
-                                    recyclerView: RecyclerView, dx: Int, dy: Int
-                                ) {
-                                    val visiblePosition =
-                                        layoutManager.findFirstVisibleItemPosition()
-                                    updateDotIndicator(it, data.file_path.size, visiblePosition)
-                                }
-                            })
-                        }
-                    }
-
-                    else -> {
-                        rlaReportText.visibility = View.GONE
-                        rlaVoiceReport.visibility = View.GONE
-                        rlaReportVideo.visibility = View.GONE
-                        rlaImageReport.visibility = View.GONE
-                        rlaPdf.visibility = View.GONE
-                    }
-                }
-
+                })
             }
 
-            imgVideoPlay.setOnClickListener {
-                listener.onItemVideoClick(data)
+            rlaSelectText.setOnClickListener {
+                listener.onClickListener(data)
             }
-
-            tvSeeMoreImage.setOnClickListener {
-                isSeeMoreExpanded(tvSeeMoreImage, lblContentImage)
-            }
-            tvSeeMoreVideo.setOnClickListener {
-                isSeeMoreExpanded(tvSeeMoreVideo, lblVideoContent)
-            }
-            tvSeeMoreText.setOnClickListener {
-                isSeeMoreExpanded(tvSeeMoreText, lblContentText)
-            }
-            tvSeeMoreVoice.setOnClickListener {
-                isSeeMoreExpanded(tvSeeMoreVoice, lblVoiceContent)
-            }
-            tvSeeMorePdf.setOnClickListener {
-                isSeeMoreExpanded(tvSeeMorePdf, lblPdfContent)
-            }
-
         }
 
         fun updateDotIndicator(dotsLayout: LinearLayout, count: Int, selectedPosition: Int) {
@@ -318,146 +129,6 @@ class HomeWorkReportAdapter(
                 dotsLayout.addView(dot)
             }
         }
-
-
-        private fun isGetTheThumbnail(isVideId: String) {
-            fetchVimeoThumbnail("https://vimeo.com/${isVideId}") { thumbnailUrl ->
-                if (thumbnailUrl != null) {
-                    Glide.with(imgVimeoThumbnail.context).load(thumbnailUrl).into(imgVimeoThumbnail)
-                    imgVideoPlay.visibility = View.VISIBLE
-                    customProgressBar.visibility = View.GONE
-                }
-            }
-        }
-
-        private fun isSeeMoreExpanded(tvSeeMore: TextView, lblContent: TextView) {
-            if (isTextExpanded) {
-                isTextExpanded = false
-                lblContent.maxLines = 3
-                lblContent.ellipsize = TextUtils.TruncateAt.END
-                tvSeeMore.text = tvSeeMore.context.getString(R.string.SeeMore)
-            } else {
-                isTextExpanded = true
-                lblContent.maxLines = Int.MAX_VALUE
-                lblContent.ellipsize = null
-                tvSeeMore.text = tvSeeMore.context.getString(R.string.SeeLess)
-            }
-        }
-
-
-        private fun isSeeMoreVisibility(lblContent: TextView, tvSeeMore: TextView) {
-            lblContent.post {
-                if (lblContent.lineCount > 3) {
-                    tvSeeMore.visibility = View.VISIBLE
-                    lblContent.maxLines = 3
-                    lblContent.ellipsize = TextUtils.TruncateAt.END
-                }
-            }
-        }
-
-        // isVoice
-        private fun initializeMediaPlayer(audioUrl: String) {
-            mediaPlayer = MediaPlayer().apply {
-                setDataSource(audioUrl)
-                prepareAsync()
-                setOnPreparedListener {
-                    isPrepared = true
-                    startAudioProgressUpdate()
-                    isVoiceProgress.visibility = View.GONE
-                    start()
-                    isPlayingVoice = true
-                    updatePlayPauseIcon(isPlaying = true)
-                }
-                setOnCompletionListener {
-                    resetPlaybackState()
-                }
-            }
-        }
-
-        // Pause audio playback
-        private fun pauseAudio() {
-            isVoiceProgress.visibility = View.GONE
-            mediaPlayer.pause()
-            lastPosition = mediaPlayer.currentPosition
-            isPlayingVoice = false
-            updatePlayPauseIcon(isPlaying = false)
-            waveformSeekBar.updateWithLevel(0f)
-        }
-
-        // Resume audio playback
-        private fun resumeAudio() {
-            isVoiceProgress.visibility = View.GONE
-            mediaPlayer.seekTo(lastPosition)
-            mediaPlayer.start()
-            isPlayingVoice = true
-            startAudioProgressUpdate()
-            updatePlayPauseIcon(isPlaying = true)
-        }
-
-        // Stop audio playback
-        private fun stopAudioPlayback() {
-            isVoiceProgress.visibility = View.GONE
-            if (::mediaPlayer.isInitialized) {
-                if (mediaPlayer.isPlaying) {
-                    mediaPlayer.stop()
-                }
-                mediaPlayer.reset()
-                resetPlaybackState()
-            }
-        }
-
-        // Update the play/pause icon
-        private fun updatePlayPauseIcon(isPlaying: Boolean) {
-            val icon = if (isPlaying) R.drawable.pause_icon else R.drawable.video_play
-            imgVoicePlay.setImageDrawable(ContextCompat.getDrawable(context, icon))
-        }
-
-        // Reset playback state
-        private fun resetPlaybackState() {
-            stopAudioProgressUpdate()
-            isPrepared = false
-            isPlayingVoice = false
-            lastPosition = 0
-            waveformSeekBar.updateWithLevel(0f)
-            updatePlayPauseIcon(isPlaying = false)
-        }
-
-        // Start updating audio progress
-        private fun startAudioProgressUpdate() {
-            handler.post(progressUpdater)
-        }
-
-        // Stop updating audio progress
-        private fun stopAudioProgressUpdate() {
-            handler.removeCallbacks(progressUpdater)
-        }
-
-        // Format milliseconds to "mm:ss"
-        private fun formatTime(milliseconds: Int): String {
-            val seconds = (milliseconds / 1000) % 60
-            val minutes = (milliseconds / (1000 * 60)) % 60
-            return String.format(Constant.dateForMate, minutes, seconds)
-        }
-
-        // Get audio duration asynchronously
-        private fun getAudioDuration(audioUrl: String, callback: (Int) -> Unit) {
-            val tempMediaPlayer = MediaPlayer()
-            try {
-                tempMediaPlayer.setDataSource(audioUrl)
-                tempMediaPlayer.prepareAsync()
-                tempMediaPlayer.setOnPreparedListener {
-                    callback(tempMediaPlayer.duration)
-                    tempMediaPlayer.release()
-                }
-                tempMediaPlayer.setOnErrorListener { mp, _, _ ->
-                    mp.release()
-                    false
-                }
-            } catch (e: Exception) {
-                tempMediaPlayer.release()
-            }
-        }
-
     }
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

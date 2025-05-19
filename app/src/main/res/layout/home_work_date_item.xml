@@ -52,8 +52,10 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcyHomeWorkItem"
         android:layout_width="match_parent"
-        android:layout_marginStart="@dimen/twenty_five"
-        android:layout_marginEnd="@dimen/twenty_five"
+        android:layout_marginStart="@dimen/fifteen"
+        android:layout_marginEnd="@dimen/fifteen"
+        android:background="@drawable/rect_shadow_white"
+        android:visibility="gone"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rlaDateItem">
     </androidx.recyclerview.widget.RecyclerView>
