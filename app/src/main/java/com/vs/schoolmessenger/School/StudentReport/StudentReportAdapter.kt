@@ -5,9 +5,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.Parent.Communication.UnifiedVoiceAdapter.ShimmerViewHolder
 import com.vs.schoolmessenger.R
@@ -67,7 +69,7 @@ class StudentReportAdapter(
         private val lblMobileNumber: TextView = itemView.findViewById(R.id.lblMobileNumber)
         private val lblStandard: TextView = itemView.findViewById(R.id.lblStandard)
         private val lblSection: TextView = itemView.findViewById(R.id.lblSection)
-
+        private val profileImage: ImageView = itemView.findViewById(R.id.imgStudent)
         private val lblEmail: TextView = itemView.findViewById(R.id.lblEmail)
         private val lnrPhoneNumber: LinearLayout = itemView.findViewById(R.id.lnrPhoneNumber)
         private val lnrSms: LinearLayout = itemView.findViewById(R.id.lnrSms)
@@ -84,6 +86,11 @@ class StudentReportAdapter(
             lblMobileNumber.text = data.primary_mobile
             lblStandard.text = data.class_name
             lblSection.text = data.section_name
+            Glide.with(context)
+                .load(data.profile)
+                .placeholder(R.drawable.image_placeholder)
+                .error(R.drawable.default_profile)
+                .into(profileImage);
 
 
 //        In Get Student Report API,We have not recived the Email-->10/05/2025
@@ -102,7 +109,25 @@ class StudentReportAdapter(
                 listener.onPhoneClick(data)
             }
         }
+
     }
+    enum class SortType {
+        NO_ASC,
+        NO_DESC,
+        NAME_ASC,
+        NAME_DESC
+    }
+    fun sortData(sortType: SortType) {
+        val sortedList = when (sortType) {
+            SortType.NO_ASC -> itemList?.sortedBy { it.admission_no }
+            SortType.NO_DESC -> itemList?.sortedByDescending { it.admission_no }
+            SortType.NAME_ASC -> itemList?.sortedBy { it.name }
+            SortType.NAME_DESC -> itemList?.sortedByDescending { it.name }
+        }
+
+        updateData(sortedList ?: emptyList())
+    }
+
 
     fun updateData(newList: List<StudentReportData>) {
         itemList = newList
@@ -117,6 +142,7 @@ class StudentReportAdapter(
             shimmerLayout.startShimmer() // Start shimmer effect
         }
     }
+
 }
 
 //existing code
