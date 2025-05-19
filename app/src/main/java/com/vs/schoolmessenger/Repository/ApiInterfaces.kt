@@ -17,11 +17,13 @@ import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsRespo
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
 import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
 import com.vs.schoolmessenger.Parent.Communication.VoiceDataResponse
+import com.vs.schoolmessenger.Parent.EventsHolidays.EventResponse
+import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
 import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
-import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
+
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionReportResponse
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
@@ -30,8 +32,8 @@ import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistor
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffAttendanceReportResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffLocationResponse
-import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
 import com.vs.schoolmessenger.School.SchoolStrength.SchoolStrengthResponse
+import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -222,6 +224,12 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String,
     ): Call<GetHomeworkData?>
 
+    @GET(APIMethods.isHomeWorkDetails)
+    fun homework_list_archive(
+        @Header(APIKeyNames.Authorization) token: String,
+    ): Call<GetHomeworkData?>
+
+
 
     @POST(APIMethods.punch_giometric_attendance)
     fun punchGiometricAttendance(
@@ -323,5 +331,10 @@ interface ApiInterfaces {
     fun isNoticeBoardReport(
         @Header(APIKeyNames.Authorization) token: String
     ): Call<NoticeBoardResponse?>?
+
+    @GET(APIMethods.IsGetEventReport)
+    fun IsGetEventReport(
+        @Header(APIKeyNames.Authorization) token: String
+    ): Call<EventResponse?>?
 
 }

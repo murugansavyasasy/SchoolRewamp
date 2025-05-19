@@ -28,7 +28,7 @@ object APIMethods {
     const val isGetCommmunicationlistload = "comm/api/communication/list"
     const val isGetVoiceHistory = "comm/api/voice/get-voice-history"
     const val isGetTextHistory = "comm/api/text-message/get-text-history"
-    const val isGetHomeWorkReport = "comm/api/homework/get-homework-report"
+    const val isGetHomeWorkReport = "comm/api/homework/report"
     const val isGetDailyCollectionReport = "admin/api/fee-report/daily-collection"
     const val isGetSchoolStrengthReport = "admin/api/get-school-strength"
     const val isDetailedPendingReport = "admin/api/fee-report/detailed-pending-report"
@@ -39,12 +39,12 @@ object APIMethods {
     const val isSendVoice = "comm/api/voice/send-voice"
     const val isUpdateStatusArchive = "comm/api/communication/read-status-update-archive"
     const val isGetAcademicYear = "comm/api/recipient/get-academic-year-list"
-    const val isHomeWorkDetails="comm/api/homework/get-homework-list"
+    const val isHomeWorkDetails="comm/api/homework/list"
 
     const val send_homework = "comm/api/homework/send-homework"
     const val homework_reports = "comm/api/homework/get-homework-report"
     const val homework_list = "comm/api/homework/get-homework-list"
-    const val homework_list_archive = "comm/api/homework/get-homework-list-archive"
+    const val homework_list_archive = "comm/homework/get-homework-list-archive"
     const val send_attachments = "comm/api/attachment/send-attachment"
     const val attachments_list = "comm/api/communication/attachment-list"
     const val attachments_list_archive = "comm/api/communication/attachment-list-archive"
@@ -61,6 +61,8 @@ object APIMethods {
     const val punch_history =  "staff-attd/api/geometric/geometric-punch-history"
 
     const val student_report= "admin/api/get-student-report"
+
+    const val IsGetEventReport = "admin/api/school-event/get-event"
 
 
 }

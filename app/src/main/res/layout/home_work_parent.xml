@@ -5,7 +5,6 @@
     android:fitsSystemWindows="true"
     android:layout_height="match_parent">
 
-
     <include
         android:id="@+id/toolbarLayout"
         layout="@layout/parent_side_tool_bar" />
@@ -13,9 +12,50 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcyHomework"
         android:layout_width="match_parent"
+        android:layout_above="@+id/lblSeeMore"
+        android:layout_marginBottom="@dimen/ten"
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbarLayout">
     </androidx.recyclerview.widget.RecyclerView>
 
+    <LinearLayout
+        android:id="@+id/rytNORecordFound"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbarLayout"
+        android:layout_marginTop="@dimen/hundred"
+        android:orientation="vertical"
+        android:visibility="gone">
 
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/two_hundred"
+            android:src="@drawable/no_data_found"></ImageView>
+
+        <TextView
+            android:id="@+id/lblNoRecordFound"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/fifty"
+            android:gravity="center">
+
+        </TextView>
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/lblSeeMore"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="@dimen/twenty"
+        android:layout_marginBottom="@dimen/twenty"
+        android:text="@string/SeeMore">
+
+    </TextView>
 </RelativeLayout>

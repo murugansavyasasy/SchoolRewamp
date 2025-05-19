@@ -1,5 +1,3 @@
-
-
 package com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter
 
 import android.content.Context
@@ -14,15 +12,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.Parent.Communication.UnifiedVoiceAdapter.ShimmerViewHolder
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkDateClickListener
-import com.vs.schoolmessenger.Parent.Homework.HomeWorkList
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetDateWiseHomeworkData
-import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
-class HomeWorkAdapter (
+class HomeWorkAdapter(
     private var DateWiseHomeworkData: List<GetDateWiseHomeworkData>?,
     private var listener: HomeWorkDateClickListener,
     private var context: Context,
@@ -32,7 +28,7 @@ class HomeWorkAdapter (
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
 
-
+    private var expandedPosition = -1
 
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
@@ -42,82 +38,76 @@ class HomeWorkAdapter (
         return if (viewType == TYPE_SHIMMER) {
             val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.home_work_date_item)
             ShimmerViewHolder(shimmerView)
-//            val view = LayoutInflater.from(parent.context)
-//                .inflate(R.layout.shimmer_view_small_list, parent, false)
-//            DataViewHolder.ShimmerViewHolder(view)
         } else {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.home_work_date_item, parent, false)
-            DataViewHolder(view, context) // Pass context to DataViewHolder
+            DataViewHolder(view, context)
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
-            holder.bind(DateWiseHomeworkData!![position],position, this,) // Pass adapter reference
+            holder.bind(DateWiseHomeworkData!![position], position, this)
         }
     }
 
     override fun getItemCount(): Int {
-        return if (isLoading) 20 // Show shimmer items while loading
-        else DateWiseHomeworkData?.size ?: 0
+        return if (isLoading) 20 else DateWiseHomeworkData?.size ?: 0
     }
-
 
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
+
         private val lblDate: TextView = itemView.findViewById(R.id.lblDate)
         private val rlaDateItem: RelativeLayout = itemView.findViewById(R.id.rlaDateItem)
         private val rcyHomeWorkItem: RecyclerView = itemView.findViewById(R.id.rcyHomeWorkItem)
         private val imgDown: ImageView = itemView.findViewById(R.id.imgDown)
         var mHomeWorkItemAdapter: HomeWorkItemAdapter? = null
-        var isPosition = -1
 
-        private fun getRecyclerView(): RecyclerView {
-            return rcyHomeWorkItem
-        }
+        private fun getRecyclerView(): RecyclerView = rcyHomeWorkItem
 
         fun bind(
             item: GetDateWiseHomeworkData,
             position: Int,
             adapter: HomeWorkAdapter,
-
-
-            ) {
+        ) {
             lblDate.text = item.date
 
-            rlaDateItem.setOnClickListener {
-                if (isPosition != position) {
-                    rcyHomeWorkItem.visibility = View.VISIBLE
-                    loadData(item.homework,item)
-                    isPosition = position
-                    imgDown.setImageResource(R.drawable.arrow_up_round)
-                } else {
-                    isPosition = -1
-                    rcyHomeWorkItem.visibility = View.GONE
-                    imgDown.setImageResource(R.drawable.arrow_down_round)
-                }
+            val isExpanded = position == adapter.expandedPosition
+            rcyHomeWorkItem.visibility = if (isExpanded) View.VISIBLE else View.GONE
+            imgDown.setImageResource(
+                if (isExpanded) R.drawable.arrow_up_round else R.drawable.arrow_down_round
+            )
+
+            if (isExpanded) {
+                loadData(item.homework, item)
             }
 
+            rlaDateItem.setOnClickListener {
+                val previouslyExpanded = adapter.expandedPosition
+                if (previouslyExpanded == position) {
+                    adapter.expandedPosition = -1
+                    adapter.notifyItemChanged(previouslyExpanded)
+                } else {
+                    adapter.expandedPosition = position
+                    adapter.notifyItemChanged(previouslyExpanded)
+                    adapter.notifyItemChanged(position)
+                }
+            }
         }
-
 
         private fun loadData(
             homeworkDetails: List<GetHomeworkDetails>,
             DateWiseHomeWorkdata: GetDateWiseHomeworkData
         ) {
-
-
-
             val rcyView = getRecyclerView()
 
             mHomeWorkItemAdapter =
-                HomeWorkItemAdapter(null,null,context, Constant.isShimmerViewShow,)
+                HomeWorkItemAdapter(null, null, context, Constant.isShimmerViewShow)
             rcyView.layoutManager = LinearLayoutManager(context)
             rcyView.adapter = mHomeWorkItemAdapter
 
             Constant.executeAfterDelay {
-                // Once data is loaded, stop shimmer and pass the actual data
                 mHomeWorkItemAdapter =
                     HomeWorkItemAdapter(
                         DateWiseHomeWorkdata,
@@ -125,18 +115,16 @@ class HomeWorkAdapter (
                         context,
                         Constant.isShimmerViewDisable,
                     )
-                // Set GridLayoutManager (2 columns in this case)
                 rcyView.adapter = mHomeWorkItemAdapter
             }
         }
-
 
         class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             private val shimmerLayout: ShimmerFrameLayout =
                 itemView.findViewById(R.id.shimmer_view_container)
 
             init {
-                shimmerLayout.startShimmer() // Start shimmer effect
+                shimmerLayout.startShimmer()
             }
         }
     }

@@ -108,7 +108,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         isUserDetails = SharedPreference.getUserDetails(this)
         binding.lblSchoolName.text = isStaffDetails!!.school_name
 
-
         if (isStaffDetails!!.school_name_regional != "") {
             binding.lblSchoolRegionalName.visibility = View.GONE
             binding.lblSchoolRegionalName.text = isStaffDetails!!.school_name_regional
@@ -178,9 +177,11 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         appViewModel!!.isGetSubjectList?.observe(this) { response ->
             Constant.hideLoading(this@RecipientActivity)
             if (response != null) {
-                isGetSubjectListData = response.data
-                isSubjectId = isGetSubjectListData!![0].id
-                isLoadSubjectData()
+                if (response.status) {
+                    isGetSubjectListData = response.data
+                    isSubjectId = isGetSubjectListData!!.first().id
+                    isLoadSubjectData()
+                }
             }
         }
 
@@ -866,9 +867,14 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
 
             if (SELECTED_SCHOOL_MENU == M_HOMEWORK) {
-                isFileUploadInAws(
-                    Constant.selectedFiles, isStaffDetails!!.school_id, "audio"
-                )
+                if (Constant.selectedFiles.size > 0) {
+                    isFileUploadInAws(
+                        Constant.selectedFiles, isStaffDetails!!.school_id, "audio"
+                    )
+                } else {
+                    isHomeWorkSend()
+                }
+
             } else if (SELECTED_SCHOOL_MENU == Constant.M_COMMUNICATION) {
                 val isTextData = Constant.isTextSendingData
                 if (Constant.isClickType == 3) {
@@ -980,6 +986,23 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     private fun isFileUploadInAws(
         isSelectedFiles: MutableList<FileItem>, schoolId: String, isFileType: String?
     ) {
+        Constant.isAwsUploadedFiles.clear()
+        val isSelectedFileListSize = Constant.selectedFiles.size
+        val iterator = Constant.selectedFiles.iterator()
+
+        while (iterator.hasNext()) {
+            val fileItem = iterator.next()
+            if (fileItem.path.contains("amazonaws.")) {
+                Constant.isAwsUploadedFiles.add(
+                    AwsUploadedFiles(
+                        isFileUrl = fileItem.path,
+                        isFileType = fileItem.type.name
+                    )
+                )
+                iterator.remove()
+            }
+        }
+
         val isCountryId = SharedPreference.getCountryId(this)
         Log.d("isSelectedFiles", isSelectedFiles.size.toString())
         for (i in isSelectedFiles.indices) {
@@ -1002,7 +1025,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                                 isFileType = isSelectedFiles[i].type.toString()
                             )
                         )
-                        if (Constant.isAwsUploadedFiles.size.toString() == isSelectedFiles.size.toString()) {
+                        if (Constant.isAwsUploadedFiles.size == isSelectedFileListSize) {
                             if (SELECTED_SCHOOL_MENU == M_HOMEWORK) {
                                 isHomeWorkSend()
                             } else if (SELECTED_SCHOOL_MENU == Constant.M_COMMUNICATION) {
@@ -1011,11 +1034,10 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         } else {
                             Log.d("isFileNotMatching", "isFileNotMatching")
                         }
-
                         Log.d("isSuccessFullUpload", "isSuccessFullUpload")
                     }
-
                     override fun onUploadError(error: String?) {
+
                     }
                 })
         }

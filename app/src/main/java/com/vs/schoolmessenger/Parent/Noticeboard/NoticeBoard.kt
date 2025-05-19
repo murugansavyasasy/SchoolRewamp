@@ -2,11 +2,15 @@ package com.vs.schoolmessenger.Parent.Noticeboard
 
 import android.content.Intent
 import android.view.View
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.CommonScreens.WebView
+import com.vs.schoolmessenger.Parent.Noticeboard.Adapter.NoticeBoardAdapter
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.NoticeBoardBinding
 
 class NoticeBoard : BaseActivity<NoticeBoardBinding>(), View.OnClickListener,
@@ -16,17 +20,18 @@ class NoticeBoard : BaseActivity<NoticeBoardBinding>(), View.OnClickListener,
         return NoticeBoardBinding.inflate(layoutInflater)
     }
 
-//    private lateinit var isNoticeBoardData: List<Notice>
-//    lateinit var mAdapter: NoticeBoardAdapter
-
+    private lateinit var isNoticeBoardData: List<Notice>
+    lateinit var mAdapter: NoticeBoardAdapter
+    private var appViewModel: App? = null
+    private var isAccessToken: String? = null
     override fun setupViews() {
         super.setupViews()
+
         setUpGradientParent()
-//        binding.toolbarLayout.imgBack.setOnClickListener(this)
-//        binding.toolbarLayout.lblParentToolBar.text = resources.getText(R.string.NoticeBoard)
-//        binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
-//        binding.toolbarLayout.lblStudentName.text = "Sathish Ganesan"
-//        binding.toolbarLayout.lblStudentSection.text = "XII - B"
+        appViewModel = ViewModelProvider(this).get(App::class.java)
+        appViewModel?.init()
+        val isChildDetails = SharedPreference.getChildDetails(this)
+        isAccessToken = isChildDetails?.access_token
 //        loadData()
     }
 

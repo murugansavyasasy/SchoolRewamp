@@ -49,25 +49,36 @@ class HomeWork : BaseActivity<HomeWorkParentBinding>(), View.OnClickListener,
             isStudentStandardName + " " + isStudentSectionName
 
         appViewModel?.isHomeWorkDetailsList?.observe(this) { response ->
-            Log.d("response++",response.toString())
             if (response!!.status) {
+                binding.rytNORecordFound.visibility = View.GONE
+                binding.rcyHomework.visibility = View.VISIBLE
                 isloadhomeworkData(response.data)
-                Log.d("GetHomeWorkDetails", response.data.toString())
-                Log.d("Access Token",isAccessToken.toString())
+            } else {
+                binding.rytNORecordFound.visibility = View.VISIBLE
+                binding.rcyHomework.visibility = View.GONE
+                binding.lblNoRecordFound.text = response.message
+            }
+        }
+
+        appViewModel?.isHomeWorkDetailsListArchive?.observe(this) { response ->
+            if (response!!.status) {
+                binding.rytNORecordFound.visibility = View.GONE
+                binding.rcyHomework.visibility = View.VISIBLE
+                isloadhomeworkData(response.data)
+            } else {
+                binding.rytNORecordFound.visibility = View.VISIBLE
+                binding.rcyHomework.visibility = View.GONE
+                binding.lblNoRecordFound.text = response.message
             }
         }
     }
 
     private fun isloadhomeworkData(newData: List<GetDateWiseHomeworkData>?) {
-
-        Log.d("GetHomeworkDataWise", newData.toString())
-
         mAdapter =
             HomeWorkAdapter(newData, this, this, Constant.isShimmerViewDisable)
         binding.rcyHomework.adapter = mAdapter
 
     }
-
 
     fun isGetHomeWorkList() {
         mAdapter = HomeWorkAdapter(null, this, this, Constant.isShimmerViewShow)
@@ -79,9 +90,22 @@ class HomeWork : BaseActivity<HomeWorkParentBinding>(), View.OnClickListener,
         )
     }
 
+    fun isGetHomeWorkListArchive() {
+        mAdapter = HomeWorkAdapter(null, this, this, Constant.isShimmerViewShow)
+        binding.rcyHomework.layoutManager = LinearLayoutManager(this)
+        binding.rcyHomework.isNestedScrollingEnabled = false
+        binding.rcyHomework.adapter = mAdapter
+        appViewModel!!.isHomeworkListArchive(
+            isAccessToken!!, this
+        )
+    }
 
     override fun onClick(p0: View?) {
-
+        when (p0?.id) {
+            R.id.lblSeeMore -> {
+                isGetHomeWorkListArchive()
+            }
+        }
     }
 
     override fun onItemClick(data: HomeWorkDateData, holder: HomeWorkAdapter.DataViewHolder) {

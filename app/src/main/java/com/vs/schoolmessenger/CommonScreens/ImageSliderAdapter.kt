@@ -1,5 +1,6 @@
 package com.vs.schoolmessenger.CommonScreens
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -53,8 +54,9 @@ class ImageSliderAdapter(
         return ImageViewHolder(view)
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onBindViewHolder(holder: ImageViewHolder, position: Int) {
-        val filePath = imageUrls[position].path
+        val filePath = imageUrls[position].url
         val fileType = imageUrls[position].type
 
         when (fileType) {
@@ -96,7 +98,15 @@ class ImageSliderAdapter(
                     }
                 })
                 .into(holder.imageView)
-        } else {
+        } else if (
+            fileType == Constant.PDF ||
+            fileType == Constant.DOC ||
+            fileType == Constant.DOCX ||
+            fileType == Constant.PPT ||
+            fileType == Constant.PPTX ||
+            fileType == Constant.TXT ||
+            fileType == Constant.EXCEL
+        ) {
             holder.imageView.visibility = View.GONE
             holder.webFileLoad.visibility = View.VISIBLE
             // WebView settings
@@ -127,7 +137,6 @@ class ImageSliderAdapter(
             }
 
             holder.webPdf.webChromeClient = WebChromeClient()
-
             if (filePath.startsWith("http")) {
                 val encodedUrl = URLEncoder.encode(filePath, "UTF-8")
                 val viewerUrl =
@@ -144,12 +153,11 @@ class ImageSliderAdapter(
                 )
             }
 
-            // Click listener for WebView file (doc, pdf, etc.)
             holder.webPdf.setOnTouchListener { _, event ->
                 if (event.action == MotionEvent.ACTION_UP) {
                     val intent = Intent(context, ImageViewActivity::class.java)
-                    intent.putExtra(Constant.isFileUrl, isFileUrl)
-                    intent.putExtra(Constant.isFileType, Constant.isDocument)
+                    intent.putExtra(Constant.isFileUrl, imageUrls[position].url)
+                    intent.putExtra(Constant.isFileType, imageUrls[position].type)
                     context.startActivity(intent)
                 }
                 false
@@ -158,7 +166,7 @@ class ImageSliderAdapter(
 
         holder.imageView.setOnClickListener {
             val intent = Intent(context, ImageViewActivity::class.java)
-            intent.putExtra(Constant.isFileUrl, imageUrls[position].path)
+            intent.putExtra(Constant.isFileUrl, imageUrls[position].url)
             intent.putExtra(Constant.isFileType, Constant.isImage)
             context.startActivity(intent)
         }

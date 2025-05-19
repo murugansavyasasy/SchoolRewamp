@@ -13,6 +13,7 @@ import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsRespo
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
 import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
 import com.vs.schoolmessenger.Parent.Communication.VoiceDataResponse
+import com.vs.schoolmessenger.Parent.EventsHolidays.EventResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
@@ -81,6 +82,9 @@ class App(application: Application) : AndroidViewModel(application) {
     var isNoticeBoardReport: LiveData<NoticeBoardResponse?>? = null
         private set
 
+    var IsGetEventReport: LiveData<EventResponse?>? = null
+        private set
+
     var isDetailedPendingReport: LiveData<FeePendingReportResponse?>? = null
         private set
 
@@ -105,6 +109,9 @@ class App(application: Application) : AndroidViewModel(application) {
         private set
 
     var isHomeWorkDetailsList: LiveData<GetHomeworkData?>? = null
+        private set
+
+    var isHomeWorkDetailsListArchive: LiveData<GetHomeworkData?>? = null
         private set
 
     var isPunchAttendance: LiveData<StatusMessageModel?>? = null
@@ -144,11 +151,13 @@ class App(application: Application) : AndroidViewModel(application) {
         isDetailedWisePendingReport = apiRepositories!!.isDetailedWisePendingReportLiveData
         isSendText = apiRepositories!!.isSendTextLiveData
         isSendHomeWork = apiRepositories!!.isSendHomeWorkLiveData
+        IsGetEventReport = apiRepositories!!.IsGetEventReportLiveData
         isVoiceSend = apiRepositories!!.isSendVoiceLiveData
         isUpdateStatusArchive = apiRepositories!!.isUpdateStatusArchiveLiveData
         isGetAcademicList = apiRepositories!!.isGetAcademicLiveData
         isUpdateStatusCommunication = apiRepositories!!.isUpdateStatusCommunicationLiveData
         isHomeWorkDetailsList = apiRepositories!!.isHomeWorkDetailsLiveData
+        isHomeWorkDetailsListArchive = apiRepositories!!.isHomeWorkDetailsListLiveData
         isPunchAttendance = apiRepositories!!.isPunchAttendanceLiveData
         isAddLocation = apiRepositories!!.isAddLocationLiveData
         isRemoveLocation = apiRepositories!!.isRemoveLocationLiveData
@@ -161,6 +170,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isStaffWiseAttendanceReportList =
             apiRepositories!!.isGiometricStaffWiseAttendanceReportLiveDataList
         isStudentReportList = apiRepositories!!.isStudentReportLiveData
+
     }
 
     fun isDashBoardData(isToken: String, isMemberType: String, activity: Activity) {
@@ -235,6 +245,10 @@ class App(application: Application) : AndroidViewModel(application) {
         apiRepositories!!.isNoticeBoardReport(isToken , activity )
     }
 
+    fun IsGetEventReport(isToken: String ,activity: Activity) {
+        apiRepositories!!.IsGetEventReport(isToken , activity )
+    }
+
 
     fun isGetTextHistory(isToken: String, activity: Activity) {
         apiRepositories!!.isGetTextHistory(isToken, activity)
@@ -273,6 +287,12 @@ class App(application: Application) : AndroidViewModel(application) {
     fun isHomeWorkDetails(isToken: String, activity: Activity) {
         apiRepositories?.isHomeWorkDetails(isToken, activity)
     }
+
+    //get homework details
+    fun isHomeworkListArchive(isToken: String, activity: Activity) {
+        apiRepositories?.homework_list_archive(isToken, activity)
+    }
+
 
     fun punchAttendance(isToken: String, jsonObject: JsonObject, activity: Activity) {
         apiRepositories?.punchAttendance(isToken, jsonObject, activity)
