@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:background="@color/white">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -37,11 +38,47 @@
                 android:textStyle="bold"/>
         </LinearLayout>
 
+
+        <LinearLayout
+            android:id="@+id/AcademicYear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/gray_bg_radius"
+            android:orientation="horizontal"
+            android:layout_below="@+id/rytHeader"
+            android:padding="@dimen/ten"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:weightSum="1">
+
+            <TextView
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:text="@string/academic_year"
+                android:textSize="@dimen/thirteen_sp">
+            </TextView>
+
+            <TextView
+                android:id="@id/lblAcademicYear"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.6"
+                android:drawableEnd="@drawable/down_arrow"
+                android:paddingEnd="@dimen/fifteen"
+                android:text="2024-2025"
+                android:textSize="@dimen/ten_sp">
+            </TextView>
+        </LinearLayout>
+
         <LinearLayout
             android:id="@+id/rlaPieChartCount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/rytHeader"
+            android:layout_below="@id/AcademicYear"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/fifteen"
             android:layout_marginEnd="@dimen/ten"

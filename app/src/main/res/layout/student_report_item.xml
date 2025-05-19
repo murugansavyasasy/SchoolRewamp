@@ -7,14 +7,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/twenty"
         android:layout_marginTop="@dimen/ten"
-        android:layout_marginEnd="@dimen/twenty"
+        android:layout_marginEnd="@dimen/five"
+        android:layout_marginStart="@dimen/five"
         android:background="@drawable/rect_shadow_white">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/four_fifty"
+            android:layout_height="wrap_content"
             android:background="@drawable/bg_student_report">
 
             <View
@@ -37,7 +37,8 @@
                     android:layout_width="@dimen/hundred"
                     android:layout_height="@dimen/hundred"
                     android:background="@drawable/rect_shadow_white"
-                    android:src="@drawable/student_image"></ImageView>
+                    >
+                </ImageView>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -536,6 +537,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginStart="@dimen/twenty"
+                        android:layout_marginEnd="@dimen/ten"
                         android:fontFamily="@font/poppins_bold"
                         android:text="sathishg079@gmail.com"
                         android:textColor="@color/navi_blue2"

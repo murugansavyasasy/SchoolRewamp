@@ -17,10 +17,13 @@ import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsRespo
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
 import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
 import com.vs.schoolmessenger.Parent.Communication.VoiceDataResponse
+import com.vs.schoolmessenger.Parent.EventsHolidays.EventResponse
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
 import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
+import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
+
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionReportResponse
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
@@ -315,4 +318,23 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String,
         @Query(APIKeyNames.academic_year_id) academic_year_id: Int?
     ): Call<FeePendingReportResponse?>?
+
+
+    @GET(APIMethods.isDetailedWisePendingReport)
+    fun isDetailedWisePendingReport(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query(APIKeyNames.academic_year_id) academic_year_id: Int?
+    ): Call<FeePendingReportResponse?>?
+
+
+    @GET(APIMethods.isNoticeBoardReport)
+    fun isNoticeBoardReport(
+        @Header(APIKeyNames.Authorization) token: String
+    ): Call<NoticeBoardResponse?>?
+
+    @GET(APIMethods.IsGetEventReport)
+    fun IsGetEventReport(
+        @Header(APIKeyNames.Authorization) token: String
+    ): Call<EventResponse?>?
+
 }
