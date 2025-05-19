@@ -6,5 +6,4 @@ data class DailyCollectionReportResponse (
     val status: Boolean,
     val message: String,
     val data: List<DailyCollectionItem>
-
 )

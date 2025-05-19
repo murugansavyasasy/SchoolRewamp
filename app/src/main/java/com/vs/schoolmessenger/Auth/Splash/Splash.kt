@@ -205,18 +205,20 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
     private fun isInterNetChecking() {
         lifecycleScope.launch {
             delay(2000) // 2-second delay
-            if (Constant.isInternetAvailable(this@Splash)) {
-                val countryId = SharedPreference.getCountryId(this@Splash)
-                Log.d("countryId", countryId.toString())
-                if (countryId != 0) {
-                    isVersionCheck()
+            withContext(Dispatchers.Main) {
+                if (Constant.isInternetAvailable(this@Splash)) {
+                    val countryId = SharedPreference.getCountryId(this@Splash)
+                    Log.d("countryId", countryId.toString())
+                    if (countryId != 0) {
+                        isVersionCheck()
+                    } else {
+                        startActivity(Intent(this@Splash, CountryScreen::class.java))
+                        finish()
+                    }
                 } else {
-                    startActivity(Intent(this@Splash, CountryScreen::class.java))
-                    finish()
+                    Log.e("Network Error", "No Internet Connection")
+                    isNoInterNet()
                 }
-            } else {
-                Log.e("Network Error", "No Internet Connection")
-                isNoInterNet()
             }
         }
     }
@@ -239,7 +241,10 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
                     finish()
                 }
 
-                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                override fun onAuthenticationError(
+                    errorCode: Int,
+                    errString: CharSequence
+                ) {
                     super.onAuthenticationError(errorCode, errString)
                     Toast.makeText(
                         applicationContext,
@@ -318,7 +323,10 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
         val jsonObject = JsonObject()
         jsonObject.addProperty(APIKeyNames.Req_device_type, Constant.isDeviceType)
         jsonObject.addProperty(APIKeyNames.Req_version_code, Constant.isVersionId)
-        jsonObject.addProperty(APIKeyNames.Req_country_id, SharedPreference.getCountryId(this))
+        jsonObject.addProperty(
+            APIKeyNames.Req_country_id,
+            SharedPreference.getCountryId(this)
+        )
         authViewModel!!.isVersionCheck(jsonObject, this)
     }
 
@@ -412,7 +420,8 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
     fun isNoInterNet() {
         val dialogView =
             LayoutInflater.from(this).inflate(R.layout.no_internet_connection, null)
-        val lottieView = dialogView.findViewById<LottieAnimationView>(R.id.lottieAnimationView)
+        val lottieView =
+            dialogView.findViewById<LottieAnimationView>(R.id.lottieAnimationView)
         val tvMessage = dialogView.findViewById<TextView>(R.id.tvMessage)
         val btnCreate = dialogView.findViewById<CardView>(R.id.btnCreate)
 

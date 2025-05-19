@@ -295,6 +295,58 @@
 
 
                 <LinearLayout
+                    android:id="@+id/lnrStandardName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lnrTeacherName"
+                    android:layout_marginTop="@dimen/ten"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/ten"
+                        android:layout_weight="0.6"
+                        android:fontFamily="@font/poppins_bold"
+                        android:text="@string/Standard"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/thirteen_sp"
+                        android:textStyle="bold">
+
+                    </TextView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" : "
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/thirteen_sp"
+                        android:textStyle="bold">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/lblStandard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/ten"
+                        android:layout_marginEnd="@dimen/ten"
+                        android:layout_weight="0.5"
+                        android:fontFamily="@font/poppins_bold"
+                        android:text="VII"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/thirteen_sp"
+                        android:textStyle="bold">
+
+                    </TextView>
+                </LinearLayout>
+
+
+
+
+
+                <LinearLayout
                     android:id="@+id/lnrTeacherName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -341,6 +393,54 @@
 
                     </TextView>
                 </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/lnrSectionName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lnrStandardName"
+                    android:layout_marginTop="@dimen/ten"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/ten"
+                        android:layout_weight="0.6"
+                        android:fontFamily="@font/poppins_bold"
+                        android:text="@string/Section"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/thirteen_sp"
+                        android:textStyle="bold">
+
+                    </TextView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" : "
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/thirteen_sp"
+                        android:textStyle="bold">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/lblSection"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/ten"
+                        android:layout_marginEnd="@dimen/ten"
+                        android:layout_weight="0.5"
+                        android:fontFamily="@font/poppins_bold"
+                        android:text="Z"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/thirteen_sp"
+                        android:textStyle="bold">
+
+                    </TextView>
+                </LinearLayout>
+
             </RelativeLayout>
 
             <RelativeLayout

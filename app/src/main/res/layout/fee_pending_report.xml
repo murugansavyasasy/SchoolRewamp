@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/sixty"
             android:layout_marginTop="@dimen/twenty"
-            android:text="@string/daily_collection_fees"
+            android:text="Fee Pending"
             android:textColor="@color/black"
             android:textSize="@dimen/twenty_sp"
             android:textStyle="bold">

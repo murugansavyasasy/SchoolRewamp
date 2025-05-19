@@ -7,15 +7,18 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
+import androidx.compose.ui.platform.LocalDensity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SectionList.Section
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.Standard
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.StudentReportBinding
 
 class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener,
@@ -27,6 +30,7 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
     var isSection: List<Section>? = null
     var isValidAcademicYear = false
     var isAcademicYear: List<AcademicYear>? = null
+    private var isStaffDetails: StaffDetails? = null
     var isAcademicYearId = -1
     var isCurrentAcademicYear = true
     var isSectionId = -1
@@ -35,12 +39,11 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
     private var isSectionID: Int? = null
 
     val items = listOf(
-        "Get all student",
-        "Student name (A - Z)",
-        "Student name (Z - A)",
-        "Roll number (0 - 1)",
-        "Roll number (1 - 0)"
+        Constant.GET_ALL_STUDENT,
+        Constant.STANDARD,
+        Constant.STANDARD_AND_SECTION
     )
+
 
     val itemsStandard = listOf(
         "XII",
@@ -74,40 +77,81 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
 
         binding.imgBack.setOnClickListener(this)
         binding.rlaSort.setOnClickListener(this)
+        binding.AcademicYear.setOnClickListener(this)
 
 //        binding.rlaStandard.setOnClickListener(this)
         binding.dropdownTextViewStandard.setOnClickListener(this)
         binding.dropdownTextViewSection.setOnClickListener(this)
+        isStaffDetails = SharedPreference.getStaffDetails(this)
+        //Setting the first "Get All Student" as Default text in the Sort Option
+        binding.dropdownTextView.text = items[0]
+        isAccessToken = isStaffDetails!!.access_token
+        Log.d("isAccessToken", isStaffDetails!!.access_token)
         isGetAcademicYear()
-        isGetStudentReport()
+//        isGetStudentReport()
 
         appViewModel!!.isGetAcademicList?.observe(this) { response ->
-            Constant.hideLoading(this@StudentReport)
-            response?.data?.let { academicList ->
-                val reorderedList = academicList.sortedByDescending { it.current_academic_year }
-                if (isAcademicYear == reorderedList) return@observe
-                isAcademicYear = reorderedList
-                isValidAcademicYear =
-                    isAcademicYear?.any { it.current_academic_year == true } == true
-                binding.lblAcademicYear.text = isAcademicYear!![0].year
-                isAcademicYearId = isAcademicYear!![0].id
-                isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
-
-                isGetStandardSection()
+//            Constant.hideLoading(this@StudentReport)
+            if (response != null) {
+                if (response.status) {
+                    response?.data?.let { academicList ->
+                        Log.d("AcademicYearResponse", response?.data.toString())
+                        val reorderedList =
+                            academicList.sortedByDescending { it.current_academic_year }
+                        if (isAcademicYear == reorderedList) return@observe
+                        isAcademicYear = reorderedList
+                        isValidAcademicYear =
+                            isAcademicYear?.any { it.current_academic_year == true } == true
+                        binding.lblAcademicYear.text = isAcademicYear!![0].year
+                        isAcademicYearId = isAcademicYear!![0].id
+                        isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
+                        Log.d("isAcademicYearId", isAcademicYearId.toString())
+                        isGetStandardSection()
+                    }
+                } else {
+                    ErrorMessage(response.message)
+                }
             }
         }
+
+        appViewModel!!.isStudentReportList?.observe(this) { response ->
+//            Constant.hideLoading(this@StudentReport)
+            if (response != null) {
+                if (response.status) {
+                    ShowData()
+                    Log.d("isStudentReportResponsestatus", response.status.toString())
+                    Log.d("isStudentReportResponseMessage", response.message)
+                    Log.d("isStudentReportList", response.data.toString())
+                    Log.d("isStudentReportListSize", response.data.size.toString())
+                    val isStudentReportResponseData = response.data
+                    isStudentReportData = isStudentReportResponseData
+                    loadStudentReport(isStudentReportData)
+                } else {
+                    ErrorMessage(response.message)
+                }
+            }
+
+        }
+
         appViewModel!!.isStandardSectionList?.observe(this) { response ->
-            Constant.hideLoading(this@StudentReport)
+//            Constant.hideLoading(this@StudentReport)
             if (response != null) {
                 isGetStandard = response.data
                 isGetStandard?.size?.let {
                     if (it > 0) {
-                        isSectionId = isGetStandard!!.get(0).sections.get(0).id
+                        isClassID = isGetStandard!!.get(0).id
+                        Log.d("isClassID", isClassID.toString())
+//                        isSectionId = isGetStandard!!.get(0).sections.get(0).id
+                        isSectionID = isGetStandard!!.get(0).sections.get(0).id
+
                         binding.dropdownTextViewStandard.text = isGetStandard!!.get(0).name
                         if (isGetStandard!!.get(0).sections.size > 0) {
-                            binding.dropdownTextViewSection.text = isGetStandard!!.get(0).sections.get(0).name
+                            binding.dropdownTextViewSection.text =
+                                isGetStandard!!.get(0).sections.get(0).name
                             isSection = isGetStandard!!.get(0).sections
+                            Log.d("isSectionID", isSection.toString())
                         }
+                        isGetStudentReport()
                     } else {
                         binding.dropdownTextViewStandard.visibility = View.GONE
                         binding.dropdownTextViewSection.visibility = View.GONE
@@ -115,102 +159,6 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
                 }
             }
         }
-
-
-//        isStudentReportData = listOf(
-//            StudentReportData(
-//                "4783567951",
-//                "Male",
-//                "Apr 1 , 2001",
-//                "Sathish",
-//                "Ganesan",
-//                "Abi",
-//                "6382677672",
-//                "sathishg079@gmail.com",
-//            ),
-//            StudentReportData(
-//                "4783567951",
-//                "Male",
-//                "Apr 1 , 2001",
-//                "Bharath",
-//                "Ganesan",
-//                "Abi",
-//                "6382677672",
-//                "sathishg079@gmail.com",
-//            ),
-//            StudentReportData(
-//                "4783567951",
-//                "Male",
-//                "Apr 1 , 2001",
-//                "Partha",
-//                "Ganesan",
-//                "Abi",
-//                "6382677672",
-//                "sathishg079@gmail.com",
-//            ),
-//            StudentReportData(
-//                "4783567951",
-//                "Male",
-//                "Apr 1 , 2001",
-//                "Saran",
-//                "Ganesan",
-//                "Abi",
-//                "6382677672",
-//                "sathishg079@gmail.com",
-//            ),
-//            StudentReportData(
-//                "4783567951",
-//                "Male",
-//                "Apr 1 , 2001",
-//                "Murugan",
-//                "Ganesan",
-//                "Abi",
-//                "6382677672",
-//                "sathishg079@gmail.com",
-//            ),
-//            StudentReportData(
-//                "4783567951",
-//                "Male",
-//                "Apr 1 , 2001",
-//                "Vel",
-//                "Ganesan",
-//                "Abi",
-//                "6382677672",
-//                "sathishg079@gmail.com",
-//            ),
-//            StudentReportData(
-//                "4783567951",
-//                "Male",
-//                "Apr 1 , 2001",
-//                "Vijay",
-//                "Ganesan",
-//                "Abi",
-//                "6382677672",
-//                "sathishg079@gmail.com",
-//            ),
-//            StudentReportData(
-//                "4783567951",
-//                "Male",
-//                "Apr 1 , 2001",
-//                "Ajith",
-//                "Ganesan",
-//                "Abi",
-//                "6382677672",
-//                "sathishg079@gmail.com",
-//            ),
-//            StudentReportData(
-//                "4783567951",
-//                "Male",
-//                "Apr 1 , 2001",
-//                "Surya",
-//                "Ganesan",
-//                "Abi",
-//                "6382677672",
-//                "sathishg079@gmail.com",
-//            )
-//        )
-
-
 
 
         binding.txtSearchMenu.addTextChangedListener(object : TextWatcher {
@@ -224,30 +172,80 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
         })
     }
 
+
     private fun isGetStudentReport() {
         mAdapter = StudentReportAdapter(null, this, this, Constant.isShimmerViewShow)
         binding.rcyStudentReport.layoutManager = LinearLayoutManager(this)
         binding.rcyStudentReport.adapter = mAdapter
 
-        Constant.executeAfterDelay {
-            // Once data is loaded, stop shimmer and pass the actual data
-            mAdapter =
-                StudentReportAdapter(isStudentReportData, this, this, Constant.isShimmerViewDisable)
-            // Set GridLayoutManager (2 columns in this case)
-            binding.rcyStudentReport.adapter = mAdapter
+        Log.d("SectionID", isSectionID.toString())
+        Log.d("ClassID", isClassID.toString())
+
+        if (Constant.GET_ALL_STUDENT == binding.dropdownTextView.text) {
+            binding.lnrStandardDetails.visibility = View.GONE
+            binding.lnrSectionDetails.visibility = View.GONE
+            Log.d("GET_ALL_STUDENT", "Get all student")
+            Log.d("SectionID", isSectionID.toString())
+            Log.d("ClassID", isClassID.toString())
+            appViewModel!!.getStudentReportDetails(
+                isAccessToken!!, activity = this
+            )
         }
-        appViewModel!!.getStudentReportDetails(
-            isAccessToken!!,isClassID!!,isSectionID!!, this
-        )
+
+        if (Constant.STANDARD == binding.dropdownTextView.text) {
+            binding.lnrStandardDetails.visibility = View.VISIBLE
+            binding.lnrSectionDetails.visibility = View.GONE
+            isGetAcademicYear()
+            Log.d("STANDARD", "STANDARD")
+            Log.d("ClassID", isClassID.toString())
+            appViewModel!!.getStudentReportDetails(
+                isAccessToken!!, class_id = isClassID!!, activity = this
+            )
+        }
+        if (Constant.STANDARD_AND_SECTION == binding.dropdownTextView.text) {
+            binding.lnrStandardDetails.visibility = View.VISIBLE
+            binding.lnrSectionDetails.visibility = View.VISIBLE
+            isGetAcademicYear()
+            Log.d("STANDARD&SECTION", "STANDARD&SECTION")
+            Log.d("SectionID", isSectionID.toString())
+            Log.d("ClassID", isClassID.toString())
+
+            appViewModel!!.getStudentReportDetails(
+                isAccessToken!!, class_id = isClassID!!, section_id = isSectionID!!, activity = this
+            )
+        }
+//        //Called at initial because we load default Get ALL Student first
+//        Log.d("InitialCall","InitialGetAllStudentData")
+//        appViewModel!!.getStudentReportDetails(
+//            isAccessToken!!, activity = this
+//        )
+
+//        appViewModel!!.getStudentReportDetails(
+//            isAccessToken!!, isClassID!!, isSectionID!!, this
+//        )
     }
+
+    private fun loadStudentReport(studentReportData: List<StudentReportData>) {
+        // Once data is loaded, stop shimmer and pass the actual data
+        mAdapter =
+            StudentReportAdapter(studentReportData, this, this, Constant.isShimmerViewDisable)
+        binding.rcyStudentReport.layoutManager = LinearLayoutManager(this)
+        // Set GridLayoutManager (2 columns in this case)
+        binding.rcyStudentReport.adapter = mAdapter
+    }
+
     private fun isGetAcademicYear() {
-        Constant.showLoading(this@StudentReport)
+        Log.d("isGetAcademicYear", "Getting")
+//        Constant.showLoading(this@StudentReport)
+
         appViewModel!!.isGetAcademicYear(
             isAccessToken!!, this
         )
     }
+
     private fun isGetStandardSection() {
-        Constant.showLoading(this@StudentReport)
+        Log.d("isAcademicYearId", isAcademicYearId.toString())
+//        Constant.showLoading(this@StudentReport)
         appViewModel!!.isGetStandardSection(isAccessToken!!.toString(), isAcademicYearId, this)
     }
 
@@ -258,8 +256,21 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
         } else {
             isStudentReportData.filter { it.name.contains(text, ignoreCase = true) }
         }
-        (mAdapter as StudentReportAdapter).updateData(filteredList)
+        (mAdapter).updateData(filteredList)
 
+    }
+
+
+    fun ErrorMessage(ErrorMessage: String) {
+        binding.rcyStudentReport.visibility = View.GONE
+        binding.lytNoDataFound.visibility = View.VISIBLE
+        binding.noDataFound.text = ErrorMessage
+    }
+
+    fun ShowData() {
+        binding.rcyStudentReport.visibility = View.VISIBLE
+        binding.lytNoDataFound.visibility = View.VISIBLE
+        binding.noDataFound.visibility = View.GONE
     }
 
     override fun onClick(p0: View?) {
@@ -269,10 +280,47 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
             }
 
             R.id.rlaSort -> {
-
                 showDropdownMenuSort(binding.dropdownTextView, this, items) { selectedOption ->
                     binding.dropdownTextView.text = selectedOption
+                    Log.d("SelectedFilterSort", binding.dropdownTextView.text.toString())
+
+                    // Reset to DefaultStandard  safely
+                    if (!isGetStandard.isNullOrEmpty()) {
+                        ShowData()
+                        val DefaultStandard = isGetStandard!![0]
+                        isClassID = DefaultStandard.id
+                        isSection = DefaultStandard.sections
+
+                        // Update Standard TextView
+                        binding.dropdownTextViewStandard.text = DefaultStandard.name
+
+                        //  Safely check if sections are available
+                        if (!DefaultStandard.sections.isNullOrEmpty()) {
+                            ShowData()
+                            isSectionID = DefaultStandard.sections[0].id
+                            binding.dropdownTextViewSection.text = DefaultStandard.sections[0].name
+                        } else {
+                            //  If no sections, reset section ID & TextView
+                            isSectionID = null
+                            binding.dropdownTextViewStandard.text = DefaultStandard.name
+                            binding.dropdownTextViewSection.text = "-"
+                            ErrorMessage("No Section Found in List")
+                            return@showDropdownMenuSort
+                        }
+                    } else {
+                        //  If no standards, reset IDs & TextViews
+                        isClassID = null
+                        isSectionID = null
+                        binding.dropdownTextViewStandard.text = "-"
+                        binding.dropdownTextViewSection.text = "-"
+                        ErrorMessage("No Standard And Section Found in List")
+                        //API call will dropped!,Because the ClassID and SectionID will have will be null
+                        return@showDropdownMenuSort
+                    }
+
+                    isGetStudentReport()
                 }
+
             }
 
             R.id.dropdownTextViewStandard -> {
@@ -280,29 +328,28 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
                 showStandardDropdown(
                     binding.dropdownTextViewStandard, this, isGetStandard
                 ) { selectStandard, position ->
+                    isClassID = selectStandard.id
+//                    isSection = selectStandard.sections
+//                    isSectionID=selectStandard.sections.get(0).id
+                    if (!selectStandard.sections.isNullOrEmpty()) {
+                        isSectionID = selectStandard.sections[0].id
+                        binding.dropdownTextViewSection.text = selectStandard.sections[0].name
+                    } else {
+                        // If no sections, reset section ID and clear TextView
+                        isSectionID = null
+                        binding.dropdownTextViewSection.text = "-"
+                        binding.dropdownTextViewSection
+                        ErrorMessage("No Section Found in List")
+                        return@showStandardDropdown
+                    }
+//                    binding.dropdownTextViewSection.text=selectStandard.sections.get(0).name
                     binding.dropdownTextViewStandard.text = selectStandard.name
-                    isSection = selectStandard.sections
                     Log.d(
                         "DropdownMenu",
                         "Selected Standard: Name = ${selectStandard.name}, ID = ${selectStandard.id}, Position = $position"
                     )
                     isGetStudentReport()
                 }
-            }
-
-            R.id.AcademicYear -> {
-                showAcademicDropdown(
-                    binding.AcademicYear, this, isAcademicYear
-                ) { selectedYear ->
-                    binding.lblAcademicYear.text = selectedYear.year
-                    isGetStandardSection()
-                    Log.d(
-                        "DropdownMenu",
-                        "Clicked Academic Year: ID = ${selectedYear.id}, Year = ${selectedYear.year}, Current = ${selectedYear.current_academic_year}"
-                    )
-                    isGetStudentReport()
-                }
-
             }
 
             R.id.dropdownTextViewSection -> {
@@ -314,11 +361,30 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
                     isSection
                 ) { selectedOption ->
                     binding.dropdownTextViewSection.text = selectedOption.first
-                    isSectionId = selectedOption.second
+//                    isSectionId = selectedOption.second
+                    isSectionID = selectedOption.second
                     isGetStudentReport()
                 }
 
             }
+
+            R.id.AcademicYear -> {
+                showAcademicDropdown(
+                    binding.AcademicYear, this, isAcademicYear
+                ) { selectedYear ->
+                    binding.lblAcademicYear.text = selectedYear.year
+                    isGetStandardSection()
+
+                    Log.d(
+                        "DropdownMenu",
+                        "Clicked Academic Year: ID = ${selectedYear.id}, Year = ${selectedYear.year}, Current = ${selectedYear.current_academic_year}"
+                    )
+                    isGetStudentReport()
+                }
+
+            }
+
+
 //We no longer need this animation because out of requiremnet
 //            R.id.rlaStandard -> {
 //                if (isVisibilityStandard) {

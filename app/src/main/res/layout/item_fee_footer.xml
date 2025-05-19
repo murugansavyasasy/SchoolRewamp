@@ -1,0 +1,24 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/fourty"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/fee_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fee Type"
+        android:textColor="@color/black"
+        android:textSize="@dimen/fifteen_sp"
+        style="@style/CustomTextStylePoppinsMedium"/>
+
+    <TextView
+        android:id="@+id/fee_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:text="Amount"
+        android:textColor="@color/black"
+        android:textSize="@dimen/fifteen_sp"
+        style="@style/CustomTextStylePoppinsMedium"/>
+</RelativeLayout>

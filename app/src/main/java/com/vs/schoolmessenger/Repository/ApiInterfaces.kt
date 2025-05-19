@@ -284,8 +284,8 @@ interface ApiInterfaces {
     @GET(APIMethods.student_report)
     fun getStudentReport(
         @Header(APIKeyNames.Authorization) token: String,
-        @Query(APIKeyNames.section_id) section_id: Int?,
-        @Query(APIKeyNames.class_id) class_id: Int?
+        @Query(APIKeyNames.class_id) class_id: Int?,
+        @Query(APIKeyNames.section_id) section_id: Int?
     ): Call<GetStudentReportData?>?
 
     @GET(APIMethods.isGetDailyCollectionReport)
@@ -309,4 +309,13 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String,
         @Query(APIKeyNames.academic_year_id) academic_year_id: Int?
     ): Call<FeePendingReportResponse?>?
+
+
+    @GET(APIMethods.isDetailedWisePendingReport)
+    fun isDetailedWisePendingReport(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query(APIKeyNames.academic_year_id) academic_year_id: Int?
+    ): Call<FeePendingReportResponse?>?
+
+
 }

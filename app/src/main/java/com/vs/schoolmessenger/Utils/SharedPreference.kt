@@ -85,7 +85,8 @@ object SharedPreference {
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
-        return sharedPreferences.getInt(SH_COUNTRY_ID,0)
+        return sharedPreferences.getInt(SH_COUNTRY_ID, 0)
+
     }
 
     fun putLogout(activity: Activity, isLogout: Boolean?) {

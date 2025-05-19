@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.Repository
 
 import android.app.Activity
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.google.gson.JsonObject
@@ -79,6 +80,10 @@ class App(application: Application) : AndroidViewModel(application) {
     var isDetailedPendingReport: LiveData<FeePendingReportResponse?>? = null
         private set
 
+    var isDetailedWisePendingReport: LiveData<FeePendingReportResponse?>? = null
+        private set
+
+
 
 
     var isSendText: LiveData<TextSendResponse?>? = null
@@ -113,6 +118,8 @@ class App(application: Application) : AndroidViewModel(application) {
     var isStaffWiseAttendanceReportList: LiveData<StaffAttendanceReportResponse?>? = null
 
     var isStudentReportList: LiveData<GetStudentReportData?>? = null
+        private set
+
 
 
 
@@ -132,6 +139,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isGetDailyCollectionReport = apiRepositories!!.isGetDailyCollectionReportLiveData
         isGetSchoolStrengthReport = apiRepositories!!.isGetSchoolStrengthReportLiveData
         isDetailedPendingReport = apiRepositories!!.isDetailedPendingReportLiveData
+        isDetailedWisePendingReport = apiRepositories!!.isDetailedWisePendingReportLiveData
         isSendText = apiRepositories!!.isSendTextLiveData
         isSendHomeWork = apiRepositories!!.isSendHomeWorkLiveData
         isVoiceSend = apiRepositories!!.isSendVoiceLiveData
@@ -176,6 +184,7 @@ class App(application: Application) : AndroidViewModel(application) {
 
 
     fun isGetStandardSection(isToken: String, isAcademicYearId: Int, activity: Activity) {
+        Log.d("isAcademicYearIdData",isAcademicYearId.toString())
         apiRepositories.isGetStandardSection(isToken, isAcademicYearId, activity)
     }
 
@@ -207,6 +216,13 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun isGetDailyCollectionReport(isToken: String,  istype: String, isfromdate: String ,istodate: String ,activity: Activity) {
         apiRepositories!!.isGetDailyCollectionReport(isToken, istype, isfromdate, istodate, activity )
+    }
+
+    fun isDetailedPendingReport(isToken: String, isAcademicYearId: Int  ,activity: Activity) {
+        apiRepositories!!.isDetailedPendingReport(isToken, isAcademicYearId, activity )
+    }
+    fun isDetailedWisePendingReport(isToken: String, isAcademicYearId: Int  ,activity: Activity) {
+        apiRepositories!!.isDetailedWisePendingReport(isToken, isAcademicYearId, activity )
     }
 
     fun isGetSchoolStrengthReport(isToken: String,   isAcademicYearId: Int ,activity: Activity) {
@@ -302,7 +318,7 @@ class App(application: Application) : AndroidViewModel(application) {
         )
     }
     //Get Student Report Details
-    fun getStudentReportDetails(isToken: String, class_id: Int,section_id:Int, activity: Activity) {
+    fun getStudentReportDetails(isToken: String, class_id: Int?=null,section_id:Int?=null, activity: Activity) {
         apiRepositories?.getStudentReportList(isToken, class_id, section_id,activity)
     }
 }

@@ -58,6 +58,8 @@ class AppServices {
     var isGetSchoolStrengthReport: MutableLiveData<SchoolStrengthResponse?>
     var isDetailedPendingReport: MutableLiveData<FeePendingReportResponse?>
 
+    var isDetailedWisePendingReport: MutableLiveData<FeePendingReportResponse>
+
     var isPunchAttendance: MutableLiveData<StatusMessageModel?>
     var isAddLocation: MutableLiveData<StatusMessageModel?>
     var isRemoveLocation: MutableLiveData<StatusMessageModel?>
@@ -94,6 +96,7 @@ class AppServices {
         isUpdateStatusCommunication = MutableLiveData()
         isHomeWorkDetailsData = MutableLiveData()
         isDetailedPendingReport = MutableLiveData()
+        isDetailedWisePendingReport = MutableLiveData()
         isGetSchoolStrengthReport = MutableLiveData()
         isPunchAttendance = MutableLiveData()
         isAddLocation = MutableLiveData()
@@ -597,6 +600,40 @@ class AppServices {
 
     val isDetailedPendingReportLiveData: LiveData<FeePendingReportResponse?>
         get() = isDetailedPendingReport
+
+
+    fun isDetailedWisePendingReport(isToken: String, isAcademicYearId: Int, activity: Activity) {
+        RestClient.apiInterfaces.isDetailedWisePendingReport(isToken, isAcademicYearId)
+            ?.enqueue(object : Callback<FeePendingReportResponse?> {
+                override fun onResponse(
+                    call: Call<FeePendingReportResponse?>,
+                    response: Response<FeePendingReportResponse?>
+                ) {
+                    Log.d(
+                        "isGetCountryList", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isDetailedWisePendingReport.postValue(response.body())
+                            } else {
+                                isDetailedWisePendingReport.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<FeePendingReportResponse?>, t: Throwable) {
+                    isDetailedWisePendingReport.postValue(null)
+                    Log.d("t.printStackTrace()", t.printStackTrace().toString())
+                }
+            })
+    }
+
+    val isDetailedWisePendingReportLiveData: LiveData<FeePendingReportResponse?>
+        get() = isDetailedWisePendingReport
+
 
 
     fun isSendText(isToken: String, jsonObject: JsonObject, activity: Activity) {
@@ -1150,7 +1187,7 @@ class AppServices {
         get() = isStaffWiseAttendanceReportList
 
 
-    fun getStudentReportList(isToken: String, class_id: Int, section_id: Int, activity: Activity) {
+    fun getStudentReportList(isToken: String, class_id: Int?=null,section_id:Int?=null, activity: Activity) {
         RestClient.apiInterfaces.getStudentReport(isToken, class_id, section_id)
             ?.enqueue(object : Callback<GetStudentReportData?> {
                 override fun onResponse(

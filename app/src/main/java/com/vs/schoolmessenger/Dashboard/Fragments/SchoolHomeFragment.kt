@@ -54,6 +54,7 @@ import com.vs.schoolmessenger.School.OnlineMeeting.OnlineMeeting
 import com.vs.schoolmessenger.School.SchoolStrength.SchoolStrength
 import com.vs.schoolmessenger.School.StaffWiseAttendanceReport.StaffWiseAttendanceReport
 import com.vs.schoolmessenger.School.StudentReport.StudentReport
+import com.vs.schoolmessenger.School.StudentReport.StudentReportAdapter
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SchoolHomeFragmentBinding
@@ -299,6 +300,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         isMenuItems.clear()
         isMenuItems.addAll(filtered)
         isMenuAdapter.updateList(isMenuItems.toList())
+
     }
 
     override fun onClick(p0: View?) {

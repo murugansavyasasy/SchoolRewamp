@@ -32,6 +32,7 @@ object APIMethods {
     const val isGetDailyCollectionReport = "admin/api/fee-report/daily-collection"
     const val isGetSchoolStrengthReport = "api/get-school-strength"
     const val isDetailedPendingReport = "admin/api/fee-report/detailed-pending-report"
+    const val isDetailedWisePendingReport = "admin/api/fee-report/detailed-class-wise-pending-report"
     const val isSendText = "comm/api/text-message/send-text"
     const val isSendHomeWork = "comm/api/homework/send-homework"
     const val isSendVoice = "comm/api/voice/send-voice"
@@ -58,7 +59,7 @@ object APIMethods {
     const val giometric_principal_attendance_report =  "staff-attd/api/geometric/geometric-principal-attendance-report"
     const val punch_history =  "staff-attd/api/geometric/geometric-punch-history"
 
-    const val student_report= "api/get-student-report"
+    const val student_report= "admin/api/get-student-report"
 
 
 }

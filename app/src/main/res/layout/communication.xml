@@ -147,7 +147,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/linearlayout1"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <RadioGroup
             android:id="@+id/rdgCommunication"
