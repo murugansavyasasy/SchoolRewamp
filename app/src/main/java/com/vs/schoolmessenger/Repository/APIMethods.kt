@@ -42,7 +42,7 @@ object APIMethods {
     const val send_homework = "comm/api/homework/send-homework"
     const val homework_reports = "comm/api/homework/get-homework-report"
     const val homework_list = "comm/api/homework/get-homework-list"
-    const val homework_list_archive = "comm/homework/get-homework-list-archive"
+    const val homework_list_archive = "comm/api/homework/list-archive"
     const val send_attachments = "comm/api/attachment/send-attachment"
     const val attachments_list = "comm/api/communication/attachment-list"
     const val attachments_list_archive = "comm/api/communication/attachment-list-archive"

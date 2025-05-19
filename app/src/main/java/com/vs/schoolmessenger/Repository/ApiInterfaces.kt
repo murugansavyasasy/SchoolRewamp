@@ -221,7 +221,7 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String,
     ): Call<GetHomeworkData?>
 
-    @GET(APIMethods.isHomeWorkDetails)
+    @GET(APIMethods.homework_list_archive)
     fun homework_list_archive(
         @Header(APIKeyNames.Authorization) token: String,
     ): Call<GetHomeworkData?>

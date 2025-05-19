@@ -869,7 +869,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             if (SELECTED_SCHOOL_MENU == M_HOMEWORK) {
                 if (Constant.selectedFiles.size > 0) {
                     isFileUploadInAws(
-                        Constant.selectedFiles, isStaffDetails!!.school_id, "audio"
+                        Constant.selectedFiles, isStaffDetails!!.school_id, "file"
                     )
                 } else {
                     isHomeWorkSend()

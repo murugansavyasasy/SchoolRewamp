@@ -34,6 +34,7 @@ class HomeWorkAdapter(
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
     }
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
             val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.home_work_date_item)

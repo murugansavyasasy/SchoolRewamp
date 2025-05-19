@@ -149,7 +149,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         binding.rlaAcademicYear.setOnClickListener(this)
         binding.imgClose.setOnClickListener(this)
         binding.infosymbol.setOnClickListener(this)
-
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
 

@@ -253,7 +253,9 @@
                             android:layout_height="@dimen/twenty"
                             android:layout_gravity="end"
                             android:layout_weight="0.6"
-                            android:src="@drawable/calender_icon"></ImageView>
+                            android:src="@drawable/calender_icon">
+
+                        </ImageView>
                     </LinearLayout>
 
 
@@ -318,7 +320,6 @@
                         </RelativeLayout>
                     </LinearLayout>
 
-
                     <LinearLayout
                         android:id="@+id/lnrToTime"
                         android:layout_width="match_parent"
@@ -369,7 +370,6 @@
                                 android:text=""
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/thirteen_sp">
-
                             </TextView>
 
                             <ImageView
@@ -381,8 +381,6 @@
                             </ImageView>
                         </RelativeLayout>
                     </LinearLayout>
-
-
                 </RelativeLayout>
 
                 <com.vs.schoolmessenger.Utils.ExpandableGridView
@@ -405,7 +403,6 @@
                     android:layout_marginTop="@dimen/ten"
                     android:visibility="gone"
                     tools:listitem="@layout/history_from_text_message"></androidx.recyclerview.widget.RecyclerView>
-
 
                 <LinearLayout
                     android:id="@+id/rytNORecordFound"
