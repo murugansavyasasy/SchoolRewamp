@@ -80,7 +80,6 @@ class AppServices {
     var isSendAbsenteeSMS: MutableLiveData<SendAbsenteeSMSResponse?>
 
 
-
     init {
         client_auth = RestClient()
         isDashBoard = MutableLiveData()
@@ -514,9 +513,8 @@ class AppServices {
         get() = isGetHomeWorkReport
 
 
-
     fun isNoticeBoardReport(
-        isToken: String,activity: Activity
+        isToken: String, activity: Activity
     ) {
         RestClient.apiInterfaces.isNoticeBoardReport(isToken)
             ?.enqueue(object : Callback<NoticeBoardResponse?> {
@@ -551,7 +549,7 @@ class AppServices {
 
 
     fun IsGetEventReport(
-        isToken: String,activity: Activity
+        isToken: String, activity: Activity
     ) {
         RestClient.apiInterfaces.IsGetEventReport(isToken)
             ?.enqueue(object : Callback<EventResponse?> {
@@ -716,7 +714,6 @@ class AppServices {
 
     val isDetailedWisePendingReportLiveData: LiveData<FeePendingReportResponse?>
         get() = isDetailedWisePendingReport
-
 
 
     fun isSendText(isToken: String, jsonObject: JsonObject, activity: Activity) {
@@ -1349,7 +1346,8 @@ class AppServices {
         RestClient.apiInterfaces.UpdateSendAbsenteeSMS(isToken, jsonObject)
             ?.enqueue(object : Callback<SendAbsenteeSMSResponse?> {
                 override fun onResponse(
-                    call: Call<SendAbsenteeSMSResponse?>, response: Response<SendAbsenteeSMSResponse?>
+                    call: Call<SendAbsenteeSMSResponse?>,
+                    response: Response<SendAbsenteeSMSResponse?>
                 ) {
                     Log.d(
                         "SendAbsenteeSMS", response.code().toString() + " - " + response.toString()

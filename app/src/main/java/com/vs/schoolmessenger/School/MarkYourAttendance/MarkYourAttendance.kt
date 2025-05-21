@@ -149,7 +149,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
                 binding.recycleAttendanceReports.visibility = View.GONE
                 binding.lblNoRecords.visibility = View.VISIBLE
                 binding.imgNorecord.visibility = View.VISIBLE
-                binding.lblNoRecords.text = response!!.message
+                binding.lblNoRecords.text = response?.message ?: "No Data Available"
             }
         }
 
