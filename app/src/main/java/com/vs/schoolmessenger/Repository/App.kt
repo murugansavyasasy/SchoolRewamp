@@ -13,7 +13,8 @@ import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsRespo
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
 import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
 import com.vs.schoolmessenger.Parent.Communication.VoiceDataResponse
-import com.vs.schoolmessenger.Parent.EventsHolidays.EventResponse
+import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventResponse
+import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.HolidayResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
@@ -84,6 +85,8 @@ class App(application: Application) : AndroidViewModel(application) {
         private set
 
     var IsGetEventReport: LiveData<EventResponse?>? = null
+        private set
+    var IsGetHolidayReport: LiveData<HolidayResponse?>? = null
         private set
 
     var isDetailedPendingReport: LiveData<FeePendingReportResponse?>? = null
@@ -156,6 +159,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isSendText = apiRepositories!!.isSendTextLiveData
         isSendHomeWork = apiRepositories!!.isSendHomeWorkLiveData
         IsGetEventReport = apiRepositories!!.IsGetEventReportLiveData
+        IsGetHolidayReport = apiRepositories!!.IsGetHolidayReportLiveData
         isVoiceSend = apiRepositories!!.isSendVoiceLiveData
         isUpdateStatusArchive = apiRepositories!!.isUpdateStatusArchiveLiveData
         isGetAcademicList = apiRepositories!!.isGetAcademicLiveData
@@ -255,6 +259,9 @@ class App(application: Application) : AndroidViewModel(application) {
         apiRepositories!!.IsGetEventReport(isToken , activity )
     }
 
+    fun IsGetHolidayReport(isToken: String ,activity: Activity) {
+        apiRepositories!!.IsGetHolidayReport(isToken , activity )
+    }
 
     fun isGetTextHistory(isToken: String, activity: Activity) {
         apiRepositories!!.isGetTextHistory(isToken, activity)

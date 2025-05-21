@@ -34,7 +34,7 @@ import com.vs.schoolmessenger.Parent.Attachment.Attachment
 import com.vs.schoolmessenger.Parent.Attendance.AttendanceReport
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificateRequest
 import com.vs.schoolmessenger.Parent.Communication.CommunicationParent
-import com.vs.schoolmessenger.Parent.EventsHolidays.Event
+import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Event
 import com.vs.schoolmessenger.Parent.FeeDetails.FeeDetails
 import com.vs.schoolmessenger.Parent.Homework.HomeWork
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.InteractionWithStaff

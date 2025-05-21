@@ -41,9 +41,10 @@ class NoticeBoard : BaseActivity<NoticeBoardBinding>(), View.OnClickListener,
                 binding.rcyNoticeBoard.visibility = View.VISIBLE
                 isloadhomeworkData(response.data)
             } else {
-//                binding.rytNORecordFound.visibility = View.VISIBLE
-//                binding.rcyHomework.visibility = View.GONE
-//                binding.lblNoRecordFound.text = response.message
+                binding.nomessage.visibility = View.VISIBLE
+                binding.rcyNoticeBoard.visibility = View.GONE
+                binding.txtNoData.visibility = View.VISIBLE
+                binding.txtNoData.text = response.message
             }
         }
     }
