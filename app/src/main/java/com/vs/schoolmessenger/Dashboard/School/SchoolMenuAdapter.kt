@@ -3,7 +3,6 @@ package com.vs.schoolmessenger.Dashboard.School
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -92,7 +91,6 @@ class SchoolMenuAdapter(
             }
         }
     }
-
 
     override fun getItemCount(): Int {
         return if (isLoading) 20

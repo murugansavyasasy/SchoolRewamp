@@ -33,7 +33,6 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
     private var hasFetchedMore = false
     private var isFilterType: String = Constant.ALL
     private var isCommunicationType = 1
-
     private var currentSearchQuery: String = ""
 
     override fun setupViews() {

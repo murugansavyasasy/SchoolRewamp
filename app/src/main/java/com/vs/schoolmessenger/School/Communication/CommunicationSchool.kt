@@ -119,7 +119,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
 
     @RequiresApi(Build.VERSION_CODES.O)
-    @SuppressLint("ClickableViewAccessibility")
+    @SuppressLint("ClickableViewAccessibility", "DefaultLocale")
     override fun setupViews() {
         super.setupViews()
         setupToolbar()
@@ -274,6 +274,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
 
             override fun afterTextChanged(p0: Editable?) {
+
             }
         })
 
@@ -402,6 +403,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     recordingStartTime = System.currentTimeMillis()
 
                     recordingRunnable = object : Runnable {
+                        @SuppressLint("DefaultLocale")
                         @RequiresApi(Build.VERSION_CODES.O)
                         override fun run() {
                             if (isRecording) {
@@ -429,13 +431,12 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     binding.lottieAnimationView.playAnimation()
 
                     binding.lblDurationOfVoice.visibility = View.VISIBLE
-                    binding.lblDurationOfVoice.text = "Recording: $fileName"
+//                    binding.lblDurationOfVoice.text = "Recording: $fileName"
 
                 } catch (e: IOException) {
                     e.printStackTrace()
                 }
             }
-
         } else {
             openAppSettings()
         }
@@ -566,7 +567,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     binding.waveformSeekBar.updateWithLevel(0f)
                     Log.d("AudioDebug", "Playback completed.")
                 }
-
                 prepareAsync()
 
             } catch (e: IOException) {
@@ -643,7 +643,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             false
         }
     }
-
 
     private fun openAppSettings() {
         returnedFromSettings = true
@@ -832,6 +831,12 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 //                binding.imgVoiceRecord.visibility = View.VISIBLE
                 binding.rytVoiceRecord.visibility = View.VISIBLE
                 binding.lblDurationOfVoice.visibility = View.VISIBLE
+
+                if (mediaPlayer!!.isPlaying) {
+                    mediaPlayer!!.stop()
+                }
+
+                Constant.selectedFiles.clear()
             }
 
             R.id.rlaSendText -> {
@@ -954,12 +959,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             R.id.imgVoiceRecord -> {
                 binding.lblStartDuration.text = "00:00"
                 stopAudioProgressUpdate()
-//                if (!isRecording) {
                 Constant.isVoiceType = 1
                 startRecording()
-//                } else {
-//                    stopRecording()
-//                }
             }
 
             R.id.lottieAnimationView -> {
@@ -979,7 +980,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     )
 
                     popupWindow.elevation = 10f
-
                     popupWindow.showAsDropDown(binding.infosymbol, -20, 10)
                 }
             }
@@ -991,9 +991,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
 
             R.id.lnrScheduleCall -> {
-                val dateAdapter = DateAdapter(this) { updatedList ->
-                    // Optional callback when dates are clicked inside calendar
-                }
+                val dateAdapter = DateAdapter(this) { updatedList -> }
 
                 selectedDatesAdapter = SelectedDatesAdapter(
                     context = this,
@@ -1007,14 +1005,13 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 binding.gridViewScheduleCall.adapter = selectedDatesAdapter
 
                 val datePickerPopup = CustomDatePicker(
-                    context = this, preSelectedDates = selectedDates.toList(), // now synced
+                    context = this, preSelectedDates = selectedDates.toList(),
                     dateAdapter = dateAdapter
                 ) { newSelectedDates ->
                     selectedDates.clear()
                     selectedDates.addAll(newSelectedDates)
                     selectedDatesAdapter.submitSelectedDates(selectedDates.toList())
                 }
-
                 datePickerPopup.show(window.decorView.rootView)
             }
 
@@ -1106,10 +1103,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
         popupWindow.elevation = 10f
         popupWindow.showAsDropDown(binding.infosymbol, -20, 10)
-
         return popupWindow
     }
-
 
     private fun isGoToRecipient() {
         val isStaffRole = isUserDetails!!.staff_role
@@ -1201,7 +1196,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             )
         )
 
-        // Update icons based on selection
         when (imgTypeCommunication) {
             binding.imgVoiceMessage -> {
                 binding.imgVoiceMessage.setImageDrawable(

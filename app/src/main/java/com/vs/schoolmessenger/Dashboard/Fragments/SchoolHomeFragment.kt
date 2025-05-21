@@ -54,12 +54,10 @@ import com.vs.schoolmessenger.School.OnlineMeeting.OnlineMeeting
 import com.vs.schoolmessenger.School.SchoolStrength.SchoolStrength
 import com.vs.schoolmessenger.School.StaffWiseAttendanceReport.StaffWiseAttendanceReport
 import com.vs.schoolmessenger.School.StudentReport.StudentReport
-import com.vs.schoolmessenger.School.StudentReport.StudentReportAdapter
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SchoolHomeFragmentBinding
 import java.util.Locale
-import javax.sql.DataSource
 
 
 class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
@@ -240,17 +238,13 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             }
         }
 
-
         binding.txtSearchMenu.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
-
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 filter(s.toString())
             }
         })
-
 
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -285,7 +279,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         binding.recyclerViewMenus.layoutManager = gridLayoutManager
         binding.recyclerViewMenus.adapter = isMenuAdapter
     }
-
 
     @SuppressLint("NotifyDataSetChanged")
     private fun filter(text: String) {
@@ -464,8 +457,9 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             }
 
             Constant.M_ONLINE_MEETING -> OnlineMeeting::class.java
+
             Constant.M_DAILY_COLLECTION -> {
-                if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
+                if (userDetails!!.staff_role == Constant.isStaffRole) {
                     DailyCollection::class.java
                 } else {
                     if (userDetails!!.staff_details.size > 1) {
@@ -477,7 +471,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             }
 
             Constant.M_STUDENT_REPORT -> {
-                if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
+                if (userDetails!!.staff_role == Constant.isStaffRole) {
                     StudentReport::class.java
                 } else {
                     if (userDetails!!.staff_details.size > 1) {
@@ -490,7 +484,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
             Constant.M_LESSON_PLAN -> {
 
-                if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
+                if (userDetails!!.staff_role == Constant.isStaffRole) {
                     LessonPlan::class.java
                 } else {
                     if (userDetails!!.staff_details.size > 1) {

@@ -69,7 +69,6 @@ class DateAdapter(
 
                 dateBox.setOnClickListener {
                     val dateStr = dateItem.getFormattedDate() ?: return@setOnClickListener
-
                     if (selectedDates.contains(dateStr)) {
                         selectedDates.remove(dateStr)
                         dateBox.setBackgroundColor(Color.TRANSPARENT)
@@ -77,8 +76,6 @@ class DateAdapter(
                         selectedDates.add(dateStr)
                         dateBox.background = selectedBackgroundDrawable
                     }
-
-                    // Notify parent of updated selection
                     onDateClick(selectedDates.toList())
                 }
 
@@ -93,14 +90,12 @@ class DateAdapter(
         }
     }
 
-
     fun setSelectedDates(selectedDates: List<String>) {
         this.selectedDates.clear()
         this.selectedDates.addAll(selectedDates)
         Log.d("DateAdapter", "Selected dates set: $selectedDates")
         notifyDataSetChanged() // Notify that data has changed
     }
-
 
     fun getSelectedDates(): List<String> {
         return selectedDates.toList() // Ensure this returns a List<String>

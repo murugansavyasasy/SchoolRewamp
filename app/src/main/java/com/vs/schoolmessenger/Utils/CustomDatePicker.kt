@@ -94,12 +94,17 @@ class CustomDatePicker(
         popupWindow.showAtLocation(anchorView, Gravity.CENTER, 0, 0)
     }
 
-
     private fun loadDates(currentMonthText: TextView) {
         val dateFormat = SimpleDateFormat(Constant.MMMM_yyyy, Locale.getDefault())
         currentMonthText.text = dateFormat.format(calendar.time)
 
-        val today = Calendar.getInstance()
+        val today = Calendar.getInstance().apply {
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }
+
         val endDate = today.clone() as Calendar
         endDate.add(Calendar.DAY_OF_MONTH, 6)
 
@@ -116,6 +121,11 @@ class CustomDatePicker(
         for (i in 1..daysInMonth) {
             val currentDate = calendar.clone() as Calendar
             currentDate.set(Calendar.DAY_OF_MONTH, i)
+            currentDate.set(Calendar.HOUR_OF_DAY, 0)
+            currentDate.set(Calendar.MINUTE, 0)
+            currentDate.set(Calendar.SECOND, 0)
+            currentDate.set(Calendar.MILLISECOND, 0)
+
             val isSelectable = !currentDate.before(today) && !currentDate.after(endDate)
             dates.add(DateItem(i, isSelectable))
         }

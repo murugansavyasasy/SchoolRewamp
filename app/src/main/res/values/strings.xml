@@ -469,7 +469,7 @@
     <string name="Failed_recording">Failed to stop recording</string>
     <string name="Enter_title_description">Enter title and description</string>
     <string name="Voice_title_required">Voice and title is required.</string>
-    <string name="Audio_least_30_seconds">Audio duration must be at least 30 seconds.</string>
+    <string name="Audio_least_30_seconds">Audio duration must be below 30 seconds.</string>
     <string name="Audio_below_3_minutes">Audio duration must be below 3 minutes.</string>
     <string name="Failed_load_audio">Failed to load audio</string>
     <string name="Invalid_Duration">Invalid Duration</string>

@@ -18,10 +18,10 @@
 
         <ImageView
             android:id="@+id/imgMenu"
-            android:layout_width="@dimen/twenty"
+            android:layout_width="@dimen/twenty_five"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:layout_height="@dimen/twenty" />
+            android:layout_height="@dimen/twenty_five" />
         </RelativeLayout>
 
     <TextView
