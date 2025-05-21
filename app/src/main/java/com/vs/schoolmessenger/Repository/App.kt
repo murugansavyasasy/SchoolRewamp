@@ -20,6 +20,7 @@ import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
 import com.vs.schoolmessenger.Repository.APIMethods.isDetailedPendingReport
+import com.vs.schoolmessenger.School.AbsenteesMarking.SendAbsenteeSMSResponse
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionReportResponse
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
@@ -127,6 +128,9 @@ class App(application: Application) : AndroidViewModel(application) {
 
     var isStudentReportList: LiveData<GetStudentReportData?>? = null
         private set
+    var isSendAbsenteeSMS: LiveData<SendAbsenteeSMSResponse?>? = null
+
+
 
 
 
@@ -170,6 +174,8 @@ class App(application: Application) : AndroidViewModel(application) {
         isStaffWiseAttendanceReportList =
             apiRepositories!!.isGiometricStaffWiseAttendanceReportLiveDataList
         isStudentReportList = apiRepositories!!.isStudentReportLiveData
+        isSendAbsenteeSMS = apiRepositories!!.isSendAbsenteeSMSLiveData
+
 
     }
 
@@ -347,5 +353,11 @@ class App(application: Application) : AndroidViewModel(application) {
     fun getStudentReportDetails(isToken: String, class_id: Int?=null,section_id:Int?=null, activity: Activity) {
         apiRepositories?.getStudentReportList(isToken, class_id, section_id,activity)
     }
+
+    fun isUpdateSendAbsenteeSMS(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        apiRepositories?.isUpdateSendAbsenteeSMS(isToken, jsonObject, activity)
+    }
+
+
 }
 

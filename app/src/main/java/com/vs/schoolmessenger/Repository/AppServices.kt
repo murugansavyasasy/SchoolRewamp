@@ -19,6 +19,7 @@ import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
 import com.vs.schoolmessenger.Parent.Noticeboard.Notice
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
+import com.vs.schoolmessenger.School.AbsenteesMarking.SendAbsenteeSMSResponse
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionReportResponse
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
@@ -76,6 +77,8 @@ class AppServices {
     var isStudentReportList: MutableLiveData<GetStudentReportData?>
 
     var IsGetEventReport: MutableLiveData<EventResponse?>
+    var isSendAbsenteeSMS: MutableLiveData<SendAbsenteeSMSResponse?>
+
 
 
     init {
@@ -116,6 +119,8 @@ class AppServices {
         isStaffWiseAttendanceReportList = MutableLiveData()
         isStudentReportList = MutableLiveData()
         IsGetEventReport = MutableLiveData()
+        isSendAbsenteeSMS = MutableLiveData()
+
 
     }
 
@@ -1339,4 +1344,36 @@ class AppServices {
 
     val isStudentReportLiveData: LiveData<GetStudentReportData?>
         get() = isStudentReportList
+
+    fun isUpdateSendAbsenteeSMS(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        RestClient.apiInterfaces.UpdateSendAbsenteeSMS(isToken, jsonObject)
+            ?.enqueue(object : Callback<SendAbsenteeSMSResponse?> {
+                override fun onResponse(
+                    call: Call<SendAbsenteeSMSResponse?>, response: Response<SendAbsenteeSMSResponse?>
+                ) {
+                    Log.d(
+                        "SendAbsenteeSMS", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isSendAbsenteeSMS.postValue(response.body())
+                            } else {
+                                isSendAbsenteeSMS.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<SendAbsenteeSMSResponse?>, t: Throwable) {
+                    isSendAbsenteeSMS.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isSendAbsenteeSMSLiveData: LiveData<SendAbsenteeSMSResponse?>
+        get() = isSendAbsenteeSMS
+
 }
