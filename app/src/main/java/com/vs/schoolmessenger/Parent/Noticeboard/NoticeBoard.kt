@@ -1,15 +1,10 @@
 package com.vs.schoolmessenger.Parent.Noticeboard
 
-import android.content.Intent
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
-import com.vs.schoolmessenger.CommonScreens.WebView
-import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.HomeWorkAdapter
-import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetDateWiseHomeworkData
 import com.vs.schoolmessenger.Parent.Noticeboard.Adapter.NoticeBoardAdapter
-import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference

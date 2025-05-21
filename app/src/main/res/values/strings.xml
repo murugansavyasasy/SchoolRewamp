@@ -531,6 +531,7 @@
     <string name="nameasc">NameASC</string>
     <string name="select_attendance_type">Select Attendance Type</string>
     <string name="admis_no">ADMIS No:</string>
+    <string name="Staffwise_Attendance_Report">Staffwise Attendance Report</string>
 
 
 </resources>

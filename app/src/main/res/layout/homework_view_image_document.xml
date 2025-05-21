@@ -31,48 +31,16 @@
             android:textStyle="bold" />
     </RelativeLayout>
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewPager"
-        android:layout_below="@+id/rytHeader"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcyFile"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/thirty"
-        android:layout_marginStart="@dimen/twenty"
-        android:layout_marginEnd="@dimen/twenty"
-        android:layout_marginBottom="@dimen/thirty"
-         />
-
-    <RelativeLayout
         android:layout_below="@+id/rytHeader"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/thirty"
-        android:layout_marginStart="@dimen/twenty"
-        android:layout_marginEnd="@dimen/twenty"
-        android:layout_marginBottom="@dimen/thirty"
-        >
-
-        <WebView
-            android:id="@+id/documentWebView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone" />
-
-        <ScrollView
-            android:id="@+id/txtScroll"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone">
-
-            <TextView
-                android:id="@+id/documentTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/sixteen"
-                android:textSize="@dimen/sixteen_sp" />
-        </ScrollView>
-
-    </RelativeLayout>
+        android:orientation="horizontal"
+        android:overScrollMode="never"
+        android:scrollbars="horizontal"
+        android:layout_marginTop="8dp"
+        />
 
 </RelativeLayout>
 

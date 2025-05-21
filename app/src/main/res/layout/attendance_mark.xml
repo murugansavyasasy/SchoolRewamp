@@ -6,45 +6,15 @@
     android:background="@color/white"
     android:fitsSystemWindows="true">
 
-    <RelativeLayout
-        android:id="@+id/rytHeader"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/gradient_theme_school"
-        android:paddingStart="@dimen/ten"
-        android:paddingTop="@dimen/ten"
-        android:paddingEnd="@dimen/ten"
-        >
-
-        <ImageView
-            android:id="@+id/imgBack"
-            android:layout_width="@dimen/thirty"
-            android:layout_height="@dimen/thirty"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/ten"
-            android:layout_marginBottom="@dimen/ten"
-            android:src="@drawable/left_arrow">
-
-        </ImageView>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/ten"
-            android:layout_toEndOf="@+id/imgBack"
-            android:text="@string/MarkAttendance"
-            android:textColor="@color/black"
-            android:textSize="@dimen/twenty_sp"
-            android:textStyle="bold">
-
-        </TextView>
-    </RelativeLayout>
+    <include
+        android:id="@+id/toolbarLayout"
+        layout="@layout/school_side_tool_bar" />
 
     <LinearLayout
         android:id="@+id/lnrParent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rytHeader"
+        android:layout_below="@+id/toolbarLayout"
         android:layout_centerHorizontal="true"
         android:layout_marginHorizontal="@dimen/ten"
         android:layout_marginTop="@dimen/fifteen"
