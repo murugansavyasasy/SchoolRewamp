@@ -2,7 +2,6 @@ package com.vs.schoolmessenger.School.StaffWiseAttendanceReport
 
 import android.app.Dialog
 import android.os.Build
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
@@ -62,10 +61,12 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
         binding.btnCreate.setOnClickListener(this)
         binding.btnHistory.setOnClickListener(this)
         binding.rlaStaff.setOnClickListener(this)
-        binding.toolbarLayout.lblParentToolBar.text = "Staffwise Attendance Report"
+        binding.toolbarLayout.lblParentToolBar.text =
+            getString(R.string.Staffwise_Attendance_Report)
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
         getStaffAttendanceReport(Constant.getCurrentDate(), "", "")
+        binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
 
         binding.toolbarLayout.imgBack.setOnClickListener {
             onBackPressed()

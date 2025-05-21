@@ -2,49 +2,50 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="@dimen/one_fifty"
-    android:elevation="@dimen/five"
+    android:id="@+id/fileItem"
     android:layout_margin="@dimen/ten"
     android:layout_marginEnd="@dimen/ten"
-    app:cardCornerRadius="@dimen/fifteen"
     android:layout_height="@dimen/one_twenty"
+    android:elevation="@dimen/five"
     android:fitsSystemWindows="true"
-    android:padding="@dimen/five">
+    android:padding="@dimen/five"
+    app:cardCornerRadius="@dimen/fifteen">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/Rl_WV_Img"
-        android:layout_margin="@dimen/seven"
-        app:cardCornerRadius="@dimen/twenty"
+
+    <WebView
+        android:id="@+id/WVThumbnaildocument"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
-            <WebView
-                android:id="@+id/WVThumbnaildocument"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="fitXY"
+        android:scaleType="fitXY"
+        android:visibility="gone">
 
-                android:visibility="gone">
+    </WebView>
 
-            </WebView>
+    <ProgressBar
+        android:id="@+id/loadingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminateDrawable="@drawable/progress_bar_white"
+        android:indeterminateOnly="true"
+        android:visibility="gone">
 
-            <ImageView
-                android:id="@+id/ImgPDF"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="fitXY">
-            </ImageView>
+    </ProgressBar>
 
-
-    </androidx.cardview.widget.CardView>
     <ImageView
-        android:elevation="@dimen/five"
-        android:layout_gravity="end|bottom"
-        android:layout_marginEnd="@dimen/two"
-        android:layout_below="@+id/Rl_WV_Img"
+        android:id="@+id/ImgPDF"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"></ImageView>
+
+    <ImageView
         android:id="@+id/imageOrDocumentType"
         android:layout_width="@dimen/thirty"
         android:layout_height="@dimen/thirty"
-        >
+        android:layout_below="@+id/Rl_WV_Img"
+        android:layout_gravity="end|bottom"
+        android:layout_marginEnd="@dimen/two"
+        android:elevation="@dimen/five">
 
     </ImageView>
 </androidx.cardview.widget.CardView>

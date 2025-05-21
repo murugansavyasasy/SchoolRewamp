@@ -7,7 +7,6 @@ import android.icu.util.Calendar
 import android.os.Build
 import android.util.Log
 import android.view.View
-import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
@@ -88,7 +87,7 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         setupToolbar()
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
-        binding.imgBack.setOnClickListener(this)
+        binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.rlaStandard.setOnClickListener(this)
         binding.rlaSection.setOnClickListener(this)
         binding.rlaAttendanceType.setOnClickListener(this)
@@ -104,6 +103,9 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         binding.rlaHalfDay.setOnClickListener(this)
         binding.rlaSecondHalf.setOnClickListener(this)
         binding.rlaFirstHalf.setOnClickListener(this)
+
+        binding.toolbarLayout.lblParentToolBar.text = getString(R.string.MarkAttendance)
+        binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
 
 
         appViewModel!!.isSendAbsenteeSMS?.observe(this) { response ->

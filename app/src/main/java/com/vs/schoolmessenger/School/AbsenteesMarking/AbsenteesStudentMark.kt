@@ -1,7 +1,6 @@
 package com.vs.schoolmessenger.School.AbsenteesMarking
 import android.util.Log
 import android.view.View
-import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
@@ -96,7 +95,6 @@ View.OnClickListener {
             binding.recycleStudents.adapter = mAdapter
         }
     }
-
 
     override fun onPause() {
         super.onPause()

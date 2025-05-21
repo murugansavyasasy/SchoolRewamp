@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/rect_shadow_white"
     android:layout_marginTop="@dimen/five"
     android:fitsSystemWindows="true">
 
@@ -101,7 +102,6 @@
             android:layout_height="@dimen/one_fifty"
             android:layout_below="@+id/LblHWSubjectName"
             android:layout_margin="@dimen/twenty"
-            android:background="@drawable/rect_shadow_white"
             android:visibility="gone"
             android:layout_marginTop="@dimen/ten"></androidx.recyclerview.widget.RecyclerView>
 
@@ -124,11 +124,10 @@
             android:layout_below="@+id/rcyImgPDF"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/fifteen"
-            android:fontFamily="@font/poppins_bold"
             android:text="Annual Day celebrations"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"
-            android:textStyle="bold" />
+            style="@style/CustomTextStylePoppinsBold" />
 
         <TextView
             android:id="@+id/lblContentImage"
@@ -154,15 +153,6 @@
             android:text="@string/SeeMore"
             android:textColor="@android:color/holo_blue_dark"
             android:visibility="gone" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@+id/lblDateImage"
-            android:background="@color/gray">
-
-        </View>
-
 
     </RelativeLayout>
 </RelativeLayout>

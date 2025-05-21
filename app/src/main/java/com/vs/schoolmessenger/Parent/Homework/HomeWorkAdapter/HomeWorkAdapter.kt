@@ -72,7 +72,7 @@ class HomeWorkAdapter(
             position: Int,
             adapter: HomeWorkAdapter,
         ) {
-            lblDate.text = item.date
+            lblDate.text = Constant.convertDateTimeFormat(item.date)
 
             val isExpanded = position == adapter.expandedPosition
             rcyHomeWorkItem.visibility = if (isExpanded) View.VISIBLE else View.GONE
