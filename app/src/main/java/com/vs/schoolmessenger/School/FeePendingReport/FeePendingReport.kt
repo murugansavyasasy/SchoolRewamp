@@ -10,7 +10,7 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
-import com.vs.schoolmessenger.School.FeePendingReport.FeePendingData
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.FeePendingReportBinding
 import kotlin.collections.forEach
@@ -44,6 +44,7 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
         binding.AcademicYear.setOnClickListener(this)
         binding.categoryName.setOnClickListener(this)
         binding.className.setOnClickListener(this)
+        binding.imgBack.setOnClickListener(this)
 
         appViewModel!!.isGetAcademicList?.observe(this) { response ->
             response?.data?.let { academicList ->
@@ -68,24 +69,26 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
         isGetAcademicYear()
 
         appViewModel?.isDetailedPendingReport?.observe(this) { response ->
+            Constant.hideLoading(this@FeePendingReport)
             Log.d("response++", response.toString())
             mAdapter?.clearData()
 
             if (response != null && response.status && !response.data.isNullOrEmpty()) {
                 isLoadDailyCollectionData(response.data)
             } else {
-                showNoDataMessage()
+                showNoDataMessage(response?.message ?: "No fee pending data available.")
             }
         }
 
         appViewModel?.isDetailedWisePendingReport?.observe(this) { response ->
+            Constant.hideLoading(this@FeePendingReport)
             Log.d("response++", response.toString())
             mAdapter?.clearData()
 
             if (response != null && response.status && !response.data.isNullOrEmpty()) {
                 isLoadDailyCollectionData(response.data)
             } else {
-                showNoDataMessage()
+                showNoDataMessage(response?.message ?: "No fee pending data available.")
             }
         }
     }
@@ -94,7 +97,7 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
         val flatList = mutableListOf<DisplayItem>()
 
         if (data.isNullOrEmpty()) {
-            showNoDataMessage()
+            showNoDataMessage("No fee pending data available.")
             return
         }
 
@@ -109,7 +112,7 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
         }
 
         if (flatList.isEmpty()) {
-            showNoDataMessage()
+            showNoDataMessage("No fee pending data available.")
         } else {
             binding.nomessage.visibility = View.GONE
             binding.txtNoData.visibility = View.GONE
@@ -121,14 +124,15 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
         }
     }
 
-    private fun showNoDataMessage() {
+    private fun showNoDataMessage(message: String) {
         binding.nomessage.visibility = View.VISIBLE
         binding.txtNoData.visibility = View.VISIBLE
+        binding.txtNoData.text = message
         binding.totalsummary1.visibility = View.GONE
     }
 
     private fun isGetDailyCollection() {
-        resetListUI()
+        showLoadingAndResetList()
         appViewModel?.isDetailedPendingReport(
             isAccessToken ?: "",
             isAcademicYearId,
@@ -137,7 +141,7 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
     }
 
     private fun isGetDailyWiseCollection() {
-        resetListUI()
+        showLoadingAndResetList()
         appViewModel?.isDetailedWisePendingReport(
             isAccessToken ?: "",
             isAcademicYearId,
@@ -156,8 +160,16 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
         binding.totalsummary1.adapter = mAdapter
     }
 
+    private fun showLoadingAndResetList() {
+        Constant.showLoading(this@FeePendingReport)
+        resetListUI()
+    }
+
     override fun onClick(p0: View?) {
         when (p0?.id) {
+            R.id.imgBack -> {
+                onBackPressed()
+            }
             R.id.AcademicYear -> {
                 showAcademicDropdown(
                     binding.AcademicYear, this, isAcademicYear
@@ -171,7 +183,6 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
                         "Clicked Academic Year: ID = ${selectedYear.id}, Year = ${selectedYear.year}, Current = ${selectedYear.current_academic_year}"
                     )
 
-                    // Respect tab selection
                     if (isClassWiseSelected) {
                         isGetDailyWiseCollection()
                     } else {

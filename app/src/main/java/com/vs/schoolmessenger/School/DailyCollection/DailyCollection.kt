@@ -40,6 +40,7 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(), View.OnClickList
     override fun setupViews() {
         super.setupViews()
         setupToolbar()
+        binding.imgBack.setOnClickListener(this)
         binding.className.setOnClickListener(this)
         binding.modeName.setOnClickListener(this)
         binding.categoryName.setOnClickListener(this)
@@ -68,21 +69,31 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(), View.OnClickList
         isGetDailyCollection()
 
         appViewModel?.isGetDailyCollectionReport?.observe(this) { response ->
+            Constant.hideLoading(this@DailyCollection)
             Log.d("response++", response.toString())
 
+            if (response == null) {
+                showErrorUI("Something went wrong. Please try again.")
+                return@observe
+            }
 
-
-            if (response != null && response.status) {
+            if (response.status) {
                 isLoadDailyCollectionData(response.data)
             } else {
-
-                binding.nomessage.visibility = View.VISIBLE
-                binding.txtNoData.visibility = View.VISIBLE
-                binding.totalsummary1.visibility = View.GONE
+                showErrorUI(response.message ?: "No data available")
             }
         }
 
+
     }
+
+    private fun showErrorUI(message: String) {
+        binding.nomessage.visibility = View.VISIBLE
+        binding.txtNoData.text = message
+        binding.txtNoData.visibility = View.VISIBLE
+        binding.totalsummary1.visibility = View.GONE
+    }
+
 
 
 
@@ -123,6 +134,7 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(), View.OnClickList
 
 
     private fun isGetDailyCollection() {
+
         if (from_Date.isNullOrEmpty() || to_Date.isNullOrEmpty()) return
 
         binding.totalsummary1.visibility = View.GONE
@@ -135,7 +147,7 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(), View.OnClickList
         binding.totalsummary1.layoutManager = LinearLayoutManager(this)
         binding.totalsummary1.adapter = mAdapter
 
-
+        Constant.showLoading(this@DailyCollection)
         appViewModel?.isGetDailyCollectionReport(
             isAccessToken ?: "",
             selectedType,
@@ -149,6 +161,9 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(), View.OnClickList
 
     override fun onClick(v: View?) {
         when (v?.id) {
+            R.id.imgBack -> {
+                onBackPressed()
+            }
             R.id.class_name -> {
                 selectedType = "2"
                 binding.className.setBackgroundResource(R.drawable.custom_category_background)

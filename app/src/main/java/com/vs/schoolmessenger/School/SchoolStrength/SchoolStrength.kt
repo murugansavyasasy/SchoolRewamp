@@ -52,7 +52,7 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
         binding.AcademicYear.setOnClickListener(this)
-
+        binding.imgBack.setOnClickListener(this)
 
         appViewModel!!.isGetAcademicList?.observe(this) { response ->
             response?.data?.let { academicList ->
@@ -113,6 +113,9 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
 
     override fun onClick(p0: View?) {
         when (p0?.id) {
+            R.id.imgBack -> {
+                onBackPressed()
+            }
             R.id.AcademicYear -> {
                 showAcademicDropdown(binding.AcademicYear, this, isAcademicYear) { selectedYear ->
                     binding.lblAcademicYear.text = selectedYear.year
