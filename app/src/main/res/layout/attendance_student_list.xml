@@ -117,14 +117,35 @@
 
         </RelativeLayout>
     </LinearLayout>
+    <TextView
+        android:id="@+id/lblAdmissionNoTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/admis_no"
+        android:gravity="end"
+        android:layout_marginEnd="@dimen/fifty"
+        app:layout_constraintTop_toBottomOf="@id/lnrHeader"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/lblAdmissionNoValue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="123456"
+        android:gravity="end"
+        android:layout_marginEnd="@dimen/fifty"
+        app:layout_constraintTop_toBottomOf="@id/lblAdmissionNoTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/point_five"
-        android:layout_marginTop="@dimen/fifteen"
+        android:layout_marginTop="@dimen/ten"
         android:layout_marginHorizontal="@dimen/ten"
         android:background="@color/grey"
-        app:layout_constraintTop_toBottomOf="@+id/lnrHeader" />
+        app:layout_constraintTop_toBottomOf="@+id/lblAdmissionNoValue" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

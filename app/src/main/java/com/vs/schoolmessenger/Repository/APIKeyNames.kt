@@ -11,6 +11,11 @@ object APIKeyNames {
     const val longitude = "longitude"
     const val location = "location"
     const val distance = "distance"
+    const val all_present = "all_present"
+    const val session_type = "session_type"
+    const val attendance_date = "attendance_date"
+    const val student_id = "student_id"
+
     const val name = "name"
     const val profile = "profile"
     const val date = "date"

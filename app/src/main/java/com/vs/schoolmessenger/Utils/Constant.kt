@@ -227,6 +227,9 @@ object Constant {
 """.trimIndent()
     var isMailTitle = "Request to configure communication academic year"
     var isAcademicYearId = "isAcademicYearId"
+    var isSectionId="isSectionId"
+    var isStandardName="isStandardName"
+    var isSectionName="isSectionName"
     var isCurrentAcademicYear = "isCurrentAcademicYear"
     var lblAcademicYear = "lblAcademicYear"
     var isSelectedId = "isSelectedId"
@@ -271,6 +274,7 @@ object Constant {
 
     var data = "data"
     var position = "position"
+    var isAccessToken="isAccessToken"
     var subjectName = "subjectName"
     var SelectedDocumentPath = "SelectedDocumentPath"
     var SelectedDocumentType = "SelectedDocumentType"

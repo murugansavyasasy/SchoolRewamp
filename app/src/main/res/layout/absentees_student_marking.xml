@@ -4,72 +4,73 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:fitsSystemWindows="true">
 
     <RelativeLayout
+        android:id="@+id/relativeContainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/rytSend"
+        android:layout_marginBottom="8dp">
 
         <RelativeLayout
             android:id="@+id/rytHeader"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/primary_light"
+            android:background="@drawable/gradient_theme_school"
             android:padding="@dimen/ten">
 
             <ImageView
                 android:id="@+id/imgBack"
                 android:layout_width="@dimen/thirty"
                 android:layout_height="@dimen/thirty"
+                app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="@dimen/ten"
-                android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/ten"
-                android:layout_marginBottom="@dimen/ten"
-                android:src="@drawable/arrow_back_black">
-
-            </ImageView>
+                android:src="@drawable/left_arrow" />
 
             <TextView
+                android:id="@+id/lblClassAndSection"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toStartOf="@dimen/fifteen"
-                android:layout_marginTop="@dimen/ten"
                 android:layout_toEndOf="@+id/imgBack"
-                android:text="@string/AttendanceMark"
+                android:text="ClassName"
+                android:layout_centerInParent="true"
                 android:textColor="@color/black"
-                android:textSize="@dimen/twenty_sp"
-                android:textStyle="bold">
+                android:textSize="@dimen/thirteen_sp"
+                android:textStyle="bold" />
 
-            </TextView>
-
-            <RelativeLayout
-                android:id="@+id/lblSendBug"
+            <LinearLayout
+                android:id="@+id/lnrSelectAll"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_marginTop="@dimen/five"
-                android:layout_marginEnd="@dimen/twenty"
-                android:gravity="center"
-                android:padding="@dimen/thirteen">
+                android:layout_marginEnd="@dimen/twenty">
 
                 <TextView
-                    android:id="@+id/lblSend"
+
+                    android:id="@+id/lblSelectAll"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/Send"
-                    android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
-                    android:textStyle="bold"
-                    android:visibility="gone">
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:text="@string/Selectall" />
 
-                </TextView>
-
-
-
-            </RelativeLayout>
+                <CheckBox
+                    android:id="@+id/chSelectAll"
+                    android:layout_width="wrap_content"
+                    android:enabled="false"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/lblSelectAll"
+                    style="@style/CustomCheckBox">
+                </CheckBox>
+            </LinearLayout>
         </RelativeLayout>
-
 
         <RelativeLayout
             android:id="@+id/rytSearch"
@@ -102,8 +103,6 @@
                 android:textSize="@dimen/thirteen_sp" />
         </RelativeLayout>
 
-
-
         <LinearLayout
             android:id="@+id/lnrHeader"
             android:layout_below="@+id/rytSearch"
@@ -111,8 +110,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/five"
             android:orientation="horizontal"
-            android:background="@drawable/rect_light_blue"
-          >
+            android:background="@drawable/rect_light_blue">
 
             <TextView
                 android:id="@+id/lblName"
@@ -122,26 +120,22 @@
                 android:gravity="center"
                 android:padding="@dimen/ten"
                 android:text="@string/name"
-                android:textStyle="normal"
                 android:fontFamily="@font/poppins_regular"
                 android:textColor="@color/black"
                 android:textSize="@dimen/twele_sp" />
-
 
             <TextView
                 android:id="@+id/lblRollNo"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:paddingHorizontal="@dimen/five"
                 android:paddingVertical="@dimen/five"
                 android:text="@string/roll_no"
                 android:gravity="center"
-                android:textColor="@color/black"
-                android:textStyle="normal"
                 android:fontFamily="@font/poppins_regular"
+                android:textColor="@color/black"
                 android:textSize="@dimen/twele_sp" />
-
 
             <TextView
                 android:layout_width="0dp"
@@ -150,22 +144,53 @@
                 android:layout_marginStart="@dimen/ten"
                 android:text="@string/status"
                 android:gravity="center"
-                android:textStyle="normal"
                 android:fontFamily="@font/poppins_regular"
                 android:textColor="@color/black"
                 android:textSize="@dimen/twele_sp" />
-
-
         </LinearLayout>
 
-
         <androidx.recyclerview.widget.RecyclerView
-            android:layout_below="@+id/lnrHeader"
             android:id="@+id/recycleStudents"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_below="@+id/lnrHeader"
             tools:listitem="@layout/attendance_student_list" />
 
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rytSend"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fourty"
+        android:layout_marginStart="@dimen/twenty_five"
+        android:layout_marginEnd="@dimen/twenty_five"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/bg_orange"
+        android:gravity="center"
+        android:padding="@dimen/eight">
+
+        <TextView
+            android:id="@+id/lblSend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/poppins_regular"
+            android:gravity="center_horizontal"
+            android:text="@string/Send"
+            android:textColor="@color/white"
+            android:textSize="@dimen/fifteen_sp"
+            android:textStyle="normal" />
+
+        <ImageView
+            android:id="@+id/imgSend1"
+            android:layout_width="@dimen/twenty"
+            android:layout_height="@dimen/twenty"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/five"
+            android:layout_marginEnd="@dimen/five"
+            android:layout_toEndOf="@+id/lblSend"
+            android:src="@drawable/send_icon_white" />
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

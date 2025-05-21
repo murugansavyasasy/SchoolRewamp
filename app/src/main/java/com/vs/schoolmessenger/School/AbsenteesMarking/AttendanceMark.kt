@@ -7,17 +7,20 @@ import android.icu.util.Calendar
 import android.os.Build
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SectionList.Section
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.Standard
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.OnDateSelectedListener
@@ -34,6 +37,9 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
     private var appViewModel: App? = null
     var isSection: List<Section>? = null
     private var isAccessToken: String? = null
+    private var isStandardName: String? = null
+    private var isSectionName: String? = null
+
     var isValidAcademicYear = false
     var isAcademicYear: List<AcademicYear>? = null
     private var isStaffDetails: StaffDetails? = null
@@ -100,6 +106,15 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         binding.rlaFirstHalf.setOnClickListener(this)
 
 
+        appViewModel!!.isSendAbsenteeSMS?.observe(this) { response ->
+            if (response != null && response.status) {
+                Constant.hideLoading(this@AttendanceMark)
+//                val dialogRootView = view as ViewGroup
+//                showTopAlertPopup(response.message, dialogRootView, -1, response.status, "isUpdate")
+            }
+        }
+
+
 
 
 
@@ -114,6 +129,19 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         binding.lblDate1.text = dayOnly
         binding.lblDay.text = dayOfWeek
         binding.lblDatePick.text = fullDate
+/////////////
+        //start here!!!!!!!!!!!!
+        /////////
+
+        val jsonObject = JsonObject().apply {
+            addProperty(APIKeyNames.class_id, isClassID)
+            addProperty(APIKeyNames.section_id, isSectionID)
+            addProperty(APIKeyNames.all_present, true)
+            addProperty(APIKeyNames.session_type, true)
+            addProperty(APIKeyNames.attendance_date, true)
+            addProperty(APIKeyNames.student_id, true)
+        }
+        appViewModel?.isUpdateSendAbsenteeSMS(isAccessToken!!, jsonObject, this)
 
 
 
@@ -166,6 +194,9 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                                 isSection = isGetStandard!!.get(0).sections
                                 Log.d("isSectionID", isSection.toString())
                             }
+                            val firstStandard = isGetStandard!![0]
+                            //To Assign Standard and Section in early to use in AbsenteesStudentMark.kt
+                            updateStandardAndSection(firstStandard)
 //                        isGetStudentReport()
                         }
                     }
@@ -199,6 +230,8 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
             // No Standard Found
             isClassID = null
             isSectionID = null
+            isStandardName = null
+            isSectionName = null
 
             binding.lblStandard.text = "-"
             binding.lblSection.text = "-"
@@ -210,14 +243,18 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         // Set selected Standard
         isClassID = standard.id
         isSection = standard.sections
+
         binding.lblStandard.text = standard.name
+        isStandardName=standard.name
+
+
 
         val sections = standard.sections
         if (!sections.isNullOrEmpty()) {
             val defaultSection = sections[0]
             isSectionID = defaultSection.id
             binding.lblSection.text = defaultSection.name
-
+            isSectionName= defaultSection.name
             if (sections.size == 1) {
                 // Only one section -> disable dropdown
                 binding.rlaSection.isEnabled = false
@@ -232,11 +269,13 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
             // No sections -> reset and disable section dropdown
             isSectionID = null
             isSection = null
+            isSectionName = null
             binding.lblSection.text = "-"
             binding.rlaSection.isEnabled = false
             binding.rlaSection.isClickable = false
             return
         }
+
 
         // Safe to call API now
 //        isGetStudentReport()
@@ -326,7 +365,20 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
             }
 
             R.id.btnAbsent -> {
-                startActivity(Intent(this, AbsenteesStudentMark::class.java))
+
+                val intent = Intent(this, AbsenteesStudentMark::class.java)
+                Log.d("ComingStandardName",isStandardName.toString())
+                Log.d("ComingSectionName",isSectionName.toString())
+
+                intent.putExtra(Constant.isStandardName,isStandardName)
+                intent.putExtra(Constant.isSectionName,isSectionName)
+                intent.putExtra(Constant.isAccessToken,isAccessToken!!.toString() )
+                intent.putExtra(Constant.isAcademicYearId, isAcademicYearId)
+                intent.putExtra(Constant.isSectionId,isSectionID)
+
+
+                startActivity(intent)
+
             }
 
             R.id.rlaStandard -> {
@@ -349,6 +401,7 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                     ) { selectedOption ->
                         binding.lblSection.text = selectedOption.first
                         isSectionID = selectedOption.second
+                        isSectionName = selectedOption.first
 //                        isGetStudentReport()
                     }
                 }
