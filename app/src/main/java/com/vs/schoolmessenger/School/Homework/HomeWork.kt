@@ -91,7 +91,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
 
-        binding.imgBack.setOnClickListener(this)
+        binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.rlaSection.setOnClickListener(this)
         binding.rlaStandard.setOnClickListener(this)
         binding.lblDatePick.setOnClickListener(this)
@@ -102,6 +102,8 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         binding.Calendar.setOnClickListener(this)
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
+        binding.toolbarLayout.lblParentToolBar.text = getString(R.string.HomeWork)
+        binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
 
         saveDrawableToCache(R.drawable.add_image)?.let {
             Constant.selectedFiles.add(
@@ -174,7 +176,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
                 this, Manifest.permission.CAMERA
             ) == PackageManager.PERMISSION_GRANTED
         ) {
-            showBottomDialog()
+            openCamera()
         } else {
             ActivityCompat.requestPermissions(
                 this, arrayOf(Manifest.permission.CAMERA), CAMERA_PERMISSION_REQUEST_CODE
@@ -319,7 +321,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
 
     override fun onImageClick(position: Int) {
         if (position == 0) {
-            checkCameraPermissionAndOpenCamera()
+            showBottomDialog()
         }
     }
 
@@ -370,7 +372,8 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         }
 
         rlaCamera.setOnClickListener {
-            openCamera()
+            checkCameraPermissionAndOpenCamera()
+
             dialog.dismiss()
         }
         rlaDocument.setOnClickListener {
@@ -638,10 +641,10 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         }
 
 
-        isClickingId.background = ContextCompat.getDrawable(this, R.drawable.white_bg_radius)
+        isClickingId.background = ContextCompat.getDrawable(this, R.drawable.bg_light_blue)
         isClickingId.setTextColor(ContextCompat.getColor(this, R.color.dark_blue))
-        isClickingId.background = ContextCompat.getDrawable(this, R.drawable.custom_bg_blue)
-        isClickingId.setTextColor(ContextCompat.getColor(this, R.color.white))
+        isClickingId.background = ContextCompat.getDrawable(this, R.drawable.white_bg_radius)
+        isClickingId.setTextColor(ContextCompat.getColor(this, R.color.black))
 
     }
     override fun onClickListener(data: HomeWorkReport) {

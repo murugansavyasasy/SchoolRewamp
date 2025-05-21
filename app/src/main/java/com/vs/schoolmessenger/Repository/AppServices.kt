@@ -12,7 +12,8 @@ import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsRespo
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
 import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
 import com.vs.schoolmessenger.Parent.Communication.VoiceDataResponse
-import com.vs.schoolmessenger.Parent.EventsHolidays.EventResponse
+import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventResponse
+import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.HolidayResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
@@ -77,6 +78,8 @@ class AppServices {
     var isStudentReportList: MutableLiveData<GetStudentReportData?>
 
     var IsGetEventReport: MutableLiveData<EventResponse?>
+
+    var IsGetHolidayReport: MutableLiveData<HolidayResponse?>
     var isSendAbsenteeSMS: MutableLiveData<SendAbsenteeSMSResponse?>
 
 
@@ -118,6 +121,7 @@ class AppServices {
         isStaffWiseAttendanceReportList = MutableLiveData()
         isStudentReportList = MutableLiveData()
         IsGetEventReport = MutableLiveData()
+        IsGetHolidayReport = MutableLiveData()
         isSendAbsenteeSMS = MutableLiveData()
 
 
@@ -581,6 +585,41 @@ class AppServices {
 
     val IsGetEventReportLiveData: LiveData<EventResponse?>
         get() = IsGetEventReport
+
+    fun IsGetHolidayReport(
+        isToken: String, activity: Activity
+    ) {
+        RestClient.apiInterfaces.IsGetHolidayReport(isToken)
+            ?.enqueue(object : Callback<HolidayResponse?> {
+                override fun onResponse(
+                    call: Call<HolidayResponse?>,
+                    response: Response<HolidayResponse?>
+                ) {
+                    Log.d(
+                        "isGetCountryList", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                IsGetHolidayReport.postValue(response.body())
+                            } else {
+                                IsGetHolidayReport.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<HolidayResponse?>, t: Throwable) {
+                    IsGetHolidayReport.postValue(null)
+                    Log.d("t.printStackTrace()", t.printStackTrace().toString())
+                }
+            })
+    }
+
+    val IsGetHolidayReportLiveData: LiveData<HolidayResponse?>
+        get() = IsGetHolidayReport
+
 
 
     fun isGetDailyCollectionReport(

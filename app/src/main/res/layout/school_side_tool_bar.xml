@@ -20,20 +20,38 @@
 
         </ImageView>
 
-
-        <TextView
-            android:id="@+id/lblParentToolBar"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/lytTitleAndName"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toStartOf="@+id/rlaStudentName"
             android:layout_toEndOf="@+id/imgBack"
-            android:text=""
-            android:textColor="@color/black"
-            android:textSize="@dimen/fifteen_sp"
-            android:textStyle="bold">
+            android:orientation="vertical">
 
-        </TextView>
+            <TextView
+                android:id="@+id/lblParentToolBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen_sp"
+                android:textStyle="bold">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/lblSchoolName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen_sp"
+                android:textStyle="bold">
+
+            </TextView>
+
+        </LinearLayout>
 
         <RelativeLayout
             android:id="@+id/rlaStudentName"

@@ -20,4 +20,39 @@
 
     </androidx.recyclerview.widget.RecyclerView>
 
+    <LinearLayout
+        android:id="@+id/lytList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbarLayout"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/nomessage"
+            android:layout_width="@dimen/two_fifty"
+            android:layout_height="@dimen/two_fifty"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/twenty"
+            android:src="@drawable/nomessages"
+            android:textColor="@color/black"
+            android:textSize="@dimen/eighteen"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/txtNoData"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/twenty"
+            android:text="@string/no_list_found"
+            android:textColor="@color/black"
+            android:textSize="@dimen/eighteen"
+            android:visibility="gone" />
+
+
+    </LinearLayout>
+
 </RelativeLayout>

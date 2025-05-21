@@ -8,7 +8,6 @@ import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
@@ -69,13 +68,11 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
     private val selectedSchoolIds = mutableListOf<String>()
     var isMultipleSchool = false
     private lateinit var mAdapter: SchoolListAdapter
-
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
     private var isUserDetails: UserDetails? = null
     private var isStaffData: StaffDetails? = null
     var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
-
     var isAcademicYear: List<AcademicYear>? = null
     var isAcademicYearId = -1
 

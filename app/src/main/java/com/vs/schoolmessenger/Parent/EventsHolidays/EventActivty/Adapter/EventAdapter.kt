@@ -1,30 +1,21 @@
-package com.vs.schoolmessenger.Parent.EventsHolidays
+package com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Bitmap
-import android.text.TextUtils
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebChromeClient
-import android.webkit.WebView
-import android.webkit.WebViewClient
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager.widget.ViewPager
-import com.facebook.shimmer.ShimmerFrameLayout
-import com.vs.schoolmessenger.CommonScreens.ImageSliderAdapter
-import com.vs.schoolmessenger.Parent.ImagesOrPdf.ImageOrPdfData
+import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventClickListener
+import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventDataClass
+import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Adapter.ShimmerViewHolder
 import com.vs.schoolmessenger.R
-import me.relex.circleindicator.CircleIndicator
+import com.vs.schoolmessenger.Utils.Constant
 
 class EventAdapter (
-    private var itemList: List<EventData>?,
+    private var itemList: List<EventDataClass>?,
     private var listener: EventClickListener,
     private var context: Context,
     private var isLoading: Boolean
@@ -66,20 +57,53 @@ class EventAdapter (
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
 
+        private val lblDateImage: TextView = itemView.findViewById(R.id.lblDateImage)
+        private val lblTitleImage: TextView = itemView.findViewById(R.id.lblTitleImage)
+        private val lblContentImage: TextView = itemView.findViewById(R.id.lblContentImage)
+
+        private val RcyImgPdf: RecyclerView = itemView.findViewById(R.id.rcyImgPDF)
+        var meventAdapter: EventFilePathAdapter? = null
+
+        private fun getRecyclerView(): RecyclerView {
+            return RcyImgPdf
+        }
+
 
 
         @SuppressLint("ClickableViewAccessibility")
         fun bind(
-            data: EventData,
+            data: EventDataClass,
             position: Int,
             listener: EventClickListener,
             adapter: EventAdapter
         ) {
 
-            when (data.isType) {
+            val eventImgPdf = getRecyclerView()
+            lblTitleImage.text = data.title
+            lblContentImage.text = data.content
+            lblDateImage.text = data.date
 
-
+            if (data.file_path.size > 0) {
+                RcyImgPdf.visibility = View.VISIBLE
+            } else {
+                RcyImgPdf.visibility = View.GONE
             }
+
+            meventAdapter =
+                EventFilePathAdapter(null, context, Constant.isShimmerViewShow)
+            eventImgPdf.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            eventImgPdf.adapter = meventAdapter
+
+
+            meventAdapter =
+                EventFilePathAdapter(
+                    data.file_path,
+                    context,
+                    Constant.isShimmerViewDisable
+
+                )
+            eventImgPdf.adapter = meventAdapter
         }
     }
 }

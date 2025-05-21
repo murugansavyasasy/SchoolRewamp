@@ -2,13 +2,10 @@ package com.vs.schoolmessenger.School.MarkYourAttendance
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.ActionBar
 import android.app.Activity
-import android.app.AlertDialog
 import android.app.Dialog
 import android.app.KeyguardManager
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
@@ -16,16 +13,13 @@ import android.location.LocationManager
 import android.os.Build
 import android.provider.Settings
 import android.util.Log
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ImageView
-import android.widget.PopupWindow
 import android.widget.TextView
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
@@ -39,8 +33,8 @@ import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Repository.APIKeyNames
+import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.MarkYourAttendance.Adapter.PunchHistoryAdapter
 import com.vs.schoolmessenger.School.MarkYourAttendance.Adapter.StaffAttendanceReportAdapter
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchTimingsData
@@ -65,16 +59,12 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
         return MarkYourAttendanceBinding.inflate(layoutInflater)
     }
 
-
     private var isStaffAttendanceReportAdapter: StaffAttendanceReportAdapter? = null
     private var isPunchHistoryAdapter: PunchHistoryAdapter? = null
     private var appViewModel: App? = null
-    var ifBiometricAvailable: Boolean = false
     private lateinit var gpsStatusReceiver: GPSStatusReceiver
     private val locationRequestCode = 1000
     private var biometricPrompt: BiometricPrompt? = null
-    private var authenticatealertpopupWindow: PopupWindow? = null
-    private var enableBiometricPopup: PopupWindow? = null
     private var isStaffDetails: StaffDetails? = null
     private var isAccessToken: String? = null
     private var isLatitude: Double? = null
@@ -99,6 +89,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
         appViewModel?.init()
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
+        binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
 
         if (isStaffDetails!!.biometric_enable) {
             binding.toolbarLayout.rytAddLocation.visibility = View.VISIBLE
@@ -137,7 +128,6 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
                 Constant.showTopAlertPopup(response.message, Constant.isGioMetric, this)
             }
         }
-
 
         appViewModel!!.isStaffAttendanceReport?.observe(this) { response ->
             if (response != null && response.status) {

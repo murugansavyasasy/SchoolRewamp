@@ -3,23 +3,30 @@ package com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.os.Parcelable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
+import android.view.View.OnTouchListener
 import android.view.ViewGroup
+import android.webkit.WebResourceError
+import android.webkit.WebResourceRequest
 import android.webkit.WebView
+import android.webkit.WebViewClient
 import android.widget.ImageView
+import android.widget.ProgressBar
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.facebook.shimmer.ShimmerFrameLayout
-import com.google.gson.Gson
 import com.vs.schoolmessenger.Parent.Communication.UnifiedVoiceAdapter.ShimmerViewHolder
 import com.vs.schoolmessenger.Parent.Homework.FullScreenViewerActivity
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
+
 
 class HomeworkImgPDFAdapter(
     private var SubjectName:String ,
@@ -41,20 +48,18 @@ class HomeworkImgPDFAdapter(
             val view =
                 LayoutInflater.from(parent.context)
                     .inflate(R.layout.homework_img_pdf_item, parent, false)
-            DataViewHolder(view, context) // Pass context to DataViewHolder
+            DataViewHolder(view, context)
         }
     }
 
     override fun getItemCount(): Int {
-        return if (isLoading) 20 // Show shimmer items while loading
+        return if (isLoading) 20
         else GetFilePathDetailsData?.size ?: 0
 
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
-            // Bind actual data when loading is complete
-
             holder.bind(SubjectName,GetFilePathDetailsData!![position],position, this)
         }
     }
@@ -63,6 +68,8 @@ class HomeworkImgPDFAdapter(
         private val DefaultImage: ImageView = itemView.findViewById(R.id.ImgPDF)
         private val ImgOrDocumentType:ImageView=itemView.findViewById(R.id.imageOrDocumentType)
         private val WebViewThumbnail:WebView=itemView.findViewById(R.id.WVThumbnaildocument)
+        private val loadingBar: ProgressBar = itemView.findViewById(R.id.loadingBar)
+        private val fileItem: CardView = itemView.findViewById(R.id.fileItem)
 
         @SuppressLint("ClickableViewAccessibility")
         fun bind(
@@ -70,7 +77,8 @@ class HomeworkImgPDFAdapter(
             SubjectName: String,
             data: GetFilePathDetails?,
             position: Int,
-            adapter: HomeworkImgPDFAdapter, ) {
+            adapter: HomeworkImgPDFAdapter,
+        ) {
 
             Log.d("GetFileDetails", data.toString())
             when (data?.type?.uppercase()) {
@@ -111,60 +119,76 @@ class HomeworkImgPDFAdapter(
                 }
             }
 
-            DefaultImage.setOnClickListener {
-               val selectedItem = adapter.GetFilePathDetailsData!![position]
-                val context = itemView.context
-
-
-
-                if (selectedItem.type.equals(Constant.IMAGE, ignoreCase = true)) {
-                    // Filter only image items
-                    val imageList = adapter.GetFilePathDetailsData!!.filter {
-                        it.type.equals(Constant.IMAGE, ignoreCase = true)
-                    }
-                    val selectedImageIndex = imageList.indexOfFirst {
-                        it.path == selectedItem.path
-                    }
+            fileItem.setOnClickListener {
                     val intent = Intent(context, FullScreenViewerActivity::class.java)
-                    val dataJson = Gson().toJson(imageList)
-                    intent.putExtra("SelectedSubjectName", SubjectName)
-                    intent.putExtra(Constant.data, dataJson)
-                    intent.putExtra(Constant.position, selectedImageIndex)
+                intent.putParcelableArrayListExtra(
+                    Constant.position,
+                    adapter.GetFilePathDetailsData as ArrayList<out Parcelable?>?
+                )
+                intent.putExtra("SubjectName", SubjectName)
                     context.startActivity(intent)
-                }
             }
 
-            WebViewThumbnail.setOnTouchListener { _, event ->
-                if (event.action == MotionEvent.ACTION_UP) {
-                    val selectedItem = adapter.GetFilePathDetailsData!![position]
-                    val context = itemView.context
-                    val intent = Intent(context, FullScreenViewerActivity::class.java)
-                    intent.putExtra("SelectedSubjectName", SubjectName)
-                    intent.putExtra(Constant.SelectedDocumentPath, selectedItem.path)
-                    intent.putExtra(Constant.SelectedDocumentType, selectedItem.type)
+            WebViewThumbnail.setOnTouchListener(object : OnTouchListener {
+                override fun onTouch(v: View?, event: MotionEvent): Boolean {
+                    if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                        return false
+                    }
+
+                    if (event.getAction() == MotionEvent.ACTION_UP) {
+                        val intent = Intent(context, FullScreenViewerActivity::class.java)
+                        intent.putParcelableArrayListExtra(
+                            Constant.position,
+                            adapter.GetFilePathDetailsData as ArrayList<out Parcelable?>?
+                        )
+                        intent.putExtra("SubjectName", SubjectName)
                         context.startActivity(intent)
-                }
-                true
+                    }
 
+                    return false
+                }
+            })
+        }
+
+        private fun openDocumentInWebView(urlPath: String) {
+            loadingBar.visibility = View.VISIBLE
+
+            val googleDocsUrl = "https://docs.google.com/gview?embedded=true&url=$urlPath"
+
+            DefaultImage.visibility = View.GONE
+            WebViewThumbnail.visibility = View.VISIBLE
+            WebViewThumbnail.setOnTouchListener(null)
+            WebViewThumbnail.settings.javaScriptEnabled = true
+            WebViewThumbnail.settings.domStorageEnabled = true
+            WebViewThumbnail.settings.loadWithOverviewMode = true
+            WebViewThumbnail.settings.useWideViewPort = true
+
+            WebViewThumbnail.webViewClient = object : WebViewClient() {
+                override fun onPageStarted(
+                    view: WebView?, url: String?, favicon: android.graphics.Bitmap?
+                ) {
+                    loadingBar.visibility = View.VISIBLE
+                }
+
+                override fun onPageFinished(view: WebView?, url: String?) {
+                    loadingBar.visibility = View.GONE
+                }
+
+                override fun onReceivedError(
+                    view: WebView?, request: WebResourceRequest?, error: WebResourceError?
+                ) {
+                    loadingBar.visibility = View.GONE
+                    Log.e("WebViewError", "Error loading: ${error?.description}")
+                }
             }
 
+            WebViewThumbnail.loadUrl(googleDocsUrl)
         }
-
-        private fun openDocumentInWebView(urlpath: String) {
-            DefaultImage.visibility=View.GONE
-            WebViewThumbnail.setOnTouchListener { _, _ -> true }
-            WebViewThumbnail.visibility=View.VISIBLE
-            val googleDocsUrl = "https://docs.google.com/gview?embedded=true&url=$urlpath"
-            WebViewThumbnail.loadUrl(googleDocsUrl);
-        }
-
-
         class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             private val shimmerLayout: ShimmerFrameLayout =
                 itemView.findViewById(R.id.shimmer_view_container)
-
             init {
-                shimmerLayout.startShimmer() // Start shimmer effect
+                shimmerLayout.startShimmer()
             }
         }
     }

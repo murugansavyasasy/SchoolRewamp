@@ -1,4 +1,6 @@
-package com.vs.schoolmessenger.Parent.EventsHolidays
+package com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model
+
+import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.FilePath
 
 data class EventDataClass (
     val title: String,
