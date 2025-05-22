@@ -10,7 +10,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.facebook.shimmer.ShimmerFrameLayout
-import com.vs.schoolmessenger.CommonScreens.ImageSliderAdapter
 import com.vs.schoolmessenger.R
 import me.relex.circleindicator.CircleIndicator
 

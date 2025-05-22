@@ -37,6 +37,7 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserValidationData
 import com.vs.schoolmessenger.Auth.OTP.ForgetOtpData
+import com.vs.schoolmessenger.CommonScreens.CommonFileData
 import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolList
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
@@ -202,19 +203,24 @@ object Constant {
     //    var isVoiceFile: String? = null
     var isVoiceSendingData: VoiceSendingData? = null
     var isTextSendingData: TextSendingData? = null
+    var commonFileList: List<CommonFileData> = emptyList()
+    var selectedFileIndex: Int = -1
     var isClickType = 1
     var isVoiceType = 1
 
     var isBioMetricEnable: Int = -1
 
     //MarkAttendanceDetails
-    var isAttendanceType = ""
-    var isSessionType = ""
-    var isAllPresent = ""
-    var isClassID = ""
-    var isSectionID = ""
-    var isSelectedDate = ""
+
     var isMarkAttendanceDataSending: MarkAttendanceDataSending? = null
+    var secondHalf = "SH"
+    var firstHalf="FH"
+    var fullDay="F"
+    var allPresent="T"
+    var some_Absent="F"
+    var halfDay="H"
+
+
 
 
     // String fields
@@ -222,7 +228,6 @@ object Constant {
     var scaleY = "scaleY"
     var AM = "AM"
     var PM = "PM"
-    var SH = "SH"
     var dd_MM_yyyy = "dd/MM/yyyy"
     var EEE_dd_MMM_yyyy = "EEE dd MMM, yyyy"
     var hh_mm_a = "hh:mm a"
@@ -239,9 +244,9 @@ object Constant {
 """.trimIndent()
     var isMailTitle = "Request to configure communication academic year"
     var isAcademicYearId = "isAcademicYearId"
-    var isSectionId = "isSectionId"
-    var isStandardName = "isStandardName"
-    var isSectionName = "isSectionName"
+    var isSectionId="isSectionId"
+    var isStandardName="isStandardName"
+    var isSectionName="isSectionName"
     var isCurrentAcademicYear = "isCurrentAcademicYear"
     var lblAcademicYear = "lblAcademicYear"
     var isSelectedId = "isSelectedId"
@@ -283,13 +288,10 @@ object Constant {
     var PPTX = "PPTX"
     var TXT = "TXT"
     var EXCEL = "EXCEL"
-
     var data = "data"
     var position = "position"
-    var isAccessToken = "isAccessToken"
+    var isAccessToken="isAccessToken"
     var subjectName = "subjectName"
-    var SelectedDocumentPath = "SelectedDocumentPath"
-    var SelectedDocumentType = "SelectedDocumentType"
     var isText = "isText"
     var isVoice = "isVoice"
     var isVideo = "isVideo"
@@ -585,16 +587,50 @@ object Constant {
         dimView.isFocusableInTouchMode = true
 
     }
+    public fun showDatePicker(context: Context, onDateSelected: (String) -> Unit) {
+        val calendar = Calendar.getInstance()
+
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(
+            context,
+            { _, selectedYear, selectedMonth, selectedDay ->
+                val selectedCalendar = Calendar.getInstance().apply {
+                    set(selectedYear, selectedMonth, selectedDay)
+                }
+                val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                val formattedDate = sdf.format(selectedCalendar.time)
+
+                onDateSelected(formattedDate)
+            },
+            year, month, day
+        )
+
+        datePickerDialog.show()
+    }
+
+    fun covertDateFormate(input: String): String {
+        return try {
+            val inputFormat = SimpleDateFormat(dd_MM_yyyy, Locale.getDefault())
+            val outputFormat = SimpleDateFormat(EEE_dd_MMM_yyyy, Locale.getDefault())
+            val date = inputFormat.parse(input)
+            outputFormat.format(date!!)
+        } catch (e: Exception) {
+            input // return original if there's a parsing error
+        }
+    }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun showDataValidation(title: String, message: String, activity: Activity) {
+    fun showDataValidation(title :String,message: String, activity: Activity) {
         val inflater = LayoutInflater.from(activity)
         val view = inflater.inflate(R.layout.success_popup, null)
 
         val messageText = view.findViewById<TextView>(R.id.alertMessage)
         val titleText = view.findViewById<TextView>(R.id.alertTitle)
         val okButton = view.findViewById<TextView>(R.id.btnOk)
-        titleText.text = title
+        titleText.text=title
         messageText.text = message
 
         val rootView = activity.findViewById<ViewGroup>(android.R.id.content)
@@ -789,17 +825,7 @@ object Constant {
         } catch (e: Exception) {
             input // return original if there's a parsing error
         }
-    }
 
-    fun covertDateFormate(input: String): String {
-        return try {
-            val inputFormat = SimpleDateFormat(dd_MM_yyyy, Locale.getDefault())
-            val outputFormat = SimpleDateFormat(EEE_dd_MMM_yyyy, Locale.getDefault())
-            val date = inputFormat.parse(input)
-            outputFormat.format(date!!)
-        } catch (e: Exception) {
-            input // return original if there's a parsing error
-        }
     }
 
     fun getTimeAfter20Minutes(): String {
@@ -831,38 +857,15 @@ object Constant {
     fun getDateDetails(input: String): Triple<String, Int, String> {
         val sdf = SimpleDateFormat(ddMMyyyy, Locale.getDefault())
         val date = sdf.parse(input) ?: return Triple("", -1, "")
+
         val calendar = Calendar.getInstance().apply { time = date }
+
         val month = SimpleDateFormat(MMMM, Locale.getDefault()).format(date) // "April"
         val day = calendar.get(Calendar.DAY_OF_MONTH) // 29
         val dayOfWeek = SimpleDateFormat(EEEE, Locale.getDefault()).format(date) // "Tuesday"
 
         return Triple(month, day, dayOfWeek)
     }
-
-    public fun showDatePicker(context: Context, onDateSelected: (String) -> Unit) {
-        val calendar = Calendar.getInstance()
-
-        val year = calendar.get(Calendar.YEAR)
-        val month = calendar.get(Calendar.MONTH)
-        val day = calendar.get(Calendar.DAY_OF_MONTH)
-
-        val datePickerDialog = DatePickerDialog(
-            context,
-            { _, selectedYear, selectedMonth, selectedDay ->
-                val selectedCalendar = Calendar.getInstance().apply {
-                    set(selectedYear, selectedMonth, selectedDay)
-                }
-                val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                val formattedDate = sdf.format(selectedCalendar.time)
-
-                onDateSelected(formattedDate)
-            },
-            year, month, day
-        )
-
-        datePickerDialog.show()
-    }
-
 
     fun getDeviceName(): String {
         val manufacturer = android.os.Build.MANUFACTURER

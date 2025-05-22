@@ -117,40 +117,40 @@ class EventFilePathAdapter (
                 }
             }
 
-            DefaultImage.setOnClickListener {
-                val selectedItem = adapter.GetFilePathDetailsData!![position]
-                val context = itemView.context
-
-
-
-                if (selectedItem.type.equals(Constant.IMAGE, ignoreCase = true)) {
-                    // Filter only image items
-                    val imageList = adapter.GetFilePathDetailsData!!.filter {
-                        it.type.equals(Constant.IMAGE, ignoreCase = true)
-                    }
-                    val selectedImageIndex = imageList.indexOfFirst {
-                        it.url == selectedItem.url
-                    }
-                    val intent = Intent(context, FullScreenViewerActivity::class.java)
-                    val dataJson = Gson().toJson(imageList)
-                    intent.putExtra(Constant.data, dataJson)
-                    intent.putExtra(Constant.position, selectedImageIndex)
-                    context.startActivity(intent)
-                }
-            }
-
-            WebViewThumbnail.setOnTouchListener { _, event ->
-                if (event.action == MotionEvent.ACTION_UP) {
-                    val selectedItem = adapter.GetFilePathDetailsData!![position]
-                    val context = itemView.context
-                    val intent = Intent(context, FullScreenViewerActivity::class.java)
-                    intent.putExtra(Constant.SelectedDocumentPath, selectedItem.url)
-                    intent.putExtra(Constant.SelectedDocumentType, selectedItem.type)
-                    context.startActivity(intent)
-                }
-                true
-
-            }
+//            DefaultImage.setOnClickListener {
+//                val selectedItem = adapter.GetFilePathDetailsData!![position]
+//                val context = itemView.context
+//
+//
+//
+//                if (selectedItem.type.equals(Constant.IMAGE, ignoreCase = true)) {
+//                    // Filter only image items
+//                    val imageList = adapter.GetFilePathDetailsData!!.filter {
+//                        it.type.equals(Constant.IMAGE, ignoreCase = true)
+//                    }
+//                    val selectedImageIndex = imageList.indexOfFirst {
+//                        it.url == selectedItem.url
+//                    }
+//                    val intent = Intent(context, FullScreenViewerActivity::class.java)
+//                    val dataJson = Gson().toJson(imageList)
+//                    intent.putExtra(Constant.data, dataJson)
+//                    intent.putExtra(Constant.position, selectedImageIndex)
+//                    context.startActivity(intent)
+//                }
+//            }
+//
+//            WebViewThumbnail.setOnTouchListener { _, event ->
+//                if (event.action == MotionEvent.ACTION_UP) {
+//                    val selectedItem = adapter.GetFilePathDetailsData!![position]
+//                    val context = itemView.context
+//                    val intent = Intent(context, FullScreenViewerActivity::class.java)
+//                    intent.putExtra(Constant.SelectedDocumentPath, selectedItem.url)
+//                    intent.putExtra(Constant.SelectedDocumentType, selectedItem.type)
+//                    context.startActivity(intent)
+//                }
+//                true
+//
+//            }
 
         }
 

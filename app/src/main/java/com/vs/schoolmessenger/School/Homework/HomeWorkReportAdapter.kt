@@ -2,12 +2,9 @@ package com.vs.schoolmessenger.School.Homework
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.CommonScreens.ImageSliderAdapter
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReport
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 import me.relex.circleindicator.CircleIndicator
 
@@ -46,10 +44,9 @@ class HomeWorkReportAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
-            holder.bind(itemList!![position], position, listener, this)
+            holder.bind(itemList!![position], position, listener, context)
         } else if (holder is ShimmerViewHolder) {
             holder.startShimmer()
-
         }
     }
 
@@ -71,62 +68,36 @@ class HomeWorkReportAdapter(
         private val tvSeeMoreImage: TextView = itemView.findViewById(R.id.tvSeeMoreImage)
         private val LblHWSubjectName: TextView = itemView.findViewById(R.id.LblHWSubjectName)
         private val rlaSelectText: RelativeLayout = itemView.findViewById(R.id.rlaSelectText)
+
         @SuppressLint("ClickableViewAccessibility")
         fun bind(
             data: HomeWorkReport,
             position: Int,
             listener: HomeWorkReportClickListener,
-            adapter: HomeWorkReportAdapter
+            adapter: Context
         ) {
             rlaImageReport.visibility = View.VISIBLE
             LblHWSubjectName.text = data.subject_name
             lblTitleImage.text = data.title
             lblContentImage.text = data.description
-            if (data.file_path.size > 0) {
-                rcyImgPDF.visibility = View.VISIBLE
-                indicator.visibility = View.VISIBLE
-            } else {
-                rcyImgPDF.visibility = View.GONE
-                indicator.visibility = View.GONE
-            }
-            Log.d("data.file_path", data.file_path.size.toString())
-            val layoutManager =
+            rcyImgPDF.visibility = View.VISIBLE
+
+            var adapter = ImageSliderAdapter("", null, context, Constant.isShimmerViewShow)
+            rcyImgPDF.layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            val adapter = ImageSliderAdapter(context, data.file_path)
-            rcyImgPDF.layoutManager = layoutManager
             rcyImgPDF.adapter = adapter
 
-            val dotsLayout =
-                itemView.findViewById<LinearLayout?>(R.id.dotIndicatorLayout)
-            dotsLayout?.let {
-                updateDotIndicator(it, data.file_path.size, 0)
-                rcyImgPDF.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                    override fun onScrolled(
-                        recyclerView: RecyclerView, dx: Int, dy: Int
-                    ) {
-                        val visiblePosition =
-                            layoutManager.findFirstVisibleItemPosition()
-                        updateDotIndicator(it, data.file_path.size, visiblePosition)
-                    }
-                })
+            Constant.executeAfterDelay {
+                adapter = ImageSliderAdapter(
+                    data.subject_name,
+                    data.file_path,
+                    context,
+                    Constant.isShimmerViewDisable,
+                )
+                rcyImgPDF.adapter = adapter
             }
-
             rlaSelectText.setOnClickListener {
                 listener.onClickListener(data)
-            }
-        }
-
-        fun updateDotIndicator(dotsLayout: LinearLayout, count: Int, selectedPosition: Int) {
-            dotsLayout.removeAllViews()
-            for (i in 0 until count) {
-                val dot = ImageView(dotsLayout.context)
-                val params = LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
-                )
-                params.setMargins(8, 0, 8, 0)
-                dot.layoutParams = params
-                dot.setImageResource(if (i == selectedPosition) R.drawable.active_dot else R.drawable.inactive_dot)
-                dotsLayout.addView(dot)
             }
         }
     }

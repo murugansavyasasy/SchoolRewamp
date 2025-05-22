@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -36,101 +37,16 @@
     </LinearLayout>
 
 
-    <LinearLayout
-        android:id="@+id/lnrParent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginHorizontal="@dimen/ten"
-        android:layout_marginTop="@dimen/fifteen"
-        android:background="@drawable/bg_light_blue"
-        app:layout_constraintTop_toBottomOf="@+id/rytHeader">
-
-        <TextView
-            android:id="@+id/btnCreate"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/bg_blue"
-            android:gravity="center"
-            android:padding="@dimen/ten"
-            android:text="@string/Create"
-            android:textColor="@color/white"
-            android:fontFamily="@font/poppins_bold"
-            android:textSize="@dimen/thirteen_sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/btnHistory"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:padding="@dimen/ten"
-            android:text="@string/History"
-            android:textColor="@color/dark_blue"
-            android:textSize="@dimen/thirteen_sp"
-            android:fontFamily="@font/poppins_bold"
-            android:textStyle="bold" />
-
-    </LinearLayout>
-
-
-    <RelativeLayout
-        android:id="@+id/rytHistory"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/ten"
-        android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@+id/lnrParent">
-
-        <RelativeLayout
-            android:id="@+id/rytSearch"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/thirty_five"
-            android:layout_margin="@dimen/ten"
-            android:background="@drawable/rect_grey"
-            android:visibility="visible">
-
-            <ImageView
-                android:id="@+id/imgSearch"
-                android:layout_width="@dimen/thirty"
-                android:layout_height="@dimen/thirty"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/ten"
-                android:src="@drawable/ic_search" />
-
-            <EditText
-                android:id="@+id/txtSearch"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_toEndOf="@id/imgSearch"
-                android:background="@android:color/transparent"
-                android:hint="@string/lblSearch"
-                android:maxLines="1"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp" />
-        </RelativeLayout>
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycleStudents"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/rytSearch"
-            tools:listitem="@layout/attendance_student_list" />
-
-    </RelativeLayout>
 
     <ScrollView
         android:id="@+id/eventCreate"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginHorizontal="@dimen/ten"
-        android:layout_marginTop="@dimen/one_thirty"
         android:scrollbars="none"
         android:visibility="visible"
-        app:layout_constraintTop_toBottomOf="@+id/lnrParent">
+        app:layout_constraintTop_toBottomOf="@+id/rytHeader"
+        android:layout_below="@+id/rytHeader">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -147,6 +63,8 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
                 android:fontFamily="@font/poppins_bold"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="5dp"
                 android:textStyle="bold" />
 
             <ImageView
@@ -168,6 +86,8 @@
                 android:inputType="text"
                 android:fontFamily="@font/poppins_regular"
                 android:textColor="@color/black"
+                android:layout_alignStart="@+id/lblLocation"
+                android:layout_marginEnd="10dp"
                 android:textSize="@dimen/thirteen_sp" />
 
             <TextView
@@ -179,6 +99,7 @@
                 android:text="@string/EventTitle"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
+                android:layout_alignStart="@+id/txtLocation"
                 android:fontFamily="@font/poppins_bold"
                 android:textStyle="bold" />
 
@@ -194,6 +115,8 @@
                 android:inputType="text"
                 android:textColor="@color/black"
                 android:fontFamily="@font/poppins_regular"
+                android:layout_alignStart="@+id/lblEventTitle"
+                android:layout_alignEnd="@+id/txtLocation"
                 android:textSize="@dimen/thirteen_sp" />
 
             <TextView
@@ -206,6 +129,7 @@
                 android:textColor="@color/black"
                 android:fontFamily="@font/poppins_bold"
                 android:textSize="@dimen/thirteen_sp"
+                android:layout_alignStart="@+id/txtTitle"
                 android:textStyle="bold" />
 
 
@@ -217,6 +141,8 @@
                 android:layout_marginTop="@dimen/fifteen"
                 android:background="@drawable/bg_stroke_rect_black"
                 android:paddingHorizontal="@dimen/ten"
+                android:layout_alignStart="@+id/lblEventDesc"
+                android:layout_alignEnd="@+id/txtTitle"
                 android:paddingVertical="@dimen/twenty">
 
                 <EditText
@@ -248,6 +174,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rytDesc"
+                android:layout_alignStart="@+id/rytDesc"
                 android:layout_marginTop="@dimen/fifteen">
 
                 <TextView
@@ -383,6 +310,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_below="@+id/lblStart"
+                        android:layout_marginEnd="10dp"
                         android:layout_marginTop="@dimen/ten">
 
                         <RelativeLayout
@@ -509,6 +437,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_below="@+id/lblEnd"
+                        android:layout_marginEnd="10dp"
                         android:layout_marginTop="@dimen/ten">
 
                         <RelativeLayout
@@ -629,6 +558,8 @@
                         android:fontFamily="@font/poppins_bold"
                         android:textColor="@color/white"
                         android:textSize="@dimen/thirteen_sp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginEnd="10dp"
                         android:textStyle="bold" />
 
 
@@ -642,4 +573,4 @@
 
     </ScrollView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
