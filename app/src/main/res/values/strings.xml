@@ -532,6 +532,9 @@
     <string name="select_attendance_type">Select Attendance Type</string>
     <string name="admis_no">ADMIS No:</string>
     <string name="Staffwise_Attendance_Report">Staffwise Attendance Report</string>
+    <string name="staff_name">Staff name</string>
+    <string name="designation">Designation</string>
+    <string name="school_name">School name</string>
 
 
 </resources>

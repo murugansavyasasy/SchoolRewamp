@@ -20,6 +20,7 @@ object APIKeyNames {
     const val profile = "profile"
     const val date = "date"
     const val time = "time"
+    const val role = "role"
     const val duration = "duration"
     const val content = "content"
     const val subject = "subject"
