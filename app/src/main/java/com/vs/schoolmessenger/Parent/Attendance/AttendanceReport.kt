@@ -1,5 +1,4 @@
 package com.vs.schoolmessenger.Parent.Attendance
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,7 +31,8 @@ class AttendanceReport : BaseActivity<AttendanceReportParentBinding>(), View.OnC
         binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
         isChildDetails = SharedPreference.getChildDetails(this)
         binding.toolbarLayout.lblStudentName.text = isChildDetails!!.name
-        binding.toolbarLayout.lblStudentSection.text = isChildDetails!!.standard_name + " - " + isChildDetails!!.section_name
+        binding.toolbarLayout.lblStudentSection.text =
+            isChildDetails!!.standard_name + " - " + isChildDetails!!.section_name
 
         isAccessToken = isChildDetails?.access_token
         appViewModel = ViewModelProvider(this)[App::class.java]
@@ -49,11 +49,14 @@ class AttendanceReport : BaseActivity<AttendanceReportParentBinding>(), View.OnC
                     attendanceReportList = response.data
                     binding.rcyAttendanceReport.layoutManager = LinearLayoutManager(this)
                     binding.rcyAttendanceReport.adapter = mAdapter
-                    mAdapter = AttendanceReportAdapter(attendanceReportList, this, Constant.isShimmerViewDisable)
+                    mAdapter = AttendanceReportAdapter(
+                        attendanceReportList,
+                        this,
+                        Constant.isShimmerViewDisable
+                    )
                     binding.rcyAttendanceReport.adapter = mAdapter
 
-                }
-                else{
+                } else {
                     binding.rcyAttendanceReport.visibility = View.GONE
                     binding.toolbarLayout.rytSearch.visibility = View.GONE
 
@@ -68,7 +71,7 @@ class AttendanceReport : BaseActivity<AttendanceReportParentBinding>(), View.OnC
         }
     }
 
-    fun showShimmer(){
+    fun showShimmer() {
         val shimmerAdapter = AttendanceReportAdapter(
             null,
             this,

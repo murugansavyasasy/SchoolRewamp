@@ -238,7 +238,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/rytDetails"
         android:layout_marginTop="@dimen/ten">
-
     </androidx.recyclerview.widget.RecyclerView>
 
 
