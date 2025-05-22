@@ -632,54 +632,54 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
 
             StudentAttendanceReportData(
                 "Murugan", "76979871",
-                "Present"
+                "Present",""
             ),
 
             StudentAttendanceReportData(
                 "Sathish", "22439234",
-                "Absent"
+                "Absent",""
             ),
             StudentAttendanceReportData(
                 "Saran Raj", "259411563",
-                "Present"
+                "Present",""
             ),
             StudentAttendanceReportData(
                 "Chanthru", "216098214",
-                "Absent"
+                "Absent",""
             ),
             StudentAttendanceReportData(
                 "Ramesh", "90509568",
-                "Present"
+                "Present",""
             ),
             StudentAttendanceReportData(
                 "Lakshmanan Narayanan", "90509568",
-                "Absent"
+                "Absent",""
             ),
             StudentAttendanceReportData(
                 "Gunal", "90509568",
-                "Present"
+                "Present",""
             ),
             StudentAttendanceReportData(
                 "Lakshmanan", "90509568",
-                "Absent"
+                "Absent",""
             ),
             StudentAttendanceReportData(
                 "Narayanan", "90509568",
-                "Present"
+                "Present",""
             ), StudentAttendanceReportData(
                 "Gunal", "90509568",
-                "Present"
+                "Present",""
             ),
             StudentAttendanceReportData(
                 "Lakshmanan", "90509568",
-                "Absent"
+                "Absent",""
             ), StudentAttendanceReportData(
                 "Gunal", "90509568",
-                "Present"
+                "Present",""
             ),
             StudentAttendanceReportData(
                 "Lakshmanan", "90509568",
-                "Absent"
+                "Absent",""
             )
         )
 

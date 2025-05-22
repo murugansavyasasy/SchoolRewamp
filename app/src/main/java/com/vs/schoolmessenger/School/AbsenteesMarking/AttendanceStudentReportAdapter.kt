@@ -60,11 +60,11 @@ class AttendanceStudentReportAdapter(
 
         @SuppressLint("UseCompatLoadingForDrawables")
         fun bind(data: StudentAttendanceReportData, position: Int) {
-            lblStudentName.text = data.Name
-            lblAdmissionValue.text = data.RollNo
-            lblAttendanceStatus.text = data.Status
+            lblStudentName.text = data.student_name
+            lblAdmissionValue.text = data.admission_no
+            lblAttendanceStatus.text = data.att_status
 
-            if (data.Status == "Absent") {
+            if (data.att_status == "Absent") {
                 lblAttendanceStatus.setBackgroundDrawable(context.resources.getDrawable(R.drawable.rounded_top_right_bottom_end_red))
                 rlaAttendance.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_outline_red))
             } else {

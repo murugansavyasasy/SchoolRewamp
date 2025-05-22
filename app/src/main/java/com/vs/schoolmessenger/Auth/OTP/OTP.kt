@@ -63,6 +63,7 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
             binding.lblContactUs.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
         authViewModel!!.isOtpResponse?.observe(this) { response ->
+            Constant.hideLoading(this@OTP)
             if (response != null) {
                 val status = response.status
                 val message = response.message
@@ -76,6 +77,7 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
 
                     if (Constant.isForgotPassword!!) {
                         val intent = Intent(this@OTP, PasswordGeneration::class.java)
+                        intent.putExtra("type", "forgot")                 // Int
                         Constant.isPasswordCreation = false
                         startActivity(intent)
                     } else if (Constant.user_data!![0].is_password_updated) {
@@ -135,6 +137,7 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
                         }
                     } else {
                         val intent = Intent(this@OTP, PasswordGeneration::class.java)
+                        intent.putExtra("type", "new")                 // Int
                         Constant.isPasswordCreation = true
                         startActivity(intent)
                     }
@@ -144,6 +147,7 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
         }
 
         authViewModel!!.isForgetPassword?.observe(this) { response ->
+            Constant.hideLoading(this@OTP)
             if (response != null) {
                 Constant.forgotData = response.data
                 isOtpTitleLoad()
@@ -225,6 +229,7 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
     }
 
     private fun isOtpValidate(isOpt: String) {
+        Constant.showLoading(this@OTP)
         val jsonObject = JsonObject()
         val isSecureId = Constant.getAndroidSecureId(this)
         jsonObject.addProperty(APIKeyNames.Req_device_type, Constant.isDeviceType)
@@ -275,6 +280,7 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
     }
 
     private fun isForgetPassword() {
+        Constant.showLoading(this@OTP)
         val jsonObject = JsonObject()
         jsonObject.addProperty(APIKeyNames.Req_mobile_number, Constant.isMobileNumber)
         authViewModel!!.isForgetPassword(jsonObject, this)

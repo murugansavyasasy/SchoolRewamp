@@ -46,6 +46,7 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener {
         binding.txtMobileNumber.hint = Constant.country_details!!.mobile_no_hint
 
         authViewModel!!.isUserValidation?.observe(this) { response ->
+            Constant.hideLoading(this@Login)
             if (response != null) {
                 val status = response.status
                 val message = response.message
@@ -135,6 +136,7 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener {
             }
         }
         authViewModel!!.isForgetPassword?.observe(this) { response ->
+            Constant.hideLoading(this@Login)
             if (response != null) {
                 val status = response.status
                 val message = response.message
@@ -156,6 +158,7 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener {
     }
 
     private fun isForgetPassword() {
+        Constant.showLoading(this@Login)
         val jsonObject = JsonObject()
         jsonObject.addProperty(
             APIKeyNames.Req_mobile_number, binding.txtMobileNumber.text.toString()
@@ -179,7 +182,7 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener {
     }
 
     private fun isValidateUser() {
-
+        Constant.showLoading(this@Login)
         val jsonObject = JsonObject()
         val isSecureId = Constant.getAndroidSecureId(this@Login)
 
