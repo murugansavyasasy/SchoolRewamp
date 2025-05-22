@@ -5,12 +5,16 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filter.FilterResults
+import android.widget.Filterable
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventClickListener
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventDataClass
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Adapter.ShimmerViewHolder
+import com.vs.schoolmessenger.Parent.Noticeboard.Notice
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 
@@ -19,10 +23,18 @@ class EventAdapter (
     private var listener: EventClickListener,
     private var context: Context,
     private var isLoading: Boolean
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
 
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
+
+    private var fullList: List<EventDataClass> = itemList ?: listOf()
+    private var filteredList: List<EventDataClass> = itemList ?: listOf()
+    init {
+        fullList = itemList ?: listOf()
+        filteredList = fullList
+    }
+
 
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
@@ -45,13 +57,38 @@ class EventAdapter (
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
             // Bind actual data when loading is complete
-            holder.bind(itemList!![position], position, listener, this)
+            holder.bind(filteredList!![position], position, listener, this)
         }
     }
 
     override fun getItemCount(): Int {
-        return if (isLoading) 20 // Show shimmer items while loading
-        else itemList?.size ?: 0
+        return if (isLoading) 20 else filteredList.size
+    }
+
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val query = constraint?.toString()?.lowercase()?.trim() ?: ""
+                val result = if (query.isEmpty()) {
+                    fullList
+                } else {
+                    fullList.filter {
+                        it.title.lowercase().contains(query) ||
+                                it.content.lowercase().contains(query) ||
+                                it.venue.lowercase().contains(query)
+                    }
+                }
+                val filterResults = FilterResults()
+                filterResults.values = result
+                return filterResults
+            }
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                filteredList = results?.values as? List<EventDataClass> ?: listOf()
+                notifyDataSetChanged()
+            }
+        }
     }
 
     class DataViewHolder(itemView: View, private val context: Context) :

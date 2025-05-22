@@ -1,10 +1,13 @@
 package com.vs.schoolmessenger.Parent.Noticeboard
 
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Parent.Noticeboard.Adapter.NoticeBoardAdapter
+import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -29,6 +32,19 @@ class NoticeBoard : BaseActivity<NoticeBoardBinding>(), View.OnClickListener,
         val isChildDetails = SharedPreference.getChildDetails(this)
         isAccessToken = isChildDetails?.access_token
         isGetNoticeBoardList()
+
+        binding.toolbarLayout.lblParentToolBar.text = "Notice Board"
+        binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
+
+        binding.toolbarLayout.txtVideoMenu.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (::mAdapter.isInitialized) {
+                    mAdapter.filter.filter(s)
+                }
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        })
 
 
         appViewModel?.isNoticeBoardReport?.observe(this) { response ->
