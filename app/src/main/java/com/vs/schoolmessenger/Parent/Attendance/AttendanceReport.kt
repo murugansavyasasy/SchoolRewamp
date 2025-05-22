@@ -1,10 +1,8 @@
 package com.vs.schoolmessenger.Parent.Attendance
 
 import android.view.View
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.AttendanceReportParentBinding
 
 class AttendanceReport : BaseActivity<AttendanceReportParentBinding>(), View.OnClickListener {
