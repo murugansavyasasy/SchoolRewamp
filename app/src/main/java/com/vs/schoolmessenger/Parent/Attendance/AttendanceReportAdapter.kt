@@ -9,7 +9,9 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
+import com.vs.schoolmessenger.Parent.Communication.UnifiedVoiceAdapter.ShimmerViewHolder
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class AttendanceReportAdapter(
     private var itemList: List<AttendanceReportStudentData>?,
@@ -26,10 +28,11 @@ class AttendanceReportAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-            val view =
-                LayoutInflater.from(parent.context)
-                    .inflate(R.layout.shimmer_view_small_list, parent, false)
-            ShimmerViewHolder(view)
+            val shimmerView =
+                ShimmerUtil.wrapWithShimmer(parent, R.layout.attendace_report_student)
+            com.vs.schoolmessenger.Parent.Communication.UnifiedVoiceAdapter.ShimmerViewHolder(
+                shimmerView
+            )
         } else {
             val view =
                 LayoutInflater.from(parent.context)
@@ -62,11 +65,11 @@ class AttendanceReportAdapter(
 
         @SuppressLint("UseCompatLoadingForDrawables")
         fun bind(data: AttendanceReportStudentData, position: Int) {
-            lblStudentName.text = data.Name
-            lblAdmissionValue.text = data.RollNo
-            lblAttendanceStatus.text = data.Status
+            lblStudentName.text = data.date
+            lblAdmissionValue.text = data.day
+            lblAttendanceStatus.text = data.type
 
-            if (data.Status == "Absent") {
+            if (data.type == "Absent") {
                 lblAttendanceStatus.setBackgroundDrawable(context.resources.getDrawable(R.drawable.rounded_top_right_bottom_end_red))
                 rlaAttendance.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_outline_red))
                 lnrDate.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_light_red_radious))
@@ -83,11 +86,8 @@ class AttendanceReportAdapter(
     }
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val shimmerLayout: ShimmerFrameLayout =
-            itemView.findViewById(R.id.shimmer_view_container)
-
-        init {
-            shimmerLayout.startShimmer() // Start shimmer effect
+        fun startShimmer() {
+            ShimmerUtil.startShimmer(itemView)
         }
     }
 }

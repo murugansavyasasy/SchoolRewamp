@@ -1,7 +1,8 @@
 package com.vs.schoolmessenger.School.AbsenteesMarking
 
 data class StudentAttendanceReportData(
-    val Name: String,
-    var RollNo: String,
-    val Status: String
+    val student_name: String,
+    var admission_no: String,
+    val att_status: String,
+    val absent_on: String
 )
