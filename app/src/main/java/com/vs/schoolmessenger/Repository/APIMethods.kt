@@ -63,7 +63,7 @@ object APIMethods {
     const val student_report= "admin/api/get-student-report"
 
     const val IsGetEventReport = "admin/api/school-event/get-event"
-    const val send_absentee_sms = "comm/api/recipient/get-student-list"
+    const val send_absentee_sms = "stud-attd/api/attendance/send-absentees-sms-with-session-type"
 
 
 }

@@ -40,6 +40,7 @@ import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolList
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.AbsenteesMarking.MarkAttendanceDataSending
 import com.vs.schoolmessenger.School.Communication.CommunicationSchool
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendingData
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceSendingData
@@ -204,6 +205,17 @@ object Constant {
     var isVoiceType = 1
 
     var isBioMetricEnable: Int = -1
+
+    //MarkAttendanceDetails
+    var isAttendanceType=""
+    var isSessionType=""
+    var isAllPresent=""
+    var isClassID=""
+    var isSectionID=""
+    var isSelectedDate=""
+    var isMarkAttendanceDataSending: MarkAttendanceDataSending? = null
+
+
 
 
     // String fields

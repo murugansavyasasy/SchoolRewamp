@@ -382,7 +382,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:enabled="false"
                     android:layout_marginEnd="@dimen/ten"></RadioButton>
 
                 <TextView
@@ -416,7 +415,6 @@
                     android:id="@+id/radioButtonHalfDay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:enabled="false"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="@dimen/ten">
 
@@ -573,6 +571,7 @@
         </RelativeLayout>
 
         <TextView
+            android:enabled="false"
             android:id="@+id/btnSelectPresent"
             android:layout_width="match_parent"
             android:layout_height="@dimen/fourty_five"
@@ -580,7 +579,7 @@
             android:layout_marginStart="@dimen/twenty"
             android:layout_marginTop="@dimen/twenty_five"
             android:layout_marginEnd="@dimen/twenty"
-            android:background="@drawable/rect_shadow_green"
+            android:background="@drawable/rect_shadow_gray"
             android:fontFamily="@font/poppins_bold"
             android:gravity="center"
             android:padding="@dimen/ten"
@@ -607,6 +606,7 @@
         </TextView>
 
         <TextView
+            android:enabled="false"
             android:id="@+id/btnAbsent"
             android:layout_width="match_parent"
             android:layout_height="@dimen/fourty_five"
@@ -614,7 +614,7 @@
             android:layout_marginStart="@dimen/twenty"
             android:layout_marginTop="@dimen/ten"
             android:layout_marginEnd="@dimen/twenty"
-            android:background="@drawable/rect_shadow_red"
+            android:background="@drawable/rect_shadow_gray"
             android:fontFamily="@font/poppins_bold"
             android:gravity="center"
             android:padding="@dimen/ten"
