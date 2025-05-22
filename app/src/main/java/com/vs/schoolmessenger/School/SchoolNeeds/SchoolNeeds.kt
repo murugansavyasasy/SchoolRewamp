@@ -17,6 +17,8 @@ class SchoolNeeds : BaseActivity<SchoolNeedsBinding>(),
         super.setupViews()
         setupToolbar()
         setUpGradientSchool()
+        binding.imgBack.setOnClickListener(this)
+
 
         Constant.loadWebView(
             this,

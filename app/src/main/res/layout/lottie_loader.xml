@@ -9,8 +9,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_loader"
-        android:layout_width="@dimen/hundred"
-        android:layout_height="@dimen/hundred"
+        android:layout_width="@dimen/ninety"
+        android:layout_height="@dimen/ninety"
         android:layout_centerInParent="true"
         android:layout_margin="@dimen/sixteen"
         app:cardCornerRadius="@dimen/sixteen"

@@ -111,7 +111,9 @@ class SettingsFragment : Fragment(), View.OnClickListener {
             }
 
             R.id.lnrChangePassword -> {
-                startActivity(Intent(requireActivity(), PasswordGeneration::class.java))
+                val intent = Intent(requireActivity(), PasswordGeneration::class.java)
+                intent.putExtra("type", "change")                 // Int
+                startActivity(intent)
             }
 
             R.id.lnrLogout -> {

@@ -149,12 +149,12 @@ class AuthServices {
                             }
                         }
                     } else {
+                        isValidationUser.postValue(null)
                         val errorBodyString = response.errorBody()?.string()
                         val gson = Gson()
                         val errorModel = gson.fromJson(errorBodyString, ErrorResponse::class.java)
                         Constant.errorAlert(activity, "", errorModel.message)
                     }
-
 
                 }
 
@@ -191,6 +191,7 @@ class AuthServices {
                             }
                         }
                     } else {
+                        isOtpResponse.postValue(null)
                         val errorBodyString = response.errorBody()?.string()
                         val gson = Gson()
                         val errorModel = gson.fromJson(errorBodyString, ErrorResponse::class.java)
@@ -229,6 +230,11 @@ class AuthServices {
                             }
                         }
                     } else {
+                        isPasswordChange.postValue(null)
+                        val errorBodyString = response.errorBody()?.string()
+                            val gson = Gson()
+                            val errorModel = gson.fromJson(errorBodyString, ErrorResponse::class.java)
+                            Constant.errorAlert(activity, "", errorModel.message)
 
                     }
                 }
@@ -264,6 +270,7 @@ class AuthServices {
                             }
                         }
                     } else {
+                        isForgetPassword.postValue(null)
                         val errorBodyString = response.errorBody()?.string()
                         val gson = Gson()
                         val errorModel = gson.fromJson(errorBodyString, ErrorResponse::class.java)
@@ -302,7 +309,11 @@ class AuthServices {
                             }
                         }
                     } else {
-
+                        isPasswordReset.postValue(null)
+                        val errorBodyString = response.errorBody()?.string()
+                        val gson = Gson()
+                        val errorModel = gson.fromJson(errorBodyString, ErrorResponse::class.java)
+                        Toast.makeText(activity, errorModel.message, Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -337,7 +348,11 @@ class AuthServices {
                             }
                         }
                     } else {
-
+                        isCreatePassWord.postValue(null)
+                        val errorBodyString = response.errorBody()?.string()
+                        val gson = Gson()
+                        val errorModel = gson.fromJson(errorBodyString, ErrorResponse::class.java)
+                        Toast.makeText(activity, errorModel.message, Toast.LENGTH_SHORT).show()
                     }
                 }
 

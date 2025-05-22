@@ -4,6 +4,7 @@ import android.view.View
 import android.widget.ImageView
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.FaqBinding
 
 class Faq : BaseActivity<FaqBinding>(), View.OnClickListener {
@@ -21,6 +22,15 @@ class Faq : BaseActivity<FaqBinding>(), View.OnClickListener {
         binding.arrowIcon3.setOnClickListener(this)
         binding.arrowIcon4.setOnClickListener(this)
         binding.arrowIcon5.setOnClickListener(this)
+
+        if (Constant.isParentChoose) {
+            setUpGradientParent()
+            binding.header.setBackgroundResource(com.vs.schoolmessenger.R.drawable.gradient_theme_parent)
+        }
+        else {
+            setUpGradientSchool()
+            binding.header.setBackgroundResource(com.vs.schoolmessenger.R.drawable.gradient_theme_school)
+        }
     }
 
     override fun onClick(p0: View?) {
