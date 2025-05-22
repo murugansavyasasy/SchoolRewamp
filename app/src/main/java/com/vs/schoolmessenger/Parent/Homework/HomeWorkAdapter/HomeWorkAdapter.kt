@@ -27,7 +27,6 @@ class HomeWorkAdapter(
 
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
-
     private var expandedPosition = -1
 
     override fun getItemViewType(position: Int): Int {

@@ -61,8 +61,7 @@ object APIMethods {
     const val punch_history =  "staff-attd/api/geometric/geometric-punch-history"
     const val student_report= "admin/api/get-student-report"
     const val IsGetEventReport = "admin/api/school-event/get-event"
+    const val send_absentee_sms = "stud-attd/api/attendance/send-absentees-sms-with-session-type"
     const val IsGetHolidayReport = "admin/api/school-event/view-holidays"
-    const val send_absentee_sms = "comm/api/recipient/get-student-list"
-
 
 }

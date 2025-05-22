@@ -24,8 +24,8 @@ class HomeWork : BaseActivity<HomeWorkParentBinding>(), View.OnClickListener,
     override fun getViewBinding(): HomeWorkParentBinding {
         return HomeWorkParentBinding.inflate(layoutInflater)
     }
-    var mAdapter: HomeWorkAdapter? = null
 
+    var mAdapter: HomeWorkAdapter? = null
 
     override fun setupViews() {
         super.setupViews()
@@ -33,7 +33,6 @@ class HomeWork : BaseActivity<HomeWorkParentBinding>(), View.OnClickListener,
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel?.init()
 
-        binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.lblSeeMore.setOnClickListener(this)
         binding.toolbarLayout.lblParentToolBar.text = resources.getText(R.string.HomeWork)
         binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
@@ -48,6 +47,10 @@ class HomeWork : BaseActivity<HomeWorkParentBinding>(), View.OnClickListener,
         binding.toolbarLayout.lblStudentName.text = isStudentName
         binding.toolbarLayout.lblStudentSection.text =
             isStudentStandardName + " " + isStudentSectionName
+
+        binding.toolbarLayout.imgBack.setOnClickListener {
+            onBackPressed()
+        }
 
         appViewModel?.isHomeWorkDetailsList?.observe(this) { response ->
             if (response!!.status) {
@@ -75,8 +78,7 @@ class HomeWork : BaseActivity<HomeWorkParentBinding>(), View.OnClickListener,
     }
 
     private fun isloadhomeworkData(newData: List<GetDateWiseHomeworkData>?) {
-        mAdapter =
-            HomeWorkAdapter(newData, this, this, Constant.isShimmerViewDisable)
+        mAdapter = HomeWorkAdapter(newData, this, this, Constant.isShimmerViewDisable)
         binding.rcyHomework.adapter = mAdapter
     }
 

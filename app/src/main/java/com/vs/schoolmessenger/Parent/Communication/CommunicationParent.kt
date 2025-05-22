@@ -219,7 +219,11 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
             R.id.imgBack -> onBackPressed()
 
             R.id.imgFilter -> {
-                binding.rytFilter.visibility = View.VISIBLE
+                if (binding.rytFilter.visibility == View.VISIBLE) {
+                    binding.rytFilter.visibility = View.GONE
+                } else {
+                    binding.rytFilter.visibility = View.VISIBLE
+                }
             }
 
             R.id.rlaTextMessage -> {

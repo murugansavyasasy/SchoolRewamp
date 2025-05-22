@@ -911,6 +911,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                             } else {
                                 isGoToRecipient()
                             }
+
                         } else {
                             Constant.showValidationAlertPopup(
                                 getString(R.string.Voice_title_required), this
