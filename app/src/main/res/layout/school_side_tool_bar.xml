@@ -34,9 +34,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
+                style="@style/CustomTextStylePoppinsBold"
                 android:textColor="@color/black"
                 android:textSize="@dimen/fifteen_sp"
-                android:textStyle="bold">
+                >
 
             </TextView>
 
@@ -45,9 +46,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textColor="@color/black"
-                android:textSize="@dimen/fifteen_sp"
-                android:textStyle="bold">
+                android:textSize="@dimen/twele_sp"
+                android:textColor="@color/light_gray"
+                style="@style/CustomTextStylePoppinsBold"
+               >
 
             </TextView>
 
@@ -95,40 +97,40 @@
 
         </RelativeLayout>
 
-        <LinearLayout
-            android:id="@+id/rytAddLocation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:visibility="gone"
-            android:orientation="horizontal"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/ten">
+<!--        <LinearLayout-->
+<!--            android:id="@+id/rytAddLocation"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_alignParentEnd="true"-->
+<!--            android:visibility="gone"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:layout_centerVertical="true"-->
+<!--            android:layout_marginEnd="@dimen/ten">-->
 
-            <TextView
-                android:id="@+id/lblAddLocation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/add_location"
-                style="@style/Base.CardView"
-                android:layout_marginEnd="@dimen/five"
-                android:textColor="@color/navi_blue3"
-                android:textSize="@dimen/thirteen_sp">
+<!--            <TextView-->
+<!--                android:id="@+id/lblAddLocation"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@string/add_location"-->
+<!--                style="@style/Base.CardView"-->
+<!--                android:layout_marginEnd="@dimen/five"-->
+<!--                android:textColor="@color/navi_blue3"-->
+<!--                android:textSize="@dimen/thirteen_sp">-->
 
-            </TextView>
+<!--            </TextView>-->
 
-            <ImageView
-                android:id="@+id/imgAddLocation"
-                android:layout_width="@dimen/twenty"
-                android:layout_height="@dimen/twenty"
-               android:src="@drawable/plus_circle">
+<!--            <ImageView-->
+<!--                android:id="@+id/imgAddLocation"-->
+<!--                android:layout_width="@dimen/twenty"-->
+<!--                android:layout_height="@dimen/twenty"-->
+<!--               android:src="@drawable/plus_circle">-->
 
-            </ImageView>
-
-
+<!--            </ImageView>-->
 
 
-        </LinearLayout>
+
+
+<!--        </LinearLayout>-->
 
 
     </RelativeLayout>

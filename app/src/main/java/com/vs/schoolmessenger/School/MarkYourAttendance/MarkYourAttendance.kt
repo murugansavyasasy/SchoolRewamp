@@ -72,6 +72,10 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
     private var isLongitude: Double? = null
     private var rcyPunchList: RecyclerView? = null
     private var lblNoRecordsFound: TextView? = null
+    private var lblName: TextView? = null
+    private var lblDate: TextView? = null
+    private var lblSchoolName: TextView? = null
+    private var lblDesignation: TextView? = null
     var isAcademicYear: List<AcademicYear>? = null
     var isAcademicYearId = -1
 
@@ -384,13 +388,18 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
             }
 
             R.id.btnHistory -> {
+                binding.rytAddLocation.visibility = View.GONE
                 binding.rytProgressBar.visibility = View.GONE
                 isGetAcademicYear()
                 isBackgroundChange(binding.btnHistory)
             }
 
             R.id.btnCreate -> {
-
+                if (isStaffDetails!!.biometric_enable) {
+                    binding.rytAddLocation.visibility = View.VISIBLE
+                } else {
+                    binding.rytAddLocation.visibility = View.GONE
+                }
                 binding.rytProgressBar.visibility = View.VISIBLE
                 binding.rytPresentlayout.visibility = View.GONE
                 isBackgroundChange(binding.btnCreate)
@@ -404,6 +413,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
     }
 
     private fun isBackgroundChange(btnClick: TextView) {
+
         binding.btnCreate.background = null
         binding.btnHistory.background = null
         binding.lblNoRecords.visibility = View.GONE
@@ -572,12 +582,23 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
     }
 
     override fun onItemClick(data: StaffAttendanceReportData) {
-        isLocationHistory(data)
+        isLoadPunchHistory(data)
     }
 
-    private fun isLocationHistory(data: StaffAttendanceReportData) {
+    private fun isLoadPunchHistory(data: StaffAttendanceReportData) {
         val dialog = Dialog(this)
         val view = LayoutInflater.from(this).inflate(R.layout.punch_history, null)
+
+        lblName = view.findViewById<TextView>(R.id.lblStaffName)
+        lblDate = view.findViewById<TextView>(R.id.lblDate)
+        lblSchoolName = view.findViewById<TextView>(R.id.lblSchoolName)
+        lblDesignation = view.findViewById<TextView>(R.id.lblDesignation)
+
+        lblDate!!.text = Constant.convertDateTimeFormat(data.date)
+        lblName!!.text = data.name
+        lblSchoolName!!.text = isStaffDetails!!.school_name
+        lblDesignation!!.text = data.role
+
 
         rcyPunchList = view.findViewById<RecyclerView>(R.id.rcyPunchList)
         lblNoRecordsFound = view.findViewById<TextView>(R.id.lblNoRecordsFound)
