@@ -17,10 +17,8 @@ class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(
     override fun setupViews() {
         super.setupViews()
         setUpGradientParent()
-
         val subjectName = intent.getStringExtra(Constant.subjectName) ?: ""
         binding.lblSubject.text = subjectName
-
         adapter = FileViewerAdapter(this,  Constant.commonFileList)
         binding.rcyFile.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.rcyFile.adapter = adapter

@@ -52,18 +52,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),NoticeClickLi
             R.id.imgBack -> {
                 onBackPressed()
             }
-//            R.id.btnCreate -> {
-//                isBackRoundChange(binding.btnCreate)
-//                binding.rytHistory.visibility = View.GONE
-//                binding.noticeboardCreate.visibility = View.VISIBLE
-//
-//            }
-//            R.id.btnHistory -> {
-//                isBackRoundChange(binding.btnHistory)
-//                binding.rytHistory.visibility = View.VISIBLE
-//                binding.noticeboardCreate.visibility = View.GONE
-//                loadData()
-//            }
+
         }
     }
 

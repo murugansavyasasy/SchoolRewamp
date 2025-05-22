@@ -19,7 +19,9 @@
             android:layout_width="@dimen/thirty"
             android:layout_height="@dimen/thirty"
             android:layout_marginTop="@dimen/ten"
-            android:src="@drawable/left_arrow"></ImageView>
+            android:src="@drawable/left_arrow">
+
+        </ImageView>
 
         <TextView
             android:layout_toEndOf="@+id/imgBack"

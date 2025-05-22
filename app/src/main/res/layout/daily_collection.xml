@@ -18,7 +18,7 @@
             android:layout_height="@dimen/thirty"
             android:layout_marginStart="@dimen/twenty"
             android:layout_marginTop="@dimen/twenty"
-            android:src="@drawable/arrow_back_black">
+            android:src="@drawable/left_arrow">
 
         </ImageView>
 
