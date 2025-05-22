@@ -23,8 +23,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(),
         super.setupViews()
         setupToolbar()
         binding.imgBack.setOnClickListener(this)
-        binding.btnCreate.setOnClickListener(this)
-        binding.btnHistory.setOnClickListener(this)
+
 
         Glide.with(this)
             .load("https://s3.ap-south-1.amazonaws.com/schoolchimes-files-india/27-11-2024/File_vc_-5346401391795845263.png")
@@ -42,19 +41,6 @@ class CreateEvent : BaseActivity<CreateEventBinding>(),
         when (v?.id) {
             R.id.imgBack -> {
                 onBackPressed()
-            }
-            R.id.btnCreate -> {
-                isBackRoundChange(binding.btnCreate)
-                binding.rytHistory.visibility = View.GONE
-                binding.eventCreate.visibility = View.VISIBLE
-
-            }
-
-            R.id.btnHistory -> {
-                isBackRoundChange(binding.btnHistory)
-                binding.rytHistory.visibility = View.VISIBLE
-                binding.eventCreate.visibility = View.GONE
-                loadData()
             }
         }
     }
@@ -110,36 +96,18 @@ class CreateEvent : BaseActivity<CreateEventBinding>(),
         )
 
         mAdapter = EventHistoryAdapter(null, this, this, Constant.isShimmerViewShow)
-        binding.recycleStudents.layoutManager = LinearLayoutManager(this)
-        binding.recycleStudents.adapter = mAdapter
+
 
         Constant.executeAfterDelay {
             // Once data is loaded, stop shimmer and pass the actual data
             mAdapter =
                 EventHistoryAdapter(isEventHistoryData, this, this, Constant.isShimmerViewDisable)
             // Set GridLayoutManager (2 columns in this case)
-            binding.recycleStudents.adapter = mAdapter
         }
 
     }
 
-    private fun isBackRoundChange(isClickingId: TextView) {
 
-        if (isClickingId == binding.btnCreate) {
-            binding.btnHistory.background = null
-            binding.btnHistory.setTextColor(ContextCompat.getColor(this, R.color.dark_blue))
-        }
-
-        if (isClickingId == binding.btnHistory) {
-            binding.btnCreate.background = null
-            binding.btnCreate.setTextColor(ContextCompat.getColor(this, R.color.dark_blue))
-
-        }
-
-        isClickingId.background = ContextCompat.getDrawable(this, R.drawable.bg_blue)
-        isClickingId.setTextColor(ContextCompat.getColor(this, R.color.white))
-
-    }
 
     override fun onItemClick(data: EventHistoryData) {
 
