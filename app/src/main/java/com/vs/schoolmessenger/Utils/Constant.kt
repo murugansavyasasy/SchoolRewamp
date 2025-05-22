@@ -36,6 +36,7 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserValidationData
 import com.vs.schoolmessenger.Auth.OTP.ForgetOtpData
+import com.vs.schoolmessenger.CommonScreens.CommonFileData
 import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolList
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
@@ -200,6 +201,8 @@ object Constant {
     //    var isVoiceFile: String? = null
     var isVoiceSendingData: VoiceSendingData? = null
     var isTextSendingData: TextSendingData? = null
+    var commonFileList: List<CommonFileData> = emptyList()
+    var selectedFileIndex: Int = -1
     var isClickType = 1
     var isVoiceType = 1
 
@@ -271,13 +274,10 @@ object Constant {
     var PPTX = "PPTX"
     var TXT = "TXT"
     var EXCEL = "EXCEL"
-
     var data = "data"
     var position = "position"
     var isAccessToken="isAccessToken"
     var subjectName = "subjectName"
-    var SelectedDocumentPath = "SelectedDocumentPath"
-    var SelectedDocumentType = "SelectedDocumentType"
     var isText = "isText"
     var isVoice = "isVoice"
     var isVideo = "isVideo"

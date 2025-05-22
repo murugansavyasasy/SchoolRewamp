@@ -3,7 +3,6 @@ package com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.os.Parcelable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -20,6 +19,7 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.facebook.shimmer.ShimmerFrameLayout
+import com.vs.schoolmessenger.CommonScreens.CommonFileData
 import com.vs.schoolmessenger.Parent.Communication.UnifiedVoiceAdapter.ShimmerViewHolder
 import com.vs.schoolmessenger.Parent.Homework.FullScreenViewerActivity
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
@@ -27,19 +27,19 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
-
 class HomeworkImgPDFAdapter(
-    private var SubjectName:String ,
+    private var SubjectName: String,
     private var GetFilePathDetailsData: List<GetFilePathDetails>?,
     private var context: Context,
     private var isLoading: Boolean
-):RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
 
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
             val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.homework_img_pdf_item)
@@ -55,19 +55,20 @@ class HomeworkImgPDFAdapter(
     override fun getItemCount(): Int {
         return if (isLoading) 20
         else GetFilePathDetailsData?.size ?: 0
-
     }
+
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
-            holder.bind(SubjectName,GetFilePathDetailsData!![position],position, this)
+            holder.bind(SubjectName, GetFilePathDetailsData!![position], position, this)
         }
     }
+
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
         private val DefaultImage: ImageView = itemView.findViewById(R.id.ImgPDF)
-        private val ImgOrDocumentType:ImageView=itemView.findViewById(R.id.imageOrDocumentType)
-        private val WebViewThumbnail:WebView=itemView.findViewById(R.id.WVThumbnaildocument)
+        private val ImgOrDocumentType: ImageView = itemView.findViewById(R.id.imageOrDocumentType)
+        private val WebViewThumbnail: WebView = itemView.findViewById(R.id.WVThumbnaildocument)
         private val loadingBar: ProgressBar = itemView.findViewById(R.id.loadingBar)
         private val fileItem: CardView = itemView.findViewById(R.id.fileItem)
 
@@ -120,14 +121,23 @@ class HomeworkImgPDFAdapter(
             }
 
             fileItem.setOnClickListener {
-                    val intent = Intent(context, FullScreenViewerActivity::class.java)
-                intent.putParcelableArrayListExtra(
-                    Constant.position,
-                    adapter.GetFilePathDetailsData as ArrayList<out Parcelable?>?
-                )
-                intent.putExtra("SubjectName", SubjectName)
-                    context.startActivity(intent)
+                Constant.commonFileList.isEmpty()
+                Constant.selectedFileIndex=-1
+                val commonList = adapter.GetFilePathDetailsData?.map {
+                    CommonFileData(
+                        type = it.type,
+                        path = it.path,
+                    )
+                } ?: emptyList()
+
+                Constant.commonFileList = commonList
+                Constant.selectedFileIndex = position
+
+                val intent = Intent(context, FullScreenViewerActivity::class.java)
+                intent.putExtra(Constant.subjectName, SubjectName)
+                context.startActivity(intent)
             }
+
 
             WebViewThumbnail.setOnTouchListener(object : OnTouchListener {
                 override fun onTouch(v: View?, event: MotionEvent): Boolean {
@@ -136,12 +146,20 @@ class HomeworkImgPDFAdapter(
                     }
 
                     if (event.getAction() == MotionEvent.ACTION_UP) {
+                        Constant.commonFileList.isEmpty()
+                        Constant.selectedFileIndex=-1
+                        val commonList = adapter.GetFilePathDetailsData?.map {
+                            CommonFileData(
+                                type = it.type,
+                                path = it.path,
+                            )
+                        } ?: emptyList()
+
+                        Constant.commonFileList = commonList
+                        Constant.selectedFileIndex = position
+
                         val intent = Intent(context, FullScreenViewerActivity::class.java)
-                        intent.putParcelableArrayListExtra(
-                            Constant.position,
-                            adapter.GetFilePathDetailsData as ArrayList<out Parcelable?>?
-                        )
-                        intent.putExtra("SubjectName", SubjectName)
+                        intent.putExtra(Constant.subjectName, SubjectName)
                         context.startActivity(intent)
                     }
 
@@ -184,9 +202,11 @@ class HomeworkImgPDFAdapter(
 
             WebViewThumbnail.loadUrl(googleDocsUrl)
         }
+
         class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             private val shimmerLayout: ShimmerFrameLayout =
                 itemView.findViewById(R.id.shimmer_view_container)
+
             init {
                 shimmerLayout.startShimmer()
             }

@@ -112,6 +112,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var isUpdateStatusCommunication: LiveData<StatusArchiveResponse?>? = null
         private set
 
+
     var isHomeWorkDetailsList: LiveData<GetHomeworkData?>? = null
         private set
 
