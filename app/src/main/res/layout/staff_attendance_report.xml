@@ -6,7 +6,6 @@
     android:background="@color/white"
     android:fitsSystemWindows="true">
 
-
     <include
         android:id="@+id/toolbarLayout"
         layout="@layout/school_side_tool_bar" />
@@ -51,35 +50,19 @@
     </LinearLayout>
 
     <RelativeLayout
-        android:id="@+id/rytTodays"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/lnrParent"
-        android:visibility="visible">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycleAttendanceReportsToday"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"
-            tools:listitem="@layout/giometric_attendance_report_item_list" />
-
-
-    </RelativeLayout>
-
-    <RelativeLayout
         android:id="@+id/rytAttendanceHistorySceen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/lnrParent"
         android:layout_marginTop="@dimen/fifteen"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <LinearLayout
             android:id="@+id/lnrSpinners"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:visibility="gone"
             android:orientation="horizontal">
 
             <RelativeLayout
@@ -145,6 +128,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/lnrSpinners"
+            android:visibility="gone"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/five"
             android:text="@string/select_staff">
@@ -158,6 +142,7 @@
             android:layout_below="@+id/lblSelectStaff"
             android:layout_marginStart="@dimen/fifteen"
             android:layout_marginTop="@dimen/ten"
+            android:visibility="gone"
             android:layout_marginEnd="@dimen/fifteen"
             android:background="@drawable/bg_white_light_radious"
             android:padding="@dimen/fifteen">
@@ -189,52 +174,48 @@
             </TextView>
         </RelativeLayout>
 
-
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycleAttendanceReport"
+            android:id="@+id/recycleAttendanceReportsToday"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_below="@+id/rlaStaff"
-            android:layout_marginTop="@dimen/ten"
             android:visibility="gone"
             tools:listitem="@layout/giometric_attendance_report_item_list" />
 
-    </RelativeLayout>
-
-    <LinearLayout
-        android:id="@+id/lytNoRecordFound"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <ImageView
-            android:id="@+id/imgNorecord"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/two_hundred"
-            android:layout_centerInParent="true"
-            android:src="@drawable/man_doing_fingerprint_research"
-            android:visibility="visible">
-
-        </ImageView>
-
-        <TextView
-            android:id="@+id/lblNoRecords"
-            style="@style/CustomTextStylePoppinsBold"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:id="@+id/lytNoRecordFound"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/imgNorecord"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/twenty_five"
-            android:layout_marginEnd="@dimen/twenty_five"
-            android:gravity="center"
-            android:text=""
-            android:textColor="@color/black"
-            android:textSize="@dimen/fifteen_sp"
-            android:visibility="visible" />
+            android:layout_centerInParent="true"
+            android:orientation="vertical"
+            android:visibility="gone">
 
-    </LinearLayout>
+            <ImageView
+                android:id="@+id/imgNorecord"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/two_hundred"
+                android:layout_centerInParent="true"
+                android:src="@drawable/man_doing_fingerprint_research"
+                android:visibility="visible">
 
+            </ImageView>
+
+            <TextView
+                android:id="@+id/lblNoRecords"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imgNorecord"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/twenty_five"
+                android:layout_marginEnd="@dimen/twenty_five"
+                android:gravity="center"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen_sp"
+                android:visibility="visible" />
+
+        </LinearLayout>
+    </RelativeLayout>
 
 </RelativeLayout>
