@@ -9,7 +9,9 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
+import com.vs.schoolmessenger.Parent.Communication.UnifiedVoiceAdapter.ShimmerViewHolder
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class AttendanceReportAdapter(
     private var itemList: List<AttendanceReportStudentData>?,
@@ -26,10 +28,11 @@ class AttendanceReportAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-            val view =
-                LayoutInflater.from(parent.context)
-                    .inflate(R.layout.shimmer_view_small_list, parent, false)
-            ShimmerViewHolder(view)
+            val shimmerView =
+                ShimmerUtil.wrapWithShimmer(parent, R.layout.attendace_report_student)
+            com.vs.schoolmessenger.Parent.Communication.UnifiedVoiceAdapter.ShimmerViewHolder(
+                shimmerView
+            )
         } else {
             val view =
                 LayoutInflater.from(parent.context)
@@ -79,15 +82,13 @@ class AttendanceReportAdapter(
 //                lblMonth.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_green_radious))
 //
 //            }
+
         }
     }
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val shimmerLayout: ShimmerFrameLayout =
-            itemView.findViewById(R.id.shimmer_view_container)
-
-        init {
-            shimmerLayout.startShimmer() // Start shimmer effect
+        fun startShimmer() {
+            ShimmerUtil.startShimmer(itemView)
         }
     }
 }

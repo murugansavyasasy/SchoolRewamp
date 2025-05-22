@@ -7,8 +7,8 @@ import android.view.View
 import android.widget.RatingBar
 import android.widget.TextView
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
-import com.vs.schoolmessenger.Auth.CreateResetChangePassword.PasswordGeneration
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.RateUsBinding
 
 class RateUs : BaseActivity<RateUsBinding>(), View.OnClickListener {
@@ -23,7 +23,14 @@ class RateUs : BaseActivity<RateUsBinding>(), View.OnClickListener {
 
     override fun setupViews() {
         super.setupViews()
-        isToolBarWhiteTheme()
+        setupToolbar()
+
+        if (Constant.isParentChoose) {
+            setUpGradientParent()
+        }
+        else {
+            setUpGradientSchool()
+        }
 
         binding.lblAppUi.setOnClickListener(this)
         binding.lblWatchUi.setOnClickListener(this)
@@ -39,6 +46,7 @@ class RateUs : BaseActivity<RateUsBinding>(), View.OnClickListener {
         binding.imgback.setOnClickListener(this)
         binding.btnsubmit.setOnClickListener(this)
         binding.lblMayBeLater.setOnClickListener(this)
+
 
         isRatingData = listOf(
             GetRatingData(1, "Super"),

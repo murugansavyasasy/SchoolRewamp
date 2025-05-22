@@ -4,16 +4,14 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Communication.Adapter.TextHistoryAdapter
-import com.vs.schoolmessenger.School.MarkYourAttendance.Interface.AttendanceReportClickListener
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffAttendanceReportData
+import com.vs.schoolmessenger.School.MarkYourAttendance.Interface.AttendanceReportClickListener
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
@@ -78,20 +76,19 @@ class StaffAttendanceReportAdapter(
             adapter: StaffAttendanceReportAdapter
         ) {
 
+            val attendanceMap = data.attendance_type
+            lblPresentStatus.visibility = View.GONE
+            lblAbsentStatus.visibility = View.GONE
 
-
-
-//            lblStatus.text = data.leave_type
-//
-//            if (data.leave_type.equals(Constant.Present)) {
-//                lblStatus.background = ContextCompat.getDrawable(
-//                    context,
-//                    R.drawable.rounded_top_right_bottom_end_green
-//                )
-//            } else {
-//                lblStatus.background =
-//                    ContextCompat.getDrawable(context, R.drawable.rounded_top_right_bottom_end_red)
-//            }
+            attendanceMap.forEach { (key, value) ->
+                if (value == "P") {
+                    lblPresentStatus.visibility = View.VISIBLE
+                    lblPresentStatus.text = "$key : $value"
+                } else if (value == "A") {
+                    lblAbsentStatus.visibility = View.VISIBLE
+                    lblAbsentStatus.text = "$key : $value"
+                }
+            }
 
 
             lblStaffName.text = data.name

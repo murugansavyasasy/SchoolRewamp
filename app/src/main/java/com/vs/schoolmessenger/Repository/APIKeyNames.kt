@@ -96,6 +96,7 @@ object APIKeyNames {
     const val menu_id = "menu_id"
     const val section_ids = "section_ids"
     const val section_id = "section_id"
+    const val standard_id = "standard_id"
     const val bucket = "bucket"
     const val fileName = "fileName"
     const val bucketPath = "bucketPath"

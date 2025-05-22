@@ -97,6 +97,7 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
         }
 
         authViewModel!!.isUserValidation?.observe(this) { response ->
+            Constant.hideLoading(this@Splash)
             if (response != null) {
                 val status = response.status
                 val message = response.message
@@ -307,6 +308,7 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
     }
 
     private fun isValidateUser() {
+        Constant.showLoading(this@Splash)
         val jsonObject = JsonObject()
         val isSecureId = Constant.getAndroidSecureId(this@Splash)
         val isMobileNumber = SharedPreference.getMobileNumber(this)

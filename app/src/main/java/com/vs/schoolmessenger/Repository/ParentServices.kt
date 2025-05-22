@@ -11,7 +11,6 @@ import retrofit2.Response
 
 class ParentServices {
     var client_auth: RestClient
-
     var isChildAttendanceReport: MutableLiveData<ChildAttendanceResponse?>
 
     init {

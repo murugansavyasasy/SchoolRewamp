@@ -36,7 +36,6 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
     }
 
     var isGetStaffListData: List<NameAndIds>? = null
-
     private var isStaffAttendanceReportAdapter: StaffAttendanceReportAdapter? = null
     private var appViewModel: App? = null
     private var isStaffDetails: StaffDetails? = null

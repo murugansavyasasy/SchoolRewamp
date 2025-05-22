@@ -54,6 +54,12 @@
     <string name="lblSingapore">Uganda</string>
     <string name="lblCanada">Canada</string>
     <string name="lblCreateNewPassword">Create New Password</string>
+    <string name="lblChangePassword">Change Password</string>
+    <string name="lblOldPassword">Enter the old Password</string>
+    <string name="lblNewPassword">Enter the new Password</string>
+    <string name="lblChange">Change</string>
+    <string name="lblCreate">Create</string>
+    <string name="lblReset">Reset</string>
     <string name="lblCreatePassword">Create Password</string>
     <string name="lblConfirmPassword">Confirm Password</string>
     <string name="lblPrevious">Previous</string>
@@ -532,6 +538,9 @@
     <string name="select_attendance_type">Select Attendance Type</string>
     <string name="admis_no">ADMIS No:</string>
     <string name="Staffwise_Attendance_Report">Staffwise Attendance Report</string>
+    <string name="staff_name">Staff name</string>
+    <string name="designation">Designation</string>
+    <string name="school_name">School name</string>
 
 
 </resources>

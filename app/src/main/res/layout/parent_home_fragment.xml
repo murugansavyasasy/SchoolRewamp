@@ -273,6 +273,7 @@
                 android:layout_below="@id/lblCategories"
                 android:layout_marginTop="@dimen/twenty"
                 android:background="@color/white"
+                android:paddingBottom="@dimen/ten"
                 tools:listitem="@layout/menu_item_card" />
         </RelativeLayout>
     </RelativeLayout>

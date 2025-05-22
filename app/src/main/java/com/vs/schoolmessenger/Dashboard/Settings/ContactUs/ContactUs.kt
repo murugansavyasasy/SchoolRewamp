@@ -17,6 +17,14 @@ class ContactUs : BaseActivity<ContactSupportBinding>(), View.OnClickListener {
         binding.imgBack.setOnClickListener(this)
         binding.rytPhone.setOnClickListener(this)
         binding.rytMail.setOnClickListener(this)
+        if (Constant.isParentChoose) {
+            setUpGradientParent()
+            binding.rlaLblContactSupport.setBackgroundResource(com.vs.schoolmessenger.R.drawable.gradient_theme_parent)
+        }
+        else {
+            setUpGradientSchool()
+            binding.rlaLblContactSupport.setBackgroundResource(com.vs.schoolmessenger.R.drawable.gradient_theme_school)
+        }
     }
 
     override fun onClick(p0: View?) {

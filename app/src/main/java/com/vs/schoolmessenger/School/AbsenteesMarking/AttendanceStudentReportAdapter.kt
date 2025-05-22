@@ -60,17 +60,17 @@ class AttendanceStudentReportAdapter(
 
         @SuppressLint("UseCompatLoadingForDrawables")
         fun bind(data: StudentAttendanceReportData, position: Int) {
-            lblStudentName.text = data.Name
-            lblAdmissionValue.text = data.RollNo
-            lblAttendanceStatus.text = data.Status
-
-            if (data.Status == "Absent") {
-                lblAttendanceStatus.setBackgroundDrawable(context.resources.getDrawable(R.drawable.rounded_top_right_bottom_end_red))
-                rlaAttendance.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_outline_red))
-            } else {
-                lblAttendanceStatus.setBackgroundDrawable(context.resources.getDrawable(R.drawable.rounded_top_right_bottom_end_green))
-                rlaAttendance.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_outline_green))
-            }
+//            lblStudentName.text = data.Name
+//            lblAdmissionValue.text = data.RollNo
+//            lblAttendanceStatus.text = data.Status
+//
+//            if (data.Status == "Absent") {
+//                lblAttendanceStatus.setBackgroundDrawable(context.resources.getDrawable(R.drawable.rounded_top_right_bottom_end_red))
+//                rlaAttendance.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_outline_red))
+//            } else {
+//                lblAttendanceStatus.setBackgroundDrawable(context.resources.getDrawable(R.drawable.rounded_top_right_bottom_end_green))
+//                rlaAttendance.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_outline_green))
+//            }
         }
     }
 

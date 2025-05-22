@@ -17,6 +17,7 @@ class ImportantInfo : BaseActivity<ImportantInfoBinding>(),
         super.setupViews()
         setupToolbar()
         setUpGradientSchool()
+        binding.imgBack.setOnClickListener(this)
 
         Constant.loadWebView(
             this,

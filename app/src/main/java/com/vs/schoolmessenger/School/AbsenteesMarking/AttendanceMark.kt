@@ -391,7 +391,7 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                 isBackRoundChange(binding.btnHistory)
                 binding.rlaAttendanceReport.visibility = View.VISIBLE
                 binding.rlaAttendanceMark.visibility = View.GONE
-                loadData()
+             //   loadData()
             }
 
             R.id.btnAbsent -> {
@@ -627,70 +627,70 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
     override fun onDateSelected(date: String) {
     }
 
-    fun loadData() {
-        studentsList = listOf(
-
-            StudentAttendanceReportData(
-                "Murugan", "76979871",
-                "Present"
-            ),
-
-            StudentAttendanceReportData(
-                "Sathish", "22439234",
-                "Absent"
-            ),
-            StudentAttendanceReportData(
-                "Saran Raj", "259411563",
-                "Present"
-            ),
-            StudentAttendanceReportData(
-                "Chanthru", "216098214",
-                "Absent"
-            ),
-            StudentAttendanceReportData(
-                "Ramesh", "90509568",
-                "Present"
-            ),
-            StudentAttendanceReportData(
-                "Lakshmanan Narayanan", "90509568",
-                "Absent"
-            ),
-            StudentAttendanceReportData(
-                "Gunal", "90509568",
-                "Present"
-            ),
-            StudentAttendanceReportData(
-                "Lakshmanan", "90509568",
-                "Absent"
-            ),
-            StudentAttendanceReportData(
-                "Narayanan", "90509568",
-                "Present"
-            ), StudentAttendanceReportData(
-                "Gunal", "90509568",
-                "Present"
-            ),
-            StudentAttendanceReportData(
-                "Lakshmanan", "90509568",
-                "Absent"
-            ), StudentAttendanceReportData(
-                "Gunal", "90509568",
-                "Present"
-            ),
-            StudentAttendanceReportData(
-                "Lakshmanan", "90509568",
-                "Absent"
-            )
-        )
-
-
-        mAdapter = AttendanceStudentReportAdapter(null, this, Constant.isShimmerViewShow)
-        binding.rcyAttendanceReport.layoutManager = LinearLayoutManager(this)
-        binding.rcyAttendanceReport.adapter = mAdapter
-        Constant.executeAfterDelay {
-            mAdapter =
-                AttendanceStudentReportAdapter(studentsList, this, Constant.isShimmerViewDisable)
-            binding.rcyAttendanceReport.adapter = mAdapter
-        }
-    }
+//    fun loadData() {
+//        studentsList = listOf(
+//
+//            StudentAttendanceReportData(
+//                "Murugan", "76979871",
+//                "Present"
+//            ),
+//
+//            StudentAttendanceReportData(
+//                "Sathish", "22439234",
+//                "Absent"
+//            ),
+//            StudentAttendanceReportData(
+//                "Saran Raj", "259411563",
+//                "Present"
+//            ),
+//            StudentAttendanceReportData(
+//                "Chanthru", "216098214",
+//                "Absent"
+//            ),
+//            StudentAttendanceReportData(
+//                "Ramesh", "90509568",
+//                "Present"
+//            ),
+//            StudentAttendanceReportData(
+//                "Lakshmanan Narayanan", "90509568",
+//                "Absent"
+//            ),
+//            StudentAttendanceReportData(
+//                "Gunal", "90509568",
+//                "Present"
+//            ),
+//            StudentAttendanceReportData(
+//                "Lakshmanan", "90509568",
+//                "Absent"
+//            ),
+//            StudentAttendanceReportData(
+//                "Narayanan", "90509568",
+//                "Present"
+//            ), StudentAttendanceReportData(
+//                "Gunal", "90509568",
+//                "Present"
+//            ),
+//            StudentAttendanceReportData(
+//                "Lakshmanan", "90509568",
+//                "Absent"
+//            ), StudentAttendanceReportData(
+//                "Gunal", "90509568",
+//                "Present"
+//            ),
+//            StudentAttendanceReportData(
+//                "Lakshmanan", "90509568",
+//                "Absent"
+//            )
+//        )
+//
+//
+//        mAdapter = AttendanceStudentReportAdapter(null, this, Constant.isShimmerViewShow)
+//        binding.rcyAttendanceReport.layoutManager = LinearLayoutManager(this)
+//        binding.rcyAttendanceReport.adapter = mAdapter
+//        Constant.executeAfterDelay {
+//            mAdapter =
+//                AttendanceStudentReportAdapter(studentsList, this, Constant.isShimmerViewDisable)
+//            binding.rcyAttendanceReport.adapter = mAdapter
+//        }
+//    }
 }

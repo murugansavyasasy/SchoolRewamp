@@ -50,6 +50,7 @@ class MobileNumber : BaseActivity<MobileNumberBinding>(), View.OnClickListener {
         binding.txtMobileNumber.hint = Constant.country_details!!.mobile_no_hint
 
         authViewModel!!.isUserValidation?.observe(this) { response ->
+            Constant.hideLoading(this@MobileNumber)
             if (response != null) {
                 val status = response.status
                 val message = response.message
@@ -91,6 +92,7 @@ class MobileNumber : BaseActivity<MobileNumberBinding>(), View.OnClickListener {
     }
 
     private fun isValidateUser() {
+        Constant.showLoading(this@MobileNumber)
         val jsonObject = JsonObject()
         val isSecureId = Constant.getAndroidSecureId(this@MobileNumber)
         jsonObject.addProperty(

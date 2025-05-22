@@ -17,6 +17,12 @@ class TermsAndConditions  : BaseActivity<TermsAndConditionsBinding>(), View.OnCl
         setupToolbar()
         // Enable JavaScript
         binding.imgBack.setOnClickListener(this)
+        if (Constant.isParentChoose) {
+            setUpGradientParent()
+        }
+        else {
+            setUpGradientSchool()
+        }
 
         Constant.loadWebView(
             this,
