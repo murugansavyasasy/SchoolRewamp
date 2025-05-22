@@ -66,7 +66,7 @@ class EventAdapter (
     }
 
 
-    override fun getFilter(): Filter {
+    override fun getFilter(): Filter {2
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val query = constraint?.toString()?.lowercase()?.trim() ?: ""

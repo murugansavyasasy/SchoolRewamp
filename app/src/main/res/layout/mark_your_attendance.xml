@@ -89,6 +89,7 @@
         android:id="@+id/rytMarkAttendanceSceen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="visible"
         android:layout_below="@+id/lnrParent">
 
         <RelativeLayout
@@ -400,6 +401,42 @@
 
         </RelativeLayout>
 
+
     </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/rytAddLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="@dimen/ten"
+        android:layout_marginBottom="@dimen/twenty"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/imgAddLocation"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
+            android:layout_gravity="center"
+            android:src="@drawable/plus_circle">
+
+        </ImageView>
+
+        <TextView
+            android:id="@+id/lblAddLocation"
+            style="@style/Base.CardView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/five"
+            android:text="@string/add_location"
+            android:textColor="@color/navi_blue3"
+            android:textSize="@dimen/thirteen_sp">
+
+        </TextView>
+
+
+    </LinearLayout>
 
 </RelativeLayout>

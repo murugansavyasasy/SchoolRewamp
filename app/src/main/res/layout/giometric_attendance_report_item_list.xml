@@ -15,12 +15,6 @@
         android:paddingBottom="@dimen/zero"
         app:layout_constraintTop_toTopOf="parent">
 
-        <!--        <LinearLayout-->
-        <!--            android:id="@+id/lnrDate"-->
-        <!--            android:layout_width="@dimen/eighty"-->
-        <!--            android:layout_centerVertical="true"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:orientation="vertical">-->
 
         <LinearLayout
             android:id="@+id/lnrDate"
@@ -72,12 +66,27 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/lblStatus"
+            android:id="@+id/lblPresentStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="@dimen/minus_five"
             android:background="@drawable/btn_green"
+            android:paddingHorizontal="@dimen/five"
+            android:paddingTop="@dimen/ten"
+            android:paddingBottom="@dimen/five"
+            android:text="@string/present"
+            android:textColor="@color/white"
+            android:textSize="@dimen/twele_sp" />
+
+        <TextView
+            android:id="@+id/lblAbsentStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblPresentStatus"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/five"
+            android:background="@drawable/rect_btn_red"
             android:paddingHorizontal="@dimen/five"
             android:paddingTop="@dimen/ten"
             android:paddingBottom="@dimen/five"
@@ -92,7 +101,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/ten"
-            android:layout_toStartOf="@+id/imgPunchHistory"
+            android:layout_toStartOf="@+id/lblAbsentStatus"
             android:layout_toEndOf="@+id/lnrDate">
 
 
@@ -107,7 +116,7 @@
                 android:visibility="visible" />
 
             <TextView
-                android:id="@+id/lblAttendanceType"
+                android:id="@+id/lblStaffDesignation"
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -120,7 +129,7 @@
                 android:id="@+id/rytCheckInTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/lblAttendanceType">
+                android:layout_below="@+id/lblStaffDesignation">
 
                 <TextView
                     android:id="@+id/lblCheckInTime"
@@ -166,6 +175,7 @@
             android:layout_width="@dimen/thirty"
             android:layout_height="@dimen/thirty"
             android:layout_alignParentEnd="true"
+            android:layout_below="@+id/lblAbsentStatus"
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/ten"
             android:src="@drawable/rightarrrow" />

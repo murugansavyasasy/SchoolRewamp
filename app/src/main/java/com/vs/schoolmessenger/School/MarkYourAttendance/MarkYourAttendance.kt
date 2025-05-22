@@ -32,6 +32,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
+import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
@@ -71,7 +72,8 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
     private var isLongitude: Double? = null
     private var rcyPunchList: RecyclerView? = null
     private var lblNoRecordsFound: TextView? = null
-
+    var isAcademicYear: List<AcademicYear>? = null
+    var isAcademicYearId = -1
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
@@ -92,17 +94,24 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
 
         if (isStaffDetails!!.biometric_enable) {
-            binding.toolbarLayout.rytAddLocation.visibility = View.VISIBLE
+            binding.rytAddLocation.visibility = View.VISIBLE
         } else {
-            binding.toolbarLayout.rytAddLocation.visibility = View.GONE
+            binding.rytAddLocation.visibility = View.GONE
         }
-        binding.toolbarLayout.rytAddLocation.setOnClickListener {
+        binding.rytAddLocation.setOnClickListener {
             val intent = Intent(this@MarkYourAttendance, AddLocationActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             startActivity(intent)
         }
 
         gpsStatusReceiver = GPSStatusReceiver(this)
+
+        appViewModel!!.isGetAcademicList?.observe(this) { response ->
+            Constant.hideLoading(this@MarkYourAttendance)
+            if (response!!.status) {
+                isLoadYear(response.data)
+            }
+        }
 
         appViewModel!!.isStaffLocations?.observe(this) { response ->
             if (response != null && response.status) {
@@ -158,27 +167,35 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
         }
     }
 
-    private fun isLoadYear() {
-        val years = (2025 downTo 2001).map { it.toString() }
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, years)
+    private fun isGetAcademicYear() {
+        Constant.showLoading(this@MarkYourAttendance)
+        appViewModel!!.isGetAcademicYear(
+            isAccessToken!!, this
+        )
+    }
+
+    private fun isLoadYear(yearList: List<AcademicYear>) {
+        val uniqueYears = yearList
+            .mapNotNull { it.year.split("-").firstOrNull() }
+            .distinct()
+        val currentYear = yearList.find { it.current_academic_year }?.year?.split("-")?.firstOrNull()
+        val sortedYears = if (currentYear != null) {
+            listOf(currentYear) + uniqueYears.filter { it != currentYear }
+        } else {
+            uniqueYears
+        }
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, sortedYears)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spinnerYears.adapter = adapter
         binding.spinnerYears.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 binding.lblNoRecords.visibility = View.GONE
                 binding.imgNorecord.visibility = View.GONE
                 val selectedYear = parent.getItemAtPosition(position).toString()
                 isLoadMonth(selectedYear)
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>) {
-
-            }
+            override fun onNothingSelected(parent: AdapterView<*>) {}
         }
     }
 
@@ -368,7 +385,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
 
             R.id.btnHistory -> {
                 binding.rytProgressBar.visibility = View.GONE
-                isLoadYear()
+                isGetAcademicYear()
                 isBackgroundChange(binding.btnHistory)
             }
 
