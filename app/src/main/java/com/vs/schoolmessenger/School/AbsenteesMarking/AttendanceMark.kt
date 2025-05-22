@@ -175,12 +175,14 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                     isGetStandard?.size?.let {
                         if (it > 0) {
                             binding.lnrClasses.visibility = View.VISIBLE
-                            ClassID = isGetStandard!!.get(0).id
-                            Constant.isClassID = ClassID.toString()
-                            Log.d("isClassID", ClassID.toString())
+                            Constant.isClassID = isGetStandard!!.get(0).id.toString()
+//                            ClassID = isGetStandard!!.get(0).id
+//                            Constant.isClassID = ClassID.toString()
+                            Log.d("isClassID", Constant.isClassID.toString())
 //                        isSectionId = isGetStandard!!.get(0).sections.get(0).id
-                            SectionID = isGetStandard!!.get(0).sections.get(0).id
-                            Constant.isSectionID = SectionID.toString()
+                            Constant.isSectionID = isGetStandard!!.get(0).sections.get(0).id.toString()
+//                            SectionID = isGetStandard!!.get(0).sections.get(0).id
+//                            Constant.isSectionID = SectionID.toString()
 
 
                             binding.lblStandard.text = isGetStandard!!.get(0).name
@@ -223,10 +225,8 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
     private fun updateStandardAndSection(standard: Standard?) {
         if (standard == null) {
             // No Standard Found
-            ClassID = null
-            Constant.isClassID = ClassID.toString()
-            SectionID = null
-            Constant.isSectionID = SectionID.toString()
+            Constant.isClassID = ""
+            Constant.isSectionID = ""
             isStandardName = null
             isSectionName = null
 
@@ -238,8 +238,7 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
             return
         }
         // Set selected Standard
-        ClassID = standard.id
-        Constant.isClassID = ClassID.toString()
+        Constant.isClassID = standard.id.toString()
         isSection = standard.sections
 
         binding.lblStandard.text = standard.name
@@ -249,8 +248,7 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         val sections = standard.sections
         if (!sections.isNullOrEmpty()) {
             val defaultSection = sections[0]
-            SectionID = defaultSection.id
-            Constant.isSectionID = SectionID.toString()
+            Constant.isSectionID = defaultSection.id.toString()
             binding.lblSection.text = defaultSection.name
             isSectionName = defaultSection.name
             if (sections.size == 1) {
@@ -297,14 +295,20 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
 
 
             R.id.rlaDayDatePicker -> {
-                showDayDatePickerDialog(this) { dayOnly, dayOfWeek, fullDate, slashDate ->
-                    binding.lblDate1.text = dayOnly         // we get Date
-                    binding.lblDay.text = dayOfWeek     // we get Day
-                    binding.lblDatePick.text = fullDate       //we get Day Date Month Year
-                    SelectedDate = slashDate //Day/Month/Year
-                    Constant.isSelectedDate = SelectedDate.toString()
+//                showDayDatePickerDialog(this) { dayOnly, dayOfWeek, fullDate, slashDate ->
+//                    binding.lblDate1.text = dayOnly         // we get Date
+//                    binding.lblDay.text = dayOfWeek     // we get Day
+//                    binding.lblDatePick.text = fullDate       //we get Day Date Month Year
+//                    SelectedDate = slashDate //Day/Month/Year
+//                    Constant.isSelectedDate = SelectedDate.toString()
+//
+//                }
 
+                Constant.showDatePicker(this) { selectedDate ->
+                    Log.d("selectedDate", selectedDate)
+                    binding.lblDatePick.text = Constant.covertDateFormate(selectedDate)
                 }
+
 
 
             }
@@ -362,7 +366,7 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
             }
 
             R.id.radioButtonSecondHalf, R.id.rlaSecondHalf -> {
-                SessionType = "SH"
+                SessionType = Constant.SH
                 Constant.isSessionType = SessionType
                 if (binding.radioButtonHalfDay.isChecked) {
                     binding.radioButtonFirstHalf.isChecked = false
@@ -522,18 +526,6 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         for (id in selectedIds) {
             AbsentStudentIDList.add(JsonPrimitive(id))
         }
-
-        Log.d(
-            "Parameter_for_SendAbsentessSMS",
-            ClassID.toString() + "," +
-                    SectionID.toString() + "," +
-                    AllPresent + "," +
-                    AttendanceType + "," +
-                    SessionType + "," +
-                    SelectedDate.toString() + "," +
-                    AbsentStudentIDList.toString()
-        )
-
         val jsonObject = JsonObject().apply {
             addProperty(APIKeyNames.class_id, ClassID.toString())
             addProperty(APIKeyNames.section_id, SectionID.toString())
@@ -565,46 +557,46 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
 
     }
 
-    fun showDayDatePickerDialog(
-        context: Context,
-        onDateSelected: (
-            dayOnly: String,
-            dayOfWeek: String,
-            fullDate: String,
-            slashDate: String
-        ) -> Unit
-    ) {
-        val calendar = Calendar.getInstance()
-        val year = calendar.get(Calendar.YEAR)
-        val month = calendar.get(Calendar.MONTH)
-        val day = calendar.get(Calendar.DAY_OF_MONTH)
-
-        val datePickerDialog = DatePickerDialog(
-            context,
-            { _, selectedYear, selectedMonth, selectedDay ->
-                val selectedCal = Calendar.getInstance()
-                selectedCal.set(selectedYear, selectedMonth, selectedDay)
-
-                val dayOnly = String.format("%02d", selectedDay)
-                val dayOfWeek =
-                    SimpleDateFormat("EEE", Locale.getDefault()).format(selectedCal.time)
-                val fullDate = SimpleDateFormat(
-                    "EEE dd MMM yyyy",
-                    Locale.getDefault()
-                ).format(selectedCal.time)
-                val slashDate =
-                    SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(selectedCal.time)
-
-                onDateSelected(dayOnly, dayOfWeek, fullDate, slashDate)
-            },
-            year, month, day
-        )
-
-        //  Disallow future dates — only today and past
-        datePickerDialog.datePicker.maxDate = calendar.timeInMillis
-
-        datePickerDialog.show()
-    }
+//    private fun showDayDatePickerDialog(
+//        context: Context,
+//        onDateSelected: (
+//            dayOnly: String,
+//            dayOfWeek: String,
+//            fullDate: String,
+//            slashDate: String
+//        ) -> Unit
+//    ) {
+//        val calendar = Calendar.getInstance()
+//        val year = calendar.get(Calendar.YEAR)
+//        val month = calendar.get(Calendar.MONTH)
+//        val day = calendar.get(Calendar.DAY_OF_MONTH)
+//
+//        val datePickerDialog = DatePickerDialog(
+//            context,
+//            { _, selectedYear, selectedMonth, selectedDay ->
+//                val selectedCal = Calendar.getInstance()
+//                selectedCal.set(selectedYear, selectedMonth, selectedDay)
+//
+//                val dayOnly = String.format("%02d", selectedDay)
+//                val dayOfWeek =
+//                    SimpleDateFormat("EEE", Locale.getDefault()).format(selectedCal.time)
+//                val fullDate = SimpleDateFormat(
+//                    "EEE dd MMM yyyy",
+//                    Locale.getDefault()
+//                ).format(selectedCal.time)
+//                val slashDate =
+//                    SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(selectedCal.time)
+//
+//                onDateSelected(dayOnly, dayOfWeek, fullDate, slashDate)
+//            },
+//            year, month, day
+//        )
+//
+//        //  Disallow future dates — only today and past
+//        datePickerDialog.datePicker.maxDate = calendar.timeInMillis
+//
+//        datePickerDialog.show()
+//    }
 
     fun getCurrentDateInfo(): List<String> {
         val calendar = Calendar.getInstance()

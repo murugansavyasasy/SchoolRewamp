@@ -22,7 +22,7 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(), Abs
     private val selectedIds = mutableListOf<String>()
     lateinit var mAdapter: AbsenteesMarkAdapter
     private var appViewModel: App? = null
-    private lateinit var studentsList: List<NameAndIds>
+    private var studentsList: List<NameAndIds>? = null
     private lateinit var isSelectedIds: List<String>
     private lateinit var isStandardName: String
     private lateinit var isSectionName: String
@@ -52,13 +52,9 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(), Abs
         Log.d("isGetStudentListisSectionName", isSectionName.toString())
 
 
-
-
-
-
         isAccessToken = intent.getStringExtra(Constant.isAccessToken) ?: ""
-        isAcademicYearId = intent.getIntExtra(Constant.isAcademicYearId, 0)
-        isSectionId = intent.getIntExtra(Constant.isSectionId, 0)
+//        isAcademicYearId = intent.getIntExtra(Constant.isAcademicYearId, 0)
+//        isSectionId = intent.getIntExtra(Constant.isSectionId, 0)
 
         Log.d("isGetStudentListSectionID", isSectionId.toString())
         binding.lblClassAndSection.text = isStandardName + "-" + isSectionName
@@ -141,7 +137,6 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(), Abs
     }
 
 
-
     private fun isMarkAttendance() {
         AllPresent = if (selectedIds.isEmpty()) "T" else "F"
         Constant.isAllPresent = AllPresent!!
@@ -150,24 +145,23 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(), Abs
         Log.d("MARK_ATTENDANCE", "AllPresent = $AllPresent")
         Log.d("MARK_ATTENDANCE", "MarkAttendanceData = $MarkAttendanceData")
 
-        if (MarkAttendanceData?.class_id != "" &&
-            MarkAttendanceData?.section_id != "" &&
-            MarkAttendanceData?.attendance_date != null) {
+        if (MarkAttendanceData?.class_id != "" && MarkAttendanceData?.section_id != "" && MarkAttendanceData?.attendance_date != null) {
 
             Log.d("MARK_ATTENDANCE", "Basic data valid, checking attendance conditions...")
 
-            if (MarkAttendanceData.attendance_type == "F" &&
-                MarkAttendanceData.session_type == "" &&
-                selectedIds.isEmpty()) {
+            if (MarkAttendanceData.attendance_type == "F" && MarkAttendanceData.session_type == "" && selectedIds.isEmpty()) {
 
-                Log.d("MARK_ATTENDANCE", "Calling isUpdateMarkAtttendance() for Full day all present")
+                Log.d(
+                    "MARK_ATTENDANCE",
+                    "Calling isUpdateMarkAtttendance() for Full day all present"
+                )
                 isUpdateMarkAtttendance()
+            } else if (MarkAttendanceData.attendance_type == "H" && MarkAttendanceData.session_type!!.isNotEmpty() && selectedIds.isNotEmpty()) {
 
-            } else if (MarkAttendanceData.attendance_type == "H" &&
-                MarkAttendanceData.session_type!!.isNotEmpty() &&
-                selectedIds.isNotEmpty()) {
-
-                Log.d("MARK_ATTENDANCE", "Calling isUpdateMarkAtttendance() for Half day with absentees")
+                Log.d(
+                    "MARK_ATTENDANCE",
+                    "Calling isUpdateMarkAtttendance() for Half day with absentees"
+                )
                 isUpdateMarkAtttendance()
             } else {
                 Log.d("MARK_ATTENDANCE", "No condition matched")
@@ -215,7 +209,7 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(), Abs
                 }
             }
             add(APIKeyNames.student_id, studentArray)
-            Log.d("AbsenteesStudentID",studentArray.toString())
+            Log.d("AbsenteesStudentID", studentArray.toString())
         }
         appViewModel?.isUpdateSendAbsenteeSMS(isAccessToken!!, jsonObject, this)
 
@@ -226,7 +220,7 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(), Abs
     }
 
     override fun onSelectionChanged(selectedIds: List<String>) {
-           Log.d("ActivitySelectedIDs", selectedIds.toString())
+        Log.d("ActivitySelectedIDs", selectedIds.toString())
         isSelectedIds = selectedIds
     }
 }
