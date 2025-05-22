@@ -17,7 +17,8 @@ import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsRespo
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
 import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
 import com.vs.schoolmessenger.Parent.Communication.VoiceDataResponse
-import com.vs.schoolmessenger.Parent.EventsHolidays.EventResponse
+import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventResponse
+import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.HolidayResponse
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
 import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
@@ -335,6 +336,11 @@ interface ApiInterfaces {
     fun IsGetEventReport(
         @Header(APIKeyNames.Authorization) token: String
     ): Call<EventResponse?>?
+
+    @GET(APIMethods.IsGetHolidayReport)
+    fun IsGetHolidayReport(
+        @Header(APIKeyNames.Authorization) token: String
+    ): Call<HolidayResponse?>?
 
     @POST(APIMethods.send_absentee_sms)
     fun UpdateSendAbsenteeSMS(

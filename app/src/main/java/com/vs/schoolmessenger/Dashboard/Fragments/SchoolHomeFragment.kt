@@ -51,6 +51,7 @@ import com.vs.schoolmessenger.School.MarkYourAttendance.MarkYourAttendance
 import com.vs.schoolmessenger.School.MessageFromManagement.MessageFromManagement
 import com.vs.schoolmessenger.School.NoticeBoard.CreateNoticeBoard
 import com.vs.schoolmessenger.School.OnlineMeeting.OnlineMeeting
+import com.vs.schoolmessenger.School.SchoolNeeds.SchoolNeeds
 import com.vs.schoolmessenger.School.SchoolStrength.SchoolStrength
 import com.vs.schoolmessenger.School.StaffWiseAttendanceReport.StaffWiseAttendanceReport
 import com.vs.schoolmessenger.School.StudentReport.StudentReport
@@ -567,8 +568,8 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
             Constant.M_VERY_IMPORTANT_INFO -> ImportantInfo::class.java
             Constant.M_FEEDBACK -> ImportantInfo::class.java
+            Constant.M_SCHOOL_NEEDS -> SchoolNeeds::class.java
 
-            // Constant.sch_feedback_id -> ImportantInfo::class.java
             else -> null
         }
 

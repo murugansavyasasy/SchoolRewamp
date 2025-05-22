@@ -2,7 +2,6 @@ package com.vs.schoolmessenger.School.AbsenteesMarking
 
 import android.util.Log
 import android.view.View
-import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.JsonArray
@@ -19,7 +18,6 @@ import com.vs.schoolmessenger.databinding.AbsenteesStudentMarkingBinding
 class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(), AbsenteesClickListener,
     AbsenteesSelectionListener,
     View.OnClickListener {
-
 
     private val selectedIds = mutableListOf<String>()
     lateinit var mAdapter: AbsenteesMarkAdapter
@@ -115,7 +113,6 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(), Abs
             binding.recycleStudents.adapter = mAdapter
         }
     }
-
 
     override fun onPause() {
         super.onPause()
@@ -226,11 +223,10 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(), Abs
 
     override fun onItemClick(data: NameAndIds) {
         Log.d("SelectedData", data.name)
-
     }
 
     override fun onSelectionChanged(selectedIds: List<String>) {
-        //   Log.d("ActivitySelectedIDs", selectedIds.toString())
+           Log.d("ActivitySelectedIDs", selectedIds.toString())
         isSelectedIds = selectedIds
     }
 }

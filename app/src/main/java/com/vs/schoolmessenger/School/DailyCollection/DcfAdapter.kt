@@ -64,8 +64,10 @@ class DcfAdapter(
 
         fun bind(item: DisplayItem.Header) {
             totalLabel.text = item.category
-            totalValue.text = item.total
+            totalValue.text = String.format("₹%s", item.total)
+
         }
+
     }
 
     inner class FeeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -74,7 +76,7 @@ class DcfAdapter(
 
         fun bind(item: DisplayItem.Fee) {
             feeType.text = item.typeName
-            feeAmount.text = item.amount
+            feeAmount.text = String.format("₹%s", item.amount)
         }
     }
 }

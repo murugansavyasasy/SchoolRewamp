@@ -34,6 +34,7 @@ class HomeWork : BaseActivity<HomeWorkParentBinding>(), View.OnClickListener,
         appViewModel?.init()
 
         binding.toolbarLayout.imgBack.setOnClickListener(this)
+        binding.lblSeeMore.setOnClickListener(this)
         binding.toolbarLayout.lblParentToolBar.text = resources.getText(R.string.HomeWork)
         binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
         val isChildDetails = SharedPreference.getChildDetails(this)

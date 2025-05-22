@@ -509,7 +509,7 @@
             android:windowSoftInputMode="adjustPan|adjustResize"></activity>
 
         <activity
-            android:name=".Parent.EventsHolidays.Event"
+            android:name=".Parent.EventsHolidays.EventActivty.Event"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize"></activity>
 

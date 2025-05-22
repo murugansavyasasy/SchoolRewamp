@@ -26,7 +26,7 @@
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/ten"
                 android:layout_marginBottom="@dimen/ten"
-                android:src="@drawable/arrow_back_black"/>
+                android:src="@drawable/left_arrow"/>
 
             <TextView
                 android:layout_width="wrap_content"

@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/fifteen"
             android:layout_toEndOf="@+id/imgBack"
-            android:text="@string/recipient_selection"
+            android:text="@string/school_selection"
             android:textColor="@color/white"
             android:textSize="@dimen/fifteen_sp"
             android:textStyle="bold" />

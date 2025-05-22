@@ -1,15 +1,10 @@
 package com.vs.schoolmessenger.Parent.Noticeboard
 
-import android.content.Intent
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
-import com.vs.schoolmessenger.CommonScreens.WebView
-import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.HomeWorkAdapter
-import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetDateWiseHomeworkData
 import com.vs.schoolmessenger.Parent.Noticeboard.Adapter.NoticeBoardAdapter
-import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -41,9 +36,10 @@ class NoticeBoard : BaseActivity<NoticeBoardBinding>(), View.OnClickListener,
                 binding.rcyNoticeBoard.visibility = View.VISIBLE
                 isloadhomeworkData(response.data)
             } else {
-//                binding.rytNORecordFound.visibility = View.VISIBLE
-//                binding.rcyHomework.visibility = View.GONE
-//                binding.lblNoRecordFound.text = response.message
+                binding.nomessage.visibility = View.VISIBLE
+                binding.rcyNoticeBoard.visibility = View.GONE
+                binding.txtNoData.visibility = View.VISIBLE
+                binding.txtNoData.text = response.message
             }
         }
     }

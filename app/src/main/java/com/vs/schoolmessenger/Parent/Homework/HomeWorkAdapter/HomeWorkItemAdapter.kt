@@ -45,14 +45,11 @@ class HomeWorkItemAdapter(
                 LayoutInflater.from(parent.context)
                     .inflate(R.layout.homework_school_reportitem, parent, false)
             DataViewHolder(view, context)
-
-
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
-            // Bind actual data when loading is complete
             holder.bind(GetHomeworkData, HomeDetails!![position], position, this)
         }
     }
@@ -94,7 +91,7 @@ class HomeWorkItemAdapter(
             val homeworkImgPdf = getRecyclerView()
             lblTitleImage.text = homeworkData.title
             lblContentImage.text = homeworkData.description
-            lblDateImage.text = data!!.date
+            lblDateImage.text = Constant.convertDateTimeFormat(data!!.date)
             lblSubjectName.text = homeworkData.subject_name
             rlaSelectText.visibility = View.GONE
 
