@@ -2,14 +2,12 @@ package com.vs.schoolmessenger.Auth.CreateResetChangePassword
 
 import android.content.Intent
 import android.text.InputType
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.Login
-import com.vs.schoolmessenger.Auth.OTP.OTP
 import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.R
@@ -33,7 +31,6 @@ class PasswordGeneration : BaseActivity<PasswordGenerationBinding>(), View.OnCli
 
     override fun setupViews() {
         super.setupViews()
-        // Access a specific view using its ID
         isToolBarWhiteTheme()
         binding.imgHide.setOnClickListener(this)
         binding.imgHide1.setOnClickListener(this)
@@ -273,17 +270,17 @@ class PasswordGeneration : BaseActivity<PasswordGenerationBinding>(), View.OnCli
             ) {
                 isPassWord = false
                 if (binding.txtCreatePassword.text.toString() == binding.txtConfirmPassword.text.toString()) {
-                    isPassWord = true;
+                    isPassWord = true
                 } else {
                     isPassWord = false
                     Toast.makeText(this, R.string.isPasswordMisMatching, Toast.LENGTH_SHORT).show()
                 }
             } else {
-                isPassWord = false;
+                isPassWord = false
                 Toast.makeText(this, R.string.EnterTheConformPassword, Toast.LENGTH_SHORT).show()
             }
         } else {
-            isPassWord = false;
+            isPassWord = false
             Toast.makeText(this, R.string.EnterTheNewPassword, Toast.LENGTH_SHORT).show()
         }
         return isPassWord
