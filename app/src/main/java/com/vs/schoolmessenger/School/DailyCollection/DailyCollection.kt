@@ -46,8 +46,8 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(), View.OnClickList
         binding.categoryName.setOnClickListener(this)
         binding.linearLayout3.setOnClickListener(this)
         binding.linearLayout5.setOnClickListener(this)
-
-
+        binding.SearchNotification.setOnClickListener(this)
+        binding.imgDelete.setOnClickListener (this)
         val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
         val calendar = Calendar.getInstance()
 
@@ -177,12 +177,18 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(), View.OnClickList
             R.id.imgBack -> {
                 onBackPressed()
             }
+            R.id.SearchNotification ->{
+                binding.rytSearch.visibility=View.VISIBLE
+            }
+            R.id.imgDelete ->{
+                binding.rytSearch.visibility=View.GONE
+            }
             R.id.class_name -> {
                 selectedType = "2"
                 binding.className.setBackgroundResource(R.drawable.white_radious)
                 binding.className.setTextColor(Color.BLACK)
-                binding.modeName.setBackgroundResource(R.drawable.rect_light_gray)
-                binding.categoryName.setBackgroundResource(R.drawable.rect_light_gray)
+                binding.modeName.setBackgroundResource(R.drawable.bg_light_blue)
+                binding.categoryName.setBackgroundResource(R.drawable.bg_light_blue)
 
                 isGetDailyCollection()
             }
@@ -191,8 +197,8 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(), View.OnClickList
                 selectedType = "3"
                 binding.modeName.setBackgroundResource(R.drawable.white_radious)
                 binding.modeName.setTextColor(Color.BLACK)
-                binding.className.setBackgroundResource(R.drawable.rect_light_gray)
-                binding.categoryName.setBackgroundResource(R.drawable.rect_light_gray)
+                binding.className.setBackgroundResource(R.drawable.bg_light_blue)
+                binding.categoryName.setBackgroundResource(R.drawable.bg_light_blue)
                 isGetDailyCollection()
             }
 
@@ -200,8 +206,8 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(), View.OnClickList
                 selectedType = "1"
                 binding.categoryName.setBackgroundResource(R.drawable.white_radious)
                 binding.categoryName.setTextColor(Color.BLACK)
-                binding.modeName.setBackgroundResource(R.drawable.rect_light_gray)
-                binding.className.setBackgroundResource(R.drawable.rect_light_gray)
+                binding.modeName.setBackgroundResource(R.drawable.bg_light_blue)
+                binding.className.setBackgroundResource(R.drawable.bg_light_blue)
                 isGetDailyCollection()
             }
 
