@@ -134,11 +134,17 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(), Abs
                 isMarkAttendance()
             }
 
-            R.id.lnrSelectAll ,R.id.chSelectAll-> {
-                binding.chSelectAll.isChecked = !binding.chSelectAll.isChecked
-                val isChecked = binding.chSelectAll.isChecked
-                mAdapter.setAllAbsent(isChecked)
+            R.id.lnrSelectAll, R.id.chSelectAll -> {
+                if (v.id == R.id.lnrSelectAll) {
+                    // User clicked the layout → manually toggle the checkbox
+                    binding.chSelectAll.isChecked = !binding.chSelectAll.isChecked
+                }
 
+                // Whether user clicked checkbox or layout, get the new state
+                val isChecked = binding.chSelectAll.isChecked
+
+                // Update the adapter with the current checkbox state
+                mAdapter.setAllAbsent(isChecked)
             }
 
         }

@@ -1,7 +1,7 @@
 package com.vs.schoolmessenger.School.StudentReport
 
 import android.content.Context
-import android.util.Log
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +11,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.facebook.shimmer.ShimmerFrameLayout
-import com.vs.schoolmessenger.Parent.Communication.UnifiedVoiceAdapter.ShimmerViewHolder
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
@@ -83,18 +82,32 @@ class StudentReportAdapter(
             lblStudentName.text = data.name
             lblFatherName.text = data.father_name
             lblTeacherName.text = data.class_teacher
-            lblMobileNumber.text = data.primary_mobile
             lblStandard.text = data.class_name
             lblSection.text = data.section_name
+            if(data.primary_mobile!=""){
+                lnrPhoneNumber.visibility=View.VISIBLE
+                lnrSms.visibility=View.VISIBLE
+                lblMobileNumber.text = data.primary_mobile
+                lblMobileNumber.setPaintFlags(lblMobileNumber.getPaintFlags() or Paint.UNDERLINE_TEXT_FLAG)
+
+            }else{
+                lnrPhoneNumber.visibility=View.GONE
+                lnrSms.visibility=View.GONE
+            }
+            if(data.email!=""){
+                lnrMail.visibility=View.VISIBLE
+                lblEmail.text = data.email
+                lblEmail.setPaintFlags(lblEmail.getPaintFlags() or Paint.UNDERLINE_TEXT_FLAG)
+
+            }else{
+                lnrMail.visibility=View.GONE
+            }
             Glide.with(context)
                 .load(data.profile)
                 .placeholder(R.drawable.image_placeholder)
                 .error(R.drawable.default_profile)
                 .into(profileImage);
 
-
-//        In Get Student Report API,We have not recived the Email-->10/05/2025
-//            lblEmail.text = data.email
 
             // Set click listener for the email TextView
             lnrMail.setOnClickListener {
