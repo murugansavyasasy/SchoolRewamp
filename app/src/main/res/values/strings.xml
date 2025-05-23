@@ -1,7 +1,7 @@
 <resources>
 
 <!--    <string name="app_name">School Chimes</string>-->
-    <string name="app_name">School Chimes Revamp</string>
+    <string name="app_name">School Chimes-Beta</string>
     <string name="isPasswordMisMatching">Password is mismatching</string>
     <string name="SuccessfullyPasswordCreation">Successfully creation your password</string>
     <string name="EnterTheNewPassword">Enter the new password</string>

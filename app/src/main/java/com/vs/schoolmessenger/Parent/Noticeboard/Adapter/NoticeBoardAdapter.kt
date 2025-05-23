@@ -18,7 +18,6 @@ import com.vs.schoolmessenger.Parent.Noticeboard.Notice
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardClickListener
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
-
 class NoticeBoardAdapter(
     private var itemList: List<Notice>?,
     private var listener: NoticeBoardClickListener,
@@ -108,7 +107,7 @@ class NoticeBoardAdapter(
         fun bind(noticeData: Notice, position: Int, adapter: NoticeBoardAdapter) {
             lblTitleImage.text = noticeData.title
             lblContentImage.text = noticeData.content
-            lblDateImage.text = noticeData.created_on
+            lblDateImage.text = Constant.convertDateAndTimeFormat(noticeData.created_on)
 
             if (noticeData.file_path.isNotEmpty()) {
                 rcyImgPdf.visibility = View.VISIBLE

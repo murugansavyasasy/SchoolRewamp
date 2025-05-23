@@ -83,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginTop="@dimen/five"
-                android:text="6382677672"
+                android:text="04438462020"
                 android:textSize="@dimen/thirteen_sp"
                 android:layout_marginEnd="@dimen/ten"
                 android:textColor="@color/navi_blue2"

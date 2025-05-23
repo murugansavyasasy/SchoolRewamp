@@ -133,6 +133,11 @@ class PasswordGeneration : BaseActivity<PasswordGenerationBinding>(), View.OnCli
                 val message = response.message
                 if (status) {
                     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+                    SharedPreference.putLogout(this@PasswordGeneration, true)
+                    SharedPreference.putMobileNumberPassWord(
+                        this@PasswordGeneration,
+                        Constant.isMobileNumber,
+                        binding.txtConfirmPassword.text.toString())
                     Constant.isForgotPassword = false
                     val intent = Intent(this@PasswordGeneration, Login::class.java)
                     startActivity(intent)
