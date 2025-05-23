@@ -1,7 +1,14 @@
 package com.vs.schoolmessenger.Parent.Noticeboard
 
+import com.google.gson.annotations.SerializedName
+import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.Holiday
+import com.vs.schoolmessenger.Repository.APIKeyNames
+
 data class NoticeBoardResponse (
-    val status: Boolean,
-    val message: String,
-    val data: List<Notice>
+    @SerializedName (APIKeyNames.status)val status: Boolean,
+    @SerializedName (APIKeyNames.message) val message: String,
+    @SerializedName(APIKeyNames.data) val data: List<Notice>
 )
+
+
+

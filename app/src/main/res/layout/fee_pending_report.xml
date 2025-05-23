@@ -46,20 +46,25 @@
         android:layout_below="@+id/rlaLbCommunication"
         android:weightSum="2"
         android:gravity="center_vertical"
-        android:layout_marginTop="@dimen/ten">
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="@dimen/ten"
+        android:background="@drawable/rect_light_gray">
 
 
         <TextView
             android:id="@+id/category_name"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/five"
+            android:background="@drawable/white_radious"
             android:layout_weight="1"
-            android:background="@drawable/custom_category_background"
             android:gravity="center"
             android:text="CATEGORY WISE"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="@dimen/fifteen_sp"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:layout_marginStart="3dp"
             style="@style/CustomTextStylePoppinsMedium">
         </TextView>
 
@@ -68,12 +73,12 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="CLASS WISE"
-            android:textColor="@color/grey"
+            android:textColor="@color/black"
             android:textSize="@dimen/fifteen_sp"
-            android:layout_marginTop="@dimen/five"
             android:layout_weight="1"
-            android:layout_marginStart="@dimen/three"
-            android:background="@drawable/custom_rounded_background2"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:layout_marginStart="3dp"
             android:layout_marginEnd="@dimen/three"
             android:gravity="center"
             style="@style/CustomTextStylePoppinsMedium">
@@ -118,11 +123,33 @@
         </TextView>
     </LinearLayout>
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/relative_layout5"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/AcademicYear"
+        >
+        <TextView
+            android:id="@+id/total_collection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Collection"
+            android:layout_alignParentEnd="true"
+            android:textColor="@color/orange"
+            android:layout_marginEnd="15dp"
+            style="@style/CustomTextStylePoppinsBold"
+            android:textSize="13sp"/>
+
+
+    </RelativeLayout>
+
+
     <LinearLayout
         android:id="@+id/lytList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/AcademicYear"
+        android:layout_below="@+id/relative_layout5"
         android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView

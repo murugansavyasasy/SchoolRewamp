@@ -178,7 +178,10 @@
         android:id="@+id/relative_layout8"
         android:layout_below="@+id/relative_layout"
         android:weightSum="3"
+        android:background="@drawable/rect_light_gray"
         android:gravity="center_vertical"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
         android:layout_marginTop="@dimen/ten">
 
 
@@ -186,13 +189,15 @@
             android:id="@+id/category_name"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/five"
             android:layout_weight="1"
-            android:background="@drawable/custom_category_background"
             android:gravity="center"
             android:text="@string/DC_category"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
+            android:background="@drawable/white_radious"
             android:textSize="@dimen/fifteen_sp"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:layout_marginStart="3dp"
             style="@style/CustomTextStylePoppinsMedium">
         </TextView>
 
@@ -203,10 +208,10 @@
             android:text="@string/DailyCollection_class"
             android:textColor="@color/grey"
             android:textSize="@dimen/fifteen_sp"
-            android:layout_marginTop="@dimen/five"
             android:layout_weight="1"
-            android:layout_marginStart="@dimen/three"
-            android:background="@drawable/custom_rounded_background2"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:layout_marginStart="3dp"
             android:layout_marginEnd="@dimen/three"
             android:gravity="center"
             style="@style/CustomTextStylePoppinsMedium">
@@ -220,30 +225,56 @@
             android:text="@string/mode"
             android:textColor="@color/grey"
             android:textSize="@dimen/fifteen_sp"
-            android:layout_marginTop="@dimen/five"
             android:layout_weight="1"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:layout_marginStart="3dp"
             android:gravity="center"
             style="@style/CustomTextStylePoppinsMedium"
-            android:background="@drawable/custom_rounded_background2"
            >
         </TextView>
 
      </LinearLayout>
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/relative_layout5"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/relative_layout8"
+       >
+        <TextView
+            android:id="@+id/total_collection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Collection"
+            android:layout_alignParentEnd="true"
+            android:textColor="@color/orange"
+            android:layout_marginEnd="15dp"
+            style="@style/CustomTextStylePoppinsBold"
+            android:textSize="13sp"/>
+
+
+    </RelativeLayout>
+
     <LinearLayout
         android:id="@+id/lytList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/relative_layout8"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/relative_layout5"
         android:orientation="vertical">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/totalsummary1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/relative_layout8"
         android:layout_marginTop="@dimen/ten">
     </androidx.recyclerview.widget.RecyclerView>
+
+
+
+
 
     <ImageView
         android:id="@+id/nomessage"
