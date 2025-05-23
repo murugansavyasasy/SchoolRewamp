@@ -16,12 +16,12 @@ import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
 import com.vs.schoolmessenger.Parent.Communication.VoiceDataResponse
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventResponse
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.HolidayResponse
-import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
-import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
-import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.SendAbsenteeSMSResponse
+import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
+import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
+import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionReportResponse
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
@@ -30,8 +30,8 @@ import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistor
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffAttendanceReportResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffLocationResponse
-import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
 import com.vs.schoolmessenger.School.SchoolStrength.SchoolStrengthResponse
+import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
 
 class App(application: Application) : AndroidViewModel(application) {
 
@@ -142,62 +142,63 @@ class App(application: Application) : AndroidViewModel(application) {
 
 
     fun init() {
-        isDashBoardData = apiSchoolRepositories!!.isDashBoardLiveData
-        isGetAds = apiSchoolRepositories!!.isGetAdsLiveData
-        isGetStaffList = apiSchoolRepositories!!.isGetStaffListLiveData
-        isGetSubjectList = apiSchoolRepositories!!.isSubjectListLiveData
-        isStandardSectionList = apiSchoolRepositories!!.isGetStandardSectionLiveData
-        isStudentList = apiSchoolRepositories!!.isStudentLiveData
-        isGetGroupList = apiSchoolRepositories!!.isGetGroupLiveData
-        isGetCommmunicationlist = apiSchoolRepositories!!.isGetCommunicationLiveData
-        isGetCommmunicationlistload = apiSchoolRepositories!!.isGetCommunicationloadLiveData
-        isGetVoiceHistory = apiSchoolRepositories!!.isGetVoiceHistoryLiveData
-        isGetTextHistory = apiSchoolRepositories!!.isGetTextHistoryLiveData
-        isGetHomeWorkReport = apiSchoolRepositories!!.isGetHomeWorkReportLiveData
-        isNoticeBoardReport = apiSchoolRepositories!!.isNoticeBoardReportLiveData
-        isGetDailyCollectionReport = apiSchoolRepositories!!.isGetDailyCollectionReportLiveData
-        isGetSchoolStrengthReport = apiSchoolRepositories!!.isGetSchoolStrengthReportLiveData
-        isDetailedPendingReport = apiSchoolRepositories!!.isDetailedPendingReportLiveData
-        isDetailedWisePendingReport = apiSchoolRepositories!!.isDetailedWisePendingReportLiveData
-        isSendText = apiSchoolRepositories!!.isSendTextLiveData
-        isSendHomeWork = apiSchoolRepositories!!.isSendHomeWorkLiveData
-        IsGetEventReport = apiSchoolRepositories!!.IsGetEventReportLiveData
-        IsGetHolidayReport = apiSchoolRepositories!!.IsGetHolidayReportLiveData
-        isVoiceSend = apiSchoolRepositories!!.isSendVoiceLiveData
-        isUpdateStatusArchive = apiSchoolRepositories!!.isUpdateStatusArchiveLiveData
-        isGetAcademicList = apiSchoolRepositories!!.isGetAcademicLiveData
-        isUpdateStatusCommunication = apiSchoolRepositories!!.isUpdateStatusCommunicationLiveData
-        isHomeWorkDetailsList = apiSchoolRepositories!!.isHomeWorkDetailsLiveData
-        isHomeWorkDetailsListArchive = apiSchoolRepositories!!.isHomeWorkDetailsListLiveData
-        isPunchAttendance = apiSchoolRepositories!!.isPunchAttendanceLiveData
-        isAddLocation = apiSchoolRepositories!!.isAddLocationLiveData
-        isRemoveLocation = apiSchoolRepositories!!.isRemoveLocationLiveData
-        isUpdateLocation = apiSchoolRepositories!!.isUpdateLocationLiveData
-        isLocationHistory = apiSchoolRepositories!!.isLocationHistoryLiveData
-        isStaffLocations = apiSchoolRepositories!!.isStaffLocationsLiveData
-        isPunchHistory = apiSchoolRepositories!!.isPunchHistoryLiveData
-        isStaffAttendanceReport = apiSchoolRepositories!!.isGiometricStaffAttendanceReportLiveData
-        isStaffWiseAttendanceReport = apiSchoolRepositories!!.isGiometricStaffWiseAttendanceReportLiveData
+        isDashBoardData = apiSchoolRepositories.isDashBoardLiveData
+        isGetAds = apiSchoolRepositories.isGetAdsLiveData
+        isGetStaffList = apiSchoolRepositories.isGetStaffListLiveData
+        isGetSubjectList = apiSchoolRepositories.isSubjectListLiveData
+        isStandardSectionList = apiSchoolRepositories.isGetStandardSectionLiveData
+        isStudentList = apiSchoolRepositories.isStudentLiveData
+        isGetGroupList = apiSchoolRepositories.isGetGroupLiveData
+        isGetCommmunicationlist = apiSchoolRepositories.isGetCommunicationLiveData
+        isGetCommmunicationlistload = apiSchoolRepositories.isGetCommunicationloadLiveData
+        isGetVoiceHistory = apiSchoolRepositories.isGetVoiceHistoryLiveData
+        isGetTextHistory = apiSchoolRepositories.isGetTextHistoryLiveData
+        isGetHomeWorkReport = apiSchoolRepositories.isGetHomeWorkReportLiveData
+        isNoticeBoardReport = apiSchoolRepositories.isNoticeBoardReportLiveData
+        isGetDailyCollectionReport = apiSchoolRepositories.isGetDailyCollectionReportLiveData
+        isGetSchoolStrengthReport = apiSchoolRepositories.isGetSchoolStrengthReportLiveData
+        isDetailedPendingReport = apiSchoolRepositories.isDetailedPendingReportLiveData
+        isDetailedWisePendingReport = apiSchoolRepositories.isDetailedWisePendingReportLiveData
+        isSendText = apiSchoolRepositories.isSendTextLiveData
+        isSendHomeWork = apiSchoolRepositories.isSendHomeWorkLiveData
+        IsGetEventReport = apiSchoolRepositories.IsGetEventReportLiveData
+        IsGetHolidayReport = apiSchoolRepositories.IsGetHolidayReportLiveData
+        isVoiceSend = apiSchoolRepositories.isSendVoiceLiveData
+        isUpdateStatusArchive = apiSchoolRepositories.isUpdateStatusArchiveLiveData
+        isGetAcademicList = apiSchoolRepositories.isGetAcademicLiveData
+        isUpdateStatusCommunication = apiSchoolRepositories.isUpdateStatusCommunicationLiveData
+        isHomeWorkDetailsList = apiSchoolRepositories.isHomeWorkDetailsLiveData
+        isHomeWorkDetailsListArchive = apiSchoolRepositories.isHomeWorkDetailsListLiveData
+        isPunchAttendance = apiSchoolRepositories.isPunchAttendanceLiveData
+        isAddLocation = apiSchoolRepositories.isAddLocationLiveData
+        isRemoveLocation = apiSchoolRepositories.isRemoveLocationLiveData
+        isUpdateLocation = apiSchoolRepositories.isUpdateLocationLiveData
+        isLocationHistory = apiSchoolRepositories.isLocationHistoryLiveData
+        isStaffLocations = apiSchoolRepositories.isStaffLocationsLiveData
+        isPunchHistory = apiSchoolRepositories.isPunchHistoryLiveData
+        isStaffAttendanceReport = apiSchoolRepositories.isGiometricStaffAttendanceReportLiveData
+        isStaffWiseAttendanceReport =
+            apiSchoolRepositories.isGiometricStaffWiseAttendanceReportLiveData
         isStaffWiseAttendanceReportList =
-            apiSchoolRepositories!!.isGiometricStaffWiseAttendanceReportLiveDataList
-        isStudentReportList = apiSchoolRepositories!!.isStudentReportLiveData
-        isSendAbsenteeSMS = apiSchoolRepositories!!.isSendAbsenteeSMSLiveData
+            apiSchoolRepositories.isGiometricStaffWiseAttendanceReportLiveDataList
+        isStudentReportList = apiSchoolRepositories.isStudentReportLiveData
+        isSendAbsenteeSMS = apiSchoolRepositories.isSendAbsenteeSMSLiveData
 
-        isChildAttendanceReport = apiParentRepositories!!.isChildAttendanceReportLiveData
+        isChildAttendanceReport = apiParentRepositories.isChildAttendanceReportLiveData
 
 
     }
 
     fun isDashBoardData(isToken: String, isMemberType: String, activity: Activity) {
-        apiSchoolRepositories!!.isDashBoard(isToken, isMemberType, activity)
+        apiSchoolRepositories.isDashBoard(isToken, isMemberType, activity)
     }
 
     fun isGetAds(isToken: String, isMenuId: String, activity: Activity) {
-        apiSchoolRepositories!!.isGetAds(isToken, isMenuId, activity)
+        apiSchoolRepositories.isGetAds(isToken, isMenuId, activity)
     }
 
     fun isGetStaffList(isToken: String, activity: Activity) {
-        apiSchoolRepositories!!.isGetStaffList(isToken, activity)
+        apiSchoolRepositories.isGetStaffList(isToken, activity)
     }
 
     fun isGetSubjectList(
@@ -225,67 +226,79 @@ class App(application: Application) : AndroidViewModel(application) {
     }
 
     fun isGetGroupList(isToken: String, isAcademicYearId: Int, activity: Activity) {
-        apiSchoolRepositories!!.isGetGroupList(isToken, isAcademicYearId, activity)
+        apiSchoolRepositories.isGetGroupList(isToken, isAcademicYearId, activity)
     }
 
     fun isGetCommmunicationlistload(isToken: String, activity: Activity) {
-        apiSchoolRepositories!!.isGetCommmunicationlistload(isToken, activity)
+        apiSchoolRepositories.isGetCommmunicationlistload(isToken, activity)
     }
 
 
     fun isGetCommmunicationlist(isToken: String, activity: Activity) {
-        apiSchoolRepositories!!.isGetCommmunicationlist(isToken, activity)
+        apiSchoolRepositories.isGetCommmunicationlist(isToken, activity)
     }
 
     fun isGetHomeWorkReport(isToken: String,  isSectionId: Int, isAcademicYearId: Int ,isdate: String ,activity: Activity) {
-        apiSchoolRepositories!!.isGetHomeWorkReport(isToken, isSectionId, isAcademicYearId, isdate, activity )
+        apiSchoolRepositories.isGetHomeWorkReport(
+            isToken,
+            isSectionId,
+            isAcademicYearId,
+            isdate,
+            activity
+        )
     }
 
     fun isGetDailyCollectionReport(isToken: String,  istype: String, isfromdate: String ,istodate: String ,activity: Activity) {
-        apiSchoolRepositories!!.isGetDailyCollectionReport(isToken, istype, isfromdate, istodate, activity )
+        apiSchoolRepositories.isGetDailyCollectionReport(
+            isToken,
+            istype,
+            isfromdate,
+            istodate,
+            activity
+        )
     }
 
     fun isDetailedPendingReport(isToken: String, isAcademicYearId: Int  ,activity: Activity) {
-        apiSchoolRepositories!!.isDetailedPendingReport(isToken, isAcademicYearId, activity )
+        apiSchoolRepositories.isDetailedPendingReport(isToken, isAcademicYearId, activity)
     }
     fun isDetailedWisePendingReport(isToken: String, isAcademicYearId: Int  ,activity: Activity) {
-        apiSchoolRepositories!!.isDetailedWisePendingReport(isToken, isAcademicYearId, activity )
+        apiSchoolRepositories.isDetailedWisePendingReport(isToken, isAcademicYearId, activity)
     }
 
     fun isGetSchoolStrengthReport(isToken: String,   isAcademicYearId: Int ,activity: Activity) {
-        apiSchoolRepositories!!.isGetSchoolStrengthReport(isToken, isAcademicYearId , activity )
+        apiSchoolRepositories.isGetSchoolStrengthReport(isToken, isAcademicYearId, activity)
     }
 
     fun isNoticeBoardReport(isToken: String ,activity: Activity) {
-        apiSchoolRepositories!!.isNoticeBoardReport(isToken , activity )
+        apiSchoolRepositories.isNoticeBoardReport(isToken, activity)
     }
 
     fun IsGetEventReport(isToken: String ,activity: Activity) {
-        apiSchoolRepositories!!.IsGetEventReport(isToken , activity )
+        apiSchoolRepositories.IsGetEventReport(isToken, activity)
     }
 
     fun IsGetHolidayReport(isToken: String ,activity: Activity) {
-        apiSchoolRepositories!!.IsGetHolidayReport(isToken , activity )
+        apiSchoolRepositories.IsGetHolidayReport(isToken, activity)
     }
 
     fun isGetTextHistory(isToken: String, activity: Activity) {
-        apiSchoolRepositories!!.isGetTextHistory(isToken, activity)
+        apiSchoolRepositories.isGetTextHistory(isToken, activity)
     }
 
     fun isGetVoiceHistory(isToken: String, isEmergency: String, activity: Activity) {
-        apiSchoolRepositories!!.isGetVoiceHistory(isToken, isEmergency, activity)
+        apiSchoolRepositories.isGetVoiceHistory(isToken, isEmergency, activity)
     }
 
     fun isSendText(isToken: String, josnObject: JsonObject, activity: Activity) {
-        apiSchoolRepositories!!.isSendText(isToken, josnObject, activity)
+        apiSchoolRepositories.isSendText(isToken, josnObject, activity)
     }
 
     fun isSendHomeWork(isToken: String, josnObject: JsonObject, activity: Activity) {
-        apiSchoolRepositories!!.isSendHomeWork(isToken, josnObject, activity)
+        apiSchoolRepositories.isSendHomeWork(isToken, josnObject, activity)
     }
 
     fun isVoiceSend(isToken: String, josnObject: JsonObject, activity: Activity) {
-        apiSchoolRepositories!!.isSendVoice(isToken, josnObject, activity)
+        apiSchoolRepositories.isSendVoice(isToken, josnObject, activity)
     }
 
     fun isUpdateStatusArchive(isToken: String, jsonObject: JsonObject, activity: Activity) {
@@ -308,44 +321,48 @@ class App(application: Application) : AndroidViewModel(application) {
 
     //get homework details
     fun isHomeworkListArchive(isToken: String, activity: Activity) {
-        apiSchoolRepositories?.homework_list_archive(isToken, activity)
+        apiSchoolRepositories.homework_list_archive(isToken, activity)
     }
 
 
     fun punchAttendance(isToken: String, jsonObject: JsonObject, activity: Activity) {
-        apiSchoolRepositories?.punchAttendance(isToken, jsonObject, activity)
+        apiSchoolRepositories.punchAttendance(isToken, jsonObject, activity)
     }
 
     fun addLocation(isToken: String, jsonObject: JsonObject, activity: Activity) {
-        apiSchoolRepositories?.addLocation(isToken, jsonObject, activity)
+        apiSchoolRepositories.addLocation(isToken, jsonObject, activity)
     }
 
     fun removeLocation(isToken: String, jsonObject: JsonObject, activity: Activity) {
-        apiSchoolRepositories?.removeLocation(isToken, jsonObject, activity)
+        apiSchoolRepositories.removeLocation(isToken, jsonObject, activity)
     }
 
     fun updateLocation(isToken: String, jsonObject: JsonObject, activity: Activity) {
-        apiSchoolRepositories?.updateLocation(isToken, jsonObject, activity)
+        apiSchoolRepositories.updateLocation(isToken, jsonObject, activity)
     }
 
     fun getStaffLocations(isToken: String, activity: Activity) {
-        apiSchoolRepositories?.getStaffLocations(isToken, activity)
+        apiSchoolRepositories.getStaffLocations(isToken, activity)
     }
 
     fun getPunchHistory(isToken: String, isDate: String, staff_id: String, activity: Activity) {
-        apiSchoolRepositories?.getPunchHistory(isToken, isDate,staff_id, activity)
+        apiSchoolRepositories.getPunchHistory(isToken, isDate, staff_id, activity)
     }
 
     fun getLocationHistory(isToken: String, activity: Activity) {
-        apiSchoolRepositories?.getLocationHistory(isToken, activity)
+        apiSchoolRepositories.getLocationHistory(isToken, activity)
     }
 
     fun getStaffAttendanceReport(isToken: String, attendance_dt: String, activity: Activity) {
-        apiSchoolRepositories?.getGiometricStaffAttendancereport(isToken, attendance_dt, activity)
+        apiSchoolRepositories.getGiometricStaffAttendancereport(isToken, attendance_dt, activity)
     }
 
     fun getStaffWiseAttendanceReport(isToken: String, isCurrentDate: String, activity: Activity) {
-        apiSchoolRepositories?.getGiometricStaffWiseAttendancereport(isToken, isCurrentDate, activity)
+        apiSchoolRepositories.getGiometricStaffWiseAttendancereport(
+            isToken,
+            isCurrentDate,
+            activity
+        )
     }
 
     fun getStaffWiseAttendanceReportList(
@@ -354,7 +371,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isStaffId: Int,
         activity: Activity
     ) {
-        apiSchoolRepositories?.getGiometricStaffWiseAttendancereportStaffList(
+        apiSchoolRepositories.getGiometricStaffWiseAttendancereportStaffList(
             isToken,
             isSelectedDate,
             isStaffId,
@@ -363,17 +380,15 @@ class App(application: Application) : AndroidViewModel(application) {
     }
     //Get Student Report Details
     fun getStudentReportDetails(isToken: String, class_id: Int?=null,section_id:Int?=null, activity: Activity) {
-        apiSchoolRepositories?.getStudentReportList(isToken, class_id, section_id,activity)
+        apiSchoolRepositories.getStudentReportList(isToken, class_id, section_id, activity)
     }
 
     fun isUpdateSendAbsenteeSMS(isToken: String, jsonObject: JsonObject, activity: Activity) {
-        apiSchoolRepositories?.isUpdateSendAbsenteeSMS(isToken, jsonObject, activity)
+        apiSchoolRepositories.isUpdateSendAbsenteeSMS(isToken, jsonObject, activity)
     }
 
     fun getChildAttendanceReport(isToken: String, activity: Activity) {
-        apiParentRepositories?.getChildAttendanceReport(isToken, activity)
+        apiParentRepositories.getChildAttendanceReport(isToken, activity)
     }
-
-
 }
 

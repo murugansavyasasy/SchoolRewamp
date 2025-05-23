@@ -155,15 +155,11 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
 
     private fun isLoadData(isStaffReport: List<StaffAttendanceReportData>) {
         Constant.executeAfterDelay {
-                    isStaffAttendanceReportAdapter =
-                        StaffAttendanceReportAdapter(
-                            isStaffReport,
-                            this,
-                            this,
-                            Constant.isShimmerViewDisable
-                        )
-                    binding.recycleAttendanceReportsToday.adapter = isStaffAttendanceReportAdapter
-            }
+            isStaffAttendanceReportAdapter = StaffAttendanceReportAdapter(
+                isStaffReport, this, this, Constant.isShimmerViewDisable
+            )
+            binding.recycleAttendanceReportsToday.adapter = isStaffAttendanceReportAdapter
+        }
     }
 
     private fun isLoadYear(yearList: List<AcademicYear>) {
@@ -277,7 +273,7 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
 //            }
         } else {
             rcyPunchList!!.visibility = View.GONE
-            lblNoRecordsFound!!.text =getString(R.string.Punch_History_found)
+            lblNoRecordsFound!!.text = getString(R.string.Punch_History_found)
             lblNoRecordsFound!!.visibility = View.VISIBLE
         }
     }
@@ -328,19 +324,12 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
         selectedMonthNumber: String
     ) {
         binding.lytNoRecordFound.visibility = View.GONE
-        if (isTodayList) {
-            binding.recycleAttendanceReportsToday.visibility = View.VISIBLE
-            isStaffAttendanceReportAdapter =
-                StaffAttendanceReportAdapter(null, this, this, Constant.isShimmerViewShow)
-            binding.recycleAttendanceReportsToday.layoutManager = LinearLayoutManager(this)
-            binding.recycleAttendanceReportsToday.adapter = isStaffAttendanceReportAdapter
-        } else {
-            binding.recycleAttendanceReportsToday.visibility = View.VISIBLE
-            isStaffAttendanceReportAdapter =
-                StaffAttendanceReportAdapter(null, this, this, Constant.isShimmerViewShow)
-            binding.recycleAttendanceReportsToday.layoutManager = LinearLayoutManager(this)
-            binding.recycleAttendanceReportsToday.adapter = isStaffAttendanceReportAdapter
-        }
+        binding.recycleAttendanceReportsToday.visibility = View.VISIBLE
+        isStaffAttendanceReportAdapter =
+            StaffAttendanceReportAdapter(null, this, this, Constant.isShimmerViewShow)
+        binding.recycleAttendanceReportsToday.layoutManager = LinearLayoutManager(this)
+        binding.recycleAttendanceReportsToday.adapter = isStaffAttendanceReportAdapter
+
 
         if (isTodayList) {
             isAccessToken?.let {
