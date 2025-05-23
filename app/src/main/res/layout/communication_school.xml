@@ -15,41 +15,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
-                android:id="@+id/rlaLbCommunication"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/eighty"
-                android:background="@drawable/gradient_theme_school"
-                android:paddingBottom="@dimen/thirty">
-
-                <ImageView
-                    android:id="@+id/imgBack"
-                    android:layout_width="@dimen/thirty"
-                    android:layout_height="@dimen/thirty"
-                    android:layout_marginStart="@dimen/ten"
-                    android:layout_marginTop="@dimen/twenty"
-                    android:src="@drawable/arrow_back_black">
-
-                </ImageView>
-
-                <TextView
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/fifteen"
-                    android:layout_marginTop="@dimen/twenty"
-                    android:text="@string/Communication"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/twenty_sp">
-
-                </TextView>
-            </LinearLayout>
+            <include
+                android:id="@+id/toolbarLayout"
+                layout="@layout/school_side_tool_bar" />
 
             <RelativeLayout
                 android:id="@+id/rlaAcademicYear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/rlaLbCommunication"
+                android:layout_below="@+id/toolbarLayout"
                 android:layout_marginStart="@dimen/fifteen"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/fifteen"

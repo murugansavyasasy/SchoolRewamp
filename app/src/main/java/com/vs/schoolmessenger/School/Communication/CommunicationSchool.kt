@@ -142,7 +142,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         binding.lottieAnimationView.setOnClickListener(this)
         binding.lnrHistoryList.setOnClickListener(this)
         binding.rlaBackRecord.setOnClickListener(this)
-        binding.imgBack.setOnClickListener(this)
+        binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.lnrScheduleCall.setOnClickListener(this)
         binding.rlaSendVoice.setOnClickListener(this)
         binding.rlaSendText.setOnClickListener(this)
@@ -156,6 +156,14 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
         recordingStartTime = System.currentTimeMillis()
+        isUserDetails = SharedPreference.getUserDetails(this)
+
+        if (isUserDetails!!.staff_role == Constant.isStaffRole) {
+            binding.rlaScheduleCall.visibility = View.GONE
+        } else {
+            binding.rlaScheduleCall.visibility = View.VISIBLE
+        }
+        binding.toolbarLayout.lblParentToolBar.text = getString(R.string.Communication)
 
         if (!checkAndRequestPermissions(this)) {
             return
@@ -164,8 +172,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
         isAwsUploadingPreSigned = AwsUploadingPreSigned()
         isFileExtensionFromContentUri = FileExtensionFromContentUri()
-
-        isUserDetails = SharedPreference.getUserDetails(this)
 
         if (isUserDetails!!.staff_details.size > 1) {
             isMultipleSchool = true
@@ -176,11 +182,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         binding.lblStartTime.text = Constant.getCurrentTime()
         binding.lblEndTime.text = Constant.getTimeAfter20Minutes()
 
-        if (isUserDetails!!.staff_role == Constant.isStaffRole) {
-            binding.rlaScheduleCall.visibility = View.GONE
-        } else {
-            binding.rlaScheduleCall.visibility = View.VISIBLE
-        }
 
         appViewModel!!.isGetVoiceHistory?.observe(this) { response ->
             if (response != null) {
