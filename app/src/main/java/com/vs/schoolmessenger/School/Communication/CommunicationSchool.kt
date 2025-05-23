@@ -98,6 +98,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     var isAcademicYearId = -1
     var isAcademicYear: List<AcademicYear>? = null
     var isFileName: String? = null
+    var isFromTime = true
     private val progressUpdater = object : Runnable {
         override fun run() {
             if (isPrepared && mediaPlayer!!.isPlaying) {
@@ -716,7 +717,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
                 binding.llEmergencyContainer.visibility = View.VISIBLE
                 isScheduleCall = false
-                Constant.isClickType = 1
+                Constant.isCommunicationType = 1
                 if (mAdapter != null) {
                     mAdapter!!.releaseMediaPlayer()
                 }
@@ -724,7 +725,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
                 binding.rlaBackRecord.visibility = View.GONE
                 binding.gridViewScheduleCall.visibility = View.GONE
-                if (Constant.isClickType == 2) {
+                if (Constant.isCommunicationType == 2) {
                     binding.rlaScheduleCallPickDate.visibility = View.VISIBLE
                     binding.gridViewScheduleCall.visibility = View.VISIBLE
                 } else {
@@ -742,6 +743,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
 
             R.id.rlaScheduleCall -> {
+                binding.lblDurationOfVoice.text = "00:00 / 03:00"
                 if (binding.SwitchEmergencyVoice.isChecked() == true) {
                     binding.SwitchEmergencyVoice.setChecked(true)
                 } else {
@@ -753,7 +755,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
                 binding.llEmergencyContainer.visibility = View.GONE
                 isScheduleCall = true
-                Constant.isClickType = 2
+                Constant.isCommunicationType = 2
                 if (mAdapter != null) {
                     mAdapter!!.releaseMediaPlayer()
                 }
@@ -761,7 +763,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
                 binding.rlaBackRecord.visibility = View.GONE
                 binding.lnrHistoryList.visibility = View.VISIBLE
-                if (Constant.isClickType == 2) {
+                if (Constant.isCommunicationType == 2) {
                     binding.rlaScheduleCallPickDate.visibility = View.VISIBLE
                     binding.gridViewScheduleCall.visibility = View.VISIBLE
                 } else {
@@ -789,7 +791,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
                 binding.llEmergencyContainer.visibility = View.GONE
                 isScheduleCall = false
-                Constant.isClickType = 3
+                Constant.isCommunicationType = 3
                 if (mAdapter != null) {
                     mAdapter!!.releaseMediaPlayer()
                 }
@@ -798,7 +800,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 binding.lnrHistoryList.visibility = View.VISIBLE
                 binding.rlaMessageFromText.visibility = View.VISIBLE
                 binding.rlaSendText.visibility = View.VISIBLE
-                if (Constant.isClickType == 2) {
+                if (Constant.isCommunicationType == 2) {
                     binding.rlaScheduleCallPickDate.visibility = View.VISIBLE
                     binding.gridViewScheduleCall.visibility = View.VISIBLE
                 } else {
@@ -813,6 +815,12 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
 
             R.id.rlaFromTime -> {
+                isFromTime = true
+                showTimePickerDialog(this, this)
+            }
+
+            R.id.rlaToTime -> {
+                isFromTime = false
                 showTimePickerDialog(this, this)
             }
 
@@ -832,9 +840,12 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 binding.rytVoiceRecord.visibility = View.VISIBLE
                 binding.lblDurationOfVoice.visibility = View.VISIBLE
 
-                if (mediaPlayer!!.isPlaying) {
-                    mediaPlayer!!.stop()
+                mediaPlayer?.let {
+                    if (it.isPlaying) {
+                        it.stop()
+                    }
                 }
+
 
                 Constant.selectedFiles.clear()
             }
@@ -844,19 +855,15 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     if (binding.edtContentTextMessage.text.toString() != "") {
                         isGoToRecipient()
                     } else {
-                        Constant.showValidationAlertPopup(
+                        Constant.showValidationAlertPopup(getString(R.string.alert),
                             getString(R.string.Enter_title_description), this
                         )
                     }
                 } else {
-                    Constant.showValidationAlertPopup(
+                    Constant.showValidationAlertPopup(getString(R.string.alert),
                         getString(R.string.Enter_title_description), this
                     )
                 }
-            }
-
-            R.id.rlaToTime -> {
-                showTimePickerDialog(this, this)
             }
 
             R.id.rlaAcademicYear -> {
@@ -880,20 +887,20 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                                 if (selectedDates.isNotEmpty()) {
                                     isGoToRecipient()
                                 } else {
-                                    Constant.showValidationAlertPopup(
-                                        "Select the schedule date", this
+                                    Constant.showValidationAlertPopup(getString(R.string.alert),
+                                        getString(R.string.Select_schedule_date), this
                                     )
                                 }
                             } else {
                                 isGoToRecipient()
                             }
                         } else {
-                            Constant.showValidationAlertPopup(
+                            Constant.showValidationAlertPopup(getString(R.string.alert),
                                 getString(R.string.Voice_title_required), this
                             )
                         }
                     } else {
-                        Constant.showValidationAlertPopup(
+                        Constant.showValidationAlertPopup(getString(R.string.alert),
                             getString(R.string.Voice_title_required), this
                         )
                     }
@@ -904,8 +911,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                                 if (selectedDates.isNotEmpty()) {
                                     isGoToRecipient()
                                 } else {
-                                    Constant.showValidationAlertPopup(
-                                        "Select the schedule date", this
+                                    Constant.showValidationAlertPopup(getString(R.string.alert),
+                                       getString(R.string.Select_schedule_date), this
                                     )
                                 }
                             } else {
@@ -913,12 +920,12 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                             }
 
                         } else {
-                            Constant.showValidationAlertPopup(
+                            Constant.showValidationAlertPopup(getString(R.string.alert),
                                 getString(R.string.Voice_title_required), this
                             )
                         }
                     } else {
-                        Constant.showValidationAlertPopup(
+                        Constant.showValidationAlertPopup(getString(R.string.alert),
                             getString(R.string.Voice_title_required), this
                         )
                     }
@@ -1023,8 +1030,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     mAdapter!!.releaseMediaPlayer()
                 }
 
-                Log.d("Constant.isClickType", Constant.isClickType.toString())
-                when (Constant.isClickType) {
+                Log.d("Constant.isCommunicationType", Constant.isCommunicationType.toString())
+                when (Constant.isCommunicationType) {
                     1 -> {
                         binding.gridViewScheduleCall.visibility = View.GONE
                         binding.rlaScheduleCallPickDate.visibility = View.GONE
@@ -1054,7 +1061,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
             R.id.lnrHistoryList -> {
                 stopAudioProgressUpdate()
-                when (Constant.isClickType) {
+                when (Constant.isCommunicationType) {
                     1 -> {
                         binding.rcyHistoryDataVoiceAndText.visibility = View.GONE
                         binding.lnrHistoryList.visibility = View.GONE
@@ -1139,7 +1146,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
     fun isSaveTheVoiceData() {
         val voiceData = VoiceSendingData(
-            isClickType = Constant.isClickType,
+            isCommunicationType = Constant.isCommunicationType,
             selectedDates = selectedDates,
             isStartTimeText = binding.lblStartTime.text.toString(),
             isEndTimeText = binding.lblEndTime.text.toString(),
@@ -1267,8 +1274,13 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     }
 
     override fun onTimeSelected(hour: Int, minute: Int, amPm: String) {
-        binding.lblStartTime.text = String.format(Constant.timeForMateWithAMPM, hour, minute, amPm)
-        binding.lblEndTime.text = String.format(Constant.timeForMateWithAMPM, hour, minute, amPm)
+        if (isFromTime) {
+            binding.lblStartTime.text =
+                String.format(Constant.timeForMateWithAMPM, hour, minute, amPm)
+        } else {
+            binding.lblEndTime.text =
+                String.format(Constant.timeForMateWithAMPM, hour, minute, amPm)
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -1276,56 +1288,103 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         data: VoiceHistoryDetails, holder: VoiceHistoryAdapter.DataViewHolder
     ) {
         // UI setup
-        if (Constant.isClickType == 2) {
+        if (Constant.isCommunicationType == 2) {
             binding.rlaScheduleCallPickDate.visibility = View.VISIBLE
             binding.gridViewScheduleCall.visibility = View.VISIBLE
         } else {
             binding.rlaScheduleCallPickDate.visibility = View.GONE
             binding.gridViewScheduleCall.visibility = View.GONE
         }
-        binding.rlaRecordVoice.visibility = View.VISIBLE
+        val voiceUrlOrPath = data.url
+        val mediaPlayer = MediaPlayer()
+        try {
+            mediaPlayer.setDataSource(voiceUrlOrPath)
+            mediaPlayer.prepare()
+            val durationInMillis = mediaPlayer.duration
+            if (Constant.isCommunicationType != 2) {
+                if (binding.SwitchEmergencyVoice.isChecked() == true) {
+                    if (durationInMillis > 30000) {
+                        mediaPlayer.release()
+                        showDurationLimitDialog(getString(R.string.Audio_least_30_seconds))
+                        return
+                    } else {
+                        setHistoryData(data)
+                    }
+                } else {
+                    if (durationInMillis > 180000) {
+                        mediaPlayer.release()
+                        showDurationLimitDialog(getString(R.string.Audio_below_3_minutes))
+                        return
+                    } else {
+                        setHistoryData(data)
+                    }
+                }
+            } else {
+                if (durationInMillis > 180000) {
+                    mediaPlayer.release()
+                    showDurationLimitDialog(getString(R.string.Audio_below_3_minutes))
+                    return
+                } else {
+                    setHistoryData(data)
+                }
+            }
 
-        binding.llEmergencyContainer.visibility = View.VISIBLE
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            showDurationLimitDialog("Failed to load audio duration")
+            return
+        } finally {
+            mediaPlayer.release()
+        }
+
+
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun setHistoryData(data: VoiceHistoryDetails) {
+        binding.rlaRecordVoice.visibility = View.VISIBLE
+        if (Constant.isCommunicationType == 1) {
+            binding.llEmergencyContainer.visibility = View.VISIBLE
+        } else {
+            binding.llEmergencyContainer.visibility = View.GONE
+        }
         binding.rcyHistoryDataVoiceAndText.visibility = View.GONE
         binding.rlaBackRecord.visibility = View.GONE
         binding.lnrHistoryList.visibility = View.VISIBLE
-
-//        binding.imgVoiceRecord.visibility = View.GONE
         binding.rytVoiceRecord.visibility = View.GONE
         binding.lblDurationOfVoice.visibility = View.GONE
         binding.rlaAddLocalFile.visibility = View.GONE
 
-
         binding.imgVoiceRecord.setImageDrawable(
             ContextCompat.getDrawable(this@CommunicationSchool, R.drawable.record_icon)
         )
+
         mediaRecorder = null
         isRecording = false
-        recordingHandler.removeCallbacks(recordingRunnable) // Stop updating time
-        Log.d(
-            "RecordingFilePath", "Recording stopped. File Path: $audioFilePath"
-        )
-//        Constant.isVoiceFile = audioFilePath
+        recordingHandler.removeCallbacks(recordingRunnable)
+
+        Log.d("RecordingFilePath", "Recording stopped. File Path: $audioFilePath")
+
         Constant.isAwsUploadedFiles.add(
-            AwsUploadedFiles(
-                isFileUrl = data.url, isFileType = FileType.AUDIO.toString()
-            )
+            AwsUploadedFiles(isFileUrl = data.url, isFileType = FileType.AUDIO.toString())
         )
+
         binding.rlaSeekBarAndTitle.visibility = View.VISIBLE
         binding.rlaTitle.visibility = View.VISIBLE
         binding.edtTitle.setText(data.title.toString())
-
-//        binding.lblEndDuration.text = "/ "+data.duration.toString()
         binding.lblEndDuration.text = "/ " + Constant.getAudioDurationInMinutes(data.url)
 
         Constant.isVoiceType = 3
+
         val voiceUrlOrPath = data.url
         audioFilePath = voiceUrlOrPath
+
+
         val currentDate: String? = Constant.getCurrentDate()
         val isFileExtension = getFileExtensionFromAwsUrl(data.url)
         isFileName = "sss_" + currentDate + "." + isFileExtension
     }
-
 
     private fun openAudioFilePicker() {
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
@@ -1355,11 +1414,19 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
                     val durationInMillis = mediaPlayer.duration
                     val formattedDuration = formatDuration(durationInMillis)
-                    if (binding.SwitchEmergencyVoice.isChecked() == true) {
-                        if (durationInMillis > 30000) {
-                            mediaPlayer.release()
-                            showDurationLimitDialog(getString(R.string.Audio_least_30_seconds))
-                            return
+                    if (Constant.isCommunicationType != 2) {
+                        if (binding.SwitchEmergencyVoice.isChecked() == true) {
+                            if (durationInMillis > 30000) {
+                                mediaPlayer.release()
+                                showDurationLimitDialog(getString(R.string.Audio_least_30_seconds))
+                                return
+                            }
+                        } else {
+                            if (durationInMillis > 180000) {
+                                mediaPlayer.release()
+                                showDurationLimitDialog(getString(R.string.Audio_below_3_minutes))
+                                return
+                            }
                         }
                     } else {
                         if (durationInMillis > 180000) {
@@ -1368,8 +1435,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                             return
                         }
                     }
-
-
                     mediaPlayer.release()
 
                     val timeStamp = SimpleDateFormat(

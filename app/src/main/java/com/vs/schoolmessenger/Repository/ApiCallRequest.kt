@@ -13,7 +13,7 @@ object ApiCallRequest {
     @RequiresApi(Build.VERSION_CODES.O)
     fun isVoiceSend(
         isAcademicYearId: Int,
-        isClickType: Int,
+        isCommunicationType: Int,
         selectedDates: List<String>,
         isStartTimeText: String,
         isEndTimeText: String,
@@ -36,7 +36,7 @@ object ApiCallRequest {
 
         val startTime: String
         val endTime: String
-        if (isClickType == 2) {
+        if (isCommunicationType == 2) {
             startTime = isStartTimeText
             endTime = isEndTimeText
         } else {
@@ -52,7 +52,7 @@ object ApiCallRequest {
         jsonObject.addProperty(APIKeyNames.file_name, fileName)
 
         val jsonArray = JsonArray()
-        if (isClickType == 2) {
+        if (isCommunicationType == 2) {
             selectedDates.forEach { jsonArray.add(it) }
         } else {
             jsonArray.add(Constant.getCurrentDate())
