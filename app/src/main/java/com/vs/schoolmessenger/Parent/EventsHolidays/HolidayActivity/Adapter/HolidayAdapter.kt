@@ -6,9 +6,13 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filter.FilterResults
+import android.widget.Filterable
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
+import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventDataClass
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.Holiday
 import com.vs.schoolmessenger.R
 import java.text.SimpleDateFormat
@@ -19,10 +23,17 @@ class HolidayAdapter(
     private var itemList: List<Holiday>?,
     private var context: Context,
     private var isLoading: Boolean
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
 
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
+
+    private var fullList: List<Holiday> = itemList ?: listOf()
+    private var filteredList: List<Holiday> = itemList ?: listOf()
+    init {
+        fullList = itemList ?: listOf()
+        filteredList = fullList
+    }
 
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
@@ -42,13 +53,38 @@ class HolidayAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
-            holder.bind(itemList!![position], position, this)
+            holder.bind(filteredList!![position], position, this)
         }
     }
 
     override fun getItemCount(): Int {
-        return if (isLoading) 20 else itemList?.size ?: 0
+        return if (isLoading) 20 else filteredList.size
     }
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val query = constraint?.toString()?.lowercase()?.trim() ?: ""
+                val result = if (query.isEmpty()) {
+                    fullList
+                } else {
+                    fullList.filter {
+                        it.name.lowercase().contains(query)
+
+                    }
+                }
+                val filterResults = FilterResults()
+                filterResults.values = result
+                return filterResults
+            }
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                filteredList = results?.values as? List<Holiday> ?: listOf()
+                notifyDataSetChanged()
+            }
+        }
+    }
+
 
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {

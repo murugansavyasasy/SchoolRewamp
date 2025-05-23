@@ -1,5 +1,7 @@
 package com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty
 
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -49,6 +51,28 @@ class Event : BaseActivity<EventParentBinding>(), View.OnClickListener, EventCli
         binding.toolbarLayout.lblRightSideBar.text = resources.getText(R.string.Event)
 
         loadeventdata()
+
+        binding.toolbarLayout.txtVideoMenu.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (::mAdapter.isInitialized) {
+                    mAdapter.filter.filter(s)
+                }
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
+
+        binding.toolbarLayout.txtVideoMenu.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (::isHolidayAdapter.isInitialized) {
+                    isHolidayAdapter.filter.filter(s)
+                }
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
 
         appViewModel?.IsGetEventReport?.observe(this) { response ->
             if (response!!.status) {

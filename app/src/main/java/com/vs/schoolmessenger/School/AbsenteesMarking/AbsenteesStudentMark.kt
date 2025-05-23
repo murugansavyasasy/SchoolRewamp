@@ -1,17 +1,21 @@
 package com.vs.schoolmessenger.School.AbsenteesMarking
 
+import android.os.Build
 import android.util.Log
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIds
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.AbsenteesStudentMarkingBinding
 
 class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(), AbsenteesClickListener,
@@ -19,23 +23,26 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(), Abs
     View.OnClickListener {
 
     private val selectedIds = mutableListOf<String>()
+    private var MarkAttendanceData: MarkAttendanceDataSending? = null
     lateinit var mAdapter: AbsenteesMarkAdapter
     private var appViewModel: App? = null
-    private lateinit var studentsList: List<NameAndIds>
-    private lateinit var isSelectedIds: List<String>
+    private var studentsList: List<NameAndIds>? = null
+    private  var isSelectedIds: List<String>?=null
     private lateinit var isStandardName: String
     private lateinit var isSectionName: String
     private var AllPresent: String? = null
-
+    private var isStaffDetails: StaffDetails? = null
     private lateinit var isAccessToken: String
-    var isAcademicYearId: Int? = null
-    var isSectionId: Int? = null
+    var isAcademicYearId=-1
+    var isSectionId: String? = null
+
 
 
     override fun getViewBinding(): AbsenteesStudentMarkingBinding {
         return AbsenteesStudentMarkingBinding.inflate(layoutInflater)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
         setupToolbar()
@@ -43,21 +50,18 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(), Abs
         binding.rytSend.setOnClickListener(this)
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
-        isStandardName = intent.getStringExtra(Constant.isStandardName) ?: ""
-        isSectionName = intent.getStringExtra(Constant.isSectionName) ?: ""
+        isStaffDetails = SharedPreference.getStaffDetails(this)
+        isAccessToken = isStaffDetails!!.access_token
+        MarkAttendanceData = Constant.isMarkAttendanceDataSending
+        isStandardName = MarkAttendanceData?.class_name.toString()
+        isSectionName =MarkAttendanceData?.section_name.toString()
+        isSectionId=MarkAttendanceData?.section_id
+        isAcademicYearId =MarkAttendanceData?.academic_year_id!!
+        binding.chSelectAll.setOnClickListener(this)
+        Log.d("isGetStudentlListisAcademicYearId", isAcademicYearId.toString())
         binding.lnrSelectAll.setOnClickListener(this)
-
         Log.d("isGetStudentListisStandardName", isStandardName.toString())
         Log.d("isGetStudentListisSectionName", isSectionName.toString())
-
-
-
-
-
-
-        isAccessToken = intent.getStringExtra(Constant.isAccessToken) ?: ""
-        isAcademicYearId = intent.getIntExtra(Constant.isAcademicYearId, 0)
-        isSectionId = intent.getIntExtra(Constant.isSectionId, 0)
 
         Log.d("isGetStudentListSectionID", isSectionId.toString())
         binding.lblClassAndSection.text = isStandardName + "-" + isSectionName
@@ -66,6 +70,8 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(), Abs
             if (response != null && response.status) {
                 Constant.hideLoading(this@AbsenteesStudentMark)
                 Log.d("isSendAbsenteeSMS", response.message)
+                Constant.showDataValidation("Success", response.message, this)
+
 //                val dialogRootView = view as ViewGroup
 //                showTopAlertPopup(response.message, dialogRootView, -1, response.status, "isUpdate")
             }
@@ -128,7 +134,7 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(), Abs
                 isMarkAttendance()
             }
 
-            R.id.lnrSelectAll -> {
+            R.id.lnrSelectAll ,R.id.chSelectAll-> {
                 binding.chSelectAll.isChecked = !binding.chSelectAll.isChecked
                 val isChecked = binding.chSelectAll.isChecked
                 mAdapter.setAllAbsent(isChecked)
@@ -140,55 +146,31 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(), Abs
     }
 
 
-
     private fun isMarkAttendance() {
-        AllPresent = if (selectedIds.isEmpty()) "T" else "F"
-        Constant.isAllPresent = AllPresent!!
-        val MarkAttendanceData = Constant.isMarkAttendanceDataSending
+        AllPresent = if (isSelectedIds.isNullOrEmpty()) "T" else "F"
+        MarkAttendanceData = Constant.isMarkAttendanceDataSending
+        if (MarkAttendanceData?.class_id != "" && MarkAttendanceData?.section_id != ""
+            && MarkAttendanceData?.attendance_date != null) {
 
-        Log.d("MARK_ATTENDANCE", "AllPresent = $AllPresent")
-        Log.d("MARK_ATTENDANCE", "MarkAttendanceData = $MarkAttendanceData")
-
-        if (MarkAttendanceData?.class_id != "" &&
-            MarkAttendanceData?.section_id != "" &&
-            MarkAttendanceData?.attendance_date != null) {
-
-            Log.d("MARK_ATTENDANCE", "Basic data valid, checking attendance conditions...")
-
-            if (MarkAttendanceData.attendance_type == "F" &&
-                MarkAttendanceData.session_type == "" &&
-                selectedIds.isEmpty()) {
-
-                Log.d("MARK_ATTENDANCE", "Calling isUpdateMarkAtttendance() for Full day all present")
+            if (MarkAttendanceData?.attendance_type == "F" && MarkAttendanceData?.session_type == "") {
                 isUpdateMarkAtttendance()
 
-            } else if (MarkAttendanceData.attendance_type == "H" &&
-                MarkAttendanceData.session_type!!.isNotEmpty() &&
-                selectedIds.isNotEmpty()) {
-
-                Log.d("MARK_ATTENDANCE", "Calling isUpdateMarkAtttendance() for Half day with absentees")
-                isUpdateMarkAtttendance()
-            } else {
-                Log.d("MARK_ATTENDANCE", "No condition matched")
+            } else if (MarkAttendanceData?.attendance_type == "H" && MarkAttendanceData?.session_type!!.isNotEmpty()) {
+                isUpdateMarkAtttendance()}
             }
-
-        } else {
-            Log.d("MARK_ATTENDANCE", "Invalid or missing class_id/section_id/attendance_date")
-        }
     }
 
 //    private fun isMarkAttendance() {
 //        // Assign values to the data holder
 //        AllPresent = if (selectedIds.isEmpty()) "T" else "F"
-//        Constant.isAllPresent = AllPresent!!
 //        var MarkAttendanceData = Constant.isMarkAttendanceDataSending
 //
 //
 //        // Decision logic to call update only when necessary
 //        if (MarkAttendanceData?.class_id != "" && MarkAttendanceData?.section_id != "" && MarkAttendanceData?.attendance_date != null) {
-//            if (MarkAttendanceData?.attendance_type == "F" && MarkAttendanceData?.session_type == "" && selectedIds.isEmpty()) {
+//            if (MarkAttendanceData?.attendance_type == "F" && MarkAttendanceData?.session_type == "" && isSelectedIds.isEmpty()) {
 //                isUpdateMarkAtttendance()
-//            } else if (MarkAttendanceData?.attendance_type == "H" && MarkAttendanceData?.session_type!!.isNotEmpty() && selectedIds.isNotEmpty()) {
+//            } else if (MarkAttendanceData?.attendance_type == "H" && MarkAttendanceData?.session_type!!.isNotEmpty() && isSelectedIds.isNotEmpty()) {
 //                isUpdateMarkAtttendance()
 //            }
 //        }
@@ -207,14 +189,14 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(), Abs
             addProperty(APIKeyNames.session_type, MarkAttendanceData?.session_type)
             addProperty(APIKeyNames.attendance_date, MarkAttendanceData?.attendance_date)
             val studentArray = JsonArray().apply {
-                isSelectedIds.forEach { id ->
+                isSelectedIds?.forEach { id ->
                     add(JsonObject().apply {
                         addProperty("ID", id)
                     })
                 }
             }
             add(APIKeyNames.student_id, studentArray)
-            Log.d("AbsenteesStudentID",studentArray.toString())
+            Log.d("AbsenteesStudentID", studentArray.toString())
         }
         appViewModel?.isUpdateSendAbsenteeSMS(isAccessToken!!, jsonObject, this)
 
@@ -225,7 +207,7 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(), Abs
     }
 
     override fun onSelectionChanged(selectedIds: List<String>) {
-           Log.d("ActivitySelectedIDs", selectedIds.toString())
+        Log.d("ActivitySelectedIDs", selectedIds.toString())
         isSelectedIds = selectedIds
     }
 }
