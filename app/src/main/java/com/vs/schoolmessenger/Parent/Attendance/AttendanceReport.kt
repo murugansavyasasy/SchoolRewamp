@@ -55,8 +55,8 @@ class AttendanceReport : BaseActivity<AttendanceReportParentBinding>(), View.OnC
                         Constant.isShimmerViewDisable
                     )
                     binding.rcyAttendanceReport.adapter = mAdapter
-
-                } else {
+                }
+                else {
                     binding.rcyAttendanceReport.visibility = View.GONE
                     binding.toolbarLayout.rytSearch.visibility = View.GONE
 

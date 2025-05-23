@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.Utils
 
 import android.app.Activity
 import android.app.AlertDialog
+import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -167,13 +168,14 @@ object Constant {
     var isBioMetricEnable: Int = -1
 
     //MarkAttendanceDetails
-    var isAttendanceType=""
-    var isSessionType=""
-    var isAllPresent=""
-    var isClassID=""
-    var isSectionID=""
-    var isSelectedDate=""
+
     var isMarkAttendanceDataSending: MarkAttendanceDataSending? = null
+    var secondHalf = "SH"
+    var firstHalf="FH"
+    var fullDay="F"
+    var allPresent="T"
+    var some_Absent="F"
+    var halfDay="H"
 
 
 
@@ -541,6 +543,40 @@ object Constant {
         dimView.isFocusable = true
         dimView.isFocusableInTouchMode = true
 
+    }
+    public fun showDatePicker(context: Context, onDateSelected: (String) -> Unit) {
+        val calendar = Calendar.getInstance()
+
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(
+            context,
+            { _, selectedYear, selectedMonth, selectedDay ->
+                val selectedCalendar = Calendar.getInstance().apply {
+                    set(selectedYear, selectedMonth, selectedDay)
+                }
+                val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                val formattedDate = sdf.format(selectedCalendar.time)
+
+                onDateSelected(formattedDate)
+            },
+            year, month, day
+        )
+
+        datePickerDialog.show()
+    }
+
+    fun covertDateFormate(input: String): String {
+        return try {
+            val inputFormat = SimpleDateFormat(dd_MM_yyyy, Locale.getDefault())
+            val outputFormat = SimpleDateFormat(EEE_dd_MMM_yyyy, Locale.getDefault())
+            val date = inputFormat.parse(input)
+            outputFormat.format(date!!)
+        } catch (e: Exception) {
+            input // return original if there's a parsing error
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

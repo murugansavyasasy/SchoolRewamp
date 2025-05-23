@@ -65,23 +65,24 @@ class AttendanceReportAdapter(
 
         @SuppressLint("UseCompatLoadingForDrawables")
         fun bind(data: AttendanceReportStudentData, position: Int) {
-            lblStudentName.text = data.date
-            lblAdmissionValue.text = data.day
-            lblAttendanceStatus.text = data.type
+//            lblStudentName.text = data.Name
+//            lblAdmissionValue.text = data.RollNo
+//            lblAttendanceStatus.text = data.Status
 
-            if (data.type == "Absent") {
-                lblAttendanceStatus.setBackgroundDrawable(context.resources.getDrawable(R.drawable.rounded_top_right_bottom_end_red))
-                rlaAttendance.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_outline_red))
-                lnrDate.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_light_red_radious))
-                lblMonth.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_red_radious_top_left_different))
+//            if (data.Status == "Absent") {
+//                lblAttendanceStatus.setBackgroundDrawable(context.resources.getDrawable(R.drawable.rounded_top_right_bottom_end_red))
+//                rlaAttendance.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_outline_red))
+//                lnrDate.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_light_red_radious))
+//                lblMonth.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_red_radious_top_left_different))
+//
+//            } else {
+//                lblAttendanceStatus.setBackgroundDrawable(context.resources.getDrawable(R.drawable.rounded_top_right_bottom_end_green))
+//                rlaAttendance.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_outline_green))
+//                lnrDate.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_light_green_radious))
+//                lblMonth.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_green_radious))
+//
+//            }
 
-            } else {
-                lblAttendanceStatus.setBackgroundDrawable(context.resources.getDrawable(R.drawable.rounded_top_right_bottom_end_green))
-                rlaAttendance.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_outline_green))
-                lnrDate.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_light_green_radious))
-                lblMonth.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_green_radious))
-
-            }
         }
     }
 

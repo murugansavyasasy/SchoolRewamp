@@ -117,10 +117,16 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
             binding.nomessage.visibility = View.GONE
             binding.txtNoData.visibility = View.GONE
             binding.totalsummary1.visibility = View.VISIBLE
+            binding.relativeLayout5.visibility = View.VISIBLE
 
             mAdapter = FeePendingReportAdapter(flatList, this)
             binding.totalsummary1.layoutManager = LinearLayoutManager(this)
             binding.totalsummary1.adapter = mAdapter
+            val totalCollectionSum = data.sumOf {
+                it.total_pending?.toDoubleOrNull() ?: 0.0
+            }
+
+            binding.totalCollection.text = "Total Collection : ₹ %.2f".format(totalCollectionSum)
         }
     }
 
@@ -129,6 +135,7 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
         binding.txtNoData.visibility = View.VISIBLE
         binding.txtNoData.text = message
         binding.totalsummary1.visibility = View.GONE
+        binding.relativeLayout5.visibility = View.GONE
     }
 
     private fun isGetDailyCollection() {
@@ -153,6 +160,7 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
         binding.totalsummary1.visibility = View.GONE
         binding.nomessage.visibility = View.GONE
         binding.txtNoData.visibility = View.GONE
+        binding.relativeLayout5.visibility = View.GONE
 
         mAdapter?.clearData()
         mAdapter = FeePendingReportAdapter(emptyList(), this)
@@ -193,18 +201,18 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
 
             R.id.category_name -> {
                 isClassWiseSelected = false
-                binding.categoryName.setBackgroundResource(R.drawable.custom_category_background)
-                binding.categoryName.setTextColor(Color.WHITE)
-                binding.className.setBackgroundResource(R.drawable.custom_rounded_background2)
+                binding.categoryName.setBackgroundResource(R.drawable.white_radious)
+                binding.categoryName.setTextColor(Color.BLACK)
+                binding.className.setBackgroundResource(R.drawable.rect_light_gray)
                 binding.className.setTextColor(Color.BLACK)
                 isGetDailyCollection()
             }
 
             R.id.class_name -> {
                 isClassWiseSelected = true
-                binding.className.setBackgroundResource(R.drawable.custom_category_background)
-                binding.className.setTextColor(Color.WHITE)
-                binding.categoryName.setBackgroundResource(R.drawable.custom_rounded_background2)
+                binding.className.setBackgroundResource(R.drawable.white_radious)
+                binding.className.setTextColor(Color.BLACK)
+                binding.categoryName.setBackgroundResource(R.drawable.rect_light_gray)
                 binding.categoryName.setTextColor(Color.BLACK)
                 isGetDailyWiseCollection()
             }

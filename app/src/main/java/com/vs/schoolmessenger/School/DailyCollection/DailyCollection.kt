@@ -92,6 +92,7 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(), View.OnClickList
         binding.txtNoData.text = message
         binding.txtNoData.visibility = View.VISIBLE
         binding.totalsummary1.visibility = View.GONE
+        binding.relativeLayout5.visibility = View.GONE
     }
 
 
@@ -104,6 +105,7 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(), View.OnClickList
             binding.nomessage.visibility = View.VISIBLE
             binding.txtNoData.visibility = View.VISIBLE
             binding.totalsummary1.visibility = View.GONE
+            binding.relativeLayout5.visibility = View.GONE
             return
         }
 
@@ -121,15 +123,25 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(), View.OnClickList
             binding.nomessage.visibility = View.VISIBLE
             binding.txtNoData.visibility = View.VISIBLE
             binding.totalsummary1.visibility = View.GONE
+            binding.relativeLayout5.visibility = View.GONE
         } else {
             binding.nomessage.visibility = View.GONE
             binding.txtNoData.visibility = View.GONE
             binding.totalsummary1.visibility = View.VISIBLE
+            binding.relativeLayout5.visibility = View.VISIBLE
 
             mAdapter = DcfAdapter(flatList, this)
             binding.totalsummary1.layoutManager = LinearLayoutManager(this)
             binding.totalsummary1.adapter = mAdapter
+
+            val totalCollectionSum = data.sumOf {
+                it.total_collection?.toDoubleOrNull() ?: 0.0
+            }
+
+            binding.totalCollection.text = "Total Collection : ₹ %.2f".format(totalCollectionSum)
         }
+
+
     }
 
 
@@ -140,6 +152,7 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(), View.OnClickList
         binding.totalsummary1.visibility = View.GONE
         binding.nomessage.visibility = View.GONE
         binding.txtNoData.visibility = View.GONE
+        binding.relativeLayout5.visibility = View.GONE
 
 
         mAdapter?.clearData()
@@ -166,28 +179,29 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(), View.OnClickList
             }
             R.id.class_name -> {
                 selectedType = "2"
-                binding.className.setBackgroundResource(R.drawable.custom_category_background)
-                binding.className.setTextColor(Color.WHITE)
-                binding.modeName.setBackgroundResource(R.drawable.custom_rounded_background2)
-                binding.categoryName.setBackgroundResource(R.drawable.custom_rounded_background2)
+                binding.className.setBackgroundResource(R.drawable.white_radious)
+                binding.className.setTextColor(Color.BLACK)
+                binding.modeName.setBackgroundResource(R.drawable.rect_light_gray)
+                binding.categoryName.setBackgroundResource(R.drawable.rect_light_gray)
+
                 isGetDailyCollection()
             }
 
             R.id.mode_name -> {
                 selectedType = "3"
-                binding.modeName.setBackgroundResource(R.drawable.custom_category_background)
-                binding.modeName.setTextColor(Color.WHITE)
-                binding.className.setBackgroundResource(R.drawable.custom_rounded_background2)
-                binding.categoryName.setBackgroundResource(R.drawable.custom_rounded_background2)
+                binding.modeName.setBackgroundResource(R.drawable.white_radious)
+                binding.modeName.setTextColor(Color.BLACK)
+                binding.className.setBackgroundResource(R.drawable.rect_light_gray)
+                binding.categoryName.setBackgroundResource(R.drawable.rect_light_gray)
                 isGetDailyCollection()
             }
 
             R.id.category_name -> {
                 selectedType = "1"
-                binding.categoryName.setBackgroundResource(R.drawable.custom_category_background)
-                binding.categoryName.setTextColor(Color.WHITE)
-                binding.modeName.setBackgroundResource(R.drawable.custom_rounded_background2)
-                binding.className.setBackgroundResource(R.drawable.custom_rounded_background2)
+                binding.categoryName.setBackgroundResource(R.drawable.white_radious)
+                binding.categoryName.setTextColor(Color.BLACK)
+                binding.modeName.setBackgroundResource(R.drawable.rect_light_gray)
+                binding.className.setBackgroundResource(R.drawable.rect_light_gray)
                 isGetDailyCollection()
             }
 

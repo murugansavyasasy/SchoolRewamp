@@ -2,7 +2,6 @@ package com.vs.schoolmessenger.AlbumImage
 
 import android.content.Context
 import android.net.Uri
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,7 +37,6 @@ class FileGridAdapter(
         val binding = holder.binding
         val context = binding.root.context
 
-        // Reset visibility
         binding.audioIcon.visibility = View.GONE
         binding.videoIcon.visibility = View.GONE
         binding.progressBar.visibility = View.VISIBLE
