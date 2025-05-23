@@ -1,7 +1,7 @@
 package com.vs.schoolmessenger.CommonScreens
 
-class GloabalVariableResponse (
+class GlobalVariableResponse (
     val status: Boolean,
     val message: String,
-    val data: List<Any>
+    val data: List<GlobalVariableData>
 )

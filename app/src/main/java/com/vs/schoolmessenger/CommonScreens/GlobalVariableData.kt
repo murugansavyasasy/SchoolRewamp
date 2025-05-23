@@ -1,4 +1,7 @@
 package com.vs.schoolmessenger.CommonScreens
 
-class GlobalVariableData {
-}
+class GlobalVariableData (
+
+    val new_version: String,
+    val new_updates: String
+)

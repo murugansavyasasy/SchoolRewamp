@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.CommonScreens.Ads.AdsResponse
+import com.vs.schoolmessenger.CommonScreens.GlobalVariableResponse
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYearResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
@@ -43,6 +44,9 @@ class App(application: Application) : AndroidViewModel(application) {
         private set
 
     var isGetAds: LiveData<AdsResponse?>? = null
+        private set
+
+    var isGlobalVariables: LiveData<GlobalVariableResponse?>? = null
         private set
 
     var isGetStaffList: LiveData<NameAndIdsResponse?>? = null
@@ -144,6 +148,7 @@ class App(application: Application) : AndroidViewModel(application) {
     fun init() {
         isDashBoardData = apiSchoolRepositories.isDashBoardLiveData
         isGetAds = apiSchoolRepositories.isGetAdsLiveData
+        isGlobalVariables = apiSchoolRepositories.isGetGlobalVariablesLiveData
         isGetStaffList = apiSchoolRepositories.isGetStaffListLiveData
         isGetSubjectList = apiSchoolRepositories.isSubjectListLiveData
         isStandardSectionList = apiSchoolRepositories.isGetStandardSectionLiveData
@@ -195,6 +200,10 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun isGetAds(isToken: String, isMenuId: String, activity: Activity) {
         apiSchoolRepositories.isGetAds(isToken, isMenuId, activity)
+    }
+
+    fun isGetGlobalVariables(isToken: String, activity: Activity) {
+        apiSchoolRepositories.isGetGlobalVariables(isToken, activity)
     }
 
     fun isGetStaffList(isToken: String, activity: Activity) {
