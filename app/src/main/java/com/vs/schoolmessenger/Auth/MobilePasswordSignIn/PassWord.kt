@@ -44,6 +44,7 @@ class PassWord : BaseActivity<PassWordBinding>(), View.OnClickListener {
 
 
         authViewModel!!.isUserValidation?.observe(this) { response ->
+            Constant.hideLoading(this@PassWord)
             if (response != null) {
                 val status = response.status
                 val message = response.message
@@ -130,6 +131,7 @@ class PassWord : BaseActivity<PassWordBinding>(), View.OnClickListener {
             }
         }
         authViewModel!!.isForgetPassword?.observe(this) { response ->
+            Constant.hideLoading(this@PassWord)
             if (response != null) {
                 val status = response.status
                 val message = response.message
@@ -148,6 +150,7 @@ class PassWord : BaseActivity<PassWordBinding>(), View.OnClickListener {
 
 
     private fun isForgetPassword() {
+        Constant.showLoading(this@PassWord)
         val jsonObject = JsonObject()
         jsonObject.addProperty(APIKeyNames.Req_mobile_number, Constant.isMobileNumber)
         authViewModel!!.isForgetPassword(jsonObject, this)
@@ -169,6 +172,7 @@ class PassWord : BaseActivity<PassWordBinding>(), View.OnClickListener {
     }
 
     private fun isValidateUser() {
+        Constant.showLoading(this@PassWord)
         val jsonObject = JsonObject()
         val isSecureId = Constant.getAndroidSecureId(this@PassWord)
         jsonObject.addProperty(APIKeyNames.Req_mobile_number, Constant.isMobileNumber)

@@ -24,6 +24,16 @@ class Notification : BaseActivity<NotificationBinding>(), View.OnClickListener {
         setupToolbar()
         binding.imgBack.setOnClickListener(this)
 
+
+        if (Constant.isParentChoose) {
+            setUpGradientParent()
+            binding.rlaLblNotification.setBackgroundResource(com.vs.schoolmessenger.R.drawable.gradient_theme_parent)
+        }
+        else {
+            setUpGradientSchool()
+            binding.rlaLblNotification.setBackgroundResource(com.vs.schoolmessenger.R.drawable.gradient_theme_school)
+        }
+
         items = listOf(
             NotificationDataClass("text", "Text Message", "Come to school", "Sathish"),
             NotificationDataClass("voice", "Voice Message", "Come to office", "Murugan"),

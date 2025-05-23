@@ -134,7 +134,6 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
             }
         }
         isGetAcademicYear()
-
         val (dayOnly, dayOfWeek, fullDate, slashDate) = getCurrentDateInfo()
         binding.lblDate1.text = dayOnly
         binding.lblDay.text = dayOfWeek
@@ -142,7 +141,7 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         SelectedDate = slashDate
 
         appViewModel!!.isGetAcademicList?.observe(this) { response ->
-//            Constant.hideLoading(this@StudentReport)
+            Constant.hideLoading(this@AttendanceMark)
             if (response != null) {
                 if (response.status) {
                     response.data.let { academicList ->
@@ -161,13 +160,12 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                     }
                 } else {
                     Constant.showDataValidation("Error", response.message, this)
-//                    ErrorMessage(response.message)
                 }
             }
         }
 
         appViewModel!!.isStandardSectionList?.observe(this) { response ->
-//            Constant.hideLoading(this@StudentReport)
+            Constant.hideLoading(this@AttendanceMark)
             if (response != null) {
                 if (response.status) {
                     isGetStandard = response.data
@@ -204,14 +202,13 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
 
     private fun isGetStandardSection() {
         Log.d("isAcademicYearId", isAcademicYearId.toString())
-//        Constant.showLoading(this@StudentReport)
+        Constant.showLoading(this@AttendanceMark)
         appViewModel!!.isGetStandardSection(isAccessToken!!.toString(), isAcademicYearId, this)
     }
 
     private fun isGetAcademicYear() {
         Log.d("isGetAcademicYear", "Getting")
-//        Constant.showLoading(this@StudentReport)
-
+        Constant.showLoading(this@AttendanceMark)
         appViewModel!!.isGetAcademicYear(
             isAccessToken!!, this
         )
@@ -229,7 +226,8 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
             binding.lblSection.text = "-"
             binding.rlaSection.isEnabled = false
             binding.rlaSection.isClickable = false
-//            ErrorMessage(Constant.No_STANDARD_FOUND)
+            //Checking Whether to enable the Select All as present and Mark Absentees button
+            updateActionButtonsState()
             return
         }
         // Set selected Standard
@@ -238,8 +236,6 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
 
         binding.lblStandard.text = standard.name
         isStandardName = standard.name
-
-
         val sections = standard.sections
         if (!sections.isNullOrEmpty()) {
             val defaultSection = sections[0]
@@ -256,7 +252,9 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                 binding.rlaSection.isClickable = true
             }
 
-        } else {
+        }
+        else
+        {
             // No sections -> reset and disable section dropdown
             SectionID = null
             isSection = null
@@ -264,12 +262,12 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
             binding.lblSection.text = "-"
             binding.rlaSection.isEnabled = false
             binding.rlaSection.isClickable = false
+            //Checking Whether to enable the Select All as present and Mark Absentees button
+            updateActionButtonsState()
             return
         }
-
-
-        // Safe to call API now
-//        isGetStudentReport()
+        //Checking Whether to enable the Select All as present and Mark Absentees button
+        updateActionButtonsState()
     }
 
 
@@ -281,7 +279,6 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
 
             R.id.btnSelectPresent -> {
                 Constant.showLoading(this@AttendanceMark)
-                //saving the data in Data Class if we are using in next screen
                 isMarkAttendance()
             }
 
@@ -375,20 +372,12 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                 isBackRoundChange(binding.btnHistory)
                 binding.rlaAttendanceReport.visibility = View.VISIBLE
                 binding.rlaAttendanceMark.visibility = View.GONE
-                loadData()
+             //   loadData()
             }
 
             R.id.btnAbsent -> {
 
                 val intent = Intent(this, AbsenteesStudentMark::class.java)
-//                Log.d("ComingStandardName", isStandardName.toString())
-//                Log.d("ComingSectionName", isSectionName.toString())
-//                intent.putExtra(Constant.isStandardName, isStandardName)
-//                intent.putExtra(Constant.isSectionName, isSectionName)
-//                intent.putExtra(Constant.isAccessToken, isAccessToken!!.toString())
-//                intent.putExtra(Constant.isAcademicYearId, isAcademicYearId)
-//                intent.putExtra(Constant.isSectionId, SectionID)
-
                 //We are saving the details in Data class to use in the next screen
                 isSaveMarkAttendanceDetails()
                 startActivity(intent)
@@ -468,10 +457,10 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
     }
 
     private fun updateActionButtonsState() {
-        if (binding.radioButtonFullDay.isChecked ||
+        if ((ClassID != null && SectionID != null)&&(binding.radioButtonFullDay.isChecked ||
             (binding.radioButtonHalfDay.isChecked &&
                     (binding.radioButtonFirstHalf.isChecked || binding.radioButtonSecondHalf.isChecked))
-        ) {
+        )) {
 
             binding.btnSelectPresent.setBackgroundResource(R.drawable.rect_shadow_green)
             binding.btnAbsent.setBackgroundResource(R.drawable.rect_shadow_red)
@@ -566,70 +555,4 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
     override fun onDateSelected(date: String) {
     }
 
-    fun loadData() {
-        studentsList = listOf(
-
-            StudentAttendanceReportData(
-                "Murugan", "76979871",
-                "Present"
-            ),
-
-            StudentAttendanceReportData(
-                "Sathish", "22439234",
-                "Absent"
-            ),
-            StudentAttendanceReportData(
-                "Saran Raj", "259411563",
-                "Present"
-            ),
-            StudentAttendanceReportData(
-                "Chanthru", "216098214",
-                "Absent"
-            ),
-            StudentAttendanceReportData(
-                "Ramesh", "90509568",
-                "Present"
-            ),
-            StudentAttendanceReportData(
-                "Lakshmanan Narayanan", "90509568",
-                "Absent"
-            ),
-            StudentAttendanceReportData(
-                "Gunal", "90509568",
-                "Present"
-            ),
-            StudentAttendanceReportData(
-                "Lakshmanan", "90509568",
-                "Absent"
-            ),
-            StudentAttendanceReportData(
-                "Narayanan", "90509568",
-                "Present"
-            ), StudentAttendanceReportData(
-                "Gunal", "90509568",
-                "Present"
-            ),
-            StudentAttendanceReportData(
-                "Lakshmanan", "90509568",
-                "Absent"
-            ), StudentAttendanceReportData(
-                "Gunal", "90509568",
-                "Present"
-            ),
-            StudentAttendanceReportData(
-                "Lakshmanan", "90509568",
-                "Absent"
-            )
-        )
-
-
-        mAdapter = AttendanceStudentReportAdapter(null, this, Constant.isShimmerViewShow)
-        binding.rcyAttendanceReport.layoutManager = LinearLayoutManager(this)
-        binding.rcyAttendanceReport.adapter = mAdapter
-        Constant.executeAfterDelay {
-            mAdapter =
-                AttendanceStudentReportAdapter(studentsList, this, Constant.isShimmerViewDisable)
-            binding.rcyAttendanceReport.adapter = mAdapter
-        }
-    }
 }

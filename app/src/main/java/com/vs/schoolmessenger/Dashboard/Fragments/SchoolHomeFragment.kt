@@ -300,6 +300,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     override fun onClick(p0: View?) {
         when (p0?.id) {
             R.id.imgNotification -> {
+                Constant.isParentChoose = false
                 val intent = Intent(requireActivity(), Notification::class.java)
                 startActivity(intent)
             }

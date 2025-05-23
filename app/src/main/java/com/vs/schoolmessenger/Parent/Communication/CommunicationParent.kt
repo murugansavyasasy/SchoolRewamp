@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.JsonObject
@@ -219,7 +220,7 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
             R.id.imgBack -> onBackPressed()
 
             R.id.imgFilter -> {
-                if (binding.rytFilter.visibility == View.VISIBLE) {
+                if (binding.rytFilter.isVisible) {
                     binding.rytFilter.visibility = View.GONE
                 } else {
                     binding.rytFilter.visibility = View.VISIBLE

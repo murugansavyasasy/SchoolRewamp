@@ -2,14 +2,12 @@ package com.vs.schoolmessenger.Auth.CreateResetChangePassword
 
 import android.content.Intent
 import android.text.InputType
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.Login
-import com.vs.schoolmessenger.Auth.OTP.OTP
 import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.R
@@ -29,10 +27,10 @@ class PasswordGeneration : BaseActivity<PasswordGenerationBinding>(), View.OnCli
     }
 
     var authViewModel: Auth? = null
+    var screen_type: String? = null
 
     override fun setupViews() {
         super.setupViews()
-        // Access a specific view using its ID
         isToolBarWhiteTheme()
         binding.imgHide.setOnClickListener(this)
         binding.imgHide1.setOnClickListener(this)
@@ -40,13 +38,29 @@ class PasswordGeneration : BaseActivity<PasswordGenerationBinding>(), View.OnCli
         authViewModel = ViewModelProvider(this).get(Auth::class.java)
         authViewModel!!.init()
 
-        if (Constant.isPasswordCreation!!) {
-            binding.lblCreatePassword.text = getString(R.string.lblCreateNewPassword)
-        } else {
-            binding.lblCreatePassword.text = getString(R.string.ResetThePassword)
+        screen_type = intent.getStringExtra("type")
+        if(screen_type.equals("change")){
+            binding.lblTitle.text = getString(R.string.lblChangePassword)
+            binding.lblCreatePassword.text = getString(R.string.lblOldPassword)
+            binding.lblPassword.text = getString(R.string.lblNewPassword)
+            binding.btnCreate.text = getString(R.string.lblChange)
+        }
+        else {
+            if (Constant.isPasswordCreation!!) {
+                binding.lblTitle.text = getString(R.string.lblCreateNewPassword)
+                binding.lblCreatePassword.text = getString(R.string.lblCreateNewPassword)
+                binding.btnCreate.text = getString(R.string.lblCreate)
+
+            } else {
+                binding.lblTitle.text = getString(R.string.ResetThePassword)
+                binding.lblCreatePassword.text = getString(R.string.ResetThePassword)
+                binding.btnCreate.text = getString(R.string.lblReset)
+
+            }
         }
 
         authViewModel!!.isCreateNewPassword?.observe(this) { response ->
+            Constant.hideLoading(this@PasswordGeneration)
             if (response != null) {
                 val status = response.status
                 val message = response.message
@@ -113,6 +127,7 @@ class PasswordGeneration : BaseActivity<PasswordGenerationBinding>(), View.OnCli
         }
 
         authViewModel!!.isPasswordReset?.observe(this) { response ->
+            Constant.hideLoading(this@PasswordGeneration)
             if (response != null) {
                 val status = response.status
                 val message = response.message
@@ -124,9 +139,29 @@ class PasswordGeneration : BaseActivity<PasswordGenerationBinding>(), View.OnCli
                 }
             }
         }
+
+        authViewModel!!.isPasswordChange?.observe(this) { response ->
+            Constant.hideLoading(this@PasswordGeneration)
+            if (response != null) {
+                val status = response.status
+                val message = response.message
+                if (status) {
+                    SharedPreference.putLogout(this@PasswordGeneration, true)
+                    SharedPreference.putMobileNumberPassWord(
+                        this@PasswordGeneration,
+                        Constant.isMobileNumber,
+                        binding.txtConfirmPassword.text.toString())
+                    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this@PasswordGeneration, Login::class.java)
+                    startActivity(intent)
+                }
+            }
+        }
     }
 
     private fun isPasswordReset() {
+        Constant.showLoading(this@PasswordGeneration)
+
         val jsonObject = JsonObject()
         jsonObject.addProperty(APIKeyNames.Req_mobile_number, Constant.isMobileNumber)
         jsonObject.addProperty(
@@ -137,6 +172,8 @@ class PasswordGeneration : BaseActivity<PasswordGenerationBinding>(), View.OnCli
     }
 
     private fun isCreatePassword() {
+        Constant.showLoading(this@PasswordGeneration)
+
         val jsonObject = JsonObject()
         jsonObject.addProperty(APIKeyNames.Req_mobile_number, Constant.isMobileNumber)
         jsonObject.addProperty(
@@ -146,32 +183,48 @@ class PasswordGeneration : BaseActivity<PasswordGenerationBinding>(), View.OnCli
         authViewModel!!.isCreatePassword(jsonObject, this)
     }
 
+    private fun isPasswordChange() {
+        Constant.showLoading(this@PasswordGeneration)
+
+        val jsonObject = JsonObject()
+        jsonObject.addProperty(APIKeyNames.Req_mobile_number, Constant.isMobileNumber)
+        jsonObject.addProperty(
+            APIKeyNames.Req_old_password,
+            binding.txtCreatePassword.text.toString()
+        )
+        jsonObject.addProperty(
+            APIKeyNames.Req_new_password,
+            binding.txtConfirmPassword.text.toString()
+        )
+        authViewModel!!.isPasswordChange(jsonObject, this)
+    }
+
     private fun isPasswordViewAndHide1() {
         if (isCreatePasswordVisible) {
-            binding.txtCreatePassword.inputType =
+            binding.txtConfirmPassword.inputType =
                 InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
             binding.imgHide1.setImageResource(R.drawable.password_hide)
         } else {
-            binding.txtCreatePassword.inputType =
+            binding.txtConfirmPassword.inputType =
                 InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
             binding.imgHide1.setImageResource(R.drawable.password_view)
         }
-        binding.txtCreatePassword.setSelection(binding.txtCreatePassword.text?.length ?: 0)
+        binding.txtConfirmPassword.setSelection(binding.txtConfirmPassword.text?.length ?: 0)
         isCreatePasswordVisible = !isCreatePasswordVisible
     }
 
 
     private fun isPasswordViewAndHide() {
         if (isPasswordVisible) {
-            binding.txtConfirmPassword.inputType =
+            binding.txtCreatePassword.inputType =
                 InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
             binding.imgHide.setImageResource(R.drawable.password_hide)
         } else {
-            binding.txtConfirmPassword.inputType =
+            binding.txtCreatePassword.inputType =
                 InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
             binding.imgHide.setImageResource(R.drawable.password_view)
         }
-        binding.txtConfirmPassword.setSelection(binding.txtConfirmPassword.text?.length ?: 0)
+        binding.txtCreatePassword.setSelection(binding.txtCreatePassword.text?.length ?: 0)
         isPasswordVisible = !isPasswordVisible
     }
 
@@ -187,13 +240,22 @@ class PasswordGeneration : BaseActivity<PasswordGenerationBinding>(), View.OnCli
             }
 
             R.id.btnCreate -> {
-                if (Constant.isPasswordCreation!!) {
-                    if (isPassWordNotEmpty()) {
-                        isCreatePassword()
+
+                if(screen_type.equals("change")) {
+                    if(binding.txtCreatePassword.text.toString() != "" && binding.txtConfirmPassword.text.toString() != "")
+                    {
+                        isPasswordChange()
                     }
-                } else {
-                    if (isPassWordNotEmpty()) {
-                        isPasswordReset()
+                }
+                else {
+                    if (Constant.isPasswordCreation!!) {
+                        if (isPassWordNotEmpty()) {
+                            isCreatePassword()
+                        }
+                    } else {
+                        if (isPassWordNotEmpty()) {
+                            isPasswordReset()
+                        }
                     }
                 }
             }
@@ -208,17 +270,17 @@ class PasswordGeneration : BaseActivity<PasswordGenerationBinding>(), View.OnCli
             ) {
                 isPassWord = false
                 if (binding.txtCreatePassword.text.toString() == binding.txtConfirmPassword.text.toString()) {
-                    isPassWord = true;
+                    isPassWord = true
                 } else {
                     isPassWord = false
                     Toast.makeText(this, R.string.isPasswordMisMatching, Toast.LENGTH_SHORT).show()
                 }
             } else {
-                isPassWord = false;
+                isPassWord = false
                 Toast.makeText(this, R.string.EnterTheConformPassword, Toast.LENGTH_SHORT).show()
             }
         } else {
-            isPassWord = false;
+            isPassWord = false
             Toast.makeText(this, R.string.EnterTheNewPassword, Toast.LENGTH_SHORT).show()
         }
         return isPassWord

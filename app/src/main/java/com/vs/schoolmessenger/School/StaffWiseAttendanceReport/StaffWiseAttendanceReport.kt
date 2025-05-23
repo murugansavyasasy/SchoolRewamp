@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
+import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIds
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
@@ -36,7 +37,6 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
     }
 
     var isGetStaffListData: List<NameAndIds>? = null
-
     private var isStaffAttendanceReportAdapter: StaffAttendanceReportAdapter? = null
     private var appViewModel: App? = null
     private var isStaffDetails: StaffDetails? = null
@@ -50,6 +50,13 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
     private var selectedMonthNumber: String? = null
     private var isMonthLoaded = ""
     private var isLoadingFirstTime = true
+    private var yearList: List<AcademicYear>? = null
+    private var lblName: TextView? = null
+    private var lblDate: TextView? = null
+    private var lblSchoolName: TextView? = null
+    private var lblDesignation: TextView? = null
+    var isAcademicYear: List<AcademicYear>? = null
+    var isAcademicYearId = -1
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -72,84 +79,61 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
             onBackPressed()
         }
 
+        appViewModel!!.isGetAcademicList?.observe(this) { response ->
+            Constant.hideLoading(this@StaffWiseAttendanceReport)
+            if (response!!.status) {
+                yearList = response.data
+                isLoadYear(response.data)
+            }
+        }
+
         appViewModel!!.isStaffWiseAttendanceReport?.observe(this) { response ->
-            if (response != null && response.status) {
-                binding.recycleAttendanceReportsToday.visibility = View.VISIBLE
-                binding.lytNoRecordFound.visibility = View.GONE
-                val isStaffReport = response.data
-                isLoadData(isStaffReport)
+            if (response != null) {
+                if (response.status) {
+                    binding.recycleAttendanceReportsToday.visibility = View.VISIBLE
+                    binding.lytNoRecordFound.visibility = View.GONE
+                    val isStaffReport = response.data
+                    isLoadData(isStaffReport)
+                } else {
+                    binding.recycleAttendanceReportsToday.visibility = View.GONE
+                    binding.lytNoRecordFound.visibility = View.VISIBLE
+                    binding.lblNoRecords.text = response!!.message
+                }
             } else {
                 binding.recycleAttendanceReportsToday.visibility = View.GONE
                 binding.lytNoRecordFound.visibility = View.VISIBLE
-                binding.lblNoRecords.text = response!!.message
+                binding.lblNoRecords.text = getString(R.string.no_data_found)
             }
         }
 
         appViewModel!!.isStaffWiseAttendanceReportList?.observe(this) { response ->
-            if (response != null && response.status) {
-                binding.recycleAttendanceReportsToday.visibility = View.VISIBLE
-                binding.lytNoRecordFound.visibility = View.GONE
-                val isStaffReport = response.data
-                isLoadData(isStaffReport)
+            if (response != null) {
+                if (response.status) {
+                    binding.recycleAttendanceReportsToday.visibility = View.VISIBLE
+                    binding.lytNoRecordFound.visibility = View.GONE
+                    val isStaffReport = response.data
+                    isLoadData(isStaffReport)
+                } else {
+                    binding.recycleAttendanceReportsToday.visibility = View.GONE
+                    binding.lytNoRecordFound.visibility = View.VISIBLE
+                    binding.lblNoRecords.text = response!!.message
+                }
             } else {
-                binding.recycleAttendanceReport.visibility = View.GONE
+                binding.recycleAttendanceReportsToday.visibility = View.GONE
                 binding.lytNoRecordFound.visibility = View.VISIBLE
-                binding.lblNoRecords.text = response!!.message
+                binding.lblNoRecords.text = getString(R.string.no_data_found)
             }
         }
-
         appViewModel!!.isGetStaffList?.observe(this) { response ->
             Constant.hideLoading(this@StaffWiseAttendanceReport)
-
             if (response != null) {
                 binding.rlaStaff.visibility = View.VISIBLE
                 isGetStaffListData = response.data
                 binding.lblStaff.text = isGetStaffListData!![0].name
                 isStaffId = isGetStaffListData!![0].id
-                isLoadYear()
-                isLoadMonth()
+                getStaffAttendanceReport("", isSelectedYear!!, selectedMonthNumber!!)
             }
         }
-    }
-
-    private fun isLoadData(isStaffReport: List<StaffAttendanceReportData>) {
-
-        if (isStaffReport.isNotEmpty()) {
-            Constant.executeAfterDelay {
-                binding.lytNoRecordFound.visibility = View.GONE
-                if (isTodayList) {
-                    binding.recycleAttendanceReportsToday.visibility = View.VISIBLE
-                    binding.recycleAttendanceReport.visibility = View.GONE
-                    isStaffAttendanceReportAdapter =
-                        StaffAttendanceReportAdapter(
-                            isStaffReport,
-                            this,
-                            this,
-                            Constant.isShimmerViewDisable
-                        )
-                    binding.recycleAttendanceReportsToday.adapter = isStaffAttendanceReportAdapter
-                } else {
-                    binding.recycleAttendanceReport.visibility = View.VISIBLE
-                    binding.recycleAttendanceReportsToday.visibility = View.GONE
-                    isStaffAttendanceReportAdapter =
-                        StaffAttendanceReportAdapter(
-                            isStaffReport,
-                            this,
-                            this,
-                            Constant.isShimmerViewDisable
-                        )
-                    binding.recycleAttendanceReport.adapter = isStaffAttendanceReportAdapter
-                }
-            }
-        } else {
-            binding.recycleAttendanceReport.visibility = View.GONE
-            binding.recycleAttendanceReportsToday.visibility = View.GONE
-            binding.lytNoRecordFound.visibility = View.VISIBLE
-            binding.lblNoRecords.text = "No list found!"
-        }
-
-
-
         appViewModel!!.isPunchHistory?.observe(this) { response ->
             if (response != null && response.status) {
                 val historyList = response.data
@@ -169,9 +153,29 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
         }
     }
 
-    private fun isLoadYear() {
-        val years = (2025 downTo 2001).map { it.toString() }
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, years)
+    private fun isLoadData(isStaffReport: List<StaffAttendanceReportData>) {
+        Constant.executeAfterDelay {
+                    isStaffAttendanceReportAdapter =
+                        StaffAttendanceReportAdapter(
+                            isStaffReport,
+                            this,
+                            this,
+                            Constant.isShimmerViewDisable
+                        )
+                    binding.recycleAttendanceReportsToday.adapter = isStaffAttendanceReportAdapter
+            }
+    }
+
+    private fun isLoadYear(yearList: List<AcademicYear>) {
+        val uniqueYears = yearList.mapNotNull { it.year.split("-").firstOrNull() }.distinct()
+        val currentYear =
+            yearList.find { it.current_academic_year }?.year?.split("-")?.firstOrNull()
+        val sortedYears = if (currentYear != null) {
+            listOf(currentYear) + uniqueYears.filter { it != currentYear }
+        } else {
+            uniqueYears
+        }
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, sortedYears)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spinnerYears.adapter = adapter
         binding.spinnerYears.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -186,11 +190,10 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
                 isLoadMonth()
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>) {
-
-            }
+            override fun onNothingSelected(parent: AdapterView<*>) {}
         }
     }
+
 
     fun isLoadMonth() {
         val months = listOf(
@@ -231,7 +234,8 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
                 isMonthLoaded = updatedMonths[position]
                 binding.lytNoRecordFound.visibility = View.GONE
                 selectedMonthNumber = String.format("%02d", months.indexOf(isMonthLoaded) + 1)
-                getStaffAttendanceReport("", isSelectedYear!!, selectedMonthNumber!!)
+                isGetStaffList()
+
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {}
@@ -247,15 +251,16 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
         btnClick.setBackgroundResource(R.drawable.white_bg_radius)
 
         if (btnClick == binding.btnCreate) {
-            binding.rytTodays.visibility = View.VISIBLE
-            binding.rytAttendanceHistorySceen.visibility = View.GONE
+            binding.lblSelectStaff.visibility = View.GONE
+            binding.lnrSpinners.visibility = View.GONE
+            binding.rlaStaff.visibility = View.GONE
             getStaffAttendanceReport(Constant.getCurrentDate(), "", "")
         }
 
         if (btnClick == binding.btnHistory) {
-            isGetStaffList()
-            binding.rytTodays.visibility = View.GONE
-            binding.rytAttendanceHistorySceen.visibility = View.VISIBLE
+            binding.lblSelectStaff.visibility = View.VISIBLE
+            binding.lnrSpinners.visibility = View.VISIBLE
+            binding.rlaStaff.visibility = View.VISIBLE
         }
     }
 
@@ -272,7 +277,7 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
 //            }
         } else {
             rcyPunchList!!.visibility = View.GONE
-            lblNoRecordsFound!!.text = "No Punch History found!"
+            lblNoRecordsFound!!.text =getString(R.string.Punch_History_found)
             lblNoRecordsFound!!.visibility = View.VISIBLE
         }
     }
@@ -282,6 +287,7 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
         when (p0?.id) {
             R.id.btnHistory -> {
                 isTodayList = false
+                isGetAcademicYear()
                 isBackgroundChange(binding.btnHistory)
 
             }
@@ -304,8 +310,14 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
     }
 
     private fun isGetStaffList() {
-        Constant.showLoading(this@StaffWiseAttendanceReport)
         appViewModel!!.isGetStaffList(
+            isAccessToken!!, this
+        )
+    }
+
+    private fun isGetAcademicYear() {
+        Constant.showLoading(this@StaffWiseAttendanceReport)
+        appViewModel!!.isGetAcademicYear(
             isAccessToken!!, this
         )
     }
@@ -323,11 +335,11 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
             binding.recycleAttendanceReportsToday.layoutManager = LinearLayoutManager(this)
             binding.recycleAttendanceReportsToday.adapter = isStaffAttendanceReportAdapter
         } else {
-            binding.recycleAttendanceReport.visibility = View.VISIBLE
+            binding.recycleAttendanceReportsToday.visibility = View.VISIBLE
             isStaffAttendanceReportAdapter =
                 StaffAttendanceReportAdapter(null, this, this, Constant.isShimmerViewShow)
-            binding.recycleAttendanceReport.layoutManager = LinearLayoutManager(this)
-            binding.recycleAttendanceReport.adapter = isStaffAttendanceReportAdapter
+            binding.recycleAttendanceReportsToday.layoutManager = LinearLayoutManager(this)
+            binding.recycleAttendanceReportsToday.adapter = isStaffAttendanceReportAdapter
         }
 
         if (isTodayList) {
@@ -351,6 +363,18 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
 
         rcyPunchList = view.findViewById<RecyclerView>(R.id.rcyPunchList)
         lblNoRecordsFound = view.findViewById<TextView>(R.id.lblNoRecordsFound)
+
+        lblName = view.findViewById<TextView>(R.id.lblStaffName)
+        lblDate = view.findViewById<TextView>(R.id.lblDate)
+        lblSchoolName = view.findViewById<TextView>(R.id.lblSchoolName)
+        lblDesignation = view.findViewById<TextView>(R.id.lblDesignation)
+
+        lblDate!!.text = Constant.convertDateTimeFormat(data.date)
+        lblName!!.text = data.name
+        lblSchoolName!!.text = isStaffDetails!!.school_name
+        lblDesignation!!.text = data.role
+
+
         val imgBack = view.findViewById<ImageView>(R.id.imgBack)
         isPunchHistory(data)
 

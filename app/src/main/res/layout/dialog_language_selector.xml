@@ -14,9 +14,9 @@
 
         <ImageView
             android:id="@+id/imgClose"
-            android:layout_width="@dimen/twenty"
-            android:layout_height="@dimen/twenty"
-            android:src="@drawable/close_icon_without_bg">
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
+            android:src="@drawable/close_red_color">
 
         </ImageView>
 
@@ -375,7 +375,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/twenty"
         android:background="@drawable/rect_btn_orange"
-        android:padding="@dimen/eight"
+        android:padding="@dimen/five"
         android:text="@string/lblConfirm"
         android:textColor="@color/white"
         android:textStyle="bold">

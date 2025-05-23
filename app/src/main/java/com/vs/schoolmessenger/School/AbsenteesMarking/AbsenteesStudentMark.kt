@@ -57,16 +57,11 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(), Abs
         isSectionName =MarkAttendanceData?.section_name.toString()
         isSectionId=MarkAttendanceData?.section_id
         isAcademicYearId =MarkAttendanceData?.academic_year_id!!
+        binding.chSelectAll.setOnClickListener(this)
         Log.d("isGetStudentlListisAcademicYearId", isAcademicYearId.toString())
         binding.lnrSelectAll.setOnClickListener(this)
         Log.d("isGetStudentListisStandardName", isStandardName.toString())
         Log.d("isGetStudentListisSectionName", isSectionName.toString())
-
-//        isStandardName = intent.getStringExtra(Constant.isStandardName) ?: ""
-//        isSectionName = intent.getStringExtra(Constant.isSectionName) ?: ""
-//        isAccessToken = intent.getStringExtra(Constant.isAccessToken) ?: ""
-//        isAcademicYearId = intent.getIntExtra(Constant.isAcademicYearId, 0)
-//        isSectionId = intent.getIntExtra(Constant.isSectionId, 0)
 
         Log.d("isGetStudentListSectionID", isSectionId.toString())
         binding.lblClassAndSection.text = isStandardName + "-" + isSectionName
@@ -139,7 +134,7 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(), Abs
                 isMarkAttendance()
             }
 
-            R.id.lnrSelectAll -> {
+            R.id.lnrSelectAll ,R.id.chSelectAll-> {
                 binding.chSelectAll.isChecked = !binding.chSelectAll.isChecked
                 val isChecked = binding.chSelectAll.isChecked
                 mAdapter.setAllAbsent(isChecked)

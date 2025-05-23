@@ -5,13 +5,39 @@
     android:fitsSystemWindows="true"
     android:layout_height="match_parent">
 
-    <include
-        android:id="@+id/toolbarLayout"
-        layout="@layout/school_side_tool_bar" />
+    <RelativeLayout
+        android:id="@+id/rytHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gradient_theme_school"
+        android:padding="@dimen/ten">
 
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
+            android:layout_marginTop="@dimen/ten"
+            android:src="@drawable/left_arrow">
+
+        </ImageView>
+
+        <TextView
+            android:layout_toEndOf="@+id/imgBack"
+            android:id="@+id/lblHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten"
+            android:text="Important Info"
+            android:textColor="@color/black"
+            android:textSize="@dimen/twenty_sp"
+            android:textStyle="bold">
+
+        </TextView>
+
+    </RelativeLayout>
 
     <RelativeLayout
-        android:layout_below="@+id/toolbarLayout"
+        android:layout_below="@+id/rytHeader"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

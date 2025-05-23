@@ -107,7 +107,7 @@
                 android:layout_width="@dimen/thirty"
                 android:layout_height="@dimen/thirty"
                 android:layout_below="@+id/changeroll"
-                android:layout_marginTop="@dimen/five"
+                android:layout_marginTop="@dimen/fifteen"
                 android:layout_marginEnd="@dimen/ten"
                 android:layout_toStartOf="@+id/rytImageNotification"
                 android:src="@drawable/search_icon_white"
@@ -121,7 +121,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/changeroll"
                 android:layout_alignParentEnd="true"
-                android:layout_marginTop="@dimen/five">
+                android:layout_marginTop="@dimen/fifteen">
 
                 <TextView
                     android:id="@+id/lblNotificationCount"
@@ -154,6 +154,7 @@
             android:layout_below="@+id/rlaSchoolDetail"
             android:layout_marginStart="@dimen/twenty"
             android:layout_marginEnd="@dimen/twenty"
+            android:layout_marginTop="@dimen/ten"
             android:background="@drawable/rect_white_light_radious"
             android:elevation="@dimen/ten"
             android:padding="@dimen/fifteen">
@@ -264,6 +265,7 @@
             android:layout_below="@id/rytSearchParent"
             android:background="@color/white"
             android:visibility="visible"
+            android:paddingBottom="@dimen/ten"
             tools:listitem="@layout/menu_item_card" />
     </RelativeLayout>
 

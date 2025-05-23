@@ -18,9 +18,9 @@ import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
-import com.vs.schoolmessenger.Parent.Noticeboard.Notice
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.SendAbsenteeSMSResponse
+import com.vs.schoolmessenger.School.AbsenteesMarking.StudentAttendanceReportDataResponse
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionReportResponse
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
@@ -36,7 +36,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class AppServices {
+class SchoolServices {
 
     var client_auth: RestClient
     var isDashBoard: MutableLiveData<DashboardResponse?>
@@ -81,6 +81,8 @@ class AppServices {
 
     var IsGetHolidayReport: MutableLiveData<HolidayResponse?>
     var isSendAbsenteeSMS: MutableLiveData<SendAbsenteeSMSResponse?>
+    var isStudentAttendanceReportForSchool: MutableLiveData<StudentAttendanceReportDataResponse?>
+
 
 
     init {
@@ -123,6 +125,7 @@ class AppServices {
         IsGetEventReport = MutableLiveData()
         IsGetHolidayReport = MutableLiveData()
         isSendAbsenteeSMS = MutableLiveData()
+        isStudentAttendanceReportForSchool = MutableLiveData()
 
 
     }
@@ -1412,5 +1415,56 @@ class AppServices {
 
     val isSendAbsenteeSMSLiveData: LiveData<SendAbsenteeSMSResponse?>
         get() = isSendAbsenteeSMS
+
+
+
+    fun getStudentAttendanceReportForSchool(
+        isToken: String,
+        class_id: String,
+        section_id: String,
+        from_date: String,
+        to_date: String,
+        activity: Activity
+    ) {
+        RestClient.apiInterfaces.isGetStudentAttendanceReportForSchool(isToken, class_id, section_id,from_date,to_date)
+            ?.enqueue(object : Callback<StudentAttendanceReportDataResponse?> {
+                override fun onResponse(
+                    call: Call<StudentAttendanceReportDataResponse?>,
+                    response: Response<StudentAttendanceReportDataResponse?>
+                ) {
+                    Log.d(
+                        "GetStudentReport Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetStudentReportData", response.body().toString())
+                                isStudentAttendanceReportForSchool.postValue(response.body())
+                            } else {
+                                Log.d("GetStudentReportData", response.body().toString())
+                                isStudentAttendanceReportForSchool.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<StudentAttendanceReportDataResponse?>,
+                    t: Throwable
+                ) {
+                    isStudentAttendanceReportForSchool.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+
+    val isStudentAttendanceReportLiveData: LiveData<StudentAttendanceReportDataResponse?>
+        get() = isStudentAttendanceReportForSchool
+
+
+
 
 }

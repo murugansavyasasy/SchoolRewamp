@@ -1,7 +1,8 @@
 package com.vs.schoolmessenger.Parent.Attendance
-
 data class AttendanceReportStudentData(
-    val Name: String,
-    var RollNo: String,
-    val Status: String
+    val date: String,
+    var day: String,
+    val type: String,
+    val is_Archive: Boolean
 )
+

@@ -4,16 +4,14 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Communication.Adapter.TextHistoryAdapter
-import com.vs.schoolmessenger.School.MarkYourAttendance.Interface.AttendanceReportClickListener
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffAttendanceReportData
+import com.vs.schoolmessenger.School.MarkYourAttendance.Interface.AttendanceReportClickListener
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
@@ -58,7 +56,8 @@ class StaffAttendanceReportAdapter(
 
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
-        private val lblStatus: TextView = itemView.findViewById(R.id.lblStatus)
+        private val lblAbsentStatus: TextView = itemView.findViewById(R.id.lblAbsentStatus)
+        private val lblPresentStatus: TextView = itemView.findViewById(R.id.lblPresentStatus)
         private val lblStaffName: TextView = itemView.findViewById(R.id.lblStaffName)
         private val lblCheckInTime: TextView = itemView.findViewById(R.id.lblCheckInTime)
         private val lblCheckoutTime: TextView = itemView.findViewById(R.id.lblCheckoutTime)
@@ -67,7 +66,7 @@ class StaffAttendanceReportAdapter(
         private val lblDate: TextView = itemView.findViewById(R.id.lblDate)
         private val lblDay: TextView = itemView.findViewById(R.id.lblDay)
         private val rytParentCard: RelativeLayout = itemView.findViewById(R.id.rytParentCard)
-        private val lblAttendanceType: TextView = itemView.findViewById(R.id.lblAttendanceType)
+        private val lblStaffDesignation: TextView = itemView.findViewById(R.id.lblStaffDesignation)
         private val lnrDate: LinearLayout = itemView.findViewById(R.id.lnrDate)
 
         fun bind(
@@ -76,16 +75,19 @@ class StaffAttendanceReportAdapter(
             listener: AttendanceReportClickListener,
             adapter: StaffAttendanceReportAdapter
         ) {
-            lblStatus.text = data.leave_type
 
-            if (data.leave_type.equals(Constant.Present)) {
-                lblStatus.background = ContextCompat.getDrawable(
-                    context,
-                    R.drawable.rounded_top_right_bottom_end_green
-                )
-            } else {
-                lblStatus.background =
-                    ContextCompat.getDrawable(context, R.drawable.rounded_top_right_bottom_end_red)
+            val attendanceMap = data.attendance_type
+            lblPresentStatus.visibility = View.GONE
+            lblAbsentStatus.visibility = View.GONE
+
+            attendanceMap.forEach { (key, value) ->
+                if (value == "P") {
+                    lblPresentStatus.visibility = View.VISIBLE
+                    lblPresentStatus.text = "$key : $value"
+                } else if (value == "A") {
+                    lblAbsentStatus.visibility = View.VISIBLE
+                    lblAbsentStatus.text = "$key : $value"
+                }
             }
 
 
@@ -98,7 +100,7 @@ class StaffAttendanceReportAdapter(
                 lblCheckoutTime.visibility = View.GONE
             }
             lblWorkingHours.text = context.getString(R.string.Workinghours) + data.working_hours
-            lblAttendanceType.text = data.attendance_type
+            lblStaffDesignation.text = data.role
 
             val result = Constant.getDateDetails(data.date)
             lblMonth.text = result.first
