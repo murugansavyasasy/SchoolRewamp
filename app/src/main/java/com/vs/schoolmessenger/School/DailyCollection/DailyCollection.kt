@@ -9,6 +9,7 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.databinding.DailyCollectionBinding
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Parent.Communication.UnifiedVoiceAdapter
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.HomeWorkAdapter
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetDateWiseHomeworkData
@@ -32,7 +33,7 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(), View.OnClickList
     private var from_Date: String? = null
 
     private var mAdapter: DcfAdapter? = null
-
+    private var isStaffDetails: StaffDetails? = null
     override fun getViewBinding(): DailyCollectionBinding {
         return DailyCollectionBinding.inflate(layoutInflater)
     }
@@ -40,13 +41,16 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(), View.OnClickList
     override fun setupViews() {
         super.setupViews()
         setupToolbar()
-        binding.imgBack.setOnClickListener(this)
+        binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
         binding.className.setOnClickListener(this)
         binding.modeName.setOnClickListener(this)
         binding.categoryName.setOnClickListener(this)
         binding.linearLayout3.setOnClickListener(this)
         binding.linearLayout5.setOnClickListener(this)
-        binding.SearchNotification.setOnClickListener(this)
+        isStaffDetails = SharedPreference.getStaffDetails(this)
+        binding.toolbarLayout.lblParentToolBar.text = "Daily Collection"
+        binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
+
         binding.imgDelete.setOnClickListener (this)
         val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
         val calendar = Calendar.getInstance()

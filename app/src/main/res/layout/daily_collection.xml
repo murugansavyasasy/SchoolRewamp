@@ -6,52 +6,16 @@
     android:fitsSystemWindows="true"
     android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:gravity="center"
-        android:id="@+id/rytHeader"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/gradient_theme_school"
-        android:padding="@dimen/ten">
+    <include
+        android:id="@+id/toolbarLayout"
+        layout="@layout/school_side_tool_bar" />
 
-        <ImageView
-            android:id="@+id/imgBack"
-            android:layout_width="@dimen/thirty"
-            android:layout_height="@dimen/thirty"
-            android:layout_marginTop="@dimen/ten"
-            android:src="@drawable/left_arrow">
-
-        </ImageView>
-
-        <TextView
-            android:layout_toEndOf="@+id/imgBack"
-            android:id="@+id/NavStudentReport"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/ten"
-            android:text="Daily Collection"
-            android:textColor="@color/black"
-            android:textSize="@dimen/twenty_sp"
-            android:textStyle="bold">
-
-        </TextView>
-        <ImageView
-            android:id="@+id/SearchNotification"
-            android:layout_width="@dimen/thirty"
-            android:layout_height="@dimen/thirty"
-            android:layout_marginTop="@dimen/ten"
-            android:layout_alignParentEnd="true"
-            android:alpha="0.5"
-            android:visibility="invisible"
-            android:layout_marginEnd="@dimen/ten"
-            android:src="@drawable/ic_search" />
-    </RelativeLayout>
 
 
     <RelativeLayout
         android:layout_marginTop="@dimen/five"
         android:layout_width="match_parent"
-        android:layout_below="@+id/rytHeader"
+        android:layout_below="@+id/toolbarLayout"
         android:id="@+id/rytSearch"
         android:visibility="gone"
         android:layout_marginStart="@dimen/five"
@@ -331,6 +295,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginEnd="7dp"
         android:layout_below="@+id/relative_layout5"
         android:orientation="vertical">
 
@@ -338,7 +304,8 @@
         android:id="@+id/totalsummary1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/ten">
+        android:layout_marginTop="@dimen/ten"
+       >
     </androidx.recyclerview.widget.RecyclerView>
 
 
@@ -368,6 +335,7 @@
         android:text="@string/no_list_found"
         android:textColor="@color/black"
         android:textSize="18sp"
+        android:gravity="center"
         android:visibility="gone" />
 
     </LinearLayout>

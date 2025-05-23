@@ -769,6 +769,18 @@ object Constant {
 
     }
 
+    fun convertDateAndTimeFormat(input: String): String {
+        return try {
+            val inputFormat = SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("dd MMM yyyy h.mm a", Locale.getDefault())
+            val date = inputFormat.parse(input)
+            if (date != null) outputFormat.format(date) else input
+        } catch (e: Exception) {
+            input
+        }
+    }
+
+
     fun getTimeAfter20Minutes(): String {
         val dateFormat = SimpleDateFormat(hh_mm_a, Locale.getDefault())
         val calendar = Calendar.getInstance()
