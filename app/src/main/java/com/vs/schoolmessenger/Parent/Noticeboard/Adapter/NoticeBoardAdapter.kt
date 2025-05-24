@@ -18,6 +18,8 @@ import com.vs.schoolmessenger.Parent.Noticeboard.Notice
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardClickListener
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.ShimmerUtil
+
 class NoticeBoardAdapter(
     private var itemList: List<Notice>?,
     private var listener: NoticeBoardClickListener,
@@ -42,10 +44,10 @@ class NoticeBoardAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-            val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.shimmer_view_small_list, parent, false)
-            ShimmerViewHolder(view)
-        } else {
+            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.noticeboard_report_item)
+            ShimmerViewHolder(shimmerView)
+        }
+        else {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.noticeboard_report_item, parent, false)
             DataViewHolder(view, context)
@@ -55,7 +57,9 @@ class NoticeBoardAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
             holder.bind(filteredList[position], position, this)
-        }
+        }  else if (holder is ShimmerViewHolder) {
+        holder.startShimmer()
+    }
     }
 
     override fun getItemCount(): Int {
@@ -126,11 +130,8 @@ class NoticeBoardAdapter(
     }
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val shimmerLayout: ShimmerFrameLayout =
-            itemView.findViewById(R.id.shimmer_view_container)
-
-        init {
-            shimmerLayout.startShimmer()
+        fun startShimmer() {
+            ShimmerUtil.startShimmer(itemView)
         }
     }
 }
