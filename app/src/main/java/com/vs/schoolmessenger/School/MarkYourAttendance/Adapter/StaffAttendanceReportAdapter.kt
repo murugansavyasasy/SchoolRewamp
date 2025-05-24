@@ -56,8 +56,11 @@ class StaffAttendanceReportAdapter(
 
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
-        private val lblAbsentStatus: TextView = itemView.findViewById(R.id.lblAbsentStatus)
         private val lblPresentStatus: TextView = itemView.findViewById(R.id.lblPresentStatus)
+        private val lblAbsentStatus: TextView = itemView.findViewById(R.id.lblAbsentStatus)
+
+        private val lblAbsentLabel: TextView = itemView.findViewById(R.id.lblAbsentLabel)
+        private val lblPresentLabel: TextView = itemView.findViewById(R.id.lblPresentLabel)
         private val lblStaffName: TextView = itemView.findViewById(R.id.lblStaffName)
         private val lblCheckInTime: TextView = itemView.findViewById(R.id.lblCheckInTime)
         private val lblCheckoutTime: TextView = itemView.findViewById(R.id.lblCheckoutTime)
@@ -77,16 +80,22 @@ class StaffAttendanceReportAdapter(
         ) {
 
             val attendanceMap = data.attendance_type
+            lblPresentLabel.visibility = View.GONE
+            lblAbsentLabel.visibility = View.GONE
             lblPresentStatus.visibility = View.GONE
             lblAbsentStatus.visibility = View.GONE
 
             attendanceMap.forEach { (key, value) ->
                 if (value == "P") {
+                    lblPresentLabel.visibility = View.VISIBLE
                     lblPresentStatus.visibility = View.VISIBLE
-                    lblPresentStatus.text = "$key : $value"
+                    lblPresentLabel.text = "$key"
+                    lblPresentStatus.text = Constant.Present
                 } else if (value == "A") {
+                    lblAbsentLabel.visibility = View.VISIBLE
                     lblAbsentStatus.visibility = View.VISIBLE
-                    lblAbsentStatus.text = "$key : $value"
+                    lblAbsentLabel.text = "$key"
+                    lblAbsentStatus.text = Constant.Absent
                 }
             }
 

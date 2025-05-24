@@ -20,7 +20,6 @@ class NoticeBoard : BaseActivity<NoticeBoardBinding>(), View.OnClickListener,
         return NoticeBoardBinding.inflate(layoutInflater)
     }
 
-
     lateinit var mAdapter: NoticeBoardAdapter
     private var appViewModel: App? = null
     private var isAccessToken: String? = null

@@ -66,33 +66,59 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/lblPresentStatus"
-            android:layout_width="@dimen/sixty"
+            android:id="@+id/lblPresentLabel"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="@dimen/minus_five"
-            android:background="@drawable/rounded_top_right_bottom_end_green"
-            android:paddingHorizontal="@dimen/five"
-            android:paddingTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/one"
+            android:layout_toStartOf="@+id/lblPresentStatus"
+            android:background="@drawable/rounded_start_bottom_green"
+            android:padding="@dimen/seven"
             style="@style/CustomTextStylePoppinsRegular"
-            android:paddingBottom="@dimen/five"
-            android:text="@string/present"
+            android:text="FD"
+            android:textColor="@color/white"
+            android:textSize="@dimen/twele_sp" />
+
+        <TextView
+            android:id="@+id/lblPresentStatus"
+            style="@style/CustomTextStylePoppinsRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/rounded_top_end_green"
+            android:gravity="center"
+            android:padding="@dimen/seven"
+            android:text="Present"
+            android:textColor="@color/white"
+            android:textSize="@dimen/twele_sp" />
+
+        <TextView
+            android:id="@+id/lblAbsentLabel"
+            style="@style/CustomTextStylePoppinsRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblPresentStatus"
+            android:layout_marginTop="@dimen/three"
+            android:layout_marginEnd="@dimen/one"
+            android:layout_toStartOf="@+id/lblAbsentStatus"
+            android:background="@drawable/rounded_start_bottom_red"
+            android:gravity="center"
+            android:padding="@dimen/seven"
+            android:text="FD"
             android:textColor="@color/white"
             android:textSize="@dimen/twele_sp" />
 
         <TextView
             android:id="@+id/lblAbsentStatus"
-            android:layout_width="@dimen/sixty"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/lblPresentStatus"
             android:layout_alignParentEnd="true"
             android:gravity="center"
+            android:layout_marginTop="@dimen/three"
+            android:background="@drawable/rounded_top_end_red"
             style="@style/CustomTextStylePoppinsRegular"
-            android:background="@drawable/rounded_top_right_bottom_end_red"
-            android:paddingHorizontal="@dimen/five"
-            android:paddingTop="@dimen/ten"
-            android:paddingBottom="@dimen/five"
+            android:padding="@dimen/seven"
             android:text="@string/present"
             android:textColor="@color/white"
             android:textSize="@dimen/twele_sp" />
@@ -104,7 +130,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/ten"
-            android:layout_toStartOf="@+id/lblAbsentStatus"
+            android:layout_toStartOf="@+id/lblPresentLabel"
             android:layout_toEndOf="@+id/lnrDate">
 
 

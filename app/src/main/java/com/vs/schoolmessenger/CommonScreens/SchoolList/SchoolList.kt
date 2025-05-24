@@ -201,7 +201,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                     Log.d("SelectedSchoolId", selectedSchoolIds[i].toString())
                 }
                 if (selectedSchoolIds.isNotEmpty()) {
-                    if (Constant.isClickType == 3) {
+                    if (Constant.isCommunicationType == 3) {
                         showConfirmationAlert(
                             resources.getString(R.string.selected_target_1) + selectedSchoolIds.size.toString(),
                             resources.getString(R.string.are_you_sure_want_to_send_this_message)
@@ -214,6 +214,9 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                     }
                 } else {
                     Constant.showValidationAlertPopup(
+                        getString(
+                            R.string.alert
+                        ),
                         resources.getString(R.string.Please_select_least), this
                     )
                 }
@@ -340,7 +343,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         val isVoiceData = Constant.isVoiceSendingData
         val jsonObject = ApiCallRequest.isVoiceSend(
             isAcademicYearId = isAcademicYearId,
-            isClickType = isVoiceData!!.isClickType,
+            isCommunicationType = isVoiceData!!.isCommunicationType,
             selectedDates = isVoiceData.selectedDates,
             isStartTimeText = isVoiceData.isStartTimeText,
             isEndTimeText = isVoiceData.isEndTimeText,
@@ -365,7 +368,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             .setPositiveButton(resources.getString(R.string.Yes)) { dialog, _ ->
                 Constant.showLoading(this@SchoolList)
 
-                if (Constant.isClickType == 3) {
+                if (Constant.isCommunicationType == 3) {
                     val jsonObject = ApiCallRequest.isSendText(
                         isAcademicYearId = isAcademicYearId,
                         schoolId = selectedSchoolIds,
@@ -418,7 +421,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             alertDialog.dismiss()
             Constant.showLoading(this@SchoolList)
 
-            if (Constant.isClickType == 3) {
+            if (Constant.isCommunicationType == 3) {
                 val jsonObject = ApiCallRequest.isSendText(
                     isAcademicYearId = isAcademicYearId,
                     schoolId = selectedSchoolIds,

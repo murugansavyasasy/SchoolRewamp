@@ -593,7 +593,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                             "", isAcademicYearNote
                         )
                     } else {
-                        if (Constant.isClickType == 3) {
+                        if (Constant.isCommunicationType == 3) {
                             showSendConfirmationDialog(
                                 resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + " " + isTypeOfName + resources.getString(
                                     R.string._s
@@ -610,6 +610,9 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
                 } else {
                     Constant.showValidationAlertPopup(
+                        getString(
+                            R.string.alert
+                        ),
                         resources.getString(R.string.Please_select_leastone) + " " + isTypeOfName + " " + resources.getString(
                             R.string.send_message
                         ), this
@@ -874,7 +877,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
             } else if (SELECTED_SCHOOL_MENU == Constant.M_COMMUNICATION) {
                 val isTextData = Constant.isTextSendingData
-                if (Constant.isClickType == 3) {
+                if (Constant.isCommunicationType == 3) {
                     val jsonObject = ApiCallRequest.isSendText(
                         isAcademicYearId = isAcademicYearId,
                         schoolId = selectedIds,
@@ -1053,7 +1056,9 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             )
             appViewModel!!.isSendHomeWork(isAccessToken!!, jsonObject, this)
         } ?: run {
-            Constant.showValidationAlertPopup(
+            Constant.showValidationAlertPopup( getString(
+                R.string.alert
+            ),
                 resources.getString(R.string.Section_details_missing), this
             )
         }
@@ -1065,7 +1070,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         val isVoiceData = Constant.isVoiceSendingData
         val jsonObject = ApiCallRequest.isVoiceSend(
             isAcademicYearId = isAcademicYearId,
-            isClickType = isVoiceData!!.isClickType,
+            isCommunicationType = isVoiceData!!.isCommunicationType,
             selectedDates = isVoiceData.selectedDates,
             isStartTimeText = isVoiceData.isStartTimeText,
             isEndTimeText = isVoiceData.isEndTimeText,

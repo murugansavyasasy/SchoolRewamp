@@ -224,8 +224,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 response.message
                 if (status) {
                     isAdItem = response.data
-//                    isAdsDisplayOptions = isAdItem!![0].ads_display_options
-//                    isLoadData()
                     val filteredAds = response.data.filter { it.id != null }
                     isAdsDisplayOptions = isAdItem!![0].ads_display_options
                     val adList: List<AdItem> = filteredAds.map { ad ->
