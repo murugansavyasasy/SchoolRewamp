@@ -252,6 +252,9 @@ class SchoolServices {
                             }
                         }
                     }
+                    else{
+                        isGetStaffList.postValue(null)
+                    }
                 }
 
                 override fun onFailure(call: Call<NameAndIdsResponse?>, t: Throwable) {
@@ -285,6 +288,9 @@ class SchoolServices {
                             }
                         }
                     }
+                    else{
+                        isGetSubjectList.postValue(null)
+                    }
                 }
 
                 override fun onFailure(call: Call<NameAndIdsResponse?>, t: Throwable) {
@@ -316,6 +322,9 @@ class SchoolServices {
                                 isGetStandardSection.postValue(response.body())
                             }
                         }
+                    }
+                    else{
+                        isGetStandardSection.postValue(null)
                     }
                 }
 
@@ -351,6 +360,9 @@ class SchoolServices {
                             }
                         }
                     }
+                    else{
+                        isGetStudentList.postValue(null)
+                    }
                 }
 
                 override fun onFailure(call: Call<NameAndIdsResponse?>, t: Throwable) {
@@ -383,6 +395,9 @@ class SchoolServices {
                             }
                         }
                     }
+                    else{
+                        isGetCommmunicationlist.postValue(null)
+                    }
                 }
 
                 override fun onFailure(call: Call<VoiceDataResponse?>, t: Throwable) {
@@ -413,6 +428,9 @@ class SchoolServices {
                                 isGetCommmunicationlistload.postValue(response.body())
                             }
                         }
+                    }
+                    else{
+                        isGetCommmunicationlistload.postValue(null)
                     }
                 }
 
@@ -446,6 +464,9 @@ class SchoolServices {
                             }
                         }
                     }
+                    else{
+                        isGetGroupList.postValue(null)
+                    }
                 }
 
                 override fun onFailure(call: Call<NameAndIdsResponse?>, t: Throwable) {
@@ -478,6 +499,9 @@ class SchoolServices {
                             }
                         }
                     }
+                    else{
+                        isGetVoiceHistory.postValue(null)
+                    }
                 }
 
                 override fun onFailure(call: Call<VoiceDetails?>, t: Throwable) {
@@ -506,6 +530,9 @@ class SchoolServices {
                             isGetTextHistory.postValue(response.body())
 
                         }
+                    }
+                    else{
+                        isGetTextHistory.postValue(null)
                     }
                 }
 
@@ -542,6 +569,9 @@ class SchoolServices {
                             }
                         }
                     }
+                    else{
+                        isGetHomeWorkReport.postValue(null)
+                    }
                 }
 
                 override fun onFailure(call: Call<HomeWorkReportApiResponse?>, t: Throwable) {
@@ -576,6 +606,9 @@ class SchoolServices {
                                 isNoticeBoardReport.postValue(response.body())
                             }
                         }
+                    }
+                    else{
+                        isNoticeBoardReport.postValue(null)
                     }
                 }
 
@@ -612,6 +645,9 @@ class SchoolServices {
                             }
                         }
                     }
+                    else{
+                        IsGetEventReport.postValue(null)
+                    }
                 }
 
                 override fun onFailure(call: Call<EventResponse?>, t: Throwable) {
@@ -645,6 +681,9 @@ class SchoolServices {
                                 IsGetHolidayReport.postValue(response.body())
                             }
                         }
+                    }
+                    else{
+                        IsGetHolidayReport.postValue(null)
                     }
                 }
 
@@ -682,6 +721,9 @@ class SchoolServices {
                             }
                         }
                     }
+                    else{
+                        isGetDailyCollectionReport.postValue(null)
+                    }
                 }
 
                 override fun onFailure(call: Call<DailyCollectionReportResponse?>, t: Throwable) {
@@ -713,6 +755,9 @@ class SchoolServices {
                                 isGetSchoolStrengthReport.postValue(response.body())
                             }
                         }
+                    }
+                    else{
+                        isGetSchoolStrengthReport.postValue(null)
                     }
                 }
 
@@ -747,6 +792,9 @@ class SchoolServices {
                             }
                         }
                     }
+                    else{
+                        isDetailedPendingReport.postValue(null)
+                    }
                 }
 
                 override fun onFailure(call: Call<FeePendingReportResponse?>, t: Throwable) {
@@ -780,6 +828,9 @@ class SchoolServices {
                             }
                         }
                     }
+                    else{
+                        isDetailedWisePendingReport.postValue(null)
+                    }
                 }
 
                 override fun onFailure(call: Call<FeePendingReportResponse?>, t: Throwable) {
@@ -804,6 +855,7 @@ class SchoolServices {
                     } else {
                         isSendText.postValue(response.body())
                     }
+
 
                     Log.d("isGetCountryList", "${response.code()} - ${response}")
                 }
@@ -950,6 +1002,9 @@ class SchoolServices {
                             }
                         }
                     }
+                    else{
+                        isAcademicYear.postValue(null)
+                    }
                 }
 
                 override fun onFailure(call: Call<AcademicYearResponse?>, t: Throwable) {
@@ -979,6 +1034,9 @@ class SchoolServices {
                             Log.d("GetHomeworkDataRespone", response.body().toString())
 
                         }
+                    }
+                    else{
+                        isHomeWorkDetailsData.postValue(null)
                     }
                 }
 
@@ -1011,6 +1069,9 @@ class SchoolServices {
 
                         }
                     }
+                    else{
+                        isHomeWorkDetailsData.postValue(null)
+                    }
                 }
 
                 override fun onFailure(call: Call<GetHomeworkData?>, t: Throwable) {
@@ -1038,6 +1099,9 @@ class SchoolServices {
                         if (response.body() != null) {
                             isPunchAttendance.postValue(response.body())
                         }
+                    }
+                    else{
+                        isPunchAttendance.postValue(null)
                     }
                 }
 
@@ -1070,6 +1134,9 @@ class SchoolServices {
                                 isAddLocation.postValue(response.body())
                             }
                         }
+                    }
+                    else{
+                        isAddLocation.postValue(null)
                     }
                 }
 
@@ -1104,6 +1171,9 @@ class SchoolServices {
                             }
                         }
                     }
+                    else{
+                        isRemoveLocation.postValue(null)
+                    }
                 }
 
                 override fun onFailure(call: Call<StatusMessageModel?>, t: Throwable) {
@@ -1137,6 +1207,9 @@ class SchoolServices {
                             }
                         }
                     }
+                    else{
+                        isUpdateLocation.postValue(null)
+                    }
                 }
 
                 override fun onFailure(call: Call<StatusMessageModel?>, t: Throwable) {
@@ -1169,6 +1242,9 @@ class SchoolServices {
                                 isStaffLocations.postValue(response.body())
                             }
                         }
+                    }
+                    else{
+                        isStaffLocations.postValue(null)
                     }
                 }
 
@@ -1204,6 +1280,9 @@ class SchoolServices {
                                 isLocationHistory.postValue(response.body())
                             }
                         }
+                    }
+                    else{
+                        isLocationHistory.postValue(null)
                     }
                 }
 
@@ -1242,6 +1321,9 @@ class SchoolServices {
                             isPunchHistory.postValue(response.body())
                         }
 //                        }
+                    }
+                    else{
+                        isPunchHistory.postValue(null)
                     }
                 }
 
@@ -1283,6 +1365,9 @@ class SchoolServices {
                             }
                         }
                     }
+                    else{
+                        isStaffAttendanceReport.postValue(null)
+                    }
                 }
 
                 override fun onFailure(
@@ -1322,6 +1407,9 @@ class SchoolServices {
                             }
                         }
                     }
+                    else{
+                        isStaffWiseAttendanceReport.postValue(null)
+                    }
                 }
 
                 override fun onFailure(
@@ -1359,6 +1447,9 @@ class SchoolServices {
                             isStaffWiseAttendanceReportList.postValue(response.body())
                         }
                     }
+                }
+                else{
+                    isStaffWiseAttendanceReportList.postValue(null)
                 }
             }
 
@@ -1403,6 +1494,9 @@ class SchoolServices {
                             }
                         }
                     }
+                    else{
+                        isStudentReportList.postValue(null)
+                    }
                 }
 
                 override fun onFailure(
@@ -1438,6 +1532,9 @@ class SchoolServices {
                                 isSendAbsenteeSMS.postValue(response.body())
                             }
                         }
+                    }
+                    else{
+                        isSendAbsenteeSMS.postValue(null)
                     }
                 }
 

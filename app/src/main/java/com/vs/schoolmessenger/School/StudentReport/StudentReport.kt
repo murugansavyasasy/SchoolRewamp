@@ -7,9 +7,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import android.view.animation.AnimationUtils
 import androidx.annotation.RequiresApi
-import androidx.compose.ui.platform.LocalDensity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
@@ -64,9 +62,9 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.rlaSort.setOnClickListener(this)
         binding.AcademicYear.setOnClickListener(this)
-        binding.toolbarLayout.imgSearchToolBar.visibility=View.VISIBLE
-        binding.toolbarLayout.imgSearchToolBar.setOnClickListener{
-            binding.rytSearchBar.visibility=View.VISIBLE
+        binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
+        binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
+            binding.rytSearchBar.visibility = View.VISIBLE
         }
         binding.imgDelete.setOnClickListener(this)
         binding.tapNameAsc.setOnClickListener(this)
@@ -80,8 +78,8 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
         binding.dropdownTextView.text = items[0]
         isAccessToken = isStaffDetails!!.access_token
         Log.d("isAccessToken", isStaffDetails!!.access_token)
-        binding.toolbarLayout.lblSchoolName.visibility=View.VISIBLE
-        binding.toolbarLayout.lblParentToolBar.visibility=View.VISIBLE
+        binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
+        binding.toolbarLayout.lblParentToolBar.visibility = View.VISIBLE
         binding.toolbarLayout.lblParentToolBar.text = getString(R.string.StudentReport)
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
         isGetAcademicYear()
@@ -105,8 +103,8 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
                         isGetStandardSection()
                     }
                 } else {
-                    binding.tabLayout.visibility=View.GONE
-                    binding.rlaStandardPicking.visibility=View.GONE
+                    binding.tabLayout.visibility = View.GONE
+                    binding.rlaStandardPicking.visibility = View.GONE
                     ErrorMessage(response.message)
                 }
             }
@@ -117,10 +115,6 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
             if (response != null) {
                 if (response.status) {
                     ShowData()
-                    Log.d("isStudentReportResponsestatus", response.status.toString())
-                    Log.d("isStudentReportResponseMessage", response.message)
-                    Log.d("isStudentReportList", response.data.toString())
-                    Log.d("isStudentReportListSize", response.data.size.toString())
                     val isStudentReportResponseData = response.data
                     isStudentReportData = isStudentReportResponseData
                     loadStudentReport(isStudentReportData)
@@ -264,6 +258,7 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
                         field.contains(word)
                     }
                 }
+
             }
         }
 
@@ -408,7 +403,7 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
                 }
             }
             R.id.imgDelete ->{
-                binding.rytSearchBar.visibility=View.GONE
+                binding.rytSearchBar.visibility = View.GONE
             }
 
             R.id.tapNoAsc -> {

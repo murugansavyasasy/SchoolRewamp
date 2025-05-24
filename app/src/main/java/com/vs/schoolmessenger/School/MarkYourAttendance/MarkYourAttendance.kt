@@ -95,6 +95,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
         appViewModel?.init()
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
+        binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
 
         if (isStaffDetails!!.biometric_enable) {
@@ -111,7 +112,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
         gpsStatusReceiver = GPSStatusReceiver(this)
 
         appViewModel!!.isGetAcademicList?.observe(this) { response ->
-            Constant.hideLoading(this@MarkYourAttendance)
+//            Constant.hideLoading(this@MarkYourAttendance)
             if (response!!.status) {
                 isLoadYear(response.data)
             }
@@ -172,7 +173,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
     }
 
     private fun isGetAcademicYear() {
-        Constant.showLoading(this@MarkYourAttendance)
+//        Constant.showLoading(this@MarkYourAttendance)
         appViewModel!!.isGetAcademicYear(
             isAccessToken!!, this
         )

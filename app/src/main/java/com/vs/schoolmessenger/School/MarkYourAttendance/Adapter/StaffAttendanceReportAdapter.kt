@@ -99,7 +99,6 @@ class StaffAttendanceReportAdapter(
                 }
             }
 
-
             lblStaffName.text = data.name
             lblCheckInTime.text = context.getString(R.string.Firstin) + data.in_time
             if (data.out_time != "") {

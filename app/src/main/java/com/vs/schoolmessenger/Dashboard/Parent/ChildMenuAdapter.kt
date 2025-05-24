@@ -2,12 +2,9 @@ package com.vs.schoolmessenger.Dashboard.Parent
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -16,14 +13,9 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.CommonScreens.Ads.AdItem
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuClickListener
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuDetail
-import com.vs.schoolmessenger.Dashboard.School.SchoolMenuAdapter.ShimmerViewHolder
-import com.vs.schoolmessenger.Parent.Assignment.Assignment
-import com.vs.schoolmessenger.Parent.Homework.HomeWork
-import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequest
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
@@ -94,7 +86,13 @@ class ChildMenuAdapter(
 
             is AdViewHolder -> {
                 if (position == 9) {
-                    holder.bind(specialImages!!, context)
+                    specialImages?.let {
+                        if (it.isNotEmpty()) {
+                            holder.bind(it, context)
+                        } else {
+                            holder.bind(emptyList(), context)
+                        }
+                    } ?: holder.bind(emptyList(), context)
                 } else {
                     holder.bind(emptyList(), context)
                 }
