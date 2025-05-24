@@ -525,8 +525,8 @@
     <string name="choose_pre_recorded_file">Choose pre recorded file</string>
     <string name="isSuccess">Success!</string>
     <string name="no_student_found">No student found!</string>
-    <string name="no_dsc">No DSC</string>
-    <string name="no_asc">No ASC</string>
+    <string name="no_dsc">Admission No DSC</string>
+    <string name="no_asc">Admission No ASC</string>
     <string name="namedsc">NameDSC</string>
     <string name="nameasc">NameASC</string>
     <string name="select_attendance_type">Select Attendance Type</string>

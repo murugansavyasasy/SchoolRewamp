@@ -39,9 +39,6 @@ class AbsenteesMarkAdapter(
             com.vs.schoolmessenger.Parent.Communication.UnifiedVoiceAdapter.ShimmerViewHolder(
                 shimmerView
             )
-//            val view =
-//                LayoutInflater.from(parent.context).inflate(R.layout.shimmer_view_small_list, parent, false)
-//            ShimmerViewHolder(view)
         } else {
             val view =
                 LayoutInflater.from(parent.context)
