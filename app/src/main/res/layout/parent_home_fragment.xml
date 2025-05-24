@@ -55,27 +55,26 @@
                 android:layout_toEndOf="@+id/imgSchoolLogo">
 
 
-                <TextView
-                    android:id="@+id/lblHello"
-                    style="@style/CustomTextStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:shadowColor="@color/light_gray"
-                    android:shadowDx="12"
-                    android:shadowDy="7"
-                    android:shadowRadius="10"
-                    android:text="Hello,"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/twenty_sp">
+                <!--                <TextView-->
+                <!--                    android:id="@+id/lblHello"-->
+                <!--                    style="@style/CustomTextStyle"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:shadowColor="@color/light_gray"-->
+                <!--                    android:shadowDx="12"-->
+                <!--                    android:shadowDy="7"-->
+                <!--                    android:shadowRadius="10"-->
+                <!--                    android:text="Hello,"-->
+                <!--                    android:textColor="@color/white"-->
+                <!--                    android:textSize="@dimen/twenty_sp">-->
 
-                </TextView>
+                <!--                </TextView>-->
 
                 <TextView
                     android:id="@+id/lblStudentName"
                     style="@style/CustomTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/lblHello"
                     android:shadowColor="@color/light_gray"
                     android:shadowDx="12"
                     android:shadowDy="7"
@@ -125,7 +124,7 @@
                 android:layout_marginTop="@dimen/thirty_five"
                 android:layout_marginEnd="@dimen/ten"
                 android:layout_toStartOf="@+id/rytImageNotification"
-                android:src="@drawable/search_icon_white"
+                android:src="@drawable/ic_search"
                 android:visibility="visible">
 
             </ImageView>
@@ -156,7 +155,7 @@
                     android:id="@+id/imgNotification"
                     android:layout_width="@dimen/thirty"
                     android:layout_height="@dimen/thirty"
-                    android:src="@drawable/notification_icon_white" />
+                    android:src="@drawable/ic_notification" />
 
             </FrameLayout>
         </RelativeLayout>
@@ -271,7 +270,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@id/lblCategories"
-                android:layout_marginTop="@dimen/twenty"
+                android:layout_marginTop="@dimen/thirty"
                 android:background="@color/white"
                 android:paddingBottom="@dimen/ten"
                 tools:listitem="@layout/menu_item_card" />

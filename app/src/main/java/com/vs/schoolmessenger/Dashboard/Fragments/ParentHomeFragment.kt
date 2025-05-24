@@ -177,12 +177,10 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         appViewModel!!.isGetAds?.observe(requireActivity()) { response ->
             if (response != null) {
                 val status = response.status
-                response.message
+                val message = response.message
                 if (status) {
                     isAdItem = response.data
-
-                    if (status) {
-                        val filteredAds = response.data.filter { it.id != null }
+                    val filteredAds = response.data.filter { it.id != null }
                         isAdsDisplayOptions = isAdItem!![0].ads_display_options
                         val adList: List<AdItem> = filteredAds.map { ad ->
                             AdItem(
@@ -190,9 +188,8 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                             )
                         }
                         isAdItem = adList
-                        isLoadData()
-                    }
                 }
+                isLoadData()
             }
         }
 

@@ -68,8 +68,6 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
         binding.tapNameDsc.setOnClickListener(this)
         binding.tapNoAsc.setOnClickListener(this)
 
-
-
         binding.dropdownTextViewStandard.setOnClickListener(this)
         binding.dropdownTextViewSection.setOnClickListener(this)
         isStaffDetails = SharedPreference.getStaffDetails(this)
