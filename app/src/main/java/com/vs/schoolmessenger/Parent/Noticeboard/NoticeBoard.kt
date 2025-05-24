@@ -76,6 +76,7 @@ class NoticeBoard : BaseActivity<NoticeBoardBinding>(), View.OnClickListener,
 
     }
 
+
     private fun isGetNoticeBoardList() {
         mAdapter = NoticeBoardAdapter(null, this, this, Constant.isShimmerViewShow)
         binding.rcyNoticeBoard.layoutManager = LinearLayoutManager(this)
