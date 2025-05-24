@@ -99,6 +99,8 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
             access_token = staffDetails!!.access_token
             binding.lblSchoolName.text = staffDetails!!.school_name
+//            binding.lblStaffRole.text = staffDetails!!.role
+
             if (staffDetails!!.school_name_regional != "") {
                 binding.lblSchoolRegionalName.visibility = View.GONE
                 binding.lblSchoolRegionalName.text = staffDetails!!.school_name_regional

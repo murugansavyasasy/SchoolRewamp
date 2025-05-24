@@ -364,50 +364,34 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         startActivity(intent)
     }
 
-//    private fun showBottomDialog() {
-//        val dialog = Dialog(this)
-//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-//        dialog.setContentView(R.layout.filepick_bottom_sheet)
-//
-//        val rlaGallery = dialog.findViewById<RelativeLayout>(R.id.rlaGallery)
-//        val rlaCamera = dialog.findViewById<RelativeLayout>(R.id.rlaCamera)
-//        val rlaDocument = dialog.findViewById<RelativeLayout>(R.id.rlaVideo)
-//
-//        rlaGallery.setOnClickListener {
-//            openAlbumSelectActivity("IMAGE")
-//            dialog.dismiss()
-//        }
-//
-//        rlaCamera.setOnClickListener {
-//            checkCameraPermissionAndOpenCamera()
-//            dialog.dismiss()
-//        }
-//
-//        rlaDocument.setOnClickListener {
-//            openAlbumSelectActivity("DOCUMENT")
-//            dialog.dismiss()
-//        }
-//
-//        dialog.window?.apply {
-//            setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-//            setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-//            setGravity(Gravity.BOTTOM)
-//            setWindowAnimations(R.style.PopupAnimation)
-//        }
-//        dialog.show()
-//    }
-
-
     private fun showBottomDialog() {
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.filepick_bottom_sheet)
+
         val rlaGallery = dialog.findViewById<RelativeLayout>(R.id.rlaGallery)
         val rlaCamera = dialog.findViewById<RelativeLayout>(R.id.rlaCamera)
         val rlaDocument = dialog.findViewById<RelativeLayout>(R.id.rlaVideo)
+        val rlaVoice = dialog.findViewById<RelativeLayout>(R.id.rlaVoice)
+        val rlaVideoPick = dialog.findViewById<RelativeLayout>(R.id.rlaVideoPick)
 
         rlaGallery.setOnClickListener {
-            onImageButtonClick()
+            openAlbumSelectActivity("IMAGE")
+            dialog.dismiss()
+        }
+
+        rlaVoice.setOnClickListener {
+            openAlbumSelectActivity("AUDIO")
+            dialog.dismiss()
+        }
+
+        rlaVideoPick.setOnClickListener {
+            openAlbumSelectActivity("VIDEO")
+            dialog.dismiss()
+        }
+
+        rlaDocument.setOnClickListener {
+            openAlbumSelectActivity("DOCUMENT")
             dialog.dismiss()
         }
 
@@ -415,22 +399,54 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
             checkCameraPermissionAndOpenCamera()
             dialog.dismiss()
         }
-        rlaDocument.setOnClickListener {
-            onPdfButtonClick()
-            dialog.dismiss()
-        }
+
+
 
         dialog.window?.apply {
-            setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT)) // Transparent background
-            setLayout(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
-            ) // Size
-            setGravity(Gravity.BOTTOM) // Display at the bottom
-            setWindowAnimations(R.style.PopupAnimation) // Apply the animation
+            setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            setGravity(Gravity.BOTTOM)
+            setWindowAnimations(R.style.PopupAnimation)
         }
         dialog.show()
-
     }
+
+
+//    private fun showBottomDialog() {
+//        val dialog = Dialog(this)
+//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+//        dialog.setContentView(R.layout.filepick_bottom_sheet)
+//        val rlaGallery = dialog.findViewById<RelativeLayout>(R.id.rlaGallery)
+//        val rlaCamera = dialog.findViewById<RelativeLayout>(R.id.rlaCamera)
+//        val rlaDocument = dialog.findViewById<RelativeLayout>(R.id.rlaVideo)
+//        val rlaVoice = dialog.findViewById<RelativeLayout>(R.id.rlaVoice)
+//        val rlaVideoPick = dialog.findViewById<RelativeLayout>(R.id.rlaVideoPick)
+//
+//        rlaGallery.setOnClickListener {
+//            onImageButtonClick()
+//            dialog.dismiss()
+//        }
+//
+//
+//        rlaCamera.setOnClickListener {
+//            checkCameraPermissionAndOpenCamera()
+//            dialog.dismiss()
+//        }
+//        rlaDocument.setOnClickListener {
+//            onPdfButtonClick()
+//            dialog.dismiss()
+//        }
+//
+//        dialog.window?.apply {
+//            setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT)) // Transparent background
+//            setLayout(
+//                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
+//            ) // Size
+//            setGravity(Gravity.BOTTOM) // Display at the bottom
+//            setWindowAnimations(R.style.PopupAnimation) // Apply the animation
+//        }
+//        dialog.show()
+//    }
 
     fun onImageButtonClick() {
         val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
