@@ -153,6 +153,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
                 binding.recycleAttendanceReports.visibility = View.GONE
                 binding.lblNoRecords.visibility = View.VISIBLE
                 binding.imgNorecord.visibility = View.VISIBLE
+                binding.linearagendalayout.visibility = View.GONE
                 binding.lblNoRecords.text = response?.message ?: "No Data Available"
             }
         }
@@ -208,6 +209,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
         if (isStaffReport.isNotEmpty()) {
             Constant.executeAfterDelay {
                 binding.recycleAttendanceReports.visibility = View.VISIBLE
+                binding.linearagendalayout.visibility = View.VISIBLE
                 binding.lblNoRecords.visibility = View.GONE
                 binding.imgNorecord.visibility = View.GONE
                 isStaffAttendanceReportAdapter =
@@ -323,6 +325,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
 
     fun getStaffAttendanceReport(selectedYear: String, selectedMonth: String) {
         binding.recycleAttendanceReports.visibility = View.VISIBLE
+        binding.linearagendalayout.visibility = View.VISIBLE
         isStaffAttendanceReportAdapter =
             StaffAttendanceReportAdapter(null, this, this, Constant.isShimmerViewShow)
         binding.recycleAttendanceReports.layoutManager = LinearLayoutManager(this)

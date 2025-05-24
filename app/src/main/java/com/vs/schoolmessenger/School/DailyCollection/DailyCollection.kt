@@ -60,10 +60,8 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(), View.OnClickList
         to_Date = currentDate
         binding.fromDate3.text = currentDate
 
-        calendar.add(Calendar.YEAR, -1)
-        val oneYearAgoDate = dateFormat.format(calendar.time)
-        from_Date = oneYearAgoDate
-        binding.fromDate2.text = oneYearAgoDate
+        from_Date = currentDate
+        binding.fromDate2.text = currentDate
 
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel?.init()
