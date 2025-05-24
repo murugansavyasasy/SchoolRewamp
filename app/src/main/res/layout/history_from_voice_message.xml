@@ -251,7 +251,6 @@
                 android:textSize="@dimen/thirteen_sp">
             </TextView>
 
-
             <TextView
                 android:id="@+id/lblSeeMore"
                 android:layout_width="wrap_content"
@@ -261,7 +260,7 @@
                 android:text="@string/View"
                 android:textColor="@color/navi_blue2"
                 android:textSize="@dimen/thirteen_sp"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:textStyle="bold">
 
             </TextView>

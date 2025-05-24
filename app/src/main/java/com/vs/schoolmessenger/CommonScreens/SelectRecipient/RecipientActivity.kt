@@ -548,7 +548,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     isTargetType = Constant.isSchool
                     isCircularType = Constant.school
                     selectedIds.clear()
-                    isUserDetails?.staff_details?.get(0)?.school_id?.let {
+                    isStaffDetails!!.school_id.let {
                         selectedIds.add(it)
                     }
                 } else if (isSelectedType == 1) {

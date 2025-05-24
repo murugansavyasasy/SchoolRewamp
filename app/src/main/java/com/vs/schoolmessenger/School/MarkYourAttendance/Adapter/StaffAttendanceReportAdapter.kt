@@ -86,16 +86,16 @@ class StaffAttendanceReportAdapter(
             lblAbsentStatus.visibility = View.GONE
 
             attendanceMap.forEach { (key, value) ->
-                if (value == "P") {
+                if (value == Constant.Present) {
                     lblPresentLabel.visibility = View.VISIBLE
                     lblPresentStatus.visibility = View.VISIBLE
-                    lblPresentLabel.text = "$key"
-                    lblPresentStatus.text = Constant.Present
-                } else if (value == "A") {
+                    lblPresentLabel.text = key
+                    lblPresentStatus.text = value
+                } else if (value == Constant.Absent) {
                     lblAbsentLabel.visibility = View.VISIBLE
                     lblAbsentStatus.visibility = View.VISIBLE
-                    lblAbsentLabel.text = "$key"
-                    lblAbsentStatus.text = Constant.Absent
+                    lblAbsentLabel.text = key
+                    lblAbsentStatus.text = value
                 }
             }
 

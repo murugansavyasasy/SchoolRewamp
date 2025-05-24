@@ -84,7 +84,13 @@ class SchoolMenuAdapter(
 
             is AdViewHolder -> {
                 if (position == 9) {
-                    holder.bind(isAdItem!!, context)
+                    isAdItem?.let {
+                        if (it.isNotEmpty()) {
+                            holder.bind(it, context)
+                        } else {
+                            holder.bind(emptyList(), context)
+                        }
+                    } ?: holder.bind(emptyList(), context)
                 } else {
                     holder.bind(emptyList(), context)
                 }

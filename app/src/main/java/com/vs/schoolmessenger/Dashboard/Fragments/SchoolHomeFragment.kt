@@ -99,6 +99,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
             access_token = staffDetails!!.access_token
             binding.lblSchoolName.text = staffDetails!!.school_name
+            binding.lblStaffRole.text = userDetails!!.staff_details[0].role
 
             if (staffDetails!!.school_name_regional != "") {
                 binding.lblSchoolRegionalName.visibility = View.GONE
@@ -140,12 +141,10 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         } else {
             access_token = userDetails!!.staff_details[0].access_token
             if (userDetails!!.staff_details.size > 1) {
-                binding.lblSchoolName.text = userDetails!!.role_name
-//                binding.lblSchoolAddress.visibility = View.GONE
-                binding.lblStaffRole.visibility = View.GONE
+                binding.lblStaffRole.text = userDetails!!.role_name
+                binding.lblSchoolName.visibility = View.GONE
             } else {
-//                binding.lblSchoolAddress.visibility = View.VISIBLE
-                binding.lblStaffRole.visibility = View.VISIBLE
+                binding.lblSchoolName.visibility = View.VISIBLE
                 binding.lblSchoolName.text = userDetails!!.staff_details[0].school_name
                 binding.lblStaffRole.text = userDetails!!.staff_details[0].role
                 if (staffDetails!!.school_name_regional != "") {

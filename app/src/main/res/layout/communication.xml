@@ -262,6 +262,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerInitial"
             android:layout_width="match_parent"
+            android:layout_marginBottom="@dimen/fifty"
             android:layout_height="wrap_content" />
 
         <ImageView
@@ -297,9 +298,9 @@
         style="@style/CustomTextStylePoppinsBold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/lytList"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="@dimen/twenty"
+        android:layout_alignParentBottom="true"
         android:layout_marginBottom="@dimen/fifteen"
         android:text="@string/see_more"
         android:textColor="@color/navi_blue2"
