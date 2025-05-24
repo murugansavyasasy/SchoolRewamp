@@ -100,7 +100,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginEnd="@dimen/twenty"
-                android:background="@drawable/rect_white_light_radious"
+                android:background="@drawable/bg_white_light_radious"
                 android:drawableEnd="@drawable/down_arrow"
                 android:gravity="center_vertical"
                 android:padding="@dimen/fifteen"
@@ -119,7 +119,7 @@
     android:layout_below="@+id/lnrAcademicDetails"
     android:layout_height="wrap_content">
     <TextView
-
+        android:layout_marginTop="@dimen/five"
         android:id="@+id/date_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -220,7 +220,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/rlaSelectDate"
             android:layout_marginStart="@dimen/fifteen"
-            android:layout_marginTop="@dimen/fifteen"
+            android:layout_marginTop="@dimen/twenty"
             android:fontFamily="@font/poppins_bold"
             android:text="@string/select_standard_and_section"
             android:textColor="@color/black"
@@ -231,7 +231,6 @@
         <LinearLayout
             android:id="@+id/lnrClasses"
             android:layout_width="match_parent"
-
             android:layout_height="wrap_content"
             android:layout_below="@+id/selectClassSection"
             android:weightSum="1">
@@ -240,13 +239,12 @@
             <RelativeLayout
                 android:id="@+id/rlaStandard"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/thirty_five"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/fifteen"
-                android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/fifteen"
                 android:layout_weight="0.5"
-                android:background="@drawable/rect_white_light_radious"
-                android:padding="@dimen/five">
+                android:background="@drawable/bg_white_light_radious"
+                android:padding="@dimen/fifteen">
 
 
                 <ImageView
@@ -277,13 +275,12 @@
             <RelativeLayout
                 android:id="@+id/rlaSection"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/thirty_five"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/fifteen"
-                android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/fifteen"
                 android:layout_weight="0.5"
-                android:background="@drawable/rect_white_light_radious"
-                android:padding="@dimen/five">
+                android:background="@drawable/bg_white_light_radious"
+                android:padding="@dimen/fifteen">
 
 
                 <ImageView
@@ -338,13 +335,12 @@
             <RelativeLayout
                 android:id="@+id/rlaFullDay"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/thirty_five"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/fifteen"
-                android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/fifteen"
                 android:layout_weight="0.5"
-                android:background="@drawable/rect_white_light_radious"
-                android:padding="@dimen/five">
+                android:background="@drawable/bg_white_light_radious"
+                android:padding="@dimen/ten">
 
 
                 <RadioButton
@@ -372,13 +368,12 @@
             <RelativeLayout
                 android:id="@+id/rlaHalfDay"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/thirty_five"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/fifteen"
-                android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/fifteen"
                 android:layout_weight="0.5"
-                android:background="@drawable/rect_white_light_radious"
-                android:padding="@dimen/five">
+                android:background="@drawable/bg_white_light_radious"
+                android:padding="@dimen/ten">
 
 
                 <RadioButton

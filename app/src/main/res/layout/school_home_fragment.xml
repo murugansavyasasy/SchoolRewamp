@@ -53,6 +53,14 @@
                 android:layout_toStartOf="@+id/changeroll"
                 android:layout_toEndOf="@+id/imgSchoolLogo">
 
+<!--                <TextView-->
+<!--                    android:id="@+id/lblStaffRole"-->
+<!--                    style="@style/CustomTextStylePoppinsBold"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="@dimen/twenty"-->
+<!--                    android:text=""-->
+<!--                    android:textSize="@dimen/fourteen_sp" />-->
 
                 <TextView
                     android:id="@+id/lblSchoolName"

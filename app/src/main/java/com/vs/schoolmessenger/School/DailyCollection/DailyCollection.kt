@@ -51,7 +51,8 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(), View.OnClickList
         binding.toolbarLayout.lblParentToolBar.text = "Daily Collection"
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
 
-        binding.imgDelete.setOnClickListener (this)
+
+
         val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
         val calendar = Calendar.getInstance()
 
@@ -59,10 +60,8 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(), View.OnClickList
         to_Date = currentDate
         binding.fromDate3.text = currentDate
 
-        calendar.add(Calendar.YEAR, -1)
-        val oneYearAgoDate = dateFormat.format(calendar.time)
-        from_Date = oneYearAgoDate
-        binding.fromDate2.text = oneYearAgoDate
+        from_Date = currentDate
+        binding.fromDate2.text = currentDate
 
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel?.init()
@@ -181,12 +180,7 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(), View.OnClickList
             R.id.imgBack -> {
                 onBackPressed()
             }
-            R.id.SearchNotification ->{
-                binding.rytSearch.visibility=View.VISIBLE
-            }
-            R.id.imgDelete ->{
-                binding.rytSearch.visibility=View.GONE
-            }
+
             R.id.class_name -> {
                 selectedType = "2"
                 binding.className.setBackgroundResource(R.drawable.white_radious)
