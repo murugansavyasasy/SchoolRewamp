@@ -90,12 +90,7 @@ class NoticeBoardAdapter(
         }
     }
 
-    fun updateData(newList: List<Notice>) {
-        fullList = newList
-        filteredList = newList
-        isLoading = false
-        notifyDataSetChanged()
-    }
+
 
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {

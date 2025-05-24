@@ -44,7 +44,7 @@ class AttendanceReportAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
             // Bind actual data when loading is complete
-            holder.bind(itemList!![position], position)
+            holder.bind(itemList!![position], position, this)
 
         }
     }
@@ -64,8 +64,8 @@ class AttendanceReportAdapter(
         private val lnrDate: RelativeLayout = itemView.findViewById(R.id.lnrDate)
 
         @SuppressLint("UseCompatLoadingForDrawables")
-        fun bind(data: AttendanceReportStudentData, position: Int) {
-//            lblStudentName.text = data.Name
+        fun bind(data: AttendanceReportStudentData, position: Int, adapter: AttendanceReportAdapter) {
+            lblStudentName.text = data.date
 //            lblAdmissionValue.text = data.RollNo
 //            lblAttendanceStatus.text = data.Status
 
