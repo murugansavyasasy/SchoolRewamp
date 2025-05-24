@@ -48,16 +48,21 @@ class NoticeBoard : BaseActivity<NoticeBoardBinding>(), View.OnClickListener,
 
 
         appViewModel?.isNoticeBoardReport?.observe(this) { response ->
-            if (response!!.status) {
+            if (response?.status == true && !response.data.isNullOrEmpty()) {
                 binding.rcyNoticeBoard.visibility = View.VISIBLE
+                binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
+                binding.nomessage.visibility = View.GONE
+                binding.txtNoData.visibility = View.GONE
                 isloadhomeworkData(response.data)
             } else {
-                binding.nomessage.visibility = View.VISIBLE
                 binding.rcyNoticeBoard.visibility = View.GONE
+                binding.toolbarLayout.rytSearch.visibility = View.GONE
+                binding.nomessage.visibility = View.VISIBLE
                 binding.txtNoData.visibility = View.VISIBLE
-                binding.txtNoData.text = response.message
+                binding.txtNoData.text = response?.message ?: "No data found"
             }
         }
+
     }
 
 

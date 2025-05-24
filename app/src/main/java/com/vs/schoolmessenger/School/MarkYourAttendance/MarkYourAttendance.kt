@@ -95,6 +95,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
         appViewModel?.init()
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
+        binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
 
         if (isStaffDetails!!.biometric_enable) {
@@ -111,7 +112,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
         gpsStatusReceiver = GPSStatusReceiver(this)
 
         appViewModel!!.isGetAcademicList?.observe(this) { response ->
-            Constant.hideLoading(this@MarkYourAttendance)
+//            Constant.hideLoading(this@MarkYourAttendance)
             if (response!!.status) {
                 isLoadYear(response.data)
             }
@@ -152,6 +153,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
                 binding.recycleAttendanceReports.visibility = View.GONE
                 binding.lblNoRecords.visibility = View.VISIBLE
                 binding.imgNorecord.visibility = View.VISIBLE
+                binding.linearagendalayout.visibility = View.GONE
                 binding.lblNoRecords.text = response?.message ?: "No Data Available"
             }
         }
@@ -172,7 +174,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
     }
 
     private fun isGetAcademicYear() {
-        Constant.showLoading(this@MarkYourAttendance)
+//        Constant.showLoading(this@MarkYourAttendance)
         appViewModel!!.isGetAcademicYear(
             isAccessToken!!, this
         )
@@ -207,6 +209,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
         if (isStaffReport.isNotEmpty()) {
             Constant.executeAfterDelay {
                 binding.recycleAttendanceReports.visibility = View.VISIBLE
+                binding.linearagendalayout.visibility = View.VISIBLE
                 binding.lblNoRecords.visibility = View.GONE
                 binding.imgNorecord.visibility = View.GONE
                 isStaffAttendanceReportAdapter =
@@ -322,6 +325,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
 
     fun getStaffAttendanceReport(selectedYear: String, selectedMonth: String) {
         binding.recycleAttendanceReports.visibility = View.VISIBLE
+        binding.linearagendalayout.visibility = View.VISIBLE
         isStaffAttendanceReportAdapter =
             StaffAttendanceReportAdapter(null, this, this, Constant.isShimmerViewShow)
         binding.recycleAttendanceReports.layoutManager = LinearLayoutManager(this)

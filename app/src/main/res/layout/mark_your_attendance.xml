@@ -314,20 +314,14 @@
 
                 <Spinner
                     android:id="@+id/spinnerYears"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:background="@android:color/transparent"
+                    android:background="@drawable/custom_spinner_background"
                     android:gravity="center"
                     android:spinnerMode="dropdown" />
 
-                <ImageView
-                    android:id="@+id/imgYearDropDown"
-                    android:layout_width="@dimen/thirty"
-                    android:layout_height="@dimen/thirty"
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/spinnerYears"
-                    android:src="@drawable/ic_drop_down" />
+
 
             </RelativeLayout>
 
@@ -342,29 +336,61 @@
 
                 <Spinner
                     android:id="@+id/spinnerMonths"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:background="@android:color/transparent"
+                    android:background="@drawable/custom_spinner_background"
                     android:gravity="center"
                     android:spinnerMode="dropdown" />
 
-                <ImageView
-                    android:id="@+id/imgMonthDropDown"
-                    android:layout_width="@dimen/thirty"
-                    android:layout_height="@dimen/thirty"
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/spinnerMonths"
-                    android:src="@drawable/ic_drop_down" />
 
             </RelativeLayout>
 
         </LinearLayout>
 
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearagendalayout"
+            android:layout_below="@+id/lnrSpinners"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginStart="18dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/fdtextview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="FD: Full Day"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"
+                style="@style/CustomTextStylePoppinsMedium"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="FH: First Half (morning session)"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"
+                android:layout_marginTop="5dp"
+                android:id="@+id/fhtextview"
+                style="@style/CustomTextStylePoppinsMedium"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SH: Second Half (afternoon session)"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"
+                android:layout_marginTop="5dp"
+                style="@style/CustomTextStylePoppinsMedium"/>
+        </LinearLayout>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/lnrSpinners">
+            android:layout_below="@+id/linearagendalayout">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycleAttendanceReports"

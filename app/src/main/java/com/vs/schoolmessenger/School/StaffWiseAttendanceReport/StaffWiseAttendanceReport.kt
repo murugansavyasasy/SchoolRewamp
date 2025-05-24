@@ -4,12 +4,14 @@ import android.app.Dialog
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewTreeObserver
 import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.appcompat.widget.AppCompatSpinner
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -73,6 +75,7 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
         getStaffAttendanceReport(Constant.getCurrentDate(), "", "")
+        binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
 
         binding.toolbarLayout.imgBack.setOnClickListener {
@@ -154,12 +157,12 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
     }
 
     private fun isLoadData(isStaffReport: List<StaffAttendanceReportData>) {
-        Constant.executeAfterDelay {
+//        Constant.executeAfterDelay {
             isStaffAttendanceReportAdapter = StaffAttendanceReportAdapter(
                 isStaffReport, this, this, Constant.isShimmerViewDisable
             )
             binding.recycleAttendanceReportsToday.adapter = isStaffAttendanceReportAdapter
-        }
+       // }
     }
 
     private fun isLoadYear(yearList: List<AcademicYear>) {
@@ -174,6 +177,8 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, sortedYears)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spinnerYears.adapter = adapter
+
+
         binding.spinnerYears.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>,

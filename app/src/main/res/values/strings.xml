@@ -510,8 +510,8 @@
     <string name="select_staff">Select Staff</string>
     <string name="alert">Alert!</string>
     <string name="Meters">Meters</string>
-    <string name="Firstin">First in - </string>
-    <string name="Lastin">Last in - </string>
+    <string name="Firstin">Check in - </string>
+    <string name="Lastin">Check out - </string>
     <string name="Workinghours">Working hours - </string>
     <string name="EnterLocation">Enter your location name and distance, Distance should be above 10 Meter(s)</string>
     <string name="Choose_enter_distance">Choose or enter the distance</string>

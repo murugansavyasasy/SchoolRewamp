@@ -17,7 +17,7 @@
             android:layout_marginStart="@dimen/twenty"
             android:layout_marginTop="@dimen/twenty_five"
             android:layout_marginEnd="@dimen/thirty"
-            android:background="@drawable/rect_shadow_white"
+            android:background="@drawable/rect_shadow_white_2"
             android:padding="@dimen/ten">
 
             <ImageView

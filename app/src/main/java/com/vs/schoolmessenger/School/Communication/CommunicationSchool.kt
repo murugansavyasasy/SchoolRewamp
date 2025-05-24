@@ -157,6 +157,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         isAccessToken = isStaffDetails!!.access_token
         recordingStartTime = System.currentTimeMillis()
         isUserDetails = SharedPreference.getUserDetails(this)
+        binding.toolbarLayout.lblSchoolName.visibility = View.GONE
 
         if (isUserDetails!!.staff_role == Constant.isStaffRole) {
             binding.rlaScheduleCall.visibility = View.GONE
