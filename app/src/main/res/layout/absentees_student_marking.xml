@@ -1,114 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     android:fitsSystemWindows="true">
 
+    <!-- Main content container (above send button) -->
     <RelativeLayout
         android:id="@+id/relativeContainer"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/rytSend"
+        android:layout_height="match_parent"
+        android:layout_above="@id/rytSend"
+        android:layout_alignParentTop="true"
         android:layout_marginBottom="8dp">
 
-        <RelativeLayout
-            android:id="@+id/rytHeader"
+        <include
+            android:id="@+id/toolbarLayout"
+            layout="@layout/school_side_tool_bar" />
 
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/gradient_theme_school"
-            android:padding="@dimen/ten">
-
-            <ImageView
-                android:id="@+id/imgBack"
-                android:layout_width="@dimen/thirty"
-                android:layout_height="@dimen/thirty"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="@dimen/ten"
-                android:layout_marginEnd="@dimen/ten"
-                android:src="@drawable/left_arrow" />
-
-            <TextView
-                android:id="@+id/lblClassAndSection"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/imgBack"
-                android:text="ClassName"
-                android:layout_centerInParent="true"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp"
-                android:textStyle="bold" />
-
-            <LinearLayout
-                android:id="@+id/lnrSelectAll"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="@dimen/twenty">
-
-                <TextView
-
-                    android:id="@+id/lblSelectAll"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/thirteen_sp"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:text="@string/Selectall" />
-
-                <CheckBox
-                    android:id="@+id/chSelectAll"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="false"
-                    android:layout_toEndOf="@+id/lblSelectAll"
-                    style="@style/CustomCheckBox">
-                </CheckBox>
-            </LinearLayout>
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rytSearch"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/thirty_five"
-            android:layout_below="@id/rytHeader"
-            android:layout_margin="@dimen/ten"
-            android:background="@drawable/rect_grey"
-            android:visibility="visible">
-
-            <ImageView
-                android:id="@+id/imgSearch"
-                android:layout_width="@dimen/thirty"
-                android:layout_height="@dimen/thirty"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/ten"
-                android:src="@drawable/ic_search" />
-
-            <EditText
-                android:id="@+id/txtSearch"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_toEndOf="@id/imgSearch"
-                android:background="@android:color/transparent"
-                android:hint="@string/lblSearch"
-                android:maxLines="1"
-                android:textStyle="normal"
-                android:fontFamily="@font/poppins_regular"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp" />
-        </RelativeLayout>
-
+        <!-- Header row -->
         <LinearLayout
             android:id="@+id/lnrHeader"
-            android:layout_below="@+id/rytSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/toolbarLayout"
             android:layout_marginTop="@dimen/five"
             android:orientation="horizontal"
             android:background="@drawable/rect_light_blue">
@@ -150,23 +68,24 @@
                 android:textSize="@dimen/twele_sp" />
         </LinearLayout>
 
+        <!-- RecyclerView for students -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycleStudents"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/lnrHeader"
+            android:layout_below="@id/lnrHeader"
             tools:listitem="@layout/attendance_student_list" />
-
     </RelativeLayout>
 
+    <!-- Send Button -->
     <RelativeLayout
         android:id="@+id/rytSend"
         android:layout_width="match_parent"
         android:layout_height="@dimen/fourty"
+        android:layout_alignParentBottom="true"
         android:layout_marginStart="@dimen/twenty_five"
         android:layout_marginEnd="@dimen/twenty_five"
         android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:background="@drawable/bg_orange"
         android:gravity="center"
         android:padding="@dimen/eight">
@@ -194,4 +113,4 @@
             android:src="@drawable/send_icon_white" />
     </RelativeLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

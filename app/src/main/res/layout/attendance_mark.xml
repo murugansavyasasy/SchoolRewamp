@@ -76,14 +76,15 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginTop="@dimen/ten"
-            android:visibility="visible"
             android:id="@+id/lnrAcademicDetails"
             android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:gravity="center"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/lnrAttendance"
-            android:layout_height="wrap_content">
+            android:layout_marginTop="@dimen/ten"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="visible">
+
             <TextView
                 android:id="@+id/lblAcademicYearPick"
                 android:layout_width="wrap_content"
@@ -111,485 +112,517 @@
         </LinearLayout>
 
 
-
-
-<RelativeLayout
-    android:id="@+id/rlaSelectDate"
-    android:layout_width="match_parent"
-    android:layout_below="@+id/lnrAcademicDetails"
-    android:layout_height="wrap_content">
-    <TextView
-        android:layout_marginTop="@dimen/five"
-        android:id="@+id/date_header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/cardStart"
-        android:fontFamily="@font/poppins_bold"
-        android:text="@string/select_date"
-        android:textColor="@color/black"
-        android:textSize="@dimen/thirteen_sp"
-        android:textStyle="bold" />
-
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardStart"
-        android:layout_width="@dimen/fifty"
-        android:layout_height="@dimen/fifty"
-        android:layout_below="@+id/date_header"
-        android:layout_marginStart="@dimen/fifteen"
-        android:layout_marginTop="@dimen/five"
-        app:cardCornerRadius="@dimen/ten"
-        app:cardElevation="@dimen/zero">
-
-        <LinearLayout
-            android:id="@+id/lnrStartCalendar"
+        <RelativeLayout
+            android:id="@+id/rlaMarkAttendanceDetails"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/bg_stroke_rect_black"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lnrAcademicDetails">
+
+            <RelativeLayout
+                android:id="@+id/rlaSelectDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/date_header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/cardStart"
+                    android:layout_marginTop="@dimen/five"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="@string/select_date"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:textStyle="bold" />
+
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardStart"
+                    android:layout_width="@dimen/fifty"
+                    android:layout_height="@dimen/fifty"
+                    android:layout_below="@+id/date_header"
+                    android:layout_marginStart="@dimen/fifteen"
+                    android:layout_marginTop="@dimen/five"
+                    app:cardCornerRadius="@dimen/ten"
+                    app:cardElevation="@dimen/zero">
+
+                    <LinearLayout
+                        android:id="@+id/lnrStartCalendar"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_stroke_rect_black"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/lblDay"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/two"
+                            android:text="Sun"
+                            android:textColor="@color/grey"
+                            android:textSize="@dimen/thirteen_sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/lblDate1"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/primary_light"
+                            android:gravity="center"
+                            android:text="00"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/fifteen_sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <RelativeLayout
+                    android:id="@+id/rlaDayDatePicker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/fourty_five"
+                    android:layout_toEndOf="@+id/cardStart">
+
+                    <TextView
+                        android:id="@+id/lblDatePick"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/ten"
+                        android:layout_marginTop="@dimen/ten"
+                        android:drawablePadding="@dimen/ten"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="Thu 13 Feb 2025"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/thirteen_sp"
+                        android:textStyle="normal"></TextView>
+
+                    <ImageView
+                        android:id="@+id/image_downarrow"
+                        android:layout_width="@dimen/twenty"
+                        android:layout_height="@dimen/twenty"
+                        android:layout_alignBottom="@+id/lblDatePick"
+                        android:layout_marginStart="@dimen/eight"
+                        android:layout_toEndOf="@+id/lblDatePick"
+                        android:src="@drawable/ic_down_arrow" />
+                </RelativeLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/point_five"
+                    android:layout_below="@+id/cardStart"
+                    android:layout_marginStart="@dimen/ten"
+                    android:layout_marginEnd="@dimen/fourty"
+                    android:layout_toEndOf="@+id/cardStart"
+                    android:background="@color/grey" />
+            </RelativeLayout>
+
 
             <TextView
-                android:id="@+id/lblDay"
+                android:id="@+id/selectClassSection"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/two"
-                android:text="Sun"
-                android:textColor="@color/grey"
+                android:layout_below="@+id/rlaSelectDate"
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginTop="@dimen/twenty"
+                android:fontFamily="@font/poppins_bold"
+                android:text="@string/select_standard_and_section"
+                android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/lblDate1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/primary_light"
-                android:gravity="center"
-                android:text="00"
-                android:textColor="@color/black"
-                android:textSize="@dimen/fifteen_sp"
-                android:textStyle="bold" />
 
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
-    <RelativeLayout
-        android:id="@+id/rlaDayDatePicker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/fourty_five"
-        android:layout_toEndOf="@+id/cardStart">
-
-        <TextView
-            android:id="@+id/lblDatePick"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/ten"
-            android:drawablePadding="@dimen/ten"
-            android:fontFamily="@font/poppins_medium"
-            android:text="Thu 13 Feb 2025"
-            android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"
-            android:textStyle="normal"></TextView>
-
-        <ImageView
-            android:id="@+id/image_downarrow"
-            android:layout_width="@dimen/twenty"
-            android:layout_height="@dimen/twenty"
-            android:layout_alignBottom="@+id/lblDatePick"
-            android:layout_marginStart="@dimen/eight"
-            android:layout_toEndOf="@+id/lblDatePick"
-            android:src="@drawable/ic_down_arrow" />
-    </RelativeLayout>
-
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/point_five"
-        android:layout_below="@+id/cardStart"
-        android:layout_marginStart="@dimen/ten"
-        android:layout_marginEnd="@dimen/fourty"
-        android:layout_toEndOf="@+id/cardStart"
-        android:background="@color/grey" />
-</RelativeLayout>
-
-
-        <TextView
-            android:id="@+id/selectClassSection"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/rlaSelectDate"
-            android:layout_marginStart="@dimen/fifteen"
-            android:layout_marginTop="@dimen/twenty"
-            android:fontFamily="@font/poppins_bold"
-            android:text="@string/select_standard_and_section"
-            android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"
-            android:textStyle="bold" />
-
-
-        <LinearLayout
-            android:id="@+id/lnrClasses"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/selectClassSection"
-            android:weightSum="1">
-
-
-            <RelativeLayout
-                android:id="@+id/rlaStandard"
+            <LinearLayout
+                android:id="@+id/lnrClasses"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/fifteen"
-                android:layout_marginEnd="@dimen/fifteen"
-                android:layout_weight="0.5"
-                android:background="@drawable/bg_white_light_radious"
-                android:padding="@dimen/fifteen">
+                android:layout_below="@+id/selectClassSection"
+                android:weightSum="1">
 
 
-                <ImageView
-                    android:id="@+id/imgStandard"
-                    android:layout_width="@dimen/fifteen"
-                    android:layout_height="@dimen/twenty"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="@dimen/ten"
-                    android:src="@drawable/downarrow">
-
-                </ImageView>
-
-                <TextView
-                    android:id="@+id/lblStandard"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:id="@+id/rlaStandard"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/fifteen"
-                    android:fontFamily="@font/poppins_bold"
-                    android:text="@string/standard"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/twele_sp"
-                    android:textStyle="bold"></TextView>
-            </RelativeLayout>
+                    android:layout_marginEnd="@dimen/fifteen"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/bg_white_light_radious"
+                    android:padding="@dimen/fifteen">
 
 
-            <RelativeLayout
-                android:id="@+id/rlaSection"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/fifteen"
-                android:layout_marginEnd="@dimen/fifteen"
-                android:layout_weight="0.5"
-                android:background="@drawable/bg_white_light_radious"
-                android:padding="@dimen/fifteen">
+                    <ImageView
+                        android:id="@+id/imgStandard"
+                        android:layout_width="@dimen/fifteen"
+                        android:layout_height="@dimen/twenty"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/ten"
+                        android:src="@drawable/downarrow">
+
+                    </ImageView>
+
+                    <TextView
+                        android:id="@+id/lblStandard"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/fifteen"
+                        android:fontFamily="@font/poppins_bold"
+                        android:text="@string/standard"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/twele_sp"
+                        android:textStyle="bold"></TextView>
+                </RelativeLayout>
 
 
-                <ImageView
-                    android:id="@+id/imgSection"
-                    android:layout_width="@dimen/fifteen"
-                    android:layout_height="@dimen/twenty"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="@dimen/ten"
-                    android:src="@drawable/downarrow">
-
-                </ImageView>
-
-                <TextView
-                    android:id="@+id/lblSection"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:id="@+id/rlaSection"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/fifteen"
-                    android:fontFamily="@font/poppins_bold"
-                    android:text="@string/section"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/twele"
-                    android:textStyle="bold"></TextView>
-            </RelativeLayout>
-
-        </LinearLayout>
+                    android:layout_marginEnd="@dimen/fifteen"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/bg_white_light_radious"
+                    android:padding="@dimen/fifteen">
 
 
-        <TextView
-            android:id="@+id/attendancetype_header"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/lnrClasses"
-            android:layout_marginStart="@dimen/fifteen"
-            android:layout_marginTop="@dimen/fifteen"
-            android:fontFamily="@font/poppins_bold"
-            android:text="@string/select_attendance_type"
-            android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"
-            android:textStyle="bold" />
+                    <ImageView
+                        android:id="@+id/imgSection"
+                        android:layout_width="@dimen/fifteen"
+                        android:layout_height="@dimen/twenty"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/ten"
+                        android:src="@drawable/downarrow">
 
+                    </ImageView>
 
-        <LinearLayout
-            android:id="@+id/lnrClasses1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/attendancetype_header"
-            android:weightSum="1">
+                    <TextView
+                        android:id="@+id/lblSection"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/fifteen"
+                        android:fontFamily="@font/poppins_bold"
+                        android:text="@string/section"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/twele"
+                        android:textStyle="bold"></TextView>
+                </RelativeLayout>
 
+            </LinearLayout>
 
-            <RelativeLayout
-                android:id="@+id/rlaFullDay"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/fifteen"
-                android:layout_marginEnd="@dimen/fifteen"
-                android:layout_weight="0.5"
-                android:background="@drawable/bg_white_light_radious"
-                android:padding="@dimen/ten">
-
-
-                <RadioButton
-                    android:id="@+id/radioButtonFullDay"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="@dimen/ten"></RadioButton>
-
-                <TextView
-                    android:id="@+id/fullday_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="@dimen/ten"
-                    android:layout_toEndOf="@+id/radioButtonFullDay"
-                    android:fontFamily="@font/poppins_medium"
-                    android:text="@string/full_day"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"
-                    android:textStyle="normal"></TextView>
-            </RelativeLayout>
-
-
-            <RelativeLayout
-                android:id="@+id/rlaHalfDay"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/fifteen"
-                android:layout_marginEnd="@dimen/fifteen"
-                android:layout_weight="0.5"
-                android:background="@drawable/bg_white_light_radious"
-                android:padding="@dimen/ten">
-
-
-                <RadioButton
-                    android:id="@+id/radioButtonHalfDay"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="@dimen/ten">
-
-                </RadioButton>
-
-                <TextView
-                    android:id="@+id/halfday_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/radioButtonHalfDay"
-                    android:fontFamily="@font/poppins_medium"
-                    android:text="@string/half_day"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"
-                    android:textStyle="normal"></TextView>
-            </RelativeLayout>
-
-        </LinearLayout>
-
-
-        <TextView
-            android:visibility="gone"
-            android:id="@+id/session_header"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/lnrClasses1"
-            android:layout_marginStart="@dimen/fifteen"
-            android:layout_marginTop="@dimen/fifteen"
-            android:fontFamily="@font/poppins_bold"
-            android:text="@string/select_session"
-            android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"
-            android:textStyle="bold" />
-
-
-        <LinearLayout
-            android:visibility="gone"
-            android:id="@+id/lnrClasses2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/session_header"
-            android:weightSum="1">
-
-
-            <RelativeLayout
-                android:id="@+id/rlaFirstHalf"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/thirty_five"
-                android:layout_marginStart="@dimen/fifteen"
-                android:layout_marginTop="@dimen/ten"
-                android:layout_marginEnd="@dimen/fifteen"
-                android:layout_weight="0.5"
-                android:background="@drawable/rect_white_light_radious"
-                android:padding="@dimen/five">
-
-
-                <RadioButton
-                    android:id="@+id/radioButtonFirstHalf"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:enabled="false"
-                    android:layout_marginEnd="@dimen/ten"></RadioButton>
-
-                <TextView
-                    android:id="@+id/firsthalf_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="@dimen/ten"
-                    android:layout_toEndOf="@+id/radioButtonFirstHalf"
-                    android:fontFamily="@font/poppins_medium"
-                    android:text="@string/first_half"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"
-                    android:textStyle="normal"></TextView>
-            </RelativeLayout>
-
-
-            <RelativeLayout
-                android:id="@+id/rlaSecondHalf"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/thirty_five"
-                android:layout_marginStart="@dimen/fifteen"
-                android:layout_marginTop="@dimen/ten"
-                android:layout_marginEnd="@dimen/fifteen"
-                android:layout_weight="0.5"
-                android:background="@drawable/rect_white_light_radious"
-                android:padding="@dimen/five">
-
-
-                <RadioButton
-                    android:id="@+id/radioButtonSecondHalf"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:enabled="false"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="@dimen/ten">
-
-                </RadioButton>
-
-                <TextView
-                    android:id="@+id/secondhalf_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/radioButtonSecondHalf"
-                    android:fontFamily="@font/poppins_medium"
-                    android:text="@string/half_day"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"
-                    android:textStyle="normal"></TextView>
-            </RelativeLayout>
-        </LinearLayout>
-
-        <RelativeLayout
-            android:id="@+id/rlaAttendanceType"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/attendancetype_header"
-            android:layout_marginStart="@dimen/fifteen"
-            android:layout_marginTop="@dimen/ten"
-            android:layout_marginEnd="@dimen/fifteen"
-            android:layout_weight="0.5"
-            android:background="@drawable/rect_grey"
-            android:padding="@dimen/five"
-            android:visibility="gone">
-
-
-            <ImageView
-                android:id="@+id/imgTypeOfAttendance"
-                android:layout_width="@dimen/twenty_five"
-                android:layout_height="@dimen/twenty_five"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="@dimen/ten"
-                android:src="@drawable/ic_down_arrow">
-
-            </ImageView>
 
             <TextView
-                android:id="@+id/lblAttendanceType"
+                android:id="@+id/attendancetype_header"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
+                android:layout_below="@+id/lnrClasses"
                 android:layout_marginStart="@dimen/fifteen"
-                android:text="Full day"
+                android:layout_marginTop="@dimen/fifteen"
+                android:fontFamily="@font/poppins_bold"
+                android:text="@string/select_attendance_type"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"
+                android:textStyle="bold" />
+
+
+            <LinearLayout
+                android:id="@+id/lnrClasses1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/attendancetype_header"
+                android:weightSum="1">
+
+
+                <RelativeLayout
+                    android:id="@+id/rlaFullDay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/fifteen"
+                    android:layout_marginEnd="@dimen/fifteen"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/bg_white_light_radious"
+                    android:padding="@dimen/ten">
+
+
+                    <RadioButton
+                        android:id="@+id/radioButtonFullDay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/ten"></RadioButton>
+
+                    <TextView
+                        android:id="@+id/fullday_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/ten"
+                        android:layout_toEndOf="@+id/radioButtonFullDay"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="@string/full_day"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/thirteen_sp"
+                        android:textStyle="normal"></TextView>
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/rlaHalfDay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/fifteen"
+                    android:layout_marginEnd="@dimen/fifteen"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/bg_white_light_radious"
+                    android:padding="@dimen/ten">
+
+
+                    <RadioButton
+                        android:id="@+id/radioButtonHalfDay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/ten">
+
+                    </RadioButton>
+
+                    <TextView
+                        android:id="@+id/halfday_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/radioButtonHalfDay"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="@string/half_day"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/thirteen_sp"
+                        android:textStyle="normal"></TextView>
+                </RelativeLayout>
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/session_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lnrClasses1"
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginTop="@dimen/fifteen"
+                android:fontFamily="@font/poppins_bold"
+                android:text="@string/select_session"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+
+            <LinearLayout
+                android:id="@+id/lnrClasses2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/session_header"
+                android:visibility="gone"
+                android:weightSum="1">
+
+
+                <RelativeLayout
+                    android:id="@+id/rlaFirstHalf"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/thirty_five"
+                    android:layout_marginStart="@dimen/fifteen"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_marginEnd="@dimen/fifteen"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/rect_white_light_radious"
+                    android:padding="@dimen/five">
+
+
+                    <RadioButton
+                        android:id="@+id/radioButtonFirstHalf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/ten"
+                        android:enabled="false"></RadioButton>
+
+                    <TextView
+                        android:id="@+id/firsthalf_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/ten"
+                        android:layout_toEndOf="@+id/radioButtonFirstHalf"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="@string/first_half"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/thirteen_sp"
+                        android:textStyle="normal"></TextView>
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/rlaSecondHalf"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/thirty_five"
+                    android:layout_marginStart="@dimen/fifteen"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_marginEnd="@dimen/fifteen"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/rect_white_light_radious"
+                    android:padding="@dimen/five">
+
+
+                    <RadioButton
+                        android:id="@+id/radioButtonSecondHalf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/ten"
+                        android:enabled="false">
+
+                    </RadioButton>
+
+                    <TextView
+                        android:id="@+id/secondhalf_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/radioButtonSecondHalf"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="@string/half_day"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/thirteen_sp"
+                        android:textStyle="normal"></TextView>
+                </RelativeLayout>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlaAttendanceType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/attendancetype_header"
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/fifteen"
+                android:layout_weight="0.5"
+                android:background="@drawable/rect_grey"
+                android:padding="@dimen/five"
+                android:visibility="gone">
+
+
+                <ImageView
+                    android:id="@+id/imgTypeOfAttendance"
+                    android:layout_width="@dimen/twenty_five"
+                    android:layout_height="@dimen/twenty_five"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/ten"
+                    android:src="@drawable/ic_down_arrow">
+
+                </ImageView>
+
+                <TextView
+                    android:id="@+id/lblAttendanceType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/fifteen"
+                    android:text="Full day"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:textStyle="bold">
+
+                </TextView>
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/btnSelectPresent"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/fourty_five"
+                android:layout_below="@+id/lnrClasses2"
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginTop="@dimen/twenty_five"
+                android:layout_marginEnd="@dimen/twenty"
+                android:background="@drawable/rect_shadow_gray"
+                android:enabled="false"
+                android:fontFamily="@font/poppins_bold"
+                android:gravity="center"
+                android:padding="@dimen/ten"
+                android:text="@string/Selectallaspresent"
+                android:textColor="@color/white"
+                android:textSize="@dimen/thirteen_sp"
+                android:textStyle="bold">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/btnOr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/btnSelectPresent"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/ten"
+                android:gravity="center"
+                android:text="@string/OR"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
                 android:textStyle="bold">
 
             </TextView>
+
+            <TextView
+                android:id="@+id/btnAbsent"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/fourty_five"
+                android:layout_below="@+id/btnOr"
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/twenty"
+                android:background="@drawable/rect_shadow_gray"
+                android:enabled="false"
+                android:fontFamily="@font/poppins_bold"
+                android:gravity="center"
+                android:padding="@dimen/ten"
+                android:text="@string/MarkAbsentees"
+                android:textColor="@color/white"
+                android:textSize="@dimen/thirteen_sp"
+                android:textStyle="bold">
+
+            </TextView>
         </RelativeLayout>
-
-        <TextView
-            android:enabled="false"
-            android:id="@+id/btnSelectPresent"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/fourty_five"
-            android:layout_below="@+id/lnrClasses2"
-            android:layout_marginStart="@dimen/twenty"
-            android:layout_marginTop="@dimen/twenty_five"
-            android:layout_marginEnd="@dimen/twenty"
-            android:background="@drawable/rect_shadow_gray"
-            android:fontFamily="@font/poppins_bold"
-            android:gravity="center"
-            android:padding="@dimen/ten"
-            android:text="@string/Selectallaspresent"
-            android:textColor="@color/white"
-            android:textSize="@dimen/thirteen_sp"
-            android:textStyle="bold">
-
-        </TextView>
-
-        <TextView
-            android:id="@+id/btnOr"
+        <LinearLayout
+            android:id="@+id/lytNoDataFound"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/btnSelectPresent"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/ten"
-            android:gravity="center"
-            android:text="@string/OR"
-            android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"
-            android:textStyle="bold">
+            android:layout_below="@+id/lnrAcademicDetails"
+            android:layout_centerInParent="true"
+            android:orientation="vertical"
+            android:visibility="gone">
 
-        </TextView>
+            <ImageView
+                android:layout_width="@dimen/two_hundred"
+                android:layout_height="@dimen/two_hundred"
+                android:layout_marginTop="@dimen/twenty_five"
+                android:src="@drawable/no_data_found"></ImageView>
 
-        <TextView
-            android:enabled="false"
-            android:id="@+id/btnAbsent"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/fourty_five"
-            android:layout_below="@+id/btnOr"
-            android:layout_marginStart="@dimen/twenty"
-            android:layout_marginTop="@dimen/ten"
-            android:layout_marginEnd="@dimen/twenty"
-            android:background="@drawable/rect_shadow_gray"
-            android:fontFamily="@font/poppins_bold"
-            android:gravity="center"
-            android:padding="@dimen/ten"
-            android:text="@string/MarkAbsentees"
-            android:textColor="@color/white"
-            android:textSize="@dimen/thirteen_sp"
-            android:textStyle="bold">
+            <TextView
+                android:id="@+id/noDataFound"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/twenty"
+                android:text="">
 
-        </TextView>
+            </TextView>
 
+        </LinearLayout>
 
     </RelativeLayout>
 

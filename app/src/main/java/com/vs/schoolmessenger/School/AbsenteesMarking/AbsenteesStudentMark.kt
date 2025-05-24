@@ -46,7 +46,7 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(), Abs
     override fun setupViews() {
         super.setupViews()
         setupToolbar()
-        binding.imgBack.setOnClickListener(this)
+        binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.rytSend.setOnClickListener(this)
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
@@ -57,14 +57,22 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(), Abs
         isSectionName =MarkAttendanceData?.section_name.toString()
         isSectionId=MarkAttendanceData?.section_id
         isAcademicYearId =MarkAttendanceData?.academic_year_id!!
-        binding.chSelectAll.setOnClickListener(this)
+        binding.toolbarLayout.cbSelect.visibility=View.VISIBLE
+        binding.toolbarLayout.cbSelect.text=getString(R.string.Selectall)
+        binding.toolbarLayout.cbSelect.setOnClickListener{
+                val isChecked = binding.toolbarLayout.cbSelect.isChecked
+                mAdapter.setAllAbsent(isChecked)
+        }
+
         Log.d("isGetStudentlListisAcademicYearId", isAcademicYearId.toString())
-        binding.lnrSelectAll.setOnClickListener(this)
+//        binding.lnrSelectAll.setOnClickListener(this)
         Log.d("isGetStudentListisStandardName", isStandardName.toString())
         Log.d("isGetStudentListisSectionName", isSectionName.toString())
-
         Log.d("isGetStudentListSectionID", isSectionId.toString())
-        binding.lblClassAndSection.text = isStandardName + "-" + isSectionName
+        binding.toolbarLayout.lblSchoolName.visibility=View.VISIBLE
+        binding.toolbarLayout.lblParentToolBar.visibility=View.VISIBLE
+        binding.toolbarLayout.lblParentToolBar.text = getString(R.string.MarkAttendance)
+        binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name+" | "+isStandardName+"-"+isSectionName
 
         appViewModel!!.isSendAbsenteeSMS?.observe(this) { response ->
             if (response != null && response.status) {
@@ -133,20 +141,6 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(), Abs
             R.id.rytSend -> {
                 isMarkAttendance()
             }
-
-            R.id.lnrSelectAll, R.id.chSelectAll -> {
-                if (v.id == R.id.lnrSelectAll) {
-                    // User clicked the layout → manually toggle the checkbox
-                    binding.chSelectAll.isChecked = !binding.chSelectAll.isChecked
-                }
-
-                // Whether user clicked checkbox or layout, get the new state
-                val isChecked = binding.chSelectAll.isChecked
-
-                // Update the adapter with the current checkbox state
-                mAdapter.setAllAbsent(isChecked)
-            }
-
         }
 
     }

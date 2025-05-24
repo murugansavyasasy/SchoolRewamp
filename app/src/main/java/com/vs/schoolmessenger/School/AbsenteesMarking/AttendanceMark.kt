@@ -157,9 +157,11 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                         isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
                         Log.d("isAcademicYearId", isAcademicYearId.toString())
                         isGetStandardSection()
+                        binding.rlaMarkAttendanceDetails.visibility=View.VISIBLE
                     }
                 } else {
-                    Constant.showDataValidation("Error", response.message, this)
+                    binding.rlaMarkAttendanceDetails.visibility=View.GONE
+                    ErrorMessage(response.message)
                 }
             }
         }
@@ -186,15 +188,17 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                                 Log.d("isSectionID", isSection.toString())
                             }
                             val firstStandard = isGetStandard!![0]
+                            binding.rlaMarkAttendanceDetails.visibility=View.VISIBLE
                             //To Assign Standard and Section in early to use in AbsenteesStudentMark.kt
                             updateStandardAndSection(firstStandard)
 //                        isGetStudentReport()
                         }
                     }
                 } else {
-                    binding.selectClassSection.visibility = View.GONE
-                    binding.lnrClasses.visibility = View.GONE
-                    Constant.showDataValidation("Error", response.message, this)
+                    binding.rlaMarkAttendanceDetails.visibility=View.GONE
+//                    binding.selectClassSection.visibility = View.GONE
+//                    binding.lnrClasses.visibility = View.GONE
+                    ErrorMessage(response.message)
                 }
             }
         }
@@ -268,6 +272,11 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         }
         //Checking Whether to enable the Select All as present and Mark Absentees button
         updateActionButtonsState()
+    }
+
+    fun ErrorMessage(ErrorMessage: String) {
+        binding.lytNoDataFound.visibility = View.VISIBLE
+        binding.noDataFound.text = ErrorMessage
     }
 
 
