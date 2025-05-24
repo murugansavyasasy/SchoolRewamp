@@ -31,10 +31,10 @@
 
             <TextView
                 android:id="@+id/lblParentToolBar"
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                style="@style/CustomTextStylePoppinsBold"
                 android:textColor="@color/black"
                 android:textSize="@dimen/fifteen_sp">
 
@@ -42,14 +42,13 @@
 
             <TextView
                 android:id="@+id/lblSchoolName"
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
                 android:visibility="gone"
-                android:textSize="@dimen/twele_sp"
                 android:textColor="@color/light_gray"
-                style="@style/CustomTextStylePoppinsBold"
-               >
+                android:textSize="@dimen/twele_sp">
 
             </TextView>
 
@@ -86,52 +85,28 @@
 
             <CheckBox
                 android:id="@+id/cbSelect"
+                style="@style/CustomCheckBox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/ten"
-                style="@style/CustomCheckBox"
+                android:layout_marginEnd="25dp"
                 android:button="@drawable/ch_square"
                 android:padding="@dimen/five"
                 android:text="@string/Selectallaspresent"
                 android:visibility="gone" />
 
+
         </RelativeLayout>
 
-<!--        <LinearLayout-->
-<!--            android:id="@+id/rytAddLocation"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_alignParentEnd="true"-->
-<!--            android:visibility="gone"-->
-<!--            android:orientation="horizontal"-->
-<!--            android:layout_centerVertical="true"-->
-<!--            android:layout_marginEnd="@dimen/ten">-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/lblAddLocation"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="@string/add_location"-->
-<!--                style="@style/Base.CardView"-->
-<!--                android:layout_marginEnd="@dimen/five"-->
-<!--                android:textColor="@color/navi_blue3"-->
-<!--                android:textSize="@dimen/thirteen_sp">-->
-
-<!--            </TextView>-->
-
-<!--            <ImageView-->
-<!--                android:id="@+id/imgAddLocation"-->
-<!--                android:layout_width="@dimen/twenty"-->
-<!--                android:layout_height="@dimen/twenty"-->
-<!--               android:src="@drawable/plus_circle">-->
-
-<!--            </ImageView>-->
-
-
-
-
-<!--        </LinearLayout>-->
-
+        <ImageView
+            android:id="@+id/imgSearchToolBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            android:padding="@dimen/five"
+            android:src="@drawable/search_icon"
+            android:visibility="gone" />
 
     </RelativeLayout>
 

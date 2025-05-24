@@ -814,10 +814,12 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     }
 
     private fun isGetGroupList() {
+        Constant.showLoading(this@RecipientActivity)
         appViewModel!!.isGetGroupList(isAccessToken!!, isAcademicYearId, this)
     }
 
     private fun isGetSubjectList(isSectionId: String) {
+        Constant.showLoading(this@RecipientActivity)
         appViewModel!!.isGetSubjectList(
             isAccessToken!!, isAcademicYearId, isSectionId.toString(), this
         )
