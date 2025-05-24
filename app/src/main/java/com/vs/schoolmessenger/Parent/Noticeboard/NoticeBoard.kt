@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Parent.Noticeboard.Adapter.NoticeBoardAdapter
+import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -33,6 +34,7 @@ class NoticeBoard : BaseActivity<NoticeBoardBinding>(), View.OnClickListener,
 
         binding.toolbarLayout.lblParentToolBar.text = "Notice Board"
         binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
+        binding.toolbarLayout.imgBack.setOnClickListener(this)
 
         binding.toolbarLayout.txtVideoMenu.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -66,6 +68,10 @@ class NoticeBoard : BaseActivity<NoticeBoardBinding>(), View.OnClickListener,
     }
 
     override fun onClick(p0: View?) {
+
+        when (p0?.id) {
+            R.id.imgBack -> onBackPressed()
+        }
 
 
     }

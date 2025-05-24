@@ -6,17 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
-import android.widget.Filter.FilterResults
 import android.widget.Filterable
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventClickListener
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventDataClass
-import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Adapter.ShimmerViewHolder
-import com.vs.schoolmessenger.Parent.Noticeboard.Notice
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class EventAdapter (
     private var itemList: List<EventDataClass>?,
@@ -42,10 +40,8 @@ class EventAdapter (
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-            val view =
-                LayoutInflater.from(parent.context)
-                    .inflate(R.layout.shimmer_view_small_list, parent, false)
-            ShimmerViewHolder(view)
+            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.homeword_report_item)
+            ShimmerViewHolder(shimmerView)
         } else {
             val view =
                 LayoutInflater.from(parent.context)
@@ -58,6 +54,8 @@ class EventAdapter (
         if (holder is DataViewHolder) {
             // Bind actual data when loading is complete
             holder.bind(filteredList!![position], position, listener, this)
+        }  else if (holder is ShimmerViewHolder) {
+            holder.startShimmer()
         }
     }
 
@@ -142,5 +140,11 @@ class EventAdapter (
                 )
             eventImgPdf.adapter = meventAdapter
         }
+    }
+}
+
+class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    fun startShimmer() {
+        ShimmerUtil.startShimmer(itemView)
     }
 }

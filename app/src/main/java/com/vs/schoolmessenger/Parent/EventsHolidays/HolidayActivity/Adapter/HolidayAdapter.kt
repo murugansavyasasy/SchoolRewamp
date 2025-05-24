@@ -12,9 +12,9 @@ import android.widget.Filterable
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
-import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventDataClass
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.Holiday
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.ShimmerUtil
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -41,10 +41,9 @@ class HolidayAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-            val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.shimmer_view_small_list, parent, false)
-            ShimmerViewHolder(view)
-        } else {
+            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.holiday_item)
+            ShimmerViewHolder(shimmerView)
+        }else {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.holiday_item, parent, false)
             DataViewHolder(view, context)
@@ -54,6 +53,8 @@ class HolidayAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
             holder.bind(filteredList!![position], position, this)
+        }  else if (holder is ShimmerViewHolder) {
+            holder.startShimmer()
         }
     }
 
@@ -129,10 +130,7 @@ class HolidayAdapter(
 }
 
 class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    private val shimmerLayout: ShimmerFrameLayout =
-        itemView.findViewById(R.id.shimmer_view_container)
-
-    init {
-        shimmerLayout.startShimmer()
+    fun startShimmer() {
+        ShimmerUtil.startShimmer(itemView)
     }
 }
