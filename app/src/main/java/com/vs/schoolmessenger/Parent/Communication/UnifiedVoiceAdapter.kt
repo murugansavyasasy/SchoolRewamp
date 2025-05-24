@@ -119,14 +119,12 @@ class UnifiedVoiceAdapter(
         private val rlaSendVoice: View = itemView.findViewById(R.id.rlaSendVoice)
         private val rlaSelectText: View = itemView.findViewById(R.id.rlaSelectText)
         private var isExpanded = false
-//        private lateinit var mediaPlayer: MediaPlayer
-private var mediaPlayer: MediaPlayer? = null
+        private var mediaPlayer: MediaPlayer? = null
 
         private var isPrepared = false
         private var isPlayingVoice = false
         private var lastPosition: Int = 0
         private val handler = Handler(Looper.getMainLooper())
-
 
         private val progressUpdater = object : Runnable {
             override fun run() {
@@ -158,16 +156,6 @@ private var mediaPlayer: MediaPlayer? = null
 
                 getAudioDuration(data.content ?: "") { duration ->
                     lblEndDuration.text = formatTime(duration)
-                }
-
-                lblSeeMore.setOnClickListener {
-                    listener.onItemClick(data, this@DataViewHolder)
-                    lblSeeMore.visibility = View.GONE
-                    if (data.is_archive!!) {
-                        listener.onUpdateArchiveStatus(data.type, data.id)
-                    } else {
-                        listener.onUpdateCommunicationStatus(data.type, data.id)
-                    }
                 }
 
 
@@ -211,11 +199,31 @@ private var mediaPlayer: MediaPlayer? = null
                 Log.d("data.is_unread!!", data.is_unread!!.toString())
                 if (data.is_unread!!) {
                     lblnewiconText.visibility = View.VISIBLE
+                    lblSeeMore.visibility = View.VISIBLE
+
                 } else {
                     lblnewiconText.visibility = View.GONE
+                    lblSeeMore.visibility = View.GONE
+
                 }
 
                 rlaText.setOnClickListener {
+                    isExpanded = !isExpanded
+                    lblSeeMore.visibility = View.GONE
+                    lblnewiconText.visibility = View.GONE
+                    lblContentText.maxLines = if (isExpanded) Int.MAX_VALUE else 3
+                    if (data.is_unread!!) {
+                        if (data.is_archive!!) {
+                            listener.onUpdateArchiveStatus(data.type, data.id)
+                        } else {
+                            listener.onUpdateCommunicationStatus(data.type, data.id)
+                        }
+                        data.is_unread = false
+                    }
+                    listener.onItemClick(data, this@DataViewHolder)
+                }
+
+                lblSeeMore.setOnClickListener {
                     isExpanded = !isExpanded
                     lblSeeMore.visibility = View.GONE
                     lblnewiconText.visibility = View.GONE
@@ -305,9 +313,16 @@ private var mediaPlayer: MediaPlayer? = null
         }
 
         private fun updatePlayPauseIcon(isPlaying: Boolean) {
-            val icon = if (isPlaying) R.drawable.pause_icon else R.drawable.video_play
+            val icon: Int
+            if (isPlaying) {
+                icon = R.drawable.pause_icon
+            } else {
+                icon = R.drawable.video_play
+                lblStartDuration.text = "00:00"
+            }
             imgVoicePlay.setImageDrawable(ContextCompat.getDrawable(context, icon))
         }
+
 
         private fun startAudioProgressUpdate() {
             handler.post(progressUpdater)

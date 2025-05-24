@@ -385,7 +385,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
             val dir = externalCacheDir ?: cacheDir
             val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
-            val fileName = "Communication_$timeStamp.mp3"
+            val fileName = "Communication_$timeStamp.wav"
             val filePath = "${dir.absolutePath}/$fileName"
 
             audioFilePath = filePath
@@ -1442,7 +1442,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     val timeStamp = SimpleDateFormat(
                         Constant.yyyyMMdd_HHmmss, Locale.getDefault()
                     ).format(Date())
-                    var isFileExtension = "mp3"
+                    var isFileExtension = "wav"
                     val fileName = "Communication_${timeStamp}.$isFileExtension"
                     isFileName = fileName
 

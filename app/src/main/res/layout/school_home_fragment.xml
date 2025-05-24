@@ -13,7 +13,7 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="@dimen/two_hundred">
 
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/lblGif"
@@ -50,7 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/ten"
-               android:gravity="center"
+                android:layout_marginTop="@dimen/fifteen"
                 android:layout_toStartOf="@+id/changeroll"
                 android:layout_toEndOf="@+id/imgSchoolLogo">
 
@@ -60,7 +60,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/twenty"
-                    android:visibility="gone"
                     android:text=""
                     android:textSize="@dimen/fourteen_sp" />
 
@@ -69,7 +68,7 @@
                     style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/five"
+                    android:layout_marginTop="@dimen/ten"
                     android:layout_below="@+id/lblStaffRole"
                     android:text=""
                     android:textSize="@dimen/fourteen_sp" />

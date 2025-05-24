@@ -18,7 +18,7 @@
 
         <LinearLayout
             android:id="@+id/lnrDate"
-            android:layout_width="@dimen/hundred"
+            android:layout_width="@dimen/eighty"
             android:layout_height="match_parent"
             android:layout_alignBottom="@id/rytDetails"
             android:layout_marginBottom="@dimen/eight"
@@ -35,7 +35,7 @@
                 android:background="@color/clr_month_blue"
                 android:gravity="center"
                 android:padding="@dimen/ten"
-                android:text="April"
+                android:text=""
                 android:textColor="@color/white"
                 android:textSize="@dimen/fifteen_sp"
                 android:textStyle="bold" />
@@ -47,7 +47,7 @@
                 android:background="@color/light_sky_blue5"
                 android:gravity="center"
                 android:padding="@dimen/five"
-                android:text="1"
+                android:text=""
                 android:textColor="@color/black"
                 android:textSize="@dimen/twenty_sp"
                 android:textStyle="bold" />
@@ -59,9 +59,9 @@
                 android:background="@color/light_sky_blue5"
                 android:gravity="center"
                 android:padding="@dimen/five"
-                android:text="Monday"
+                android:text=""
                 android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp" />
+                android:textSize="@dimen/twele_sp" />
 
         </LinearLayout>
 
@@ -130,6 +130,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/five"
             android:layout_toStartOf="@+id/lblPresentLabel"
             android:layout_toEndOf="@+id/lnrDate">
 
