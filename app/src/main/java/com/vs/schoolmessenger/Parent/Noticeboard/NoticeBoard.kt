@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Parent.Noticeboard.Adapter.NoticeBoardAdapter
-import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -19,7 +18,6 @@ class NoticeBoard : BaseActivity<NoticeBoardBinding>(), View.OnClickListener,
     override fun getViewBinding(): NoticeBoardBinding {
         return NoticeBoardBinding.inflate(layoutInflater)
     }
-
 
     lateinit var mAdapter: NoticeBoardAdapter
     private var appViewModel: App? = null

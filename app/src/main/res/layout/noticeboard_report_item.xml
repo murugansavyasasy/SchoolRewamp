@@ -25,21 +25,23 @@
         android:layout_width="@dimen/thirty"
         android:layout_height="@dimen/thirty"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="@dimen/twenty"
         android:elevation="@dimen/ten"
+        android:layout_marginBottom="-5dp"
         android:src="@drawable/noticeboard_pin"
         android:visibility="visible">
     </ImageView>
 
     <ImageView
         android:id="@+id/imgBgPin"
-        android:layout_width="@dimen/thirteen"
-        android:layout_height="@dimen/thirteen"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/eighteen"
+        android:layout_width="@dimen/fifteen"
+        android:layout_height="@dimen/fifteen"
         android:elevation="@dimen/ten"
-        android:src="@drawable/circle_dark_blue"
-        android:visibility="gone">
+        android:layout_marginEnd="-10dp"
+        android:layout_marginTop="-4dp"
+        android:layout_toStartOf="@+id/imgNoticeBoardPin"
+        android:layout_below="@+id/imgNoticeBoardPin"
+        android:src="@drawable/blackcircle"
+        android:visibility="visible">
     </ImageView>
 
     <RelativeLayout
@@ -134,11 +136,11 @@
             android:layout_below="@+id/lytRecyclerwview"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/fifteen"
-            android:fontFamily="@font/poppins_bold"
+       style="@style/CustomTextStylePoppinsBold"
             android:text="Annual Day celebrations"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"
-            android:textStyle="bold" />
+           />
 
 
         <TextView

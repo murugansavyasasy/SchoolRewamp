@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.CommonScreens.Ads.AdsResponse
+import com.vs.schoolmessenger.CommonScreens.GlobalVariableResponse
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYearResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
@@ -41,6 +42,7 @@ class SchoolServices {
     var client_auth: RestClient
     var isDashBoard: MutableLiveData<DashboardResponse?>
     var isGetAds: MutableLiveData<AdsResponse?>
+    var isGetGlobalVariables: MutableLiveData<GlobalVariableResponse?>
     var isGetStaffList: MutableLiveData<NameAndIdsResponse?>
     var isGetSubjectList: MutableLiveData<NameAndIdsResponse?>
     var isGetStandardSection: MutableLiveData<StandardResponse?>
@@ -89,6 +91,7 @@ class SchoolServices {
         client_auth = RestClient()
         isDashBoard = MutableLiveData()
         isGetAds = MutableLiveData()
+        isGetGlobalVariables = MutableLiveData()
         isGetStaffList = MutableLiveData()
         isGetSubjectList = MutableLiveData()
         isGetStandardSection = MutableLiveData()
@@ -197,6 +200,38 @@ class SchoolServices {
 
     val isGetAdsLiveData: LiveData<AdsResponse?>
         get() = isGetAds
+
+    fun isGetGlobalVariables(isToken: String, activity: Activity) {
+        RestClient.apiInterfaces.isGetGlobalVariable(isToken)
+            ?.enqueue(object : Callback<GlobalVariableResponse?> {
+                override fun onResponse(
+                    call: Call<GlobalVariableResponse?>, response: Response<GlobalVariableResponse?>
+                ) {
+                    Log.d(
+                        "isGetCountryList", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isGetGlobalVariables.postValue(response.body())
+                            } else {
+                                isGetGlobalVariables.postValue(response.body())
+                            }
+                        }
+                    } else {
+                    }
+                }
+
+                override fun onFailure(call: Call<GlobalVariableResponse?>, t: Throwable) {
+                    isGetGlobalVariables.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isGetGlobalVariablesLiveData: LiveData<GlobalVariableResponse?>
+        get() = isGetGlobalVariables
 
     fun isGetStaffList(isToken: String, activity: Activity) {
         RestClient.apiInterfaces.getStaffList(isToken)

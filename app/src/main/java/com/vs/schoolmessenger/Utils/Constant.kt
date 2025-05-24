@@ -162,7 +162,7 @@ object Constant {
     var isTextSendingData: TextSendingData? = null
     var commonFileList: List<CommonFileData> = emptyList()
     var selectedFileIndex: Int = -1
-    var isClickType = 1
+    var isCommunicationType = 1
     var isVoiceType = 1
 
     var isBioMetricEnable: Int = -1
@@ -175,6 +175,7 @@ object Constant {
     var fullDay="F"
     var allPresent="T"
     var some_Absent="F"
+    var Absent = "Absent"
     var halfDay="H"
 
 
@@ -632,18 +633,19 @@ object Constant {
 
             closePopup()
         }
-
     }
 
-
     @RequiresApi(Build.VERSION_CODES.O)
-    fun showValidationAlertPopup(message: String, activity: Activity) {
+    fun showValidationAlertPopup(isTitle: String, message: String, activity: Activity) {
         val inflater = LayoutInflater.from(activity)
         val view = inflater.inflate(R.layout.success_popup, null)
 
         val messageText = view.findViewById<TextView>(R.id.alertMessage)
         val okButton = view.findViewById<TextView>(R.id.btnOk)
+        val title = view.findViewById<TextView>(R.id.alertTitle)
+
         messageText.text = message
+        title.text = isTitle
 
         val rootView = activity.findViewById<ViewGroup>(android.R.id.content)
 
@@ -768,6 +770,18 @@ object Constant {
         }
 
     }
+
+    fun convertDateAndTimeFormat(input: String): String {
+        return try {
+            val inputFormat = SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("dd MMM yyyy h.mm a", Locale.getDefault())
+            val date = inputFormat.parse(input)
+            if (date != null) outputFormat.format(date) else input
+        } catch (e: Exception) {
+            input
+        }
+    }
+
 
     fun getTimeAfter20Minutes(): String {
         val dateFormat = SimpleDateFormat(hh_mm_a, Locale.getDefault())

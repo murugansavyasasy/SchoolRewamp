@@ -9,6 +9,7 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.databinding.DailyCollectionBinding
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Parent.Communication.UnifiedVoiceAdapter
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.HomeWorkAdapter
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetDateWiseHomeworkData
@@ -32,7 +33,7 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(), View.OnClickList
     private var from_Date: String? = null
 
     private var mAdapter: DcfAdapter? = null
-
+    private var isStaffDetails: StaffDetails? = null
     override fun getViewBinding(): DailyCollectionBinding {
         return DailyCollectionBinding.inflate(layoutInflater)
     }
@@ -40,12 +41,16 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(), View.OnClickList
     override fun setupViews() {
         super.setupViews()
         setupToolbar()
-        binding.imgBack.setOnClickListener(this)
+        binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
         binding.className.setOnClickListener(this)
         binding.modeName.setOnClickListener(this)
         binding.categoryName.setOnClickListener(this)
         binding.linearLayout3.setOnClickListener(this)
         binding.linearLayout5.setOnClickListener(this)
+        isStaffDetails = SharedPreference.getStaffDetails(this)
+        binding.toolbarLayout.lblParentToolBar.text = "Daily Collection"
+        binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
+
 
 
         val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
@@ -177,12 +182,13 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(), View.OnClickList
             R.id.imgBack -> {
                 onBackPressed()
             }
+
             R.id.class_name -> {
                 selectedType = "2"
                 binding.className.setBackgroundResource(R.drawable.white_radious)
                 binding.className.setTextColor(Color.BLACK)
-                binding.modeName.setBackgroundResource(R.drawable.rect_light_gray)
-                binding.categoryName.setBackgroundResource(R.drawable.rect_light_gray)
+                binding.modeName.setBackgroundResource(R.drawable.bg_light_blue)
+                binding.categoryName.setBackgroundResource(R.drawable.bg_light_blue)
 
                 isGetDailyCollection()
             }
@@ -191,8 +197,8 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(), View.OnClickList
                 selectedType = "3"
                 binding.modeName.setBackgroundResource(R.drawable.white_radious)
                 binding.modeName.setTextColor(Color.BLACK)
-                binding.className.setBackgroundResource(R.drawable.rect_light_gray)
-                binding.categoryName.setBackgroundResource(R.drawable.rect_light_gray)
+                binding.className.setBackgroundResource(R.drawable.bg_light_blue)
+                binding.categoryName.setBackgroundResource(R.drawable.bg_light_blue)
                 isGetDailyCollection()
             }
 
@@ -200,8 +206,8 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(), View.OnClickList
                 selectedType = "1"
                 binding.categoryName.setBackgroundResource(R.drawable.white_radious)
                 binding.categoryName.setTextColor(Color.BLACK)
-                binding.modeName.setBackgroundResource(R.drawable.rect_light_gray)
-                binding.className.setBackgroundResource(R.drawable.rect_light_gray)
+                binding.modeName.setBackgroundResource(R.drawable.bg_light_blue)
+                binding.className.setBackgroundResource(R.drawable.bg_light_blue)
                 isGetDailyCollection()
             }
 

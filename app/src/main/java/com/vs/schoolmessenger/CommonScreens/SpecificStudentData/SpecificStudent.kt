@@ -55,7 +55,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.rytSend.setOnClickListener(this)
 
-        binding.toolbarLayout.lblParentToolBar.text = resources.getString(R.string.Students)
+        binding.toolbarLayout.lblParentToolBar.text = resources.getString(R.string.Students_List)
         binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
         binding.toolbarLayout.cbSelect.visibility = View.VISIBLE
         binding.toolbarLayout.rytFilter.visibility = View.GONE
@@ -67,6 +67,8 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
         isCurrentAcademicYear = intent.getBooleanExtra(Constant.isCurrentAcademicYear, false)
         isAcademicYear = intent.getStringExtra(Constant.lblAcademicYear)
         isStaffDetails = SharedPreference.getStaffDetails(this)
+        binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
+
         isAccessToken = isStaffDetails!!.access_token
         isGetStudentList(isSelectedId, isAcademicYearId)
         isAwsUploadingPreSigned = AwsUploadingPreSigned()
@@ -223,7 +225,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
 
         val jsonObject = ApiCallRequest.isVoiceSend(
             isAcademicYearId = isAcademicYearId,
-            isClickType = isVoiceData!!.isClickType,
+            isCommunicationType = isVoiceData!!.isCommunicationType,
             selectedDates = isVoiceData.selectedDates,
             isStartTimeText = isVoiceData.isStartTimeText,
             isEndTimeText = isVoiceData.isEndTimeText,
@@ -267,7 +269,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
             Constant.showLoading(this@SpecificStudent)
 
             val isTextData = Constant.isTextSendingData
-            if (Constant.isClickType == 3) {
+            if (Constant.isCommunicationType == 3) {
                 val jsonObject = ApiCallRequest.isSendText(
                     isAcademicYearId = isAcademicYearId,
                     schoolId = selectedIds,
@@ -334,7 +336,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                             resources.getString(R.string.are_you_sure_want_to_send_this_message)
                     }
 
-                    if (Constant.isClickType == 3) {
+                    if (Constant.isCommunicationType == 3) {
                         showSendConfirmationDialog(
                             resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + resources.getString(
                                 R.string.Student_s
@@ -351,6 +353,9 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                     }
                 } else {
                     Constant.showValidationAlertPopup(
+                        getString(
+                            R.string.alert
+                        ),
                         resources.getString(R.string.Please_select_least_student),
                         this
                     )

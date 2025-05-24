@@ -159,7 +159,7 @@ class Event : BaseActivity<EventParentBinding>(), View.OnClickListener, EventCli
         }
 
         isClickingId.background =
-            ContextCompat.getDrawable(this, R.drawable.bg_gradient_parent_clickbar)
-        isClickingId.setTextColor(ContextCompat.getColor(this, R.color.white))
+            ContextCompat.getDrawable(this, R.drawable.white_radious)
+        isClickingId.setTextColor(ContextCompat.getColor(this, R.color.black))
     }
 }

@@ -44,7 +44,9 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
         binding.AcademicYear.setOnClickListener(this)
         binding.categoryName.setOnClickListener(this)
         binding.className.setOnClickListener(this)
-        binding.imgBack.setOnClickListener(this)
+        binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
+        binding.toolbarLayout.lblParentToolBar.text = "Fee Pending"
+        binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
 
         appViewModel!!.isGetAcademicList?.observe(this) { response ->
             response?.data?.let { academicList ->
@@ -203,7 +205,7 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
                 isClassWiseSelected = false
                 binding.categoryName.setBackgroundResource(R.drawable.white_radious)
                 binding.categoryName.setTextColor(Color.BLACK)
-                binding.className.setBackgroundResource(R.drawable.rect_light_gray)
+                binding.className.setBackgroundResource(R.drawable.bg_light_blue)
                 binding.className.setTextColor(Color.BLACK)
                 isGetDailyCollection()
             }
@@ -212,7 +214,7 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
                 isClassWiseSelected = true
                 binding.className.setBackgroundResource(R.drawable.white_radious)
                 binding.className.setTextColor(Color.BLACK)
-                binding.categoryName.setBackgroundResource(R.drawable.rect_light_gray)
+                binding.categoryName.setBackgroundResource(R.drawable.bg_light_blue)
                 binding.categoryName.setTextColor(Color.BLACK)
                 isGetDailyWiseCollection()
             }

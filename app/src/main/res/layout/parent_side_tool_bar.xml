@@ -76,7 +76,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginHorizontal="@dimen/ten"
         android:layout_marginTop="@dimen/fifteen"
-        android:background="@drawable/bg_light_blue"
+        android:background="@drawable/bg_light_green"
         android:visibility="gone">
 
         <TextView
@@ -84,12 +84,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/bg_gradient_parent_clickbar"
+            android:background="@drawable/white_radious"
             android:gravity="center"
-            android:padding="@dimen/ten"
             android:text=""
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:layout_marginStart="2dp"
+            android:padding="@dimen/eight"
             android:textStyle="bold" />
 
         <TextView
@@ -98,10 +101,13 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:padding="@dimen/ten"
             android:text=""
-            android:textColor="@color/dark_blue"
+            android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:layout_marginEnd="2dp"
+            android:padding="@dimen/eight"
             android:textStyle="bold" />
 
     </LinearLayout>

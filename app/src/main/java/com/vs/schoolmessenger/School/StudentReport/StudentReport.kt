@@ -73,9 +73,6 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
         binding.tapNoDsc.setOnClickListener(this)
         binding.tapNameDsc.setOnClickListener(this)
         binding.tapNoAsc.setOnClickListener(this)
-
-
-
         binding.dropdownTextViewStandard.setOnClickListener(this)
         binding.dropdownTextViewSection.setOnClickListener(this)
         isStaffDetails = SharedPreference.getStaffDetails(this)
@@ -160,7 +157,6 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
                         binding.tabLayout.visibility=View.GONE
                         binding.rlaStandardPicking.visibility=View.GONE
                         ErrorMessage(response.message)
-//                        Constant.showDataValidation("Error", response.message, this)
                     }
                 }
             }
@@ -178,8 +174,6 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
             }
         })
     }
-
-
     private fun isGetStudentReport() {
         binding.txtSearchMenu.text.clear()
         mAdapter = StudentReportAdapter(null, this, this, Constant.isShimmerViewShow)
@@ -337,10 +331,6 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
         isGetStudentReport()
     }
 
-
-
-
-
     private fun highlightSelectedTab(selectedView: View) {
         // Reset all tabs to white
         binding.tapNoAsc.setBackgroundResource(R.drawable.light_gray_radius)
@@ -350,9 +340,6 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
         // Highlight the selected tab
         selectedView.setBackgroundResource(R.drawable.theme_colour_radius)
     }
-
-
-
     override fun onClick(p0: View?) {
         when (p0?.id) {
             R.id.imgBack -> {
@@ -435,9 +422,7 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
         }
 
     }
-
     override fun onMailClick(data: StudentReportData) {
-//        In Get Student Report API,We have not recived the Email-->10/05/2025
         Constant.redirectToMail(this, data.email,"","")
     }
 

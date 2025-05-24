@@ -11,6 +11,7 @@ import com.vs.schoolmessenger.Auth.OTP.OtpResponse
 import com.vs.schoolmessenger.Auth.Splash.VersionCheckResponse
 import com.vs.schoolmessenger.CommonScreens.Ads.AdsResponse
 import com.vs.schoolmessenger.CommonScreens.DeviceToken
+import com.vs.schoolmessenger.CommonScreens.GlobalVariableResponse
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYearResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
@@ -98,6 +99,10 @@ interface ApiInterfaces {
         @Body jsonObject: JsonObject
     ): Call<DeviceToken?>?
 
+    @GET(APIMethods.isGlobalVariables)
+    fun isGetGlobalVariable(
+        @Header(APIKeyNames.Authorization) token: String  // Pass token as a header
+    ): Call<GlobalVariableResponse?>
 
     @GET(APIMethods.isGetDashBoard)
     fun isDashBoard(

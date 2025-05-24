@@ -29,6 +29,7 @@ import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.vs.schoolmessenger.AlbumImage.AlbumSelectActivity
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
@@ -331,7 +332,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         )
     }
 
-
     private fun RedirectToSectionStudents() {
         val title = binding.edtTitle.text.toString().trim()
         val description = binding.edtDescription.text.toString().trim()
@@ -358,6 +358,46 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
     }
 
 
+    private fun openAlbumSelectActivity(type: String) {
+        val intent = Intent(this, AlbumSelectActivity::class.java)
+        intent.putExtra("type", type)
+        startActivity(intent)
+    }
+
+//    private fun showBottomDialog() {
+//        val dialog = Dialog(this)
+//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+//        dialog.setContentView(R.layout.filepick_bottom_sheet)
+//
+//        val rlaGallery = dialog.findViewById<RelativeLayout>(R.id.rlaGallery)
+//        val rlaCamera = dialog.findViewById<RelativeLayout>(R.id.rlaCamera)
+//        val rlaDocument = dialog.findViewById<RelativeLayout>(R.id.rlaVideo)
+//
+//        rlaGallery.setOnClickListener {
+//            openAlbumSelectActivity("IMAGE")
+//            dialog.dismiss()
+//        }
+//
+//        rlaCamera.setOnClickListener {
+//            checkCameraPermissionAndOpenCamera()
+//            dialog.dismiss()
+//        }
+//
+//        rlaDocument.setOnClickListener {
+//            openAlbumSelectActivity("DOCUMENT")
+//            dialog.dismiss()
+//        }
+//
+//        dialog.window?.apply {
+//            setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+//            setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+//            setGravity(Gravity.BOTTOM)
+//            setWindowAnimations(R.style.PopupAnimation)
+//        }
+//        dialog.show()
+//    }
+
+
     private fun showBottomDialog() {
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -373,7 +413,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
 
         rlaCamera.setOnClickListener {
             checkCameraPermissionAndOpenCamera()
-
             dialog.dismiss()
         }
         rlaDocument.setOnClickListener {

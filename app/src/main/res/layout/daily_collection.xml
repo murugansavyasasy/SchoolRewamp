@@ -6,43 +6,15 @@
     android:fitsSystemWindows="true"
     android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:id="@+id/rlaLbCommunication"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/eighty"
-        android:background="@color/primary_light"
-        android:paddingBottom="@dimen/thirty">
-        <ImageView
-            android:id="@+id/imgBack"
-            android:layout_width="@dimen/thirty"
-            android:layout_height="@dimen/thirty"
-            android:layout_marginStart="@dimen/twenty"
-            android:layout_marginTop="@dimen/twenty"
-            android:src="@drawable/left_arrow">
-
-        </ImageView>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/sixty"
-            android:layout_marginTop="@dimen/twenty"
-            android:text="@string/daily_collection_fees"
-            android:textColor="@color/black"
-            android:textSize="@dimen/twenty_sp"
-            android:textStyle="bold">
-
-        </TextView>
-    </RelativeLayout>
-
-
-
+    <include
+        android:id="@+id/toolbarLayout"
+        layout="@layout/school_side_tool_bar" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/relative_layout"
-        android:layout_below="@+id/rlaLbCommunication"
+        android:layout_below="@+id/toolbarLayout"
         android:gravity="center_horizontal"
         android:layout_marginTop="@dimen/ten">
 
@@ -174,15 +146,15 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/fifty"
+        android:layout_height="wrap_content"
         android:id="@+id/relative_layout8"
         android:layout_below="@+id/relative_layout"
         android:weightSum="3"
-        android:background="@drawable/rect_light_gray"
+        android:background="@drawable/bg_light_blue"
         android:gravity="center_vertical"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginTop="@dimen/ten">
+        android:layout_marginStart="7dp"
+        android:layout_marginEnd="7dp"
+        android:layout_marginTop="13dp">
 
 
         <TextView
@@ -194,10 +166,11 @@
             android:text="@string/DC_category"
             android:textColor="@color/black"
             android:background="@drawable/white_radious"
-            android:textSize="@dimen/fifteen_sp"
-            android:layout_marginTop="3dp"
-            android:layout_marginBottom="3dp"
-            android:layout_marginStart="3dp"
+            android:textSize="@dimen/thirteen_sp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:layout_marginStart="2dp"
+            android:padding="@dimen/eight"
             style="@style/CustomTextStylePoppinsMedium">
         </TextView>
 
@@ -206,13 +179,14 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/DailyCollection_class"
-            android:textColor="@color/grey"
-            android:textSize="@dimen/fifteen_sp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp"
             android:layout_weight="1"
-            android:layout_marginTop="3dp"
-            android:layout_marginBottom="3dp"
-            android:layout_marginStart="3dp"
-            android:layout_marginEnd="@dimen/three"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:layout_marginStart="2dp"
+            android:padding="@dimen/eight"
+            android:layout_marginEnd="2dp"
             android:gravity="center"
             style="@style/CustomTextStylePoppinsMedium">
         </TextView>
@@ -223,12 +197,14 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/mode"
-            android:textColor="@color/grey"
-            android:textSize="@dimen/fifteen_sp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp"
             android:layout_weight="1"
-            android:layout_marginTop="3dp"
-            android:layout_marginBottom="3dp"
-            android:layout_marginStart="3dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:layout_marginStart="2dp"
+            android:padding="@dimen/eight"
+            android:layout_marginEnd="2dp"
             android:gravity="center"
             style="@style/CustomTextStylePoppinsMedium"
            >
@@ -240,7 +216,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/relative_layout5"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="8dp"
         android:layout_below="@+id/relative_layout8"
        >
         <TextView
@@ -262,6 +238,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginEnd="7dp"
         android:layout_below="@+id/relative_layout5"
         android:orientation="vertical">
 
@@ -269,7 +247,8 @@
         android:id="@+id/totalsummary1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/ten">
+        android:layout_marginTop="@dimen/ten"
+       >
     </androidx.recyclerview.widget.RecyclerView>
 
 
@@ -285,7 +264,7 @@
         android:layout_marginTop="@dimen/twenty"
         android:src="@drawable/nomessages"
         android:textColor="@color/black"
-        android:textSize="@dimen/eighteen"
+        android:textSize="18sp"
         android:visibility="gone" />
 
     <TextView
@@ -298,7 +277,8 @@
         android:layout_marginTop="@dimen/twenty"
         android:text="@string/no_list_found"
         android:textColor="@color/black"
-        android:textSize="@dimen/eighteen"
+        android:textSize="18sp"
+        android:gravity="center"
         android:visibility="gone" />
 
     </LinearLayout>
