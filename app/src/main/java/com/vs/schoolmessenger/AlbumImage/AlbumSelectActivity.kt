@@ -35,7 +35,6 @@ class AlbumSelectActivity : AppCompatActivity() {
         binding.recyclerView.adapter = adapter
 
         var fileType = intent.getStringExtra("type") ?: "IMAGE"
-        fileType = "DOCUMENT"
         when (fileType.uppercase()) {
             "IMAGE" -> adapter.submitList(loadImages())
             "VIDEO" -> adapter.submitList(loadVideos())

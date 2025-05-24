@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:fitsSystemWindows="true"
+    android:fitsSystemWindows=
+        "true"
     android:layout_marginTop="@dimen/five">
 
 
@@ -86,6 +87,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/LblHWSubjectName"
+            android:layout_marginTop="10dp"
             android:orientation="vertical">
 
             <androidx.recyclerview.widget.RecyclerView
@@ -136,11 +138,11 @@
             android:layout_below="@+id/lytRecyclerwview"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/fifteen"
-       style="@style/CustomTextStylePoppinsBold"
+            style="@style/CustomTextStylePoppinsBold"
             android:text="Annual Day celebrations"
             android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"
-           />
+            android:textSize="@dimen/thirteen_sp"/>
+
 
 
         <TextView
@@ -558,9 +560,5 @@
             android:text="@string/SeeMore"
             android:textColor="@android:color/holo_blue_dark"
             android:visibility="gone" />
-
-
     </RelativeLayout>
-
-
 </RelativeLayout>

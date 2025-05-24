@@ -31,8 +31,7 @@ class AttendanceReport : BaseActivity<AttendanceReportParentBinding>(), View.OnC
         binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
         isChildDetails = SharedPreference.getChildDetails(this)
         binding.toolbarLayout.lblStudentName.text = isChildDetails!!.name
-        binding.toolbarLayout.lblStudentSection.text =
-            isChildDetails!!.standard_name + " - " + isChildDetails!!.section_name
+        binding.toolbarLayout.lblStudentSection.text = isChildDetails!!.standard_name + " - " + isChildDetails!!.section_name
 
         isAccessToken = isChildDetails?.access_token
         appViewModel = ViewModelProvider(this)[App::class.java]
