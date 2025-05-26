@@ -238,27 +238,38 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
     }
 
     private fun filter(text: String) {
-
-        val filteredList = if (text.isEmpty()) {
+        val filteredList = if (text.isBlank()) {
             isStudentReportData
         } else {
-            isStudentReportData.filter {
-                it.name.contains(text, ignoreCase = true) ||
-                        it.admission_no.contains(text, ignoreCase = true) ||
-                        it.email.contains(text, ignoreCase = true) ||
-                        it.primary_mobile.contains(text, ignoreCase = true)
+
+            val searchWords = text.trim().lowercase().split("\\s+".toRegex())
+
+            isStudentReportData.filter { student ->
+                val fieldsToSearch = listOf(
+                    student.name.lowercase(),
+                    student.admission_no.lowercase(),
+                    student.email.lowercase(),
+                    student.primary_mobile.lowercase()
+                )
+
+                // Check if ALL search words are found in ANY of the fields(feildTosearch List i.e name,email...etc)
+                searchWords.all { word ->
+                    fieldsToSearch.any { field ->
+                        field.contains(word)
+                    }
+                }
+
             }
         }
 
-        if(filteredList.size>1){
+        if (filteredList.isNotEmpty()) {
             ShowData()
-            (mAdapter).updateData(filteredList)
-        }
-        else{
+            mAdapter.updateData(filteredList)
+        } else {
             ErrorMessage(Constant.NO_DATA_FOUND)
         }
-
     }
+
 
 
     fun ErrorMessage(ErrorMessage: String) {

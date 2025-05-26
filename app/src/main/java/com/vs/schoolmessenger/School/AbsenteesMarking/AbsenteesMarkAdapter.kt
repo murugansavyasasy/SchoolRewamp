@@ -73,11 +73,19 @@ class AbsenteesMarkAdapter(
         private val lblAdmisNo: TextView = itemView.findViewById(R.id.lblAdmissionNoValue)
         private val lnrPresent: LinearLayout = itemView.findViewById(R.id.lnrPresent)
         private val lnrAbsent: RelativeLayout = itemView.findViewById(R.id.lnrAbsent)
+        private val lnrRollno: LinearLayout = itemView.findViewById(R.id.lnrRollNo)
 
         fun bind(data: NameAndIds, position: Int, listener: AbsenteesClickListener) {
 
             lblName.text = data.name
-            lblRollNo.text = data.roll_no
+            if(data.roll_no!=""){
+                lblRollNo.text = data.roll_no
+                lnrRollno.setBackgroundResource(R.drawable.rect_light_blue)
+            }
+            else{
+                lblRollNo.text = ""
+                lnrRollno.setBackgroundResource(0)
+            }
             lblAdmisNo.text = data.admission_no
 
             val id = data.id.toString()

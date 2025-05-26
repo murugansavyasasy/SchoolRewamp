@@ -1,7 +1,5 @@
 package com.vs.schoolmessenger.School.AbsenteesMarking
 
-import android.app.DatePickerDialog
-import android.content.Context
 import android.content.Intent
 import android.icu.util.Calendar
 import android.os.Build
@@ -11,10 +9,8 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
-import com.google.gson.JsonPrimitive
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
@@ -157,9 +153,11 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                         isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
                         Log.d("isAcademicYearId", isAcademicYearId.toString())
                         isGetStandardSection()
+                        binding.rlaMarkAttendanceDetails.visibility=View.VISIBLE
                     }
                 } else {
-                    Constant.showDataValidation("Error", response.message, this)
+                    binding.rlaMarkAttendanceDetails.visibility=View.GONE
+                    ErrorMessage(response.message)
                 }
             }
         }
@@ -186,15 +184,17 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                                 Log.d("isSectionID", isSection.toString())
                             }
                             val firstStandard = isGetStandard!![0]
+                            binding.rlaMarkAttendanceDetails.visibility=View.VISIBLE
                             //To Assign Standard and Section in early to use in AbsenteesStudentMark.kt
                             updateStandardAndSection(firstStandard)
 //                        isGetStudentReport()
                         }
                     }
                 } else {
-                    binding.selectClassSection.visibility = View.GONE
-                    binding.lnrClasses.visibility = View.GONE
-                    Constant.showDataValidation("Error", response.message, this)
+                    binding.rlaMarkAttendanceDetails.visibility=View.GONE
+//                    binding.selectClassSection.visibility = View.GONE
+//                    binding.lnrClasses.visibility = View.GONE
+                    ErrorMessage(response.message)
                 }
             }
         }
@@ -268,6 +268,11 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         }
         //Checking Whether to enable the Select All as present and Mark Absentees button
         updateActionButtonsState()
+    }
+
+    fun ErrorMessage(ErrorMessage: String) {
+        binding.lytNoDataFound.visibility = View.VISIBLE
+        binding.noDataFound.text = ErrorMessage
     }
 
 
