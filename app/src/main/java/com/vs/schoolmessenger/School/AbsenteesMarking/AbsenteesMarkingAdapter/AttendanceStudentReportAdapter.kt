@@ -11,10 +11,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportData
+import com.vs.schoolmessenger.School.StudentReport.StudentReportData
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class AttendanceStudentReportAdapter(
-    private var itemList: List<StudentAttendanceReportData>?,
+    private var itemList: List<StudentAttendanceReportData>?= emptyList(),
     private var context: Context,
     private var isLoading: Boolean
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -66,14 +68,23 @@ class AttendanceStudentReportAdapter(
             lblAdmissionValue.text = data.admission_no
             lblAttendanceStatus.text = data.att_status
 
-            if (data.att_status == "A") {
+            if (data.att_status == Constant.school) {
+                lblAttendanceStatus.text= Constant.Absent
                 lblAttendanceStatus.setBackgroundDrawable(context.resources.getDrawable(R.drawable.rounded_top_right_bottom_end_red))
-                rlaAttendance.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_outline_red))
-            } else {
+            } else if(data.att_status == Constant.P) {
+                lblAttendanceStatus.text= Constant.Present
                 lblAttendanceStatus.setBackgroundDrawable(context.resources.getDrawable(R.drawable.rounded_top_right_bottom_end_green))
-                rlaAttendance.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_outline_green))
+            }
+            else{
+                lblAttendanceStatus.text=data.att_status
+                lblAttendanceStatus.setBackgroundDrawable(context.resources.getDrawable(R.drawable.rounded_top_right_bottom_end_orange))
             }
         }
+    }
+
+    fun updateData(newList: List<StudentAttendanceReportData>) {
+        itemList = newList
+        notifyDataSetChanged()
     }
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

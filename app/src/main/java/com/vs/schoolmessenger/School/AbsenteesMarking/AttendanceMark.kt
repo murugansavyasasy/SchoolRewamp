@@ -3,6 +3,8 @@ package com.vs.schoolmessenger.School.AbsenteesMarking
 import android.content.Intent
 import android.icu.util.Calendar
 import android.os.Build
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.TextView
@@ -95,6 +97,8 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         binding.radioButtonHalfDay.setOnClickListener(this)
         binding.radioButtonFirstHalf.setOnClickListener(this)
         binding.radioButtonSecondHalf.setOnClickListener(this)
+        binding.txtSearch.setOnClickListener(this)
+
 
         updateActionButtonsState()
         isStaffDetails = SharedPreference.getStaffDetails(this)
@@ -202,6 +206,54 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
 
         }
 
+        binding.txtSearch.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                filter(s.toString())
+            }
+        })
+
+    }
+
+    private fun filter(text: String) {
+        val filteredList = if (text.isBlank()) {
+            studentsList
+        } else {
+
+            val searchWords = text.trim().lowercase().split("\\s+".toRegex())
+
+            studentsList.filter { student ->
+                val fieldsToSearch = listOf(
+                    student.student_name.lowercase(),
+                    student.admission_no.lowercase(),
+                )
+
+                // Check if ALL search words are found in ANY of the fields(feildTosearch List i.e admission_no,student_name...etc)
+                searchWords.all { word ->
+                    fieldsToSearch.any { field ->
+                        field.contains(word)
+                    }
+                }
+            }
+
+        }
+
+        if (filteredList.isNotEmpty()) {
+            ShowData()
+            mAdapter.updateData(filteredList)
+        } else {
+            binding.rcyAttendanceReport.visibility = View.GONE
+            ErrorMessage(Constant.NO_DATA_FOUND)
+        }
+    }
+
+    fun ShowData() {
+        binding.rcyAttendanceReport.visibility = View.VISIBLE
+        binding.lytNoDataFound.visibility = View.GONE
     }
 
     private fun isGetStandardSection() {
