@@ -666,7 +666,11 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
 
     private fun loadFragment(fragment: Fragment) {
-
+        val currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
+        // Check if the current fragment is of the same class
+        if (currentFragment != null && currentFragment::class == fragment::class) {
+            return // Already loaded, do nothing
+        }
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, fragment)
             .commit()
