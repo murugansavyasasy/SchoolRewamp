@@ -147,6 +147,7 @@ object Constant {
     var isStaff = 6
 
     var school = "A"
+    var P="P"
     var standard = "C"
     var section = "S"
     var group = "G"

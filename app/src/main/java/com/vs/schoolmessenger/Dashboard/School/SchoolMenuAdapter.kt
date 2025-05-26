@@ -1,8 +1,6 @@
 package com.vs.schoolmessenger.Dashboard.School
 
 import android.content.Context
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,8 +17,6 @@ import com.vs.schoolmessenger.Dashboard.Parent.AdImageAdapter
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
-import java.util.Timer
-import java.util.TimerTask
 
 
 class SchoolMenuAdapter(
@@ -36,12 +32,14 @@ class SchoolMenuAdapter(
     private val TYPE_AD = 2
 
     override fun getItemViewType(position: Int): Int {
+        val showAd = !isLoading && isAdItem?.isNotEmpty() == true && (itemList?.size ?: 0) > 9
         return when {
             isLoading -> TYPE_SHIMMER
-            position == 8 -> TYPE_AD
+            showAd && position == 9 -> TYPE_AD
             else -> TYPE_DATA
         }
     }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -69,39 +67,31 @@ class SchoolMenuAdapter(
         itemList=newList
         notifyDataSetChanged()
     }
-
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val showAd = isAdItem?.isNotEmpty() == true && (itemList?.size ?: 0) > 9
+
         when (holder) {
             is DataViewHolder -> {
-                itemList?.get(position)?.let { menuDetail ->
-                    holder.bind(menuDetail,position, listener)
+                val actualPosition = if (showAd && position > 9) position - 1 else position
+                itemList?.getOrNull(actualPosition)?.let { menuDetail ->
+                    holder.bind(menuDetail, actualPosition, listener)
                 }
             }
 
-            is ShimmerViewHolder -> {
-                holder.startShimmer()
-            }
+            is ShimmerViewHolder -> holder.startShimmer()
 
-            is AdViewHolder -> {
-                if (position == 9) {
-                    isAdItem?.let {
-                        if (it.isNotEmpty()) {
-                            holder.bind(it, context)
-                        } else {
-                            holder.bind(emptyList(), context)
-                        }
-                    } ?: holder.bind(emptyList(), context)
-                } else {
-                    holder.bind(emptyList(), context)
-                }
-            }
+            is AdViewHolder -> holder.bind(isAdItem ?: emptyList(), context)
         }
     }
 
+
     override fun getItemCount(): Int {
-        return if (isLoading) 20
-        else itemList!!.size
+        if (isLoading) return 20
+        val baseSize = itemList?.size ?: 0
+        val showAd = isAdItem?.isNotEmpty() == true && baseSize > 9
+        return if (showAd) baseSize + 1 else baseSize
     }
+
 
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
@@ -166,12 +156,6 @@ class SchoolMenuAdapter(
                     imgMenu.setImageResource(R.drawable.attachement_icon)
                 }
 
-
-
-
-
-
-
                 Constant.M_ONLINE_MEETING -> {
                     imgMenu.setImageResource(R.drawable.online_meeting_icon)
                 }
@@ -204,7 +188,6 @@ class SchoolMenuAdapter(
                 }
             }
 
-
             rlaMenu.setOnClickListener {
                 Constant.SELECTED_SCHOOL_MENU = data.id
                 listener.onClick(data)
@@ -216,19 +199,8 @@ class SchoolMenuAdapter(
     class AdViewHolder(itemView: View, private val adapter: SchoolMenuAdapter) :
         RecyclerView.ViewHolder(itemView) {
         private val recyclerView: RecyclerView = itemView.findViewById(R.id.recyclerViewAdImages)
-        private val lnrHomeWork: LinearLayout = itemView.findViewById(R.id.lnrHomeWork)
-        private val lnrLeaveRequest: LinearLayout = itemView.findViewById(R.id.lnrLeaveRequest)
-        private val lnrAssignment: LinearLayout = itemView.findViewById(R.id.lnrAssignment)
-        private val lblSeeMore: TextView = itemView.findViewById(R.id.lblSeeMore)
-        private val dotContainer: LinearLayout = itemView.findViewById(R.id.dotContainer)
         private val rlaMenuExample: LinearLayout = itemView.findViewById(R.id.rlaMenuExample)
-        private var isFirstTime = true
         private lateinit var layoutManager: LinearLayoutManager
-        private var position: Int = 0
-        private val handler = Handler(Looper.getMainLooper())
-        private var isTouching = false
-        private var timer: Timer? = null
-        private var timerTask: TimerTask? = null
 
         fun bind(isAds: List<AdItem>, context: Context) {
             layoutManager =

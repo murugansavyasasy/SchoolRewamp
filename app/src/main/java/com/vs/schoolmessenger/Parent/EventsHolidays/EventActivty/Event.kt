@@ -157,7 +157,7 @@ class Event : BaseActivity<EventParentBinding>(), View.OnClickListener, EventCli
         if (isEmpty) {
             binding.nomessage.visibility = View.VISIBLE
             binding.txtNoData.visibility = View.VISIBLE
-            binding.txtNoData.text = "No matching notices found"
+            binding.txtNoData.text = "No matching Event found"
             binding.rcyEvent.visibility = View.GONE
         } else {
             binding.nomessage.visibility = View.GONE
@@ -170,7 +170,7 @@ class Event : BaseActivity<EventParentBinding>(), View.OnClickListener, EventCli
         if (isEmpty) {
             binding.nomessage.visibility = View.VISIBLE
             binding.txtNoData.visibility = View.VISIBLE
-            binding.txtNoData.text = "No matching notices found"
+            binding.txtNoData.text = "No matching Holiday found"
             binding.rcyEvent.visibility = View.GONE
         } else {
             binding.nomessage.visibility = View.GONE
