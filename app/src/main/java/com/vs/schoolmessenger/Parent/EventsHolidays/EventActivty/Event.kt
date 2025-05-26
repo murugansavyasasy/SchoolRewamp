@@ -13,13 +13,14 @@ import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventClic
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventDataClass
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Adapter.HolidayAdapter
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.Holiday
+import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.HolidayClickListener
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.EventParentBinding
 
-class Event : BaseActivity<EventParentBinding>(), View.OnClickListener, EventClickListener {
+class Event : BaseActivity<EventParentBinding>(), View.OnClickListener, EventClickListener, HolidayClickListener {
 
     override fun getViewBinding(): EventParentBinding {
         return EventParentBinding.inflate(layoutInflater)
@@ -125,7 +126,7 @@ class Event : BaseActivity<EventParentBinding>(), View.OnClickListener, EventCli
     }
 
     private fun isloadholidayData(newData: List<Holiday>?) {
-        isHolidayAdapter = HolidayAdapter(newData, this, Constant.isShimmerViewDisable)
+        isHolidayAdapter = HolidayAdapter(newData, this, Constant.isShimmerViewDisable, this)
         binding.rcyEvent.adapter = isHolidayAdapter
     }
 
@@ -138,7 +139,7 @@ class Event : BaseActivity<EventParentBinding>(), View.OnClickListener, EventCli
     }
 
     private fun loadHolidayData() {
-        isHolidayAdapter = HolidayAdapter(null, this, Constant.isShimmerViewShow)
+        isHolidayAdapter = HolidayAdapter(null, this, Constant.isShimmerViewShow,this)
         binding.rcyEvent.layoutManager = LinearLayoutManager(this)
         binding.rcyEvent.isNestedScrollingEnabled = false
         binding.rcyEvent.adapter = isHolidayAdapter
@@ -150,6 +151,36 @@ class Event : BaseActivity<EventParentBinding>(), View.OnClickListener, EventCli
             R.id.imgBack -> onBackPressed()
         }
     }
+
+
+    override fun onSearchResultEmpty(isEmpty: Boolean) {
+        if (isEmpty) {
+            binding.nomessage.visibility = View.VISIBLE
+            binding.txtNoData.visibility = View.VISIBLE
+            binding.txtNoData.text = "No matching notices found"
+            binding.rcyEvent.visibility = View.GONE
+        } else {
+            binding.nomessage.visibility = View.GONE
+            binding.txtNoData.visibility = View.GONE
+            binding.rcyEvent.visibility = View.VISIBLE
+        }
+    }
+
+    override fun onSearchHolidayResultEmpty(isEmpty: Boolean) {
+        if (isEmpty) {
+            binding.nomessage.visibility = View.VISIBLE
+            binding.txtNoData.visibility = View.VISIBLE
+            binding.txtNoData.text = "No matching notices found"
+            binding.rcyEvent.visibility = View.GONE
+        } else {
+            binding.nomessage.visibility = View.GONE
+            binding.txtNoData.visibility = View.GONE
+            binding.rcyEvent.visibility = View.VISIBLE
+        }
+    }
+
+
+
 
     private fun isBackRoundChange(isClickingId: TextView) {
         if (isClickingId == binding.toolbarLayout.lblRightSideBar) {

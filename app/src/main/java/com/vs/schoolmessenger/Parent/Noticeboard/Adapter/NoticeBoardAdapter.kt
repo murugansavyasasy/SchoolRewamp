@@ -85,8 +85,10 @@ class NoticeBoardAdapter(
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
                 filteredList = results?.values as? List<Notice> ?: listOf()
+                listener.onSearchResultEmpty(filteredList.isEmpty())
                 notifyDataSetChanged()
             }
+
         }
     }
 

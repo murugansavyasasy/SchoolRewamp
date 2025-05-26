@@ -82,6 +82,20 @@ class NoticeBoard : BaseActivity<NoticeBoardBinding>(), View.OnClickListener,
     }
 
 
+    override fun onSearchResultEmpty(isEmpty: Boolean) {
+        if (isEmpty) {
+            binding.nomessage.visibility = View.VISIBLE
+            binding.txtNoData.visibility = View.VISIBLE
+            binding.txtNoData.text = "No matching notices found"
+            binding.rcyNoticeBoard.visibility = View.GONE
+        } else {
+            binding.nomessage.visibility = View.GONE
+            binding.txtNoData.visibility = View.GONE
+            binding.rcyNoticeBoard.visibility = View.VISIBLE
+        }
+    }
+
+
     private fun isGetNoticeBoardList() {
         mAdapter = NoticeBoardAdapter(null, this, this, Constant.isShimmerViewShow)
         binding.rcyNoticeBoard.layoutManager = LinearLayoutManager(this)
