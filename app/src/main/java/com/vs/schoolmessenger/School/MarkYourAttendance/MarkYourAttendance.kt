@@ -17,7 +17,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
@@ -38,6 +37,7 @@ import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.MarkYourAttendance.Adapter.PunchHistoryAdapter
 import com.vs.schoolmessenger.School.MarkYourAttendance.Adapter.StaffAttendanceReportAdapter
+import com.vs.schoolmessenger.School.MarkYourAttendance.Adapter.YearLoadingAdapter
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchTimingsData
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffAttendanceReportData
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffLocationData
@@ -49,12 +49,11 @@ import com.vs.schoolmessenger.Utils.GPSStatusReceiver
 import com.vs.schoolmessenger.Utils.LocationDistanceCalculator
 import com.vs.schoolmessenger.Utils.LocationHelper
 import com.vs.schoolmessenger.Utils.SharedPreference
+import com.vs.schoolmessenger.Utils.SpinnerLoadingAdapter
 import com.vs.schoolmessenger.databinding.MarkYourAttendanceBinding
-import java.util.Calendar
 
-class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
-    View.OnClickListener, GPSStatusListener, LocationLatLongListener,
-    AttendanceReportClickListener {
+class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnClickListener,
+    GPSStatusListener, LocationLatLongListener, AttendanceReportClickListener {
 
     override fun getViewBinding(): MarkYourAttendanceBinding {
         return MarkYourAttendanceBinding.inflate(layoutInflater)
@@ -180,21 +179,27 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
         )
     }
 
-    private fun isLoadYear(yearList: List<AcademicYear>) {
-        val uniqueYears = yearList
-            .mapNotNull { it.year.split("-").firstOrNull() }
-            .distinct()
-        val currentYear = yearList.find { it.current_academic_year }?.year?.split("-")?.firstOrNull()
+    private fun isLoadYear(isAcademicYear: List<AcademicYear>?) {
+        val uniqueYears =
+            isAcademicYear!!.mapNotNull { it.year.split("-").firstOrNull() }.distinct()
+        val currentYear =
+            isAcademicYear.find { it.current_academic_year }?.year?.split("-")?.firstOrNull()
         val sortedYears = if (currentYear != null) {
             listOf(currentYear) + uniqueYears.filter { it != currentYear }
         } else {
             uniqueYears
         }
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, sortedYears)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        val adapter = YearLoadingAdapter(this, sortedYears)
         binding.spinnerYears.adapter = adapter
+
         binding.spinnerYears.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>, view: View?, position: Int, id: Long
+            ) {
+                adapter.selectedPosition = position
+                adapter.notifyDataSetChanged()
+
                 binding.lblNoRecords.visibility = View.GONE
                 binding.imgNorecord.visibility = View.GONE
                 val selectedYear = parent.getItemAtPosition(position).toString()
@@ -212,47 +217,52 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
                 binding.linearagendalayout.visibility = View.VISIBLE
                 binding.lblNoRecords.visibility = View.GONE
                 binding.imgNorecord.visibility = View.GONE
-                isStaffAttendanceReportAdapter =
-                    StaffAttendanceReportAdapter(
-                        isStaffReport,
-                        this,
-                        this,
-                        Constant.isShimmerViewDisable
-                    )
+                isStaffAttendanceReportAdapter = StaffAttendanceReportAdapter(
+                    isStaffReport, this, this, Constant.isShimmerViewDisable
+                )
                 binding.recycleAttendanceReports.adapter = isStaffAttendanceReportAdapter
             }
         }
     }
 
-
-    fun isLoadMonth(selectedYear: String) {
+    private fun isLoadMonth(selectedYear: String) {
         val months = listOf(
-            "January", "February", "March", "April", "May", "June",
-            "July", "August", "September", "October", "November", "December"
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December"
         )
-        val monthAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, months)
-        monthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        val adapter = SpinnerLoadingAdapter(this, months)
+        binding.spinnerMonths.adapter = adapter
 
-        binding.spinnerMonths.adapter = monthAdapter
+        binding.spinnerMonths.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    adapter.selectedPosition = position
+                    adapter.notifyDataSetChanged()
 
-        val currentMonthIndex = Calendar.getInstance().get(Calendar.MONTH)
-        binding.spinnerMonths.setSelection(currentMonthIndex)
+                    val selectedOption = months[position]
+                    binding.lblNoRecords.visibility = View.GONE
+                    binding.imgNorecord.visibility = View.GONE
+                    val selectedMonthNumber = String.format("%02d", position + 1)
+                    getStaffAttendanceReport(selectedYear, selectedMonthNumber)
+                }
 
-        binding.spinnerMonths.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                binding.lblNoRecords.visibility = View.GONE
-                binding.imgNorecord.visibility = View.GONE
-                val selectedMonthNumber = String.format("%02d", position + 1)
-                getStaffAttendanceReport(selectedYear, selectedMonthNumber)
+                override fun onNothingSelected(parent: AdapterView<*>) {}
             }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {}
-        }
     }
 
 
@@ -271,9 +281,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
 
 
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
+        requestCode: Int, permissions: Array<out String>, grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
@@ -338,21 +346,16 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
 
     private fun getLocationPermissions() {
         if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-            && ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
+                this, Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this, Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             ActivityCompat.requestPermissions(
-                this,
-                arrayOf<String>(
+                this, arrayOf<String>(
                     Manifest.permission.ACCESS_FINE_LOCATION,
                     Manifest.permission.ACCESS_COARSE_LOCATION
-                ),
-                locationRequestCode
+                ), locationRequestCode
             )
         } else {
             if (Constant.isGPSEnabled(this)) {
@@ -440,8 +443,8 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
         val biometricManager = BiometricManager.from(this)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            val authenticators = BiometricManager.Authenticators.BIOMETRIC_STRONG or
-                    BiometricManager.Authenticators.DEVICE_CREDENTIAL
+            val authenticators =
+                BiometricManager.Authenticators.BIOMETRIC_STRONG or BiometricManager.Authenticators.DEVICE_CREDENTIAL
 
             when (biometricManager.canAuthenticate(authenticators)) {
                 BiometricManager.BIOMETRIC_SUCCESS -> showBiometricPrompt(authenticators)
@@ -467,8 +470,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
         val executor = ContextCompat.getMainExecutor(this)
 
         biometricPrompt = BiometricPrompt(
-            this, executor,
-            object : BiometricPrompt.AuthenticationCallback() {
+            this, executor, object : BiometricPrompt.AuthenticationCallback() {
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                     super.onAuthenticationSucceeded(result)
                     Log.d("BiometricAuth", "Authentication succeeded")
@@ -479,10 +481,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
                     super.onAuthenticationError(errorCode, errString)
                     Log.d("BiometricAuth", "Authentication error: $errString")
 
-                    if (errorCode == BiometricPrompt.ERROR_NO_BIOMETRICS ||
-                        errorCode == BiometricPrompt.ERROR_HW_UNAVAILABLE ||
-                        errorCode == BiometricPrompt.ERROR_HW_NOT_PRESENT
-                    ) {
+                    if (errorCode == BiometricPrompt.ERROR_NO_BIOMETRICS || errorCode == BiometricPrompt.ERROR_HW_UNAVAILABLE || errorCode == BiometricPrompt.ERROR_HW_NOT_PRESENT) {
                         isPunchAttendance()
                     }
                 }
@@ -493,11 +492,9 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
                 }
             })
 
-        val promptInfo = PromptInfo.Builder()
-            .setTitle("Authenticate")
+        val promptInfo = PromptInfo.Builder().setTitle("Authenticate")
             .setSubtitle("Use fingerprint, face, PIN, or pattern")
-            .setAllowedAuthenticators(authenticators)
-            .build()
+            .setAllowedAuthenticators(authenticators).build()
 
         biometricPrompt?.authenticate(promptInfo)
     }
@@ -508,8 +505,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
 
             if (keyguardManager.isKeyguardSecure) {
                 val intent = keyguardManager.createConfirmDeviceCredentialIntent(
-                    "Authentication Required",
-                    "Please confirm your screen lock PIN or pattern"
+                    "Authentication Required", "Please confirm your screen lock PIN or pattern"
                 )
                 startActivityForResult(intent, 1001)
             } else {
@@ -633,7 +629,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(),
     private fun isPunchHistory(data: StaffAttendanceReportData) {
 
         isAccessToken?.let {
-            appViewModel?.getPunchHistory(it, data.date,data.staff_id, this)
+            appViewModel?.getPunchHistory(it, data.date, data.staff_id, this)
         }
     }
 

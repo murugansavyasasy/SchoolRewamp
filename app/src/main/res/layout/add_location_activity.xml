@@ -233,40 +233,30 @@
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/fourty"
+                        android:layout_height="@dimen/fifty_five"
                         android:layout_marginStart="@dimen/five"
                         android:layout_marginTop="@dimen/five"
                         android:background="@drawable/outline_gray">
 
-
                         <RelativeLayout
-                            android:id="@+id/rytSpinnertMetres"
-                            android:layout_width="@dimen/hundred"
-                            android:layout_height="@dimen/thirty_five"
-                            android:layout_centerVertical="true"
+                            android:id="@+id/rytSpinnerMetres"
+                            android:layout_width="@dimen/one_twenty"
+                            android:layout_height="@dimen/fifty_five"
                             android:layout_marginStart="@dimen/two"
-                            android:background="@color/gray">
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="@dimen/ten"
+                            android:background="@drawable/bg_white_light_radious"
+                            android:gravity="center">
 
                             <Spinner
                                 android:id="@+id/spinnerMetres"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_centerVertical="true"
-                                android:layout_gravity="center"
-                                android:layout_toStartOf="@+id/imgDropCountry"
-                                android:background="@android:color/transparent"
-                                android:gravity="left"
-                                android:paddingLeft="@dimen/ten"
+                                android:background="@drawable/custom_spinner_background"
+                                android:gravity="center"
                                 android:spinnerMode="dropdown" />
 
-                            <ImageView
-                                android:id="@+id/imgDropCountry"
-                                android:layout_width="@dimen/thirty"
-                                android:layout_height="@dimen/thirty"
-                                android:layout_alignParentEnd="true"
-                                android:layout_centerVertical="true"
-                                android:layout_gravity="center"
-                                android:src="@drawable/ic_drop_down" />
 
                         </RelativeLayout>
 
@@ -274,9 +264,8 @@
                             android:id="@+id/txtMeters"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginStart="@dimen/five"
                             android:layout_toStartOf="@+id/lblMeter"
-                            android:layout_toEndOf="@+id/rytSpinnertMetres"
+                            android:layout_toEndOf="@+id/rytSpinnerMetres"
                             android:background="@null"
                             android:gravity="center"
                             android:hint="@string/drop_your_location"

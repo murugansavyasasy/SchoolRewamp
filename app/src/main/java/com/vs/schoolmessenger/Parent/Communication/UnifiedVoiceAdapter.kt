@@ -153,11 +153,11 @@ class UnifiedVoiceAdapter(
                 lblnewiconText.visibility = View.GONE
                 rlaSendVoice.visibility = View.GONE
                 lblContentText.text = data.content ?: ""
-
-                getAudioDuration(data.content ?: "") { duration ->
-                    lblEndDuration.text = formatTime(duration)
-                }
-
+                lblEndDuration.text = String.format(
+                    "%02d:%02d",
+                    data.duration!!.toInt() / 60,
+                    data.duration!!.toInt() % 60
+                )
 
                 imgVoicePlay.setOnClickListener {
                     listener.onItemClick(data, this@DataViewHolder)
@@ -196,7 +196,6 @@ class UnifiedVoiceAdapter(
                 rlaSelectText.visibility = View.GONE
                 rlaSendVoice.visibility = View.GONE
 
-                Log.d("data.is_unread!!", data.is_unread!!.toString())
                 if (data.is_unread!!) {
                     lblnewiconText.visibility = View.VISIBLE
                     lblSeeMore.visibility = View.VISIBLE
@@ -204,7 +203,6 @@ class UnifiedVoiceAdapter(
                 } else {
                     lblnewiconText.visibility = View.GONE
                     lblSeeMore.visibility = View.GONE
-
                 }
 
                 rlaText.setOnClickListener {

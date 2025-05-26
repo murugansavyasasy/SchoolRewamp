@@ -48,6 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
+                android:layout_alignParentEnd="true"
                 style="@style/CustomTextStylePoppinsMedium"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp">
@@ -60,6 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblStudentName"
                 android:text=""
+                android:layout_alignParentEnd="true"
                 android:textColor="@color/black"
                 style="@style/CustomTextStylePoppinsMedium"
                 android:textSize="@dimen/thirteen_sp">
@@ -120,7 +122,7 @@
         android:layout_below="@id/lnrParent"
         android:layout_margin="@dimen/ten"
         android:background="@drawable/rect_grey"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/imgSearch"
