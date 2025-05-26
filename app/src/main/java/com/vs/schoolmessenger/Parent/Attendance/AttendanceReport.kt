@@ -1,4 +1,6 @@
 package com.vs.schoolmessenger.Parent.Attendance
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,22 +18,26 @@ class AttendanceReport : BaseActivity<AttendanceReportParentBinding>(), View.OnC
         return AttendanceReportParentBinding.inflate(layoutInflater)
     }
 
-    lateinit var mAdapter: AttendanceReportAdapter
+    private lateinit var mAdapter: AttendanceReportAdapter
     private lateinit var attendanceReportList: List<AttendanceReportStudentData>
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
     private var isChildDetails: ChildDetails? = null
 
-
     override fun setupViews() {
         super.setupViews()
         setUpGradientParent()
+
+        // Toolbar setup
         binding.toolbarLayout.imgBack.setOnClickListener(this)
-        binding.toolbarLayout.lblParentToolBar.text = resources.getText(R.string.AttendanceReport)
+        binding.toolbarLayout.lblParentToolBar.text = getString(R.string.AttendanceReport)
         binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
+
+
         isChildDetails = SharedPreference.getChildDetails(this)
-        binding.toolbarLayout.lblStudentName.text = isChildDetails!!.name
-        binding.toolbarLayout.lblStudentSection.text = isChildDetails!!.standard_name + " - " + isChildDetails!!.section_name
+        binding.toolbarLayout.lblStudentName.text = isChildDetails?.name ?: ""
+        binding.toolbarLayout.lblStudentSection.text =
+            "${isChildDetails?.standard_name} - ${isChildDetails?.section_name}"
 
         isAccessToken = isChildDetails?.access_token
         appViewModel = ViewModelProvider(this)[App::class.java]
@@ -39,38 +45,58 @@ class AttendanceReport : BaseActivity<AttendanceReportParentBinding>(), View.OnC
 
         loadData()
 
+
+        binding.toolbarLayout.txtVideoMenu.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (::mAdapter.isInitialized) {
+                    mAdapter.filter.filter(s)
+                }
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
+
         appViewModel!!.isChildAttendanceReport?.observe(this) { response ->
-            if (response != null) {
-                if (response.status) {
+            if (response != null && response.status) {
+                val dataList = response.data
+
+                if (!dataList.isNullOrEmpty()) {
+
                     binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
                     binding.rcyAttendanceReport.visibility = View.VISIBLE
-                    attendanceReportList!!.isEmpty()
-                    attendanceReportList = response.data
-                    binding.rcyAttendanceReport.layoutManager = LinearLayoutManager(this)
-                    binding.rcyAttendanceReport.adapter = mAdapter
+                    binding.lytList.visibility = View.GONE
+
+                    attendanceReportList = dataList
                     mAdapter = AttendanceReportAdapter(
                         attendanceReportList,
                         this,
                         Constant.isShimmerViewDisable
                     )
+                    binding.rcyAttendanceReport.layoutManager = LinearLayoutManager(this)
                     binding.rcyAttendanceReport.adapter = mAdapter
-                }
-                else {
+                } else {
+
                     binding.rcyAttendanceReport.visibility = View.GONE
                     binding.toolbarLayout.rytSearch.visibility = View.GONE
-
+                    binding.lytList.visibility = View.VISIBLE
                 }
+            } else {
+
+                binding.rcyAttendanceReport.visibility = View.GONE
+                binding.toolbarLayout.rytSearch.visibility = View.GONE
+                binding.lytList.visibility = View.VISIBLE
             }
         }
     }
 
-    override fun onClick(p0: View?) {
-        when (p0?.id) {
+    override fun onClick(view: View?) {
+        when (view?.id) {
             R.id.imgBack -> onBackPressed()
         }
     }
 
-    fun showShimmer() {
+    private fun showShimmer() {
         val shimmerAdapter = AttendanceReportAdapter(
             null,
             this,
@@ -81,11 +107,10 @@ class AttendanceReport : BaseActivity<AttendanceReportParentBinding>(), View.OnC
         binding.rcyAttendanceReport.adapter = shimmerAdapter
     }
 
-    fun loadData() {
+    private fun loadData() {
         showShimmer()
-        appViewModel!!.getChildAttendanceReport(
-            isAccessToken!!, activity = this
+        appViewModel?.getChildAttendanceReport(
+            isAccessToken.orEmpty(), activity = this
         )
     }
-
 }

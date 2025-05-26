@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/five"
-    android:fitsSystemWindows="true"
-    tools:ignore="MissingDefaultResource">
+    android:fitsSystemWindows="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -88,6 +87,7 @@
                 android:gravity="start"
                 android:text="Sathish Ganesan"
                 android:textColor="@color/black"
+                android:visibility="invisible"
                 android:textSize="@dimen/thirteen_sp"
                 android:textStyle="bold">
 
@@ -99,7 +99,6 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblStudentName"
                 android:layout_marginStart="@dimen/twenty_five"
-                android:layout_marginTop="@dimen/ten"
                 android:layout_toEndOf="@+id/lnrDate"
                 android:text="@string/Admissionno"
                 android:textColor="@color/black"
@@ -114,11 +113,12 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblStudentName"
                 android:layout_marginStart="@dimen/ten"
-                android:layout_marginTop="@dimen/ten"
+
                 android:layout_toEndOf="@+id/lblAdmission"
                 android:text="1234556776"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
+                android:visibility="invisible"
                 android:textStyle="normal">
 
             </TextView>
