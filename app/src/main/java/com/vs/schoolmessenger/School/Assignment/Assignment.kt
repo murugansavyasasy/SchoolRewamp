@@ -17,6 +17,7 @@ import com.vs.schoolmessenger.CommonScreens.ImagePickingData
 import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.OnDateSelectedListener
+import com.vs.schoolmessenger.Utils.SpinnerLoadingAdapter
 import com.vs.schoolmessenger.Utils.TimeSelectedListener
 import com.vs.schoolmessenger.databinding.AssignmentBinding
 
@@ -93,7 +94,7 @@ class Assignment : BaseActivity<AssignmentBinding>(),
     }
 
     private fun setupAssignmentTypeSpinner() {
-        val adapter = AssignmentTypeAdapter(this, itemsAssignmentType)
+        val adapter = SpinnerLoadingAdapter(this, itemsAssignmentType)
         binding.spinnerAssignment.adapter = adapter
 
         binding.spinnerAssignment.onItemSelectedListener =
@@ -118,7 +119,7 @@ class Assignment : BaseActivity<AssignmentBinding>(),
 
     private fun spinnerType() {
 
-        val adapter = AssignmentTypeAdapter(this, itemsCategory)
+        val adapter = SpinnerLoadingAdapter(this, itemsCategory)
         binding.spinnerType.adapter = adapter
 
         binding.spinnerType.onItemSelectedListener =
