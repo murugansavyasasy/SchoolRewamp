@@ -16,7 +16,9 @@
             android:layout_width="@dimen/thirty_five"
             android:layout_height="@dimen/thirty_five"
             android:layout_centerVertical="true"
-            android:src="@drawable/left_arrow_blue"></ImageView>
+            android:src="@drawable/left_arrow_blue">
+
+        </ImageView>
 
         <TextView
             android:id="@+id/lblSchoolName"
@@ -286,48 +288,6 @@
             android:background="@drawable/custom_spinner_background" />
 
     </RelativeLayout>
-
-
-<!--    <RelativeLayout-->
-<!--        android:id="@+id/rlaSubject"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_below="@+id/rytList"-->
-<!--        android:layout_marginStart="@dimen/fifteen"-->
-<!--        android:layout_marginTop="0dp"-->
-<!--        android:layout_marginEnd="@dimen/fifteen"-->
-<!--        android:layout_marginBottom="@dimen/fifty"-->
-<!--        android:background="@drawable/bg_stroke_rect_black"-->
-<!--        android:padding="@dimen/ten"-->
-<!--        android:visibility="gone">-->
-
-
-<!--        <ImageView-->
-<!--            android:id="@+id/imgSubject"-->
-<!--            android:layout_width="@dimen/twenty_five"-->
-<!--            android:layout_height="@dimen/twenty_five"-->
-<!--            android:layout_alignParentEnd="true"-->
-<!--            android:layout_centerVertical="true"-->
-<!--            android:layout_marginEnd="@dimen/ten"-->
-<!--            android:src="@drawable/ic_down_arrow">-->
-
-<!--        </ImageView>-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/lblSuibject"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_centerVertical="true"-->
-<!--            android:layout_marginStart="@dimen/fifteen"-->
-<!--            android:fontFamily="@font/poppins_bold"-->
-<!--            android:text="@string/select_subject"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:textSize="@dimen/thirteen_sp"-->
-<!--            android:textStyle="bold">-->
-
-<!--        </TextView>-->
-<!--    </RelativeLayout>-->
-
 
     <TextView
         android:id="@+id/textdesc"
