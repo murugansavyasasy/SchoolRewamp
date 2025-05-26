@@ -11,13 +11,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIds
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesClickListener
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesSelectionListener
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class AbsenteesMarkAdapter(
     private var itemList: List<NameAndIds>?,
-    private var listener: AbsenteesClickListener,
     private var context: Context,
     private var isLoading: Boolean,
     private val selectionListener: AbsenteesSelectionListener
@@ -51,7 +49,7 @@ class AbsenteesMarkAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
             // Bind actual data when loading is complete
-            holder.bind(itemList!![position], position, listener)
+            holder.bind(itemList!![position], position)
 
         }
     }
@@ -76,7 +74,7 @@ class AbsenteesMarkAdapter(
         private val lnrAbsent: LinearLayout = itemView.findViewById(R.id.lnrAbsent)
         private val lnrRollno: LinearLayout = itemView.findViewById(R.id.lnrRollNo)
 
-        fun bind(data: NameAndIds, position: Int, listener: AbsenteesClickListener) {
+        fun bind(data: NameAndIds, position: Int) {
 
             lblName.text = data.name
             if(data.roll_no!=""){
@@ -112,7 +110,6 @@ class AbsenteesMarkAdapter(
 
                 Log.d("StudentIDList", "After marking Absent: $studentIdList")
                 selectionListener.onSelectionChanged(studentIdList.toList())
-                listener.onItemClick(data)
             }
 
             lnrAbsent.setOnClickListener {
@@ -124,7 +121,6 @@ class AbsenteesMarkAdapter(
 
                 Log.d("StudentIDList", "After marking Present: $studentIdList")
                 selectionListener.onSelectionChanged(studentIdList.toList())
-                listener.onItemClick(data)
             }
         }
     }

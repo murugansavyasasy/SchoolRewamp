@@ -171,14 +171,12 @@ object Constant {
 
     var isMarkAttendanceDataSending: MarkAttendanceDataSending? = null
     var secondHalf = "SH"
-    var firstHalf="FH"
-    var fullDay="F"
-    var allPresent="T"
-    var some_Absent="F"
+    var firstHalf = "FH"
+    var fullDay = "F"
+    var allPresent = "T"
+    var some_Absent = "F"
     var Absent = "Absent"
-    var halfDay="H"
-
-
+    var halfDay = "H"
 
 
     // String fields
@@ -202,9 +200,9 @@ object Constant {
 """.trimIndent()
     var isMailTitle = "Request to configure communication academic year"
     var isAcademicYearId = "isAcademicYearId"
-    var isSectionId="isSectionId"
-    var isStandardName="isStandardName"
-    var isSectionName="isSectionName"
+    var isSectionId = "isSectionId"
+    var isStandardName = "isStandardName"
+    var isSectionName = "isSectionName"
     var isCurrentAcademicYear = "isCurrentAcademicYear"
     var lblAcademicYear = "lblAcademicYear"
     var isSelectedId = "isSelectedId"
@@ -248,7 +246,7 @@ object Constant {
     var EXCEL = "EXCEL"
     var data = "data"
     var position = "position"
-    var isAccessToken="isAccessToken"
+    var isAccessToken = "isAccessToken"
     var subjectName = "subjectName"
     var isText = "isText"
     var isVoice = "isVoice"
@@ -545,6 +543,7 @@ object Constant {
         dimView.isFocusableInTouchMode = true
 
     }
+
     public fun showDatePicker(context: Context, onDateSelected: (String) -> Unit) {
         val calendar = Calendar.getInstance()
 
@@ -564,7 +563,9 @@ object Constant {
                 onDateSelected(formattedDate)
             },
             year, month, day
+
         )
+        datePickerDialog.datePicker.maxDate = calendar.timeInMillis
 
         datePickerDialog.show()
     }
@@ -581,14 +582,14 @@ object Constant {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun showDataValidation(title :String,message: String, activity: Activity) {
+    fun showDataValidation(title: String, message: String, activity: Activity) {
         val inflater = LayoutInflater.from(activity)
         val view = inflater.inflate(R.layout.success_popup, null)
 
         val messageText = view.findViewById<TextView>(R.id.alertMessage)
         val titleText = view.findViewById<TextView>(R.id.alertTitle)
         val okButton = view.findViewById<TextView>(R.id.btnOk)
-        titleText.text=title
+        titleText.text = title
         messageText.text = message
 
         val rootView = activity.findViewById<ViewGroup>(android.R.id.content)

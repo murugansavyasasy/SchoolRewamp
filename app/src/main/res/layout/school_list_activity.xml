@@ -71,41 +71,58 @@
             android:layout_marginEnd="@dimen/ten"/>
 
         <RelativeLayout
-            android:id="@+id/rlaAcademicYear"
-            android:layout_width="@dimen/zero"
-            android:layout_weight="1"
+            android:id="@+id/rytAcademicYear"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/rect_white_light_radious"
-            android:padding="@dimen/ten"
-            android:visibility="visible">
+            android:layout_below="@+id/lblCategory"
+            android:layout_marginStart="@dimen/fifteen"
+            android:layout_marginEnd="@dimen/fifteen"
+            android:background="@drawable/bg_white_light_radious"
+            android:gravity="center">
 
-
-
-            <ImageView
-                android:id="@+id/imgAcademicYear"
-                android:layout_width="@dimen/fifteen"
-                android:layout_height="@dimen/twenty"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="@dimen/ten"
-                android:src="@drawable/downarrow">
-
-            </ImageView>
-
-            <TextView
-                android:id="@+id/lblAcademicYear"
-                android:layout_width="wrap_content"
+            <Spinner
+                android:id="@+id/isSpinner"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/fifteen"
-                android:fontFamily="@font/poppins_bold"
-                android:text=""
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp"
-                android:textStyle="bold">
+                android:background="@drawable/custom_spinner_background" />
 
-            </TextView>
         </RelativeLayout>
+
+        <!--        <RelativeLayout-->
+        <!--            android:id="@+id/rlaAcademicYear"-->
+        <!--            android:layout_width="@dimen/zero"-->
+        <!--            android:layout_weight="1"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:background="@drawable/rect_white_light_radious"-->
+        <!--            android:padding="@dimen/ten"-->
+        <!--            android:visibility="visible">-->
+
+
+        <!--            <ImageView-->
+        <!--                android:id="@+id/imgAcademicYear"-->
+        <!--                android:layout_width="@dimen/fifteen"-->
+        <!--                android:layout_height="@dimen/twenty"-->
+        <!--                android:layout_alignParentEnd="true"-->
+        <!--                android:layout_centerVertical="true"-->
+        <!--                android:layout_marginEnd="@dimen/ten"-->
+        <!--                android:src="@drawable/downarrow">-->
+
+        <!--            </ImageView>-->
+
+        <!--            <TextView-->
+        <!--                android:id="@+id/lblAcademicYear"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_centerVertical="true"-->
+        <!--                android:layout_marginStart="@dimen/fifteen"-->
+        <!--                android:fontFamily="@font/poppins_bold"-->
+        <!--                android:text=""-->
+        <!--                android:textColor="@color/black"-->
+        <!--                android:textSize="@dimen/thirteen_sp"-->
+        <!--                android:textStyle="bold">-->
+
+        <!--            </TextView>-->
+        <!--        </RelativeLayout>-->
     </LinearLayout>
 
 

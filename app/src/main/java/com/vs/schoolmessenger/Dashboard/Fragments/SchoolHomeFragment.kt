@@ -235,8 +235,8 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                         )
                     }
                     isAdItem = adList
-                    isLoadData()
                 }
+                isLoadData()
             }
         }
 

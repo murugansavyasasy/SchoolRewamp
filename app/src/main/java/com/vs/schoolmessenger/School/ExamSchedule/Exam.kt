@@ -52,25 +52,25 @@ class Exam : BaseActivity<ExamBinding>(),
                 onBackPressed()
             }
 
-            R.id.rlaStandard -> {
-                showDropdownMenuSort(
-                    binding.lblStandard,
-                    this,
-                    itemsStandard
-                ) { selectedOption ->
-                    binding.lblStandard.text = selectedOption
-                }
-            }
+//            R.id.rlaStandard -> {
+//                showDropdownMenuSort(
+//                    binding.lblStandard,
+//                    this,
+//                    itemsStandard
+//                ) { selectedOption ->
+//                    binding.lblStandard.text = selectedOption
+//                }
+//            }
 
-            R.id.rlaSection -> {
-                showDropdownMenuSort(
-                    binding.lblSection,
-                    this,
-                    itemsSection
-                ) { selectedOption ->
-                    binding.lblSection.text = selectedOption
-                }
-            }
+//            R.id.rlaSection -> {
+//                showDropdownMenuSort(
+//                    binding.lblSection,
+//                    this,
+//                    itemsSection
+//                ) { selectedOption ->
+//                    binding.lblSection.text = selectedOption
+//                }
+//            }
 
             R.id.btnSelectExam -> {
                 startActivity(Intent(this, ExamSubjectList::class.java))
