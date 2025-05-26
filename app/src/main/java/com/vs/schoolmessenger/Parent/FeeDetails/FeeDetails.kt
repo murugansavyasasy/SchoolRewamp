@@ -21,7 +21,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
-import com.vs.schoolmessenger.Parent.Assignment.Assignment
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
@@ -298,7 +297,8 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener,Invoi
 
     override fun onItemClick(data: InvoiceDetails, holder: FeeReceiptAdapter.DataViewHolder) {
         Log.d("InvoiceID",data.id.toString())
-        Intent(this@FeeDetails, FeeReceiptViewActivity::class.java)
+        val intent =  Intent(this@FeeDetails, FeeReceiptViewActivity::class.java)
+        startActivity(intent)
 
     }
 }

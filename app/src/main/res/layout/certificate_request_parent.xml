@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:fitsSystemWindows="true">
 
     <include
@@ -19,14 +20,14 @@
         android:layout_alignStart="@+id/rellay1"
         android:layout_alignEnd="@+id/rellay1"
         android:padding="@dimen/two"
-        android:background="@drawable/bg_light_grey">
+        android:background="@drawable/bg_light_green">
 
         <TextView
             android:id="@+id/lblTeacher"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/bg_radiantgreen"
+            android:background="@drawable/white_bg_radius"
             android:gravity="center"
             android:padding="@dimen/ten"
             android:text="@string/request"
@@ -42,10 +43,9 @@
             android:gravity="center"
             android:padding="@dimen/ten"
             android:text="@string/certificates"
-            android:textColor="@color/grey"
+            android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"
             android:layout_marginStart="@dimen/two"
-            android:background="@drawable/bg_radiantwhite"
             android:textStyle="bold" />
 
     </LinearLayout>

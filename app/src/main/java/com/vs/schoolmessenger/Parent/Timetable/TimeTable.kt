@@ -25,7 +25,7 @@ class TimeTable : BaseActivity<TimeTableBinding>(),
 
     override fun setupViews() {
         super.setupViews()
-        setupToolbar()
+        setUpGradientParent()
         setupRecyclerView()
         loadHardcodedData()
         setupRecyclerView1()

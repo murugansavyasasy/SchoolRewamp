@@ -14,29 +14,34 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.gms.common.api.Api
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Repository.APIKeyNames
+import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.MarkYourAttendance.Adapter.LocationHistoryAdapter
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistoryData
 import com.vs.schoolmessenger.School.MarkYourAttendance.Interface.LocationHistoryClickListener
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
+import com.vs.schoolmessenger.Utils.SpinnerLoadingAdapter
 import com.vs.schoolmessenger.databinding.AddLocationActivityBinding
-import java.util.*
+import java.util.Locale
 
 class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnClickListener,
     LocationHistoryClickListener {
@@ -157,22 +162,22 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
     private fun isLoadMeter() {
         val distances =
             listOf("10", "15", "20", "25", "30", "35", "40", "45", "50", "55", "60", "75", "Custom")
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, distances)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        val adapter = SpinnerLoadingAdapter(this, distances)
         binding.spinnerMetres.adapter = adapter
+
         binding.spinnerMetres.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>, view: View?, position: Int, id: Long
             ) {
+                adapter.selectedPosition = position
+                adapter.notifyDataSetChanged()
+
                 isDistance = parent.getItemAtPosition(position).toString()
                 if (!isDistance.equals(Constant.Custom)) {
                     binding.txtMeters.setText(isDistance)
                 } else {
                     binding.txtMeters.setText("")
                 }
-//                if (isFirstTime) {
-//                    isFirstTime = true
-//                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {}

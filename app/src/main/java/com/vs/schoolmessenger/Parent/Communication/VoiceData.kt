@@ -10,6 +10,7 @@ data class VoiceData(
     @SerializedName(APIKeyNames.title) var title: String?,
     @SerializedName(APIKeyNames.date) val date: String?,
     @SerializedName(APIKeyNames.time) var time: String?,
+    @SerializedName(APIKeyNames.duration) var duration: String?,
     @SerializedName(APIKeyNames.subject) var subject: String?,
     @SerializedName(APIKeyNames.is_unread) var is_unread: Boolean? = null,
     @SerializedName(APIKeyNames.is_archive) var is_archive: Boolean? = null

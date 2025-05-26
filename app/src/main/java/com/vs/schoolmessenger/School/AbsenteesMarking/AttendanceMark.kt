@@ -40,7 +40,6 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
 
 
     lateinit var mAdapter: AttendanceStudentReportAdapter
-    private val selectedIds = mutableListOf<String>()
     private lateinit var studentsList: List<StudentAttendanceReportData>
     private var appViewModel: App? = null
     var isSection: List<Section>? = null
