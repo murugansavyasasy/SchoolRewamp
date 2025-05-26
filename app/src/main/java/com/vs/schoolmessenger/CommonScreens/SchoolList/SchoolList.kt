@@ -8,6 +8,7 @@ import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.AdapterView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
@@ -84,7 +85,6 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         binding.lblSendToMultipleSchool.setOnClickListener(this)
         binding.lblSelectReceipients.setOnClickListener(this)
         binding.rytSend.setOnClickListener(this)
-        binding.rlaAcademicYear.setOnClickListener(this)
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
 
@@ -131,7 +131,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                 response.data.let { academicList ->
                     val reorderedList = academicList.sortedByDescending { it.current_academic_year }
                     isAcademicYear = reorderedList
-                    binding.lblAcademicYear.text = isAcademicYear!![0].year
+                    isLoadAcademicYear(isAcademicYear)
                     isAcademicYearId = isAcademicYear!![0].id
                 }
             }
@@ -162,6 +162,32 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         Constant.stopDelay()
     }
 
+    private fun isLoadAcademicYear(isAcademicYear: List<AcademicYear>?) {
+        val adapter = AcademicYearAdapter(this, isAcademicYear)
+        binding.isSpinner.adapter = adapter
+
+        binding.isSpinner.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    adapter.selectedPosition = position
+                    adapter.notifyDataSetChanged()
+                    val selectedOption = isAcademicYear!![position]
+                    Log.d(
+                        "DropdownMenu",
+                        "Clicked Academic Year: ID = ${isAcademicYear[position].id}, Year = ${isAcademicYear[position].year}, Current = ${isAcademicYear[position].current_academic_year}"
+                    )
+                    isAcademicYearId = isAcademicYear[position].id
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {}
+            }
+    }
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onClick(v: View?) {
         when (v?.id) {
@@ -181,19 +207,6 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                 binding.linearlayout.visibility = View.VISIBLE
                 isMultipleSchool = true
                 isChangeBackRound(binding.lblSendToMultipleSchool)
-            }
-
-            R.id.rlaAcademicYear -> {
-                showAcademicDropdown(
-                    binding.rlaAcademicYear, this, isAcademicYear
-                ) { selectedYear ->
-                    binding.lblAcademicYear.text = selectedYear.year
-                    Log.d(
-                        "DropdownMenu",
-                        "Clicked Academic Year: ID = ${selectedYear.id}, Year = ${selectedYear.year}, Current = ${selectedYear.current_academic_year}"
-                    )
-                    isAcademicYearId = selectedYear.id
-                }
             }
 
             R.id.rytSend -> {
