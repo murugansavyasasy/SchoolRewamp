@@ -108,11 +108,11 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         binding.rlaHalfDay.setOnClickListener(this)
         binding.rlaSecondHalf.setOnClickListener(this)
         binding.rlaFirstHalf.setOnClickListener(this)
-
         binding.radioButtonFullDay.setOnClickListener(this)
         binding.radioButtonHalfDay.setOnClickListener(this)
         binding.radioButtonFirstHalf.setOnClickListener(this)
         binding.radioButtonSecondHalf.setOnClickListener(this)
+
         updateActionButtonsState()
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
@@ -300,15 +300,15 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                 }
             }
 
-            R.id.rlaStandardReport -> {
-                showDropdownMenuSort(
-                    binding.lblStandardReport,
-                    this,
-                    itemsStandard
-                ) { selectedOption ->
-                    binding.lblStandardReport.text = selectedOption
-                }
-            }
+//            R.id.rlaStandardReport -> {
+//                showDropdownMenuSort(
+//                    binding.lblStandardReport,
+//                    this,
+//                    itemsStandard
+//                ) { selectedOption ->
+//                    binding.lblStandardReport.text = selectedOption
+//                }
+//            }
 
             R.id.radioButtonFullDay, R.id.rlaFullDay -> {
                 SessionType = ""
@@ -356,15 +356,15 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                 }
             }
 
-            R.id.rlaSectionReport -> {
-                showDropdownMenuSort(
-                    binding.lblSectionReport,
-                    this,
-                    itemsSection
-                ) { selectedOption ->
-                    binding.lblSectionReport.text = selectedOption
-                }
-            }
+//            R.id.rlaSectionReport -> {
+//                showDropdownMenuSort(
+//                    binding.lblSectionReport,
+//                    this,
+//                    itemsSection
+//                ) { selectedOption ->
+//                    binding.lblSectionReport.text = selectedOption
+//                }
+//            }
 
 
             R.id.btnCreate -> {
@@ -412,9 +412,7 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
 //                        isGetStudentReport()
                     }
                 }
-
             }
-
 
             R.id.dropdownAcademicYear -> {
                 showAcademicDropdown(
@@ -431,17 +429,16 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
             }
 
 
-            R.id.rlaAttendanceType -> {
-                showDropdownMenuSort(
-                    binding.lblAttendanceType,
-                    this,
-                    itemsAttendanceType
-                ) { selectedOption ->
-                    binding.lblAttendanceType.text = selectedOption
-                }
-            }
+//            R.id.rlaAttendanceType -> {
+//                showDropdownMenuSort(
+//                    binding.lblAttendanceType,
+//                    this,
+//                    itemsAttendanceType
+//                ) { selectedOption ->
+//                    binding.lblAttendanceType.text = selectedOption
+//                }
+//            }
         }
-        // Call this after any change
         updateActionButtonsState()
     }
 
@@ -556,8 +553,7 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
 
     }
 
-
     override fun onDateSelected(date: String) {
-    }
 
+    }
 }
