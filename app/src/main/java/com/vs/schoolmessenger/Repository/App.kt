@@ -20,6 +20,7 @@ import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.Holida
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.SendAbsenteeSMSResponse
+import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesCountByResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
@@ -139,6 +140,7 @@ class App(application: Application) : AndroidViewModel(application) {
         private set
     var isSendAbsenteeSMS: LiveData<SendAbsenteeSMSResponse?>? = null
     var isChildAttendanceReport: LiveData<ChildAttendanceResponse?>? = null
+    var getabsenteescountbydate: LiveData<AbsenteesCountByResponse?>? = null
 
 
 
@@ -191,6 +193,7 @@ class App(application: Application) : AndroidViewModel(application) {
 
         isChildAttendanceReport = apiParentRepositories.isChildAttendanceReportLiveData
 
+        getabsenteescountbydate = apiSchoolRepositories.getabsenteescountbydateLiveData
 
     }
 
@@ -399,5 +402,10 @@ class App(application: Application) : AndroidViewModel(application) {
     fun getChildAttendanceReport(isToken: String, activity: Activity) {
         apiParentRepositories.getChildAttendanceReport(isToken, activity)
     }
+
+//    fun getabsenteescountbydate(isToken: String, activity: Activity) {
+//        apiSchoolRepositories.getabsenteescountbydate(isToken, activity)
+//    }
 }
+
 

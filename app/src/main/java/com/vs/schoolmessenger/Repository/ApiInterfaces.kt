@@ -28,6 +28,7 @@ import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.SendAbsenteeSMSResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.StudentAttendanceReportDataResponse
+import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesCountByResponse
 
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionReportResponse
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportResponse
@@ -369,6 +370,13 @@ interface ApiInterfaces {
     fun isGetChildAttendanceReport(
         @Header(APIKeyNames.Authorization) token: String
     ): Call<ChildAttendanceResponse?>
+
+
+
+    @GET(APIMethods.getabsenteescountbydate)
+    fun isGetAbsenteesCountByDate(
+        @Header(APIKeyNames.Authorization) token: String
+    ): Call<AbsenteesCountByResponse?>
 
 
 

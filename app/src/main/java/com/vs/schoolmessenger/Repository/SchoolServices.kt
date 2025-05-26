@@ -22,6 +22,7 @@ import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.SendAbsenteeSMSResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.StudentAttendanceReportDataResponse
+import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesCountByResponse
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionReportResponse
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
@@ -85,6 +86,7 @@ class SchoolServices {
     var isSendAbsenteeSMS: MutableLiveData<SendAbsenteeSMSResponse?>
     var isStudentAttendanceReportForSchool: MutableLiveData<StudentAttendanceReportDataResponse?>
 
+    var getabsenteescountbydate: MutableLiveData<AbsenteesCountByResponse?>
 
 
     init {
@@ -129,8 +131,7 @@ class SchoolServices {
         IsGetHolidayReport = MutableLiveData()
         isSendAbsenteeSMS = MutableLiveData()
         isStudentAttendanceReportForSchool = MutableLiveData()
-
-
+        getabsenteescountbydate = MutableLiveData()
     }
 
 
@@ -1512,6 +1513,59 @@ class SchoolServices {
 
     val isStudentReportLiveData: LiveData<GetStudentReportData?>
         get() = isStudentReportList
+
+
+
+//    fun getabsenteescountbydate(
+//        isToken: String,
+//        activity: Activity
+//    ) {
+//        RestClient.apiInterfaces.getabsenteescountbydate(isToken)
+//            ?.enqueue(object : Callback<getabsenteescountbydate?> {
+//                override fun onResponse(
+//                    call: Call<getabsenteescountbydate?>,
+//                    response: Response<getabsenteescountbydate?>
+//                ) {
+//                    Log.d(
+//                        "GetStudentReport Response",
+//                        response.code().toString() + " - " + response.toString()
+//                    )
+//                    if (response.code() == 200) {
+//                        if (response.body() != null) {
+//                            val status = response.body()!!.status
+//                            if (status) {
+//                                Log.d("GetStudentReportData", response.body().toString())
+//                                getabsenteescountbydate.postValue(response.body())
+//                            } else {
+//                                Log.d("GetStudentReportData", response.body().toString())
+//                                getabsenteescountbydate.postValue(response.body())
+//                            }
+//                        }
+//                    }
+//                    else{
+//                        getabsenteescountbydate.postValue(null)
+//                    }
+//                }
+//
+//                override fun onFailure(
+//                    call: Call<GetStudentReportData?>,
+//                    t: Throwable
+//                ) {
+//                    isStudentReportList.postValue(null)
+//                    t.printStackTrace()
+//                }
+//            })
+//    }
+
+
+//    val isStudentReportLiveData: LiveData<GetStudentReportData?>
+//        get() = isStudentReportList
+
+
+
+
+
+
 
     fun isUpdateSendAbsenteeSMS(isToken: String, jsonObject: JsonObject, activity: Activity) {
         RestClient.apiInterfaces.UpdateSendAbsenteeSMS(isToken, jsonObject)

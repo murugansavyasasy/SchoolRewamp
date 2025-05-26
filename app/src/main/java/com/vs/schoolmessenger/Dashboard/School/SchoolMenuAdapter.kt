@@ -38,7 +38,7 @@ class SchoolMenuAdapter(
     override fun getItemViewType(position: Int): Int {
         return when {
             isLoading -> TYPE_SHIMMER
-            position == 9 -> TYPE_AD
+            position == 8 -> TYPE_AD
             else -> TYPE_DATA
         }
     }
