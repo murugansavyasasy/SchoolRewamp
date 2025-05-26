@@ -54,6 +54,7 @@
         android:id="@+id/rlaAttendanceMark"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="visible"
         android:layout_below="@+id/lnrParent">
 
         <LinearLayout
@@ -116,6 +117,7 @@
             android:id="@+id/rlaMarkAttendanceDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="visible"
             android:layout_below="@+id/lnrAcademicDetails">
 
             <RelativeLayout
@@ -241,7 +243,6 @@
                 android:layout_below="@+id/selectClassSection"
                 android:weightSum="1">
 
-
                 <RelativeLayout
                     android:id="@+id/rlaStandard"
                     android:layout_width="match_parent"
@@ -315,8 +316,25 @@
 
             </LinearLayout>
 
+            <RelativeLayout
+                android:id="@+id/rlaAttendanceReport"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/lnrClasses"
+                android:visibility="gone">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcyAttendanceReport"
+                    android:layout_marginTop="@dimen/five"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </androidx.recyclerview.widget.RecyclerView>
+            </RelativeLayout>
+
 
             <TextView
+                android:visibility="visible"
                 android:id="@+id/attendancetype_header"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -331,6 +349,7 @@
 
 
             <LinearLayout
+                android:visibility="visible"
                 android:id="@+id/lnrClasses1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -540,7 +559,6 @@
 
                 </TextView>
             </RelativeLayout>
-
             <TextView
                 android:id="@+id/btnSelectPresent"
                 android:layout_width="match_parent"
@@ -554,6 +572,7 @@
                 android:fontFamily="@font/poppins_bold"
                 android:gravity="center"
                 android:padding="@dimen/ten"
+                android:visibility="visible"
                 android:text="@string/Selectallaspresent"
                 android:textColor="@color/white"
                 android:textSize="@dimen/thirteen_sp"
@@ -563,6 +582,7 @@
 
             <TextView
                 android:id="@+id/btnOr"
+                android:visibility="visible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/btnSelectPresent"
@@ -577,6 +597,7 @@
             </TextView>
 
             <TextView
+                android:visibility="visible"
                 android:id="@+id/btnAbsent"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/fourty_five"
@@ -623,134 +644,6 @@
             </TextView>
 
         </LinearLayout>
-
-    </RelativeLayout>
-
-
-    <RelativeLayout
-        android:id="@+id/rlaAttendanceReport"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/lnrParent"
-        android:visibility="gone">
-
-        <ImageView
-            android:id="@+id/imgCalender"
-            android:layout_width="@dimen/thirty"
-            android:layout_height="@dimen/thirty"
-            android:layout_marginStart="@dimen/twenty"
-            android:layout_marginTop="@dimen/twenty"
-            android:src="@drawable/calender_icon_color">
-
-        </ImageView>
-
-        <TextView
-            android:id="@+id/lblDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/twenty"
-            android:layout_marginTop="@dimen/twenty_five"
-            android:layout_toEndOf="@+id/imgCalender"
-            android:drawableEnd="@drawable/ic_down_arrow"
-            android:drawablePadding="@dimen/fifteen"
-            android:text="Apr 21, 2024"
-            android:textColor="@color/black"
-            android:textSize="@dimen/fifteen_sp"
-            android:textStyle="bold">
-
-        </TextView>
-
-
-        <LinearLayout
-            android:id="@+id/lnrClassesReport"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/lblDate"
-            android:layout_marginTop="@dimen/ten"
-            android:weightSum="1">
-
-
-            <RelativeLayout
-                android:id="@+id/rlaStandardReport"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/fifteen"
-                android:layout_marginTop="@dimen/ten"
-                android:layout_marginEnd="@dimen/fifteen"
-                android:layout_weight="0.5"
-                android:background="@drawable/rect_grey"
-                android:padding="@dimen/five">
-
-
-                <ImageView
-                    android:id="@+id/imgStandardReport"
-                    android:layout_width="@dimen/twenty_five"
-                    android:layout_height="@dimen/twenty_five"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="@dimen/ten"
-                    android:src="@drawable/ic_down_arrow">
-
-                </ImageView>
-
-                <TextView
-                    android:id="@+id/lblStandardReport"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/fifteen"
-                    android:text="XII"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/fifteen_sp"
-                    android:textStyle="bold"></TextView>
-            </RelativeLayout>
-
-
-            <RelativeLayout
-                android:id="@+id/rlaSectionReport"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/fifteen"
-                android:layout_marginTop="@dimen/ten"
-                android:layout_marginEnd="@dimen/fifteen"
-                android:layout_weight="0.5"
-                android:background="@drawable/rect_grey"
-                android:padding="@dimen/five">
-
-
-                <ImageView
-                    android:id="@+id/imgSectionReport"
-                    android:layout_width="@dimen/twenty_five"
-                    android:layout_height="@dimen/twenty_five"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="@dimen/ten"
-                    android:src="@drawable/ic_down_arrow">
-
-                </ImageView>
-
-                <TextView
-                    android:id="@+id/lblSectionReport"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/fifteen"
-                    android:text="A"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/fifteen_sp"
-                    android:textStyle="bold"></TextView>
-            </RelativeLayout>
-
-        </LinearLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcyAttendanceReport"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/lnrClassesReport">
-
-        </androidx.recyclerview.widget.RecyclerView>
-
 
     </RelativeLayout>
 </RelativeLayout>

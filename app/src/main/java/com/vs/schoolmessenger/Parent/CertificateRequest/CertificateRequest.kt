@@ -64,18 +64,14 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
 
         when (v.id) {
             com.vs.schoolmessenger.R.id.lblTeacher -> {
-                binding.lblTeacher.setBackgroundResource(com.vs.schoolmessenger.R.drawable.bg_radiantgreen)
-                binding.lblTeacher.setTextColor(Color.BLACK)
+                binding.lblTeacher.setBackgroundResource(com.vs.schoolmessenger.R.drawable.white_bg_radius)
                 binding.lblParent.setBackgroundResource(0)
-                binding.lblParent.setTextColor(Color.GRAY)
                 binding.recyclerView.visibility = View.GONE
                 binding.rellay1.visibility = View.VISIBLE
             }
             com.vs.schoolmessenger.R.id.lblParent -> {
-                binding.lblParent.setBackgroundResource(com.vs.schoolmessenger.R.drawable.bg_radiantgreen)
-                binding.lblParent.setTextColor(Color.BLACK)
+                binding.lblParent.setBackgroundResource(com.vs.schoolmessenger.R.drawable.white_bg_radius)
                 binding.lblTeacher.setBackgroundResource(0)
-                binding.lblTeacher.setTextColor(Color.GRAY)
 
                 binding.recyclerView.visibility = View.VISIBLE
                 binding.rellay1.visibility = View.GONE

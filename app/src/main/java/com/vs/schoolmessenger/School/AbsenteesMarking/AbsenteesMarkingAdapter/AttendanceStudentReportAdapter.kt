@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.School.AbsenteesMarking
+package com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingAdapter
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -10,6 +10,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportData
+import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class AttendanceStudentReportAdapter(
     private var itemList: List<StudentAttendanceReportData>?,
@@ -26,10 +28,10 @@ class AttendanceStudentReportAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-            val view =
-                LayoutInflater.from(parent.context)
-                    .inflate(R.layout.shimmer_view_small_list, parent, false)
-            ShimmerViewHolder(view)
+            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.attendance_student_report_item)
+            ShimmerViewHolder(
+                shimmerView
+            )
         } else {
             val view =
                 LayoutInflater.from(parent.context)
@@ -60,26 +62,23 @@ class AttendanceStudentReportAdapter(
 
         @SuppressLint("UseCompatLoadingForDrawables")
         fun bind(data: StudentAttendanceReportData, position: Int) {
-//            lblStudentName.text = data.Name
-//            lblAdmissionValue.text = data.RollNo
-//            lblAttendanceStatus.text = data.Status
-//
-//            if (data.Status == "Absent") {
-//                lblAttendanceStatus.setBackgroundDrawable(context.resources.getDrawable(R.drawable.rounded_top_right_bottom_end_red))
-//                rlaAttendance.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_outline_red))
-//            } else {
-//                lblAttendanceStatus.setBackgroundDrawable(context.resources.getDrawable(R.drawable.rounded_top_right_bottom_end_green))
-//                rlaAttendance.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_outline_green))
-//            }
+            lblStudentName.text = data.student_name
+            lblAdmissionValue.text = data.admission_no
+            lblAttendanceStatus.text = data.att_status
+
+            if (data.att_status == "A") {
+                lblAttendanceStatus.setBackgroundDrawable(context.resources.getDrawable(R.drawable.rounded_top_right_bottom_end_red))
+                rlaAttendance.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_outline_red))
+            } else {
+                lblAttendanceStatus.setBackgroundDrawable(context.resources.getDrawable(R.drawable.rounded_top_right_bottom_end_green))
+                rlaAttendance.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_outline_green))
+            }
         }
     }
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val shimmerLayout: ShimmerFrameLayout =
-            itemView.findViewById(R.id.shimmer_view_container)
-
-        init {
-            shimmerLayout.startShimmer() // Start shimmer effect
+        fun startShimmer() {
+            ShimmerUtil.startShimmer(itemView)
         }
     }
 }

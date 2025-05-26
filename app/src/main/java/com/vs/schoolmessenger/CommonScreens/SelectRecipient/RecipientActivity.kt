@@ -472,7 +472,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 adapter.selectedPosition = position
 
                 val selectedOption = isAcademicYear!![position]
-                isSelectedAcademicYear = selectedOption.year.toString()
+                isSelectedAcademicYear = selectedOption.year
                 isAcademicYearId = selectedOption.id
                 isCurrentAcademicYear = selectedOption.current_academic_year
 
@@ -651,7 +651,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                             )
                         }
                     }
-
                 } else {
                     Constant.showValidationAlertPopup(
                         getString(

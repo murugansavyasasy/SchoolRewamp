@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.School.AbsenteesMarking
+package com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel
 
 data class MarkAttendanceDataSending(
     var academic_year_id:Int,
