@@ -21,6 +21,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.FrameLayout
 import android.widget.ImageView
@@ -28,6 +29,7 @@ import android.widget.LinearLayout
 import android.widget.ListView
 import android.widget.PopupWindow
 import android.widget.RelativeLayout
+import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -210,51 +212,76 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     }
 
     fun showDropdownMenuSort(
-        anchor: View,
-        activity: Activity,
+        context: Context,
+        spinner: Spinner,
         items: List<String>,
         onItemSelected: (String) -> Unit
     ) {
-        if (activity.isFinishing || activity.isDestroyed) {
-            Log.e("DropdownMenu", "Activity is not valid for showing the popup.")
-            return
-        }
-
-        val inflater = LayoutInflater.from(anchor.context)
-        val dropdownView = inflater.inflate(R.layout.dropdown_menu, null)
-
-        // Create a PopupWindow
-        val popupWindow = PopupWindow(
-            dropdownView,
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            true
+        val adapter = ArrayAdapter(
+            context,
+            R.layout.dropdown_spinner, // or android.R.layout.simple_spinner_item
+            items
         )
-        dimBehind(popupWindow)
-        // Set up the ListView in the dropdown
-        val listView: ListView = dropdownView.findViewById(R.id.dropdownListView)
-        val adapter =
-            ArrayAdapter(anchor.context, R.layout.dropdown_spinner, items)
-        listView.adapter = adapter
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.adapter = adapter
 
-        // Handle item clicks
-        listView.setOnItemClickListener { _, _, position, _ ->
-            val selectedItem = items[position]
-            onItemSelected(selectedItem)
-            clearDim()
-            popupWindow.dismiss() // Close the dropdown
-        }
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>, view: View?, position: Int, id: Long
+            ) {
+                onItemSelected(items[position])
+            }
 
-        popupWindow.setOnDismissListener {
-            clearDim()
-        }
-
-        try {
-            popupWindow.showAsDropDown(anchor)
-        } catch (e: Exception) {
-            Log.e("DropdownMenu", "Failed to show dropdown menu", e)
+            override fun onNothingSelected(parent: AdapterView<*>) {}
         }
     }
+
+//    fun showDropdownMenuSort(
+//        anchor: View,
+//        activity: Activity,
+//        items: List<String>,
+//        onItemSelected: (String) -> Unit
+//    ) {
+//        if (activity.isFinishing || activity.isDestroyed) {
+//            Log.e("DropdownMenu", "Activity is not valid for showing the popup.")
+//            return
+//        }
+//
+//        val inflater = LayoutInflater.from(anchor.context)
+//        val dropdownView = inflater.inflate(R.layout.dropdown_menu, null)
+//
+//        // Create a PopupWindow
+//        val popupWindow = PopupWindow(
+//            dropdownView,
+//            ViewGroup.LayoutParams.WRAP_CONTENT,
+//            ViewGroup.LayoutParams.WRAP_CONTENT,
+//            true
+//        )
+//        dimBehind(popupWindow)
+//        // Set up the ListView in the dropdown
+//        val listView: ListView = dropdownView.findViewById(R.id.dropdownListView)
+//        val adapter =
+//            ArrayAdapter(anchor.context, R.layout.dropdown_spinner, items)
+//        listView.adapter = adapter
+//
+//        // Handle item clicks
+//        listView.setOnItemClickListener { _, _, position, _ ->
+//            val selectedItem = items[position]
+//            onItemSelected(selectedItem)
+//            clearDim()
+//            popupWindow.dismiss() // Close the dropdown
+//        }
+//
+//        popupWindow.setOnDismissListener {
+//            clearDim()
+//        }
+//
+//        try {
+//            popupWindow.showAsDropDown(anchor)
+//        } catch (e: Exception) {
+//            Log.e("DropdownMenu", "Failed to show dropdown menu", e)
+//        }
+//    }
 
     fun isDropDownLoadData(
         anchor: View,

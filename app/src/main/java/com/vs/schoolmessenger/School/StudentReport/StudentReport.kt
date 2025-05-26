@@ -352,18 +352,18 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
                 onBackPressed()
             }
 
-            R.id.rlaSort -> {
-                showDropdownMenuSort(binding.dropdownTextView, this, items) { selectedOption ->
-                    binding.dropdownTextView.text = selectedOption
-                    Log.d("SelectedFilterSort", selectedOption)
-
-                    if (!isGetStandard.isNullOrEmpty()) {
-                        updateStandardAndSection(isGetStandard!![0])
-                    } else {
-                        updateStandardAndSection(null)
-                    }
-                }
-            }
+//            R.id.rlaSort -> {
+//                showDropdownMenuSort(binding.dropdownTextView, this, items) { selectedOption ->
+//                    binding.dropdownTextView.text = selectedOption
+//                    Log.d("SelectedFilterSort", selectedOption)
+//
+//                    if (!isGetStandard.isNullOrEmpty()) {
+//                        updateStandardAndSection(isGetStandard!![0])
+//                    } else {
+//                        updateStandardAndSection(null)
+//                    }
+//                }
+//            }
 
 
             R.id.dropdownTextViewStandard -> {

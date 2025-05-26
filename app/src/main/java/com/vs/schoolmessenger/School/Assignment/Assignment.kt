@@ -10,10 +10,9 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.AdapterView
 import android.widget.RelativeLayout
-import androidx.recyclerview.widget.GridLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
-import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.CommonScreens.ImagePickingData
 import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
 import com.vs.schoolmessenger.R
@@ -49,11 +48,13 @@ class Assignment : BaseActivity<AssignmentBinding>(),
         setupToolbar()
         binding.imgBack.setOnClickListener(this)
         binding.btnChooseRecipient.setOnClickListener(this)
-        binding.rlaTypeofSending.setOnClickListener(this)
-        binding.rlaAssignmentType.setOnClickListener(this)
+//        binding.rlaTypeofSending.setOnClickListener(this)
+//        binding.spinnerAssignment.setOnClickListener(this)
         binding.lblDatePick.setOnClickListener(this)
         binding.lblTimePick.setOnClickListener(this)
 
+        setupAssignmentTypeSpinner()
+        spinnerType()
 
         imageList = mutableListOf(
             ImagePickingData(R.drawable.add_image),
@@ -89,7 +90,55 @@ class Assignment : BaseActivity<AssignmentBinding>(),
                 }
             }
         })
+    }
 
+    private fun setupAssignmentTypeSpinner() {
+        val adapter = AssignmentTypeAdapter(this, itemsAssignmentType)
+        binding.spinnerAssignment.adapter = adapter
+
+        binding.spinnerAssignment.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    adapter.selectedPosition = position
+                    adapter.notifyDataSetChanged()
+
+                    val selectedOption = itemsAssignmentType[position]
+                    binding.rlaFilePicking.visibility =
+                        if (selectedOption == "Text") View.GONE else View.VISIBLE
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {}
+            }
+    }
+
+    private fun spinnerType() {
+
+        val adapter = AssignmentTypeAdapter(this, itemsCategory)
+        binding.spinnerType.adapter = adapter
+
+        binding.spinnerType.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    adapter.selectedPosition = position
+                    adapter.notifyDataSetChanged()
+
+//                    val selectedOption = itemsCategory[position]
+//                    binding.rlaFilePicking.visibility =
+//                        if (selectedOption == "Text") View.GONE else View.VISIBLE
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {}
+            }
     }
 
     override fun onResume() {
@@ -104,32 +153,6 @@ class Assignment : BaseActivity<AssignmentBinding>(),
 
             R.id.btnChooseRecipient -> {
                 Log.d("isChoosingImageSize", imageList.size.toString())
-            }
-
-            R.id.rlaAssignmentType -> {
-                showDropdownMenuSort(
-                    binding.lblAssignment,
-                    this,
-                    itemsAssignmentType
-                ) { selectedOption ->
-                    binding.lblAssignment.text = selectedOption
-
-                    if (binding.lblAssignment.text.toString() == "Text") {
-                        binding.rlaFilePicking.visibility = View.GONE
-                    } else {
-                        binding.rlaFilePicking.visibility = View.VISIBLE
-                    }
-                }
-            }
-
-            R.id.rlaTypeofSending -> {
-                showDropdownMenuSort(
-                    binding.lblAssignmentSendingType,
-                    this,
-                    itemsCategory
-                ) { selectedOption ->
-                    binding.lblAssignmentSendingType.text = selectedOption
-                }
             }
 
             R.id.lblTimePick -> {

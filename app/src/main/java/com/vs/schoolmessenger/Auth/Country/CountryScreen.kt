@@ -69,13 +69,13 @@ class CountryScreen : BaseActivity<CountryListScreenBinding>(), View.OnClickList
         val isCountryList =
             listOf(Country(-0, "Select Your Country", -0, -0, "", "", "", "")) + countryList
         val adapter = CountrySpinnerAdapter(this@CountryScreen, isCountryList)
-        binding.isSpineer.adapter = adapter
+        binding.isSpinner.adapter = adapter
 
         if (isCountryList.isNotEmpty()) {
             Constant.country_details = isCountryList[0]
         }
 
-        binding.isSpineer.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        binding.isSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,

@@ -117,13 +117,13 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(),
 
         lblClose.setOnClickListener { dialog.dismiss() }
 
-        lblMonthChoose.setOnClickListener {
-            showDropdownMenuSort(lblMonthChoose, this, months) { lblMonthChoose.text = it }
-        }
-
-        lblStatusChoose.setOnClickListener {
-            showDropdownMenuSort(lblStatusChoose, this, statuses) { lblStatusChoose.text = it }
-        }
+//        lblMonthChoose.setOnClickListener {
+//            showDropdownMenuSort(lblMonthChoose, this, months) { lblMonthChoose.text = it }
+//        }
+//
+//        lblStatusChoose.setOnClickListener {
+//            showDropdownMenuSort(lblStatusChoose, this, statuses) { lblStatusChoose.text = it }
+//        }
 
         lblFromDate?.setOnClickListener { showDatePickerDialog(this, this) }
         lblToDate?.setOnClickListener { showDatePickerDialog(this, this) }
