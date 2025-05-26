@@ -19,7 +19,8 @@ import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventResp
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.HolidayResponse
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
-import com.vs.schoolmessenger.School.AbsenteesMarking.SendAbsenteeSMSResponse
+import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.SendAbsenteeSMSResponse
+import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportDataResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
@@ -139,6 +140,7 @@ class App(application: Application) : AndroidViewModel(application) {
         private set
     var isSendAbsenteeSMS: LiveData<SendAbsenteeSMSResponse?>? = null
     var isChildAttendanceReport: LiveData<ChildAttendanceResponse?>? = null
+    var isGetStudentAttendanceReportData: LiveData<StudentAttendanceReportDataResponse?>? = null
 
 
 
@@ -190,6 +192,8 @@ class App(application: Application) : AndroidViewModel(application) {
         isSendAbsenteeSMS = apiSchoolRepositories.isSendAbsenteeSMSLiveData
 
         isChildAttendanceReport = apiParentRepositories.isChildAttendanceReportLiveData
+
+        isGetStudentAttendanceReportData = apiSchoolRepositories.isStudentAttendanceReportLiveData
 
 
     }
@@ -398,6 +402,9 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun getChildAttendanceReport(isToken: String, activity: Activity) {
         apiParentRepositories.getChildAttendanceReport(isToken, activity)
+    }
+    fun getStudentAttendanceReport(isToken: String,section_id:String,from_date:String,to_date:String,class_id:String,activity: Activity) {
+        apiSchoolRepositories.getStudentAttendanceReportForSchool(isToken,section_id,from_date,to_date,class_id,activity)
     }
 }
 

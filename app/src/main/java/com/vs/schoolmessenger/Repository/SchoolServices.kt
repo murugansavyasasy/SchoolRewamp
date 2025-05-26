@@ -20,8 +20,8 @@ import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
-import com.vs.schoolmessenger.School.AbsenteesMarking.SendAbsenteeSMSResponse
-import com.vs.schoolmessenger.School.AbsenteesMarking.StudentAttendanceReportDataResponse
+import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.SendAbsenteeSMSResponse
+import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportDataResponse
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionReportResponse
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
@@ -1552,30 +1552,30 @@ class SchoolServices {
 
     fun getStudentAttendanceReportForSchool(
         isToken: String,
-        class_id: String,
         section_id: String,
         from_date: String,
         to_date: String,
+        class_id: String,
         activity: Activity
     ) {
-        RestClient.apiInterfaces.isGetStudentAttendanceReportForSchool(isToken, class_id, section_id,from_date,to_date)
+        RestClient.apiInterfaces.isGetStudentAttendanceReportForSchool(isToken,section_id,from_date,to_date,class_id)
             ?.enqueue(object : Callback<StudentAttendanceReportDataResponse?> {
                 override fun onResponse(
                     call: Call<StudentAttendanceReportDataResponse?>,
                     response: Response<StudentAttendanceReportDataResponse?>
                 ) {
                     Log.d(
-                        "GetStudentReport Response",
+                        "GetStudentAttendanceReport Response",
                         response.code().toString() + " - " + response.toString()
                     )
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
                             if (status) {
-                                Log.d("GetStudentReportData", response.body().toString())
+                                Log.d("GetStudentAttendanceReportData", response.body().toString())
                                 isStudentAttendanceReportForSchool.postValue(response.body())
                             } else {
-                                Log.d("GetStudentReportData", response.body().toString())
+                                Log.d("GetStudentAttendanceReportData", response.body().toString())
                                 isStudentAttendanceReportForSchool.postValue(response.body())
                             }
                         }
