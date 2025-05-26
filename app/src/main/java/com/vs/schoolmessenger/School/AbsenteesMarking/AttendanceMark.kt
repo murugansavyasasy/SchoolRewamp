@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
@@ -19,6 +20,12 @@ import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.Standar
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingAdapter.AttendanceStudentReportAdapter
+import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.MarkAttendanceDataSending
+import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportData
+import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportDataResponse
+import com.vs.schoolmessenger.School.StudentReport.StudentReportAdapter
+import com.vs.schoolmessenger.School.StudentReport.StudentReportData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.OnDateSelectedListener
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -27,7 +34,7 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
-    View.OnClickListener, OnDateSelectedListener, AbsenteesSelectionListener {
+    View.OnClickListener {
 
 
     lateinit var mAdapter: AttendanceStudentReportAdapter
@@ -38,12 +45,14 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
     private var isAccessToken: String? = null
     private var isStandardName: String? = null
     private var isSectionName: String? = null
-    private  var isSelectedIds: List<String>?=null
+    private var isSelectedIds: List<String>? = null
     var isValidAcademicYear = false
     var isAcademicYear: List<AcademicYear>? = null
     var AllPresent = ""
     var SessionType = ""
     var AttendanceType = ""
+    var fromDate = ""
+    var toDate = ""
     private var isStaffDetails: StaffDetails? = null
     var isAcademicYearId = -1
 
@@ -59,32 +68,6 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         return AttendanceMarkBinding.inflate(layoutInflater)
     }
 
-    private val itemsSection = listOf(
-        "A",
-        "B",
-        "C",
-        "D",
-        "E",
-        "F",
-        "G",
-        "H",
-    )
-    private val itemsStandard = listOf(
-        "V",
-        "VI",
-        "VII",
-        "VIII",
-        "IX",
-        "X",
-        "XI",
-        "XII"
-    )
-    private val itemsAttendanceType = listOf(
-        "Full day",
-        "Half day"
-    )
-
-
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
@@ -98,10 +81,10 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         binding.btnAbsent.setOnClickListener(this)
         binding.btnCreate.setOnClickListener(this)
         binding.btnHistory.setOnClickListener(this)
-        binding.lblDate.setOnClickListener(this)
-        binding.rlaStandardReport.setOnClickListener(this)
+//        binding.lblDate.setOnClickListener(this)
+//        binding.rlaStandardReport.setOnClickListener(this)
         binding.btnSelectPresent.setOnClickListener(this)
-        binding.rlaSectionReport.setOnClickListener(this)
+//        binding.rlaSectionReport.setOnClickListener(this)
         binding.rlaDayDatePicker.setOnClickListener(this)
         binding.dropdownAcademicYear.setOnClickListener(this)
         binding.rlaFullDay.setOnClickListener(this)
@@ -118,17 +101,22 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         isAccessToken = isStaffDetails!!.access_token
         Log.d("isAccessToken", isStaffDetails!!.access_token)
         binding.toolbarLayout.lblParentToolBar.text = getString(R.string.MarkAttendance)
+        binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
 
 
         appViewModel!!.isSendAbsenteeSMS?.observe(this) { response ->
-            if (response != null && response.status) {
-                Constant.hideLoading(this@AttendanceMark)
-                Log.d("isSendAbsenteeSMS", response.message)
-                Constant.showDataValidation("Success", response.message, this)
-
+            if (response != null) {
+                if (response.status) {
+                    Constant.hideLoading(this@AttendanceMark)
+                    Log.d("isSendAbsenteeSMS", response.message)
+                    Constant.showDataValidation("Success", response.message, this)
+                } else {
+                    Constant.showDataValidation("Fail", response.message, this)
+                }
             }
         }
+
         isGetAcademicYear()
         val (dayOnly, dayOfWeek, fullDate, slashDate) = getCurrentDateInfo()
         binding.lblDate1.text = dayOnly
@@ -153,10 +141,10 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                         isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
                         Log.d("isAcademicYearId", isAcademicYearId.toString())
                         isGetStandardSection()
-                        binding.rlaMarkAttendanceDetails.visibility=View.VISIBLE
+                        binding.rlaMarkAttendanceDetails.visibility = View.VISIBLE
                     }
                 } else {
-                    binding.rlaMarkAttendanceDetails.visibility=View.GONE
+                    binding.rlaMarkAttendanceDetails.visibility = View.GONE
                     ErrorMessage(response.message)
                 }
             }
@@ -184,20 +172,36 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                                 Log.d("isSectionID", isSection.toString())
                             }
                             val firstStandard = isGetStandard!![0]
-                            binding.rlaMarkAttendanceDetails.visibility=View.VISIBLE
+                            binding.rlaMarkAttendanceDetails.visibility = View.VISIBLE
                             //To Assign Standard and Section in early to use in AbsenteesStudentMark.kt
                             updateStandardAndSection(firstStandard)
-//                        isGetStudentReport()
+                            loadData()
                         }
                     }
                 } else {
-                    binding.rlaMarkAttendanceDetails.visibility=View.GONE
+                    binding.rlaMarkAttendanceDetails.visibility = View.GONE
 //                    binding.selectClassSection.visibility = View.GONE
 //                    binding.lnrClasses.visibility = View.GONE
                     ErrorMessage(response.message)
                 }
             }
         }
+
+        appViewModel!!.isGetStudentAttendanceReportData?.observe(this) { response ->
+            Constant.hideLoading(this@AttendanceMark)
+            if (response != null) {
+                if (response.status) {
+                    val isStudentAttendanceReportResponseData = response.data
+                    studentsList = isStudentAttendanceReportResponseData
+                    loadStudentReport(studentsList)
+                } else {
+//                    binding.tabLayout.visibility=View.GONE
+//                    ErrorMessage(response.message)
+                }
+            }
+
+        }
+
     }
 
     private fun isGetStandardSection() {
@@ -252,9 +256,7 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                 binding.rlaSection.isClickable = true
             }
 
-        }
-        else
-        {
+        } else {
             // No sections -> reset and disable section dropdown
             SectionID = null
             isSection = null
@@ -291,12 +293,13 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                 Constant.showDatePicker(this) { selectedDate ->
                     Log.d("selectedDate", selectedDate)
                     binding.lblDatePick.text = Constant.covertDateFormate(selectedDate)
-                    SelectedDate = selectedDate.toString()
+                    SelectedDate = selectedDate
                     val parts = binding.lblDatePick.text.split(" ")
                     val day = parts[0]
                     val Date = parts[1]
-                    binding.lblDay.text=day
-                    binding.lblDate1.text=Date
+                    binding.lblDay.text = day
+                    binding.lblDate1.text = Date
+                    loadData()
                 }
             }
 
@@ -312,7 +315,7 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
 
             R.id.radioButtonFullDay, R.id.rlaFullDay -> {
                 SessionType = ""
-                AttendanceType =Constant.fullDay
+                AttendanceType = Constant.fullDay
                 binding.radioButtonFullDay.isChecked = true
                 binding.radioButtonHalfDay.isChecked = false
                 binding.radioButtonFirstHalf.isChecked = false
@@ -341,7 +344,7 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
             }
 
             R.id.radioButtonFirstHalf, R.id.rlaFirstHalf -> {
-                SessionType =Constant.firstHalf
+                SessionType = Constant.firstHalf
                 if (binding.radioButtonHalfDay.isChecked) {
                     binding.radioButtonFirstHalf.isChecked = true
                     binding.radioButtonSecondHalf.isChecked = false
@@ -369,15 +372,28 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
 
             R.id.btnCreate -> {
                 isBackRoundChange(binding.btnCreate)
-                binding.rlaAttendanceReport.visibility = View.GONE
                 binding.rlaAttendanceMark.visibility = View.VISIBLE
+                binding.rlaAttendanceReport.visibility = View.GONE
+                binding.attendancetypeHeader.visibility = View.VISIBLE
+                binding.lnrClasses1.visibility = View.VISIBLE
+                binding.btnSelectPresent.visibility = View.VISIBLE
+                binding.btnAbsent.visibility = View.VISIBLE
+                binding.btnOr.visibility = View.VISIBLE
+
+
             }
 
             R.id.btnHistory -> {
                 isBackRoundChange(binding.btnHistory)
                 binding.rlaAttendanceReport.visibility = View.VISIBLE
-                binding.rlaAttendanceMark.visibility = View.GONE
-             //   loadData()
+                binding.lnrClasses1.visibility = View.GONE
+                binding.attendancetypeHeader.visibility = View.GONE
+                binding.sessionHeader.visibility = View.GONE
+                binding.lnrClasses2.visibility = View.GONE
+                binding.btnSelectPresent.visibility = View.GONE
+                binding.btnAbsent.visibility = View.GONE
+                binding.btnOr.visibility = View.GONE
+                loadData()
             }
 
             R.id.btnAbsent -> {
@@ -396,6 +412,7 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                     isGetStandard
                 ) { selectStandard, _ ->
                     updateStandardAndSection(selectStandard)
+                    loadData()
                 }
             }
 
@@ -409,7 +426,7 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                         binding.lblSection.text = selectedOption.first
                         SectionID = selectedOption.second
                         isSectionName = selectedOption.first
-//                        isGetStudentReport()
+                        loadData()
                     }
                 }
             }
@@ -424,7 +441,7 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                         "DropdownMenu",
                         "Clicked Academic Year: ID = ${selectedYear.id}, Year = ${selectedYear.year}, Current = ${selectedYear.current_academic_year}"
                     )
-//                    isGetStudentReport()
+                    loadData()
                 }
             }
 
@@ -444,9 +461,9 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
 
     private fun isSaveMarkAttendanceDetails() {
         val saveAttendanceData = MarkAttendanceDataSending(
-            academic_year_id=isAcademicYearId,
-            class_name=isStandardName!!,
-            section_name=isSectionName!!,
+            academic_year_id = isAcademicYearId,
+            class_name = isStandardName!!,
+            section_name = isSectionName!!,
             class_id = ClassID.toString(),
             section_id = SectionID.toString(),
             all_present = AllPresent,
@@ -459,10 +476,11 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
     }
 
     private fun updateActionButtonsState() {
-        if ((ClassID != null && SectionID != null)&&(binding.radioButtonFullDay.isChecked ||
-            (binding.radioButtonHalfDay.isChecked &&
-                    (binding.radioButtonFirstHalf.isChecked || binding.radioButtonSecondHalf.isChecked))
-        )) {
+        if ((ClassID != null && SectionID != null) && (binding.radioButtonFullDay.isChecked ||
+                    (binding.radioButtonHalfDay.isChecked &&
+                            (binding.radioButtonFirstHalf.isChecked || binding.radioButtonSecondHalf.isChecked))
+                    )
+        ) {
 
             binding.btnSelectPresent.setBackgroundResource(R.drawable.rect_shadow_green)
             binding.btnAbsent.setBackgroundResource(R.drawable.rect_shadow_red)
@@ -478,19 +496,23 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
     }
 
     private fun isMarkAttendance() {
-        if (ClassID != null && SectionID != null && SessionType == ""
-            && AttendanceType == Constant.fullDay && SelectedDate != null && isSelectedIds?.size == null
+        Log.d(
+            "Parameter_for_SendAbsentessSMS",
+            ClassID.toString() + "," +
+                    SectionID.toString() + "," +
+                    AllPresent + "," +
+                    AttendanceType + "," +
+                    SessionType + "," +
+                    SelectedDate.toString() + "," +
+                    isSelectedIds?.size.toString()
+        )
+        if (ClassID != null && SectionID != null &&
+            ((SessionType == "" && AttendanceType == Constant.fullDay)
+                    || (AttendanceType == Constant.halfDay && (SessionType == Constant.firstHalf || SessionType == Constant.secondHalf)))
+            && SelectedDate != null && isSelectedIds?.size == null
         ) {
             AllPresent = Constant.allPresent
-            Log.d(
-                "Parameter_for_SendAbsentessSMS",
-                ClassID.toString() + "," +
-                        SectionID.toString() + "," +
-                        AllPresent + "," +
-                        AttendanceType + "," +
-                        SessionType + "," +
-                        SelectedDate.toString()
-            )
+
 
             val jsonObject = JsonObject().apply {
                 addProperty(APIKeyNames.class_id, ClassID.toString())
@@ -507,13 +529,36 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                     }
                 }
                 add(APIKeyNames.student_id, studentArray)
-                Log.d("AbsenteesList",studentArray.toString())
+                Log.d("AbsenteesList", studentArray.toString())
 
             }
             appViewModel?.isUpdateSendAbsenteeSMS(isAccessToken!!, jsonObject, this)
         }
 
     }
+
+    fun loadData() {
+        //In API,we have From Date and To Date but we actually going to pass only One date(that we getting from ID:rlaDayDatePicker) in both From and To Date
+        //Till now this is our requirement(one Day picker we are using so From and To Date)
+        fromDate = SelectedDate.toString()
+        toDate = SelectedDate.toString()
+
+        mAdapter = AttendanceStudentReportAdapter(null, this, Constant.isShimmerViewShow)
+        binding.rcyAttendanceReport.layoutManager = LinearLayoutManager(this)
+        binding.rcyAttendanceReport.adapter = mAdapter
+        appViewModel!!.getStudentAttendanceReport(
+            isAccessToken!!, SectionID.toString(), fromDate, toDate, ClassID.toString(), this
+        )
+
+    }
+
+    private fun loadStudentReport(studentReportData: List<StudentAttendanceReportData>) {
+        // Once data is loaded, stop shimmer and pass the actual data
+        mAdapter =
+            AttendanceStudentReportAdapter(studentReportData, this, Constant.isShimmerViewDisable)
+        binding.rcyAttendanceReport.adapter = mAdapter
+    }
+
 
     private fun isBackRoundChange(isClickingId: TextView) {
 
@@ -545,15 +590,5 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
             SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(calendar.time)
 
         return listOf(dayOnly, dayOfWeek, fullDate, slashDate)
-    }
-
-    override fun onSelectionChanged(selectedIds: List<String>) {
-        Log.d("ActivitySelectedIDs", selectedIds.toString())
-        isSelectedIds = selectedIds
-
-    }
-
-    override fun onDateSelected(date: String) {
-
     }
 }

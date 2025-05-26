@@ -26,9 +26,11 @@ import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
-import com.vs.schoolmessenger.School.AbsenteesMarking.SendAbsenteeSMSResponse
-import com.vs.schoolmessenger.School.AbsenteesMarking.StudentAttendanceReportDataResponse
+
 import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesCountByResponse
+import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.SendAbsenteeSMSResponse
+import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportDataResponse
+
 
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionReportResponse
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportResponse
@@ -359,10 +361,10 @@ interface ApiInterfaces {
     @GET(APIMethods.get_student_attendance_report_for_scchool)
     fun isGetStudentAttendanceReportForSchool(
         @Header(APIKeyNames.Authorization) token: String,
-        @Query(APIKeyNames.standard_id) standard_id: String,
         @Query(APIKeyNames.section_id) section_id: String,
         @Query(APIKeyNames.from_date) from_date: String,
-        @Query(APIKeyNames.to_date) to_date: String
+        @Query(APIKeyNames.to_date) to_date: String,
+        @Query(APIKeyNames.standard_id) standard_id: String
     ): Call<StudentAttendanceReportDataResponse?>
 
 

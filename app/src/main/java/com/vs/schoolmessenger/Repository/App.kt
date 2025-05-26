@@ -19,8 +19,12 @@ import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventResp
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.HolidayResponse
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
-import com.vs.schoolmessenger.School.AbsenteesMarking.SendAbsenteeSMSResponse
+
 import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesCountByResponse
+
+import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.SendAbsenteeSMSResponse
+import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportDataResponse
+
 import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
@@ -140,7 +144,11 @@ class App(application: Application) : AndroidViewModel(application) {
         private set
     var isSendAbsenteeSMS: LiveData<SendAbsenteeSMSResponse?>? = null
     var isChildAttendanceReport: LiveData<ChildAttendanceResponse?>? = null
+
     var getabsenteescountbydate: LiveData<AbsenteesCountByResponse?>? = null
+
+    var isGetStudentAttendanceReportData: LiveData<StudentAttendanceReportDataResponse?>? = null
+
 
 
 
@@ -193,7 +201,12 @@ class App(application: Application) : AndroidViewModel(application) {
 
         isChildAttendanceReport = apiParentRepositories.isChildAttendanceReportLiveData
 
+
 //        getabsenteescountbydate = apiSchoolRepositories.getabsenteescountbydateLiveData
+
+        isGetStudentAttendanceReportData = apiSchoolRepositories.isStudentAttendanceReportLiveData
+
+
 
     }
 
@@ -403,9 +416,14 @@ class App(application: Application) : AndroidViewModel(application) {
         apiParentRepositories.getChildAttendanceReport(isToken, activity)
     }
 
+
 //    fun getabsenteescountbydate(isToken: String, activity: Activity) {
 //        apiSchoolRepositories.getabsenteescountbydate(isToken, activity)
 //    }
+
+    fun getStudentAttendanceReport(isToken: String,section_id:String,from_date:String,to_date:String,class_id:String,activity: Activity) {
+        apiSchoolRepositories.getStudentAttendanceReportForSchool(isToken,section_id,from_date,to_date,class_id,activity)
+    }
 }
 
 
