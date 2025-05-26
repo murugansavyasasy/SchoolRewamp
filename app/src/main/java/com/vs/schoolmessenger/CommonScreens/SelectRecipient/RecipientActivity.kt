@@ -204,7 +204,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                             binding.rytStandardDropDown.visibility = View.VISIBLE
                             binding.bottomLayout.visibility = View.VISIBLE
                             isSection = isGetStandard!!.get(0).sections
-//                            binding.lblStandard.text = isGetStandard!![0].name
                             binding.nomessage.visibility = View.GONE
                             isLoadData(isSection)
                             binding.grouplabel.text = resources.getString(R.string.Section)
@@ -566,14 +565,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onClick(p0: View?) {
         when (p0?.id) {
-//            R.id.rlaSubject -> {
-//                isDropDownLoadData(
-//                    binding.rlaSubject, this, isGetSubjectListData
-//                ) { selectedSubject ->
-//                    binding.lblSuibject.text = selectedSubject.first
-//                    isSubjectId = selectedSubject.second
-//                }
-//            }
 
             R.id.imgBack -> {
                 onBackPressed()
