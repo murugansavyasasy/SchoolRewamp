@@ -35,12 +35,14 @@ class ChildMenuAdapter(
     private val TYPE_AD = 2
 
     override fun getItemViewType(position: Int): Int {
+        val hasAd = specialImages?.isNotEmpty() == true && isMenuDetails?.size ?: 0 > 9
         return when {
             isLoading -> TYPE_SHIMMER
-            position == 9 -> TYPE_AD
+            hasAd && position == 9 -> TYPE_AD
             else -> TYPE_DATA
         }
     }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -73,37 +75,35 @@ class ChildMenuAdapter(
 
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val showAd = specialImages?.isNotEmpty() == true && isMenuDetails?.size ?: 0 > 9
+
         when (holder) {
             is DataViewHolder -> {
-                isMenuDetails?.get(position)?.let { menuDetail ->
-                    holder.bind(menuDetail, position, listener)
+                val adjustedPosition = if (showAd && position > 9) position - 1 else position
+                isMenuDetails?.getOrNull(adjustedPosition)?.let { menuDetail ->
+                    holder.bind(menuDetail, adjustedPosition, listener)
                 }
             }
 
-            is ShimmerViewHolder -> {
-                holder.startShimmer()
-            }
+            is ShimmerViewHolder -> holder.startShimmer()
 
             is AdViewHolder -> {
-                if (position == 9) {
-                    specialImages?.let {
-                        if (it.isNotEmpty()) {
-                            holder.bind(it, context)
-                        } else {
-                            holder.bind(emptyList(), context)
-                        }
-                    } ?: holder.bind(emptyList(), context)
-                } else {
-                    holder.bind(emptyList(), context)
-                }
+                // Only reached if showAd is true and position == 9
+                holder.bind(specialImages ?: emptyList(), context)
             }
         }
     }
 
+
+
     override fun getItemCount(): Int {
-        return if (isLoading) 20
-        else isMenuDetails!!.size
+        if (isLoading) return 20
+
+        val baseSize = isMenuDetails?.size ?: 0
+        val showAd = specialImages?.isNotEmpty() == true && baseSize > 9
+        return if (showAd) baseSize + 1 else baseSize
     }
+
 
     class DataViewHolder(
         itemView: View,
