@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.School.AbsenteesMarking
+package com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel
 
 data class StudentAttendanceReportData(
     val student_name: String,

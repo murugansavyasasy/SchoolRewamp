@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.School.AbsenteesMarking
+package com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingAdapter
 
 import android.content.Context
 import android.util.Log
@@ -6,12 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIds
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesClickListener
+import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesSelectionListener
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class AbsenteesMarkAdapter(
@@ -72,7 +73,7 @@ class AbsenteesMarkAdapter(
         private val lblRollNo: TextView = itemView.findViewById(R.id.lblRollNo)
         private val lblAdmisNo: TextView = itemView.findViewById(R.id.lblAdmissionNoValue)
         private val lnrPresent: LinearLayout = itemView.findViewById(R.id.lnrPresent)
-        private val lnrAbsent: RelativeLayout = itemView.findViewById(R.id.lnrAbsent)
+        private val lnrAbsent: LinearLayout = itemView.findViewById(R.id.lnrAbsent)
         private val lnrRollno: LinearLayout = itemView.findViewById(R.id.lnrRollNo)
 
         fun bind(data: NameAndIds, position: Int, listener: AbsenteesClickListener) {

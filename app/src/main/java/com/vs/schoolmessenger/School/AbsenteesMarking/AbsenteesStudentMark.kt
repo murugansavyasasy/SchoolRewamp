@@ -14,6 +14,8 @@ import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIds
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingAdapter.AbsenteesMarkAdapter
+import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.MarkAttendanceDataSending
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.AbsenteesStudentMarkingBinding
@@ -63,9 +65,7 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(), Abs
                 val isChecked = binding.toolbarLayout.cbSelect.isChecked
                 mAdapter.setAllAbsent(isChecked)
         }
-
         Log.d("isGetStudentlListisAcademicYearId", isAcademicYearId.toString())
-//        binding.lnrSelectAll.setOnClickListener(this)
         Log.d("isGetStudentListisStandardName", isStandardName.toString())
         Log.d("isGetStudentListisSectionName", isSectionName.toString())
         Log.d("isGetStudentListSectionID", isSectionId.toString())
@@ -74,17 +74,18 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(), Abs
         binding.toolbarLayout.lblParentToolBar.text = getString(R.string.MarkAttendance)
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name+" | "+isStandardName+"-"+isSectionName
 
-        appViewModel!!.isSendAbsenteeSMS?.observe(this) { response ->
-            if (response != null && response.status) {
-                Constant.hideLoading(this@AbsenteesStudentMark)
-                Log.d("isSendAbsenteeSMS", response.message)
-                Constant.showDataValidation("Success", response.message, this)
 
-//                val dialogRootView = view as ViewGroup
-//                showTopAlertPopup(response.message, dialogRootView, -1, response.status, "isUpdate")
+        appViewModel!!.isSendAbsenteeSMS?.observe(this) { response ->
+            if (response != null) {
+                if (response.status) {
+                    Constant.hideLoading(this@AbsenteesStudentMark)
+                    Log.d("isSendAbsenteeSMS", response.message)
+                    Constant.showDataValidation("Success", response.message, this)
+                } else {
+                    Constant.showDataValidation("Fail", response.message, this)
+                }
             }
         }
-
 
         appViewModel!!.isGetStudentList(
             isAccessToken!!,
@@ -95,20 +96,24 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(), Abs
         appViewModel!!.isStudentList!!.observe(this) { response ->
             if (response != null) {
                 if (response.status) {
+                    binding.lnrHeader.visibility=View.VISIBLE
+                    binding.recycleStudents.visibility=View.VISIBLE
                     studentsList = response.data
-//                    isStudentData = isStudentList
-//                    isStudentData()
-                } else {
-//                    binding.lblNoRecordsFound.visibility = View.VISIBLE
-//                    binding.rcySpecificStudent.visibility = View.GONE
-//                    binding.lblNoRecordsFound.text = response.message
+
                 }
-            } else {
-//                binding.lblNoRecordsFound.visibility = View.VISIBLE
+                else {
+                    binding.lnrHeader.visibility=View.GONE
+                    binding.recycleStudents.visibility=View.GONE
+                    ErrorMessage(response.message)
+
+                }
             }
         }
+    }
 
-
+    fun ErrorMessage(ErrorMessage: String) {
+        binding.lytNoDataFound.visibility = View.VISIBLE
+        binding.noDataFound.text = ErrorMessage
     }
 
     override fun onResume() {
@@ -159,23 +164,6 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(), Abs
                 isUpdateMarkAtttendance()}
             }
     }
-
-//    private fun isMarkAttendance() {
-//        // Assign values to the data holder
-//        AllPresent = if (selectedIds.isEmpty()) "T" else "F"
-//        var MarkAttendanceData = Constant.isMarkAttendanceDataSending
-//
-//
-//        // Decision logic to call update only when necessary
-//        if (MarkAttendanceData?.class_id != "" && MarkAttendanceData?.section_id != "" && MarkAttendanceData?.attendance_date != null) {
-//            if (MarkAttendanceData?.attendance_type == "F" && MarkAttendanceData?.session_type == "" && isSelectedIds.isEmpty()) {
-//                isUpdateMarkAtttendance()
-//            } else if (MarkAttendanceData?.attendance_type == "H" && MarkAttendanceData?.session_type!!.isNotEmpty() && isSelectedIds.isNotEmpty()) {
-//                isUpdateMarkAtttendance()
-//            }
-//        }
-//    }
-
 
     private fun isUpdateMarkAtttendance() {
         var MarkAttendanceData = Constant.isMarkAttendanceDataSending
