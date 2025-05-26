@@ -193,7 +193,7 @@ class App(application: Application) : AndroidViewModel(application) {
 
         isChildAttendanceReport = apiParentRepositories.isChildAttendanceReportLiveData
 
-        getabsenteescountbydate = apiSchoolRepositories.getabsenteescountbydateLiveData
+//        getabsenteescountbydate = apiSchoolRepositories.getabsenteescountbydateLiveData
 
     }
 
