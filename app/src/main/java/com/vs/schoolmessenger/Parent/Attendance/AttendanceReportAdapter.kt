@@ -18,11 +18,13 @@ import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.Parent.Communication.UnifiedVoiceAdapter.ShimmerViewHolder
 import com.vs.schoolmessenger.Parent.Noticeboard.Adapter.NoticeBoardAdapter
 import com.vs.schoolmessenger.Parent.Noticeboard.Notice
+import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardClickListener
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class AttendanceReportAdapter(
     private var itemList: List<AttendanceReportStudentData>?,
+    private var listener: AttendanceReportClickListener,
     private var context: Context,
     private var isLoading: Boolean
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
@@ -93,6 +95,7 @@ class AttendanceReportAdapter(
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
                 filteredList = results?.values as? List<AttendanceReportStudentData> ?: listOf()
+                listener.onSearchResultEmpty(filteredList.isEmpty())
                 notifyDataSetChanged()
             }
         }

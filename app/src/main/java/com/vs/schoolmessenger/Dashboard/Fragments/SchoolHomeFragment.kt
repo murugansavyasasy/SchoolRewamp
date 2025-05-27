@@ -259,7 +259,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 }
             }
         }
-        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
         return binding.root
     }

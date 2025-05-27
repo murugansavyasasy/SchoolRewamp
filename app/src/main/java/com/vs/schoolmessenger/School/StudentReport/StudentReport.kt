@@ -164,7 +164,9 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
 
             }
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                Log.d("TextSSS",s.toString())
                 filter(s.toString())
+
             }
         })
     }
