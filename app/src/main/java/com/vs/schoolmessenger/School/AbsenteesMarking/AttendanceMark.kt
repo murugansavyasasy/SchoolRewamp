@@ -96,7 +96,11 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         binding.radioButtonHalfDay.setOnClickListener(this)
         binding.radioButtonFirstHalf.setOnClickListener(this)
         binding.radioButtonSecondHalf.setOnClickListener(this)
-        binding.txtSearch.setOnClickListener(this)
+        binding.txtSearch.setOnClickListener {
+            Log.d("EditText", "Clicked")
+        }
+
+
 
 
         updateActionButtonsState()
@@ -106,6 +110,8 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         binding.toolbarLayout.lblParentToolBar.text = getString(R.string.MarkAttendance)
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
+
+
 
 
         appViewModel!!.isSendAbsenteeSMS?.observe(this) { response ->
@@ -212,9 +218,12 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
 
             }
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                Log.d("TEXTCOMING", "Text changed to: ${s.toString()}")
                 filter(s.toString())
             }
         })
+
+
 
     }
 
@@ -242,13 +251,18 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         }
 
         if (filteredList.isNotEmpty()) {
-            ShowData()
+            Log.d("Filter COming",filteredList.toString())
             mAdapter.updateData(filteredList)
+            Log.d("Filter Came",filteredList.toString())
+            ShowData()
+
         } else {
             binding.rcyAttendanceReport.visibility = View.GONE
             ErrorMessage(Constant.NO_DATA_FOUND)
         }
     }
+
+
 
     fun ShowData() {
         binding.rcyAttendanceReport.visibility = View.VISIBLE
