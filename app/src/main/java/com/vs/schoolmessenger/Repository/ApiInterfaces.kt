@@ -29,6 +29,7 @@ import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
 
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.SendAbsenteeSMSResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportDataResponse
+import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeStudents.AbsenteeStudentsResponse
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteesResponse
 
 
@@ -379,5 +380,13 @@ interface ApiInterfaces {
     fun getabsenteescountbydate(
         @Header(APIKeyNames.Authorization) token: String
     ): Call<AbsenteesResponse?>
+
+
+    @GET(APIMethods.getabsenteesstudentbydate)
+    fun getabsenteesstudentbydate(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query(APIKeyNames.absent_on) absent_on: String?,
+        @Query(APIKeyNames.section_id) section_id: String?
+    ): Call<AbsenteeStudentsResponse?>
 
 }

@@ -22,6 +22,7 @@ import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
 
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.SendAbsenteeSMSResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportDataResponse
+import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeStudents.AbsenteeStudentsResponse
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteesResponse
 
 import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
@@ -148,7 +149,7 @@ class App(application: Application) : AndroidViewModel(application) {
 
     var isGetStudentAttendanceReportData: LiveData<StudentAttendanceReportDataResponse?>? = null
 
-
+    var getabsenteesstudentbydate: LiveData<AbsenteeStudentsResponse?>? = null
 
 
 
@@ -203,6 +204,7 @@ class App(application: Application) : AndroidViewModel(application) {
 
         getabsenteescountbydate = apiSchoolRepositories.getabsenteescountbydateLiveData
 
+        getabsenteesstudentbydate = apiSchoolRepositories.getabsenteesstudentbydateLiveData
         isGetStudentAttendanceReportData = apiSchoolRepositories.isStudentAttendanceReportLiveData
 
 
@@ -418,6 +420,10 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun getabsenteescountbydate(isToken: String, activity: Activity) {
         apiSchoolRepositories.getabsenteescountbydate(isToken, activity)
+    }
+
+    fun getabsenteesstudentbydate(isToken: String, absent_on: String, section_id: String, activity: Activity) {
+        apiSchoolRepositories.getabsenteesstudentbydate(isToken,absent_on,section_id, activity)
     }
 
     fun getStudentAttendanceReport(isToken: String,section_id:String,from_date:String,to_date:String,class_id:String,activity: Activity) {

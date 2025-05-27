@@ -67,4 +67,10 @@ object APIMethods {
     const val get_child_attendance_report = "stud-attd/api/attendance/get-absent-dates-for-child"
     const val IsGetHolidayReport = "admin/api/school-event/view-holidays"
     const val getabsenteescountbydate = "stud-attd/api/attendance/get-absentees-count-by-date"
+
+    const val getabsenteesstudentbydate = "stud-attd/api/attendance/get-absentees-students-by-date"
 }
+
+
+
+

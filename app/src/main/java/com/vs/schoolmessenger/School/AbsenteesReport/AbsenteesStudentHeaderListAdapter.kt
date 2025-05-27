@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.School.AbsenteesReport
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,18 +12,19 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeStudents.Student
+import com.vs.schoolmessenger.Utils.Constant
 
-class AbsenteesStudentHeaderListAdapter (
-
-    private var itemList: List<AbsenteesStudentHeaderData>?,
+class AbsenteesStudentHeaderListAdapter(
+    private var itemList: List<Student>?,
     private var listener: AbsenteesHeaderClickListener,
     private var context: Context,
     private var isLoading: Boolean
-) : RecyclerView.Adapter<RecyclerView.ViewHolder> () {
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
-    private var selectedPosition = RecyclerView.NO_POSITION
+    private var selectedPosition = 0
 
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
@@ -36,23 +38,18 @@ class AbsenteesStudentHeaderListAdapter (
         } else {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.absentees_student_headerlist, parent, false)
-            DataViewHolder(view, context) // Pass context to DataViewHolder
+            DataViewHolder(view, context)
         }
     }
-
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is DataViewHolder) {
-            // Bind actual data when loading is complete
-            holder.bind(itemList!![position], position, listener, this) // Pass adapter reference
+        if (holder is DataViewHolder && itemList != null) {
+            holder.bind(itemList!![position], position, listener, this)
         }
     }
 
-
-
     override fun getItemCount(): Int {
-        return if (isLoading) 20 // Show shimmer items while loading
-        else itemList?.size ?: 0
+        return if (isLoading) 20 else itemList?.size ?: 0
     }
 
     fun setSelectedPosition(position: Int) {
@@ -62,38 +59,59 @@ class AbsenteesStudentHeaderListAdapter (
         notifyItemChanged(selectedPosition)
     }
 
+    fun updateData(newList: List<Student>) {
+        this.itemList = newList
+        isLoading = false
+        notifyDataSetChanged()
+    }
+
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
+
         private val section_values: TextView = itemView.findViewById(R.id.section_values)
         private val cardview: RelativeLayout = itemView.findViewById(R.id.cardview)
+        private val badge_count: TextView = itemView.findViewById(R.id.badge_count)
 
         fun bind(
-            data: AbsenteesStudentHeaderData,
+            data: Student,
             position: Int,
             listener: AbsenteesHeaderClickListener,
             adapter: AbsenteesStudentHeaderListAdapter
         ) {
-            section_values.text = data.section_values
+            Log.d("BindViewHolder", "Binding student at position $position: ${data.student_name}")
 
+            Constant.isAbsenteesReportDataSending?.let { report ->
+                val sectionNamesCombined = report.section_wise?.joinToString(", ") { it.name } ?: ""
+                val combinedText = "${report.name ?: ""} - $sectionNamesCombined"
+
+                section_values.text = combinedText
+                badge_count.text = report.total_absentees ?: "0"
+
+                Log.d("BindViewHolder", "Class: ${report.name}, Date: ${report.date}, Sections: $sectionNamesCombined, Absentees: ${report.total_absentees}")
+            }
 
             if (adapter.selectedPosition == position) {
-                cardview.setBackgroundColor(ContextCompat.getColor(context,R.color.custom_blue))
-                section_values.setTextColor(ContextCompat.getColor(context,R.color.black))
+                cardview.setBackgroundColor(ContextCompat.getColor(context, R.color.custom_blue))
+                section_values.setTextColor(ContextCompat.getColor(context, R.color.black))
             } else {
-                cardview.setBackgroundColor(ContextCompat.getColor(context,R.color.white))
-                section_values.setTextColor(ContextCompat.getColor(context,R.color.grey))
+                cardview.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
+                section_values.setTextColor(ContextCompat.getColor(context, R.color.grey))
             }
 
             itemView.setOnClickListener {
-                adapter.setSelectedPosition(position)  // Update selected position
+                Log.d("BindViewHolder", "Item clicked at position $position")
+                adapter.setSelectedPosition(position)
+                listener.onHeaderItemClicked(position, data)
             }
         }
 
         class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             private val shimmerLayout: ShimmerFrameLayout =
                 itemView.findViewById(R.id.shimmer_view_container)
+
             init {
-                shimmerLayout.startShimmer() // Start shimmer effect
+                shimmerLayout.startShimmer()
+                Log.d("ShimmerViewHolder", "Shimmer started")
             }
         }
     }
