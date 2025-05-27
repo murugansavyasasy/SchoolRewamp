@@ -1,11 +1,15 @@
 package com.vs.schoolmessenger.Dashboard.Settings.RateUs
 
 import android.annotation.SuppressLint
+import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.util.Log
 import android.view.View
 import android.widget.RatingBar
 import android.widget.TextView
+import com.google.android.play.core.review.ReviewManagerFactory
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
@@ -24,6 +28,25 @@ class RateUs : BaseActivity<RateUsBinding>(), View.OnClickListener {
     override fun setupViews() {
         super.setupViews()
         setupToolbar()
+
+
+
+
+        //In app rating page
+//        val manager = ReviewManagerFactory.create(this@RateUs)
+//        val request = manager.requestReviewFlow()
+//        request.addOnCompleteListener { task ->
+//            if (task.isSuccessful) {
+//                val reviewInfo = task.result
+//                val flow = manager.launchReviewFlow(this@RateUs, reviewInfo)
+//                flow.addOnCompleteListener {
+//                    // Review dialog shown (or not, depending on Google's decision)
+//                }
+//            } else {
+//                // Fallback (e.g., open Play Store page)
+//                openAppInPlayStore(this@RateUs)
+//            }
+//        }
 
         if (Constant.isParentChoose) {
             setUpGradientParent()
@@ -103,6 +126,20 @@ class RateUs : BaseActivity<RateUsBinding>(), View.OnClickListener {
                     }
                 }
             }
+    }
+
+    private fun openAppInPlayStore(context: Context) {
+        val packageName = context.packageName
+        try {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$packageName"))
+            intent.setPackage("com.android.vending")
+            context.startActivity(intent)
+        } catch (e: ActivityNotFoundException) {
+            // Play Store not installed, open in browser
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$packageName"))
+            context.startActivity(intent)
+        }
+
     }
 
     private fun isRating() {

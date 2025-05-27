@@ -53,27 +53,30 @@
 
 
         <RelativeLayout
-            android:layout_width="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/relative_layout1">
+            android:id="@+id/rytEdit">
 
             <TextView
-                android:id="@+id/editbutton"
+                android:id="@+id/btnEdit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/edit"
                 android:textColor="@color/navi_blue2"
                 android:textSize="@dimen/sixteen_sp"
                 android:textStyle="bold"
-                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:layout_marginEnd="@dimen/sixteen" />
+                android:layout_marginEnd="@dimen/five" />
+
             <ImageView
+                android:layout_toEndOf="@+id/btnEdit"
                 android:layout_width="@dimen/sixteen"
                 android:layout_height="@dimen/sixteen"
+                android:layout_centerVertical="true"
                 android:src="@drawable/pencilicon"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"/>
+              />
 
         </RelativeLayout>
 
@@ -136,8 +139,8 @@
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/imgStudentProfile"
-                    android:layout_width="@dimen/hundred"
-                    android:layout_height="@dimen/hundred"
+                    android:layout_width="@dimen/eighty"
+                    android:layout_height="@dimen/eighty"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/ten"
                     android:scaleType="centerCrop"
@@ -153,6 +156,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/lblName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/ten"
@@ -162,6 +166,7 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/lblSchoolName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/ten"
@@ -172,6 +177,7 @@
 
 
                     <TextView
+                        android:id="@+id/lblRegisterNo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Register number : 1473538628"
@@ -190,6 +196,7 @@
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/lnrStandardDetails"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/circlebordersolid"
@@ -203,6 +210,7 @@
 
 
                         <TextView
+                            android:id="@+id/lblStandard"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Standard : IIX"
@@ -212,6 +220,7 @@
 
 
                         <TextView
+                            android:id="@+id/lblSection"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/ten"
@@ -263,6 +272,7 @@
                                 android:src="@drawable/phone_icon" />
 
                             <TextView
+                                android:id="@+id/lblMobileNumber"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="20dp"
@@ -295,6 +305,7 @@
                                 android:src="@drawable/mail_icon" />
 
                             <TextView
+                                android:id="@+id/lblEmail"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/twenty"
@@ -347,6 +358,7 @@
                                 android:src="@drawable/blood_group" />
 
                             <TextView
+                                android:id="@+id/lblBloodGroup"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/twenty"
@@ -370,6 +382,7 @@
                                 android:src="@drawable/address_icon" />
 
                             <TextView
+                                android:id="@+id/lblStudentAddress"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/twenty"
@@ -455,6 +468,7 @@
                                     android:textSize="@dimen/thirteen_sp" />
 
                                 <TextView
+                                    android:id="@+id/lblFatherName"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="0.5"
@@ -487,6 +501,7 @@
                                     android:textSize="@dimen/thirteen_sp" />
 
                                 <TextView
+                                    android:id="@+id/lblMotherName"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="0.5"
@@ -519,6 +534,7 @@
                                     android:textSize="@dimen/thirteen_sp" />
 
                                 <TextView
+                                    android:id="@+id/lblFatherOccupation"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="0.5"
@@ -551,6 +567,7 @@
                                     android:textSize="@dimen/thirteen_sp" />
 
                                 <TextView
+                                    android:id="@+id/lblMotherOccupation"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="0.5"
@@ -583,6 +600,7 @@
                                     android:textSize="@dimen/thirteen_sp" />
 
                                 <TextView
+                                    android:id="@+id/lblSecondaryMobileNo"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="0.5"

@@ -3,6 +3,12 @@ package com.vs.schoolmessenger.Auth.MobilePasswordSignIn
 data class StaffDetails(
     val staff_id: String,
     val name: String,
+    val emp_id: String,
+    val mobile_no: String,
+    val address: String,
+    val email: String,
+    val blood_group: String,
+    val staff_profile: String,
     val school_id: String,
     val school_name: String,
     val school_name_regional: String,

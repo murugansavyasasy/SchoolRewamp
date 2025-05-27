@@ -17,7 +17,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbarLayout"
-        android:layout_marginTop="@dimen/fifteen"></androidx.recyclerview.widget.RecyclerView>
+        android:layout_marginTop="@dimen/fifteen">
+    </androidx.recyclerview.widget.RecyclerView>
 
 
     <RelativeLayout
@@ -57,7 +58,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rytSearch"
-        android:layout_marginTop="@dimen/five"></androidx.recyclerview.widget.RecyclerView>
+        android:layout_marginTop="@dimen/five">
+    </androidx.recyclerview.widget.RecyclerView>
 
 
 </RelativeLayout>

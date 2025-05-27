@@ -561,18 +561,23 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     if (userDetails!!.staff_details.size > 1) {
                         SchoolList::class.java
                     } else {
+
                         //go to ptm page
                         LessonPlan::class.java
+
                     }
+
                 }
+
             }
+
 
 
             Constant.M_VERY_IMPORTANT_INFO -> ImportantInfo::class.java
             Constant.M_FEEDBACK -> ImportantInfo::class.java
             Constant.M_SCHOOL_NEEDS -> SchoolNeeds::class.java
-
             else -> null
+
         }
 
         activityClass?.let {

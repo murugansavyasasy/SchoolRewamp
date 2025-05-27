@@ -121,16 +121,6 @@
 
         </LinearLayout>
 
-
-        <!--        <androidx.recyclerview.widget.RecyclerView-->
-        <!--            android:id="@+id/rcyImgPDF"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_marginTop="@dimen/ten"-->
-        <!--            android:layout_below="@+id/LblHWSubjectName"-->
-        <!--            android:layout_height="@dimen/one_fifty">-->
-
-        <!--        </androidx.recyclerview.widget.RecyclerView>-->
-
         <me.relex.circleindicator.CircleIndicator
             android:id="@+id/indicator"
             style="@style/IndicatorStyle"

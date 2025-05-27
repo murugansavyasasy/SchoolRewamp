@@ -27,9 +27,9 @@ import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
 
-import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesCountByResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.SendAbsenteeSMSResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportDataResponse
+import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteesResponse
 
 
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionReportResponse
@@ -376,10 +376,8 @@ interface ApiInterfaces {
 
 
     @GET(APIMethods.getabsenteescountbydate)
-    fun isGetAbsenteesCountByDate(
+    fun getabsenteescountbydate(
         @Header(APIKeyNames.Authorization) token: String
-    ): Call<AbsenteesCountByResponse?>
-
-
+    ): Call<AbsenteesResponse?>
 
 }

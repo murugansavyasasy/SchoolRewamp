@@ -1,20 +1,36 @@
 package com.vs.schoolmessenger.School.AbsenteesReport
 
+import android.util.Log
 import android.view.View
+import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeData
+import com.vs.schoolmessenger.School.AbsenteesReport.Model.ClassWise
+import com.vs.schoolmessenger.School.DailyCollection.DailyCollection
+import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionItem
+import com.vs.schoolmessenger.School.DailyCollection.DcfAdapter
+import com.vs.schoolmessenger.School.DailyCollection.DisplayItem
+import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.AbsenteesReportBinding
+import kotlin.collections.forEach
+import kotlin.text.isNullOrEmpty
 
-class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(),
-    View.OnClickListener {
 
-    private lateinit var adapter: AbsenteesReportAdapter
-    private lateinit var adapter1: AbsenteesReportDetailAdapter
+class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickListener, AbsenteesClickListener,
+    AbsenteesDetailClickListener {
 
-    private val absenteesList = mutableListOf<AbsenteesDateData>()
-    private val absenteesDetailList = mutableListOf<AbsenteesDetailData>()
+    private var isAccessToken: String? = null
+    private var appViewModel: App? = null
+    private var isStaffDetails: StaffDetails? = null
 
+    private lateinit var dateadapter: AbsenteesReportAdapter
+    private lateinit var classadapter: AbsenteesReportDetailAdapter
 
     override fun getViewBinding(): AbsenteesReportBinding {
         return AbsenteesReportBinding.inflate(layoutInflater)
@@ -23,72 +39,97 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(),
     override fun setupViews() {
         super.setupViews()
         setupToolbar()
-        binding.toolbarLayout.lblParentToolBar.text = resources.getText(R.string.absentees_report)
-        setupRecyclerView()
-        setupRecyclerView1()
-        loadHardcodedData()
-        loadHardcodedData1()
 
-    }
+        binding.toolbarLayout.lblParentToolBar.text = "Absentees Report"
+        isStaffDetails = SharedPreference.getStaffDetails(this)
+        binding.toolbarLayout.lblSchoolName.text = isStaffDetails?.school_name ?: ""
 
+        isAccessToken = isStaffDetails?.access_token
 
-    private fun setupRecyclerView() {
-        adapter = AbsenteesReportAdapter(absenteesList, object : AbsenteesClickListener {
-            override fun onItemClick(
-                data: AbsenteesDateData,
-                holder: AbsenteesReportAdapter.DataViewHolder
-            ) {
-                // Handle item click
-            }
-        }, this, false)
+        appViewModel = ViewModelProvider(this)[App::class.java]
+        appViewModel?.init()
 
         binding.rlaabsenteesreport.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
-        binding.rlaabsenteesreport.adapter = adapter
-    }
+        fetchAbsenteeData()
 
 
-    private fun setupRecyclerView1() {
-        adapter1 = AbsenteesReportDetailAdapter(absenteesDetailList, object : AbsenteesDetailClickListener {
-            override fun onItemClick(
-                data: AbsenteesDetailData,
-                holder: AbsenteesReportDetailAdapter.DataViewHolder
-            ) {
-
-
-                // Handle item click
+        appViewModel?.getabsenteescountbydate?.observe(this) { response ->
+            Constant.hideLoading(this@AbsenteesReport)
+            Log.d("response++", response.toString())
+            if (response == null) {
+                showErrorUI("Something went wrong. Please try again.")
+                return@observe
             }
-        }, this, false)
-        binding.rlaabsenteesreport2.layoutManager =
-            LinearLayoutManager(this)
-        binding.rlaabsenteesreport2.adapter = adapter1
+            if (response.status) {
+                isLoadDailyCollectionData(response.data)
+            } else {
+                showErrorUI(response.message ?: "No data available")
+            }
+        }
+    }
+
+    private fun fetchAbsenteeData() {
+        Constant.showLoading(this@AbsenteesReport)
+        appViewModel?.getabsenteescountbydate(
+            isAccessToken ?: "",
+            this
+        )
+    }
+
+    private fun showErrorUI(message: String) {
+        binding.nomessage.visibility = View.VISIBLE
+        binding.txtNoData.text = message
+        binding.txtNoData.visibility = View.VISIBLE
+        binding.rlaabsenteesreport.visibility = View.GONE
+        binding.rlaabsenteesreport2.visibility = View.GONE
+    }
+
+    private fun isLoadDailyCollectionData(data: List<AbsenteeData>?) {
+        if (data.isNullOrEmpty()) {
+            showErrorUI("No absentee data available")
+            return
+        }
+
+        binding.nomessage.visibility = View.GONE
+        binding.txtNoData.visibility = View.GONE
+        binding.rlaabsenteesreport.visibility = View.VISIBLE
+        binding.rlaabsenteesreport2.visibility = View.VISIBLE
+
+        dateadapter = AbsenteesReportAdapter(data, this, this, false)
+        binding.rlaabsenteesreport.adapter = dateadapter
+
+
+        dateadapter.setSelectedPosition(0)
+
+
+        onDateSelected(data[0])
+
+        Log.d("AbsenteesReport", "Class-wise size: ${data[0].class_wise.size}")
+    }
+
+    override fun onClick(v: View?) {
+
 
     }
 
+    override fun onDateSelected(data: AbsenteeData) {
 
-    private fun loadHardcodedData() {
-        absenteesList.apply {
-            add(AbsenteesDateData("March", "10", "Monday"))
-            add(AbsenteesDateData("March", "11", "Tuesday"))
-            add(AbsenteesDateData("March", "12", "Wednesday"))
-            add(AbsenteesDateData("March", "13", "Thursday"))
-            add(AbsenteesDateData("March", "14", "Friday"))
-        }
-        adapter.notifyDataSetChanged()
+        classadapter = AbsenteesReportDetailAdapter(data.class_wise, this, this, false, data.date)
+        binding.rlaabsenteesreport2.layoutManager = LinearLayoutManager(this)
+        binding.rlaabsenteesreport2.adapter = classadapter
+
     }
 
-    private fun loadHardcodedData1() {
-        absenteesDetailList.apply {
-            add(AbsenteesDetailData("10th Grade", "21 Jan 2024"))
-            add(AbsenteesDetailData("9th Grade", "20 Jan 2024"))
-        }
-        adapter1.notifyDataSetChanged()
+    override fun onItemClick(
+        data: AbsenteesDetailData,
+        holder: AbsenteesReportDetailAdapter.DataViewHolder
+    ) {
+
     }
 
-    override fun onClick(p0: View?) {
-        when (p0?.id) {
-            // Handle clicks if needed
-        }
+    override fun onClassSelected(data: ClassWise) {
+        Toast.makeText(this, "Class clicked: ${data.name}", Toast.LENGTH_SHORT).show()
     }
 }
