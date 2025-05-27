@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:fitsSystemWindows=
-        "true"
+    android:fitsSystemWindows="true"
     android:layout_marginTop="@dimen/five">
 
 
@@ -108,16 +107,6 @@
 
 
         </LinearLayout>
-
-
-        <!--        <androidx.recyclerview.widget.RecyclerView-->
-        <!--            android:id="@+id/rcyImgPDF"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_marginTop="@dimen/ten"-->
-        <!--            android:layout_below="@+id/LblHWSubjectName"-->
-        <!--            android:layout_height="@dimen/one_fifty">-->
-
-        <!--        </androidx.recyclerview.widget.RecyclerView>-->
 
         <me.relex.circleindicator.CircleIndicator
             android:id="@+id/indicator"
