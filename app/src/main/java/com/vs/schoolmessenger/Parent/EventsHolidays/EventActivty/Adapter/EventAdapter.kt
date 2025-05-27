@@ -84,6 +84,7 @@ class EventAdapter (
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
                 filteredList = results?.values as? List<EventDataClass> ?: listOf()
+                listener.onSearchResultEmpty(filteredList.isEmpty())
                 notifyDataSetChanged()
             }
         }

@@ -12,7 +12,9 @@ import android.widget.Filterable
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
+import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventClickListener
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.Holiday
+import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.HolidayClickListener
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 import java.text.SimpleDateFormat
@@ -22,7 +24,8 @@ import java.util.Locale
 class HolidayAdapter(
     private var itemList: List<Holiday>?,
     private var context: Context,
-    private var isLoading: Boolean
+    private var isLoading: Boolean,
+    private var listener: HolidayClickListener
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
 
     private val TYPE_SHIMMER = 0
@@ -52,7 +55,7 @@ class HolidayAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
-            holder.bind(filteredList!![position], position, this)
+            holder.bind(filteredList!![position], position, listener, this)
         }  else if (holder is ShimmerViewHolder) {
             holder.startShimmer()
         }
@@ -81,6 +84,7 @@ class HolidayAdapter(
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
                 filteredList = results?.values as? List<Holiday> ?: listOf()
+                listener.onSearchHolidayResultEmpty(filteredList.isEmpty())
                 notifyDataSetChanged()
             }
         }
@@ -99,6 +103,7 @@ class HolidayAdapter(
         fun bind(
             data: Holiday,
             position: Int,
+            listener: HolidayClickListener,
             adapter: HolidayAdapter
         ) {
             lblNameOfTheHoliDay.text = data.name

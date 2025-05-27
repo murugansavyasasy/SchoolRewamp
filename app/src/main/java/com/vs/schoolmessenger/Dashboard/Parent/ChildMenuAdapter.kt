@@ -88,7 +88,6 @@ class ChildMenuAdapter(
             is ShimmerViewHolder -> holder.startShimmer()
 
             is AdViewHolder -> {
-                // Only reached if showAd is true and position == 9
                 holder.bind(specialImages ?: emptyList(), context)
             }
         }
