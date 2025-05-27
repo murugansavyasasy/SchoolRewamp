@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@drawable/rect_shadow_light_gray"
     android:layout_height="wrap_content"
-    android:fitsSystemWindows=
-        "true"
+    android:fitsSystemWindows="true"
     android:layout_marginTop="@dimen/five">
 
 
@@ -21,36 +21,48 @@
 
     </ImageView>
 
-    <ImageView
-        android:id="@+id/imgNoticeBoardPin"
-        android:layout_width="@dimen/thirty"
-        android:layout_height="@dimen/thirty"
+    <FrameLayout
+        android:id="@+id/rytPin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="@dimen/five"
         android:layout_centerHorizontal="true"
-        android:elevation="@dimen/ten"
-        android:layout_marginBottom="-5dp"
-        android:src="@drawable/noticeboard_pin"
+        android:layout_gravity="center_horizontal"
         android:visibility="visible">
-    </ImageView>
 
-    <ImageView
-        android:id="@+id/imgBgPin"
-        android:layout_width="@dimen/fifteen"
-        android:layout_height="@dimen/fifteen"
-        android:elevation="@dimen/ten"
-        android:layout_marginEnd="-10dp"
-        android:layout_marginTop="-4dp"
-        android:layout_toStartOf="@+id/imgNoticeBoardPin"
-        android:layout_below="@+id/imgNoticeBoardPin"
-        android:src="@drawable/blackcircle"
-        android:visibility="visible">
-    </ImageView>
+        <View
+            android:layout_width="@dimen/fifteen"
+            android:layout_height="@dimen/fifteen"
+            android:layout_marginTop="@dimen/fifteen"
+            android:background="@drawable/circle_bg_black" />
+
+        <ImageView
+            android:id="@+id/imgPin"
+            android:layout_width="@dimen/twenty_five"
+            android:layout_height="@dimen/twenty_five"
+            android:layout_marginStart="@dimen/five"
+            android:src="@drawable/pin" />
+
+    </FrameLayout>
+    <TextView
+        android:id="@+id/lblTitleImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rytPin"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/five"
+        style="@style/CustomTextStylePoppinsBold"
+        android:text="Annual Day celebrations"
+        android:textColor="@color/black"
+        android:textSize="@dimen/thirteen_sp"/>
+
 
     <RelativeLayout
         android:id="@+id/rlaImageReport"
         android:layout_width="match_parent"
+        android:layout_below="@+id/lblTitleImage"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/ten"
-        android:background="@drawable/rect_shadow_light_gray"
         android:visibility="visible">
 
         <TextView
@@ -131,17 +143,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:id="@+id/lblTitleImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/lytRecyclerwview"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/fifteen"
-            style="@style/CustomTextStylePoppinsBold"
-            android:text="Annual Day celebrations"
-            android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"/>
+
 
 
 
@@ -149,9 +151,9 @@
             android:id="@+id/lblContentImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lblTitleImage"
+            android:layout_below="@+id/lytRecyclerwview"
             android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/ten"
+            android:layout_marginTop="@dimen/five"
             android:maxLines="3"
             android:text="If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress."
             android:textColor="@color/black"
