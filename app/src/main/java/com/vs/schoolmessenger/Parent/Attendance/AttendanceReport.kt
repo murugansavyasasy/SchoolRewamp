@@ -12,7 +12,7 @@ import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.AttendanceReportParentBinding
 
-class AttendanceReport : BaseActivity<AttendanceReportParentBinding>(), View.OnClickListener {
+class AttendanceReport : BaseActivity<AttendanceReportParentBinding>(), View.OnClickListener,AttendanceReportClickListener {
 
     override fun getViewBinding(): AttendanceReportParentBinding {
         return AttendanceReportParentBinding.inflate(layoutInflater)
@@ -57,6 +57,8 @@ class AttendanceReport : BaseActivity<AttendanceReportParentBinding>(), View.OnC
         })
 
 
+
+
         appViewModel!!.isChildAttendanceReport?.observe(this) { response ->
             if (response != null && response.status) {
                 val dataList = response.data
@@ -70,6 +72,7 @@ class AttendanceReport : BaseActivity<AttendanceReportParentBinding>(), View.OnC
                     attendanceReportList = dataList
                     mAdapter = AttendanceReportAdapter(
                         attendanceReportList,
+                        this,
                         this,
                         Constant.isShimmerViewDisable
                     )
@@ -90,6 +93,18 @@ class AttendanceReport : BaseActivity<AttendanceReportParentBinding>(), View.OnC
         }
     }
 
+    override fun onSearchResultEmpty(isEmpty: Boolean) {
+        if (isEmpty) {
+
+            binding.lytList.visibility = View.VISIBLE
+            binding.txtNoData.text = "No matching notices found"
+            binding.rcyAttendanceReport.visibility = View.GONE
+        } else {
+            binding.lytList.visibility = View.GONE
+            binding.rcyAttendanceReport.visibility = View.VISIBLE
+        }
+    }
+
     override fun onClick(view: View?) {
         when (view?.id) {
             R.id.imgBack -> onBackPressed()
@@ -99,6 +114,7 @@ class AttendanceReport : BaseActivity<AttendanceReportParentBinding>(), View.OnC
     private fun showShimmer() {
         val shimmerAdapter = AttendanceReportAdapter(
             null,
+            this,
             this,
             Constant.isShimmerViewShow
         )
