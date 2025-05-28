@@ -7,19 +7,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
-import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeData
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.ClassWise
-import com.vs.schoolmessenger.School.DailyCollection.DailyCollection
-import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionItem
-import com.vs.schoolmessenger.School.DailyCollection.DcfAdapter
-import com.vs.schoolmessenger.School.DailyCollection.DisplayItem
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.AbsenteesReportBinding
-import kotlin.collections.forEach
-import kotlin.text.isNullOrEmpty
 
 
 class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickListener, AbsenteesClickListener,
