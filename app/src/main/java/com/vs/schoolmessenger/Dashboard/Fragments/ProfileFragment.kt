@@ -50,6 +50,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     }
 
     private fun setupStaffDetails() {
+
         val profileUrl: String? = staffDetails!!.staff_profile
         val name: String? = staffDetails!!.name
         val school_name: String? = staffDetails!!.school_name
@@ -76,6 +77,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     }
 
     private fun setupStudentDetails() {
+
         val profileUrl: String? = childDetails!!.profile
         val name: String? = childDetails!!.name
         val school_name: String? = childDetails!!.school_name
