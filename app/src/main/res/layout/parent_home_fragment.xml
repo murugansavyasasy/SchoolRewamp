@@ -220,16 +220,23 @@
             android:background="@drawable/rounded_top_corners">
 
 
-            <RelativeLayout
-                android:id="@+id/rytSearch"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/thirty_five"
-                android:layout_marginStart="@dimen/twenty"
-                android:layout_marginTop="@dimen/twenty_five"
-                android:layout_marginEnd="@dimen/twenty"
-                android:padding="@dimen/five"
-                android:background="@drawable/rect_grey"
-                android:visibility="gone">
+    <RelativeLayout
+        android:layout_marginTop="@dimen/twenty"
+        android:layout_width="match_parent"
+        android:id="@+id/rytSearchBar"
+        android:visibility="gone"
+        android:layout_marginStart="@dimen/five"
+        android:layout_marginEnd="@dimen/five"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:id="@+id/rytSearch"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/thirty_five"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginEnd="@dimen/ten"
+            android:background="@drawable/rect_grey">
+
 
                 <ImageView
                     android:id="@+id/imgSearch"
@@ -250,13 +257,26 @@
                     android:textSize="@dimen/thirteen_sp" />
             </RelativeLayout>
 
+        <ImageView
+            android:background="@drawable/white_circle_bg"
+            android:id="@+id/imgSearchCancel"
+            android:padding="@dimen/five"
+            android:layout_width="@dimen/twenty_five"
+            android:layout_height="@dimen/twenty_five"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/eight"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/del_icon"/>
+
+    </RelativeLayout>
+
 
             <TextView
                 android:id="@+id/lblCategories"
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/rytSearch"
+                android:layout_below="@+id/rytSearchBar"
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/ten"
                 android:text="@string/categories"

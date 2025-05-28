@@ -87,6 +87,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         binding.imgNotification.setOnClickListener(this)
         binding.imgSearchClick.setOnClickListener(this)
         binding.changeroll.setOnClickListener(this)
+        binding.imgSearchCancel.setOnClickListener(this)
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
@@ -313,12 +314,18 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             R.id.imgSearchClick -> {
 
                 if (isSearchVisible) {
+                    binding.txtSearchMenu.setText("")
                     isSearchVisible = false
-                    binding.rytSearch.visibility = View.GONE
+                    binding.rytSearchBar.visibility = View.GONE
                 } else {
                     isSearchVisible = true
-                    binding.rytSearch.visibility = View.VISIBLE
+                    binding.rytSearchBar.visibility = View.VISIBLE
                 }
+            }
+            R.id.imgSearchCancel->{
+                binding.txtSearchMenu.setText("")
+                isSearchVisible = false
+                binding.rytSearchBar.visibility = View.GONE
             }
         }
     }

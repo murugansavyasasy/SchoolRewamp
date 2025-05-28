@@ -79,6 +79,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         binding.imgNotification.setOnClickListener(this)
         binding.imgSearchClick.setOnClickListener(this)
         binding.lblChangeRoll.setOnClickListener(this)
+        binding.imgSearchCancel.setOnClickListener(this)
         childDetails = SharedPreference.getChildDetails(requireActivity())
         userDetails = SharedPreference.getUserDetails(requireActivity())
 
@@ -270,12 +271,18 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
             R.id.imgSearchClick -> {
                 if (isSearchVisible) {
+                    binding.txtSearchMenu.setText("")
                     isSearchVisible = false
-                    binding.rytSearch.visibility = View.GONE
+                    binding.rytSearchBar.visibility = View.GONE
                 } else {
                     isSearchVisible = true
-                    binding.rytSearch.visibility = View.VISIBLE
+                    binding.rytSearchBar.visibility = View.VISIBLE
                 }
+            }
+            R.id.imgSearchCancel ->{
+                binding.txtSearchMenu.setText("")
+                isSearchVisible = false
+                binding.rytSearchBar.visibility = View.GONE
             }
         }
     }
