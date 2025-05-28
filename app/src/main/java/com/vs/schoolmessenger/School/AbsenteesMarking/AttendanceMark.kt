@@ -3,6 +3,8 @@ package com.vs.schoolmessenger.School.AbsenteesMarking
 import android.content.Intent
 import android.icu.util.Calendar
 import android.os.Build
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.TextView
@@ -23,11 +25,7 @@ import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingAdapter.AttendanceStudentReportAdapter
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.MarkAttendanceDataSending
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportData
-import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportDataResponse
-import com.vs.schoolmessenger.School.StudentReport.StudentReportAdapter
-import com.vs.schoolmessenger.School.StudentReport.StudentReportData
 import com.vs.schoolmessenger.Utils.Constant
-import com.vs.schoolmessenger.Utils.OnDateSelectedListener
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.AttendanceMarkBinding
 import java.text.SimpleDateFormat
@@ -38,7 +36,6 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
 
 
     lateinit var mAdapter: AttendanceStudentReportAdapter
-    private val selectedIds = mutableListOf<String>()
     private lateinit var studentsList: List<StudentAttendanceReportData>
     private var appViewModel: App? = null
     var isSection: List<Section>? = null
@@ -81,6 +78,7 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         binding.btnAbsent.setOnClickListener(this)
         binding.btnCreate.setOnClickListener(this)
         binding.btnHistory.setOnClickListener(this)
+        binding.imgSearch.setOnClickListener(this)
 //        binding.lblDate.setOnClickListener(this)
 //        binding.rlaStandardReport.setOnClickListener(this)
         binding.btnSelectPresent.setOnClickListener(this)
@@ -95,7 +93,6 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         binding.radioButtonHalfDay.setOnClickListener(this)
         binding.radioButtonFirstHalf.setOnClickListener(this)
         binding.radioButtonSecondHalf.setOnClickListener(this)
-
         updateActionButtonsState()
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
@@ -103,6 +100,20 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         binding.toolbarLayout.lblParentToolBar.text = getString(R.string.MarkAttendance)
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
+
+        binding.txtSearchBox.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                Log.d("TEXTCOMING", "Text changed to: ${s.toString()}")
+                filter(s.toString())
+            }
+        })
 
 
         appViewModel!!.isSendAbsenteeSMS?.observe(this) { response ->
@@ -154,13 +165,13 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
             Constant.hideLoading(this@AttendanceMark)
             if (response != null) {
                 if (response.status) {
+
                     isGetStandard = response.data
                     isGetStandard?.size?.let {
                         if (it > 0) {
                             binding.lnrClasses.visibility = View.VISIBLE
                             ClassID = isGetStandard!!.get(0).id
                             Log.d("isClassID", ClassID.toString())
-//                        isSectionId = isGetStandard!!.get(0).sections.get(0).id
                             SectionID = isGetStandard!!.get(0).sections.get(0).id
 
 
@@ -202,6 +213,47 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
 
         }
 
+    }
+
+    private fun filter(text: String) {
+        val filteredList = if (text.isBlank()) {
+            studentsList
+        } else {
+
+            val searchWords = text.trim().lowercase().split("\\s+".toRegex())
+
+            studentsList.filter { student ->
+                val fieldsToSearch = listOf(
+                    student.student_name.lowercase(),
+                    student.admission_no.lowercase(),
+                )
+
+                // Check if ALL search words are found in ANY of the fields(feildTosearch List i.e admission_no,student_name...etc)
+                searchWords.all { word ->
+                    fieldsToSearch.any { field ->
+                        field.contains(word)
+                    }
+                }
+            }
+
+        }
+
+        if (filteredList.isNotEmpty()) {
+            Log.d("Filter COming", filteredList.toString())
+            mAdapter.updateData(filteredList)
+            Log.d("Filter Came", filteredList.toString())
+            ShowData()
+
+        } else {
+            binding.rcyAttendanceReport.visibility = View.GONE
+            ErrorMessage(Constant.NO_DATA_FOUND)
+        }
+    }
+
+
+    fun ShowData() {
+        binding.rcyAttendanceReport.visibility = View.VISIBLE
+        binding.lytNoDataFound.visibility = View.GONE
     }
 
     private fun isGetStandardSection() {
@@ -278,6 +330,7 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onClick(p0: View?) {
         when (p0?.id) {
             R.id.imgBack -> {
@@ -285,9 +338,23 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
             }
 
             R.id.btnSelectPresent -> {
-                Constant.showLoading(this@AttendanceMark)
-                isMarkAttendance()
+
+                Constant.showSendConfirmationDialog(
+                    this,
+                    getString(R.string.confirmation),
+                    getString(R.string.permission_ok),
+                    getString(R.string.Cancel),
+                    "",
+                    getString(R.string.MarkAllPresent)
+                ) { confirmed ->
+                    if (confirmed) {
+                        Constant.showLoading(this)
+                        isMarkAttendance()
+                    }
+                }
             }
+
+
 
             R.id.rlaDayDatePicker -> {
                 Constant.showDatePicker(this) { selectedDate ->
@@ -371,6 +438,7 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
 
 
             R.id.btnCreate -> {
+                binding.txtSearchBox.text.clear()
                 isBackRoundChange(binding.btnCreate)
                 binding.rlaAttendanceMark.visibility = View.VISIBLE
                 binding.rlaAttendanceReport.visibility = View.GONE
@@ -384,6 +452,10 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
             }
 
             R.id.btnHistory -> {
+                binding.radioButtonFullDay.isChecked = false
+                binding.radioButtonHalfDay.isChecked = false
+                binding.radioButtonFirstHalf.isChecked = false
+                binding.radioButtonSecondHalf.isChecked = false
                 isBackRoundChange(binding.btnHistory)
                 binding.rlaAttendanceReport.visibility = View.VISIBLE
                 binding.lnrClasses1.visibility = View.GONE
@@ -413,6 +485,7 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                 ) { selectStandard, _ ->
                     updateStandardAndSection(selectStandard)
                     loadData()
+                    binding.txtSearchBox.text.clear()
                 }
             }
 
@@ -427,6 +500,8 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                         SectionID = selectedOption.second
                         isSectionName = selectedOption.first
                         loadData()
+                        binding.txtSearchBox.text.clear()
+
                     }
                 }
             }
@@ -442,6 +517,7 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                         "Clicked Academic Year: ID = ${selectedYear.id}, Year = ${selectedYear.year}, Current = ${selectedYear.current_academic_year}"
                     )
                     loadData()
+                    binding.txtSearchBox.text.clear()
                 }
             }
 

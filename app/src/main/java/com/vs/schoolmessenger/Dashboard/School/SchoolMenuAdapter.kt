@@ -18,7 +18,6 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
-
 class SchoolMenuAdapter(
     private var context: Context,
     private var listener: MenuClickListener,
@@ -64,9 +63,10 @@ class SchoolMenuAdapter(
 
     fun updateList(newList: List<MenuDetail>) {
         itemList = emptyList()
-        itemList=newList
+        itemList = newList
         notifyDataSetChanged()
     }
+
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val showAd = isAdItem?.isNotEmpty() == true && (itemList?.size ?: 0) > 9
 
@@ -99,7 +99,7 @@ class SchoolMenuAdapter(
         private val lblMenuName: TextView = itemView.findViewById(R.id.lblMenuName)
         private val rlaMenu: RelativeLayout = itemView.findViewById(R.id.rlaMenu)
 
-        fun bind(data: MenuDetail,position: Int, listener: MenuClickListener) {
+        fun bind(data: MenuDetail, position: Int, listener: MenuClickListener) {
             lblMenuName.text = data.name
 
             when (data.id) {
@@ -111,7 +111,7 @@ class SchoolMenuAdapter(
                     imgMenu.setImageResource(R.drawable.assignment_icon_school)
                 }
 
-                Constant.M_HOMEWORK-> {
+                Constant.M_HOMEWORK -> {
                     imgMenu.setImageResource(R.drawable.home_work_icon_school)
                 }
 
@@ -179,6 +179,7 @@ class SchoolMenuAdapter(
                 Constant.M_VERY_IMPORTANT_INFO -> {
                     imgMenu.setImageResource(R.drawable.very_important_icon)
                 }
+
                 Constant.M_MARK_YOUR_ATTENDANCE -> {
                     imgMenu.setImageResource(R.drawable.fee_pending_reports)
                 }
@@ -187,7 +188,6 @@ class SchoolMenuAdapter(
                     imgMenu.setImageResource(R.drawable.importent_info)
                 }
             }
-
 
             rlaMenu.setOnClickListener {
                 Constant.SELECTED_SCHOOL_MENU = data.id

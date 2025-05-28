@@ -445,6 +445,7 @@
                     android:id="@+id/isViewSignalCheck"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/point_one"
+                    android:visibility="gone"
                     android:layout_below="@+id/lnrSaveContact"
                     android:layout_marginStart="@dimen/thirty"
                     android:layout_marginTop="@dimen/ten"
@@ -462,6 +463,7 @@
                     android:layout_marginBottom="@dimen/fifteen"
                     android:layout_marginEnd="@dimen/thirty"
                     android:gravity="center"
+                    android:visibility="gone"
                     android:orientation="horizontal"
                     android:weightSum="1">
 

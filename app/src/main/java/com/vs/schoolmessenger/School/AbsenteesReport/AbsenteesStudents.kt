@@ -1,21 +1,33 @@
 package com.vs.schoolmessenger.School.AbsenteesReport
 
+import android.util.Log
 import android.view.View
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesReport
+import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeData
+import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeStudents.Student
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.AbsenteesReportBinding
 import com.vs.schoolmessenger.databinding.AbsenteesStudentlistBinding
 
 class AbsenteesStudents : BaseActivity<AbsenteesStudentlistBinding>(),
-    View.OnClickListener {
+    View.OnClickListener,AbsenteesHeaderClickListener {
 
-    private lateinit var adapter: AbsenteesStudentHeaderListAdapter
-    private lateinit var adapter1: AbsenteesStudentFooterListAdapter
 
-    private val absenteesheaderlist = mutableListOf<AbsenteesStudentHeaderData>()
-    private val absenteesfooterlist = mutableListOf<AbsenteesStudentFooterData>()
+    private var isAccessToken: String? = null
+    private var appViewModel: App? = null
+    private var isStaffDetails: StaffDetails? = null
+
+
+    private lateinit var absenteesstudentdateadapter: AbsenteesStudentHeaderListAdapter
+    private lateinit var absenteesstudentdatedetailadapter: AbsenteesStudentFooterListAdapter
+
 
 
     override fun getViewBinding(): AbsenteesStudentlistBinding {
@@ -25,81 +37,103 @@ class AbsenteesStudents : BaseActivity<AbsenteesStudentlistBinding>(),
     override fun setupViews() {
         super.setupViews()
         setupToolbar()
-        binding.toolbarLayout.lblParentToolBar.text = resources.getText(R.string.absentees_report)
-        setupRecyclerView()
-        loadHardcodedData()
-        setupRecyclerView1()
-        loadHardcodedData1()
-    }
 
+        binding.toolbarLayout.lblParentToolBar.text = "Absentees Report"
+        isStaffDetails = SharedPreference.getStaffDetails(this)
+        binding.toolbarLayout.lblSchoolName.text = isStaffDetails?.school_name ?: ""
 
-    private fun setupRecyclerView() {
-        adapter = AbsenteesStudentHeaderListAdapter(absenteesheaderlist, object : AbsenteesHeaderClickListener {
-            override fun onItemClick(
-                data: AbsenteesStudentHeaderData,
-                holder: AbsenteesStudentHeaderListAdapter.DataViewHolder
-            ) {
-///Handle Item Click
+        isAccessToken = isStaffDetails?.access_token
 
-            }
-        }, this, false)
+        appViewModel = ViewModelProvider(this)[App::class.java]
+        appViewModel?.init()
 
         binding.studendreport.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
-        binding.studendreport.adapter = adapter
-    }
 
-    private fun setupRecyclerView1() {
-        adapter1 = AbsenteesStudentFooterListAdapter(absenteesfooterlist, object : AbsenteesFooterClickListener {
-            override fun onItemClick(
-                data: AbsenteesStudentFooterData,
-                holder: AbsenteesStudentFooterListAdapter.DataViewHolder
-            ) {
-///Handle Item Click
+        fetchAbsenteeStudentData()
 
+
+        appViewModel?.getabsenteesstudentbydate?.observe(this) { response ->
+            Constant.hideLoading(this@AbsenteesStudents)
+            Log.d("response++", response.toString())
+            if (response == null) {
+                showErrorUI("Something went wrong. Please try again.")
+                return@observe
             }
-        }, this, false)
-        binding.studentlistreport.layoutManager =
-            LinearLayoutManager(this)
-        binding.studentlistreport.adapter = adapter1
-    }
-
-
-    private fun loadHardcodedData() {
-        absenteesheaderlist.apply {
-            add(AbsenteesStudentHeaderData("VII - A"))
-            add(AbsenteesStudentHeaderData("VII - B"))
-            add(AbsenteesStudentHeaderData("VII - C"))
-            add(AbsenteesStudentHeaderData("VII - D"))
-            add(AbsenteesStudentHeaderData("VII - E"))
-            add(AbsenteesStudentHeaderData("VII - F"))
-            add(AbsenteesStudentHeaderData("VII - G"))
-            add(AbsenteesStudentHeaderData("VII - H"))
-            add(AbsenteesStudentHeaderData("VII - I"))
-            add(AbsenteesStudentHeaderData("VII - J"))
-
+            if (response.status) {
+                isLoadDailyCollectionData(response.data)
+            } else {
+                showErrorUI(response.message ?: "No data available")
+            }
         }
-        adapter.notifyDataSetChanged()
+
+
     }
 
 
-    private fun loadHardcodedData1() {
-        absenteesfooterlist.apply {
-            add(AbsenteesStudentFooterData("John Doe","10th A","AD2413"))
-            add(AbsenteesStudentFooterData("Steve Smith","9th B","AD2412"))
-            add(AbsenteesStudentFooterData("Virat","8th C","AD2411"))
-            add(AbsenteesStudentFooterData("Dravid","12th D","AD2417"))
-            add(AbsenteesStudentFooterData("Micheal","5th E","AD2418"))
+    private fun fetchAbsenteeStudentData() {
+        Constant.showLoading(this@AbsenteesStudents)
+
+        val absent_on = Constant.isAbsenteesReportDataSending?.date ?: ""
+        val section_id = Constant.isAbsenteesReportDataSending?.section_wise?.firstOrNull()?.id ?: ""
+
+        Log.d("API_CALL", "Fetching for date: $absent_on, section: $section_id")
+
+        appViewModel?.getabsenteesstudentbydate(
+            isAccessToken ?: "",
+            absent_on,
+            section_id,
+            this
+        )
+    }
+
+
+
+
+    private fun isLoadDailyCollectionData(data: List<Student>?) {
+        if (data.isNullOrEmpty()) {
+            showErrorUI("No absentee data available")
+            return
         }
-        adapter1.notifyDataSetChanged()
+
+        Log.d("DataLoad", "Received ${data.size} students")
+
+        binding.nomessage.visibility = View.GONE
+        binding.txtNoData.visibility = View.GONE
+        binding.studendreport.visibility = View.VISIBLE
+
+        if (!::absenteesstudentdateadapter.isInitialized) {
+            absenteesstudentdateadapter = AbsenteesStudentHeaderListAdapter(data, this, this, false)
+            binding.studendreport.adapter = absenteesstudentdateadapter
+        } else {
+            absenteesstudentdateadapter.updateData(data)
+        }
+
+        absenteesstudentdateadapter.setSelectedPosition(0)
     }
+
+
+    private fun showErrorUI(message: String) {
+        binding.nomessage.visibility = View.VISIBLE
+        binding.txtNoData.text = message
+        binding.txtNoData.visibility = View.VISIBLE
+        binding.studendreport.visibility = View.GONE
+
+    }
+
 
 
     override fun onClick(p0: View?) {
 
         when (p0?.id) {
-            // Handle clicks if needed
+
         }
     }
+
+    override fun onHeaderItemClicked(position: Int, student: Student) {
+        Log.d("HeaderClick", "Clicked student at position $position: ${student.student_name}")
+    }
+
+
 }

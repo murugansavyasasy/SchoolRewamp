@@ -43,6 +43,7 @@ import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.MarkAttendanceDataSending
+import com.vs.schoolmessenger.School.AbsenteesReport.Model.ClassWise
 import com.vs.schoolmessenger.School.Communication.CommunicationSchool
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendingData
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceSendingData
@@ -147,6 +148,8 @@ object Constant {
     var isStaff = 6
 
     var school = "A"
+    var P="P"
+    var MarkAllPresent="Mark all as present!"
     var standard = "C"
     var section = "S"
     var group = "G"
@@ -170,6 +173,8 @@ object Constant {
     //MarkAttendanceDetails
 
     var isMarkAttendanceDataSending: MarkAttendanceDataSending? = null
+    var isAbsenteesReportDataSending: ClassWise? = null
+
     var secondHalf = "SH"
     var firstHalf = "FH"
     var fullDay = "F"
@@ -215,6 +220,8 @@ object Constant {
     var isDocument = "isDocument"
     var staff_ = "staff"
     var en = "en"
+    var Ok = "Ok"
+    var Cancel="Cancel"
     var ta = "ta"
     var th = "th"
     var hi = "hi"
@@ -685,6 +692,54 @@ object Constant {
             closePopup()
         }
     }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun showSendConfirmationDialog(
+        activity: Activity,
+        istitle:String,
+        Ok:String,
+        Cancel:String,
+        isSelectTarget: String,
+        isMessage: String,
+        onResult: (Boolean) -> Unit
+    ) {
+        val dialogView = LayoutInflater.from(activity).inflate(R.layout.alert_popup, null)
+        val builder = AlertDialog.Builder(activity)
+        builder.setView(dialogView)
+        val alertDialog = builder.create()
+
+        alertDialog.setCancelable(false)
+        alertDialog.setCanceledOnTouchOutside(false)
+        alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        alertDialog.show()
+
+        val okButton = dialogView.findViewById<TextView>(R.id.btnOk)
+        val lblalertTitle = dialogView.findViewById<TextView>(R.id.alertTitle)
+        val btnCancel = dialogView.findViewById<TextView>(R.id.btnCancel)
+        val alertMessage = dialogView.findViewById<TextView>(R.id.alertMessage)
+        val lblSelectTarget = dialogView.findViewById<TextView>(R.id.lblSelectTarget)
+
+        alertMessage.text = isMessage
+        okButton.text = Ok
+        lblalertTitle.text=istitle
+        btnCancel.text = Cancel
+        lblSelectTarget.text = isSelectTarget
+
+        if (isSelectTarget.isEmpty()) {
+            lblSelectTarget.visibility = View.GONE
+        }
+
+        okButton.setOnClickListener {
+            alertDialog.dismiss()
+            onResult(true)
+        }
+
+        btnCancel.setOnClickListener {
+            alertDialog.dismiss()
+            onResult(false)
+        }
+    }
+
 
     fun getAudioDurationInSeconds(url: String): Int {
         val retriever = MediaMetadataRetriever()

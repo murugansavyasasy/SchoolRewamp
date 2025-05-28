@@ -81,11 +81,6 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
             }
         }
 
-        appViewModel!!.isGetStudentList(
-            isAccessToken!!,
-            isSectionId!!.toString(), isAcademicYearId!!, this
-        )
-
 
         appViewModel!!.isStudentList!!.observe(this) { response ->
             if (response != null) {
@@ -93,6 +88,7 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
                     binding.lnrHeader.visibility = View.VISIBLE
                     binding.recycleStudents.visibility = View.VISIBLE
                     studentsList = response.data
+                    loadStudentAbsenteesList(studentsList!!)
 
                 } else {
                     binding.lnrHeader.visibility = View.GONE
@@ -115,12 +111,20 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
         mAdapter = AbsenteesMarkAdapter(null, this, Constant.isShimmerViewShow, this)
         binding.recycleStudents.layoutManager = LinearLayoutManager(this)
         binding.recycleStudents.adapter = mAdapter
-            mAdapter =
-                AbsenteesMarkAdapter(
-                    studentsList, this, Constant.isShimmerViewDisable, this
-                )
-            binding.recycleStudents.adapter = mAdapter
 
+        appViewModel!!.isGetStudentList(
+            isAccessToken!!,
+            isSectionId!!.toString(), isAcademicYearId!!, this
+        )
+
+    }
+
+    fun loadStudentAbsenteesList(studentsList: List<NameAndIds>){
+        mAdapter =
+            AbsenteesMarkAdapter(
+                studentsList, this, Constant.isShimmerViewDisable, this
+            )
+        binding.recycleStudents.adapter = mAdapter
     }
 
     override fun onPause() {

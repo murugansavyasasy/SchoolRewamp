@@ -12,19 +12,26 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.MarkAttendanceDataSending
+import com.vs.schoolmessenger.School.AbsenteesReport.Model.ClassWise
+import com.vs.schoolmessenger.School.AbsenteesReport.Model.SectionWise
+import com.vs.schoolmessenger.Utils.Constant
+import kotlin.String
 
 
-class AbsenteesReportDetailAdapter (
-
-    private var itemList: List<AbsenteesDetailData>?,
+class AbsenteesReportDetailAdapter(
+    private var itemList: List<ClassWise>?,
     private var listener: AbsenteesDetailClickListener,
     private var context: Context,
-    private var isLoading: Boolean
-) : RecyclerView.Adapter<RecyclerView.ViewHolder> () {
+    private var isLoading: Boolean,
+    private val selectedDate: String,
+    private var class_name: String? = null
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
 
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
-    private var selectedPosition = RecyclerView.NO_POSITION
+    private var selectedPosition = 0
 
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
@@ -38,22 +45,22 @@ class AbsenteesReportDetailAdapter (
         } else {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.absentees_detail_list, parent, false)
-            DataViewHolder(view, context) // Pass context to DataViewHolder
+            DataViewHolder(view, context)
         }
     }
 
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
-            // Bind actual data when loading is complete
-            holder.bind(itemList!![position], position, listener, this) // Pass adapter reference
+            holder.bind(itemList!![position], position, listener, this, selectedDate)
         }
     }
 
 
 
+
     override fun getItemCount(): Int {
-        return if (isLoading) 20 // Show shimmer items while loading
+        return if (isLoading) 20
         else itemList?.size ?: 0
     }
 
@@ -64,23 +71,36 @@ class AbsenteesReportDetailAdapter (
         private val grade_view: TextView = itemView.findViewById(R.id.grade_view)
         private val date_view: TextView = itemView.findViewById(R.id.date_view)
         private val relative_layout: RelativeLayout = itemView.findViewById(R.id.relative_layout)
+        private val badge_count: TextView = itemView.findViewById(R.id.badge_count)
 
         fun bind(
-            data: AbsenteesDetailData,
+            data: ClassWise,
             position: Int,
             listener: AbsenteesDetailClickListener,
-            adapter: AbsenteesReportDetailAdapter
+            adapter: AbsenteesReportDetailAdapter,
+            selectedDate: String
         ) {
-            grade_view.text = data.Grade
-            date_view.text = data.Date
+            grade_view.text = data.name
+            badge_count.text = data.total_absentees
+            date_view.text = selectedDate
 
-            // Set click listener for navigation
             relative_layout.setOnClickListener {
                 val intent = Intent(context, AbsenteesStudents::class.java).apply {
-
                 }
+                isSaveAbsenteesReportDetails(data,selectedDate)
                 context.startActivity(intent)
             }
+        }
+
+        private fun isSaveAbsenteesReportDetails(data: ClassWise, selectedDate: String) {
+            val saveAbsenteesReportData = ClassWise(
+                id = data.id,
+                name = data.name,
+                section_wise = data.section_wise,
+                total_absentees = data.total_absentees,
+                date = selectedDate
+            )
+            Constant.isAbsenteesReportDataSending = saveAbsenteesReportData
         }
 
 
@@ -88,7 +108,7 @@ class AbsenteesReportDetailAdapter (
             private val shimmerLayout: ShimmerFrameLayout =
                 itemView.findViewById(R.id.shimmer_view_container)
             init {
-                shimmerLayout.startShimmer() // Start shimmer effect
+                shimmerLayout.startShimmer()
             }
         }
     }
