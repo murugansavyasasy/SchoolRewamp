@@ -96,23 +96,8 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
 
 
 
-        val aaChartModel = AAChartModel()
-            .chartType(AAChartType.Bar)
-            .title("School Strength")
-            .titleStyle(AAStyle().color("#FFFFFF"))
-            .subtitle("Section Data")
-            .backgroundColor("#FFFFFF")
-            .dataLabelsEnabled(true)
-            .categories(arrayOf("A Sec", "B Sec", "C Sec", "D Sec", "E Sec", "F Sec"))
-            .series(
-                arrayOf(
-                    AASeriesElement()
-                        .name("Strength")
-                        .color("#53c0bd")
-                        .data(arrayOf(32.0, 47.0, 30.0, 55.0, 32.0, 47.0)),
-                )
-            )
-        binding.aaChartView.aa_drawChartWithChartModel(aaChartModel)
+
+
     }
 
     override fun onClick(p0: View?) {

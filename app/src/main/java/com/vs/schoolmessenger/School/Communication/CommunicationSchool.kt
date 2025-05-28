@@ -969,11 +969,19 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
 
             R.id.imgVoiceRecord -> {
+                mediaPlayer?.let { player ->
+                    if (player.isPlaying) {
+                        player.stop()
+                        player.reset()
+                    }
+                }
+
                 binding.lblStartDuration.text = "00:00"
                 stopAudioProgressUpdate()
                 Constant.isVoiceType = 1
                 startRecording()
             }
+
 
             R.id.lottieAnimationView -> {
                 stopAudioProgressUpdate()

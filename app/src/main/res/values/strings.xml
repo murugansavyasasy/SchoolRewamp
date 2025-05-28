@@ -180,7 +180,7 @@
     <string name="Complete">Complete</string>
     <string name="MarkAttendance">Mark Attendance</string>
     <string name="AttendanceReport">Attendance Report</string>
-    <string name="Selectallaspresent">Select all as present</string>
+    <string name="Selectallaspresent">Select all</string>
     <string name="OR">OR</string>
     <string name="MarkAbsentees">Mark Absentees</string>
     <string name="Admissionnoist">Admission no  : </string>
@@ -543,10 +543,6 @@
     <string name="lblCreate">Create</string>
     <string name="lblReset">Reset</string>
     <string name="Students_List">Students List</string>
-    <string name="MarkAllPresent">Mark All Present</string>
-
-
-
-
+    <string name="MarkAllPresent">Mark all as present!</string>
 
 </resources>

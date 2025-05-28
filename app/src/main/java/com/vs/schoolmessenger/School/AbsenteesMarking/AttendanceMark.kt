@@ -355,7 +355,6 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
             }
 
 
-
             R.id.rlaDayDatePicker -> {
                 Constant.showDatePicker(this) { selectedDate ->
                     Log.d("selectedDate", selectedDate)
