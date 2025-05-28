@@ -45,14 +45,18 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
     override fun setupViews() {
         super.setupViews()
         setupToolbar()
-        binding.imgBack.setOnClickListener(this)
+
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
         binding.AcademicYear.setOnClickListener(this)
-        binding.imgBack.setOnClickListener(this)
+
+        binding.toolbarLayout.lblParentToolBar.text = "School Strength"
+        binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
+        binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
+        binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
 
         appViewModel!!.isGetAcademicList?.observe(this) { response ->
             response?.data?.let { academicList ->
@@ -116,6 +120,7 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
             R.id.imgBack -> {
                 onBackPressed()
             }
+
             R.id.AcademicYear -> {
                 showAcademicDropdown(binding.AcademicYear, this, isAcademicYear) { selectedYear ->
                     binding.lblAcademicYear.text = selectedYear.year
@@ -158,4 +163,6 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
         binding.studentsData1.text = "Staff -${totalStaffStrength.toInt()}"
         binding.studentsData2.text = "Total -${total.toInt()}"
     }
+
+
 }

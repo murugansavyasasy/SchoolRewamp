@@ -46,6 +46,7 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
         binding.className.setOnClickListener(this)
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
         binding.toolbarLayout.lblParentToolBar.text = "Fee Pending"
+        binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
 
         appViewModel!!.isGetAcademicList?.observe(this) { response ->

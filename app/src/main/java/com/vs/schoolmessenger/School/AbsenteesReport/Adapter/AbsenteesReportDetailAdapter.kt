@@ -1,21 +1,20 @@
-package com.vs.schoolmessenger.School.AbsenteesReport
+package com.vs.schoolmessenger.School.AbsenteesReport.Adapter
 
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.MarkAttendanceDataSending
+import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesStudents
+import com.vs.schoolmessenger.School.AbsenteesReport.Adapter.AbsenteesReportAdapter.ShimmerViewHolder
+import com.vs.schoolmessenger.School.AbsenteesReport.Listener.AbsenteesDetailClickListener
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.ClassWise
-import com.vs.schoolmessenger.School.AbsenteesReport.Model.SectionWise
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.ShimmerUtil
 import kotlin.String
 
 
@@ -39,9 +38,8 @@ class AbsenteesReportDetailAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-            val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.shimmer_view_small_list, parent, false)
-            DataViewHolder.ShimmerViewHolder(view)
+            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.absentees_detail_list)
+            ShimmerViewHolder(shimmerView)
         } else {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.absentees_detail_list, parent, false)
@@ -53,8 +51,11 @@ class AbsenteesReportDetailAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
             holder.bind(itemList!![position], position, listener, this, selectedDate)
+        }  else if (holder is ShimmerViewHolder) {
+            holder.startShimmer()
         }
     }
+
 
 
 
@@ -105,10 +106,8 @@ class AbsenteesReportDetailAdapter(
 
 
         class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-            private val shimmerLayout: ShimmerFrameLayout =
-                itemView.findViewById(R.id.shimmer_view_container)
-            init {
-                shimmerLayout.startShimmer()
+            fun startShimmer() {
+                ShimmerUtil.startShimmer(itemView)
             }
         }
     }

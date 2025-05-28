@@ -8,14 +8,25 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.AbsenteesReport.Adapter.AbsenteesReportAdapter
+import com.vs.schoolmessenger.School.AbsenteesReport.Adapter.AbsenteesReportDetailAdapter
+import com.vs.schoolmessenger.School.AbsenteesReport.Listener.AbsenteesClickListener
+import com.vs.schoolmessenger.School.AbsenteesReport.Listener.AbsenteesDetailClickListener
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeData
+import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteesDetailData
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.ClassWise
+<<<<<<< HEAD
 import com.vs.schoolmessenger.Utils.Constant
+=======
+
+>>>>>>> 23ca25c29e04de5a6e413c5748d5cf044790087a
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.AbsenteesReportBinding
 
 
-class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickListener, AbsenteesClickListener,
+
+class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickListener,
+    AbsenteesClickListener,
     AbsenteesDetailClickListener {
 
     private var isAccessToken: String? = null
@@ -32,9 +43,10 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
     override fun setupViews() {
         super.setupViews()
         setupToolbar()
-
+        binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
         binding.toolbarLayout.lblParentToolBar.text = "Absentees Report"
         isStaffDetails = SharedPreference.getStaffDetails(this)
+        binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails?.school_name ?: ""
 
         isAccessToken = isStaffDetails?.access_token
@@ -49,7 +61,7 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
 
 
         appViewModel?.getabsenteescountbydate?.observe(this) { response ->
-            Constant.hideLoading(this@AbsenteesReport)
+
             Log.d("response++", response.toString())
             if (response == null) {
                 showErrorUI("Something went wrong. Please try again.")
@@ -64,7 +76,6 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
     }
 
     private fun fetchAbsenteeData() {
-        Constant.showLoading(this@AbsenteesReport)
         appViewModel?.getabsenteescountbydate(
             isAccessToken ?: "",
             this
@@ -102,17 +113,20 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
         Log.d("AbsenteesReport", "Class-wise size: ${data[0].class_wise.size}")
     }
 
+
     override fun onClick(v: View?) {
-
-
+        when (v?.id) {
+            R.id.imgBack -> {
+                onBackPressed()
+            }
+        }
     }
 
-    override fun onDateSelected(data: AbsenteeData) {
 
+    override fun onDateSelected(data: AbsenteeData) {
         classadapter = AbsenteesReportDetailAdapter(data.class_wise, this, this, false, data.date)
         binding.rlaabsenteesreport2.layoutManager = LinearLayoutManager(this)
         binding.rlaabsenteesreport2.adapter = classadapter
-
     }
 
     override fun onItemClick(

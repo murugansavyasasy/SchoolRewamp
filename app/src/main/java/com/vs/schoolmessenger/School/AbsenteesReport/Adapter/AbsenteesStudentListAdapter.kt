@@ -1,23 +1,24 @@
-package com.vs.schoolmessenger.School.AbsenteesReport
+package com.vs.schoolmessenger.School.AbsenteesReport.Adapter
 
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeStudents.Student
+import com.vs.schoolmessenger.School.AbsenteesReport.Adapter.AbsenteesStudentListAdapter.DataViewHolder.ShimmerViewHolder
+import com.vs.schoolmessenger.School.AbsenteesReport.Listener.AbsenteesStudentClickListener
+import com.vs.schoolmessenger.School.AbsenteesReport.Model.Student
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.ShimmerUtil
 
-class AbsenteesStudentHeaderListAdapter(
+class AbsenteesStudentListAdapter(
     private var itemList: List<Student>?,
-    private var listener: AbsenteesHeaderClickListener,
+    private var listener: AbsenteesStudentClickListener,
     private var context: Context,
     private var isLoading: Boolean
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -32,9 +33,8 @@ class AbsenteesStudentHeaderListAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-            val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.shimmer_view_small_list, parent, false)
-            DataViewHolder.ShimmerViewHolder(view)
+            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.absentees_student_headerlist)
+            ShimmerViewHolder(shimmerView)
         } else {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.absentees_student_headerlist, parent, false)
@@ -45,6 +45,8 @@ class AbsenteesStudentHeaderListAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder && itemList != null) {
             holder.bind(itemList!![position], position, listener, this)
+        }   else if (holder is ShimmerViewHolder) {
+            holder.startShimmer()
         }
     }
 
@@ -75,8 +77,8 @@ class AbsenteesStudentHeaderListAdapter(
         fun bind(
             data: Student,
             position: Int,
-            listener: AbsenteesHeaderClickListener,
-            adapter: AbsenteesStudentHeaderListAdapter
+            listener: AbsenteesStudentClickListener,
+            adapter: AbsenteesStudentListAdapter
         ) {
             Log.d("BindViewHolder", "Binding student at position $position: ${data.student_name}")
 
@@ -91,7 +93,7 @@ class AbsenteesStudentHeaderListAdapter(
             }
 
             if (adapter.selectedPosition == position) {
-                cardview.setBackgroundColor(ContextCompat.getColor(context, R.color.custom_blue))
+                cardview.setBackgroundColor(ContextCompat.getColor(context, R.color.holo_blue_light))
                 section_values.setTextColor(ContextCompat.getColor(context, R.color.black))
             } else {
                 cardview.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
@@ -105,13 +107,10 @@ class AbsenteesStudentHeaderListAdapter(
             }
         }
 
-        class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-            private val shimmerLayout: ShimmerFrameLayout =
-                itemView.findViewById(R.id.shimmer_view_container)
 
-            init {
-                shimmerLayout.startShimmer()
-                Log.d("ShimmerViewHolder", "Shimmer started")
+        class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+            fun startShimmer() {
+                ShimmerUtil.startShimmer(itemView)
             }
         }
     }
