@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
+import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.AbsenteesReport.Adapter.AbsenteesReportAdapter
 import com.vs.schoolmessenger.School.AbsenteesReport.Adapter.AbsenteesReportDetailAdapter
@@ -15,11 +16,7 @@ import com.vs.schoolmessenger.School.AbsenteesReport.Listener.AbsenteesDetailCli
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeData
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteesDetailData
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.ClassWise
-<<<<<<< HEAD
-import com.vs.schoolmessenger.Utils.Constant
-=======
 
->>>>>>> 23ca25c29e04de5a6e413c5748d5cf044790087a
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.AbsenteesReportBinding
 
