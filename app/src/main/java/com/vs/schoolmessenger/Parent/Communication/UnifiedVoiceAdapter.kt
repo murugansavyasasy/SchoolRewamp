@@ -1,5 +1,6 @@
 package com.vs.schoolmessenger.Parent.Communication
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.media.MediaPlayer
 import android.os.Handler
@@ -136,6 +137,7 @@ class UnifiedVoiceAdapter(
             }
         }
 
+        @SuppressLint("DefaultLocale")
         fun bind(
             data: VoiceData,
             position: Int,
@@ -145,7 +147,6 @@ class UnifiedVoiceAdapter(
             if (data.type.equals(Constant.VOICE)) {
                 rlaVoice.visibility = View.VISIBLE
                 rlaText.visibility = View.GONE
-
                 lblTitle.text = data.title ?: ""
                 lblDate.text = Constant.convertDateTimeFormat(data.date.toString())
                 lblTime.text = data.time ?: ""
@@ -252,6 +253,7 @@ class UnifiedVoiceAdapter(
                 }
                 setOnCompletionListener {
                     resetPlaybackState()
+                    lblStartDuration.text = "00:00"
                 }
             }
         }
@@ -292,15 +294,6 @@ class UnifiedVoiceAdapter(
             mediaPlayer = null
         }
 
-//        fun stopAudioPlayback() {
-//            if (::mediaPlayer!!.isInitialized) {
-//                if (mediaPlayer!!.isPlaying) mediaPlayer!!.stop()
-//                mediaPlayer!!.reset()
-//                mediaPlayer!!.release()
-//                resetPlaybackState()
-//            }
-//        }
-
         private fun resetPlaybackState() {
             stopAudioProgressUpdate()
             isPrepared = false
@@ -316,7 +309,6 @@ class UnifiedVoiceAdapter(
                 icon = R.drawable.pause_icon
             } else {
                 icon = R.drawable.video_play
-                lblStartDuration.text = "00:00"
             }
             imgVoicePlay.setImageDrawable(ContextCompat.getDrawable(context, icon))
         }
@@ -334,24 +326,6 @@ class UnifiedVoiceAdapter(
             val seconds = (milliseconds / 1000) % 60
             val minutes = (milliseconds / (1000 * 60)) % 60
             return String.format(Constant.dateForMate, minutes, seconds)
-        }
-
-        private fun getAudioDuration(audioUrl: String, callback: (Int) -> Unit) {
-            val tempMediaPlayer = MediaPlayer()
-            try {
-                tempMediaPlayer.setDataSource(audioUrl)
-                tempMediaPlayer.prepareAsync()
-                tempMediaPlayer.setOnPreparedListener {
-                    callback(tempMediaPlayer.duration)
-                    tempMediaPlayer.release()
-                }
-                tempMediaPlayer.setOnErrorListener { mp, _, _ ->
-                    mp.release()
-                    false
-                }
-            } catch (e: Exception) {
-                tempMediaPlayer.release()
-            }
         }
     }
 
