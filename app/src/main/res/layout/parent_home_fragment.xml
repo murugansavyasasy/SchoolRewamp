@@ -124,7 +124,7 @@
                 android:layout_marginTop="@dimen/thirty_five"
                 android:layout_marginEnd="@dimen/ten"
                 android:layout_toStartOf="@+id/rytImageNotification"
-                android:src="@drawable/ic_search_white_color"
+                android:src="@drawable/ic_search"
                 android:visibility="visible">
 
             </ImageView>
@@ -155,7 +155,7 @@
                     android:id="@+id/imgNotification"
                     android:layout_width="@dimen/thirty"
                     android:layout_height="@dimen/thirty"
-                    android:src="@drawable/ic_notification" />
+                    android:src="@drawable/notification_icon_white" />
 
             </FrameLayout>
         </RelativeLayout>

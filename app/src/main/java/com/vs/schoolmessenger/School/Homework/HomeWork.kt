@@ -45,7 +45,6 @@ import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
 import com.vs.schoolmessenger.Utils.OnDateSelectedListener
-import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.HomeWorkBinding
 import java.io.File
 import java.io.FileOutputStream
@@ -101,10 +100,10 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         binding.AcademicYear.setOnClickListener(this)
         binding.btnChooseRecipient.setOnClickListener(this)
         binding.Calendar.setOnClickListener(this)
-        isStaffDetails = SharedPreference.getStaffDetails(this)
-        isAccessToken = isStaffDetails!!.access_token
-        binding.toolbarLayout.lblParentToolBar.text = getString(R.string.HomeWork)
-        binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
+//        isStaffDetails = SharedPreference.getStaffDetails(this)
+//        isAccessToken = isStaffDetails!!.access_token
+//        binding.toolbarLayout.lblParentToolBar.text = getString(R.string.HomeWork)
+//        binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
 
         saveDrawableToCache(R.drawable.add_image)?.let {
             Constant.selectedFiles.add(

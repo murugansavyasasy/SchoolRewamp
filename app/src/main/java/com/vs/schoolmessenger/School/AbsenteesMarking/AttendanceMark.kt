@@ -1,15 +1,11 @@
 package com.vs.schoolmessenger.School.AbsenteesMarking
 
-import android.app.AlertDialog
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.icu.util.Calendar
 import android.os.Build
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
 import androidx.annotation.RequiresApi
@@ -25,18 +21,11 @@ import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SectionList.Section
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.Standard
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
-import com.vs.schoolmessenger.Repository.ApiCallRequest
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingAdapter.AttendanceStudentReportAdapter
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.MarkAttendanceDataSending
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportData
-import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportDataResponse
-import com.vs.schoolmessenger.School.StudentReport.StudentReportAdapter
-import com.vs.schoolmessenger.School.StudentReport.StudentReportData
 import com.vs.schoolmessenger.Utils.Constant
-import com.vs.schoolmessenger.Utils.Constant.M_HOMEWORK
-import com.vs.schoolmessenger.Utils.Constant.SELECTED_SCHOOL_MENU
-import com.vs.schoolmessenger.Utils.OnDateSelectedListener
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.AttendanceMarkBinding
 import java.text.SimpleDateFormat
@@ -115,9 +104,11 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         binding.txtSearchBox.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
             }
+
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
+
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 Log.d("TEXTCOMING", "Text changed to: ${s.toString()}")
                 filter(s.toString())
@@ -248,9 +239,9 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         }
 
         if (filteredList.isNotEmpty()) {
-            Log.d("Filter COming",filteredList.toString())
+            Log.d("Filter COming", filteredList.toString())
             mAdapter.updateData(filteredList)
-            Log.d("Filter Came",filteredList.toString())
+            Log.d("Filter Came", filteredList.toString())
             ShowData()
 
         } else {
@@ -258,7 +249,6 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
             ErrorMessage(Constant.NO_DATA_FOUND)
         }
     }
-
 
 
     fun ShowData() {
@@ -349,7 +339,14 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
 
             R.id.btnSelectPresent -> {
 
-                Constant.showSendConfirmationDialog(this, getString(R.string.confirmation),getString(R.string.permission_ok),getString(R.string.Cancel),"",getString(R.string.MarkAllPresent)) { confirmed ->
+                Constant.showSendConfirmationDialog(
+                    this,
+                    getString(R.string.confirmation),
+                    getString(R.string.permission_ok),
+                    getString(R.string.Cancel),
+                    "",
+                    getString(R.string.MarkAllPresent)
+                ) { confirmed ->
                     if (confirmed) {
                         Constant.showLoading(this)
                         isMarkAttendance()
@@ -670,4 +667,4 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
 
         return listOf(dayOnly, dayOfWeek, fullDate, slashDate)
     }
-    }
+}

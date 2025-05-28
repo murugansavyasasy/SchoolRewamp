@@ -1,6 +1,5 @@
 package com.vs.schoolmessenger.AlbumImage
 
-import android.content.Context
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
@@ -41,28 +40,45 @@ class FileGridAdapter(
         binding.videoIcon.visibility = View.GONE
         binding.progressBar.visibility = View.VISIBLE
 
-        val ext = getFileExtension(context, uri)
+        val mimeType = context.contentResolver.getType(uri)
+        val filePath = uri.toString()
 
-        println("LOADED FILE: $uri -> TYPE: $ext")
-
-        when (ext) {
-            "image" -> {
+        when {
+            mimeType?.startsWith("image/") == true -> {
                 Glide.with(context).load(uri).into(binding.imageView)
             }
-            "video" -> {
+            mimeType?.startsWith("video/") == true -> {
                 Glide.with(context).load(uri).into(binding.imageView)
                 binding.videoIcon.visibility = View.VISIBLE
             }
-            "audio" -> {
+            mimeType?.startsWith("audio/") == true -> {
                 binding.imageView.setImageResource(R.drawable.voice)
                 binding.audioIcon.visibility = View.VISIBLE
             }
-            "pdf" -> binding.imageView.setImageResource(R.drawable.pdf_icon)
-            "doc" -> binding.imageView.setImageResource(R.drawable.doc_icon)
-            "xls" -> binding.imageView.setImageResource(R.drawable.excel_icon)
-            "ppt" -> binding.imageView.setImageResource(R.drawable.ppt_icon)
-            "txt" -> binding.imageView.setImageResource(R.drawable.txt_icon)
-            else -> binding.imageView.setImageResource(R.drawable.doc_icon)
+            mimeType == "application/pdf" || filePath.endsWith(".pdf") -> {
+                binding.imageView.setImageResource(R.drawable.pdf_icon)
+            }
+            mimeType == "application/msword" ||
+                    mimeType == "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
+                    filePath.endsWith(".doc") || filePath.endsWith(".docx") -> {
+                binding.imageView.setImageResource(R.drawable.doc_icon)
+            }
+            mimeType == "application/vnd.ms-excel" ||
+                    mimeType == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
+                    filePath.endsWith(".xls") || filePath.endsWith(".xlsx") -> {
+                binding.imageView.setImageResource(R.drawable.excel_icon)
+            }
+            mimeType == "application/vnd.ms-powerpoint" ||
+                    mimeType == "application/vnd.openxmlformats-officedocument.presentationml.presentation" ||
+                    filePath.endsWith(".ppt") || filePath.endsWith(".pptx") -> {
+                binding.imageView.setImageResource(R.drawable.ppt_icon)
+            }
+            mimeType == "text/plain" || filePath.endsWith(".txt") -> {
+                binding.imageView.setImageResource(R.drawable.txt_icon)
+            }
+            else -> {
+                binding.imageView.setImageResource(R.drawable.doc_icon)
+            }
         }
 
         binding.progressBar.visibility = View.GONE
@@ -80,46 +96,6 @@ class FileGridAdapter(
             }
             notifyItemChanged(position)
             onSelectionChanged(selected)
-        }
-    }
-
-    private fun getFileExtension(context: Context, uri: Uri): String {
-        // Try MIME type first
-        val mimeType = context.contentResolver.getType(uri)
-        if (mimeType != null) {
-            return when {
-                mimeType.startsWith("image/") -> "image"
-                mimeType.startsWith("video/") -> "video"
-                mimeType.startsWith("audio/") -> "audio"
-                mimeType == "application/pdf" -> "pdf"
-                mimeType == "application/msword" ||
-                        mimeType == "application/vnd.openxmlformats-officedocument.wordprocessingml.document" -> "doc"
-                mimeType == "application/vnd.ms-excel" ||
-                        mimeType == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
-                        mimeType == "application/x-tika-msoffice" -> "xls"
-                mimeType == "application/vnd.ms-powerpoint" ||
-                        mimeType == "application/vnd.openxmlformats-officedocument.presentationml.presentation" -> "ppt"
-                mimeType == "text/plain" -> "txt"
-                else -> {
-                    println("UNKNOWN MIME: $mimeType")
-                    "unknown"
-                }
-            }
-        }
-        val path = uri.toString().lowercase()
-        return when {
-            path.endsWith(".pdf") -> "pdf"
-            path.endsWith(".doc") || path.endsWith(".docx") -> "doc"
-            path.endsWith(".xls") || path.endsWith(".xlsx") -> "xls"
-            path.endsWith(".ppt") || path.endsWith(".pptx") -> "ppt"
-            path.endsWith(".txt") -> "txt"
-            path.endsWith(".jpg") || path.endsWith(".jpeg") || path.endsWith(".png") -> "image"
-            path.endsWith(".mp4") || path.endsWith(".mkv") -> "video"
-            path.endsWith(".mp3") || path.endsWith(".wav") -> "audio"
-            else -> {
-                println("UNKNOWN EXT: $path")
-                "unknown"
-            }
         }
     }
 
