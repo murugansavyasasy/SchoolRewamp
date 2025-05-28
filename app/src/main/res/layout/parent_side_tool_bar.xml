@@ -35,12 +35,12 @@
 
         </TextView>
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/rlaStudentName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/ten">
 
             <TextView
@@ -48,6 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
+                android:layout_gravity="end"
                 style="@style/CustomTextStylePoppinsMedium"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp">
@@ -60,12 +61,13 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblStudentName"
                 android:text=""
+                android:layout_gravity="end"
                 android:textColor="@color/black"
                 style="@style/CustomTextStylePoppinsMedium"
                 android:textSize="@dimen/thirteen_sp">
 
             </TextView>
-        </RelativeLayout>
+        </LinearLayout>
     </RelativeLayout>
 
     <LinearLayout

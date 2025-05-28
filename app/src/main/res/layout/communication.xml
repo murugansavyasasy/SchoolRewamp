@@ -159,7 +159,7 @@
 
             <RadioButton
                 android:id="@+id/RdbAll"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/ten"
                 android:layout_weight="1"
@@ -172,7 +172,7 @@
 
             <RadioButton
                 android:id="@+id/RdbVoice"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/ten"
                 android:layout_weight="1"
@@ -184,7 +184,7 @@
 
             <RadioButton
                 android:id="@+id/RdbText"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/ten"
                 android:layout_weight="1"
@@ -280,14 +280,15 @@
         <TextView
             android:id="@+id/txtNoData"
             style="@style/CustomTextStylePoppinsBold"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="@dimen/fifteen_sp"
             android:layout_marginTop="@dimen/twenty"
             android:text="@string/no_list_found"
             android:textColor="@color/black"
-            android:textSize="@dimen/eighteen"
             android:visibility="gone" />
 
 
