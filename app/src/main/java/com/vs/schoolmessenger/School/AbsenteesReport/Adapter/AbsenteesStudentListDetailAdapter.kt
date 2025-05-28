@@ -1,0 +1,140 @@
+package com.vs.schoolmessenger.School.AbsenteesReport.Adapter
+
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.AbsenteesReport.Listener.AbsenteesStudentDetailClickListener
+import com.vs.schoolmessenger.School.AbsenteesReport.Model.Student
+import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.ShimmerUtil
+
+class AbsenteesStudentListDetailAdapter(
+    private var itemList: List<Student>?,
+    private val listener: AbsenteesStudentDetailClickListener,
+    private val context: Context,
+    private var isLoading: Boolean
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
+
+    private val TYPE_SHIMMER = 0
+    private val TYPE_DATA = 1
+
+    private var fullList: List<Student> = itemList ?: listOf()
+    private var filteredList: List<Student> = itemList ?: listOf()
+
+    init {
+        fullList = itemList ?: listOf()
+        filteredList = fullList
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return if (isLoading) TYPE_SHIMMER else TYPE_DATA
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return if (viewType == TYPE_SHIMMER) {
+            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.absentees_student_footerlist)
+            ShimmerViewHolder(shimmerView)
+        } else {
+            val view = LayoutInflater.from(parent.context)
+                .inflate(R.layout.absentees_student_footerlist, parent, false)
+            DataViewHolder(view, context)
+        }
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if (holder is DataViewHolder) {
+            holder.bind(filteredList[position], position, listener)
+        } else if (holder is ShimmerViewHolder) {
+            holder.startShimmer()
+        }
+    }
+
+    override fun getItemCount(): Int {
+        return if (isLoading) 5 else filteredList.size
+    }
+
+    fun updateData(newList: List<Student>) {
+        isLoading = false
+        itemList = newList
+        fullList = newList
+        filteredList = newList
+        notifyDataSetChanged()
+    }
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val query = constraint?.toString()?.lowercase()?.trim() ?: ""
+                val result = if (query.isEmpty()) {
+                    fullList
+                } else {
+                    fullList.filter {
+                        it.student_name.lowercase().contains(query) ||
+                                it.admission_no.lowercase().contains(query) ||
+                                it.primary_mobile.lowercase().contains(query) ||
+                                it.student_id.lowercase().contains(query) ||
+                                it.roll_no.lowercase().contains(query)
+                    }
+                }
+                return FilterResults().apply { values = result }
+            }
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                filteredList = results?.values as? List<Student> ?: listOf()
+                listener.onSearchResultEmpty(filteredList.isEmpty())
+                notifyDataSetChanged()
+            }
+        }
+    }
+
+    class DataViewHolder(itemView: View, private val context: Context) :
+        RecyclerView.ViewHolder(itemView) {
+
+        private val studentName: TextView = itemView.findViewById(R.id.student_name)
+        private val sectionValue: TextView = itemView.findViewById(R.id.section_value)
+        private val registerNumber: TextView = itemView.findViewById(R.id.register_number)
+        private val imageView: ImageView = itemView.findViewById(R.id.Image_value)
+        private val mobile_number: TextView = itemView.findViewById(R.id.mobile_number)
+        private  val linearlayout: LinearLayout = itemView.findViewById(R.id.linearlayout)
+
+        fun bind(data: Student, position: Int, listener: AbsenteesStudentDetailClickListener) {
+            studentName.text = data.student_name
+            registerNumber.text = data.admission_no
+            mobile_number.text = data.primary_mobile
+
+            Glide.with(context)
+                .load(data.photo_path)
+                .error(R.drawable.default_profile)
+                .into(imageView)
+
+            Constant.isAbsenteesReportDataSending?.let { report ->
+                val sectionNamesCombined = report.section_wise?.joinToString(", ") { it.name } ?: ""
+                sectionValue.text = "${report.name ?: ""} - $sectionNamesCombined"
+            }
+
+            itemView.setOnClickListener {
+                listener.onFooterItemClicked(position, data)
+            }
+
+            linearlayout.setOnClickListener {
+                Constant.redirectToDialPad(context, mobile_number.text.toString())
+            }
+
+        }
+    }
+
+    class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        fun startShimmer() {
+            ShimmerUtil.startShimmer(itemView)
+        }
+    }
+}

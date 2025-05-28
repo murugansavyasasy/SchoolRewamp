@@ -22,7 +22,7 @@ import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
 
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.SendAbsenteeSMSResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportDataResponse
-import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeStudents.AbsenteeStudentsResponse
+import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeStudentsResponse
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteesResponse
 
 import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse

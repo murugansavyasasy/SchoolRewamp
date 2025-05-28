@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.School.AbsenteesReport
+package com.vs.schoolmessenger.School.AbsenteesReport.Adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,15 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import java.text.SimpleDateFormat
-import java.util.*
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.AbsenteesReport.Listener.AbsenteesClickListener
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeData
-import com.vs.schoolmessenger.School.NoticeBoard.SchoolNoticeBoardAdapter.ShimmerViewHolder
 import com.vs.schoolmessenger.Utils.ShimmerUtil
-
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class AbsenteesReportAdapter(
     private var itemList: List<AbsenteeData>,
@@ -22,7 +22,7 @@ class AbsenteesReportAdapter(
     private var context: Context,
     private var isLoading: Boolean,
 
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1

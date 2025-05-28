@@ -9,18 +9,18 @@
 
     <TextView
         android:id="@+id/badge_count"
-        android:layout_width="@dimen/twenty_four"
-        android:layout_height="@dimen/twenty_four"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="@dimen/eight"
         android:background="@drawable/circle_background"
         android:elevation="@dimen/ten"
-        android:fontFamily="@font/poppins_regular"
+       style="@style/CustomTextStylePoppinsBold"
         android:gravity="center"
         android:text=""
         android:textColor="@color/black"
         android:textSize="@dimen/twele_sp"
-        android:textStyle="normal" />
+        />
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -53,12 +53,12 @@
                     android:layout_marginStart="@dimen/ten"
                     android:layout_marginTop="@dimen/five"
                     android:layout_marginEnd="@dimen/thirty"
-                    android:fontFamily="@font/futura_regular"
+                 style="@style/CustomTextStylePoppinsBold"
                     android:gravity="center"
                     android:text="10 th Grade"
                     android:textColor="@color/black"
                     android:textSize="@dimen/seventeen_sp"
-                    android:textStyle="bold" />
+                   />
 
                 <TextView
                     android:id="@+id/date_view"
@@ -67,12 +67,12 @@
                     android:layout_marginStart="@dimen/ten"
                     android:layout_marginTop="@dimen/five"
                     android:layout_marginEnd="@dimen/thirty"
-                    android:fontFamily="@font/futura_regular"
+                   style="@style/CustomTextStylePoppinsBold"
                     android:gravity="center"
                     android:text="21 Jan 2025"
                     android:textColor="@color/black"
                     android:textSize="@dimen/seventeen_sp"
-                    android:textStyle="bold" />
+                    />
             </LinearLayout>
 
 

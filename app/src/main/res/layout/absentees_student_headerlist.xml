@@ -29,23 +29,23 @@
                 android:layout_marginEnd="@dimen/two"
                 android:background="@drawable/circle_background1"
                 android:elevation="@dimen/ten"
-                android:fontFamily="@font/poppins_bold"
+               style="@style/CustomTextStylePoppinsBold"
                 android:gravity="center"
                 android:text="0"
                 android:textColor="@color/grey"
                 android:textSize="@dimen/twele_sp"
-                android:textStyle="bold" />
+           />
 
             <TextView
                 android:id="@+id/section_values"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:fontFamily="@font/futura_regular"
+                 style="@style/CustomTextStylePoppinsBold"
                 android:text="VII - A"
                 android:textColor="@color/grey"
                 android:textSize="@dimen/fifteen_sp"
-                android:textStyle="bold" />
+          />
 
         </RelativeLayout>
 

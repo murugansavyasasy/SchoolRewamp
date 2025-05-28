@@ -11,32 +11,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:id="@+id/rytHeader"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/primary_light"
-            android:padding="@dimen/ten">
-
-            <ImageView
-                android:id="@+id/imgBack"
-                android:layout_width="@dimen/thirty"
-                android:layout_height="@dimen/thirty"
-                android:layout_marginStart="@dimen/ten"
-                android:layout_marginTop="@dimen/ten"
-                android:layout_marginEnd="@dimen/ten"
-                android:layout_marginBottom="@dimen/ten"
-                android:src="@drawable/left_arrow"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/ten"
-                android:text="@string/lblSchoolStrength"
-                android:textColor="@color/black"
-                android:textSize="@dimen/twenty_sp"
-                android:textStyle="bold"/>
-        </LinearLayout>
+        <include
+            android:id="@+id/toolbarLayout"
+            layout="@layout/school_side_tool_bar" />
 
 
         <LinearLayout
@@ -45,7 +22,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/gray_bg_radius"
             android:orientation="horizontal"
-            android:layout_below="@+id/rytHeader"
+            android:layout_below="@+id/toolbarLayout"
             android:padding="@dimen/ten"
             android:layout_marginTop="10dp"
             android:layout_marginStart="10dp"
