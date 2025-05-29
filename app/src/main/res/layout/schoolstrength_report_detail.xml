@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:background="@drawable/bg_card"
+    android:layout_margin="8dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:id="@+id/sectionname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="A"
+            android:textSize="13sp"
+            style="@style/CustomTextStylePoppinsBold"
+            android:textColor="#000000"/>
+
+
+        <TextView
+            android:id="@+id/totalcount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/bg_pill"
+            android:text="0 Students"
+            android:textSize="13sp"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="4dp"
+            android:textColor="#000000"
+            style="@style/CustomTextStylePoppinsBold"/>
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/boyscount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="👦 Boys : 0"
+        android:textColor="@color/black"
+        android:layout_marginTop="8dp"
+        style="@style/CustomTextStylePoppinsMedium"
+        android:textSize="13sp"/>
+
+
+    <TextView
+        android:id="@+id/girlscount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="👧 Girls: 0"
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"
+        style="@style/CustomTextStylePoppinsMedium"
+        android:textSize="13sp"/>
+
+
+    <TextView
+        android:id="@+id/otherscount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="🧑 Others: 0"
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"
+        style="@style/CustomTextStylePoppinsMedium"
+        android:textSize="13sp"/>
+
+</LinearLayout>

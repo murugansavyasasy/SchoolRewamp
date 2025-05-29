@@ -1,31 +1,21 @@
 package com.vs.schoolmessenger.School.SchoolStrength
 
-import android.graphics.Color
+
 import android.util.Log
 import android.view.View
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.github.aachartmodel.aainfographics.aachartcreator.AAChartModel
-import com.github.aachartmodel.aainfographics.aachartcreator.AAChartType
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.Utils.CustomGraphView
-import com.github.aachartmodel.aainfographics.aachartcreator.AASeriesElement
-import com.github.aachartmodel.aainfographics.aaoptionsmodel.AAStyle
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.Repository.App
-import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionItem
-import com.vs.schoolmessenger.School.DailyCollection.DcfAdapter
-import com.vs.schoolmessenger.School.DailyCollection.DisplayItem
-import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportAdapter
+import com.vs.schoolmessenger.School.SchoolStrength.Adapter.SchoolStrengthAdapter
+import com.vs.schoolmessenger.School.SchoolStrength.Adapter.SchoolStrengthDetailAdapter
+import com.vs.schoolmessenger.School.SchoolStrength.Model.SchoolData
 import com.vs.schoolmessenger.Utils.SharedPreference
-
 import com.vs.schoolmessenger.databinding.SchoolStrengthBinding
-import kotlin.collections.forEach
-import kotlin.text.isNullOrEmpty
+
 
 
 class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListener {
@@ -42,10 +32,12 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
     private var isAccessToken: String? = null
     private var isStaffDetails: StaffDetails? = null
 
+    private lateinit var schoolstrengthadapter: SchoolStrengthAdapter
+    private lateinit var schoolstrengthdetailadapter: SchoolStrengthDetailAdapter
+
     override fun setupViews() {
         super.setupViews()
         setupToolbar()
-
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
@@ -57,6 +49,10 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
+
+        // Setup LayoutManager only
+        binding.rlaabsenteesreport2.layoutManager = LinearLayoutManager(this)
+
 
         appViewModel!!.isGetAcademicList?.observe(this) { response ->
             response?.data?.let { academicList ->
@@ -72,11 +68,9 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
 
                 Log.d("DefaultAcademicYear", "ID: $isAcademicYearId, Year: ${defaultYear.year}")
 
-
                 isGetSchoolStrength()
             }
         }
-
 
         appViewModel?.isGetSchoolStrengthReport?.observe(this) { response ->
             Log.d("response++", response.toString())
@@ -84,27 +78,21 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
             if (response != null && response.status) {
                 isLoadSchoolStrengthData(response.data)
             } else {
-                // Handle empty/error state if needed
-                // binding.nomessage.visibility = View.VISIBLE
-                // binding.txtNoData.visibility = View.VISIBLE
-                // binding.totalsummary1.visibility = View.GONE
+
+                 binding.nomessage.visibility = View.VISIBLE
+                 binding.txtNoData.visibility = View.VISIBLE
+                 binding.AcademicYear.visibility = View.GONE
+                binding.rlaPieChartCount.visibility = View.GONE
+                binding.rlaabsenteesreport2.visibility = View.GONE
             }
         }
 
-
         isGetAcademicYear()
-
-
-
-
-
     }
 
     override fun onClick(p0: View?) {
         when (p0?.id) {
-            R.id.imgBack -> {
-                onBackPressed()
-            }
+            R.id.imgBack -> onBackPressed()
 
             R.id.AcademicYear -> {
                 showAcademicDropdown(binding.AcademicYear, this, isAcademicYear) { selectedYear ->
@@ -112,10 +100,7 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
                     isAcademicYearId = selectedYear.id
                     isCurrentAcademicYear = selectedYear.current_academic_year
 
-                    Log.d(
-                        "DropdownMenu",
-                        "Clicked Academic Year: ID = ${selectedYear.id}, Year = ${selectedYear.year}, Current = ${selectedYear.current_academic_year}"
-                    )
+                    Log.d("DropdownMenu", "Clicked Academic Year: ID = ${selectedYear.id}, Year = ${selectedYear.year}, Current = ${selectedYear.current_academic_year}")
                     isGetSchoolStrength()
                 }
             }
@@ -138,16 +123,20 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
         val total = totalStudentStrength + totalStaffStrength
 
         val chartData = listOf(
-            Pair((totalStudentStrength / total) * 100, getColor(R.color.light_green_bg1)), // Students
-            Pair((totalStaffStrength / total) * 100, getColor(R.color.red))                // Staff
+            Pair((totalStudentStrength / total) * 100, getColor(R.color.light_green_bg1)),
+            Pair((totalStaffStrength / total) * 100, getColor(R.color.red))
         )
-
         binding.customPieChart.setData(chartData)
 
-        binding.studentsData.text = "Students -${totalStudentStrength.toInt()}"
-        binding.studentsData1.text = "Staff -${totalStaffStrength.toInt()}"
-        binding.studentsData2.text = "Total -${total.toInt()}"
+        binding.studentsData.text = "Students - ${totalStudentStrength.toInt()}"
+        binding.studentsData1.text = "Staff - ${totalStaffStrength.toInt()}"
+        binding.studentsData2.text = "Total - ${total.toInt()}"
+
+        val standardList = data.flatMap { it.standards ?: emptyList() }
+        Log.d("StandardList", "Size: ${standardList.size} | Data: $standardList")
+
+
+        schoolstrengthadapter = SchoolStrengthAdapter(standardList, this, false)
+        binding.rlaabsenteesreport2.adapter = schoolstrengthadapter
     }
-
-
 }

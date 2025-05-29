@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true"
     android:fillViewport="true"
     android:background="@color/white">
@@ -157,65 +156,45 @@
 
         </LinearLayout>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardview"
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rlaabsenteesreport2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_marginEnd="@dimen/ten"
-            android:layout_marginTop="8dp"
             android:layout_below="@+id/rlaPieChartCount"
-            card_view:cardCornerRadius="8dp"
-            card_view:cardElevation="4dp">
-
-            <LinearLayout
-                android:id="@+id/linear_layout2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@drawable/rect_light_blue1">
-
-                <TextView
-                    android:id="@+id/header1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="9th Standard"
-                    android:textSize="@dimen/fourteen_sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:fontFamily="@font/poppins_bold"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="@dimen/ten"
-                    android:layout_marginStart="@dimen/ten"
-                    android:layout_weight="1"/>
-
-                <ImageView
-                    android:id="@+id/header2"
-                    android:layout_width="@dimen/twenty_three"
-                    android:layout_height="@dimen/nineteen"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginTop="@dimen/five"
-                    android:layout_marginEnd="@dimen/ten"
-                    android:layout_marginBottom="@dimen/five"
-                    android:src="@drawable/downarrow"/>
-            </LinearLayout>
-
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rlaabsenteesreport2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/linear_layout2"
-                android:layout_marginTop="50dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp">
-            </androidx.recyclerview.widget.RecyclerView>
-        </androidx.cardview.widget.CardView>
-
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="10dp">
+        </androidx.recyclerview.widget.RecyclerView>
 
 
 
     </RelativeLayout>
+    <ImageView
+        android:id="@+id/nomessage"
+        android:layout_width="@dimen/two_fifty"
+        android:layout_height="@dimen/two_fifty"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/twenty"
+        android:src="@drawable/nomessages"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:visibility="gone" />
 
-</ScrollView>
+    <TextView
+        android:id="@+id/txtNoData"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/twenty"
+        android:text="@string/no_list_found"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+      android:layout_below="@+id/nomessage"
+        android:visibility="gone" />
+</RelativeLayout>

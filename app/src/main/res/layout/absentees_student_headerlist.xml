@@ -22,8 +22,8 @@
 
             <TextView
                 android:id="@+id/badge_count"
-                android:layout_width="@dimen/twenty_two"
-                android:layout_height="@dimen/twenty_two"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="@dimen/two"
                 android:layout_marginEnd="@dimen/two"
@@ -32,7 +32,7 @@
                style="@style/CustomTextStylePoppinsBold"
                 android:gravity="center"
                 android:text="0"
-                android:textColor="@color/grey"
+                android:textColor="@color/black"
                 android:textSize="@dimen/twele_sp"
            />
 
