@@ -7,6 +7,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -31,6 +32,7 @@ class AlbumSelectActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = AlbumSelectActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.toolbarLayout.rytFilePicking.visibility = View.VISIBLE
 
         adapter = FileGridAdapter(limit = 5) { selectedUris ->
             // Print selected URIs

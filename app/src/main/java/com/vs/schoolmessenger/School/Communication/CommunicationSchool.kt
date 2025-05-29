@@ -834,24 +834,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
 
             R.id.imgClose -> {
-                binding.SwitchEmergencyVoice.setChecked(false)
-                binding.lblDurationOfVoice.text = "00:00 / 03:00"
-                binding.rlaSeekBarAndTitle.visibility = View.GONE
-                binding.rlaTitle.visibility = View.GONE
-                Constant.selectedFiles.clear()
-                binding.rlaAddLocalFile.visibility = View.VISIBLE
-//                binding.imgVoiceRecord.visibility = View.VISIBLE
-                binding.rytVoiceRecord.visibility = View.VISIBLE
-                binding.lblDurationOfVoice.visibility = View.VISIBLE
-
-                mediaPlayer?.let {
-                    if (it.isPlaying) {
-                        it.stop()
-                    }
-                }
-
-
-                Constant.selectedFiles.clear()
+                isClearData()
             }
 
             R.id.rlaSendText -> {
@@ -1111,6 +1094,26 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         }
     }
 
+    fun isClearData() {
+        binding.SwitchEmergencyVoice.setChecked(false)
+        binding.lblDurationOfVoice.text = "00:00 / 03:00"
+        binding.rlaSeekBarAndTitle.visibility = View.GONE
+        binding.rlaTitle.visibility = View.GONE
+        Constant.selectedFiles.clear()
+        binding.rlaAddLocalFile.visibility = View.VISIBLE
+//                binding.imgVoiceRecord.visibility = View.VISIBLE
+        binding.rytVoiceRecord.visibility = View.VISIBLE
+        binding.lblDurationOfVoice.visibility = View.VISIBLE
+
+        mediaPlayer?.let {
+            if (it.isPlaying) {
+                it.stop()
+            }
+        }
+
+        Constant.selectedFiles.clear()
+    }
+
     private fun infosymbolload(): PopupWindow {
         val popupView = layoutInflater.inflate(R.layout.custom_tooltip, null)
 
@@ -1184,6 +1187,12 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         imgTypeCommunication: ImageView,
         lblTypeCommunication: TextView
     ) {
+
+        if (isRecording) {
+            stopRecording()
+        }
+        isClearData()
+
         binding.lnrHistoryList.visibility = View.VISIBLE
         binding.rytNORecordFound.visibility = View.GONE
         binding.rlaVoiceMessage.background = null
@@ -1244,8 +1253,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     }
 
     private fun isGetVoiceHistory() {
-
-        Log.d("isVoiceHistory", "isVoiceHistory")
         binding.rcyHistoryDataVoiceAndText.visibility = View.VISIBLE
         mAdapter = VoiceHistoryAdapter(null, this, this, Constant.isShimmerViewShow)
         binding.rcyHistoryDataVoiceAndText.layoutManager = LinearLayoutManager(this)
@@ -1340,8 +1347,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     setHistoryData(data)
                 }
             }
-
-
         } catch (e: Exception) {
             e.printStackTrace()
             showDurationLimitDialog("Failed to load audio duration")
