@@ -544,5 +544,6 @@
     <string name="lblReset">Reset</string>
     <string name="Students_List">Students List</string>
     <string name="MarkAllPresent">Mark all as present!</string>
+    <string name="done">Done</string>
 
 </resources>

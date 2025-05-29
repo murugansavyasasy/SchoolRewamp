@@ -1111,7 +1111,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
         }
 
-
         Constant.selectedFiles.clear()
     }
 

@@ -1,6 +1,8 @@
 package com.vs.schoolmessenger.AlbumImage
 
+import android.content.Context
 import android.net.Uri
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,6 +41,9 @@ class FileGridAdapter(
         binding.audioIcon.visibility = View.GONE
         binding.videoIcon.visibility = View.GONE
         binding.progressBar.visibility = View.VISIBLE
+
+        val fileName = getFileName(context, uri)
+        binding.fileName.text = fileName
 
         val mimeType = context.contentResolver.getType(uri)
         val filePath = uri.toString()
@@ -97,6 +102,20 @@ class FileGridAdapter(
             notifyItemChanged(position)
             onSelectionChanged(selected)
         }
+    }
+
+    private fun getFileName(context: Context, uri: Uri): String {
+        var name: String? = null
+        val cursor = context.contentResolver.query(uri, null, null, null, null)
+        cursor?.use {
+            if (it.moveToFirst()) {
+                val index = it.getColumnIndex(MediaStore.MediaColumns.DISPLAY_NAME)
+                if (index != -1) {
+                    name = it.getString(index)
+                }
+            }
+        }
+        return name ?: uri.lastPathSegment ?: "Unknown"
     }
 
     override fun getItemCount(): Int = items.size

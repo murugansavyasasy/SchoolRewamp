@@ -344,10 +344,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
             binding.edtDescription.requestFocus()
             return
         }
-//        if (Constant.selectedFiles.size == 1) {
-//            Toast.makeText(this, "Choose atleast one file", Toast.LENGTH_SHORT).show()
-//            return
-//        }
+
         val sectionDetails = SectionDetails(title, description)
         Constant.selectedFiles.removeAt(0)
         Log.d("Constant.selectedFiles", Constant.selectedFiles.toString())
@@ -408,62 +405,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
             setWindowAnimations(R.style.PopupAnimation)
         }
         dialog.show()
-    }
-
-
-//    private fun showBottomDialog() {
-//        val dialog = Dialog(this)
-//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-//        dialog.setContentView(R.layout.filepick_bottom_sheet)
-//        val rlaGallery = dialog.findViewById<RelativeLayout>(R.id.rlaGallery)
-//        val rlaCamera = dialog.findViewById<RelativeLayout>(R.id.rlaCamera)
-//        val rlaDocument = dialog.findViewById<RelativeLayout>(R.id.rlaVideo)
-//        val rlaVoice = dialog.findViewById<RelativeLayout>(R.id.rlaVoice)
-//        val rlaVideoPick = dialog.findViewById<RelativeLayout>(R.id.rlaVideoPick)
-//
-//        rlaGallery.setOnClickListener {
-//            onImageButtonClick()
-//            dialog.dismiss()
-//        }
-//
-//
-//        rlaCamera.setOnClickListener {
-//            checkCameraPermissionAndOpenCamera()
-//            dialog.dismiss()
-//        }
-//        rlaDocument.setOnClickListener {
-//            onPdfButtonClick()
-//            dialog.dismiss()
-//        }
-//
-//        dialog.window?.apply {
-//            setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT)) // Transparent background
-//            setLayout(
-//                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
-//            ) // Size
-//            setGravity(Gravity.BOTTOM) // Display at the bottom
-//            setWindowAnimations(R.style.PopupAnimation) // Apply the animation
-//        }
-//        dialog.show()
-//    }
-
-    fun onImageButtonClick() {
-        val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
-            type = "image/*"
-            putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-        }
-        startActivityForResult(Intent.createChooser(intent, "Select Images"), PICK_IMAGE_REQUEST)
-    }
-
-    fun onPdfButtonClick() {
-        val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
-            type = "*/*"
-            putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-            addCategory(Intent.CATEGORY_OPENABLE)  // Important for file-only types
-        }
-        startActivityForResult(
-            Intent.createChooser(intent, "Select Documents"), PICK_DOCUMENT_REQUEST
-        )
     }
 
     private fun copyDocumentToInternalStorage(uri: Uri): File? {

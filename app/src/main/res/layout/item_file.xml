@@ -1,71 +1,69 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_file_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".AlbumImage.FileGridAdapter">
+    android:background="@drawable/outline_gray"
+    android:padding="@dimen/ten">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/one_fifty"
+        android:layout_margin="@dimen/ten"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/fileName"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageView"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
+        android:layout_marginBottom="@dimen/ten"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="1"
+        android:text="filename.ext"
+        android:textColor="@android:color/black" />
+
+    <ImageView
+        android:id="@+id/videoIcon"
+        android:layout_width="@dimen/twenty_five"
+        android:layout_height="@dimen/twenty_five"
+        android:layout_alignEnd="@id/imageView"
+        android:layout_alignBottom="@id/imageView"
+        android:layout_margin="@dimen/ten"
+        android:src="@drawable/video"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/audioIcon"
+        android:layout_width="@dimen/twenty_five"
+        android:layout_height="@dimen/twenty_five"
+        android:layout_alignEnd="@id/imageView"
+        android:layout_alignBottom="@id/imageView"
+        android:layout_margin="@dimen/ten"
+        android:src="@drawable/voice"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/checkIcon"
+        android:layout_width="@dimen/thirty"
+        android:layout_height="@dimen/thirty"
+        android:layout_alignTop="@id/imageView"
+        android:layout_alignEnd="@id/imageView"
+        android:layout_margin="@dimen/ten"
+        android:src="@android:drawable/checkbox_on_background"
+        android:background="@android:color/transparent"
+        android:visibility="gone" />
 
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="@dimen/twenty"
         android:layout_height="@dimen/twenty"
-        android:layout_margin="8dp"
+        android:layout_centerInParent="true"
         android:indeterminate="true"
-        android:visibility="gone"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_margin="8dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/videoIcon"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_margin="8dp"
-        android:src="@drawable/video"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/audioIcon"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_margin="8dp"
-        android:src="@drawable/voice"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/checkIcon"
-        android:layout_width="@dimen/twenty"
-        android:layout_height="@dimen/twenty"
-        android:layout_margin="8dp"
-        android:src="@android:drawable/checkbox_on_background"
-        android:background="@android:color/transparent"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        android:visibility="gone" />
 </RelativeLayout>

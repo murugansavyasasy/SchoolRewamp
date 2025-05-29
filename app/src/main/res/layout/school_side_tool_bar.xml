@@ -212,4 +212,36 @@
             android:textSize="@dimen/thirteen_sp" />
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/rytFilePicking"
+        android:layout_width="match_parent"
+        android:layout_centerVertical="true"
+        android:visibility="gone"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvSelectionCount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Image Selected: 0/5"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_toStartOf="@+id/btnDone"
+            android:gravity="center"
+            android:padding="@dimen/ten" />
+
+        <TextView
+            android:id="@+id/btnDone"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="@dimen/fifty"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/ten"
+            android:background="@drawable/rect_btn_orange"
+            android:gravity="center"
+            android:padding="@dimen/five"
+            android:text="@string/done"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white" />
+
+    </RelativeLayout>
+
 </RelativeLayout>

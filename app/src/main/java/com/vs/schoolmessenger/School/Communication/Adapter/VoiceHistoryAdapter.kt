@@ -1,5 +1,6 @@
 package com.vs.schoolmessenger.School.Communication.Adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.media.MediaPlayer
 import android.os.Handler
@@ -93,6 +94,7 @@ class VoiceHistoryAdapter(
         }
 
 
+        @SuppressLint("DefaultLocale")
         fun bind(
             data: VoiceHistoryDetails,
             position: Int,
@@ -111,11 +113,12 @@ class VoiceHistoryAdapter(
             }
 
             rlaSendVoice.visibility = View.VISIBLE
+            lblEndDuration.text = String.format(
+                "%02d:%02d",
+                data.duration.toInt() / 60,
+                data.duration.toInt() % 60
+            )
 
-            getAudioDuration(data.url) { duration ->
-                lblEndDuration.text =
-                    formatTime(duration) // Update the TextView with formatted duration
-            }
             rlaSendVoice.setOnClickListener {
                 listener.onItemClick(data, this@DataViewHolder)
             }
@@ -154,6 +157,7 @@ class VoiceHistoryAdapter(
                 }
                 setOnCompletionListener {
                     resetPlaybackState()
+                    lblStartDuration.text = "00:00"
                 }
             }
         }
@@ -194,7 +198,6 @@ class VoiceHistoryAdapter(
                 icon = R.drawable.pause_icon
             } else {
                 icon = R.drawable.video_play
-                lblStartDuration.text = "00:00"
             }
             imgVoicePlay.setImageDrawable(ContextCompat.getDrawable(context, icon))
         }
