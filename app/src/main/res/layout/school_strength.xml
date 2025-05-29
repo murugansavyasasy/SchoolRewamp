@@ -77,7 +77,7 @@
                 android:layout_gravity="center_vertical"
                 android:orientation="vertical">
 
-                <!-- Students -->
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -101,7 +101,7 @@
                         android:textSize="@dimen/thirteen_sp"/>
                 </LinearLayout>
 
-                <!-- Staff -->
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -126,7 +126,7 @@
                         android:textSize="@dimen/thirteen_sp"/>
                 </LinearLayout>
 
-                <!-- Total -->
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
