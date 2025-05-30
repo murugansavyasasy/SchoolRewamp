@@ -70,7 +70,7 @@
             android:layout_marginBottom="@dimen/twenty"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="@dimen/ten"
-            android:visibility="gone"
+            android:visibility="visible"
             android:background="@drawable/rect_blue_and_green_small_radious"
             android:gravity="center"
             android:padding="@dimen/five">

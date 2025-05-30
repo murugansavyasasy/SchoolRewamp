@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.School.Homework
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.ContentResolver
 import android.content.Intent
@@ -14,11 +15,14 @@ import android.os.Build
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.provider.OpenableColumns
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.AdapterView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -37,9 +41,11 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
+import com.vs.schoolmessenger.CommonScreens.SchoolList.AcademicYearAdapter
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SectionList.Section
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.Standard
+import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardDropDownListAdapter
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReport
@@ -47,6 +53,7 @@ import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
 import com.vs.schoolmessenger.Utils.OnDateSelectedListener
+import com.vs.schoolmessenger.Utils.SectionDropDownListAdapter
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.HomeWorkBinding
 import java.io.File
@@ -64,7 +71,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
     }
     private lateinit var albumResultLauncher: ActivityResultLauncher<Intent>
 
-
     companion object {
         private const val PICK_DOCUMENT_REQUEST = 1003
         private const val PICK_IMAGE_REQUEST = 1001
@@ -72,6 +78,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         private const val MAX_FILES = 10
     }
 
+    var isFirstLoad = false
     private var cameraImageFilePath: String? = null
     private val CAMERA_PERMISSION_REQUEST_CODE = 200
     private var mAdapter: ImagePickingAdapter? = null
@@ -87,6 +94,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
     private lateinit var isHomeWorkReportData: List<HomeWorkReport>
     var mHomeWorkReportAdapter: HomeWorkReportAdapter? = null
     var isSectionId = -1
+    private val isHomeWorkItem = mutableListOf<HomeWorkReport>()
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
@@ -97,8 +105,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         appViewModel!!.init()
 
         binding.toolbarLayout.imgBack.setOnClickListener(this)
-        binding.rlaSection.setOnClickListener(this)
-        binding.rlaStandard.setOnClickListener(this)
         binding.lblDatePick.setOnClickListener(this)
         binding.btnCreate.setOnClickListener(this)
         binding.btnHistory.setOnClickListener(this)
@@ -129,9 +135,9 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
                 val reorderedList = academicList.sortedByDescending { it.current_academic_year }
                 if (isAcademicYear == reorderedList) return@observe
                 isAcademicYear = reorderedList
+                isLoadAcademicYear(isAcademicYear)
                 isValidAcademicYear =
                     isAcademicYear?.any { it.current_academic_year == true } == true
-                binding.lblAcademicYear.text = isAcademicYear!![0].year
                 isAcademicYearId = isAcademicYear!![0].id
                 isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
                 isGetStandardSection()
@@ -143,16 +149,16 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
                 isGetStandard = response.data
                 isGetStandard?.size?.let {
                     if (it > 0) {
+                        binding.rytStandardDropDown.visibility = View.VISIBLE
+                        binding.rytSectionDropDown.visibility = View.VISIBLE
                         isSectionId = isGetStandard!!.get(0).sections.get(0).id
-                        binding.lblStandard.text = isGetStandard!!.get(0).name
                         if (isGetStandard!!.get(0).sections.size > 0) {
-                            binding.lblSection.text = isGetStandard!![0].sections.get(0).name
+                            isLoadStandard(isGetStandard)
                             isSection = isGetStandard!!.get(0).sections
-                            fetchHomeWorkReportData()
                         }
                     } else {
-                        binding.rlaStandard.visibility = View.GONE
-                        binding.rlaSection.visibility = View.GONE
+                        binding.rytStandardDropDown.visibility = View.GONE
+                        binding.rytSectionDropDown.visibility = View.GONE
                     }
                 }
             }
@@ -160,6 +166,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
 
         appViewModel!!.isGetHomeWorkReport?.observe(this) { response ->
             if (response != null) {
+                isFirstLoad = true
                 if (response.status) {
                     binding.rcyHomeWorkReport.visibility = View.VISIBLE
                     binding.lytNoDataFound.visibility = View.GONE
@@ -234,6 +241,101 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
                 }
             }
 
+        binding.edtSearch.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                filter(s.toString())
+            }
+        })
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun filter(text: String) {
+        val query = text.lowercase(Locale.ROOT)
+        val filtered = if (query.isEmpty()) {
+            isHomeWorkReportData
+        } else {
+            isHomeWorkReportData.filter {
+                it.title.lowercase(Locale.ROOT).contains(query) == true
+            }
+        }
+        isHomeWorkItem.isEmpty()
+        isHomeWorkItem.addAll(filtered)
+        mHomeWorkReportAdapter!!.updateList(isHomeWorkItem.toList())
+
+    }
+
+    private fun isLoadAcademicYear(isAcademicYear: List<AcademicYear>?) {
+        val adapter = AcademicYearAdapter(this, isAcademicYear)
+        binding.isSpinner.adapter = adapter
+        binding.isSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>, view: View?, position: Int, id: Long
+            ) {
+                adapter.selectedPosition = position
+                if (isFirstLoad) {
+                    val selectedOption = isAcademicYear!![position]
+                    isAcademicYearId = selectedOption.id
+                    isCurrentAcademicYear = selectedOption.current_academic_year
+                    Log.d(
+                        "DropdownMenu",
+                        "Clicked Standard Year: ID = ${selectedOption.id}, Year = ${selectedOption.year}, Current = ${selectedOption.current_academic_year}"
+                    )
+                    fetchHomeWorkReportData()
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
+    }
+
+    private fun isLoadStandard(isStandard: List<Standard>?) {
+        val adapter = StandardDropDownListAdapter(this, isStandard)
+        binding.isSpinnerStandard.adapter = adapter
+        binding.isSpinnerStandard.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>, view: View?, position: Int, id: Long
+                ) {
+                    adapter.selectedPosition = position
+                    adapter.notifyDataSetChanged()
+                    val selectedOption = isStandard!![position]
+                    Log.d(
+                        "DropdownMenu",
+                        "Clicked Standard Year: ID = ${isStandard[position].id}, Year = ${isStandard[position].name}"
+                    )
+
+                    isSectionId = isStandard.get(position).id
+                    isSection = isStandard[position].sections
+                    isLoadSection(isSection)
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {}
+            }
+    }
+
+    private fun isLoadSection(isSection: List<Section>?) {
+        val adapter = SectionDropDownListAdapter(this, isSection)
+        binding.isSpinnerSection.adapter = adapter
+        binding.isSpinnerSection.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>, view: View?, position: Int, id: Long
+                ) {
+                    adapter.selectedPosition = position
+                    adapter.notifyDataSetChanged()
+                    val selectedOption = isSection!![position]
+                    Log.d(
+                        "DropdownMenu",
+                        "Clicked Standard Year: ID = ${isSection[position].id}, Year = ${isSection[position].name}"
+                    )
+                    isSectionId = selectedOption.id
+                    fetchHomeWorkReportData()
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {}
+            }
     }
 
     private fun checkCameraPermissionAndOpenCamera() {
@@ -291,32 +393,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
                 onBackPressed()
             }
 
-            R.id.rlaStandard -> {
-                showStandardDropdown(
-                    binding.rlaStandard, this, isGetStandard
-                ) { selectStandard, position ->
-                    binding.lblStandard.text = selectStandard.name
-                    binding.lblSection.text = selectStandard.sections[0].name
-                    isSectionId = selectStandard.sections[0].id
-                    isSection = selectStandard.sections
-                    Log.d(
-                        "DropdownMenu",
-                        "Selected Standard: Name = ${selectStandard.name}, ID = ${selectStandard.id}, Position = $position"
-                    )
-                    fetchHomeWorkReportData()
-                }
-            }
-
-            R.id.rlaSection -> {
-                isDropDownLoadDataSection(
-                    binding.lblSection, this, isSection
-                ) { selectedOption ->
-                    binding.lblSection.text = selectedOption.first
-                    isSectionId = selectedOption.second
-                    fetchHomeWorkReportData()
-                }
-            }
-
             R.id.lblDatePick -> {
                 showDatePickerDialog(this, this)
                 fetchHomeWorkReportData()
@@ -340,19 +416,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
             }
             R.id.Calendar -> {
                 fetchHomeWorkReportData()
-            }
-            R.id.AcademicYear -> {
-                showAcademicDropdown(
-                    binding.AcademicYear, this, isAcademicYear
-                ) { selectedYear ->
-                    binding.lblAcademicYear.text = selectedYear.year
-                    isGetStandardSection()
-                    Log.d(
-                        "DropdownMenu",
-                        "Clicked Academic Year: ID = ${selectedYear.id}, Year = ${selectedYear.year}, Current = ${selectedYear.current_academic_year}"
-                    )
-                    fetchHomeWorkReportData()
-                }
             }
         }
     }
@@ -493,23 +556,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         }
         dialog.show()
     }
-
-//    private fun copyDocumentToInternalStorage(uri: Uri): File? {
-//        val inputStream = contentResolver.openInputStream(uri)
-//        val file = File(filesDir, "copied_document.pdf") // Save to app's internal storage
-//
-//        try {
-//            inputStream?.copyTo(FileOutputStream(file))
-//            return file
-//        } catch (e: Exception) {
-//            e.printStackTrace()
-//        } finally {
-//            inputStream?.close()
-//        }
-//
-//        return null
-//    }
-
     private fun openCamera() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
 
@@ -685,9 +731,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
     }
 
     private fun getFilePathForDocument(filePath: String): String? {
-        // Handle converting document path to actual file path if possible.
-        // For example, for a PDF, the file might be stored in external storage,
-        // so ensure you use the correct path conversion logic here if needed.
         return filePath // This is just a placeholder; implement appropriate logic for your use case.
     }
 
@@ -751,7 +794,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
                 } catch (e: IllegalArgumentException) {
                     FileType.OTHER
                 }
-
                 FileItem(path = filePath.url, type = fileType)
             }
             Constant.selectedFiles.addAll(mappedList)

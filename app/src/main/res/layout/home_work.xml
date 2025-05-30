@@ -13,8 +13,6 @@
             android:id="@+id/toolbarLayout"
             layout="@layout/school_side_tool_bar" />
 
-
-
         <LinearLayout
             android:id="@+id/lnrParent"
             android:layout_width="match_parent"
@@ -58,7 +56,6 @@
                 android:textStyle="bold" />
 
         </LinearLayout>
-
 
         <RelativeLayout
             android:id="@+id/rlaHomework"
@@ -227,31 +224,35 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/gray_bg_radius"
                 android:orientation="horizontal"
-                android:padding="@dimen/ten"
                 android:weightSum="1">
 
                 <TextView
                     style="@style/CustomTextStylePoppinsMedium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.4"
+                    android:layout_marginStart="@dimen/fifteen"
+                    android:layout_weight="0.5"
                     android:text="@string/academic_year"
                     android:textSize="@dimen/thirteen_sp">
 
                 </TextView>
 
-                <TextView
-                    android:id="@id/lblAcademicYear"
-                    style="@style/CustomTextStylePoppinsMedium"
+                <RelativeLayout
+                    android:id="@+id/rytAcademicYearDropDown"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.6"
-                    android:drawableEnd="@drawable/down_arrow"
-                    android:paddingEnd="@dimen/fifteen"
-                    android:text="2024-2025"
-                    android:textSize="@dimen/ten_sp">
+                    android:layout_marginStart="@dimen/fifteen"
+                    android:layout_marginEnd="@dimen/fifteen"
+                    android:layout_weight="0.5"
+                    android:gravity="center">
 
-                </TextView>
+                    <Spinner
+                        android:id="@+id/isSpinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/custom_spinner_background" />
+
+                </RelativeLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -325,73 +326,41 @@
                 android:gravity="center"
                 android:weightSum="1">
 
-
                 <RelativeLayout
-                    android:id="@+id/rlaStandard"
+                    android:id="@+id/rytStandardDropDown"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/fifteen"
+                    android:layout_weight="0.5"
                     android:layout_marginEnd="@dimen/fifteen"
-                    android:layout_weight="0.5"
-                    android:background="@drawable/gray_bg_radius"
-                    android:padding="@dimen/ten">
+                    android:background="@drawable/bg_white_light_radious"
+                    android:gravity="center">
 
-
-                    <ImageView
-                        android:id="@+id/imgStandard"
-                        android:layout_width="@dimen/fifteen"
-                        android:layout_height="@dimen/fifteen"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginEnd="@dimen/ten"
-                        android:src="@drawable/downarrow">
-
-                    </ImageView>
-
-                    <TextView
-                        android:id="@+id/lblStandard"
-                        android:layout_width="wrap_content"
+                    <Spinner
+                        android:id="@+id/isSpinnerStandard"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/fifteen"
-                        android:text=""
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp"
-                        android:textStyle="bold"></TextView>
-                </RelativeLayout>
+                        android:background="@drawable/custom_spinner_background" />
 
+                </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/rlaSection"
+                    android:id="@+id/rytSectionDropDown"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/fifteen"
                     android:layout_weight="0.5"
-                    android:background="@drawable/gray_bg_radius"
-                    android:padding="@dimen/ten">
+                    android:layout_marginEnd="@dimen/fifteen"
+                    android:background="@drawable/bg_white_light_radious"
+                    android:gravity="center">
 
-
-                    <ImageView
-                        android:id="@+id/imgSection"
-                        android:layout_width="@dimen/fifteen"
-                        android:layout_height="@dimen/fifteen"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginEnd="@dimen/ten"
-                        android:src="@drawable/downarrow">
-
-                    </ImageView>
-
-                    <TextView
-                        android:id="@+id/lblSection"
-                        android:layout_width="wrap_content"
+                    <Spinner
+                        android:id="@+id/isSpinnerSection"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/thirty"
-                        android:text=""
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp"
-                        android:textStyle="bold"></TextView>
-                </RelativeLayout>
+                        android:background="@drawable/custom_spinner_background" />
 
+                </RelativeLayout>
             </LinearLayout>
 
             <View
@@ -421,16 +390,17 @@
                     android:alpha="0.4"
                     android:src="@drawable/search_icon"></ImageView>
 
-                <TextView
-                    style="@style/CustomTextStylePoppinsMedium"
+                <EditText
+                    android:id="@+id/edtSearch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/five"
                     android:hint="@string/search"
+                    android:background="@null"
                     android:text=""
                     android:textSize="@dimen/fifteen_sp">
 
-                </TextView>
+                </EditText>
 
 
             </LinearLayout>
@@ -476,10 +446,7 @@
                     android:text="">
 
                 </TextView>
-
             </LinearLayout>
-
-
         </RelativeLayout>
     </RelativeLayout>
 </ScrollView>

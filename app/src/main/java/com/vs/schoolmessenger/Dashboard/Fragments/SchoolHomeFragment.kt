@@ -38,6 +38,7 @@ import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.AbsenteesMarking.AttendanceMark
 import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesReport
 import com.vs.schoolmessenger.School.Assignment.Assignment
+import com.vs.schoolmessenger.School.Attachment.Attachment
 import com.vs.schoolmessenger.School.Communication.CommunicationSchool
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollection
 import com.vs.schoolmessenger.School.Event.CreateEvent
@@ -559,23 +560,8 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 }
             }
 
-            //
             Constant.M_ATTACHMENTS -> {
-                if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
-                    //go to ptm page
-                    LessonPlan::class.java
-                } else {
-                    if (userDetails!!.staff_details.size > 1) {
-                        SchoolList::class.java
-                    } else {
-
-                        //go to ptm page
-                        LessonPlan::class.java
-
-                    }
-
-                }
-
+                Attachment::class.java
             }
 
 
