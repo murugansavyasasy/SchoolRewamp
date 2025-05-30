@@ -5,8 +5,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.NoticeBoard.NoticeData
-import com.vs.schoolmessenger.School.NoticeBoard.SchoolNoticeBoardAdapter
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.ExamSubjectListBinding
 

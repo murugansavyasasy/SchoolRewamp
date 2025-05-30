@@ -69,6 +69,8 @@ object APIMethods {
     const val getabsenteescountbydate = "stud-attd/api/attendance/get-absentees-count-by-date"
 
     const val getabsenteesstudentbydate = "stud-attd/api/attendance/get-absentees-students-by-date"
+
+    const val sendnotice = "admin/api/notice-board/send-notice"
 }
 
 

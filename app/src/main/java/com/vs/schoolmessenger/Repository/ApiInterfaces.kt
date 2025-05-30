@@ -41,6 +41,7 @@ import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistor
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffAttendanceReportResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffLocationResponse
+import com.vs.schoolmessenger.School.NoticeBoard.Response.NoticeBoardSendResponse
 import com.vs.schoolmessenger.School.SchoolStrength.Model.SchoolStrengthResponse
 import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
 import retrofit2.Call
@@ -388,5 +389,13 @@ interface ApiInterfaces {
         @Query(APIKeyNames.absent_on) absent_on: String?,
         @Query(APIKeyNames.section_id) section_id: String?
     ): Call<AbsenteeStudentsResponse?>
+
+
+    @POST(APIMethods.sendnotice)
+    fun sendnotice(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Body request: JsonObject
+    ): Call<NoticeBoardSendResponse>?
+
 
 }

@@ -33,6 +33,7 @@ import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistor
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffAttendanceReportResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffLocationResponse
+import com.vs.schoolmessenger.School.NoticeBoard.Response.NoticeBoardSendResponse
 import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
 import com.vs.schoolmessenger.School.SchoolStrength.Model.SchoolStrengthResponse
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -92,6 +93,9 @@ class SchoolServices {
 
     var getabsenteesstudentbydate: MutableLiveData<AbsenteeStudentsResponse?>
 
+
+    var sendnotice: MutableLiveData<NoticeBoardSendResponse>
+
     init {
         client_auth = RestClient()
         isDashBoard = MutableLiveData()
@@ -136,6 +140,8 @@ class SchoolServices {
         isStudentAttendanceReportForSchool = MutableLiveData()
         getabsenteescountbydate = MutableLiveData()
         getabsenteesstudentbydate = MutableLiveData()
+        sendnotice = MutableLiveData()
+
     }
 
 
@@ -1702,6 +1708,35 @@ class SchoolServices {
         get() = isStudentAttendanceReportForSchool
 
 
+
+
+
+    fun sendnotice(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        RestClient.changeApiBaseUrl(SharedPreference.getBaseUrl(activity).toString())
+        RestClient.apiInterfaces.sendnotice(isToken, jsonObject)
+            ?.enqueue(object : Callback<NoticeBoardSendResponse?> {
+                override fun onResponse(
+                    call: Call<NoticeBoardSendResponse?>, response: Response<NoticeBoardSendResponse?>
+                ) {
+                    if (response.code() == 200 && response.body() != null) {
+                        sendnotice.postValue(response.body())
+                    } else {
+                        sendnotice.postValue(response.body())
+                    }
+
+                    Log.d("isGetCountryList", "${response.code()} - ${response}")
+                }
+
+                override fun onFailure(call: Call<NoticeBoardSendResponse?>, t: Throwable) {
+                    sendnotice.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+
+    val sendnoticeLiveData: LiveData<NoticeBoardSendResponse?>
+        get() = sendnotice
 
 
 }
