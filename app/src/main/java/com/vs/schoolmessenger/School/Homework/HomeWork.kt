@@ -22,6 +22,8 @@ import android.view.Window
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -45,6 +47,7 @@ import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
 import com.vs.schoolmessenger.Utils.OnDateSelectedListener
+import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.HomeWorkBinding
 import java.io.File
 import java.io.FileOutputStream
@@ -59,6 +62,8 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
     override fun getViewBinding(): HomeWorkBinding {
         return HomeWorkBinding.inflate(layoutInflater)
     }
+    private lateinit var albumResultLauncher: ActivityResultLauncher<Intent>
+
 
     companion object {
         private const val PICK_DOCUMENT_REQUEST = 1003
@@ -100,11 +105,10 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         binding.AcademicYear.setOnClickListener(this)
         binding.btnChooseRecipient.setOnClickListener(this)
         binding.Calendar.setOnClickListener(this)
-//        isStaffDetails = SharedPreference.getStaffDetails(this)
-//        isAccessToken = isStaffDetails!!.access_token
-//        binding.toolbarLayout.lblParentToolBar.text = getString(R.string.HomeWork)
-//        binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
-
+        isStaffDetails = SharedPreference.getStaffDetails(this)
+        isAccessToken = isStaffDetails!!.access_token
+        binding.toolbarLayout.lblParentToolBar.text = getString(R.string.HomeWork)
+        binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
         saveDrawableToCache(R.drawable.add_image)?.let {
             Constant.selectedFiles.add(
                 FileItem(
@@ -169,6 +173,67 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
                 }
             }
         }
+
+        albumResultLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == RESULT_OK) {
+                    val selectedUris =
+                        result.data?.getParcelableArrayListExtra<Uri>(Constant.isSelectedFiles)
+                    val remaining = MAX_FILES - Constant.selectedFiles.size
+
+                    selectedUris?.take(remaining)?.forEach { uri ->
+                        val mimeType = contentResolver.getType(uri)
+                        val path = when (uri.scheme) {
+                            "file" -> uri.path
+                            else -> getPathFromUri(uri)
+                        }
+
+                        if (path == null) {
+                            Log.w("addPath", "Could not resolve path from URI: $uri")
+                            return@forEach
+                        }
+
+                        val fileName = getFileName(uri).ifEmpty { File(path).name }
+                        val type = when {
+                            mimeType?.startsWith("image/") == true -> FileType.IMAGE
+                            mimeType?.startsWith("video/") == true -> FileType.VIDEO
+                            mimeType?.startsWith("audio/") == true -> FileType.AUDIO
+                            fileName.endsWith(".pdf", true) -> FileType.PDF
+                            fileName.endsWith(".doc", true) || fileName.endsWith(
+                                ".docx",
+                                true
+                            ) -> FileType.DOC
+
+                            fileName.endsWith(".xls", true) || fileName.endsWith(
+                                ".xlsx",
+                                true
+                            ) -> FileType.EXCEL
+
+                            fileName.endsWith(".ppt", true) || fileName.endsWith(
+                                ".pptx",
+                                true
+                            ) -> FileType.PPT
+
+                            fileName.endsWith(".txt", true) -> FileType.TXT
+                            else -> FileType.OTHER
+                        }
+
+                        Constant.selectedFiles.add(FileItem(uri.toString(), type))
+                        Log.d("SelectedFile", "URI: $uri, Type: $type")
+                    }
+
+                    if ((selectedUris?.size ?: 0) > remaining) {
+                        Toast.makeText(
+                            this,
+                            "Only $remaining files added (max $MAX_FILES)",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
+                    mAdapter?.notifyDataSetChanged()
+                }
+            }
+
     }
 
     private fun checkCameraPermissionAndOpenCamera() {
@@ -352,12 +417,36 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         intent.putExtra(Constant.section_data, sectionDetails)
         startActivity(intent)
     }
+    private fun openAlbumSelectActivity(isFileType: String) {
+        val sdkInt = Build.VERSION.SDK_INT
+        if (isFileType == Constant.DOCUMENT && sdkInt < Build.VERSION_CODES.R) {
+            openSystemDocumentPicker()
+        } else {
+            val intent = Intent(this, AlbumSelectActivity::class.java)
+            intent.putExtra(Constant.isFileType, isFileType)
+            albumResultLauncher.launch(intent)
+        }
+    }
 
-
-    private fun openAlbumSelectActivity(type: String) {
-        val intent = Intent(this, AlbumSelectActivity::class.java)
-        intent.putExtra("type", type)
-        startActivity(intent)
+    // Opens the system file picker for DOCUMENT on Android 10 and below
+    private fun openSystemDocumentPicker() {
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "*/*"
+            val mimeTypes = arrayOf(
+                "application/pdf",
+                "application/msword",
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                "application/vnd.ms-powerpoint",
+                "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                "text/plain"
+            )
+            putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
+            putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+        }
+        startActivityForResult(intent, PICK_DOCUMENT_REQUEST)
     }
 
     private fun showBottomDialog() {
@@ -372,22 +461,22 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         val rlaVideoPick = dialog.findViewById<RelativeLayout>(R.id.rlaVideoPick)
 
         rlaGallery.setOnClickListener {
-            openAlbumSelectActivity("IMAGE")
+            openAlbumSelectActivity(Constant.IMAGE)
             dialog.dismiss()
         }
 
         rlaVoice.setOnClickListener {
-            openAlbumSelectActivity("AUDIO")
+            openAlbumSelectActivity(Constant.AUDIO)
             dialog.dismiss()
         }
 
         rlaVideoPick.setOnClickListener {
-            openAlbumSelectActivity("VIDEO")
+            openAlbumSelectActivity(Constant.VIDEO)
             dialog.dismiss()
         }
 
         rlaDocument.setOnClickListener {
-            openAlbumSelectActivity("DOCUMENT")
+            openAlbumSelectActivity(Constant.DOCUMENT)
             dialog.dismiss()
         }
 
@@ -395,8 +484,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
             checkCameraPermissionAndOpenCamera()
             dialog.dismiss()
         }
-
-
 
         dialog.window?.apply {
             setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -407,21 +494,21 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         dialog.show()
     }
 
-    private fun copyDocumentToInternalStorage(uri: Uri): File? {
-        val inputStream = contentResolver.openInputStream(uri)
-        val file = File(filesDir, "copied_document.pdf") // Save to app's internal storage
-
-        try {
-            inputStream?.copyTo(FileOutputStream(file))
-            return file
-        } catch (e: Exception) {
-            e.printStackTrace()
-        } finally {
-            inputStream?.close()
-        }
-
-        return null
-    }
+//    private fun copyDocumentToInternalStorage(uri: Uri): File? {
+//        val inputStream = contentResolver.openInputStream(uri)
+//        val file = File(filesDir, "copied_document.pdf") // Save to app's internal storage
+//
+//        try {
+//            inputStream?.copyTo(FileOutputStream(file))
+//            return file
+//        } catch (e: Exception) {
+//            e.printStackTrace()
+//        } finally {
+//            inputStream?.close()
+//        }
+//
+//        return null
+//    }
 
     private fun openCamera() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -497,24 +584,24 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         }
 
         when (requestCode) {
-            PICK_IMAGE_REQUEST, PICK_DOCUMENT_REQUEST -> {
-                data?.clipData?.let { cd ->
-                    val toTake = minOf(cd.itemCount, remaining)
-                    for (i in 0 until toTake) {
-                        val uri = cd.getItemAt(i).uri
-                        addPath(uri) // Use the updated addPath that handles MIME type
-                        if (uri.toString().contains("document")) copyDocumentToInternalStorage(uri)
-                    }
-
-                    if (cd.itemCount > remaining) Toast.makeText(
-                        this, "Only $remaining added", Toast.LENGTH_SHORT
-                    ).show()
-                } ?: data?.data?.let { uri ->
-
-                    addPath(uri) // Use the updated addPath that handles MIME type
-                    if (uri.toString().contains("document")) copyDocumentToInternalStorage(uri)
-                }
-            }
+//            PICK_IMAGE_REQUEST, PICK_DOCUMENT_REQUEST -> {
+//                data?.clipData?.let { cd ->
+//                    val toTake = minOf(cd.itemCount, remaining)
+//                    for (i in 0 until toTake) {
+//                        val uri = cd.getItemAt(i).uri
+//                        addPath(uri) // Use the updated addPath that handles MIME type
+//                        if (uri.toString().contains("document")) copyDocumentToInternalStorage(uri)
+//                    }
+//
+//                    if (cd.itemCount > remaining) Toast.makeText(
+//                        this, "Only $remaining added", Toast.LENGTH_SHORT
+//                    ).show()
+//                } ?: data?.data?.let { uri ->
+//
+//                    addPath(uri) // Use the updated addPath that handles MIME type
+//                    if (uri.toString().contains("document")) copyDocumentToInternalStorage(uri)
+//                }
+//            }
 
             CAMERA_IMAGE_REQUEST -> {
                 cameraImageFilePath?.let { filePath ->
@@ -573,7 +660,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
                 }
             }
         }
-
         return path
     }
 
@@ -592,7 +678,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
             result = uri.path
             val cut = result?.lastIndexOf('/')
             if (cut != null && cut != -1) {
-                result = result?.substring(cut + 1)
+                result = result!!.substring(cut + 1)
             }
         }
         return result ?: ""
@@ -640,8 +726,8 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         isClickingId.setTextColor(ContextCompat.getColor(this, R.color.dark_blue))
         isClickingId.background = ContextCompat.getDrawable(this, R.drawable.white_bg_radius)
         isClickingId.setTextColor(ContextCompat.getColor(this, R.color.black))
-
     }
+
     override fun onClickListener(data: HomeWorkReport) {
         Constant.isAwsUploadedFiles.clear()
         Constant.selectedFiles.clear()
@@ -675,6 +761,5 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         mAdapter = ImagePickingAdapter(this, Constant.selectedFiles, this)
         binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
         binding.rcyImages.adapter = mAdapter
-
     }
 }

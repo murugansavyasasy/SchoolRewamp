@@ -118,5 +118,8 @@ class FileGridAdapter(
         return name ?: uri.lastPathSegment ?: "Unknown"
     }
 
+    fun getSelectedItems(): List<Uri> = selected.toList()
+
+
     override fun getItemCount(): Int = items.size
 }

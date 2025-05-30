@@ -115,7 +115,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     private var isAccessToken: String? = null
     private var isUserDetails: UserDetails? = null
     private var isStaffDetails: StaffDetails? = null
-    private var hasStartedRecording = false
     private var recordingStartTime: Long = 0
 
 
@@ -447,7 +446,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun stopRecording() {
         val elapsedTime = System.currentTimeMillis() - recordingStartTime
         if (elapsedTime < 1000L) {

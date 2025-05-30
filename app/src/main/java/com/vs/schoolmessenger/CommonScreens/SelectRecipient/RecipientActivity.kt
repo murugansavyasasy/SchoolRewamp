@@ -1097,7 +1097,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 selectedIds = selectedIds,
                 title = it.title,
                 description = it.description,
-                subjectId = isSubjectId!!,
+                subjectId = isSubjectId,
             )
             appViewModel!!.isSendHomeWork(isAccessToken!!, jsonObject, this)
         } ?: run {
