@@ -19,10 +19,12 @@ class SchoolStrengthAdapter (
     private var context: Context,
     private var isLoading: Boolean,
 
+
     ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
+    private var expandedPosition = -1
 
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
@@ -79,21 +81,22 @@ class SchoolStrengthAdapter (
             val detailAdapter = SchoolStrengthDetailAdapter(data.sections, context, false)
             detailRecyclerView.adapter = detailAdapter
 
-
-            detailRecyclerView.visibility = View.GONE
+            detailRecyclerView.visibility = if (adapter.expandedPosition == position) View.VISIBLE else View.GONE
 
             expandableLayout.setOnClickListener {
-                detailRecyclerView.visibility = if (detailRecyclerView.visibility == View.VISIBLE) {
-                    View.GONE
+                val previousExpandedPosition = adapter.expandedPosition
+
+
+                if (adapter.expandedPosition == position) {
+                    adapter.expandedPosition = -1
+                    adapter.notifyItemChanged(position)
                 } else {
-                    View.VISIBLE
+                    adapter.expandedPosition = position
+                    adapter.notifyItemChanged(previousExpandedPosition)
+                    adapter.notifyItemChanged(position)
                 }
             }
         }
-
-
-
-
 
     }
 
