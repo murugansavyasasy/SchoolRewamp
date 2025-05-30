@@ -10,6 +10,8 @@ import android.app.DatePickerDialog
 import android.app.Dialog
 import android.app.TimePickerDialog
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.PorterDuff
@@ -51,6 +53,8 @@ import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.OnDateSelectedListener
 import com.vs.schoolmessenger.Utils.TimePickerAdapter
 import com.vs.schoolmessenger.Utils.TimeSelectedListener
+import java.io.File
+import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -145,6 +149,22 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
             window.setBackgroundDrawableResource(R.drawable.gradient_theme_school)
         }
     }
+
+    fun saveDrawableToCache(drawableResId: Int): String? {
+        val drawable = ContextCompat.getDrawable(this, drawableResId) ?: return null
+        val width = drawable.intrinsicWidth.takeIf { it > 0 } ?: 100
+        val height = drawable.intrinsicHeight.takeIf { it > 0 } ?: 100
+        val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        drawable.setBounds(0, 0, canvas.width, canvas.height)
+        drawable.draw(canvas)
+        val file = File(cacheDir, "temp_image_${System.currentTimeMillis()}.png")
+        FileOutputStream(file).use { out ->
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
+        }
+        return file.absolutePath
+    }
+
 
     fun isToolBarWhiteTheme() {
         if (Build.VERSION.SDK_INT >= 21) {

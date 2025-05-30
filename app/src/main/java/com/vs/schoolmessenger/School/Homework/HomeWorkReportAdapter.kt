@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.School.Homework
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -58,8 +59,10 @@ class HomeWorkReportAdapter(
     fun updateList(newList: List<HomeWorkReport>) {
         itemList = emptyList()
         itemList = newList
+        Log.d("itemList", itemList?.size.toString())
         notifyDataSetChanged()
     }
+
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
         // Image

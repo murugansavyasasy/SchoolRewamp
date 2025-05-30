@@ -252,7 +252,6 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         isMenuItems.clear()
         isMenuItems.addAll(filtered)
         isMenuAdapter.updateList(isMenuItems.toList())
-
     }
 
 

@@ -74,7 +74,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
     companion object {
         private const val PICK_DOCUMENT_REQUEST = 1003
         private const val PICK_IMAGE_REQUEST = 1001
-        private const val CAMERA_IMAGE_REQUEST = 1004
+        internal const val CAMERA_IMAGE_REQUEST = 1004
         private const val MAX_FILES = 10
     }
 
@@ -93,8 +93,9 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
     var isGetStandard: List<Standard>? = null
     private lateinit var isHomeWorkReportData: List<HomeWorkReport>
     var mHomeWorkReportAdapter: HomeWorkReportAdapter? = null
-    var isSectionId = -1
     private val isHomeWorkItem = mutableListOf<HomeWorkReport>()
+
+    var isSectionId = -1
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
@@ -252,7 +253,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
 
     @SuppressLint("NotifyDataSetChanged")
     private fun filter(text: String) {
-        val query = text.lowercase(Locale.ROOT)
+          val query = text.lowercase(Locale.ROOT).trim()
         val filtered = if (query.isEmpty()) {
             isHomeWorkReportData
         } else {
@@ -260,11 +261,11 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
                 it.title.lowercase(Locale.ROOT).contains(query) == true
             }
         }
-        isHomeWorkItem.isEmpty()
+        isHomeWorkItem.clear()
         isHomeWorkItem.addAll(filtered)
-        mHomeWorkReportAdapter!!.updateList(isHomeWorkItem.toList())
-
+        mHomeWorkReportAdapter?.updateList(isHomeWorkItem.toList())
     }
+
 
     private fun isLoadAcademicYear(isAcademicYear: List<AcademicYear>?) {
         val adapter = AcademicYearAdapter(this, isAcademicYear)
@@ -364,20 +365,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         }
     }
 
-    fun saveDrawableToCache(drawableResId: Int): String? {
-        val drawable = ContextCompat.getDrawable(this, drawableResId) ?: return null
-        val width = drawable.intrinsicWidth.takeIf { it > 0 } ?: 100
-        val height = drawable.intrinsicHeight.takeIf { it > 0 } ?: 100
-        val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-        val canvas = Canvas(bitmap)
-        drawable.setBounds(0, 0, canvas.width, canvas.height)
-        drawable.draw(canvas)
-        val file = File(cacheDir, "temp_image_${System.currentTimeMillis()}.png")
-        FileOutputStream(file).use { out ->
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
-        }
-        return file.absolutePath
-    }
 
     override fun onBackPressed() {
         Constant.selectedFiles.clear()

@@ -79,8 +79,6 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         binding.btnCreate.setOnClickListener(this)
         binding.btnHistory.setOnClickListener(this)
         binding.imgSearch.setOnClickListener(this)
-//        binding.lblDate.setOnClickListener(this)
-//        binding.rlaStandardReport.setOnClickListener(this)
         binding.btnSelectPresent.setOnClickListener(this)
 //        binding.rlaSectionReport.setOnClickListener(this)
         binding.rlaDayDatePicker.setOnClickListener(this)
@@ -663,7 +661,6 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
             SimpleDateFormat("EEE dd MMM yyyy", Locale.getDefault()).format(calendar.time)
         val slashDate =
             SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(calendar.time)
-
         return listOf(dayOnly, dayOfWeek, fullDate, slashDate)
     }
 }
