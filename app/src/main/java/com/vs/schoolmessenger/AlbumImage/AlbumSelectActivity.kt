@@ -13,6 +13,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.databinding.AlbumSelectActivityBinding
 
 class AlbumSelectActivity : AppCompatActivity() {
@@ -46,12 +47,12 @@ class AlbumSelectActivity : AppCompatActivity() {
         binding.recyclerView.layoutManager = GridLayoutManager(this, 3)
         binding.recyclerView.adapter = adapter
 
-        val fileType = intent.getStringExtra("type") ?: "IMAGE"
+        val fileType = intent.getStringExtra(Constant.isFileType) ?: Constant.IMAGE
         when (fileType.uppercase()) {
-            "IMAGE" -> adapter.submitList(loadImages())
-            "VIDEO" -> adapter.submitList(loadVideos())
-            "AUDIO" -> adapter.submitList(loadAudio())
-            "DOCUMENT" -> {
+            Constant.IMAGE -> adapter.submitList(loadImages())
+            Constant.VIDEO -> adapter.submitList(loadVideos())
+            Constant.AUDIO -> adapter.submitList(loadAudio())
+            Constant.DOCUMENT -> {
                 if (hasStoragePermission()) {
                     loadDocumentsOrOpenPicker()
                 } else {
@@ -59,6 +60,15 @@ class AlbumSelectActivity : AppCompatActivity() {
                 }
             }
             else -> adapter.submitList(emptyList())
+        }
+
+        binding.toolbarLayout.btnDone.setOnClickListener {
+            val selectedUris = adapter.getSelectedItems()
+            val intent = Intent().apply {
+                putParcelableArrayListExtra(Constant.isSelectedFiles, ArrayList(selectedUris))
+            }
+            setResult(RESULT_OK, intent)
+            finish()
         }
     }
 

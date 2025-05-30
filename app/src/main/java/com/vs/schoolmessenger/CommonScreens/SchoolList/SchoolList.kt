@@ -26,6 +26,7 @@ import com.vs.schoolmessenger.Repository.ApiCallRequest
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.AbsenteesMarking.AttendanceMark
 import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesReport
+import com.vs.schoolmessenger.School.Attachment.Attachment
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollection
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReport
 import com.vs.schoolmessenger.School.Homework.HomeWork
@@ -312,6 +313,10 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                 startActivity(intent)
             } else if (SELECTED_SCHOOL_MENU == M_PTM) {
                 //go to ptm  screen
+            } else if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS) {
+                val intent = Intent(this, Attachment::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                startActivity(intent)
             }
         }
     }

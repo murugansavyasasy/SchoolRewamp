@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.CommonScreens.ImageSliderAdapter
+import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuDetail
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReport
 import com.vs.schoolmessenger.Utils.Constant
@@ -54,7 +55,11 @@ class HomeWorkReportAdapter(
         return if (isLoading) 20 // Show shimmer items while loading
         else itemList?.size ?: 0
     }
-
+    fun updateList(newList: List<HomeWorkReport>) {
+        itemList = emptyList()
+        itemList = newList
+        notifyDataSetChanged()
+    }
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
         // Image

@@ -234,6 +234,9 @@ object Constant {
     var UNREAD = "UNREAD"
     var READ = "READ"
     var VOICE = "VOICE"
+    var AUDIO = "AUDIO"
+    var VIDEO = "VIDEO"
+    var DOCUMENT = "DOCUMENT"
     var VOICE_UNREAD = "VOICE_UNREAD"
     var VOICE_READ = "VOICE_READ"
     var TEXT = "TEXT"
@@ -242,6 +245,7 @@ object Constant {
     var TEXT_ALL = "TEXT_ALL"
     var VOICE_ALL = "VOICE_ALL"
     var dateForMate = "%02d:%02d"
+    var isSelectedFiles = "isSelectedFiles"
 
     var IMAGE = "IMAGE"
     var PDF = "PDF"
