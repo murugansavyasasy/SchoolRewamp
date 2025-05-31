@@ -78,7 +78,6 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnCli
     var isAcademicYear: List<AcademicYear>? = null
     var isAcademicYearId = -1
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
         setupToolbar()
@@ -138,7 +137,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnCli
         appViewModel!!.isPunchAttendance?.observe(this) { response ->
             if (response!!.status) {
                 Constant.hideLoading(this)
-                Constant.showTopAlertPopup(response.message, Constant.isGioMetric, this)
+                Constant.showTopAlertPopup(response.message, this)
             }
         }
 

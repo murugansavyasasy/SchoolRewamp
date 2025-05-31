@@ -1,5 +1,6 @@
 package com.vs.schoolmessenger.Repository
 
+
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.AWS.PreSignedUrl
 import com.vs.schoolmessenger.Auth.Country.CountryResponse
@@ -22,17 +23,14 @@ import com.vs.schoolmessenger.Parent.Communication.VoiceDataResponse
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventResponse
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.HolidayResponse
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
-import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
-import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
-import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
-
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.SendAbsenteeSMSResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportDataResponse
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeStudentsResponse
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteesResponse
-
-
+import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
+import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
+import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionReportResponse
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
@@ -397,5 +395,10 @@ interface ApiInterfaces {
         @Body request: JsonObject
     ): Call<NoticeBoardSendResponse>?
 
+    @POST(APIMethods.sendAttachment)
+    fun sendAttachment(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Body request: JsonObject
+    ): Call<NoticeBoardSendResponse>?
 
 }

@@ -116,14 +116,20 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         appViewModel!!.isVoiceSend?.observe(this) { response ->
             Constant.hideLoading(this@SchoolList)
             if (response != null && response.status) {
-                Constant.showTopAlertPopup(response.message, Constant.isCommunication, this)
+                Constant.showTopAlertPopup(response.message, this)
+            }
+        }
+        appViewModel!!.isAttachmentSend?.observe(this) { response ->
+            Constant.hideLoading(this@SchoolList)
+            if (response != null && response.status) {
+                Constant.showTopAlertPopup(response.message, this)
             }
         }
 
         appViewModel!!.isSendText?.observe(this) { response ->
             Constant.hideLoading(this@SchoolList)
             if (response != null && response.status) {
-                Constant.showTopAlertPopup(response.message, Constant.isCommunication, this)
+                Constant.showTopAlertPopup(response.message, this)
             }
         }
 
@@ -215,17 +221,25 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                     Log.d("SelectedSchoolId", selectedSchoolIds[i].toString())
                 }
                 if (selectedSchoolIds.isNotEmpty()) {
-                    if (Constant.isCommunicationType == 3) {
+                    if (SELECTED_SCHOOL_MENU == M_COMMUNICATION) {
+                        if (Constant.isCommunicationType == 3) {
+                            showConfirmationAlert(
+                                resources.getString(R.string.selected_target_1) + selectedSchoolIds.size.toString(),
+                                resources.getString(R.string.are_you_sure_want_to_send_this_message)
+                            )
+                        } else {
+                            showConfirmationAlert(
+                                resources.getString(R.string.selected_target_1) + selectedSchoolIds.size.toString(),
+                                resources.getString(R.string.are_you_sure_want_to_send_this_message)
+                            )
+                        }
+                    } else if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS) {
                         showConfirmationAlert(
                             resources.getString(R.string.selected_target_1) + selectedSchoolIds.size.toString(),
-                            resources.getString(R.string.are_you_sure_want_to_send_this_message)
-                        )
-                    } else {
-                        showConfirmationAlert(
-                            resources.getString(R.string.selected_target_1) + selectedSchoolIds.size.toString(),
-                            resources.getString(R.string.are_you_sure_want_to_send_this_message)
+                            resources.getString(R.string.are_you_sure_want_to_send_this_attachment)
                         )
                     }
+
                 } else {
                     Constant.showValidationAlertPopup(
                         getString(
@@ -344,7 +358,11 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                             )
                         )
                         if (Constant.isAwsUploadedFiles.size == isSelectedFiles.size) {
-                            voiceSendApi(isFileUploaded)
+                            if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS) {
+                                attachmentSendApi()
+                            } else if (SELECTED_SCHOOL_MENU == M_COMMUNICATION) {
+                                voiceSendApi(isFileUploaded)
+                            }
                         }
                         Log.d("isSuccessFullUpload", "isSuccessFullUpload")
                     }
@@ -378,6 +396,21 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
+    fun attachmentSendApi() {
+        val jsonObject = ApiCallRequest.isSendAttachment(
+            isAcademicYearId = isAcademicYearId,
+            selectedIds = selectedSchoolIds,
+            title = Constant.isCommonTitle,
+            description = Constant.isCommonDescription,
+            targetType = Constant.isSchool,
+            iframe = "iframe",
+            fileSize = "1",
+        )
+        appViewModel!!.sendAttachment(isAccessToken!!, jsonObject, this)
+
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
     fun showSendConfirmationDialog(isMessage: String) {
         val isTextData = Constant.isTextSendingData
 
@@ -405,9 +438,6 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                             isStaffData!!.school_id,
                             "audio"
                         )
-//                        isFileUploadInAws(
-//                            Constant.selectedFiles.get(0).path!!, isStaffData!!.school_id, "audio"
-//                        )
                     }
                 }
             }.setNegativeButton(resources.getString(R.string.Cancel)) { dialog, _ ->
@@ -439,29 +469,34 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             alertDialog.dismiss()
             Constant.showLoading(this@SchoolList)
 
-            if (Constant.isCommunicationType == 3) {
-                val jsonObject = ApiCallRequest.isSendText(
-                    isAcademicYearId = isAcademicYearId,
-                    schoolId = selectedSchoolIds,
-                    message = isTextData!!.isTitle,
-                    description = isTextData.isContent,
-                    targetType = Constant.isSchool
-                )
-                appViewModel!!.isSendText(isAccessToken!!, jsonObject, this)
-            } else {
-                if (Constant.isVoiceType == 3) {
-                    val isVoiceData = Constant.isVoiceSendingData
-                    voiceSendApi(isVoiceData!!.isAwsUrl)
-                } else {
-                    isFileUploadInAws(
-                        Constant.selectedFiles,
-                        isStaffData!!.school_id,
-                        "audio"
+            if (SELECTED_SCHOOL_MENU == M_COMMUNICATION) {
+                if (Constant.isCommunicationType == 3) {
+                    val jsonObject = ApiCallRequest.isSendText(
+                        isAcademicYearId = isAcademicYearId,
+                        schoolId = selectedSchoolIds,
+                        message = isTextData!!.isTitle,
+                        description = isTextData.isContent,
+                        targetType = Constant.isSchool
                     )
-//                    isFileUploadInAws(
-//                        Constant.selectedFiles.get(0).path!!, isStaffData!!.school_id, "audio"
-//                    )
+                    appViewModel!!.isSendText(isAccessToken!!, jsonObject, this)
+                } else {
+                    if (Constant.isVoiceType == 3) {
+                        val isVoiceData = Constant.isVoiceSendingData
+                        voiceSendApi(isVoiceData!!.isAwsUrl)
+                    } else {
+                        isFileUploadInAws(
+                            Constant.selectedFiles,
+                            isStaffData!!.school_id,
+                            "files"
+                        )
+                    }
                 }
+            } else if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS) {
+                isFileUploadInAws(
+                    Constant.selectedFiles,
+                    isStaffData!!.school_id,
+                    "audio"
+                )
             }
         }
         btnCancel.setOnClickListener {

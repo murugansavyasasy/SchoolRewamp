@@ -21,6 +21,7 @@ import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -28,15 +29,17 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.vs.schoolmessenger.AlbumImage.AlbumSelectActivity
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
+import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolList
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Homework.HomeWork
-import com.vs.schoolmessenger.School.Homework.SectionDetails
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
+import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.AttachmentBinding
 import java.io.File
 import java.io.IOException
@@ -44,7 +47,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener {
+class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View.OnClickListener {
 
     override fun getViewBinding(): AttachmentBinding {
         return AttachmentBinding.inflate(layoutInflater)
@@ -58,6 +61,9 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener {
         private const val MAX_FILES = 10
     }
 
+    private var isUserDetails: UserDetails? = null
+
+    var isMultipleSchool = false
     private var isStaffDetails: StaffDetails? = null
     private var cameraImageFilePath: String? = null
     private val CAMERA_PERMISSION_REQUEST_CODE = 200
@@ -66,7 +72,8 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener {
     override fun setupViews() {
         super.setupViews()
         setupToolbar()
-
+        binding.btnChooseRecipient.setOnClickListener(this)
+        binding.toolbarLayout.imgBack.setOnClickListener(this)
         saveDrawableToCache(R.drawable.add_image)?.let {
             Constant.selectedFiles.add(
                 FileItem(
@@ -74,6 +81,14 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener {
                 )
             )
         }
+        isUserDetails = SharedPreference.getUserDetails(this)
+        binding.toolbarLayout.lblParentToolBar.text = getString(R.string.lblAttachment)
+        if (isUserDetails!!.staff_details.size > 1) {
+            isMultipleSchool = true
+        } else {
+            isMultipleSchool = false
+        }
+
         binding.rcyImages.visibility = View.VISIBLE
         mAdapter = ImagePickingAdapter(this, Constant.selectedFiles!!, this)
         binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
@@ -177,28 +192,6 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener {
         if (position == 0) {
             showBottomDialog()
         }
-    }
-
-    private fun RedirectToSectionStudents() {
-        val title = binding.edtTitle.text.toString().trim()
-        val description = binding.edtDescription.text.toString().trim()
-        if (title.isEmpty()) {
-            binding.edtTitle.error = getString(R.string.Title_required)
-            binding.edtTitle.requestFocus()
-            return
-        }
-        if (description.isEmpty()) {
-            binding.edtDescription.error = getString(R.string.Title_required)
-            binding.edtDescription.requestFocus()
-            return
-        }
-
-        val sectionDetails = SectionDetails(title, description)
-        Constant.selectedFiles.removeAt(0)
-        Log.d("Constant.selectedFiles", Constant.selectedFiles.toString())
-        val intent = Intent(this, RecipientActivity::class.java)
-        intent.putExtra(Constant.section_data, sectionDetails)
-        startActivity(intent)
     }
 
     private fun openAlbumSelectActivity(isFileType: String) {
@@ -460,7 +453,6 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener {
         return filePath // This is just a placeholder; implement appropriate logic for your use case.
     }
 
-
     @Throws(IOException::class)
     private fun createImageFile(): File {
         val timeStamp: String =
@@ -471,5 +463,62 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener {
             ".jpg",               /* suffix */
             storageDir            /* directory */
         )
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.imgBack -> onBackPressed()
+            R.id.btnChooseRecipient -> {
+                Constant.isCommonTitle = binding.edtTitle.text.toString()
+                Constant.isCommonDescription = binding.edtDescription.text.toString()
+                isGoToRecipient()
+            }
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun isGoToRecipient() {
+
+        val title = binding.edtTitle.text.toString().trim()
+        val description = binding.edtDescription.text.toString().trim()
+        if (title.isEmpty()) {
+            binding.edtTitle.error = getString(R.string.Title_required)
+            binding.edtTitle.requestFocus()
+            return
+        }
+        if (description.isEmpty()) {
+            binding.edtDescription.error = getString(R.string.Description_required)
+            binding.edtDescription.requestFocus()
+            return
+        }
+
+        if (Constant.selectedFiles.size == 0 || Constant.selectedFiles.size == 1) {
+            Constant.showValidationAlertPopup(
+                getString(R.string.alert),
+                getString(R.string.Pick_atlease_one_file),
+                this
+            )
+            return
+        }
+
+
+        val isStaffRole = isUserDetails!!.staff_role
+        if (isMultipleSchool) {
+            if (isStaffRole == Constant.isGroupHeadRole || isStaffRole == Constant.isPrincipalRole || isStaffRole == Constant.isAdminRole
+            ) {
+                val intent = Intent(this, SchoolList::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                startActivity(intent)
+            } else {
+                val intent = Intent(this, RecipientActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                startActivity(intent)
+            }
+        } else {
+            val intent = Intent(this, RecipientActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            startActivity(intent)
+        }
     }
 }
