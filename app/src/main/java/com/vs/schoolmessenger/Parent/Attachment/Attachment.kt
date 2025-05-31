@@ -5,6 +5,7 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.databinding.ParentAttachmentBinding
 
 class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener {
+
     override fun getViewBinding(): ParentAttachmentBinding {
         return ParentAttachmentBinding.inflate(layoutInflater)
     }
@@ -17,5 +18,4 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
     override fun onClick(p0: View?) {
 
     }
-
 }
