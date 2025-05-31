@@ -47,7 +47,7 @@
                 android:layout_below="@+id/lblEventTitle"
                 android:layout_marginTop="@dimen/fifteen"
                 android:background="@drawable/bg_edittext_view_line"
-                android:hint="@string/eg_result_announcement"
+                android:hint="Title"
                 android:paddingBottom="@dimen/ten"
                 android:inputType="text"
                 android:textColor="@color/black"
@@ -92,73 +92,32 @@
                     style="@style/CustomTextStylePoppinsMedium"
                     android:textSize="@dimen/thirteen_sp" />
 
-                <TextView
-                    android:id="@+id/lbTextCount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/txtDesc"
-                    android:layout_alignParentEnd="true"
-                    android:text="@string/_0_of_500"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"
-                    style="@style/CustomTextStylePoppinsBold"/>
+
 
             </RelativeLayout>
+
+            <TextView
+                android:id="@+id/lbTextCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rytDesc"
+                android:layout_alignParentEnd="true"
+                android:text="@string/_0_of_500"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginTop="@dimen/ten"
+                style="@style/CustomTextStylePoppinsBold"/>
 
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/rytDesc"
+                android:layout_below="@+id/lbTextCount"
                 android:layout_alignStart="@+id/rytDesc"
                 android:layout_alignEnd="@+id/rytDesc"
                 android:layout_marginTop="@dimen/fifteen">
 
-                <TextView
-                    android:id="@+id/lblAddPhoto"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/ten"
-                    android:text="@string/AddPhotos"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"
-                    style="@style/CustomTextStylePoppinsBold" />
-
-                <TextView
-                    android:layout_toEndOf="@+id/lblAddPhoto"
-                    android:id="@+id/lblOptional"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/ten"
-                    android:text="@string/Optional"
-                    android:textColor="@color/grey"
-                    android:textSize="@dimen/thirteen_sp"
-                    style="@style/CustomTextStylePoppinsMedium" />
-
-                <ImageView
-                    android:layout_width="@dimen/twenty"
-                    android:layout_height="@dimen/twenty"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="@dimen/ten"
-                    android:src="@drawable/ic_photo" />
-
-
-                <RelativeLayout
-                    android:id="@+id/rytADD"
-                    android:layout_width="@dimen/seventy"
-                    android:layout_height="@dimen/seventy"
-                    android:layout_below="@+id/lblAddPhoto"
-                    android:layout_marginTop="@dimen/fifteen"
-                    android:background="@drawable/rect_light_blue">
-
-                    <ImageView
-                        android:layout_width="@dimen/thirty"
-                        android:layout_height="@dimen/thirty"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/ic_plus" />
-
-                </RelativeLayout>
 
 
 
@@ -168,33 +127,16 @@
                     android:id="@+id/rytEventDateTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/rytADD"
-                    android:layout_marginTop="@dimen/fifteen">
 
-                    <TextView
-                        android:id="@+id/lblDateTime"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/ten"
-                        android:text="@string/DateTime"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp"
-                        style="@style/CustomTextStylePoppinsBold" />
+                   >
 
-                    <ImageView
-                        android:layout_width="@dimen/twenty"
-                        android:layout_height="@dimen/twenty"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginTop="@dimen/ten"
-                        android:src="@drawable/ic_date_time" />
 
                     <TextView
                         android:id="@+id/lblStart"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/lblDateTime"
                         android:layout_marginTop="@dimen/ten"
-                        android:text="@string/Start"
+                        android:text="From"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp"
                         style="@style/CustomTextStylePoppinsBold" />
@@ -224,7 +166,8 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:background="@drawable/bg_stroke_rect_black"
-                                    android:orientation="vertical">
+                                    android:orientation="vertical"
+                                   >
 
                                     <TextView
                                         android:id="@+id/lblDay"
@@ -233,10 +176,10 @@
                                         android:layout_gravity="center_horizontal"
                                         android:layout_marginTop="@dimen/five"
                                         android:text="Fri"
-                                        android:fontFamily="@font/poppins_bold"
+                                        style="@style/CustomTextStylePoppinsBold"
                                         android:textColor="@color/black"
                                         android:textSize="@dimen/fifteen_sp"
-                                        android:textStyle="bold" />
+                                        />
 
                                     <TextView
                                         android:id="@+id/lblDate"
@@ -245,10 +188,10 @@
                                         android:background="@color/primary_light"
                                         android:gravity="center"
                                         android:text="12"
-                                        android:fontFamily="@font/poppins_bold"
+                                        style="@style/CustomTextStylePoppinsBold"
                                         android:textColor="@color/black"
                                         android:textSize="@dimen/fifteen_sp"
-                                        android:textStyle="bold" />
+                                     />
 
                                 </LinearLayout>
                             </androidx.cardview.widget.CardView>
@@ -277,36 +220,6 @@
                                 android:textSize="@dimen/thirteen_sp" />
 
                         </RelativeLayout>
-
-
-                        <RelativeLayout
-                            android:id="@+id/rytStartTime"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true">
-
-                            <ImageView
-                                android:id="@+id/imgTimeDown"
-                                android:layout_width="@dimen/twenty"
-                                android:layout_height="@dimen/twenty"
-                                android:layout_centerVertical="true"
-                                android:layout_toStartOf="@+id/txtStartTime"
-                                android:src="@drawable/ic_down_arrow" />
-
-                            <TextView
-                                android:id="@+id/txtStartTime"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentEnd="true"
-                                android:text="12:11 AM"
-                                android:textColor="@color/black"
-                                style="@style/CustomTextStylePoppinsMedium"
-                                android:textSize="@dimen/thirteen_sp" />
-
-                        </RelativeLayout>
-
-
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/one"
@@ -324,11 +237,10 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/rytStart"
                         android:layout_marginTop="@dimen/ten"
-                        android:text="@string/End"
+                        android:text="To"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp"
-                        android:fontFamily="@font/poppins_bold"
-                        android:textStyle="bold" />
+                       style="@style/CustomTextStylePoppinsBold" />
 
                     <RelativeLayout
                         android:id="@+id/rytEnd"
@@ -363,10 +275,10 @@
                                         android:layout_gravity="center_horizontal"
                                         android:layout_marginTop="@dimen/five"
                                         android:text="Fri"
-                                        android:fontFamily="@font/poppins_bold"
+                                       style="@style/CustomTextStylePoppinsBold"
                                         android:textColor="@color/black"
                                         android:textSize="@dimen/fifteen_sp"
-                                        android:textStyle="bold" />
+                                         />
 
                                     <TextView
                                         android:id="@+id/lblEndDate"
@@ -375,10 +287,10 @@
                                         android:background="@color/primary_light"
                                         android:gravity="center"
                                         android:text="12"
-                                        android:fontFamily="@font/poppins_bold"
+                                       style="@style/CustomTextStylePoppinsBold"
                                         android:textColor="@color/black"
                                         android:textSize="@dimen/fifteen_sp"
-                                        android:textStyle="bold" />
+                                       />
 
                                 </LinearLayout>
                             </androidx.cardview.widget.CardView>
@@ -408,35 +320,6 @@
 
                         </RelativeLayout>
 
-
-                        <RelativeLayout
-                            android:id="@+id/rytEndTime"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true">
-
-                            <ImageView
-                                android:id="@+id/imgTimeDown2"
-                                android:layout_width="@dimen/twenty"
-                                android:layout_height="@dimen/twenty"
-                                android:layout_centerVertical="true"
-                                android:layout_toStartOf="@+id/txtEndTime"
-                                android:src="@drawable/ic_down_arrow" />
-
-                            <TextView
-                                android:id="@+id/txtEndTime"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentEnd="true"
-                                android:text="12:11 AM"
-                                style="@style/CustomTextStylePoppinsMedium"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/thirteen_sp" />
-
-                        </RelativeLayout>
-
-
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/one"
@@ -447,11 +330,61 @@
                     </RelativeLayout>
 
 
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/linaerlayout"
+                        android:layout_below="@+id/rytEnd"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+
+
+                    <TextView
+                        android:id="@+id/lblAddPhoto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ten"
+                        android:text="Upload Image/Document"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/thirteen_sp"
+                        style="@style/CustomTextStylePoppinsBold" />
+
+                        <TextView
+                            android:id="@+id/optionallabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/ten"
+                            android:text="(Optional)"
+                            android:textColor="@color/grey"
+                            android:textSize="@dimen/thirteen_sp"
+                            android:layout_marginStart="5dp"
+                            style="@style/CustomTextStylePoppinsBold" />
+
+
+
+
+                    </LinearLayout>
+
+
+
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rcyImages"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/linaerlayout"
+                        android:layout_marginTop="@dimen/ten"
+                        android:orientation="vertical">
+
+                    </androidx.recyclerview.widget.RecyclerView>
+
                     <TextView
                         android:id="@+id/btnNext"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/fourty"
-                        android:layout_below="@+id/rytEnd"
+                        android:layout_below="@+id/rcyImages"
                         android:layout_marginTop="@dimen/thirty"
                         android:background="@drawable/rect_btn_orange"
                         android:gravity="center"
