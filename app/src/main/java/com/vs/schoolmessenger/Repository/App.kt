@@ -153,6 +153,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var getabsenteesstudentbydate: LiveData<AbsenteeStudentsResponse?>? = null
 
     var sendnotice: LiveData<NoticeBoardSendResponse?>? = null
+    var isAttachmentSend: LiveData<NoticeBoardSendResponse?>? = null
 
 
 
@@ -207,6 +208,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isGetStudentAttendanceReportData = apiSchoolRepositories.isStudentAttendanceReportLiveData
 
         sendnotice = apiSchoolRepositories.sendnoticeLiveData
+        isAttachmentSend = apiSchoolRepositories.sendAttachmentLiveData
 
     }
 
@@ -432,6 +434,9 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun sendnotice(isToken: String, josnObject: JsonObject, activity: Activity) {
         apiSchoolRepositories.sendnotice(isToken, josnObject, activity)
+    }
+    fun sendAttachment(isToken: String, josnObject: JsonObject, activity: Activity) {
+        apiSchoolRepositories.sendAttachment(isToken, josnObject, activity)
     }
 }
 

@@ -23,6 +23,7 @@ import com.vs.schoolmessenger.Repository.ApiCallRequest
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.AwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.Constant.SELECTED_SCHOOL_MENU
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SpecificStudentBinding
@@ -46,7 +47,8 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
     var isAcademicYear: String? = null
     var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
     private var isStudentList: List<NameAndIds> = listOf()
-
+    var isTargetType: Int? = null
+    var isCircularType: String? = null
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
@@ -69,9 +71,15 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
         isStaffDetails = SharedPreference.getStaffDetails(this)
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
 
+
+        isTargetType = Constant.isStudent
+        isCircularType = Constant.student
+
         isAccessToken = isStaffDetails!!.access_token
         isGetStudentList(isSelectedId, isAcademicYearId)
         isAwsUploadingPreSigned = AwsUploadingPreSigned()
+
+
 
         appViewModel!!.isStudentList!!.observe(this) { response ->
             if (response != null) {
@@ -104,16 +112,23 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
             }
         }
 
+        appViewModel!!.isAttachmentSend?.observe(this) { response ->
+            Constant.hideLoading(this@SpecificStudent)
+            if (response != null && response.status) {
+                Constant.showTopAlertPopup(response.message, this)
+            }
+        }
+
         appViewModel!!.isVoiceSend?.observe(this) { response ->
             Constant.hideLoading(this@SpecificStudent)
             if (response != null && response.status) {
-                Constant.showTopAlertPopup(response.message, Constant.isCommunication, this)
+                Constant.showTopAlertPopup(response.message, this)
             }
         }
         appViewModel!!.isSendText?.observe(this) { response ->
             Constant.hideLoading(this@SpecificStudent)
             if (response != null && response.status) {
-                Constant.showTopAlertPopup(response.message, Constant.isCommunication, this)
+                Constant.showTopAlertPopup(response.message, this)
 
             }
         }
@@ -202,7 +217,11 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                             )
                         )
                         if (Constant.isAwsUploadedFiles.size == isSelectedFiles.size) {
-                            voiceSendApi(isFileUploaded)
+                            if (Constant.SELECTED_SCHOOL_MENU == Constant.M_COMMUNICATION) {
+                                voiceSendApi(isFileUploaded)
+                            } else if (Constant.SELECTED_SCHOOL_MENU == Constant.M_ATTACHMENTS) {
+                                attachmentSendApi()
+                            }
                         }
                         Log.d("isSuccessFullUpload", "isSuccessFullUpload")
                     }
@@ -218,10 +237,6 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
     @RequiresApi(Build.VERSION_CODES.O)
     fun voiceSendApi(isFileUploadedUrl: String?) {
         val isVoiceData = Constant.isVoiceSendingData
-        var isTargetType: Int? = null
-        var isCircularType: String? = null
-        isTargetType = Constant.isStudent
-        isCircularType = Constant.student
 
         val jsonObject = ApiCallRequest.isVoiceSend(
             isAcademicYearId = isAcademicYearId,
@@ -233,11 +248,28 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
             isEmergency = isVoiceData.isEmergency,
             isScheduleCall = isVoiceData.isScheduleCall,
             schoolId = selectedIds,
-            targetType = isTargetType,
-            circularType = isCircularType,
+            targetType = isTargetType!!,
+            circularType = isCircularType!!,
             fileName = isVoiceData.isFileName
         )
         appViewModel!!.isVoiceSend(isAccessToken!!, jsonObject, this)
+
+    }
+
+    fun attachmentSendApi() {
+
+        isTargetType = Constant.isStudent
+        isCircularType = Constant.student
+        val jsonObject = ApiCallRequest.isSendAttachment(
+            isAcademicYearId = isAcademicYearId,
+            selectedIds = selectedIds,
+            title = Constant.isCommonTitle,
+            description = Constant.isCommonDescription,
+            targetType = isTargetType!!,
+            iframe = "iframe",
+            fileSize = "1",
+        )
+        appViewModel!!.sendAttachment(isAccessToken!!, jsonObject, this)
 
     }
 
@@ -279,19 +311,23 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                 )
                 appViewModel!!.isSendText(isAccessToken!!, jsonObject, this)
             } else {
-
-                if (Constant.isVoiceType == 3) {
-                    val isVoiceData = Constant.isVoiceSendingData
-                    voiceSendApi(isVoiceData!!.isAwsUrl)
-                } else {
+                if (Constant.SELECTED_SCHOOL_MENU == Constant.M_COMMUNICATION) {
+                    if (Constant.isVoiceType == 3) {
+                        val isVoiceData = Constant.isVoiceSendingData
+                        voiceSendApi(isVoiceData!!.isAwsUrl)
+                    } else {
+                        isFileUploadInAws(
+                            Constant.selectedFiles,
+                            isStaffDetails!!.school_id,
+                            "audio"
+                        )
+                    }
+                } else if (SELECTED_SCHOOL_MENU == Constant.M_ATTACHMENTS) {
                     isFileUploadInAws(
                         Constant.selectedFiles,
                         isStaffDetails!!.school_id,
-                        "audio"
+                        "files"
                     )
-//                    isFileUploadInAws(
-//                      //  Constant.selectedFiles.get(0).path!!, isStaffDetails!!.school_id, "audio"
-//                    )
                 }
             }
         }

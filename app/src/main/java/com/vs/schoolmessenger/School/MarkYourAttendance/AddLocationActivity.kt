@@ -85,7 +85,7 @@ class AddLocationActivity : BaseActivity<AddLocationActivityBinding>(), View.OnC
         appViewModel!!.isAddLocation?.observe(this) { response ->
             if (response != null && response.status) {
                 Constant.hideLoading(this@AddLocationActivity)
-                Constant.showTopAlertPopup(response.message, Constant.isGioMetric, this)
+                Constant.showTopAlertPopup(response.message, this)
             }
         }
 
