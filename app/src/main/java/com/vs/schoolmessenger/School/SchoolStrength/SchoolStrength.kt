@@ -3,19 +3,20 @@ package com.vs.schoolmessenger.School.SchoolStrength
 
 import android.util.Log
 import android.view.View
+import android.widget.AdapterView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
-import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
+import com.vs.schoolmessenger.CommonScreens.SchoolList.AcademicYearAdapter
+import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.SchoolStrength.Adapter.SchoolStrengthAdapter
 import com.vs.schoolmessenger.School.SchoolStrength.Adapter.SchoolStrengthDetailAdapter
 import com.vs.schoolmessenger.School.SchoolStrength.Model.SchoolData
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SchoolStrengthBinding
-
 
 
 class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListener {
@@ -31,6 +32,7 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
     private var isStaffDetails: StaffDetails? = null
+    var isFirstLoad = false
 
     private lateinit var schoolstrengthadapter: SchoolStrengthAdapter
     private lateinit var schoolstrengthdetailadapter: SchoolStrengthDetailAdapter
@@ -59,29 +61,28 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
                 val reorderedList = academicList.sortedByDescending { it.current_academic_year }
                 if (isAcademicYear == reorderedList) return@observe
                 isAcademicYear = reorderedList
-                isValidAcademicYear = isAcademicYear?.any { it.current_academic_year } == true
-
-                val defaultYear = isAcademicYear!!.first()
-                binding.lblAcademicYear.text = defaultYear.year
-                isAcademicYearId = defaultYear.id
-                isCurrentAcademicYear = defaultYear.current_academic_year
-
-                Log.d("DefaultAcademicYear", "ID: $isAcademicYearId, Year: ${defaultYear.year}")
-
+                isLoadAcademicYear(isAcademicYear)
+                isValidAcademicYear =
+                    isAcademicYear?.any { it.current_academic_year == true } == true
+                isAcademicYearId = isAcademicYear!![0].id
+                isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
                 isGetSchoolStrength()
             }
         }
 
         appViewModel?.isGetSchoolStrengthReport?.observe(this) { response ->
-            Log.d("response++", response.toString())
 
             if (response != null && response.status) {
+                isFirstLoad = true
+                binding.nomessage.visibility = View.GONE
+                binding.txtNoData.visibility = View.GONE
+                binding.rlaPieChartCount.visibility = View.VISIBLE
+                binding.rlaabsenteesreport2.visibility = View.VISIBLE
                 isLoadSchoolStrengthData(response.data)
             } else {
 
                  binding.nomessage.visibility = View.VISIBLE
                  binding.txtNoData.visibility = View.VISIBLE
-                 binding.AcademicYear.visibility = View.GONE
                 binding.rlaPieChartCount.visibility = View.GONE
                 binding.rlaabsenteesreport2.visibility = View.GONE
             }
@@ -93,17 +94,31 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
     override fun onClick(p0: View?) {
         when (p0?.id) {
             R.id.imgBack -> onBackPressed()
+        }
+    }
 
-            R.id.AcademicYear -> {
-                showAcademicDropdown(binding.AcademicYear, this, isAcademicYear) { selectedYear ->
-                    binding.lblAcademicYear.text = selectedYear.year
-                    isAcademicYearId = selectedYear.id
-                    isCurrentAcademicYear = selectedYear.current_academic_year
+    private fun isLoadAcademicYear(isAcademicYear: List<AcademicYear>?) {
+        val adapter = AcademicYearAdapter(this, isAcademicYear)
+        binding.isSpinner.adapter = adapter
+        binding.isSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>, view: View?, position: Int, id: Long
+            ) {
+                adapter.selectedPosition = position
+                if (isFirstLoad) {
+                    val selectedOption = isAcademicYear!![position]
+                    isAcademicYearId = selectedOption.id
+                    isCurrentAcademicYear = selectedOption.current_academic_year
 
-                    Log.d("DropdownMenu", "Clicked Academic Year: ID = ${selectedYear.id}, Year = ${selectedYear.year}, Current = ${selectedYear.current_academic_year}")
+                    Log.d(
+                        "DropdownMenu",
+                        "Clicked Academic Year: ID = ${selectedOption.id}, Year = ${selectedOption.year}, Current = ${selectedOption.current_academic_year}"
+                    )
                     isGetSchoolStrength()
                 }
             }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {}
         }
     }
 

@@ -7,6 +7,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.widget.AdapterView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
@@ -17,6 +18,7 @@ import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
+import com.vs.schoolmessenger.CommonScreens.SchoolList.AcademicYearAdapter
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SectionList.Section
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.Standard
 import com.vs.schoolmessenger.R
@@ -82,7 +84,7 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         binding.btnSelectPresent.setOnClickListener(this)
 //        binding.rlaSectionReport.setOnClickListener(this)
         binding.rlaDayDatePicker.setOnClickListener(this)
-        binding.dropdownAcademicYear.setOnClickListener(this)
+//        binding.dropdownAcademicYear.setOnClickListener(this)
         binding.rlaFullDay.setOnClickListener(this)
         binding.rlaHalfDay.setOnClickListener(this)
         binding.rlaSecondHalf.setOnClickListener(this)
@@ -145,12 +147,12 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                         isAcademicYear = reorderedList
                         isValidAcademicYear =
                             isAcademicYear?.any { it.current_academic_year == true } == true
-                        binding.dropdownAcademicYear.text = isAcademicYear!![0].year
                         isAcademicYearId = isAcademicYear!![0].id
                         isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
-                        Log.d("isAcademicYearId", isAcademicYearId.toString())
+                        isLoadAcademicYear(isAcademicYear)
                         isGetStandardSection()
                         binding.rlaMarkAttendanceDetails.visibility = View.VISIBLE
+
                     }
                 } else {
                     binding.rlaMarkAttendanceDetails.visibility = View.GONE
@@ -163,7 +165,6 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
             Constant.hideLoading(this@AttendanceMark)
             if (response != null) {
                 if (response.status) {
-
                     isGetStandard = response.data
                     isGetStandard?.size?.let {
                         if (it > 0) {
@@ -503,20 +504,20 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                 }
             }
 
-            R.id.dropdownAcademicYear -> {
-                showAcademicDropdown(
-                    binding.dropdownAcademicYear, this, isAcademicYear
-                ) { selectedYear ->
-                    binding.dropdownAcademicYear.text = selectedYear.year
-                    isGetStandardSection()
-                    Log.d(
-                        "DropdownMenu",
-                        "Clicked Academic Year: ID = ${selectedYear.id}, Year = ${selectedYear.year}, Current = ${selectedYear.current_academic_year}"
-                    )
-                    loadData()
-                    binding.txtSearchBox.text.clear()
-                }
-            }
+//            R.id.dropdownAcademicYear -> {
+//                showAcademicDropdown(
+//                    binding.dropdownAcademicYear, this, isAcademicYear
+//                ) { selectedYear ->
+//                    binding.dropdownAcademicYear.text = selectedYear.year
+//                    isGetStandardSection()
+//                    Log.d(
+//                        "DropdownMenu",
+//                        "Clicked Academic Year: ID = ${selectedYear.id}, Year = ${selectedYear.year}, Current = ${selectedYear.current_academic_year}"
+//                    )
+//                    loadData()
+//                    binding.txtSearchBox.text.clear()
+//                }
+//            }
 
 
 //            R.id.rlaAttendanceType -> {
@@ -530,6 +531,31 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
 //            }
         }
         updateActionButtonsState()
+    }
+
+    private fun isLoadAcademicYear(isAcademicYear: List<AcademicYear>?) {
+        val adapter = AcademicYearAdapter(this, isAcademicYear)
+        binding.isSpinner.adapter = adapter
+
+        binding.isSpinner.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    adapter.selectedPosition = position
+                    adapter.notifyDataSetChanged()
+                    val selectedOption = isAcademicYear!![position]
+                    isAcademicYearId = selectedOption.id
+                    isGetStandardSection()
+                    loadData()
+                    binding.txtSearchBox.text.clear()
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {}
+            }
     }
 
     private fun isSaveMarkAttendanceDetails() {
