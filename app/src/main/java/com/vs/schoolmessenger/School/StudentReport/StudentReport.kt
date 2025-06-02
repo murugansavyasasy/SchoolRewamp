@@ -176,6 +176,9 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
         binding.rcyStudentReport.layoutManager = LinearLayoutManager(this)
         binding.rcyStudentReport.adapter = mAdapter
 
+        appViewModel!!.getStudentReportDetails(
+            isAccessToken!!, activity = this
+        )
         Log.d("SectionID", isSectionID.toString())
         Log.d("ClassID", isClassID.toString())
 
@@ -260,7 +263,6 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
                         field.contains(word)
                     }
                 }
-
             }
         }
 
@@ -354,18 +356,18 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
                 onBackPressed()
             }
 
-//            R.id.rlaSort -> {
-//                showDropdownMenuSort(binding.dropdownTextView, this, items) { selectedOption ->
-//                    binding.dropdownTextView.text = selectedOption
-//                    Log.d("SelectedFilterSort", selectedOption)
-//
-//                    if (!isGetStandard.isNullOrEmpty()) {
-//                        updateStandardAndSection(isGetStandard!![0])
-//                    } else {
-//                        updateStandardAndSection(null)
-//                    }
-//                }
-//            }
+            R.id.rlaSort -> {
+                showDropdownMenuSort(binding.dropdownTextView, this, items) { selectedOption ->
+                    binding.dropdownTextView.text = selectedOption
+                    Log.d("SelectedFilterSort", selectedOption)
+
+                    if (!isGetStandard.isNullOrEmpty()) {
+                        updateStandardAndSection(isGetStandard!![0])
+                    } else {
+                        updateStandardAndSection(null)
+                    }
+                }
+            }
 
 
             R.id.dropdownTextViewStandard -> {
