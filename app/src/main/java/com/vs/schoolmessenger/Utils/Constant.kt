@@ -49,6 +49,7 @@ import com.vs.schoolmessenger.School.Communication.CommunicationSchool
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendingData
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceSendingData
 import com.vs.schoolmessenger.School.Homework.HomeWork
+import com.vs.schoolmessenger.School.NoticeBoard.CreateNoticeBoard
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalTime
@@ -550,6 +551,10 @@ object Constant {
                 activity.startActivity(intent)
             } else if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS) {
                 val intent = Intent(activity, Attachment::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                activity.startActivity(intent)
+            } else if (SELECTED_SCHOOL_MENU == M_NOTICEBOARD) {
+                val intent = Intent(activity, CreateNoticeBoard::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 activity.startActivity(intent)
             }

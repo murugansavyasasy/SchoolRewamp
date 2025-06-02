@@ -1,12 +1,10 @@
 package com.vs.schoolmessenger.School.NoticeBoard.Model
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+import java.io.Serializable
 
-@Parcelize
 data class NoticeBoardDetails (
     val title: String,
     val description: String,
     val txtStartDate: String,
     val txtEndDate: String
-) : Parcelable
+) : Serializable

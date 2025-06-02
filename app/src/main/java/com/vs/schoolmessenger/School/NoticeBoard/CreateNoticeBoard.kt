@@ -30,6 +30,7 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
+import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolList
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
@@ -46,6 +47,7 @@ import com.vs.schoolmessenger.databinding.CreateNoticeBoardBinding
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 import kotlin.text.endsWith
@@ -81,7 +83,8 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickL
 
 
     private var selectedDateField: Int = 0
-
+    private var txtStartDate: String? = null
+    private var txtEndDate: String? = null
 
 
     override fun setupViews() {
@@ -96,6 +99,18 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickL
         binding.btnNext.setOnClickListener(this)
         binding.rytStartDate.setOnClickListener(this)
         binding.rytEndDate.setOnClickListener(this)
+        val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+        val calendar = Calendar.getInstance()
+
+        val currentDate = dateFormat.format(calendar.time)
+        txtStartDate = currentDate
+        binding.txtStartDate.text = currentDate
+        txtEndDate = currentDate
+        binding.txtEndDate.text = currentDate
+
+
+
+
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
         binding.toolbarLayout.lblParentToolBar.text = getString(R.string.NoticeBoard)
@@ -593,9 +608,9 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickL
 
         Log.d("RedirectToSchoolList", "Remaining selectedFiles: ${Constant.selectedFiles}")
 
-        val intent = Intent(this, RecipientActivity::class.java)
+        val intent = Intent(this, SchoolList::class.java)
         intent.putExtra(Constant.notice_data, noticeboardDetails)
-        Log.d("RedirectToSchoolList", "Starting RecipientActivity with notice data")
+        Log.d("RedirectToSchoolList", "Starting SchoolList with notice data")
         startActivity(intent)
     }
 

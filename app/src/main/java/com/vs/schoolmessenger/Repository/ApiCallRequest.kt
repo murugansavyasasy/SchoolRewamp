@@ -5,6 +5,8 @@ import androidx.annotation.RequiresApi
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Utils.Constant
+import org.json.JSONArray
+import org.json.JSONObject
 
 object ApiCallRequest {
 
@@ -152,18 +154,40 @@ object ApiCallRequest {
     }
 
     fun isSendNotice(
-        istitle: Int,
-        iscontent: MutableList<String>,
-        istargetcode: String,
-        isintendedfor: String,
-        isvisiblefrom: String,
-        isvisibleto: String,
-        subjectId: Int): JsonObject {
+        title: String,
+        description: String,
+        startDate: String,
+        endDate: String,
+        target_code: MutableList<String>,
+        intended_for: String
+    ): JsonObject {
         val jsonObject = JsonObject()
         val filePathArray = JsonArray()
 
+        for (i in Constant.isAwsUploadedFiles.indices) {
+            val isSelectedObject = JsonObject()
+            isSelectedObject.addProperty(APIKeyNames.url, Constant.isAwsUploadedFiles[i].isFileUrl)
+            isSelectedObject.addProperty(APIKeyNames.type, Constant.isAwsUploadedFiles[i].isFileType.toString())
+            filePathArray.add(isSelectedObject)
+        }
+
+        val targetCodeArray = JsonArray()
+        for (code in target_code) {
+            targetCodeArray.add(code)
+        }
+
+        jsonObject.addProperty("title", title)
+        jsonObject.addProperty("content", description)
+        jsonObject.add("target_code", targetCodeArray)
+        jsonObject.addProperty("intended_for", intended_for)
+        jsonObject.addProperty("visible_from", startDate)
+        jsonObject.addProperty("visible_to", endDate)
+        jsonObject.add(APIKeyNames.file_path, filePathArray)
+
         return jsonObject
     }
+
+
 
 
 }
