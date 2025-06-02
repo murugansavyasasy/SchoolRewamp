@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
@@ -18,11 +19,14 @@ import android.os.Looper
 import android.provider.Settings
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebResourceRequest
+import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.EditText
@@ -422,12 +426,45 @@ object Constant {
     }
 
     fun loadWebView(context: Context, webView: WebView, url: String) {
-        webView.settings.javaScriptEnabled = true
-        webView.settings.setSupportZoom(true)
-        webView.settings.builtInZoomControls = true
-        webView.settings.displayZoomControls = false
-        webView.webViewClient = WebViewClient()
+        val settings = webView.settings
+        settings.javaScriptEnabled = true
+        settings.domStorageEnabled = true
+        settings.setSupportMultipleWindows(true)
+        settings.javaScriptCanOpenWindowsAutomatically = true
+        settings.loadWithOverviewMode = true
+        settings.useWideViewPort = true
+        settings.setSupportZoom(true)
+        settings.builtInZoomControls = false
+        settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN
+        settings.cacheMode = WebSettings.LOAD_NO_CACHE
+
+        webView.scrollBarStyle = WebView.SCROLLBARS_OUTSIDE_OVERLAY
+        webView.isScrollbarFadingEnabled = true
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            webView.setLayerType(View.LAYER_TYPE_HARDWARE, null)
+        } else {
+            webView.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
+        }
+
+        webView.webViewClient = object : WebViewClient() {
+            override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
+                super.onPageStarted(view, url, favicon)
+                Constant.showLoading(context as Activity)
+            }
+
+            override fun onReceivedError(view: WebView, errorCode: Int, description: String?, failingUrl: String?) {
+                Constant.hideLoading(context as Activity)
+
+            }
+            override fun onPageFinished(view: WebView, url: String) {
+                Constant.hideLoading(context as Activity)
+
+            }
+        }
+
         webView.loadUrl(url)
+
     }
 
     fun getAndroidSecureId(activity: Activity): String {
