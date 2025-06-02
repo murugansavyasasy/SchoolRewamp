@@ -12,6 +12,7 @@ import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYearResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
+import com.vs.schoolmessenger.Parent.Attachment.AttachmentResponse
 import com.vs.schoolmessenger.Parent.Attendance.ChildAttendanceResponse
 import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
 import com.vs.schoolmessenger.Parent.Communication.VoiceDataResponse
@@ -145,6 +146,8 @@ class App(application: Application) : AndroidViewModel(application) {
         private set
     var isSendAbsenteeSMS: LiveData<SendAbsenteeSMSResponse?>? = null
     var isChildAttendanceReport: LiveData<ChildAttendanceResponse?>? = null
+    var isAttachmentResponse: LiveData<AttachmentResponse?>? = null
+    var isAttachmentResponseArchive: LiveData<AttachmentResponse?>? = null
 
     var getabsenteescountbydate: LiveData<AbsenteesResponse?>? = null
 
@@ -203,6 +206,8 @@ class App(application: Application) : AndroidViewModel(application) {
         isSendAbsenteeSMS = apiSchoolRepositories.isSendAbsenteeSMSLiveData
 
         isChildAttendanceReport = apiParentRepositories.isChildAttendanceReportLiveData
+        isAttachmentResponse = apiParentRepositories.isAttachmentResponseLiveData
+        isAttachmentResponseArchive = apiParentRepositories.isAttachmentResponseArchiveLiveData
         getabsenteescountbydate = apiSchoolRepositories.getabsenteescountbydateLiveData
         getabsenteesstudentbydate = apiSchoolRepositories.getabsenteesstudentbydateLiveData
         isGetStudentAttendanceReportData = apiSchoolRepositories.isStudentAttendanceReportLiveData
@@ -437,6 +442,14 @@ class App(application: Application) : AndroidViewModel(application) {
     }
     fun sendAttachment(isToken: String, josnObject: JsonObject, activity: Activity) {
         apiSchoolRepositories.sendAttachment(isToken, josnObject, activity)
+    }
+
+    fun getAttachment(isToken: String, activity: Activity) {
+        apiParentRepositories.getAttachmentList(isToken, activity)
+    }
+
+    fun getAttachmentArchive(isToken: String, activity: Activity) {
+        apiParentRepositories.attachmentListArchive(isToken, activity)
     }
 }
 

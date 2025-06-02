@@ -17,6 +17,7 @@ import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYearResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
+import com.vs.schoolmessenger.Parent.Attachment.AttachmentResponse
 import com.vs.schoolmessenger.Parent.Attendance.ChildAttendanceResponse
 import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
 import com.vs.schoolmessenger.Parent.Communication.VoiceDataResponse
@@ -381,6 +382,7 @@ interface ApiInterfaces {
     ): Call<AbsenteesResponse?>
 
 
+
     @GET(APIMethods.getabsenteesstudentbydate)
     fun getabsenteesstudentbydate(
         @Header(APIKeyNames.Authorization) token: String,
@@ -400,5 +402,18 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String,
         @Body request: JsonObject
     ): Call<NoticeBoardSendResponse>?
+
+
+    @GET(APIMethods.attachmentList)
+    fun attachmentList(
+        @Header(APIKeyNames.Authorization) token: String
+    ): Call<AttachmentResponse?>
+
+    @GET(APIMethods.attachmentListArchive)
+    fun attachmentListArchive(
+        @Header(APIKeyNames.Authorization) token: String
+    ): Call<AttachmentResponse?>
+
+
 
 }
