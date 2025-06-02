@@ -30,8 +30,12 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
+import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.Homework.HomeWork
+import com.vs.schoolmessenger.School.Homework.SectionDetails
+import com.vs.schoolmessenger.School.NoticeBoard.Model.NoticeBoardDetails
 
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.FileItem
@@ -169,6 +173,8 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickL
                 }
             }
 
+
+
         Constant.editTextCounter(this,binding.txtDesc,500,binding.lbTextCount)
 
     }
@@ -238,6 +244,12 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickL
         }
     }
 
+    override fun onBackPressed() {
+        Constant.selectedFiles.clear()
+        Constant.isAwsUploadedFiles.clear()
+        super.onBackPressed()
+    }
+
     override fun onImageClick(position: Int) {
         if (position == 0) {
             showBottomDialog()
@@ -272,7 +284,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickL
             putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
             putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
         }
-        startActivityForResult(intent, CreateNoticeBoard.Companion.PICK_DOCUMENT_REQUEST)
+        startActivityForResult(intent, PICK_DOCUMENT_REQUEST)
     }
 
 
@@ -321,6 +333,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickL
         dialog.show()
     }
 
+
     private fun openCamera() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
 
@@ -338,7 +351,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickL
                 )
                 cameraImageFilePath = it.absolutePath
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                startActivityForResult(intent, CAMERA_IMAGE_REQUEST)
+                startActivityForResult(intent, HomeWork.Companion.CAMERA_IMAGE_REQUEST)
             } ?: Toast.makeText(this, "Could not create file for photo", Toast.LENGTH_SHORT).show()
         } else {
             Toast.makeText(this, "No camera app found", Toast.LENGTH_SHORT).show()
@@ -415,7 +428,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickL
 //                }
 //            }
 
-            CAMERA_IMAGE_REQUEST -> {
+            HomeWork.Companion.CAMERA_IMAGE_REQUEST -> {
                 cameraImageFilePath?.let { filePath ->
                     var file = File(filePath)
 
@@ -475,6 +488,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickL
         return path
     }
 
+
     override fun onDateSelected(date: String) {
         when (selectedDateField) {
             1 -> binding.txtStartDate.text = date
@@ -509,6 +523,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickL
     }
 
 
+
     @Throws(IOException::class)
     private fun createImageFile(): File {
         val timeStamp: String =
@@ -534,9 +549,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickL
             )
         }
 
-
-
-
         binding.rcyImages.visibility = View.VISIBLE
         mAdapter = ImagePickingAdapter(this, Constant.selectedFiles, this)
         binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
@@ -545,19 +557,46 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickL
 
 
     private fun RedirectToSchoolList() {
-
         val title = binding.txtTitle.text.toString().trim()
         val description = binding.txtDesc.text.toString().trim()
+        val txtStartDate = binding.txtStartDate.text.toString().trim()
+        val txtEndDate = binding.txtEndDate.text.toString().trim()
+
+        Log.d("RedirectToSchoolList", "Title: $title")
+        Log.d("RedirectToSchoolList", "Description: $description")
+        Log.d("RedirectToSchoolList", "Start Date: $txtStartDate")
+        Log.d("RedirectToSchoolList", "End Date: $txtEndDate")
 
         if (title.isEmpty()) {
+            Log.d("RedirectToSchoolList", "Title is empty")
             binding.txtTitle.error = getString(R.string.Title_required)
             binding.txtTitle.requestFocus()
             return
         }
+
         if (description.isEmpty()) {
+            Log.d("RedirectToSchoolList", "Description is empty")
             binding.txtDesc.error = "Description is required"
             binding.txtDesc.requestFocus()
             return
         }
+
+        val noticeboardDetails = NoticeBoardDetails(title, description, txtStartDate, txtEndDate)
+        Log.d("RedirectToSchoolList", "NoticeBoardDetails created: $noticeboardDetails")
+
+        if (Constant.selectedFiles.isNotEmpty()) {
+            Log.d("RedirectToSchoolList", "Removing first file from selectedFiles: ${Constant.selectedFiles[0]}")
+            Constant.selectedFiles.removeAt(0)
+        } else {
+            Log.d("RedirectToSchoolList", "selectedFiles list is already empty")
+        }
+
+        Log.d("RedirectToSchoolList", "Remaining selectedFiles: ${Constant.selectedFiles}")
+
+        val intent = Intent(this, RecipientActivity::class.java)
+        intent.putExtra(Constant.notice_data, noticeboardDetails)
+        Log.d("RedirectToSchoolList", "Starting RecipientActivity with notice data")
+        startActivity(intent)
     }
+
 }

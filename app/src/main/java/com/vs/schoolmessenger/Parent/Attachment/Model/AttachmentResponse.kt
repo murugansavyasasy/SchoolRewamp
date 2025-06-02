@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.Parent.Attachment
+package com.vs.schoolmessenger.Parent.Attachment.Model
 
 data class AttachmentResponse(
     val status: Boolean,

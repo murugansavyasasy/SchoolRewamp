@@ -1,4 +1,6 @@
-package com.vs.schoolmessenger.Parent.Attachment
+package com.vs.schoolmessenger.Parent.Attachment.Model
+
+import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentFile
 
 data class AttachmentData(
     val id: String,
