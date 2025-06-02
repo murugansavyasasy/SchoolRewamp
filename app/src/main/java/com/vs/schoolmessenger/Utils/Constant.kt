@@ -217,6 +217,7 @@ object Constant {
     var lblAcademicYear = "lblAcademicYear"
     var isSelectedId = "isSelectedId"
     var section_data = "section_data"
+    var notice_data = "notice_data"
     var isFileUrl = "isFileUrl"
     var isFileType = "isFileType"
     var isTitle = "isTitle"

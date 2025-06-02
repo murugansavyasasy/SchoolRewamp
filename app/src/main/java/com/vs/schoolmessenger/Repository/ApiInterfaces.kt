@@ -17,7 +17,7 @@ import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYearResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
-import com.vs.schoolmessenger.Parent.Attachment.AttachmentResponse
+import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentResponse
 import com.vs.schoolmessenger.Parent.Attendance.ChildAttendanceResponse
 import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
 import com.vs.schoolmessenger.Parent.Communication.VoiceDataResponse
@@ -43,11 +43,14 @@ import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffLocationR
 import com.vs.schoolmessenger.School.NoticeBoard.Response.NoticeBoardSendResponse
 import com.vs.schoolmessenger.School.SchoolStrength.Model.SchoolStrengthResponse
 import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
+import okhttp3.RequestBody
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Query
 
 interface ApiInterfaces {
@@ -414,6 +417,19 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String
     ): Call<AttachmentResponse?>
 
+    @POST("me/videos")
+    fun isCreateVideoUrl(
+        @Body jsonObject: JsonObject?
+    ): Call<JsonObject>
 
+    @PUT("upload")
+    fun patchVimeoVideoMetaData(
+        @Query("ticket_id") ticketid: String?,
+        @Query("video_file_id") videoid: String,
+        @Query("signature") signatureid: String?,
+        @Query("v6") v6id: String?,
+        @Query("redirect_url") redirecturl: String?,
+        @Body file: RequestBody?
+    ): Call<ResponseBody>
 
 }
