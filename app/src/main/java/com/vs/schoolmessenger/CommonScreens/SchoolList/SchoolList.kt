@@ -12,7 +12,6 @@ import android.widget.AdapterView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
-import androidx.core.net.toUri
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.AWS.AwsUploadingPreSigned
@@ -59,11 +58,11 @@ import com.vs.schoolmessenger.Utils.Constant.M_STUDENT_REPORT
 import com.vs.schoolmessenger.Utils.Constant.SELECTED_SCHOOL_MENU
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.SharedPreference
-import com.vs.schoolmessenger.Vimeo.VimeoTusUploader
 import com.vs.schoolmessenger.databinding.SchoolListActivityBinding
+import com.vs.schoolmessenger.util.VimeoUploader
 
 class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickListener,
-    View.OnClickListener {
+    View.OnClickListener, VimeoUploader.UploadCompletionListener {
 
     override fun getViewBinding(): SchoolListActivityBinding {
         return SchoolListActivityBinding.inflate(layoutInflater)
@@ -507,60 +506,32 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         }
     }
 
+
     private fun videoSending() {
-        Log.d("isSelectedFile", Constant.selectedFiles.get(0).path)
-        Constant.showLoading(this)
         val isToken = "8d74d8bf6b5742d39971cc7d3ffbb51a"
-
-        val uploader = VimeoTusUploader(isToken, this)
-        uploader.uploadVideo(
-            Constant.selectedFiles[0].path.toUri(),
-            object : VimeoTusUploader.Callback {
-                override fun onProgress(progressPercent: Int) {
-                    Log.d("VIMEO", "Upload progress: $progressPercent%")
-                }
-
-                override fun onSuccess(videoUrl: String, embedIframe: String) {
-                    Log.d("VIMEO", "Upload successful: $videoUrl")
-                }
-
-                override fun onError(errorMessage: String) {
-                    Log.e("VIMEO", "Upload failed: $errorMessage")
-                }
-            })
-
-//        val listener: UploadProgressListener = object : UploadProgressListener {
-//            override fun onProgressUpdate(percentage: Int, Uploading: Boolean) {
-//                Log.d("videoUpload_pb", percentage.toString())
-//                Log.d("Uploading", Uploading.toString())
-//                if (percentage == 100 && Uploading) {
-//
-//                } else {
-//                    if (percentage == 100) {
-//                        Constant.hideLoading(this@SchoolList)
-////                        Constant.isA(this@SchoolList, "Video sending failed")
-//                    }
-//                }
-//            }
-//
-//            override fun onUploadComplete(videoId: String?) {
-//                // Implementation for onUploadComplete
-//            }
-//
-//            override fun onUploadFailed(error: String?) {
-//                // Implementation for onUploadFailed
-//            }
-//        }
-//        val isToken = "8d74d8bf6b5742d39971cc7d3ffbb51a"
-//        val filepath = File(Constant.isSelectedFiles[0].toString())
-//        val isVimeoUploaded = VimeoUploaded()
-//        isVimeoUploaded.VimeoVideoUploadTask(
-//            "quiz",
-//            "quiz",
-//            isToken,
-//            filepath,
-//            listener
-//        )
-//        isVimeoUploaded.execute()
+        Log.d("Constant.selectedFiles.get(1).path", Constant.selectedFiles.get(1).path.toString())
+        VimeoUploader.uploadVideo(
+            this@SchoolList,
+            "quiz",
+            "quiz",
+            isToken,
+            Constant.selectedFiles[1].path,
+            this@SchoolList
+        )
     }
+
+    override fun onUploadComplete(success: Boolean, iframe: String?, link: String?) {
+        runOnUiThread {
+            Log.d("Vimeo_Video_upload", success.toString())
+            Log.d("VimeoIframe", iframe.toString())
+            Log.d("link", link.toString())
+        }
+    }
+
+    override fun onFailure(errorMessage: String?) {
+        runOnUiThread {
+            Log.e("VimeoUploadError", errorMessage ?: "Unknown error")
+        }
+    }
+
 }

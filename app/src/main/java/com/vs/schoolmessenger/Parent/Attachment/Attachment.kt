@@ -10,7 +10,6 @@ import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentClickListener
 import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentData
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
-import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ParentAttachmentBinding
 

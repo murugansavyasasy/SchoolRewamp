@@ -25,7 +25,8 @@ class AlbumSelectActivity : AppCompatActivity() {
     companion object {
         private const val REQUEST_CODE_MANAGE_ALL_FILES = 100
         private const val REQUEST_CODE_READ_STORAGE = 101
-        private val SUPPORTED_EXTENSIONS = listOf("pdf", "doc", "docx", "ppt", "pptx", "xls", "xlsx", "txt")
+        private val SUPPORTED_EXTENSIONS =
+            listOf("pdf", "doc", "docx", "ppt", "pptx", "xls", "xlsx", "txt")
         private const val TAG = "DocumentScan"
     }
 
@@ -59,6 +60,7 @@ class AlbumSelectActivity : AppCompatActivity() {
                     requestStoragePermission()
                 }
             }
+
             else -> adapter.submitList(emptyList())
         }
 
@@ -107,25 +109,38 @@ class AlbumSelectActivity : AppCompatActivity() {
     private fun requestStoragePermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             try {
-                val intent = Intent(android.provider.Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
+                val intent =
+                    Intent(android.provider.Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
                 intent.data = Uri.parse("package:$packageName")
                 startActivityForResult(intent, REQUEST_CODE_MANAGE_ALL_FILES)
             } catch (e: Exception) {
-                val intent = Intent(android.provider.Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION)
+                val intent =
+                    Intent(android.provider.Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION)
                 startActivityForResult(intent, REQUEST_CODE_MANAGE_ALL_FILES)
             }
         } else {
-            requestPermissions(arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE), REQUEST_CODE_READ_STORAGE)
+            requestPermissions(
+                arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),
+                REQUEST_CODE_READ_STORAGE
+            )
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_CODE_READ_STORAGE) {
             if (grantResults.isNotEmpty() && grantResults[0] == android.content.pm.PackageManager.PERMISSION_GRANTED) {
                 loadDocumentsOrOpenPicker()
             } else {
-                Toast.makeText(this, "Permission denied to read external storage", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    "Permission denied to read external storage",
+                    Toast.LENGTH_SHORT
+                ).show()
                 Log.w(TAG, "Read storage permission denied")
             }
         }
@@ -137,7 +152,8 @@ class AlbumSelectActivity : AppCompatActivity() {
             if (hasStoragePermission()) {
                 loadDocumentsOrOpenPicker()
             } else {
-                Toast.makeText(this, "Permission denied to manage all files", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Permission denied to manage all files", Toast.LENGTH_SHORT)
+                    .show()
                 Log.w(TAG, "Manage all files permission denied")
             }
         }
@@ -196,13 +212,22 @@ class AlbumSelectActivity : AppCompatActivity() {
         if (mimeType == null) return false
         val map = mapOf(
             "pdf" to listOf("application/pdf"),
-            "doc" to listOf("application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"),
-            "ppt" to listOf("application/vnd.ms-powerpoint", "application/vnd.openxmlformats-officedocument.presentationml.presentation"),
-            "xls" to listOf("application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"),
+            "doc" to listOf(
+                "application/msword",
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            ),
+            "ppt" to listOf(
+                "application/vnd.ms-powerpoint",
+                "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+            ),
+            "xls" to listOf(
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            ),
             "txt" to listOf("text/plain")
         )
         return extensions.any { ext ->
-            map[ext]?.contains(mimeType) ?: false
+            map[ext]?.contains(mimeType) == true
         }
     }
 
@@ -217,9 +242,21 @@ class AlbumSelectActivity : AppCompatActivity() {
 
     private fun extToMimeTypes(extension: String): List<String> = when (extension) {
         "pdf" -> listOf("application/pdf")
-        "doc" -> listOf("application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
-        "ppt" -> listOf("application/vnd.ms-powerpoint", "application/vnd.openxmlformats-officedocument.presentationml.presentation")
-        "xls" -> listOf("application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+        "doc" -> listOf(
+            "application/msword",
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        )
+
+        "ppt" -> listOf(
+            "application/vnd.ms-powerpoint",
+            "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+        )
+
+        "xls" -> listOf(
+            "application/vnd.ms-excel",
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        )
+
         "txt" -> listOf("text/plain")
         else -> emptyList()
     }

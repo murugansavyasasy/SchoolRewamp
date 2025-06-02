@@ -52,35 +52,43 @@ class FileGridAdapter(
             mimeType?.startsWith("image/") == true -> {
                 Glide.with(context).load(uri).into(binding.imageView)
             }
+
             mimeType?.startsWith("video/") == true -> {
                 Glide.with(context).load(uri).into(binding.imageView)
                 binding.videoIcon.visibility = View.VISIBLE
             }
+
             mimeType?.startsWith("audio/") == true -> {
                 binding.imageView.setImageResource(R.drawable.voice)
                 binding.audioIcon.visibility = View.VISIBLE
             }
+
             mimeType == "application/pdf" || filePath.endsWith(".pdf") -> {
                 binding.imageView.setImageResource(R.drawable.pdf_icon)
             }
+
             mimeType == "application/msword" ||
                     mimeType == "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
                     filePath.endsWith(".doc") || filePath.endsWith(".docx") -> {
                 binding.imageView.setImageResource(R.drawable.doc_icon)
             }
+
             mimeType == "application/vnd.ms-excel" ||
                     mimeType == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
                     filePath.endsWith(".xls") || filePath.endsWith(".xlsx") -> {
                 binding.imageView.setImageResource(R.drawable.excel_icon)
             }
+
             mimeType == "application/vnd.ms-powerpoint" ||
                     mimeType == "application/vnd.openxmlformats-officedocument.presentationml.presentation" ||
                     filePath.endsWith(".ppt") || filePath.endsWith(".pptx") -> {
                 binding.imageView.setImageResource(R.drawable.ppt_icon)
             }
+
             mimeType == "text/plain" || filePath.endsWith(".txt") -> {
                 binding.imageView.setImageResource(R.drawable.txt_icon)
             }
+
             else -> {
                 binding.imageView.setImageResource(R.drawable.doc_icon)
             }
