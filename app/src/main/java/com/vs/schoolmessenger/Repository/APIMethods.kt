@@ -72,6 +72,8 @@ object APIMethods {
 
     const val sendnotice = "admin/api/notice-board/send-notice"
     const val sendAttachment = "comm/api/attachment/send-attachment"
+    const val attachmentList = "comm/api/attachment/list"
+    const val attachmentListArchive = "comm/api/attachment/list-archive"
 }
 
 
