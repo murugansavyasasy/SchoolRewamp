@@ -9,7 +9,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.AdapterView
+import android.widget.RadioButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -31,6 +33,7 @@ import com.vs.schoolmessenger.School.DailyCollection.DailyCollection
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReport
 import com.vs.schoolmessenger.School.Homework.HomeWork
 import com.vs.schoolmessenger.School.MarkYourAttendance.MarkYourAttendance
+import com.vs.schoolmessenger.School.NoticeBoard.Model.NoticeBoardDetails
 import com.vs.schoolmessenger.School.SchoolStrength.SchoolStrength
 import com.vs.schoolmessenger.School.StaffWiseAttendanceReport.StaffWiseAttendanceReport
 import com.vs.schoolmessenger.School.StudentReport.StudentReport
@@ -78,6 +81,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
     var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
     var isAcademicYear: List<AcademicYear>? = null
     var isAcademicYearId = -1
+    var isTargetType: Int? = null
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
@@ -97,7 +101,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         Constant.hideLoading(this)
         isUserDetails = SharedPreference.getUserDetails(this)
 
-        if (SELECTED_SCHOOL_MENU == M_COMMUNICATION || SELECTED_SCHOOL_MENU == M_NOTICEBOARD || SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_SCHEDULE_EXAM_TEST || SELECTED_SCHOOL_MENU == M_EVENTS_HOLIDAYS || SELECTED_SCHOOL_MENU == M_ONLINE_MEETING) {
+        if (SELECTED_SCHOOL_MENU == M_COMMUNICATION || SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_SCHEDULE_EXAM_TEST || SELECTED_SCHOOL_MENU == M_EVENTS_HOLIDAYS || SELECTED_SCHOOL_MENU == M_ONLINE_MEETING) {
             isMultipleSchool = false
             if (Constant.isEmergencyVoiceNoticeBoard!!) {
                 binding.lnrTab.visibility = View.GONE
@@ -107,6 +111,12 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         } else if (SELECTED_SCHOOL_MENU == M_MARK_YOUR_ATTENDANCE || SELECTED_SCHOOL_MENU == M_STAFF_WISE_ATTENDANCE_REPORT || SELECTED_SCHOOL_MENU == M_STUDENT_REPORT || SELECTED_SCHOOL_MENU == M_SCHOOL_STRENGTH || SELECTED_SCHOOL_MENU == M_ABSENTEES_REPORT || SELECTED_SCHOOL_MENU == M_DAILY_COLLECTION || SELECTED_SCHOOL_MENU == M_FEE_PENDING_REPORT || SELECTED_SCHOOL_MENU == M_ATTENDANCE_MARKING || SELECTED_SCHOOL_MENU == M_HOMEWORK) {
             isMultipleSchool = false
             binding.lnrTab.visibility = View.GONE
+        } else if (SELECTED_SCHOOL_MENU == M_NOTICEBOARD) {
+            isMultipleSchool = true
+            binding.lnrTab.visibility = View.GONE
+            binding.rytSend.visibility = View.VISIBLE
+            binding.sendOnlyLayout.visibility = View.VISIBLE
+
         } else {
             isMultipleSchool = true
             binding.lnrTab.visibility = View.GONE
@@ -128,6 +138,13 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         }
 
         appViewModel!!.isSendText?.observe(this) { response ->
+            Constant.hideLoading(this@SchoolList)
+            if (response != null && response.status) {
+                Constant.showTopAlertPopup(response.message, this)
+            }
+        }
+
+        appViewModel!!.sendnotice?.observe(this) { response ->
             Constant.hideLoading(this@SchoolList)
             if (response != null && response.status) {
                 Constant.showTopAlertPopup(response.message, this)
@@ -239,8 +256,23 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                             resources.getString(R.string.selected_target_1) + selectedSchoolIds.size.toString(),
                             resources.getString(R.string.are_you_sure_want_to_send_this_attachment)
                         )
-                    }
+                    } else if (SELECTED_SCHOOL_MENU == M_NOTICEBOARD) {
+                        val selectedRadioId = binding.radioGroupSendTo.checkedRadioButtonId
 
+                        if (selectedRadioId == -1) {
+                            Toast.makeText(
+                                this,
+                                "Please select a recipient (All / Staff / Student)",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            return
+                        }
+
+                        showConfirmationAlert(
+                            resources.getString(R.string.selected_target_1) + selectedSchoolIds.size.toString(),
+                            resources.getString(R.string.are_you_sure_want_to_send_this_attachment)
+                        )
+                    }
                 } else {
                     Constant.showValidationAlertPopup(
                         getString(
@@ -358,11 +390,16 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                                 isFileType = isSelectedFiles[i].type.toString()
                             )
                         )
+                        Log.d("Aws Size", SELECTED_SCHOOL_MENU.toString())
+                        Log.d("Selected File Size", M_NOTICEBOARD.toString())
+
                         if (Constant.isAwsUploadedFiles.size == isSelectedFiles.size) {
                             if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS) {
                                 attachmentSendApi()
                             } else if (SELECTED_SCHOOL_MENU == M_COMMUNICATION) {
                                 voiceSendApi(isFileUploaded)
+                            } else if (SELECTED_SCHOOL_MENU == M_NOTICEBOARD) {
+                                noticeboardsendapi()
                             }
                         }
                         Log.d("isSuccessFullUpload", "isSuccessFullUpload")
@@ -410,6 +447,40 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         appViewModel!!.sendAttachment(isAccessToken!!, jsonObject, this)
 
     }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun noticeboardsendapi() {
+        val selectedRadioId = binding.radioGroupSendTo.checkedRadioButtonId
+        var intendedFor = ""
+
+        if (selectedRadioId != -1) {
+            val selectedRadioButton = findViewById<RadioButton>(selectedRadioId)
+            intendedFor = selectedRadioButton.text.toString().lowercase() // Force lowercase
+            Log.d("noticeboardsendapi", "Selected intended_for: $intendedFor")
+        } else {
+            Log.d("noticeboardsendapi", "No option selected in radioGroupSendTo")
+        }
+
+        val noticeDetails = intent.getSerializableExtra(Constant.notice_data) as? NoticeBoardDetails
+        if (noticeDetails != null) {
+            val jsonObject = ApiCallRequest.isSendNotice(
+                title = noticeDetails.title,
+                description = noticeDetails.description,
+                startDate = noticeDetails.txtStartDate,
+                endDate = noticeDetails.txtEndDate,
+                target_code = selectedSchoolIds,
+                intended_for = intendedFor
+            )
+            Log.d("SchoolList", "Notice details received and jsonObject created: $jsonObject")
+            Log.d("Object", jsonObject.toString())
+            appViewModel!!.sendnotice(isAccessToken!!, jsonObject, this)
+
+        } else {
+            Log.e("SchoolList", "NoticeBoardDetails not found in intent")
+        }
+    }
+
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun showSendConfirmationDialog(isMessage: String) {
@@ -499,6 +570,18 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
 //                    "audio"
 //                )
                 videoSending()
+
+            } else if (SELECTED_SCHOOL_MENU == M_NOTICEBOARD) {
+
+                if (Constant.selectedFiles.isNotEmpty()) {
+                    isFileUploadInAws(
+                        Constant.selectedFiles,
+                        isStaffData!!.school_id,
+                        "file"
+                    )
+                } else {
+                    noticeboardsendapi()
+                }
             }
         }
         btnCancel.setOnClickListener {
@@ -509,7 +592,6 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
 
     private fun videoSending() {
         val isToken = "8d74d8bf6b5742d39971cc7d3ffbb51a"
-        Log.d("Constant.selectedFiles.get(1).path", Constant.selectedFiles.get(1).path.toString())
         VimeoUploader.uploadVideo(
             this@SchoolList,
             "quiz",
