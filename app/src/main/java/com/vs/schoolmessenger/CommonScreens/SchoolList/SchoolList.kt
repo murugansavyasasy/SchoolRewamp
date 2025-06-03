@@ -62,10 +62,10 @@ import com.vs.schoolmessenger.Utils.Constant.SELECTED_SCHOOL_MENU
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SchoolListActivityBinding
-import com.vs.schoolmessenger.util.VimeoUploader
+import com.vs.schoolmessenger.util.VimeoVideoUpload
 
 class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickListener,
-    View.OnClickListener, VimeoUploader.UploadCompletionListener {
+    View.OnClickListener, VimeoVideoUpload.UploadCompletionListener {
 
     override fun getViewBinding(): SchoolListActivityBinding {
         return SchoolListActivityBinding.inflate(layoutInflater)
@@ -591,12 +591,10 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
 
 
     private fun videoSending() {
-        val isToken = "8d74d8bf6b5742d39971cc7d3ffbb51a"
-        VimeoUploader.uploadVideo(
+        VimeoVideoUpload.uploadVideo(
             this@SchoolList,
             "quiz",
             "quiz",
-            isToken,
             Constant.selectedFiles[1].path,
             this@SchoolList
         )
@@ -615,5 +613,10 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             Log.e("VimeoUploadError", errorMessage ?: "Unknown error")
         }
     }
-
+    override fun onProgressUpdate(percent: Int) {
+        runOnUiThread {
+            binding.customProgress.progress = percent
+            Log.d("VimeoUploadProgress", "Progress: $percent%")
+        }
+    }
 }

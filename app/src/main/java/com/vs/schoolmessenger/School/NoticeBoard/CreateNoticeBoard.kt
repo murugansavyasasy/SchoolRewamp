@@ -1,4 +1,5 @@
 package com.vs.schoolmessenger.School.NoticeBoard
+
 import android.Manifest
 import android.app.Dialog
 import android.content.ContentResolver
@@ -20,6 +21,7 @@ import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -31,13 +33,10 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
 import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolList
-import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Homework.HomeWork
-import com.vs.schoolmessenger.School.Homework.SectionDetails
 import com.vs.schoolmessenger.School.NoticeBoard.Model.NoticeBoardDetails
-
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
@@ -47,11 +46,8 @@ import com.vs.schoolmessenger.databinding.CreateNoticeBoardBinding
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
-import java.util.Calendar
 import java.util.Date
 import java.util.Locale
-import kotlin.text.endsWith
-import kotlin.text.ifEmpty
 
 class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickListener, OnDateSelectedListener, NoticeBoardClickListener,
     View.OnClickListener  {
@@ -87,6 +83,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickL
     private var txtEndDate: String? = null
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
         setupToolbar()
@@ -98,18 +95,20 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickL
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.btnNext.setOnClickListener(this)
         binding.rytStartDate.setOnClickListener(this)
+        binding.rytStart.setOnClickListener(this)
+        binding.rytEnd.setOnClickListener(this)
         binding.rytEndDate.setOnClickListener(this)
-        val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-        val calendar = Calendar.getInstance()
-
-        val currentDate = dateFormat.format(calendar.time)
-        txtStartDate = currentDate
-        binding.txtStartDate.text = currentDate
-        txtEndDate = currentDate
-        binding.txtEndDate.text = currentDate
 
 
+        val (dayOnly, dayOfWeek, fullDate, slashDate) = Constant.getCurrentDateInfo()
+        binding.lblDate.text = dayOnly
+        binding.lblDay.text = dayOfWeek
 
+        binding.lblEndDate.text = dayOnly
+        binding.lblEndDay.text = dayOfWeek
+
+        binding.txtStartDate.text = fullDate
+        binding.txtEndDate.text = fullDate
 
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
@@ -211,24 +210,47 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickL
                 onBackPressed()
             }
 
+            R.id.rytStart -> {
+                selectedDateField = 1
+                Constant.showDatePicker(this) { selectedDate ->
+                    Log.d("selectedDate", selectedDate)
+                    binding.txtStartDate.text = Constant.covertDateFormate(selectedDate)
+                    val parts = binding.txtStartDate.text.split(" ")
+                    val day = parts[0]
+                    val Date = parts[1]
+                    binding.lblDay.text = day
+                    binding.lblDate.text = Date
+                }
+            }
+
+            R.id.rytEnd -> {
+                selectedDateField = 2
+                Constant.showDatePicker(this) { selectedDate ->
+                    Log.d("selectedDate", selectedDate)
+                    binding.txtEndDate.text = Constant.covertDateFormate(selectedDate)
+                    val parts = binding.txtEndDate.text.split(" ")
+                    val day = parts[0]
+                    val Date = parts[1]
+                    binding.lblEndDay.text = day
+                    binding.lblEndDate.text = Date
+                }
+            }
+
+
             R.id.btnNext -> {
                 RedirectToSchoolList()
             }
 
-            R.id.rytStartDate -> {
-                selectedDateField = 1
-                showDatePickerDialog(this, this)
-            }
+//            R.id.rytStartDate -> {
+//                selectedDateField = 1
+//                showDatePickerDialog(this, this)
+//            }
+//
+//            R.id.rytEndDate -> {
+//                selectedDateField = 2
+//                showDatePickerDialog(this, this)
+//            }
 
-            R.id.rytEndDate -> {
-                selectedDateField = 2
-                showDatePickerDialog(this, this)
-            }
-
-
-            R.id.rytEndDate -> {
-                showDatePickerDialog(this, this)
-            }
 
         }
     }
@@ -574,8 +596,8 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickL
     private fun RedirectToSchoolList() {
         val title = binding.txtTitle.text.toString().trim()
         val description = binding.txtDesc.text.toString().trim()
-        val txtStartDate = binding.txtStartDate.text.toString().trim()
-        val txtEndDate = binding.txtEndDate.text.toString().trim()
+        val txtEndDate = Constant.convertDateFormat(binding.txtEndDate.text.toString())
+        val txtStartDate = Constant.convertDateFormat(binding.txtStartDate.text.toString())
 
         Log.d("RedirectToSchoolList", "Title: $title")
         Log.d("RedirectToSchoolList", "Description: $description")

@@ -19,13 +19,11 @@ import android.os.Looper
 import android.provider.Settings
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebResourceRequest
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -162,9 +160,6 @@ object Constant {
     var student = "student"
     var staff = "staff"
 
-    var isCommunication = "isCommunication"
-    var isHomeWork = "isHomeWork"
-    var isGioMetric = "isGioMetric"
 
     //    var isVoiceFile: String? = null
     var isVoiceSendingData: VoiceSendingData? = null
@@ -197,6 +192,7 @@ object Constant {
     var PM = "PM"
     var dd_MM_yyyy = "dd/MM/yyyy"
     var EEE_dd_MMM_yyyy = "EEE dd MMM, yyyy"
+    var EEE_dd_MMM_yyyy_1 = "EEE dd MMM yyyy"
     var hh_mm_a = "hh:mm a"
     var time_forMate = "00:%02d"
     var time_zero = "00:00"
@@ -322,6 +318,34 @@ object Constant {
 
     var isCommonTitle = ""
     var isCommonDescription = ""
+
+
+    // VIMEO
+    var isVimeoToken = "8d74d8bf6b5742d39971cc7d3ffbb51a"
+    var isVimeoUrl = "https://api.vimeo.com/me/videos"
+    const val Content_Type = "Content-Type"
+    var POST = "POST"
+    var application_json = "application/json"
+    var Accept = "Accept"
+    var application_vimeo_jsonversion = "application/vnd.vimeo.*+json;version=3.4"
+    var approach = "approach"
+    var tus = "tus"
+    var size = "size"
+    var upload = "upload"
+    var view = "view"
+    var unlisted = "unlisted"
+    var download = "download"
+    var privacy = "privacy"
+    var videoTitle = "videoTitle"
+    var videoDesc = "videoDesc"
+    var HEAD = "HEAD"
+    var HETus_ResumableAD = "Tus-Resumable"
+    var HETus_ResumableAD_Version = "1.0.0"
+    var Upload_Offset = "Upload-Offset"
+    var PATCH = "PATCH"
+    var application_offset_octet_stream = "application/offset+octet-stream"
+
+
 
 
     fun isInternetAvailable(activity: Activity): Boolean {
@@ -864,6 +888,30 @@ object Constant {
         val currentDate = LocalDate.now()
         val formatter = DateTimeFormatter.ofPattern(ddMMyyyy) // or "dd/MM/yyyy", etc.
         return currentDate.format(formatter)
+    }
+
+    fun getCurrentDateInfo(): List<String> {
+        val calendar = android.icu.util.Calendar.getInstance()
+
+        val dayOnly = String.format("%02d", calendar.get(android.icu.util.Calendar.DAY_OF_MONTH))
+        val dayOfWeek = SimpleDateFormat("EEE", Locale.getDefault()).format(calendar.time)
+        val fullDate =
+            SimpleDateFormat("EEE dd MMM yyyy", Locale.getDefault()).format(calendar.time)
+        val slashDate =
+            SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(calendar.time)
+        return listOf(dayOnly, dayOfWeek, fullDate, slashDate)
+    }
+
+    fun convertDateFormat(input: String): String {
+        return try {
+            val inputFormat = SimpleDateFormat(EEE_dd_MMM_yyyy_1, Locale.getDefault())
+            val outputFormat = SimpleDateFormat(ddMMyyyy, Locale.getDefault())
+            val date = inputFormat.parse(input)
+            outputFormat.format(date!!)
+        } catch (e: Exception) {
+            input // return original if there's a parsing error
+        }
+
     }
 
     fun convertDateTimeFormat(input: String): String {

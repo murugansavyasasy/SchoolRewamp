@@ -565,7 +565,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             }
 
 
-
             Constant.M_VERY_IMPORTANT_INFO -> ImportantInfo::class.java
             Constant.M_FEEDBACK -> ImportantInfo::class.java
             Constant.M_SCHOOL_NEEDS -> SchoolNeeds::class.java
@@ -577,5 +576,4 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             startActivity(Intent(requireActivity(), it))
         }
     }
-
 }

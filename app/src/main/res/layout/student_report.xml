@@ -75,7 +75,7 @@
         android:layout_below="@+id/rytSearchBar"
         android:layout_marginStart="@dimen/five"
         android:layout_marginTop="@dimen/ten"
-        android:layout_marginEnd="@dimen/two"
+        android:layout_marginEnd="@dimen/five"
         android:orientation="horizontal"
         android:weightSum="1">
 
@@ -120,8 +120,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/lblCategory"
-            android:layout_marginStart="@dimen/fifteen"
-            android:layout_marginEnd="@dimen/fifteen"
+            android:layout_marginEnd="@dimen/ten"
             android:layout_weight="0.6"
             android:background="@drawable/bg_white_light_radious"
             android:gravity="center">

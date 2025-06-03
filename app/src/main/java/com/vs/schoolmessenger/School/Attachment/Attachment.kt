@@ -310,7 +310,7 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
             return
         }
         fun addPath(uri: Uri) {
-            if (Constant.selectedFiles!!.size >= MAX_FILES) return
+            if (Constant.selectedFiles.size >= MAX_FILES) return
 
             // Skip only audio and video
             val mimeType = contentResolver.getType(uri)
