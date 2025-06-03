@@ -100,7 +100,6 @@ object Constant {
     val M_CLASS_TIME_TABLE = 6
     val M_COMMUNICATION = 7
     val M_DAILY_COLLECTION = 8
-    val M_EVENTS_HOLIDAYS = 9
     val M_EXAM = 10
     val M_FEEDBACK = 11
     val M_FEE_DETAILS = 12
