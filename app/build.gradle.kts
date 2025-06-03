@@ -6,6 +6,8 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services")
     id ("kotlin-parcelize")
+    id("com.google.firebase.crashlytics")
+
 }
 
 android {
@@ -151,7 +153,10 @@ dependencies {
     implementation ("com.google.android.gms:play-services-maps:18.2.0")
     implementation ("io.socket:socket.io-client:2.1.0") // stable version
 
-
+    // Firebase BOM (manages all Firebase versions)
+    implementation(platform("com.google.firebase:firebase-bom:32.7.3"))
+    // Crashlytics
+    implementation("com.google.firebase:firebase-crashlytics")
 
 
 
