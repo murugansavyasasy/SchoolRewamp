@@ -30,6 +30,7 @@ import com.vs.schoolmessenger.School.AbsenteesMarking.AttendanceMark
 import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesReport
 import com.vs.schoolmessenger.School.Attachment.Attachment
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollection
+import com.vs.schoolmessenger.School.Event.CreateEvent
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReport
 import com.vs.schoolmessenger.School.Homework.HomeWork
 import com.vs.schoolmessenger.School.MarkYourAttendance.MarkYourAttendance
@@ -45,7 +46,7 @@ import com.vs.schoolmessenger.Utils.Constant.M_ATTACHMENTS
 import com.vs.schoolmessenger.Utils.Constant.M_ATTENDANCE_MARKING
 import com.vs.schoolmessenger.Utils.Constant.M_COMMUNICATION
 import com.vs.schoolmessenger.Utils.Constant.M_DAILY_COLLECTION
-import com.vs.schoolmessenger.Utils.Constant.M_EVENTS_HOLIDAYS
+import com.vs.schoolmessenger.Utils.Constant.M_SCHOOL_CLASS_EVENTS
 import com.vs.schoolmessenger.Utils.Constant.M_FEE_PENDING_REPORT
 import com.vs.schoolmessenger.Utils.Constant.M_HOMEWORK
 import com.vs.schoolmessenger.Utils.Constant.M_LESSON_PLAN
@@ -101,14 +102,14 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         Constant.hideLoading(this)
         isUserDetails = SharedPreference.getUserDetails(this)
 
-        if (SELECTED_SCHOOL_MENU == M_COMMUNICATION || SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_SCHEDULE_EXAM_TEST || SELECTED_SCHOOL_MENU == M_EVENTS_HOLIDAYS || SELECTED_SCHOOL_MENU == M_ONLINE_MEETING) {
+        if (SELECTED_SCHOOL_MENU == M_COMMUNICATION || SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_SCHEDULE_EXAM_TEST  || SELECTED_SCHOOL_MENU == M_ONLINE_MEETING) {
             isMultipleSchool = false
             if (Constant.isEmergencyVoiceNoticeBoard!!) {
                 binding.lnrTab.visibility = View.GONE
             } else {
                 binding.lnrTab.visibility = View.VISIBLE
             }
-        } else if (SELECTED_SCHOOL_MENU == M_MARK_YOUR_ATTENDANCE || SELECTED_SCHOOL_MENU == M_STAFF_WISE_ATTENDANCE_REPORT || SELECTED_SCHOOL_MENU == M_STUDENT_REPORT || SELECTED_SCHOOL_MENU == M_SCHOOL_STRENGTH || SELECTED_SCHOOL_MENU == M_ABSENTEES_REPORT || SELECTED_SCHOOL_MENU == M_DAILY_COLLECTION || SELECTED_SCHOOL_MENU == M_FEE_PENDING_REPORT || SELECTED_SCHOOL_MENU == M_ATTENDANCE_MARKING || SELECTED_SCHOOL_MENU == M_HOMEWORK) {
+        } else if (SELECTED_SCHOOL_MENU == M_MARK_YOUR_ATTENDANCE || SELECTED_SCHOOL_MENU == M_STAFF_WISE_ATTENDANCE_REPORT || SELECTED_SCHOOL_MENU == M_STUDENT_REPORT || SELECTED_SCHOOL_MENU == M_SCHOOL_STRENGTH || SELECTED_SCHOOL_MENU == M_ABSENTEES_REPORT || SELECTED_SCHOOL_MENU == M_DAILY_COLLECTION || SELECTED_SCHOOL_MENU == M_FEE_PENDING_REPORT || SELECTED_SCHOOL_MENU == M_ATTENDANCE_MARKING || SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS) {
             isMultipleSchool = false
             binding.lnrTab.visibility = View.GONE
         } else if (SELECTED_SCHOOL_MENU == M_NOTICEBOARD) {
@@ -312,7 +313,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         Log.d("SELECTED_SCHOOL_MENU", SELECTED_SCHOOL_MENU.toString())
         SharedPreference.putStaffDetails(this, data)
 
-        if (SELECTED_SCHOOL_MENU == M_COMMUNICATION || SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_ASSIGNMENT || SELECTED_SCHOOL_MENU == M_ONLINE_MEETING || SELECTED_SCHOOL_MENU == M_EVENTS_HOLIDAYS || SELECTED_SCHOOL_MENU == M_SCHEDULE_EXAM_TEST) {
+        if (SELECTED_SCHOOL_MENU == M_COMMUNICATION || SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_ASSIGNMENT || SELECTED_SCHOOL_MENU == M_ONLINE_MEETING  || SELECTED_SCHOOL_MENU == M_SCHEDULE_EXAM_TEST) {
             val intent = Intent(this, RecipientActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             startActivity(intent)
@@ -325,7 +326,11 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                 val intent = Intent(this, HomeWork::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 startActivity(intent)
-            } else if (SELECTED_SCHOOL_MENU == M_ABSENTEES_REPORT) {
+            } else if (SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS) {
+                val intent = Intent(this, CreateEvent::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                startActivity(intent)
+            }  else if (SELECTED_SCHOOL_MENU == M_ABSENTEES_REPORT) {
                 val intent = Intent(this, AbsenteesReport::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 startActivity(intent)
@@ -360,10 +365,6 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                 startActivity(intent)
             } else if (SELECTED_SCHOOL_MENU == M_PTM) {
                 //go to ptm  screen
-            } else if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS) {
-                val intent = Intent(this, Attachment::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(intent)
             }
         }
     }

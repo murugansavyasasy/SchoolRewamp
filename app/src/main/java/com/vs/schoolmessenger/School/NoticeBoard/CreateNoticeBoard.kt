@@ -114,6 +114,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickL
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
         binding.toolbarLayout.lblParentToolBar.text = getString(R.string.NoticeBoard)
+        binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
         saveDrawableToCache(R.drawable.add_image)?.let {
             Constant.selectedFiles.add(
