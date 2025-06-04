@@ -5,8 +5,6 @@ import androidx.annotation.RequiresApi
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Utils.Constant
-import org.json.JSONArray
-import org.json.JSONObject
 
 object ApiCallRequest {
 
@@ -86,6 +84,9 @@ object ApiCallRequest {
     }
 
     fun isSendHomeWork(
+        targetType: Int,
+        iframe: String,
+        file_size: String,
         isAcademicYearId: Int,
         selectedIds: MutableList<String>,
         title: String,
@@ -105,8 +106,11 @@ object ApiCallRequest {
         }
 
         jsonObject.addProperty(APIKeyNames.academic_year_id, isAcademicYearId)
-        jsonObject.add(APIKeyNames.section_code, sectionArray)
+        jsonObject.add(APIKeyNames.target_code, sectionArray)
+        jsonObject.addProperty(APIKeyNames.target_type, targetType)
         jsonObject.addProperty(APIKeyNames.title, title)
+        jsonObject.addProperty(APIKeyNames.iframe, iframe)
+        jsonObject.addProperty(APIKeyNames.file_size, file_size)
         jsonObject.addProperty(APIKeyNames.description, description)
         jsonObject.addProperty(
             APIKeyNames.subject_id,

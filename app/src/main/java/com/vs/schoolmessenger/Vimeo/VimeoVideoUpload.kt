@@ -29,15 +29,9 @@ object VimeoVideoUpload {
         listener: UploadCompletionListener?
     ) {
         createVimeoUploadURL(
-            activity,
-            title,
-            description,
-            videoFilePath,
-            object : VimeoUploadURLListener {
+            activity, title, description, videoFilePath, object : VimeoUploadURLListener {
                 override fun onUploadURLGenerated(
-                    uploadLink: String?,
-                    iframe: String?,
-                    link: String?
+                    uploadLink: String?, iframe: String?, link: String?
                 ) {
                     uploadVideoToVimeo(
                         activity,
@@ -47,9 +41,7 @@ object VimeoVideoUpload {
                         videoFilePath,
                         object : VimeoUploadListener {
                             override fun onUploadComplete(
-                                success: Boolean,
-                                iframe: String?,
-                                link: String?
+                                success: Boolean, iframe: String?, link: String?
                             ) {
                                 if (listener != null) {
                                     listener.onUploadComplete(success, iframe, link)
