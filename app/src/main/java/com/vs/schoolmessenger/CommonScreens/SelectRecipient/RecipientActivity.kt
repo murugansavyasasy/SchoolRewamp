@@ -44,11 +44,14 @@ import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
 import com.vs.schoolmessenger.Utils.Constant.M_HOMEWORK
 import com.vs.schoolmessenger.Utils.Constant.SELECTED_SCHOOL_MENU
 import com.vs.schoolmessenger.Utils.FileItem
+import com.vs.schoolmessenger.Utils.FileType
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SelectRecipientBinding
+import com.vs.schoolmessenger.util.VimeoVideoUpload
 
 class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickListener,
-    SectionListClickListener, StandardListClickListener, GroupListClickListener {
+    SectionListClickListener, StandardListClickListener, GroupListClickListener,
+    VimeoVideoUpload.UploadCompletionListener {
 
     override fun getViewBinding(): SelectRecipientBinding {
         return SelectRecipientBinding.inflate(layoutInflater)
@@ -79,9 +82,13 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     var isCurrentAcademicYear = true
     var isTargetType: Int? = null
     var isCircularType: String? = null
+    var isIframe = ""
+    var isFileSize = ""
     var isValidAcademicYear = false
     var isSelectedAcademicYear: String? = null
     private var appViewModel: App? = null
+    private var hasTriggeredSend = false
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
@@ -921,9 +928,14 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
             if (SELECTED_SCHOOL_MENU == M_HOMEWORK) {
                 if (Constant.selectedFiles.isNotEmpty()) {
-                    isFileUploadInAws(
-                        Constant.selectedFiles, isStaffDetails!!.school_id, "file"
-                    )
+                    val videoFiles = Constant.selectedFiles.filter { it.type == FileType.VIDEO }
+                    if (videoFiles.isNotEmpty()) {
+                        videoUploading()
+                    } else {
+                        isFileUploadInAws(
+                            Constant.selectedFiles, isStaffDetails!!.school_id, "file"
+                        )
+                    }
                 } else {
                     isHomeWorkSend()
                 }
@@ -945,9 +957,13 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         val isVoiceData = Constant.isVoiceSendingData
                         voiceSendApi()
                     } else {
-                        isFileUploadInAws(
-                            Constant.selectedFiles, isStaffDetails!!.school_id, "audio"
-                        )
+                        if (Constant.selectedFiles.isNotEmpty()) {
+                            voiceSendApi()
+                        } else {
+                            isFileUploadInAws(
+                                Constant.selectedFiles, isStaffDetails!!.school_id, "audio"
+                            )
+                        }
                     }
 
                 }
@@ -964,8 +980,56 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         btnCancel.setOnClickListener {
             alertDialog.dismiss()
         }
-
     }
+
+    private fun videoUploading() {
+        VimeoVideoUpload.uploadVideo(
+            this@RecipientActivity,
+            "quiz",
+            "quiz",
+            Constant.selectedFiles[0].path,
+            this@RecipientActivity
+        )
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onUploadComplete(success: Boolean, iframe: String?, link: String?) {
+        runOnUiThread {
+            Log.d("Vimeo_Video_upload", success.toString())
+            Log.d("VimeoIframe", iframe.toString())
+            Log.d("link", link.toString())
+            isIframe = extractVimeoUrlFromIframe(iframe.toString()).toString()
+            isFileSize = "30"
+
+            Constant.isAwsUploadedFiles.add(
+                AwsUploadedFiles(
+                    isFileUrl = link.toString(), isFileType = Constant.VIDEO
+                )
+            )
+
+            isHomeWorkSend()
+        }
+    }
+
+    fun extractVimeoUrlFromIframe(iframeHtml: String): String? {
+        val regex = Regex("""<iframe[^>]+src="([^"]+)"""")
+        val match = regex.find(iframeHtml)
+        return match?.groups?.get(1)?.value
+    }
+
+
+    override fun onFailure(errorMessage: String?) {
+        runOnUiThread {
+            Log.e("VimeoUploadError", errorMessage ?: "Unknown error")
+        }
+    }
+
+    override fun onProgressUpdate(percent: Int) {
+        runOnUiThread {
+            Log.d("VimeoUploadProgress", "Progress: $percent%")
+        }
+    }
+
 
     override fun onIdCheck(group: NameAndIds) {
         if (!isGroupSelectedIds.any { it.id == group.id }) {
@@ -1062,13 +1126,13 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
         val isCountryId = SharedPreference.getCountryId(this)
         Log.d("isSelectedFiles", isSelectedFiles.size.toString())
-        if (isSelectedFiles.size == 0) {
-            if (SELECTED_SCHOOL_MENU == M_HOMEWORK) {
-                isHomeWorkSend()
-            } else if (SELECTED_SCHOOL_MENU == Constant.M_COMMUNICATION) {
-                voiceSendApi()
-            }
-        } else {
+//        if (isSelectedFiles.size == 0) {
+//            if (SELECTED_SCHOOL_MENU == M_HOMEWORK) {
+//                isHomeWorkSend()
+//            } else if (SELECTED_SCHOOL_MENU == Constant.M_COMMUNICATION) {
+//                voiceSendApi()
+//            }
+//        } else {
             for (i in isSelectedFiles.indices) {
                 isAwsUploadingPreSigned!!.getPreSignedUrl(
                     isSelectedFiles[i].path.toString(),
@@ -1108,7 +1172,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
                         }
                     })
-            }
+                //   }
         }
     }
 
@@ -1133,6 +1197,9 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         val sectionDetails = intent.getParcelableExtra<SectionDetails>(Constant.section_data)
         sectionDetails?.let {
             val jsonObject = ApiCallRequest.isSendHomeWork(
+                targetType = isTargetType!!,
+                iframe = isIframe,
+                file_size = isFileSize,
                 isAcademicYearId = isAcademicYearId,
                 selectedIds = selectedIds,
                 title = it.title,

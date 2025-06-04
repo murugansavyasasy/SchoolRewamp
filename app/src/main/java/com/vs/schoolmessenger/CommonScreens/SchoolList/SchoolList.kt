@@ -28,7 +28,6 @@ import com.vs.schoolmessenger.Repository.ApiCallRequest
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.AbsenteesMarking.AttendanceMark
 import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesReport
-import com.vs.schoolmessenger.School.Attachment.Attachment
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollection
 import com.vs.schoolmessenger.School.Event.CreateEvent
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReport
@@ -46,7 +45,6 @@ import com.vs.schoolmessenger.Utils.Constant.M_ATTACHMENTS
 import com.vs.schoolmessenger.Utils.Constant.M_ATTENDANCE_MARKING
 import com.vs.schoolmessenger.Utils.Constant.M_COMMUNICATION
 import com.vs.schoolmessenger.Utils.Constant.M_DAILY_COLLECTION
-import com.vs.schoolmessenger.Utils.Constant.M_SCHOOL_CLASS_EVENTS
 import com.vs.schoolmessenger.Utils.Constant.M_FEE_PENDING_REPORT
 import com.vs.schoolmessenger.Utils.Constant.M_HOMEWORK
 import com.vs.schoolmessenger.Utils.Constant.M_LESSON_PLAN
@@ -56,6 +54,7 @@ import com.vs.schoolmessenger.Utils.Constant.M_NOTICEBOARD
 import com.vs.schoolmessenger.Utils.Constant.M_ONLINE_MEETING
 import com.vs.schoolmessenger.Utils.Constant.M_PTM
 import com.vs.schoolmessenger.Utils.Constant.M_SCHEDULE_EXAM_TEST
+import com.vs.schoolmessenger.Utils.Constant.M_SCHOOL_CLASS_EVENTS
 import com.vs.schoolmessenger.Utils.Constant.M_SCHOOL_STRENGTH
 import com.vs.schoolmessenger.Utils.Constant.M_STAFF_WISE_ATTENDANCE_REPORT
 import com.vs.schoolmessenger.Utils.Constant.M_STUDENT_REPORT
@@ -565,12 +564,12 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                     }
                 }
             } else if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS) {
-//                isFileUploadInAws(
-//                    Constant.selectedFiles,
-//                    isStaffData!!.school_id,
-//                    "audio"
-//                )
-                videoSending()
+                isFileUploadInAws(
+                    Constant.selectedFiles,
+                    isStaffData!!.school_id,
+                    "audio"
+                )
+//                videoSending()
 
             } else if (SELECTED_SCHOOL_MENU == M_NOTICEBOARD) {
 
@@ -591,15 +590,15 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
     }
 
 
-    private fun videoSending() {
-        VimeoVideoUpload.uploadVideo(
-            this@SchoolList,
-            "quiz",
-            "quiz",
-            Constant.selectedFiles[1].path,
-            this@SchoolList
-        )
-    }
+//    private fun videoSending() {
+//        VimeoVideoUpload.uploadVideo(
+//            this@SchoolList,
+//            "quiz",
+//            "quiz",
+//            Constant.selectedFiles[1].path,
+//            this@SchoolList
+//        )
+//    }
 
     override fun onUploadComplete(success: Boolean, iframe: String?, link: String?) {
         runOnUiThread {
@@ -616,7 +615,6 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
     }
     override fun onProgressUpdate(percent: Int) {
         runOnUiThread {
-            binding.customProgress.progress = percent
             Log.d("VimeoUploadProgress", "Progress: $percent%")
         }
     }

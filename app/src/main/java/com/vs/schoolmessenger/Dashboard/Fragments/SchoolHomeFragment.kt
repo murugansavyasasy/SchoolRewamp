@@ -581,7 +581,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             Constant.M_FEEDBACK -> ImportantInfo::class.java
             Constant.M_SCHOOL_NEEDS -> SchoolNeeds::class.java
             else -> null
-
         }
 
         activityClass?.let {
