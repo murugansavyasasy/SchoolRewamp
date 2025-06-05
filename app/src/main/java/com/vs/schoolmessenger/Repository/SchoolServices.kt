@@ -26,6 +26,7 @@ import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.Stud
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeStudentsResponse
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteesResponse
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionReportResponse
+import com.vs.schoolmessenger.School.Event.Response.EventSendResponse
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
@@ -95,6 +96,7 @@ class SchoolServices {
 
 
     var sendnotice: MutableLiveData<NoticeBoardSendResponse?>
+    var sendevent: MutableLiveData<EventSendResponse?>
     var isSendAttachment: MutableLiveData<NoticeBoardSendResponse?>
 
     init {
@@ -142,6 +144,7 @@ class SchoolServices {
         getabsenteescountbydate = MutableLiveData()
         getabsenteesstudentbydate = MutableLiveData()
         sendnotice = MutableLiveData()
+        sendevent = MutableLiveData()
         isSendAttachment = MutableLiveData()
 
     }
@@ -1739,6 +1742,35 @@ class SchoolServices {
 
     val sendnoticeLiveData: LiveData<NoticeBoardSendResponse?>
         get() = sendnotice
+
+
+    fun sendevent(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        RestClient.changeApiBaseUrl(SharedPreference.getBaseUrl(activity).toString())
+        RestClient.apiInterfaces.sendevent(isToken, jsonObject)
+            ?.enqueue(object : Callback<EventSendResponse?> {
+                override fun onResponse(
+                    call: Call<EventSendResponse?>, response: Response<EventSendResponse?>
+                ) {
+                    if (response.code() == 200 && response.body() != null) {
+                        sendevent.postValue(response.body())
+                    } else {
+                        sendevent.postValue(response.body())
+                    }
+
+                    Log.d("isGetCountryList", "${response.code()} - ${response}")
+                }
+
+                override fun onFailure(call: Call<EventSendResponse?>, t: Throwable) {
+                    sendevent.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+
+    val sendeventLiveData: LiveData<EventSendResponse?>
+        get() = sendevent
+
 
 
     fun sendAttachment(isToken: String, jsonObject: JsonObject, activity: Activity) {

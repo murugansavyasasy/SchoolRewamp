@@ -71,6 +71,7 @@ object APIMethods {
     const val getabsenteesstudentbydate = "stud-attd/api/attendance/get-absentees-students-by-date"
 
     const val sendnotice = "admin/api/notice-board/send-notice"
+    const val sendevent = "admin/api/school-event/send-event"
     const val sendAttachment = "comm/api/attachment/send-attachment"
     const val attachmentList = "comm/api/attachment/list"
     const val attachmentListArchive = "comm/api/attachment/list-archive"
