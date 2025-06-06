@@ -43,7 +43,6 @@ import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
 import com.vs.schoolmessenger.Utils.Constant.M_HOMEWORK
 import com.vs.schoolmessenger.Utils.Constant.SELECTED_SCHOOL_MENU
-import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SelectRecipientBinding
@@ -933,7 +932,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         videoUploading()
                     } else {
                         isFileUploadInAws(
-                            Constant.selectedFiles, isStaffDetails!!.school_id, "file"
+                            isStaffDetails!!.school_id, "file"
                         )
                     }
                 } else {
@@ -961,7 +960,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                             voiceSendApi()
                         } else {
                             isFileUploadInAws(
-                                Constant.selectedFiles, isStaffDetails!!.school_id, "audio"
+                                isStaffDetails!!.school_id, "audio"
                             )
                         }
                     }
@@ -969,7 +968,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 }
             } else if (SELECTED_SCHOOL_MENU == Constant.M_ATTACHMENTS) {
                 isFileUploadInAws(
-                    Constant.selectedFiles,
                     isStaffDetails!!.school_id,
                     "files"
                 )
@@ -1105,7 +1103,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun isFileUploadInAws(
-        isSelectedFiles: MutableList<FileItem>, schoolId: String, isFileType: String?
+        schoolId: String, isFileType: String?
     ) {
         Constant.isAwsUploadedFiles.clear()
         val isSelectedFileListSize = Constant.selectedFiles.size
@@ -1125,7 +1123,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         }
 
         val isCountryId = SharedPreference.getCountryId(this)
-        Log.d("isSelectedFiles", isSelectedFiles.size.toString())
+        Log.d("isSelectedFiles", Constant.selectedFiles.size.toString())
 //        if (isSelectedFiles.size == 0) {
 //            if (SELECTED_SCHOOL_MENU == M_HOMEWORK) {
 //                isHomeWorkSend()
@@ -1133,9 +1131,12 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 //                voiceSendApi()
 //            }
 //        } else {
-            for (i in isSelectedFiles.indices) {
+        if (Constant.selectedFiles.isEmpty()) {
+            isHomeWorkSend()
+        } else {
+            for (i in Constant.selectedFiles.indices) {
                 isAwsUploadingPreSigned!!.getPreSignedUrl(
-                    isSelectedFiles[i].path.toString(),
+                    Constant.selectedFiles[i].path.toString(),
                     schoolId,
                     isFileType!!,
                     this,
@@ -1150,7 +1151,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                             Constant.isAwsUploadedFiles.add(
                                 AwsUploadedFiles(
                                     isFileUrl = isFileUploaded!!,
-                                    isFileType = isSelectedFiles[i].type.toString()
+                                    isFileType = Constant.selectedFiles[i].type.toString()
                                 )
                             )
                             if (Constant.isAwsUploadedFiles.size == isSelectedFileListSize) {
@@ -1172,7 +1173,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
                         }
                     })
-                //   }
+            }
         }
     }
 

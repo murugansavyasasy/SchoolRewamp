@@ -296,7 +296,6 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         lblSelectedTab: TextView
     ) {
         isLoadData()
-        // Reset backgrounds and colors
         binding.lblSendToMultipleSchool.background = null
         binding.lblSelectReceipients.background = null
 
@@ -563,13 +562,14 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                         )
                     }
                 }
-            } else if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS) {
-                isFileUploadInAws(
-                    Constant.selectedFiles,
-                    isStaffData!!.school_id,
-                    "audio"
-                )
-//                videoSending()
+            }
+            else if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS) {
+//                isFileUploadInAws(
+//                    Constant.selectedFiles,
+//                    isStaffData!!.school_id,
+//                    "audio"
+//                )
+                videoSending()
 
             } else if (SELECTED_SCHOOL_MENU == M_NOTICEBOARD) {
 
@@ -590,15 +590,15 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
     }
 
 
-//    private fun videoSending() {
-//        VimeoVideoUpload.uploadVideo(
-//            this@SchoolList,
-//            "quiz",
-//            "quiz",
-//            Constant.selectedFiles[1].path,
-//            this@SchoolList
-//        )
-//    }
+    private fun videoSending() {
+        VimeoVideoUpload.uploadVideo(
+            this@SchoolList,
+            "quiz",
+            "quiz",
+            Constant.selectedFiles[1].path,
+            this@SchoolList
+        )
+    }
 
     override fun onUploadComplete(success: Boolean, iframe: String?, link: String?) {
         runOnUiThread {

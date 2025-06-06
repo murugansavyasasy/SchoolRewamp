@@ -6,6 +6,6 @@ import com.vs.schoolmessenger.Repository.APIKeyNames
 data class GetFilePathDetails(
     @SerializedName(APIKeyNames.type)
     val type: String,
-    @SerializedName(APIKeyNames.path)
-    val path: String,
+    @SerializedName(APIKeyNames.url)
+    val url: String,
 )

@@ -85,10 +85,9 @@ class HomeworkImgPDFAdapter(
             when (data?.type?.uppercase()) {
                 Constant.IMAGE -> {
                     Glide.with(context)
-                        .load(data.path)
+                        .load(data.url)
                         .placeholder(R.drawable.image_placeholder)
                         .into(DefaultImage)
-
                     ImgOrDocumentType.setBackgroundResource(R.drawable.default_image_icon)
                     WebViewThumbnail.visibility = View.GONE
                     DefaultImage.visibility = View.VISIBLE
@@ -96,27 +95,32 @@ class HomeworkImgPDFAdapter(
 
                 Constant.PDF -> {
                     ImgOrDocumentType.setBackgroundResource(R.drawable.hw_pdf_img)
-                    openDocumentInWebView(data.path)
+                    openDocumentInWebView(data.url)
                 }
 
                 Constant.DOC, Constant.DOCX -> {
                     ImgOrDocumentType.setBackgroundResource(R.drawable.microsoft_word_img)
-                    openDocumentInWebView(data.path)
+                    openDocumentInWebView(data.url)
                 }
 
                 Constant.TXT -> {
                     ImgOrDocumentType.setBackgroundResource(R.drawable.txt_file_img)
-                    openDocumentInWebView(data.path)
+                    openDocumentInWebView(data.url)
                 }
 
                 Constant.PPT, Constant.PPTX -> {
                     ImgOrDocumentType.setBackgroundResource(R.drawable.ppt_icon)
-                    openDocumentInWebView(data.path)
+                    openDocumentInWebView(data.url)
                 }
 
                 Constant.EXCEL -> {
                     ImgOrDocumentType.setBackgroundResource(R.drawable.excel_icon)
-                    openDocumentInWebView(data.path)
+                    openDocumentInWebView(data.url)
+                }
+                Constant.VIDEO -> {
+                    ImgOrDocumentType.setBackgroundResource(R.drawable.video_icon)
+                    Log.d("data.path",data.url)
+                    openDocumentInWebView(data.url)
                 }
             }
 
@@ -126,7 +130,7 @@ class HomeworkImgPDFAdapter(
                 val commonList = adapter.GetFilePathDetailsData?.map {
                     CommonFileData(
                         type = it.type,
-                        path = it.path,
+                        path = it.url,
                     )
                 } ?: emptyList()
 
@@ -151,7 +155,7 @@ class HomeworkImgPDFAdapter(
                         val commonList = adapter.GetFilePathDetailsData?.map {
                             CommonFileData(
                                 type = it.type,
-                                path = it.path,
+                                path = it.url,
                             )
                         } ?: emptyList()
 
@@ -170,8 +174,13 @@ class HomeworkImgPDFAdapter(
 
         private fun openDocumentInWebView(urlPath: String) {
             loadingBar.visibility = View.VISIBLE
-
-            val googleDocsUrl = "https://docs.google.com/gview?embedded=true&url=$urlPath"
+            var isLoadingUrl = ""
+            if (urlPath.contains("vimeo")) {
+                isLoadingUrl = urlPath
+            } else {
+                val googleDocsUrl = "https://docs.google.com/gview?embedded=true&url=$urlPath"
+                isLoadingUrl = googleDocsUrl
+            }
 
             DefaultImage.visibility = View.GONE
             WebViewThumbnail.visibility = View.VISIBLE
@@ -200,7 +209,7 @@ class HomeworkImgPDFAdapter(
                 }
             }
 
-            WebViewThumbnail.loadUrl(googleDocsUrl)
+            WebViewThumbnail.loadUrl(isLoadingUrl)
         }
 
         class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

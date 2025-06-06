@@ -43,14 +43,11 @@ import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffLocationR
 import com.vs.schoolmessenger.School.NoticeBoard.Response.NoticeBoardSendResponse
 import com.vs.schoolmessenger.School.SchoolStrength.Model.SchoolStrengthResponse
 import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
-import okhttp3.RequestBody
-import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
-import retrofit2.http.PUT
 import retrofit2.http.Query
 
 interface ApiInterfaces {
@@ -72,14 +69,6 @@ interface ApiInterfaces {
     fun isValidateOtp(
         @Body jsonObject: JsonObject
     ): Call<OtpResponse?>?
-
-//    @GET(APIMethods.isValidateUser)
-//    fun isUserDetails(
-//        @Query(APIKeyNames.Req_mobile_number) mobile_number: String?,
-//        @Query(APIKeyNames.Req_password) password: String?,
-//        @Query(APIKeyNames.Req_device_type) device_type: String?,
-//        @Query(APIKeyNames.Req_secure_id) secure_id: String?
-//    ): Call<UserDetailsResponse?>?
 
     @POST(APIMethods.isPasswordChange)
     fun isPasswordChange(
@@ -371,20 +360,15 @@ interface ApiInterfaces {
         @Query(APIKeyNames.standard_id) standard_id: String
     ): Call<StudentAttendanceReportDataResponse?>
 
-
     @GET(APIMethods.get_child_attendance_report)
     fun isGetChildAttendanceReport(
         @Header(APIKeyNames.Authorization) token: String
     ): Call<ChildAttendanceResponse?>
 
-
-
     @GET(APIMethods.getabsenteescountbydate)
     fun getabsenteescountbydate(
         @Header(APIKeyNames.Authorization) token: String
     ): Call<AbsenteesResponse?>
-
-
 
     @GET(APIMethods.getabsenteesstudentbydate)
     fun getabsenteesstudentbydate(
@@ -392,7 +376,6 @@ interface ApiInterfaces {
         @Query(APIKeyNames.absent_on) absent_on: String?,
         @Query(APIKeyNames.section_id) section_id: String?
     ): Call<AbsenteeStudentsResponse?>
-
 
     @POST(APIMethods.sendnotice)
     fun sendnotice(
@@ -406,7 +389,6 @@ interface ApiInterfaces {
         @Body request: JsonObject
     ): Call<NoticeBoardSendResponse>?
 
-
     @GET(APIMethods.attachmentList)
     fun attachmentList(
         @Header(APIKeyNames.Authorization) token: String
@@ -416,20 +398,5 @@ interface ApiInterfaces {
     fun attachmentListArchive(
         @Header(APIKeyNames.Authorization) token: String
     ): Call<AttachmentResponse?>
-
-    @POST("me/videos")
-    fun isCreateVideoUrl(
-        @Body jsonObject: JsonObject?
-    ): Call<JsonObject>
-
-    @PUT("upload")
-    fun patchVimeoVideoMetaData(
-        @Query("ticket_id") ticketid: String?,
-        @Query("video_file_id") videoid: String,
-        @Query("signature") signatureid: String?,
-        @Query("v6") v6id: String?,
-        @Query("redirect_url") redirecturl: String?,
-        @Body file: RequestBody?
-    ): Call<ResponseBody>
 
 }
