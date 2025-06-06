@@ -1,7 +1,6 @@
 package com.vs.schoolmessenger.School.Homework
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -65,6 +64,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
     override fun getViewBinding(): HomeWorkBinding {
         return HomeWorkBinding.inflate(layoutInflater)
     }
+
     private lateinit var albumResultLauncher: ActivityResultLauncher<Intent>
 
     companion object {
@@ -89,12 +89,12 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
     var isSection: List<Section>? = null
     var isGetStandard: List<Standard>? = null
 
-    //    private lateinit var isHomeWorkReportData: List<HomeWorkReport>
     private var isHomeWorkReportData: List<HomeWorkReport>? = null
 
     var mHomeWorkReportAdapter: HomeWorkReportAdapter? = null
-    private val isHomeWorkItem = mutableListOf<HomeWorkReport>()
-
+    private var fullHomeworkList: List<HomeWorkReport> = listOf()
+    private var filteredHomeworkList: List<HomeWorkReport> = listOf()
+    private lateinit var homeWorkReportAdapter: HomeWorkReportAdapter
     var isSectionId = -1
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -125,7 +125,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         }
 
         binding.rcyImages.visibility = View.VISIBLE
-        mAdapter = ImagePickingAdapter(this, Constant.selectedFiles!!, this)
+        mAdapter = ImagePickingAdapter(this, Constant.selectedFiles, this)
         binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
         binding.rcyImages.adapter = mAdapter
 
@@ -243,46 +243,18 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
             }
 
         binding.edtSearch.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {}
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                filter(s.toString())
+                val query = s.toString().trim().lowercase(Locale.ROOT)
+                filterHomeWorkReport(query)
             }
+
+            override fun afterTextChanged(s: Editable?) {}
         })
-    }
-    @SuppressLint("NotifyDataSetChanged")
-    private fun filter(text: String) {
-        val query = text.lowercase(Locale.ROOT).trim()
-        val allData = isHomeWorkReportData ?: return
 
-        val filtered = if (query.isEmpty()) {
-            allData
-        } else {
-            allData.filter {
-                it.title.lowercase(Locale.ROOT).contains(query)
-            }
-        }
 
-        isHomeWorkItem.clear()
-        isHomeWorkItem.addAll(filtered)
-        mHomeWorkReportAdapter?.updateList(isHomeWorkItem.toList())
     }
 
-
-//    @SuppressLint("NotifyDataSetChanged")
-//    private fun filter(text: String) {
-//          val query = text.lowercase(Locale.ROOT).trim()
-//        val filtered = if (query.isEmpty()) {
-//            isHomeWorkReportData
-//        } else {
-//            isHomeWorkReportData.filter {
-//                it.title.lowercase(Locale.ROOT).contains(query) == true
-//            }
-//        }
-//        isHomeWorkItem.clear()
-//        isHomeWorkItem.addAll(filtered)
-//        mHomeWorkReportAdapter?.updateList(isHomeWorkItem.toList())
-//    }
 
 
     private fun isLoadAcademicYear(isAcademicYear: List<AcademicYear>?) {
@@ -357,6 +329,33 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
             }
     }
 
+    private fun filterHomeWorkReport(query: String) {
+        val lowerQuery = query.lowercase(Locale.getDefault())
+
+        val filteredList = if (query.isEmpty()) {
+            fullHomeworkList
+        } else {
+            fullHomeworkList.filter {
+                it.title.lowercase(Locale.getDefault()).contains(lowerQuery) ||
+                        it.description.lowercase(Locale.getDefault()).contains(lowerQuery) ||
+                        it.subject_name.lowercase(Locale.getDefault()).contains(lowerQuery)
+            }
+        }
+
+        mHomeWorkReportAdapter = HomeWorkReportAdapter(filteredList, this, this, false)
+        binding.rcyHomeWorkReport.adapter = mHomeWorkReportAdapter
+
+        if (filteredList.isEmpty()) {
+            binding.rcyHomeWorkReport.visibility = View.GONE
+            binding.lytNoDataFound.visibility = View.VISIBLE
+            binding.noDataFound.text = "No matching homework found."
+        } else {
+            binding.rcyHomeWorkReport.visibility = View.VISIBLE
+            binding.lytNoDataFound.visibility = View.GONE
+        }
+    }
+
+
     private fun checkCameraPermissionAndOpenCamera() {
         if (ContextCompat.checkSelfPermission(
                 this, Manifest.permission.CAMERA
@@ -419,6 +418,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
             R.id.btnChooseRecipient -> {
                 RedirectToSectionStudents()
             }
+
             R.id.Calendar -> {
                 fetchHomeWorkReportData()
             }
@@ -485,16 +485,17 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         intent.putExtra(Constant.section_data, sectionDetails)
         startActivity(intent)
     }
+
     private fun openAlbumSelectActivity(isFileType: String) {
-        Constant.selectedFiles.clear()
-        saveDrawableToCache(R.drawable.add_image)?.let {
-            Constant.selectedFiles.add(
-                FileItem(
-                    it, FileType.IMAGE
-                )
-            )
-        }
-        mAdapter!!.notifyDataSetChanged()
+//        Constant.selectedFiles.clear()
+//        saveDrawableToCache(R.drawable.add_image)?.let {
+//            Constant.selectedFiles.add(
+//                FileItem(
+//                    it, FileType.IMAGE
+//                )
+//            )
+//        }
+//        mAdapter!!.notifyDataSetChanged()
         val sdkInt = Build.VERSION.SDK_INT
         if (isFileType == Constant.DOCUMENT && sdkInt < Build.VERSION_CODES.R) {
             openSystemDocumentPicker()
@@ -633,6 +634,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
                     ".xlsx",
                     true
                 ) -> FileType.EXCEL
+
                 fileName.endsWith(".ppt", true) || fileName.endsWith(".pptx", true) -> FileType.PPT
                 fileName.matches(".*\\.(jpg|jpeg|png|webp)$".toRegex(RegexOption.IGNORE_CASE)) -> FileType.IMAGE
                 fileName.endsWith(".txt", true) -> FileType.TXT

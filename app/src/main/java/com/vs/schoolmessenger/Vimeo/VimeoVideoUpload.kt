@@ -112,6 +112,7 @@ object VimeoVideoUpload {
                 val responseCode = conn.responseCode
                 if (responseCode == HttpURLConnection.HTTP_OK || responseCode == HttpURLConnection.HTTP_CREATED) {
                     val response = conn.inputStream.bufferedReader().use { it.readText() }
+                    Log.d("isVimeoResponse", response)
                     val jsonResponse = JSONObject(response)
                     val upload = jsonResponse.getJSONObject(APIKeyNames.upload)
                     val embed = jsonResponse.getJSONObject(APIKeyNames.embed)
