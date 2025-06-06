@@ -31,24 +31,26 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
+import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.Event.Model.EventDetails
 import com.vs.schoolmessenger.School.Homework.HomeWork
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
+import com.vs.schoolmessenger.Utils.OnDateSelectedListener
 import com.vs.schoolmessenger.Utils.SharedPreference
+import com.vs.schoolmessenger.Utils.TimeSelectedListener
 import com.vs.schoolmessenger.databinding.CreateEventBinding
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import kotlin.text.endsWith
-import kotlin.text.ifEmpty
 
 class CreateEvent : BaseActivity<CreateEventBinding>(),OnImageClickListener,
-    View.OnClickListener, EventClickListener {
+    View.OnClickListener, OnDateSelectedListener, EventClickListener, TimeSelectedListener {
 
     override fun getViewBinding(): CreateEventBinding {
         return CreateEventBinding.inflate(layoutInflater)
@@ -63,6 +65,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(),OnImageClickListener,
         private const val MAX_FILES = 10
     }
 
+
     private var cameraImageFilePath: String? = null
     private val CAMERA_PERMISSION_REQUEST_CODE = 200
     private var mAdapter: ImagePickingAdapter? = null
@@ -70,9 +73,9 @@ class CreateEvent : BaseActivity<CreateEventBinding>(),OnImageClickListener,
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
 
-
+    var isFromTime = true
     private var isStaffDetails: StaffDetails? = null
-
+    private var selectedDateField: Int = 0
 
     override fun setupViews() {
         super.setupViews()
@@ -81,6 +84,11 @@ class CreateEvent : BaseActivity<CreateEventBinding>(),OnImageClickListener,
         appViewModel!!.init()
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.btnNext.setOnClickListener(this)
+        binding.rytStartDate.setOnClickListener(this)
+        binding.rytStart.setOnClickListener(this)
+        binding.rytStartTime.setOnClickListener(this)
+        binding.txtStartTime.setOnClickListener(this)
+
         Constant.editTextCounter(this,binding.txtDesc,500,binding.lbTextCount)
 
         isStaffDetails = SharedPreference.getStaffDetails(this)
@@ -101,6 +109,11 @@ class CreateEvent : BaseActivity<CreateEventBinding>(),OnImageClickListener,
         binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
         binding.rcyImages.adapter = mAdapter
 
+        val (dayOnly, dayOfWeek, fullDate, slashDate) = Constant.getCurrentDateInfo()
+        binding.lblDate.text = dayOnly
+        binding.lblDay.text = dayOfWeek
+
+        binding.txtStartDate.text = fullDate
         albumResultLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == RESULT_OK) {
@@ -182,9 +195,44 @@ class CreateEvent : BaseActivity<CreateEventBinding>(),OnImageClickListener,
                 onBackPressed()
             }
 
+            R.id.rytStartDate -> {
+                selectedDateField = 1
+                Constant.showDatePicker(this) { selectedDate ->
+                    Log.d("selectedDate", selectedDate)
+                    binding.txtStartDate.text = Constant.covertDateFormate(selectedDate)
+                    val parts = binding.txtStartDate.text.split(" ")
+                    val day = parts[0]
+                    val Date = parts[1]
+                    binding.lblDay.text = day
+                    binding.lblDate.text = Date
+                }
+            }
+
+
+            R.id.txtStartTime -> {
+                isFromTime = true
+                showTimePickerDialog(this, this)
+            }
+
             R.id.btnNext -> {
                 RedirectToRecepientActivity()
             }
+        }
+    }
+
+    override fun onDateSelected(date: String) {
+        when (selectedDateField) {
+            1 -> binding.txtStartDate.text = date
+
+        }
+    }
+
+    override fun onTimeSelected(hour: Int, minute: Int, amPm: String) {
+        if (isFromTime) {
+            binding.txtStartTime.text =
+                String.format(Constant.timeForMateWithAMPM, hour, minute, amPm)
+        } else {
+
         }
     }
 
@@ -378,24 +426,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(),OnImageClickListener,
         }
 
         when (requestCode) {
-//            PICK_IMAGE_REQUEST, PICK_DOCUMENT_REQUEST -> {
-//                data?.clipData?.let { cd ->
-//                    val toTake = minOf(cd.itemCount, remaining)
-//                    for (i in 0 until toTake) {
-//                        val uri = cd.getItemAt(i).uri
-//                        addPath(uri) // Use the updated addPath that handles MIME type
-//                        if (uri.toString().contains("document")) copyDocumentToInternalStorage(uri)
-//                    }
-//
-//                    if (cd.itemCount > remaining) Toast.makeText(
-//                        this, "Only $remaining added", Toast.LENGTH_SHORT
-//                    ).show()
-//                } ?: data?.data?.let { uri ->
-//
-//                    addPath(uri) // Use the updated addPath that handles MIME type
-//                    if (uri.toString().contains("document")) copyDocumentToInternalStorage(uri)
-//                }
-//            }
+
 
             HomeWork.Companion.CAMERA_IMAGE_REQUEST -> {
                 cameraImageFilePath?.let { filePath ->
@@ -500,7 +531,6 @@ class CreateEvent : BaseActivity<CreateEventBinding>(),OnImageClickListener,
     }
 
 
-
     override fun onClickListener(data: CreateEvent) {
         Constant.isAwsUploadedFiles.clear()
         Constant.selectedFiles.clear()
@@ -518,13 +548,63 @@ class CreateEvent : BaseActivity<CreateEventBinding>(),OnImageClickListener,
         binding.rcyImages.adapter = mAdapter
     }
 
-
-
     private fun RedirectToRecepientActivity() {
 
+        val txtLocation = binding.txtLocation.text.toString().trim()
+        val txtTitle = binding.txtTitle.text.toString().trim()
+        val txtDesc = binding.txtDesc.text.toString().trim()
+        val txtStartDate = Constant.convertDateFormat(binding.txtStartDate.text.toString())
+        val txtStartTime = binding.txtStartTime.text.toString().trim()
+
+
+
+        Log.d("RedirectToRecepientActivity", "Location: $txtLocation")
+        Log.d("RedirectToRecepientActivity", "Title: $txtTitle")
+        Log.d("RedirectToRecepientActivity", "Start Date: $txtStartDate")
+        Log.d("RedirectToRecepientActivity", "Description: $txtDesc")
+        Log.d("RedirectToRecepientActivity", "Start Time: $txtStartTime")
+
+        if (txtLocation.isEmpty()) {
+            Log.d("RedirectToRecepientActivity", "Location is empty")
+            binding.txtLocation.error = "Location is required"
+            binding.txtLocation.requestFocus()
+            return
+        }
+
+        if (txtTitle.isEmpty()) {
+            Log.d("RedirectToRecepientActivity", "Description is empty")
+            binding.txtTitle.error = getString(R.string.Title_required)
+            binding.txtTitle.requestFocus()
+            return
+        }
+
+        if (txtDesc.isEmpty()) {
+            Log.d("RedirectToRecepientActivity", "Description is empty")
+            binding.txtDesc.error = "Description is required"
+            binding.txtDesc.requestFocus()
+            return
+        }
+
+        val eventDetails = EventDetails(txtLocation, txtTitle, txtDesc, txtStartDate, txtStartTime)
+        Log.d("RedirectToRecepientActivity", "NoticeBoardDetails created: $eventDetails")
+
+        if (Constant.selectedFiles.isNotEmpty()) {
+            Log.d(
+                "RedirectToRecepientActivity",
+                "Removing first file from selectedFiles: ${Constant.selectedFiles[0]}"
+            )
+            Constant.selectedFiles.removeAt(0)
+        } else {
+            Log.d("RedirectToRecepientActivity", "selectedFiles list is already empty")
+        }
+
+        Log.d("RedirectToRecepientActivity", "Remaining selectedFiles: ${Constant.selectedFiles}")
+
+        val intent = Intent(this, RecipientActivity::class.java)
+        intent.putExtra(Constant.event_data, eventDetails)
+        Log.d("RedirectToRecepientActivity", "Starting RecepientActivity with event data")
+        startActivity(intent)
+
     }
-
-
-
 
 }

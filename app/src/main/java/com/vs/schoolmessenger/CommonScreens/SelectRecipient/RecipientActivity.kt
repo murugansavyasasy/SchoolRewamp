@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.AdapterView
+import android.widget.RadioButton
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
@@ -37,11 +38,14 @@ import com.vs.schoolmessenger.CommonScreens.SpecificStudentData.SpecificStudent
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.ApiCallRequest
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.Event.Model.EventDetails
 import com.vs.schoolmessenger.School.Homework.SectionDetails
+import com.vs.schoolmessenger.School.NoticeBoard.Model.NoticeBoardDetails
 import com.vs.schoolmessenger.Utils.AwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
 import com.vs.schoolmessenger.Utils.Constant.M_HOMEWORK
+import com.vs.schoolmessenger.Utils.Constant.M_SCHOOL_CLASS_EVENTS
 import com.vs.schoolmessenger.Utils.Constant.SELECTED_SCHOOL_MENU
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
@@ -268,6 +272,15 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             }
         }
 
+        appViewModel!!.sendevent?.observe(this) { response ->
+            Constant.hideLoading(this@RecipientActivity)
+            if (response != null) {
+                Log.d("Response", response.status.toString())
+                Constant.showTopAlertPopup(response.message, this)
+
+            }
+        }
+
         appViewModel!!.isVoiceSend?.observe(this) { response ->
             Constant.hideLoading(this@RecipientActivity)
             if (response != null) {
@@ -353,6 +366,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     }
 
     private fun tapVisibility() {
+        Log.d("Tap Visibility Check","Tap Debug Check")
         if (isUserDetails!!.staff_role == Constant.isStaffRole) {
             if (SELECTED_SCHOOL_MENU == M_HOMEWORK) {
                 binding.nomessage.visibility = View.GONE
@@ -378,7 +392,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 changeTapBg(Constant.isSection)
 
                 //show send and specific student button
-            } else {
+            }else {
 
                 binding.nomessage.visibility = View.GONE
                 binding.nomessageEntire.visibility = View.GONE
@@ -390,7 +404,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 changeTapBg(Constant.isStandard)
 
             }
-
         } else {
             Log.d("SELECTED_SCHOOL_MENU", SELECTED_SCHOOL_MENU.toString())
             if (SELECTED_SCHOOL_MENU == M_HOMEWORK) {
@@ -415,12 +428,22 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 binding.tapStaffs.visibility = View.GONE
                 changeTapBg(Constant.isSection)
 
-                //show send and specific student button
-            } else {
+            }else if (SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS) {
                 binding.textdesc.visibility = View.VISIBLE
                 binding.bottomLayout.visibility = View.VISIBLE
                 binding.nomessageEntire.visibility = View.VISIBLE
-
+                binding.tapEntireSchool.visibility = View.VISIBLE
+                binding.tapStandards.visibility = View.VISIBLE
+                binding.tabSectionsStudent.visibility = View.GONE
+                binding.tabGroups.visibility = View.VISIBLE
+                binding.tapStaffs.visibility = View.GONE
+                changeTapBg(Constant.isSchool)
+                isSelectedType = 0
+                isGetAcademicYear()
+            }  else {
+                binding.textdesc.visibility = View.VISIBLE
+                binding.bottomLayout.visibility = View.VISIBLE
+                binding.nomessageEntire.visibility = View.VISIBLE
                 binding.tapEntireSchool.visibility = View.VISIBLE
                 binding.tapStandards.visibility = View.VISIBLE
                 binding.tabSectionsStudent.visibility = View.VISIBLE
@@ -973,6 +996,17 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     isStaffDetails!!.school_id,
                     "files"
                 )
+            } else if (SELECTED_SCHOOL_MENU == Constant.M_SCHOOL_CLASS_EVENTS) {
+
+                if (Constant.selectedFiles.isNotEmpty()) {
+                    isFileUploadInAws(
+                        Constant.selectedFiles,
+                        isStaffDetails!!.school_id,
+                        "files"
+                    )
+                } else {
+                    eventsendapi()
+                }
             }
 
         }
@@ -990,6 +1024,29 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             Constant.selectedFiles[0].path,
             this@RecipientActivity
         )
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun eventsendapi() {
+
+        val eventDetails = intent.getSerializableExtra(Constant.event_data) as? EventDetails
+        if (eventDetails != null) {
+            val jsonObject = ApiCallRequest.isSendEvent(
+                title = eventDetails.txtTitle,
+                content = eventDetails.txtDesc,
+                venue = eventDetails.txtLocation,
+                event_date = eventDetails.txtStartDate,
+                event_time = eventDetails.txtStartTime,
+                target_type = isTargetType,
+                target_code = selectedIds
+            )
+            Log.d("RecepientEventList", "Event details received and jsonObject created: $jsonObject")
+            Log.d("Object", jsonObject.toString())
+            appViewModel!!.sendevent(isAccessToken!!, jsonObject, this)
+
+        } else {
+            Log.e("RecepientEventList", "EventDetails not found in intent")
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -1161,6 +1218,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                                     voiceSendApi()
                                 } else if (SELECTED_SCHOOL_MENU == Constant.M_ATTACHMENTS) {
                                     attachmentSendApi()
+                                } else if (SELECTED_SCHOOL_MENU == Constant.M_SCHOOL_CLASS_EVENTS) {
+                                    eventsendapi()
                                 }
                             } else {
                                 Log.d("isFileNotMatching", "isFileNotMatching")

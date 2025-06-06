@@ -50,6 +50,7 @@ import com.vs.schoolmessenger.School.Attachment.Attachment
 import com.vs.schoolmessenger.School.Communication.CommunicationSchool
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendingData
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceSendingData
+import com.vs.schoolmessenger.School.Event.CreateEvent
 import com.vs.schoolmessenger.School.Homework.HomeWork
 import com.vs.schoolmessenger.School.NoticeBoard.CreateNoticeBoard
 import java.text.SimpleDateFormat
@@ -191,6 +192,7 @@ object Constant {
     var PM = "PM"
     var dd_MM_yyyy = "dd/MM/yyyy"
     var EEE_dd_MMM_yyyy = "EEE dd MMM, yyyy"
+    var yyyy_MMM_dd = "yyyy MMM, dd"
     var EEE_dd_MMM_yyyy_1 = "EEE dd MMM yyyy"
     var hh_mm_a = "hh:mm a"
     var time_forMate = "00:%02d"
@@ -214,6 +216,7 @@ object Constant {
     var isSelectedId = "isSelectedId"
     var section_data = "section_data"
     var notice_data = "notice_data"
+    var event_data = "event_data"
     var isFileUrl = "isFileUrl"
     var isFileType = "isFileType"
     var isTitle = "isTitle"
@@ -617,6 +620,10 @@ object Constant {
                 val intent = Intent(activity, CreateNoticeBoard::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 activity.startActivity(intent)
+            }  else if (SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS) {
+                val intent = Intent(activity, CreateEvent::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                activity.startActivity(intent)
             }
             closePopup()
         }
@@ -912,6 +919,18 @@ object Constant {
         }
 
     }
+
+//    fun convertDate(input: String): String {
+//        return try {
+//            val inputFormat = SimpleDateFormat(EEE_dd_MMM_yyyy, Locale.getDefault())
+//            val outputFormat = SimpleDateFormat(ddMMyyyy, Locale.getDefault())
+//            val date = inputFormat.parse(input)
+//            outputFormat.format(date!!)
+//        } catch (e: Exception) {
+//            input // return original if there's a parsing error
+//        }
+//
+//    }
 
     fun convertDateTimeFormat(input: String): String {
         return try {

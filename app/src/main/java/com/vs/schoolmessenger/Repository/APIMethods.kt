@@ -17,8 +17,8 @@ object APIMethods {
 
 
 
-    const val isGetDashBoard = "dashboard/dashboard/get-dashboard-details"
-    const val isGetAds = "dashboard/dashboard/get-ads"
+    const val isGetDashBoard = "dashboard/api/dashboard/get-dashboard-details"
+    const val isGetAds = "dashboard/api/dashboard/get-ads"
     const val getStaffList = "comm/api/recipient/get-staff-list"
     const val getSubjectList = "comm/api/recipient/get-subject-list"
     const val getStandard = "comm/api/recipient/get-standards"

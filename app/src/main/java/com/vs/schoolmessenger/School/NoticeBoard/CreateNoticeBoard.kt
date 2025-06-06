@@ -49,7 +49,8 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickListener, OnDateSelectedListener, NoticeBoardClickListener,
+class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickListener,
+    OnDateSelectedListener, NoticeBoardClickListener,
     View.OnClickListener  {
 
 

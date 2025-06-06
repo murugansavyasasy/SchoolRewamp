@@ -238,7 +238,7 @@
                                 android:layout_marginStart="@dimen/five"
                                 android:layout_marginTop="@dimen/ten"
                                 android:layout_toEndOf="@+id/imgDateDown"
-                                android:text="2024 Dec, 04"
+                                android:text=""
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/thirteen_sp" />
 

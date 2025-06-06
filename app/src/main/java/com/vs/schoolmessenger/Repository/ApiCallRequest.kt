@@ -192,6 +192,44 @@ object ApiCallRequest {
     }
 
 
+    fun isSendEvent(
+        title: String,
+        content: String,
+        venue: String,
+        event_date: String,
+        event_time: String,
+        target_type: Int?,
+        target_code: MutableList<String>
+    ): JsonObject {
+        val jsonObject = JsonObject()
+        val filePathArray = JsonArray()
+
+        for (i in Constant.isAwsUploadedFiles.indices) {
+            val isSelectedObject = JsonObject()
+            isSelectedObject.addProperty(APIKeyNames.url, Constant.isAwsUploadedFiles[i].isFileUrl)
+            isSelectedObject.addProperty(APIKeyNames.type, Constant.isAwsUploadedFiles[i].isFileType.toString())
+            filePathArray.add(isSelectedObject)
+        }
+
+        val targetCodeArray = JsonArray()
+        for (code in target_code) {
+            targetCodeArray.add(code)
+        }
+
+        jsonObject.addProperty(APIKeyNames.title, title)
+        jsonObject.addProperty(APIKeyNames.description, content)
+        jsonObject.add("target_code", targetCodeArray)
+        jsonObject.addProperty("venue", venue)
+        jsonObject.addProperty("event_date", event_date)
+        jsonObject.addProperty("event_time", event_time)
+        jsonObject.addProperty("target_type", target_type)
+        jsonObject.add(APIKeyNames.file_path, filePathArray)
+
+        return jsonObject
+    }
+
+
+
 
 
 }

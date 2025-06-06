@@ -196,8 +196,8 @@
         android:layout_below="@+id/tabLayout"
         android:layout_marginStart="@dimen/twenty"
         android:layout_marginTop="@dimen/twenty"
-        android:text="@string/Group"
-        ></TextView>
+        android:text="@string/Group">
+    </TextView>
 
     <RelativeLayout
         android:id="@+id/rytStandardDropDown"
