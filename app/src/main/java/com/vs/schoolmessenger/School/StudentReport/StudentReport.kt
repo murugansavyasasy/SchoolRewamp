@@ -46,11 +46,14 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
     private var hasUserSelectedSection = false
     private var hasUserSelectedStandard = false
 
+
+
     val filterCaterotyType = listOf(
         Constant.GET_ALL_STUDENT,
         Constant.STANDARD,
         Constant.STANDARD_AND_SECTION
     )
+
 
     val handler = Handler(Looper.getMainLooper())
 
@@ -68,6 +71,7 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
 
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.rlaSort.setOnClickListener(this)
+//        binding.AcademicYear.setOnClickListener(this)
         binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
             binding.rytSearchBar.visibility = View.VISIBLE
@@ -77,6 +81,8 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
         binding.tapNoDsc.setOnClickListener(this)
         binding.tapNameDsc.setOnClickListener(this)
         binding.tapNoAsc.setOnClickListener(this)
+//        binding.dropdownTextViewStandard.setOnClickListener(this)
+//        binding.dropdownTextViewSection.setOnClickListener(this)
         isStaffDetails = SharedPreference.getStaffDetails(this)
 
 
@@ -103,14 +109,15 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
                         isLoadAcademicYear(isAcademicYear)
                         isValidAcademicYear =
                             isAcademicYear?.any { it.current_academic_year == true } == true
+//                        binding.lblAcademicYear.text = isAcademicYear!![0].year
                         isAcademicYearId = isAcademicYear!![0].id
                         isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
                         Log.d("isAcademicYearId", isAcademicYearId.toString())
                         isGetStandardSection()
-
                     }
                 } else {
                     binding.tabLayout.visibility = View.GONE
+//                    binding.rlaStandardPicking.visibility = View.GONE
                     ErrorMessage(response.message)
                 }
             }
@@ -141,14 +148,16 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
                         isClassID = isGetStandard!!.get(0).id
                         isSectionID = isGetStandard!!.get(0).sections.get(0).id
                         isLoadStandard(isGetStandard)
+//                        binding.dropdownTextViewStandard.text = isGetStandard!!.get(0).name
                         if (isGetStandard!!.get(0).sections.size > 0) {
+//                            binding.dropdownTextViewSection.text = isGetStandard!!.get(0).sections.get(0).name
                             isSection = isGetStandard!!.get(0).sections
                         }
                         isGetStudentReport()
-
                     }
                     else {
                         binding.tabLayout.visibility=View.GONE
+//                        binding.rlaStandardPicking.visibility=View.GONE
                         ErrorMessage(response.message)
                     }
                 }
@@ -170,6 +179,7 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
         })
     }
     private fun isGetStudentReport() {
+
         binding.txtSearchMenu.text.clear()
         mAdapter = StudentReportAdapter(null, this, this, Constant.isShimmerViewShow)
         binding.rcyStudentReport.layoutManager = LinearLayoutManager(this)
@@ -180,7 +190,7 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
             binding.lnrStandardDetails.visibility = View.GONE
             binding.lnrSectionDetails.visibility = View.GONE
             appViewModel!!.getStudentReportDetails(
-                isAccessToken!!, activity = this
+                isAccessToken!!,isAcademicYearId, activity = this
             )
         }
 
@@ -188,15 +198,14 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
             binding.lnrStandardDetails.visibility = View.VISIBLE
             binding.lnrSectionDetails.visibility = View.GONE
             appViewModel!!.getStudentReportDetails(
-                isAccessToken!!, class_id = isClassID!!, activity = this
+                isAccessToken!!,isAcademicYearId, class_id = isClassID!!, activity = this
             )
         }
         if (Constant.STANDARD_AND_SECTION == filterSelectedOption) {
             binding.lnrStandardDetails.visibility = View.VISIBLE
             binding.lnrSectionDetails.visibility = View.VISIBLE
-
             appViewModel!!.getStudentReportDetails(
-                isAccessToken!!, class_id = isClassID!!, section_id = isSectionID!!, activity = this
+                isAccessToken!!,isAcademicYearId, class_id = isClassID!!, section_id = isSectionID!!, activity = this
             )
         }
     }
@@ -241,6 +250,7 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
                     student.primary_mobile.lowercase()
                 )
 
+                // Check if ALL search words are found in ANY of the fields(feildTosearch List i.e name,email...etc)
                 searchWords.all { word ->
                     fieldsToSearch.any { field ->
                         field.contains(word)
@@ -306,13 +316,16 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
                         "DropdownMenu",
                         "Clicked Standard Year: ID = ${isSection[position].id}, Year = ${isSection[position].name}"
                     )
-
+//                    isSectionId = selectedOption.id
+//                    isSectionID= selectedOption.id
+//                    isGetStudentReport()
                     if (hasUserSelectedSection) {
                         isSectionId = selectedOption.id
                         isSectionID= selectedOption.id
                         isGetStudentReport()
 
                     } else {
+                        // First auto-trigger — just set the flag and skip loadData
                         hasUserSelectedSection = true
                     }
 
@@ -341,7 +354,13 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
             // No Standard Found
             isClassID = null
             isSectionID = null
+
+//            binding.dropdownTextViewStandard.text = "-"
+//            binding.dropdownTextViewSection.text = "-"
             binding.tabLayout.visibility = View.GONE
+//            binding.dropdownTextViewSection.isEnabled = false
+//            binding.dropdownTextViewSection.isClickable = false
+
             ErrorMessage(Constant.No_STANDARD_FOUND)
             return
         }
@@ -349,33 +368,37 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
         // Set selected Standard
         isClassID = standard.id
         isSection = standard.sections
+//        binding.dropdownTextViewStandard.text = standard.name
         binding.tabLayout.visibility = View.VISIBLE
 
         val sections = standard.sections
         if (!sections.isNullOrEmpty()) {
             val defaultSection = sections[0]
             isSectionID = defaultSection.id
+//            binding.dropdownTextViewSection.text = defaultSection.name
 
             if (sections.size == 1) {
 //                // Only one section -> disable dropdown
-
+//                binding.dropdownTextViewSection.isEnabled = false
+//                binding.dropdownTextViewSection.isClickable = false
             } else {
                 // Multiple sections -> enable dropdown
-
+//                binding.dropdownTextViewSection.isEnabled = true
+//                binding.dropdownTextViewSection.isClickable = true
             }
 
         } else {
             // No sections -> reset and disable section dropdown
             isSectionID = null
             isSection = null
+//            binding.dropdownTextViewSection.text = "-"
             binding.tabLayout.visibility = View.GONE
-
+//            binding.dropdownTextViewSection.isEnabled = false
+//            binding.dropdownTextViewSection.isClickable = false
 
             ErrorMessage("No Section Found in '${standard.name}'")
             return
         }
-
-        // Safe to call API now
 
     }
 
@@ -443,7 +466,6 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
                         adapter.selectedPosition = position
                         adapter.notifyDataSetChanged()
                         filterSelectedOption = filterCaterotyType[position]
-                        Log.d("DEBUG", "Category changed to: ${filterSelectedOption}")
                         isGetStandardSection() // Only triggered with valid selection
                     }
                 }

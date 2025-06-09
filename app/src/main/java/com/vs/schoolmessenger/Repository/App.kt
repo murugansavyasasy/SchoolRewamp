@@ -9,6 +9,7 @@ import com.google.gson.JsonObject
 import com.vs.schoolmessenger.CommonScreens.Ads.AdsResponse
 import com.vs.schoolmessenger.CommonScreens.GlobalVariableResponse
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
+import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYearResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
@@ -414,8 +415,8 @@ class App(application: Application) : AndroidViewModel(application) {
         )
     }
     //Get Student Report Details
-    fun getStudentReportDetails(isToken: String, class_id: Int?=null,section_id:Int?=null, activity: Activity) {
-        apiSchoolRepositories.getStudentReportList(isToken, class_id, section_id, activity)
+    fun getStudentReportDetails(isToken: String,isAcademicYearId:Int,class_id: Int?=null,section_id:Int?=null, activity: Activity) {
+        apiSchoolRepositories.getStudentReportList(isToken,isAcademicYearId, class_id, section_id, activity)
     }
 
     fun isUpdateSendAbsenteeSMS(isToken: String, jsonObject: JsonObject, activity: Activity) {
