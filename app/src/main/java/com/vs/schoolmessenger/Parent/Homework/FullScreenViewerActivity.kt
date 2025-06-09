@@ -79,32 +79,32 @@ class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(
 
             R.id.lnrNext -> {
                 if (currentPosition < Constant.commonFileList.size - 1) {
-                    binding.lnrNext.isEnabled=true
-                    binding.btnPrevious.alpha=1.0f
                     currentPosition++
                     scrollToPosition(currentPosition)
-                } else {
-                    binding.lnrNext.isEnabled=false
-                    binding.btnPrevious.alpha=0.5f
-
-//                    Toast.makeText(this, "This is the last file", Toast.LENGTH_SHORT).show()
                 }
+
+                // Update button states
+                binding.lnrPrevious.isEnabled = currentPosition > 0
+                binding.btnPrevious.alpha = if (currentPosition > 0) 1.0f else 0.5f
+
+                binding.lnrNext.isEnabled = currentPosition < Constant.commonFileList.size - 1
+                binding.btnNext.alpha = if (currentPosition < Constant.commonFileList.size - 1) 1.0f else 0.5f
             }
 
             R.id.lnrPrevious -> {
-
-                if (currentPosition < 0 || currentPosition==0) {
-                    binding.lnrPrevious.isEnabled=false
-                    binding.btnNext.alpha=0.5f
-//                    Toast.makeText(this, "This is the first file", Toast.LENGTH_SHORT).show()
-
-                } else {
-                    binding.lnrPrevious.isEnabled=true
-                    binding.btnNext.alpha=1.0f
+                if (currentPosition > 0) {
                     currentPosition--
                     scrollToPosition(currentPosition)
                 }
+
+                // Update button states
+                binding.lnrPrevious.isEnabled = currentPosition > 0
+                binding.btnPrevious.alpha = if (currentPosition > 0) 1.0f else 0.5f
+
+                binding.lnrNext.isEnabled = currentPosition < Constant.commonFileList.size - 1
+                binding.btnNext.alpha = if (currentPosition < Constant.commonFileList.size - 1) 1.0f else 0.5f
             }
+
         }
     }
 
