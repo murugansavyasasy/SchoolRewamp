@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
@@ -11,67 +10,49 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:id="@+id/rytHeader"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/primary_light"
-            android:padding="@dimen/ten">
-
-            <ImageView
-                android:id="@+id/imgBack"
-                android:layout_width="@dimen/thirty"
-                android:layout_height="@dimen/thirty"
-                android:layout_marginStart="@dimen/ten"
-                android:layout_marginTop="@dimen/ten"
-                android:layout_marginEnd="@dimen/ten"
-                android:layout_marginBottom="@dimen/ten"
-                android:src="@drawable/left_arrow"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/ten"
-                android:text="@string/lblSchoolStrength"
-                android:textColor="@color/black"
-                android:textSize="@dimen/twenty_sp"
-                android:textStyle="bold"/>
-        </LinearLayout>
-
+        <include
+            android:id="@+id/toolbarLayout"
+            layout="@layout/school_side_tool_bar" />
 
         <LinearLayout
             android:id="@+id/AcademicYear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/toolbarLayout"
             android:background="@drawable/gray_bg_radius"
             android:orientation="horizontal"
-            android:layout_below="@+id/rytHeader"
-            android:padding="@dimen/ten"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginStart="@dimen/fifteen"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/fifteen"
             android:weightSum="1">
 
             <TextView
                 style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.4"
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_weight="0.5"
                 android:text="@string/academic_year"
                 android:textSize="@dimen/thirteen_sp">
+
             </TextView>
 
-            <TextView
-                android:id="@id/lblAcademicYear"
-                style="@style/CustomTextStylePoppinsMedium"
+            <RelativeLayout
+                android:id="@+id/rytAcademicYearDropDown"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.6"
-                android:drawableEnd="@drawable/down_arrow"
-                android:paddingEnd="@dimen/fifteen"
-                android:text="2024-2025"
-                android:textSize="@dimen/ten_sp">
-            </TextView>
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginEnd="@dimen/fifteen"
+                android:layout_weight="0.5"
+                android:gravity="center">
+
+                <Spinner
+                    android:id="@+id/isSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_spinner_background" />
+
+            </RelativeLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -101,7 +82,7 @@
                 android:layout_gravity="center_vertical"
                 android:orientation="vertical">
 
-                <!-- Students -->
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -125,7 +106,7 @@
                         android:textSize="@dimen/thirteen_sp"/>
                 </LinearLayout>
 
-                <!-- Staff -->
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -150,7 +131,7 @@
                         android:textSize="@dimen/thirteen_sp"/>
                 </LinearLayout>
 
-                <!-- Total -->
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -180,51 +161,45 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/linear_layout2"
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rlaabsenteesreport2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@drawable/rect_light_blue1"
             android:layout_below="@+id/rlaPieChartCount"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_marginEnd="@dimen/ten"
-            android:layout_marginTop="8dp">
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="10dp">
+        </androidx.recyclerview.widget.RecyclerView>
 
-            <TextView
-                android:id="@+id/header1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="9th Standard"
-                android:textSize="@dimen/fourteen_sp"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:fontFamily="@font/poppins_bold"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="@dimen/ten"
-                android:layout_marginStart="@dimen/ten"
-                android:layout_weight="1"/>
 
-            <ImageView
-                android:id="@+id/header2"
-                android:layout_width="@dimen/twenty_three"
-                android:layout_height="@dimen/nineteen"
-                android:layout_gravity="center_vertical"
-                android:layout_marginTop="@dimen/five"
-                android:layout_marginEnd="@dimen/ten"
-                android:layout_marginBottom="@dimen/five"
-                android:src="@drawable/downarrow"/>
-        </LinearLayout>
-
-        <com.github.aachartmodel.aainfographics.aachartcreator.AAChartView
-            android:id="@+id/aa_chart_view"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/four_hundred"
-            android:layout_below="@+id/linear_layout2"
-            android:layout_marginTop="@dimen/three"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_marginEnd="@dimen/ten"/>
 
     </RelativeLayout>
+    <ImageView
+        android:id="@+id/nomessage"
+        android:layout_width="@dimen/two_fifty"
+        android:layout_height="@dimen/two_fifty"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/twenty"
+        android:src="@drawable/nomessages"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:visibility="gone" />
 
-</ScrollView>
+    <TextView
+        android:id="@+id/txtNoData"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/twenty"
+        android:text="@string/no_list_found"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+      android:layout_below="@+id/nomessage"
+        android:visibility="gone" />
+</RelativeLayout>

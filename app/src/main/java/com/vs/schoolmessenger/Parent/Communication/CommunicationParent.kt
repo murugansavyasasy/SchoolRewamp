@@ -76,7 +76,7 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
             if (response?.status == true) {
                 appendData(response.data, archiveFlag = true)
             } else {
-                checkAndShowNoData()
+                checkAndShowNoData(message = response?.message)
             }
         }
 
@@ -84,7 +84,7 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
             if (response?.status == true) {
                 appendData(response.data, archiveFlag = false)
             } else {
-                checkAndShowNoData()
+                checkAndShowNoData(message = response?.message)
             }
         }
 
@@ -291,20 +291,23 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
                 adapter?.setIsFromArchive(archiveFlag)
                 adapter?.updateList(allVoiceData)
             }
-
             applyCombinedFilter()
         }
-
         checkAndShowNoData()
     }
 
-    private fun checkAndShowNoData(filteredList: List<VoiceData>? = null) {
+    private fun checkAndShowNoData(filteredList: List<VoiceData>? = null, message: String? = null) {
         val listToCheck = filteredList ?: allVoiceData
         val isEmpty = listToCheck.isEmpty()
         binding.txtNoData.visibility = if (isEmpty) View.VISIBLE else View.GONE
         binding.nomessage.visibility = if (isEmpty) View.VISIBLE else View.GONE
         binding.recyclerInitial.visibility = if (isEmpty) View.GONE else View.VISIBLE
+
+        if (isEmpty) {
+            binding.txtNoData.text = message ?: getString(R.string.no_list_found)
+        }
     }
+
 
     private fun showShimmer() {
         val shimmerAdapter = UnifiedVoiceAdapter(

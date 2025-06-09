@@ -17,8 +17,8 @@ object APIMethods {
 
 
 
-    const val isGetDashBoard = "dashboard/dashboard/get-dashboard-details"
-    const val isGetAds = "dashboard/dashboard/get-ads"
+    const val isGetDashBoard = "dashboard/api/dashboard/get-dashboard-details"
+    const val isGetAds = "dashboard/api/dashboard/get-ads"
     const val getStaffList = "comm/api/recipient/get-staff-list"
     const val getSubjectList = "comm/api/recipient/get-subject-list"
     const val getStandard = "comm/api/recipient/get-standards"
@@ -67,4 +67,15 @@ object APIMethods {
     const val get_child_attendance_report = "stud-attd/api/attendance/get-absent-dates-for-child"
     const val IsGetHolidayReport = "admin/api/school-event/view-holidays"
     const val getabsenteescountbydate = "stud-attd/api/attendance/get-absentees-count-by-date"
+
+    const val getabsenteesstudentbydate = "stud-attd/api/attendance/get-absentees-students-by-date"
+
+    const val sendnotice = "admin/api/notice-board/send-notice"
+    const val sendAttachment = "comm/api/attachment/send-attachment"
+    const val attachmentList = "comm/api/attachment/list"
+    const val attachmentListArchive = "comm/api/attachment/list-archive"
 }
+
+
+
+

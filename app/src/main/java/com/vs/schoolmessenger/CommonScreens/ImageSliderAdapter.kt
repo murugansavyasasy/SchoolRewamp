@@ -114,6 +114,19 @@ class ImageSliderAdapter(
                     ImgOrDocumentType.setBackgroundResource(R.drawable.excel_icon)
                     openDocumentInWebView(data.url)
                 }
+                Constant.AUDIO -> {
+                    Glide.with(context).load(R.drawable.voice).into(DefaultImage)
+                    ImgOrDocumentType.setBackgroundResource(R.drawable.voice)
+                    WebViewThumbnail.visibility = View.GONE
+                    DefaultImage.visibility = View.VISIBLE
+                }
+
+                Constant.VIDEO -> {
+                    openDocumentInWebView(data.url)
+                    ImgOrDocumentType.setBackgroundResource(R.drawable.video_icon)
+                    WebViewThumbnail.visibility = View.GONE
+                    DefaultImage.visibility = View.VISIBLE
+                }
             }
 
             fileItem.setOnClickListener {

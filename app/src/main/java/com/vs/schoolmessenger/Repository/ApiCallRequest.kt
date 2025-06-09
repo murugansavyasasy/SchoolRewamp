@@ -1,12 +1,10 @@
 package com.vs.schoolmessenger.Repository
 
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Utils.Constant
-import com.vs.schoolmessenger.Utils.FileItem
 
 object ApiCallRequest {
 
@@ -117,27 +115,55 @@ object ApiCallRequest {
     }
 
 
-//    fun isSendNotice(
-//        istitle: Int,
-//        iscontent: MutableList<String>,
-//        istargetcode: String,
-//        isintendedfor: String,
-//        isvisiblefrom: String,
-//        isvisibleto: String,
-//        subjectId: Int): JsonObject {
-//        val jsonObject = JsonObject()
-//        val filePathArray = JsonArray()
-//
-//
-//        jsonObject.addProperty(APIKeyNames.title, istitle)
-//        jsonObject.addProperty(APIKeyNames.content, iscontent)
-//        jsonObject.addProperty(APIKeyNames.target_code, istargetcode)
-//        jsonObject.addProperty(APIKeyNames.intended_for, isintendedfor)
-//        jsonObject.addProperty(APIKeyNames.visible_from, isvisiblefrom)
-//        jsonObject.addProperty(APIKeyNames.visible_to,isvisibleto)
-//        jsonObject.add(APIKeyNames.file_path, filePathArray)
-//        return jsonObject
-//    }
+    fun isSendAttachment(
+        isAcademicYearId: Int,
+        selectedIds: MutableList<String>,
+        title: String,
+        description: String,
+        targetType: Int,
+        iframe: String,
+        fileSize: String,
+    ): JsonObject {
+
+        val jsonObject = JsonObject()
+        val sectionArray = JsonArray()
+        selectedIds.forEach { sectionArray.add(it) }
+        val filePathArray = JsonArray()
+
+        for (i in Constant.isAwsUploadedFiles.indices) {
+            val isSelectedObject = JsonObject()
+            isSelectedObject.addProperty(APIKeyNames.url, Constant.isAwsUploadedFiles[i].isFileUrl)
+            isSelectedObject.addProperty(
+                APIKeyNames.type,
+                Constant.isAwsUploadedFiles[i].isFileType.toString()
+            )
+            filePathArray.add(isSelectedObject)
+        }
+
+        jsonObject.addProperty(APIKeyNames.academic_year_id, isAcademicYearId)
+        jsonObject.add(APIKeyNames.target_code, sectionArray)
+        jsonObject.addProperty(APIKeyNames.title, title)
+        jsonObject.addProperty(APIKeyNames.target_type, targetType)
+        jsonObject.addProperty(APIKeyNames.description, description)
+        jsonObject.addProperty(APIKeyNames.iframe, iframe)
+        jsonObject.addProperty(APIKeyNames.file_size, fileSize)
+        jsonObject.add(APIKeyNames.file_path, filePathArray)
+        return jsonObject
+    }
+
+    fun isSendNotice(
+        istitle: Int,
+        iscontent: MutableList<String>,
+        istargetcode: String,
+        isintendedfor: String,
+        isvisiblefrom: String,
+        isvisibleto: String,
+        subjectId: Int): JsonObject {
+        val jsonObject = JsonObject()
+        val filePathArray = JsonArray()
+
+        return jsonObject
+    }
 
 
 }

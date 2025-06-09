@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_top_radious"
+    android:background="@drawable/bg_top_radius_2"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     android:padding="@dimen/five">
@@ -20,7 +20,8 @@
             android:text="Pick your file type "
             android:textColor="@color/black"
             android:textSize="@dimen/fifteen_sp"
-            android:textStyle="bold"></TextView>
+            style="@style/CustomTextStylePoppinsBold"
+            ></TextView>
 
 
         <LinearLayout
@@ -42,10 +43,12 @@
 
                 <ImageView
                     android:id="@+id/imgGallery"
-                    android:layout_width="@dimen/fourty"
-                    android:layout_height="@dimen/fourty"
+                    android:layout_width="@dimen/sixty"
+                    android:padding="@dimen/fifteen"
+                    android:background="@drawable/curve_gray_radius"
+                    android:layout_height="@dimen/sixty"
                     android:layout_centerHorizontal="true"
-                    android:src="@drawable/gallery_icon"></ImageView>
+                    android:src="@drawable/gallery_icon2"></ImageView>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -57,7 +60,8 @@
                     android:text="Gallery"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
-                    android:textStyle="bold">
+                    style="@style/CustomTextStylePoppinsBold"
+                   >
 
                 </TextView>
 
@@ -72,10 +76,12 @@
 
                 <ImageView
                     android:id="@+id/imgCamera"
-                    android:layout_width="@dimen/fourty"
-                    android:layout_height="@dimen/fourty"
+                    android:layout_width="@dimen/sixty"
+                    android:layout_height="@dimen/sixty"
+                    android:padding="@dimen/fifteen"
                     android:layout_centerHorizontal="true"
-                    android:src="@drawable/camera_pick_icon"></ImageView>
+                    android:background="@drawable/curve_gray_radius"
+                    android:src="@drawable/camera_icon2"></ImageView>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -85,10 +91,10 @@
                     android:gravity="center"
                     android:paddingBottom="@dimen/ten"
                     android:text="Camera"
-
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
-                    android:textStyle="bold">
+                    style="@style/CustomTextStylePoppinsBold"
+                    >
 
                 </TextView>
 
@@ -104,10 +110,12 @@
 
                 <ImageView
                     android:id="@+id/imgDocument"
-                    android:layout_width="@dimen/fourty"
-                    android:layout_height="@dimen/fourty"
+                    android:layout_width="@dimen/sixty"
+                    android:layout_height="@dimen/sixty"
+                    android:padding="@dimen/fifteen"
+                    android:background="@drawable/curve_gray_radius"
                     android:layout_centerHorizontal="true"
-                    android:src="@drawable/doc_icon"></ImageView>
+                    android:src="@drawable/document_icon2"></ImageView>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -119,7 +127,8 @@
                     android:text="Document"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
-                    android:textStyle="bold">
+                    style="@style/CustomTextStylePoppinsBold"
+                    >
 
                 </TextView>
             </RelativeLayout>
@@ -145,10 +154,12 @@
 
                 <ImageView
                     android:id="@+id/imgVoice"
-                    android:layout_width="@dimen/fourty"
-                    android:layout_height="@dimen/fourty"
+                    android:padding="@dimen/fifteen"
+                    android:background="@drawable/curve_gray_radius"
+                    android:layout_width="@dimen/sixty"
+                    android:layout_height="@dimen/sixty"
                     android:layout_centerHorizontal="true"
-                    android:src="@drawable/voice"></ImageView>
+                    android:src="@drawable/audio_icon2"></ImageView>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -160,7 +171,8 @@
                     android:text="Voice"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
-                    android:textStyle="bold">
+                    style="@style/CustomTextStylePoppinsBold"
+                    >
 
                 </TextView>
 
@@ -175,10 +187,12 @@
 
                 <ImageView
                     android:id="@+id/imgVideopick"
-                    android:layout_width="@dimen/fourty"
-                    android:layout_height="@dimen/fourty"
+                    android:layout_width="@dimen/sixty"
+                    android:padding="@dimen/fifteen"
+                    android:background="@drawable/curve_gray_radius"
+                    android:layout_height="@dimen/sixty"
                     android:layout_centerHorizontal="true"
-                    android:src="@drawable/video_icon"></ImageView>
+                    android:src="@drawable/video_icon2"></ImageView>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -188,10 +202,10 @@
                     android:gravity="center"
                     android:paddingBottom="@dimen/ten"
                     android:text="Video"
-
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
-                    android:textStyle="bold">
+                    style="@style/CustomTextStylePoppinsBold"
+                    >
 
                 </TextView>
 

@@ -265,14 +265,14 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             Constant.hideLoading(this@RecipientActivity)
             if (response != null) {
                 Log.d("Response", response.status.toString())
-                Constant.showTopAlertPopup(response.message, Constant.isCommunication, this)
+                Constant.showTopAlertPopup(response.message, this)
             }
         }
 
         appViewModel!!.isSendText?.observe(this) { response ->
             Constant.hideLoading(this@RecipientActivity)
             if (response != null) {
-                Constant.showTopAlertPopup(response.message, Constant.isCommunication, this)
+                Constant.showTopAlertPopup(response.message, this)
             }
         }
 
@@ -281,9 +281,17 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
             if (response != null) {
                 Log.d("Response", response.status.toString())
-                Constant.showTopAlertPopup(response.message, Constant.isHomeWork, this)
+                Constant.showTopAlertPopup(response.message, this)
             }
         }
+
+        appViewModel!!.isAttachmentSend?.observe(this) { response ->
+            Constant.hideLoading(this@RecipientActivity)
+            if (response != null && response.status) {
+                Constant.showTopAlertPopup(response.message, this)
+            }
+        }
+
         binding.chAllSelect.setOnClickListener {
             if (isSelectedType == 1) {
                 if (binding.chAllSelect.isChecked) {
@@ -637,19 +645,19 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                             "", isAcademicYearNote
                         )
                     } else {
-                        if (Constant.isCommunicationType == 3) {
+                        // if (Constant.isCommunicationType == 3) {
                             showSendConfirmationDialog(
                                 resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + " " + isTypeOfName + resources.getString(
                                     R.string._s
                                 ), isAcademicYearNote
                             )
-                        } else {
-                            showSendConfirmationDialog(
-                                resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + " " + isTypeOfName + resources.getString(
-                                    R.string._s
-                                ), isAcademicYearNote.toString()
-                            )
-                        }
+//                        } else {
+//                            showSendConfirmationDialog(
+//                                resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + " " + isTypeOfName + resources.getString(
+//                                    R.string._s
+//                                ), isAcademicYearNote.toString()
+//                            )
+//                        }
                     }
                 } else {
                     Constant.showValidationAlertPopup(
@@ -777,7 +785,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
                 binding.chAllSelect.visibility = View.GONE
                 binding.rytSubjectDropDown.visibility = View.GONE
-                if (SELECTED_SCHOOL_MENU == Constant.M_COMMUNICATION) {
+                if (SELECTED_SCHOOL_MENU == Constant.M_COMMUNICATION || SELECTED_SCHOOL_MENU == Constant.M_ATTACHMENTS) {
                     binding.btnSpecificStudent.visibility = View.VISIBLE
                 } else {
                     binding.btnSpecificStudent.visibility = View.GONE
@@ -912,7 +920,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
 
             if (SELECTED_SCHOOL_MENU == M_HOMEWORK) {
-                if (Constant.selectedFiles.size > 0) {
+                if (Constant.selectedFiles.isNotEmpty()) {
                     isFileUploadInAws(
                         Constant.selectedFiles, isStaffDetails!!.school_id, "file"
                     )
@@ -935,7 +943,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 } else {
                     if (Constant.isVoiceType == 3) {
                         val isVoiceData = Constant.isVoiceSendingData
-                        voiceSendApi(isVoiceData!!.isAwsUrl)
+                        voiceSendApi()
                     } else {
                         isFileUploadInAws(
                             Constant.selectedFiles, isStaffDetails!!.school_id, "audio"
@@ -943,10 +951,13 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     }
 
                 }
+            } else if (SELECTED_SCHOOL_MENU == Constant.M_ATTACHMENTS) {
+                isFileUploadInAws(
+                    Constant.selectedFiles,
+                    isStaffDetails!!.school_id,
+                    "files"
+                )
             }
-//            else if () {
-//
-//            }
 
         }
 
@@ -1028,6 +1039,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun isFileUploadInAws(
         isSelectedFiles: MutableList<FileItem>, schoolId: String, isFileType: String?
     ) {
@@ -1050,43 +1062,71 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
         val isCountryId = SharedPreference.getCountryId(this)
         Log.d("isSelectedFiles", isSelectedFiles.size.toString())
-        for (i in isSelectedFiles.indices) {
-            isAwsUploadingPreSigned!!.getPreSignedUrl(
-                isSelectedFiles[i].path.toString(),
-                schoolId,
-                isFileType!!,
-                this,
-                isCountryId!!,
-                true,
-                false,
-                object : UploadCallback {
-                    @RequiresApi(Build.VERSION_CODES.O)
-                    override fun onUploadSuccess(
-                        response: String?, isFileUploaded: String?
-                    ) {
-                        Constant.isAwsUploadedFiles.add(
-                            AwsUploadedFiles(
-                                isFileUrl = isFileUploaded!!,
-                                isFileType = isSelectedFiles[i].type.toString()
+        if (isSelectedFiles.size == 0) {
+            if (SELECTED_SCHOOL_MENU == M_HOMEWORK) {
+                isHomeWorkSend()
+            } else if (SELECTED_SCHOOL_MENU == Constant.M_COMMUNICATION) {
+                voiceSendApi()
+            }
+        } else {
+            for (i in isSelectedFiles.indices) {
+                isAwsUploadingPreSigned!!.getPreSignedUrl(
+                    isSelectedFiles[i].path.toString(),
+                    schoolId,
+                    isFileType!!,
+                    this,
+                    isCountryId!!,
+                    true,
+                    false,
+                    object : UploadCallback {
+                        @RequiresApi(Build.VERSION_CODES.O)
+                        override fun onUploadSuccess(
+                            response: String?, isFileUploaded: String?
+                        ) {
+                            Constant.isAwsUploadedFiles.add(
+                                AwsUploadedFiles(
+                                    isFileUrl = isFileUploaded!!,
+                                    isFileType = isSelectedFiles[i].type.toString()
+                                )
                             )
-                        )
-                        if (Constant.isAwsUploadedFiles.size == isSelectedFileListSize) {
-                            if (SELECTED_SCHOOL_MENU == M_HOMEWORK) {
-                                isHomeWorkSend()
-                            } else if (SELECTED_SCHOOL_MENU == Constant.M_COMMUNICATION) {
-                                voiceSendApi(isFileUploaded)
+                            if (Constant.isAwsUploadedFiles.size == isSelectedFileListSize) {
+                                Log.d("SELECTED_SCHOOL_MENU", SELECTED_SCHOOL_MENU.toString())
+                                if (SELECTED_SCHOOL_MENU == M_HOMEWORK) {
+                                    isHomeWorkSend()
+                                } else if (SELECTED_SCHOOL_MENU == Constant.M_COMMUNICATION) {
+                                    voiceSendApi()
+                                } else if (SELECTED_SCHOOL_MENU == Constant.M_ATTACHMENTS) {
+                                    attachmentSendApi()
+                                }
+                            } else {
+                                Log.d("isFileNotMatching", "isFileNotMatching")
                             }
-                        } else {
-                            Log.d("isFileNotMatching", "isFileNotMatching")
+                            Log.d("isSuccessFullUpload", "isSuccessFullUpload")
                         }
-                        Log.d("isSuccessFullUpload", "isSuccessFullUpload")
-                    }
-                    override fun onUploadError(error: String?) {
 
-                    }
-                })
+                        override fun onUploadError(error: String?) {
+
+                        }
+                    })
+            }
         }
     }
+
+    fun attachmentSendApi() {
+        val jsonObject = ApiCallRequest.isSendAttachment(
+            isAcademicYearId = isAcademicYearId,
+            selectedIds = selectedIds,
+            title = Constant.isCommonTitle,
+            description = Constant.isCommonDescription,
+            targetType = isTargetType!!,
+            iframe = "iframe",
+            fileSize = "1",
+        )
+        appViewModel!!.sendAttachment(isAccessToken!!, jsonObject, this)
+
+    }
+
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun isHomeWorkSend() {
@@ -1097,7 +1137,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 selectedIds = selectedIds,
                 title = it.title,
                 description = it.description,
-                subjectId = isSubjectId!!,
+                subjectId = isSubjectId,
             )
             appViewModel!!.isSendHomeWork(isAccessToken!!, jsonObject, this)
         } ?: run {
@@ -1110,7 +1150,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun voiceSendApi(isFileUploadedUrl: String?) {
+    fun voiceSendApi() {
 
         val isVoiceData = Constant.isVoiceSendingData
         val jsonObject = ApiCallRequest.isVoiceSend(

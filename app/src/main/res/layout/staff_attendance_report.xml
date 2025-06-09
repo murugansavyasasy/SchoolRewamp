@@ -68,7 +68,7 @@
             <RelativeLayout
                 android:id="@+id/rytYears"
                 android:layout_width="@dimen/one_fifty"
-                android:layout_height="@dimen/fifty"
+                android:layout_height="@dimen/sixty"
                 android:layout_marginStart="@dimen/thirty"
                 android:background="@drawable/bg_white_light_radious"
                 android:gravity="center">
@@ -82,14 +82,12 @@
                     android:gravity="center"
                     android:spinnerMode="dropdown" />
 
-
-
             </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/rytMonths"
                 android:layout_width="@dimen/one_fifty"
-                android:layout_height="@dimen/fifty"
+                android:layout_height="@dimen/sixty"
                 android:layout_marginStart="@dimen/five"
                 android:layout_marginEnd="@dimen/thirty"
                 android:background="@drawable/bg_white_light_radious"
@@ -100,8 +98,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:gravity="center"
                     android:background="@drawable/custom_spinner_background"
+                    android:gravity="center"
                     android:spinnerMode="dropdown" />
 
 
@@ -125,40 +123,24 @@
         <RelativeLayout
             android:id="@+id/rlaStaff"
             android:layout_width="match_parent"
+            android:layout_marginStart="@dimen/thirty"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/thirty"
+            android:gravity="center"
             android:layout_below="@+id/lblSelectStaff"
-            android:layout_marginStart="@dimen/fifteen"
-            android:layout_marginTop="@dimen/ten"
-            android:visibility="gone"
-            android:layout_marginEnd="@dimen/fifteen"
             android:background="@drawable/bg_white_light_radious"
-            android:padding="@dimen/fifteen">
+            android:visibility="gone">
 
-
-            <ImageView
-                android:id="@+id/imgStaff"
-                android:layout_width="@dimen/twenty_five"
-                android:layout_height="@dimen/twenty_five"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="@dimen/ten"
-                android:src="@drawable/ic_drop_down">
-
-            </ImageView>
-
-            <TextView
-                android:id="@+id/lblStaff"
-                android:layout_width="wrap_content"
+            <Spinner
+                android:id="@+id/spinnerStaffList"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/fifteen"
-                android:fontFamily="@font/poppins_bold"
-                android:text=""
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp"
-                android:textStyle="bold">
+                android:background="@drawable/custom_spinner_background"
+                android:gravity="center"
+                android:spinnerMode="dropdown" />
 
-            </TextView>
+
         </RelativeLayout>
 
         <androidx.recyclerview.widget.RecyclerView

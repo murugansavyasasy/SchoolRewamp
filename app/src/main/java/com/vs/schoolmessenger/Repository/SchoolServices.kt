@@ -23,6 +23,7 @@ import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
 
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.SendAbsenteeSMSResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportDataResponse
+import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeStudentsResponse
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteesResponse
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionReportResponse
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportResponse
@@ -32,8 +33,9 @@ import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistor
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffAttendanceReportResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffLocationResponse
+import com.vs.schoolmessenger.School.NoticeBoard.Response.NoticeBoardSendResponse
 import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
-import com.vs.schoolmessenger.School.SchoolStrength.SchoolStrengthResponse
+import com.vs.schoolmessenger.School.SchoolStrength.Model.SchoolStrengthResponse
 import com.vs.schoolmessenger.Utils.SharedPreference
 import retrofit2.Call
 import retrofit2.Callback
@@ -89,6 +91,11 @@ class SchoolServices {
 
     var getabsenteescountbydate: MutableLiveData<AbsenteesResponse?>
 
+    var getabsenteesstudentbydate: MutableLiveData<AbsenteeStudentsResponse?>
+
+
+    var sendnotice: MutableLiveData<NoticeBoardSendResponse?>
+    var isSendAttachment: MutableLiveData<NoticeBoardSendResponse?>
 
     init {
         client_auth = RestClient()
@@ -133,6 +140,10 @@ class SchoolServices {
         isSendAbsenteeSMS = MutableLiveData()
         isStudentAttendanceReportForSchool = MutableLiveData()
         getabsenteescountbydate = MutableLiveData()
+        getabsenteesstudentbydate = MutableLiveData()
+        sendnotice = MutableLiveData()
+        isSendAttachment = MutableLiveData()
+
     }
 
 
@@ -1470,11 +1481,12 @@ class SchoolServices {
 
     fun getStudentReportList(
         isToken: String,
+        isAcademicYearId: Int,
         class_id: Int? = null,
         section_id: Int? = null,
         activity: Activity
     ) {
-        RestClient.apiInterfaces.getStudentReport(isToken, class_id, section_id)
+        RestClient.apiInterfaces.getStudentReport(isToken,isAcademicYearId, class_id, section_id)
             ?.enqueue(object : Callback<GetStudentReportData?> {
                 override fun onResponse(
                     call: Call<GetStudentReportData?>,
@@ -1566,6 +1578,53 @@ class SchoolServices {
 
 
 
+    fun getabsenteesstudentbydate(
+        isToken: String,
+        absent_on: String? = null,
+        section_id: String? = null,
+        activity: Activity
+
+    ) {
+        RestClient.apiInterfaces.getabsenteesstudentbydate(isToken, absent_on, section_id)
+            ?.enqueue(object : Callback<AbsenteeStudentsResponse?> {
+                override fun onResponse(
+                    call: Call<AbsenteeStudentsResponse?>,
+                    response: Response<AbsenteeStudentsResponse?>
+                ) {
+                    Log.d(
+                        "GetStudentReport Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetStudentReportData", response.body().toString())
+                                getabsenteesstudentbydate.postValue(response.body())
+                            } else {
+                                Log.d("GetStudentReportData", response.body().toString())
+                                getabsenteesstudentbydate.postValue(response.body())
+                            }
+                        }
+                    }
+                    else{
+                        getabsenteesstudentbydate.postValue(null)
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<AbsenteeStudentsResponse?>,
+                    t: Throwable
+                ) {
+                    getabsenteesstudentbydate.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+
+    val getabsenteesstudentbydateLiveData: LiveData<AbsenteeStudentsResponse?>
+        get() = getabsenteesstudentbydate
 
 
     fun isUpdateSendAbsenteeSMS(isToken: String, jsonObject: JsonObject, activity: Activity) {
@@ -1652,6 +1711,63 @@ class SchoolServices {
         get() = isStudentAttendanceReportForSchool
 
 
+
+
+
+    fun sendnotice(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        RestClient.changeApiBaseUrl(SharedPreference.getBaseUrl(activity).toString())
+        RestClient.apiInterfaces.sendnotice(isToken, jsonObject)
+            ?.enqueue(object : Callback<NoticeBoardSendResponse?> {
+                override fun onResponse(
+                    call: Call<NoticeBoardSendResponse?>, response: Response<NoticeBoardSendResponse?>
+                ) {
+                    if (response.code() == 200 && response.body() != null) {
+                        sendnotice.postValue(response.body())
+                    } else {
+                        sendnotice.postValue(response.body())
+                    }
+
+                    Log.d("isGetCountryList", "${response.code()} - ${response}")
+                }
+
+                override fun onFailure(call: Call<NoticeBoardSendResponse?>, t: Throwable) {
+                    sendnotice.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+
+    val sendnoticeLiveData: LiveData<NoticeBoardSendResponse?>
+        get() = sendnotice
+
+
+    fun sendAttachment(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        RestClient.changeApiBaseUrl(SharedPreference.getBaseUrl(activity).toString())
+        RestClient.apiInterfaces.sendAttachment(isToken, jsonObject)
+            ?.enqueue(object : Callback<NoticeBoardSendResponse?> {
+                override fun onResponse(
+                    call: Call<NoticeBoardSendResponse?>, response: Response<NoticeBoardSendResponse?>
+                ) {
+                    if (response.code() == 200 && response.body() != null) {
+                        isSendAttachment.postValue(response.body())
+                    } else {
+                        isSendAttachment.postValue(response.body())
+                    }
+
+                    Log.d("isGetCountryList", "${response.code()} - ${response}")
+                }
+
+                override fun onFailure(call: Call<NoticeBoardSendResponse?>, t: Throwable) {
+                    isSendAttachment.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+
+    val sendAttachmentLiveData: LiveData<NoticeBoardSendResponse?>
+        get() = isSendAttachment
 
 
 }

@@ -6,6 +6,7 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
+    <color name="holo_blue_light">#ff33b5e5</color>
     <color name="black1">#646060</color>
     <color name="jumbo">#87878a</color>
     <color name="teal">#53c0bd</color>
@@ -82,7 +83,9 @@
     <color name="sky_blue1">#98d2de</color>
     <color name="sky_blue2">#C8E2F4</color>
     <color name="light_blue">#F4F8FE</color>
+    <color name="light_blue1">#e0ebff</color>
 
+    <color name="dark_blue">#162053</color>
     <color name="yellow">#fcd246</color>
     <color name="light_yellow">#f4d382</color>
     <color name="light_orange0">#d3603b</color>
@@ -131,7 +134,6 @@
     <color name="light_green_bg1">#3FCCBB</color>
     <color name="light_violet_bg1">#B58EF3</color>
     <color name="light_dark_blue">#7ac6dc</color>
-    <color name="dark_blue">#7ac6dc</color>
 
 
 

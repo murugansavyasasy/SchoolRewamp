@@ -44,6 +44,7 @@ import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.MarkAttendanceDataSending
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.ClassWise
+import com.vs.schoolmessenger.School.Attachment.Attachment
 import com.vs.schoolmessenger.School.Communication.CommunicationSchool
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendingData
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceSendingData
@@ -212,6 +213,7 @@ object Constant {
     var lblAcademicYear = "lblAcademicYear"
     var isSelectedId = "isSelectedId"
     var section_data = "section_data"
+    var notice_data = "notice_data"
     var isFileUrl = "isFileUrl"
     var isFileType = "isFileType"
     var isTitle = "isTitle"
@@ -234,6 +236,9 @@ object Constant {
     var UNREAD = "UNREAD"
     var READ = "READ"
     var VOICE = "VOICE"
+    var AUDIO = "AUDIO"
+    var VIDEO = "VIDEO"
+    var DOCUMENT = "DOCUMENT"
     var VOICE_UNREAD = "VOICE_UNREAD"
     var VOICE_READ = "VOICE_READ"
     var TEXT = "TEXT"
@@ -242,6 +247,7 @@ object Constant {
     var TEXT_ALL = "TEXT_ALL"
     var VOICE_ALL = "VOICE_ALL"
     var dateForMate = "%02d:%02d"
+    var isSelectedFiles = "isSelectedFiles"
 
     var IMAGE = "IMAGE"
     var PDF = "PDF"
@@ -308,6 +314,9 @@ object Constant {
 
     var NO_DATA_FOUND = "No Data Found"
     var No_STANDARD_FOUND = "No Standard Found"
+
+    var isCommonTitle = ""
+    var isCommonDescription = ""
 
 
     fun isInternetAvailable(activity: Activity): Boolean {
@@ -490,7 +499,7 @@ object Constant {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun showTopAlertPopup(message: String, isType: String, activity: Activity) {
+    fun showTopAlertPopup(message: String, activity: Activity) {
         val inflater = LayoutInflater.from(activity)
         val view = inflater.inflate(R.layout.success_popup, null)
 
@@ -530,17 +539,17 @@ object Constant {
         okButton.setOnClickListener {
             isAwsUploadedFiles.clear()
             selectedFiles.clear()
-            if (isType == isCommunication) {
+            if (SELECTED_SCHOOL_MENU == M_COMMUNICATION) {
                 val intent = Intent(activity, CommunicationSchool::class.java)
 
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 activity.startActivity(intent)
-            } else if (isType == isGioMetric) {
-//                val intent = Intent(activity, MarkYourAttendance::class.java)
-//                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-//                activity.startActivity(intent)
-            } else if (isType == isHomeWork) {
+            } else if (SELECTED_SCHOOL_MENU == M_HOMEWORK) {
                 val intent = Intent(activity, HomeWork::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                activity.startActivity(intent)
+            } else if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS) {
+                val intent = Intent(activity, Attachment::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 activity.startActivity(intent)
             }
@@ -813,6 +822,18 @@ object Constant {
         val currentDate = LocalDate.now()
         val formatter = DateTimeFormatter.ofPattern(ddMMyyyy) // or "dd/MM/yyyy", etc.
         return currentDate.format(formatter)
+    }
+
+    fun getCurrentDateInfo(): List<String> {
+        val calendar = android.icu.util.Calendar.getInstance()
+
+        val dayOnly = String.format("%02d", calendar.get(android.icu.util.Calendar.DAY_OF_MONTH))
+        val dayOfWeek = SimpleDateFormat("EEE", Locale.getDefault()).format(calendar.time)
+        val fullDate =
+            SimpleDateFormat("EEE dd MMM yyyy", Locale.getDefault()).format(calendar.time)
+        val slashDate =
+            SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(calendar.time)
+        return listOf(dayOnly, dayOfWeek, fullDate, slashDate)
     }
 
     fun convertDateTimeFormat(input: String): String {

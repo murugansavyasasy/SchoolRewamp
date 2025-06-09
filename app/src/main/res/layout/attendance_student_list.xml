@@ -13,7 +13,7 @@
 
         <TextView
             android:id="@+id/lblName"
-            style="@style/CustomTextStylePoppinsMedium"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
@@ -22,7 +22,7 @@
             android:padding="@dimen/ten"
             android:text="Murugan"
             android:textColor="@color/black"
-            android:textSize="@dimen/twele_sp" />
+             />
 
         <LinearLayout
             android:id="@+id/lnrRollNo"

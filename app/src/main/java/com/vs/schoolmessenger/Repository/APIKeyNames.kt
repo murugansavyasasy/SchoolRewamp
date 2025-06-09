@@ -17,6 +17,8 @@ object APIKeyNames {
     const val student_id = "student_id"
 
     const val name = "name"
+    const val iframe = "iframe"
+    const val file_size = "file_size"
     const val profile = "profile"
     const val date = "date"
     const val time = "time"
@@ -96,6 +98,7 @@ object APIKeyNames {
     const val menu_id = "menu_id"
     const val section_ids = "section_ids"
     const val section_id = "section_id"
+    const val absent_on = "absent_on"
     const val standard_id = "standard_id"
     const val bucket = "bucket"
     const val fileName = "fileName"

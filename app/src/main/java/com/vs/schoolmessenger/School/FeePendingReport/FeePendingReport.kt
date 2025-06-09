@@ -3,18 +3,18 @@ package com.vs.schoolmessenger.School.FeePendingReport
 import android.graphics.Color
 import android.util.Log
 import android.view.View
+import android.widget.AdapterView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
+import com.vs.schoolmessenger.CommonScreens.SchoolList.AcademicYearAdapter
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.FeePendingReportBinding
-import kotlin.collections.forEach
-import kotlin.text.isNullOrEmpty
 
 class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickListener {
 
@@ -30,6 +30,7 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
     private var isAccessToken: String? = null
     private var isStaffDetails: StaffDetails? = null
     private var mAdapter: FeePendingReportAdapter? = null
+    var isFirstLoad = false
 
     private var isClassWiseSelected = false
 
@@ -46,6 +47,7 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
         binding.className.setOnClickListener(this)
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
         binding.toolbarLayout.lblParentToolBar.text = "Fee Pending"
+        binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
 
         appViewModel!!.isGetAcademicList?.observe(this) { response ->
@@ -55,10 +57,11 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
                 isAcademicYear = reorderedList
                 isValidAcademicYear = isAcademicYear?.any { it.current_academic_year == true } == true
 
-                val defaultYear = isAcademicYear!!.first()
-                binding.lblAcademicYear.text = defaultYear.year
-                isAcademicYearId = defaultYear.id
-                isCurrentAcademicYear = defaultYear.current_academic_year
+                isLoadAcademicYear(isAcademicYear)
+                isValidAcademicYear =
+                    isAcademicYear?.any { it.current_academic_year == true } == true
+                isAcademicYearId = isAcademicYear!![0].id
+                isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
 
                 if (isClassWiseSelected) {
                     isGetDailyWiseCollection()
@@ -76,6 +79,7 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
             mAdapter?.clearData()
 
             if (response != null && response.status && !response.data.isNullOrEmpty()) {
+                isFirstLoad = true
                 isLoadDailyCollectionData(response.data)
             } else {
                 showNoDataMessage(response?.message ?: "No fee pending data available.")
@@ -88,6 +92,7 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
             mAdapter?.clearData()
 
             if (response != null && response.status && !response.data.isNullOrEmpty()) {
+                isFirstLoad = true
                 isLoadDailyCollectionData(response.data)
             } else {
                 showNoDataMessage(response?.message ?: "No fee pending data available.")
@@ -175,22 +180,22 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
         resetListUI()
     }
 
-    override fun onClick(p0: View?) {
-        when (p0?.id) {
-            R.id.imgBack -> {
-                onBackPressed()
-            }
-            R.id.AcademicYear -> {
-                showAcademicDropdown(
-                    binding.AcademicYear, this, isAcademicYear
-                ) { selectedYear ->
-                    binding.lblAcademicYear.text = selectedYear.year
-                    isAcademicYearId = selectedYear.id
-                    isCurrentAcademicYear = selectedYear.current_academic_year
+    private fun isLoadAcademicYear(isAcademicYear: List<AcademicYear>?) {
+        val adapter = AcademicYearAdapter(this, isAcademicYear)
+        binding.isSpinner.adapter = adapter
+        binding.isSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>, view: View?, position: Int, id: Long
+            ) {
+                adapter.selectedPosition = position
+                if (isFirstLoad) {
+                    val selectedOption = isAcademicYear!![position]
+                    isAcademicYearId = selectedOption.id
+                    isCurrentAcademicYear = selectedOption.current_academic_year
 
                     Log.d(
                         "DropdownMenu",
-                        "Clicked Academic Year: ID = ${selectedYear.id}, Year = ${selectedYear.year}, Current = ${selectedYear.current_academic_year}"
+                        "Clicked Academic Year: ID = ${selectedOption.id}, Year = ${selectedOption.year}, Current = ${selectedOption.current_academic_year}"
                     )
 
                     if (isClassWiseSelected) {
@@ -200,6 +205,17 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
                     }
                 }
             }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
+    }
+
+    override fun onClick(p0: View?) {
+        when (p0?.id) {
+            R.id.imgBack -> {
+                onBackPressed()
+            }
+
 
             R.id.category_name -> {
                 isClassWiseSelected = false

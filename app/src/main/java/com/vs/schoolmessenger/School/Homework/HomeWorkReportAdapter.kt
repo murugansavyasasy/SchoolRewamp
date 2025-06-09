@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.School.Homework
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.CommonScreens.ImageSliderAdapter
+import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuDetail
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReport
 import com.vs.schoolmessenger.Utils.Constant
@@ -53,6 +55,12 @@ class HomeWorkReportAdapter(
     override fun getItemCount(): Int {
         return if (isLoading) 20 // Show shimmer items while loading
         else itemList?.size ?: 0
+    }
+    fun updateList(newList: List<HomeWorkReport>) {
+        itemList = emptyList()
+        itemList = newList
+        Log.d("itemList", itemList?.size.toString())
+        notifyDataSetChanged()
     }
 
     class DataViewHolder(itemView: View, private val context: Context) :

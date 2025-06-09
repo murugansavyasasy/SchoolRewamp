@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:fitsSystemWindows="true"
     android:layout_height="match_parent">
@@ -64,60 +63,53 @@
 
     </LinearLayout>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        app:cardElevation="6dp"
-        app:cardCornerRadius="10dp"
-        app:cardBackgroundColor="@android:color/white"
-        app:cardUseCompatPadding="true"
-        android:layout_below="@+id/relative_layout8">
-
-        <LinearLayout
+    <LinearLayout
             android:id="@+id/AcademicYear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+        android:layout_below="@+id/relative_layout8"
             android:orientation="horizontal"
-            android:padding="10dp"
-            android:weightSum="1"
-            android:gravity="center_vertical">
+        android:layout_marginStart="@dimen/fifteen"
+        android:layout_marginTop="@dimen/fifteen"
+        android:layout_marginEnd="@dimen/fifteen"
+        android:background="@drawable/gray_bg_radius"
+        android:weightSum="1">
 
             <TextView
                 style="@style/CustomTextStylePoppinsMedium"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.4"
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_weight="0.5"
                 android:text="@string/academic_year"
-                android:textSize="@dimen/thirteen_sp" />
+                android:textSize="@dimen/thirteen_sp">
 
-            <TextView
-                android:id="@+id/lblAcademicYear"
-                style="@style/CustomTextStylePoppinsMedium"
-                android:layout_width="0dp"
+            </TextView>
+
+        <RelativeLayout
+            android:id="@+id/rytAcademicYearDropDown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/fifteen"
+            android:layout_marginEnd="@dimen/fifteen"
+            android:layout_weight="0.5"
+            android:gravity="center">
+
+            <Spinner
+                android:id="@+id/isSpinner"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.6"
-                android:drawableEnd="@drawable/down_arrow"
-                android:drawablePadding="6dp"
-                android:paddingEnd="10dp"
-                android:text="2024-2025"
-                android:textColor="#5F5FD1"
-            android:textSize="@dimen/ten_sp"
-            android:gravity="end|center_vertical" />
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+                android:background="@drawable/custom_spinner_background" />
 
+        </RelativeLayout>
+        </LinearLayout>
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/relative_layout5"
-        android:layout_marginTop="5dp"
-        android:layout_below="@+id/cardview"
-        >
+        android:layout_below="@+id/AcademicYear"
+        android:layout_marginTop="@dimen/ten">
         <TextView
             android:id="@+id/total_collection"
             android:layout_width="wrap_content"

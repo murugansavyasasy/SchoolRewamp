@@ -1,6 +1,6 @@
 package com.vs.schoolmessenger.Parent.Attendance
 
-import com.vs.schoolmessenger.School.SchoolStrength.SchoolData
+import com.vs.schoolmessenger.School.SchoolStrength.Model.SchoolData
 
 data class ChildAttendanceResponse (
     val status: Boolean,

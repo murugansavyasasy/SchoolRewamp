@@ -1,5 +1,6 @@
 package com.vs.schoolmessenger.Repository
 
+
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.AWS.PreSignedUrl
 import com.vs.schoolmessenger.Auth.Country.CountryResponse
@@ -16,22 +17,21 @@ import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYearResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
+import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentResponse
 import com.vs.schoolmessenger.Parent.Attendance.ChildAttendanceResponse
 import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
 import com.vs.schoolmessenger.Parent.Communication.VoiceDataResponse
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventResponse
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.HolidayResponse
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
+import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
+import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.SendAbsenteeSMSResponse
+import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportDataResponse
+import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeStudentsResponse
+import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteesResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
-import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
-
-import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.SendAbsenteeSMSResponse
-import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportDataResponse
-import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteesResponse
-
-
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionReportResponse
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
@@ -40,13 +40,17 @@ import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistor
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffAttendanceReportResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffLocationResponse
-import com.vs.schoolmessenger.School.SchoolStrength.SchoolStrengthResponse
+import com.vs.schoolmessenger.School.NoticeBoard.Response.NoticeBoardSendResponse
+import com.vs.schoolmessenger.School.SchoolStrength.Model.SchoolStrengthResponse
 import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
+import okhttp3.RequestBody
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Query
 
 interface ApiInterfaces {
@@ -303,6 +307,7 @@ interface ApiInterfaces {
     @GET(APIMethods.student_report)
     fun getStudentReport(
         @Header(APIKeyNames.Authorization) token: String,
+        @Query(APIKeyNames.academic_year_id) academic_year_id: Int,
         @Query(APIKeyNames.class_id) class_id: Int?,
         @Query(APIKeyNames.section_id) section_id: Int?
     ): Call<GetStudentReportData?>?
@@ -379,5 +384,53 @@ interface ApiInterfaces {
     fun getabsenteescountbydate(
         @Header(APIKeyNames.Authorization) token: String
     ): Call<AbsenteesResponse?>
+
+
+
+    @GET(APIMethods.getabsenteesstudentbydate)
+    fun getabsenteesstudentbydate(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query(APIKeyNames.absent_on) absent_on: String?,
+        @Query(APIKeyNames.section_id) section_id: String?
+    ): Call<AbsenteeStudentsResponse?>
+
+
+    @POST(APIMethods.sendnotice)
+    fun sendnotice(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Body request: JsonObject
+    ): Call<NoticeBoardSendResponse>?
+
+    @POST(APIMethods.sendAttachment)
+    fun sendAttachment(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Body request: JsonObject
+    ): Call<NoticeBoardSendResponse>?
+
+
+    @GET(APIMethods.attachmentList)
+    fun attachmentList(
+        @Header(APIKeyNames.Authorization) token: String
+    ): Call<AttachmentResponse?>
+
+    @GET(APIMethods.attachmentListArchive)
+    fun attachmentListArchive(
+        @Header(APIKeyNames.Authorization) token: String
+    ): Call<AttachmentResponse?>
+
+    @POST("me/videos")
+    fun isCreateVideoUrl(
+        @Body jsonObject: JsonObject?
+    ): Call<JsonObject>
+
+    @PUT("upload")
+    fun patchVimeoVideoMetaData(
+        @Query("ticket_id") ticketid: String?,
+        @Query("video_file_id") videoid: String,
+        @Query("signature") signatureid: String?,
+        @Query("v6") v6id: String?,
+        @Query("redirect_url") redirecturl: String?,
+        @Body file: RequestBody?
+    ): Call<ResponseBody>
 
 }

@@ -9,9 +9,11 @@ import com.google.gson.JsonObject
 import com.vs.schoolmessenger.CommonScreens.Ads.AdsResponse
 import com.vs.schoolmessenger.CommonScreens.GlobalVariableResponse
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
+import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYearResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
+import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentResponse
 import com.vs.schoolmessenger.Parent.Attendance.ChildAttendanceResponse
 import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
 import com.vs.schoolmessenger.Parent.Communication.VoiceDataResponse
@@ -22,6 +24,7 @@ import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
 
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.SendAbsenteeSMSResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportDataResponse
+import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeStudentsResponse
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteesResponse
 
 import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
@@ -35,7 +38,8 @@ import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistor
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffAttendanceReportResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffLocationResponse
-import com.vs.schoolmessenger.School.SchoolStrength.SchoolStrengthResponse
+import com.vs.schoolmessenger.School.NoticeBoard.Response.NoticeBoardSendResponse
+import com.vs.schoolmessenger.School.SchoolStrength.Model.SchoolStrengthResponse
 import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
 
 class App(application: Application) : AndroidViewModel(application) {
@@ -143,13 +147,17 @@ class App(application: Application) : AndroidViewModel(application) {
         private set
     var isSendAbsenteeSMS: LiveData<SendAbsenteeSMSResponse?>? = null
     var isChildAttendanceReport: LiveData<ChildAttendanceResponse?>? = null
+    var isAttachmentResponse: LiveData<AttachmentResponse?>? = null
+    var isAttachmentResponseArchive: LiveData<AttachmentResponse?>? = null
 
     var getabsenteescountbydate: LiveData<AbsenteesResponse?>? = null
 
     var isGetStudentAttendanceReportData: LiveData<StudentAttendanceReportDataResponse?>? = null
 
+    var getabsenteesstudentbydate: LiveData<AbsenteeStudentsResponse?>? = null
 
-
+    var sendnotice: LiveData<NoticeBoardSendResponse?>? = null
+    var isAttachmentSend: LiveData<NoticeBoardSendResponse?>? = null
 
 
 
@@ -199,13 +207,14 @@ class App(application: Application) : AndroidViewModel(application) {
         isSendAbsenteeSMS = apiSchoolRepositories.isSendAbsenteeSMSLiveData
 
         isChildAttendanceReport = apiParentRepositories.isChildAttendanceReportLiveData
-
-
+        isAttachmentResponse = apiParentRepositories.isAttachmentResponseLiveData
+        isAttachmentResponseArchive = apiParentRepositories.isAttachmentResponseArchiveLiveData
         getabsenteescountbydate = apiSchoolRepositories.getabsenteescountbydateLiveData
-
+        getabsenteesstudentbydate = apiSchoolRepositories.getabsenteesstudentbydateLiveData
         isGetStudentAttendanceReportData = apiSchoolRepositories.isStudentAttendanceReportLiveData
 
-
+        sendnotice = apiSchoolRepositories.sendnoticeLiveData
+        isAttachmentSend = apiSchoolRepositories.sendAttachmentLiveData
 
     }
 
@@ -403,8 +412,8 @@ class App(application: Application) : AndroidViewModel(application) {
         )
     }
     //Get Student Report Details
-    fun getStudentReportDetails(isToken: String, class_id: Int?=null,section_id:Int?=null, activity: Activity) {
-        apiSchoolRepositories.getStudentReportList(isToken, class_id, section_id, activity)
+    fun getStudentReportDetails(isToken: String,isAcademicYearId:Int,class_id: Int?=null,section_id:Int?=null, activity: Activity) {
+        apiSchoolRepositories.getStudentReportList(isToken,isAcademicYearId, class_id, section_id, activity)
     }
 
     fun isUpdateSendAbsenteeSMS(isToken: String, jsonObject: JsonObject, activity: Activity) {
@@ -420,8 +429,28 @@ class App(application: Application) : AndroidViewModel(application) {
         apiSchoolRepositories.getabsenteescountbydate(isToken, activity)
     }
 
+    fun getabsenteesstudentbydate(isToken: String, absent_on: String, section_id: String, activity: Activity) {
+        apiSchoolRepositories.getabsenteesstudentbydate(isToken,absent_on,section_id, activity)
+    }
+
     fun getStudentAttendanceReport(isToken: String,section_id:String,from_date:String,to_date:String,class_id:String,activity: Activity) {
         apiSchoolRepositories.getStudentAttendanceReportForSchool(isToken,section_id,from_date,to_date,class_id,activity)
+    }
+
+
+    fun sendnotice(isToken: String, josnObject: JsonObject, activity: Activity) {
+        apiSchoolRepositories.sendnotice(isToken, josnObject, activity)
+    }
+    fun sendAttachment(isToken: String, josnObject: JsonObject, activity: Activity) {
+        apiSchoolRepositories.sendAttachment(isToken, josnObject, activity)
+    }
+
+    fun getAttachment(isToken: String, activity: Activity) {
+        apiParentRepositories.getAttachmentList(isToken, activity)
+    }
+
+    fun getAttachmentArchive(isToken: String, activity: Activity) {
+        apiParentRepositories.attachmentListArchive(isToken, activity)
     }
 }
 

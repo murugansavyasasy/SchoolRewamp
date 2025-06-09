@@ -8,10 +8,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesFooterClickListener
-import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesStudentFooterData
-import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesStudentFooterListAdapter
-import com.vs.schoolmessenger.School.AbsenteesReport.AbsenteesStudentFooterListAdapter.DataViewHolder
 
 class LSRWAdapter (
     private var itemList: List<LSRWData>?,
