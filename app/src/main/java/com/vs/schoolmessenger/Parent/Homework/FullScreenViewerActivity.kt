@@ -93,6 +93,13 @@ class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(
                     scrollToPosition(currentPosition)
                     updateNavButtons()
                 }
+
+                // Update button states
+                binding.lnrPrevious.isEnabled = currentPosition > 0
+                binding.btnPrevious.alpha = if (currentPosition > 0) 1.0f else 0.5f
+
+                binding.lnrNext.isEnabled = currentPosition < Constant.commonFileList.size - 1
+                binding.btnNext.alpha = if (currentPosition < Constant.commonFileList.size - 1) 1.0f else 0.5f
             }
 
             R.id.lnrPrevious -> {
@@ -101,7 +108,15 @@ class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(
                     scrollToPosition(currentPosition)
                     updateNavButtons()
                 }
+
+                // Update button states
+                binding.lnrPrevious.isEnabled = currentPosition > 0
+                binding.btnPrevious.alpha = if (currentPosition > 0) 1.0f else 0.5f
+
+                binding.lnrNext.isEnabled = currentPosition < Constant.commonFileList.size - 1
+                binding.btnNext.alpha = if (currentPosition < Constant.commonFileList.size - 1) 1.0f else 0.5f
             }
+
         }
     }
 
