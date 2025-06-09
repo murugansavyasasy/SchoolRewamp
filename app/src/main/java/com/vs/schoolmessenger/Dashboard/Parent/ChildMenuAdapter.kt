@@ -130,10 +130,6 @@ class ChildMenuAdapter(
                     imgMenu.setImageResource(R.drawable.exam_icon)
                 }
 
-                24 -> {
-                    //imgMenu.setImageResource(R.drawable.assignment_icon_school)
-                }
-
                 Constant.M_NOTICEBOARD -> {
                     imgMenu.setImageResource(R.drawable.noticeboard_icon)
                 }
@@ -158,15 +154,12 @@ class ChildMenuAdapter(
                     //    imgMenu.setImageResource(R.drawable.interact_with_student)
                 }
 
-                15 -> {
-                    // imgMenu.setImageResource(R.drawable.event_icon_school)
-                }
 
                 Constant.M_ASSIGNMENT -> {
                     imgMenu.setImageResource(R.drawable.assignment_icon_school)
                 }
 
-                19 -> {
+                Constant.M_SCHOOL_CLASS_EVENTS -> {
 //                    imgMenu.setImageResource(R.drawable.event_icon_school)
                 }
 

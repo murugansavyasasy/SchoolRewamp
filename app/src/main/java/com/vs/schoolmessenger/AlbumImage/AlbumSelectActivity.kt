@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.Settings
+import android.util.Log
 import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -22,6 +23,7 @@ class AlbumSelectActivity : AppCompatActivity() {
     private lateinit var adapter: FileGridAdapter
     private lateinit var documentPickerLauncher: ActivityResultLauncher<Array<String>>
     private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
+    private var shouldReload = false
 
     companion object {
         private const val REQUEST_CODE_MANAGE_ALL_FILES = 100
@@ -39,17 +41,18 @@ class AlbumSelectActivity : AppCompatActivity() {
         setupPermissionLauncher()
         setupDocumentPicker()
 
-        adapter = FileGridAdapter(limit = 5) { selectedUris ->
-            selectedUris.forEach {
-                println("Selected: $it")
-            }
-        }
+        adapter = FileGridAdapter(limit = 5, onSelectionChanged = { selectedUris ->
+            Log.d("AlbumSelectActivity", "Selected count: ${selectedUris.size}")
+            binding.toolbarLayout.tvSelectionCount.text =
+                "Selected Files : ${selectedUris.size} / 5"
+        }, onItemClicked = { uri ->
+            Log.d("AlbumSelectActivity", "Clicked file: $uri")
+        })
 
         binding.recyclerView.layoutManager = GridLayoutManager(this, 3)
         binding.recyclerView.adapter = adapter
 
         checkAndRequestPermissions()
-
 
         val fileType = intent.getStringExtra(Constant.isFileType) ?: Constant.IMAGE
         if (fileType.uppercase() == Constant.DOCUMENT) {
@@ -63,6 +66,10 @@ class AlbumSelectActivity : AppCompatActivity() {
             }
         }
 
+        binding.toolbarLayout.imgBack.setOnClickListener {
+            onBackPressed()
+        }
+
         binding.toolbarLayout.btnDone.setOnClickListener {
             val selectedUris = adapter.getSelectedItems()
             val intent = Intent().apply {
@@ -70,6 +77,17 @@ class AlbumSelectActivity : AppCompatActivity() {
             }
             setResult(RESULT_OK, intent)
             finish()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val fileType = intent.getStringExtra(Constant.isFileType) ?: Constant.IMAGE
+        if (fileType.uppercase() == Constant.DOCUMENT && Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && android.os.Environment.isExternalStorageManager()) {
+            if (shouldReload) {
+                loadDocumentsOrOpenPicker()
+                shouldReload = false
+            }
         }
     }
 
@@ -108,7 +126,6 @@ class AlbumSelectActivity : AppCompatActivity() {
     }
 
     private fun checkAndRequestPermissions() {
-
         when {
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU -> {
                 permissionLauncher.launch(
@@ -124,6 +141,7 @@ class AlbumSelectActivity : AppCompatActivity() {
                 if (android.os.Environment.isExternalStorageManager()) {
                     loadDocumentsOrOpenPicker()
                 } else {
+                    shouldReload = true
                     val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
                     intent.data = Uri.parse("package:$packageName")
                     startActivityForResult(intent, REQUEST_CODE_MANAGE_ALL_FILES)
@@ -140,6 +158,7 @@ class AlbumSelectActivity : AppCompatActivity() {
         val docs = loadDocumentsFromMediaStore()
         if (docs.isNotEmpty()) {
             adapter.submitList(docs)
+            Log.d(TAG, "Loaded ${docs.size} documents")
         } else {
             openDocumentPicker()
         }
@@ -156,7 +175,6 @@ class AlbumSelectActivity : AppCompatActivity() {
 
         val selection = buildSelectionForMimeTypes(SUPPORTED_EXTENSIONS)
         val selectionArgs = buildMimeTypesArgs(SUPPORTED_EXTENSIONS)
-
         val sortOrder = "${MediaStore.Files.FileColumns.DATE_ADDED} DESC"
 
         val cursor = contentResolver.query(
@@ -202,9 +220,7 @@ class AlbumSelectActivity : AppCompatActivity() {
             ),
             "txt" to listOf("text/plain")
         )
-        return extensions.any { ext ->
-            map[ext]?.contains(mimeType) == true
-        }
+        return extensions.any { ext -> map[ext]?.contains(mimeType) == true }
     }
 
     private fun buildSelectionForMimeTypes(extensions: List<String>): String {

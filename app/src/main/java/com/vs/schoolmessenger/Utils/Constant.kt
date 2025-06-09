@@ -133,7 +133,6 @@ object Constant {
     val M_ATTACHMENTS = 39
     val M_FINANCE = 194
 
-
     var SELECTED_SCHOOL_MENU = 0
     var SELECTED_PARENT_MENU = 0
 
@@ -152,24 +151,19 @@ object Constant {
     var isStaff = 6
 
     var school = "A"
-    var P="P"
-    var MarkAllPresent="Mark all as present!"
+    var P = "P"
+    var MarkAllPresent = "Mark all as present!"
     var standard = "C"
     var section = "S"
     var group = "G"
     var student = "student"
     var staff = "staff"
-
-
-    //    var isVoiceFile: String? = null
     var isVoiceSendingData: VoiceSendingData? = null
     var isTextSendingData: TextSendingData? = null
     var commonFileList: List<CommonFileData> = emptyList()
     var selectedFileIndex: Int = -1
     var isCommunicationType = 1
     var isVoiceType = 1
-
-    var isBioMetricEnable: Int = -1
 
     //MarkAttendanceDetails
 
@@ -226,7 +220,7 @@ object Constant {
     var staff_ = "staff"
     var en = "en"
     var Ok = "Ok"
-    var Cancel="Cancel"
+    var Cancel = "Cancel"
     var ta = "ta"
     var th = "th"
     var hi = "hi"
@@ -346,8 +340,6 @@ object Constant {
     var Upload_Offset = "Upload-Offset"
     var PATCH = "PATCH"
     var application_offset_octet_stream = "application/offset+octet-stream"
-
-
 
 
     fun isInternetAvailable(activity: Activity): Boolean {
@@ -481,10 +473,16 @@ object Constant {
                 Constant.showLoading(context as Activity)
             }
 
-            override fun onReceivedError(view: WebView, errorCode: Int, description: String?, failingUrl: String?) {
+            override fun onReceivedError(
+                view: WebView,
+                errorCode: Int,
+                description: String?,
+                failingUrl: String?
+            ) {
                 Constant.hideLoading(context as Activity)
 
             }
+
             override fun onPageFinished(view: WebView, url: String) {
                 Constant.hideLoading(context as Activity)
 
@@ -620,7 +618,7 @@ object Constant {
                 val intent = Intent(activity, CreateNoticeBoard::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 activity.startActivity(intent)
-            }  else if (SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS) {
+            } else if (SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS) {
                 val intent = Intent(activity, CreateEvent::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 activity.startActivity(intent)
@@ -777,9 +775,9 @@ object Constant {
     @RequiresApi(Build.VERSION_CODES.O)
     fun showSendConfirmationDialog(
         activity: Activity,
-        istitle:String,
-        Ok:String,
-        Cancel:String,
+        istitle: String,
+        Ok: String,
+        Cancel: String,
         isSelectTarget: String,
         isMessage: String,
         onResult: (Boolean) -> Unit
@@ -802,7 +800,7 @@ object Constant {
 
         alertMessage.text = isMessage
         okButton.text = Ok
-        lblalertTitle.text=istitle
+        lblalertTitle.text = istitle
         btnCancel.text = Cancel
         lblSelectTarget.text = isSelectTarget
 
