@@ -8,6 +8,8 @@
         android:padding="@dimen/ten"
         android:text=""
         style="@style/CustomTextStylePoppinsBold"
+        android:textSize="@dimen/eleven_sp"
+        android:layout_marginEnd="@dimen/ten"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

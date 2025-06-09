@@ -83,8 +83,8 @@
             android:id="@+id/rlaSort"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_marginEnd="@dimen/ten"
+            android:layout_marginStart="@dimen/five"
+            android:layout_marginEnd="@dimen/five"
             android:layout_weight="0.4"
             android:background="@drawable/bg_white_light_radious"
             android:padding="@dimen/ten">
@@ -114,8 +114,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/lblCategory"
-            android:layout_marginStart="@dimen/fifteen"
-            android:layout_marginEnd="@dimen/fifteen"
+            android:layout_marginStart="@dimen/five"
+            android:layout_marginEnd="@dimen/five"
             android:layout_weight="0.6"
             android:background="@drawable/bg_white_light_radious"
             android:gravity="center">
@@ -355,8 +355,5 @@
             android:text="">
 
         </TextView>
-
     </LinearLayout>
-
-
 </RelativeLayout>

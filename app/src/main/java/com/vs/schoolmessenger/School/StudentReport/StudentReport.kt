@@ -79,7 +79,6 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
         binding.tapNoAsc.setOnClickListener(this)
         isStaffDetails = SharedPreference.getStaffDetails(this)
 
-
         isAccessToken = isStaffDetails!!.access_token
         Log.d("isAccessToken", isStaffDetails!!.access_token)
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
@@ -87,6 +86,7 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
         binding.toolbarLayout.lblParentToolBar.text = getString(R.string.StudentReport)
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
         isGetAcademicYear()
+
 
 
 
@@ -125,7 +125,7 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
                     isStudentReportData = isStudentReportResponseData
                     loadStudentReport(isStudentReportData)
                 } else {
-                    binding.tabLayout.visibility=View.GONE
+                    binding.tabLayout.visibility = View.GONE
                     ErrorMessage(response.message)
                 }
             }
@@ -137,7 +137,7 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
                 isGetStandard = response.data
                 isGetStandard?.size?.let {
                     if (it > 0) {
-                        binding.rlaStandardPicking.visibility=View.VISIBLE
+                        binding.rlaStandardPicking.visibility = View.VISIBLE
                         isClassID = isGetStandard!!.get(0).id
                         isSectionID = isGetStandard!!.get(0).sections.get(0).id
                         isLoadStandard(isGetStandard)
@@ -145,10 +145,8 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
                             isSection = isGetStandard!!.get(0).sections
                         }
                         isGetStudentReport()
-
-                    }
-                    else {
-                        binding.tabLayout.visibility=View.GONE
+                    } else {
+                        binding.tabLayout.visibility = View.GONE
                         ErrorMessage(response.message)
                     }
                 }
@@ -159,16 +157,18 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
         binding.txtSearchMenu.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
             }
+
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
+
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                Log.d("TextSSS",s.toString())
                 filter(s.toString())
 
             }
         })
     }
+
     private fun isGetStudentReport() {
         binding.txtSearchMenu.text.clear()
         mAdapter = StudentReportAdapter(null, this, this, Constant.isShimmerViewShow)
@@ -180,7 +180,7 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
             binding.lnrStandardDetails.visibility = View.GONE
             binding.lnrSectionDetails.visibility = View.GONE
             appViewModel!!.getStudentReportDetails(
-                isAccessToken!!, activity = this
+                isAccessToken!!, isAcademicYearId = isAcademicYearId, activity = this
             )
         }
 
@@ -188,21 +188,26 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
             binding.lnrStandardDetails.visibility = View.VISIBLE
             binding.lnrSectionDetails.visibility = View.GONE
             appViewModel!!.getStudentReportDetails(
-                isAccessToken!!, class_id = isClassID!!, activity = this
+                isAccessToken!!,
+                isAcademicYearId = isAcademicYearId,
+                class_id = isClassID!!,
+                activity = this
             )
         }
         if (Constant.STANDARD_AND_SECTION == filterSelectedOption) {
             binding.lnrStandardDetails.visibility = View.VISIBLE
             binding.lnrSectionDetails.visibility = View.VISIBLE
-
             appViewModel!!.getStudentReportDetails(
-                isAccessToken!!, class_id = isClassID!!, section_id = isSectionID!!, activity = this
+                isAccessToken!!,
+                isAcademicYearId = isAcademicYearId,
+                class_id = isClassID!!,
+                section_id = isSectionID!!,
+                activity = this
             )
         }
     }
 
     private fun loadStudentReport(studentReportData: List<StudentReportData>) {
-        // Once data is loaded, stop shimmer and pass the actual data
         mAdapter =
             StudentReportAdapter(studentReportData, this, this, Constant.isShimmerViewDisable)
         binding.rcyStudentReport.layoutManager = LinearLayoutManager(this)
@@ -257,6 +262,7 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
         }
     }
 
+
     private fun isLoadStandard(isStandard: List<Standard>?) {
         val adapter = StandardDropDownListAdapter(this, isStandard)
         binding.isSpinnerStandard.adapter = adapter
@@ -277,7 +283,6 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
                         "DropdownMenu",
                         "Clicked Standard Year: ID = ${isStandard[position].id}, Year = ${isStandard[position].name}"
                     )
-                    //new
                     if (hasUserSelectedStandard) {
                         isGetStudentReport()
                     } else {
@@ -309,20 +314,22 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
 
                     if (hasUserSelectedSection) {
                         isSectionId = selectedOption.id
-                        isSectionID= selectedOption.id
+                        isSectionID = selectedOption.id
                         isGetStudentReport()
 
                     } else {
+                        // First auto-trigger — just set the flag and skip loadData
                         hasUserSelectedSection = true
                     }
-
+                    isSectionID = selectedOption.id
+                    isGetStudentReport()
 
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>) {}
             }
-    }
 
+    }
 
 
     fun ErrorMessage(ErrorMessage: String) {
@@ -345,7 +352,6 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
             ErrorMessage(Constant.No_STANDARD_FOUND)
             return
         }
-
         // Set selected Standard
         isClassID = standard.id
         isSection = standard.sections
@@ -363,21 +369,22 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
                 // Multiple sections -> enable dropdown
 
             }
-
         } else {
             // No sections -> reset and disable section dropdown
             isSectionID = null
             isSection = null
             binding.tabLayout.visibility = View.GONE
-
-
+//            binding.dropdownTextViewSection.isEnabled = false
+//            binding.dropdownTextViewSection.isClickable = false
             ErrorMessage("No Section Found in '${standard.name}'")
             return
         }
 
-        // Safe to call API now
 
+        ErrorMessage("No Section Found in '${standard.name}'")
+        return
     }
+
 
     private fun highlightSelectedTab(selectedView: View) {
         // Reset all tabs to white
@@ -388,13 +395,14 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
         // Highlight the selected tab
         selectedView.setBackgroundResource(R.drawable.theme_colour_radius)
     }
+
     override fun onClick(p0: View?) {
         when (p0?.id) {
             R.id.imgBack -> {
                 onBackPressed()
             }
 
-            R.id.imgDelete ->{
+            R.id.imgDelete -> {
                 binding.rytSearchBar.visibility = View.GONE
             }
 
@@ -418,8 +426,8 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
                 mAdapter.sortData(StudentReportAdapter.SortType.NAME_DESC)
             }
         }
-
     }
+
 
     private fun setupFilerCatoryTypeSpinner(forceTrigger: Boolean = false) {
         val adapter = SpinnerLoadingAdapter(this, filterCaterotyType)
@@ -453,9 +461,6 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
     }
 
 
-
-
-
     private fun isLoadAcademicYear(isAcademicYear: List<AcademicYear>?) {
         val adapter = AcademicYearAdapter(this, isAcademicYear)
         binding.isSpinner.adapter = adapter
@@ -485,8 +490,9 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
             }
     }
 
+
     override fun onMailClick(data: StudentReportData) {
-        Constant.redirectToMail(this, data.email,"","")
+        Constant.redirectToMail(this, data.email, "", "")
     }
 
     override fun onPhoneClick(data: StudentReportData) {
