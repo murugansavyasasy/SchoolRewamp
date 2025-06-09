@@ -44,19 +44,24 @@ class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(
 
         binding.imgBack.setOnClickListener(this)
         binding.lytDownload.setOnClickListener(this)
-        binding.btnNext.setOnClickListener(this)
-        binding.btnPrevious.setOnClickListener(this)
+        binding.lnrNext.setOnClickListener(this)
+        binding.lnrPrevious.setOnClickListener(this)
+
 
         adapter = FileViewerAdapter(this, Constant.commonFileList)
 
-        binding.rcyFile.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        val noScrollLayoutManager = object : LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false) {
+            override fun canScrollHorizontally(): Boolean = false // disables horizontal scrolling
+        }
+        binding.rcyFile.layoutManager = noScrollLayoutManager
         binding.rcyFile.adapter = adapter
 
-        scrollToPosition(currentPosition)
+//        scrollToPosition(currentPosition)
     }
 
     private fun scrollToPosition(position: Int) {
-        binding.rcyFile.smoothScrollToPosition(position)
+        binding.rcyFile.scrollToPosition(position)
+        adapter.notifyItemChanged(position)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -72,21 +77,32 @@ class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(
                 }
             }
 
-            R.id.btnNext -> {
+            R.id.lnrNext -> {
                 if (currentPosition < Constant.commonFileList.size - 1) {
+                    binding.lnrNext.isEnabled=true
+                    binding.btnPrevious.alpha=1.0f
                     currentPosition++
                     scrollToPosition(currentPosition)
                 } else {
-                    Toast.makeText(this, "This is the last file", Toast.LENGTH_SHORT).show()
+                    binding.lnrNext.isEnabled=false
+                    binding.btnPrevious.alpha=0.5f
+
+//                    Toast.makeText(this, "This is the last file", Toast.LENGTH_SHORT).show()
                 }
             }
 
-            R.id.btnPrevious -> {
-                if (currentPosition > 0) {
+            R.id.lnrPrevious -> {
+
+                if (currentPosition < 0 || currentPosition==0) {
+                    binding.lnrPrevious.isEnabled=false
+                    binding.btnNext.alpha=0.5f
+//                    Toast.makeText(this, "This is the first file", Toast.LENGTH_SHORT).show()
+
+                } else {
+                    binding.lnrPrevious.isEnabled=true
+                    binding.btnNext.alpha=1.0f
                     currentPosition--
                     scrollToPosition(currentPosition)
-                } else {
-                    Toast.makeText(this, "This is the first file", Toast.LENGTH_SHORT).show()
                 }
             }
         }

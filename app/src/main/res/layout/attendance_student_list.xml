@@ -65,19 +65,19 @@
                 android:background="@drawable/rect_green_stroke"
                 android:gravity="center_vertical">
 
+                <View
+                    android:layout_width="@dimen/twenty"
+                    android:layout_height="@dimen/twenty"
+                    android:background="@drawable/circle_bg_green" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/present"
+                    android:layout_marginStart="@dimen/five"
                     android:textColor="@color/green"
                     style="@style/CustomTextStylePoppinsMedium"
                     android:textSize="@dimen/twele_sp" />
 
-                <View
-                    android:layout_width="@dimen/twenty"
-                    android:layout_height="@dimen/twenty"
-                    android:layout_marginStart="@dimen/five"
-                    android:background="@drawable/circle_bg_green" />
             </LinearLayout>
 
             <!-- Absent (Initially hidden) -->
