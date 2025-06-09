@@ -15,8 +15,6 @@ object APIMethods {
     const val isGlobalVariables = "app/api/global/global-variables"
 
 
-
-
     const val isGetDashBoard = "dashboard/api/dashboard/get-dashboard-details"
     const val isGetAds = "dashboard/api/dashboard/get-ads"
     const val getStaffList = "comm/api/recipient/get-staff-list"
