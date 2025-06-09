@@ -487,15 +487,16 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
     }
 
     private fun openAlbumSelectActivity(isFileType: String) {
-//        Constant.selectedFiles.clear()
-//        saveDrawableToCache(R.drawable.add_image)?.let {
-//            Constant.selectedFiles.add(
-//                FileItem(
-//                    it, FileType.IMAGE
-//                )
-//            )
-//        }
-//        mAdapter!!.notifyDataSetChanged()
+        Constant.selectedFiles.clear()
+        saveDrawableToCache(R.drawable.add_image)?.let {
+            Constant.selectedFiles.add(
+                FileItem(
+                    it, FileType.IMAGE
+                )
+            )
+        }
+        mAdapter!!.notifyDataSetChanged()
+
         val sdkInt = Build.VERSION.SDK_INT
         if (isFileType == Constant.DOCUMENT && sdkInt < Build.VERSION_CODES.R) {
             openSystemDocumentPicker()
@@ -722,194 +723,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         val storageDir: File = getExternalFilesDir(Environment.DIRECTORY_PICTURES) ?: cacheDir
         return File.createTempFile("IMG_${timeStamp}_", ".jpg", storageDir)
     }
-//    private fun openCamera() {
-//        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-//        if (intent.resolveActivity(packageManager) != null) {
-//            val photoFile: File? = try {
-//                createImageFile()
-//            } catch (ex: IOException) {
-//                ex.printStackTrace()
-//                null
-//            }
-//            photoFile?.also {
-//                val photoURI: Uri = FileProvider.getUriForFile(
-//                    this, "${applicationContext.packageName}.fileprovider", it
-//                )
-//                cameraImageFilePath = it.absolutePath
-//                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-//                startActivityForResult(intent, CAMERA_IMAGE_REQUEST)
-//            } ?: Toast.makeText(this, "Could not create file for photo", Toast.LENGTH_SHORT).show()
-//        } else {
-//            Toast.makeText(this, "No camera app found", Toast.LENGTH_SHORT).show()
-//        }
-//    }
-//
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//
-//        if (resultCode != RESULT_OK) return
-//
-//        val remaining = MAX_FILES - Constant.selectedFiles.size
-//        if (remaining <= 0) {
-//            Toast.makeText(this, "Max $MAX_FILES files allowed", Toast.LENGTH_SHORT).show()
-//            return
-//        }
-//        fun addPath(uri: Uri) {
-//            if (Constant.selectedFiles!!.size >= MAX_FILES) return
-//
-//            // Skip only audio and video
-//            val mimeType = contentResolver.getType(uri)
-//            if (mimeType?.startsWith("video/") == true || mimeType?.startsWith("audio/") == true) {
-//                Log.d("SkipFile", "Skipping audio/video file: $uri (MIME: $mimeType)")
-//                return
-//            }
-//
-//            // Resolve path (optional, based on your needs)
-//            val path: String? = when {
-//                uri.scheme == "file" -> uri.path
-//                else -> getPathFromUri(uri)
-//            }
-//
-//            if (path == null) {
-//                Log.w("addPath", "Could not resolve path from URI: $uri")
-//                return
-//            }
-//            val fileName = getFileName(uri).ifEmpty { File(path).name }
-//            val type = when {
-//                fileName.endsWith(".pdf", true) -> FileType.PDF
-//                fileName.endsWith(".doc", true) || fileName.endsWith(".docx", true) -> FileType.DOC
-//                fileName.endsWith(".xls", true) || fileName.endsWith(
-//                    ".xlsx", true
-//                ) -> FileType.EXCEL
-//
-//                fileName.endsWith(".ppt", true) || fileName.endsWith(".pptx", true) -> FileType.PPT
-//                fileName.matches(".*\\.(jpg|jpeg|png|webp)$".toRegex(RegexOption.IGNORE_CASE)) -> FileType.IMAGE
-//                fileName.endsWith(".txt", true) -> FileType.TXT
-//                else -> FileType.OTHER
-//            }
-//            Constant.selectedFiles.add(FileItem(uri.toString(), type))
-//            for (item in Constant.selectedFiles!!) {
-//                Log.d("SelectedFile", "Path: ${item.path}, Type: ${item.type}")
-//            }
-//        }
-//
-//        when (requestCode) {
-////            PICK_IMAGE_REQUEST, PICK_DOCUMENT_REQUEST -> {
-////                data?.clipData?.let { cd ->
-////                    val toTake = minOf(cd.itemCount, remaining)
-////                    for (i in 0 until toTake) {
-////                        val uri = cd.getItemAt(i).uri
-////                        addPath(uri) // Use the updated addPath that handles MIME type
-////                        if (uri.toString().contains("document")) copyDocumentToInternalStorage(uri)
-////                    }
-////
-////                    if (cd.itemCount > remaining) Toast.makeText(
-////                        this, "Only $remaining added", Toast.LENGTH_SHORT
-////                    ).show()
-////                } ?: data?.data?.let { uri ->
-////
-////                    addPath(uri) // Use the updated addPath that handles MIME type
-////                    if (uri.toString().contains("document")) copyDocumentToInternalStorage(uri)
-////                }
-////            }
-//
-//            CAMERA_IMAGE_REQUEST -> {
-//                cameraImageFilePath?.let { filePath ->
-//                    var file = File(filePath)
-//
-//                    if (file.exists()) {
-//                        if (!file.name.endsWith(".jpg", true)) {
-//                            val newFile = File(file.parent, file.nameWithoutExtension + ".jpg")
-//                            if (file.renameTo(newFile)) {
-//                                cameraImageFilePath = newFile.absolutePath
-//                                file = newFile
-//                            }
-//                        }
-//
-//                        val uri = Uri.fromFile(file)
-//                        addPath(uri)
-//                    } else {
-//                        Toast.makeText(this, "Camera image file not found.", Toast.LENGTH_SHORT)
-//                            .show()
-//                    }
-//                } ?: run {
-//                    Toast.makeText(this, "Camera image failed", Toast.LENGTH_SHORT).show()
-//                }
-//            }
-//        }
-//        mAdapter!!.notifyDataSetChanged()
-//    }
-//
-//    private fun getPathFromUri(uri: Uri): String? {
-//        var path: String? = null
-//
-//        if (uri.scheme.equals("content", ignoreCase = true)) {
-//            val cursor = contentResolver.query(uri, null, null, null, null)
-//            cursor?.use {
-//                if (it.moveToFirst()) {
-//                    val columnIndex = it.getColumnIndex("_data")
-//                    if (columnIndex != -1) {
-//                        path = it.getString(columnIndex)
-//                    }
-//                }
-//            }
-//        }
-//
-//        if (path == null && DocumentsContract.isDocumentUri(this, uri)) {
-//            if (uri.scheme == ContentResolver.SCHEME_CONTENT) {
-//                try {
-//                    val docId = DocumentsContract.getDocumentId(uri)
-//                    val split = docId.split(":")
-//                    val type = split[0]
-//                    val filePath = split[1]
-//
-//                    // Handle specific file type based on URI
-//                    path = getFilePathForDocument(filePath)
-//                } catch (e: Exception) {
-//                    e.printStackTrace()
-//                }
-//            }
-//        }
-//        return path
-//    }
-//
-//    fun getFileName(uri: Uri): String {
-//        var result: String? = null
-//        if (uri.scheme == "content") {
-//            val cursor = contentResolver.query(uri, null, null, null, null)
-//            cursor?.use {
-//                if (it.moveToFirst()) {
-//                    val index = it.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-//                    if (index >= 0) result = it.getString(index)
-//                }
-//            }
-//        }
-//        if (result == null) {
-//            result = uri.path
-//            val cut = result?.lastIndexOf('/')
-//            if (cut != null && cut != -1) {
-//                result = result!!.substring(cut + 1)
-//            }
-//        }
-//        return result ?: ""
-//    }
-//
-//    private fun getFilePathForDocument(filePath: String): String? {
-//        return filePath // This is just a placeholder; implement appropriate logic for your use case.
-//    }
-//
-//
-//    @Throws(IOException::class)
-//    private fun createImageFile(): File {
-//        val timeStamp: String =
-//            SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
-//        val storageDir: File = cacheDir // Or getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-//        return File.createTempFile(
-//            "IMG_${timeStamp}_",  /* prefix */
-//            ".jpg",               /* suffix */
-//            storageDir            /* directory */
-//        )
-//    }
 
     override fun onDateSelected(date: String) {
         binding.selectdate.text = date

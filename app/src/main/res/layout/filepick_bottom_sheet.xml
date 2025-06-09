@@ -20,8 +20,9 @@
             android:text="Pick your file type "
             android:textColor="@color/black"
             android:textSize="@dimen/fifteen_sp"
-            style="@style/CustomTextStylePoppinsBold"
-            ></TextView>
+            style="@style/CustomTextStylePoppinsBold">
+
+        </TextView>
 
 
         <LinearLayout
@@ -150,18 +151,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/ten"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/imgVoice"
-                    android:padding="@dimen/fifteen"
-                    android:background="@drawable/curve_gray_radius"
                     android:layout_width="@dimen/sixty"
                     android:layout_height="@dimen/sixty"
                     android:layout_centerHorizontal="true"
+                    android:background="@drawable/curve_gray_radius"
+                    android:padding="@dimen/fifteen"
                     android:src="@drawable/audio_icon2"></ImageView>
 
                 <TextView
+                    style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/imgVoice"
@@ -170,9 +173,7 @@
                     android:paddingBottom="@dimen/ten"
                     android:text="Voice"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"
-                    style="@style/CustomTextStylePoppinsBold"
-                    >
+                    android:textSize="@dimen/thirteen_sp">
 
                 </TextView>
 
@@ -208,7 +209,6 @@
                     >
 
                 </TextView>
-
             </RelativeLayout>
         </LinearLayout>
     </RelativeLayout>

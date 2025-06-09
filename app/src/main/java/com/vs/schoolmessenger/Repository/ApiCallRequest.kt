@@ -181,7 +181,7 @@ object ApiCallRequest {
         }
 
         jsonObject.addProperty("title", title)
-        jsonObject.addProperty("content", description)
+        jsonObject.addProperty(APIKeyNames.description, description)
         jsonObject.add("target_code", targetCodeArray)
         jsonObject.addProperty("intended_for", intended_for)
         jsonObject.addProperty("visible_from", startDate)

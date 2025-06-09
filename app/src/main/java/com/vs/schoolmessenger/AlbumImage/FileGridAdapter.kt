@@ -14,8 +14,10 @@ import com.vs.schoolmessenger.databinding.ItemFileBinding
 
 class FileGridAdapter(
     private val limit: Int,
-    private val onSelectionChanged: (List<Uri>) -> Unit
+    private val onSelectionChanged: (List<Uri>) -> Unit,
+    private val onItemClicked: (Uri) -> Unit
 ) : RecyclerView.Adapter<FileGridAdapter.FileViewHolder>() {
+
 
     private val selected = mutableListOf<Uri>()
     private val items = mutableListOf<Uri>()
@@ -98,6 +100,7 @@ class FileGridAdapter(
         binding.checkIcon.visibility = if (selected.contains(uri)) View.VISIBLE else View.GONE
 
         binding.root.setOnClickListener {
+            onItemClicked(uri)
             if (selected.contains(uri)) {
                 selected.remove(uri)
             } else {
