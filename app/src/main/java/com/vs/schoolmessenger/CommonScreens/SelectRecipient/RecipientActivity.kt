@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.AdapterView
+import android.widget.RadioButton
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
@@ -37,18 +38,23 @@ import com.vs.schoolmessenger.CommonScreens.SpecificStudentData.SpecificStudent
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.ApiCallRequest
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.Event.Model.EventDetails
 import com.vs.schoolmessenger.School.Homework.SectionDetails
+import com.vs.schoolmessenger.School.NoticeBoard.Model.NoticeBoardDetails
 import com.vs.schoolmessenger.Utils.AwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
 import com.vs.schoolmessenger.Utils.Constant.M_HOMEWORK
+import com.vs.schoolmessenger.Utils.Constant.M_SCHOOL_CLASS_EVENTS
 import com.vs.schoolmessenger.Utils.Constant.SELECTED_SCHOOL_MENU
-import com.vs.schoolmessenger.Utils.FileItem
+import com.vs.schoolmessenger.Utils.FileType
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SelectRecipientBinding
+import com.vs.schoolmessenger.util.VimeoVideoUpload
 
 class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickListener,
-    SectionListClickListener, StandardListClickListener, GroupListClickListener {
+    SectionListClickListener, StandardListClickListener, GroupListClickListener,
+    VimeoVideoUpload.UploadCompletionListener {
 
     override fun getViewBinding(): SelectRecipientBinding {
         return SelectRecipientBinding.inflate(layoutInflater)
@@ -79,9 +85,13 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     var isCurrentAcademicYear = true
     var isTargetType: Int? = null
     var isCircularType: String? = null
+    var isIframe = ""
+    var isFileSize = ""
     var isValidAcademicYear = false
     var isSelectedAcademicYear: String? = null
     private var appViewModel: App? = null
+    private var hasTriggeredSend = false
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
@@ -261,6 +271,15 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             }
         }
 
+        appViewModel!!.sendevent?.observe(this) { response ->
+            Constant.hideLoading(this@RecipientActivity)
+            if (response != null) {
+                Log.d("Response", response.status.toString())
+                Constant.showTopAlertPopup(response.message, this)
+
+            }
+        }
+
         appViewModel!!.isVoiceSend?.observe(this) { response ->
             Constant.hideLoading(this@RecipientActivity)
             if (response != null) {
@@ -346,6 +365,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     }
 
     private fun tapVisibility() {
+        Log.d("Tap Visibility Check","Tap Debug Check")
         if (isUserDetails!!.staff_role == Constant.isStaffRole) {
             if (SELECTED_SCHOOL_MENU == M_HOMEWORK) {
                 binding.nomessage.visibility = View.GONE
@@ -371,7 +391,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 changeTapBg(Constant.isSection)
 
                 //show send and specific student button
-            } else {
+            }else {
 
                 binding.nomessage.visibility = View.GONE
                 binding.nomessageEntire.visibility = View.GONE
@@ -383,7 +403,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 changeTapBg(Constant.isStandard)
 
             }
-
         } else {
             Log.d("SELECTED_SCHOOL_MENU", SELECTED_SCHOOL_MENU.toString())
             if (SELECTED_SCHOOL_MENU == M_HOMEWORK) {
@@ -408,12 +427,22 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 binding.tapStaffs.visibility = View.GONE
                 changeTapBg(Constant.isSection)
 
-                //show send and specific student button
-            } else {
+            }else if (SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS) {
                 binding.textdesc.visibility = View.VISIBLE
                 binding.bottomLayout.visibility = View.VISIBLE
                 binding.nomessageEntire.visibility = View.VISIBLE
-
+                binding.tapEntireSchool.visibility = View.VISIBLE
+                binding.tapStandards.visibility = View.VISIBLE
+                binding.tabSectionsStudent.visibility = View.GONE
+                binding.tabGroups.visibility = View.VISIBLE
+                binding.tapStaffs.visibility = View.GONE
+                changeTapBg(Constant.isSchool)
+                isSelectedType = 0
+                isGetAcademicYear()
+            }  else {
+                binding.textdesc.visibility = View.VISIBLE
+                binding.bottomLayout.visibility = View.VISIBLE
+                binding.nomessageEntire.visibility = View.VISIBLE
                 binding.tapEntireSchool.visibility = View.VISIBLE
                 binding.tapStandards.visibility = View.VISIBLE
                 binding.tabSectionsStudent.visibility = View.VISIBLE
@@ -921,9 +950,14 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
             if (SELECTED_SCHOOL_MENU == M_HOMEWORK) {
                 if (Constant.selectedFiles.isNotEmpty()) {
-                    isFileUploadInAws(
-                        Constant.selectedFiles, isStaffDetails!!.school_id, "file"
-                    )
+                    val videoFiles = Constant.selectedFiles.filter { it.type == FileType.VIDEO }
+                    if (videoFiles.isNotEmpty()) {
+                        videoUploading()
+                    } else {
+                        isFileUploadInAws(
+                            isStaffDetails!!.school_id, "file"
+                        )
+                    }
                 } else {
                     isHomeWorkSend()
                 }
@@ -945,18 +979,31 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         val isVoiceData = Constant.isVoiceSendingData
                         voiceSendApi()
                     } else {
-                        isFileUploadInAws(
-                            Constant.selectedFiles, isStaffDetails!!.school_id, "audio"
-                        )
+                        if (Constant.selectedFiles.isNotEmpty()) {
+                            voiceSendApi()
+                        } else {
+                            isFileUploadInAws(
+                                isStaffDetails!!.school_id, "audio"
+                            )
+                        }
                     }
 
                 }
             } else if (SELECTED_SCHOOL_MENU == Constant.M_ATTACHMENTS) {
                 isFileUploadInAws(
-                    Constant.selectedFiles,
                     isStaffDetails!!.school_id,
                     "files"
                 )
+            } else if (SELECTED_SCHOOL_MENU == Constant.M_SCHOOL_CLASS_EVENTS) {
+
+                if (Constant.selectedFiles.isNotEmpty()) {
+                    isFileUploadInAws(
+                        isStaffDetails!!.school_id,
+                        "files"
+                    )
+                } else {
+                    eventsendapi()
+                }
             }
 
         }
@@ -964,8 +1011,79 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         btnCancel.setOnClickListener {
             alertDialog.dismiss()
         }
-
     }
+
+    private fun videoUploading() {
+        VimeoVideoUpload.uploadVideo(
+            this@RecipientActivity,
+            "quiz",
+            "quiz",
+            Constant.selectedFiles[0].path,
+            this@RecipientActivity
+        )
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun eventsendapi() {
+
+        val eventDetails = intent.getSerializableExtra(Constant.event_data) as? EventDetails
+        if (eventDetails != null) {
+            val jsonObject = ApiCallRequest.isSendEvent(
+                title = eventDetails.txtTitle,
+                content = eventDetails.txtDesc,
+                venue = eventDetails.txtLocation,
+                event_date = eventDetails.txtStartDate,
+                event_time = eventDetails.txtStartTime,
+                target_type = isTargetType,
+                target_code = selectedIds
+            )
+            Log.d("RecepientEventList", "Event details received and jsonObject created: $jsonObject")
+            Log.d("Object", jsonObject.toString())
+            appViewModel!!.sendevent(isAccessToken!!, jsonObject, this)
+
+        } else {
+            Log.e("RecepientEventList", "EventDetails not found in intent")
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onUploadComplete(success: Boolean, iframe: String?, link: String?) {
+        runOnUiThread {
+            Log.d("Vimeo_Video_upload", success.toString())
+            Log.d("VimeoIframe", iframe.toString())
+            Log.d("link", link.toString())
+            isIframe = extractVimeoUrlFromIframe(iframe.toString()).toString()
+            isFileSize = "30"
+
+            Constant.isAwsUploadedFiles.add(
+                AwsUploadedFiles(
+                    isFileUrl = link.toString(), isFileType = Constant.VIDEO
+                )
+            )
+
+            isHomeWorkSend()
+        }
+    }
+
+    fun extractVimeoUrlFromIframe(iframeHtml: String): String? {
+        val regex = Regex("""<iframe[^>]+src="([^"]+)"""")
+        val match = regex.find(iframeHtml)
+        return match?.groups?.get(1)?.value
+    }
+
+
+    override fun onFailure(errorMessage: String?) {
+        runOnUiThread {
+            Log.e("VimeoUploadError", errorMessage ?: "Unknown error")
+        }
+    }
+
+    override fun onProgressUpdate(percent: Int) {
+        runOnUiThread {
+            Log.d("VimeoUploadProgress", "Progress: $percent%")
+        }
+    }
+
 
     override fun onIdCheck(group: NameAndIds) {
         if (!isGroupSelectedIds.any { it.id == group.id }) {
@@ -1041,7 +1159,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun isFileUploadInAws(
-        isSelectedFiles: MutableList<FileItem>, schoolId: String, isFileType: String?
+        schoolId: String, isFileType: String?
     ) {
         Constant.isAwsUploadedFiles.clear()
         val isSelectedFileListSize = Constant.selectedFiles.size
@@ -1061,17 +1179,20 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         }
 
         val isCountryId = SharedPreference.getCountryId(this)
-        Log.d("isSelectedFiles", isSelectedFiles.size.toString())
-        if (isSelectedFiles.size == 0) {
-            if (SELECTED_SCHOOL_MENU == M_HOMEWORK) {
-                isHomeWorkSend()
-            } else if (SELECTED_SCHOOL_MENU == Constant.M_COMMUNICATION) {
-                voiceSendApi()
-            }
+        Log.d("isSelectedFiles", Constant.selectedFiles.size.toString())
+//        if (isSelectedFiles.size == 0) {
+//            if (SELECTED_SCHOOL_MENU == M_HOMEWORK) {
+//                isHomeWorkSend()
+//            } else if (SELECTED_SCHOOL_MENU == Constant.M_COMMUNICATION) {
+//                voiceSendApi()
+//            }
+//        } else {
+        if (Constant.selectedFiles.isEmpty()) {
+            isHomeWorkSend()
         } else {
-            for (i in isSelectedFiles.indices) {
+            for (i in Constant.selectedFiles.indices) {
                 isAwsUploadingPreSigned!!.getPreSignedUrl(
-                    isSelectedFiles[i].path.toString(),
+                    Constant.selectedFiles[i].path.toString(),
                     schoolId,
                     isFileType!!,
                     this,
@@ -1086,7 +1207,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                             Constant.isAwsUploadedFiles.add(
                                 AwsUploadedFiles(
                                     isFileUrl = isFileUploaded!!,
-                                    isFileType = isSelectedFiles[i].type.toString()
+                                    isFileType = Constant.selectedFiles[i].type.toString()
                                 )
                             )
                             if (Constant.isAwsUploadedFiles.size == isSelectedFileListSize) {
@@ -1097,6 +1218,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                                     voiceSendApi()
                                 } else if (SELECTED_SCHOOL_MENU == Constant.M_ATTACHMENTS) {
                                     attachmentSendApi()
+                                } else if (SELECTED_SCHOOL_MENU == Constant.M_SCHOOL_CLASS_EVENTS) {
+                                    eventsendapi()
                                 }
                             } else {
                                 Log.d("isFileNotMatching", "isFileNotMatching")
@@ -1133,6 +1256,9 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         val sectionDetails = intent.getParcelableExtra<SectionDetails>(Constant.section_data)
         sectionDetails?.let {
             val jsonObject = ApiCallRequest.isSendHomeWork(
+                targetType = isTargetType!!,
+                iframe = isIframe,
+                file_size = isFileSize,
                 isAcademicYearId = isAcademicYearId,
                 selectedIds = selectedIds,
                 title = it.title,

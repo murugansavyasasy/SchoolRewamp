@@ -30,6 +30,7 @@ import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionReportResponse
+import com.vs.schoolmessenger.School.Event.Response.EventSendResponse
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
@@ -156,6 +157,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var getabsenteesstudentbydate: LiveData<AbsenteeStudentsResponse?>? = null
 
     var sendnotice: LiveData<NoticeBoardSendResponse?>? = null
+    var sendevent: LiveData<EventSendResponse?>? = null
     var isAttachmentSend: LiveData<NoticeBoardSendResponse?>? = null
 
 
@@ -213,6 +215,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isGetStudentAttendanceReportData = apiSchoolRepositories.isStudentAttendanceReportLiveData
 
         sendnotice = apiSchoolRepositories.sendnoticeLiveData
+        sendevent = apiSchoolRepositories.sendeventLiveData
         isAttachmentSend = apiSchoolRepositories.sendAttachmentLiveData
 
     }
@@ -439,6 +442,9 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun sendnotice(isToken: String, josnObject: JsonObject, activity: Activity) {
         apiSchoolRepositories.sendnotice(isToken, josnObject, activity)
+    }
+    fun sendevent(isToken: String, josnObject: JsonObject, activity: Activity) {
+        apiSchoolRepositories.sendevent(isToken, josnObject, activity)
     }
     fun sendAttachment(isToken: String, josnObject: JsonObject, activity: Activity) {
         apiSchoolRepositories.sendAttachment(isToken, josnObject, activity)

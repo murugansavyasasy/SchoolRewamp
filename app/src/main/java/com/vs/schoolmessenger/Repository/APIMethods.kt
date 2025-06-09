@@ -15,10 +15,8 @@ object APIMethods {
     const val isGlobalVariables = "app/api/global/global-variables"
 
 
-
-
-    const val isGetDashBoard = "dashboard/dashboard/get-dashboard-details"
-    const val isGetAds = "dashboard/dashboard/get-ads"
+    const val isGetDashBoard = "dashboard/api/dashboard/get-dashboard-details"
+    const val isGetAds = "dashboard/api/dashboard/get-ads"
     const val getStaffList = "comm/api/recipient/get-staff-list"
     const val getSubjectList = "comm/api/recipient/get-subject-list"
     const val getStandard = "comm/api/recipient/get-standards"
@@ -30,10 +28,10 @@ object APIMethods {
     const val isGetVoiceHistory = "comm/api/voice/get-voice-history"
     const val isGetTextHistory = "comm/api/text-message/get-text-history"
     const val isGetHomeWorkReport = "comm/api/homework/report"
-    const val isGetDailyCollectionReport = "admin/api/fee-report/daily-collection"
+    const val isGetDailyCollectionReport = "fee/api/fee-report/daily-collection"
     const val isGetSchoolStrengthReport = "admin/api/get-school-strength"
-    const val isDetailedPendingReport = "admin/api/fee-report/detailed-pending-report"
-    const val isDetailedWisePendingReport = "admin/api/fee-report/detailed-class-wise-pending-report"
+    const val isDetailedPendingReport = "fee/api/fee-report/detailed-pending-report"
+    const val isDetailedWisePendingReport = "fee/api/fee-report/detailed-class-wise-pending-report"
     const val isNoticeBoardReport = "admin/api/notice-board/get-notice"
     const val isSendText = "comm/api/text-message/send-text"
     const val isSendHomeWork = "comm/api/homework/send-homework"
@@ -71,6 +69,7 @@ object APIMethods {
     const val getabsenteesstudentbydate = "stud-attd/api/attendance/get-absentees-students-by-date"
 
     const val sendnotice = "admin/api/notice-board/send-notice"
+    const val sendevent = "admin/api/school-event/send-event"
     const val sendAttachment = "comm/api/attachment/send-attachment"
     const val attachmentList = "comm/api/attachment/list"
     const val attachmentListArchive = "comm/api/attachment/list-archive"

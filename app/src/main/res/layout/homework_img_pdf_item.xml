@@ -16,7 +16,7 @@
         android:id="@+id/WVThumbnaildocument"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY"
+        android:scaleType="centerCrop"
         android:visibility="gone">
 
     </WebView>
@@ -36,7 +36,7 @@
         android:id="@+id/ImgPDF"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY"></ImageView>
+        android:scaleType="centerCrop"></ImageView>
 
     <ImageView
         android:id="@+id/imageOrDocumentType"

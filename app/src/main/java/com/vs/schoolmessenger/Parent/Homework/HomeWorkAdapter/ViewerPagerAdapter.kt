@@ -63,7 +63,13 @@ class FileViewerAdapter(
                 }).into(holder.imageView)
         } else {
             holder.documentWebView.visibility = View.VISIBLE
-            val googleViewerUrl = "https://docs.google.com/gview?embedded=true&url=${item.path}"
+            var isLoadingUrl = ""
+            if (item.path.contains("vimeo")) {
+                isLoadingUrl = item.path
+            } else {
+                val googleDocsUrl = "https://docs.google.com/gview?embedded=true&url=${item.path}"
+                isLoadingUrl = googleDocsUrl
+            }
             holder.documentWebView.webViewClient = object : WebViewClient() {
                 override fun onPageFinished(view: WebView?, url: String?) {
                     holder.loadingBar.visibility = View.GONE
@@ -79,7 +85,7 @@ class FileViewerAdapter(
                 useWideViewPort = true
             }
 
-            holder.documentWebView.loadUrl(googleViewerUrl)
+            holder.documentWebView.loadUrl(isLoadingUrl)
         }
     }
 
