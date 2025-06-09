@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.target.Target
+import com.bumptech.glide.request.RequestListener
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
@@ -39,11 +39,12 @@ class FileViewerAdapter(
         if (item.type == Constant.IMAGE) {
             holder.imageView.visibility = View.VISIBLE
             Glide.with(context).load(item.path)
-                .listener(object : com.bumptech.glide.request.RequestListener<Drawable> {
+                .listener(object : RequestListener<Drawable> {
+
                     override fun onLoadFailed(
                         e: GlideException?,
                         model: Any?,
-                        target: Target<Drawable>,
+                        target: com.bumptech.glide.request.target.Target<Drawable?>,
                         isFirstResource: Boolean
                     ): Boolean {
                         holder.loadingBar.visibility = View.GONE
@@ -53,7 +54,7 @@ class FileViewerAdapter(
                     override fun onResourceReady(
                         resource: Drawable,
                         model: Any,
-                        target: Target<Drawable>?,
+                        target: com.bumptech.glide.request.target.Target<Drawable?>?,
                         dataSource: DataSource,
                         isFirstResource: Boolean
                     ): Boolean {
