@@ -66,14 +66,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/rytHeader"
+        android:layout_above="@+id/indicator"
         android:orientation="horizontal"
-        android:layout_above="@+id/lnrPrevious"
         android:overScrollMode="never"
         android:scrollbars="horizontal"
         android:layout_marginTop="8dp"
         />
 
-
+    <me.relex.circleindicator.CircleIndicator2
+        android:id="@+id/indicator"
+        style="@style/IndicatorStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/thirty"
+        android:layout_above="@+id/lnrPrevious"
+        android:layout_centerInParent="true"
+        android:visibility="visible"
+        android:elevation="4dp"/>
 
     <LinearLayout
         android:id="@+id/lnrPrevious"

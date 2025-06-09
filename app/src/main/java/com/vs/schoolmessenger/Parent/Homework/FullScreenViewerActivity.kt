@@ -12,6 +12,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.FileViewerAdapter
 import com.vs.schoolmessenger.R
@@ -21,6 +22,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import me.relex.circleindicator.CircleIndicator2
 import java.io.File
 import java.io.FileOutputStream
 import java.net.URL
@@ -51,13 +53,42 @@ class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(
             override fun canScrollHorizontally(): Boolean = false
             override fun canScrollVertically(): Boolean = false
         }
+
         binding.rcyFile.layoutManager = noScrollLayoutManager
         binding.rcyFile.adapter = adapter
+
+        // Setup indicator
+        if (Constant.commonFileList.isNullOrEmpty()) {
+            binding.indicator.visibility = View.GONE
+        } else {
+            binding.indicator.visibility = View.VISIBLE
+            binding.indicator.attachToRecyclerView(binding.rcyFile)
+        }
         binding.rcyFile.setOnTouchListener { _, _ -> true }
         currentPosition = Constant.selectedFileIndex
         scrollToPosition(currentPosition)
 
         updateNavButtons()
+    }
+
+    fun CircleIndicator2.attachToRecyclerView(recyclerView: RecyclerView) {
+        val adapter = recyclerView.adapter ?: return
+        this.createIndicators(adapter.itemCount, 0)
+
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(rv: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(rv, dx, dy)
+                val layoutManager = rv.layoutManager as? LinearLayoutManager ?: return
+                val firstVisible = layoutManager.findFirstVisibleItemPosition()
+                this@attachToRecyclerView.animatePageSelected(firstVisible)
+            }
+        })
+
+        adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+            override fun onChanged() {
+                this@attachToRecyclerView.createIndicators(adapter.itemCount, 0)
+            }
+        })
     }
 
 
