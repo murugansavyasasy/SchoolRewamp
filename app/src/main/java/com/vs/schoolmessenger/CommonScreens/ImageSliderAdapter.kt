@@ -80,7 +80,7 @@ class ImageSliderAdapter(
 
             Log.d("GetFileDetails", data.toString())
 
-            when (data.type?.uppercase()) {
+            when (data.type.uppercase()) {
                 Constant.IMAGE -> {
                     Glide.with(context).load(data.url).placeholder(R.drawable.image_placeholder)
                         .into(DefaultImage)
@@ -175,8 +175,13 @@ class ImageSliderAdapter(
 
         private fun openDocumentInWebView(urlPath: String) {
             loadingBar.visibility = View.VISIBLE
-
-            val googleDocsUrl = "https://docs.google.com/gview?embedded=true&url=$urlPath"
+            var isLoadingUrl = ""
+            if (urlPath.contains("vimeo")) {
+                isLoadingUrl = urlPath
+            } else {
+                val googleDocsUrl = "https://docs.google.com/gview?embedded=true&url=$urlPath"
+                isLoadingUrl = googleDocsUrl
+            }
 
             DefaultImage.visibility = View.GONE
             WebViewThumbnail.visibility = View.VISIBLE
@@ -205,7 +210,7 @@ class ImageSliderAdapter(
                 }
             }
 
-            WebViewThumbnail.loadUrl(googleDocsUrl)
+            WebViewThumbnail.loadUrl(isLoadingUrl)
         }
 
         class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

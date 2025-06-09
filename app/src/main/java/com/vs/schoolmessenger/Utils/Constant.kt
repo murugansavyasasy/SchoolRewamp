@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
@@ -23,6 +24,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.EditText
@@ -48,7 +50,9 @@ import com.vs.schoolmessenger.School.Attachment.Attachment
 import com.vs.schoolmessenger.School.Communication.CommunicationSchool
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendingData
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceSendingData
+import com.vs.schoolmessenger.School.Event.CreateEvent
 import com.vs.schoolmessenger.School.Homework.HomeWork
+import com.vs.schoolmessenger.School.NoticeBoard.CreateNoticeBoard
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalTime
@@ -97,7 +101,6 @@ object Constant {
     val M_CLASS_TIME_TABLE = 6
     val M_COMMUNICATION = 7
     val M_DAILY_COLLECTION = 8
-    val M_EVENTS_HOLIDAYS = 9
     val M_EXAM = 10
     val M_FEEDBACK = 11
     val M_FEE_DETAILS = 12
@@ -157,9 +160,6 @@ object Constant {
     var student = "student"
     var staff = "staff"
 
-    var isCommunication = "isCommunication"
-    var isHomeWork = "isHomeWork"
-    var isGioMetric = "isGioMetric"
 
     //    var isVoiceFile: String? = null
     var isVoiceSendingData: VoiceSendingData? = null
@@ -192,6 +192,8 @@ object Constant {
     var PM = "PM"
     var dd_MM_yyyy = "dd/MM/yyyy"
     var EEE_dd_MMM_yyyy = "EEE dd MMM, yyyy"
+    var yyyy_MMM_dd = "yyyy MMM, dd"
+    var EEE_dd_MMM_yyyy_1 = "EEE dd MMM yyyy"
     var hh_mm_a = "hh:mm a"
     var time_forMate = "00:%02d"
     var time_zero = "00:00"
@@ -214,6 +216,7 @@ object Constant {
     var isSelectedId = "isSelectedId"
     var section_data = "section_data"
     var notice_data = "notice_data"
+    var event_data = "event_data"
     var isFileUrl = "isFileUrl"
     var isFileType = "isFileType"
     var isTitle = "isTitle"
@@ -317,6 +320,34 @@ object Constant {
 
     var isCommonTitle = ""
     var isCommonDescription = ""
+
+
+    // VIMEO
+    var isVimeoToken = "8d74d8bf6b5742d39971cc7d3ffbb51a"
+    var isVimeoUrl = "https://api.vimeo.com/me/videos"
+    const val Content_Type = "Content-Type"
+    var POST = "POST"
+    var application_json = "application/json"
+    var Accept = "Accept"
+    var application_vimeo_jsonversion = "application/vnd.vimeo.*+json;version=3.4"
+    var approach = "approach"
+    var tus = "tus"
+    var size = "size"
+    var upload = "upload"
+    var view = "view"
+    var unlisted = "unlisted"
+    var download = "download"
+    var privacy = "privacy"
+    var videoTitle = "videoTitle"
+    var videoDesc = "videoDesc"
+    var HEAD = "HEAD"
+    var HETus_ResumableAD = "Tus-Resumable"
+    var HETus_ResumableAD_Version = "1.0.0"
+    var Upload_Offset = "Upload-Offset"
+    var PATCH = "PATCH"
+    var application_offset_octet_stream = "application/offset+octet-stream"
+
+
 
 
     fun isInternetAvailable(activity: Activity): Boolean {
@@ -423,12 +454,45 @@ object Constant {
     }
 
     fun loadWebView(context: Context, webView: WebView, url: String) {
-        webView.settings.javaScriptEnabled = true
-        webView.settings.setSupportZoom(true)
-        webView.settings.builtInZoomControls = true
-        webView.settings.displayZoomControls = false
-        webView.webViewClient = WebViewClient()
+        val settings = webView.settings
+        settings.javaScriptEnabled = true
+        settings.domStorageEnabled = true
+        settings.setSupportMultipleWindows(true)
+        settings.javaScriptCanOpenWindowsAutomatically = true
+        settings.loadWithOverviewMode = true
+        settings.useWideViewPort = true
+        settings.setSupportZoom(true)
+        settings.builtInZoomControls = false
+        settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN
+        settings.cacheMode = WebSettings.LOAD_NO_CACHE
+
+        webView.scrollBarStyle = WebView.SCROLLBARS_OUTSIDE_OVERLAY
+        webView.isScrollbarFadingEnabled = true
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            webView.setLayerType(View.LAYER_TYPE_HARDWARE, null)
+        } else {
+            webView.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
+        }
+
+        webView.webViewClient = object : WebViewClient() {
+            override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
+                super.onPageStarted(view, url, favicon)
+                Constant.showLoading(context as Activity)
+            }
+
+            override fun onReceivedError(view: WebView, errorCode: Int, description: String?, failingUrl: String?) {
+                Constant.hideLoading(context as Activity)
+
+            }
+            override fun onPageFinished(view: WebView, url: String) {
+                Constant.hideLoading(context as Activity)
+
+            }
+        }
+
         webView.loadUrl(url)
+
     }
 
     fun getAndroidSecureId(activity: Activity): String {
@@ -550,6 +614,14 @@ object Constant {
                 activity.startActivity(intent)
             } else if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS) {
                 val intent = Intent(activity, Attachment::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                activity.startActivity(intent)
+            } else if (SELECTED_SCHOOL_MENU == M_NOTICEBOARD) {
+                val intent = Intent(activity, CreateNoticeBoard::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                activity.startActivity(intent)
+            }  else if (SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS) {
+                val intent = Intent(activity, CreateEvent::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 activity.startActivity(intent)
             }
@@ -835,6 +907,30 @@ object Constant {
             SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(calendar.time)
         return listOf(dayOnly, dayOfWeek, fullDate, slashDate)
     }
+
+    fun convertDateFormat(input: String): String {
+        return try {
+            val inputFormat = SimpleDateFormat(EEE_dd_MMM_yyyy_1, Locale.getDefault())
+            val outputFormat = SimpleDateFormat(ddMMyyyy, Locale.getDefault())
+            val date = inputFormat.parse(input)
+            outputFormat.format(date!!)
+        } catch (e: Exception) {
+            input // return original if there's a parsing error
+        }
+
+    }
+
+//    fun convertDate(input: String): String {
+//        return try {
+//            val inputFormat = SimpleDateFormat(EEE_dd_MMM_yyyy, Locale.getDefault())
+//            val outputFormat = SimpleDateFormat(ddMMyyyy, Locale.getDefault())
+//            val date = inputFormat.parse(input)
+//            outputFormat.format(date!!)
+//        } catch (e: Exception) {
+//            input // return original if there's a parsing error
+//        }
+//
+//    }
 
     fun convertDateTimeFormat(input: String): String {
         return try {

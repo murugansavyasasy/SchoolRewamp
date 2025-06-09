@@ -15,7 +15,9 @@
         android:layout_marginStart="@dimen/twenty"
         android:elevation="10dp"
         android:src="@drawable/noticeboard_pin"
-        android:visibility="gone"></ImageView>
+        android:visibility="gone">
+
+    </ImageView>
 
     <ImageView
         android:id="@+id/imgBgPin"
@@ -25,7 +27,9 @@
         android:layout_marginTop="@dimen/eighteen"
         android:elevation="10dp"
         android:src="@drawable/circle_dark_blue"
-        android:visibility="gone"></ImageView>
+        android:visibility="gone">
+
+    </ImageView>
 
     <RelativeLayout
         android:id="@+id/rlaImageReport"
@@ -41,11 +45,10 @@
             android:layout_centerHorizontal="true"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/fifteen"
-            android:fontFamily="@font/poppins_bold"
+            style="@style/CustomTextStylePoppinsBold"
             android:text="Annual Day celebrations"
             android:textColor="@color/black"
-            android:textSize="@dimen/eighteen_sp"
-            android:textStyle="bold" />
+            android:textSize="@dimen/eighteen_sp" />
 
 
         <TextView
@@ -81,7 +84,9 @@
                 android:layout_height="@dimen/fifteen"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/five"
-                android:src="@drawable/send_icon_white"></ImageView>
+                android:src="@drawable/send_icon_white">
+
+            </ImageView>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -92,7 +97,9 @@
                 android:text="Forward"
                 android:textColor="@color/white"
                 android:textSize="@dimen/thirteen_sp"
-                android:textStyle="bold"></TextView>
+                android:textStyle="bold">
+
+            </TextView>
         </RelativeLayout>
 
 
@@ -103,19 +110,20 @@
             android:layout_below="@+id/LblHWSubjectName"
             android:layout_margin="@dimen/twenty"
             android:visibility="gone"
-            android:layout_marginTop="@dimen/ten"></androidx.recyclerview.widget.RecyclerView>
+            android:layout_marginTop="@dimen/ten">
 
-        <me.relex.circleindicator.CircleIndicator
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <me.relex.circleindicator.CircleIndicator2
             android:id="@+id/indicator"
             style="@style/IndicatorStyle"
             android:layout_width="wrap_content"
-            android:visibility="gone"
             android:layout_height="@dimen/thirty"
             android:layout_below="@+id/rcyImgPDF"
             android:layout_centerInParent="true"
-            android:elevation="4dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:visibility="gone"
+            android:elevation="4dp"/>
+
 
         <TextView
             android:id="@+id/lblTitleImage"

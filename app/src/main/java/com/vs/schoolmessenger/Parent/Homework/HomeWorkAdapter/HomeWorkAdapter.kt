@@ -78,7 +78,6 @@ class HomeWorkAdapter(
             imgDown.setImageResource(
                 if (isExpanded) R.drawable.arrow_up_round else R.drawable.arrow_down_round
             )
-
             if (isExpanded) {
                 loadData(item.homework, item)
             }
@@ -107,7 +106,7 @@ class HomeWorkAdapter(
             rcyView.layoutManager = LinearLayoutManager(context)
             rcyView.adapter = mHomeWorkItemAdapter
 
-            Constant.executeAfterDelay {
+//            Constant.executeAfterDelay {
                 mHomeWorkItemAdapter =
                     HomeWorkItemAdapter(
                         DateWiseHomeWorkdata,
@@ -116,7 +115,7 @@ class HomeWorkAdapter(
                         Constant.isShimmerViewDisable,
                     )
                 rcyView.adapter = mHomeWorkItemAdapter
-            }
+//            }
         }
 
         class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

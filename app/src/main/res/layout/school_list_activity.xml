@@ -130,74 +130,122 @@
             android:textColor="@color/black">
 
         </TextView>
-
-
     </LinearLayout>
-
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleSchools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/rytSend"
         android:layout_below="@+id/lnrTab"
         android:layout_marginBottom="@dimen/ten"
         android:padding="@dimen/ten"
+        android:layout_above="@+id/bottomContainer"
         tools:listitem="@layout/schools_list_item" />
 
-
-    <RelativeLayout
-        android:id="@+id/rytSend"
+    <LinearLayout
+        android:id="@+id/bottomContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="@dimen/twenty"
-        android:layout_marginEnd="@dimen/twenty"
-        android:layout_marginBottom="@dimen/ten"
-        android:background="@drawable/rect_btn_orange"
-        android:gravity="center_horizontal"
-        android:visibility="gone"
-        android:padding="@dimen/eight">
+        android:background="@android:color/transparent"
+        android:paddingBottom="@dimen/ten"
+        android:paddingTop="@dimen/five">
 
-
-        <TextView
-            android:id="@+id/lblSend"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/sendOnlyLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_regular"
+            android:orientation="horizontal"
+            android:layout_marginBottom="@dimen/five"
+            android:padding="@dimen/ten"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tvSendOnly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Send only :"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="@dimen/ten"
+                android:textColor="#000000"
+                android:textSize="@dimen/thirteen_sp" />
+
+            <RadioGroup
+                android:id="@+id/radioGroupSendTo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radioAll"
+                    style="@style/CustomTextStylePoppinsRegular"
+                    android:layout_height="wrap_content"
+                    android:text="All"
+                    android:layout_width="match_parent"
+                    android:textColor="#007AFF"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio_selected_bg"
+                    android:buttonTint="#007AFF"
+                    android:textSize="@dimen/thirteen_sp" />
+
+                <RadioButton
+                    android:id="@+id/radioStaff"
+                    style="@style/CustomTextStylePoppinsRegular"
+                    android:layout_height="wrap_content"
+                    android:text="Staff"
+                    android:textColor="#007AFF"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:buttonTint="#007AFF" />
+
+                <RadioButton
+                    android:id="@+id/radioStudent"
+                    style="@style/CustomTextStylePoppinsRegular"
+                    android:layout_height="wrap_content"
+                    android:text="Student"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:textColor="#007AFF"
+                    android:buttonTint="#007AFF"/>
+            </RadioGroup>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/rytSend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rect_btn_orange"
             android:gravity="center_horizontal"
-            android:visibility="visible"
-            android:text="@string/Send"
-            android:layout_centerVertical="true"
-            android:textColor="@color/white"
-            android:textSize="@dimen/fifteen_sp"
-            android:textStyle="normal">
+            android:visibility="gone"
+            android:padding="@dimen/eight"
+            android:layout_marginStart="@dimen/twenty"
+            android:layout_marginEnd="@dimen/twenty">
 
-        </TextView>
+            <TextView
+                android:id="@+id/lblSend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:gravity="center_horizontal"
+                android:visibility="visible"
+                android:text="@string/Send"
+                android:layout_centerVertical="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/fifteen_sp"
+                android:textStyle="normal"/>
 
-
-        <ImageView
-            android:layout_toEndOf="@+id/lblSend"
-            android:id="@+id/imgSend1"
-            android:layout_width="@dimen/twenty"
-            android:layout_height="@dimen/twenty"
-            android:layout_marginStart="@dimen/five"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/five"
-            android:src="@drawable/send_icon_white" />
-
-
-    </RelativeLayout>
-
-
-
-
-
-
-
-
-
-
-
+            <ImageView
+                android:id="@+id/imgSend1"
+                android:layout_width="@dimen/twenty"
+                android:layout_height="@dimen/twenty"
+                android:layout_toEndOf="@+id/lblSend"
+                android:layout_marginStart="@dimen/five"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/five"
+                android:src="@drawable/send_icon_white" />
+        </RelativeLayout>
+    </LinearLayout>
 
 </RelativeLayout>

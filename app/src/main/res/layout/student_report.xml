@@ -129,28 +129,7 @@
         </RelativeLayout>
 
 
-        <!--        <RelativeLayout-->
-        <!--            android:id="@+id/AcademicYear"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginStart="@dimen/ten"-->
-        <!--            android:layout_marginEnd="@dimen/ten"-->
-        <!--            android:layout_weight="0.6"-->
-        <!--            android:background="@drawable/bg_white_light_radious"-->
-        <!--            android:padding="@dimen/ten">-->
 
-        <!--            <TextView-->
-        <!--                android:id="@id/lblAcademicYear"-->
-        <!--                style="@style/CustomTextStylePoppinsMedium"-->
-        <!--                android:layout_width="match_parent"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:drawableEnd="@drawable/down_arrow"-->
-        <!--                android:padding="@dimen/eight"-->
-        <!--                android:paddingEnd="@dimen/five"-->
-        <!--                android:text=""-->
-        <!--                android:textSize="@dimen/ten_sp"-->
-        <!--                android:textStyle="bold"></TextView>-->
-        <!--        </RelativeLayout>-->
 
     </LinearLayout>
 
@@ -183,7 +162,8 @@
                 android:text="@string/Standard"
                 android:textColor="@color/black"
                 android:textSize="@dimen/twele_sp"
-                android:textStyle="bold"></TextView>
+                android:textStyle="bold">
+            </TextView>
 
 
             <RelativeLayout
@@ -205,21 +185,6 @@
             </RelativeLayout>
 
 
-            <!--            <TextView-->
-            <!--                android:id="@+id/dropdownTextViewStandard"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_below="@+id/lblStandardPick"-->
-            <!--                android:layout_marginStart="@dimen/ten"-->
-            <!--                android:layout_marginEnd="@dimen/ten"-->
-            <!--                android:background="@drawable/bg_white_light_radious"-->
-            <!--                android:drawableEnd="@drawable/down_arrow"-->
-            <!--                android:gravity="center_vertical"-->
-            <!--                android:padding="@dimen/fifteen"-->
-            <!--                android:text="XII"-->
-            <!--                android:textColor="@color/navi_blue2"-->
-            <!--                android:textSize="@dimen/eleven_sp"-->
-            <!--                android:textStyle="bold" />-->
 
         </LinearLayout>
 
@@ -241,7 +206,8 @@
                 android:text="@string/Section"
                 android:textColor="@color/black"
                 android:textSize="@dimen/twele_sp"
-                android:textStyle="bold"></TextView>
+                android:textStyle="bold">
+            </TextView>
 
 
             <RelativeLayout
@@ -263,23 +229,7 @@
             </RelativeLayout>
 
 
-            <!--            <TextView-->
-
-            <!--                android:id="@+id/dropdownTextViewSection"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_below="@+id/lblSectionPick"-->
-            <!--                android:layout_marginStart="@dimen/ten"-->
-            <!--                android:layout_marginEnd="@dimen/ten"-->
-            <!--                android:background="@drawable/bg_white_light_radious"-->
-            <!--                android:drawableEnd="@drawable/down_arrow"-->
-            <!--                android:gravity="center_vertical"-->
-            <!--                android:padding="@dimen/fifteen"-->
-            <!--                android:text="B"-->
-            <!--                android:textColor="@color/navi_blue2"-->
-            <!--                android:textSize="@dimen/eleven_sp"-->
-            <!--                android:textStyle="bold" />-->
-        </LinearLayout>
+                  </LinearLayout>
     </LinearLayout>
 
     <HorizontalScrollView
@@ -315,7 +265,8 @@
                 android:padding="@dimen/eight"
                 android:text="@string/nameasc"
                 android:textColor="@color/black"
-                android:textSize="@dimen/ten_sp"></TextView>
+                android:textSize="@dimen/ten_sp">
+            </TextView>
 
             <TextView
                 android:id="@+id/tapNameDsc"
@@ -361,7 +312,8 @@
                 android:padding="@dimen/ten"
                 android:text="@string/no_dsc"
                 android:textColor="@color/black"
-                android:textSize="@dimen/ten_sp"></TextView>
+                android:textSize="@dimen/ten_sp">
+            </TextView>
 
 
         </LinearLayout>
@@ -374,7 +326,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tabLayout"
         android:layout_marginStart="@dimen/ten"
-        android:layout_marginEnd="@dimen/ten"></androidx.recyclerview.widget.RecyclerView>
+        android:layout_marginEnd="@dimen/ten">
+    </androidx.recyclerview.widget.RecyclerView>
 
     <LinearLayout
         android:id="@+id/lytNoDataFound"
@@ -389,7 +342,8 @@
             android:layout_width="@dimen/two_hundred"
             android:layout_height="@dimen/two_hundred"
             android:layout_marginTop="@dimen/twenty_five"
-            android:src="@drawable/no_data_found"></ImageView>
+            android:src="@drawable/no_data_found">
+        </ImageView>
 
         <TextView
             android:id="@+id/noDataFound"
@@ -401,9 +355,5 @@
             android:text="">
 
         </TextView>
-
     </LinearLayout>
-
-
 </RelativeLayout>
-

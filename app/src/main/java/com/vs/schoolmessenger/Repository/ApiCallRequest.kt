@@ -84,6 +84,9 @@ object ApiCallRequest {
     }
 
     fun isSendHomeWork(
+        targetType: Int,
+        iframe: String,
+        file_size: String,
         isAcademicYearId: Int,
         selectedIds: MutableList<String>,
         title: String,
@@ -103,8 +106,11 @@ object ApiCallRequest {
         }
 
         jsonObject.addProperty(APIKeyNames.academic_year_id, isAcademicYearId)
-        jsonObject.add(APIKeyNames.section_code, sectionArray)
+        jsonObject.add(APIKeyNames.target_code, sectionArray)
+        jsonObject.addProperty(APIKeyNames.target_type, targetType)
         jsonObject.addProperty(APIKeyNames.title, title)
+        jsonObject.addProperty(APIKeyNames.iframe, iframe)
+        jsonObject.addProperty(APIKeyNames.file_size, file_size)
         jsonObject.addProperty(APIKeyNames.description, description)
         jsonObject.addProperty(
             APIKeyNames.subject_id,
@@ -152,18 +158,78 @@ object ApiCallRequest {
     }
 
     fun isSendNotice(
-        istitle: Int,
-        iscontent: MutableList<String>,
-        istargetcode: String,
-        isintendedfor: String,
-        isvisiblefrom: String,
-        isvisibleto: String,
-        subjectId: Int): JsonObject {
+        title: String,
+        description: String,
+        startDate: String,
+        endDate: String,
+        target_code: MutableList<String>,
+        intended_for: String
+    ): JsonObject {
         val jsonObject = JsonObject()
         val filePathArray = JsonArray()
 
+        for (i in Constant.isAwsUploadedFiles.indices) {
+            val isSelectedObject = JsonObject()
+            isSelectedObject.addProperty(APIKeyNames.url, Constant.isAwsUploadedFiles[i].isFileUrl)
+            isSelectedObject.addProperty(APIKeyNames.type, Constant.isAwsUploadedFiles[i].isFileType.toString())
+            filePathArray.add(isSelectedObject)
+        }
+
+        val targetCodeArray = JsonArray()
+        for (code in target_code) {
+            targetCodeArray.add(code)
+        }
+
+        jsonObject.addProperty("title", title)
+        jsonObject.addProperty("content", description)
+        jsonObject.add("target_code", targetCodeArray)
+        jsonObject.addProperty("intended_for", intended_for)
+        jsonObject.addProperty("visible_from", startDate)
+        jsonObject.addProperty("visible_to", endDate)
+        jsonObject.add(APIKeyNames.file_path, filePathArray)
+
         return jsonObject
     }
+
+
+    fun isSendEvent(
+        title: String,
+        content: String,
+        venue: String,
+        event_date: String,
+        event_time: String,
+        target_type: Int?,
+        target_code: MutableList<String>
+    ): JsonObject {
+        val jsonObject = JsonObject()
+        val filePathArray = JsonArray()
+
+        for (i in Constant.isAwsUploadedFiles.indices) {
+            val isSelectedObject = JsonObject()
+            isSelectedObject.addProperty(APIKeyNames.url, Constant.isAwsUploadedFiles[i].isFileUrl)
+            isSelectedObject.addProperty(APIKeyNames.type, Constant.isAwsUploadedFiles[i].isFileType.toString())
+            filePathArray.add(isSelectedObject)
+        }
+
+        val targetCodeArray = JsonArray()
+        for (code in target_code) {
+            targetCodeArray.add(code)
+        }
+
+        jsonObject.addProperty(APIKeyNames.title, title)
+        jsonObject.addProperty(APIKeyNames.description, content)
+        jsonObject.add("target_code", targetCodeArray)
+        jsonObject.addProperty("venue", venue)
+        jsonObject.addProperty("event_date", event_date)
+        jsonObject.addProperty("event_time", event_time)
+        jsonObject.addProperty("target_type", target_type)
+        jsonObject.add(APIKeyNames.file_path, filePathArray)
+
+        return jsonObject
+    }
+
+
+
 
 
 }

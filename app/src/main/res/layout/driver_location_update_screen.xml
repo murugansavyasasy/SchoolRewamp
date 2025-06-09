@@ -6,16 +6,50 @@
     android:fitsSystemWindows="true"
     android:background="#F9F9F9">
 
+
+    <RelativeLayout
+        android:id="@+id/rytHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gradient_theme_school"
+        android:padding="@dimen/ten">
+
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
+            android:layout_marginTop="@dimen/ten"
+            android:src="@drawable/left_arrow">
+
+        </ImageView>
+
+        <TextView
+            android:layout_toEndOf="@+id/imgBack"
+            android:id="@+id/lblHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten"
+            android:text="Update Bus Location"
+            android:textColor="@color/black"
+            android:textSize="@dimen/twenty_sp"
+            android:textStyle="bold">
+
+        </TextView>
+
+    </RelativeLayout>
+
+
     <!-- Google Map -->
-    <fragment
-        android:id="@+id/mapView"
+    <WebView
+        android:layout_below="@+id/rytHeader"
+        android:id="@+id/mapWebView"
         android:layout_width="match_parent"
         android:layout_height="@dimen/four_hundred" />
 
     <!-- Driver Info Card -->
     <LinearLayout
         android:id="@+id/driverInfoCard"
-        android:layout_below="@id/mapView"
+        android:layout_below="@id/mapWebView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/sixteen"

@@ -1,14 +1,14 @@
 package com.vs.schoolmessenger.AlbumImage
 
+import android.Manifest
 import android.content.ContentUris
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
+import android.provider.Settings
 import android.view.View
-import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -21,11 +21,12 @@ class AlbumSelectActivity : AppCompatActivity() {
     private lateinit var binding: AlbumSelectActivityBinding
     private lateinit var adapter: FileGridAdapter
     private lateinit var documentPickerLauncher: ActivityResultLauncher<Array<String>>
+    private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
 
     companion object {
         private const val REQUEST_CODE_MANAGE_ALL_FILES = 100
-        private const val REQUEST_CODE_READ_STORAGE = 101
-        private val SUPPORTED_EXTENSIONS = listOf("pdf", "doc", "docx", "ppt", "pptx", "xls", "xlsx", "txt")
+        private val SUPPORTED_EXTENSIONS =
+            listOf("pdf", "doc", "docx", "ppt", "pptx", "xls", "xlsx", "txt")
         private const val TAG = "DocumentScan"
     }
 
@@ -35,31 +36,31 @@ class AlbumSelectActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.toolbarLayout.rytFilePicking.visibility = View.VISIBLE
 
+        setupPermissionLauncher()
+        setupDocumentPicker()
+
         adapter = FileGridAdapter(limit = 5) { selectedUris ->
-            // Print selected URIs
             selectedUris.forEach {
                 println("Selected: $it")
             }
         }
 
-        setupDocumentPicker()
-
         binding.recyclerView.layoutManager = GridLayoutManager(this, 3)
         binding.recyclerView.adapter = adapter
 
+        checkAndRequestPermissions()
+
+
         val fileType = intent.getStringExtra(Constant.isFileType) ?: Constant.IMAGE
-        when (fileType.uppercase()) {
-            Constant.IMAGE -> adapter.submitList(loadImages())
-            Constant.VIDEO -> adapter.submitList(loadVideos())
-            Constant.AUDIO -> adapter.submitList(loadAudio())
-            Constant.DOCUMENT -> {
-                if (hasStoragePermission()) {
-                    loadDocumentsOrOpenPicker()
-                } else {
-                    requestStoragePermission()
-                }
+        if (fileType.uppercase() == Constant.DOCUMENT) {
+            checkAndRequestPermissions()
+        } else {
+            when (fileType.uppercase()) {
+                Constant.IMAGE -> adapter.submitList(loadImages())
+                Constant.VIDEO -> adapter.submitList(loadVideos())
+                Constant.AUDIO -> adapter.submitList(loadAudio())
+                else -> adapter.submitList(emptyList())
             }
-            else -> adapter.submitList(emptyList())
         }
 
         binding.toolbarLayout.btnDone.setOnClickListener {
@@ -70,6 +71,16 @@ class AlbumSelectActivity : AppCompatActivity() {
             setResult(RESULT_OK, intent)
             finish()
         }
+    }
+
+    private fun setupPermissionLauncher() {
+        permissionLauncher =
+            registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+                val allGranted = permissions.entries.all { it.value }
+                if (allGranted || (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && android.os.Environment.isExternalStorageManager())) {
+                    loadDocumentsOrOpenPicker()
+                }
+            }
     }
 
     private fun setupDocumentPicker() {
@@ -96,49 +107,31 @@ class AlbumSelectActivity : AppCompatActivity() {
         )
     }
 
-    private fun hasStoragePermission(): Boolean {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            android.os.Environment.isExternalStorageManager()
-        } else {
-            checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == android.content.pm.PackageManager.PERMISSION_GRANTED
-        }
-    }
+    private fun checkAndRequestPermissions() {
 
-    private fun requestStoragePermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            try {
-                val intent = Intent(android.provider.Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
-                intent.data = Uri.parse("package:$packageName")
-                startActivityForResult(intent, REQUEST_CODE_MANAGE_ALL_FILES)
-            } catch (e: Exception) {
-                val intent = Intent(android.provider.Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION)
-                startActivityForResult(intent, REQUEST_CODE_MANAGE_ALL_FILES)
+        when {
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU -> {
+                permissionLauncher.launch(
+                    arrayOf(
+                        Manifest.permission.READ_MEDIA_IMAGES,
+                        Manifest.permission.READ_MEDIA_VIDEO,
+                        Manifest.permission.READ_MEDIA_AUDIO
+                    )
+                )
             }
-        } else {
-            requestPermissions(arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE), REQUEST_CODE_READ_STORAGE)
-        }
-    }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == REQUEST_CODE_READ_STORAGE) {
-            if (grantResults.isNotEmpty() && grantResults[0] == android.content.pm.PackageManager.PERMISSION_GRANTED) {
-                loadDocumentsOrOpenPicker()
-            } else {
-                Toast.makeText(this, "Permission denied to read external storage", Toast.LENGTH_SHORT).show()
-                Log.w(TAG, "Read storage permission denied")
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.R -> {
+                if (android.os.Environment.isExternalStorageManager()) {
+                    loadDocumentsOrOpenPicker()
+                } else {
+                    val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
+                    intent.data = Uri.parse("package:$packageName")
+                    startActivityForResult(intent, REQUEST_CODE_MANAGE_ALL_FILES)
+                }
             }
-        }
-    }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_CODE_MANAGE_ALL_FILES) {
-            if (hasStoragePermission()) {
-                loadDocumentsOrOpenPicker()
-            } else {
-                Toast.makeText(this, "Permission denied to manage all files", Toast.LENGTH_SHORT).show()
-                Log.w(TAG, "Manage all files permission denied")
+            else -> {
+                permissionLauncher.launch(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE))
             }
         }
     }
@@ -182,7 +175,6 @@ class AlbumSelectActivity : AppCompatActivity() {
                 val mimeType = it.getString(mimeCol)
                 val contentUri = Uri.withAppendedPath(collection, id.toString())
 
-                // Optional: filter again by extension to be safe
                 if (mimeTypeMatchesExtension(mimeType, SUPPORTED_EXTENSIONS)) {
                     documentUris.add(contentUri)
                 }
@@ -196,13 +188,22 @@ class AlbumSelectActivity : AppCompatActivity() {
         if (mimeType == null) return false
         val map = mapOf(
             "pdf" to listOf("application/pdf"),
-            "doc" to listOf("application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"),
-            "ppt" to listOf("application/vnd.ms-powerpoint", "application/vnd.openxmlformats-officedocument.presentationml.presentation"),
-            "xls" to listOf("application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"),
+            "doc" to listOf(
+                "application/msword",
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            ),
+            "ppt" to listOf(
+                "application/vnd.ms-powerpoint",
+                "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+            ),
+            "xls" to listOf(
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            ),
             "txt" to listOf("text/plain")
         )
         return extensions.any { ext ->
-            map[ext]?.contains(mimeType) ?: false
+            map[ext]?.contains(mimeType) == true
         }
     }
 
@@ -217,9 +218,18 @@ class AlbumSelectActivity : AppCompatActivity() {
 
     private fun extToMimeTypes(extension: String): List<String> = when (extension) {
         "pdf" -> listOf("application/pdf")
-        "doc" -> listOf("application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
-        "ppt" -> listOf("application/vnd.ms-powerpoint", "application/vnd.openxmlformats-officedocument.presentationml.presentation")
-        "xls" -> listOf("application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+        "doc" -> listOf(
+            "application/msword",
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        )
+        "ppt" -> listOf(
+            "application/vnd.ms-powerpoint",
+            "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+        )
+        "xls" -> listOf(
+            "application/vnd.ms-excel",
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        )
         "txt" -> listOf("text/plain")
         else -> emptyList()
     }

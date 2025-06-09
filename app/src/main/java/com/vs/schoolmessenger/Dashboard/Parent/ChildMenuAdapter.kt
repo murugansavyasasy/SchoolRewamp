@@ -138,7 +138,7 @@ class ChildMenuAdapter(
                     imgMenu.setImageResource(R.drawable.noticeboard_icon)
                 }
 
-                Constant.M_EVENTS_HOLIDAYS -> {
+                Constant.M_SCHOOL_CLASS_EVENTS -> {
                     imgMenu.setImageResource(R.drawable.event_icon_school)
                 }
 

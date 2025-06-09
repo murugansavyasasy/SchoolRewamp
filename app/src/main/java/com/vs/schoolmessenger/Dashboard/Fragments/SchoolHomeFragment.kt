@@ -441,7 +441,20 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             }
 
             Constant.M_NOTICEBOARD -> CreateNoticeBoard::class.java
-            Constant.M_EVENTS_HOLIDAYS -> CreateEvent::class.java
+            Constant.M_SCHOOL_CLASS_EVENTS -> {
+
+                if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
+                    CreateEvent::class.java
+                } else {
+                    if (userDetails!!.staff_details.size > 1) {
+                        SchoolList::class.java
+                    } else {
+                        CreateEvent::class.java
+                    }
+                }
+            }
+
+
             Constant.M_SCHEDULE_EXAM_TEST -> Exam::class.java
             Constant.M_MESSAGES_FROM_MANAGEMENT -> {
                 if (userDetails!!.staff_role == Constant.isStaffRole) {
@@ -564,18 +577,14 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 Attachment::class.java
             }
 
-
-
             Constant.M_VERY_IMPORTANT_INFO -> ImportantInfo::class.java
             Constant.M_FEEDBACK -> ImportantInfo::class.java
             Constant.M_SCHOOL_NEEDS -> SchoolNeeds::class.java
             else -> null
-
         }
 
         activityClass?.let {
             startActivity(Intent(requireActivity(), it))
         }
     }
-
 }
