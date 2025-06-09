@@ -5,10 +5,8 @@ import android.content.Context
 import android.graphics.Matrix
 import android.graphics.PointF
 import android.graphics.drawable.Drawable
-import android.view.GestureDetector
 import android.view.LayoutInflater
 import android.view.MotionEvent
-import android.view.ScaleGestureDetector
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView

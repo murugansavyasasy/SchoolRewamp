@@ -125,22 +125,24 @@ class HomeworkImgPDFAdapter(
             }
 
             fileItem.setOnClickListener {
-                Constant.commonFileList.isEmpty()
-                Constant.selectedFileIndex=-1
-                val commonList = adapter.GetFilePathDetailsData?.map {
-                    CommonFileData(
-                        type = it.type,
-                        path = it.url,
-                    )
-                } ?: emptyList()
+                val originalList = adapter.GetFilePathDetailsData ?: emptyList()
+                if (originalList.isEmpty()) return@setOnClickListener
+
+                val rotatedList = originalList.drop(position) + originalList.take(position)
+                val commonList = rotatedList.map {
+                    CommonFileData(type = it.type, path = it.url)
+                }
 
                 Constant.commonFileList = commonList
-                Constant.selectedFileIndex = position
+                Constant.selectedFileIndex = 0
 
                 val intent = Intent(context, FullScreenViewerActivity::class.java)
                 intent.putExtra(Constant.subjectName, SubjectName)
                 context.startActivity(intent)
             }
+
+
+
 
 
             WebViewThumbnail.setOnTouchListener(object : OnTouchListener {

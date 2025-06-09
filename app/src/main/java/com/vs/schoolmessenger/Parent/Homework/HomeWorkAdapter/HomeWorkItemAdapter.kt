@@ -15,7 +15,6 @@ import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetDateWiseHome
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
-import me.relex.circleindicator.CircleIndicator
 import me.relex.circleindicator.CircleIndicator2
 
 class HomeWorkItemAdapter(

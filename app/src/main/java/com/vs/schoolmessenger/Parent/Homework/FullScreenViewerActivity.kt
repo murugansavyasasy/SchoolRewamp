@@ -25,8 +25,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.net.URL
 
-class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
-    View.OnClickListener {
+class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(), View.OnClickListener {
 
     private lateinit var adapter: FileViewerAdapter
     private var currentPosition = 0
@@ -47,21 +46,32 @@ class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(
         binding.lnrNext.setOnClickListener(this)
         binding.lnrPrevious.setOnClickListener(this)
 
-
         adapter = FileViewerAdapter(this, Constant.commonFileList)
-
         val noScrollLayoutManager = object : LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false) {
-            override fun canScrollHorizontally(): Boolean = false // disables horizontal scrolling
+            override fun canScrollHorizontally(): Boolean = false
+            override fun canScrollVertically(): Boolean = false
         }
         binding.rcyFile.layoutManager = noScrollLayoutManager
         binding.rcyFile.adapter = adapter
+        binding.rcyFile.setOnTouchListener { _, _ -> true }
+        currentPosition = Constant.selectedFileIndex
+        scrollToPosition(currentPosition)
 
-//        scrollToPosition(currentPosition)
+        updateNavButtons()
     }
+
 
     private fun scrollToPosition(position: Int) {
         binding.rcyFile.scrollToPosition(position)
         adapter.notifyItemChanged(position)
+    }
+
+    private fun updateNavButtons() {
+        binding.lnrPrevious.isEnabled = currentPosition > 0
+        binding.btnPrevious.alpha = if (currentPosition > 0) 1.0f else 0.5f
+
+        binding.lnrNext.isEnabled = currentPosition < Constant.commonFileList.size - 1
+        binding.btnNext.alpha = if (currentPosition < Constant.commonFileList.size - 1) 1.0f else 0.5f
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -79,30 +89,17 @@ class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(
 
             R.id.lnrNext -> {
                 if (currentPosition < Constant.commonFileList.size - 1) {
-                    binding.lnrNext.isEnabled=true
-                    binding.btnPrevious.alpha=1.0f
                     currentPosition++
                     scrollToPosition(currentPosition)
-                } else {
-                    binding.lnrNext.isEnabled=false
-                    binding.btnPrevious.alpha=0.5f
-
-//                    Toast.makeText(this, "This is the last file", Toast.LENGTH_SHORT).show()
+                    updateNavButtons()
                 }
             }
 
             R.id.lnrPrevious -> {
-
-                if (currentPosition < 0 || currentPosition==0) {
-                    binding.lnrPrevious.isEnabled=false
-                    binding.btnNext.alpha=0.5f
-//                    Toast.makeText(this, "This is the first file", Toast.LENGTH_SHORT).show()
-
-                } else {
-                    binding.lnrPrevious.isEnabled=true
-                    binding.btnNext.alpha=1.0f
+                if (currentPosition > 0) {
                     currentPosition--
                     scrollToPosition(currentPosition)
+                    updateNavButtons()
                 }
             }
         }
@@ -110,15 +107,11 @@ class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(
 
     private fun checkStoragePermission(): Boolean {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.READ_MEDIA_IMAGES
-            ) == PackageManager.PERMISSION_GRANTED
+            ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES) ==
+                    PackageManager.PERMISSION_GRANTED
         } else {
-            ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            ) == PackageManager.PERMISSION_GRANTED
+            ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
+                    PackageManager.PERMISSION_GRANTED
         }
     }
 
