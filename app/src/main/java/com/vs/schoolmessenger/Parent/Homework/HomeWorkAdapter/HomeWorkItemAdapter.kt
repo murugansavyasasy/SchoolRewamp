@@ -15,7 +15,7 @@ import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetDateWiseHome
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
-import me.relex.circleindicator.CircleIndicator
+import me.relex.circleindicator.CircleIndicator2
 
 class HomeWorkItemAdapter(
     private var GetHomeworkData: GetDateWiseHomeworkData?,
@@ -57,13 +57,12 @@ class HomeWorkItemAdapter(
         RecyclerView.ViewHolder(itemView) {
 
         private var isTextExpanded = false
-
         private val lblDateImage: TextView = itemView.findViewById(R.id.lblDateImage)
         private val lblTitleImage: TextView = itemView.findViewById(R.id.lblTitleImage)
         private val lblContentImage: TextView = itemView.findViewById(R.id.lblContentImage)
         private val tvSeeMoreImage: TextView = itemView.findViewById(R.id.tvSeeMoreImage)
         private val RcyImgPdf: RecyclerView = itemView.findViewById(R.id.rcyImgPDF)
-        private val DotIndicator: CircleIndicator = itemView.findViewById(R.id.indicator)
+        private val DotIndicator: CircleIndicator2 = itemView.findViewById(R.id.indicator)
         private val lblSubjectName: TextView = itemView.findViewById(R.id.LblHWSubjectName)
         private val rlaSelectText: RelativeLayout = itemView.findViewById(R.id.rlaSelectText)
         private var mHomeworkImgPDFAdapter: HomeworkImgPDFAdapter? = null
@@ -133,7 +132,7 @@ class HomeWorkItemAdapter(
             }
         }
 
-        private fun setupDotIndicator(indicator: CircleIndicator, itemCount: Int) {
+        private fun setupDotIndicator(indicator: CircleIndicator2, itemCount: Int) {
             if (itemCount <= 1) {
                 indicator.visibility = View.GONE
                 return
@@ -150,7 +149,6 @@ class HomeWorkItemAdapter(
 
         class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             private val shimmerLayout: ShimmerFrameLayout = itemView.findViewById(R.id.shimmer_view_container)
-
             init {
                 shimmerLayout.startShimmer()
             }

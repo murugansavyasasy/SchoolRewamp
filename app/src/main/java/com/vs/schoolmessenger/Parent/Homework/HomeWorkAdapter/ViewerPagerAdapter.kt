@@ -1,8 +1,12 @@
 package com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Matrix
+import android.graphics.PointF
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
@@ -13,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.target.Target
+import com.bumptech.glide.request.RequestListener
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
@@ -39,50 +43,52 @@ class FileViewerAdapter(
         if (item.type == Constant.IMAGE) {
             holder.imageView.visibility = View.VISIBLE
             Glide.with(context).load(item.path)
-                .listener(object : com.bumptech.glide.request.RequestListener<Drawable> {
+                .listener(object : RequestListener<Drawable> {
                     override fun onLoadFailed(
-                        e: GlideException?,
-                        model: Any?,
-                        target: Target<Drawable>,
-                        isFirstResource: Boolean
+                        e: GlideException?, model: Any?, target: com.bumptech.glide.request.target.Target<Drawable?>, isFirstResource: Boolean
                     ): Boolean {
                         holder.loadingBar.visibility = View.GONE
                         return false
                     }
 
                     override fun onResourceReady(
-                        resource: Drawable,
-                        model: Any,
-                        target: Target<Drawable>?,
-                        dataSource: DataSource,
-                        isFirstResource: Boolean
+                        resource: Drawable, model: Any, target: com.bumptech.glide.request.target.Target<Drawable?>?,
+                        dataSource: DataSource, isFirstResource: Boolean
                     ): Boolean {
                         holder.loadingBar.visibility = View.GONE
-                        return false
+                        holder.imageView.setImageDrawable(resource)
+                        holder.imageView.scaleType = ImageView.ScaleType.MATRIX
+                        enableZoomOnImage(holder.imageView)
+                        return true
                     }
-                }).into(holder.imageView)
+                }).submit()
+
+            enableZoomOnImage(holder.imageView)
         } else {
             holder.documentWebView.visibility = View.VISIBLE
-            var isLoadingUrl = ""
-            if (item.path.contains("vimeo")) {
-                isLoadingUrl = item.path
+            val isLoadingUrl = if (item.path.contains("vimeo")) {
+                item.path
             } else {
-                val googleDocsUrl = "https://docs.google.com/gview?embedded=true&url=${item.path}"
-                isLoadingUrl = googleDocsUrl
-            }
-            holder.documentWebView.webViewClient = object : WebViewClient() {
-                override fun onPageFinished(view: WebView?, url: String?) {
-                    holder.loadingBar.visibility = View.GONE
-                }
+                "https://docs.google.com/gview?embedded=true&url=${item.path}"
             }
 
             holder.documentWebView.settings.apply {
                 javaScriptEnabled = true
                 setSupportZoom(true)
-                allowFileAccess = true
-                domStorageEnabled = true
+                builtInZoomControls = true
+                displayZoomControls = false
                 loadWithOverviewMode = true
                 useWideViewPort = true
+                domStorageEnabled = true
+            }
+
+            holder.documentWebView.setInitialScale(1)
+            holder.documentWebView.scrollBarStyle = WebView.SCROLLBARS_INSIDE_OVERLAY
+            holder.documentWebView.setLayerType(View.LAYER_TYPE_HARDWARE, null)
+            holder.documentWebView.webViewClient = object : WebViewClient() {
+                override fun onPageFinished(view: WebView?, url: String?) {
+                    holder.loadingBar.visibility = View.GONE
+                }
             }
 
             holder.documentWebView.loadUrl(isLoadingUrl)
@@ -95,5 +101,75 @@ class FileViewerAdapter(
         val documentWebView: WebView = itemView.findViewById(R.id.documentWebView)
         val imageView: ImageView = itemView.findViewById(R.id.imageView)
         val loadingBar: ProgressBar = itemView.findViewById(R.id.loadingBar)
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun enableZoomOnImage(imageView: ImageView) {
+        val matrix = Matrix()
+        val savedMatrix = Matrix()
+
+        val startPoint = PointF()
+        val midPoint = PointF()
+        var oldDist = 1f
+        var mode = NONE
+
+        imageView.setOnTouchListener { v, event ->
+            val view = v as ImageView
+            when (event.action and MotionEvent.ACTION_MASK) {
+                MotionEvent.ACTION_DOWN -> {
+                    matrix.set(view.imageMatrix)
+                    savedMatrix.set(matrix)
+                    startPoint.set(event.x, event.y)
+                    mode = DRAG
+                }
+
+                MotionEvent.ACTION_POINTER_DOWN -> {
+                    oldDist = spacing(event)
+                    if (oldDist > 10f) {
+                        savedMatrix.set(matrix)
+                        midPoint(midPoint, event)
+                        mode = ZOOM
+                    }
+                }
+
+                MotionEvent.ACTION_UP, MotionEvent.ACTION_POINTER_UP -> {
+                    mode = NONE
+                }
+
+                MotionEvent.ACTION_MOVE -> {
+                    if (mode == DRAG) {
+                        matrix.set(savedMatrix)
+                        matrix.postTranslate(event.x - startPoint.x, event.y - startPoint.y)
+                    } else if (mode == ZOOM) {
+                        val newDist = spacing(event)
+                        if (newDist > 10f) {
+                            matrix.set(savedMatrix)
+                            val scale = newDist / oldDist
+                            matrix.postScale(scale, scale, midPoint.x, midPoint.y)
+                        }
+                    }
+                }
+            }
+            view.imageMatrix = matrix
+            true
+        }
+    }
+
+    companion object {
+        const val NONE = 0
+        const val DRAG = 1
+        const val ZOOM = 2
+
+        fun spacing(event: MotionEvent): Float {
+            val x = event.getX(0) - event.getX(1)
+            val y = event.getY(0) - event.getY(1)
+            return kotlin.math.sqrt(x * x + y * y)
+        }
+
+        fun midPoint(point: PointF, event: MotionEvent) {
+            val x = event.getX(0) + event.getX(1)
+            val y = event.getY(0) + event.getY(1)
+            point.set(x / 2, y / 2)
+        }
     }
 }

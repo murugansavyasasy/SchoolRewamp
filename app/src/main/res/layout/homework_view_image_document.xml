@@ -25,22 +25,124 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="@string/subject_name"
+            style="@style/CustomTextStylePoppinsBold"
             android:textColor="@color/black"
             android:textSize="@dimen/twenty_sp"
-            android:textStyle="bold" />
+            android:text="" />
     </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/lytDownload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/twenty"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/ten"
+            android:text="@string/download"
+            android:textColor="@color/bpBlue"
+            android:textSize="@dimen/fifteen_sp">
+
+        </TextView>
+
+        <ImageView
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
+            android:layout_marginEnd="@dimen/ten"
+            android:src="@drawable/download_icon">
+
+        </ImageView>
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcyFile"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/rytHeader"
+        android:layout_above="@+id/indicator"
         android:orientation="horizontal"
         android:overScrollMode="never"
         android:scrollbars="horizontal"
         android:layout_marginTop="8dp"
         />
+
+    <me.relex.circleindicator.CircleIndicator2
+        android:id="@+id/indicator"
+        style="@style/IndicatorStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/thirty"
+        android:layout_above="@+id/lnrPrevious"
+        android:layout_centerInParent="true"
+        android:visibility="visible"
+        android:elevation="4dp"/>
+
+    <LinearLayout
+        android:id="@+id/lnrPrevious"
+        android:layout_width="wrap_content"
+        android:background="@drawable/bg_white_light_radious"
+        android:layout_alignParentStart="true"
+        android:layout_margin="16dp"
+        android:gravity="center"
+        android:paddingStart="@dimen/fifteen"
+        android:paddingEnd="@dimen/twenty_five"
+        android:paddingTop="@dimen/fifteen"
+        android:paddingBottom="@dimen/fifteen"
+        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/imgPre"
+            android:layout_width="@dimen/twenty"
+            android:src="@drawable/left_arrow"
+            android:layout_height="@dimen/twenty">
+        </ImageView>
+        <TextView
+            android:id="@+id/btnPrevious"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Previous" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lnrNext"
+        android:layout_width="wrap_content"
+        android:paddingStart="@dimen/twenty_five"
+        android:paddingEnd="@dimen/twenty_five"
+        android:paddingTop="@dimen/fifteen"
+        android:paddingBottom="@dimen/fifteen"
+        android:background="@drawable/bg_white_light_radious"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="16dp"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/btnNext"
+            android:layout_width="wrap_content"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_height="wrap_content"
+            android:text="Next" />
+
+        <ImageView
+            android:id="@+id/imgNext"
+            android:layout_width="@dimen/twenty"
+            android:src="@drawable/rightarrrow"
+            android:layout_height="@dimen/twenty">
+        </ImageView>
+    </LinearLayout>
+
+
+
+
+
 
 </RelativeLayout>
 

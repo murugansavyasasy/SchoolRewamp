@@ -105,9 +105,7 @@ class HomeWorkAdapter(
                 HomeWorkItemAdapter(null, null, context, Constant.isShimmerViewShow)
             rcyView.layoutManager = LinearLayoutManager(context)
             rcyView.adapter = mHomeWorkItemAdapter
-
-//            Constant.executeAfterDelay {
-                mHomeWorkItemAdapter =
+             mHomeWorkItemAdapter =
                     HomeWorkItemAdapter(
                         DateWiseHomeWorkdata,
                         homeworkDetails,
@@ -115,7 +113,6 @@ class HomeWorkAdapter(
                         Constant.isShimmerViewDisable,
                     )
                 rcyView.adapter = mHomeWorkItemAdapter
-//            }
         }
 
         class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

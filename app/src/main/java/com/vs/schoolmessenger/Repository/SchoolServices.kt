@@ -1484,11 +1484,12 @@ class SchoolServices {
 
     fun getStudentReportList(
         isToken: String,
+        isAcademicYearId: Int,
         class_id: Int? = null,
         section_id: Int? = null,
         activity: Activity
     ) {
-        RestClient.apiInterfaces.getStudentReport(isToken, class_id, section_id)
+        RestClient.apiInterfaces.getStudentReport(isToken,isAcademicYearId, class_id, section_id)
             ?.enqueue(object : Callback<GetStudentReportData?> {
                 override fun onResponse(
                     call: Call<GetStudentReportData?>,

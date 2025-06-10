@@ -39,9 +39,9 @@
                 android:gravity="center"
                 android:padding="@dimen/ten"
                 android:text="@string/name"
-                android:fontFamily="@font/poppins_regular"
+                style="@style/CustomTextStylePoppinsBold"
                 android:textColor="@color/black"
-                android:textSize="@dimen/twele_sp" />
+                />
 
             <TextView
                 android:id="@+id/lblRollNo"
@@ -52,9 +52,8 @@
                 android:paddingVertical="@dimen/five"
                 android:text="@string/roll_no"
                 android:gravity="center"
-                android:fontFamily="@font/poppins_regular"
                 android:textColor="@color/black"
-                android:textSize="@dimen/twele_sp" />
+                style="@style/CustomTextStylePoppinsBold"/>
 
             <TextView
                 android:layout_width="0dp"
@@ -62,10 +61,10 @@
                 android:layout_weight="1"
                 android:layout_marginStart="@dimen/ten"
                 android:text="@string/status"
+                style="@style/CustomTextStylePoppinsBold"
                 android:gravity="center"
-                android:fontFamily="@font/poppins_regular"
                 android:textColor="@color/black"
-                android:textSize="@dimen/twele_sp" />
+               />
         </LinearLayout>
 
         <!-- RecyclerView for students -->

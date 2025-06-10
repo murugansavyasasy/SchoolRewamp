@@ -426,8 +426,6 @@ class CreateEvent : BaseActivity<CreateEventBinding>(),OnImageClickListener,
         }
 
         when (requestCode) {
-
-
             HomeWork.Companion.CAMERA_IMAGE_REQUEST -> {
                 cameraImageFilePath?.let { filePath ->
                     var file = File(filePath)

@@ -2,14 +2,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/twele_sp">
+    android:orientation="horizontal"
+    android:padding="@dimen/ten">
 
     <TextView
         android:id="@+id/textViewItem"
         style="@style/CustomTextStylePoppinsBold"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/five"
+        android:layout_toStartOf="@+id/imageTick"
         android:textColor="@android:color/black"
         android:textSize="@dimen/thirteen_sp" />
 
@@ -17,8 +19,8 @@
         android:id="@+id/imageTick"
         android:layout_width="@dimen/twenty"
         android:layout_height="@dimen/twenty"
+        android:layout_marginBottom="@dimen/five"
         android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
         android:src="@drawable/tick_mark"
         android:visibility="gone" />
 </RelativeLayout>
