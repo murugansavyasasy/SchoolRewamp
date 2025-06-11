@@ -23,13 +23,15 @@ import com.vs.schoolmessenger.Repository.ApiCallRequest
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.AwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.Constant.M_COMMUNICATION
 import com.vs.schoolmessenger.Utils.Constant.SELECTED_SCHOOL_MENU
-import com.vs.schoolmessenger.Utils.FileItem
+import com.vs.schoolmessenger.Utils.FileType
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SpecificStudentBinding
+import com.vs.schoolmessenger.util.VimeoVideoUpload
 
 class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentSelectClickListener,
-    View.OnClickListener {
+    View.OnClickListener, VimeoVideoUpload.UploadCompletionListener {
 
     override fun getViewBinding(): SpecificStudentBinding {
         return SpecificStudentBinding.inflate(layoutInflater)
@@ -49,6 +51,8 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
     private var isStudentList: List<NameAndIds> = listOf()
     var isTargetType: Int? = null
     var isCircularType: String? = null
+    var isIframe = ""
+    var isFileSize = ""
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
@@ -176,7 +180,6 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
     }
 
     private fun isGetStudentList(isSelectedId: ArrayList<String>, isAcademicYearId: Int) {
-//        Constant.showLoading(this@SpecificStudent)
         binding.rcySpecificStudent.layoutManager = LinearLayoutManager(this)
         mAdapter =
             SpecificStudentAdapter(
@@ -194,48 +197,80 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
         )
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun isFileUploadInAws(
-        isSelectedFiles: MutableList<FileItem>, schoolId: String, isFileType: String?
+        schoolId: String, isFileType: String?
     ) {
-        val isCountryId = SharedPreference.getCountryId(this)
-        for (i in isSelectedFiles.indices) {
-            isAwsUploadingPreSigned!!.getPreSignedUrl(
-                isSelectedFiles[i].path, schoolId, isFileType!!,
-                this, isCountryId!!,
-                true,
-                false,
-                object : UploadCallback {
-                    @RequiresApi(Build.VERSION_CODES.O)
-                    override fun onUploadSuccess(
-                        response: String?,
-                        isFileUploaded: String?
-                    ) {
-                        Constant.isAwsUploadedFiles.add(
-                            AwsUploadedFiles(
-                                isFileUrl = isFileUploaded!!,
-                                isFileType = isSelectedFiles[i].type.toString()
-                            )
-                        )
-                        if (Constant.isAwsUploadedFiles.size == isSelectedFiles.size) {
-                            if (Constant.SELECTED_SCHOOL_MENU == Constant.M_COMMUNICATION) {
-                                voiceSendApi(isFileUploaded)
-                            } else if (Constant.SELECTED_SCHOOL_MENU == Constant.M_ATTACHMENTS) {
-                                attachmentSendApi()
-                            }
-                        }
-                        Log.d("isSuccessFullUpload", "isSuccessFullUpload")
-                    }
+        Constant.isAwsUploadedFiles.clear()
+        val isSelectedFileListSize = Constant.selectedFiles.size
+        val iterator = Constant.selectedFiles.iterator()
 
-                    override fun onUploadError(error: String?) {
-
-                    }
-                })
+        while (iterator.hasNext()) {
+            val fileItem = iterator.next()
+            if (fileItem.path.contains("amazonaws.")) {
+                Constant.isAwsUploadedFiles.add(
+                    AwsUploadedFiles(
+                        isFileUrl = fileItem.path, isFileType = fileItem.type.name
+                    )
+                )
+                iterator.remove()
+            }
         }
 
+        val isCountryId = SharedPreference.getCountryId(this)
+        Log.d("isSelectedFiles", Constant.selectedFiles.size.toString())
+        if (Constant.selectedFiles.size == 0) {
+            if (SELECTED_SCHOOL_MENU == Constant.M_COMMUNICATION) {
+                voiceSendApi()
+            }
+        } else {
+            for (i in Constant.selectedFiles.indices) {
+                isAwsUploadingPreSigned!!.getPreSignedUrl(
+                    Constant.selectedFiles[i].path.toString(),
+                    schoolId,
+                    isFileType!!,
+                    this,
+                    isCountryId!!,
+                    true,
+                    false,
+                    object : UploadCallback {
+                        @RequiresApi(Build.VERSION_CODES.O)
+                        override fun onUploadSuccess(
+                            response: String?, isFileUploaded: String?
+                        ) {
+                            Constant.isAwsUploadedFiles.add(
+                                AwsUploadedFiles(
+                                    isFileUrl = isFileUploaded!!,
+                                    isFileType = Constant.selectedFiles[i].type.toString()
+                                )
+                            )
+
+                            if (Constant.isAwsUploadedFiles.size == isSelectedFileListSize) {
+                                Log.d("SELECTED_SCHOOL_MENU", SELECTED_SCHOOL_MENU.toString())
+                                if (SELECTED_SCHOOL_MENU == Constant.M_COMMUNICATION) {
+                                    voiceSendApi()
+                                } else if (SELECTED_SCHOOL_MENU == Constant.M_ATTACHMENTS) {
+                                    attachmentSendApi()
+                                }
+//                               else if (SELECTED_SCHOOL_MENU == Constant.M_SCHOOL_CLASS_EVENTS) {
+//                                    eventsendapi()
+//                                }
+                            } else {
+                                Log.d("isFileNotMatching", "isFileNotMatching")
+                            }
+                            Log.d("isSuccessFullUpload", "isSuccessFullUpload")
+                        }
+
+                        override fun onUploadError(error: String?) {
+
+                        }
+                    })
+            }
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun voiceSendApi(isFileUploadedUrl: String?) {
+    fun voiceSendApi() {
         val isVoiceData = Constant.isVoiceSendingData
 
         val jsonObject = ApiCallRequest.isVoiceSend(
@@ -266,8 +301,8 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
             title = Constant.isCommonTitle,
             description = Constant.isCommonDescription,
             targetType = isTargetType!!,
-            iframe = "iframe",
-            fileSize = "1",
+            iframe = isIframe,
+            fileSize = isFileSize,
         )
         appViewModel!!.sendAttachment(isAccessToken!!, jsonObject, this)
 
@@ -299,35 +334,39 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
         okButton.setOnClickListener {
             alertDialog.dismiss()
             Constant.showLoading(this@SpecificStudent)
-
-            val isTextData = Constant.isTextSendingData
-            if (Constant.isCommunicationType == 3) {
-                val jsonObject = ApiCallRequest.isSendText(
-                    isAcademicYearId = isAcademicYearId,
-                    schoolId = selectedIds,
-                    message = isTextData!!.isTitle,
-                    description = isTextData.isContent,
-                    targetType = isTargetType
-                )
-                appViewModel!!.isSendText(isAccessToken!!, jsonObject, this)
-            } else {
-                if (Constant.SELECTED_SCHOOL_MENU == Constant.M_COMMUNICATION) {
-                    if (Constant.isVoiceType == 3) {
-                        val isVoiceData = Constant.isVoiceSendingData
-                        voiceSendApi(isVoiceData!!.isAwsUrl)
+            if (SELECTED_SCHOOL_MENU == Constant.M_ATTACHMENTS) {
+                if (Constant.selectedFiles.isNotEmpty()) {
+                    val videoFiles = Constant.selectedFiles.filter { it.type == FileType.VIDEO }
+                    if (videoFiles.isNotEmpty()) {
+                        videoUploading()
                     } else {
                         isFileUploadInAws(
-                            Constant.selectedFiles,
                             isStaffDetails!!.school_id,
                             "audio"
                         )
                     }
-                } else if (SELECTED_SCHOOL_MENU == Constant.M_ATTACHMENTS) {
-                    isFileUploadInAws(
-                        Constant.selectedFiles,
-                        isStaffDetails!!.school_id,
-                        "files"
+                }
+            } else if (SELECTED_SCHOOL_MENU == M_COMMUNICATION) {
+                val isTextData = Constant.isTextSendingData
+                if (Constant.isCommunicationType == 3) {
+                    val jsonObject = ApiCallRequest.isSendText(
+                        isAcademicYearId = isAcademicYearId,
+                        schoolId = selectedIds,
+                        message = isTextData!!.isTitle,
+                        description = isTextData.isContent,
+                        targetType = Constant.isSchool
                     )
+                    appViewModel!!.isSendText(isAccessToken!!, jsonObject, this)
+                } else {
+                    if (Constant.isVoiceType == 3) {
+                        val isVoiceData = Constant.isVoiceSendingData
+                        voiceSendApi()
+                    } else {
+                        isFileUploadInAws(
+                            isStaffDetails!!.school_id,
+                            "files"
+                        )
+                    }
                 }
             }
         }
@@ -337,6 +376,55 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
         }
     }
 
+
+    private fun videoUploading() {
+        VimeoVideoUpload.uploadVideo(
+            this@SpecificStudent,
+            "quiz",
+            "quiz",
+            Constant.selectedFiles[0].path,
+            this@SpecificStudent
+        )
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onUploadComplete(success: Boolean, iframe: String?, link: String?) {
+        runOnUiThread {
+            Log.d("Vimeo_Video_upload", success.toString())
+            Log.d("VimeoIframe", iframe.toString())
+            Log.d("link", link.toString())
+            isIframe = extractVimeoUrlFromIframe(iframe.toString()).toString()
+            isFileSize = Constant.getFileSizeInMB(Constant.selectedFiles[0].path)
+
+            Constant.isAwsUploadedFiles.add(
+                AwsUploadedFiles(
+                    isFileUrl = link.toString(), isFileType = Constant.VIDEO
+                )
+            )
+            if (SELECTED_SCHOOL_MENU == Constant.M_ATTACHMENTS) {
+                attachmentSendApi()
+            }
+        }
+    }
+
+    fun extractVimeoUrlFromIframe(iframeHtml: String): String? {
+        val regex = Regex("""<iframe[^>]+src="([^"]+)"""")
+        val match = regex.find(iframeHtml)
+        return match?.groups?.get(1)?.value
+    }
+
+
+    override fun onFailure(errorMessage: String?) {
+        runOnUiThread {
+            Log.e("VimeoUploadError", errorMessage ?: "Unknown error")
+        }
+    }
+
+    override fun onProgressUpdate(percent: Int) {
+        runOnUiThread {
+            Log.d("VimeoUploadProgress", "Progress: $percent%")
+        }
+    }
 
     override fun onResume() {
         super.onResume()

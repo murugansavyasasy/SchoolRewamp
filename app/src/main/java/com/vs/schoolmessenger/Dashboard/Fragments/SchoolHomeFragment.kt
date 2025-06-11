@@ -47,6 +47,7 @@ import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReport
 import com.vs.schoolmessenger.School.Homework.HomeWork
 import com.vs.schoolmessenger.School.ImportantInfo.ImportantInfo
 import com.vs.schoolmessenger.School.InteractionWithStudent.InteractionWithStudent
+import com.vs.schoolmessenger.School.LeaveRequests.LeaveRequests
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlan
 import com.vs.schoolmessenger.School.MarkYourAttendance.MarkYourAttendance
 import com.vs.schoolmessenger.School.MessageFromManagement.MessageFromManagement
@@ -575,6 +576,10 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
             Constant.M_ATTACHMENTS -> {
                 Attachment::class.java
+            }
+
+            Constant.M_LEAVE_REQUEST -> {
+                LeaveRequests::class.java
             }
 
             Constant.M_VERY_IMPORTANT_INFO -> ImportantInfo::class.java

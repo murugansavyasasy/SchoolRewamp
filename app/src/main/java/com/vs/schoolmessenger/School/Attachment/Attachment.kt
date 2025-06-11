@@ -238,21 +238,25 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
         val rlaVideoPick = dialog.findViewById<RelativeLayout>(R.id.rlaVideoPick)
 
         rlaGallery.setOnClickListener {
+            Constant.isFileLimit = 5
             openAlbumSelectActivity(Constant.IMAGE)
             dialog.dismiss()
         }
 
         rlaVoice.setOnClickListener {
+            Constant.isFileLimit = 1
             openAlbumSelectActivity(Constant.AUDIO)
             dialog.dismiss()
         }
 
         rlaVideoPick.setOnClickListener {
+            Constant.isFileLimit = 1
             openAlbumSelectActivity(Constant.VIDEO)
             dialog.dismiss()
         }
 
         rlaDocument.setOnClickListener {
+            Constant.isFileLimit = 5
             openAlbumSelectActivity(Constant.DOCUMENT)
             dialog.dismiss()
         }
@@ -504,6 +508,7 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
 
 
         val isStaffRole = isUserDetails!!.staff_role
+        Constant.selectedFiles.removeAt(0)
         if (isMultipleSchool) {
             if (isStaffRole == Constant.isGroupHeadRole || isStaffRole == Constant.isPrincipalRole || isStaffRole == Constant.isAdminRole
             ) {

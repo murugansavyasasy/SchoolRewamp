@@ -223,7 +223,6 @@
             android:id="@+id/tvSelectionCount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Selected Files : 0 / 5"
             style="@style/CustomTextStylePoppinsBold"
             android:layout_toStartOf="@+id/btnDone"
             android:gravity="center"

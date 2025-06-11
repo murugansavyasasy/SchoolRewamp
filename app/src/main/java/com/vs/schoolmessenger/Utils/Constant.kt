@@ -46,13 +46,9 @@ import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.MarkAttendanceDataSending
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.ClassWise
-import com.vs.schoolmessenger.School.Attachment.Attachment
-import com.vs.schoolmessenger.School.Communication.CommunicationSchool
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendingData
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceSendingData
-import com.vs.schoolmessenger.School.Event.CreateEvent
-import com.vs.schoolmessenger.School.Homework.HomeWork
-import com.vs.schoolmessenger.School.NoticeBoard.CreateNoticeBoard
+import java.io.File
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalTime
@@ -61,7 +57,6 @@ import java.util.Calendar
 import java.util.Locale
 
 object Constant {
-
     var isDeviceType = "Android"
     var isVersionId = 93
     var terms_condition = "https://schoolchimes.com/vs_web/terms_conditions/"
@@ -120,7 +115,7 @@ object Constant {
     val M_PTM = 26
     val M_QUIZ_EXAM = 27
     val M_REQUEST_LEAVE = 28
-    val M_SCHOOL_CLASS_EVENTS = 29
+    val M_SCHOOL_CLASS_EVENTS = 9
     val M_SCHOOL_NEEDS = 30
     val M_SCHOOL_STRENGTH = 31
     val M_STAFF_LIST = 32
@@ -141,7 +136,7 @@ object Constant {
 
     var isNonEmergency = 100
     var isEmergency = 101
-
+     var isFileLimit = 0
     var isSchool = 1
 
     var isStandard = 2
@@ -435,6 +430,34 @@ object Constant {
         })
     }
 
+    fun editTitleTextCounter(
+        context: Context, editText: EditText, maxLength: Int, counterLabel: TextView
+    ) {
+
+        editText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(
+                charSequence: CharSequence?, start: Int, count: Int, after: Int
+            ) {
+                // You can add logic here if needed
+            }
+
+            override fun onTextChanged(
+                charSequence: CharSequence?, start: Int, before: Int, count: Int
+            ) {
+                // You can add logic here if needed
+            }
+
+            override fun afterTextChanged(editable: Editable?) {
+                counterLabel.setText(editable!!.length.toString() + " of " + maxLength.toString())
+                if (editable != null && editable.length > maxLength) {
+                    // Restrict to the max length by trimming the input
+                    editable.delete(maxLength, editable.length)
+                    // Optionally, show a Toast or error message
+                }
+            }
+        })
+    }
+
     fun executeAfterDelay(task: () -> Unit) {
         handler.postDelayed({
             task()
@@ -649,6 +672,18 @@ object Constant {
             input // return original if there's a parsing error
         }
     }
+
+    fun getFileSizeInMB(filePath: String): String {
+        val file = File(filePath)
+        if (!file.exists()) return "File not found"
+
+        val bytes = file.length()
+        val kilobytes = bytes / 1024.0
+        val megabytes = kilobytes / 1024.0
+
+        return String.format("%.2f MB", megabytes)
+    }
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun showDataValidation(title: String, message: String, activity: Activity) {

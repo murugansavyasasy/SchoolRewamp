@@ -93,11 +93,24 @@
                 android:textSize="@dimen/thirteen_sp" />
 
             <TextView
+                android:id="@+id/lbtitleTextCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtTitle"
+                android:layout_alignParentEnd="true"
+                android:text="0 of 50"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginTop="@dimen/ten"
+                style="@style/CustomTextStylePoppinsBold"/>
+
+            <TextView
                 android:id="@+id/lblEventDesc"
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txtTitle"
+                android:layout_below="@+id/lbtitleTextCount"
                 android:layout_alignStart="@+id/txtTitle"
                 android:layout_marginTop="@dimen/fifteen"
                 android:text="@string/Description"
@@ -127,18 +140,22 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp" />
 
-                <TextView
-                    android:id="@+id/lbTextCount"
-                    style="@style/CustomTextStylePoppinsMedium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/txtDesc"
-                    android:layout_alignParentEnd="true"
-                    android:text="@string/_0_of_500"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp" />
 
             </RelativeLayout>
+
+            <TextView
+                android:id="@+id/lbTextCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rytDesc"
+                android:layout_alignParentEnd="true"
+                android:text="@string/_0_of_500"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginTop="@dimen/ten"
+                style="@style/CustomTextStylePoppinsBold"/>
+
 
 
             <RelativeLayout

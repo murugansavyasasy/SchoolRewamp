@@ -148,7 +148,7 @@
             android:id="@+id/tvSendOnly"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Send only :"
+            android:text="Select target :"
             android:layout_gravity="center_vertical"
             android:layout_marginEnd="@dimen/ten"
             android:textColor="#000000"

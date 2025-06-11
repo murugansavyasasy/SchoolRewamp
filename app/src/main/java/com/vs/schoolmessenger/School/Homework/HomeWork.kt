@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.School.Homework
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -540,21 +541,25 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         val rlaVideoPick = dialog.findViewById<RelativeLayout>(R.id.rlaVideoPick)
 
         rlaGallery.setOnClickListener {
+            Constant.isFileLimit = 5
             openAlbumSelectActivity(Constant.IMAGE)
             dialog.dismiss()
         }
 
         rlaVoice.setOnClickListener {
+            Constant.isFileLimit = 1
             openAlbumSelectActivity(Constant.AUDIO)
             dialog.dismiss()
         }
 
         rlaVideoPick.setOnClickListener {
+            Constant.isFileLimit = 1
             openAlbumSelectActivity(Constant.VIDEO)
             dialog.dismiss()
         }
 
         rlaDocument.setOnClickListener {
+            Constant.isFileLimit = 5
             openAlbumSelectActivity(Constant.DOCUMENT)
             dialog.dismiss()
         }
@@ -671,6 +676,20 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
                     Toast.makeText(this, "Camera image failed", Toast.LENGTH_SHORT).show()
                 }
             }
+
+            PICK_DOCUMENT_REQUEST -> {
+                val clipData = data?.clipData
+                val singleUri = data?.data
+
+                if (clipData != null) {
+                    for (i in 0 until clipData.itemCount) {
+                        val uri = clipData.getItemAt(i).uri
+                        addPath(uri)
+                    }
+                } else if (singleUri != null) {
+                    addPath(singleUri)
+                }
+            }
         }
 
         mAdapter?.notifyDataSetChanged()
@@ -696,13 +715,14 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         return null
     }
 
-    fun getFileName(uri: Uri): String {
+    @SuppressLint("Range")
+    private fun getFileName(uri: Uri): String {
         var result: String? = null
         if (uri.scheme == "content") {
-            contentResolver.query(uri, null, null, null, null)?.use { cursor ->
-                if (cursor.moveToFirst()) {
-                    val index = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-                    if (index >= 0) result = cursor.getString(index)
+            val cursor = contentResolver.query(uri, null, null, null, null)
+            cursor?.use {
+                if (it.moveToFirst()) {
+                    result = it.getString(it.getColumnIndex(OpenableColumns.DISPLAY_NAME))
                 }
             }
         }
@@ -710,11 +730,32 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
             result = uri.path
             val cut = result?.lastIndexOf('/')
             if (cut != null && cut != -1) {
-                result = result!!.substring(cut + 1)
+                result = result?.substring(cut + 1)
             }
         }
         return result ?: ""
     }
+
+
+//    fun getFileName(uri: Uri): String {
+//        var result: String? = null
+//        if (uri.scheme == "content") {
+//            contentResolver.query(uri, null, null, null, null)?.use { cursor ->
+//                if (cursor.moveToFirst()) {
+//                    val index = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+//                    if (index >= 0) result = cursor.getString(index)
+//                }
+//            }
+//        }
+//        if (result == null) {
+//            result = uri.path
+//            val cut = result?.lastIndexOf('/')
+//            if (cut != null && cut != -1) {
+//                result = result!!.substring(cut + 1)
+//            }
+//        }
+//        return result ?: ""
+//    }
 
     @Throws(IOException::class)
     private fun createImageFile(): File {

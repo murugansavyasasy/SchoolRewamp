@@ -163,7 +163,9 @@ object ApiCallRequest {
         startDate: String,
         endDate: String,
         target_code: MutableList<String>,
-        intended_for: String
+        intended_for: String,
+        iframe: String,
+        fileSize: String
     ): JsonObject {
         val jsonObject = JsonObject()
         val filePathArray = JsonArray()
@@ -187,7 +189,8 @@ object ApiCallRequest {
         jsonObject.addProperty("visible_from", startDate)
         jsonObject.addProperty("visible_to", endDate)
         jsonObject.add(APIKeyNames.file_path, filePathArray)
-
+        jsonObject.addProperty(APIKeyNames.iframe, iframe)
+        jsonObject.addProperty(APIKeyNames.file_size, fileSize)
         return jsonObject
     }
 
@@ -199,7 +202,9 @@ object ApiCallRequest {
         event_date: String,
         event_time: String,
         target_type: Int?,
-        target_code: MutableList<String>
+        target_code: MutableList<String>,
+        iframe: String,
+        fileSize: String
     ): JsonObject {
         val jsonObject = JsonObject()
         val filePathArray = JsonArray()
@@ -224,6 +229,8 @@ object ApiCallRequest {
         jsonObject.addProperty("event_time", event_time)
         jsonObject.addProperty("target_type", target_type)
         jsonObject.add(APIKeyNames.file_path, filePathArray)
+        jsonObject.addProperty(APIKeyNames.iframe, iframe)
+        jsonObject.addProperty(APIKeyNames.file_size, fileSize)
 
         return jsonObject
     }
