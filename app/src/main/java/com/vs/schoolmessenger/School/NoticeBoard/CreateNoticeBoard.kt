@@ -343,21 +343,25 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickL
         val rlaVideoPick = dialog.findViewById<RelativeLayout>(R.id.rlaVideoPick)
 
         rlaGallery.setOnClickListener {
+            Constant.isFileLimit = 5
             openAlbumSelectActivity(Constant.IMAGE)
             dialog.dismiss()
         }
 
         rlaVoice.setOnClickListener {
+            Constant.isFileLimit = 1
             openAlbumSelectActivity(Constant.AUDIO)
             dialog.dismiss()
         }
 
         rlaVideoPick.setOnClickListener {
+            Constant.isFileLimit = 1
             openAlbumSelectActivity(Constant.VIDEO)
             dialog.dismiss()
         }
 
         rlaDocument.setOnClickListener {
+            Constant.isFileLimit = 5
             openAlbumSelectActivity(Constant.DOCUMENT)
             dialog.dismiss()
         }

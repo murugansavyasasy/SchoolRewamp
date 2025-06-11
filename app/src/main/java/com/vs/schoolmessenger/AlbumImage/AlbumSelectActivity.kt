@@ -26,6 +26,7 @@ class AlbumSelectActivity : AppCompatActivity() {
     private var shouldReload = false
     private var fileType: String = Constant.IMAGE
 
+
     companion object {
         private const val REQUEST_CODE_MANAGE_ALL_FILES = 100
         private val SUPPORTED_EXTENSIONS =
@@ -42,10 +43,12 @@ class AlbumSelectActivity : AppCompatActivity() {
         fileType = intent.getStringExtra(Constant.isFileType) ?: Constant.IMAGE
         setupPermissionLauncher()
         setupDocumentPicker()
+        binding.toolbarLayout.tvSelectionCount.text =
+            "Selected Files : 0 / ${Constant.isFileLimit}"
 
-        adapter = FileGridAdapter(limit = 5, onSelectionChanged = { selectedUris ->
+        adapter = FileGridAdapter(Constant.isFileLimit, onSelectionChanged = { selectedUris ->
             binding.toolbarLayout.tvSelectionCount.text =
-                "Selected Files : ${selectedUris.size} / 5"
+                "Selected Files : ${selectedUris.size} / ${Constant.isFileLimit}"
         }, onItemClicked = { uri ->
             Log.d("AlbumSelectActivity", "Clicked file: $uri")
         })

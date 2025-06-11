@@ -46,13 +46,9 @@ import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.MarkAttendanceDataSending
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.ClassWise
-import com.vs.schoolmessenger.School.Attachment.Attachment
-import com.vs.schoolmessenger.School.Communication.CommunicationSchool
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendingData
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceSendingData
-import com.vs.schoolmessenger.School.Event.CreateEvent
-import com.vs.schoolmessenger.School.Homework.HomeWork
-import com.vs.schoolmessenger.School.NoticeBoard.CreateNoticeBoard
+import java.io.File
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalTime
@@ -141,7 +137,7 @@ object Constant {
 
     var isNonEmergency = 100
     var isEmergency = 101
-
+     var isFileLimit = 0
     var isSchool = 1
 
     var isStandard = 2
@@ -648,6 +644,18 @@ object Constant {
             input // return original if there's a parsing error
         }
     }
+
+    fun getFileSizeInMB(filePath: String): String {
+        val file = File(filePath)
+        if (!file.exists()) return "File not found"
+
+        val bytes = file.length()
+        val kilobytes = bytes / 1024.0
+        val megabytes = kilobytes / 1024.0
+
+        return String.format("%.2f MB", megabytes)
+    }
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun showDataValidation(title: String, message: String, activity: Activity) {
