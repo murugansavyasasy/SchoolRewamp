@@ -1,5 +1,9 @@
 import groovy.json.JsonSlurper
 import java.io.FileReader
+import java.io.FileInputStream
+import java.io.FileOutputStream
+import groovy.json.JsonOutput
+
 
 plugins {
     id("com.android.application")
@@ -80,6 +84,301 @@ android {
             println("⚠️ Warning: schools.json file not found!")
         }
     }
+
+
+    tasks.register("generateFlavorResources") {
+        doLast {
+            val schoolsFile = file("${rootDir}/app/schools.json")
+            if (!schoolsFile.exists()) {
+                println("⚠️ Warning: schools.json file not found!")
+                return@doLast
+            }
+
+            val jsonSlurper = JsonSlurper()
+            val schools = jsonSlurper.parse(schoolsFile) as List<Map<String, Any>>
+
+            val srcDir = file("${projectDir}/src")
+
+            schools.forEach { school ->
+                val schoolId = school["id"].toString()
+                val schoolName = school["name"].toString()
+                val schoolColor = school["color"].toString()
+                val iconName = school["icon"].toString()
+
+                val flavorResDir = File(srcDir, "$schoolId/res")
+                val drawableDir = File(flavorResDir, "drawable")
+                val valuesDir = File(flavorResDir, "values")
+                val layoutDir = File(flavorResDir, "layout")
+
+                drawableDir.mkdirs()
+                valuesDir.mkdirs()
+                layoutDir.mkdirs()
+                // Copy logo to drawable folder
+                val logoFile = file("${rootDir}/logos/$iconName.png")
+                if (logoFile.exists()) {
+                    val destFile = File(drawableDir, "checklist.png")
+                    FileInputStream(logoFile).use { input ->
+                        FileOutputStream(destFile).use { output ->
+                            input.copyTo(output)
+                        }
+                    }
+                } else {
+                    println("⚠️ Warning: Logo not found for $schoolId")
+                }
+
+                // Create strings.xml
+                val stringsXml = File(valuesDir, "strings.xml")
+                stringsXml.writeText(
+                    """
+                |<?xml version="1.0" encoding="utf-8"?>
+                |<resources>
+                |    <string name="app_name">$schoolName</string>
+                |</resources>
+                """.trimMargin()
+                )
+
+                // Create colors.xml
+                val colorsXml = File(valuesDir, "colors.xml")
+                colorsXml.writeText(
+                    """
+                |<?xml version="1.0" encoding="utf-8"?>
+                |<resources>
+                |    <color name="primaryColor">$schoolColor</color>
+                |</resources>
+                """.trimMargin()
+                )
+
+                // Create layout XML
+                val layoutXml = File(layoutDir, "splash.xml")
+                layoutXml.writeText(
+                    """
+                <?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/img1"
+            android:layout_width="@dimen/fourty"
+            android:layout_height="@dimen/fourty"
+            android:layout_marginStart="@dimen/twenty"
+            android:layout_marginTop="@dimen/twenty"
+            android:layout_marginEnd="@dimen/twenty"
+            android:layout_marginBottom="@dimen/twenty"
+            android:alpha="0.5"
+            android:src="@drawable/splash_icon1" />
+
+        <ImageView
+            android:id="@+id/img2"
+            android:layout_width="@dimen/fourty"
+            android:layout_height="@dimen/fourty"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="@dimen/twenty"
+            android:layout_marginTop="@dimen/twenty"
+            android:layout_marginEnd="@dimen/twenty"
+            android:layout_marginBottom="@dimen/twenty"
+            android:alpha="0.5"
+            android:src="@drawable/splash_icon2" />
+
+        <ImageView
+            android:id="@+id/img3"
+            android:layout_width="@dimen/fourty"
+            android:layout_height="@dimen/fourty"
+            android:layout_below="@+id/img2"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="@dimen/twenty"
+            android:layout_marginTop="@dimen/twenty"
+            android:layout_marginEnd="@dimen/twenty"
+            android:layout_marginBottom="@dimen/twenty"
+            android:alpha="0.5"
+            android:src="@drawable/splash_icon3" />
+
+        <ImageView
+            android:id="@+id/img4"
+            android:layout_width="@dimen/fourty"
+            android:layout_height="@dimen/fourty"
+            android:layout_below="@+id/img3"
+            android:layout_marginStart="@dimen/twenty"
+            android:layout_marginTop="@dimen/twenty"
+            android:layout_marginEnd="@dimen/twenty"
+            android:layout_marginBottom="@dimen/twenty"
+            android:alpha="0.5"
+            android:src="@drawable/splash_icon4" />
+
+        <ImageView
+            android:id="@+id/img5"
+            android:layout_width="@dimen/fourty"
+            android:layout_height="@dimen/fourty"
+            android:layout_below="@+id/img3"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="@dimen/twenty"
+            android:layout_marginTop="@dimen/twenty"
+            android:layout_marginEnd="@dimen/twenty"
+            android:layout_marginBottom="@dimen/twenty"
+            android:alpha="0.5"
+            android:src="@drawable/splash_icon5" />
+
+    </RelativeLayout>
+    <ImageView
+        android:id="@+id/imgSplash"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/two_fifty"
+        android:layout_centerInParent="true"
+        android:src="@drawable/school_blue" />
+
+    <ImageView
+        android:id="@+id/imgLogo"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/hundred"
+        android:layout_below="@+id/imgSplash"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="@dimen/minus_one_nineteen"
+        android:src="@mipmap/school_chimes_logo" />
+
+    <RelativeLayout
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/img6"
+            android:layout_width="@dimen/fourty"
+            android:layout_height="@dimen/fourty"
+            android:layout_marginStart="@dimen/twenty"
+            android:layout_marginTop="@dimen/twenty"
+            android:layout_marginEnd="@dimen/twenty"
+            android:alpha="0.5"
+            android:layout_marginBottom="@dimen/twenty"
+            android:src="@drawable/splash_icon6" />
+
+        <ImageView
+            android:id="@+id/img7"
+            android:layout_width="@dimen/fourty"
+            android:layout_height="@dimen/fourty"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="@dimen/twenty"
+            android:layout_marginTop="@dimen/twenty"
+            android:layout_marginEnd="@dimen/twenty"
+            android:layout_marginBottom="@dimen/twenty"
+            android:alpha="0.5"
+            android:src="@drawable/splash_icon7" />
+
+        <ImageView
+            android:id="@+id/img8"
+            android:layout_width="@dimen/fourty"
+            android:layout_height="@dimen/fourty"
+            android:layout_below="@+id/img7"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="@dimen/twenty"
+            android:layout_marginTop="@dimen/twenty"
+            android:layout_marginEnd="@dimen/twenty"
+            android:layout_marginBottom="@dimen/twenty"
+            android:alpha="0.5"
+            android:src="@drawable/splash_icon4" />
+
+        <ImageView
+            android:id="@+id/img9"
+            android:layout_width="@dimen/fourty"
+            android:layout_height="@dimen/fourty"
+            android:layout_below="@+id/img8"
+            android:layout_marginStart="@dimen/twenty"
+            android:layout_marginTop="@dimen/twenty"
+            android:layout_marginEnd="@dimen/twenty"
+            android:layout_marginBottom="@dimen/twenty"
+            android:alpha="0.5"
+            android:src="@drawable/splash_icon8" />
+
+        <ImageView
+            android:id="@+id/img10"
+            android:layout_width="@dimen/fourty"
+            android:layout_height="@dimen/fourty"
+            android:layout_below="@+id/img8"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="@dimen/twenty"
+            android:layout_marginTop="@dimen/twenty"
+            android:layout_marginEnd="@dimen/twenty"
+            android:layout_marginBottom="@dimen/twenty"
+            android:alpha="0.5"
+            android:src="@drawable/splash_icon3" />
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/fourty"
+        android:layout_centerHorizontal="true"
+        android:text="1.0"
+        android:textColor="@color/black" />
+</RelativeLayout>
+                """.trimMargin()
+                )
+
+                println("✅ Resources created for $schoolId")
+            }
+        }
+    }
+
+
+    tasks.register("generateGoogleServicesJson") {
+        doLast {
+            val schoolsFile = file("${rootDir}/app/schools.json")
+            val googleServicesTemplateFile = file("${rootDir}/app/google-services.json")
+
+            if (!schoolsFile.exists()) {
+                throw GradleException("Error: schools.json file not found!")
+            }
+            if (!googleServicesTemplateFile.exists()) {
+                throw GradleException("Error: google-services.json template not found!")
+            }
+
+            val jsonSlurper = JsonSlurper()
+            val schools = jsonSlurper.parse(schoolsFile) as List<Map<String, Any>>
+            val googleServicesTemplate = jsonSlurper.parse(googleServicesTemplateFile) as Map<*, *>
+
+            schools.forEach { school ->
+                val schoolId = school["id"].toString()
+                val packageName = "com.vs.schoolmessenger.$schoolId"
+                val flavorDir = File("${rootDir}/app/src/$schoolId/")
+
+                if (!flavorDir.exists()) {
+                    flavorDir.mkdirs()
+                }
+
+                // Deep copy the JSON template to avoid modifying the original in memory
+                val googleServicesCopy = jsonSlurper.parseText(JsonOutput.toJson(googleServicesTemplate)) as Map<String, Any>
+                val clientList = googleServicesCopy["client"] as? List<MutableMap<String, Any>>
+
+                if (clientList != null && clientList.isNotEmpty()) {
+                    val clientInfo = clientList[0]["client_info"] as? MutableMap<String, Any>
+                    val androidClientInfo = clientInfo?.get("android_client_info") as? MutableMap<String, Any>
+                    if (androidClientInfo != null) {
+                        androidClientInfo["package_name"] = packageName
+                    } else {
+                        throw GradleException("Error: Missing android_client_info key in google-services.json")
+                    }
+                } else {
+                    throw GradleException("Error: google-services.json is missing 'client' key")
+                }
+
+                val outputFile = File(flavorDir, "google-services.json")
+                outputFile.writeText(JsonOutput.prettyPrint(JsonOutput.toJson(googleServicesCopy)))
+                println("✅ Generated google-services.json for $schoolId with package $packageName")
+            }
+        }
+    }
+
+
 }
 
 dependencies {
