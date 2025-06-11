@@ -369,7 +369,7 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
 
 
             R.id.rlaDayDatePicker -> {
-                Constant.showDatePicker(this) { selectedDate ->
+                Constant.showDatePicker(this,true) { selectedDate ->
                     Log.d("selectedDate", selectedDate)
                     binding.lblDatePick.text = Constant.covertDateFormate(selectedDate)
                     SelectedDate = selectedDate

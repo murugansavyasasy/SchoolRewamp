@@ -21,50 +21,122 @@
             android:id="@+id/toolbarLayout"
             layout="@layout/school_side_tool_bar" />
 
+
+        <LinearLayout
+            android:id="@+id/rlaSortSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/toolbarLayout"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:id="@+id/rlaSort"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/five"
+                android:layout_marginEnd="@dimen/five"
+                android:layout_weight="0.7"
+                android:background="@drawable/bg_white_light_radious"
+                android:padding="@dimen/ten">
+
+                <ImageView
+                    android:id="@+id/imgSort"
+                    android:layout_width="@dimen/twenty"
+                    android:layout_height="@dimen/twenty"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/ten"
+                    android:src="@drawable/filter_icon">
+
+                </ImageView>
+
+                <Spinner
+                    android:id="@+id/isSpinnerSort"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/five"
+                    android:layout_toEndOf="@+id/imgSort"
+                    android:background="@drawable/custom_spinner_background" />
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/rytSearchBar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/thirty_five"
+                android:layout_marginEnd="@dimen/ten"
+                android:layout_weight="0.6"
+                android:background="@drawable/rect_grey"
+                android:visibility="visible">
+
+
+                <ImageView
+                    android:id="@+id/imgSearch"
+                    android:layout_width="@dimen/thirty"
+                    android:layout_height="@dimen/thirty"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/ten"
+                    android:alpha="0.34"
+                    android:src="@drawable/ic_search" />
+
+                <EditText
+                    android:id="@+id/txtSearchMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toEndOf="@+id/imgSearch"
+                    android:background="@android:color/transparent"
+                    android:fontFamily="@font/poppins_regular"
+                    android:hint="@string/lblSearch"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
         <!-- Header row -->
         <LinearLayout
             android:id="@+id/lnrHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/toolbarLayout"
+            android:layout_below="@id/rlaSortSearch"
             android:layout_marginTop="@dimen/five"
-            android:orientation="horizontal"
-            android:background="@drawable/rect_light_blue">
+            android:background="@drawable/rect_light_blue"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/lblName"
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:padding="@dimen/ten"
                 android:text="@string/name"
-                style="@style/CustomTextStylePoppinsBold"
-                android:textColor="@color/black"
-                />
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/lblRollNo"
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:paddingHorizontal="@dimen/five"
                 android:paddingVertical="@dimen/five"
                 android:text="@string/roll_no"
-                android:gravity="center"
-                android:textColor="@color/black"
-                style="@style/CustomTextStylePoppinsBold"/>
+                android:textColor="@color/black" />
 
             <TextView
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginStart="@dimen/ten"
-                android:text="@string/status"
-                style="@style/CustomTextStylePoppinsBold"
+                android:layout_weight="1"
                 android:gravity="center"
-                android:textColor="@color/black"
-               />
+                android:text="@string/status"
+                android:textColor="@color/black" />
         </LinearLayout>
 
         <!-- RecyclerView for students -->
@@ -124,7 +196,7 @@
             android:layout_centerVertical="true"
             android:fontFamily="@font/poppins_regular"
             android:gravity="center_horizontal"
-            android:text="@string/Send"
+            android:text="@string/lblSubmit"
             android:textColor="@color/white"
             android:textSize="@dimen/fifteen_sp"
             android:textStyle="normal" />

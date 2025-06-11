@@ -18,11 +18,11 @@
 
         <ImageView
             android:id="@+id/imgBack"
-            android:layout_width="@dimen/thirty"
-            android:layout_height="@dimen/thirty"
+            android:layout_width="@dimen/thirty_five"
+            android:layout_height="@dimen/thirty_five"
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/fifteen"
-            android:src="@drawable/arrow_back_black" />
+            android:src="@drawable/left_arrow" />
 
         <TextView
             android:id="@+id/lblTitle"

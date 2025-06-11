@@ -65,18 +65,19 @@
                 android:background="@drawable/rect_green_stroke"
                 android:gravity="center_vertical">
 
-                <View
-                    android:layout_width="@dimen/twenty"
-                    android:layout_height="@dimen/twenty"
-                    android:background="@drawable/circle_bg_green" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/present"
-                    android:layout_marginStart="@dimen/five"
+                    android:layout_marginEnd="@dimen/five"
                     android:textColor="@color/green"
                     style="@style/CustomTextStylePoppinsMedium"
                     android:textSize="@dimen/twele_sp" />
+                <View
+                    android:layout_width="@dimen/twenty"
+                    android:layout_height="@dimen/twenty"
+                    android:background="@drawable/circle_bg_green" />
 
             </LinearLayout>
 
@@ -93,21 +94,21 @@
                 android:gravity="center_vertical"
                 android:visibility="gone">
 
+                <View
+                    android:id="@+id/imgAbsent"
+                    android:layout_width="@dimen/twenty"
+                    android:layout_height="@dimen/twenty"
+                    android:background="@drawable/circle_bg_red" />
+
                 <TextView
                     android:id="@+id/lblAbsent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/absent"
                     android:textColor="@color/red"
+                    android:layout_marginStart="@dimen/five"
                     android:textSize="@dimen/twele_sp"
                     style="@style/CustomTextStylePoppinsMedium" />
-
-                <View
-                    android:id="@+id/imgAbsent"
-                    android:layout_width="@dimen/twenty"
-                    android:layout_height="@dimen/twenty"
-                    android:layout_marginStart="@dimen/five"
-                    android:background="@drawable/circle_bg_red" />
             </LinearLayout>
 
             <!-- Admission Info -->

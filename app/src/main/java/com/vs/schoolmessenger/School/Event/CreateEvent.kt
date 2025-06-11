@@ -200,7 +200,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(),OnImageClickListener,
 
             R.id.rytStartDate,R.id.txtStartDate,R.id.lnrStartCalendar -> {
                 selectedDateField = 1
-                Constant.showDatePicker(this) { selectedDate ->
+                Constant.showDatePicker(this,false) { selectedDate ->
                     Log.d("selectedDate", selectedDate)
                     binding.txtStartDate.text = Constant.covertDateFormate(selectedDate) // 13 may 2222
                     val parts = binding.txtStartDate.text.split(" ")
@@ -215,6 +215,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(),OnImageClickListener,
             R.id.txtStartTime -> {
                 isFromTime = true
                 showTimePickerDialog(this, this)
+
             }
 
             R.id.btnNext -> {
