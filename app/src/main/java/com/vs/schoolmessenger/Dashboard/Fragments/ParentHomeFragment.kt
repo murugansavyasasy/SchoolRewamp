@@ -50,6 +50,8 @@ import com.vs.schoolmessenger.School.ExamSchedule.Exam
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ParentHomeFragmentBinding
+import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Locale
 
 class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
@@ -82,7 +84,10 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         binding.imgSearchCancel.setOnClickListener(this)
         childDetails = SharedPreference.getChildDetails(requireActivity())
         userDetails = SharedPreference.getUserDetails(requireActivity())
-
+        val currentDate = Calendar.getInstance().time
+        val dateFormat = SimpleDateFormat("dd, MMM yyyy", Locale.ENGLISH)
+        val formattedDate = dateFormat.format(currentDate)
+        binding.lblDate.text = formattedDate
         binding.lblStudentName.text = childDetails!!.name
         binding.lblSchoolName.text = childDetails!!.school_name
         binding.lblSchoolAddress.text = childDetails!!.student_address
@@ -308,7 +313,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             Constant.M_HOMEWORK -> Intent(requireActivity(), HomeWork::class.java)
             Constant.M_EXAM -> Intent(requireActivity(), Exam::class.java)
             Constant.M_NOTICEBOARD -> Intent(requireActivity(), NoticeBoard::class.java)
-            Constant.M_SCHOOL_CLASS_EVENTS -> Intent(requireActivity(), Event::class.java)
+            Constant.M_PARENT_CLASS_EVENTS -> Intent(requireActivity(), Event::class.java)
             Constant.M_ATTENDANCE_REPORT -> Intent(requireActivity(), AttendanceReport::class.java)
             Constant.M_LEAVE_REQUEST -> Intent(requireActivity(), LeaveRequest::class.java)
             Constant.M_FEE_DETAILS -> Intent(requireActivity(), FeeDetails::class.java)

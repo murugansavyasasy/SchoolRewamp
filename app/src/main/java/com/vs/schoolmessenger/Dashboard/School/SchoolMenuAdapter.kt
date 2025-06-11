@@ -132,7 +132,7 @@ class SchoolMenuAdapter(
                 }
 
                 Constant.M_SCHOOL_CLASS_EVENTS -> {
-                    imgMenu.setImageResource(R.drawable.event_icon_school)
+                    imgMenu.setImageResource(R.drawable.graduationevent)
                 }
 
                 Constant.M_SCHEDULE_EXAM_TEST -> {
@@ -147,9 +147,7 @@ class SchoolMenuAdapter(
                     imgMenu.setImageResource(R.drawable.finance_icon)
                 }
 
-                Constant.M_SCHOOL_CLASS_EVENTS -> {
-                    imgMenu.setImageResource(R.drawable.finance_icon)
-                }
+
 
 
                 Constant.M_ATTACHMENTS -> {
@@ -161,7 +159,7 @@ class SchoolMenuAdapter(
                 }
 
                 Constant.M_DAILY_COLLECTION -> {
-                    imgMenu.setImageResource(R.drawable.daily_collection)
+                    imgMenu.setImageResource(R.drawable.collect)
                 }
 
                 Constant.M_STUDENT_REPORT -> {
@@ -169,7 +167,7 @@ class SchoolMenuAdapter(
                 }
 
                 Constant.M_LESSON_PLAN -> {
-                    imgMenu.setImageResource(R.drawable.lesson_plan)
+                    imgMenu.setImageResource(R.drawable.lessonplanimage)
                 }
 
                 Constant.M_FEEDBACK -> {
@@ -190,6 +188,16 @@ class SchoolMenuAdapter(
 
                 Constant .M_LEAVE_REQUEST -> {
                     imgMenu.setImageResource(R.drawable.leave_request_icon_school)
+                }
+
+                Constant .M_PTM -> {
+                    imgMenu.setImageResource(R.drawable.ptm_school)
+                }
+                Constant .M_FEE_PENDING_REPORT -> {
+                    imgMenu.setImageResource(R.drawable.fee_pending_reports)
+                }
+                Constant .M_SCHOOL_NEEDS -> {
+                    imgMenu.setImageResource(R.drawable.school_needs)
                 }
             }
 
