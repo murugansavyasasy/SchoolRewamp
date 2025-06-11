@@ -622,16 +622,6 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
     }
 
     private fun isMarkAttendance() {
-        Log.d(
-            "Parameter_for_SendAbsentessSMS",
-            isStandardId.toString() + "," +
-                    SectionID.toString() + "," +
-                    AllPresent + "," +
-                    AttendanceType + "," +
-                    SessionType + "," +
-                    SelectedDate.toString() + "," +
-                    isSelectedIds?.size.toString()
-        )
         if (isStandardId != null && SectionID != null &&
             ((SessionType == "" && AttendanceType == Constant.fullDay)
                     || (AttendanceType == Constant.halfDay && (SessionType == Constant.firstHalf || SessionType == Constant.secondHalf)))

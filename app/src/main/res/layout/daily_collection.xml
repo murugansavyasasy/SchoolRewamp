@@ -34,7 +34,6 @@
             style="@style/CustomTextStylePoppinsMedium"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"
-            android:layout_gravity="center"
             android:layout_marginEnd="@dimen/ten"
             android:text="@string/FromDate"/>
 
@@ -90,7 +89,6 @@
                 android:id="@+id/from_date1"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
-                android:layout_gravity="center"
                 style="@style/CustomTextStylePoppinsMedium"
                 android:layout_marginEnd="@dimen/ten"
                 android:text="@string/ToDate"/>

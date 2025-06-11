@@ -132,11 +132,73 @@
         </TextView>
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/sendOnlyLayout"
+        android:layout_below="@+id/lnrTab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/ten"
+        android:paddingStart="@dimen/ten"
+        android:paddingEnd="@dimen/ten"
+        android:layout_marginBottom="@dimen/five"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tvSendOnly"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Send only :"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="@dimen/ten"
+            android:textColor="#000000"
+            android:textSize="@dimen/thirteen_sp" />
+
+        <RadioGroup
+            android:id="@+id/radioGroupSendTo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radioAll"
+                style="@style/CustomTextStylePoppinsRegular"
+                android:layout_height="wrap_content"
+                android:text="All"
+                android:layout_width="match_parent"
+                android:textColor="#007AFF"
+                android:layout_weight="1"
+                android:buttonTint="#007AFF"
+                android:textSize="@dimen/thirteen_sp" />
+
+            <RadioButton
+                android:id="@+id/radioStaff"
+                style="@style/CustomTextStylePoppinsRegular"
+                android:layout_height="wrap_content"
+                android:text="Staff"
+                android:textColor="#007AFF"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:buttonTint="#007AFF" />
+
+            <RadioButton
+                android:id="@+id/radioStudent"
+                style="@style/CustomTextStylePoppinsRegular"
+                android:layout_height="wrap_content"
+                android:text="Student"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:textColor="#007AFF"
+                android:buttonTint="#007AFF"/>
+        </RadioGroup>
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleSchools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/lnrTab"
+        android:layout_below="@+id/sendOnlyLayout"
         android:layout_marginBottom="@dimen/ten"
         android:padding="@dimen/ten"
         android:layout_above="@+id/bottomContainer"
@@ -151,66 +213,6 @@
         android:background="@android:color/transparent"
         android:paddingBottom="@dimen/ten"
         android:paddingTop="@dimen/five">
-
-        <LinearLayout
-            android:id="@+id/sendOnlyLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="@dimen/five"
-            android:padding="@dimen/ten"
-            android:visibility="gone">
-
-            <TextView
-                android:id="@+id/tvSendOnly"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Send only :"
-                android:layout_gravity="center_vertical"
-                android:layout_marginEnd="@dimen/ten"
-                android:textColor="#000000"
-                android:textSize="@dimen/thirteen_sp" />
-
-            <RadioGroup
-                android:id="@+id/radioGroupSendTo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/radioAll"
-                    style="@style/CustomTextStylePoppinsRegular"
-                    android:layout_height="wrap_content"
-                    android:text="All"
-                    android:layout_width="match_parent"
-                    android:textColor="#007AFF"
-                    android:layout_weight="1"
-                    android:background="@drawable/radio_selected_bg"
-                    android:buttonTint="#007AFF"
-                    android:textSize="@dimen/thirteen_sp" />
-
-                <RadioButton
-                    android:id="@+id/radioStaff"
-                    style="@style/CustomTextStylePoppinsRegular"
-                    android:layout_height="wrap_content"
-                    android:text="Staff"
-                    android:textColor="#007AFF"
-                    android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    android:buttonTint="#007AFF" />
-
-                <RadioButton
-                    android:id="@+id/radioStudent"
-                    style="@style/CustomTextStylePoppinsRegular"
-                    android:layout_height="wrap_content"
-                    android:text="Student"
-                    android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    android:textColor="#007AFF"
-                    android:buttonTint="#007AFF"/>
-            </RadioGroup>
-        </LinearLayout>
 
         <RelativeLayout
             android:id="@+id/rytSend"
