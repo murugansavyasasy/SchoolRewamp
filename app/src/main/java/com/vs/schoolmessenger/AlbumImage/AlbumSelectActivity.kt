@@ -24,6 +24,7 @@ class AlbumSelectActivity : AppCompatActivity() {
     private lateinit var documentPickerLauncher: ActivityResultLauncher<Array<String>>
     private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
     private var shouldReload = false
+    private var fileType: String = Constant.IMAGE
 
     companion object {
         private const val REQUEST_CODE_MANAGE_ALL_FILES = 100
@@ -38,11 +39,11 @@ class AlbumSelectActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.toolbarLayout.rytFilePicking.visibility = View.VISIBLE
 
+        fileType = intent.getStringExtra(Constant.isFileType) ?: Constant.IMAGE
         setupPermissionLauncher()
         setupDocumentPicker()
 
         adapter = FileGridAdapter(limit = 5, onSelectionChanged = { selectedUris ->
-            Log.d("AlbumSelectActivity", "Selected count: ${selectedUris.size}")
             binding.toolbarLayout.tvSelectionCount.text =
                 "Selected Files : ${selectedUris.size} / 5"
         }, onItemClicked = { uri ->
@@ -52,24 +53,13 @@ class AlbumSelectActivity : AppCompatActivity() {
         binding.recyclerView.layoutManager = GridLayoutManager(this, 3)
         binding.recyclerView.adapter = adapter
 
-        checkAndRequestPermissions()
-
-        val fileType = intent.getStringExtra(Constant.isFileType) ?: Constant.IMAGE
-        Log.d("fileType",fileType)
         if (fileType.uppercase() == Constant.DOCUMENT) {
-            checkAndRequestPermissions()
+            checkAndRequestPermissionsForDocuments()
         } else {
-            when (fileType.uppercase()) {
-                Constant.IMAGE -> adapter.submitList(loadImages())
-                Constant.VIDEO -> adapter.submitList(loadVideos())
-                Constant.AUDIO -> adapter.submitList(loadAudio())
-                else -> adapter.submitList(emptyList())
-            }
+            checkAndRequestPermissionsForMedia()
         }
 
-        binding.toolbarLayout.imgBack.setOnClickListener {
-            onBackPressed()
-        }
+        binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
 
         binding.toolbarLayout.btnDone.setOnClickListener {
             val selectedUris = adapter.getSelectedItems()
@@ -83,8 +73,10 @@ class AlbumSelectActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        val fileType = intent.getStringExtra(Constant.isFileType) ?: Constant.IMAGE
-        if (fileType.uppercase() == Constant.DOCUMENT && Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && android.os.Environment.isExternalStorageManager()) {
+        if (fileType.uppercase() == Constant.DOCUMENT &&
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.R &&
+            android.os.Environment.isExternalStorageManager()
+        ) {
             if (shouldReload) {
                 loadDocumentsOrOpenPicker()
                 shouldReload = false
@@ -96,8 +88,16 @@ class AlbumSelectActivity : AppCompatActivity() {
         permissionLauncher =
             registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
                 val allGranted = permissions.entries.all { it.value }
-                if (allGranted || (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && android.os.Environment.isExternalStorageManager())) {
-                    loadDocumentsOrOpenPicker()
+                if (fileType.uppercase() == Constant.DOCUMENT) {
+                    if (allGranted || (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R &&
+                                android.os.Environment.isExternalStorageManager())
+                    ) {
+                        loadDocumentsOrOpenPicker()
+                    }
+                } else {
+                    if (allGranted) {
+                        loadMediaFiles()
+                    }
                 }
             }
     }
@@ -109,6 +109,55 @@ class AlbumSelectActivity : AppCompatActivity() {
                     adapter.submitList(uris)
                 }
             }
+    }
+
+    private fun checkAndRequestPermissionsForDocuments() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            if (android.os.Environment.isExternalStorageManager()) {
+                loadDocumentsOrOpenPicker()
+            } else {
+                shouldReload = true
+                val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
+                intent.data = Uri.parse("package:$packageName")
+                startActivityForResult(intent, REQUEST_CODE_MANAGE_ALL_FILES)
+            }
+        } else {
+            permissionLauncher.launch(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE))
+        }
+    }
+
+    private fun checkAndRequestPermissionsForMedia() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            permissionLauncher.launch(
+                arrayOf(
+                    Manifest.permission.READ_MEDIA_IMAGES,
+                    Manifest.permission.READ_MEDIA_VIDEO,
+                    Manifest.permission.READ_MEDIA_AUDIO
+                )
+            )
+        } else {
+            permissionLauncher.launch(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE))
+        }
+    }
+
+    private fun loadMediaFiles() {
+        val mediaList = when (fileType.uppercase()) {
+            Constant.IMAGE -> loadImages()
+            Constant.VIDEO -> loadVideos()
+            Constant.AUDIO -> loadAudio()
+            else -> emptyList()
+        }
+        adapter.submitList(mediaList)
+    }
+
+    private fun loadDocumentsOrOpenPicker() {
+        val docs = loadDocumentsFromMediaStore()
+        if (docs.isNotEmpty()) {
+            adapter.submitList(docs)
+            Log.d(TAG, "Loaded ${docs.size} documents")
+        } else {
+            openDocumentPicker()
+        }
     }
 
     private fun openDocumentPicker() {
@@ -124,45 +173,6 @@ class AlbumSelectActivity : AppCompatActivity() {
                 "text/plain"
             )
         )
-    }
-
-    private fun checkAndRequestPermissions() {
-        when {
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU -> {
-                permissionLauncher.launch(
-                    arrayOf(
-                        Manifest.permission.READ_MEDIA_IMAGES,
-                        Manifest.permission.READ_MEDIA_VIDEO,
-                        Manifest.permission.READ_MEDIA_AUDIO
-                    )
-                )
-            }
-
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.R -> {
-                if (android.os.Environment.isExternalStorageManager()) {
-                    loadDocumentsOrOpenPicker()
-                } else {
-                    shouldReload = true
-                    val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
-                    intent.data = Uri.parse("package:$packageName")
-                    startActivityForResult(intent, REQUEST_CODE_MANAGE_ALL_FILES)
-                }
-            }
-
-            else -> {
-                permissionLauncher.launch(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE))
-            }
-        }
-    }
-
-    private fun loadDocumentsOrOpenPicker() {
-        val docs = loadDocumentsFromMediaStore()
-        if (docs.isNotEmpty()) {
-            adapter.submitList(docs)
-            Log.d(TAG, "Loaded ${docs.size} documents")
-        } else {
-            openDocumentPicker()
-        }
     }
 
     private fun loadDocumentsFromMediaStore(): List<Uri> {
@@ -261,8 +271,7 @@ class AlbumSelectActivity : AppCompatActivity() {
             val idCol = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
             while (cursor.moveToNext()) {
                 val id = cursor.getLong(idCol)
-                val uri = ContentUris.withAppendedId(collection, id)
-                imageUris.add(uri)
+                imageUris.add(ContentUris.withAppendedId(collection, id))
             }
         }
         return imageUris
@@ -278,8 +287,7 @@ class AlbumSelectActivity : AppCompatActivity() {
             val idCol = cursor.getColumnIndexOrThrow(MediaStore.Video.Media._ID)
             while (cursor.moveToNext()) {
                 val id = cursor.getLong(idCol)
-                val uri = ContentUris.withAppendedId(collection, id)
-                videoUris.add(uri)
+                videoUris.add(ContentUris.withAppendedId(collection, id))
             }
         }
         return videoUris
@@ -295,8 +303,7 @@ class AlbumSelectActivity : AppCompatActivity() {
             val idCol = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media._ID)
             while (cursor.moveToNext()) {
                 val id = cursor.getLong(idCol)
-                val uri = ContentUris.withAppendedId(collection, id)
-                audioUris.add(uri)
+                audioUris.add(ContentUris.withAppendedId(collection, id))
             }
         }
         return audioUris
