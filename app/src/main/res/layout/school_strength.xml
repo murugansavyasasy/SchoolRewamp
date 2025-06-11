@@ -15,34 +15,36 @@
             layout="@layout/school_side_tool_bar" />
 
         <LinearLayout
+            android:gravity="center"
             android:id="@+id/AcademicYear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/toolbarLayout"
-            android:background="@drawable/gray_bg_radius"
             android:orientation="horizontal"
-            android:layout_marginStart="@dimen/fifteen"
+            android:layout_marginStart="@dimen/five"
             android:layout_marginTop="@dimen/ten"
-            android:layout_marginEnd="@dimen/fifteen"
+            android:layout_marginEnd="@dimen/ten"
             android:weightSum="1">
 
+
             <TextView
-                style="@style/CustomTextStylePoppinsMedium"
+                android:id="@+id/lblAcademicYearPick"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/fifteen"
+                android:text="@string/choose_academic_year"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_weight="0.5"
-                android:text="@string/academic_year"
-                android:textSize="@dimen/thirteen_sp">
-
-            </TextView>
+               ></TextView>
 
             <RelativeLayout
                 android:id="@+id/rytAcademicYearDropDown"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/fifteen"
-                android:layout_marginEnd="@dimen/fifteen"
+                android:layout_marginStart="@dimen/twenty"
+                android:background="@drawable/bg_white_light_radious"
                 android:layout_weight="0.5"
                 android:gravity="center">
 

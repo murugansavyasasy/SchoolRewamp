@@ -186,7 +186,7 @@ object Constant {
     var dd_MM_yyyy = "dd/MM/yyyy"
     var EEE_dd_MMM_yyyy = "EEE dd MMM, yyyy"
     var yyyy_MMM_dd = "yyyy MMM, dd"
-    var EEE_dd_MMM_yyyy_1 = "EEE dd MMM yyyy"
+    var dd_MMM_yyyy_1 = "dd MMM yyyy"
     var hh_mm_a = "hh:mm a"
     var time_forMate = "00:%02d"
     var time_zero = "00:00"
@@ -434,6 +434,34 @@ object Constant {
         })
     }
 
+    fun editTitleTextCounter(
+        context: Context, editText: EditText, maxLength: Int, counterLabel: TextView
+    ) {
+
+        editText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(
+                charSequence: CharSequence?, start: Int, count: Int, after: Int
+            ) {
+                // You can add logic here if needed
+            }
+
+            override fun onTextChanged(
+                charSequence: CharSequence?, start: Int, before: Int, count: Int
+            ) {
+                // You can add logic here if needed
+            }
+
+            override fun afterTextChanged(editable: Editable?) {
+                counterLabel.setText(editable!!.length.toString() + " of " + maxLength.toString())
+                if (editable != null && editable.length > maxLength) {
+                    // Restrict to the max length by trimming the input
+                    editable.delete(maxLength, editable.length)
+                    // Optionally, show a Toast or error message
+                }
+            }
+        })
+    }
+
     fun executeAfterDelay(task: () -> Unit) {
         handler.postDelayed({
             task()
@@ -600,28 +628,9 @@ object Constant {
         okButton.setOnClickListener {
             isAwsUploadedFiles.clear()
             selectedFiles.clear()
-            if (SELECTED_SCHOOL_MENU == M_COMMUNICATION) {
-                val intent = Intent(activity, CommunicationSchool::class.java)
-
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                activity.startActivity(intent)
-            } else if (SELECTED_SCHOOL_MENU == M_HOMEWORK) {
-                val intent = Intent(activity, HomeWork::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                activity.startActivity(intent)
-            } else if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS) {
-                val intent = Intent(activity, Attachment::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                activity.startActivity(intent)
-            } else if (SELECTED_SCHOOL_MENU == M_NOTICEBOARD) {
-                val intent = Intent(activity, CreateNoticeBoard::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                activity.startActivity(intent)
-            } else if (SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS) {
-                val intent = Intent(activity, CreateEvent::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                activity.startActivity(intent)
-            }
+            val intent = Intent(activity, SchoolDashboard::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            activity.startActivity(intent)
             closePopup()
         }
         dimView.isFocusable = true
@@ -658,7 +667,8 @@ object Constant {
     fun covertDateFormate(input: String): String {
         return try {
             val inputFormat = SimpleDateFormat(dd_MM_yyyy, Locale.getDefault())
-            val outputFormat = SimpleDateFormat(EEE_dd_MMM_yyyy, Locale.getDefault())
+//            val outputFormat = SimpleDateFormat(EEE_dd_MMM_yyyy, Locale.getDefault())
+            val outputFormat = SimpleDateFormat(dd_MMM_yyyy, Locale.getDefault())
             val date = inputFormat.parse(input)
             outputFormat.format(date!!)
         } catch (e: Exception) {
@@ -707,16 +717,9 @@ object Constant {
         }
 
         okButton.setOnClickListener {
-            if (user_details!!.staff_details.size == 1) {
-                val intent = Intent(activity, SchoolDashboard::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                activity.startActivity(intent)
-            } else {
-                val intent = Intent(activity, SchoolList::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                activity.startActivity(intent)
-            }
-
+            val intent = Intent(activity, SchoolDashboard::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            activity.startActivity(intent)
             closePopup()
         }
     }
@@ -899,7 +902,9 @@ object Constant {
         val dayOnly = String.format("%02d", calendar.get(android.icu.util.Calendar.DAY_OF_MONTH))
         val dayOfWeek = SimpleDateFormat("EEE", Locale.getDefault()).format(calendar.time)
         val fullDate =
-            SimpleDateFormat("EEE dd MMM yyyy", Locale.getDefault()).format(calendar.time)
+            SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(calendar.time)
+//        val fullDate =
+//            SimpleDateFormat("EEE dd MMM yyyy", Locale.getDefault()).format(calendar.time)
         val slashDate =
             SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(calendar.time)
         return listOf(dayOnly, dayOfWeek, fullDate, slashDate)
@@ -907,7 +912,7 @@ object Constant {
 
     fun convertDateFormat(input: String): String {
         return try {
-            val inputFormat = SimpleDateFormat(EEE_dd_MMM_yyyy_1, Locale.getDefault())
+            val inputFormat = SimpleDateFormat(dd_MMM_yyyy_1, Locale.getDefault())
             val outputFormat = SimpleDateFormat(ddMMyyyy, Locale.getDefault())
             val date = inputFormat.parse(input)
             outputFormat.format(date!!)
@@ -916,18 +921,6 @@ object Constant {
         }
 
     }
-
-//    fun convertDate(input: String): String {
-//        return try {
-//            val inputFormat = SimpleDateFormat(EEE_dd_MMM_yyyy, Locale.getDefault())
-//            val outputFormat = SimpleDateFormat(ddMMyyyy, Locale.getDefault())
-//            val date = inputFormat.parse(input)
-//            outputFormat.format(date!!)
-//        } catch (e: Exception) {
-//            input // return original if there's a parsing error
-//        }
-//
-//    }
 
     fun convertDateTimeFormat(input: String): String {
         return try {

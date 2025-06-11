@@ -496,7 +496,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
             )
         }
         mAdapter!!.notifyDataSetChanged()
-
+    Log.d("FileComing",isFileType)
         val sdkInt = Build.VERSION.SDK_INT
         if (isFileType == Constant.DOCUMENT && sdkInt < Build.VERSION_CODES.R) {
             openSystemDocumentPicker()

@@ -56,10 +56,23 @@
                 android:textSize="@dimen/thirteen_sp" />
 
             <TextView
-                android:id="@+id/lblEventDesc"
+                android:id="@+id/lbtitleTextCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/txtTitle"
+                android:layout_alignParentEnd="true"
+                android:text="0 of 50"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginTop="@dimen/ten"
+                style="@style/CustomTextStylePoppinsBold"/>
+
+            <TextView
+                android:id="@+id/lblEventDesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lbtitleTextCount"
                 android:layout_marginTop="@dimen/fifteen"
                 android:text="@string/Description"
                 android:textColor="@color/black"
@@ -151,7 +164,7 @@
 
                         <RelativeLayout
                             android:id="@+id/rytStartDate"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
 

@@ -74,9 +74,9 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
                 if (response.status) {
                     Constant.hideLoading(this@AbsenteesStudentMark)
                     Log.d("isSendAbsenteeSMS", response.message)
-                    Constant.showDataValidation("Success", response.message, this)
+                    Constant.showDataValidation(getString(R.string.success), response.message, this)
                 } else {
-                    Constant.showDataValidation("Fail", response.message, this)
+                    Constant.showDataValidation(getString(R.string.fail), response.message, this)
                 }
             }
         }
@@ -119,7 +119,7 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
 
     }
 
-    fun loadStudentAbsenteesList(studentsList: List<NameAndIds>){
+    fun loadStudentAbsenteesList(studentsList: List<NameAndIds>) {
         mAdapter =
             AbsenteesMarkAdapter(
                 studentsList, this, Constant.isShimmerViewDisable, this

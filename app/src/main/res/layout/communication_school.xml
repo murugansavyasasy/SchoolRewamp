@@ -496,6 +496,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
+
                         <TextView
                             android:id="@+id/lblCountOfTitle"
                             android:layout_width="wrap_content"
@@ -524,43 +525,29 @@
                     </RelativeLayout>
 
 
-                    <TextView
-
-                        style="@style/CustomTextStylePoppinsBold"
-                        android:layout_width="wrap_content"
+                    <RelativeLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/ten"
                         android:layout_marginTop="@dimen/ten"
-                        android:text="@string/Description"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp">
-
-                    </TextView>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/two_hundred"
-                        android:layout_marginStart="@dimen/ten"
-                        android:layout_marginTop="@dimen/ten"
-                        android:layout_marginEnd="@dimen/ten">
+                        android:layout_marginEnd="@dimen/ten"
+                        android:layout_marginBottom="@dimen/ten">
 
                         <TextView
-                            android:id="@+id/lblCountOfDescription"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:id="@+id/txtDescriptionLabel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentBottom="true"
-                            android:padding="@dimen/ten"
-                            android:text="0/500"
+                            android:text="@string/Description"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/thirteen_sp">
-
-                        </TextView>
+                            android:textSize="@dimen/thirteen_sp" />
 
                         <EditText
                             android:id="@+id/edtContentTextMessage"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="@dimen/two_hundred"
+                            android:layout_below="@id/txtDescriptionLabel"
+                            android:layout_marginTop="@dimen/ten"
                             android:background="@drawable/bg_outline_black"
                             android:gravity="start|top"
                             android:hint="@string/Description"
@@ -569,7 +556,20 @@
                             android:padding="@dimen/ten"
                             android:textSize="@dimen/thirteen_sp" />
 
+                        <TextView
+                            android:id="@+id/lblCountOfDescription"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/edtContentTextMessage"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginTop="@dimen/ten"
+                            android:text="0/500"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/thirteen_sp"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:padding="@dimen/ten" />
                     </RelativeLayout>
+
 
 
                 </LinearLayout>

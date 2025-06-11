@@ -99,6 +99,10 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickL
         binding.rytStart.setOnClickListener(this)
         binding.rytEnd.setOnClickListener(this)
         binding.rytEndDate.setOnClickListener(this)
+        binding.txtStartDate.setOnClickListener(this)
+        binding.txtEndDate.setOnClickListener(this)
+        binding.lnrStartCalendar.setOnClickListener(this)
+        binding.lnrEndCalendar.setOnClickListener(this)
 
 
         val (dayOnly, dayOfWeek, fullDate, slashDate) = Constant.getCurrentDateInfo()
@@ -192,6 +196,8 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickL
 
 
         Constant.editTextCounter(this,binding.txtDesc,500,binding.lbTextCount)
+        Constant.editTextCounter(this,binding.txtTitle,50,binding.lbtitleTextCount)
+
 
     }
 
@@ -212,7 +218,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickL
                 onBackPressed()
             }
 
-            R.id.rytStart -> {
+            R.id.txtStartDate,R.id.rytStartDate,R.id.txtStartDate,R.id.lnrStartCalendar-> {
                 selectedDateField = 1
                 Constant.showDatePicker(this) { selectedDate ->
                     Log.d("selectedDate", selectedDate)
@@ -225,7 +231,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickL
                 }
             }
 
-            R.id.rytEnd -> {
+            R.id.rytEndDate,R.id.lnrEndCalendar,R.id.txtEndDate, -> {
                 selectedDateField = 2
                 Constant.showDatePicker(this) { selectedDate ->
                     Log.d("selectedDate", selectedDate)

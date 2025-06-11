@@ -161,6 +161,17 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                 }
             }
         }
+
+        binding.radioGroupSendTo.setOnCheckedChangeListener { group, checkedId ->
+            for (i in 0 until group.childCount) {
+                val radioButton = group.getChildAt(i) as? RadioButton
+                radioButton?.background = null
+            }
+
+            val selectedRadioButton = group.findViewById<RadioButton>(checkedId)
+            selectedRadioButton?.setBackgroundResource(R.drawable.radio_selected_bg) // Set selected background
+        }
+
     }
 
     override fun onResume() {

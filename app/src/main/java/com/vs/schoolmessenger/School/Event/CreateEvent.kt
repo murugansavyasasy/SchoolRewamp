@@ -87,6 +87,8 @@ class CreateEvent : BaseActivity<CreateEventBinding>(),OnImageClickListener,
         binding.rytStartDate.setOnClickListener(this)
         binding.rytStart.setOnClickListener(this)
         binding.rytStartTime.setOnClickListener(this)
+        binding.lnrStartCalendar.setOnClickListener(this)
+        binding.txtStartDate.setOnClickListener(this)
         binding.txtStartTime.setOnClickListener(this)
 
         Constant.editTextCounter(this,binding.txtDesc,500,binding.lbTextCount)
@@ -175,6 +177,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(),OnImageClickListener,
             }
 
         Constant.editTextCounter(this,binding.txtDesc,500,binding.lbTextCount)
+        Constant.editTextCounter(this,binding.txtTitle,50,binding.lbtitleTextCount)
 
     }
 
@@ -195,11 +198,11 @@ class CreateEvent : BaseActivity<CreateEventBinding>(),OnImageClickListener,
                 onBackPressed()
             }
 
-            R.id.rytStartDate -> {
+            R.id.rytStartDate,R.id.txtStartDate,R.id.lnrStartCalendar -> {
                 selectedDateField = 1
                 Constant.showDatePicker(this) { selectedDate ->
                     Log.d("selectedDate", selectedDate)
-                    binding.txtStartDate.text = Constant.covertDateFormate(selectedDate)
+                    binding.txtStartDate.text = Constant.covertDateFormate(selectedDate) // 13 may 2222
                     val parts = binding.txtStartDate.text.split(" ")
                     val day = parts[0]
                     val Date = parts[1]

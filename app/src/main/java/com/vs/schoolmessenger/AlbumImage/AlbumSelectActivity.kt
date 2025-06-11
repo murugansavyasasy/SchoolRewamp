@@ -55,6 +55,7 @@ class AlbumSelectActivity : AppCompatActivity() {
         checkAndRequestPermissions()
 
         val fileType = intent.getStringExtra(Constant.isFileType) ?: Constant.IMAGE
+        Log.d("fileType",fileType)
         if (fileType.uppercase() == Constant.DOCUMENT) {
             checkAndRequestPermissions()
         } else {
