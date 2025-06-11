@@ -49,7 +49,7 @@ class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(
         binding.lnrPrevious.setOnClickListener(this)
 
         adapter = FileViewerAdapter(this, Constant.commonFileList)
-        val noScrollLayoutManager = object : LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false) {
+        val noScrollLayoutManager = object : LinearLayoutManager(this, HORIZONTAL, false) {
             override fun canScrollHorizontally(): Boolean = false
             override fun canScrollVertically(): Boolean = false
         }

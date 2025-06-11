@@ -308,7 +308,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             Constant.M_HOMEWORK -> Intent(requireActivity(), HomeWork::class.java)
             Constant.M_EXAM -> Intent(requireActivity(), Exam::class.java)
             Constant.M_NOTICEBOARD -> Intent(requireActivity(), NoticeBoard::class.java)
-            Constant.M_SCHOOL_CLASS_EVENTS -> Intent(requireActivity(), Event::class.java)
+            Constant.M_PARENT_CLASS_EVENTS -> Intent(requireActivity(), Event::class.java)
             Constant.M_ATTENDANCE_REPORT -> Intent(requireActivity(), AttendanceReport::class.java)
             Constant.M_LEAVE_REQUEST -> Intent(requireActivity(), LeaveRequest::class.java)
             Constant.M_FEE_DETAILS -> Intent(requireActivity(), FeeDetails::class.java)
