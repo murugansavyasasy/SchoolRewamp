@@ -181,11 +181,11 @@ class SchoolMenuAdapter(
                 }
 
                 Constant.M_MARK_YOUR_ATTENDANCE -> {
-                    imgMenu.setImageResource(R.drawable.fee_pending_reports)
+                    imgMenu.setImageResource(R.drawable.attendanceimage)
                 }
 
                 Constant.M_STAFF_WISE_ATTENDANCE_REPORT -> {
-                    imgMenu.setImageResource(R.drawable.importent_info)
+                    imgMenu.setImageResource(R.drawable.staff_attendance_report)
                 }
 
                 Constant .M_LEAVE_REQUEST -> {

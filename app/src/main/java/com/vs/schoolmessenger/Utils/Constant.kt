@@ -894,14 +894,14 @@ object Constant {
     @RequiresApi(Build.VERSION_CODES.O)
     fun getCurrentTime(): String {
         val currentTime = LocalTime.now()
-        val formatter = DateTimeFormatter.ofPattern(hh_mm_a) // or "hh:mm a" for AM/PM
+        val formatter = DateTimeFormatter.ofPattern(hh_mm_a)
         return currentTime.format(formatter)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun getCurrentDate(): String {
         val currentDate = LocalDate.now()
-        val formatter = DateTimeFormatter.ofPattern(ddMMyyyy) // or "dd/MM/yyyy", etc.
+        val formatter = DateTimeFormatter.ofPattern(ddMMyyyy)
         return currentDate.format(formatter)
     }
 

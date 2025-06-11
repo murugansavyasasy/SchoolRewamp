@@ -8,6 +8,8 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import java.text.SimpleDateFormat
+import java.util.*
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -90,7 +92,10 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         binding.imgSearchClick.setOnClickListener(this)
         binding.changeroll.setOnClickListener(this)
         binding.imgSearchCancel.setOnClickListener(this)
-
+        val currentDate = Calendar.getInstance().time
+        val dateFormat = SimpleDateFormat("dd, MMM yyyy", Locale.ENGLISH)
+        val formattedDate = dateFormat.format(currentDate)
+        binding.lblDate.text = formattedDate
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
         binding.changeroll.paintFlags = binding.changeroll.paintFlags or Paint.UNDERLINE_TEXT_FLAG
