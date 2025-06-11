@@ -674,19 +674,11 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                             "", isAcademicYearNote
                         )
                     } else {
-                        // if (Constant.isCommunicationType == 3) {
                             showSendConfirmationDialog(
                                 resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + " " + isTypeOfName + resources.getString(
                                     R.string._s
                                 ), isAcademicYearNote
                             )
-//                        } else {
-//                            showSendConfirmationDialog(
-//                                resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + " " + isTypeOfName + resources.getString(
-//                                    R.string._s
-//                                ), isAcademicYearNote.toString()
-//                            )
-//                        }
                     }
                 } else {
                     Constant.showValidationAlertPopup(

@@ -403,7 +403,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         val isCountryId = SharedPreference.getCountryId(this)
         Log.d("isSelectedFiles", Constant.selectedFiles.size.toString())
         if (Constant.selectedFiles.isEmpty()) {
-            if (SELECTED_SCHOOL_MENU == M_HOMEWORK) {
+            if (SELECTED_SCHOOL_MENU == M_COMMUNICATION) {
                 voiceSendApi()
             }
         } else {
