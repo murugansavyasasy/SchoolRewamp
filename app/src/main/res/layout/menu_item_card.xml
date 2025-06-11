@@ -15,13 +15,22 @@
         android:layout_centerHorizontal="true"
         android:background="@drawable/bg_menu_light_gray_radious"
         android:layout_height="@dimen/fifty">
-
         <ImageView
             android:id="@+id/imgMenu"
             android:layout_width="@dimen/twenty_five"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:layout_height="@dimen/twenty_five" />
+
+        <View
+            android:id="@+id/imgReadCount"
+            android:visibility="gone"
+            android:layout_alignParentEnd="true"
+            android:layout_width="@dimen/ten"
+            android:background="@drawable/bg_red_circle"
+            android:layout_height="@dimen/ten">
+        </View>
+
         </RelativeLayout>
 
     <TextView
