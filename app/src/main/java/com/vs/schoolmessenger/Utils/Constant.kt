@@ -57,7 +57,6 @@ import java.util.Calendar
 import java.util.Locale
 
 object Constant {
-
     var isDeviceType = "Android"
     var isVersionId = 93
     var terms_condition = "https://schoolchimes.com/vs_web/terms_conditions/"
@@ -116,7 +115,7 @@ object Constant {
     val M_PTM = 26
     val M_QUIZ_EXAM = 27
     val M_REQUEST_LEAVE = 28
-    val M_SCHOOL_CLASS_EVENTS = 29
+    val M_SCHOOL_CLASS_EVENTS = 9
     val M_SCHOOL_NEEDS = 30
     val M_SCHOOL_STRENGTH = 31
     val M_STAFF_LIST = 32
@@ -404,6 +403,34 @@ object Constant {
     }
 
     fun editTextCounter(
+        context: Context, editText: EditText, maxLength: Int, counterLabel: TextView
+    ) {
+
+        editText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(
+                charSequence: CharSequence?, start: Int, count: Int, after: Int
+            ) {
+                // You can add logic here if needed
+            }
+
+            override fun onTextChanged(
+                charSequence: CharSequence?, start: Int, before: Int, count: Int
+            ) {
+                // You can add logic here if needed
+            }
+
+            override fun afterTextChanged(editable: Editable?) {
+                counterLabel.setText(editable!!.length.toString() + " of " + maxLength.toString())
+                if (editable != null && editable.length > maxLength) {
+                    // Restrict to the max length by trimming the input
+                    editable.delete(maxLength, editable.length)
+                    // Optionally, show a Toast or error message
+                }
+            }
+        })
+    }
+
+    fun editTitleTextCounter(
         context: Context, editText: EditText, maxLength: Int, counterLabel: TextView
     ) {
 

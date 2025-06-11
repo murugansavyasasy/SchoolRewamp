@@ -177,6 +177,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(),OnImageClickListener,
             }
 
         Constant.editTextCounter(this,binding.txtDesc,500,binding.lbTextCount)
+        Constant.editTextCounter(this,binding.txtTitle,50,binding.lbtitleTextCount)
 
     }
 
@@ -432,8 +433,6 @@ class CreateEvent : BaseActivity<CreateEventBinding>(),OnImageClickListener,
         }
 
         when (requestCode) {
-
-
             HomeWork.Companion.CAMERA_IMAGE_REQUEST -> {
                 cameraImageFilePath?.let { filePath ->
                     var file = File(filePath)

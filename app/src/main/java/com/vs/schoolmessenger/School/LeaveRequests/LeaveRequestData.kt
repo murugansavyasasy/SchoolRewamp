@@ -8,5 +8,4 @@ data class LeaveRequestData(
     val isLeaveFromDate: String,
     val isLeaveToDate: String,
     val isReason: String,
-    val isType: String,
-    )
+    val isType: String, )

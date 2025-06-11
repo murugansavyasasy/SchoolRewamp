@@ -187,6 +187,10 @@ class SchoolMenuAdapter(
                 Constant.M_STAFF_WISE_ATTENDANCE_REPORT -> {
                     imgMenu.setImageResource(R.drawable.importent_info)
                 }
+
+                Constant .M_LEAVE_REQUEST -> {
+                    imgMenu.setImageResource(R.drawable.leave_request_icon_school)
+                }
             }
 
             rlaMenu.setOnClickListener {

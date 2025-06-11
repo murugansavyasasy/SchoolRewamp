@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout
+     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/rect_shadow_white"
@@ -61,6 +61,7 @@
             android:layout_marginEnd="@dimen/ten"
             android:fontFamily="@font/poppins_regular"
             android:text="15 Nov 2024"
+            android:layout_alignStart="@+id/rlaSelectText"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"
             android:textStyle="normal" />
@@ -76,6 +77,7 @@
             android:visibility="visible"
             android:background="@drawable/rect_blue_and_green_small_radious"
             android:gravity="center"
+            android:layout_marginTop="@dimen/three"
             android:padding="@dimen/five">
 
             <ImageView
@@ -108,9 +110,9 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/one_fifty"
             android:layout_below="@+id/LblHWSubjectName"
-            android:layout_margin="@dimen/twenty"
-            android:visibility="gone"
-            android:layout_marginTop="@dimen/ten">
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/ten"
+            android:visibility="gone">
 
         </androidx.recyclerview.widget.RecyclerView>
 
@@ -122,6 +124,7 @@
             android:layout_below="@+id/rcyImgPDF"
             android:layout_centerInParent="true"
             android:visibility="gone"
+            android:layout_marginTop="@dimen/five"
             android:elevation="4dp"/>
 
 
@@ -129,7 +132,7 @@
             android:id="@+id/lblTitleImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/rcyImgPDF"
+            android:layout_below="@+id/indicator"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/fifteen"
             android:text="Annual Day celebrations"
@@ -144,6 +147,7 @@
             android:layout_below="@+id/lblTitleImage"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="10dp"
             android:maxLines="3"
             android:text="If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress."
             android:textColor="@color/black"

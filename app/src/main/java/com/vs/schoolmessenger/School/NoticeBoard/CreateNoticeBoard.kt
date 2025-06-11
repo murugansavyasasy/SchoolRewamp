@@ -196,6 +196,8 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickL
 
 
         Constant.editTextCounter(this,binding.txtDesc,500,binding.lbTextCount)
+        Constant.editTextCounter(this,binding.txtTitle,50,binding.lbtitleTextCount)
+
 
     }
 
