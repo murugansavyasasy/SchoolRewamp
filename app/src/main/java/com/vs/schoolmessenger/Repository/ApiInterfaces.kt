@@ -123,6 +123,7 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String,
         @Query(APIKeyNames.academic_year_id) isAcademicYearId: Int,
         @Query(APIKeyNames.section_ids) isSectionId: String
+
     ): Call<NameAndIdsResponse?>
 
 

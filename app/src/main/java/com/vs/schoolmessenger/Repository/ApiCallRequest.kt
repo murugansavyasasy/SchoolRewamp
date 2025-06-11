@@ -224,7 +224,6 @@ object ApiCallRequest {
         jsonObject.addProperty("event_time", event_time)
         jsonObject.addProperty("target_type", target_type)
         jsonObject.add(APIKeyNames.file_path, filePathArray)
-
         return jsonObject
     }
 

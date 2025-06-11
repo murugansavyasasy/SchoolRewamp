@@ -61,7 +61,6 @@ import java.util.Calendar
 import java.util.Locale
 
 object Constant {
-
     var isDeviceType = "Android"
     var isVersionId = 93
     var terms_condition = "https://schoolchimes.com/vs_web/terms_conditions/"
@@ -120,7 +119,7 @@ object Constant {
     val M_PTM = 26
     val M_QUIZ_EXAM = 27
     val M_REQUEST_LEAVE = 28
-    val M_SCHOOL_CLASS_EVENTS = 29
+    val M_SCHOOL_CLASS_EVENTS = 9
     val M_SCHOOL_NEEDS = 30
     val M_SCHOOL_STRENGTH = 31
     val M_STAFF_LIST = 32
