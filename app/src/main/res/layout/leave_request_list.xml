@@ -13,28 +13,43 @@
         android:background="@drawable/rect_shadow_white">
 
 
+        <RelativeLayout
+            android:id="@+id/relative_layout"
+            android:layout_width="@dimen/hundred"
+            android:layout_height="@dimen/thirty_three"
+            android:layout_marginStart="@dimen/twenty"
+            android:layout_marginEnd="@dimen/twenty"
+            android:layout_alignParentEnd="true"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/ten"
+            android:background="@drawable/bg_green_radoius_10dp"
+            android:padding="@dimen/two">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/approve"
+                android:textSize="13sp"
+                android:textColor="@color/white"
+                android:textStyle="bold">
+
+            </TextView>
+        </RelativeLayout>
+
+
         <LinearLayout
             android:id="@+id/lblLeaveInformation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/ten"
+            android:layout_below="@+id/relative_layout"
             android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/lblDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/five"
-                android:layout_marginEnd="@dimen/ten"
-                android:text="12 sep 2024,12:00 Am"
-                android:textColor="@color/black"
-                android:textSize="@dimen/twele"
-                android:textStyle="normal" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/eight"
+                android:layout_marginTop="@dimen/five"
                 android:weightSum="0">
 
                 <TextView
@@ -45,7 +60,7 @@
                     android:gravity="start"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
-                    android:textStyle="bold" />
+                    style="@style/CustomTextStylePoppinsMedium" />
 
                 <TextView
                     android:id="@+id/lblName"
@@ -55,7 +70,8 @@
                     android:layout_weight="0"
                     android:text="Sathish"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp" />
+                    android:textSize="@dimen/thirteen_sp"
+                    style="@style/CustomTextStylePoppinsMedium"/>
             </LinearLayout>
 
             <LinearLayout
@@ -71,7 +87,7 @@
                     android:text="@string/Class"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
-                    android:textStyle="bold" />
+                    style="@style/CustomTextStylePoppinsMedium" />
 
                 <TextView
                     android:id="@+id/lblSection"
@@ -81,13 +97,14 @@
                     android:layout_weight="0"
                     android:text="XII - B"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp" />
+                    android:textSize="@dimen/thirteen_sp"
+                    style="@style/CustomTextStylePoppinsMedium"/>
             </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/fifteen"
+                android:layout_marginTop="@dimen/ten"
                 >
 
                 <TextView
@@ -98,7 +115,7 @@
                     android:text="Mar 31, 2023"
                     android:textColor="@color/black"
                     android:textSize="@dimen/twele"
-                    android:textStyle="bold" />
+                   style="@style/CustomTextStylePoppinsBold" />
 
                 <ImageView
                     android:layout_width="@dimen/sixteen"
@@ -115,19 +132,80 @@
                     android:text="Apr 2 -2023"
                     android:textColor="@color/black"
                     android:textSize="@dimen/twele_sp"
-                    android:textStyle="bold" />
+                    style="@style/CustomTextStylePoppinsBold" />
             </RelativeLayout>
 
-            <TextView
-                android:id="@+id/lblReason"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/ten"
-                android:padding="@dimen/six"
-                android:text="The reason for my leave is [brief reason for leave, such as personal reasons, family emergency, etc.]. During my absence, I will ensure that all pending tasks are completed or delegated to a colleague. In case of any urgent matters, I can be reached at [your contact details]. I kindly request you to approve my leave."
-                android:textColor="@color/black">
+                android:layout_marginTop="@dimen/eight"
+                android:weightSum="0">
 
-            </TextView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:text="No.Of.Days"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp"
+                    style="@style/CustomTextStylePoppinsMedium" />
+
+                <TextView
+                    android:id="@+id/lbldays"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="28dp"
+                    android:layout_weight="0"
+                    android:text="3"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp"
+                    style="@style/CustomTextStylePoppinsMedium"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/eight"
+                android:weightSum="0">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:text="Applied On:"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp"
+                    style="@style/CustomTextStylePoppinsMedium" />
+
+                <TextView
+                    android:id="@+id/lbldate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="28dp"
+                    android:layout_weight="0"
+                    android:text="04 Jun 2025 03:38 PM"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp"
+                    style="@style/CustomTextStylePoppinsMedium"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/eight"
+                android:weightSum="0">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:text="Going to temple"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp"
+                    style="@style/CustomTextStylePoppinsMedium" />
+            </LinearLayout>
+
+
 
         </LinearLayout>
 
@@ -137,7 +215,8 @@
             android:layout_below="@+id/lblLeaveInformation"
             android:layout_margin="@dimen/ten"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="visible">
 
             <RelativeLayout
                 android:layout_width="@dimen/hundred"
@@ -200,6 +279,39 @@
 
                 </TextView>
             </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblLeaveInformation"
+            android:layout_margin="@dimen/ten"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/thirty_three"
+                android:layout_weight="0"
+                android:background="@drawable/bg_red_radoius_10dp"
+                android:gravity="center"
+                android:padding="@dimen/two">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rejected On 04 Jun 2025 03:50 PM"
+                    android:textSize="14sp"
+                    android:textColor="@color/red"
+                   style="@style/CustomTextStylePoppinsBold">
+
+                </TextView>
+            </RelativeLayout>
+
+
 
         </LinearLayout>
     </RelativeLayout>
