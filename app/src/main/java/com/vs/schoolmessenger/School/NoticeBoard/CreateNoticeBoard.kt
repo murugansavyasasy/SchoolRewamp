@@ -118,7 +118,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickL
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
         binding.toolbarLayout.lblParentToolBar.text = getString(R.string.NoticeBoard)
-        binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
+        binding.toolbarLayout.lblSchoolName.visibility = View.GONE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
         saveDrawableToCache(R.drawable.add_image)?.let {
             Constant.selectedFiles.add(
@@ -218,7 +218,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickL
 
             R.id.txtStartDate,R.id.rytStartDate,R.id.txtStartDate,R.id.lnrStartCalendar-> {
                 selectedDateField = 1
-                Constant.showDatePicker(this) { selectedDate ->
+                Constant.showDatePicker(this,false) { selectedDate ->
                     Log.d("selectedDate", selectedDate)
                     binding.txtStartDate.text = Constant.covertDateFormate(selectedDate)
                     val parts = binding.txtStartDate.text.split(" ")
@@ -231,7 +231,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickL
 
             R.id.rytEndDate,R.id.lnrEndCalendar,R.id.txtEndDate, -> {
                 selectedDateField = 2
-                Constant.showDatePicker(this) { selectedDate ->
+                Constant.showDatePicker(this,false) { selectedDate ->
                     Log.d("selectedDate", selectedDate)
                     binding.txtEndDate.text = Constant.covertDateFormate(selectedDate)
                     val parts = binding.txtEndDate.text.split(" ")

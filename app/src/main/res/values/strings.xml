@@ -527,8 +527,12 @@
     <string name="no_student_found">No student found!</string>
     <string name="no_dsc">Admission No DSC</string>
     <string name="no_asc">Admission No ASC</string>
+    <string name="admis_no_asc">AdmisNo ASC</string>
+    <string name="admis_no_dsc">AdmisNo DSC</string>
     <string name="namedsc">NameDSC</string>
     <string name="nameasc">NameASC</string>
+    <string name="rollasc">RollASC</string>
+    <string name="rolldsc">RollDSC</string>
     <string name="select_attendance_type">Select Attendance Type</string>
     <string name="admis_no">ADMIS No:</string>
     <string name="Staffwise_Attendance_Report">Staffwise Attendance Report</string>

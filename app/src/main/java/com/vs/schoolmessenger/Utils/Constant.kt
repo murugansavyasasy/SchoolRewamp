@@ -611,7 +611,7 @@ object Constant {
 
     }
 
-    public fun showDatePicker(context: Context, onDateSelected: (String) -> Unit) {
+    public fun showDatePicker(context: Context,dateFormatType: Boolean, onDateSelected: (String) -> Unit) {
         val calendar = Calendar.getInstance()
 
         val year = calendar.get(Calendar.YEAR)
@@ -632,8 +632,9 @@ object Constant {
             year, month, day
 
         )
-        datePickerDialog.datePicker.maxDate = calendar.timeInMillis
-
+        if (dateFormatType) {
+            datePickerDialog.datePicker.maxDate = calendar.timeInMillis
+        }
         datePickerDialog.show()
     }
 

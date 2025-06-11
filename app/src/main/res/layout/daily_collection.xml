@@ -64,17 +64,17 @@
 
 
                 <ImageView
-                    android:layout_width="@dimen/eighteen"
-                    android:layout_height="@dimen/eighteen"
                     android:id="@+id/image_view"
-                    android:textStyle="normal"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"
-                    android:layout_marginEnd="@dimen/ten"
-                    android:gravity="center"
+                    android:layout_width="13dp"
+                    android:layout_height="19dp"
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/three"
-                    android:src="@drawable/calender_icon_color"/>
+                    android:layout_marginEnd="@dimen/ten"
+                    android:gravity="center"
+                    android:src="@drawable/calender_icon_color"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:textStyle="normal" />
             </LinearLayout>
         </LinearLayout>
         <LinearLayout

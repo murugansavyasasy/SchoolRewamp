@@ -10,23 +10,25 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIds
+import com.vs.schoolmessenger.CommonScreens.SpecificStudentData.SpecificStudentSelectClickListener
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesSelectionListener
+import com.vs.schoolmessenger.School.StudentReport.StudentReportData
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class AbsenteesMarkAdapter(
     private var itemList: List<NameAndIds>?,
     private var context: Context,
     private var isLoading: Boolean,
-    private val selectionListener: AbsenteesSelectionListener
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private val selectionListener: AbsenteesSelectionListener,
+    private val listener: SpecificStudentSelectClickListener,
+    ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val studentIdList = mutableListOf<String>()
     private var isTextExpanded = false
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
     private var allMarkedAbsent = false
-
 
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
@@ -42,7 +44,7 @@ class AbsenteesMarkAdapter(
             val view =
                 LayoutInflater.from(parent.context)
                     .inflate(R.layout.attendance_student_list, parent, false)
-            DataViewHolder(view, context, studentIdList,selectionListener) // Pass context to DataViewHolder
+            DataViewHolder(view, context, studentIdList,selectionListener,listener) // Pass context to DataViewHolder
         }
     }
 
@@ -63,9 +65,11 @@ class AbsenteesMarkAdapter(
         itemView: View,
         private val context: Context,
         private val studentIdList: MutableList<String>,
-        private val selectionListener: AbsenteesSelectionListener
+        private val selectionListener: AbsenteesSelectionListener,
+        private val listener: SpecificStudentSelectClickListener,
 
-    ) :
+
+        ) :
         RecyclerView.ViewHolder(itemView) {
         private val lblName: TextView = itemView.findViewById(R.id.lblName)
         private val lblRollNo: TextView = itemView.findViewById(R.id.lblRollNo)
@@ -106,6 +110,7 @@ class AbsenteesMarkAdapter(
 
                 if (!studentIdList.contains(id)) {
                     studentIdList.add(id)
+                    listener.onIdCheck(data)
                 }
 
                 Log.d("StudentIDList", "After marking Absent: $studentIdList")
@@ -116,9 +121,8 @@ class AbsenteesMarkAdapter(
                 // Now showing "Present", so remove from list
                 lnrAbsent.visibility = View.GONE
                 lnrPresent.visibility = View.VISIBLE
-
                 studentIdList.remove(id)
-
+                listener.onIdUnchecked(data)
                 Log.d("StudentIDList", "After marking Present: $studentIdList")
                 selectionListener.onSelectionChanged(studentIdList.toList())
             }
@@ -126,17 +130,49 @@ class AbsenteesMarkAdapter(
     }
 
     fun setAllAbsent(enable: Boolean) {
-        studentIdList.clear()
-
+//        studentIdList.clear()
         if (enable) {
             itemList?.forEach {
                 studentIdList.add(it.id.toString())
             }
         }
+        else {
+            studentIdList.clear()
+        }
+
         notifyDataSetChanged()
         selectionListener.onSelectionChanged(studentIdList.toList())
 
     }
+    enum class SortType {
+        NO_ASC,
+        NO_DESC,
+        NAME_ASC,
+        NAME_DESC,
+        REG_ASC,
+        REG_DSC
+    }
+    fun sortData(sortType: SortType) {
+        val sortedList = when (sortType) {
+            SortType.NO_ASC -> itemList?.sortedBy { it.admission_no }
+            SortType.NO_DESC -> itemList?.sortedByDescending { it.admission_no }
+            SortType.NAME_ASC -> itemList?.sortedBy { it.name }
+            SortType.NAME_DESC -> itemList?.sortedByDescending { it.name }
+            SortType.REG_ASC -> itemList?.sortedBy { it.roll_no }
+            SortType.REG_DSC -> itemList?.sortedByDescending { it.roll_no }
+
+        }
+
+        updateData(sortedList ?: emptyList())
+    }
+
+
+    fun updateData(newList: List<NameAndIds>) {
+        itemList = newList
+        notifyDataSetChanged()
+    }
+
+
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun startShimmer() {

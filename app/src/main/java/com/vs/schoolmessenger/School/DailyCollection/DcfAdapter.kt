@@ -64,7 +64,7 @@ class DcfAdapter(
 
         fun bind(item: DisplayItem.Header) {
             totalLabel.text = item.category
-            totalValue.text = String.format("₹%s", item.total)
+            totalValue.text = String.format( item.total)
 
         }
 
@@ -76,7 +76,7 @@ class DcfAdapter(
 
         fun bind(item: DisplayItem.Fee) {
             feeType.text = item.typeName
-            feeAmount.text = String.format("₹%s", item.amount)
+            feeAmount.text = String.format( item.amount)
         }
     }
 }
