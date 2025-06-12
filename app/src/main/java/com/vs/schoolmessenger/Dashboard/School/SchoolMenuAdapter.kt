@@ -103,10 +103,8 @@ class SchoolMenuAdapter(
         fun bind(data: MenuDetail, position: Int, listener: MenuClickListener) {
             lblMenuName.text = data.name
 
-            if(data.unreadCount>=1){
-                imgReadCount.visibility=View.VISIBLE
-            }
-
+            imgReadCount.visibility = View.GONE
+            
             when (data.id) {
                 Constant.M_COMMUNICATION -> {
                     imgMenu.setImageResource(R.drawable.communication_icon_dashboard)
@@ -153,8 +151,6 @@ class SchoolMenuAdapter(
                 }
 
 
-
-
                 Constant.M_ATTACHMENTS -> {
                     imgMenu.setImageResource(R.drawable.attachement_icon)
                 }
@@ -191,17 +187,19 @@ class SchoolMenuAdapter(
                     imgMenu.setImageResource(R.drawable.staff_attendance_report)
                 }
 
-                Constant .M_LEAVE_REQUEST -> {
+                Constant.M_LEAVE_REQUEST -> {
                     imgMenu.setImageResource(R.drawable.leave_request_icon_school)
                 }
 
-                Constant .M_PTM -> {
+                Constant.M_PTM -> {
                     imgMenu.setImageResource(R.drawable.ptm_school)
                 }
-                Constant .M_FEE_PENDING_REPORT -> {
+
+                Constant.M_FEE_PENDING_REPORT -> {
                     imgMenu.setImageResource(R.drawable.fee_pending_reports)
                 }
-                Constant .M_SCHOOL_NEEDS -> {
+
+                Constant.M_SCHOOL_NEEDS -> {
                     imgMenu.setImageResource(R.drawable.school_needs)
                 }
             }
