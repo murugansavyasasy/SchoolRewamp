@@ -21,6 +21,7 @@ import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventResp
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.HolidayResponse
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
+import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestApplyResponse
 
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.SendAbsenteeSMSResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportDataResponse
@@ -160,6 +161,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var sendnotice: LiveData<NoticeBoardSendResponse?>? = null
     var sendevent: LiveData<EventSendResponse?>? = null
     var isAttachmentSend: LiveData<NoticeBoardSendResponse?>? = null
+    var isLeaveRequest: LiveData<LeaveRequestApplyResponse?>? = null
 
 
 
@@ -218,6 +220,7 @@ class App(application: Application) : AndroidViewModel(application) {
         sendnotice = apiSchoolRepositories.sendnoticeLiveData
         sendevent = apiSchoolRepositories.sendeventLiveData
         isAttachmentSend = apiSchoolRepositories.sendAttachmentLiveData
+        isLeaveRequest = apiParentRepositories.leaveRequestLiveData
 
     }
 
@@ -457,6 +460,10 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun getAttachmentArchive(isToken: String, activity: Activity) {
         apiParentRepositories.attachmentListArchive(isToken, activity)
+    }
+
+    fun isSendLeaveRequestApply(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        apiParentRepositories.isLeaveRequestApply(isToken, jsonObject, activity)
     }
 }
 

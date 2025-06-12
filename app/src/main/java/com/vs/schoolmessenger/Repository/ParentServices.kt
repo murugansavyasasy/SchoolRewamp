@@ -4,8 +4,11 @@ import android.app.Activity
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentResponse
 import com.vs.schoolmessenger.Parent.Attendance.ChildAttendanceResponse
+import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestApplyResponse
+import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.SendAbsenteeSMSResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -15,12 +18,14 @@ class ParentServices {
     var isChildAttendanceReport: MutableLiveData<ChildAttendanceResponse?>
     var isAttachmentResponse: MutableLiveData<AttachmentResponse?>
     var isAttachmentResponseArchive: MutableLiveData<AttachmentResponse?>
+    var isLeaveRequestApplyResponse: MutableLiveData<LeaveRequestApplyResponse?>
 
     init {
         client_auth = RestClient()
         isChildAttendanceReport = MutableLiveData()
         isAttachmentResponse = MutableLiveData()
         isAttachmentResponseArchive = MutableLiveData()
+        isLeaveRequestApplyResponse=MutableLiveData()
     }
 
     fun getChildAttendanceReport(
@@ -147,5 +152,49 @@ class ParentServices {
 
     val isAttachmentResponseArchiveLiveData: LiveData<AttachmentResponse?>
         get() = isAttachmentResponseArchive
+
+
+    fun isLeaveRequestApply(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        RestClient.apiInterfaces.LeaveRequestApply(isToken, jsonObject)
+            ?.enqueue(object : Callback<LeaveRequestApplyResponse?> {
+                override fun onResponse(
+                    call: Call<LeaveRequestApplyResponse?>,
+                    response: Response<LeaveRequestApplyResponse?>
+                ) {
+                    Log.d(
+                        "", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isLeaveRequestApplyResponse.postValue(response.body())
+                            } else {
+                                isLeaveRequestApplyResponse.postValue(response.body())
+                            }
+                        }
+                    }
+                    else{
+                        isLeaveRequestApplyResponse.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<LeaveRequestApplyResponse?>, t: Throwable) {
+                    isLeaveRequestApplyResponse.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val leaveRequestLiveData: LiveData<LeaveRequestApplyResponse?>
+        get() = isLeaveRequestApplyResponse
+
+
+
+
+
+
+
+
 
 }

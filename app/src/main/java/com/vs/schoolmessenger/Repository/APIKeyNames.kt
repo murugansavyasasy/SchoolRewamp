@@ -126,6 +126,11 @@ object APIKeyNames {
     const val embed ="embed"
     const val upload_link ="upload_link"
     const val html ="html"
+    const val leave_from ="leave_from"
+    const val leave_to ="leave_to"
+    const val reason ="reason"
+
+
 
 
 

@@ -147,7 +147,7 @@ class ChildMenuAdapter(
                     imgMenu.setImageResource(R.drawable.attendance_report_icon)
                 }
 
-                Constant.M_LEAVE_REQUEST -> {
+                Constant.M_PARENT_LEAVE_REQUEST -> {
                     imgMenu.setImageResource(R.drawable.leave_request_icon_school)
                 }
 

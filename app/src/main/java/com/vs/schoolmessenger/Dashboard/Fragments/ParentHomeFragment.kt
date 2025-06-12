@@ -329,6 +329,8 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             Constant.M_QUIZ_EXAM -> Intent(requireActivity(), Quiz::class.java)
             Constant.M_LSRW -> Intent(requireActivity(), LSRW::class.java)
             Constant.M_CLASS_TIME_TABLE -> Intent(requireActivity(), TimeTable::class.java)
+            Constant.M_PARENT_LEAVE_REQUEST -> Intent(requireActivity(), LeaveRequest::class.java)
+
 //            24 -> Intent(requireActivity(), UserProfile::class.java)
             Constant.M_CERTIFICATE_REQUEST -> Intent(
                 requireActivity(),

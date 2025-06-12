@@ -105,6 +105,7 @@ object Constant {
     val M_INTERACTION_WITH_STAFF = 16
     val M_INTERACTION_WITH_STUDENT = 17
     val M_LEAVE_REQUEST = 18
+    val M_PARENT_LEAVE_REQUEST = 28
     val M_LESSON_PLAN = 19
     val M_LSRW = 20
     val M_MARK_YOUR_ATTENDANCE = 21
@@ -662,6 +663,49 @@ object Constant {
         datePickerDialog.show()
     }
 
+    //Leave Request
+    fun handleRestrictDatePicker(
+        context: Context,
+        minDate: Long? = null,
+        preSelectedDateMillis: Long? = null,
+        onDateSelected: (String) -> Unit
+    ) {
+        val calendar = Calendar.getInstance()
+
+        // Use pre-selected date if it is selected
+        if (preSelectedDateMillis != null) {
+            calendar.timeInMillis = preSelectedDateMillis
+        }
+
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(
+            context,
+            { _, selectedYear, selectedMonth, selectedDay ->
+                val selectedCalendar = Calendar.getInstance().apply {
+                    set(selectedYear, selectedMonth, selectedDay)
+                }
+                val formattedDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                    .format(selectedCalendar.time)
+                onDateSelected(formattedDate)
+            },
+            year, month, day
+        )
+
+        minDate?.let {
+            datePickerDialog.datePicker.minDate = it
+        }
+
+        datePickerDialog.show()
+    }
+
+
+
+
+
+
     fun covertDateFormate(input: String): String {
         return try {
             val inputFormat = SimpleDateFormat(dd_MM_yyyy, Locale.getDefault())
@@ -673,6 +717,9 @@ object Constant {
             input // return original if there's a parsing error
         }
     }
+
+
+
 
     fun getFileSizeInMB(filePath: String): String {
         val file = File(filePath)

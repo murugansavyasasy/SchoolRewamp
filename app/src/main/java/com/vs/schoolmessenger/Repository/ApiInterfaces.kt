@@ -25,6 +25,8 @@ import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventResp
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.HolidayResponse
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
+import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequest
+import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestApplyResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.SendAbsenteeSMSResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportDataResponse
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeStudentsResponse
@@ -408,5 +410,12 @@ interface ApiInterfaces {
     fun attachmentListArchive(
         @Header(APIKeyNames.Authorization) token: String
     ): Call<AttachmentResponse?>
+
+    @POST(APIMethods.leave_request_apply)
+    fun LeaveRequestApply(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Body request: JsonObject
+    ): Call<LeaveRequestApplyResponse>?
+
 
 }

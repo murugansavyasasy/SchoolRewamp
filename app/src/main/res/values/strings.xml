@@ -554,7 +554,8 @@
     <string name="Description_required">Description is required</string>
     <string name="success">Success</string>
     <string name="fail">Fail</string>
-
+    <string name="reason_for_leave">Reason for Leave</string>
+    <string name="create_leave_request">Create Leave Request</string>
 
 
 </resources>
