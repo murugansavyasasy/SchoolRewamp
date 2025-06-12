@@ -71,6 +71,7 @@ object APIMethods {
     const val sendAttachment = "comm/api/attachment/send-attachment"
     const val attachmentList = "comm/api/attachment/list"
     const val attachmentListArchive = "comm/api/attachment/list-archive"
+    const val getleaverequest = "comm/api/leave-req/list"
 }
 
 

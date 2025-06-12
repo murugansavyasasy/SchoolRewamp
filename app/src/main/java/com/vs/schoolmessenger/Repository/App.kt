@@ -35,6 +35,7 @@ import com.vs.schoolmessenger.School.Event.Response.EventSendResponse
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
+import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveRequestResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffAttendanceReportResponse
@@ -47,6 +48,8 @@ class App(application: Application) : AndroidViewModel(application) {
 
     private var apiSchoolRepositories: SchoolServices = SchoolServices()
     private var apiParentRepositories: ParentServices = ParentServices()
+
+
 
 
     var isDashBoardData: LiveData<DashboardResponse?>? = null
@@ -161,6 +164,9 @@ class App(application: Application) : AndroidViewModel(application) {
     var sendevent: LiveData<EventSendResponse?>? = null
     var isAttachmentSend: LiveData<NoticeBoardSendResponse?>? = null
 
+    var getleaverequest: LiveData<LeaveRequestResponse?>? = null
+
+
 
 
 
@@ -218,6 +224,7 @@ class App(application: Application) : AndroidViewModel(application) {
         sendnotice = apiSchoolRepositories.sendnoticeLiveData
         sendevent = apiSchoolRepositories.sendeventLiveData
         isAttachmentSend = apiSchoolRepositories.sendAttachmentLiveData
+        getleaverequest =apiSchoolRepositories.leaverequestLiveData
 
     }
 
@@ -457,6 +464,11 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun getAttachmentArchive(isToken: String, activity: Activity) {
         apiParentRepositories.attachmentListArchive(isToken, activity)
+    }
+
+
+    fun getleaverequest(isToken: String, member_type: String, activity: Activity) {
+        apiSchoolRepositories.getleaverequest(isToken,member_type,activity)
     }
 }
 

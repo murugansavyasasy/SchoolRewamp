@@ -30,6 +30,7 @@ import com.vs.schoolmessenger.School.Event.Response.EventSendResponse
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
+import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveRequestResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffAttendanceReportResponse
@@ -98,6 +99,7 @@ class SchoolServices {
     var sendnotice: MutableLiveData<NoticeBoardSendResponse?>
     var sendevent: MutableLiveData<EventSendResponse?>
     var isSendAttachment: MutableLiveData<NoticeBoardSendResponse?>
+    var getleaverequest: MutableLiveData<LeaveRequestResponse?>
 
     init {
         client_auth = RestClient()
@@ -146,6 +148,7 @@ class SchoolServices {
         sendnotice = MutableLiveData()
         sendevent = MutableLiveData()
         isSendAttachment = MutableLiveData()
+        getleaverequest = MutableLiveData()
 
     }
 
@@ -1800,6 +1803,44 @@ class SchoolServices {
 
     val sendAttachmentLiveData: LiveData<NoticeBoardSendResponse?>
         get() = isSendAttachment
+
+
+
+    fun getleaverequest(
+        isToken: String, member_type: String, activity: Activity
+    ) {
+        RestClient.apiInterfaces.getleaverequest(isToken, member_type)
+            ?.enqueue(object : Callback<LeaveRequestResponse?> {
+                override fun onResponse(
+                    call: Call<LeaveRequestResponse?>, response: Response<LeaveRequestResponse?>
+                ) {
+                    Log.d(
+                        "isGetCountryList", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                getleaverequest.postValue(response.body())
+                            } else {
+                                getleaverequest.postValue(response.body())
+                            }
+                        }
+                    }
+                    else{
+                        getleaverequest.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<LeaveRequestResponse?>, t: Throwable) {
+                    isGetAds.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val leaverequestLiveData: LiveData<LeaveRequestResponse?>
+        get() = getleaverequest
 
 
 }
