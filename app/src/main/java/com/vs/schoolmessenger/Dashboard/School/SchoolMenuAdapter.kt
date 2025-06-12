@@ -96,11 +96,16 @@ class SchoolMenuAdapter(
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
         private val imgMenu: ImageView = itemView.findViewById(R.id.imgMenu)
+        private val imgReadCount: View = itemView.findViewById(R.id.imgReadCount)
         private val lblMenuName: TextView = itemView.findViewById(R.id.lblMenuName)
         private val rlaMenu: RelativeLayout = itemView.findViewById(R.id.rlaMenu)
 
         fun bind(data: MenuDetail, position: Int, listener: MenuClickListener) {
             lblMenuName.text = data.name
+
+            if(data.unreadCount>=1){
+                imgReadCount.visibility=View.VISIBLE
+            }
 
             when (data.id) {
                 Constant.M_COMMUNICATION -> {

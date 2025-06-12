@@ -179,11 +179,11 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
             filterSelectedOption = filterCaterotyType[position]
 
             when (filterSelectedOption) {
-                getString(R.string.no_asc) -> {
+                getString(R.string.admis_no_asc) -> {
                     mAdapter.sortData(AbsenteesMarkAdapter.SortType.NO_ASC)
                 }
 
-                getString(R.string.no_dsc) -> {
+                getString(R.string.admis_no_dsc) -> {
                     mAdapter.sortData(AbsenteesMarkAdapter.SortType.NO_DESC)
                 }
 
