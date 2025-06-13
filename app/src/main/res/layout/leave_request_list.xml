@@ -27,12 +27,13 @@
 
 
             <TextView
+                android:id="@+id/statustext_top"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/approve"
                 android:textSize="13sp"
                 android:textColor="@color/white"
-                android:textStyle="bold">
+               style="@style/CustomTextStylePoppinsBold">
 
             </TextView>
         </RelativeLayout>
@@ -59,7 +60,7 @@
                     android:text="@string/name"
                     android:gravity="start"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"
+                    android:textSize="@dimen/fourteen_sp"
                     style="@style/CustomTextStylePoppinsMedium" />
 
                 <TextView
@@ -70,14 +71,14 @@
                     android:layout_weight="0"
                     android:text="Sathish"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"
+                    android:textSize="@dimen/fourteen_sp"
                     style="@style/CustomTextStylePoppinsMedium"/>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/eight"
+                android:layout_marginTop="10dp"
                 android:weightSum="0">
 
                 <TextView
@@ -86,7 +87,7 @@
                     android:layout_weight="0"
                     android:text="@string/Class"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"
+                    android:textSize="@dimen/fourteen_sp"
                     style="@style/CustomTextStylePoppinsMedium" />
 
                 <TextView
@@ -97,7 +98,7 @@
                     android:layout_weight="0"
                     android:text="XII - B"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"
+                    android:textSize="@dimen/fourteen_sp"
                     style="@style/CustomTextStylePoppinsMedium"/>
             </LinearLayout>
 
@@ -114,7 +115,7 @@
                     android:gravity="start"
                     android:text="Mar 31, 2023"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/twele"
+                    android:textSize="@dimen/fourteen_sp"
                    style="@style/CustomTextStylePoppinsBold" />
 
                 <ImageView
@@ -131,14 +132,14 @@
                     android:layout_marginStart="120dp"
                     android:text="Apr 2 -2023"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/twele_sp"
+                    android:textSize="@dimen/fourteen_sp"
                     style="@style/CustomTextStylePoppinsBold" />
             </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/eight"
+                android:layout_marginTop="10dp"
                 android:weightSum="0">
 
                 <TextView
@@ -147,7 +148,7 @@
                     android:layout_weight="0"
                     android:text="No.Of.Days"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"
+                    android:textSize="@dimen/fourteen_sp"
                     style="@style/CustomTextStylePoppinsMedium" />
 
                 <TextView
@@ -158,14 +159,14 @@
                     android:layout_weight="0"
                     android:text="3"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"
+                    android:textSize="@dimen/fourteen_sp"
                     style="@style/CustomTextStylePoppinsMedium"/>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/eight"
+                android:layout_marginTop="10dp"
                 android:weightSum="0">
 
                 <TextView
@@ -174,7 +175,7 @@
                     android:layout_weight="0"
                     android:text="Applied On:"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"
+                    android:textSize="@dimen/fourteen_sp"
                     style="@style/CustomTextStylePoppinsMedium" />
 
                 <TextView
@@ -185,23 +186,24 @@
                     android:layout_weight="0"
                     android:text="04 Jun 2025 03:38 PM"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"
+                    android:textSize="@dimen/fourteen_sp"
                     style="@style/CustomTextStylePoppinsMedium"/>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/eight"
+                android:layout_marginTop="10dp"
                 android:weightSum="0">
 
                 <TextView
+                    android:id="@+id/leaverequestdesc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
                     android:text="Going to temple"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"
+                    android:textSize="@dimen/fourteen_sp"
                     style="@style/CustomTextStylePoppinsMedium" />
             </LinearLayout>
 
@@ -210,15 +212,18 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/bottomlinear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/lblLeaveInformation"
             android:layout_margin="@dimen/ten"
             android:gravity="center"
             android:orientation="horizontal"
-            android:visibility="visible">
+            android:layout_marginTop="10dp"
+            android:visibility="gone">
 
             <RelativeLayout
+                android:id="@+id/btnapprove"
                 android:layout_width="@dimen/hundred"
                 android:layout_height="@dimen/thirty_three"
                 android:layout_marginStart="@dimen/twenty"
@@ -242,7 +247,7 @@
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/imgChecked"
                     android:text="@string/approve"
-                    android:textSize="13sp"
+                    android:textSize="@dimen/fourteen_sp"
                     android:textColor="@color/white"
                     android:textStyle="bold">
 
@@ -250,6 +255,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/btnrejected"
                 android:layout_width="@dimen/hundred"
                 android:layout_height="@dimen/thirty_three"
                 android:layout_marginStart="@dimen/twenty"
@@ -274,7 +280,7 @@
                     android:layout_toEndOf="@+id/imgReject"
                     android:text="@string/reject"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/thirteen_sp"
+                    android:textSize="@dimen/fourteen_sp"
                     android:textStyle="bold">
 
                 </TextView>
@@ -283,15 +289,18 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/bottomstatuslinear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/lblLeaveInformation"
             android:layout_margin="@dimen/ten"
             android:gravity="center"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <RelativeLayout
+                android:id="@+id/bottomstatusrelative_layout"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/thirty_three"
                 android:layout_weight="0"
@@ -301,6 +310,7 @@
 
 
                 <TextView
+                    android:id="@+id/status_textlabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Rejected On 04 Jun 2025 03:50 PM"
