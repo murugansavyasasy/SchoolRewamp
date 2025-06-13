@@ -1,13 +1,17 @@
 package com.vs.schoolmessenger.School.LeaveRequests
 
+import android.os.Build
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
+import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequest
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.LeaveRequests.Listener.SchoolLRClickListener
@@ -29,6 +33,7 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
     private var isAccessToken: String? = null
     private var isStaffDetails: StaffDetails? = null
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
         setupToolbar()
@@ -67,6 +72,19 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
                 binding.nomessage.visibility = View.VISIBLE
                 binding.txtNoData.visibility = View.VISIBLE
                 binding.txtNoData.text = response?.message ?: "No data found"
+            }
+        }
+
+
+        appViewModel!!.isleaverequestapprove?.observe(this) { response ->
+            if (response != null) {
+                if (response.status) {
+                    Constant.hideLoading(this@LeaveRequests)
+                    Log.d("isSendleaverequestmarking", response.message)
+                    Constant.showDataValidation(resources.getString(R.string.success), response.message, this)
+                } else {
+                    Constant.showDataValidation(resources.getString(R.string.fail), response.message, this)
+                }
             }
         }
     }
