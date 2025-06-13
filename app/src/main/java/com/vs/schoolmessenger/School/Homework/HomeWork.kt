@@ -252,11 +252,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
 
             override fun afterTextChanged(s: Editable?) {}
         })
-
-
     }
-
-
 
     private fun isLoadAcademicYear(isAcademicYear: List<AcademicYear>?) {
         val adapter = AcademicYearAdapter(this, isAcademicYear)
@@ -298,7 +294,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
                         "Clicked Standard Year: ID = ${isStandard[position].id}, Year = ${isStandard[position].name}"
                     )
 
-                    isSectionId = isStandard.get(position).id
+                    isSectionId = isStandard[position].id
                     isSection = isStandard[position].sections
                     isLoadSection(isSection)
                 }
@@ -349,7 +345,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         if (filteredList.isEmpty()) {
             binding.rcyHomeWorkReport.visibility = View.GONE
             binding.lytNoDataFound.visibility = View.VISIBLE
-            binding.noDataFound.text = "No matching homework found."
+            binding.noDataFound.text = getString(R.string.no_matching_homework_found)
         } else {
             binding.rcyHomeWorkReport.visibility = View.VISIBLE
             binding.lytNoDataFound.visibility = View.GONE
@@ -417,7 +413,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
             }
 
             R.id.btnChooseRecipient -> {
-                RedirectToSectionStudents()
+                isRedirectToSectionStudents()
             }
 
             R.id.Calendar -> {
@@ -445,7 +441,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         binding.rcyHomeWorkReport.layoutManager = LinearLayoutManager(this)
         binding.rcyHomeWorkReport.isNestedScrollingEnabled = false
         binding.rcyHomeWorkReport.adapter = mHomeWorkReportAdapter
-
     }
 
 
@@ -465,7 +460,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         )
     }
 
-    private fun RedirectToSectionStudents() {
+    private fun isRedirectToSectionStudents() {
         val title = binding.edtTitle.text.toString().trim()
         val description = binding.edtDescription.text.toString().trim()
         if (title.isEmpty()) {
@@ -497,7 +492,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
             )
         }
         mAdapter!!.notifyDataSetChanged()
-    Log.d("FileComing",isFileType)
+        Log.d("FileComing", isFileType)
         val sdkInt = Build.VERSION.SDK_INT
         if (isFileType == Constant.DOCUMENT && sdkInt < Build.VERSION_CODES.R) {
             openSystemDocumentPicker()
@@ -565,6 +560,15 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         }
 
         rlaCamera.setOnClickListener {
+            Constant.selectedFiles.clear()
+            saveDrawableToCache(R.drawable.add_image)?.let {
+                Constant.selectedFiles.add(
+                    FileItem(
+                        it, FileType.IMAGE
+                    )
+                )
+            }
+            mAdapter!!.notifyDataSetChanged()
             checkCameraPermissionAndOpenCamera()
             dialog.dismiss()
         }
@@ -618,6 +622,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         }
 
         fun addPath(uri: Uri) {
+            Log.d("isFilePickingUrl", uri.toString())
             if (Constant.selectedFiles.size >= MAX_FILES) return
 
             val mimeType = contentResolver.getType(uri)
@@ -626,13 +631,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
                 return
             }
 
-            val path: String? = if (uri.scheme == "file") uri.path else getPathFromUri(uri)
-            if (path == null) {
-                Log.w("addPath", "Could not resolve path from URI: $uri")
-                return
-            }
-
-            val fileName = getFileName(uri).ifEmpty { File(path).name }
+            val fileName = getFileName(uri)
             val type = when {
                 fileName.endsWith(".pdf", true) -> FileType.PDF
                 fileName.endsWith(".doc", true) || fileName.endsWith(".docx", true) -> FileType.DOC
@@ -657,7 +656,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
             CAMERA_IMAGE_REQUEST -> {
                 cameraImageFilePath?.let { filePath ->
                     var file = File(filePath)
-
                     if (file.exists()) {
                         if (!file.name.endsWith(".jpg", true)) {
                             val newFile = File(file.parent, file.nameWithoutExtension + ".jpg")
@@ -691,7 +689,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
                 }
             }
         }
-
         mAdapter?.notifyDataSetChanged()
     }
 
@@ -711,7 +708,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         if (uri.scheme.equals("file", ignoreCase = true)) {
             return uri.path
         }
-
         return null
     }
 
@@ -790,6 +786,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
     }
 
     override fun onClickListener(data: HomeWorkReport) {
+        Constant.isForward = true
         Constant.isAwsUploadedFiles.clear()
         Constant.selectedFiles.clear()
         saveDrawableToCache(R.drawable.add_image)?.let {

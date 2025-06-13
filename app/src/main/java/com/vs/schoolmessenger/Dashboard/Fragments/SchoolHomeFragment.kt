@@ -8,8 +8,6 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import java.text.SimpleDateFormat
-import java.util.*
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -62,6 +60,8 @@ import com.vs.schoolmessenger.School.StudentReport.StudentReport
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SchoolHomeFragmentBinding
+import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Locale
 
 
