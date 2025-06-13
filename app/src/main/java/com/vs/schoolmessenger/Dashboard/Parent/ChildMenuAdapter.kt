@@ -120,6 +120,9 @@ class ChildMenuAdapter(
             if(data.unreadCount>=1){
                 imgReadCount.visibility=View.VISIBLE
             }
+            else{
+                imgReadCount.visibility=View.GONE
+            }
 
             when (data.id) {
 

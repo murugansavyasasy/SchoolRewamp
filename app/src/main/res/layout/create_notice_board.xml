@@ -39,6 +39,21 @@
                 android:textSize="@dimen/thirteen_sp"
                 style="@style/CustomTextStylePoppinsBold" />
 
+
+            <TextView
+                android:id="@+id/lblStar"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_toEndOf="@id/lblEventTitle"
+                android:layout_height="wrap_content"
+                android:text="@string/mandatory"
+                android:layout_marginTop="@dimen/eighteen"
+                android:layout_marginStart="@dimen/two"
+                android:textColor="@color/red"
+                android:textSize="@dimen/thirteen_sp" />
+
+
+
             <EditText
                 android:id="@+id/txtTitle"
                 android:layout_width="match_parent"
@@ -73,13 +88,27 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lbtitleTextCount"
-                android:layout_marginTop="@dimen/fifteen"
+                android:layout_marginTop="@dimen/ten"
                 android:text="@string/Description"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
                 android:layout_alignStart="@+id/txtTitle"
                 style="@style/CustomTextStylePoppinsBold"
               />
+
+
+            <TextView
+                android:id="@+id/lblStar2"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/eight"
+                android:layout_toEndOf="@id/lblEventDesc"
+                android:layout_below="@+id/lbtitleTextCount"
+                android:layout_height="wrap_content"
+                android:text="@string/mandatory"
+                android:layout_marginStart="@dimen/two"
+                android:textColor="@color/red"
+                android:textSize="@dimen/thirteen_sp" />
 
 
             <RelativeLayout
@@ -129,7 +158,7 @@
                 android:layout_below="@+id/lbTextCount"
                 android:layout_alignStart="@+id/rytDesc"
                 android:layout_alignEnd="@+id/rytDesc"
-                android:layout_marginTop="@dimen/fifteen">
+                android:layout_marginTop="@dimen/ten">
 
 
 
@@ -153,6 +182,18 @@
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp"
                         style="@style/CustomTextStylePoppinsBold" />
+
+                    <TextView
+                        android:id="@+id/lblStar3"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="@dimen/eight"
+                        android:layout_toEndOf="@id/lblStart"
+                        android:layout_height="wrap_content"
+                        android:text="@string/mandatory"
+                        android:layout_marginStart="@dimen/two"
+                        android:textColor="@color/red"
+                        android:textSize="@dimen/thirteen_sp" />
 
 
                     <RelativeLayout
@@ -254,6 +295,19 @@
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp"
                        style="@style/CustomTextStylePoppinsBold" />
+
+                    <TextView
+                        android:id="@+id/lblStar4"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="@dimen/eight"
+                        android:layout_toEndOf="@id/lblEnd"
+                        android:layout_below="@+id/rytStart"
+                        android:layout_height="wrap_content"
+                        android:text="@string/mandatory"
+                        android:layout_marginStart="@dimen/two"
+                        android:textColor="@color/red"
+                        android:textSize="@dimen/thirteen_sp" />
 
                     <RelativeLayout
                         android:id="@+id/rytEnd"

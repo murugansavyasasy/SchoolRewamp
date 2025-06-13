@@ -260,7 +260,7 @@
                 android:text="@string/View"
                 android:textColor="@color/navi_blue2"
                 android:textSize="@dimen/thirteen_sp"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:textStyle="bold">
 
             </TextView>

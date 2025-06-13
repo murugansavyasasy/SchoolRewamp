@@ -189,7 +189,6 @@
                     android:layout_height="wrap_content"
                     android:visibility="gone">
 
-
                     <LinearLayout
                         android:id="@+id/lnrScheduleCall"
                         android:layout_width="match_parent"
@@ -198,18 +197,33 @@
                         android:weightSum="1">
 
 
-                        <TextView
-                            style="@style/CustomTextStylePoppinsBold"
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginStart="@dimen/twenty"
                             android:layout_weight="0.4"
-                            android:text="@string/schedule_date"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/thirteen_sp">
+                            android:layout_gravity="center"
+                            android:orientation="horizontal"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                style="@style/CustomTextStylePoppinsBold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/twenty"
+                                android:text="@string/schedule_date"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/thirteen_sp">
 
-                        </TextView>
+                            </TextView>
+
+                            <TextView
+                                android:id="@+id/lblStar"
+                                style="@style/CustomTextStylePoppinsBold"
+                                android:layout_width="wrap_content"
+                                android:layout_marginStart="@dimen/two"
+                                android:layout_height="wrap_content"
+                                android:text="@string/mandatory"
+                                android:textColor="@color/red"
+                                android:textSize="@dimen/thirteen_sp" />
+                        </LinearLayout>
 
                         <TextView
                             android:layout_width="@dimen/twenty"
@@ -242,18 +256,33 @@
                         android:orientation="horizontal"
                         android:weightSum="1">
 
-                        <TextView
-                            style="@style/CustomTextStylePoppinsBold"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                        <LinearLayout
                             android:layout_gravity="center"
-                            android:layout_marginStart="@dimen/twenty"
+                            android:layout_width="match_parent"
                             android:layout_weight="0.4"
-                            android:text="@string/from_time"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/thirteen_sp">
+                            android:orientation="horizontal"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                style="@style/CustomTextStylePoppinsBold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/twenty"
+                                android:text="@string/from_time"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/thirteen_sp">
 
-                        </TextView>
+                            </TextView>
+
+                            <TextView
+                                android:id="@+id/lblStar2"
+                                style="@style/CustomTextStylePoppinsBold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/mandatory"
+                                android:layout_marginStart="@dimen/two"
+                                android:textColor="@color/red"
+                                android:textSize="@dimen/thirteen_sp" />
+                        </LinearLayout>
 
                         <TextView
                             android:layout_width="@dimen/twenty"
@@ -303,18 +332,34 @@
                         android:orientation="horizontal"
                         android:weightSum="1">
 
-                        <TextView
-                            style="@style/CustomTextStylePoppinsBold"
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginStart="@dimen/twenty"
                             android:layout_weight="0.4"
-                            android:text="@string/do_not_dial_beyond"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/thirteen_sp">
+                            android:layout_gravity="center"
+                            android:orientation="horizontal"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                style="@style/CustomTextStylePoppinsBold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/twenty"
+                                android:text="@string/do_not_dial_beyond"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/thirteen_sp">
 
-                        </TextView>
+                            </TextView>
+
+                            <TextView
+                                android:id="@+id/lblStar3"
+                                style="@style/CustomTextStylePoppinsBold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/mandatory"
+                                android:layout_marginStart="@dimen/two"
+                                android:textColor="@color/red"
+                                android:textSize="@dimen/thirteen_sp" />
+                        </LinearLayout>
+
 
                         <TextView
                             android:layout_width="@dimen/twenty"
@@ -480,18 +525,32 @@
                     android:visibility="gone">
 
 
-                    <TextView
-
-                        style="@style/CustomTextStylePoppinsBold"
+                    <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/ten"
+                        android:orientation="horizontal"
                         android:layout_marginTop="@dimen/ten"
-                        android:text="@string/Title"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp">
+                        android:layout_height="wrap_content">
+                        <TextView
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/Title"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/thirteen_sp">
+                        </TextView>
 
-                    </TextView>
+                        <TextView
+                            android:id="@+id/lblStar4"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/mandatory"
+                            android:layout_marginStart="@dimen/two"
+                            android:textColor="@color/red"
+                            android:textSize="@dimen/thirteen_sp" />
+                    </LinearLayout>
+
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -540,6 +599,17 @@
                             android:layout_height="wrap_content"
                             android:text="@string/Description"
                             android:textColor="@color/black"
+                            android:textSize="@dimen/thirteen_sp" />
+
+                        <TextView
+                            android:id="@+id/lblStar5"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:layout_width="wrap_content"
+                            android:layout_toEndOf="@id/txtDescriptionLabel"
+                            android:layout_height="wrap_content"
+                            android:text="@string/mandatory"
+                            android:textColor="@color/red"
+                            android:layout_marginStart="@dimen/two"
                             android:textSize="@dimen/thirteen_sp" />
 
                         <EditText
@@ -824,6 +894,16 @@
                             android:visibility="visible">
 
                         </TextView>
+                        <TextView
+                            android:id="@+id/lblStar6"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/mandatory"
+                            android:layout_toEndOf="@id/lblTitle"
+                            android:layout_marginStart="@dimen/two"
+                            android:textColor="@color/red"
+                            android:textSize="@dimen/thirteen_sp" />
 
 
                         <RelativeLayout

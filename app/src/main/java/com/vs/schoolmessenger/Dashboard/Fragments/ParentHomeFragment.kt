@@ -96,7 +96,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
-        isDashBoardData()
+//        isDashBoardData()
 
         if (userDetails!!.is_parent && userDetails!!.is_staff) {
             binding.lblChangeRoll.visibility = View.VISIBLE
@@ -299,6 +299,11 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
     override fun onResume() {
         super.onResume()
+        Log.d("Loading","Dashboard Data is Loading")
+        isDashBoardData()
+        Log.d("Loading","Dashboard Data is Refreshed")
+
+
     }
 
     override fun onPause() {
