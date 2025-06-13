@@ -190,6 +190,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     if (isGetSubjectListData!!.size > 0) {
                         isSubjectId = isGetSubjectListData!!.first().id
                         binding.rytSubjectDropDown.visibility = View.VISIBLE
+                        binding.subjectlabel.visibility = View.VISIBLE
                         isLoadSubject(isGetSubjectListData)
                     }
                 }
@@ -674,11 +675,11 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                             "", isAcademicYearNote
                         )
                     } else {
-                            showSendConfirmationDialog(
-                                resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + " " + isTypeOfName + resources.getString(
-                                    R.string._s
-                                ), isAcademicYearNote
-                            )
+                        showSendConfirmationDialog(
+                            resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + " " + isTypeOfName + resources.getString(
+                                R.string._s
+                            ), isAcademicYearNote
+                        )
                     }
                 } else {
                     Constant.showValidationAlertPopup(
@@ -740,6 +741,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 binding.grouplabel.visibility = View.GONE
                 binding.recyclerView.visibility = View.GONE
                 binding.rytSubjectDropDown.visibility = View.GONE
+                binding.subjectlabel.visibility = View.GONE
                 binding.textdesc.visibility = View.VISIBLE
                 binding.bottomLayout.visibility = View.VISIBLE
                 binding.btnSpecificStudent.visibility = View.GONE
@@ -771,6 +773,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 binding.grouplabel.text = resources.getString(R.string.Standards)
                 binding.grouplabel.visibility = View.VISIBLE
                 binding.rytSubjectDropDown.visibility = View.GONE
+                binding.subjectlabel.visibility = View.GONE
                 binding.textdesc.visibility = View.GONE
                 binding.bottomLayout.visibility = View.GONE
                 binding.btnSpecificStudent.visibility = View.GONE
@@ -806,6 +809,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
                 binding.chAllSelect.visibility = View.GONE
                 binding.rytSubjectDropDown.visibility = View.GONE
+                binding.subjectlabel.visibility = View.GONE
                 if (SELECTED_SCHOOL_MENU == Constant.M_COMMUNICATION || SELECTED_SCHOOL_MENU == Constant.M_ATTACHMENTS) {
                     binding.btnSpecificStudent.visibility = View.VISIBLE
                 } else {
@@ -842,6 +846,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 binding.btnSpecificStudent.visibility = View.GONE
                 binding.recyclerView.visibility = View.GONE
                 binding.rytSubjectDropDown.visibility = View.GONE
+                binding.subjectlabel.visibility = View.GONE
                 binding.textdesc.visibility = View.GONE
                 binding.bottomLayout.visibility = View.GONE
                 if (isAcademicYearId != -1) {
@@ -875,6 +880,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 binding.grouplabel.text = resources.getString(R.string.Staff)
                 binding.grouplabel.visibility = View.VISIBLE
                 binding.rytSubjectDropDown.visibility = View.GONE
+                binding.subjectlabel.visibility = View.GONE
                 binding.chAllSelect.visibility = View.GONE
                 binding.textdesc.visibility = View.GONE
                 binding.bottomLayout.visibility = View.GONE

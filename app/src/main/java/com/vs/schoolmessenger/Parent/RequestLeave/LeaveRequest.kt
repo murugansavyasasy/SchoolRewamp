@@ -306,7 +306,6 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
                 )
             )
         }
-
         if (isClickingId == binding.toolbarLayout.lblLeftSideBar) {
             binding.toolbarLayout.lblRightSideBar.background = null
             binding.toolbarLayout.lblRightSideBar.setTextColor(

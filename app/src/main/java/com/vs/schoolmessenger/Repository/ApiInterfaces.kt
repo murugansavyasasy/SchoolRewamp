@@ -53,6 +53,7 @@ import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Query
@@ -427,11 +428,14 @@ interface ApiInterfaces {
         @Query(APIKeyNames.member_type) member_type: String?
     ): Call<LeaveRequestResponse?>
 
+    @Headers("Content-Type: application/json")
     @PUT(APIMethods.isleaverequestapprove)
     fun isleaverequestapprove(
         @Header(APIKeyNames.Authorization) token: String,
         @Body request: LeaveApproveRequest
     ): Call<LeaveActionResponse?>
+
+
 
 
 }

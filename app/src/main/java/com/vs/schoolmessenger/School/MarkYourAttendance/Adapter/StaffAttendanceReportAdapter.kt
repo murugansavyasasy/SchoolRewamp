@@ -1,9 +1,11 @@
 package com.vs.schoolmessenger.School.MarkYourAttendance.Adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -71,6 +73,7 @@ class StaffAttendanceReportAdapter(
         private val rytParentCard: RelativeLayout = itemView.findViewById(R.id.rytParentCard)
         private val lblStaffDesignation: TextView = itemView.findViewById(R.id.lblStaffDesignation)
         private val lnrDate: LinearLayout = itemView.findViewById(R.id.lnrDate)
+        private val imgPunchHistory: ImageView = itemView.findViewById(R.id.imgPunchHistory)
 
         fun bind(
             data: StaffAttendanceReportData,
@@ -84,20 +87,30 @@ class StaffAttendanceReportAdapter(
             lblAbsentLabel.visibility = View.GONE
             lblPresentStatus.visibility = View.GONE
             lblAbsentStatus.visibility = View.GONE
+            Log.d("attendanceMap", data.attendance_type.size.toString())
+
 
             attendanceMap.forEach { (key, value) ->
+                if (value == Constant.Absent) {
+                    lblAbsentLabel.visibility = View.VISIBLE
+                    lblAbsentStatus.visibility = View.VISIBLE
+                    lblAbsentLabel.text = key
+                    lblAbsentStatus.text = value
+                    if (data.attendance_type.size != 2) {
+                        imgPunchHistory.visibility = View.GONE
+                    } else {
+                        imgPunchHistory.visibility = View.VISIBLE
+                    }
+                }
                 if (value == Constant.Present) {
                     lblPresentLabel.visibility = View.VISIBLE
                     lblPresentStatus.visibility = View.VISIBLE
                     lblPresentLabel.text = key
                     lblPresentStatus.text = value
-                } else if (value == Constant.Absent) {
-                    lblAbsentLabel.visibility = View.VISIBLE
-                    lblAbsentStatus.visibility = View.VISIBLE
-                    lblAbsentLabel.text = key
-                    lblAbsentStatus.text = value
+                    imgPunchHistory.visibility = View.VISIBLE
                 }
             }
+
 
             lblStaffName.text = data.name
             lblCheckInTime.text = context.getString(R.string.Firstin) + data.in_time
@@ -116,7 +129,13 @@ class StaffAttendanceReportAdapter(
             lblDay.text = result.third
 
             rytParentCard.setOnClickListener {
-                listener.onItemClick(data)
+                attendanceMap.forEach { (key, value) ->
+                    if (value == Constant.Present) {
+                        listener.onItemClick(data)
+                    } else if (value == Constant.Absent) {
+                        Log.d("The user has no attendance history", "")
+                    }
+                }
             }
         }
 
