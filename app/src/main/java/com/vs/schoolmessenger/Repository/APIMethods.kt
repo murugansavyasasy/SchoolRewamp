@@ -73,6 +73,7 @@ object APIMethods {
     const val attachmentListArchive = "comm/api/attachment/list-archive"
     const val leave_request_apply = "comm/api/leave-req/apply"
     const val getleaverequest = "comm/api/leave-req/list"
+    const val isleaverequestapprove = "comm/api/leave-req/update-status"
 }
 
 

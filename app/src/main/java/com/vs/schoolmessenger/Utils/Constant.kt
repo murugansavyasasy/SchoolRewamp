@@ -161,6 +161,7 @@ object Constant {
     var selectedFileIndex: Int = -1
     var isCommunicationType = 1
     var isVoiceType = 1
+    var isForward = false
 
     //MarkAttendanceDetails
 
@@ -636,7 +637,7 @@ object Constant {
 
     }
 
-    public fun showDatePicker(context: Context,dateFormatType: Boolean, onDateSelected: (String) -> Unit) {
+     fun showDatePicker(context: Context,dateFormatType: Boolean, onDateSelected: (String) -> Unit) {
         val calendar = Calendar.getInstance()
 
         val year = calendar.get(Calendar.YEAR)

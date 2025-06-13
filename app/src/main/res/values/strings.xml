@@ -556,6 +556,7 @@
     <string name="fail">Fail</string>
     <string name="reason_for_leave">Reason for Leave</string>
     <string name="create_leave_request">Create Leave Request</string>
+    <string name="no_matching_homework_found">No matching homework found.</string>
 
 
 </resources>

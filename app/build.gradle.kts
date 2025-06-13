@@ -377,8 +377,6 @@ android {
             }
         }
     }
-
-
 }
 
 dependencies {
