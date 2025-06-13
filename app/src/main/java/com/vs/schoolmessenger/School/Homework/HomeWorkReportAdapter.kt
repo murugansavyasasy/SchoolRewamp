@@ -105,6 +105,7 @@ class HomeWorkReportAdapter(
                 listener.onClickListener(data)
             }
         }
+
         fun CircleIndicator2.attachToRecyclerView(recyclerView: RecyclerView) {
             val adapter = recyclerView.adapter ?: return
             this.createIndicators(adapter.itemCount, 0)
@@ -125,7 +126,6 @@ class HomeWorkReportAdapter(
             })
         }
     }
-
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun startShimmer() {
