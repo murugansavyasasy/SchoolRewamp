@@ -5,13 +5,11 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
-import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequest
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.LeaveRequests.Listener.SchoolLRClickListener
@@ -108,26 +106,21 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
         }
     }
 
-
-
     override fun onApproveClicked(data: LeaveData, position: Int) {
         val request = LeaveApproveRequest(
             id = data.id,
-            is_approve = "true"
+            is_approve = true
         )
         appViewModel?.isleaverequestapprove(isAccessToken!!, request, this)
     }
-
 
     override fun onRejectClicked(data: LeaveData, position: Int) {
         val request = LeaveApproveRequest(
             id = data.id,
-            is_approve = "false"
+            is_approve = false
         )
         appViewModel?.isleaverequestapprove(isAccessToken!!, request, this)
     }
-
-
 
     private fun isloadleaverequestData(newData: List<LeaveData>?) {
         mAdapter =

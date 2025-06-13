@@ -2,12 +2,14 @@ package com.vs.schoolmessenger.School.LeaveRequests
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.PorterDuff
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filter.FilterResults
 import android.widget.Filterable
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -124,6 +126,7 @@ class LeaveRequestAdapter(
         private val statustext_top: TextView = itemView.findViewById(R.id.statustext_top)
         private val btnrejected: RelativeLayout = itemView.findViewById(R.id.btnrejected)
         private val btnapprove: RelativeLayout = itemView.findViewById(R.id.btnapprove)
+        private val imagearrow_view: ImageView = itemView.findViewById(R.id.imagearrow_view)
         @SuppressLint("UseCompatLoadingForDrawables")
         fun bind(data: LeaveData, position: Int) {
             lblName.text = data.student_name
@@ -133,6 +136,8 @@ class LeaveRequestAdapter(
             lbldays.text = data.no_of_days
             lbldate.text =data.applied_on
             leaverequestdesc.text = data.reason
+            imagearrow_view.setColorFilter(ContextCompat.getColor(context, R.color.navi_blue2), PorterDuff.Mode.SRC_IN)
+
 
             if (data.status == "Rejected") {
                 bottomlinear_layout.visibility = View.GONE
