@@ -35,6 +35,8 @@ import com.vs.schoolmessenger.School.Event.Response.EventSendResponse
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
+import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
+import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveActionResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveRequestResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchHistoryResponse
@@ -166,6 +168,9 @@ class App(application: Application) : AndroidViewModel(application) {
 
     var getleaverequest: LiveData<LeaveRequestResponse?>? = null
 
+    var isleaverequestapprove: LiveData<LeaveActionResponse?>? = null
+
+
 
 
 
@@ -225,6 +230,7 @@ class App(application: Application) : AndroidViewModel(application) {
         sendevent = apiSchoolRepositories.sendeventLiveData
         isAttachmentSend = apiSchoolRepositories.sendAttachmentLiveData
         getleaverequest =apiSchoolRepositories.leaverequestLiveData
+        isleaverequestapprove = apiSchoolRepositories.isleaverequestapproveLiveData
 
     }
 
@@ -470,6 +476,13 @@ class App(application: Application) : AndroidViewModel(application) {
     fun getleaverequest(isToken: String, member_type: String, activity: Activity) {
         apiSchoolRepositories.getleaverequest(isToken,member_type,activity)
     }
+
+    fun isleaverequestapprove(isToken: String, request: LeaveApproveRequest, activity: Activity) {
+        apiSchoolRepositories.isleaverequestapprove(isToken,request,activity)
+    }
+
+
 }
+
 
 

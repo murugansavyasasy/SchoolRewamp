@@ -11,6 +11,7 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.LeaveRequests.Listener.SchoolLRClickListener
+import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -91,24 +92,24 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
 
 
 
-        override fun onApproveClicked(data: LeaveData, position: Int) {
-            approvesendapi()
-        }
-
-        override fun onRejectClicked(data: LeaveData, position: Int) {
-            rejectedsendapi()
-        }
-
-
-    private fun approvesendapi() {
-//        appViewModel?.isleaverequestapprove(isAccessToken!!, this)
-
-
+    override fun onApproveClicked(data: LeaveData, position: Int) {
+        val request = LeaveApproveRequest(
+            id = data.id,
+            is_approve = "true"
+        )
+        appViewModel?.isleaverequestapprove(isAccessToken!!, request, this)
     }
 
-    private fun rejectedsendapi() {
 
+    override fun onRejectClicked(data: LeaveData, position: Int) {
+        val request = LeaveApproveRequest(
+            id = data.id,
+            is_approve = "false"
+        )
+        appViewModel?.isleaverequestapprove(isAccessToken!!, request, this)
     }
+
+
 
     private fun isloadleaverequestData(newData: List<LeaveData>?) {
         mAdapter =

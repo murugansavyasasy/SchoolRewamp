@@ -20,6 +20,7 @@ import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
+import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequest
 
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.SendAbsenteeSMSResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportDataResponse
@@ -30,6 +31,8 @@ import com.vs.schoolmessenger.School.Event.Response.EventSendResponse
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
+import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
+import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveActionResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveRequestResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchHistoryResponse
@@ -100,6 +103,7 @@ class SchoolServices {
     var sendevent: MutableLiveData<EventSendResponse?>
     var isSendAttachment: MutableLiveData<NoticeBoardSendResponse?>
     var getleaverequest: MutableLiveData<LeaveRequestResponse?>
+    var isleaverequestapprove: MutableLiveData<LeaveActionResponse?>
 
     init {
         client_auth = RestClient()
@@ -149,6 +153,7 @@ class SchoolServices {
         sendevent = MutableLiveData()
         isSendAttachment = MutableLiveData()
         getleaverequest = MutableLiveData()
+        isleaverequestapprove = MutableLiveData()
 
     }
 
@@ -1841,6 +1846,46 @@ class SchoolServices {
 
     val leaverequestLiveData: LiveData<LeaveRequestResponse?>
         get() = getleaverequest
+
+
+
+
+
+    fun isleaverequestapprove(
+        isToken: String, request: LeaveApproveRequest, activity: Activity
+    ) {
+        RestClient.apiInterfaces.isleaverequestapprove(isToken, request)
+            ?.enqueue(object : Callback<LeaveActionResponse?> {
+                override fun onResponse(
+                    call: Call<LeaveActionResponse?>, response: Response<LeaveActionResponse?>
+                ) {
+                    Log.d(
+                        "isGetCountryList", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isleaverequestapprove.postValue(response.body())
+                            } else {
+                                isleaverequestapprove.postValue(response.body())
+                            }
+                        }
+                    }
+                    else{
+                        isleaverequestapprove.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<LeaveActionResponse?>, t: Throwable) {
+                    isGetAds.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isleaverequestapproveLiveData: LiveData<LeaveActionResponse?>
+        get() = isleaverequestapprove
 
 
 }
