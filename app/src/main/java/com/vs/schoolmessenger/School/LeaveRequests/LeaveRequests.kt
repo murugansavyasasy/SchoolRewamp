@@ -1,9 +1,11 @@
 package com.vs.schoolmessenger.School.LeaveRequests
 
+import android.os.Build
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
-import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
@@ -29,6 +31,7 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
     private var isAccessToken: String? = null
     private var isStaffDetails: StaffDetails? = null
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
         setupToolbar()
@@ -69,6 +72,19 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
                 binding.txtNoData.text = response?.message ?: "No data found"
             }
         }
+
+
+        appViewModel!!.isleaverequestapprove?.observe(this) { response ->
+            if (response != null) {
+                if (response.status) {
+                    Constant.hideLoading(this@LeaveRequests)
+                    Log.d("isSendleaverequestmarking", response.message)
+                    Constant.showDataValidation(resources.getString(R.string.success), response.message, this)
+                } else {
+                    Constant.showDataValidation(resources.getString(R.string.fail), response.message, this)
+                }
+            }
+        }
     }
 
     override fun onClick(p0: View?) {
@@ -90,26 +106,21 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
         }
     }
 
-
-
     override fun onApproveClicked(data: LeaveData, position: Int) {
         val request = LeaveApproveRequest(
             id = data.id,
-            is_approve = "true"
+            is_approve = true
         )
         appViewModel?.isleaverequestapprove(isAccessToken!!, request, this)
     }
-
 
     override fun onRejectClicked(data: LeaveData, position: Int) {
         val request = LeaveApproveRequest(
             id = data.id,
-            is_approve = "false"
+            is_approve = false
         )
         appViewModel?.isleaverequestapprove(isAccessToken!!, request, this)
     }
-
-
 
     private fun isloadleaverequestData(newData: List<LeaveData>?) {
         mAdapter =

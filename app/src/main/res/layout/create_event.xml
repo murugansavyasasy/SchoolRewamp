@@ -35,8 +35,19 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="5dp"
+                android:layout_alignParentStart="true"
                 android:text="@string/Venue"
                 android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp" />
+
+            <TextView
+                android:id="@+id/lblStar"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_toEndOf="@id/lblLocation"
+                android:layout_height="wrap_content"
+                android:text="@string/mandatory"
+                android:textColor="@color/red"
                 android:textSize="@dimen/thirteen_sp" />
 
 
@@ -74,6 +85,18 @@
                 android:layout_marginTop="@dimen/fifteen"
                 android:text="@string/Title"
                 android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp" />
+
+            <TextView
+                android:id="@+id/lblStar1"
+                android:layout_below="@+id/txtLocation"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_toEndOf="@id/lblEventTitle"
+                android:layout_height="wrap_content"
+                android:text="@string/mandatory"
+                android:textColor="@color/red"
                 android:textSize="@dimen/thirteen_sp" />
 
             <EditText
@@ -115,6 +138,19 @@
                 android:layout_marginTop="@dimen/fifteen"
                 android:text="@string/Description"
                 android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp" />
+
+
+            <TextView
+                android:id="@+id/lblStar3"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_below="@+id/lbtitleTextCount"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_toEndOf="@id/lblEventDesc"
+                android:layout_height="wrap_content"
+                android:text="@string/mandatory"
+                android:textColor="@color/red"
                 android:textSize="@dimen/thirteen_sp" />
 
 
@@ -181,6 +217,17 @@
                         android:layout_marginTop="@dimen/ten"
                         android:text="Starts on"
                         android:textColor="@color/black"
+                        android:textSize="@dimen/thirteen_sp" />
+
+                    <TextView
+                        android:id="@+id/lblStar4"
+                        android:layout_marginTop="@dimen/five"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="wrap_content"
+                        android:layout_toEndOf="@id/lblStart"
+                        android:layout_height="wrap_content"
+                        android:text="@string/mandatory"
+                        android:textColor="@color/red"
                         android:textSize="@dimen/thirteen_sp" />
 
 

@@ -120,7 +120,6 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
             if (response != null) {
                 if (response.status) {
                     Constant.hideLoading(this@LeaveRequest)
-                    Log.d("isSendAbsenteeSMS", response.message)
                     Constant.showDataValidation(resources.getString(R.string.success), response.message, this)
                 } else {
                     Constant.showDataValidation(resources.getString(R.string.fail), response.message, this)
@@ -138,7 +137,6 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
             binding.rlaHistory.visibility=View.VISIBLE
             binding.rlaCreateLeaveRequest.visibility = View.GONE
             isBackRoundChange(binding.toolbarLayout.lblLeftSideBar)
-//            loadData()
             isGetLeaveRequestList()
 
         }
@@ -271,69 +269,6 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
     }
 
 
-
-
-//    private fun loadData() {
-//
-//        isLeaveRequestHistoryData = listOf(
-//            LeaveRequestHistoryData(
-//                "15 Nov 2024",
-//                "15 Nov 2024",
-//                "Pending",
-//                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-//            ),
-//            LeaveRequestHistoryData(
-//                "15 Nov 2024",
-//                "15 Nov 2024",
-//                "Rejected",
-//                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-//            ),
-//
-//            LeaveRequestHistoryData(
-//                "15 Nov 2024",
-//                "15 Nov 2024",
-//                "Approval",
-//                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-//            ),
-//            LeaveRequestHistoryData(
-//                "15 Nov 2024",
-//                "15 Nov 2024",
-//                "Pending",
-//                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-//            ),
-//            LeaveRequestHistoryData(
-//                "15 Nov 2024",
-//                "15 Nov 2024",
-//                "Rejected",
-//                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-//            ),
-//            LeaveRequestHistoryData(
-//                "15 Nov 2024",
-//                "15 Nov 2024",
-//                "Approval",
-//                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-//            )
-//        )
-//
-//        mAdapter = LeaveRequestAdapter(null, this, this, Constant.isShimmerViewShow)
-//        binding.rcyLeaveRequestHistory.layoutManager = LinearLayoutManager(this)
-//        binding.rcyLeaveRequestHistory.adapter = mAdapter
-//
-//        Constant.executeAfterDelay {
-//            // Once data is loaded, stop shimmer and pass the actual data
-//            mAdapter =
-//                LeaveRequestAdapter(
-//                    isLeaveRequestHistoryData,
-//                    this,
-//                    this,
-//                    Constant.isShimmerViewDisable
-//                )
-//            // Set GridLayoutManager (2 columns in this case)
-//            binding.rcyLeaveRequestHistory.adapter = mAdapter
-//        }
-//
-//    }
-
     private fun isloadleaverequestData(newData: List<LeaveData>?) {
         mAdapter =
             LeaveRequestAdapter(
@@ -371,7 +306,6 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
                 )
             )
         }
-
         if (isClickingId == binding.toolbarLayout.lblLeftSideBar) {
             binding.toolbarLayout.lblRightSideBar.background = null
             binding.toolbarLayout.lblRightSideBar.setTextColor(

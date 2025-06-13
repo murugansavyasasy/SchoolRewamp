@@ -83,6 +83,19 @@
                 </TextView>
 
 
+                <TextView
+                    android:id="@+id/lblStar"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_toEndOf="@id/lblTitle"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mandatory"
+                    android:textColor="@color/red"
+                    android:layout_marginStart="@dimen/two"
+                    android:layout_marginTop="@dimen/eighteen"
+                    android:textSize="@dimen/thirteen_sp" />
+
+
                 <EditText
                     android:id="@+id/edtTitle"
                     style="@style/CustomTextStylePoppinsMedium"
@@ -111,6 +124,20 @@
                     android:textSize="@dimen/thirteen_sp">
 
                 </TextView>
+
+
+                <TextView
+                    android:id="@+id/lblStar2"
+                    android:layout_below="@+id/edtTitle"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_toEndOf="@id/lblDescription"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mandatory"
+                    android:layout_marginStart="@dimen/two"
+                    android:layout_marginTop="@dimen/eight"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/thirteen_sp" />
 
                 <EditText
                     android:id="@+id/edtDescription"

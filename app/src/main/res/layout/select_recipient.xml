@@ -270,6 +270,19 @@
 
     </RelativeLayout>
 
+    <TextView
+        android:id="@+id/subjectlabel"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rytList"
+        android:visibility="gone"
+        android:layout_marginStart="@dimen/twenty"
+        android:layout_marginTop="@dimen/twenty"
+        android:text="Subject">
+    </TextView>
+
+
     <RelativeLayout
         android:id="@+id/rytSubjectDropDown"
         android:layout_width="match_parent"
@@ -277,7 +290,7 @@
         android:layout_marginStart="@dimen/fifteen"
         android:visibility="gone"
         android:layout_marginEnd="@dimen/fifteen"
-        android:layout_below="@+id/rytList"
+        android:layout_below="@+id/subjectlabel"
         android:background="@drawable/bg_white_light_radious"
         android:gravity="center">
 

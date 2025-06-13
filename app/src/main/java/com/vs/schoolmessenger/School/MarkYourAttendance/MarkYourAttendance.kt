@@ -51,6 +51,7 @@ import com.vs.schoolmessenger.Utils.LocationHelper
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.Utils.SpinnerLoadingAdapter
 import com.vs.schoolmessenger.databinding.MarkYourAttendanceBinding
+import java.util.Calendar
 
 class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnClickListener,
     GPSStatusListener, LocationLatLongListener, AttendanceReportClickListener {
@@ -78,6 +79,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnCli
     var isAcademicYear: List<AcademicYear>? = null
     var isAcademicYearId = -1
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
         setupToolbar()
@@ -226,21 +228,19 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnCli
 
     private fun isLoadMonth(selectedYear: String) {
         val months = listOf(
-            "January",
-            "February",
-            "March",
-            "April",
-            "May",
-            "June",
-            "July",
-            "August",
-            "September",
-            "October",
-            "November",
-            "December"
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
         )
+
         val adapter = SpinnerLoadingAdapter(this, months)
         binding.spinnerMonths.adapter = adapter
+
+        // Get the current month (0-based index)
+        val currentMonthIndex = Calendar.getInstance().get(Calendar.MONTH)
+        adapter.selectedPosition = currentMonthIndex
+
+        // Set the spinner to the current month
+        binding.spinnerMonths.setSelection(currentMonthIndex)
 
         binding.spinnerMonths.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
@@ -253,15 +253,19 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnCli
                     adapter.selectedPosition = position
                     adapter.notifyDataSetChanged()
 
-                    val selectedOption = months[position]
+                    val selectedMonthNumber = String.format("%02d", position + 1)
                     binding.lblNoRecords.visibility = View.GONE
                     binding.imgNorecord.visibility = View.GONE
-                    val selectedMonthNumber = String.format("%02d", position + 1)
+
                     getStaffAttendanceReport(selectedYear, selectedMonthNumber)
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>) {}
             }
+
+        // Trigger report call immediately for the default selected month
+        val selectedMonthNumber = String.format("%02d", currentMonthIndex + 1)
+        getStaffAttendanceReport(selectedYear, selectedMonthNumber)
     }
 
 

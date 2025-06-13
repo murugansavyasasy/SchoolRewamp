@@ -75,7 +75,7 @@ class NoticeBoardAdapter(
                 } else {
                     fullList.filter {
                         it.title.lowercase().contains(query) ||
-                                it.content.lowercase().contains(query)
+                                it.description.lowercase().contains(query)
                     }
                 }
                 val filterResults = FilterResults()
@@ -107,7 +107,7 @@ class NoticeBoardAdapter(
         @SuppressLint("ClickableViewAccessibility")
         fun bind(noticeData: Notice, position: Int, adapter: NoticeBoardAdapter) {
             lblTitleImage.text = noticeData.title
-            lblContentImage.text = noticeData.content
+            lblContentImage.text = noticeData.description
             lblDateImage.text = Constant.convertDateAndTimeFormat(noticeData.created_on)
 
             if (noticeData.file_path.isNotEmpty()) {

@@ -103,8 +103,12 @@ class SchoolMenuAdapter(
         fun bind(data: MenuDetail, position: Int, listener: MenuClickListener) {
             lblMenuName.text = data.name
 
-            imgReadCount.visibility = View.GONE
-            
+            if(data.unreadCount>=1){
+                imgReadCount.visibility=View.VISIBLE
+            }
+            else{
+                imgReadCount.visibility=View.GONE
+            }
             when (data.id) {
                 Constant.M_COMMUNICATION -> {
                     imgMenu.setImageResource(R.drawable.communication_icon_dashboard)

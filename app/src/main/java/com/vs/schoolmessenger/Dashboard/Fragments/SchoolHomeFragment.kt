@@ -212,7 +212,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         binding.lblGif.playAnimation()
         binding.lblGif.setAnimation(R.raw.mathematics)
 
-        isDashBoardData()
+//        isDashBoardData()
 
         appViewModel!!.isDashBoardData?.observe(requireActivity()) { response ->
             if (response != null) {
@@ -380,6 +380,10 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
     override fun onResume() {
         super.onResume()
+        Log.d("Loading","Dashboard Data is Loading")
+        isDashBoardData()
+        Log.d("Loading","Dashboard Data is Refreshed")
+
         Log.d("Status", "onResume")
     }
 

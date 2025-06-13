@@ -558,6 +558,6 @@
     <string name="create_leave_request">Create Leave Request</string>
     <string name="no_matching_homework_found">No matching homework found.</string>
     <string name="UploadAttachmentOptional">Upload Image/Documents</string>
-
+    <string name="mandatory">*</string>
 
 </resources>
