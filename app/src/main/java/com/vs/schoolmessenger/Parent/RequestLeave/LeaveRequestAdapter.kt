@@ -12,9 +12,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.LeaveRequests.LeaveRequestAdapter.ShimmerViewHolder
+import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveData
+import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class LeaveRequestAdapter(
-    private var itemList: List<LeaveRequestHistoryData>?,
+    private var itemList: List<LeaveData>?,
     private var listener: LeaveRequestClickListener,
     private var context: Context,
     private var isLoading: Boolean
@@ -29,10 +32,11 @@ class LeaveRequestAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-            val view =
-                LayoutInflater.from(parent.context)
-                    .inflate(R.layout.shimmer_view_small_list, parent, false)
-            ShimmerViewHolder(view)
+
+            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.leave_request_list)
+            ShimmerViewHolder(
+                shimmerView
+            )
         } else {
             val view =
                 LayoutInflater.from(parent.context)
@@ -70,20 +74,20 @@ class LeaveRequestAdapter(
 
         @SuppressLint("ClickableViewAccessibility")
         fun bind(
-            data: LeaveRequestHistoryData,
+            data: LeaveData,
             position: Int,
             listener: LeaveRequestClickListener,
             adapter: LeaveRequestAdapter
         ) {
 
-            lblFrom.text = data.isFrom
-            lblTo.text = data.isTo
-            lblStatus.text = data.isStatus
-            lblReason.text = data.isReason
+            lblFrom.text = data.leave_from
+            lblTo.text = data.leave_to
+            lblStatus.text = data.status
+            lblReason.text = data.reason
 
             isSeeMoreVisibility(lblReason, tvSeeMoreImage)
 
-            when (data.isStatus) {
+            when (data.status) {
 
                 "Pending" -> {
                     rlaStatus.setBackgroundResource(R.drawable.bg_light_orange)
@@ -134,11 +138,8 @@ class LeaveRequestAdapter(
 
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val shimmerLayout: ShimmerFrameLayout =
-            itemView.findViewById(R.id.shimmer_view_container)
-
-        init {
-            shimmerLayout.startShimmer() // Start shimmer effect
+        fun startShimmer() {
+            ShimmerUtil.startShimmer(itemView)
         }
     }
 

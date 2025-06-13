@@ -14,6 +14,7 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.LeaveRequestBinding
@@ -30,13 +31,12 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
 
     private var isAccessToken: String? = null
     private var appViewModel: App? = null
-    private lateinit var isLeaveRequestHistoryData: List<LeaveRequestHistoryData>
     lateinit var mAdapter: LeaveRequestAdapter
-
     private var fromDateMillis: Long = 0L
     private var toDateMillis: Long = 0L
     private var totalLeaveDays: Int = 0
     private val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -47,7 +47,6 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
         appViewModel?.init()
 
         val isChildDetails = SharedPreference.getChildDetails(this)
-
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.rytStartDate.setOnClickListener(this)
         binding.rytStart.setOnClickListener(this)
@@ -58,6 +57,7 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
         binding.lnrStartCalendar.setOnClickListener(this)
         binding.lnrEndCalendar.setOnClickListener(this)
         binding.btnNext.setOnClickListener(this)
+
 
 
         val today = Calendar.getInstance()
@@ -96,7 +96,25 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
         binding.toolbarLayout.lblLeftSideBar.text = resources.getText(R.string.History)
         binding.toolbarLayout.lblRightSideBar.text = resources.getText(R.string.Create)
         binding.rlaCreateLeaveRequest.visibility = View.VISIBLE
-        loadData()
+//        loadData()
+
+
+        appViewModel?.getleaverequest?.observe(this) { response ->
+            if (response?.status == true && !response.data.isNullOrEmpty()) {
+                binding.rcyLeaveRequestHistory.visibility = View.VISIBLE
+                binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
+                binding.nomessage.visibility = View.GONE
+                binding.txtNoData.visibility = View.GONE
+                isloadleaverequestData(response.data)
+            } else {
+                binding.rcyLeaveRequestHistory.visibility = View.GONE
+                binding.toolbarLayout.rytSearch.visibility = View.GONE
+                binding.nomessage.visibility = View.VISIBLE
+                binding.txtNoData.visibility = View.VISIBLE
+                binding.txtNoData.text = response?.message ?: "No data found"
+            }
+        }
+
 
         appViewModel!!.isLeaveRequest?.observe(this) { response ->
             if (response != null) {
@@ -120,7 +138,9 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
             binding.rlaHistory.visibility=View.VISIBLE
             binding.rlaCreateLeaveRequest.visibility = View.GONE
             isBackRoundChange(binding.toolbarLayout.lblLeftSideBar)
-            loadData()
+//            loadData()
+            isGetLeaveRequestList()
+
         }
 
         Constant.editTextCounter(this,binding.txtDesc,500,binding.lbTextCount)
@@ -172,7 +192,7 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
                     val fromDate = dateFormat.parse(selectedDate)
                     fromDateMillis = fromDate?.time ?: 0L
 
-                    val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+//                    val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
                     val result = getDayAndDate(selectedDate, dateFormat)
 
                     result?.let { (dayOfWeek, dayOfMonth) ->
@@ -223,8 +243,7 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
                     }
 
                     binding.lblTotalDays.text = "$totalLeaveDays Days"
-
-                    val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+//                    val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
                     val result = getDayAndDate(selectedDate, dateFormat)
                     result?.let { (dayOfWeek, dayOfMonth) ->
                         binding.lblEndDay.text = dayOfWeek
@@ -235,6 +254,8 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
         }
 
     }
+
+
 
 
     fun getDayAndDate(dateString: String, dateFormat: SimpleDateFormat): Pair<String, String>? {
@@ -252,65 +273,91 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
 
 
 
-    private fun loadData() {
+//    private fun loadData() {
+//
+//        isLeaveRequestHistoryData = listOf(
+//            LeaveRequestHistoryData(
+//                "15 Nov 2024",
+//                "15 Nov 2024",
+//                "Pending",
+//                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
+//            ),
+//            LeaveRequestHistoryData(
+//                "15 Nov 2024",
+//                "15 Nov 2024",
+//                "Rejected",
+//                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
+//            ),
+//
+//            LeaveRequestHistoryData(
+//                "15 Nov 2024",
+//                "15 Nov 2024",
+//                "Approval",
+//                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
+//            ),
+//            LeaveRequestHistoryData(
+//                "15 Nov 2024",
+//                "15 Nov 2024",
+//                "Pending",
+//                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
+//            ),
+//            LeaveRequestHistoryData(
+//                "15 Nov 2024",
+//                "15 Nov 2024",
+//                "Rejected",
+//                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
+//            ),
+//            LeaveRequestHistoryData(
+//                "15 Nov 2024",
+//                "15 Nov 2024",
+//                "Approval",
+//                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
+//            )
+//        )
+//
+//        mAdapter = LeaveRequestAdapter(null, this, this, Constant.isShimmerViewShow)
+//        binding.rcyLeaveRequestHistory.layoutManager = LinearLayoutManager(this)
+//        binding.rcyLeaveRequestHistory.adapter = mAdapter
+//
+//        Constant.executeAfterDelay {
+//            // Once data is loaded, stop shimmer and pass the actual data
+//            mAdapter =
+//                LeaveRequestAdapter(
+//                    isLeaveRequestHistoryData,
+//                    this,
+//                    this,
+//                    Constant.isShimmerViewDisable
+//                )
+//            // Set GridLayoutManager (2 columns in this case)
+//            binding.rcyLeaveRequestHistory.adapter = mAdapter
+//        }
+//
+//    }
 
-        isLeaveRequestHistoryData = listOf(
-            LeaveRequestHistoryData(
-                "15 Nov 2024",
-                "15 Nov 2024",
-                "Pending",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-            ),
-            LeaveRequestHistoryData(
-                "15 Nov 2024",
-                "15 Nov 2024",
-                "Rejected",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-            ),
-
-            LeaveRequestHistoryData(
-                "15 Nov 2024",
-                "15 Nov 2024",
-                "Approval",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-            ),
-            LeaveRequestHistoryData(
-                "15 Nov 2024",
-                "15 Nov 2024",
-                "Pending",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-            ),
-            LeaveRequestHistoryData(
-                "15 Nov 2024",
-                "15 Nov 2024",
-                "Rejected",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
-            ),
-            LeaveRequestHistoryData(
-                "15 Nov 2024",
-                "15 Nov 2024",
-                "Approval",
-                "If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress.",
+    private fun isloadleaverequestData(newData: List<LeaveData>?) {
+        mAdapter =
+            LeaveRequestAdapter(
+                newData,
+                this,
+                this,
+                Constant.isShimmerViewDisable
             )
-        )
-
-        mAdapter = LeaveRequestAdapter(null, this, this, Constant.isShimmerViewShow)
-        binding.rcyLeaveRequestHistory.layoutManager = LinearLayoutManager(this)
         binding.rcyLeaveRequestHistory.adapter = mAdapter
+    }
 
-        Constant.executeAfterDelay {
-            // Once data is loaded, stop shimmer and pass the actual data
-            mAdapter =
-                LeaveRequestAdapter(
-                    isLeaveRequestHistoryData,
-                    this,
-                    this,
-                    Constant.isShimmerViewDisable
-                )
-            // Set GridLayoutManager (2 columns in this case)
-            binding.rcyLeaveRequestHistory.adapter = mAdapter
-        }
-
+    private fun isGetLeaveRequestList() {
+        mAdapter =LeaveRequestAdapter(
+            null,
+            this,
+            this,
+            Constant.isShimmerViewShow
+        )
+        binding.rcyLeaveRequestHistory.layoutManager = LinearLayoutManager(this)
+        binding.rcyLeaveRequestHistory.isNestedScrollingEnabled = false
+        binding.rcyLeaveRequestHistory.adapter = mAdapter
+        appViewModel!!.getleaverequest(
+            isAccessToken!!, "STUDENT", this
+        )
     }
 
     private fun isBackRoundChange(isClickingId: TextView) {

@@ -39,6 +39,7 @@ import com.vs.schoolmessenger.School.Event.Response.EventSendResponse
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
+import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveRequestResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffAttendanceReportResponse
@@ -417,5 +418,18 @@ interface ApiInterfaces {
         @Body request: JsonObject
     ): Call<LeaveRequestApplyResponse>?
 
+    @GET(APIMethods.getleaverequest)
+    fun getleaverequest(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query(APIKeyNames.member_type) member_type: String?
+    ): Call<LeaveRequestResponse?>
+//
+//    @PUT(APIMethods.isleaverequestapprove)
+//    fun isleaverequestapprove(
+//        @Header(APIKeyNames.Authorization) token: String,
+//        @Body(APIKeyNames.id) id: String?,
+//        @Body(APIKeyNames.is_approve) is_approve: String?,
+//
+//    ): Call<LeaveRequestResponse?>
 
 }
