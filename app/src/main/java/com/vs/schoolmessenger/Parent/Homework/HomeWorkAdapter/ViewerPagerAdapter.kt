@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
+import com.github.chrisbanes.photoview.PhotoView
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
@@ -42,36 +43,38 @@ class FileViewerAdapter(
 
         if (item.type == Constant.IMAGE) {
             holder.imageView.visibility = View.VISIBLE
-            Glide.with(context).load(item.path)
+            Glide.with(context)
+                .load(item.path)
                 .listener(object : RequestListener<Drawable> {
                     override fun onLoadFailed(
-                        e: GlideException?, model: Any?, target: com.bumptech.glide.request.target.Target<Drawable?>, isFirstResource: Boolean
+                        e: GlideException?,
+                        model: Any?,
+                        target: com.bumptech.glide.request.target.Target<Drawable?>,
+                        isFirstResource: Boolean
                     ): Boolean {
                         holder.loadingBar.visibility = View.GONE
+                        e?.printStackTrace()
                         return false
                     }
 
                     override fun onResourceReady(
-                        resource: Drawable, model: Any, target: com.bumptech.glide.request.target.Target<Drawable?>?,
-                        dataSource: DataSource, isFirstResource: Boolean
+                        resource: Drawable,
+                        model: Any,
+                        target: com.bumptech.glide.request.target.Target<Drawable?>?,
+                        dataSource: DataSource,
+                        isFirstResource: Boolean
                     ): Boolean {
                         holder.loadingBar.visibility = View.GONE
                         holder.imageView.setImageDrawable(resource)
-                        holder.imageView.scaleType = ImageView.ScaleType.MATRIX
-                        enableZoomOnImage(holder.imageView)
                         return true
                     }
-                }).submit()
+                })
+                .into(holder.imageView)
 
-            enableZoomOnImage(holder.imageView)
+            // enableZoomOnImage(holder.imageView)
         } else {
             holder.documentWebView.visibility = View.VISIBLE
-            val isLoadingUrl = if (item.path.contains("vimeo")) {
-                item.path
-            } else {
-                "https://docs.google.com/gview?embedded=true&url=${item.path}"
-            }
-
+            val isFile = "https://docs.google.com/gview?embedded=true&url=${item.path}"
             holder.documentWebView.settings.apply {
                 javaScriptEnabled = true
                 setSupportZoom(true)
@@ -90,8 +93,7 @@ class FileViewerAdapter(
                     holder.loadingBar.visibility = View.GONE
                 }
             }
-
-            holder.documentWebView.loadUrl(isLoadingUrl)
+            holder.documentWebView.loadUrl(isFile)
         }
     }
 
@@ -99,8 +101,8 @@ class FileViewerAdapter(
 
     inner class FileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val documentWebView: WebView = itemView.findViewById(R.id.documentWebView)
-        val imageView: ImageView = itemView.findViewById(R.id.imageView)
         val loadingBar: ProgressBar = itemView.findViewById(R.id.loadingBar)
+        val imageView: PhotoView = itemView.findViewById(R.id.imageView)
     }
 
     @SuppressLint("ClickableViewAccessibility")

@@ -454,6 +454,9 @@ dependencies {
     // Crashlytics
     implementation("com.google.firebase:firebase-crashlytics")
 
+    implementation("com.github.chrisbanes:PhotoView:2.3.0")
+
+
 
 
 

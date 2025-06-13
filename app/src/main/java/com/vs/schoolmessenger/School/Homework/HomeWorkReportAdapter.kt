@@ -2,10 +2,17 @@ package com.vs.schoolmessenger.School.Homework
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Bitmap
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebChromeClient
+import android.webkit.WebResourceError
+import android.webkit.WebResourceRequest
+import android.webkit.WebSettings
+import android.webkit.WebViewClient
+import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -60,11 +67,15 @@ class HomeWorkReportAdapter(
 
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
+
         private val rlaImageReport: RelativeLayout = itemView.findViewById(R.id.rlaImageReport)
         private val lblDateImage: TextView = itemView.findViewById(R.id.lblDateImage)
         private val lblTitleImage: TextView = itemView.findViewById(R.id.lblTitleImage)
         private val lblContentImage: TextView = itemView.findViewById(R.id.lblContentImage)
         private val rcyImgPDF: RecyclerView = itemView.findViewById(R.id.rcyImgPDF)
+        private val rytList: RelativeLayout = itemView.findViewById(R.id.rytList)
+        private val webView: android.webkit.WebView = itemView.findViewById(R.id.webView)
+        private val progressBar: ProgressBar = itemView.findViewById(R.id.loadingBar)
         private val indicator: CircleIndicator2 = itemView.findViewById(R.id.indicator)
         private val tvSeeMoreImage: TextView = itemView.findViewById(R.id.tvSeeMoreImage)
         private val LblHWSubjectName: TextView = itemView.findViewById(R.id.LblHWSubjectName)
@@ -82,7 +93,20 @@ class HomeWorkReportAdapter(
             lblTitleImage.text = data.title
             lblContentImage.text = data.description
 
-            rcyImgPDF.visibility = if (data.file_path.isNullOrEmpty()) View.GONE else View.VISIBLE
+            if (data.file_path.isNotEmpty()) {
+                rytList.visibility = View.VISIBLE
+                if (data.file_path[0].type != Constant.VIDEO) {
+                    rcyImgPDF.visibility = View.VISIBLE
+                    webView.visibility = View.GONE
+                } else {
+                    webView.visibility = View.VISIBLE
+                    rcyImgPDF.visibility = View.GONE
+                    val videoUrl = data.file_path[0].url ?: ""
+                    loadSimpleUrl(webView, videoUrl)
+                }
+            } else {
+                rytList.visibility = View.GONE
+            }
 
             val adapter = ImageSliderAdapter(
                 data.subject_name ?: "",
@@ -90,10 +114,11 @@ class HomeWorkReportAdapter(
                 adapterContext,
                 Constant.isShimmerViewDisable,
             )
-            rcyImgPDF.layoutManager = LinearLayoutManager(adapterContext, LinearLayoutManager.HORIZONTAL, false)
+
+            rcyImgPDF.layoutManager =
+                LinearLayoutManager(adapterContext, LinearLayoutManager.HORIZONTAL, false)
             rcyImgPDF.adapter = adapter
 
-            // Setup indicator
             if (data.file_path.isNullOrEmpty()) {
                 indicator.visibility = View.GONE
             } else {
@@ -104,6 +129,47 @@ class HomeWorkReportAdapter(
             rlaSelectText.setOnClickListener {
                 listener.onClickListener(data)
             }
+        }
+
+        @SuppressLint("SetJavaScriptEnabled")
+        fun loadSimpleUrl(webView: android.webkit.WebView, url: String) {
+            progressBar.visibility = View.VISIBLE
+            webView.settings.javaScriptEnabled = true
+            webView.settings.domStorageEnabled = true
+            webView.settings.useWideViewPort = true
+            webView.settings.loadWithOverviewMode = true
+            webView.settings.allowFileAccess = true
+            webView.settings.allowContentAccess = true
+
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                webView.settings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
+            }
+
+            webView.webChromeClient = WebChromeClient()
+            webView.webViewClient = object : WebViewClient() {
+                override fun onPageStarted(
+                    view: android.webkit.WebView?,
+                    url: String?,
+                    favicon: Bitmap?
+                ) {
+                    progressBar.visibility = View.VISIBLE
+                }
+
+                override fun onPageFinished(view: android.webkit.WebView?, url: String?) {
+                    progressBar.visibility = View.GONE
+                }
+
+                override fun onReceivedError(
+                    view: android.webkit.WebView?,
+                    request: WebResourceRequest?,
+                    error: WebResourceError?
+                ) {
+                    progressBar.visibility = View.GONE
+                    Log.e("WebViewError", "Error loading: ${error?.description}")
+                }
+            }
+
+            webView.loadUrl(url)
         }
 
         fun CircleIndicator2.attachToRecyclerView(recyclerView: RecyclerView) {

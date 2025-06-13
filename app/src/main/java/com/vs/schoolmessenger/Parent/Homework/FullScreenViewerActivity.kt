@@ -58,10 +58,14 @@ class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(
         binding.rcyFile.adapter = adapter
 
         // Setup indicator
-        if (Constant.commonFileList.isNullOrEmpty()) {
+        if (Constant.commonFileList.isNullOrEmpty() || Constant.commonFileList.size == 1) {
             binding.indicator.visibility = View.GONE
+            binding.lnrNext.visibility = View.GONE
+            binding.lnrPrevious.visibility = View.GONE
         } else {
             binding.indicator.visibility = View.VISIBLE
+            binding.lnrPrevious.visibility = View.VISIBLE
+            binding.lnrNext.visibility = View.VISIBLE
             binding.indicator.attachToRecyclerView(binding.rcyFile)
         }
         binding.rcyFile.setOnTouchListener { _, _ -> true }

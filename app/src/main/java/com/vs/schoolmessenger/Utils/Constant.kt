@@ -519,6 +519,19 @@ object Constant {
 
     }
 
+     fun getVideoThumbnail(context: Activity,uri: Uri): Bitmap? {
+        return try {
+            val retriever = MediaMetadataRetriever()
+            retriever.setDataSource(context, uri)
+            val bitmap = retriever.getFrameAtTime(1, MediaMetadataRetriever.OPTION_CLOSEST)
+            retriever.release()
+            bitmap
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
     fun getAndroidSecureId(activity: Activity): String {
         return Settings.Secure.getString(activity.contentResolver, Settings.Secure.ANDROID_ID)
             ?: "Empty"

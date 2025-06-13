@@ -2,12 +2,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
+    <com.github.chrisbanes.photoview.PhotoView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="matrix"
-        android:visibility="gone" />
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true" />
 
     <WebView
         android:id="@+id/documentWebView"

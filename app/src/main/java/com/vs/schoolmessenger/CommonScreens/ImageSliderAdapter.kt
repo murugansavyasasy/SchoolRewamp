@@ -3,14 +3,18 @@ package com.vs.schoolmessenger.CommonScreens
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnTouchListener
 import android.view.ViewGroup
+import android.webkit.WebChromeClient
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
+import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.ImageView
@@ -18,7 +22,6 @@ import android.widget.ProgressBar
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.vs.schoolmessenger.CommonScreens.ImageSliderAdapter.DataViewHolder.ShimmerViewHolder
 import com.vs.schoolmessenger.Parent.Homework.FullScreenViewerActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.FilePath
@@ -31,12 +34,11 @@ class ImageSliderAdapter(
     private var context: Context,
     private var isLoading: Boolean
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
 
-    override fun getItemViewType(position: Int): Int {
-        return if (isLoading) TYPE_SHIMMER else TYPE_DATA
-    }
+    override fun getItemViewType(position: Int): Int = if (isLoading) TYPE_SHIMMER else TYPE_DATA
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
@@ -49,26 +51,24 @@ class ImageSliderAdapter(
         }
     }
 
-    override fun getItemCount(): Int {
-        return if (isLoading) 20
-        else GetFilePathDetailsData?.size ?: 0
-
-    }
+    override fun getItemCount(): Int = if (isLoading) 20 else GetFilePathDetailsData?.size ?: 0
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is DataViewHolder) {
-            holder.bind(GetFilePathDetailsData!!, position, isSubjectName.toString())
+        if (holder is DataViewHolder && GetFilePathDetailsData != null) {
+            holder.bind(GetFilePathDetailsData!!, position, isSubjectName ?: "")
         }
     }
 
-
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
+
         private val DefaultImage: ImageView = itemView.findViewById(R.id.ImgPDF)
         private val ImgOrDocumentType: ImageView = itemView.findViewById(R.id.imageOrDocumentType)
         private val WebViewThumbnail: WebView = itemView.findViewById(R.id.WVThumbnaildocument)
         private val loadingBar: ProgressBar = itemView.findViewById(R.id.loadingBar)
         private val fileItem: CardView = itemView.findViewById(R.id.fileItem)
+
+        private var triedRawLoad = false
 
         @SuppressLint("ClickableViewAccessibility")
         fun bind(
@@ -78,7 +78,9 @@ class ImageSliderAdapter(
         ) {
             val data = fullList[position]
 
-            Log.d("GetFileDetails", data.toString())
+            WebViewThumbnail.visibility = View.GONE
+            DefaultImage.visibility = View.VISIBLE
+            loadingBar.visibility = View.GONE
 
             when (data.type.uppercase()) {
                 Constant.IMAGE -> {
@@ -86,61 +88,29 @@ class ImageSliderAdapter(
                         .into(DefaultImage)
 
                     ImgOrDocumentType.setBackgroundResource(R.drawable.default_image_icon)
-                    WebViewThumbnail.visibility = View.GONE
-                    DefaultImage.visibility = View.VISIBLE
                 }
 
-                Constant.PDF -> {
-                    ImgOrDocumentType.setBackgroundResource(R.drawable.hw_pdf_img)
-                    openDocumentInWebView(data.url)
-                }
+//                Constant.VIDEO -> {
+//                    loadVideoThumbnail(data.url)
+//                    ImgOrDocumentType.setBackgroundResource(R.drawable.video_icon)
+//                }
 
-                Constant.DOC, Constant.DOCX -> {
-                    ImgOrDocumentType.setBackgroundResource(R.drawable.microsoft_word_img)
-                    openDocumentInWebView(data.url)
-                }
-
-                Constant.TXT -> {
-                    ImgOrDocumentType.setBackgroundResource(R.drawable.txt_file_img)
-                    openDocumentInWebView(data.url)
-                }
-
-                Constant.PPT, Constant.PPTX -> {
-                    ImgOrDocumentType.setBackgroundResource(R.drawable.ppt_icon)
-                    openDocumentInWebView(data.url)
-                }
-
-                Constant.EXCEL -> {
-                    ImgOrDocumentType.setBackgroundResource(R.drawable.excel_icon)
-                    openDocumentInWebView(data.url)
-                }
                 Constant.AUDIO -> {
                     Glide.with(context).load(R.drawable.voice).into(DefaultImage)
                     ImgOrDocumentType.setBackgroundResource(R.drawable.voice)
-                    WebViewThumbnail.visibility = View.GONE
-                    DefaultImage.visibility = View.VISIBLE
                 }
 
-                Constant.VIDEO -> {
+                Constant.PDF, Constant.DOC, Constant.DOCX, Constant.TXT, Constant.PPT, Constant.PPTX, Constant.EXCEL -> {
+                    ImgOrDocumentType.setImageResource(getIconForType(data.type))
                     openDocumentInWebView(data.url)
-                    ImgOrDocumentType.setBackgroundResource(R.drawable.video_icon)
-                    WebViewThumbnail.visibility = View.GONE
-                    DefaultImage.visibility = View.VISIBLE
                 }
             }
 
+            // On item click: full screen viewer
             fileItem.setOnClickListener {
-                Constant.commonFileList.isEmpty()
-                Constant.selectedFileIndex = -1
-                val commonList = fullList.map {
-                    CommonFileData(
-                        type = it.type, path = it.url
-                    )
-                }
-
-                Constant.commonFileList = commonList
+                Constant.commonFileList =
+                    fullList.map { CommonFileData(type = it.type, path = it.url) }
                 Constant.selectedFileIndex = position
-
                 val intent = Intent(context, FullScreenViewerActivity::class.java)
                 intent.putExtra(Constant.subjectName, isSubjectName)
                 context.startActivity(intent)
@@ -173,52 +143,78 @@ class ImageSliderAdapter(
             })
         }
 
+        private fun getIconForType(type: String): Int {
+            return when (type.uppercase()) {
+                Constant.PDF -> R.drawable.hw_pdf_img
+                Constant.DOC, Constant.DOCX -> R.drawable.microsoft_word_img
+                Constant.TXT -> R.drawable.txt_file_img
+                Constant.PPT, Constant.PPTX -> R.drawable.ppt_icon
+                Constant.EXCEL -> R.drawable.excel_icon
+                else -> R.drawable.doc_icon
+            }
+        }
+
         private fun openDocumentInWebView(urlPath: String) {
             loadingBar.visibility = View.VISIBLE
-            var isLoadingUrl = ""
-            if (urlPath.contains("vimeo")) {
-                isLoadingUrl = urlPath
-            } else {
-                val googleDocsUrl = "https://docs.google.com/gview?embedded=true&url=$urlPath"
-                isLoadingUrl = googleDocsUrl
-            }
-
             DefaultImage.visibility = View.GONE
             WebViewThumbnail.visibility = View.VISIBLE
-            WebViewThumbnail.setOnTouchListener(null)
-            WebViewThumbnail.settings.javaScriptEnabled = true
-            WebViewThumbnail.settings.domStorageEnabled = true
-            WebViewThumbnail.settings.loadWithOverviewMode = true
-            WebViewThumbnail.settings.useWideViewPort = true
 
-            WebViewThumbnail.webViewClient = object : WebViewClient() {
-                override fun onPageStarted(
-                    view: WebView?, url: String?, favicon: android.graphics.Bitmap?
-                ) {
-                    loadingBar.visibility = View.VISIBLE
+            val googleDocsUrl = "https://docs.google.com/gview?embedded=true&url=$urlPath"
+
+            WebViewThumbnail.apply {
+                settings.javaScriptEnabled = true
+                settings.domStorageEnabled = true
+                settings.loadWithOverviewMode = true
+                settings.useWideViewPort = true
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    settings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
                 }
 
-                override fun onPageFinished(view: WebView?, url: String?) {
-                    loadingBar.visibility = View.GONE
+                webChromeClient = WebChromeClient()
+                webViewClient = object : WebViewClient() {
+                    override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+                        loadingBar.visibility = View.VISIBLE
+                    }
+
+                    override fun onPageFinished(view: WebView?, url: String?) {
+                        loadingBar.visibility = View.GONE
+                    }
+
+                    override fun onReceivedError(
+                        view: WebView?, request: WebResourceRequest?, error: WebResourceError?
+                    ) {
+                        Log.e("WebViewError", "Error loading: ${error?.description}")
+                        loadingBar.visibility = View.GONE
+                        if (!triedRawLoad) {
+                            triedRawLoad = true
+                            WebViewThumbnail.loadUrl(urlPath)
+                        }
+                    }
                 }
 
-                override fun onReceivedError(
-                    view: WebView?, request: WebResourceRequest?, error: WebResourceError?
-                ) {
-                    loadingBar.visibility = View.GONE
-                    Log.e("WebViewError", "Error loading: ${error?.description}")
-                }
+                loadUrl(googleDocsUrl)
             }
-
-            WebViewThumbnail.loadUrl(isLoadingUrl)
         }
 
-        class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-            // private val shimmerLayout: ShimmerFrameLayout = itemView.findViewById(R.id.shimmer_view_container)
-
-//            init {
-//                shimmerLayout.startShimmer()
+//        private fun loadVideoThumbnail(url: String) {
+//            try {
+//                val retriever = MediaMetadataRetriever()
+//                retriever.setDataSource(url, HashMap())
+//                val bitmap = retriever.frameAtTime
+//                retriever.release()
+//
+//                if (bitmap != null) {
+//                    DefaultImage.setImageBitmap(bitmap)
+//                } else {
+//                    DefaultImage.setImageResource(R.drawable.video_icon)
+//                }
+//            } catch (e: Exception) {
+//                Log.e("ThumbnailError", "Failed to load video thumbnail", e)
+//                DefaultImage.setImageResource(R.drawable.video_icon)
 //            }
-        }
+//        }
     }
+
+    class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 }
