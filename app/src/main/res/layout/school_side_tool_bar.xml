@@ -217,6 +217,7 @@
         android:layout_width="match_parent"
         android:layout_centerVertical="true"
         android:visibility="gone"
+        android:layout_marginStart="@dimen/twenty_five"
         android:layout_height="wrap_content">
 
         <TextView
@@ -225,7 +226,9 @@
             android:layout_height="wrap_content"
             style="@style/CustomTextStylePoppinsBold"
             android:layout_toStartOf="@+id/btnDone"
-            android:gravity="center"
+            android:text=""
+            android:layout_marginStart="@dimen/twenty_five"
+            android:gravity="start"
             android:padding="@dimen/ten" />
 
         <TextView
