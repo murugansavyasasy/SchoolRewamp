@@ -54,7 +54,7 @@
         android:layout_alignTop="@id/imageView"
         android:layout_alignEnd="@id/imageView"
         android:layout_margin="@dimen/ten"
-        android:src="@android:drawable/checkbox_on_background"
+        android:src="@drawable/tickmark"
         android:background="@android:color/transparent"
         android:visibility="gone" />
 

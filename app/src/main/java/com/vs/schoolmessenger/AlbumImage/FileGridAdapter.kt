@@ -98,6 +98,8 @@ class FileGridAdapter(
 
         binding.progressBar.visibility = View.GONE
         binding.checkIcon.visibility = if (selected.contains(uri)) View.VISIBLE else View.GONE
+        binding.imageView.alpha =
+            if (selected.contains(uri)) 0.5f else 1.0f
 
         binding.root.setOnClickListener {
             onItemClicked(uri)
@@ -110,9 +112,26 @@ class FileGridAdapter(
                 }
                 selected.add(uri)
             }
-            notifyItemChanged(position)
+            notifyItemChanged(position)  // This will re-bind the item and apply visibility + alpha changes
             onSelectionChanged(selected)
         }
+
+//        binding.checkIcon.visibility = if (selected.contains(uri)) View.VISIBLE else View.GONE
+//
+//        binding.root.setOnClickListener {
+//            onItemClicked(uri)
+//            if (selected.contains(uri)) {
+//                selected.remove(uri)
+//            } else {
+//                if (selected.size >= limit) {
+//                    Toast.makeText(context, "Limit is $limit", Toast.LENGTH_SHORT).show()
+//                    return@setOnClickListener
+//                }
+//                selected.add(uri)
+//            }
+//            notifyItemChanged(position)
+//            onSelectionChanged(selected)
+//        }
     }
 
     private fun getFileName(context: Context, uri: Uri): String {
