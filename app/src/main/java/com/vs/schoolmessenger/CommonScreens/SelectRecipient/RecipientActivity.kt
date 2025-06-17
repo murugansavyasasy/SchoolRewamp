@@ -1003,8 +1003,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     }
                 }
             } else if (SELECTED_SCHOOL_MENU == Constant.M_SCHOOL_CLASS_EVENTS) {
-                Log.d("isComing","wwwwwwwwwwwwwwwwwww")
-
                 if (Constant.selectedFiles.isNotEmpty()) {
                     val videoFiles = Constant.selectedFiles.filter { it.type == FileType.VIDEO }
                     if (videoFiles.isNotEmpty()) {
@@ -1099,7 +1097,9 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     }
 
     override fun onProgressUpdate(percent: Int) {
+        binding.rytLoading.visibility = View.VISIBLE
         runOnUiThread {
+            binding.txtProgress.text = percent.toString()
             Log.d("VimeoUploadProgress", "Progress: $percent%")
         }
     }

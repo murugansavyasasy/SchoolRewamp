@@ -36,7 +36,7 @@ class FileViewerAdapter(
 
     override fun onBindViewHolder(holder: FileViewHolder, position: Int) {
         val item = fileList[position]
-
+        
         holder.documentWebView.visibility = View.GONE
         holder.imageView.visibility = View.GONE
         holder.loadingBar.visibility = View.VISIBLE

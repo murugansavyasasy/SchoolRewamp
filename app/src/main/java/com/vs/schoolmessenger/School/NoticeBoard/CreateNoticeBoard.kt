@@ -611,40 +611,30 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickL
         val txtEndDate = Constant.convertDateFormat(binding.txtEndDate.text.toString())
         val txtStartDate = Constant.convertDateFormat(binding.txtStartDate.text.toString())
 
-        Log.d("RedirectToSchoolList", "Title: $title")
-        Log.d("RedirectToSchoolList", "Description: $description")
-        Log.d("RedirectToSchoolList", "Start Date: $txtStartDate")
-        Log.d("RedirectToSchoolList", "End Date: $txtEndDate")
-
         if (title.isEmpty()) {
-            Log.d("RedirectToSchoolList", "Title is empty")
             binding.txtTitle.error = getString(R.string.Title_required)
             binding.txtTitle.requestFocus()
             return
         }
 
         if (description.isEmpty()) {
-            Log.d("RedirectToSchoolList", "Description is empty")
             binding.txtDesc.error = "Description is required"
             binding.txtDesc.requestFocus()
             return
         }
 
         val noticeboardDetails = NoticeBoardDetails(title, description, txtStartDate, txtEndDate)
-        Log.d("RedirectToSchoolList", "NoticeBoardDetails created: $noticeboardDetails")
 
         if (Constant.selectedFiles.isNotEmpty()) {
-            Log.d("RedirectToSchoolList", "Removing first file from selectedFiles: ${Constant.selectedFiles[0]}")
             Constant.selectedFiles.removeAt(0)
         } else {
             Log.d("RedirectToSchoolList", "selectedFiles list is already empty")
         }
 
-        Log.d("RedirectToSchoolList", "Remaining selectedFiles: ${Constant.selectedFiles}")
+//        Log.d("RedirectToSchoolList", "Remaining selectedFiles: ${Constant.selectedFiles}")
 
         val intent = Intent(this, SchoolList::class.java)
         intent.putExtra(Constant.notice_data, noticeboardDetails)
-        Log.d("RedirectToSchoolList", "Starting SchoolList with notice data")
         startActivity(intent)
     }
 

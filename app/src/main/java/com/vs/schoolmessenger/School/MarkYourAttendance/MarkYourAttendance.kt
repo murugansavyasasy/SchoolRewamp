@@ -119,20 +119,25 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnCli
         }
 
         appViewModel!!.isStaffLocations?.observe(this) { response ->
-            if (response != null && response.status) {
-                binding.rytProgressBar.visibility = View.GONE
-                binding.rytNoLocationList.visibility = View.GONE
-                val isStaffLocation = response.data
-                if (isStaffLocation.isNotEmpty()) {
-                    binding.rytErrorMessage.visibility = View.GONE
-                    punchHiddenShow(isStaffLocation)
-                } else {
-                    binding.rytErrorMessage.visibility = View.VISIBLE
+            if (response != null) {
+                if (response.status) {
+                    binding.rytProgressBar.visibility = View.GONE
                     binding.rytNoLocationList.visibility = View.GONE
+                    val isStaffLocation = response.data
+                    if (isStaffLocation.isNotEmpty()) {
+                        binding.rytErrorMessage.visibility = View.GONE
+                        punchHiddenShow(isStaffLocation)
+                    } else {
+                        binding.rytErrorMessage.visibility = View.VISIBLE
+                        binding.rytNoLocationList.visibility = View.GONE
+                    }
+                } else {
+                    binding.rytNoLocationList.visibility = View.VISIBLE
+                    binding.lblNoLocation.text = response.message
                 }
             } else {
-                binding.rytNoLocationList.visibility = View.VISIBLE
-                binding.lblNoLocation.text = response!!.message
+                binding.rytNoLocationList.visibility = View.GONE
+                binding.rytErrorMessage.visibility = View.VISIBLE
             }
         }
 
