@@ -199,10 +199,11 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_weight="0.4"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:orientation="horizontal"
-                            android:layout_height="wrap_content">
+                            android:layout_weight="0.4"
+                            android:orientation="horizontal">
+
                             <TextView
                                 style="@style/CustomTextStylePoppinsBold"
                                 android:layout_width="wrap_content"
@@ -218,8 +219,8 @@
                                 android:id="@+id/lblStar"
                                 style="@style/CustomTextStylePoppinsBold"
                                 android:layout_width="wrap_content"
-                                android:layout_marginStart="@dimen/two"
                                 android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/two"
                                 android:text="@string/mandatory"
                                 android:textColor="@color/red"
                                 android:textSize="@dimen/thirteen_sp" />
@@ -257,11 +258,12 @@
                         android:weightSum="1">
 
                         <LinearLayout
-                            android:layout_gravity="center"
                             android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
                             android:layout_weight="0.4"
-                            android:orientation="horizontal"
-                            android:layout_height="wrap_content">
+                            android:orientation="horizontal">
+
                             <TextView
                                 style="@style/CustomTextStylePoppinsBold"
                                 android:layout_width="wrap_content"
@@ -278,8 +280,8 @@
                                 style="@style/CustomTextStylePoppinsBold"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/mandatory"
                                 android:layout_marginStart="@dimen/two"
+                                android:text="@string/mandatory"
                                 android:textColor="@color/red"
                                 android:textSize="@dimen/thirteen_sp" />
                         </LinearLayout>
@@ -334,10 +336,11 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_weight="0.4"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:orientation="horizontal"
-                            android:layout_height="wrap_content">
+                            android:layout_weight="0.4"
+                            android:orientation="horizontal">
+
                             <TextView
                                 style="@style/CustomTextStylePoppinsBold"
                                 android:layout_width="wrap_content"
@@ -354,8 +357,8 @@
                                 style="@style/CustomTextStylePoppinsBold"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/mandatory"
                                 android:layout_marginStart="@dimen/two"
+                                android:text="@string/mandatory"
                                 android:textColor="@color/red"
                                 android:textSize="@dimen/thirteen_sp" />
                         </LinearLayout>
@@ -388,8 +391,7 @@
                                 android:layout_height="wrap_content"
                                 android:text=""
                                 android:textColor="@color/black"
-                                android:textSize="@dimen/thirteen_sp">
-                            </TextView>
+                                android:textSize="@dimen/thirteen_sp"></TextView>
 
                             <ImageView
                                 android:layout_width="@dimen/twenty"
@@ -527,26 +529,26 @@
 
                     <LinearLayout
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/ten"
-                        android:orientation="horizontal"
                         android:layout_marginTop="@dimen/ten"
-                        android:layout_height="wrap_content">
+                        android:orientation="horizontal">
+
                         <TextView
                             style="@style/CustomTextStylePoppinsBold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/Title"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/thirteen_sp">
-                        </TextView>
+                            android:textSize="@dimen/thirteen_sp"></TextView>
 
                         <TextView
                             android:id="@+id/lblStar4"
                             style="@style/CustomTextStylePoppinsBold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/mandatory"
                             android:layout_marginStart="@dimen/two"
+                            android:text="@string/mandatory"
                             android:textColor="@color/red"
                             android:textSize="@dimen/thirteen_sp" />
                     </LinearLayout>
@@ -558,6 +560,7 @@
 
                         <TextView
                             android:id="@+id/lblCountOfTitle"
+                            style="@style/CustomTextStylePoppinsBold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/edtTitleTextMessage"
@@ -565,8 +568,7 @@
                             android:layout_marginEnd="@dimen/ten"
                             android:text="0/50"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/thirteen_sp"
-                            style="@style/CustomTextStylePoppinsBold">
+                            android:textSize="@dimen/thirteen_sp">
 
                         </TextView>
 
@@ -593,8 +595,8 @@
                         android:layout_marginBottom="@dimen/ten">
 
                         <TextView
-                            style="@style/CustomTextStylePoppinsBold"
                             android:id="@+id/txtDescriptionLabel"
+                            style="@style/CustomTextStylePoppinsBold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/Description"
@@ -605,11 +607,11 @@
                             android:id="@+id/lblStar5"
                             style="@style/CustomTextStylePoppinsBold"
                             android:layout_width="wrap_content"
-                            android:layout_toEndOf="@id/txtDescriptionLabel"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/two"
+                            android:layout_toEndOf="@id/txtDescriptionLabel"
                             android:text="@string/mandatory"
                             android:textColor="@color/red"
-                            android:layout_marginStart="@dimen/two"
                             android:textSize="@dimen/thirteen_sp" />
 
                         <EditText
@@ -628,18 +630,17 @@
 
                         <TextView
                             android:id="@+id/lblCountOfDescription"
+                            style="@style/CustomTextStylePoppinsBold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/edtContentTextMessage"
                             android:layout_alignParentEnd="true"
                             android:layout_marginTop="@dimen/ten"
+                            android:padding="@dimen/ten"
                             android:text="0/500"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/thirteen_sp"
-                            style="@style/CustomTextStylePoppinsBold"
-                            android:padding="@dimen/ten" />
+                            android:textSize="@dimen/thirteen_sp" />
                     </RelativeLayout>
-
 
 
                 </LinearLayout>
@@ -894,14 +895,15 @@
                             android:visibility="visible">
 
                         </TextView>
+
                         <TextView
                             android:id="@+id/lblStar6"
                             style="@style/CustomTextStylePoppinsBold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/mandatory"
-                            android:layout_toEndOf="@id/lblTitle"
                             android:layout_marginStart="@dimen/two"
+                            android:layout_toEndOf="@id/lblTitle"
+                            android:text="@string/mandatory"
                             android:textColor="@color/red"
                             android:textSize="@dimen/thirteen_sp" />
 

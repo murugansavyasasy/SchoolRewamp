@@ -593,6 +593,14 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
                     isSection = isStandard[position].sections
                     binding.recyclerView.visibility = View.VISIBLE
+                    binding.chAllSelect.isChecked = false
+                    isSectionId.clear()
+                    isSectionSelectedIds.clear()
+//                    Every time when we change the Class we need to disable the specfic student
+                    binding.btnSpecificStudent.isEnabled = false
+                    binding.btnSpecificStudent.background =
+                        ContextCompat.getDrawable(this@RecipientActivity, R.drawable.bg_gray)
+                    binding.chAllSelect.isChecked = false
                     isLoadData(isSection)
                 }
 
