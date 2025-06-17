@@ -289,6 +289,9 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
                     isSection = selectedOption.sections
                     hasUserSelectedSection = false
                     isLoadSection(isSection)
+                    // Select "All" section by default
+                    binding.isSpinnerSection.setSelection(0)
+
 
                     Log.d(
                         "DropdownMenu",

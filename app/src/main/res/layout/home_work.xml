@@ -194,7 +194,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/fifteen"
                     android:layout_marginTop="@dimen/ten"
-                    android:text="@string/UploadAttachmentOptional"
+                    android:text="Add Attachment"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp">
 
@@ -208,6 +208,7 @@
                     android:layout_toEndOf="@+id/lblAddPhoto"
                     android:text="@string/Optional"
                     android:textColor="@color/mild_grey1"
+                    android:layout_marginStart="8dp"
                     android:textSize="@dimen/thirteen_sp">
 
                 </TextView>
