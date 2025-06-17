@@ -130,7 +130,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/eight"
                         android:text="Sathish"
-                        android:textStyle="bold"
                         android:layout_marginEnd="@dimen/ten"
                         android:textColor="@color/black"
                         style="@style/CustomTextStylePoppinsRegular"
@@ -157,6 +156,7 @@
                             android:layout_height="wrap_content"
                             android:textColor="@color/black"
                             android:textStyle="bold"
+                            android:text=""
                             android:textSize="13sp"
                             style="@style/CustomTextStylePoppinsRegular">
                         </TextView>
@@ -183,7 +183,20 @@
                         android:text="IIX - A"
                         android:layout_marginEnd="@dimen/ten"
                         android:textColor="@color/black"
-                        android:textStyle="bold"
+                        android:layout_marginBottom="@dimen/ten"
+                        android:textSize="@dimen/thirteen_sp"
+                        style="@style/CustomTextStylePoppinsRegular">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/lblacademicyear"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:text=""
+                        android:layout_marginEnd="@dimen/ten"
+                        android:textColor="@color/black"
                         android:layout_marginBottom="@dimen/ten"
                         android:textSize="@dimen/thirteen_sp"
                         style="@style/CustomTextStylePoppinsRegular">

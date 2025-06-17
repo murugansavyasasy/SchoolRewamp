@@ -192,17 +192,18 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_below="@+id/lblStart"
-                        android:layout_marginTop="20dp"
+                        android:weightSum="3"
                         android:gravity="center"
-                        android:orientation="horizontal"
-                        android:weightSum="3">
+                        android:layout_marginTop="20dp"
+                        android:orientation="horizontal">
 
                         <RelativeLayout
                             android:id="@+id/rytStartDate"
                             android:layout_width="wrap_content"
+                            android:gravity="center"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:gravity="center">
+                            >
 
                             <androidx.cardview.widget.CardView
                                 android:id="@+id/cardStart"
@@ -216,29 +217,25 @@
                                     android:layout_height="match_parent"
                                     android:background="@drawable/bg_stroke_rect_black"
                                     android:orientation="vertical">
-
                                     <LinearLayout
                                         android:id="@+id/bottomdaylinear"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:background="@color/primary_light"
                                         android:gravity="center"
+                                        android:background="@color/primary_light"
                                         android:orientation="vertical">
-
                                         <TextView
-                                            android:id="@+id/lblDaylabel"
+                                            android:id="@+id/lblDay"
                                             style="@style/CustomTextStylePoppinsBold"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:layout_gravity="center_horizontal"
                                             android:layout_marginTop="@dimen/five"
                                             android:text="From"
-                                            android:layout_marginBottom="3dp"
                                             android:textColor="@color/black"
                                             android:textSize="@dimen/fifteen_sp" />
 
                                     </LinearLayout>
-
                                     <LinearLayout
                                         android:id="@+id/bottomlineardate"
                                         android:layout_width="match_parent"
@@ -248,7 +245,7 @@
 
 
                                         <TextView
-                                            android:id="@+id/lblDay"
+                                            android:id="@+id/lblDate"
                                             style="@style/CustomTextStylePoppinsBold"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
@@ -262,9 +259,8 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Fri, Jun 2025"
-                                            android:layout_marginTop="3dp"
                                             android:textColor="@color/grey"
-                                            android:textSize="12sp" />
+                                            android:textSize="13sp" />
 
 
                                     </LinearLayout>
@@ -274,20 +270,24 @@
                         </RelativeLayout>
 
 
+
                         <ImageView
                             android:id="@+id/imagearrow_view"
                             android:layout_width="@dimen/sixteen"
                             android:layout_height="@dimen/sixteen"
                             android:layout_weight="1"
-                            android:src="@drawable/exchangearrow"></ImageView>
+                            android:src="@drawable/exchangearrow">
+                        </ImageView>
+
 
 
                         <RelativeLayout
                             android:id="@+id/rytEndDate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:layout_weight="1"
-                            android:gravity="center">
+                            >
 
                             <androidx.cardview.widget.CardView
                                 android:id="@+id/cardEnd"
@@ -301,15 +301,13 @@
                                     android:layout_height="match_parent"
                                     android:background="@drawable/bg_stroke_rect_black"
                                     android:orientation="vertical">
-
                                     <LinearLayout
                                         android:id="@+id/bottomdaylinear1"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:background="@color/primary_light"
                                         android:gravity="center"
+                                        android:background="@color/primary_light"
                                         android:orientation="vertical">
-
                                         <TextView
                                             android:id="@+id/lblDay1"
                                             style="@style/CustomTextStylePoppinsBold"
@@ -318,13 +316,10 @@
                                             android:layout_gravity="center_horizontal"
                                             android:layout_marginTop="@dimen/five"
                                             android:text="To"
-                                            android:layout_marginBottom="3dp"
-
                                             android:textColor="@color/black"
                                             android:textSize="@dimen/fifteen_sp" />
 
                                     </LinearLayout>
-
                                     <LinearLayout
                                         android:id="@+id/bottomlineardate1"
                                         android:layout_width="match_parent"
@@ -334,7 +329,7 @@
 
 
                                         <TextView
-                                            android:id="@+id/lblEndDay"
+                                            android:id="@+id/lblEndDate"
                                             style="@style/CustomTextStylePoppinsBold"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
@@ -348,10 +343,8 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Fri, Jun 2025"
-                                            android:layout_marginTop="3dp"
-
                                             android:textColor="@color/grey"
-                                            android:textSize="12sp" />
+                                            android:textSize="13sp" />
 
 
                                     </LinearLayout>
@@ -362,6 +355,8 @@
 
 
                     </LinearLayout>
+
+
 
 
                     <LinearLayout

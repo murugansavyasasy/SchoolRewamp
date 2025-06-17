@@ -97,7 +97,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickL
         binding.btnNext.setOnClickListener(this)
         binding.rytStartDate.setOnClickListener(this)
         binding.rytStart.setOnClickListener(this)
-        binding.rytEnd.setOnClickListener(this)
+//        binding.rytEnd.setOnClickListener(this)
         binding.rytEndDate.setOnClickListener(this)
         binding.txtStartDate.setOnClickListener(this)
         binding.txtEndDate.setOnClickListener(this)
@@ -105,15 +105,15 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickL
         binding.lnrEndCalendar.setOnClickListener(this)
 
 
-        val (dayOnly, dayOfWeek, fullDate, slashDate) = Constant.getCurrentDateInfo()
-        binding.lblDate.text = dayOnly
-        binding.lblDay.text = dayOfWeek
+        val (dayOnly, dayOfWeek, fullDate, slashDate, customFormat) = Constant.getCurrentDateInfo()
+//        binding.lblDate.text = dayOnly
+        binding.lblDay.text = dayOnly
 
-        binding.lblEndDate.text = dayOnly
-        binding.lblEndDay.text = dayOfWeek
+//        binding.lblEndDate.text = dayOnly
+        binding.lblEndDay.text = dayOnly
 
-        binding.txtStartDate.text = fullDate
-        binding.txtEndDate.text = fullDate
+        binding.txtStartDate.text = customFormat
+        binding.txtEndDate.text = customFormat
 
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
@@ -227,7 +227,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickL
                     val day = parts[0]
                     val Date = parts[1]
                     binding.lblDay.text = day
-                    binding.lblDate.text = Date
+//                    binding.lblDate.text = Date
                 }
             }
 
@@ -240,7 +240,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickL
                     val day = parts[0]
                     val Date = parts[1]
                     binding.lblEndDay.text = day
-                    binding.lblEndDate.text = Date
+//                    binding.lblEndDate.text = Date
                 }
             }
 

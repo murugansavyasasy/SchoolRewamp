@@ -549,7 +549,8 @@ object Constant {
         val titleText = dialogView.findViewById<TextView>(R.id.alertTitle)
         val messageText = dialogView.findViewById<TextView>(R.id.alertMessage)
         val okButton = dialogView.findViewById<TextView>(R.id.btnOk)
-        messageText.text = content
+        messageText.text = content +" Please try again "
+        titleText.text = "Oops! Wrong Password"
         okButton.setOnClickListener {
             alertDialog.dismiss()
         }
@@ -973,14 +974,13 @@ object Constant {
 
         val dayOnly = String.format("%02d", calendar.get(android.icu.util.Calendar.DAY_OF_MONTH))
         val dayOfWeek = SimpleDateFormat("EEE", Locale.getDefault()).format(calendar.time)
-        val fullDate =
-            SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(calendar.time)
-//        val fullDate =
-//            SimpleDateFormat("EEE dd MMM yyyy", Locale.getDefault()).format(calendar.time)
-        val slashDate =
-            SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(calendar.time)
-        return listOf(dayOnly, dayOfWeek, fullDate, slashDate)
+        val fullDate = SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(calendar.time)
+        val slashDate = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(calendar.time)
+        val customFormat = SimpleDateFormat("EEE, MMM yyyy", Locale.getDefault()).format(calendar.time)
+
+        return listOf(dayOnly, dayOfWeek, fullDate, slashDate, customFormat)
     }
+
 
     fun convertDateFormat(input: String): String {
         return try {
