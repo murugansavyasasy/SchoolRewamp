@@ -299,7 +299,6 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         }
     }
 
-
     private fun isGetAcademicYear() {
         appViewModel!!.isGetAcademicYear(
             isAccessToken!!, this
