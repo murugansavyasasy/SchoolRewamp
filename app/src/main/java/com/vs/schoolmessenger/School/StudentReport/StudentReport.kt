@@ -45,14 +45,10 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
     private var filterSelectedOption: String? = null
     private var hasUserSelectedSection = false
     private var hasUserSelectedStandard = false
+    var isAllSectionSelected = true
+    private lateinit var filterCaterotyType: List<String>
 
 
-
-    val filterCaterotyType = listOf(
-        Constant.GET_ALL_STUDENT,
-        Constant.STANDARD,
-        Constant.STANDARD_AND_SECTION
-    )
 
 
     val handler = Handler(Looper.getMainLooper())
@@ -65,6 +61,12 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
     override fun setupViews() {
         super.setupViews()
         setupToolbar()
+
+        filterCaterotyType = listOf(
+            resources.getString(R.string.get_all_student),
+            resources.getString(R.string.standard_and_section)
+        )
+
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
@@ -146,8 +148,10 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
                     if (it > 0) {
                         binding.rlaStandardPicking.visibility=View.VISIBLE
                         isClassID = isGetStandard!!.get(0).id
-                        isSectionID = isGetStandard!!.get(0).sections.get(0).id
+//                        isSectionID = isGetStandard!!.get(0).sections.get(0).id
+                        isAllSectionSelected = true
                         isLoadStandard(isGetStandard)
+
 //                        binding.dropdownTextViewStandard.text = isGetStandard!!.get(0).name
                         if (isGetStandard!!.get(0).sections.size > 0) {
 //                            binding.dropdownTextViewSection.text = isGetStandard!!.get(0).sections.get(0).name
@@ -157,7 +161,7 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
                     }
                     else {
                         binding.tabLayout.visibility=View.GONE
-//                        binding.rlaStandardPicking.visibility=View.GONE
+                        binding.rlaStandardPicking.visibility=View.GONE
                         ErrorMessage(response.message)
                     }
                 }
@@ -187,35 +191,38 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
 
 
         if (Constant.GET_ALL_STUDENT == filterSelectedOption) {
-            binding.lnrStandardDetails.visibility = View.GONE
-            binding.lnrSectionDetails.visibility = View.GONE
+            binding.rlaStandardPicking.visibility=View.GONE
             appViewModel!!.getStudentReportDetails(
                 isAccessToken!!,isAcademicYearId, activity = this
             )
         }
 
-        if (Constant.STANDARD == filterSelectedOption) {
-            binding.lnrStandardDetails.visibility = View.VISIBLE
-            binding.lnrSectionDetails.visibility = View.GONE
-            appViewModel!!.getStudentReportDetails(
-                isAccessToken!!,isAcademicYearId, class_id = isClassID!!, activity = this
-            )
-        }
+//        if (Constant.STANDARD == filterSelectedOption) {
+//            binding.lnrStandardDetails.visibility = View.VISIBLE
+//            binding.lnrSectionDetails.visibility = View.GONE
+//            appViewModel!!.getStudentReportDetails(
+//                isAccessToken!!,isAcademicYearId, class_id = isClassID!!, activity = this
+//            )
+//        }
         if (Constant.STANDARD_AND_SECTION == filterSelectedOption) {
-            binding.lnrStandardDetails.visibility = View.VISIBLE
-            binding.lnrSectionDetails.visibility = View.VISIBLE
-            appViewModel!!.getStudentReportDetails(
-                isAccessToken!!,isAcademicYearId, class_id = isClassID!!, section_id = isSectionID!!, activity = this
-            )
+            binding.rlaStandardPicking.visibility=View.VISIBLE
+            if (isAllSectionSelected) {
+                appViewModel!!.getStudentReportDetails(
+                    isAccessToken!!, isAcademicYearId, class_id = isClassID!!, activity = this
+                )
+            } else {
+                appViewModel!!.getStudentReportDetails(
+                    isAccessToken!!, isAcademicYearId, class_id = isClassID!!, section_id = isSectionID!!, activity = this
+                )
+            }
+
         }
     }
 
     private fun loadStudentReport(studentReportData: List<StudentReportData>) {
-        // Once data is loaded, stop shimmer and pass the actual data
         mAdapter =
             StudentReportAdapter(studentReportData, this, this, Constant.isShimmerViewDisable)
         binding.rcyStudentReport.layoutManager = LinearLayoutManager(this)
-        // Set GridLayoutManager (2 columns in this case)
         binding.rcyStudentReport.adapter = mAdapter
         highlightSelectedTab(binding.tapNameAsc)
         mAdapter.sortData(StudentReportAdapter.SortType.NAME_ASC)
@@ -302,8 +309,15 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
 
 
     private fun isLoadSection(isSection: List<Section>?) {
-        val adapter = SectionDropDownListAdapter(this, isSection)
+        // Insert "All" section manually
+        val updatedSections = mutableListOf<Section>().apply {
+            add(Section(id = -1, name = "All")) // ID -1 just as a placeholder, logic based on name
+            if (isSection != null) addAll(isSection)
+        }
+
+        val adapter = SectionDropDownListAdapter(this, updatedSections)
         binding.isSpinnerSection.adapter = adapter
+
         binding.isSpinnerSection.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
@@ -311,30 +325,33 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
                 ) {
                     adapter.selectedPosition = position
                     adapter.notifyDataSetChanged()
-                    val selectedOption = isSection!![position]
+                    val selectedOption = updatedSections[position]
+
                     Log.d(
                         "DropdownMenu",
-                        "Clicked Standard Year: ID = ${isSection[position].id}, Year = ${isSection[position].name}"
+                        "Clicked Section: ID = ${selectedOption.id}, Name = ${selectedOption.name}"
                     )
-//                    isSectionId = selectedOption.id
-//                    isSectionID= selectedOption.id
-//                    isGetStudentReport()
+
                     if (hasUserSelectedSection) {
                         isSectionId = selectedOption.id
-                        isSectionID= selectedOption.id
-                        isGetStudentReport()
+                        isSectionID = selectedOption.id
 
+                        // Use section name to detect "All" case
+                        isAllSectionSelected = selectedOption.name.equals("All", ignoreCase = true)
+
+                        isGetStudentReport()
                     } else {
-                        // First auto-trigger — just set the flag and skip loadData
                         hasUserSelectedSection = true
                     }
-
-
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>) {}
             }
+
+        // Force default selection to "All"
+        binding.isSpinnerSection.setSelection(0)
     }
+
 
 
 
@@ -361,7 +378,7 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
 //            binding.dropdownTextViewSection.isEnabled = false
 //            binding.dropdownTextViewSection.isClickable = false
 
-            ErrorMessage(Constant.No_STANDARD_FOUND)
+            ErrorMessage(resources.getString(R.string.no_standard_found))
             return
         }
 
@@ -373,8 +390,8 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
 
         val sections = standard.sections
         if (!sections.isNullOrEmpty()) {
-            val defaultSection = sections[0]
-            isSectionID = defaultSection.id
+//            val defaultSection = sections[0]
+//            isSectionID = defaultSection.id
 //            binding.dropdownTextViewSection.text = defaultSection.name
 
             if (sections.size == 1) {

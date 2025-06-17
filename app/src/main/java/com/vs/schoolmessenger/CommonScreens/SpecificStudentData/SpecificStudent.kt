@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.CommonScreens.SpecificStudentData
 
 import android.app.AlertDialog
+import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
@@ -9,6 +10,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
@@ -76,6 +78,8 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
 
 
+
+
         isTargetType = Constant.isStudent
         isCircularType = Constant.student
 
@@ -88,18 +92,18 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
         appViewModel!!.isStudentList!!.observe(this) { response ->
             if (response != null) {
                 if (response.status) {
-                    binding.rcySpecificStudent.visibility = View.VISIBLE
+                    ShowData()
                     binding.lblNoRecordsFound.visibility = View.GONE
                     isStudentList = response.data
                     isStudentData = isStudentList
                     isStudentData()
                 } else {
-                    binding.lblNoRecordsFound.visibility = View.VISIBLE
                     binding.rcySpecificStudent.visibility = View.GONE
-                    binding.lblNoRecordsFound.text = response.message
+                    ErrorMessage(response.message)
                 }
             } else {
-                binding.lblNoRecordsFound.visibility = View.VISIBLE
+                binding.rcySpecificStudent.visibility = View.GONE
+                ErrorMessage(getString(R.string.no_student_found))
             }
         }
 
@@ -137,6 +141,12 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
             }
         }
 
+        binding.toolbarLayout.txtSearch.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                binding.toolbarLayout.cbSelect.visibility = View.GONE
+            }
+        }
+
 
         binding.toolbarLayout.txtSearch.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
@@ -150,20 +160,49 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
             }
         })
 
-
     }
+
+    fun ShowData() {
+        binding.rcySpecificStudent.visibility = View.VISIBLE
+        binding.lytNoDataFound.visibility = View.GONE
+    }
+
+    fun ErrorMessage(ErrorMessage: String) {
+        binding.lytNoDataFound.visibility = View.VISIBLE
+        binding.noDataFound.text = ErrorMessage
+    }
+
 
     private fun filter(query: String) {
-        isStudentData = if (query.isEmpty()) {
-            isStudentList
+        val searchWords = query.trim().lowercase().split("\\s+".toRegex())
+
+        val filteredList = if (searchWords.isEmpty() || searchWords.first().isBlank()) {
+            isStudentList.orEmpty()
         } else {
-            isStudentList.filter {
-                it.name.contains(query, ignoreCase = true) ||
-                        it.admission_no.contains(query, ignoreCase = true)
+            isStudentList.orEmpty().filter { student ->
+                val fieldsToSearch = listOf(
+                    student.name?.lowercase().orEmpty(),
+                    student.admission_no?.lowercase().orEmpty(),
+                    student.roll_no?.lowercase().orEmpty()
+                )
+
+                searchWords.all { word ->
+                    fieldsToSearch.any { field -> field.contains(word) }
+                }
             }
         }
-        mAdapter.updateList(isStudentData ?: listOf())
+
+        isStudentData = filteredList
+
+        if (filteredList.isNotEmpty()) {
+            binding.rcySpecificStudent.visibility = View.VISIBLE
+            mAdapter.updateList(filteredList)
+        } else {
+            binding.rcySpecificStudent.visibility = View.GONE
+            ErrorMessage(getString(R.string.no_student_found))
+        }
     }
+
 
 
     private fun isStudentData() {
@@ -489,15 +528,41 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
         }
     }
 
+    override fun onBackPressed() {
+        val searchText = binding.toolbarLayout.txtSearch.text.toString().trim()
+
+        if (binding.toolbarLayout.txtSearch.hasFocus()) {
+            binding.toolbarLayout.txtSearch.clearFocus()
+
+            // Hide keyboard
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(binding.toolbarLayout.txtSearch.windowToken, 0)
+
+            // Show checkbox only if search is empty
+            if (searchText.isEmpty()) {
+                binding.toolbarLayout.cbSelect.visibility = View.VISIBLE
+            }
+        } else {
+            super.onBackPressed()
+        }
+    }
+
+
+
+
+
     override fun onIdCheck(data: NameAndIds) {
         if (!isSpecificStudent.any { it.id == data.id }) {
             isSpecificStudent.add(data)
         }
-        binding.toolbarLayout.cbSelect.isChecked = isSpecificStudent.size == isStudentData?.size
+//        binding.toolbarLayout.cbSelect.isChecked = isSpecificStudent.size == isStudentData?.size
+        binding.toolbarLayout.cbSelect.isChecked = isSpecificStudent.size == isStudentList.size
+
     }
 
     override fun onIdUnchecked(data: NameAndIds) {
         isSpecificStudent.removeAll { it.id == data.id }
         binding.toolbarLayout.cbSelect.isChecked = false
+
     }
 }

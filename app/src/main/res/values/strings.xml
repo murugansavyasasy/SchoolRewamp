@@ -559,5 +559,8 @@
     <string name="no_matching_homework_found">No matching homework found.</string>
     <string name="UploadAttachmentOptional">Upload Image/Documents</string>
     <string name="mandatory">*</string>
+    <string name="get_all_student">GET ALL STUDENT</string>
+    <string name="standard_and_section">STANDARD AND SECTION</string>
+    <string name="no_standard_found">No Standard Found</string>
 
 </resources>

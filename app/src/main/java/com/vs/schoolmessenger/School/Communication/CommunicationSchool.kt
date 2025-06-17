@@ -63,6 +63,7 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import kotlin.math.ceil
 import kotlin.math.max
 
 class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnClickListener,
@@ -484,6 +485,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     val formattedDuration = formatDuration(durationInMs)
                     binding.lblEndDuration.text = "/ $formattedDuration"
 
+
                     binding.rlaSeekBarAndTitle.visibility = View.VISIBLE
                     binding.rlaTitle.visibility = View.VISIBLE
                 } else {
@@ -592,7 +594,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                         val currentFormatted = formatDuration(currentPosition)
                         Log.d("currentFormatted", currentFormatted.toString())
                         binding.lblStartDuration.text = currentFormatted
-                        handler.postDelayed(this, 1000)
+                        handler.postDelayed(this, 100)
                     }
                 }
             }
@@ -600,10 +602,14 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     }
 
     private fun formatDuration(durationInMillis: Int): String {
-        val adjustedDuration =
-            durationInMillis + 1000 // Add 1 second to account for rounding issues
-        val minutes = (adjustedDuration / 1000) / 60
-        val seconds = (adjustedDuration / 1000) % 60
+        val adjustedDuration = ceil(durationInMillis / 1000.0).toInt() // more accurate
+        val minutes = adjustedDuration / 60
+        val seconds = adjustedDuration % 60
+
+//        val adjustedDuration =
+//            durationInMillis + 1000 // Add 1 second to account for rounding issues
+//        val minutes = (adjustedDuration / 1000) / 60
+//        val seconds = (adjustedDuration / 1000) % 60
         return String.format(Constant.dateForMate, minutes, seconds)
     }
 
@@ -840,12 +846,14 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     if (binding.edtContentTextMessage.text.toString() != "") {
                         isGoToRecipient()
                     } else {
-                        Constant.showValidationAlertPopup(getString(R.string.alert),
+                        Constant.showValidationAlertPopup(
+                            getString(R.string.alert),
                             getString(R.string.Enter_title_description), this
                         )
                     }
                 } else {
-                    Constant.showValidationAlertPopup(getString(R.string.alert),
+                    Constant.showValidationAlertPopup(
+                        getString(R.string.alert),
                         getString(R.string.Enter_title_description), this
                     )
                 }
@@ -872,7 +880,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                                 if (selectedDates.isNotEmpty()) {
                                     isGoToRecipient()
                                 } else {
-                                    Constant.showValidationAlertPopup(getString(R.string.alert),
+                                    Constant.showValidationAlertPopup(
+                                        getString(R.string.alert),
                                         getString(R.string.Select_schedule_date), this
                                     )
                                 }
@@ -880,12 +889,14 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                                 isGoToRecipient()
                             }
                         } else {
-                            Constant.showValidationAlertPopup(getString(R.string.alert),
+                            Constant.showValidationAlertPopup(
+                                getString(R.string.alert),
                                 getString(R.string.Voice_title_required), this
                             )
                         }
                     } else {
-                        Constant.showValidationAlertPopup(getString(R.string.alert),
+                        Constant.showValidationAlertPopup(
+                            getString(R.string.alert),
                             getString(R.string.Voice_title_required), this
                         )
                     }
@@ -896,8 +907,9 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                                 if (selectedDates.isNotEmpty()) {
                                     isGoToRecipient()
                                 } else {
-                                    Constant.showValidationAlertPopup(getString(R.string.alert),
-                                       getString(R.string.Select_schedule_date), this
+                                    Constant.showValidationAlertPopup(
+                                        getString(R.string.alert),
+                                        getString(R.string.Select_schedule_date), this
                                     )
                                 }
                             } else {
@@ -905,12 +917,14 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                             }
 
                         } else {
-                            Constant.showValidationAlertPopup(getString(R.string.alert),
+                            Constant.showValidationAlertPopup(
+                                getString(R.string.alert),
                                 getString(R.string.Voice_title_required), this
                             )
                         }
                     } else {
-                        Constant.showValidationAlertPopup(getString(R.string.alert),
+                        Constant.showValidationAlertPopup(
+                            getString(R.string.alert),
                             getString(R.string.Voice_title_required), this
                         )
                     }
@@ -1170,6 +1184,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             isFileName = isFileName.toString()
         )
         Constant.isVoiceSendingData = voiceData
+        Log.d("VoiceData", Constant.isVoiceSendingData.toString())
+
     }
 
     fun isSaveTheTextData() {

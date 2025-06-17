@@ -16,7 +16,7 @@ import com.vs.schoolmessenger.School.Communication.Adapter.VoiceHistoryAdapter
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class SpecificStudentAdapter(
-    private var itemList: List<NameAndIds>? = null,
+    private var itemList: List<NameAndIds>?,
     private var listener: SpecificStudentSelectClickListener,
     private var context: Context,
     private var isLoading: Boolean

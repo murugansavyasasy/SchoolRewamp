@@ -2,33 +2,29 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:fitsSystemWindows="true"
-    android:padding="@dimen/ten">
+    android:layout_marginStart="@dimen/twenty"
+    android:layout_marginTop="@dimen/ten"
+    android:layout_marginEnd="@dimen/twenty"
+    android:fitsSystemWindows="true">
 
-    <RelativeLayout
+    <ImageView
+        android:id="@+id/imgPicking"
+        android:layout_width="@dimen/seventy"
+        android:layout_height="@dimen/seventy"
+        android:layout_centerInParent="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/add_image">
 
-        android:layout_width="@dimen/eighty"
-        android:layout_height="@dimen/eighty">
+    </ImageView>
 
-        <ImageView
-            android:id="@+id/imgPicking"
-            android:layout_width="match_parent"
-            android:scaleType="centerCrop"
-            android:layout_height="match_parent"
-            android:src="@drawable/add_image"></ImageView>
+    <ImageView
+        android:id="@+id/imgDelete"
+        android:layout_width="@dimen/twenty_five"
+        android:layout_height="@dimen/twenty_five"
+        android:layout_toEndOf="@+id/imgPicking"
+        android:background="@drawable/white_circle_bg"
+        android:src="@drawable/del_icon">
 
-        <ImageView
-            android:background="@drawable/white_circle_bg"
-            android:id="@+id/imgDelete"
-            android:padding="@dimen/five"
-            android:layout_width="@dimen/twenty_five"
-            android:layout_height="@dimen/twenty_five"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
-            android:src="@drawable/del_icon">
+    </ImageView>
 
-        </ImageView>
-
-
-    </RelativeLayout>
 </RelativeLayout>

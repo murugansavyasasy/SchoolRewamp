@@ -19,6 +19,7 @@ import com.vs.schoolmessenger.School.Communication.Interface.VoiceHistoryClickLi
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 import com.vs.schoolmessenger.Utils.WaveformSeekBar
+import kotlin.math.ceil
 import kotlin.math.max
 
 class VoiceHistoryAdapter(
@@ -225,9 +226,13 @@ class VoiceHistoryAdapter(
 
         // Format milliseconds to "mm:ss"
         private fun formatTime(milliseconds: Int): String {
-            val seconds = (milliseconds / 1000) % 60
-            val minutes = (milliseconds / (1000 * 60)) % 60
+            val adjustedDuration = ceil(milliseconds / 1000.0).toInt()
+            val seconds = adjustedDuration % 60
+            val minutes = adjustedDuration /60
             return String.format(Constant.dateForMate, minutes, seconds)
+//            val seconds = (milliseconds / 1000) % 60
+//            val minutes = (milliseconds / (1000 * 60)) % 60
+//            return String.format(Constant.dateForMate, minutes, seconds)
         }
 
         // Get audio duration asynchronously

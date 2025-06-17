@@ -96,9 +96,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
     private var isStaffDetails: StaffDetails? = null
     var isSection: List<Section>? = null
     var isGetStandard: List<Standard>? = null
-
     private var isHomeWorkReportData: List<HomeWorkReport>? = null
-
     var mHomeWorkReportAdapter: HomeWorkReportAdapter? = null
     private var fullHomeworkList: List<HomeWorkReport> = listOf()
     var isSectionId = -1

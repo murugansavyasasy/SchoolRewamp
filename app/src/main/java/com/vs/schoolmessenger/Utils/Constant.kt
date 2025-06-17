@@ -55,6 +55,7 @@ import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Locale
+import kotlin.math.ceil
 
 object Constant {
     var isDeviceType = "Android"
@@ -305,7 +306,7 @@ object Constant {
 
     var GET_ALL_STUDENT = "GET ALL STUDENT"
     var STANDARD = "STANDARD"
-    var STANDARD_AND_SECTION = "STANDARD & SECTION"
+    var STANDARD_AND_SECTION = "STANDARD AND SECTION"
 
     var NO_DATA_FOUND = "No Data Found"
     var No_STANDARD_FOUND = "No Standard Found"
@@ -901,7 +902,7 @@ object Constant {
             val durationStr =
                 retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
             val durationMs = durationStr?.toLongOrNull() ?: 0L
-            (durationMs / 1000).toInt()
+            ceil(durationMs / 1000.0).toInt()
         } catch (e: Exception) {
             e.printStackTrace()
             0

@@ -1,10 +1,12 @@
 package com.vs.schoolmessenger.School.AbsenteesMarking
 
+import android.content.Context
 import android.os.Build
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
@@ -81,6 +83,12 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
 //            mAdapter.setAllAbsent(isChecked)
 //        }
 
+        binding.txtSearchMenu.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                binding.toolbarLayout.cbSelect.visibility = View.GONE
+            }
+        }
+
         binding.toolbarLayout.cbSelect.setOnClickListener {
             if (binding.toolbarLayout.cbSelect.isChecked) {
                 isSpecificStudent.clear()
@@ -127,8 +135,11 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
                     binding.lnrHeader.visibility = View.GONE
                     binding.recycleStudents.visibility = View.GONE
                     ErrorMessage(response.message)
-
                 }
+            }
+            else{
+                binding.recycleStudents.visibility = View.GONE
+                ErrorMessage(getString(R.string.no_student_found))
             }
         }
         setupFilterCaterotyType(filterCaterotyType)
@@ -231,7 +242,7 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
             mAdapter.updateData(filteredList)
         } else {
             binding.recycleStudents.visibility = View.GONE
-            ErrorMessage(Constant.NO_DATA_FOUND)
+            ErrorMessage(getString(R.string.no_student_found))
         }
     }
 
@@ -333,8 +344,23 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
 
     }
 
+    override fun onBackPressed() {
+        val searchText = binding.txtSearchMenu.text.toString().trim()
+        if (binding.txtSearchMenu.hasFocus()) {
+            binding.txtSearchMenu.clearFocus()
 
+            // Hide keyboard
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(binding.txtSearchMenu.windowToken, 0)
 
+            // Show checkbox only if search is empty
+            if (searchText.isEmpty()) {
+                binding.toolbarLayout.cbSelect.visibility = View.VISIBLE
+            }
+        } else {
+            super.onBackPressed()
+        }
+    }
 
     override fun onSelectionChanged(selectedIds: List<String>) {
         Log.d("ActivitySelectedIDs", selectedIds.toString())
