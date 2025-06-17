@@ -353,11 +353,10 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/rytStart"
                         android:layout_marginTop="20dp"
-                        android:fontFamily="@font/poppins_bold"
-                        android:text="Upload Image/Document"
+                        android:text="Add Attachment"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp"
-                        android:textStyle="bold" />
+                        style="@style/CustomTextStylePoppinsBold" />
 
 
                     <androidx.recyclerview.widget.RecyclerView

@@ -25,6 +25,8 @@ data class ChildDetails(
     val student_address: String,
     val secondary_mobile: String,
     val whatsapp_number: String,
-    val class_teacher: String
+    val class_teacher: String,
+    val academic_year_id: String,
+    val academic_year_name: String
 
 )
