@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.School.StudentReport
 
 import android.content.Context
 import android.graphics.Paint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -64,13 +65,13 @@ class StudentReportAdapter(
         private val lblFatherName: TextView = itemView.findViewById(R.id.lblFatherName)
         private val lblTeacherName: TextView = itemView.findViewById(R.id.lblTeacherName)
         private val lblMobileNumber: TextView = itemView.findViewById(R.id.lblMobileNumber)
-        private val lblStandard: TextView = itemView.findViewById(R.id.lblStandard)
-        private val lblSection: TextView = itemView.findViewById(R.id.lblSection)
+        private val lblStandardAndSection: TextView = itemView.findViewById(R.id.lblStandardAndSection)
+//        private val lblSection: TextView = itemView.findViewById(R.id.lblSection)
         private val profileImage: ImageView = itemView.findViewById(R.id.imgStudent)
-        private val lblEmail: TextView = itemView.findViewById(R.id.lblEmail)
-        private val lnrPhoneNumber: LinearLayout = itemView.findViewById(R.id.lnrPhoneNumber)
-        private val lnrSms: LinearLayout = itemView.findViewById(R.id.lnrSms)
-        private val lnrMail: LinearLayout = itemView.findViewById(R.id.lnrMail)
+//        private val lblEmail: TextView = itemView.findViewById(R.id.lblEmail)
+        private val lblPhoneNumber: TextView = itemView.findViewById(R.id.lblMobileNumber)
+        private val lblSms: TextView = itemView.findViewById(R.id.lblSMS)
+        private val lblMail: TextView = itemView.findViewById(R.id.lblEmail)
 
         fun bind(data: StudentReportData, listener: StudentReportClickListener) {
             // Bind actual data to the views
@@ -80,25 +81,19 @@ class StudentReportAdapter(
             lblStudentName.text = data.name
             lblFatherName.text = data.father_name
             lblTeacherName.text = data.class_teacher
-            lblStandard.text = data.class_name
-            lblSection.text = data.section_name
+            lblStandardAndSection.text = data.class_name +"-"+data.section_name
             if(data.primary_mobile!=""){
-                lnrPhoneNumber.visibility=View.VISIBLE
-                lnrSms.visibility=View.VISIBLE
-                lblMobileNumber.text = data.primary_mobile
-                lblMobileNumber.setPaintFlags(lblMobileNumber.getPaintFlags() or Paint.UNDERLINE_TEXT_FLAG)
+                lblPhoneNumber.visibility=View.VISIBLE
+                lblSms.visibility=View.VISIBLE
 
             }else{
-                lnrPhoneNumber.visibility=View.GONE
-                lnrSms.visibility=View.GONE
+                lblPhoneNumber.visibility=View.GONE
+                lblSms.visibility=View.GONE
             }
             if(data.email!=""){
-                lnrMail.visibility=View.VISIBLE
-                lblEmail.text = data.email
-                lblEmail.setPaintFlags(lblEmail.getPaintFlags() or Paint.UNDERLINE_TEXT_FLAG)
-
+                lblMail.visibility=View.VISIBLE
             }else{
-                lnrMail.visibility=View.GONE
+                lblMail.visibility=View.GONE
             }
             Glide.with(context)
                 .load(data.profile)
@@ -107,38 +102,20 @@ class StudentReportAdapter(
                 .into(profileImage);
 
 
-            // Set click listener for the email TextView
-            lnrMail.setOnClickListener {
+            lblMail.setOnClickListener {
                 listener.onMailClick(data)
             }
 
-            lnrSms.setOnClickListener {
+            lblSms.setOnClickListener {
                 listener.onMessageClick(data)
             }
 
-            lnrPhoneNumber.setOnClickListener {
+            lblPhoneNumber.setOnClickListener {
                 listener.onPhoneClick(data)
             }
         }
 
     }
-    enum class SortType {
-        NO_ASC,
-        NO_DESC,
-        NAME_ASC,
-        NAME_DESC
-    }
-    fun sortData(sortType: SortType) {
-        val sortedList = when (sortType) {
-            SortType.NO_ASC -> itemList?.sortedBy { it.admission_no }
-            SortType.NO_DESC -> itemList?.sortedByDescending { it.admission_no }
-            SortType.NAME_ASC -> itemList?.sortedBy { it.name }
-            SortType.NAME_DESC -> itemList?.sortedByDescending { it.name }
-        }
-
-        updateData(sortedList ?: emptyList())
-    }
-
 
     fun updateData(newList: List<StudentReportData>) {
         itemList = newList

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionModel.DisplayItem
 
 
 class DcfAdapter(

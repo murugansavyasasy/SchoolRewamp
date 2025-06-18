@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.School.DailyCollection
+package com.vs.schoolmessenger.School.DailyCollection.DailyCollectionModel
 
 sealed class DisplayItem {
     data class Header(val category: String, val total: String) : DisplayItem()

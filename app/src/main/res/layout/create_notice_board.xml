@@ -279,7 +279,8 @@
                             android:layout_width="@dimen/sixteen"
                             android:layout_height="@dimen/sixteen"
                             android:layout_weight="1"
-                            android:src="@drawable/exchangearrow"></ImageView>
+                            android:src="@drawable/exchangearrow">
+                        </ImageView>
 
 
                         <RelativeLayout
