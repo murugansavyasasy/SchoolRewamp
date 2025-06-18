@@ -562,5 +562,10 @@
     <string name="get_all_student">GET ALL STUDENT</string>
     <string name="standard_and_section">STANDARD AND SECTION</string>
     <string name="no_standard_found">No Standard Found</string>
+    <string name="call">Call</string>
+    <string name="mail">Mail</string>
+    <string name="class_teacher_2">Class Teacher</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
 
 </resources>
