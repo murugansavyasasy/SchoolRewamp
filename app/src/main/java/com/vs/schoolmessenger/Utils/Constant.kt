@@ -150,7 +150,6 @@ object Constant {
 
     var school = "A"
     var P = "P"
-    var MarkAllPresent = "Mark all as present!"
     var standard = "C"
     var section = "S"
     var group = "G"
@@ -162,8 +161,8 @@ object Constant {
     var selectedFileIndex: Int = -1
     var isCommunicationType = 1
     var isVoiceType = 1
-    var isForward = false
 
+//    var isForward = false
     //MarkAttendanceDetails
 
     var isMarkAttendanceDataSending: MarkAttendanceDataSending? = null
