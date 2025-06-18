@@ -14,6 +14,9 @@ import com.vs.schoolmessenger.Parent.Communication.UnifiedVoiceAdapter
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.HomeWorkAdapter
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetDateWiseHomeworkData
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionModel.CollectionData
+import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionModel.DailyCollectionItem
+import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionModel.DisplayItem
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.OnDateSelectedListener
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -102,7 +105,7 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(), View.OnClickList
 
 
 
-    private fun isLoadDailyCollectionData(data: List<DailyCollectionItem>?) {
+    private fun isLoadDailyCollectionData(data: List<CollectionData>?) {
         val flatList = mutableListOf<DisplayItem>()
 
         if (data.isNullOrEmpty()) {
@@ -113,13 +116,15 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(), View.OnClickList
             return
         }
 
-        data.forEach { item ->
-            if (!item.category.isNullOrEmpty()) {
-                flatList.add(DisplayItem.Header(item.category ?: "Unknown", item.total ?: "0"))
-            }
+        data.forEach { collectionData ->
+            collectionData.collections.forEach { item ->
+                if (!item.category.isNullOrEmpty()) {
+                    flatList.add(DisplayItem.Header(item.category ?: "Unknown", item.total ?: "0"))
+                }
 
-            item.fee_data?.forEach { fee ->
-                flatList.add(DisplayItem.Fee(fee.type_name ?: "Unknown", fee.amount ?: "0"))
+                item.fee_data?.forEach { fee ->
+                    flatList.add(DisplayItem.Fee(fee.type_name ?: "Unknown", fee.amount ?: "0"))
+                }
             }
         }
 
@@ -139,13 +144,11 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(), View.OnClickList
             binding.totalsummary1.adapter = mAdapter
 
             val totalCollectionSum = data.sumOf {
-                it.total_collection?.toDoubleOrNull() ?: 0.0
+                it.total_collection.replace("₹", "").replace(",", "").toDoubleOrNull() ?: 0.0
             }
+            binding.totalCollection.text = "%.2f".format(totalCollectionSum)
 
-            binding.totalCollection.text = "Total Collection : ₹ %.2f".format(totalCollectionSum)
         }
-
-
     }
 
 
