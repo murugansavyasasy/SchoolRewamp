@@ -64,14 +64,11 @@ class StudentReportAdapter(
         private val lblStudentName: TextView = itemView.findViewById(R.id.lblStudentName)
         private val lblFatherName: TextView = itemView.findViewById(R.id.lblFatherName)
         private val lblTeacherName: TextView = itemView.findViewById(R.id.lblTeacherName)
-        private val lblMobileNumber: TextView = itemView.findViewById(R.id.lblMobileNumber)
         private val lblStandardAndSection: TextView = itemView.findViewById(R.id.lblStandardAndSection)
-//        private val lblSection: TextView = itemView.findViewById(R.id.lblSection)
         private val profileImage: ImageView = itemView.findViewById(R.id.imgStudent)
-//        private val lblEmail: TextView = itemView.findViewById(R.id.lblEmail)
-        private val lblPhoneNumber: TextView = itemView.findViewById(R.id.lblMobileNumber)
-        private val lblSms: TextView = itemView.findViewById(R.id.lblSMS)
-        private val lblMail: TextView = itemView.findViewById(R.id.lblEmail)
+        private val lnrPhoneNumber: LinearLayout = itemView.findViewById(R.id.lnrMobileNumber)
+        private val lnrSms: LinearLayout = itemView.findViewById(R.id.lnrSMS)
+        private val lnrMail: LinearLayout = itemView.findViewById(R.id.lnrEmail)
 
         fun bind(data: StudentReportData, listener: StudentReportClickListener) {
             // Bind actual data to the views
@@ -83,17 +80,17 @@ class StudentReportAdapter(
             lblTeacherName.text = data.class_teacher
             lblStandardAndSection.text = data.class_name +"-"+data.section_name
             if(data.primary_mobile!=""){
-                lblPhoneNumber.visibility=View.VISIBLE
-                lblSms.visibility=View.VISIBLE
+                lnrPhoneNumber.visibility=View.VISIBLE
+                lnrSms.visibility=View.VISIBLE
 
             }else{
-                lblPhoneNumber.visibility=View.GONE
-                lblSms.visibility=View.GONE
+                lnrPhoneNumber.visibility=View.GONE
+                lnrSms.visibility=View.GONE
             }
             if(data.email!=""){
-                lblMail.visibility=View.VISIBLE
+                lnrMail.visibility=View.VISIBLE
             }else{
-                lblMail.visibility=View.GONE
+                lnrMail.visibility=View.GONE
             }
             Glide.with(context)
                 .load(data.profile)
@@ -102,15 +99,15 @@ class StudentReportAdapter(
                 .into(profileImage);
 
 
-            lblMail.setOnClickListener {
+            lnrMail.setOnClickListener {
                 listener.onMailClick(data)
             }
 
-            lblSms.setOnClickListener {
+            lnrSms.setOnClickListener {
                 listener.onMessageClick(data)
             }
 
-            lblPhoneNumber.setOnClickListener {
+            lnrPhoneNumber.setOnClickListener {
                 listener.onPhoneClick(data)
             }
         }

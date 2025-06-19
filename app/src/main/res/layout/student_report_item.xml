@@ -57,7 +57,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/ten"
                             android:layout_weight="0.5"
-                            style="@style/CustomTextStylePoppinsMedium"
+                            style="@style/CustomTextStylePoppinsMedium1"
                             android:text="@string/Admissionno"
                             android:textColor="@color/black"
                            >
@@ -69,7 +69,7 @@
                             android:layout_height="wrap_content"
                             android:text=" : "
                             android:textColor="@color/black"
-                            style="@style/CustomTextStylePoppinsMedium"
+                            style="@style/CustomTextStylePoppinsMedium1"
                             >
 
                         </TextView>
@@ -81,7 +81,7 @@
                             android:layout_marginStart="@dimen/ten"
                             android:layout_marginEnd="@dimen/five"
                             android:layout_weight="0.5"
-                            style="@style/CustomTextStylePoppinsMedium"
+                            style="@style/CustomTextStylePoppinsMedium1"
                             android:text="1785278272"
                             android:textColor="@color/black"
                             >
@@ -103,7 +103,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/ten"
                             android:layout_weight="0.5"
-                            style="@style/CustomTextStylePoppinsMedium"
+                            style="@style/CustomTextStylePoppinsMedium1"
                             android:text="@string/Gender"
                             android:textColor="@color/black"
                             >
@@ -115,7 +115,7 @@
                             android:layout_height="wrap_content"
                             android:text=" : "
                             android:textColor="@color/black"
-                            style="@style/CustomTextStylePoppinsMedium"
+                            style="@style/CustomTextStylePoppinsMedium1"
                             >
 
                         </TextView>
@@ -127,7 +127,7 @@
                             android:layout_marginStart="@dimen/ten"
                             android:layout_marginEnd="@dimen/five"
                             android:layout_weight="0.5"
-                            style="@style/CustomTextStylePoppinsMedium"
+                            style="@style/CustomTextStylePoppinsMedium1"
                             android:text="Male"
                             android:textColor="@color/black"
                             >
@@ -149,7 +149,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/ten"
                             android:layout_weight="0.5"
-                            style="@style/CustomTextStylePoppinsMedium"
+                            style="@style/CustomTextStylePoppinsMedium1"
                             android:text="@string/Dateofbirth"
                             android:textColor="@color/black"
                             >
@@ -161,7 +161,7 @@
                             android:layout_height="wrap_content"
                             android:text=" : "
                             android:textColor="@color/black"
-                            style="@style/CustomTextStylePoppinsMedium"
+                            style="@style/CustomTextStylePoppinsMedium1"
                             >
 
                         </TextView>
@@ -173,7 +173,7 @@
                             android:layout_marginStart="@dimen/ten"
                             android:layout_marginEnd="@dimen/five"
                             android:layout_weight="0.5"
-                            style="@style/CustomTextStylePoppinsMedium"
+                            style="@style/CustomTextStylePoppinsMedium1"
                             android:text="Apr 1 , 2021"
                             android:textColor="@color/black"
                             >
@@ -236,7 +236,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/ten"
                         android:layout_weight="0.6"
-                        style="@style/CustomTextStylePoppinsMedium"
+                        style="@style/CustomTextStylePoppinsMedium1"
                         android:text="@string/Fathername"
                         android:textColor="@color/black"
                         >
@@ -247,7 +247,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=" : "
-                        style="@style/CustomTextStylePoppinsMedium"
+                        style="@style/CustomTextStylePoppinsMedium1"
                         android:textColor="@color/black"
                         >
 
@@ -260,7 +260,7 @@
                         android:layout_marginStart="@dimen/ten"
                         android:layout_marginEnd="@dimen/ten"
                         android:layout_weight="0.4"
-                        style="@style/CustomTextStylePoppinsMedium"
+                        style="@style/CustomTextStylePoppinsMedium1"
                         android:text="Ganesan"
                         android:textColor="@color/black"
                         >
@@ -283,7 +283,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/ten"
                         android:layout_weight="0.6"
-                        style="@style/CustomTextStylePoppinsMedium"
+                        style="@style/CustomTextStylePoppinsMedium1"
                         android:text="@string/roll_no"
                         android:textColor="@color/black"
                         >
@@ -294,9 +294,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=" : "
+                        style="@style/CustomTextStylePoppinsMedium1"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp"
-                        android:textStyle="bold">
+                        >
 
                     </TextView>
 
@@ -307,7 +307,7 @@
                         android:layout_marginStart="@dimen/ten"
                         android:layout_marginEnd="@dimen/ten"
                         android:layout_weight="0.4"
-                        style="@style/CustomTextStylePoppinsMedium"
+                        style="@style/CustomTextStylePoppinsMedium1"
                         android:text="21"
                         android:textColor="@color/black"
                         >
@@ -330,7 +330,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/ten"
                         android:layout_weight="0.6"
-                        style="@style/CustomTextStylePoppinsMedium"
+                        style="@style/CustomTextStylePoppinsMedium1"
                         android:text="@string/class_teacher_2"
                         android:textColor="@color/black"
                         >
@@ -341,7 +341,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=" : "
-                        style="@style/CustomTextStylePoppinsMedium"
+                        style="@style/CustomTextStylePoppinsMedium1"
                         android:textColor="@color/black"
                       >
 
@@ -354,7 +354,7 @@
                         android:layout_marginStart="@dimen/ten"
                         android:layout_marginEnd="@dimen/ten"
                         android:layout_weight="0.4"
-                        style="@style/CustomTextStylePoppinsMedium"
+                        style="@style/CustomTextStylePoppinsMedium1"
                         android:text="Abi"
                         android:textColor="@color/black"
                         >
@@ -365,64 +365,91 @@
 
             </RelativeLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_marginBottom="@dimen/five"
+            <RelativeLayout
+                android:layout_centerInParent="true"
+                android:layout_marginEnd="@dimen/five"
+                android:layout_marginStart="@dimen/five"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fifteen"
+                android:layout_marginBottom="@dimen/five"
                 android:layout_below="@+id/rlaNames"
-                android:layout_marginTop="@dimen/fifteen">
+                >
 
-                <TextView
-                    android:visibility="gone"
-                    android:drawablePadding="@dimen/three"
-                    android:gravity="center"
-                    android:id="@+id/lblMobileNumber"
+
+                <LinearLayout
+                    android:id="@+id/lnrMobileNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="@dimen/twenty_five"
-                    android:drawableStart="@drawable/phone_call_icon"
-                    android:text="@string/call"
-                    style="@style/CustomTextStylePoppinsMedium"
-                    android:textColor="@color/navi_blue2"
-                    >
+                    android:gravity="center">
 
-                </TextView>
+                    <ImageView
+                        android:layout_width="@dimen/twenty_five"
+                        android:layout_height="@dimen/twenty_five"
+                        android:src="@drawable/phone_call_icon">
 
-                <TextView
-                    android:visibility="gone"
-                    android:id="@+id/lblSMS"
-                    android:drawablePadding="@dimen/three"
-                    android:drawableStart="@drawable/message_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_gravity="center"
+                    </ImageView>
+
+                    <TextView
+                        android:layout_marginStart="@dimen/five"
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="@dimen/three"
+                        android:text="@string/call"
+                        android:textColor="@color/navi_blue2">
+
+                    </TextView>
+                </LinearLayout>
+                <LinearLayout
                     android:layout_marginStart="@dimen/thirty"
-                    android:text="@string/sms"
-                    style="@style/CustomTextStylePoppinsMedium"
-                    android:textColor="@color/navi_blue2"
-                    >
-
-                </TextView>
-                <TextView
-                    android:visibility="gone"
-                    android:drawablePadding="@dimen/three"
+                    android:id="@+id/lnrSMS"
                     android:gravity="center"
-                    android:id="@+id/lblEmail"
+                    android:layout_toEndOf="@+id/lnrMobileNumber"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:drawableStart="@drawable/mail_send_icon"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="@dimen/twenty_five"
+                        android:src="@drawable/message_icon"
+                        android:layout_height="@dimen/twenty_five">
+                    </ImageView>
+                    <TextView
+                        android:layout_marginStart="@dimen/five"
+                        android:drawablePadding="@dimen/three"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sms"
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:textColor="@color/navi_blue2"
+                        >
+                    </TextView>
+                </LinearLayout>
+                <LinearLayout
+                    android:gravity="center"
                     android:layout_marginStart="@dimen/thirty"
-                    style="@style/CustomTextStylePoppinsMedium"
-                    android:text="@string/mail"
-                    android:textColor="@color/navi_blue2"
-                    >
+                    android:id="@+id/lnrEmail"
+                    android:layout_toEndOf="@+id/lnrSMS"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="@dimen/twenty_five"
+                        android:src="@drawable/mail_send_icon"
+                        android:layout_height="@dimen/twenty_five">
 
-                </TextView>
+                    </ImageView>
 
-            </LinearLayout>
+                    <TextView
+                        android:layout_marginStart="@dimen/five"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:text="@string/mail"
+                        android:textColor="@color/navi_blue2"
+                        >
+
+                    </TextView>
+                </LinearLayout>
+            </RelativeLayout>
         </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>
