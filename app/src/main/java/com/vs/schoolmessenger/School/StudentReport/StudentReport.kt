@@ -30,7 +30,6 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
     StudentReportClickListener {
     private var appViewModel: App? = null
     private lateinit var mAdapter: StudentReportAdapter
-    private lateinit var isStudentReportData: List<StudentReportData>
     private var isAccessToken: String? = null
     var isSection: List<Section>? = null
     var isValidAcademicYear = false
@@ -50,9 +49,10 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
     private lateinit var filterCaterotyType: List<String>
     private var originalStudentList: List<StudentReportData> = listOf()
     private var currentFilteredList: List<StudentReportData> = listOf()
+    private var currentSortType: SortType = SortType.NO_ASC
+    private lateinit var genderSpinnerAdapter: SpinnerLoadingAdapter
 
-    enum class SortType { NO_ASC, NO_DESC, NAME_ASC, NAME_DESC }
-    enum class GenderType { ALL, MALE, FEMALE, OTHERS }
+
     val handler = Handler(Looper.getMainLooper())
 
     override fun getViewBinding(): StudentReportBinding {
@@ -120,10 +120,16 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
                         if (filterSelectedOption != null) {
                             isGetStandardSection()
                         }
+                        binding.rlaStandardPicking.visibility = View.VISIBLE
+
                     }
                 } else {
                     binding.tabLayout.visibility = View.GONE
-//                    binding.rlaStandardPicking.visibility = View.GONE
+                    originalStudentList = emptyList()
+                    currentFilteredList = emptyList()
+                    mAdapter.updateData(emptyList())
+                    binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
+                    binding.rlaStandardPicking.visibility = View.GONE
                     ErrorMessage(response.message)
                 }
             }
@@ -133,10 +139,11 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
             if (response != null) {
                 if (response.status) {
                     ShowData()
-                    val isStudentReportResponseData = response.data
-                    isStudentReportData = isStudentReportResponseData
-                    loadStudentReport(isStudentReportData)
+                    loadStudentReport(response.data)
                 } else {
+                    originalStudentList = emptyList()
+                    currentFilteredList = emptyList()
+                    mAdapter.updateData(emptyList())
                     binding.tabLayout.visibility = View.GONE
                     ErrorMessage(response.message)
                 }
@@ -157,6 +164,9 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
                         }
                         isGetStudentReport()
                     } else {
+                        originalStudentList = emptyList()
+                        currentFilteredList = emptyList()
+                        mAdapter.updateData(emptyList())
                         binding.tabLayout.visibility = View.GONE
                         binding.rlaStandardPicking.visibility = View.GONE
                         ErrorMessage(response.message)
@@ -216,6 +226,7 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
     }
 
     private fun sortList(sortType: SortType) {
+        currentSortType = sortType
         val sortedList = when (sortType) {
             SortType.NO_ASC -> currentFilteredList.sortedBy { it.admission_no }
             SortType.NO_DESC -> currentFilteredList.sortedByDescending { it.admission_no }
@@ -225,28 +236,24 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
         mAdapter.updateData(sortedList)
     }
 
-
     private fun filterByGender(genderType: GenderType) {
         currentFilteredList = when (genderType) {
-            GenderType.ALL -> originalStudentList.sortedBy { it.gender }
+            GenderType.ALL -> originalStudentList
             GenderType.MALE -> originalStudentList.filter { it.gender.equals("Male", true) }
             GenderType.FEMALE -> originalStudentList.filter { it.gender.equals("Female", true) }
             GenderType.OTHERS -> originalStudentList.filter { it.gender.equals("Others", true) }
         }
-
-        Log.d("filteredGenderList", currentFilteredList.size.toString())
 
         if (currentFilteredList.isEmpty()) {
             ErrorMessage(getString(R.string.no_student_found))
 
         } else {
             ShowData()
-
         }
+//        mAdapter.updateData(currentFilteredList)
+        sortList(currentSortType)
 
-        mAdapter.updateData(currentFilteredList)
     }
-
 
     private fun loadStudentReport(studentReportData: List<StudentReportData>) {
         originalStudentList = studentReportData
@@ -256,12 +263,22 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
             StudentReportAdapter(currentFilteredList, this, this, Constant.isShimmerViewDisable)
         binding.rcyStudentReport.layoutManager = LinearLayoutManager(this)
         binding.rcyStudentReport.adapter = mAdapter
+
+        //whenever we call the student report we make it as default gender filter all and sort NoAsc
+
+        genderSpinnerAdapter.selectedPosition = 0
+        genderSpinnerAdapter.notifyDataSetChanged()
+        binding.isGenderCatory.setSelection(0)
+
+// Also apply the ALL gender filter
+        filterByGender(GenderType.ALL)
+
+
         highlightSelectedTab(binding.tapNameAsc)
         sortList(SortType.NO_ASC)
     }
 
     private fun isGetAcademicYear() {
-        Log.d("isGetAcademicYear", "Getting")
         Constant.showLoading(this@StudentReport)
         appViewModel!!.isGetAcademicYear(
             isAccessToken!!, this
@@ -276,10 +293,10 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
 
     private fun filter(text: String) {
         val filteredList = if (text.isBlank()) {
-            isStudentReportData
+            currentFilteredList
         } else {
             val searchWords = text.trim().lowercase().split("\\s+".toRegex())
-            isStudentReportData.filter { student ->
+            currentFilteredList.filter { student ->
                 val fieldsToSearch = listOf(
                     student.name.lowercase(),
                     student.admission_no.lowercase(),
@@ -302,6 +319,7 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
             ErrorMessage(Constant.NO_DATA_FOUND)
         }
     }
+
     private fun isLoadStandard(isStandard: List<Standard>?) {
         val adapter = StandardDropDownListAdapter(this, isStandard)
         binding.isSpinnerStandard.adapter = adapter
@@ -320,13 +338,9 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
                     // Select "All" section by default
                     isAllSectionSelected = true
                     binding.isSpinnerSection.setSelection(0)
-
-
                     Log.d(
-                        "DropdownMenu",
-                        "Clicked Standard Year: ID = ${isStandard[position].id}, Year = ${isStandard[position].name}"
+                        "DropdownMenu", "Clicked Standard Year: ID = ${isStandard[position].id}, Year = ${isStandard[position].name}"
                     )
-                    //new
                     if (hasUserSelectedStandard) {
                         isGetStudentReport()
                     } else {
@@ -364,8 +378,7 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
                     val selectedOption = updatedSections[position]
 
                     Log.d(
-                        "DropdownMenu",
-                        "Clicked Section: ID = ${selectedOption.id}, Name = ${selectedOption.name}"
+                        "DropdownMenu", "Clicked Section: ID = ${selectedOption.id}, Name = ${selectedOption.name}"
                     )
 
                     if (hasUserSelectedSection) {
@@ -427,6 +440,7 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
             return
         }
     }
+
     private fun highlightSelectedTab(selectedView: View) {
         // Reset all tabs to white
         binding.tapNoAsc.setBackgroundResource(R.drawable.light_gray_radius)
@@ -477,99 +491,83 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
         filterSelectedOption = filterCaterotyType[0]
         binding.isSpinnerSort.setSelection(0)
         adapter.notifyDataSetChanged()
-        binding.isSpinnerSort.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    if (adapter.selectedPosition != position || forceTrigger) {
-                        adapter.selectedPosition = position
-                        adapter.notifyDataSetChanged()
-                        filterSelectedOption = filterCaterotyType[position]
-                        isGetStandardSection() // Only triggered with valid selection
-                    }
+        binding.isSpinnerSort.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>, view: View?, position: Int, id: Long
+            ) {
+                if (adapter.selectedPosition != position || forceTrigger) {
+                    adapter.selectedPosition = position
+                    adapter.notifyDataSetChanged()
+                    filterSelectedOption = filterCaterotyType[position]
+                    isGetStandardSection() // Only triggered with valid selection
                 }
-
-                override fun onNothingSelected(parent: AdapterView<*>) {}
             }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
     }
 
     private fun isLoadAcademicYear(isAcademicYear: List<AcademicYear>?) {
         val adapter = AcademicYearAdapter(this, isAcademicYear)
         binding.isSpinner.adapter = adapter
-        binding.isSpinner.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    adapter.selectedPosition = position
-                    adapter.notifyDataSetChanged()
-                    val selectedOption = isAcademicYear!![position]
-                    Log.d("DropdownMenu", "Clicked Academic Year: ID = ${selectedOption.id}")
-                    isAcademicYearId = selectedOption.id
-                    if (hasAcademicYearManuallyChanged) {
-                        // Reset and trigger 0th item in category
-                        setupFilerCatoryTypeSpinner(forceTrigger = true)
-                    } else {
-                        hasAcademicYearManuallyChanged = true
-                    }
-                    binding.tabLayout.visibility = View.VISIBLE
+        binding.isSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>, view: View?, position: Int, id: Long
+            ) {
+                adapter.selectedPosition = position
+                adapter.notifyDataSetChanged()
+                val selectedOption = isAcademicYear!![position]
+                Log.d("DropdownMenu", "Clicked Academic Year: ID = ${selectedOption.id}")
+                isAcademicYearId = selectedOption.id
+                if (hasAcademicYearManuallyChanged) {
+                    // Reset and trigger 0th item in category
+                    setupFilerCatoryTypeSpinner(forceTrigger = true)
+                } else {
+                    hasAcademicYearManuallyChanged = true
                 }
-
-                override fun onNothingSelected(parent: AdapterView<*>) {}
+                binding.tabLayout.visibility = View.VISIBLE
             }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
     }
 
     private fun setupGenderCaterotyType(filterGenderCaterotyType: List<String>) {
-        val adapter = SpinnerLoadingAdapter(this, filterGenderCaterotyType)
-        binding.isGenderCatory.adapter = adapter
+        genderSpinnerAdapter = SpinnerLoadingAdapter(this, filterGenderCaterotyType)
+        binding.isGenderCatory.adapter = genderSpinnerAdapter
 
         binding.isGenderCatory.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
-                    parent: AdapterView<*>,
-                    view: View?,
-                    position: Int,
-                    id: Long
+                    parent: AdapterView<*>, view: View?, position: Int, id: Long
                 ) {
-                    handleSpinnerSelection(position, adapter, filterGenderCaterotyType)
+                    handleSpinnerSelection(position, genderSpinnerAdapter, filterGenderCaterotyType)
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>) {}
             }
         // Preselect first item manually
-        adapter.selectedPosition = 0
+        genderSpinnerAdapter.selectedPosition = 0
         binding.isGenderCatory.setSelection(0)
-        adapter.notifyDataSetChanged()
-        handleSpinnerSelection(0, adapter, filterGenderCaterotyType)
+        genderSpinnerAdapter.notifyDataSetChanged()
+        handleSpinnerSelection(0, genderSpinnerAdapter, filterGenderCaterotyType)
     }
 
     private fun handleSpinnerSelection(
-        position: Int,
-        adapter: SpinnerLoadingAdapter,
-        filterGenderCaterotyType: List<String>
+        position: Int, adapter: SpinnerLoadingAdapter, filterGenderCaterotyType: List<String>
     ) {
         if (adapter.selectedPosition != position) {
+            binding.txtSearchMenu.text.clear()
             adapter.selectedPosition = position
             adapter.notifyDataSetChanged()
-
             filterSelectedOption = filterGenderCaterotyType[position]
-
             val genderType = when (filterSelectedOption) {
                 getString(R.string.male) -> GenderType.MALE
                 getString(R.string.female) -> GenderType.FEMALE
                 getString(R.string.lblOthers) -> GenderType.OTHERS
                 else -> GenderType.ALL
             }
-
             filterByGender(genderType)
-
         }
     }
 

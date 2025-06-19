@@ -3,6 +3,10 @@ package com.vs.schoolmessenger.School.StudentReport
 import com.google.gson.annotations.SerializedName
 import com.vs.schoolmessenger.Repository.APIKeyNames
 
+
+enum class SortType { NO_ASC, NO_DESC, NAME_ASC, NAME_DESC }
+enum class GenderType { ALL, MALE, FEMALE, OTHERS }
+
 data class StudentReportData (
 
     @SerializedName(APIKeyNames.id) val id: Int,
