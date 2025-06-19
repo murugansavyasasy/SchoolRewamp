@@ -188,6 +188,7 @@ object Constant {
     var EEE_dd_MMM_yyyy = "EEE dd MMM, yyyy"
     var yyyy_MMM_dd = "yyyy MMM, dd"
     var dd_MMM_yyyy_1 = "dd MMM yyyy"
+    var dd_MMM_yyyy_2 = "EEE, MMM yyyy"
     var hh_mm_a = "hh:mm a"
     var time_forMate = "00:%02d"
     var time_zero = "00:00"
@@ -1004,6 +1005,19 @@ object Constant {
         }
 
     }
+    fun convertDateFormat1(input: String): String {
+        return try {
+            val inputFormat = SimpleDateFormat(dd_MMM_yyyy_2, Locale.getDefault())
+            val outputFormat = SimpleDateFormat(ddMMyyyy, Locale.getDefault())
+            val date = inputFormat.parse(input)
+            outputFormat.format(date!!)
+        } catch (e: Exception) {
+            input // return original if there's a parsing error
+        }
+
+    }
+
+
 
     fun convertDateTimeFormat(input: String): String {
         return try {
