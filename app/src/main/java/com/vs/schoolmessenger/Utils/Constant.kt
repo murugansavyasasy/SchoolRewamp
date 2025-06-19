@@ -6,6 +6,7 @@ import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
@@ -49,6 +50,7 @@ import com.vs.schoolmessenger.School.AbsenteesReport.Model.ClassWise
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendingData
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceSendingData
 import java.io.File
+import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalTime
@@ -1065,6 +1067,90 @@ object Constant {
             "$manufacturer $model"
         }
     }
+
+
+    fun compressImagesOneByOne(
+        inputPaths: List<String>,
+        outputDir: String,
+        format: Bitmap.CompressFormat = Bitmap.CompressFormat.JPEG,
+        quality: Int = 85,
+        maxWidth: Int = 1080,
+        maxHeight: Int = 1920,
+        onEachCompressed: (originalPath: String, compressedPath: String?, success: Boolean) -> Unit,
+        onComplete: () -> Unit
+    ) {
+        inputPaths.forEachIndexed { index, path ->
+            try {
+                val originalBitmap = BitmapFactory.decodeFile(path)
+                val resizedBitmap = resizeBitmap(originalBitmap, maxWidth, maxHeight)
+                val fileName = "compressed_${index}_${File(path).name}"
+                val outputFile = File(outputDir, fileName)
+                val outputStream = FileOutputStream(outputFile)
+                val success = resizedBitmap.compress(format, quality, outputStream)
+
+                outputStream.flush()
+                outputStream.close()
+                originalBitmap.recycle()
+                resizedBitmap.recycle()
+
+                if (success) {
+                    onEachCompressed(path, outputFile.absolutePath, true)
+                } else {
+                    onEachCompressed(path, null, false)
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                onEachCompressed(path, null, false)
+            }
+        }
+        onComplete()
+    }
+
+    fun resizeBitmap(original: Bitmap, maxWidth: Int, maxHeight: Int): Bitmap {
+        val width = original.width
+        val height = original.height
+        val aspectRatio = width.toFloat() / height.toFloat()
+
+        val (newWidth, newHeight) = if (width > height) {
+            val newW = minOf(width, maxWidth)
+            Pair(newW, (newW / aspectRatio).toInt())
+        } else {
+            val newH = minOf(height, maxHeight)
+            Pair((newH * aspectRatio).toInt(), newH)
+        }
+
+        return Bitmap.createScaledBitmap(original, newWidth, newHeight, true)
+    }
+
+
+//      Usage
+//
+//    val inputImagePaths = listOf(
+//        "/storage/emulated/0/DCIM/Camera/img1.jpg",
+//        "/storage/emulated/0/DCIM/Camera/img2.jpg"
+//    )
+//
+//    val outputDirectory = "/storage/emulated/0/CompressedImages"
+//
+//    compressImagesOneByOne(
+//    inputPaths = inputImagePaths,
+//    outputDir = outputDirectory,
+//    format = Bitmap.CompressFormat.WEBP_LOSSY,
+//    quality = 80,
+//    maxWidth = 1280,
+//    maxHeight = 1280,
+//    onEachCompressed = { originalPath, compressedPath, success ->
+//        if (success) {
+//            Log.d("ImageCompressor", "Compressed: $compressedPath")
+//            // ✅ You can upload the image here immediately
+//        } else {
+//            Log.e("ImageCompressor", "Failed to compress: $originalPath")
+//        }
+//    },
+//    onComplete = {
+//        Log.d("ImageCompressor", "All images processed.")
+//    }
+//    )
 
 
 }
