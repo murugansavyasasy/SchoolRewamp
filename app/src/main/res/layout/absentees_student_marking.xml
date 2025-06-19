@@ -36,7 +36,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/five"
                 android:layout_marginEnd="@dimen/five"
-                android:layout_weight="0.7"
                 android:background="@drawable/bg_white_light_radious"
                 android:padding="@dimen/ten">
 
@@ -49,24 +48,27 @@
                     android:src="@drawable/filter_icon">
 
                 </ImageView>
-
-                <Spinner
-                    android:id="@+id/isSpinnerSort"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/five"
+                <TextView
+                    android:id="@+id/lblFilter"
                     android:layout_toEndOf="@+id/imgSort"
-                    android:background="@drawable/custom_spinner_background" />
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_marginEnd="@dimen/five"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/fifteen"
+                    android:text="@string/Description"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp">
 
+                </TextView>
             </RelativeLayout>
 
 
             <RelativeLayout
                 android:id="@+id/rytSearchBar"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="@dimen/thirty_five"
                 android:layout_marginEnd="@dimen/ten"
-                android:layout_weight="0.6"
                 android:background="@drawable/rect_grey"
                 android:visibility="visible">
 

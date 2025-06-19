@@ -83,7 +83,6 @@
             android:id="@+id/rlaSort"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/five"
             android:layout_marginEnd="@dimen/five"
             android:layout_weight="0.4"
             android:background="@drawable/bg_white_light_radious"
@@ -115,7 +114,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/lblCategory"
             android:layout_marginStart="@dimen/five"
-            android:layout_marginEnd="@dimen/five"
             android:layout_weight="0.6"
             android:background="@drawable/bg_white_light_radious"
             android:gravity="center">
@@ -141,7 +139,7 @@
         <RelativeLayout
             android:layout_weight="0.70"
             android:id="@+id/rytGenderCatory"
-            android:layout_marginStart="@dimen/five"
+            android:layout_marginStart="@dimen/ten"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/five"
@@ -217,6 +215,7 @@
                     android:gravity="center"
                     android:padding="@dimen/ten"
                     android:text="@string/no_asc"
+                    android:drawableEnd="@drawable/arrow_down2"
                     android:textColor="@color/black"
                     android:textSize="@dimen/ten_sp" />
 
@@ -232,6 +231,7 @@
                     android:fontFamily="@font/poppins_bold"
                     android:gravity="center"
                     android:padding="@dimen/ten"
+                    android:drawableEnd="@drawable/arrow_up"
                     android:text="@string/no_dsc"
                     android:textColor="@color/black"
                     android:textSize="@dimen/ten_sp">
@@ -246,8 +246,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tabLayout"
-        android:layout_marginStart="@dimen/five"
-        android:layout_marginEnd="@dimen/five"
         android:orientation="horizontal"
         android:visibility="visible"
         android:weightSum="1">

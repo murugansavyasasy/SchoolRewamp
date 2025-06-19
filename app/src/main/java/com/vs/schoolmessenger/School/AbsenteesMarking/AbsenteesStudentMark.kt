@@ -16,6 +16,7 @@ import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIds
+import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.SortType
 import com.vs.schoolmessenger.CommonScreens.SpecificStudentData.SpecificStudentSelectClickListener
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
@@ -46,6 +47,9 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
     var isAcademicYearId = -1
     var isSectionId: String? = null
     private var filterSelectedOption: String? = null
+    private lateinit var filterCaterotyType: List<String>
+    private var currentSortType: SortType = SortType.NO_ASC
+
 
 
     override fun getViewBinding(): AbsenteesStudentMarkingBinding {
@@ -57,6 +61,7 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
         super.setupViews()
         setupToolbar()
         binding.toolbarLayout.imgBack.setOnClickListener(this)
+        binding.lblFilter.setOnClickListener(this)
         binding.rytSend.setOnClickListener(this)
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
@@ -69,7 +74,7 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
         binding.toolbarLayout.cbSelect.visibility = View.VISIBLE
         binding.toolbarLayout.cbSelect.text = getString(R.string.Selectall)
 
-        val filterCaterotyType = listOf(
+        filterCaterotyType = listOf(
             getString(R.string.nameasc),
             getString(R.string.namedsc),
             getString(R.string.admis_no_asc),
@@ -129,20 +134,25 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
                     binding.lnrHeader.visibility = View.VISIBLE
                     binding.recycleStudents.visibility = View.VISIBLE
                     studentsList = response.data
+                    binding.rlaSortSearch.visibility=View.VISIBLE
+                    binding.toolbarLayout.cbSelect.visibility=View.VISIBLE
                     loadStudentAbsenteesList(studentsList!!)
 
                 } else {
                     binding.lnrHeader.visibility = View.GONE
                     binding.recycleStudents.visibility = View.GONE
+                    binding.rlaSortSearch.visibility=View.GONE
+                    binding.toolbarLayout.cbSelect.visibility=View.GONE
                     ErrorMessage(response.message)
                 }
             }
             else{
                 binding.recycleStudents.visibility = View.GONE
+                binding.rlaSortSearch.visibility=View.GONE
+                binding.toolbarLayout.cbSelect.visibility=View.GONE
                 ErrorMessage(getString(R.string.no_student_found))
             }
         }
-        setupFilterCaterotyType(filterCaterotyType)
 
         binding.txtSearchMenu.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
@@ -158,65 +168,65 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
         })
     }
 
-    private fun setupFilterCaterotyType(filterCaterotyType: List<String>) {
-        val adapter = SpinnerLoadingAdapter(this, filterCaterotyType)
-        binding.isSpinnerSort.adapter = adapter
+//    private fun setupFilterCaterotyType(filterCaterotyType: List<String>) {
+//        val adapter = SpinnerLoadingAdapter(this, filterCaterotyType)
+//        binding.isSpinnerSort.adapter = adapter
+//
+//        binding.isSpinnerSort.onItemSelectedListener =
+//            object : AdapterView.OnItemSelectedListener {
+//                override fun onItemSelected(
+//                    parent: AdapterView<*>,
+//                    view: View?,
+//                    position: Int,
+//                    id: Long
+//                ) {
+//                    handleSpinnerSelection(position, adapter,filterCaterotyType)
+//                }
+//
+//                override fun onNothingSelected(parent: AdapterView<*>) {}
+//            }
+//        // Preselect first item manually
+//        adapter.selectedPosition = 0
+//        binding.isSpinnerSort.setSelection(0)
+//        adapter.notifyDataSetChanged()
+//        handleSpinnerSelection(0, adapter,filterCaterotyType)
+//    }
 
-        binding.isSpinnerSort.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    handleSpinnerSelection(position, adapter,filterCaterotyType)
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>) {}
-            }
-        // Preselect first item manually
-        adapter.selectedPosition = 0
-        binding.isSpinnerSort.setSelection(0)
-        adapter.notifyDataSetChanged()
-        handleSpinnerSelection(0, adapter,filterCaterotyType)
-    }
-
-    private fun handleSpinnerSelection(position: Int, adapter: SpinnerLoadingAdapter,filterCaterotyType: List<String>) {
-        if (adapter.selectedPosition != position) {
-            adapter.selectedPosition = position
-            adapter.notifyDataSetChanged()
-
-            filterSelectedOption = filterCaterotyType[position]
-
-            when (filterSelectedOption) {
-                getString(R.string.admis_no_asc) -> {
-                    mAdapter.sortData(AbsenteesMarkAdapter.SortType.NO_ASC)
-                }
-
-                getString(R.string.admis_no_dsc) -> {
-                    mAdapter.sortData(AbsenteesMarkAdapter.SortType.NO_DESC)
-                }
-
-                getString(R.string.nameasc) -> {
-                    mAdapter.sortData(AbsenteesMarkAdapter.SortType.NAME_ASC)
-                }
-
-                getString(R.string.namedsc) -> {
-                    mAdapter.sortData(AbsenteesMarkAdapter.SortType.NAME_DESC)
-                }
-
-                getString(R.string.rollasc) -> {
-                    mAdapter.sortData(AbsenteesMarkAdapter.SortType.REG_ASC)
-                }
-
-                getString(R.string.rolldsc) -> {
-                    mAdapter.sortData(AbsenteesMarkAdapter.SortType.REG_DSC)
-                }
-            }
-
-        }
-    }
+//    private fun handleSpinnerSelection(position: Int, adapter: SpinnerLoadingAdapter,filterCaterotyType: List<String>) {
+//        if (adapter.selectedPosition != position) {
+//            adapter.selectedPosition = position
+//            adapter.notifyDataSetChanged()
+//
+//            filterSelectedOption = filterCaterotyType[position]
+//
+//            when (filterSelectedOption) {
+//                getString(R.string.admis_no_asc) -> {
+//                    mAdapter.sortData(AbsenteesMarkAdapter.SortType.NO_ASC)
+//                }
+//
+//                getString(R.string.admis_no_dsc) -> {
+//                    mAdapter.sortData(AbsenteesMarkAdapter.SortType.NO_DESC)
+//                }
+//
+//                getString(R.string.nameasc) -> {
+//                    mAdapter.sortData(AbsenteesMarkAdapter.SortType.NAME_ASC)
+//                }
+//
+//                getString(R.string.namedsc) -> {
+//                    mAdapter.sortData(AbsenteesMarkAdapter.SortType.NAME_DESC)
+//                }
+//
+//                getString(R.string.rollasc) -> {
+//                    mAdapter.sortData(AbsenteesMarkAdapter.SortType.REG_ASC)
+//                }
+//
+//                getString(R.string.rolldsc) -> {
+//                    mAdapter.sortData(AbsenteesMarkAdapter.SortType.REG_DSC)
+//                }
+//            }
+//
+//        }
+//    }
 
     private fun filter(text: String) {
         val searchWords = text.trim().lowercase().split("\\s+".toRegex())
@@ -267,7 +277,6 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
             isAccessToken!!,
             isSectionId!!.toString(), isAcademicYearId!!, this
         )
-
     }
 
     fun loadStudentAbsenteesList(studentsList: List<NameAndIds>) {
@@ -276,6 +285,9 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
                 studentsList, this, Constant.isShimmerViewDisable, this,this
             )
         binding.recycleStudents.adapter = mAdapter
+
+        binding.lblFilter.text =filterCaterotyType[0]
+        applySortFromText(filterCaterotyType[0])
     }
 
     override fun onPause() {
@@ -292,8 +304,56 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
             R.id.rytSend -> {
                 isMarkAttendance()
             }
+
+            R.id.lblFilter -> {
+                showDropdownMenuSort(
+                    binding.lblFilter,
+                    this,
+                    filterCaterotyType
+                ) { selectedOption ->
+                    binding.lblFilter.text = selectedOption
+                    applySortFromText(selectedOption)
+                }
+            }
+
+
         }
     }
+
+    private fun applySortFromText(selectedText: String) {
+        when (selectedText) {
+            getString(R.string.admis_no_asc) -> sortList(SortType.NO_ASC)
+            getString(R.string.admis_no_dsc) -> sortList(SortType.NO_DESC)
+            getString(R.string.nameasc) -> sortList(SortType.NAME_ASC)
+            getString(R.string.namedsc) -> sortList(SortType.NAME_DESC)
+            getString(R.string.rollasc) -> sortList(SortType.REG_ASC)
+            getString(R.string.rolldsc) -> sortList(SortType.REG_DSC)
+        }
+    }
+
+    private fun sortList(sortType: SortType) {
+        currentSortType = sortType
+
+        val sortedList = when (sortType) {
+            SortType.NO_ASC -> studentsList?.sortedBy { it.admission_no }
+            SortType.NO_DESC -> studentsList?.sortedByDescending { it.admission_no }
+            SortType.NAME_ASC -> studentsList?.sortedBy { it.name }
+            SortType.NAME_DESC -> studentsList?.sortedByDescending { it.name }
+            SortType.REG_ASC -> studentsList?.sortedBy { it.roll_no }
+            SortType.REG_DSC -> studentsList?.sortedByDescending { it.roll_no }
+        }
+
+        if (sortedList!!.isNotEmpty()) {
+            ShowData()
+            mAdapter.updateData(sortedList)
+        } else {
+            binding.recycleStudents.visibility = View.GONE
+            ErrorMessage(getString(R.string.no_student_found))
+        }
+
+    }
+
+
 
 
     private fun isMarkAttendance() {

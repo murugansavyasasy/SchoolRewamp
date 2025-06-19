@@ -144,28 +144,6 @@ class AbsenteesMarkAdapter(
         selectionListener.onSelectionChanged(studentIdList.toList())
 
     }
-    enum class SortType {
-        NO_ASC,
-        NO_DESC,
-        NAME_ASC,
-        NAME_DESC,
-        REG_ASC,
-        REG_DSC
-    }
-    fun sortData(sortType: SortType) {
-        val sortedList = when (sortType) {
-            SortType.NO_ASC -> itemList?.sortedBy { it.admission_no }
-            SortType.NO_DESC -> itemList?.sortedByDescending { it.admission_no }
-            SortType.NAME_ASC -> itemList?.sortedBy { it.name }
-            SortType.NAME_DESC -> itemList?.sortedByDescending { it.name }
-            SortType.REG_ASC -> itemList?.sortedBy { it.roll_no }
-            SortType.REG_DSC -> itemList?.sortedByDescending { it.roll_no }
-
-        }
-
-        updateData(sortedList ?: emptyList())
-    }
-
 
     fun updateData(newList: List<NameAndIds>) {
         itemList = newList

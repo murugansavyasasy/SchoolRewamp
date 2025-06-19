@@ -263,17 +263,11 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
             StudentReportAdapter(currentFilteredList, this, this, Constant.isShimmerViewDisable)
         binding.rcyStudentReport.layoutManager = LinearLayoutManager(this)
         binding.rcyStudentReport.adapter = mAdapter
-
         //whenever we call the student report we make it as default gender filter all and sort NoAsc
-
         genderSpinnerAdapter.selectedPosition = 0
         genderSpinnerAdapter.notifyDataSetChanged()
         binding.isGenderCatory.setSelection(0)
-
-// Also apply the ALL gender filter
         filterByGender(GenderType.ALL)
-
-
         highlightSelectedTab(binding.tapNameAsc)
         sortList(SortType.NO_ASC)
     }
@@ -442,14 +436,23 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
     }
 
     private fun highlightSelectedTab(selectedView: View) {
+        // make all tabs to  clickable
+        binding.tapNoAsc.isEnabled=true
+        binding.tapNoDsc.isEnabled=true
+        binding.tapNameAsc.isEnabled=true
+        binding.tapNameDsc.isEnabled=true
         // Reset all tabs to white
         binding.tapNoAsc.setBackgroundResource(R.drawable.light_gray_radius)
         binding.tapNoDsc.setBackgroundResource(R.drawable.light_gray_radius)
         binding.tapNameAsc.setBackgroundResource(R.drawable.light_gray_radius)
         binding.tapNameDsc.setBackgroundResource(R.drawable.light_gray_radius)
+
         // Highlight the selected tab
         selectedView.setBackgroundResource(R.drawable.theme_colour_radius)
+        // make the selected tab as not clickable
+        selectedView.isEnabled=false
     }
+
 
     override fun onClick(p0: View?) {
         when (p0?.id) {
