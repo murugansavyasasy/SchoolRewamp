@@ -316,17 +316,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickL
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
             addCategory(Intent.CATEGORY_OPENABLE)
             type = "*/*"
-            val mimeTypes = arrayOf(
-                "application/pdf",
-                "application/msword",
-                "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-                "application/vnd.ms-powerpoint",
-                "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-                "application/vnd.ms-excel",
-                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                "text/plain"
-            )
-            putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
+            putExtra(Intent.EXTRA_MIME_TYPES, Constant.mimeTypes)
             putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
         }
         startActivityForResult(intent, PICK_DOCUMENT_REQUEST)

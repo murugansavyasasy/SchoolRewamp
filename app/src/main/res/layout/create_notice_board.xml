@@ -10,7 +10,6 @@
         android:id="@+id/toolbarLayout"
         layout="@layout/school_side_tool_bar" />
 
-
     <ScrollView
         android:id="@+id/noticeboardCreate"
         android:layout_width="match_parent"
@@ -423,15 +422,8 @@
                         android:textColor="@color/white"
                         android:textSize="@dimen/thirteen_sp" />
 
-
                 </RelativeLayout>
-
-
             </RelativeLayout>
-
-
         </RelativeLayout>
-
     </ScrollView>
-
 </RelativeLayout>

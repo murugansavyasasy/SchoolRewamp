@@ -138,7 +138,7 @@
             <RelativeLayout
                 android:id="@+id/rlaFilePicking"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_below="@+id/rlaTitleDescription"
                 android:layout_marginTop="@dimen/five">
 
@@ -149,33 +149,120 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/fifteen"
                     android:layout_marginTop="@dimen/ten"
-                    android:text="@string/UploadAttachment"
+                    android:text="Add Attachment"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp">
 
                 </TextView>
 
                 <TextView
-                    android:id="@+id/lblStar3"
-                    style="@style/CustomTextStylePoppinsBold"
+                    android:id="@+id/lblOptional"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/lblAddPhoto"
-                    android:text="@string/mandatory"
-                    android:layout_marginTop="@dimen/eight"
-                    android:layout_marginStart="@dimen/two"
-                    android:textColor="@color/red"
-                    android:textSize="@dimen/thirteen_sp" />
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_toEndOf="@+id/lblAddPhoto"
+                    android:text="@string/Optional"
+                    android:textColor="@color/mild_grey1"
+                    android:layout_marginStart="8dp"
+                    android:textSize="@dimen/thirteen_sp">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rcyImages"
+                </TextView>
+
+                <ImageView
+                    android:layout_width="@dimen/twenty_five"
+                    android:layout_height="@dimen/twenty_five"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_marginEnd="@dimen/twenty"
+                    android:src="@drawable/ic_attach_file">
+
+                </ImageView>
+
+                <RelativeLayout
+                    android:id="@+id/rytRecyclewview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/lblAddPhoto"
-                    android:layout_marginTop="@dimen/ten"
-                    android:orientation="vertical">
+                    android:layout_below="@+id/lblAddPhoto">
 
-                </androidx.recyclerview.widget.RecyclerView>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rcyImages"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ten"
+                        android:orientation="vertical">
+
+                    </androidx.recyclerview.widget.RecyclerView>
+
+                    <VideoView
+                        android:id="@+id/videoView"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/one_eighty"
+                        android:layout_marginStart="@dimen/twenty"
+                        android:layout_marginTop="@dimen/thirty"
+                        android:layout_marginEnd="@dimen/twenty"
+                        android:visibility="gone">
+
+                    </VideoView>
+
+                    <android.webkit.WebView
+                        android:id="@+id/webView"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/one_eighty"
+                        android:layout_marginStart="@dimen/twenty"
+                        android:layout_marginTop="@dimen/thirty"
+                        android:layout_marginEnd="@dimen/twenty"
+                        android:visibility="gone">
+
+                    </android.webkit.WebView>
+
+                    <ProgressBar
+                        android:id="@+id/loadingBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:indeterminateDrawable="@drawable/progress_bar_white"
+                        android:indeterminateOnly="true"
+                        android:visibility="gone">
+
+                    </ProgressBar>
+
+
+                    <ImageView
+                        android:id="@+id/thumbnailView"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/one_eighty"
+                        android:layout_marginStart="@dimen/twenty"
+                        android:layout_marginTop="@dimen/twenty_five"
+                        android:layout_marginEnd="@dimen/twenty"
+                        android:scaleType="centerCrop"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        android:id="@+id/imgDelete"
+                        android:layout_width="@dimen/twenty_five"
+                        android:layout_height="@dimen/twenty_five"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="@dimen/twenty"
+                        android:layout_marginTop="@dimen/twenty_five"
+                        android:layout_marginEnd="@dimen/twenty"
+                        android:background="@drawable/white_circle_bg"
+                        android:padding="@dimen/five"
+                        android:src="@drawable/del_icon"
+                        android:visibility="gone">
+
+                    </ImageView>
+
+                    <ImageView
+                        android:id="@+id/imgPlay"
+                        android:layout_width="@dimen/fifty"
+                        android:layout_height="@dimen/fifty"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/video_play"
+                        android:visibility="gone">
+
+                    </ImageView>
+
+                </RelativeLayout>
 
 
                 <TextView
@@ -183,21 +270,18 @@
                     style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/rcyImages"
                     android:layout_marginStart="@dimen/twenty_five"
-                    android:layout_marginTop="@dimen/fifteen"
+                    android:layout_below="@id/rytRecyclewview"
+                    android:layout_marginTop="@dimen/fifty"
                     android:layout_marginEnd="@dimen/twenty_five"
-                    android:layout_marginBottom="@dimen/ten"
                     android:background="@drawable/rect_btn_orange"
                     android:gravity="center"
                     android:padding="@dimen/ten"
-                    android:text="@string/ChooseRecipients"
+                    android:text="@string/TOSTANDARDORSECTION"
                     android:textColor="@color/white"
                     android:textSize="@dimen/thirteen_sp">
 
                 </TextView>
-
-
             </RelativeLayout>
         </RelativeLayout>
     </RelativeLayout>

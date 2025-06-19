@@ -11,14 +11,14 @@
 
         <TextView
             android:id="@+id/lblChooseFileType"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/fifteen"
-            android:visibility="gone"
             android:text="Pick your file type "
             android:textColor="@color/black"
             android:textSize="@dimen/fifteen_sp"
-            style="@style/CustomTextStylePoppinsBold">
+            android:visibility="gone">
 
         </TextView>
 
@@ -33,21 +33,22 @@
 
             <RelativeLayout
                 android:id="@+id/rlaGallery"
-                android:layout_marginStart="@dimen/fourty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fourty"
                 android:layout_marginTop="@dimen/ten">
 
                 <ImageView
                     android:id="@+id/imgGallery"
                     android:layout_width="@dimen/fourty_five"
-                    android:padding="@dimen/ten"
-                    android:background="@drawable/bg_rect_white"
                     android:layout_height="@dimen/fourty_five"
                     android:layout_centerHorizontal="true"
+                    android:background="@drawable/bg_rect_white"
+                    android:padding="@dimen/ten"
                     android:src="@drawable/gallery_icon"></ImageView>
 
                 <TextView
+                    style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/imgGallery"
@@ -56,30 +57,30 @@
                     android:paddingBottom="@dimen/ten"
                     android:text="Gallery"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"
-                    style="@style/CustomTextStylePoppinsBold">
+                    android:textSize="@dimen/thirteen_sp">
 
                 </TextView>
 
             </RelativeLayout>
 
             <RelativeLayout
-                android:layout_centerHorizontal="true"
                 android:id="@+id/rlaCamera"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/ten">
 
                 <ImageView
                     android:id="@+id/imgCamera"
                     android:layout_width="@dimen/fourty_five"
                     android:layout_height="@dimen/fourty_five"
-                    android:padding="@dimen/ten"
                     android:layout_centerHorizontal="true"
                     android:background="@drawable/bg_rect_white"
+                    android:padding="@dimen/ten"
                     android:src="@drawable/camera_icon"></ImageView>
 
                 <TextView
+                    style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/imgCamera"
@@ -88,8 +89,7 @@
                     android:paddingBottom="@dimen/ten"
                     android:text="Camera"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"
-                    style="@style/CustomTextStylePoppinsBold">
+                    android:textSize="@dimen/thirteen_sp">
 
                 </TextView>
 
@@ -98,23 +98,24 @@
 
             <RelativeLayout
                 android:id="@+id/rlaVideo"
-                android:layout_marginEnd="@dimen/fourty"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="@dimen/thirty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/ten">
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="@dimen/thirty"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/fourty">
 
                 <ImageView
                     android:id="@+id/imgDocument"
                     android:layout_width="@dimen/fourty_five"
                     android:layout_height="@dimen/fourty_five"
-                    android:padding="@dimen/ten"
-                    android:background="@drawable/bg_rect_white"
                     android:layout_centerHorizontal="true"
+                    android:background="@drawable/bg_rect_white"
+                    android:padding="@dimen/ten"
                     android:src="@drawable/ic_document"></ImageView>
 
                 <TextView
+                    style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/imgDocument"
@@ -123,9 +124,7 @@
                     android:paddingBottom="@dimen/ten"
                     android:text="Document"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"
-                    style="@style/CustomTextStylePoppinsBold"
-                    >
+                    android:textSize="@dimen/thirteen_sp">
 
                 </TextView>
             </RelativeLayout>
@@ -136,28 +135,29 @@
             android:id="@+id/lnrSecond"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/twenty"
             android:layout_below="@+id/lnrFilePick"
-            android:layout_marginTop="@dimen/fifteen">
+            android:layout_marginTop="@dimen/fifteen"
+            android:layout_marginBottom="@dimen/twenty">
 
 
             <RelativeLayout
-                android:layout_marginStart="@dimen/fourty"
                 android:id="@+id/rlaVideoPick"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fourty"
                 android:layout_marginTop="@dimen/ten">
 
                 <ImageView
                     android:id="@+id/imgVideopick"
                     android:layout_width="@dimen/fourty_five"
-                    android:padding="@dimen/ten"
-                    android:background="@drawable/bg_rect_white"
                     android:layout_height="@dimen/fourty_five"
                     android:layout_centerHorizontal="true"
+                    android:background="@drawable/bg_rect_white"
+                    android:padding="@dimen/ten"
                     android:src="@drawable/video_icon"></ImageView>
 
                 <TextView
+                    style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/imgVideopick"
@@ -166,18 +166,16 @@
                     android:paddingBottom="@dimen/ten"
                     android:text="Video"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"
-                    style="@style/CustomTextStylePoppinsBold"
-                    >
+                    android:textSize="@dimen/thirteen_sp">
 
                 </TextView>
             </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/rlaVoice"
-                android:layout_centerHorizontal="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/ten"
                 android:visibility="gone">
 
@@ -205,9 +203,7 @@
                     android:textSize="@dimen/thirteen_sp">
 
                 </TextView>
-
             </RelativeLayout>
-
         </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>

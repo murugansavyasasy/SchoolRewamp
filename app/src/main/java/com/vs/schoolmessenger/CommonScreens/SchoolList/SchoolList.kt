@@ -405,6 +405,8 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         if (Constant.selectedFiles.isEmpty()) {
             if (SELECTED_SCHOOL_MENU == M_COMMUNICATION) {
                 voiceSendApi()
+            } else if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS) {
+                attachmentSendApi()
             }
         } else {
             for (i in Constant.selectedFiles.indices) {
