@@ -898,7 +898,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
                 Log.e("WebViewError", "Error loading: ${error?.description}")
             }
         }
-
         webView.loadUrl(url)
     }
 }
