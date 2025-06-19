@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="₹25000.00"
-            android:textColor="@color/red"
+            android:textColor="@color/light_red1"
             android:textSize="@dimen/fifteen_sp"
             style="@style/CustomTextStylePoppinsMedium" />
     </LinearLayout>

@@ -137,9 +137,9 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
             binding.totalsummary1.adapter = mAdapter
 
             val totalCollectionSum = data.sumOf {
-                it.total_collection.replace("₹", "").replace(",", "").toDoubleOrNull() ?: 0.0
+                it.total_collection.replace("₹", "").toDoubleOrNull() ?: 0.0
             }
-            binding.totalCollection.text = "%.2f".format(totalCollectionSum)
+            binding.totalCollection.text = "₹ %.2f".format(totalCollectionSum)
 
         }
     }
