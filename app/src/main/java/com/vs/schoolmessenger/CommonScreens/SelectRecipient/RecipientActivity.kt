@@ -1002,7 +1002,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                         )
                     }
                 }
-            } else if (SELECTED_SCHOOL_MENU == Constant.M_SCHOOL_CLASS_EVENTS) {
+            } else if (SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS) {
                 if (Constant.selectedFiles.isNotEmpty()) {
                     val videoFiles = Constant.selectedFiles.filter { it.type == FileType.VIDEO }
                     if (videoFiles.isNotEmpty()) {
@@ -1200,7 +1200,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
         val isCountryId = SharedPreference.getCountryId(this)
         Log.d("isSelectedFiles", Constant.selectedFiles.size.toString())
-        if (Constant.selectedFiles.size == 0) {
+        if (Constant.selectedFiles.isEmpty()) {
             if (SELECTED_SCHOOL_MENU == M_HOMEWORK) {
                 isHomeWorkSend()
             } else if (SELECTED_SCHOOL_MENU == Constant.M_COMMUNICATION) {

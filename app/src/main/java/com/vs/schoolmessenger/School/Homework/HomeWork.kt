@@ -82,9 +82,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         private const val MAX_FILES = 10
     }
 
-    //    var isImageFile = true
-    var isPickingFileName = ""
-    var isPreviousFilePicking = ""
 
     private val CAMERA_IMAGE_REQUEST = 1001
     var isFirstLoad = false
@@ -267,7 +264,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-
                 }
             }
 
@@ -553,46 +549,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
                 mAdapter!!.notifyDataSetChanged()
             }
         }
-//        if (!Constant.isForward) {
-//        if (isPickingFileName != isPreviousFilePicking) {
-//            Constant.selectedFiles.clear()
-//            saveDrawableToCache(R.drawable.add_image)?.let {
-//                Constant.selectedFiles.add(
-//                    FileItem(
-//                        it, FileType.IMAGE
-//                    )
-//                )
-//            }
-//            mAdapter!!.notifyDataSetChanged()
-//        }
-//        isPreviousFilePicking = isFileType
-//        } else {
-//            isPreviousFilePicking = Constant.selectedFiles[0].type.toString()
-//            if (isPreviousFilePicking != isFileType) {
-//                Constant.selectedFiles.clear()
-//                saveDrawableToCache(R.drawable.add_image)?.let {
-//                    Constant.selectedFiles.add(
-//                        FileItem(
-//                            it, FileType.IMAGE
-//                        )
-//                    )
-//                }
-//                mAdapter!!.notifyDataSetChanged()
-//            }
-//        }
-
-//        if (!Constant.isForward || isFileType != Constant.selectedFiles[0].type.toString()) {
-//            Constant.selectedFiles.clear()
-//            saveDrawableToCache(R.drawable.add_image)?.let {
-//                Constant.selectedFiles.add(
-//                    FileItem(
-//                        it, FileType.IMAGE
-//                    )
-//                )
-//            }
-//            mAdapter!!.notifyDataSetChanged()
-//        }
-
         Log.d("FileComing", isFileType)
         val sdkInt = Build.VERSION.SDK_INT
         if (isFileType == Constant.DOCUMENT && sdkInt < Build.VERSION_CODES.R) {
@@ -609,17 +565,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
             addCategory(Intent.CATEGORY_OPENABLE)
             type = "*/*"
-            val mimeTypes = arrayOf(
-                "application/pdf",
-                "application/msword",
-                "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-                "application/vnd.ms-powerpoint",
-                "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-                "application/vnd.ms-excel",
-                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                "text/plain"
-            )
-            putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
+            putExtra(Intent.EXTRA_MIME_TYPES, Constant.mimeTypes)
             putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
         }
         startActivityForResult(intent, PICK_DOCUMENT_REQUEST)
@@ -637,28 +583,24 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         val rlaVideoPick = dialog.findViewById<RelativeLayout>(R.id.rlaVideoPick)
 
         rlaGallery.setOnClickListener {
-            isPickingFileName = Constant.IMAGE
             Constant.isFileLimit = 5
             openAlbumSelectActivity(Constant.IMAGE)
             dialog.dismiss()
         }
 
         rlaVoice.setOnClickListener {
-            isPickingFileName = Constant.VOICE
             Constant.isFileLimit = 1
             openAlbumSelectActivity(Constant.AUDIO)
             dialog.dismiss()
         }
 
         rlaVideoPick.setOnClickListener {
-            isPickingFileName = Constant.VIDEO
             Constant.isFileLimit = 1
             openAlbumSelectActivity(Constant.VIDEO)
             dialog.dismiss()
         }
 
         rlaDocument.setOnClickListener {
-            isPickingFileName = Constant.DOCUMENT
             Constant.isFileLimit = 5
             openAlbumSelectActivity(Constant.DOCUMENT)
             dialog.dismiss()
@@ -678,48 +620,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
                     mAdapter!!.notifyDataSetChanged()
                 }
             }
-//            if (!Constant.isForward) {
-//            isPickingFileName = Constant.IMAGE
-//            if (isPickingFileName != isPreviousFilePicking) {
-//                    Constant.selectedFiles.clear()
-//                    saveDrawableToCache(R.drawable.add_image)?.let {
-//                        Constant.selectedFiles.add(
-//                            FileItem(
-//                                it, FileType.IMAGE
-//                            )
-//                        )
-//                    }
-//                    mAdapter!!.notifyDataSetChanged()
-//                }
-//            isPreviousFilePicking = Constant.IMAGE
-//            } else {
-//                isPreviousFilePicking = Constant.selectedFiles[1].type.toString()
-//                if (isPreviousFilePicking == Constant.DOCUMENT || isPreviousFilePicking == Constant.VOICE || isPreviousFilePicking == Constant.PDF || isPreviousFilePicking == Constant.EXCEL || isPreviousFilePicking == Constant.TXT || isPreviousFilePicking == Constant.PPT || isPreviousFilePicking == Constant.PPTX || isPreviousFilePicking == Constant.DOCX || isPreviousFilePicking == Constant.DOC) {
-//                    Constant.selectedFiles.clear()
-//                    saveDrawableToCache(R.drawable.add_image)?.let {
-//                        Constant.selectedFiles.add(
-//                            FileItem(
-//                                it, FileType.IMAGE
-//                            )
-//                        )
-//                    }
-//                    mAdapter!!.notifyDataSetChanged()
-//                }
-//            }
-//            isImageFile = true
-//            if (Constant.selectedFiles.isNotEmpty()) {
-//                if (Constant.selectedFiles[0].type.toString() != Constant.IMAGE) {
-//                    Constant.selectedFiles.clear()
-//                    saveDrawableToCache(R.drawable.add_image)?.let {
-//                        Constant.selectedFiles.add(
-//                            FileItem(
-//                                it, FileType.IMAGE
-//                            )
-//                        )
-//                    }
-//                    mAdapter!!.notifyDataSetChanged()
-//                }
-//            }
             checkCameraPermissionAndOpenCamera()
             dialog.dismiss()
         }
@@ -914,7 +814,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
     }
 
     override fun onClickListener(data: HomeWorkReport) {
-//        Constant.isForward = true
         Constant.isAwsUploadedFiles.clear()
         Constant.selectedFiles.clear()
         binding.webView.visibility = View.GONE
@@ -999,7 +898,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
                 Log.e("WebViewError", "Error loading: ${error?.description}")
             }
         }
-
         webView.loadUrl(url)
     }
 }

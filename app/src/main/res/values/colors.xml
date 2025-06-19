@@ -11,6 +11,10 @@
     <color name="jumbo">#87878a</color>
     <color name="teal">#53c0bd</color>
 
+    <color name="darkGreen">#1B5E20</color>
+    <color name="iconBlue">#0066FF</color>
+
+
     <color name="azure_radiance">#0079fd</color>
     <color name="AthensGray">#f2f2f7</color>
     <color name="athens_gray">#efeff0</color>
@@ -34,6 +38,7 @@
 
 
 
+    <color name="light_orangecolor">#f56363</color>
 
     <color name="light_sky_blue">#c7eaff</color>
     <color name="light_sky_blue2">#b4d8ee</color>
@@ -56,8 +61,10 @@
 
     <color name="grey">#ACACBA</color>
     <color name="grey_mild">#E3E3E9</color>
+    <color name="light_grey4">#E3E3E9</color>
     <color name="neon_green">#0FFF50</color>
     <color name="onahau">#c2e7ff</color>
+
 
 
     <color name="light_blue_color">#f0f4f9</color>

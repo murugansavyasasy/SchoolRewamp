@@ -405,6 +405,8 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         if (Constant.selectedFiles.isEmpty()) {
             if (SELECTED_SCHOOL_MENU == M_COMMUNICATION) {
                 voiceSendApi()
+            } else if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS) {
+                attachmentSendApi()
             }
         } else {
             for (i in Constant.selectedFiles.indices) {
@@ -494,9 +496,6 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         if (selectedRadioId != -1) {
             val selectedRadioButton = findViewById<RadioButton>(selectedRadioId)
             intendedFor = selectedRadioButton.text.toString().lowercase() // Force lowercase
-            Log.d("noticeboardsendapi", "Selected intended_for: $intendedFor")
-        } else {
-            Log.d("noticeboardsendapi", "No option selected in radioGroupSendTo")
         }
 
         val noticeDetails = intent.getSerializableExtra(Constant.notice_data) as? NoticeBoardDetails
@@ -511,12 +510,9 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                 iframe = isIframe,
                 fileSize = isFileSize,
             )
-            Log.d("SchoolList", "Notice details received and jsonObject created: $jsonObject")
             Log.d("Object", jsonObject.toString())
             appViewModel!!.sendnotice(isAccessToken!!, jsonObject, this)
 
-        } else {
-            Log.e("SchoolList", "NoticeBoardDetails not found in intent")
         }
     }
 

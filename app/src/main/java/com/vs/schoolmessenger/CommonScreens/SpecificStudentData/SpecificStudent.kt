@@ -259,8 +259,10 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
         val isCountryId = SharedPreference.getCountryId(this)
         Log.d("isSelectedFiles", Constant.selectedFiles.size.toString())
         if (Constant.selectedFiles.size == 0) {
-            if (SELECTED_SCHOOL_MENU == Constant.M_COMMUNICATION) {
+            if (SELECTED_SCHOOL_MENU == M_COMMUNICATION) {
                 voiceSendApi()
+            } else if (SELECTED_SCHOOL_MENU == Constant.M_ATTACHMENTS) {
+                attachmentSendApi()
             }
         } else {
             for (i in Constant.selectedFiles.indices) {
