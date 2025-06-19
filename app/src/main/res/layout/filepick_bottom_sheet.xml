@@ -188,7 +188,9 @@
                     android:layout_centerHorizontal="true"
                     android:background="@drawable/bg_rect_white"
                     android:padding="@dimen/ten"
-                    android:src="@drawable/audio_icon2"></ImageView>
+                    android:src="@drawable/audio_icon2">
+
+                </ImageView>
 
                 <TextView
                     style="@style/CustomTextStylePoppinsBold"
