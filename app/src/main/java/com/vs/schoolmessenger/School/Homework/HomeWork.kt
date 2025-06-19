@@ -82,7 +82,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         private const val MAX_FILES = 10
     }
 
-
     private val CAMERA_IMAGE_REQUEST = 1001
     var isFirstLoad = false
     private var cameraImageFilePath: String? = null
