@@ -456,6 +456,9 @@ dependencies {
 
     implementation("com.github.chrisbanes:PhotoView:2.3.0")
 
+    // FFmpeg for video compression
+    implementation("com.arthenica:mobile-ffmpeg-full:4.4")
+
 
 
 
