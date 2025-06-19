@@ -2,24 +2,27 @@ package com.vs.schoolmessenger.School.DailyCollection
 import android.graphics.Color
 import android.util.Log
 import android.view.View
-import androidx.lifecycle.ViewModelProvider
+
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
-import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.databinding.DailyCollectionBinding
+import androidx.lifecycle.ViewModelProvider
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Repository.App
-import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionModel.CollectionData
-import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionModel.DisplayItem
+import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionModel.DailyData
+import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionModel.DailyCollectionDisplayItem
+
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.OnDateSelectedListener
 import com.vs.schoolmessenger.Utils.SharedPreference
-import com.vs.schoolmessenger.databinding.DailyCollectionBinding
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
 
-class DailyCollection : BaseActivity<DailyCollectionBinding>(), View.OnClickListener, OnDateSelectedListener {
+class DailyCollection : BaseActivity<DailyCollectionBinding>(),
+    View.OnClickListener, OnDateSelectedListener {
 
     private var isAccessToken: String? = null
     private var appViewModel: App? = null
@@ -94,8 +97,8 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(), View.OnClickList
 
 
 
-    private fun isLoadDailyCollectionData(data: List<CollectionData>?) {
-        val flatList = mutableListOf<DisplayItem>()
+    private fun isLoadDailyCollectionData(data: List<DailyData>?) {
+        val flatList = mutableListOf<DailyCollectionDisplayItem>()
 
         if (data.isNullOrEmpty()) {
             binding.nomessage.visibility = View.VISIBLE
@@ -108,12 +111,13 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(), View.OnClickList
         data.forEach { collectionData ->
             collectionData.collections.forEach { item ->
                 if (!item.category.isNullOrEmpty()) {
-                    flatList.add(DisplayItem.Header(item.category ?: "Unknown", item.total ?: "0"))
+                    val feeList = item.fee_data?.map { fee ->
+                        DailyCollectionDisplayItem.Fee(fee.type_name ?: "Unknown", fee.amount ?: "0")
+                    } ?: emptyList()
+
+                    flatList.add(DailyCollectionDisplayItem.Header(item.category ?: "Unknown", item.total ?: "0", feeList))
                 }
 
-                item.fee_data?.forEach { fee ->
-                    flatList.add(DisplayItem.Fee(fee.type_name ?: "Unknown", fee.amount ?: "0"))
-                }
             }
         }
 

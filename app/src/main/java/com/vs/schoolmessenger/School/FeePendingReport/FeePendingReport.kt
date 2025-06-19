@@ -12,6 +12,8 @@ import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.CommonScreens.SchoolList.AcademicYearAdapter
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportModel.FeePendingCollectionDisplayItem
+import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportModel.FeeData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.FeePendingReportBinding
@@ -100,21 +102,24 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
         }
     }
 
-    private fun isLoadDailyCollectionData(data: List<FeePendingCollectionItem>?) {
-        val flatList = mutableListOf<DisplayItem>()
+    private fun isLoadDailyCollectionData(data: List<FeeData>?) {
+        val flatList = mutableListOf<FeePendingCollectionDisplayItem>()
 
         if (data.isNullOrEmpty()) {
             showNoDataMessage("No fee pending data available.")
             return
         }
 
-        data.forEach { item ->
-            if (!item.category.isNullOrEmpty()) {
-                flatList.add(DisplayItem.Header(item.category ?: "Unknown", item.total ?: "0"))
-            }
+        data.forEach { pendingData ->
+            pendingData.pending_details?.forEach { item ->
+                if (!item.category.isNullOrEmpty()) {
+                    val feeList = item.pending_data?.map { fee ->
+                        FeePendingCollectionDisplayItem.Fee(fee.type_name ?: "Unknown", fee.amount ?: "0")
+                    } ?: emptyList()
 
-            item.pending_data?.forEach { fee ->
-                flatList.add(DisplayItem.Fee(fee.type_name ?: "Unknown", fee.amount ?: "0"))
+                    flatList.add(FeePendingCollectionDisplayItem.Header(item.category ?: "Unknown", item.total ?: "0", feeList))
+                }
+
             }
         }
 
@@ -130,10 +135,9 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
             binding.totalsummary1.layoutManager = LinearLayoutManager(this)
             binding.totalsummary1.adapter = mAdapter
             val totalCollectionSum = data.sumOf {
-                it.total_pending?.toDoubleOrNull() ?: 0.0
+                it.total_pending.replace("₹", "").replace(",", "").toDoubleOrNull() ?: 0.0
             }
-
-            binding.totalCollection.text = "Total Collection : ₹ %.2f".format(totalCollectionSum)
+            binding.totalCollection.text = "%.2f".format(totalCollectionSum)
         }
     }
 
