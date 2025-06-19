@@ -2,9 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_top_radius_2"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical"
+    android:background="@drawable/rounded_top_corners"
     android:padding="@dimen/five">
 
     <RelativeLayout
@@ -13,10 +11,10 @@
 
         <TextView
             android:id="@+id/lblChooseFileType"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/fifteen"
-            android:gravity="center"
+            android:visibility="gone"
             android:text="Pick your file type "
             android:textColor="@color/black"
             android:textSize="@dimen/fifteen_sp"
@@ -25,34 +23,32 @@
         </TextView>
 
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/lnrFilePick"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/lblChooseFileType"
-            android:layout_marginTop="@dimen/fifteen"
-            android:orientation="horizontal"
-            android:weightSum="3">
+            android:layout_marginTop="@dimen/fifteen">
 
 
             <RelativeLayout
                 android:id="@+id/rlaGallery"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/ten"
-                android:layout_weight="1">
+                android:layout_marginStart="@dimen/fourty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ten">
 
                 <ImageView
                     android:id="@+id/imgGallery"
-                    android:layout_width="@dimen/sixty"
-                    android:padding="@dimen/fifteen"
-                    android:background="@drawable/curve_gray_radius"
-                    android:layout_height="@dimen/sixty"
+                    android:layout_width="@dimen/fourty_five"
+                    android:padding="@dimen/ten"
+                    android:background="@drawable/bg_rect_white"
+                    android:layout_height="@dimen/fourty_five"
                     android:layout_centerHorizontal="true"
-                    android:src="@drawable/gallery_icon2"></ImageView>
+                    android:src="@drawable/gallery_icon"></ImageView>
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/imgGallery"
                     android:layout_marginTop="@dimen/ten"
@@ -61,31 +57,30 @@
                     android:text="Gallery"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
-                    style="@style/CustomTextStylePoppinsBold"
-                   >
+                    style="@style/CustomTextStylePoppinsBold">
 
                 </TextView>
 
             </RelativeLayout>
 
             <RelativeLayout
+                android:layout_centerHorizontal="true"
                 android:id="@+id/rlaCamera"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/ten"
-                android:layout_weight="1">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ten">
 
                 <ImageView
                     android:id="@+id/imgCamera"
-                    android:layout_width="@dimen/sixty"
-                    android:layout_height="@dimen/sixty"
-                    android:padding="@dimen/fifteen"
+                    android:layout_width="@dimen/fourty_five"
+                    android:layout_height="@dimen/fourty_five"
+                    android:padding="@dimen/ten"
                     android:layout_centerHorizontal="true"
-                    android:background="@drawable/curve_gray_radius"
-                    android:src="@drawable/camera_icon2"></ImageView>
+                    android:background="@drawable/bg_rect_white"
+                    android:src="@drawable/camera_icon"></ImageView>
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/imgCamera"
                     android:layout_marginTop="@dimen/ten"
@@ -94,8 +89,7 @@
                     android:text="Camera"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
-                    style="@style/CustomTextStylePoppinsBold"
-                    >
+                    style="@style/CustomTextStylePoppinsBold">
 
                 </TextView>
 
@@ -104,22 +98,24 @@
 
             <RelativeLayout
                 android:id="@+id/rlaVideo"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/ten"
-                android:layout_weight="1">
+                android:layout_marginEnd="@dimen/fourty"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="@dimen/thirty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ten">
 
                 <ImageView
                     android:id="@+id/imgDocument"
-                    android:layout_width="@dimen/sixty"
-                    android:layout_height="@dimen/sixty"
-                    android:padding="@dimen/fifteen"
-                    android:background="@drawable/curve_gray_radius"
+                    android:layout_width="@dimen/fourty_five"
+                    android:layout_height="@dimen/fourty_five"
+                    android:padding="@dimen/ten"
+                    android:background="@drawable/bg_rect_white"
                     android:layout_centerHorizontal="true"
-                    android:src="@drawable/document_icon2"></ImageView>
+                    android:src="@drawable/ic_document"></ImageView>
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/imgDocument"
                     android:layout_marginTop="@dimen/ten"
@@ -133,70 +129,36 @@
 
                 </TextView>
             </RelativeLayout>
-        </LinearLayout>
+        </RelativeLayout>
 
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/lnrSecond"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/twenty"
             android:layout_below="@+id/lnrFilePick"
-            android:layout_marginTop="@dimen/fifteen"
-            android:orientation="horizontal"
-            android:weightSum="2">
+            android:layout_marginTop="@dimen/fifteen">
 
 
             <RelativeLayout
-                android:id="@+id/rlaVoice"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/ten"
-                android:layout_weight="1"
-                android:visibility="gone">
-
-                <ImageView
-                    android:id="@+id/imgVoice"
-                    android:layout_width="@dimen/sixty"
-                    android:layout_height="@dimen/sixty"
-                    android:layout_centerHorizontal="true"
-                    android:background="@drawable/curve_gray_radius"
-                    android:padding="@dimen/fifteen"
-                    android:src="@drawable/audio_icon2"></ImageView>
-
-                <TextView
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/imgVoice"
-                    android:layout_marginTop="@dimen/ten"
-                    android:gravity="center"
-                    android:paddingBottom="@dimen/ten"
-                    android:text="Voice"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp">
-
-                </TextView>
-
-            </RelativeLayout>
-
-            <RelativeLayout
+                android:layout_marginStart="@dimen/fourty"
                 android:id="@+id/rlaVideoPick"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/ten"
-                android:layout_weight="1">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ten">
 
                 <ImageView
                     android:id="@+id/imgVideopick"
-                    android:layout_width="@dimen/sixty"
-                    android:padding="@dimen/fifteen"
-                    android:background="@drawable/curve_gray_radius"
-                    android:layout_height="@dimen/sixty"
+                    android:layout_width="@dimen/fourty_five"
+                    android:padding="@dimen/ten"
+                    android:background="@drawable/bg_rect_white"
+                    android:layout_height="@dimen/fourty_five"
                     android:layout_centerHorizontal="true"
-                    android:src="@drawable/video_icon2"></ImageView>
+                    android:src="@drawable/video_icon"></ImageView>
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/imgVideopick"
                     android:layout_marginTop="@dimen/ten"
@@ -210,6 +172,42 @@
 
                 </TextView>
             </RelativeLayout>
-        </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlaVoice"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ten"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/imgVoice"
+                    android:layout_width="@dimen/fourty_five"
+                    android:layout_height="@dimen/fourty_five"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/bg_rect_white"
+                    android:padding="@dimen/ten"
+                    android:src="@drawable/audio_icon2">
+
+                </ImageView>
+
+                <TextView
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imgVoice"
+                    android:layout_marginTop="@dimen/ten"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/ten"
+                    android:text="Voice"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp">
+
+                </TextView>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>

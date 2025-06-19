@@ -21,6 +21,6 @@
         android:layout_height="@dimen/twenty"
         android:layout_marginBottom="@dimen/five"
         android:layout_alignParentEnd="true"
-        android:src="@drawable/tick_mark"
+        android:src="@drawable/ic_check_mark"
         android:visibility="gone" />
 </RelativeLayout>

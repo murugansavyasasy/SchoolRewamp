@@ -12,6 +12,7 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionModel.DailyData
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionModel.DailyCollectionDisplayItem
+
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.OnDateSelectedListener
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -29,7 +30,6 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
     private var selectedType: String = "1"
     private var to_Date: String? = null
     private var from_Date: String? = null
-
     private var mAdapter: DcfAdapter? = null
     private var isStaffDetails: StaffDetails? = null
     override fun getViewBinding(): DailyCollectionBinding {
@@ -49,7 +49,6 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
         binding.toolbarLayout.lblParentToolBar.text = getString(R.string.daily_collection_fees)
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
-
 
 
         val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
@@ -85,8 +84,6 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
                 showErrorUI(response.message ?: "No data available")
             }
         }
-
-
     }
 
     private fun showErrorUI(message: String) {

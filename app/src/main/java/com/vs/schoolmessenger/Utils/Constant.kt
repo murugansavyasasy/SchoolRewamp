@@ -1103,7 +1103,6 @@ object Constant {
                 onEachCompressed(path, null, false)
             }
         }
-
         onComplete()
     }
 
