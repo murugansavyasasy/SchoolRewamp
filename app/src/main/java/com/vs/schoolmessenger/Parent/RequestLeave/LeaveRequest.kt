@@ -57,6 +57,7 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
         binding.lnrStartCalendar.setOnClickListener(this)
         binding.lnrEndCalendar.setOnClickListener(this)
         binding.btnNext.setOnClickListener(this)
+        val (dayOnly, dayOfWeek, fullDate, slashDate, customFormat) = Constant.getCurrentDateInfo()
 
 
 
@@ -65,10 +66,9 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
 
         // Set default FROM date(current date)
         binding.txtStartDate.text = Constant.covertDateFormate(formattedToday)
-        val dayOfWeek = SimpleDateFormat("EEE", Locale.getDefault()).format(today.time) // e.g., "Tue"
-        val dayOnly = SimpleDateFormat("dd", Locale.getDefault()).format(today.time)    // e.g., "12"
-        binding.lblDay.text = dayOfWeek
-        binding.lblDate.text = dayOnly
+
+        binding.lblDay.text = dayOnly
+//        binding.lblDate.text = dayOnly
 
         // Parse millis from formatted date
         val parsedDate = dateFormat.parse(formattedToday)
@@ -76,8 +76,8 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
 
         // Set default TO date
         binding.txtEndDate.text = Constant.covertDateFormate(formattedToday)
-        binding.lblEndDay.text = dayOfWeek
-        binding.lblEndDate.text = dayOnly
+        binding.lblEndDay.text = dayOnly
+//        binding.lblEndDate.text = dayOnly
         toDateMillis = parsedDate?.time ?: today.timeInMillis
 
         // Set default leave days = 1
@@ -195,9 +195,9 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
 
                     result?.let { (dayOfWeek, dayOfMonth) ->
                         binding.lblDay.text = dayOfWeek
-                        binding.lblDate.text = dayOfMonth
+//                        binding.lblDate.text = dayOfMonth
                         binding.lblEndDay.text = dayOfWeek
-                        binding.lblEndDate.text = dayOfMonth
+//                        binding.lblEndDate.text = dayOfMonth
                     }
 
                     // Auto-set To Date = From Date
@@ -245,7 +245,7 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
                     val result = getDayAndDate(selectedDate, dateFormat)
                     result?.let { (dayOfWeek, dayOfMonth) ->
                         binding.lblEndDay.text = dayOfWeek
-                        binding.lblEndDate.text = dayOfMonth
+//                        binding.lblEndDate.text = dayOfMonth
                     }
                 }
             }

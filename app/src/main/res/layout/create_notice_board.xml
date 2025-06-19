@@ -481,7 +481,8 @@
                             android:padding="@dimen/ten"
                             android:text="@string/NEXT"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/thirteen_sp"></TextView>
+                            android:textSize="@dimen/thirteen_sp">
+                        </TextView>
                     </RelativeLayout>
                 </RelativeLayout>
             </RelativeLayout>

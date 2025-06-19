@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:fitsSystemWindows="true">
 
     <include
@@ -163,68 +163,60 @@
     <ScrollView
         android:id="@+id/rlaCreateLeaveRequest"
         android:layout_width="match_parent"
-        android:visibility="visible"
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbarLayout"
+        android:visibility="visible"
 
         >
+
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/ten"
-            app:cardCornerRadius="@dimen/fifteen"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/twenty"
+            android:layout_marginTop="@dimen/ten"
             android:layout_marginEnd="@dimen/twenty"
             android:layout_marginBottom="@dimen/twenty"
-            android:layout_height="wrap_content">
+            app:cardCornerRadius="@dimen/fifteen">
+
             <RelativeLayout
-                android:padding="@dimen/ten"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="@dimen/ten">
 
-                >
                 <TextView
                     android:id="@+id/lblHeaderTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/ten"
                     android:layout_marginTop="@dimen/ten"
+                    android:fontFamily="@font/poppins_bold"
                     android:text="@string/create_leave_request"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
-                    android:fontFamily="@font/poppins_bold"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/lblStart"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/ten"
-                    android:layout_marginTop="@dimen/ten"
-                    android:text="@string/from"
-                    android:layout_below="@+id/lblHeaderTitle"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"
-                    android:fontFamily="@font/poppins_bold"
-                    android:textStyle="bold" />
 
-                <RelativeLayout
+                <LinearLayout
                     android:id="@+id/rytStart"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/lblStart"
-                    android:layout_marginStart="@dimen/ten"
-                    android:layout_marginTop="@dimen/ten">
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/lblHeaderTitle"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
 
                     <RelativeLayout
                         android:id="@+id/rytStartDate"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center">
 
                         <androidx.cardview.widget.CardView
                             android:id="@+id/cardStart"
-                            android:layout_width="@dimen/sixty"
-                            android:layout_height="@dimen/sixty"
+                            android:layout_width="100dp"
+                            android:layout_height="80dp"
                             app:cardCornerRadius="@dimen/ten">
 
                             <LinearLayout
@@ -232,102 +224,84 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:background="@drawable/bg_stroke_rect_black"
-                                android:orientation="vertical"
-                                >
+                                android:orientation="vertical">
 
-                                <TextView
-                                    android:id="@+id/lblDay"
-                                    android:layout_width="wrap_content"
+                                <LinearLayout
+                                    android:id="@+id/bottomdaylinear"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="center_horizontal"
-                                    android:layout_marginTop="@dimen/five"
-                                    android:text="Fri"
-                                    style="@style/CustomTextStylePoppinsBold"
-                                    android:textColor="@color/black"
-                                    android:textSize="@dimen/fifteen_sp"
-                                    />
+                                    android:background="@color/light_orangecolor"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
 
-                                <TextView
-                                    android:id="@+id/lblDate"
+                                    <TextView
+                                        android:id="@+id/lblDaylabel"
+                                        style="@style/CustomTextStylePoppinsBold"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center_horizontal"
+                                        android:layout_marginTop="@dimen/five"
+                                        android:layout_marginBottom="3dp"
+                                        android:text="From"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/fifteen_sp" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/bottomlineardate"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:background="@color/primary_light"
                                     android:gravity="center"
-                                    android:text="12"
-                                    style="@style/CustomTextStylePoppinsBold"
-                                    android:textColor="@color/black"
-                                    android:textSize="@dimen/fifteen_sp"
-                                    />
+                                    android:orientation="vertical">
+
+
+                                    <TextView
+                                        android:id="@+id/lblDay"
+                                        style="@style/CustomTextStylePoppinsBold"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="12"
+                                        android:textColor="@color/black"
+                                        android:textSize="@dimen/fifteen_sp" />
+
+                                    <TextView
+                                        android:id="@+id/txtStartDate"
+                                        style="@style/CustomTextStylePoppinsBold"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="3dp"
+                                        android:text="Fri, Jun 2025"
+                                        android:textColor="@color/grey"
+                                        android:textSize="12sp" />
+
+
+                                </LinearLayout>
 
                             </LinearLayout>
                         </androidx.cardview.widget.CardView>
-
-                        <TextView
-                            android:id="@+id/txtStartDate"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="@dimen/five"
-                            android:layout_marginTop="@dimen/ten"
-                            android:layout_toEndOf="@+id/cardStart"
-                            android:text=""
-                            android:fontFamily="@font/poppins_regular"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/thirteen_sp" />
-
-                        <ImageView
-                            android:id="@+id/imgDateDown"
-                            android:layout_width="@dimen/twenty"
-                            android:layout_height="@dimen/twenty"
-                            android:layout_centerVertical="true"
-                            android:layout_toEndOf="@+id/txtStartDate"
-                            android:src="@drawable/ic_down_arrow" />
-
-
                     </RelativeLayout>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/one"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginStart="@dimen/sixty_five"
-                        android:background="@color/grey" />
 
+                    <ImageView
+                        android:id="@+id/imagearrow_view"
+                        android:layout_width="@dimen/sixteen"
+                        android:layout_height="@dimen/sixteen"
+                        android:layout_weight="1"
+                        android:src="@drawable/exchangearrow"></ImageView>
 
-                </RelativeLayout>
-
-                <TextView
-                    android:id="@+id/lblEnd"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/rytStart"
-                    android:layout_marginStart="@dimen/ten"
-                    android:layout_marginTop="@dimen/ten"
-                    android:text="@string/to"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"
-                    android:fontFamily="@font/poppins_bold"
-                    android:textStyle="bold" />
-
-                <RelativeLayout
-                    android:id="@+id/rytEnd"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/lblEnd"
-                    android:paddingBottom="@dimen/twenty"
-                    android:layout_marginTop="@dimen/ten">
 
                     <RelativeLayout
-                        android:layout_marginStart="@dimen/ten"
                         android:id="@+id/rytEndDate"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center">
 
                         <androidx.cardview.widget.CardView
                             android:id="@+id/cardEnd"
-                            android:layout_width="@dimen/sixty"
-                            android:layout_height="@dimen/sixty"
+                            android:layout_width="100dp"
+                            android:layout_height="80dp"
                             app:cardCornerRadius="@dimen/ten">
 
                             <LinearLayout
@@ -337,78 +311,87 @@
                                 android:background="@drawable/bg_stroke_rect_black"
                                 android:orientation="vertical">
 
-                                <TextView
-                                    android:id="@+id/lblEndDay"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_horizontal"
-                                    android:layout_marginTop="@dimen/five"
-                                    android:text="Fri"
-                                    style="@style/CustomTextStylePoppinsBold"
-                                    android:textColor="@color/black"
-                                    android:textSize="@dimen/fifteen_sp"
-                                    />
-
-                                <TextView
-                                    android:id="@+id/lblEndDate"
+                                <LinearLayout
+                                    android:id="@+id/bottomdaylinear1"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
+                                    android:layout_height="wrap_content"
                                     android:background="@color/primary_light"
                                     android:gravity="center"
-                                    android:text="12"
-                                    style="@style/CustomTextStylePoppinsBold"
-                                    android:textColor="@color/black"
-                                    android:textSize="@dimen/fifteen_sp"
-                                    />
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/lblDay1"
+                                        style="@style/CustomTextStylePoppinsBold"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center_horizontal"
+                                        android:layout_marginTop="@dimen/five"
+                                        android:layout_marginBottom="3dp"
+                                        android:text="To"
+
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/fifteen_sp" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/bottomlineardate1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+
+
+                                    <TextView
+                                        android:id="@+id/lblEndDay"
+                                        style="@style/CustomTextStylePoppinsBold"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="28"
+                                        android:textColor="@color/black"
+                                        android:textSize="@dimen/fifteen_sp" />
+
+                                    <TextView
+                                        android:id="@+id/txtEndDate"
+                                        style="@style/CustomTextStylePoppinsBold"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="3dp"
+                                        android:text="Fri, Jun 2025"
+                                        android:textColor="@color/grey"
+                                        android:textSize="12sp" />
+
+
+                                </LinearLayout>
 
                             </LinearLayout>
                         </androidx.cardview.widget.CardView>
-
-
-                        <ImageView
-                            android:id="@+id/imgDateDown1"
-                            android:layout_width="@dimen/twenty"
-                            android:layout_height="@dimen/twenty"
-                            android:layout_centerVertical="true"
-                            android:layout_toEndOf="@+id/txtEndDate"
-                            android:src="@drawable/ic_down_arrow" />
-
-                        <TextView
-                            android:id="@+id/txtEndDate"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="@dimen/five"
-                            android:layout_marginTop="@dimen/ten"
-                            android:layout_toEndOf="@+id/cardEnd"
-                            android:text=""
-                            android:textColor="@color/black"
-                            android:fontFamily="@font/poppins_regular"
-                            android:textSize="@dimen/thirteen_sp" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/one"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginStart="@dimen/sixty_five"
-                            android:background="@color/grey" />
-
-
                     </RelativeLayout>
+
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rytEnd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rytStart"
+                    android:layout_marginTop="@dimen/ten"
+                    android:paddingBottom="@dimen/twenty">
+
 
                     <TextView
                         android:id="@+id/lblTotalDays"
+                        style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/rytEndDate"
+
                         android:layout_alignParentEnd="true"
-                        android:layout_marginTop="@dimen/ten"
                         android:layout_marginEnd="@dimen/twenty"
+                        android:fontFamily="@font/poppins_bold"
                         android:text=""
-                        style="@style/CustomTextStylePoppinsBold"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp"
-                        android:fontFamily="@font/poppins_bold"
                         android:textStyle="bold">
 
                     </TextView>
@@ -418,12 +401,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/lblTotalDays"
-                        android:layout_marginTop="@dimen/fifteen"
                         android:layout_marginStart="@dimen/ten"
+                        android:fontFamily="@font/poppins_bold"
                         android:text="@string/reason_for_leave"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp"
-                        android:fontFamily="@font/poppins_bold"
                         android:textStyle="bold" />
 
 
@@ -432,40 +414,39 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/lblEventDesc"
-                        android:layout_marginTop="@dimen/fifteen"
-                        android:hint="@string/Description"
                         android:layout_marginStart="@dimen/ten"
+                        android:layout_marginTop="@dimen/fifteen"
                         android:layout_marginEnd="@dimen/ten"
                         android:background="@drawable/bg_stroke_rect_black"
+                        android:hint="@string/Description"
                         android:paddingHorizontal="@dimen/ten"
                         android:paddingVertical="@dimen/thirty"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp" />
 
                     <TextView
-                        android:layout_marginTop="@dimen/ten"
                         android:id="@+id/lbTextCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/txtDesc"
                         android:layout_alignParentEnd="true"
-                        android:text="@string/_0_of_500"
+                        android:layout_marginTop="@dimen/ten"
                         android:layout_marginEnd="@dimen/ten"
+                        android:text="@string/_0_of_500"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp"
-                        android:fontFamily="@font/poppins_bold"
-                        android:textStyle="bold" />
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:textSize="@dimen/thirteen_sp" />
 
 
                     <RelativeLayout
                         android:id="@+id/rytADD"
-                        android:visibility="gone"
                         android:layout_width="@dimen/seventy"
                         android:layout_height="@dimen/seventy"
                         android:layout_below="@+id/txtDesc"
-                        android:layout_marginTop="@dimen/fifteen"
                         android:layout_marginStart="@dimen/ten"
-                        android:background="@drawable/rect_light_blue">
+                        android:layout_marginTop="@dimen/fifteen"
+                        android:background="@drawable/rect_light_blue"
+                        android:visibility="gone">
 
                         <ImageView
                             android:layout_width="@dimen/thirty"
@@ -477,23 +458,21 @@
                     </RelativeLayout>
 
 
-
                     <TextView
                         android:id="@+id/btnNext"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/fourty"
                         android:layout_below="@+id/lbTextCount"
-                        android:layout_marginTop="@dimen/thirty"
                         android:layout_marginStart="@dimen/ten"
+                        android:layout_marginTop="@dimen/thirty"
                         android:layout_marginEnd="@dimen/ten"
                         android:background="@drawable/rect_btn_orange"
+                        android:fontFamily="@font/poppins_bold"
                         android:gravity="center"
                         android:text="@string/submit"
-                        android:fontFamily="@font/poppins_bold"
                         android:textColor="@color/white"
                         android:textSize="@dimen/thirteen_sp"
                         android:textStyle="bold" />
-
 
 
                 </RelativeLayout>
