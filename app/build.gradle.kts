@@ -456,8 +456,4 @@ dependencies {
 
     implementation("com.github.chrisbanes:PhotoView:2.3.0")
 
-
-
-
-
 }

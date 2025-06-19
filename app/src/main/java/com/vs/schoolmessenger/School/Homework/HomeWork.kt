@@ -904,7 +904,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         if (isClickingId == binding.btnHistory) {
             binding.btnCreate.background = null
             binding.btnCreate.setTextColor(ContextCompat.getColor(this, R.color.dark_blue))
-
         }
 
 

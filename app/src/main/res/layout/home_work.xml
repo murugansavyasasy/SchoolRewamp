@@ -219,7 +219,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/twenty"
-                    android:src="@drawable/camera_icon">
+                    android:src="@drawable/ic_attach_file">
 
                 </ImageView>
 
