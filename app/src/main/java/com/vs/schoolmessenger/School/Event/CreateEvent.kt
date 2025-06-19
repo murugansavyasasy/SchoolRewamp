@@ -605,55 +605,32 @@ class CreateEvent : BaseActivity<CreateEventBinding>(),OnImageClickListener,
         val txtStartDate = Constant.convertDateFormat(binding.txtStartDate.text.toString())
         val txtStartTime = binding.txtStartTime.text.toString().trim()
 
-
-
-        Log.d("RedirectToRecepientActivity", "Location: $txtLocation")
-        Log.d("RedirectToRecepientActivity", "Title: $txtTitle")
-        Log.d("RedirectToRecepientActivity", "Start Date: $txtStartDate")
-        Log.d("RedirectToRecepientActivity", "Description: $txtDesc")
-        Log.d("RedirectToRecepientActivity", "Start Time: $txtStartTime")
-
         if (txtLocation.isEmpty()) {
-            Log.d("RedirectToRecepientActivity", "Location is empty")
             binding.txtLocation.error = "Location is required"
             binding.txtLocation.requestFocus()
             return
         }
 
         if (txtTitle.isEmpty()) {
-            Log.d("RedirectToRecepientActivity", "Description is empty")
             binding.txtTitle.error = getString(R.string.Title_required)
             binding.txtTitle.requestFocus()
             return
         }
 
         if (txtDesc.isEmpty()) {
-            Log.d("RedirectToRecepientActivity", "Description is empty")
             binding.txtDesc.error = "Description is required"
             binding.txtDesc.requestFocus()
             return
         }
 
         val eventDetails = EventDetails(txtLocation, txtTitle, txtDesc, txtStartDate, txtStartTime)
-        Log.d("RedirectToRecepientActivity", "NoticeBoardDetails created: $eventDetails")
 
         if (Constant.selectedFiles.isNotEmpty()) {
-            Log.d(
-                "RedirectToRecepientActivity",
-                "Removing first file from selectedFiles: ${Constant.selectedFiles[0]}"
-            )
             Constant.selectedFiles.removeAt(0)
-        } else {
-            Log.d("RedirectToRecepientActivity", "selectedFiles list is already empty")
         }
-
-        Log.d("RedirectToRecepientActivity", "Remaining selectedFiles: ${Constant.selectedFiles}")
 
         val intent = Intent(this, RecipientActivity::class.java)
         intent.putExtra(Constant.event_data, eventDetails)
-        Log.d("RedirectToRecepientActivity", "Starting RecepientActivity with event data")
         startActivity(intent)
-
     }
-
 }
