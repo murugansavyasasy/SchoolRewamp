@@ -1,10 +1,10 @@
-package com.vs.schoolmessenger.School.DailyCollection.DailyCollectionModel
+package com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportModel
 
 import com.google.gson.annotations.SerializedName
 import com.vs.schoolmessenger.Repository.APIKeyNames
 
-data class DailyCollectionReportResponse (
+data class FeePendingReportResponse(
     @SerializedName(APIKeyNames.status) val status: Boolean,
     @SerializedName(APIKeyNames.message) val message: String,
-    @SerializedName(APIKeyNames.data) val data: List<DailyData>
+    @SerializedName(APIKeyNames.data) val data: List<FeeData>
 )

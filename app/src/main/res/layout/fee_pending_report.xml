@@ -105,31 +105,58 @@
         </LinearLayout>
 
     <RelativeLayout
+        android:id="@+id/relative_layout5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/relative_layout5"
         android:layout_below="@+id/AcademicYear"
-        android:layout_marginTop="@dimen/ten">
+        android:layout_centerInParent="true"
+        android:layout_marginTop="8dp">
+
         <TextView
-            android:id="@+id/total_collection"
+            android:id="@+id/totalcollectionlabel"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Total Collection"
-            android:layout_alignParentEnd="true"
-            android:textColor="@color/orange"
-            android:layout_marginEnd="15dp"
-            style="@style/CustomTextStylePoppinsBold"
-            android:textSize="13sp"/>
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="Total Pending"
+            android:textColor="@color/grey"
+            android:textSize="13sp" />
 
-
+        <TextView
+            android:id="@+id/total_collection"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/totalcollectionlabel"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="88,000.00"
+            android:textColor="@color/black"
+            android:textSize="25sp" />
     </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/paymenthistorylabel"
+        android:text="Payment history"
+        android:textColor="@color/light_gray"
+        style="@style/CustomTextStylePoppinsMedium"
+        android:textSize="13sp"
+        android:layout_marginStart="5dp"
+        android:layout_below="@+id/relative_layout5"
+        android:layout_alignStart="@+id/lytList"
+        android:layout_marginTop="8dp"/>
+
 
 
     <LinearLayout
         android:id="@+id/lytList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/relative_layout5"
+        android:layout_below="@+id/paymenthistorylabel"
         android:layout_marginStart="7dp"
         android:layout_marginEnd="7dp"
         android:orientation="vertical">

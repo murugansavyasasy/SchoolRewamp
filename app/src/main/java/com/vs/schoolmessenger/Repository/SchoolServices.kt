@@ -28,7 +28,7 @@ import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeStudentsRespo
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteesResponse
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionModel.DailyCollectionReportResponse
 import com.vs.schoolmessenger.School.Event.Response.EventSendResponse
-import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportResponse
+import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportModel.FeePendingReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest

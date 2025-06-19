@@ -221,7 +221,7 @@
                                         android:id="@+id/bottomdaylinear"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:background="@color/primary_light"
+                                        android:background="@color/light_orangecolor"
                                         android:gravity="center"
                                         android:orientation="vertical">
 
@@ -234,7 +234,7 @@
                                             android:layout_marginTop="@dimen/five"
                                             android:text="From"
                                             android:layout_marginBottom="3dp"
-                                            android:textColor="@color/black"
+                                            android:textColor="@color/white"
                                             android:textSize="@dimen/fifteen_sp" />
 
                                     </LinearLayout>
@@ -321,7 +321,7 @@
                                             android:text="To"
                                             android:layout_marginBottom="3dp"
 
-                                            android:textColor="@color/black"
+                                            android:textColor="@color/white"
                                             android:textSize="@dimen/fifteen_sp" />
 
                                     </LinearLayout>
@@ -350,7 +350,6 @@
                                             android:layout_height="wrap_content"
                                             android:text="Fri, Jun 2025"
                                             android:layout_marginTop="3dp"
-
                                             android:textColor="@color/grey"
                                             android:textSize="12sp" />
 
@@ -364,65 +363,131 @@
 
                     </LinearLayout>
 
-
-                    <LinearLayout
-                        android:id="@+id/linaerlayout"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <RelativeLayout
+                        android:id="@+id/rlaFilePicking"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_below="@+id/rytStart"
-                        android:layout_marginTop="20dp"
-                        android:orientation="horizontal">
-
+                        android:layout_marginTop="@dimen/five">
 
                         <TextView
                             android:id="@+id/lblAddPhoto"
                             style="@style/CustomTextStylePoppinsBold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/fifteen"
                             android:layout_marginTop="@dimen/ten"
                             android:text="Add Attachment"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/thirteen_sp" />
+                            android:textSize="@dimen/thirteen_sp">
+
+                        </TextView>
 
                         <TextView
-                            android:id="@+id/optionallabel"
-                            style="@style/CustomTextStylePoppinsBold"
+                            android:id="@+id/lblOptional"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="5dp"
                             android:layout_marginTop="@dimen/ten"
-                            android:text="(Optional)"
-                            android:textColor="@color/grey"
-                            android:textSize="@dimen/thirteen_sp" />
+                            android:layout_toEndOf="@+id/lblAddPhoto"
+                            android:text="@string/Optional"
+                            android:textColor="@color/mild_grey1"
+                            android:layout_marginStart="8dp"
+                            android:textSize="@dimen/thirteen_sp">
+
+                        </TextView>
+
+                        <ImageView
+                            android:layout_width="@dimen/twenty_five"
+                            android:layout_height="@dimen/twenty_five"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginTop="@dimen/ten"
+                            android:layout_marginEnd="@dimen/twenty"
+                            android:src="@drawable/camera_icon">
+
+                        </ImageView>
+
+                        <RelativeLayout
+                            android:id="@+id/rytRecyclewview"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/lblAddPhoto">
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/rcyImages"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/ten"
+                                android:orientation="vertical">
+
+                            </androidx.recyclerview.widget.RecyclerView>
+
+                            <VideoView
+                                android:id="@+id/videoView"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/one_eighty"
+                                android:layout_marginStart="@dimen/twenty"
+                                android:layout_marginTop="@dimen/thirty"
+                                android:layout_marginEnd="@dimen/twenty"
+                                android:visibility="gone">
+
+                            </VideoView>
+
+                            <ImageView
+                                android:id="@+id/thumbnailView"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/one_eighty"
+                                android:layout_marginStart="@dimen/twenty"
+                                android:layout_marginTop="@dimen/twenty_five"
+                                android:layout_marginEnd="@dimen/twenty"
+                                android:scaleType="centerCrop"
+                                android:visibility="gone" />
+
+                            <ImageView
+                                android:id="@+id/imgDelete"
+                                android:layout_width="@dimen/twenty_five"
+                                android:layout_height="@dimen/twenty_five"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginStart="@dimen/twenty"
+                                android:layout_marginTop="@dimen/twenty_five"
+                                android:layout_marginEnd="@dimen/twenty"
+                                android:background="@drawable/white_circle_bg"
+                                android:padding="@dimen/five"
+                                android:src="@drawable/del_icon"
+                                android:visibility="gone">
+
+                            </ImageView>
+
+                            <ImageView
+                                android:id="@+id/imgPlay"
+                                android:layout_width="@dimen/fifty"
+                                android:layout_height="@dimen/fifty"
+                                android:layout_centerInParent="true"
+                                android:src="@drawable/video_play"
+                                android:visibility="gone">
+
+                            </ImageView>
+
+                        </RelativeLayout>
 
 
-                    </LinearLayout>
+                        <TextView
+                            android:id="@+id/btnNext"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/twenty_five"
+                            android:layout_below="@id/rytRecyclewview"
+                            android:layout_marginTop="@dimen/fifty"
+                            android:layout_marginEnd="@dimen/twenty_five"
+                            android:background="@drawable/rect_btn_orange"
+                            android:gravity="center"
+                            android:padding="@dimen/ten"
+                            android:text="@string/NEXT"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/thirteen_sp">
 
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rcyImages"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/linaerlayout"
-                        android:layout_marginTop="@dimen/ten"
-                        android:orientation="vertical">
-
-                    </androidx.recyclerview.widget.RecyclerView>
-
-                    <TextView
-                        android:id="@+id/btnNext"
-                        style="@style/CustomTextStylePoppinsBold"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/fourty"
-                        android:layout_below="@+id/rcyImages"
-                        android:layout_marginTop="@dimen/thirty"
-                        android:layout_marginBottom="20dp"
-                        android:background="@drawable/rect_btn_orange"
-                        android:gravity="center"
-                        android:text="@string/NEXT"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/thirteen_sp" />
-
+                        </TextView>
+                    </RelativeLayout>
 
                 </RelativeLayout>
 
