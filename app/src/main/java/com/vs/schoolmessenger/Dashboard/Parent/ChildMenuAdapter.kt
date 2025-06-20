@@ -130,12 +130,16 @@ class ChildMenuAdapter(
                     imgMenu.setImageResource(R.drawable.communication_icon_dashboard)
                 }
 
+                Constant.M_ATTACHMENTS -> {
+                    imgMenu.setImageResource(R.drawable.attachement_icon)
+                }
+
                 Constant.M_HOMEWORK -> {
                     imgMenu.setImageResource(R.drawable.home_work_icon_school)
                 }
 
                 Constant.M_EXAM -> {
-                    imgMenu.setImageResource(R.drawable.exam_icon)
+                    imgMenu.setImageResource(R.drawable.schedule_exam_icon)
                 }
 
                 Constant.M_NOTICEBOARD -> {
@@ -143,7 +147,7 @@ class ChildMenuAdapter(
                 }
 
                 Constant.M_PARENT_CLASS_EVENTS -> {
-                    imgMenu.setImageResource(R.drawable.event_icon_school)
+                    imgMenu.setImageResource(R.drawable.school_or_class_events_icon)
                 }
 
                 Constant.M_ATTENDANCE_REPORT -> {
@@ -159,7 +163,7 @@ class ChildMenuAdapter(
                 }
 
                 Constant.M_INTERACTION_WITH_STAFF -> {
-                    //    imgMenu.setImageResource(R.drawable.interact_with_student)
+                        imgMenu.setImageResource(R.drawable.interact_with_student)
                 }
 
 
@@ -168,7 +172,7 @@ class ChildMenuAdapter(
                 }
 
                 Constant.M_SCHOOL_CLASS_EVENTS -> {
-//                    imgMenu.setImageResource(R.drawable.event_icon_school)
+                    imgMenu.setImageResource(R.drawable.school_or_class_events_icon)
                 }
 
                 Constant.M_ONLINE_MEETING -> {
@@ -188,7 +192,7 @@ class ChildMenuAdapter(
                 }
 
                 Constant.M_CERTIFICATE_REQUEST -> {
-//                    imgMenu.setImageResource(R.drawable.)
+                    imgMenu.setImageResource(R.drawable.certificate_request)
                 }
             }
 
