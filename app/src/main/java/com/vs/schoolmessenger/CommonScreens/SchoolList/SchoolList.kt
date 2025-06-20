@@ -32,6 +32,7 @@ import com.vs.schoolmessenger.School.DailyCollection.DailyCollection
 import com.vs.schoolmessenger.School.Event.CreateEvent
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReport
 import com.vs.schoolmessenger.School.Homework.HomeWork
+import com.vs.schoolmessenger.School.LessonPlan.LessonPlan
 import com.vs.schoolmessenger.School.MarkYourAttendance.MarkYourAttendance
 import com.vs.schoolmessenger.School.NoticeBoard.Model.NoticeBoardDetails
 import com.vs.schoolmessenger.School.SchoolStrength.SchoolStrength
@@ -110,7 +111,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             } else {
                 binding.lnrTab.visibility = View.VISIBLE
             }
-        } else if (SELECTED_SCHOOL_MENU == M_MARK_YOUR_ATTENDANCE || SELECTED_SCHOOL_MENU == M_STAFF_WISE_ATTENDANCE_REPORT || SELECTED_SCHOOL_MENU == M_STUDENT_REPORT || SELECTED_SCHOOL_MENU == M_SCHOOL_STRENGTH || SELECTED_SCHOOL_MENU == M_ABSENTEES_REPORT || SELECTED_SCHOOL_MENU == M_DAILY_COLLECTION || SELECTED_SCHOOL_MENU == M_FEE_PENDING_REPORT || SELECTED_SCHOOL_MENU == M_ATTENDANCE_MARKING || SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS) {
+        } else if (SELECTED_SCHOOL_MENU == M_MARK_YOUR_ATTENDANCE || SELECTED_SCHOOL_MENU == M_STAFF_WISE_ATTENDANCE_REPORT || SELECTED_SCHOOL_MENU == M_STUDENT_REPORT || SELECTED_SCHOOL_MENU == M_LESSON_PLAN || SELECTED_SCHOOL_MENU == M_SCHOOL_STRENGTH || SELECTED_SCHOOL_MENU == M_ABSENTEES_REPORT || SELECTED_SCHOOL_MENU == M_DAILY_COLLECTION || SELECTED_SCHOOL_MENU == M_FEE_PENDING_REPORT || SELECTED_SCHOOL_MENU == M_ATTENDANCE_MARKING || SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS) {
             isMultipleSchool = false
             binding.lnrTab.visibility = View.GONE
 
@@ -361,7 +362,9 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 startActivity(intent)
             } else if (SELECTED_SCHOOL_MENU == M_LESSON_PLAN) {
-                //go to lesson plan screen
+                val intent = Intent(this, LessonPlan::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                startActivity(intent)
             } else if (SELECTED_SCHOOL_MENU == M_FEE_PENDING_REPORT) {
                 val intent = Intent(this, FeePendingReport::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP

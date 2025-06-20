@@ -42,6 +42,7 @@ import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveActionResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveRequestResponse
+import com.vs.schoolmessenger.School.LessonPlan.Model.AllClassResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffAttendanceReportResponse
@@ -434,6 +435,13 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String,
         @Body request: LeaveApproveRequest
     ): Call<LeaveActionResponse?>
+
+
+    @GET(APIMethods.getlpStaffReport)
+    fun getlpStaffReport(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query(APIKeyNames.request_type) request_type: String?
+    ): Call<AllClassResponse?>
 
 
 
