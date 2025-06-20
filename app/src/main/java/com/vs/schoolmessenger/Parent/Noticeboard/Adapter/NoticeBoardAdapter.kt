@@ -2,23 +2,20 @@ package com.vs.schoolmessenger.Parent.Noticeboard.Adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
-
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.facebook.shimmer.ShimmerFrameLayout
-
 import com.vs.schoolmessenger.Parent.Noticeboard.Notice
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardClickListener
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
+import me.relex.circleindicator.CircleIndicator2
 
 class NoticeBoardAdapter(
     private var itemList: List<Notice>?,
@@ -101,7 +98,7 @@ class NoticeBoardAdapter(
         private val lblTitleImage: TextView = itemView.findViewById(R.id.lblTitleImage)
         private val lblContentImage: TextView = itemView.findViewById(R.id.lblContentImage)
         private val rcyImgPdf: RecyclerView = itemView.findViewById(R.id.rcyImgPDF)
-
+        private val indicator: CircleIndicator2 = itemView.findViewById(R.id.indicator)
         private var mnoticeboardImgPDFAdapter: FilePathAdapter? = null
 
         @SuppressLint("ClickableViewAccessibility")
@@ -112,6 +109,8 @@ class NoticeBoardAdapter(
 
             if (noticeData.file_path.isNotEmpty()) {
                 rcyImgPdf.visibility = View.VISIBLE
+                indicator.visibility = View.VISIBLE
+
                 rcyImgPdf.layoutManager =
                     LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 mnoticeboardImgPDFAdapter = FilePathAdapter(
@@ -120,9 +119,32 @@ class NoticeBoardAdapter(
                     Constant.isShimmerViewDisable
                 )
                 rcyImgPdf.adapter = mnoticeboardImgPDFAdapter
+                indicator.attachToRecyclerView(rcyImgPdf)
+
             } else {
                 rcyImgPdf.visibility = View.GONE
+                indicator.visibility = View.GONE
             }
+        }
+
+        fun CircleIndicator2.attachToRecyclerView(recyclerView: RecyclerView) {
+            val adapter = recyclerView.adapter ?: return
+            this.createIndicators(adapter.itemCount, 0)
+
+            recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(rv: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(rv, dx, dy)
+                    val layoutManager = rv.layoutManager as? LinearLayoutManager ?: return
+                    val firstVisible = layoutManager.findFirstVisibleItemPosition()
+                    this@attachToRecyclerView.animatePageSelected(firstVisible)
+                }
+            })
+
+            adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+                override fun onChanged() {
+                    this@attachToRecyclerView.createIndicators(adapter.itemCount, 0)
+                }
+            })
         }
     }
 

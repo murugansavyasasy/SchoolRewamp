@@ -108,6 +108,7 @@ object APIKeyNames {
     const val attendance_dt = "attendance_dt"
     const val attendance_month = "attendance_month"
     const val class_name = "class_name"
+    const val request_type = "request_type"
 
     const val staff_id = "staff_id"
     const val thumbnail_url = "thumbnail_url"

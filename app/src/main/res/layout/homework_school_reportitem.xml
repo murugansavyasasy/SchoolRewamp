@@ -8,6 +8,18 @@
     android:fitsSystemWindows="true">
 
     <ImageView
+        android:id="@+id/imgNewImage"
+        android:layout_width="@dimen/eighty"
+        android:layout_height="@dimen/eighty"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="-30dp"
+        android:elevation="@dimen/ten"
+        android:src="@drawable/new_icon"
+        android:visibility="gone">
+    </ImageView>
+
+
+    <ImageView
         android:id="@+id/imgNoticeBoardPin"
         android:layout_width="@dimen/thirty"
         android:layout_height="@dimen/thirty"
@@ -117,8 +129,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcyImgPDF"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="gone">
+                android:layout_height="match_parent">
 
             </androidx.recyclerview.widget.RecyclerView>
 

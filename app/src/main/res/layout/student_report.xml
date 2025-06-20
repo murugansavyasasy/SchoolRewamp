@@ -305,8 +305,7 @@
                 android:text="@string/Section"
                 android:textColor="@color/black"
                 android:textSize="@dimen/twele_sp"
-                android:textStyle="bold">
-            </TextView>
+                android:textStyle="bold"></TextView>
 
 
             <RelativeLayout

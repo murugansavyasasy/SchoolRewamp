@@ -60,8 +60,7 @@
                     android:text="Principles of  Management"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
-                    android:fontFamily="@font/poppins_bold"
-                    android:textStyle="bold">
+                    style="@style/CustomTextStylePoppinsBold">
 
                 </TextView>
 
@@ -74,8 +73,8 @@
                     android:text="XII - A"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
-                    android:fontFamily="@font/poppins_regular"
-                    android:textStyle="normal">
+                    android:layout_marginTop="4dp"
+                   style="@style/CustomTextStylePoppinsMedium">
 
                 </TextView>
 
@@ -88,8 +87,8 @@
                     android:text="Staff name : Sathish"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
-                    android:fontFamily="@font/poppins_regular"
-                    android:textStyle="normal">
+                    android:layout_marginTop="4dp"
+                    style="@style/CustomTextStylePoppinsMedium">
 
                 </TextView>
 
@@ -98,13 +97,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/lblStaffName"
-                    android:layout_marginTop="@dimen/five"
-                    android:gravity="center"
-                    android:text="Complete Status : 20 / 100"
-                    android:textColor="@color/dark_blue_and_green_"
+                    android:gravity="start"
+                    android:layout_marginStart="10dp"
+                    android:text="Items completed : 0/0"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
-                    android:visibility="gone"
-                    android:textStyle="normal">
+                    android:visibility="visible"
+                    android:layout_marginTop="4dp"
+                    style="@style/CustomTextStylePoppinsMedium">
 
                 </TextView>
 
@@ -180,10 +180,7 @@
                     android:text="@string/view_progress"
                     android:textColor="@color/white"
                     android:textSize="@dimen/thirteen_sp"
-                    android:fontFamily="@font/poppins_bold"
-                    android:textStyle="bold">
-
-
+                    style="@style/CustomTextStylePoppinsBold">
                 </TextView>
             </RelativeLayout>
             </RelativeLayout>

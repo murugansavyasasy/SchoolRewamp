@@ -94,7 +94,6 @@ class ChildMenuAdapter(
     }
 
 
-
     override fun getItemCount(): Int {
         if (isLoading) return 20
 
@@ -117,11 +116,10 @@ class ChildMenuAdapter(
         fun bind(data: MenuDetail, position: Int, listener: MenuClickListener) {
             lblMenuName.text = data.name
 
-            if(data.unreadCount>=1){
-                imgReadCount.visibility=View.VISIBLE
-            }
-            else{
-                imgReadCount.visibility=View.GONE
+            if (data.unreadCount >= 1) {
+                imgReadCount.visibility = View.VISIBLE
+            } else {
+                imgReadCount.visibility = View.GONE
             }
 
             when (data.id) {

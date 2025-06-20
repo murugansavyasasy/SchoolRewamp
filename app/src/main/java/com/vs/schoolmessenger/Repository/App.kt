@@ -39,6 +39,7 @@ import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveActionResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveRequestResponse
+import com.vs.schoolmessenger.School.LessonPlan.Model.AllClassResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffAttendanceReportResponse
@@ -170,6 +171,9 @@ class App(application: Application) : AndroidViewModel(application) {
 
     var isleaverequestapprove: LiveData<LeaveActionResponse?>? = null
 
+    var getlpStaffReport: LiveData<AllClassResponse?>? = null
+
+
 
 
     fun init() {
@@ -230,6 +234,8 @@ class App(application: Application) : AndroidViewModel(application) {
         getleaverequest = apiSchoolRepositories.leaverequestLiveData
         getleaverequest =apiSchoolRepositories.leaverequestLiveData
         isleaverequestapprove = apiSchoolRepositories.isleaverequestapproveLiveData
+
+        getlpStaffReport = apiSchoolRepositories.isgetlpStaffReportLiveData
 
     }
 
@@ -529,6 +535,11 @@ class App(application: Application) : AndroidViewModel(application) {
     fun isleaverequestapprove(isToken: String, request: LeaveApproveRequest, activity: Activity) {
         apiSchoolRepositories.isleaverequestapprove(isToken,request,activity)
     }
+
+    fun getlpStaffReport(isToken: String, request_type: String, activity: Activity) {
+        apiSchoolRepositories.getlpStaffReport(isToken,request_type,activity)
+    }
+
 
 
 }
