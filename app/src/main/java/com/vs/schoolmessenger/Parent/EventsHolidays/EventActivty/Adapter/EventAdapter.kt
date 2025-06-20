@@ -43,9 +43,8 @@ class EventAdapter (
             val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.homeword_report_item)
             ShimmerViewHolder(shimmerView)
         } else {
-            val view =
-                LayoutInflater.from(parent.context)
-                    .inflate(R.layout.homeword_report_item, parent, false)
+            val view = LayoutInflater.from(parent.context)
+                .inflate(R.layout.homeword_report_item, parent, false)
             DataViewHolder(view, context) // Pass context to DataViewHolder
         }
     }
@@ -64,7 +63,7 @@ class EventAdapter (
     }
 
 
-    override fun getFilter(): Filter {2
+    override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val query = constraint?.toString()?.lowercase()?.trim() ?: ""

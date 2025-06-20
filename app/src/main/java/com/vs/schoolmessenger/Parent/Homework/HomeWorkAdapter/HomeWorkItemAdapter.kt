@@ -65,6 +65,7 @@ class HomeWorkItemAdapter(
         private val DotIndicator: CircleIndicator2 = itemView.findViewById(R.id.indicator)
         private val lblSubjectName: TextView = itemView.findViewById(R.id.LblHWSubjectName)
         private val rlaSelectText: RelativeLayout = itemView.findViewById(R.id.rlaSelectText)
+        private val rytList: RelativeLayout = itemView.findViewById(R.id.rytList)
         private var mHomeworkImgPDFAdapter: HomeworkImgPDFAdapter? = null
 
         @SuppressLint("ClickableViewAccessibility")
@@ -87,10 +88,12 @@ class HomeWorkItemAdapter(
 
             if (homeworkData.file_path.isNotEmpty()) {
                 RcyImgPdf.visibility = View.VISIBLE
+                rytList.visibility = View.VISIBLE
                 DotIndicator.visibility = View.VISIBLE
             } else {
                 RcyImgPdf.visibility = View.GONE
                 DotIndicator.visibility = View.GONE
+                rytList.visibility = View.GONE
             }
 
             mHomeworkImgPDFAdapter = HomeworkImgPDFAdapter("", null, context, Constant.isShimmerViewShow)

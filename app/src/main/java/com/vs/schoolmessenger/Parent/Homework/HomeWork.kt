@@ -49,7 +49,6 @@ class HomeWork : BaseActivity<HomeWorkParentBinding>(), View.OnClickListener,
         binding.rcyHomework.isNestedScrollingEnabled = false
 
         observeHomeworkResponse()
-
         showInitialShimmer()
         fetchInitialData()
 
