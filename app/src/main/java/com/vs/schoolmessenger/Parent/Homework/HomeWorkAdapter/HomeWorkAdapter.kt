@@ -64,7 +64,6 @@ class HomeWorkAdapter(
         private val imgDown: ImageView = itemView.findViewById(R.id.imgDown)
         var mHomeWorkItemAdapter: HomeWorkItemAdapter? = null
 
-        private fun getRecyclerView(): RecyclerView = rcyHomeWorkItem
 
         fun bind(
             item: GetDateWiseHomeworkData,
@@ -99,12 +98,10 @@ class HomeWorkAdapter(
             homeworkDetails: List<GetHomeworkDetails>,
             DateWiseHomeWorkdata: GetDateWiseHomeworkData
         ) {
-            val rcyView = getRecyclerView()
-
             mHomeWorkItemAdapter =
                 HomeWorkItemAdapter(null, null, context, Constant.isShimmerViewShow)
-            rcyView.layoutManager = LinearLayoutManager(context)
-            rcyView.adapter = mHomeWorkItemAdapter
+            rcyHomeWorkItem.layoutManager = LinearLayoutManager(context)
+            rcyHomeWorkItem.adapter = mHomeWorkItemAdapter
              mHomeWorkItemAdapter =
                     HomeWorkItemAdapter(
                         DateWiseHomeWorkdata,
@@ -112,7 +109,7 @@ class HomeWorkAdapter(
                         context,
                         Constant.isShimmerViewDisable,
                     )
-                rcyView.adapter = mHomeWorkItemAdapter
+            rcyHomeWorkItem.adapter = mHomeWorkItemAdapter
         }
 
         class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

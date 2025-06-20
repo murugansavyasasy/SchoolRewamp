@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:fitsSystemWindows="true"
-    android:layout_marginTop="@dimen/five">
-
+    android:layout_marginTop="@dimen/five"
+    android:fitsSystemWindows="true">
 
     <ImageView
         android:id="@+id/imgNewImage"
@@ -28,7 +26,7 @@
         android:layout_marginStart="@dimen/twenty"
         android:elevation="@dimen/ten"
         android:src="@drawable/noticeboard_pin"
-        android:visibility="gone"></ImageView>
+        android:visibility="gone" />
 
     <ImageView
         android:id="@+id/imgBgPin"
@@ -45,7 +43,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/ten"
-        android:background="@drawable/rect_shadow_light_gray"
+        android:background="@drawable/rect_shadow_white"
         android:visibility="visible">
 
         <TextView
@@ -81,48 +79,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/LblHWSubjectName"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcyImgPDF"
                 android:layout_width="match_parent"
-                android:visibility="gone"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" />
+                android:orientation="horizontal"
+                android:visibility="visible" />
 
-            <LinearLayout
-                android:id="@+id/dotIndicatorLayout"
+            <me.relex.circleindicator.CircleIndicator2
+                android:id="@+id/indicator"
+                style="@style/IndicatorStyle"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="8dp"
-                android:orientation="horizontal" />
-
+                android:layout_height="@dimen/thirty"
+                android:layout_below="@+id/lytRecyclerwview"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/five"
+                android:elevation="4dp"
+                android:visibility="visible" />
 
         </LinearLayout>
 
-
-        <!--        <androidx.recyclerview.widget.RecyclerView-->
-        <!--            android:id="@+id/rcyImgPDF"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_marginTop="@dimen/ten"-->
-        <!--            android:layout_below="@+id/LblHWSubjectName"-->
-        <!--            android:layout_height="@dimen/one_fifty">-->
-
-        <!--        </androidx.recyclerview.widget.RecyclerView>-->
-
-        <me.relex.circleindicator.CircleIndicator
-            android:id="@+id/indicator"
-            style="@style/IndicatorStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/thirty"
-            android:layout_below="@+id/lytRecyclerwview"
-            android:layout_centerInParent="true"
-            android:elevation="@dimen/four"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/lblTitleImage"
@@ -289,10 +269,7 @@
             android:text="@string/SeeMore"
             android:textColor="@android:color/holo_blue_dark"
             android:visibility="gone" />
-
-
     </RelativeLayout>
-
 
     <RelativeLayout
         android:id="@+id/rlaReportText"
@@ -314,10 +291,7 @@
             android:text="Friday Leave"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"
-            android:textStyle="bold">
-
-        </TextView>
-
+            android:textStyle="bold"></TextView>
 
         <TextView
             android:id="@+id/lblDateText"
@@ -397,9 +371,7 @@
                 android:id="@+id/imgVimeoThumbnail"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/one_fifty"
-                android:scaleType="centerCrop">
-
-            </ImageView>
+                android:scaleType="centerCrop"></ImageView>
 
             <ImageView
                 android:id="@+id/imgVideoPlay"
@@ -422,8 +394,6 @@
                 android:indeterminateOnly="true">
 
             </ProgressBar>
-
-
         </RelativeLayout>
 
 
@@ -463,9 +433,7 @@
             android:textColor="@android:color/holo_blue_dark"
             android:visibility="gone" />
 
-
     </RelativeLayout>
-
 
     <RelativeLayout
         android:id="@+id/rlaPdf"
@@ -475,7 +443,6 @@
         android:background="@drawable/rect_shadow_light_gray"
         android:padding="@dimen/ten"
         android:visibility="gone">
-
 
         <TextView
             android:id="@+id/lblDatePdf"
@@ -488,9 +455,7 @@
             android:padding="@dimen/five"
             android:text="Sun 22 Mar,2020"
             android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp">
-
-        </TextView>
+            android:textSize="@dimen/thirteen_sp"></TextView>
 
 
         <TextView
@@ -524,9 +489,7 @@
             android:layout_centerInParent="true"
             android:indeterminateDrawable="@drawable/progress_bar_white"
             android:indeterminateOnly="true"
-            android:visibility="gone">
-
-        </ProgressBar>
+            android:visibility="gone"></ProgressBar>
 
 
         <TextView
@@ -553,9 +516,5 @@
             android:text="@string/SeeMore"
             android:textColor="@android:color/holo_blue_dark"
             android:visibility="gone" />
-
-
     </RelativeLayout>
-
-
 </RelativeLayout>

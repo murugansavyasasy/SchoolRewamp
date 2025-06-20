@@ -116,6 +116,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
 
     override fun onResume() {
         super.onResume()
+        allAttachmentData.clear()
         fetchInitialData()
     }
 }

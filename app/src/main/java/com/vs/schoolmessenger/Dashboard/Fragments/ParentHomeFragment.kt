@@ -187,13 +187,13 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 if (status) {
                     isAdItem = response.data
                     val filteredAds = response.data.filter { it.id != null }
-                        isAdsDisplayOptions = isAdItem!![0].ads_display_options
-                        val adList: List<AdItem> = filteredAds.map { ad ->
-                            AdItem(
-                                ad.id!!, ad.name ?: "", ad.content_url ?: "", ad.redirect_url ?: ""
-                            )
-                        }
-                        isAdItem = adList
+                    isAdsDisplayOptions = isAdItem!![0].ads_display_options
+                    val adList: List<AdItem> = filteredAds.map { ad ->
+                        AdItem(
+                            ad.id!!, ad.name ?: "", ad.content_url ?: "", ad.redirect_url ?: ""
+                        )
+                    }
+                    isAdItem = adList
                 }
                 isLoadData()
             }
@@ -283,7 +283,8 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                     binding.rytSearchBar.visibility = View.VISIBLE
                 }
             }
-            R.id.imgSearchCancel ->{
+
+            R.id.imgSearchCancel -> {
                 binding.txtSearchMenu.setText("")
                 isSearchVisible = false
                 binding.rytSearchBar.visibility = View.GONE
@@ -299,9 +300,9 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
     override fun onResume() {
         super.onResume()
-        Log.d("Loading","Dashboard Data is Loading")
+        Log.d("Loading", "Dashboard Data is Loading")
         isDashBoardData()
-        Log.d("Loading","Dashboard Data is Refreshed")
+        Log.d("Loading", "Dashboard Data is Refreshed")
 
 
     }

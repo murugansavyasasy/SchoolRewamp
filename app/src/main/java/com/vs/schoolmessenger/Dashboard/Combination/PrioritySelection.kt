@@ -2,7 +2,6 @@ package com.vs.schoolmessenger.Dashboard.Combination
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +10,6 @@ import android.widget.PopupWindow
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
@@ -32,12 +30,11 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
 
     private lateinit var isStudentDetailAdapter: StudentDetailAdapter
     private lateinit var isStaffDetailAdapter: StaffDetailAdapter
-
     override fun getViewBinding(): RoleSelecionBinding {
         return RoleSelecionBinding.inflate(layoutInflater)
     }
-
     private var userDetails: UserDetails? = null
+
 
     override fun setupViews() {
         super.setupViews()
@@ -64,7 +61,8 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
                     binding.lblLoginTeacherOrParent.text =
                         resources.getString(R.string.Login_Management)
                 } else {
-                    binding.lblLoginTeacherOrParent.text = getString(R.string.Login_As)+" "+userDetails!!.role_name
+                    binding.lblLoginTeacherOrParent.text =
+                        getString(R.string.Login_As) + " " + userDetails!!.role_name
                 }
                 isLoadData(true)
             }
@@ -84,7 +82,8 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
             }
 
             else -> {
-                Toast.makeText(this, resources.getString(R.string.Invalid_role), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, resources.getString(R.string.Invalid_role), Toast.LENGTH_SHORT)
+                    .show()
             }
         }
 
@@ -113,7 +112,11 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
             } else {
-                Toast.makeText(this, resources.getString(R.string.Staff_details_available), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    resources.getString(R.string.Staff_details_available),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
@@ -137,7 +140,11 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
                 binding.recyclerViews.layoutManager = LinearLayoutManager(this)
                 binding.recyclerViews.adapter = isStaffDetailAdapter
             } else {
-                Toast.makeText(this, resources.getString(R.string.No_staff_data_ound), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    resources.getString(R.string.No_staff_data_ound),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         } else {
             val childDetails = userDetails!!.child_details
@@ -146,7 +153,11 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
                 binding.recyclerViews.layoutManager = LinearLayoutManager(this)
                 binding.recyclerViews.adapter = isStudentDetailAdapter
             } else {
-                Toast.makeText(this, resources.getString(R.string.No_student_data_found), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    resources.getString(R.string.No_student_data_found),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
@@ -199,7 +210,8 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
     private fun isBackRoundChange(isClickingId: TextView) {
         when (isClickingId) {
             binding.lblParent -> {
-                binding.lblLoginTeacherOrParent.text = resources.getString(R.string.Login_Student_Parent)
+                binding.lblLoginTeacherOrParent.text =
+                    resources.getString(R.string.Login_Student_Parent)
                 binding.lblTeacher.background = null
                 binding.lblTeacher.setTextColor(ContextCompat.getColor(this, R.color.dark_blue))
                 binding.btnGo.visibility = View.GONE
@@ -211,9 +223,11 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
             binding.lblTeacher -> {
 
                 if (userDetails!!.staff_role == Constant.isPrincipalRole) {
-                    binding.lblLoginTeacherOrParent.text = resources.getString(R.string.Login_Management)
-                }else{
-                    binding.lblLoginTeacherOrParent.text =  getString(R.string.Login_As)+" "+userDetails!!.role_name
+                    binding.lblLoginTeacherOrParent.text =
+                        resources.getString(R.string.Login_Management)
+                } else {
+                    binding.lblLoginTeacherOrParent.text =
+                        getString(R.string.Login_As) + " " + userDetails!!.role_name
                 }
                 binding.lblParent.background = null
                 binding.lblParent.setTextColor(ContextCompat.getColor(this, R.color.dark_blue))
@@ -235,7 +249,6 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
         }
         isClickingId.background = ContextCompat.getDrawable(this, R.drawable.bg_blue)
         isClickingId.setTextColor(ContextCompat.getColor(this, R.color.white))
-
     }
 
     override fun onItemClick(data: ChildDetails) {
@@ -249,6 +262,5 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
         SharedPreference.putStaffDetails(this, data)
         startActivity(Intent(this, SchoolDashboard::class.java))
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-
     }
 }
