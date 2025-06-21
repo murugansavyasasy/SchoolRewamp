@@ -22,7 +22,7 @@ class AbsenteesMarkAdapter(
     private var isLoading: Boolean,
     private val selectionListener: AbsenteesSelectionListener,
     private val listener: SpecificStudentSelectClickListener,
-    ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val studentIdList = mutableListOf<String>()
     private var isTextExpanded = false

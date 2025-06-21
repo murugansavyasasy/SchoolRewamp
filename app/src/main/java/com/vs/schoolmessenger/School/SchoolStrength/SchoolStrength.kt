@@ -71,7 +71,6 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
         }
 
         appViewModel?.isGetSchoolStrengthReport?.observe(this) { response ->
-
             if (response != null && response.status) {
                 isFirstLoad = true
                 binding.nomessage.visibility = View.GONE
@@ -80,14 +79,12 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
                 binding.rlaabsenteesreport2.visibility = View.VISIBLE
                 isLoadSchoolStrengthData(response.data)
             } else {
-
                  binding.nomessage.visibility = View.VISIBLE
                  binding.txtNoData.visibility = View.VISIBLE
                 binding.rlaPieChartCount.visibility = View.GONE
                 binding.rlaabsenteesreport2.visibility = View.GONE
             }
         }
-
         isGetAcademicYear()
     }
 

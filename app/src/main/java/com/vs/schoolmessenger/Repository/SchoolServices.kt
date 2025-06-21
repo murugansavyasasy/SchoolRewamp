@@ -34,6 +34,7 @@ import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveActionResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveRequestResponse
+import com.vs.schoolmessenger.School.LessonPlan.Model.AllClassResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffAttendanceReportResponse
@@ -104,6 +105,7 @@ class SchoolServices {
     var isSendAttachment: MutableLiveData<NoticeBoardSendResponse?>
     var getleaverequest: MutableLiveData<LeaveRequestResponse?>
     var isleaverequestapprove: MutableLiveData<LeaveActionResponse?>
+    var getlpStaffReport: MutableLiveData<AllClassResponse?>
 
     init {
         client_auth = RestClient()
@@ -154,7 +156,7 @@ class SchoolServices {
         isSendAttachment = MutableLiveData()
         getleaverequest = MutableLiveData()
         isleaverequestapprove = MutableLiveData()
-
+        getlpStaffReport = MutableLiveData()
     }
 
 
@@ -1886,6 +1888,46 @@ class SchoolServices {
 
     val isleaverequestapproveLiveData: LiveData<LeaveActionResponse?>
         get() = isleaverequestapprove
+
+
+
+
+
+    fun getlpStaffReport(
+        isToken: String, request_type: String, activity: Activity
+    ) {
+        RestClient.apiInterfaces.getlpStaffReport(isToken, request_type)
+            ?.enqueue(object : Callback<AllClassResponse?> {
+                override fun onResponse(
+                    call: Call<AllClassResponse?>, response: Response<AllClassResponse?>
+                ) {
+                    Log.d(
+                        "isGetCountryList", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                getlpStaffReport.postValue(response.body())
+                            } else {
+                                getlpStaffReport.postValue(response.body())
+                            }
+                        }
+                    }
+                    else{
+                        getlpStaffReport.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<AllClassResponse?>, t: Throwable) {
+                    isGetAds.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isgetlpStaffReportLiveData: LiveData<AllClassResponse?>
+        get() = getlpStaffReport
 
 
 }

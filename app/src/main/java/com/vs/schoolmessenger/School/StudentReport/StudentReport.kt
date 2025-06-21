@@ -517,6 +517,7 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
             override fun onItemSelected(
                 parent: AdapterView<*>, view: View?, position: Int, id: Long
             ) {
+                binding.txtSearchMenu.text.clear()
                 adapter.selectedPosition = position
                 adapter.notifyDataSetChanged()
                 val selectedOption = isAcademicYear!![position]

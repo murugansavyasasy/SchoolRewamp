@@ -33,7 +33,7 @@ class LeaveRequestAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
 
-            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.leave_request_list)
+            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.leave_request_history_item)
             ShimmerViewHolder(
                 shimmerView
             )

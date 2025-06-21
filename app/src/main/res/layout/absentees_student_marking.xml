@@ -23,20 +23,21 @@
 
 
         <LinearLayout
+            android:weightSum="1"
             android:id="@+id/rlaSortSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/toolbarLayout"
             android:gravity="center"
+            android:layout_below="@+id/toolbarLayout"
             android:orientation="horizontal">
 
             <RelativeLayout
                 android:id="@+id/rlaSort"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/five"
                 android:layout_marginEnd="@dimen/five"
-                android:background="@drawable/bg_white_light_radious"
+                android:layout_weight="0.4"
                 android:padding="@dimen/ten">
 
                 <ImageView
@@ -44,31 +45,27 @@
                     android:layout_width="@dimen/twenty"
                     android:layout_height="@dimen/twenty"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/ten"
+                    android:layout_marginStart="@dimen/five"
                     android:src="@drawable/filter_icon">
 
                 </ImageView>
-                <TextView
-                    android:id="@+id/lblFilter"
-                    android:layout_toEndOf="@+id/imgSort"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="wrap_content"
-                    android:layout_marginEnd="@dimen/five"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/fifteen"
-                    android:text="@string/Description"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp">
 
-                </TextView>
+                <Spinner
+                    android:id="@+id/isSpinnerSort"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/imgSort"
+                    android:background="@null" />
+
             </RelativeLayout>
 
 
             <RelativeLayout
                 android:id="@+id/rytSearchBar"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="@dimen/thirty_five"
-                android:layout_marginEnd="@dimen/ten"
+                android:layout_marginEnd="@dimen/five"
+                android:layout_weight="0.6"
                 android:background="@drawable/rect_grey"
                 android:visibility="visible">
 
@@ -87,11 +84,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_toEndOf="@+id/imgSearch"
+                    style="@style/CustomTextStylePoppinsMedium"
                     android:background="@android:color/transparent"
-                    android:fontFamily="@font/poppins_regular"
                     android:hint="@string/lblSearch"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp" />
+                     />
 
             </RelativeLayout>
 
