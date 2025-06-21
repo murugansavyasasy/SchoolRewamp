@@ -130,7 +130,7 @@ class LeaveRequestAdapter(
         @SuppressLint("UseCompatLoadingForDrawables")
         fun bind(data: LeaveData, position: Int) {
             lblName.text = data.student_name
-            lblSection.text = data.section_name
+            lblSection.text = data.class_name
             lblFromData.text = Constant.convertDateTimeFormat(data.leave_from.toString())
             lblToDate.text = Constant.convertDateTimeFormat(data.leave_to.toString())
             lbldays.text = data.no_of_days

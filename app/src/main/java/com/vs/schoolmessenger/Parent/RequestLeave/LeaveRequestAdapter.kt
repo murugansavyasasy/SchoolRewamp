@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -14,6 +15,7 @@ import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.LeaveRequests.LeaveRequestAdapter.ShimmerViewHolder
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveData
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class LeaveRequestAdapter(
@@ -62,15 +64,15 @@ class LeaveRequestAdapter(
 
         private var isTextExpanded = false
 
-
-        private val lblFrom: TextView = itemView.findViewById(R.id.lblFrom)
-        private val lblTo: TextView = itemView.findViewById(R.id.lblTo)
+        private val lblFrom: TextView = itemView.findViewById(R.id.lblFromData)
+        private val lblTo: TextView = itemView.findViewById(R.id.lblToDate)
         private val lblStatus: TextView = itemView.findViewById(R.id.lblStatus)
-        private val lblReason: TextView = itemView.findViewById(R.id.lblReason)
-        private val tvSeeMoreImage: TextView = itemView.findViewById(R.id.tvSeeMoreImage)
-
+        private val lblReason: TextView = itemView.findViewById(R.id.leaverequestdesc)
+//        private val tvSeeMoreImage: TextView = itemView.findViewById(R.id.tvSeeMoreImage)
         private val rlaStatus: RelativeLayout = itemView.findViewById(R.id.rlaStatus)
         private val imgStatus: ImageView = itemView.findViewById(R.id.imgStatus)
+        private val lnrUpdatedOn: LinearLayout = itemView.findViewById(R.id.lnrUpdatedOn)
+        private val lblUpdatedOn: TextView = itemView.findViewById(R.id.lblUpdatedOn)
 
         @SuppressLint("ClickableViewAccessibility")
         fun bind(
@@ -84,56 +86,64 @@ class LeaveRequestAdapter(
             lblTo.text = data.leave_to
             lblStatus.text = data.status
             lblReason.text = data.reason
+            lblUpdatedOn.text = data.updated_on
+//            isSeeMoreVisibility(lblReason, tvSeeMoreImage)
 
-            isSeeMoreVisibility(lblReason, tvSeeMoreImage)
+            if (data.status==Constant.waiting_for_approval){
+                lnrUpdatedOn.visibility=View.GONE
+            }
+            else{
+                lnrUpdatedOn.visibility=View.VISIBLE
 
+            }
             when (data.status) {
 
-                "Pending" -> {
+                Constant.waiting_for_approval -> {
                     rlaStatus.setBackgroundResource(R.drawable.bg_light_orange)
+                    lblStatus.text=Constant.in_review
+                    imgStatus.setImageResource(R.drawable.waiting_for_approval)
+                }
+
+                Constant.approved -> {
+                    rlaStatus.setBackgroundResource(R.drawable.bg_dark_green_radius_10dp)
                     imgStatus.setImageResource(R.drawable.approval_icon)
                 }
 
-                "Approval" -> {
-                    rlaStatus.setBackgroundResource(R.drawable.bg_green_radoius_10dp)
-                    imgStatus.setImageResource(R.drawable.approval_icon)
-                }
-
-                "Rejected" -> {
+                Constant.rejected-> {
                     rlaStatus.setBackgroundResource(R.drawable.bg_red_radious__all_side_same)
                     imgStatus.setImageResource(R.drawable.close_icon_red)
                 }
             }
 
-            tvSeeMoreImage.setOnClickListener {
-                isSeeMoreExpanded(tvSeeMoreImage, lblReason)
-            }
+            //We don't have this requiremnet now!
+//            tvSeeMoreImage.setOnClickListener {
+//                isSeeMoreExpanded(tvSeeMoreImage, lblReason)
+//            }
         }
 
-        private fun isSeeMoreExpanded(tvSeeMore: TextView, lblContent: TextView) {
-
-            if (isTextExpanded) {
-                isTextExpanded = false
-                lblContent.maxLines = 3
-                lblContent.ellipsize = TextUtils.TruncateAt.END
-                tvSeeMore.text = context.getString(R.string.SeeMore)
-            } else {
-                isTextExpanded = true
-                lblContent.maxLines = Integer.MAX_VALUE
-                lblContent.ellipsize = null
-                tvSeeMore.text = context.getString(R.string.SeeLess)
-            }
-        }
-
-        private fun isSeeMoreVisibility(lblContent: TextView, tvSeeMore: TextView) {
-            lblContent.post {
-                if (lblContent.lineCount > 3) {
-                    tvSeeMore.visibility = View.VISIBLE
-                    lblContent.maxLines = 3
-                    lblContent.ellipsize = TextUtils.TruncateAt.END
-                }
-            }
-        }
+//        private fun isSeeMoreExpanded(tvSeeMore: TextView, lblContent: TextView) {
+//
+//            if (isTextExpanded) {
+//                isTextExpanded = false
+//                lblContent.maxLines = 3
+//                lblContent.ellipsize = TextUtils.TruncateAt.END
+//                tvSeeMore.text = context.getString(R.string.SeeMore)
+//            } else {
+//                isTextExpanded = true
+//                lblContent.maxLines = Integer.MAX_VALUE
+//                lblContent.ellipsize = null
+//                tvSeeMore.text = context.getString(R.string.SeeLess)
+//            }
+//        }
+//        private fun isSeeMoreVisibility(lblContent: TextView, tvSeeMore: TextView) {
+//            lblContent.post {
+//                if (lblContent.lineCount > 3) {
+//                    tvSeeMore.visibility = View.VISIBLE
+//                    lblContent.maxLines = 3
+//                    lblContent.ellipsize = TextUtils.TruncateAt.END
+//                }
+//            }
+//        }
     }
 
 
