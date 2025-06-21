@@ -65,8 +65,8 @@ class LessonPlanPicChartAdapter(
         fun bind(data: AllClassData, listener: LessonPlanChartClickListener) {
             lblSubject.text = data.subject_name
             lblSection.text = data.section_name
-            lblStaffName.text = "Staff name: ${data.staff_name}"
-            lblStatus.text = "Completed Status: ${data.items_completed}"
+            lblStaffName.text = "${data.staff_name}"
+            lblStatus.text = "Items Completed : ${data.items_completed}"
 //            lblComplete.text = "Completed: ${data.Completed}"
 //            lblPending.text = "Pending: ${data.Pending}"
 //

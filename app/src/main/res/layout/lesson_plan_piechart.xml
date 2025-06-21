@@ -84,7 +84,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/lblSection"
                     android:layout_marginStart="@dimen/ten"
-                    android:text="Staff name : Sathish"
+                    android:text="Sathish"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
                     android:layout_marginTop="4dp"

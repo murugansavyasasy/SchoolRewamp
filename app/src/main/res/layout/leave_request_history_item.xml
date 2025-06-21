@@ -78,7 +78,7 @@
                         android:layout_width="0dp"
                         android:layout_marginEnd="@dimen/ten"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/bg_red_radious__all_side_same">
+                        >
 
                         <ImageView
                             android:id="@+id/imgStatus"
@@ -86,7 +86,7 @@
                             android:layout_height="@dimen/twenty_five"
                             android:layout_centerVertical="true"
                             android:layout_marginStart="@dimen/five"
-                            android:src="@drawable/close_icon_red">
+                            >
 
                         </ImageView>
 
