@@ -567,5 +567,6 @@
     <string name="class_teacher_2">Class Teacher</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
+    <string name="updated_on">Updated On</string>
 
 </resources>

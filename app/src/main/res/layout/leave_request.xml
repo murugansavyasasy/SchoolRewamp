@@ -17,55 +17,10 @@
         android:layout_below="@+id/toolbarLayout"
         android:visibility="gone">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/fifteen"
-            android:text="@string/leave_request_info"
-            android:textColor="@color/black"
-            android:textSize="@dimen/fifteen_sp"
-            android:textStyle="bold">
-
-        </TextView>
-
-        <LinearLayout
-            android:id="@+id/rlaMonth"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="@dimen/ten"
-            android:layout_marginEnd="@dimen/ten"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="@dimen/five">
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/ten"
-                android:text="April"
-                android:textColor="@color/black"
-                android:textSize="@dimen/fifteen_sp"
-                android:textStyle="bold">
-
-            </TextView>
-
-            <ImageView
-                android:id="@+id/imgDown"
-                android:layout_width="@dimen/twenty_five"
-                android:layout_height="@dimen/twenty_five"
-                android:src="@drawable/ic_down_arrow"></ImageView>
-
-        </LinearLayout>
-
-
         <LinearLayout
             android:id="@+id/lnrStatusBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/rlaMonth"
             android:layout_marginTop="@dimen/ten"
             android:background="@color/mild_grey2"
             android:orientation="horizontal"

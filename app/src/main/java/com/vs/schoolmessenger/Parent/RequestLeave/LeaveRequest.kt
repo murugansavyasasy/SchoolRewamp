@@ -38,7 +38,6 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
     private val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
 
 
-
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
@@ -58,8 +57,6 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
         binding.lnrEndCalendar.setOnClickListener(this)
         binding.btnNext.setOnClickListener(this)
         val (dayOnly, dayOfWeek, fullDate, slashDate, customFormat) = Constant.getCurrentDateInfo()
-
-
 
         val today = Calendar.getInstance()
         val formattedToday = dateFormat.format(today.time)
@@ -96,19 +93,16 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
         binding.toolbarLayout.lblLeftSideBar.text = resources.getText(R.string.History)
         binding.toolbarLayout.lblRightSideBar.text = resources.getText(R.string.Create)
         binding.rlaCreateLeaveRequest.visibility = View.VISIBLE
-//        loadData()
 
 
         appViewModel?.getleaverequest?.observe(this) { response ->
             if (response?.status == true && !response.data.isNullOrEmpty()) {
                 binding.rcyLeaveRequestHistory.visibility = View.VISIBLE
-                binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
                 binding.nomessage.visibility = View.GONE
                 binding.txtNoData.visibility = View.GONE
                 isloadleaverequestData(response.data)
             } else {
                 binding.rcyLeaveRequestHistory.visibility = View.GONE
-                binding.toolbarLayout.rytSearch.visibility = View.GONE
                 binding.nomessage.visibility = View.VISIBLE
                 binding.txtNoData.visibility = View.VISIBLE
                 binding.txtNoData.text = response?.message ?: "No data found"
@@ -120,9 +114,17 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
             if (response != null) {
                 if (response.status) {
                     Constant.hideLoading(this@LeaveRequest)
-                    Constant.showDataValidation(resources.getString(R.string.success), response.message, this)
+                    Constant.showDataValidation(
+                        resources.getString(R.string.success),
+                        response.message,
+                        this
+                    )
                 } else {
-                    Constant.showDataValidation(resources.getString(R.string.fail), response.message, this)
+                    Constant.showDataValidation(
+                        resources.getString(R.string.fail),
+                        response.message,
+                        this
+                    )
                 }
             }
         }
@@ -130,27 +132,27 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
         binding.toolbarLayout.lblRightSideBar.setOnClickListener {
             isBackRoundChange(binding.toolbarLayout.lblRightSideBar)
             binding.rlaCreateLeaveRequest.visibility = View.VISIBLE
-            binding.rlaHistory.visibility=View.GONE
+            binding.rlaHistory.visibility = View.GONE
         }
 
         binding.toolbarLayout.lblLeftSideBar.setOnClickListener {
-            binding.rlaHistory.visibility=View.VISIBLE
+            binding.rlaHistory.visibility = View.VISIBLE
             binding.rlaCreateLeaveRequest.visibility = View.GONE
             isBackRoundChange(binding.toolbarLayout.lblLeftSideBar)
             isGetLeaveRequestList()
 
         }
 
-        Constant.editTextCounter(this,binding.txtDesc,500,binding.lbTextCount)
+        Constant.editTextCounter(this, binding.txtDesc, 500, binding.lbTextCount)
 
     }
 
 
     private fun isLeaveRequestApply() {
-        var from_date=Constant.convertDateFormat(binding.txtStartDate.text.toString())
-        var to_date=Constant.convertDateFormat(binding.txtEndDate.text.toString())
-        Log.d("FromAndToDateComing",from_date+" "+to_date)
-        var reason=binding.txtDesc.text.trim()
+        var from_date = Constant.convertDateFormat(binding.txtStartDate.text.toString())
+        var to_date = Constant.convertDateFormat(binding.txtEndDate.text.toString())
+        Log.d("FromAndToDateComing", from_date + " " + to_date)
+        var reason = binding.txtDesc.text.trim()
 
 
         if (reason.isEmpty()) {
@@ -159,13 +161,13 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
             return
         }
 
-            val jsonObject = JsonObject().apply {
-                addProperty(APIKeyNames.leave_from, from_date)
-                addProperty(APIKeyNames.leave_to, to_date)
-                addProperty(APIKeyNames.reason, reason.toString())
+        val jsonObject = JsonObject().apply {
+            addProperty(APIKeyNames.leave_from, from_date)
+            addProperty(APIKeyNames.leave_to, to_date)
+            addProperty(APIKeyNames.reason, reason.toString())
 
-            }
-            appViewModel?.isSendLeaveRequestApply(isAccessToken!!, jsonObject, this)
+        }
+        appViewModel?.isSendLeaveRequestApply(isAccessToken!!, jsonObject, this)
     }
 
     override fun onClick(p0: View?) {
@@ -173,14 +175,16 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
             R.id.imgBack -> {
                 onBackPressed()
             }
-            R.id.btnNext->{
+
+            R.id.btnNext -> {
                 isLeaveRequestApply()
             }
 
 
             R.id.txtStartDate, R.id.rytStartDate, R.id.lnrStartCalendar -> {
                 val todayMillis = Calendar.getInstance().timeInMillis
-                Constant.handleRestrictDatePicker(this,
+                Constant.handleRestrictDatePicker(
+                    this,
                     minDate = todayMillis,
                     preSelectedDateMillis = fromDateMillis
 
@@ -222,7 +226,8 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
 
             R.id.txtEndDate, R.id.rytEndDate, R.id.lnrEndCalendar -> {
 
-                Constant.handleRestrictDatePicker(this,
+                Constant.handleRestrictDatePicker(
+                    this,
                     minDate = fromDateMillis,
                     preSelectedDateMillis = toDateMillis
                 )
@@ -254,15 +259,15 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
     }
 
 
-
-
     fun getDayAndDate(dateString: String, dateFormat: SimpleDateFormat): Pair<String, String>? {
         val dateObj = dateFormat.parse(dateString)
         return dateObj?.let {
             val calendar = Calendar.getInstance().apply { time = it }
 
-            val dayOfWeek = SimpleDateFormat("EEE", Locale.getDefault()).format(calendar.time)  // e.g., "Sat"
-            val dayOfMonth = String.format("%02d", calendar.get(Calendar.DAY_OF_MONTH))         // e.g., "14"
+            val dayOfWeek =
+                SimpleDateFormat("EEE", Locale.getDefault()).format(calendar.time)  // e.g., "Sat"
+            val dayOfMonth =
+                String.format("%02d", calendar.get(Calendar.DAY_OF_MONTH))         // e.g., "14"
 
             Pair(dayOfWeek, dayOfMonth)
         }
@@ -281,7 +286,7 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
     }
 
     private fun isGetLeaveRequestList() {
-        mAdapter =LeaveRequestAdapter(
+        mAdapter = LeaveRequestAdapter(
             null,
             this,
             this,

@@ -52,6 +52,14 @@
 
 
     <!-- styles.xml -->
+
+    <style name="CustomTextStylePoppinsBold1" parent="TextAppearance.AppCompat">
+        <item name="fontFamily">@font/poppins_bold</item>
+        <item name="android:textSize">@dimen/thirteen_sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+
     <style name="CustomTextStylePoppinsBold" parent="TextAppearance.AppCompat">
         <item name="fontFamily">@font/open_sans_bold</item>
         <item name="android:textSize">@dimen/thirteen_sp</item>

@@ -177,6 +177,12 @@ object Constant {
     var some_Absent = "F"
     var Absent = "Absent"
     var halfDay = "H"
+    var approved="Approved"
+    var rejected="Rejected"
+    var waiting_for_approval="Waiting for approval"
+    var in_review="In review"
+
+
 
 
     // String fields
