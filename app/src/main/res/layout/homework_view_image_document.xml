@@ -24,6 +24,7 @@
             android:id="@+id/lblSubject"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:layout_centerInParent="true"
             style="@style/CustomTextStylePoppinsBold"
             android:textColor="@color/black"
@@ -35,6 +36,7 @@
         android:id="@+id/lytDownload"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="@dimen/twenty"
         android:gravity="center"
@@ -81,7 +83,7 @@
         android:layout_height="@dimen/thirty"
         android:layout_above="@+id/lnrPrevious"
         android:layout_centerInParent="true"
-        android:visibility="visible"
+        android:visibility="gone"
         android:elevation="4dp"/>
 
     <LinearLayout
@@ -108,6 +110,7 @@
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:text="Previous" />
     </LinearLayout>
 
@@ -129,6 +132,7 @@
             android:id="@+id/btnNext"
             android:layout_width="wrap_content"
             style="@style/CustomTextStylePoppinsBold"
+            android:visibility="gone"
             android:layout_height="wrap_content"
             android:text="Next" />
 
@@ -139,12 +143,6 @@
             android:layout_height="@dimen/twenty">
         </ImageView>
     </LinearLayout>
-
-
-
-
-
-
 </RelativeLayout>
 
 

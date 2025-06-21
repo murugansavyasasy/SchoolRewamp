@@ -110,7 +110,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         appViewModel!!.init()
 
         binding.toolbarLayout.imgBack.setOnClickListener(this)
-        binding.lblDatePick.setOnClickListener(this)
         binding.btnCreate.setOnClickListener(this)
         binding.btnHistory.setOnClickListener(this)
         binding.AcademicYear.setOnClickListener(this)
@@ -442,9 +441,8 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
                 onBackPressed()
             }
 
-            R.id.lblDatePick -> {
+            R.id.Calendar -> {
                 showDatePickerDialog(this, this)
-                fetchHomeWorkReportData()
             }
 
             R.id.btnCreate -> {
@@ -462,10 +460,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
 
             R.id.btnChooseRecipient -> {
                 isRedirectToSectionStudents()
-            }
-
-            R.id.Calendar -> {
-                fetchHomeWorkReportData()
             }
         }
     }
@@ -791,6 +785,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
 
     override fun onDateSelected(date: String) {
         binding.selectdate.text = date
+        fetchHomeWorkReportData()
     }
 
     private fun isBackRoundChange(isClickingId: TextView) {

@@ -48,6 +48,11 @@ class AlbumSelectActivity : AppCompatActivity() {
         adapter = FileGridAdapter(Constant.isFileLimit, onSelectionChanged = { selectedUris ->
             binding.toolbarLayout.tvSelectionCount.text =
                 "Selected Files : ${selectedUris.size} / ${Constant.isFileLimit}"
+            if (selectedUris.isEmpty()) {
+                binding.toolbarLayout.btnDone.visibility = View.GONE
+            } else {
+                binding.toolbarLayout.btnDone.visibility = View.VISIBLE
+            }
         }, onItemClicked = { uri ->
             Log.d("AlbumSelectActivity", "Clicked file: $uri")
         })
@@ -251,14 +256,17 @@ class AlbumSelectActivity : AppCompatActivity() {
             "application/msword",
             "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
         )
+
         "ppt" -> listOf(
             "application/vnd.ms-powerpoint",
             "application/vnd.openxmlformats-officedocument.presentationml.presentation"
         )
+
         "xls" -> listOf(
             "application/vnd.ms-excel",
             "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         )
+
         "txt" -> listOf("text/plain")
         else -> emptyList()
     }

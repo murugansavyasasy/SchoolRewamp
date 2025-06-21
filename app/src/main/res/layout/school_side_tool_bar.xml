@@ -240,6 +240,7 @@
             android:background="@drawable/btn_green"
             android:gravity="center"
             android:padding="@dimen/five"
+            android:visibility="gone"
             android:text="@string/done"
             android:layout_height="wrap_content"
             android:textColor="@color/white" />

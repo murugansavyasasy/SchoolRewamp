@@ -60,11 +60,11 @@ class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(
         // Setup indicator
 
         if (Constant.commonFileList.isNullOrEmpty()|| Constant.commonFileList.size==1) {
-            binding.indicator.visibility = View.GONE
+//            binding.indicator.visibility = View.GONE
             binding.lnrNext.visibility = View.GONE
             binding.lnrPrevious.visibility = View.GONE
         } else {
-            binding.indicator.visibility = View.VISIBLE
+//            binding.indicator.visibility = View.VISIBLE
             binding.lnrNext.visibility=View.VISIBLE
             binding.lnrPrevious.visibility=View.VISIBLE
             binding.indicator.attachToRecyclerView(binding.rcyFile)
@@ -100,12 +100,20 @@ class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(
     private fun scrollToPosition(position: Int) {
         binding.rcyFile.scrollToPosition(position)
         adapter.notifyItemChanged(position)
+
+        val currentUrl = Constant.commonFileList.getOrNull(position)?.path ?: "Unknown"
+        Log.d("CurrentURL", "Currently displayed file: $currentUrl")
+        if (currentUrl.contains("amazonaws.")) {
+            binding.lytDownload.visibility = View.VISIBLE
+        } else {
+            binding.lytDownload.visibility = View.GONE
+        }
     }
+
 
     private fun updateNavButtons() {
         binding.lnrPrevious.isEnabled = currentPosition > 0
         binding.btnPrevious.alpha = if (currentPosition > 0) 1.0f else 0.5f
-
         binding.lnrNext.isEnabled = currentPosition < Constant.commonFileList.size - 1
         binding.btnNext.alpha = if (currentPosition < Constant.commonFileList.size - 1) 1.0f else 0.5f
     }
@@ -133,7 +141,6 @@ class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(
                 // Update button states
                 binding.lnrPrevious.isEnabled = currentPosition > 0
                 binding.btnPrevious.alpha = if (currentPosition > 0) 1.0f else 0.5f
-
                 binding.lnrNext.isEnabled = currentPosition < Constant.commonFileList.size - 1
                 binding.btnNext.alpha = if (currentPosition < Constant.commonFileList.size - 1) 1.0f else 0.5f
             }

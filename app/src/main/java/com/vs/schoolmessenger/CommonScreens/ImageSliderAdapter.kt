@@ -118,11 +118,11 @@ class ImageSliderAdapter(
 
             WebViewThumbnail.setOnTouchListener(object : OnTouchListener {
                 override fun onTouch(v: View?, event: MotionEvent): Boolean {
-                    if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                    if (event.action == MotionEvent.ACTION_MOVE) {
                         return false
                     }
 
-                    if (event.getAction() == MotionEvent.ACTION_UP) {
+                    if (event.action == MotionEvent.ACTION_UP) {
                         Constant.commonFileList.isEmpty()
                         Constant.selectedFileIndex = -1
                         val commonList = fullList.map {
@@ -137,7 +137,6 @@ class ImageSliderAdapter(
                         intent.putExtra(Constant.subjectName, isSubjectName)
                         context.startActivity(intent)
                     }
-
                     return false
                 }
             })
