@@ -143,9 +143,7 @@
             android:textColor="@android:color/holo_blue_dark"
             android:visibility="gone" />
 
-
     </RelativeLayout>
-
 
     <RelativeLayout
         android:id="@+id/rlaVoiceReport"
