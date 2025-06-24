@@ -70,6 +70,7 @@ class HomeworkImgPDFAdapter(
         private val ImgOrDocumentType: ImageView = itemView.findViewById(R.id.imageOrDocumentType)
         private val WebViewThumbnail: WebView = itemView.findViewById(R.id.WVThumbnaildocument)
         private val loadingBar: ProgressBar = itemView.findViewById(R.id.loadingBar)
+
         private val fileItem: CardView = itemView.findViewById(R.id.fileItem)
 
         @SuppressLint("ClickableViewAccessibility")
@@ -117,11 +118,6 @@ class HomeworkImgPDFAdapter(
                     ImgOrDocumentType.setBackgroundResource(R.drawable.excel_icon)
                     openDocumentInWebView(data.url)
                 }
-                Constant.VIDEO -> {
-                    ImgOrDocumentType.setBackgroundResource(R.drawable.video_icon)
-                    Log.d("data.path",data.url)
-                    openDocumentInWebView(data.url)
-                }
             }
 
             fileItem.setOnClickListener {
@@ -153,7 +149,7 @@ class HomeworkImgPDFAdapter(
 
                     if (event.getAction() == MotionEvent.ACTION_UP) {
                         Constant.commonFileList.isEmpty()
-                        Constant.selectedFileIndex=-1
+                        Constant.selectedFileIndex = -1
                         val commonList = adapter.GetFilePathDetailsData?.map {
                             CommonFileData(
                                 type = it.type,
@@ -176,13 +172,7 @@ class HomeworkImgPDFAdapter(
 
         private fun openDocumentInWebView(urlPath: String) {
             loadingBar.visibility = View.VISIBLE
-            var isLoadingUrl = ""
-            if (urlPath.contains("vimeo")) {
-                isLoadingUrl = urlPath
-            } else {
-                val googleDocsUrl = "https://docs.google.com/gview?embedded=true&url=$urlPath"
-                isLoadingUrl = googleDocsUrl
-            }
+            val googleDocsUrl = "https://docs.google.com/gview?embedded=true&url=$urlPath"
 
             DefaultImage.visibility = View.GONE
             WebViewThumbnail.visibility = View.VISIBLE
@@ -211,7 +201,7 @@ class HomeworkImgPDFAdapter(
                 }
             }
 
-            WebViewThumbnail.loadUrl(isLoadingUrl)
+            WebViewThumbnail.loadUrl(googleDocsUrl)
         }
 
         class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

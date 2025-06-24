@@ -109,7 +109,11 @@ class NoticeBoardAdapter(
 
             if (noticeData.file_path.isNotEmpty()) {
                 rcyImgPdf.visibility = View.VISIBLE
-                indicator.visibility = View.VISIBLE
+                if (noticeData.file_path.size > 1) {
+                    indicator.visibility = View.VISIBLE
+                } else {
+                    indicator.visibility = View.GONE
+                }
 
                 rcyImgPdf.layoutManager =
                     LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -120,7 +124,6 @@ class NoticeBoardAdapter(
                 )
                 rcyImgPdf.adapter = mnoticeboardImgPDFAdapter
                 indicator.attachToRecyclerView(rcyImgPdf)
-
             } else {
                 rcyImgPdf.visibility = View.GONE
                 indicator.visibility = View.GONE

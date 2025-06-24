@@ -1066,6 +1066,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             Log.d("VimeoIframe", iframe.toString())
             Log.d("link", link.toString())
             isIframe = extractVimeoUrlFromIframe(iframe.toString()).toString()
+            Log.d("isIframe",isIframe)
             isFileSize = Constant.getFileSizeInMB(Constant.selectedFiles[0].path)
 
             Constant.isAwsUploadedFiles.add(
