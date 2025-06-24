@@ -82,7 +82,6 @@ class AwsUploadingPreSigned {
         Log.d("isBucket", isBucket)
 
         var mediaType: MediaType? = null
-//        fileExtension = getFileExtension(File(isFilePathUrl).name)
         fileExtension = getFileExtensionFromUri(activity,isFilePathUrl.toUri())
         try {
             mediaType = getMediaType(fileExtension)
@@ -176,8 +175,6 @@ class AwsUploadingPreSigned {
         isFileUploadUrl: String?,
         uploadCallback: UploadCallback
     ) {
-//        val imageData = getImageData(filePath, activity)
-//        val fileExtension = getFileExtensionFromUri(File(filePath).name)
 
         val imageData = getImageData(activity,filePath)
         val fileExtension = getFileExtensionFromUri(activity,filePath.toUri())
@@ -205,15 +202,6 @@ class AwsUploadingPreSigned {
                 }
             })
     }
-
-//    private fun getFileExtension(fileName: String): String {
-//        val lastIndexOfDot = fileName.lastIndexOf('.')
-//        return if (lastIndexOfDot > 0 && lastIndexOfDot < fileName.length - 1) {
-//            fileName.substring(lastIndexOfDot + 1).lowercase()
-//        } else {
-//            ""
-//        }
-//    }
 
     fun getFileName(context: Context, uri: Uri): String {
         var result: String? = null
@@ -257,25 +245,6 @@ class AwsUploadingPreSigned {
         return fileName.substringAfterLast('.', "").lowercase()
     }
 
-
-
-//    @RequiresApi(Build.VERSION_CODES.O)
-//    private fun getImageData(filePath: String, activity: Activity): ByteArray? {
-//        return try {
-//            if (filePath.startsWith("content://")) {
-//                val uri = Uri.parse(filePath)
-//                val inputStream = activity.contentResolver.openInputStream(uri)
-//                inputStream?.readBytes()
-//            } else {
-//                val file = File(filePath)
-//                java.nio.file.Files.readAllBytes(file.toPath())
-//            }
-//        } catch (e: Exception) {
-//            Log.e("FileReadError", "Error reading file data: ${e.message}")
-//            null
-//        }
-//    }
-
     fun getMediaType(fileExtension: String): MediaType? {
         return when (fileExtension.lowercase()) {
             // Images
@@ -306,51 +275,4 @@ class AwsUploadingPreSigned {
             }
         }
     }
-
-//    fun getMediaType(fileExtension: String): MediaType? {
-//        return when (fileExtension.lowercase()) {
-//            // Images
-//            "jpg", "jpeg" -> "image/jpeg".toMediaTypeOrNull()
-//            "png" -> "image/png".toMediaTypeOrNull()
-//            "bmp" -> "image/bmp".toMediaTypeOrNull()
-//            "webp" -> "image/webp".toMediaTypeOrNull()
-//
-//            // Audio
-//            "mp3" -> "audio/mpeg".toMediaTypeOrNull()
-//            "wav" -> "audio/wav".toMediaTypeOrNull()
-//            "3gp" -> "audio/3gpp".toMediaTypeOrNull()
-//            "m4a" -> "audio/mp4".toMediaTypeOrNull()
-//
-//            // Documents
-//            "pdf" -> "application/pdf".toMediaTypeOrNull()
-//            "doc" -> "application/msword".toMediaTypeOrNull()
-//            "docx" -> "application/vnd.openxmlformats-officedocument.wordprocessingml.document".toMediaTypeOrNull()
-//            "ppt" -> "application/vnd.ms-powerpoint".toMediaTypeOrNull()
-//            "pptx" -> "application/vnd.openxmlformats-officedocument.presentationml.presentation".toMediaTypeOrNull()
-//            "xls" -> "application/vnd.ms-excel".toMediaTypeOrNull()
-//            "xlsx" -> "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet".toMediaTypeOrNull()
-//            "txt" -> "text/plain".toMediaTypeOrNull()
-//
-//            // Fallback for unknown types
-//            else -> {
-//                Log.w("MediaTypeFallback", "Unknown file type: $fileExtension, using application/octet-stream")
-//                "application/octet-stream".toMediaTypeOrNull()
-//            }
-//        }
-//    }
-
-
-
-//    fun getMediaType(fileExtension: String): MediaType? {
-//        return when (fileExtension.lowercase()) {
-//            "jpg", "jpeg" -> "image/jpeg".toMediaTypeOrNull()
-//            "png" -> "image/png".toMediaTypeOrNull()
-//            "pdf" -> "application/pdf".toMediaTypeOrNull()
-//            "mp3" -> "audio/mpeg".toMediaTypeOrNull()
-//            "wav" -> "audio/wav".toMediaTypeOrNull()
-//            "3gp" -> "audio/3gpp".toMediaTypeOrNull()
-//            "m4a" -> "audio/mp4".toMediaTypeOrNull()
-//            else -> throw UnsupportedOperationException("Unsupported file type: $fileExtension")
-//        }
-//    }
 }

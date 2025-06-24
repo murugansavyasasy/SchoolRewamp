@@ -24,6 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/ten"
+            android:padding="@dimen/ten"
             android:layout_marginTop="@dimen/ten"
             android:layout_marginEnd="@dimen/ten">
 
@@ -356,7 +357,6 @@
                             style="@style/CustomTextStylePoppinsBold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/fifteen"
                             android:layout_marginTop="@dimen/ten"
                             android:text="Add Attachment"
                             android:textColor="@color/black"
@@ -382,7 +382,6 @@
                             android:layout_height="@dimen/twenty_five"
                             android:layout_alignParentEnd="true"
                             android:layout_marginTop="@dimen/ten"
-                            android:layout_marginEnd="@dimen/twenty"
                             android:src="@drawable/ic_attach_file">
 
                         </ImageView>

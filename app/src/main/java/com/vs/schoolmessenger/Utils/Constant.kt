@@ -20,6 +20,7 @@ import android.os.Looper
 import android.provider.Settings
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -1152,35 +1153,105 @@ object Constant {
         return Bitmap.createScaledBitmap(original, newWidth, newHeight, true)
     }
 
+    fun getVideoSizeInMB(videoPath: String): Long {
+        val file = File(videoPath)
+        return file.length() / (1024 * 1024)  // Convert bytes to MB
+    }
 
-//      Usage
-//
-//    val inputImagePaths = listOf(
-//        "/storage/emulated/0/DCIM/Camera/img1.jpg",
-//        "/storage/emulated/0/DCIM/Camera/img2.jpg"
-//    )
-//
-//    val outputDirectory = "/storage/emulated/0/CompressedImages"
-//
-//    compressImagesOneByOne(
-//    inputPaths = inputImagePaths,
-//    outputDir = outputDirectory,
-//    format = Bitmap.CompressFormat.WEBP_LOSSY,
-//    quality = 80,
-//    maxWidth = 1280,
-//    maxHeight = 1280,
-//    onEachCompressed = { originalPath, compressedPath, success ->
-//        if (success) {
-//            Log.d("ImageCompressor", "Compressed: $compressedPath")
-//            // ✅ You can upload the image here immediately
-//        } else {
-//            Log.e("ImageCompressor", "Failed to compress: $originalPath")
-//        }
-//    },
-//    onComplete = {
-//        Log.d("ImageCompressor", "All images processed.")
-//    }
-//    )
+
+    fun compressImageFilesOnly(
+        context: Context,
+        files: List<FileItem>,
+        outputDir: String,
+        format: Bitmap.CompressFormat = Bitmap.CompressFormat.WEBP_LOSSY,
+        quality: Int = 80,
+        maxWidth: Int = 1280,
+        maxHeight: Int = 1280,
+        onEachProcessed: (original: FileItem, compressedPath: String?, success: Boolean) -> Unit,
+        onComplete: () -> Unit
+    ) {
+        Thread {
+            val outputFolder = File(outputDir)
+            if (!outputFolder.exists()) {
+                val created = outputFolder.mkdirs()
+                Log.d("Compressor", "📁 Output folder created: $created at $outputDir")
+            }
+
+            if (!outputFolder.canWrite()) {
+                Log.e("Compressor", "❌ Cannot write to output folder: $outputDir")
+                onComplete()
+                return@Thread
+            }
+
+            for (fileItem in files) {
+                if (fileItem.type == FileType.IMAGE) {
+                    try {
+                        val uri = Uri.parse(fileItem.path)
+                        val bitmap: Bitmap? = try {
+                            if (fileItem.path.startsWith("content://")) {
+                                context.contentResolver.openInputStream(uri)?.use { inputStream ->
+                                    BitmapFactory.decodeStream(inputStream)
+                                }
+                            } else {
+                                BitmapFactory.decodeFile(fileItem.path)
+                            }
+                        } catch (e: Exception) {
+                            Log.e("Compressor", "❌ Error decoding: ${fileItem.path}", e)
+                            null
+                        }
+
+                        if (bitmap == null) {
+                            onEachProcessed(fileItem, null, false)
+                            continue
+                        }
+
+                        val scaledBitmap = scaleBitmap(bitmap, maxWidth, maxHeight)
+                        val outputFile = File(outputFolder, "compressed_${System.currentTimeMillis()}.webp")
+
+                        try {
+                            FileOutputStream(outputFile).use { out ->
+                                val success = scaledBitmap.compress(format, quality, out)
+                                out.flush()
+                                onEachProcessed(fileItem, outputFile.absolutePath, success)
+                            }
+                        } catch (e: Exception) {
+                            Log.e("Compressor", "❌ Failed to write compressed file: ${outputFile.absolutePath}", e)
+                            onEachProcessed(fileItem, null, false)
+                        }
+                    } catch (e: Exception) {
+                        Log.e("Compressor", "❌ Exception compressing ${fileItem.path}", e)
+                        onEachProcessed(fileItem, null, false)
+                    }
+                } else {
+                    onEachProcessed(fileItem, fileItem.path, true)
+                }
+            }
+
+            onComplete()
+        }.start()
+    }
+
+    private fun scaleBitmap(bitmap: Bitmap, maxWidth: Int, maxHeight: Int): Bitmap {
+        val width = bitmap.width
+        val height = bitmap.height
+
+        if (width <= maxWidth && height <= maxHeight) return bitmap
+
+        val ratio = width.toFloat() / height.toFloat()
+        val newWidth: Int
+        val newHeight: Int
+
+        if (maxWidth / ratio <= maxHeight) {
+            newWidth = maxWidth
+            newHeight = (maxWidth / ratio).toInt()
+        } else {
+            newHeight = maxHeight
+            newWidth = (maxHeight * ratio).toInt()
+        }
+
+        return Bitmap.createScaledBitmap(bitmap, newWidth, newHeight, true)
+    }
+
 
 
 }

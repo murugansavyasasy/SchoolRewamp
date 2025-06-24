@@ -455,5 +455,8 @@ dependencies {
     implementation("com.google.firebase:firebase-crashlytics")
 
     implementation("com.github.chrisbanes:PhotoView:2.3.0")
+//    implementation("com.abedelazizshe.lightcompressor:lightcompressor:1.2.1")
+
+
 
 }

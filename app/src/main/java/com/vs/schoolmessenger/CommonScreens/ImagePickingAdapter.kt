@@ -75,6 +75,9 @@ class ImagePickingAdapter(
 
         holder.itemView.setOnClickListener {
             if (pos != 0) {
+                if (Constant.selectedFiles.isNotEmpty()) {
+                    Constant.selectedFiles.removeAt(0)
+                }
                 Constant.commonFileList = Constant.selectedFiles.map {
                     CommonFileData(type = it.type.toString(), path = it.path)
                 }

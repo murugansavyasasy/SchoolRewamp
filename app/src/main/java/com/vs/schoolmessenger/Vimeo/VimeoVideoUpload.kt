@@ -26,38 +26,27 @@ object VimeoVideoUpload {
         title: String,
         description: String,
         videoFilePath: String,
-        listener: UploadCompletionListener?
+        listener: UploadCompletionListener
     ) {
         createVimeoUploadURL(
-            activity, title, description, videoFilePath, object : VimeoUploadURLListener {
-                override fun onUploadURLGenerated(
-                    uploadLink: String?, iframe: String?, link: String?
-                ) {
+            activity, title, description, videoFilePath,
+            object : VimeoUploadURLListener {
+                override fun onUploadURLGenerated(uploadLink: String?, iframe: String?, link: String?) {
                     uploadVideoToVimeo(
                         activity,
                         iframe,
                         link,
                         uploadLink,
                         videoFilePath,
-                        object : VimeoUploadListener {
-                            override fun onUploadComplete(
-                                success: Boolean, iframe: String?, link: String?
-                            ) {
-                                if (listener != null) {
-                                    listener.onUploadComplete(success, iframe, link)
-                                }
-                            }
-
-                            override fun onFailure(errorMessage: String?) {
-                                listener?.onFailure(errorMessage)
-                            }
-                        })
+                        listener
+                    )
                 }
 
                 override fun onFailure(errorMessage: String?) {
-                    listener?.onFailure(errorMessage)
+                    listener.onFailure(errorMessage)
                 }
-            })
+            }
+        )
     }
 
     private fun createVimeoUploadURL(
@@ -87,9 +76,7 @@ object VimeoVideoUpload {
                 val url = URL(Constant.isVimeoUrl)
                 val conn = url.openConnection() as HttpURLConnection
                 conn.requestMethod = Constant.POST
-                conn.setRequestProperty(
-                    APIKeyNames.Authorization, APIKeyNames.Bearer + Constant.isVimeoToken
-                )
+                conn.setRequestProperty(APIKeyNames.Authorization, APIKeyNames.Bearer + Constant.isVimeoToken)
                 conn.setRequestProperty(Constant.Content_Type, Constant.application_json)
                 conn.setRequestProperty(Constant.Accept, Constant.application_vimeo_jsonversion)
                 conn.doOutput = true
@@ -144,7 +131,7 @@ object VimeoVideoUpload {
         link: String?,
         uploadLink: String?,
         videoFilePath: String,
-        listener: VimeoUploadListener
+        listener: UploadCompletionListener
     ) {
         CoroutineScope(Dispatchers.IO).launch {
             var inputStream: InputStream? = null
@@ -173,33 +160,23 @@ object VimeoVideoUpload {
 
                 val offsetConn = URL(uploadLink).openConnection() as HttpURLConnection
                 offsetConn.requestMethod = Constant.HEAD
-                offsetConn.setRequestProperty(
-                    Constant.HETus_ResumableAD, Constant.HETus_ResumableAD_Version
-                )
-                offsetConn.setRequestProperty(
-                    APIKeyNames.Authorization, APIKeyNames.Bearer + Constant.isVimeoToken
-                )
+                offsetConn.setRequestProperty(Constant.HETus_ResumableAD, Constant.HETus_ResumableAD_Version)
+                offsetConn.setRequestProperty(APIKeyNames.Authorization, APIKeyNames.Bearer + Constant.isVimeoToken)
                 val offset = offsetConn.getHeaderField(Constant.Upload_Offset)?.toLongOrNull() ?: 0L
                 offsetConn.disconnect()
 
                 val conn = URL(uploadLink).openConnection() as HttpURLConnection
                 conn.requestMethod = Constant.PATCH
-                conn.setRequestProperty(
-                    APIKeyNames.Authorization, APIKeyNames.Bearer + Constant.isVimeoToken
-                )
-                conn.setRequestProperty(
-                    Constant.Content_Type, Constant.application_offset_octet_stream
-                )
+                conn.setRequestProperty(APIKeyNames.Authorization, APIKeyNames.Bearer + Constant.isVimeoToken)
+                conn.setRequestProperty(Constant.Content_Type, Constant.application_offset_octet_stream)
                 conn.setRequestProperty(Constant.Upload_Offset, offset.toString())
-                conn.setRequestProperty(
-                    Constant.HETus_ResumableAD, Constant.HETus_ResumableAD_Version
-                )
+                conn.setRequestProperty(Constant.HETus_ResumableAD, Constant.HETus_ResumableAD_Version)
                 conn.doOutput = true
 
                 inputStream?.skip(offset)
                 val outputStream = conn.outputStream
 
-                val buffer = ByteArray(1024 * 1024) // 1MB chunks
+                val buffer = ByteArray(1024 * 1024)
                 var bytesRead: Int
                 var totalUploaded = offset
                 var lastPercent = -1
@@ -212,9 +189,8 @@ object VimeoVideoUpload {
                     if (percent != lastPercent && percent in 1..100) {
                         lastPercent = percent
                         withContext(Dispatchers.Main) {
-                            (listener as? UploadCompletionListener)?.onProgressUpdate(percent)
+                            listener.onProgressUpdate(percent)
                         }
-                        Log.d("VimeoUploadProgress", "Progress: $percent%")
                     }
                 }
 
@@ -252,11 +228,6 @@ object VimeoVideoUpload {
 
     private interface VimeoUploadURLListener {
         fun onUploadURLGenerated(uploadLink: String?, iframe: String?, link: String?)
-        fun onFailure(errorMessage: String?)
-    }
-
-    private interface VimeoUploadListener {
-        fun onUploadComplete(success: Boolean, iframe: String?, link: String?)
         fun onFailure(errorMessage: String?)
     }
 }

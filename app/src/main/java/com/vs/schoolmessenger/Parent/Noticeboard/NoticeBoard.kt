@@ -32,7 +32,7 @@ class NoticeBoard : BaseActivity<NoticeBoardBinding>(), View.OnClickListener,
         isAccessToken = isChildDetails?.access_token
         isGetNoticeBoardList()
 
-        binding.toolbarLayout.lblParentToolBar.text = "Notice Board"
+        binding.toolbarLayout.lblParentToolBar.text = getString(R.string.NoticeBoard)
         binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
         binding.toolbarLayout.imgBack.setOnClickListener(this)
 

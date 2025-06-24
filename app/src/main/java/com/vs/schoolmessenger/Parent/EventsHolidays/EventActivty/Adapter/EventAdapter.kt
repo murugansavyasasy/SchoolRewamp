@@ -66,8 +66,7 @@ class EventAdapter (
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
-            // Bind actual data when loading is complete
-            holder.bind(filteredList!![position], position, listener, this)
+            holder.bind(filteredList[position], position, listener, this)
         }  else if (holder is ShimmerViewHolder) {
             holder.startShimmer()
         }

@@ -5,33 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/mild_grey5">
 
-    <RelativeLayout
-        android:id="@+id/rytLoading"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone">
 
-        <ProgressBar
-            android:id="@+id/circularProgress"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_centerInParent="true"
-            android:indeterminate="false"
-            android:max="100"
-            android:progress="0"
-            android:progressDrawable="@drawable/circular_progress_drawable" />
-
-        <TextView
-            android:id="@+id/txtProgress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="0%"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-    </RelativeLayout>
 
 
     <RelativeLayout
@@ -527,8 +501,12 @@
             android:textStyle="bold">
 
         </TextView>
-
     </LinearLayout>
 
-
+    <com.vs.schoolmessenger.Utils.CircularProgressView
+        android:id="@+id/circularProgressView"
+        android:layout_width="150dp"
+        android:layout_height="210dp"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
 </RelativeLayout>

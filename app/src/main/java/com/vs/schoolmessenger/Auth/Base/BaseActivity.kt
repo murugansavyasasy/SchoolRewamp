@@ -23,7 +23,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.FrameLayout
 import android.widget.ImageView
@@ -31,7 +30,6 @@ import android.widget.LinearLayout
 import android.widget.ListView
 import android.widget.PopupWindow
 import android.widget.RelativeLayout
-import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -118,18 +116,9 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
             window.navigationBarColor = Color.TRANSPARENT
             window.setBackgroundDrawableResource(R.drawable.gradient_theme_school)
         }
-
-//        if (Build.VERSION.SDK_INT >= 21) {
-//            val window = this.window
-//            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-//            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-//            window.statusBarColor = this.resources.getColor(R.color.primary_light)
-//            window.navigationBarColor = this.resources.getColor(R.color.primary_light)
-//        }
     }
 
     protected open fun setUpGradientParent() {
-
         if (Build.VERSION.SDK_INT >= 21) {
             val window = this.window
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
@@ -478,7 +467,6 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
                 "DropdownMenu",
                 "Selected Academic Year:\nID = ${selectedYear.id},\nYear = ${selectedYear.year},\nCurrent = ${selectedYear.current_academic_year}"
             )
-
             popupWindow.dismiss()
         }
 
@@ -488,7 +476,6 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
             clearDim()
         }
     }
-
 
     fun dimBehind(popupWindow: PopupWindow) {
         val window = this.window
@@ -563,7 +550,6 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
                 } else {
                     setUpGradientSchool()
                 }
-
             }
 
             R.id.icon_help -> {
@@ -696,17 +682,6 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
             .commit()
 
     }
-
-    // Example: Show a common loading dialog
-    protected fun showLoadingDialog() {
-        // Code to show loading dialog
-    }
-
-    // Example: Hide the loading dialog
-    protected fun hideLoadingDialog() {
-        // Code to hide loading dialog
-    }
-
 
     fun showTimePickerDialog(context: Context, listener: TimeSelectedListener) {
         // Get current time

@@ -2,10 +2,15 @@ package com.vs.schoolmessenger.CommonScreens.SelectRecipient
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Build
+import android.os.Environment
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -46,10 +51,14 @@ import com.vs.schoolmessenger.Utils.Constant.M_COMMUNICATION
 import com.vs.schoolmessenger.Utils.Constant.M_HOMEWORK
 import com.vs.schoolmessenger.Utils.Constant.M_SCHOOL_CLASS_EVENTS
 import com.vs.schoolmessenger.Utils.Constant.SELECTED_SCHOOL_MENU
+import com.vs.schoolmessenger.Utils.DimOverlayManager
+import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SelectRecipientBinding
 import com.vs.schoolmessenger.util.VimeoVideoUpload
+import java.io.File
+
 
 class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickListener,
     SectionListClickListener, StandardListClickListener, GroupListClickListener,
@@ -90,6 +99,10 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     var isSelectedAcademicYear: String? = null
     private var appViewModel: App? = null
     private var hasTriggeredSend = false
+    public var isProgressBar = 0
+    val handler = Handler(Looper.getMainLooper())
+    private lateinit var dimOverlayManager: DimOverlayManager
+
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -112,7 +125,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         binding.tapStaffs.setOnClickListener(this)
         Constant.hideLoading(this)
 
-
+        dimOverlayManager = DimOverlayManager(this)
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
         isAwsUploadingPreSigned = AwsUploadingPreSigned()
@@ -896,7 +909,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 Log.d("isDropDown", isDropDown.toString())
             }
         }
-
     }
 
     private fun isGetGroupList() {
@@ -951,14 +963,20 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         }
         okButton.setOnClickListener {
             alertDialog.dismiss()
-            Constant.showLoading(this@RecipientActivity)
-
-
             if (SELECTED_SCHOOL_MENU == M_HOMEWORK) {
                 if (Constant.selectedFiles.isNotEmpty()) {
                     val videoFiles = Constant.selectedFiles.filter { it.type == FileType.VIDEO }
                     if (videoFiles.isNotEmpty()) {
-                        videoUploading()
+                        val sizeInMB = Constant.getVideoSizeInMB(Constant.selectedFiles[0].path)
+                        if (sizeInMB <= 500) {
+                            videoUploading()
+                        } else {
+                            Constant.showValidationAlertPopup(
+                                getString(R.string.alert),
+                                "Please select a video less than 500 MB.",
+                                this
+                            )
+                        }
                     } else {
                         isFileUploadInAws(
                             isStaffDetails!!.school_id, "file"
@@ -994,7 +1012,18 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 if (Constant.selectedFiles.isNotEmpty()) {
                     val videoFiles = Constant.selectedFiles.filter { it.type == FileType.VIDEO }
                     if (videoFiles.isNotEmpty()) {
-                        videoUploading()
+                        val sizeInMB = Constant.getVideoSizeInMB(Constant.selectedFiles[0].path)
+
+                        if (sizeInMB <= 500) {
+                            videoUploading()
+                        } else {
+                            Constant.showValidationAlertPopup(
+                                getString(R.string.alert),
+                                "Please select a video less than 500 MB.",
+                                this
+                            )
+                        }
+
                     } else {
                         isFileUploadInAws(
                             isStaffDetails!!.school_id,
@@ -1006,7 +1035,17 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 if (Constant.selectedFiles.isNotEmpty()) {
                     val videoFiles = Constant.selectedFiles.filter { it.type == FileType.VIDEO }
                     if (videoFiles.isNotEmpty()) {
-                        videoUploading()
+                        val sizeInMB = Constant.getVideoSizeInMB(Constant.selectedFiles[0].path)
+                        if (sizeInMB <= 500) {
+                            videoUploading()
+                        } else {
+                            Constant.showValidationAlertPopup(
+                                getString(R.string.alert),
+                                "Please select a video less than 500 MB.",
+                                this
+                            )
+                        }
+
                     } else {
                         isFileUploadInAws(
                             isStaffDetails!!.school_id,
@@ -1024,15 +1063,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         }
     }
 
-    private fun videoUploading() {
-        VimeoVideoUpload.uploadVideo(
-            this@RecipientActivity,
-            "quiz",
-            "quiz",
-            Constant.selectedFiles[0].path,
-            this@RecipientActivity
-        )
-    }
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun eventsendapi() {
@@ -1050,13 +1081,20 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 iframe = isIframe,
                 fileSize = isFileSize
             )
-            Log.d("RecepientEventList", "Event details received and jsonObject created: $jsonObject")
             Log.d("Object", jsonObject.toString())
             appViewModel!!.sendevent(isAccessToken!!, jsonObject, this)
 
         } else {
             Log.e("RecepientEventList", "EventDetails not found in intent")
         }
+    }
+
+    private fun videoUploading() {
+        //  dimOverlayManager.showDim()
+        binding.circularProgressView.visibility = View.VISIBLE
+        VimeoVideoUpload.uploadVideo(
+            this, "quiz", "quiz", Constant.selectedFiles[0].path, this
+        )
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -1084,13 +1122,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         }
     }
 
-    fun extractVimeoUrlFromIframe(iframeHtml: String): String? {
-        val regex = Regex("""<iframe[^>]+src="([^"]+)"""")
-        val match = regex.find(iframeHtml)
-        return match?.groups?.get(1)?.value
-    }
-
-
     override fun onFailure(errorMessage: String?) {
         runOnUiThread {
             Log.e("VimeoUploadError", errorMessage ?: "Unknown error")
@@ -1098,11 +1129,21 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     }
 
     override fun onProgressUpdate(percent: Int) {
-        binding.rytLoading.visibility = View.VISIBLE
         runOnUiThread {
-            binding.txtProgress.text = percent.toString()
-            Log.d("VimeoUploadProgress", "Progress: $percent%")
+            Log.d("isPercentage", percent.toString())
+            binding.circularProgressView.setProgress(percent)
+            if (percent == 100) {
+                binding.circularProgressView.visibility = View.GONE
+                //  dimOverlayManager.hideDim()
+                Constant.showLoading(this)
+            }
         }
+    }
+
+    fun extractVimeoUrlFromIframe(iframeHtml: String): String? {
+        val regex = Regex("""<iframe[^>]+src="([^"]+)"""")
+        val match = regex.find(iframeHtml)
+        return match?.groups?.get(1)?.value
     }
 
 
@@ -1185,6 +1226,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         Constant.isAwsUploadedFiles.clear()
         val isSelectedFileListSize = Constant.selectedFiles.size
         val iterator = Constant.selectedFiles.iterator()
+        binding.circularProgressView.visibility = View.VISIBLE
 
         while (iterator.hasNext()) {
             val fileItem = iterator.next()
@@ -1204,52 +1246,129 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         if (Constant.selectedFiles.isEmpty()) {
             if (SELECTED_SCHOOL_MENU == M_HOMEWORK) {
                 isHomeWorkSend()
-            } else if (SELECTED_SCHOOL_MENU == Constant.M_COMMUNICATION) {
+            } else if (SELECTED_SCHOOL_MENU == M_COMMUNICATION) {
                 voiceSendApi()
             }
         } else {
-            for (i in Constant.selectedFiles.indices) {
-                isAwsUploadingPreSigned!!.getPreSignedUrl(
-                    Constant.selectedFiles[i].path.toString(),
-                    schoolId,
-                    isFileType!!,
-                    this,
-                    isCountryId!!,
-                    true,
-                    false,
-                    object : UploadCallback {
-                        @RequiresApi(Build.VERSION_CODES.O)
-                        override fun onUploadSuccess(
-                            response: String?, isFileUploaded: String?
-                        ) {
-                            Constant.isAwsUploadedFiles.add(
-                                AwsUploadedFiles(
-                                    isFileUrl = isFileUploaded!!,
-                                    isFileType = Constant.selectedFiles[i].type.toString()
-                                )
-                            )
-                            if (Constant.isAwsUploadedFiles.size == isSelectedFileListSize) {
-                                Log.d("SELECTED_SCHOOL_MENU", SELECTED_SCHOOL_MENU.toString())
-                                if (SELECTED_SCHOOL_MENU == M_HOMEWORK) {
-                                    isHomeWorkSend()
-                                } else if (SELECTED_SCHOOL_MENU == Constant.M_COMMUNICATION) {
-                                    voiceSendApi()
-                                } else if (SELECTED_SCHOOL_MENU == Constant.M_ATTACHMENTS) {
-                                    attachmentSendApi()
-                                } else if (SELECTED_SCHOOL_MENU == Constant.M_SCHOOL_CLASS_EVENTS) {
-                                    eventsendapi()
-                                }
+            val outputDir =
+                File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "CompressedOutput")
+            val newSelectedFiles = mutableListOf<FileItem>()
+            var uploadedFiles = 0
+            Constant.compressImageFilesOnly(
+                context = this,
+                files = Constant.selectedFiles,
+                outputDir = outputDir.absolutePath,
+                format = Bitmap.CompressFormat.WEBP_LOSSY,
+                quality = 80,
+                maxWidth = 1280,
+                maxHeight = 1280,
+                onEachProcessed = { original, outputPath, success ->
+                    if (success && outputPath != null) {
+                        val compressedFile = File(outputPath)
+                        val originalSizeKB = try {
+                            if (original.path.startsWith("content://")) {
+                                contentResolver.openFileDescriptor(
+                                    Uri.parse(original.path),
+                                    "r"
+                                )?.statSize ?: 0
                             } else {
-                                Log.d("isFileNotMatching", "isFileNotMatching")
+                                File(original.path).length()
                             }
-                            Log.d("isSuccessFullUpload", "isSuccessFullUpload")
+                        } catch (e: Exception) {
+                            0L
                         }
+                        Log.d(
+                            "Compressor",
+                            " Compressed: $outputPath (${compressedFile.length() / 1024}KB), Original: ${originalSizeKB / 1024}KB"
+                        )
+                        newSelectedFiles.add(FileItem(path = outputPath, type = original.type))
+                    } else {
+                        Log.e("Compressor", " Failed: ${original.path}")
+                    }
+                },
+                onComplete = {
+                    Constant.selectedFiles.clear()
+                    Constant.selectedFiles.addAll(newSelectedFiles)
+                    for (i in Constant.selectedFiles.indices) {
+                        isAwsUploadingPreSigned!!.getPreSignedUrl(
+                            Constant.selectedFiles[i].path.toString(),
+                            schoolId,
+                            isFileType!!,
+                            this,
+                            isCountryId!!,
+                            true,
+                            false,
+                            object : UploadCallback {
+                                @RequiresApi(Build.VERSION_CODES.O)
+                                override fun onUploadSuccess(
+                                    response: String?, isFileUploaded: String?
+                                ) {
 
-                        override fun onUploadError(error: String?) {
+                                    uploadedFiles++
+                                    val percent = (uploadedFiles * 100) / isSelectedFileListSize
 
-                        }
-                    })
-            }
+                                    runOnUiThread {
+                                        binding.circularProgressView.setProgress(percent)
+                                    }
+
+                                    Constant.isAwsUploadedFiles.add(
+                                        AwsUploadedFiles(
+                                            isFileUrl = isFileUploaded!!,
+                                            isFileType = Constant.selectedFiles[i].type.toString()
+                                        )
+                                    )
+                                    Log.d(
+                                        "Constant.isAwsUploadedFiles",
+                                        Constant.isAwsUploadedFiles.size.toString()
+                                    )
+                                    Log.d(
+                                        "Constant.isAwsUploadedFiles",
+                                        isSelectedFileListSize.toString()
+                                    )
+                                    if (Constant.isAwsUploadedFiles.size == isSelectedFileListSize) {
+
+                                        runOnUiThread {
+                                            binding.circularProgressView.visibility = View.GONE
+                                        }
+
+                                        Log.d(
+                                            "SELECTED_SCHOOL_MENU",
+                                            SELECTED_SCHOOL_MENU.toString()
+                                        )
+                                        if (SELECTED_SCHOOL_MENU == M_HOMEWORK) {
+                                            isHomeWorkSend()
+                                        } else if (SELECTED_SCHOOL_MENU == Constant.M_COMMUNICATION) {
+                                            voiceSendApi()
+                                        } else if (SELECTED_SCHOOL_MENU == Constant.M_ATTACHMENTS) {
+                                            attachmentSendApi()
+                                        } else if (SELECTED_SCHOOL_MENU == Constant.M_SCHOOL_CLASS_EVENTS) {
+                                            eventsendapi()
+                                        }
+
+                                    } else {
+                                        Log.d("isFileNotMatching", "isFileNotMatching")
+                                    }
+                                    Log.d("isSuccessFullUpload", "isSuccessFullUpload")
+                                }
+
+                                override fun onUploadError(error: String?) {
+                                    uploadedFiles++
+                                    val percent = (uploadedFiles * 100) / isSelectedFileListSize
+                                    runOnUiThread {
+                                        binding.circularProgressView.setProgress(percent)
+                                    }
+
+                                    if (uploadedFiles == isSelectedFileListSize) {
+                                        runOnUiThread {
+                                            binding.circularProgressView.visibility = View.GONE
+                                        }
+                                    }
+                                }
+                            })
+                    }
+                    Log.d("Compressor", " All files compressed and updated.")
+                }
+            )
         }
     }
 

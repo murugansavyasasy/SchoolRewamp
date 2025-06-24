@@ -1,0 +1,40 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="150dp"
+    android:layout_height="210dp"
+    android:background="@color/grey"
+    android:padding="@dimen/ten">
+
+    <ProgressBar
+        android:id="@+id/circularProgressbar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerInParent="true"
+        android:indeterminate="false"
+        android:max="100"
+        android:progress="0"
+        android:progressDrawable="@drawable/circular_progressbar"
+        android:secondaryProgress="100" />
+
+    <TextView
+        android:id="@+id/lblPresentStatus"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="0%"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/fifteen_sp" />
+
+    <TextView
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/circularProgressbar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/twenty_five"
+        android:layout_marginBottom="@dimen/twenty_five"
+        android:text="Sending Wait...."
+        android:textColor="@color/black">
+
+    </TextView>
+</RelativeLayout>

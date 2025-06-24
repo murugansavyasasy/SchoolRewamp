@@ -138,14 +138,10 @@
                 android:text="@string/SeeMore"
                 android:textColor="@android:color/holo_blue_dark"
                 android:visibility="gone" />
-
-
         </RelativeLayout>
-
     </RelativeLayout>
 
 
-    <!-- Red pin icon -->
     <ImageView
         android:id="@+id/imgPin"
         android:layout_width="24dp"
