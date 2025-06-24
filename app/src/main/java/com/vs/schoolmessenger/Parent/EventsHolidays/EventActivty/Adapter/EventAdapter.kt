@@ -2,19 +2,33 @@ package com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
+import android.view.View.OnTouchListener
 import android.view.ViewGroup
+import android.webkit.WebResourceError
+import android.webkit.WebResourceRequest
+import android.webkit.WebViewClient
 import android.widget.Filter
 import android.widget.Filterable
+import android.widget.ImageView
+import android.widget.ProgressBar
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.vs.schoolmessenger.CommonScreens.CommonFileData
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventClickListener
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventDataClass
+import com.vs.schoolmessenger.Parent.Homework.FullScreenViewerActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
+import me.relex.circleindicator.CircleIndicator2
 
 class EventAdapter (
     private var itemList: List<EventDataClass>?,
@@ -40,11 +54,12 @@ class EventAdapter (
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.homeword_report_item)
+            val shimmerView =
+                ShimmerUtil.wrapWithShimmer(parent, R.layout.homework_school_reportitem)
             ShimmerViewHolder(shimmerView)
         } else {
             val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.homeword_report_item, parent, false)
+                .inflate(R.layout.homework_school_reportitem, parent, false)
             DataViewHolder(view, context) // Pass context to DataViewHolder
         }
     }
@@ -72,10 +87,11 @@ class EventAdapter (
                 } else {
                     fullList.filter {
                         it.title.lowercase().contains(query) ||
-                                it.content.lowercase().contains(query) ||
+                                it.description.lowercase().contains(query) ||
                                 it.venue.lowercase().contains(query)
                     }
                 }
+
                 val filterResults = FilterResults()
                 filterResults.values = result
                 return filterResults
@@ -92,17 +108,17 @@ class EventAdapter (
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
 
-        private val lblDateImage: TextView = itemView.findViewById(R.id.lblDateImage)
+        private val LblHWSubjectName: TextView = itemView.findViewById(R.id.LblHWSubjectName)
         private val lblTitleImage: TextView = itemView.findViewById(R.id.lblTitleImage)
         private val lblContentImage: TextView = itemView.findViewById(R.id.lblContentImage)
-
-        private val RcyImgPdf: RecyclerView = itemView.findViewById(R.id.rcyImgPDF)
-        var meventAdapter: EventFilePathAdapter? = null
-
-        private fun getRecyclerView(): RecyclerView {
-            return RcyImgPdf
-        }
-
+        private val lblDateImage: TextView = itemView.findViewById(R.id.lblDateImage)
+        private val rlaSelectText: RelativeLayout = itemView.findViewById(R.id.rlaSelectText)
+        private val rytList: RelativeLayout = itemView.findViewById(R.id.rytList)
+        private val rcyImgPDF: RecyclerView = itemView.findViewById(R.id.rcyImgPDF)
+        private val imgNewImage: ImageView = itemView.findViewById(R.id.imgNewImage)
+        private val webView: android.webkit.WebView = itemView.findViewById(R.id.webView)
+        private val loadingBar: ProgressBar = itemView.findViewById(R.id.loadingBar)
+        private val indicator: CircleIndicator2 = itemView.findViewById(R.id.indicator)
 
 
         @SuppressLint("ClickableViewAccessibility")
@@ -113,32 +129,115 @@ class EventAdapter (
             adapter: EventAdapter
         ) {
 
-            val eventImgPdf = getRecyclerView()
             lblTitleImage.text = data.title
-            lblContentImage.text = data.content
+            lblContentImage.text = data.description
             lblDateImage.text = data.date
 
-            if (data.file_path.size > 0) {
-                RcyImgPdf.visibility = View.VISIBLE
+            LblHWSubjectName.visibility = View.GONE
+            imgNewImage.visibility = View.VISIBLE
+            rlaSelectText.visibility = View.GONE
+            lblDateImage.text = Constant.convertDateTimeFormat(data.date)
+
+            webView.setOnTouchListener(object : OnTouchListener {
+                @SuppressLint("ClickableViewAccessibility")
+                override fun onTouch(v: View?, event: MotionEvent): Boolean {
+                    if (event.action == MotionEvent.ACTION_MOVE) {
+                        return false
+                    }
+
+                    if (event.getAction() == MotionEvent.ACTION_UP) {
+                        Constant.commonFileList.isEmpty()
+                        Constant.selectedFileIndex = -1
+                        val commonList = data.file_path?.map {
+                            CommonFileData(
+                                type = it.type,
+                                path = it.url,
+                            )
+                        } ?: emptyList()
+
+                        Constant.commonFileList = commonList
+                        Constant.selectedFileIndex = position
+
+                        val intent = Intent(context, FullScreenViewerActivity::class.java)
+                        intent.putExtra(Constant.subjectName, data.title)
+                        context.startActivity(intent)
+                    }
+                    return false
+                }
+            })
+
+            if (data.iframe != "") {
+                webView.visibility = View.VISIBLE
+                rytList.visibility = View.VISIBLE
+                rcyImgPDF.visibility = View.GONE
+                webView.settings.javaScriptEnabled = true
+                webView.settings.domStorageEnabled = true
+                webView.settings.loadWithOverviewMode = true
+                webView.settings.useWideViewPort = true
+
+                webView.webViewClient = object : WebViewClient() {
+                    override fun onPageStarted(
+                        view: android.webkit.WebView, url: String, favicon: Bitmap?
+                    ) {
+                        loadingBar.visibility = View.VISIBLE
+                    }
+
+                    override fun onPageFinished(view: android.webkit.WebView?, url: String?) {
+                        loadingBar.visibility = View.GONE
+                    }
+
+                    override fun onReceivedError(
+                        view: android.webkit.WebView?,
+                        request: WebResourceRequest?,
+                        error: WebResourceError?
+                    ) {
+                        loadingBar.visibility = View.GONE
+                        Log.e("WebViewError", "Error loading: ${error?.description}")
+                    }
+                }
+
+                webView.loadUrl(data.file_path[0].url.toString())
             } else {
-                RcyImgPdf.visibility = View.GONE
+                if (data.file_path.size > 0) {
+                    webView.visibility = View.GONE
+                    rytList.visibility = View.VISIBLE
+                    rcyImgPDF.visibility = View.VISIBLE
+                    if (data.file_path.size > 1) {
+                        indicator.visibility = View.VISIBLE
+                    } else {
+                        indicator.visibility = View.GONE
+                    }
+                    rcyImgPDF.layoutManager =
+                        LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                    rcyImgPDF.adapter =
+                        EventFilePathAdapter(
+                            data.file_path!!,
+                            context,
+                            Constant.isShimmerViewDisable
+                        )
+                    indicator.attachToRecyclerView(rcyImgPDF)
+                }
             }
+        }
 
-            meventAdapter =
-                EventFilePathAdapter(null, context, Constant.isShimmerViewShow)
-            eventImgPdf.layoutManager =
-                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            eventImgPdf.adapter = meventAdapter
+        fun CircleIndicator2.attachToRecyclerView(recyclerView: RecyclerView) {
+            val adapter = recyclerView.adapter ?: return
+            this.createIndicators(adapter.itemCount, 0)
 
+            recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(rv: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(rv, dx, dy)
+                    val layoutManager = rv.layoutManager as? LinearLayoutManager ?: return
+                    val firstVisible = layoutManager.findFirstVisibleItemPosition()
+                    this@attachToRecyclerView.animatePageSelected(firstVisible)
+                }
+            })
 
-            meventAdapter =
-                EventFilePathAdapter(
-                    data.file_path,
-                    context,
-                    Constant.isShimmerViewDisable
-
-                )
-            eventImgPdf.adapter = meventAdapter
+            adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+                override fun onChanged() {
+                    this@attachToRecyclerView.createIndicators(adapter.itemCount, 0)
+                }
+            })
         }
     }
 }

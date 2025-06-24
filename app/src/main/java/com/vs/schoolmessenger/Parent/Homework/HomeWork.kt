@@ -57,7 +57,6 @@ class HomeWork : BaseActivity<HomeWorkParentBinding>(), View.OnClickListener,
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 filterHomework(s.toString())
             }
-
             override fun afterTextChanged(s: Editable?) {}
         })
     }

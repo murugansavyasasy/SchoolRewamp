@@ -2,15 +2,26 @@ package com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
+import android.view.View.OnTouchListener
 import android.view.ViewGroup
+import android.webkit.WebResourceError
+import android.webkit.WebResourceRequest
+import android.webkit.WebViewClient
+import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
+import com.vs.schoolmessenger.CommonScreens.CommonFileData
+import com.vs.schoolmessenger.Parent.Homework.FullScreenViewerActivity
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetDateWiseHomeworkData
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkDetails
 import com.vs.schoolmessenger.R
@@ -66,6 +77,9 @@ class HomeWorkItemAdapter(
         private val lblSubjectName: TextView = itemView.findViewById(R.id.LblHWSubjectName)
         private val rlaSelectText: RelativeLayout = itemView.findViewById(R.id.rlaSelectText)
         private val rytList: RelativeLayout = itemView.findViewById(R.id.rytList)
+        private val webView: android.webkit.WebView = itemView.findViewById(R.id.webView)
+        private val loadingBar: ProgressBar = itemView.findViewById(R.id.loadingBar)
+
         private var mHomeworkImgPDFAdapter: HomeworkImgPDFAdapter? = null
 
         @SuppressLint("ClickableViewAccessibility")
@@ -80,6 +94,92 @@ class HomeWorkItemAdapter(
             lblDateImage.text = Constant.convertDateTimeFormat(data!!.date)
             lblSubjectName.text = homeworkData.subject_name
             rlaSelectText.visibility = View.GONE
+            webView.setOnTouchListener(object : OnTouchListener {
+                override fun onTouch(v: View?, event: MotionEvent): Boolean {
+                    if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                        return false
+                    }
+
+                    if (event.getAction() == MotionEvent.ACTION_UP) {
+                        Constant.commonFileList.isEmpty()
+                        Constant.selectedFileIndex = -1
+                        val commonList = homeworkData.file_path?.map {
+                            CommonFileData(
+                                type = it.type,
+                                path = it.url,
+                            )
+                        } ?: emptyList()
+
+                        Constant.commonFileList = commonList
+                        Constant.selectedFileIndex = position
+
+                        val intent = Intent(context, FullScreenViewerActivity::class.java)
+                        intent.putExtra(Constant.subjectName, homeworkData.subject_name)
+                        context.startActivity(intent)
+                    }
+
+                    return false
+                }
+            })
+
+            if (homeworkData.file_path.isNotEmpty()) {
+                if (homeworkData.file_path[0].type.toString() == Constant.VIDEO) {
+                    webView.visibility = View.VISIBLE
+                    RcyImgPdf.visibility = View.GONE
+                    rytList.visibility = View.GONE
+                    DotIndicator.visibility = View.GONE
+
+                    webView.settings.javaScriptEnabled = true
+                    webView.settings.domStorageEnabled = true
+                    webView.settings.loadWithOverviewMode = true
+                    webView.settings.useWideViewPort = true
+
+                    webView.webViewClient = object : WebViewClient() {
+                        override fun onPageStarted(
+                            view: android.webkit.WebView,
+                            url: String,
+                            favicon: Bitmap?
+                        ) {
+                            loadingBar.visibility = View.VISIBLE
+                        }
+
+
+                        override fun onPageFinished(view: android.webkit.WebView?, url: String?) {
+                            loadingBar.visibility = View.GONE
+                        }
+
+                        override fun onReceivedError(
+                            view: android.webkit.WebView?,
+                            request: WebResourceRequest?,
+                            error: WebResourceError?
+                        ) {
+                            loadingBar.visibility = View.GONE
+                            Log.e("WebViewError", "Error loading: ${error?.description}")
+                        }
+                    }
+
+                    webView.loadUrl(homeworkData.file_path[0].url.toString())
+                } else {
+                    webView.visibility = View.GONE
+                    RcyImgPdf.visibility = View.VISIBLE
+                    rytList.visibility = View.VISIBLE
+                    DotIndicator.visibility = View.VISIBLE
+                    mHomeworkImgPDFAdapter =
+                        HomeworkImgPDFAdapter("", null, context, Constant.isShimmerViewShow)
+                    RcyImgPdf.layoutManager =
+                        LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                    RcyImgPdf.adapter = mHomeworkImgPDFAdapter
+
+                    mHomeworkImgPDFAdapter = HomeworkImgPDFAdapter(
+                        homeworkData.subject_name,
+                        homeworkData.file_path,
+                        context,
+                        Constant.isShimmerViewDisable,
+                    )
+                    RcyImgPdf.adapter = mHomeworkImgPDFAdapter
+                }
+            }
+
 
             isSeeMoreVisibility(lblContentImage, tvSeeMoreImage)
             tvSeeMoreImage.setOnClickListener {
@@ -95,19 +195,6 @@ class HomeWorkItemAdapter(
                 DotIndicator.visibility = View.GONE
                 rytList.visibility = View.GONE
             }
-
-            mHomeworkImgPDFAdapter = HomeworkImgPDFAdapter("", null, context, Constant.isShimmerViewShow)
-            RcyImgPdf.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            RcyImgPdf.adapter = mHomeworkImgPDFAdapter
-
-            mHomeworkImgPDFAdapter = HomeworkImgPDFAdapter(
-                homeworkData.subject_name,
-                homeworkData.file_path,
-                context,
-                Constant.isShimmerViewDisable,
-            )
-            RcyImgPdf.adapter = mHomeworkImgPDFAdapter
-
             setupDotIndicator(DotIndicator, homeworkData.file_path.size)
         }
 

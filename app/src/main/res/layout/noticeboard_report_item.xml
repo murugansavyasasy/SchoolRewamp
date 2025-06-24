@@ -1,542 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@drawable/rect_shadow_white"
     android:layout_height="wrap_content"
     android:fitsSystemWindows="true"
-    android:layout_marginTop="@dimen/five">
-
-
-    <ImageView
-        android:id="@+id/imgNewImage"
-        android:layout_width="@dimen/eighty"
-        android:layout_height="@dimen/eighty"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="@dimen/minus_eighteen"
-        android:elevation="@dimen/ten"
-        android:src="@drawable/new_icon"
-        android:visibility="gone">
-
-    </ImageView>
-
-    <FrameLayout
-        android:id="@+id/rytPin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:elevation="@dimen/five"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center_horizontal"
-        android:visibility="visible">
-
-        <View
-            android:layout_width="@dimen/fifteen"
-            android:layout_height="@dimen/fifteen"
-            android:layout_marginTop="@dimen/fifteen"
-            android:background="@drawable/circle_bg_black" />
-
-        <ImageView
-            android:id="@+id/imgPin"
-            android:layout_width="@dimen/twenty_five"
-            android:layout_height="@dimen/twenty_five"
-            android:layout_marginStart="@dimen/five"
-            android:src="@drawable/pin" />
-
-    </FrameLayout>
-    <TextView
-        android:id="@+id/lblTitleImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rytPin"
-        android:layout_marginStart="@dimen/ten"
-        android:layout_marginTop="@dimen/five"
-        style="@style/CustomTextStylePoppinsBold"
-        android:text="Annual Day celebrations"
-        android:textColor="@color/black"
-        android:textSize="@dimen/thirteen_sp"/>
-
+    android:padding="8dp">
 
     <RelativeLayout
-        android:id="@+id/rlaImageReport"
         android:layout_width="match_parent"
-        android:layout_below="@+id/lblTitleImage"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/ten"
-        android:visibility="visible">
+        android:layout_marginTop="@dimen/five"
+        android:background="@drawable/rect_shadow_white">
 
-        <TextView
-            android:id="@+id/LblHWSubjectName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <View
+            android:id="@+id/pinHole"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/fifteen"
-            android:fontFamily="@font/poppins_bold"
-            android:text="Annual Day celebrations"
-            android:textColor="@color/black"
-            android:textSize="@dimen/eighteen_sp"
-            android:visibility="gone"
-            android:textStyle="bold" />
+            android:layout_marginTop="@dimen/three"
+            android:background="@drawable/circle_bg_black" />
 
 
-        <TextView
-            android:id="@+id/lblDateImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/lblContentImage"
+        <ImageView
+            android:id="@+id/imgNewImage"
+            android:layout_width="@dimen/eighty"
+            android:layout_height="@dimen/eighty"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="@dimen/ten"
-            android:layout_marginEnd="@dimen/ten"
-            android:fontFamily="@font/poppins_regular"
-            android:text="15 Nov 2024"
-            android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"
-            android:textStyle="normal" />
+            android:layout_marginTop="@dimen/minus_eighteen"
+            android:elevation="@dimen/ten"
+            android:src="@drawable/new_icon"
+            android:visibility="gone">
 
-        <LinearLayout
-            android:id="@+id/lytRecyclerwview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/LblHWSubjectName"
-            android:layout_marginTop="10dp"
-            android:orientation="vertical">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rcyImgPDF"
-                android:layout_width="match_parent"
-                android:visibility="gone"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal" />
-
-            <me.relex.circleindicator.CircleIndicator2
-                android:id="@+id/indicator"
-                style="@style/IndicatorStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/thirty"
-                android:layout_below="@+id/lytRecyclerwview"
-                android:layout_centerInParent="true"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/five"
-                android:elevation="4dp"
-                android:visibility="visible" />
-
-
-        </LinearLayout>
-
+        </ImageView>
 
         <TextView
-            android:id="@+id/lblContentImage"
+            android:id="@+id/lblTitleImage"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lytRecyclerwview"
+            android:layout_below="@+id/pinHole"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/five"
-            android:maxLines="3"
-            android:text="If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress."
+            android:text="Annual Day celebrations"
             android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"
-            android:textStyle="normal" />
+            android:textSize="@dimen/thirteen_sp" />
 
 
-        <TextView
-            android:id="@+id/tvSeeMoreImage"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/rlaImageReport"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lblContentImage"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_marginBottom="@dimen/ten"
-            android:text="@string/SeeMore"
-            android:textColor="@android:color/holo_blue_dark"
-            android:visibility="gone" />
+            android:layout_below="@+id/lblTitleImage"
+            android:layout_marginTop="@dimen/ten"
+            android:visibility="visible">
 
+
+            <TextView
+                android:id="@+id/LblHWSubjectName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/fifteen"
+                android:fontFamily="@font/poppins_bold"
+                android:text="Annual Day celebrations"
+                android:textColor="@color/black"
+                android:textSize="@dimen/eighteen_sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+
+            <TextView
+                android:id="@+id/lblDateImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblContentImage"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/ten"
+                android:fontFamily="@font/poppins_regular"
+                android:text="15 Nov 2024"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"
+                android:textStyle="normal" />
+
+            <LinearLayout
+                android:id="@+id/lytRecyclerwview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/LblHWSubjectName"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcyImgPDF"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="gone" />
+
+                <me.relex.circleindicator.CircleIndicator2
+                    android:id="@+id/indicator"
+                    style="@style/IndicatorStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/thirty"
+                    android:layout_below="@+id/lytRecyclerwview"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/five"
+                    android:elevation="4dp"
+                    android:visibility="visible" />
+
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/lblContentImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lytRecyclerwview"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/five"
+                android:maxLines="3"
+                android:text="If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress."
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp"
+                android:textStyle="normal" />
+
+
+            <TextView
+                android:id="@+id/tvSeeMoreImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblContentImage"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginBottom="@dimen/ten"
+                android:text="@string/SeeMore"
+                android:textColor="@android:color/holo_blue_dark"
+                android:visibility="gone" />
+
+
+        </RelativeLayout>
 
     </RelativeLayout>
 
 
-    <!--    <RelativeLayout-->
-    <!--        android:id="@+id/rlaVoiceReport"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginTop="@dimen/ten"-->
-    <!--        android:background="@drawable/rect_shadow_light_gray"-->
-    <!--        android:padding="@dimen/ten"-->
-    <!--        android:visibility="gone">-->
-
-
-    <!--        <TextView-->
-    <!--            android:id="@+id/lblDateVoice"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_below="@+id/lblVoiceContent"-->
-    <!--            android:layout_alignParentEnd="true"-->
-    <!--            android:layout_marginTop="@dimen/fifteen"-->
-    <!--            android:layout_marginEnd="@dimen/ten"-->
-    <!--            android:text="01 Apr 2024"-->
-    <!--            android:textColor="@color/black"-->
-    <!--            android:textSize="@dimen/thirteen_sp">-->
-
-    <!--        </TextView>-->
-
-
-    <!--        <ImageView-->
-    <!--            android:id="@+id/imgVoicePlay"-->
-    <!--            android:layout_width="@dimen/thirty_five"-->
-    <!--            android:layout_height="@dimen/thirty_five"-->
-    <!--            android:layout_below="@+id/lblTitleVoice"-->
-    <!--            android:layout_marginStart="@dimen/five"-->
-    <!--            android:layout_marginTop="@dimen/ten"-->
-    <!--            android:src="@drawable/video_play">-->
-
-    <!--        </ImageView>-->
-
-    <!--        <ProgressBar-->
-    <!--            android:id="@+id/isVoiceProgress"-->
-    <!--            android:layout_width="@dimen/fourty_five"-->
-    <!--            android:layout_height="@dimen/fourty_five"-->
-    <!--            android:layout_below="@+id/lblTitleVoice"-->
-    <!--            android:layout_marginStart="@dimen/five"-->
-    <!--            android:layout_marginTop="@dimen/ten"-->
-    <!--            android:indeterminateDrawable="@drawable/progress_bar_white"-->
-    <!--            android:indeterminateOnly="true"-->
-    <!--            android:visibility="gone">-->
-
-    <!--        </ProgressBar>-->
-
-    <!--        <com.vs.schoolmessenger.Utils.WaveformSeekBar-->
-    <!--            android:id="@+id/waveformSeekBar"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="@dimen/thirty"-->
-    <!--            android:layout_below="@+id/lblTitleVoice"-->
-    <!--            android:layout_marginStart="@dimen/ten"-->
-    <!--            android:layout_marginTop="@dimen/fifteen"-->
-    <!--            android:layout_marginEnd="@dimen/ten"-->
-    <!--            android:layout_toEndOf="@+id/imgVoicePlay" />-->
-
-    <!--        <TextView-->
-    <!--            android:id="@+id/lblStartDuration"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_below="@+id/imgVoicePlay"-->
-    <!--            android:layout_marginStart="@dimen/ten"-->
-    <!--            android:layout_marginBottom="@dimen/five"-->
-    <!--            android:layout_toEndOf="@+id/imgVoicePlay"-->
-    <!--            android:text="00:00"-->
-    <!--            android:textColor="@color/black"-->
-    <!--            android:textSize="@dimen/thirteen_sp">-->
-
-    <!--        </TextView>-->
-
-    <!--        <TextView-->
-    <!--            android:id="@+id/lblEndDuration"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_below="@+id/imgVoicePlay"-->
-    <!--            android:layout_alignParentEnd="true"-->
-    <!--            android:layout_marginEnd="@dimen/ten"-->
-    <!--            android:text="00:00"-->
-    <!--            android:textColor="@color/black"-->
-    <!--            android:textSize="@dimen/thirteen_sp">-->
-
-    <!--        </TextView>-->
-
-
-    <!--        <TextView-->
-    <!--            android:id="@+id/lblTitleVoice"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_marginStart="@dimen/ten"-->
-    <!--            android:layout_marginTop="@dimen/five"-->
-    <!--            android:text=""-->
-    <!--            android:textColor="@color/black"-->
-    <!--            android:textSize="@dimen/thirteen_sp"-->
-    <!--            android:textStyle="bold" />-->
-
-    <!--        <TextView-->
-    <!--            android:id="@+id/lblVoiceContent"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_below="@+id/lblEndDuration"-->
-    <!--            android:layout_marginStart="@dimen/ten"-->
-    <!--            android:layout_marginTop="@dimen/five"-->
-    <!--            android:layout_marginEnd="@dimen/ten"-->
-    <!--            android:lineSpacingExtra="@dimen/five"-->
-    <!--            android:maxLines="3"-->
-    <!--            android:text=""-->
-    <!--            android:textColor="@color/black"-->
-    <!--            android:textSize="@dimen/thirteen_sp" />-->
-
-    <!--        <TextView-->
-    <!--            android:id="@+id/tvSeeMoreVoice"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_below="@+id/lblVoiceContent"-->
-    <!--            android:layout_marginStart="@dimen/ten"-->
-    <!--            android:layout_marginBottom="@dimen/ten"-->
-    <!--            android:text="@string/SeeMore"-->
-    <!--            android:textColor="@android:color/holo_blue_dark"-->
-    <!--            android:visibility="gone" />-->
-
-
-    <!--    </RelativeLayout>-->
-
-
-    <!--    <RelativeLayout-->
-    <!--        android:id="@+id/rlaReportText"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginTop="@dimen/ten"-->
-    <!--        android:background="@drawable/rect_shadow_light_gray"-->
-    <!--        android:padding="@dimen/ten"-->
-    <!--        android:visibility="gone">-->
-
-    <!--        <TextView-->
-    <!--            android:id="@+id/lblTitleText"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_marginStart="@dimen/ten"-->
-    <!--            android:layout_marginTop="@dimen/fifteen"-->
-    <!--            android:layout_marginEnd="@dimen/ten"-->
-    <!--            android:layout_toStartOf="@+id/lblDateText"-->
-    <!--            android:text="Friday Leave"-->
-    <!--            android:textColor="@color/black"-->
-    <!--            android:textSize="@dimen/thirteen_sp"-->
-    <!--            android:textStyle="bold">-->
-
-    <!--        </TextView>-->
-
-
-    <!--        <TextView-->
-    <!--            android:id="@+id/lblDateText"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_below="@+id/lblContentText"-->
-    <!--            android:layout_alignParentEnd="true"-->
-    <!--            android:layout_marginTop="@dimen/fifteen"-->
-    <!--            android:layout_marginEnd="@dimen/ten"-->
-    <!--            android:text="01 Apr 2024"-->
-    <!--            android:textColor="@color/black"-->
-    <!--            android:textSize="@dimen/thirteen_sp">-->
-
-    <!--        </TextView>-->
-
-
-    <!--        <TextView-->
-    <!--            android:id="@+id/lblContentText"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_below="@+id/lblTitleText"-->
-    <!--            android:layout_marginStart="@dimen/ten"-->
-    <!--            android:layout_marginTop="@dimen/fifteen"-->
-    <!--            android:layout_marginEnd="@dimen/ten"-->
-    <!--            android:maxLines="3"-->
-    <!--            android:text=""-->
-    <!--            android:textColor="@color/black"-->
-    <!--            android:textSize="@dimen/thirteen_sp">-->
-
-    <!--        </TextView>-->
-
-    <!--        <TextView-->
-    <!--            android:id="@+id/lblSeeMoreText"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_below="@+id/lblContentText"-->
-    <!--            android:layout_marginStart="@dimen/ten"-->
-    <!--            android:paddingBottom="@dimen/ten"-->
-    <!--            android:text="@string/SeeMore"-->
-    <!--            android:textColor="@color/navi_blue2"-->
-    <!--            android:textSize="@dimen/thirteen_sp">-->
-
-    <!--        </TextView>-->
-    <!--    </RelativeLayout>-->
-
-
-    <!--    <RelativeLayout-->
-    <!--        android:id="@+id/rlaReportVideo"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginTop="@dimen/ten"-->
-    <!--        android:background="@drawable/rect_shadow_light_gray"-->
-    <!--        android:padding="@dimen/ten"-->
-    <!--        android:visibility="gone">-->
-
-    <!--        <TextView-->
-    <!--            android:id="@+id/lblDateVideo"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_below="@+id/lblVideoContent"-->
-    <!--            android:layout_alignParentEnd="true"-->
-    <!--            android:layout_marginEnd="@dimen/ten"-->
-    <!--            android:padding="@dimen/five"-->
-    <!--            android:text="Sun 22 Mar,2020"-->
-    <!--            android:textColor="@color/black"-->
-    <!--            android:textSize="@dimen/thirteen_sp">-->
-
-    <!--        </TextView>-->
-
-    <!--        <RelativeLayout-->
-    <!--            android:id="@+id/rlaVimeoThumbnail"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="@dimen/one_fifty"-->
-    <!--            android:layout_below="@+id/lblTitleVideo">-->
-
-    <!--            <ImageView-->
-    <!--                android:id="@+id/imgVimeoThumbnail"-->
-    <!--                android:layout_width="match_parent"-->
-    <!--                android:layout_height="@dimen/one_fifty"-->
-    <!--                android:scaleType="centerCrop">-->
-
-    <!--            </ImageView>-->
-
-    <!--            <ImageView-->
-    <!--                android:id="@+id/imgVideoPlay"-->
-    <!--                android:layout_width="@dimen/thirty"-->
-    <!--                android:layout_height="@dimen/thirty"-->
-    <!--                android:layout_centerInParent="true"-->
-    <!--                android:src="@drawable/video_play"-->
-    <!--                android:visibility="gone">-->
-
-    <!--            </ImageView>-->
-
-    <!--            <ProgressBar-->
-    <!--                android:id="@+id/customProgressBar"-->
-    <!--                android:layout_width="@dimen/fifty"-->
-    <!--                android:layout_height="@dimen/fifty"-->
-    <!--                android:layout_centerInParent="true"-->
-    <!--                android:layout_marginStart="@dimen/five"-->
-    <!--                android:layout_marginTop="@dimen/ten"-->
-    <!--                android:indeterminateDrawable="@drawable/progress_bar_white"-->
-    <!--                android:indeterminateOnly="true">-->
-
-    <!--            </ProgressBar>-->
-
-
-    <!--        </RelativeLayout>-->
-
-
-    <!--        <TextView-->
-    <!--            android:id="@+id/lblTitleVideo"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_marginStart="@dimen/ten"-->
-    <!--            android:layout_marginTop="@dimen/ten"-->
-    <!--            android:text=""-->
-    <!--            android:textColor="@color/black"-->
-    <!--            android:textSize="@dimen/thirteen_sp"-->
-    <!--            android:textStyle="bold" />-->
-
-    <!--        <TextView-->
-    <!--            android:id="@+id/lblVideoContent"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_below="@+id/rlaVimeoThumbnail"-->
-    <!--            android:layout_marginStart="@dimen/ten"-->
-    <!--            android:layout_marginTop="@dimen/five"-->
-    <!--            android:layout_marginEnd="@dimen/ten"-->
-    <!--            android:lineSpacingExtra="@dimen/five"-->
-    <!--            android:maxLines="3"-->
-    <!--            android:text=""-->
-    <!--            android:textColor="@color/black"-->
-    <!--            android:textSize="@dimen/thirteen_sp" />-->
-
-    <!--        <TextView-->
-    <!--            android:id="@+id/tvSeeMoreVideo"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_below="@+id/lblVideoContent"-->
-    <!--            android:layout_marginStart="@dimen/ten"-->
-    <!--            android:layout_marginBottom="@dimen/ten"-->
-    <!--            android:text="@string/SeeMore"-->
-    <!--            android:textColor="@android:color/holo_blue_dark"-->
-    <!--            android:visibility="gone" />-->
-
-
-    <!--    </RelativeLayout>-->
-
-
-    <!--    <RelativeLayout-->
-    <!--        android:id="@+id/rlaPdf"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginTop="@dimen/ten"-->
-    <!--        android:background="@drawable/rect_shadow_light_gray"-->
-    <!--        android:padding="@dimen/ten"-->
-    <!--        android:visibility="gone">-->
-
-
-    <!--        <TextView-->
-    <!--            android:id="@+id/lblDatePdf"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_below="@+id/lblPdfContent"-->
-    <!--            android:layout_alignParentEnd="true"-->
-    <!--            android:layout_marginTop="@dimen/ten"-->
-    <!--            android:layout_marginEnd="@dimen/ten"-->
-    <!--            android:padding="@dimen/five"-->
-    <!--            android:text="Sun 22 Mar,2020"-->
-    <!--            android:textColor="@color/black"-->
-    <!--            android:textSize="@dimen/thirteen_sp">-->
-
-    <!--        </TextView>-->
-
-
-    <!--        <TextView-->
-    <!--            android:id="@+id/lblTitlePdf"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_marginStart="@dimen/ten"-->
-    <!--            android:layout_marginTop="@dimen/ten"-->
-    <!--            android:gravity="center"-->
-    <!--            android:text="Nothing"-->
-    <!--            android:textColor="@color/black"-->
-    <!--            android:textSize="@dimen/thirteen_sp"-->
-    <!--            android:textStyle="bold" />-->
-
-    <!--        <WebView-->
-    <!--            android:id="@+id/webPdf"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="@dimen/one_fifty"-->
-    <!--            android:layout_below="@+id/lblTitlePdf"-->
-    <!--            android:layout_marginStart="@dimen/five"-->
-    <!--            android:layout_marginTop="@dimen/five"-->
-    <!--            android:layout_marginEnd="@dimen/five"-->
-    <!--            tools:ignore="WebViewLayout">-->
-
-    <!--        </WebView>-->
-
-    <!--        <ProgressBar-->
-    <!--            android:id="@+id/loadingBar"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_centerInParent="true"-->
-    <!--            android:indeterminateDrawable="@drawable/progress_bar_white"-->
-    <!--            android:indeterminateOnly="true"-->
-    <!--            android:visibility="gone">-->
-
-    <!--        </ProgressBar>-->
-
-
-    <!--        <TextView-->
-    <!--            android:id="@+id/lblPdfContent"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_below="@+id/webPdf"-->
-    <!--            android:layout_marginStart="@dimen/ten"-->
-    <!--            android:layout_marginTop="@dimen/ten"-->
-    <!--            android:layout_marginEnd="@dimen/ten"-->
-    <!--            android:lineSpacingExtra="@dimen/five"-->
-    <!--            android:maxLines="3"-->
-    <!--            android:text=""-->
-    <!--            android:textColor="@color/black"-->
-    <!--            android:textSize="@dimen/thirteen_sp" />-->
-
-    <!--        <TextView-->
-    <!--            android:id="@+id/tvSeeMorePdf"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_below="@+id/lblPdfContent"-->
-    <!--            android:layout_marginStart="@dimen/ten"-->
-    <!--            android:layout_marginBottom="@dimen/ten"-->
-    <!--            android:text="@string/SeeMore"-->
-    <!--            android:textColor="@android:color/holo_blue_dark"-->
-    <!--            android:visibility="gone" />-->
-    <!--    </RelativeLayout>-->
-</RelativeLayout>
+    <!-- Red pin icon -->
+    <ImageView
+        android:id="@+id/imgPin"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_gravity="top|center_horizontal"
+        android:contentDescription="Pin icon"
+        android:src="@drawable/pin"
+        android:layout_marginStart="@dimen/ten"
+        android:translationY="-1dp" />
+</FrameLayout>

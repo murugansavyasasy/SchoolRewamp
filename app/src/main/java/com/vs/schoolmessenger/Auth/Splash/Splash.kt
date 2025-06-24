@@ -342,8 +342,7 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
 
     private fun isShowUpdateAvailable(versionData: List<VersionData>) {
         val dialogView = layoutInflater.inflate(R.layout.whats_new_popup, null)
-        val dialogBuilder = AlertDialog.Builder(this)
-            .setView(dialogView)
+        val dialogBuilder = AlertDialog.Builder(this).setView(dialogView)
             .setCancelable(false) // Prevent dismissing by clicking outside
 
         val alertDialog = dialogBuilder.create()

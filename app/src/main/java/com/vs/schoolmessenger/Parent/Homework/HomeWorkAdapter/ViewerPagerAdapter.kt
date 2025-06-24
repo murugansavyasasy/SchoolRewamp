@@ -73,8 +73,14 @@ class FileViewerAdapter(
 
             // enableZoomOnImage(holder.imageView)
         } else {
+            var isFile = ""
             holder.documentWebView.visibility = View.VISIBLE
-            val isFile = "https://docs.google.com/gview?embedded=true&url=${item.path}"
+
+            if (item.type == Constant.VIDEO) {
+                isFile = item.path
+            } else {
+                isFile = "https://docs.google.com/gview?embedded=true&url=${item.path}"
+            }
             holder.documentWebView.settings.apply {
                 javaScriptEnabled = true
                 setSupportZoom(true)
