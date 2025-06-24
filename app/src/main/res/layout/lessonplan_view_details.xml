@@ -4,20 +4,134 @@
     android:layout_width="match_parent"
     android:id="@+id/rlaHeader"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:background="@color/white">
 
     <include
         android:id="@+id/toolbarLayout"
         layout="@layout/school_side_tool_bar" />
+    <HorizontalScrollView
+        android:id="@+id/tabLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/five"
+        android:layout_marginEnd="@dimen/fifteen"
+        android:layout_marginBottom="@dimen/five"
+        android:background="@color/white"
+        android:layout_below="@+id/toolbarLayout"
+        android:fillViewport="true"
+        android:padding="@dimen/two"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/allbutton"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:paddingStart="@dimen/thirty_sp"
+                android:paddingEnd="@dimen/thirty_sp"
+                android:text="All"
+                android:textColor="@color/black"
+                android:textSize="12sp">
+            </TextView>
+
+            <TextView
+                android:id="@+id/ytsbutton"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="@dimen/five"
+                android:gravity="center"
+                android:padding="@dimen/ten"
+                android:text="Yet to Start"
+                android:paddingStart="@dimen/eighteen_sp"
+                android:paddingEnd="@dimen/eighteen_sp"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/inprogressbutton"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="@dimen/five"
+                android:gravity="center"
+                android:padding="@dimen/ten"
+                android:paddingStart="@dimen/eighteen_sp"
+                android:paddingEnd="@dimen/eighteen_sp"
+                android:text="In Progress"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+
+
+            <TextView
+                android:id="@+id/completedbutton"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="10dp"
+                android:gravity="center"
+                android:padding="@dimen/ten"
+                android:paddingStart="@dimen/eighteen_sp"
+                android:paddingEnd="@dimen/eighteen_sp"
+                android:text="Completed"
+                android:textColor="@color/black"
+                android:textSize="12sp">
+            </TextView>
+
+
+        </LinearLayout>
+    </HorizontalScrollView>
 
 
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcyLessonPlan"
+        android:id="@+id/rcyLessonViewPlan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbarLayout"/>
+        android:layout_below="@+id/tabLayout1"
+        android:layout_marginTop="10dp"
+        />
+
+    <ImageView
+        android:id="@+id/nomessage"
+        android:layout_width="@dimen/two_fifty"
+        android:layout_height="@dimen/two_fifty"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/twenty"
+        android:src="@drawable/nomessages"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/txtNoData"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/twenty"
+        android:text="@string/no_list_found"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:layout_below="@+id/nomessage"
+        android:visibility="gone" />
 
 
 </RelativeLayout>

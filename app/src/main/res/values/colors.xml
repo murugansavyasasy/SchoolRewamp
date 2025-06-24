@@ -135,6 +135,7 @@
     <color name="light_violet">#E3F1FB</color>
     <color name="card_blue">#EEE9F3</color>
     <color name="light_blue_1">#5DCBF5</color>
+    <color name="dark_blue_1">#007aff</color>
 
     <color name="light_orange">#F8ECE5</color>
     <color name="light_orange_1">#FB975C</color>
@@ -167,6 +168,8 @@
     <color name="light_green4">#50C878</color>
 
     <color name="light_orange4">#f5a961</color>
+    <color name="light_green9">#ebf9ee</color>
+
     <color name="light_red4">#ffc4c1</color>
     <color name="light_sky_blue1">#DFF4F7</color>
     <color name="light_orang1">#FCEDDB</color>

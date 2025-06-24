@@ -3,6 +3,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     android:orientation="horizontal"
+    android:gravity="center"
     android:background="@drawable/bg_fee_card_red"
     android:padding="12dp"
     android:elevation="2dp">
@@ -12,14 +13,13 @@
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:src="@drawable/collect"
-        android:layout_gravity="center_vertical" />
+         />
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="horizontal"
-        android:gravity="center_vertical"
         android:layout_marginStart="12dp">
 
         <TextView

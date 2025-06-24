@@ -1,7 +1,6 @@
-package com.vs.schoolmessenger.School.LessonPlan.Model
+package com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummaryModel
 
 data class AllClassData (
-
     val section_subject_id : String,
     val staff_name : String,
     val class_name : String,
@@ -11,5 +10,4 @@ data class AllClassData (
     val total_items : String,
     val percentage_value : String,
     val items_completed : String
-
 )

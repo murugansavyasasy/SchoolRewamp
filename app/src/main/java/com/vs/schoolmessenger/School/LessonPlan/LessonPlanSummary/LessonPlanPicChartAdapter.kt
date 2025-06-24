@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.School.LessonPlan
+package com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummary
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,9 +8,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.LessonPlan.Model.AllClassData
+import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummary.LessonPlanChartClickListener
+import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummaryModel.AllClassData
 import com.vs.schoolmessenger.Utils.CustomPieChartView
-
 
 class LessonPlanPicChartAdapter(
     private var itemList: List<AllClassData>? = emptyList(),

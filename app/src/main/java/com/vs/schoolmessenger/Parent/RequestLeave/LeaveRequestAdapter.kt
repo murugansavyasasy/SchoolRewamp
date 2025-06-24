@@ -152,5 +152,4 @@ class LeaveRequestAdapter(
             ShimmerUtil.startShimmer(itemView)
         }
     }
-
 }

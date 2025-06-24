@@ -20,7 +20,6 @@ import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
-import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequest
 
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.SendAbsenteeSMSResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportDataResponse
@@ -34,7 +33,8 @@ import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveActionResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveRequestResponse
-import com.vs.schoolmessenger.School.LessonPlan.Model.AllClassResponse
+import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummaryModel.AllClassResponse
+import com.vs.schoolmessenger.School.LessonPlan.LessonPlanViewSummaryModel.LessonPlanViewSummaryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffAttendanceReportResponse
@@ -106,6 +106,7 @@ class SchoolServices {
     var getleaverequest: MutableLiveData<LeaveRequestResponse?>
     var isleaverequestapprove: MutableLiveData<LeaveActionResponse?>
     var getlpStaffReport: MutableLiveData<AllClassResponse?>
+    var getlpViewReport: MutableLiveData<LessonPlanViewSummaryResponse?>
 
     init {
         client_auth = RestClient()
@@ -157,6 +158,7 @@ class SchoolServices {
         getleaverequest = MutableLiveData()
         isleaverequestapprove = MutableLiveData()
         getlpStaffReport = MutableLiveData()
+        getlpViewReport = MutableLiveData()
     }
 
 
@@ -1928,6 +1930,45 @@ class SchoolServices {
 
     val isgetlpStaffReportLiveData: LiveData<AllClassResponse?>
         get() = getlpStaffReport
+
+
+
+    fun getlpViewReport(
+        isToken: String, section_subject_id: String, lesson_plan_status: Int, activity: Activity
+    ) {
+        RestClient.apiInterfaces.getlpViewReport(isToken, section_subject_id, lesson_plan_status)
+            ?.enqueue(object : Callback<LessonPlanViewSummaryResponse?> {
+                override fun onResponse(
+                    call: Call<LessonPlanViewSummaryResponse?>, response: Response<LessonPlanViewSummaryResponse?>
+                ) {
+                    Log.d(
+                        "isGetCountryList", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                getlpViewReport.postValue(response.body())
+                            } else {
+                                getlpViewReport.postValue(response.body())
+                            }
+                        }
+                    }
+                    else{
+                        getlpViewReport.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<LessonPlanViewSummaryResponse?>, t: Throwable) {
+                    isGetAds.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isgetlpViewReportLiveData: LiveData<LessonPlanViewSummaryResponse?>
+        get() = getlpViewReport
+
 
 
 }

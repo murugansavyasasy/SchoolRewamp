@@ -25,7 +25,6 @@ import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventResp
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.HolidayResponse
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
-import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequest
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestApplyResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.SendAbsenteeSMSResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportDataResponse
@@ -42,7 +41,8 @@ import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveActionResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveRequestResponse
-import com.vs.schoolmessenger.School.LessonPlan.Model.AllClassResponse
+import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummaryModel.AllClassResponse
+import com.vs.schoolmessenger.School.LessonPlan.LessonPlanViewSummaryModel.LessonPlanViewSummaryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffAttendanceReportResponse
@@ -442,6 +442,14 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String,
         @Query(APIKeyNames.request_type) request_type: String?
     ): Call<AllClassResponse?>
+
+
+    @GET(APIMethods.getlpViewReport)
+    fun getlpViewReport(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query(APIKeyNames.section_subject_id) section_subject_id: String?,
+        @Query(APIKeyNames.lesson_plan_status) lesson_plan_status: Int?
+    ): Call<LessonPlanViewSummaryResponse?>
 
 
 

@@ -205,7 +205,7 @@
         </activity>
 
         <activity
-            android:name=".School.LessonPlan.LessonPlanViewDetails"
+            android:name=".School.LessonPlan.LessonPlanViewSummary.LessonPlanViewDetails"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize">
 
@@ -232,7 +232,7 @@
         </activity>
 
         <activity
-            android:name=".School.LessonPlan.LessonPlan"
+            android:name=".School.LessonPlan.LessonPlanSummary.LessonPlan"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize">
 

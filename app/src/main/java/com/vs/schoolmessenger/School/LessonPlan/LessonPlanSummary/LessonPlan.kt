@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.School.LessonPlan
+package com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummary
 
 import android.content.Intent
 import android.view.View
@@ -9,7 +9,9 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
-import com.vs.schoolmessenger.School.LessonPlan.Model.AllClassData
+import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummary.LessonPlanChartClickListener
+import com.vs.schoolmessenger.School.LessonPlan.LessonPlanViewSummary.LessonPlanViewDetails
+import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummaryModel.AllClassData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.LessonPlanBinding
@@ -36,7 +38,7 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(),
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
 
-        binding.toolbarLayout.lblParentToolBar.text = "School Strength"
+        binding.toolbarLayout.lblParentToolBar.text = "Lesson Plan"
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
         binding.toolbarLayout.imgBack.setOnClickListener(this)
@@ -56,13 +58,12 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(),
                 binding.rcyLessonPlan.visibility = View.GONE
             }
         }
-
-        // Default call
-        loadlpAllClassdata("myclass")
+        loadlpAllClassdata("allclass")
     }
 
     private fun islpStaffData(data: List<AllClassData>?) {
-        lessonplanAdapter = LessonPlanPicChartAdapter(data, this, this, Constant.isShimmerViewDisable)
+        lessonplanAdapter =
+            LessonPlanPicChartAdapter(data, this, this, Constant.isShimmerViewDisable)
         binding.rcyLessonPlan.adapter = lessonplanAdapter
     }
 
@@ -85,7 +86,7 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(),
                 binding.btnHistory.setTextColor(ContextCompat.getColor(this, R.color.black))
                 binding.btnHistory.background = null
 
-                loadlpAllClassdata("myclass")
+                loadlpAllClassdata("allclass")
             }
 
             R.id.btnHistory -> {
@@ -94,8 +95,7 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(),
                 binding.btnHistory.background = ContextCompat.getDrawable(this, R.drawable.bg_blue)
                 binding.btnCreate.setTextColor(ContextCompat.getColor(this, R.color.black))
                 binding.btnCreate.background = null
-
-                loadlpAllClassdata("allclass")
+                loadlpAllClassdata("myclass")
             }
 
             R.id.imgBack -> onBackPressed()
@@ -104,6 +104,8 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(),
 
     override fun onItem(data: AllClassData) {
         val intent = Intent(this@LessonPlan, LessonPlanViewDetails::class.java)
+        intent.putExtra("section_subject_id", data.section_subject_id)
         startActivity(intent)
     }
+
 }
