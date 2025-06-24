@@ -102,7 +102,7 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(),
         }
     }
 
-    override fun onItem(data: LessonPlanChartData) {
+    override fun onItem(data: AllClassData) {
         val intent = Intent(this@LessonPlan, LessonPlanViewDetails::class.java)
         startActivity(intent)
     }

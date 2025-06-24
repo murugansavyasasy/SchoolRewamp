@@ -41,7 +41,8 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginTop="@dimen/ten"
-                android:layout_marginEnd="@dimen/ten" />
+                android:layout_marginEnd="@dimen/ten"
+                android:padding="10dp"/>
 
             <RelativeLayout
                 android:id="@+id/rlaDetails"

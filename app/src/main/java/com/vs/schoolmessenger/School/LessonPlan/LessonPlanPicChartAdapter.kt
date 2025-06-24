@@ -10,7 +10,7 @@ import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.LessonPlan.Model.AllClassData
 import com.vs.schoolmessenger.Utils.CustomPieChartView
-import com.vs.schoolmessenger.Utils.PieChartView
+
 
 class LessonPlanPicChartAdapter(
     private var itemList: List<AllClassData>? = emptyList(),
@@ -65,28 +65,22 @@ class LessonPlanPicChartAdapter(
         fun bind(data: AllClassData, listener: LessonPlanChartClickListener) {
             lblSubject.text = data.subject_name
             lblSection.text = data.section_name
-            lblStaffName.text = "${data.staff_name}"
+            lblStaffName.text = data.staff_name
             lblStatus.text = "Items Completed : ${data.items_completed}"
-//            lblComplete.text = "Completed: ${data.Completed}"
-//            lblPending.text = "Pending: ${data.Pending}"
-//
-//            val completed = data.Completed.toFloatOrNull() ?: 0f
-//            val pending = data.Pending.toFloatOrNull() ?: 0f
-//            val total = completed + pending
-//            val progress = if (total > 0) (completed / total) * 100f else 0f
 
-//            customPieChart.setProgress(progress)
-//
-//            btnView.setOnClickListener {
-//                listener.onItem(data)
-//            }
+            val percentage = data.percentage_value.toFloatOrNull() ?: 0f
+            customPieChart.setProgress(percentage)
+
+            btnView.setOnClickListener {
+                listener.onItem(data)
+            }
         }
+
     }
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val shimmerLayout: ShimmerFrameLayout =
             itemView.findViewById(R.id.shimmer_view_container)
-
         init {
             shimmerLayout.startShimmer()
         }
