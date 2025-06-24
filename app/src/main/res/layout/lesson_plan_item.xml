@@ -1,86 +1,125 @@
-
-
-
-
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:fitsSystemWindows="true">
-    <ImageView
-        android:id="@+id/imgInProgress"
-        android:layout_width="@dimen/twenty_five"
-        android:layout_height="@dimen/twenty_five"
-        android:layout_marginTop="@dimen/fourty"
-        android:layout_marginStart="@dimen/twenty"
-        android:layout_centerVertical="true"
-        android:src="@drawable/correctic"/>
-
-
-    <!-- Vertical Line Below imgInProgress -->
-    <View
-        android:id="@+id/viewVerticalLine"
-        android:layout_width="@dimen/two"
-        android:layout_height="@dimen/fifty"
-        android:background="@color/green"
-        android:layout_marginStart="@dimen/thirty_two"
-        android:layout_below="@id/imgInProgress"
-        android:layout_marginTop="@dimen/six"
-        android:visibility="gone"/>
 
 
     <RelativeLayout
-        android:id="@+id/header_layout"
+        android:id="@+id/rlaLeaveRequest"
         android:layout_width="match_parent"
-        android:layout_toEndOf="@+id/imgInProgress"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/five"
+        android:background="@drawable/rect_shadow_white">
 
-        <RelativeLayout
-            android:id="@+id/relative_layout"
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/detailsRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/ten"
-            android:layout_marginStart="@dimen/nine"
-            android:layout_marginEnd="@dimen/twenty"
-            android:background="@drawable/rect_shadow_white"
-            android:backgroundTint="@color/custom_blue">
+            android:nestedScrollingEnabled="false"
+            android:paddingStart="13dp"
+            android:paddingEnd="13dp"
+            android:layout_marginBottom="10dp"/>
 
-            <TextView
-                android:id="@+id/header_values"
+
+
+        <LinearLayout
+            android:id="@+id/bottomstatuslinear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/detailsRecyclerView"
+            android:layout_margin="@dimen/ten"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:visibility="visible">
+
+            <RelativeLayout
+                android:id="@+id/bottomstatusrelative_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/Title"
-                android:textStyle="bold"
-                android:textSize="@dimen/twele_sp"
-                android:textColor="@color/black"
-                android:fontFamily="@font/poppins_bold"
-                android:layout_marginStart="@dimen/ten"
-                android:layout_marginTop="@dimen/ten"/>
+                android:layout_weight="0"
+                android:background="@drawable/bg_green_radoius_20dp"
+                android:gravity="center"
+                android:padding="@dimen/two">
 
-            <TextView
-                android:id="@+id/date_values"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/date"
-                android:textSize="11sp"
-                android:textColor="@color/black"
-                android:layout_marginStart="@dimen/ten"
-                android:fontFamily="@font/poppins_regular"
-                android:layout_below="@+id/header_values"
-                android:layout_marginTop="@dimen/ten"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_centerInParent="true">
 
-            <TextView
-                android:id="@+id/footer_values"
-                android:layout_width="match_parent"
+                    <ImageView
+                        android:id="@+id/status_text1label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp"
+                        android:layout_marginTop="5dp"
+                        android:src="@drawable/correcticonsvg" />
+
+                    <TextView
+                        android:id="@+id/status_textlabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="3dp"
+                        android:text="Completed"
+                        android:textSize="15sp"
+                        android:textColor="@color/green"
+                        style="@style/CustomTextStylePoppinsBold" />
+                </LinearLayout>
+            </RelativeLayout>
+        </LinearLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/editdeletelayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bottomstatuslinear_layout"
+            android:layout_marginBottom="@dimen/eight"
+            android:padding="@dimen/two">
+
+            <LinearLayout
+                android:id="@+id/editDeleteContainer"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/unit"
-                android:textSize="@dimen/eleven_sp"
-                android:textColor="@color/black"
-                android:layout_marginStart="@dimen/ten"
-                android:layout_below="@+id/date_values"
-                android:fontFamily="@font/poppins_regular"
-                android:layout_marginTop="@dimen/ten"
-                android:layout_marginBottom="@dimen/ten"/>
+                android:layout_alignParentEnd="true"
+                android:orientation="horizontal"
+                android:gravity="end"
+                android:layout_marginEnd="8dp">
+
+                <TextView
+                    android:id="@+id/btnedit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/rect_grey"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:text="Edit"
+                    android:textColor="@color/black"
+                    style="@style/CustomTextStylePoppinsMedium" />
+
+                <TextView
+                    android:id="@+id/btnedit1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_red_radoius_10dp"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:text="Delete"
+                    android:textColor="@color/black"
+                    style="@style/CustomTextStylePoppinsMedium" />
+            </LinearLayout>
         </RelativeLayout>
+
+
+
     </RelativeLayout>
 </RelativeLayout>

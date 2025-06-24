@@ -16,6 +16,9 @@ object APIKeyNames {
     const val attendance_date = "attendance_date"
     const val student_id = "student_id"
     const val is_approve = "is_approve"
+    const val section_subject_id = "section_subject_id"
+    const val lesson_plan_status = "lesson_plan_status"
+
 
     const val name = "name"
     const val iframe = "iframe"

@@ -48,7 +48,7 @@ import com.vs.schoolmessenger.School.Homework.HomeWork
 import com.vs.schoolmessenger.School.ImportantInfo.ImportantInfo
 import com.vs.schoolmessenger.School.InteractionWithStudent.InteractionWithStudent
 import com.vs.schoolmessenger.School.LeaveRequests.LeaveRequests
-import com.vs.schoolmessenger.School.LessonPlan.LessonPlan
+import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummary.LessonPlan
 import com.vs.schoolmessenger.School.MarkYourAttendance.MarkYourAttendance
 import com.vs.schoolmessenger.School.MessageFromManagement.MessageFromManagement
 import com.vs.schoolmessenger.School.NoticeBoard.CreateNoticeBoard

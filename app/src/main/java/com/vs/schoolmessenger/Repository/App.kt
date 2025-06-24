@@ -9,7 +9,6 @@ import com.google.gson.JsonObject
 import com.vs.schoolmessenger.CommonScreens.Ads.AdsResponse
 import com.vs.schoolmessenger.CommonScreens.GlobalVariableResponse
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
-import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYearResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
@@ -39,7 +38,8 @@ import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveActionResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveRequestResponse
-import com.vs.schoolmessenger.School.LessonPlan.Model.AllClassResponse
+import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummaryModel.AllClassResponse
+import com.vs.schoolmessenger.School.LessonPlan.LessonPlanViewSummaryModel.LessonPlanViewSummaryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffAttendanceReportResponse
@@ -172,6 +172,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var isleaverequestapprove: LiveData<LeaveActionResponse?>? = null
 
     var getlpStaffReport: LiveData<AllClassResponse?>? = null
+    var getlpViewReport: LiveData<LessonPlanViewSummaryResponse?>? = null
 
 
 
@@ -236,6 +237,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isleaverequestapprove = apiSchoolRepositories.isleaverequestapproveLiveData
 
         getlpStaffReport = apiSchoolRepositories.isgetlpStaffReportLiveData
+        getlpViewReport = apiSchoolRepositories.isgetlpViewReportLiveData
 
     }
 
@@ -538,6 +540,11 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun getlpStaffReport(isToken: String, request_type: String, activity: Activity) {
         apiSchoolRepositories.getlpStaffReport(isToken,request_type,activity)
+    }
+
+    fun getlpViewReport(isToken: String, section_subject_id: String, lesson_plan_status: Int, activity : Activity) {
+
+        apiSchoolRepositories.getlpViewReport(isToken,section_subject_id,lesson_plan_status,activity)
     }
 
 

@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.School.LessonPlan.Model
+package com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummaryModel
 
 data class AllClassResponse (
     val status : Boolean,

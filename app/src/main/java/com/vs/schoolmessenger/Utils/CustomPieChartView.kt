@@ -15,20 +15,20 @@ class CustomPieChartView @JvmOverloads constructor(
     private val backgroundPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = Color.GRAY
         style = Paint.Style.STROKE
-        strokeWidth = 40f
+        strokeWidth = 30f
         strokeCap = Paint.Cap.ROUND
     }
 
     private val progressPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = Color.parseColor("#FFA726") // Orange Color
         style = Paint.Style.STROKE
-        strokeWidth = 40f
+        strokeWidth = 30f
         strokeCap = Paint.Cap.ROUND
     }
 
     private val textPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = Color.BLACK
-        textSize = 60f
+        textSize = 30f
         typeface = Typeface.DEFAULT_BOLD
         textAlign = Paint.Align.CENTER
     }

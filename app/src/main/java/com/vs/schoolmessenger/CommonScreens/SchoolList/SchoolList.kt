@@ -35,7 +35,7 @@ import com.vs.schoolmessenger.School.DailyCollection.DailyCollection
 import com.vs.schoolmessenger.School.Event.CreateEvent
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReport
 import com.vs.schoolmessenger.School.Homework.HomeWork
-import com.vs.schoolmessenger.School.LessonPlan.LessonPlan
+import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummary.LessonPlan
 import com.vs.schoolmessenger.School.MarkYourAttendance.MarkYourAttendance
 import com.vs.schoolmessenger.School.NoticeBoard.Model.NoticeBoardDetails
 import com.vs.schoolmessenger.School.SchoolStrength.SchoolStrength
