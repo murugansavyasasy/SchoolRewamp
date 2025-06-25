@@ -33,6 +33,7 @@ import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveActionResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveRequestResponse
+import com.vs.schoolmessenger.School.LessonPlan.LessonPlanEditModel.LessonPlanEditResponse
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummaryModel.AllClassResponse
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanViewSummaryModel.LessonPlanViewSummaryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistoryResponse
@@ -107,6 +108,7 @@ class SchoolServices {
     var isleaverequestapprove: MutableLiveData<LeaveActionResponse?>
     var getlpStaffReport: MutableLiveData<AllClassResponse?>
     var getlpViewReport: MutableLiveData<LessonPlanViewSummaryResponse?>
+    var getlpeditReport: MutableLiveData<LessonPlanEditResponse?>
 
     init {
         client_auth = RestClient()
@@ -159,6 +161,7 @@ class SchoolServices {
         isleaverequestapprove = MutableLiveData()
         getlpStaffReport = MutableLiveData()
         getlpViewReport = MutableLiveData()
+        getlpeditReport = MutableLiveData()
     }
 
 
@@ -1968,6 +1971,44 @@ class SchoolServices {
 
     val isgetlpViewReportLiveData: LiveData<LessonPlanViewSummaryResponse?>
         get() = getlpViewReport
+
+
+
+    fun getlpeditReport(
+        isToken: String, particular_id: String, request_type: String, activity: Activity
+    ) {
+        RestClient.apiInterfaces.getlpeditReport(isToken, particular_id, request_type)
+            ?.enqueue(object : Callback<LessonPlanEditResponse?> {
+                override fun onResponse(
+                    call: Call<LessonPlanEditResponse?>, response: Response<LessonPlanEditResponse?>
+                ) {
+                    Log.d(
+                        "isGetCountryList", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                getlpeditReport.postValue(response.body())
+                            } else {
+                                getlpeditReport.postValue(response.body())
+                            }
+                        }
+                    }
+                    else{
+                        getlpeditReport.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<LessonPlanEditResponse?>, t: Throwable) {
+                    isGetAds.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isgetlpeditReportLiveData: LiveData<LessonPlanEditResponse?>
+        get() = getlpeditReport
 
 
 

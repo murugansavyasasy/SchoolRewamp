@@ -76,6 +76,7 @@ object APIMethods {
     const val isleaverequestapprove = "comm/api/leave-req/update-status"
     const val getlpStaffReport = "lms/api/lesson-plan/staff-report"
     const val getlpViewReport = "lms/api/lesson-plan/view"
+    const val getlpeditReport = "lms/api/lesson-plan/get-data-for-edit"
 }
 
 

@@ -38,6 +38,7 @@ import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveActionResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveRequestResponse
+import com.vs.schoolmessenger.School.LessonPlan.LessonPlanEditModel.LessonPlanEditResponse
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummaryModel.AllClassResponse
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanViewSummaryModel.LessonPlanViewSummaryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistoryResponse
@@ -173,6 +174,7 @@ class App(application: Application) : AndroidViewModel(application) {
 
     var getlpStaffReport: LiveData<AllClassResponse?>? = null
     var getlpViewReport: LiveData<LessonPlanViewSummaryResponse?>? = null
+    var getlpeditReport: LiveData<LessonPlanEditResponse?>? = null
 
 
 
@@ -238,6 +240,7 @@ class App(application: Application) : AndroidViewModel(application) {
 
         getlpStaffReport = apiSchoolRepositories.isgetlpStaffReportLiveData
         getlpViewReport = apiSchoolRepositories.isgetlpViewReportLiveData
+        getlpeditReport = apiSchoolRepositories.isgetlpeditReportLiveData
 
     }
 
@@ -545,6 +548,11 @@ class App(application: Application) : AndroidViewModel(application) {
     fun getlpViewReport(isToken: String, section_subject_id: String, lesson_plan_status: Int, activity : Activity) {
 
         apiSchoolRepositories.getlpViewReport(isToken,section_subject_id,lesson_plan_status,activity)
+    }
+
+    fun getlpeditReport(isToken: String, particular_id: String, request_type: String, activity : Activity) {
+
+        apiSchoolRepositories.getlpeditReport(isToken,particular_id,request_type,activity)
     }
 
 
