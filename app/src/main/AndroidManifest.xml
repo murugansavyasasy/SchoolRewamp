@@ -387,6 +387,15 @@
 
         <activity
 
+            android:name=".School.LessonPlan.LessonPlanEdit.LessonPlanEditActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+
+
+
+        <activity
+
             android:name=".Dashboard.School.SchoolDashboard"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"

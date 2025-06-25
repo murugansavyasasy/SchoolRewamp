@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:padding="10dp"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/headerlabel"
+        android:text="Month :"
+        android:textColor="@color/black"
+        android:layout_marginStart="15dp"
+        android:textSize="@dimen/eighteen_sp"
+        style="@style/CustomTextStylePoppinsBold"/>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/headerlabe1l"
+        android:layout_below="@+id/headerlabel"
+        android:text="Month"
+        android:textColor="@color/black"
+        android:background="@drawable/gray_bg_radius_textview"
+        android:padding="10dp"
+        android:gravity="start"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:textSize="@dimen/eighteen_sp"
+        android:layout_marginTop="10dp"
+        style="@style/CustomTextStylePoppinsMedium"/>
+
+
+
+</RelativeLayout>
