@@ -205,5 +205,16 @@
             android:textColor="@android:color/holo_blue_dark"
             android:visibility="gone" />
 
+        <TextView
+            android:id="@+id/tvView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvSeeMoreImage"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginBottom="@dimen/ten"
+            android:text="@string/View"
+            android:textColor="@android:color/holo_blue_dark"
+            android:visibility="gone" />
+
     </RelativeLayout>
 </RelativeLayout>

@@ -25,7 +25,7 @@
 
         <TextView
             android:id="@+id/btnCreate"
-            style="@style/CustomTextStylePoppinsMedium"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -37,7 +37,7 @@
 
         <TextView
             android:id="@+id/btnHistory"
-            style="@style/CustomTextStylePoppinsMedium"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"

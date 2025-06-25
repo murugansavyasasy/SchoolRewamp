@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
+import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentClickListener
 import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentFile
 import com.vs.schoolmessenger.Parent.Communication.UnifiedVoiceAdapter.ShimmerViewHolder
 import com.vs.schoolmessenger.Parent.Homework.FullScreenViewerActivity
@@ -34,6 +35,7 @@ class AttachmentFilePathAdapter (
     private var GetFilePathDetailsData: List<AttachmentFile>?,
     private var context: Context,
     private var isLoading: Boolean
+
 ):RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
@@ -126,6 +128,7 @@ class AttachmentFilePathAdapter (
             }
 
             fileItem.setOnClickListener {
+
                 Constant.commonFileList.isEmpty()
                 Constant.selectedFileIndex=-1
                 val commonList = adapter.GetFilePathDetailsData?.map {
@@ -147,6 +150,7 @@ class AttachmentFilePathAdapter (
 
             WebViewThumbnail.setOnTouchListener(object : OnTouchListener {
                 override fun onTouch(v: View?, event: MotionEvent): Boolean {
+
                     if (event.getAction() == MotionEvent.ACTION_MOVE) {
                         return false
                     }

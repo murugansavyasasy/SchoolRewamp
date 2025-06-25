@@ -130,6 +130,7 @@ object APIKeyNames {
     const val class_teacher="class_teacher"
     const val upload ="upload"
     const val embed ="embed"
+    const val player_embed_url ="player_embed_url"
     const val upload_link ="upload_link"
     const val html ="html"
     const val leave_from ="leave_from"

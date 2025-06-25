@@ -613,8 +613,8 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickL
     private fun isRedirectToSchoolList() {
         val title = binding.txtTitle.text.toString().trim()
         val description = binding.txtDesc.text.toString().trim()
-        val txtEndDate = Constant.convertDateFormat1(binding.txtEndDate.text.toString())
-        val txtStartDate = Constant.convertDateFormat1(binding.txtStartDate.text.toString())
+        val txtEndDate = Constant.convertDateFormat(binding.txtEndDate.text.toString())
+        val txtStartDate = Constant.convertDateFormat(binding.txtStartDate.text.toString())
         if (title.isEmpty()) {
             binding.txtTitle.error = getString(R.string.Title_required)
             binding.txtTitle.requestFocus()

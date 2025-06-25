@@ -40,7 +40,7 @@
             android:layout_marginBottom="2dp"
             android:layout_marginStart="2dp"
             android:padding="@dimen/eight"
-            style="@style/CustomTextStylePoppinsMedium">
+            style="@style/CustomTextStylePoppinsBold">
         </TextView>
 
         <TextView
@@ -48,7 +48,6 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="CLASS WISE"
-
             android:textColor="@color/black"
             android:textSize="13sp"
             android:layout_weight="1"
@@ -58,7 +57,7 @@
             android:layout_marginEnd="2dp"
             android:padding="@dimen/eight"
             android:gravity="center"
-            style="@style/CustomTextStylePoppinsMedium">
+            style="@style/CustomTextStylePoppinsBold">
         </TextView>
 
     </LinearLayout>
@@ -76,7 +75,7 @@
         android:weightSum="1">
 
             <TextView
-                style="@style/CustomTextStylePoppinsMedium"
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/fifteen"

@@ -42,6 +42,8 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserValidationData
 import com.vs.schoolmessenger.Auth.OTP.ForgetOtpData
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
+import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
+import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYearResponse
 import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolList
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
@@ -164,6 +166,9 @@ object Constant {
     var selectedFileIndex: Int = -1
     var isCommunicationType = 1
     var isVoiceType = 1
+
+    var isAcademicYearList: List<AcademicYear>? = null
+
 
 //    var isForward = false
     //MarkAttendanceDetails
@@ -337,6 +342,7 @@ object Constant {
     var size = "size"
     var upload = "upload"
     var view = "view"
+    var attachment = "Attachment"
     var unlisted = "unlisted"
     var download = "download"
     var privacy = "privacy"
@@ -756,16 +762,24 @@ object Constant {
 
 
 
-    fun getFileSizeInMB(filePath: String): String {
-        val file = File(filePath)
-        if (!file.exists()) return "File not found"
+    fun getFileSizeInMB(context: Context, filePath: String): String {
+        return try {
+            val sizeBytes: Long = if (filePath.startsWith("content://")) {
+                val uri = Uri.parse(filePath)
+                context.contentResolver.openFileDescriptor(uri, "r")?.statSize ?: 0
+            } else {
+                val file = File(filePath)
+                if (file.exists()) file.length() else 0
+            }
 
-        val bytes = file.length()
-        val kilobytes = bytes / 1024.0
-        val megabytes = kilobytes / 1024.0
-
-        return String.format("%.2f MB", megabytes)
+            val megabytes = sizeBytes / 1024.0 / 1024.0
+            String.format("%.2f MB", megabytes)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            "0.00 MB"
+        }
     }
+
 
 
     @RequiresApi(Build.VERSION_CODES.O)

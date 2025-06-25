@@ -111,12 +111,8 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnCli
 
         gpsStatusReceiver = GPSStatusReceiver(this)
 
-        appViewModel!!.isGetAcademicList?.observe(this) { response ->
-//            Constant.hideLoading(this@MarkYourAttendance)
-            if (response!!.status) {
-                isLoadYear(response.data)
-            }
-        }
+
+        isLoadYear(Constant.isAcademicYearList)
 
         appViewModel!!.isStaffLocations?.observe(this) { response ->
             if (response != null) {
@@ -176,13 +172,6 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnCli
                 lblNoRecordsFound!!.text = response!!.message
             }
         }
-    }
-
-    private fun isGetAcademicYear() {
-//        Constant.showLoading(this@MarkYourAttendance)
-        appViewModel!!.isGetAcademicYear(
-            isAccessToken!!, this
-        )
     }
 
     private fun isLoadYear(isAcademicYear: List<AcademicYear>?) {
@@ -405,7 +394,6 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnCli
             R.id.btnHistory -> {
                 binding.rytAddLocation.visibility = View.GONE
                 binding.rytProgressBar.visibility = View.GONE
-                isGetAcademicYear()
                 isBackgroundChange(binding.btnHistory)
             }
 

@@ -12,11 +12,15 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.Login
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
+import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Repository.Auth
 import com.vs.schoolmessenger.Utils.ChangeLanguage
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.Constant.isAcademicYearList
+import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SchoolDashboardBinding
 
 class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickListener {
@@ -29,6 +33,10 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
     }
 
     var authViewModel: Auth? = null
+    private var appViewModel: App? = null
+    var userDetails: UserDetails? = null
+    var access_token = ""
+
 
     override fun getViewBinding(): SchoolDashboardBinding {
         return SchoolDashboardBinding.inflate(layoutInflater)
@@ -45,7 +53,11 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
 //            window.statusBarColor = this.resources.getColor(R.color.primary_light)
 //            window.navigationBarColor = this.resources.getColor(R.color.primary_light)
 //        }
+        userDetails = SharedPreference.getUserDetails(this)
+        access_token = userDetails!!.staff_details[0].access_token
 
+        appViewModel = ViewModelProvider(this)[App::class.java]
+        appViewModel!!.init()
         authViewModel = ViewModelProvider(this).get(Auth::class.java)
         authViewModel!!.init()
         FirebaseMessaging.getInstance().isAutoInitEnabled = true
@@ -81,6 +93,20 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
                 val message = response.message
             }
         }
+
+        appViewModel!!.isGetAcademicList?.observe(this) { response ->
+            response?.data?.let { academicList ->
+              val data = academicList.sortedByDescending { it.current_academic_year }
+                if (isAcademicYearList == data) return@observe
+                  isAcademicYearList = data
+            }
+        }
+        isGetAcademicYear()
+    }
+
+    private fun isGetAcademicYear() {
+        appViewModel!!.isGetAcademicYear(access_token, this)
+
     }
 
     private fun isUpdateDeviceToken(token: String) {

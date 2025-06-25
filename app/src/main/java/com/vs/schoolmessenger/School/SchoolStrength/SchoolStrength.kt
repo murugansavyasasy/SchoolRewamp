@@ -23,6 +23,8 @@ import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.SchoolStrength.Adapter.SchoolStrengthAdapter
 import com.vs.schoolmessenger.School.SchoolStrength.Adapter.SchoolStrengthDetailAdapter
 import com.vs.schoolmessenger.School.SchoolStrength.Model.SchoolData
+import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.Constant.isAcademicYearList
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SchoolStrengthBinding
 
@@ -64,19 +66,12 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
         binding.rlaabsenteesreport2.layoutManager = LinearLayoutManager(this)
 
 
-        appViewModel!!.isGetAcademicList?.observe(this) { response ->
-            response?.data?.let { academicList ->
-                val reorderedList = academicList.sortedByDescending { it.current_academic_year }
-                if (isAcademicYear == reorderedList) return@observe
-                isAcademicYear = reorderedList
-                isLoadAcademicYear(isAcademicYear)
-                isValidAcademicYear =
-                    isAcademicYear?.any { it.current_academic_year == true } == true
-                isAcademicYearId = isAcademicYear!![0].id
-                isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
-                isGetSchoolStrength()
-            }
-        }
+        isLoadAcademicYear(isAcademicYearList)
+        isValidAcademicYear =
+            isAcademicYearList?.any { it.current_academic_year == true } == true
+        isAcademicYearId = isAcademicYearList!![0].id
+        isCurrentAcademicYear = isAcademicYearList!![0].current_academic_year
+        isGetSchoolStrength()
 
         appViewModel?.isGetSchoolStrengthReport?.observe(this) { response ->
             if (response != null && response.status) {
@@ -88,13 +83,12 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
                 //isLoadSchoolStrengthData(response.data)
                 setupPieChart(response.data)
             } else {
-                 binding.nomessage.visibility = View.VISIBLE
-                 binding.txtNoData.visibility = View.VISIBLE
+                binding.nomessage.visibility = View.VISIBLE
+                binding.txtNoData.visibility = View.VISIBLE
                 binding.rlaPieChartCount.visibility = View.GONE
                 binding.rlaabsenteesreport2.visibility = View.GONE
             }
         }
-        isGetAcademicYear()
     }
 
     override fun onClick(p0: View?) {
@@ -128,9 +122,6 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
         }
     }
 
-    private fun isGetAcademicYear() {
-        appViewModel!!.isGetAcademicYear(isAccessToken!!, this)
-    }
 
     private fun isGetSchoolStrength() {
         appViewModel?.isGetSchoolStrengthReport(isAccessToken ?: "", isAcademicYearId, this)
@@ -146,7 +137,8 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
         val totalGirlsStrength = data[0].totalGirlsStrength.toFloatOrNull() ?: 0f
         val totalothersStrength = data[0].totalOthersStrength.toFloatOrNull() ?: 0f
 
-        val total = totalBoysStrength + totalGirlsStrength + totalStaffStrength + totalothersStrength // 22
+        val total =
+            totalBoysStrength + totalGirlsStrength + totalStaffStrength + totalothersStrength // 22
         binding.customPieChart.setUsePercentValues(true)
         binding.customPieChart.getDescription().setEnabled(false)
         binding.customPieChart.setExtraOffsets(5f, 10f, 5f, 5f)
@@ -186,7 +178,7 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
         entries.add(PieEntry(totalStaffStrength))
         entries.add(PieEntry(totalBoysStrength))
         entries.add(PieEntry(totalGirlsStrength))
-        if(!data[0].totalOthersStrength.equals("0")) {
+        if (!data[0].totalOthersStrength.equals("0")) {
             entries.add(PieEntry(totalothersStrength))
         }
         // on below line we are setting pie data set
@@ -202,7 +194,7 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
         colors.add(resources.getColor(R.color.yellow))
         colors.add(resources.getColor(R.color.teal))
         colors.add(resources.getColor(R.color.pink))
-        if(!data[0].totalOthersStrength.equals("0")) {
+        if (!data[0].totalOthersStrength.equals("0")) {
             colors.add(resources.getColor(R.color.green))
         }
         // on below line we are setting colors.

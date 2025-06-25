@@ -11,12 +11,20 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Parent.Attachment.Adapter.AttachmentAdapter
+import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentClickListener
+import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentData
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.FileViewerAdapter
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
+import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.HomeworkViewImageDocumentBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -29,6 +37,8 @@ import java.net.URL
 
 class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(), View.OnClickListener {
 
+    private var isAccessToken: String? = null
+    private var appViewModel: App? = null
     private lateinit var adapter: FileViewerAdapter
     private var currentPosition = 0
 
@@ -42,6 +52,9 @@ class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(
 
         val subjectName = intent.getStringExtra(Constant.subjectName) ?: ""
         binding.lblSubject.text = subjectName
+        val childDetails = SharedPreference.getChildDetails(this)
+        isAccessToken = childDetails?.access_token
+        appViewModel = ViewModelProvider(this).get(App::class.java).apply { init() }
 
         binding.imgBack.setOnClickListener(this)
         binding.lytDownload.setOnClickListener(this)
@@ -56,8 +69,6 @@ class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(
 
         binding.rcyFile.layoutManager = noScrollLayoutManager
         binding.rcyFile.adapter = adapter
-
-        // Setup indicator
 
         if (Constant.commonFileList.isNullOrEmpty()|| Constant.commonFileList.size==1) {
 //            binding.indicator.visibility = View.GONE
@@ -248,4 +259,7 @@ class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(
             }
         }
     }
+
+
+
 }

@@ -82,13 +82,9 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
             onBackPressed()
         }
 
-        appViewModel!!.isGetAcademicList?.observe(this) { response ->
-            Constant.hideLoading(this@StaffWiseAttendanceReport)
-            if (response!!.status) {
-                yearList = response.data
-                isLoadYear(response.data)
-            }
-        }
+
+        isLoadYear(Constant.isAcademicYearList)
+
 
         appViewModel!!.isStaffWiseAttendanceReport?.observe(this) { response ->
             if (response != null) {
@@ -375,7 +371,6 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
         when (p0?.id) {
             R.id.btnHistory -> {
                 isTodayList = false
-                isGetAcademicYear()
                 isBackgroundChange(binding.btnHistory)
             }
 
@@ -402,12 +397,7 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
         )
     }
 
-    private fun isGetAcademicYear() {
-        Constant.showLoading(this@StaffWiseAttendanceReport)
-        appViewModel!!.isGetAcademicYear(
-            isAccessToken!!, this
-        )
-    }
+
 
     fun getStaffAttendanceReport(
         isCurrentDate: String,
