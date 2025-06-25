@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/headerlabe1l"
         android:layout_below="@+id/headerlabel"
-        android:text="Month"
+        android:text="Value"
         android:textColor="@color/black"
         android:background="@drawable/gray_bg_radius_textview"
         android:padding="10dp"
