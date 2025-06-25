@@ -2,14 +2,27 @@ package com.vs.schoolmessenger.Parent.Noticeboard.Adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
+import android.view.View.OnTouchListener
 import android.view.ViewGroup
+import android.webkit.WebResourceError
+import android.webkit.WebResourceRequest
+import android.webkit.WebViewClient
 import android.widget.Filter
 import android.widget.Filterable
+import android.widget.ImageView
+import android.widget.ProgressBar
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.vs.schoolmessenger.CommonScreens.CommonFileData
+import com.vs.schoolmessenger.Parent.Homework.FullScreenViewerActivity
 import com.vs.schoolmessenger.Parent.Noticeboard.Notice
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardClickListener
 import com.vs.schoolmessenger.R
@@ -41,12 +54,15 @@ class NoticeBoardAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.noticeboard_report_item)
+//            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.noticeboard_report_item)
+            val shimmerView =
+                ShimmerUtil.wrapWithShimmer(parent, R.layout.homework_school_reportitem)
             ShimmerViewHolder(shimmerView)
         }
         else {
             val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.noticeboard_report_item, parent, false)
+//                .inflate(R.layout.noticeboard_report_item, parent, false)
+                .inflate(R.layout.homework_school_reportitem, parent, false)
             DataViewHolder(view, context)
         }
     }
@@ -94,39 +110,111 @@ class NoticeBoardAdapter(
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
 
-        private val lblDateImage: TextView = itemView.findViewById(R.id.lblDateImage)
+        private val LblHWSubjectName: TextView = itemView.findViewById(R.id.LblHWSubjectName)
         private val lblTitleImage: TextView = itemView.findViewById(R.id.lblTitleImage)
         private val lblContentImage: TextView = itemView.findViewById(R.id.lblContentImage)
-        private val rcyImgPdf: RecyclerView = itemView.findViewById(R.id.rcyImgPDF)
+        private val lblDateImage: TextView = itemView.findViewById(R.id.lblDateImage)
+        private val rlaSelectText: RelativeLayout = itemView.findViewById(R.id.rlaSelectText)
+        private val rytList: RelativeLayout = itemView.findViewById(R.id.rytList)
+        private val rcyImgPDF: RecyclerView = itemView.findViewById(R.id.rcyImgPDF)
+        private val imgNewImage: ImageView = itemView.findViewById(R.id.imgNewImage)
+        private val webView: android.webkit.WebView = itemView.findViewById(R.id.webView)
+        private val loadingBar: ProgressBar = itemView.findViewById(R.id.loadingBar)
         private val indicator: CircleIndicator2 = itemView.findViewById(R.id.indicator)
-        private var mnoticeboardImgPDFAdapter: FilePathAdapter? = null
 
         @SuppressLint("ClickableViewAccessibility")
         fun bind(noticeData: Notice, position: Int, adapter: NoticeBoardAdapter) {
+
+
+            LblHWSubjectName.visibility = View.GONE
+            imgNewImage.visibility = View.VISIBLE
+            rlaSelectText.visibility = View.GONE
             lblTitleImage.text = noticeData.title
             lblContentImage.text = noticeData.description
-            lblDateImage.text = Constant.convertDateAndTimeFormat(noticeData.created_on)
+            lblDateImage.text = Constant.convertDateTimeFormat(noticeData.created_on)
 
-            if (noticeData.file_path.isNotEmpty()) {
-                rcyImgPdf.visibility = View.VISIBLE
+            webView.setOnTouchListener(object : OnTouchListener {
+                @SuppressLint("ClickableViewAccessibility")
+                override fun onTouch(v: View?, event: MotionEvent): Boolean {
+                    if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                        return false
+                    }
+
+                    if (event.getAction() == MotionEvent.ACTION_UP) {
+                        Constant.commonFileList.isEmpty()
+                        Constant.selectedFileIndex = -1
+                        val commonList = noticeData.file_path?.map {
+                            CommonFileData(
+                                type = it.type,
+                                path = it.url,
+                            )
+                        } ?: emptyList()
+
+                        Constant.commonFileList = commonList
+                        Constant.selectedFileIndex = position
+
+                        val intent = Intent(context, FullScreenViewerActivity::class.java)
+                        intent.putExtra(Constant.subjectName, noticeData.title)
+                        context.startActivity(intent)
+                    }
+
+                    return false
+                }
+            })
+
+            if (noticeData.iframe != "") {
+                webView.visibility = View.VISIBLE
+                rytList.visibility = View.VISIBLE
+                rcyImgPDF.visibility = View.GONE
+                webView.settings.javaScriptEnabled = true
+                webView.settings.domStorageEnabled = true
+                webView.settings.loadWithOverviewMode = true
+                webView.settings.useWideViewPort = true
+
+                webView.webViewClient = object : WebViewClient() {
+                    override fun onPageStarted(
+                        view: android.webkit.WebView, url: String, favicon: Bitmap?
+                    ) {
+                        loadingBar.visibility = View.VISIBLE
+                    }
+
+                    override fun onPageFinished(view: android.webkit.WebView?, url: String?) {
+                        loadingBar.visibility = View.GONE
+                    }
+
+                    override fun onReceivedError(
+                        view: android.webkit.WebView?,
+                        request: WebResourceRequest?,
+                        error: WebResourceError?
+                    ) {
+                        loadingBar.visibility = View.GONE
+                        Log.e("WebViewError", "Error loading: ${error?.description}")
+                    }
+                }
+
+                webView.loadUrl(noticeData.file_path[0].url.toString())
+            } else {
+                if (noticeData.file_path.isEmpty()) {
+                    rytList.visibility = View.GONE
+                    rcyImgPDF.visibility = View.GONE
+                } else {
+                    rytList.visibility = View.VISIBLE
+                    rcyImgPDF.visibility = View.VISIBLE
+                }
+
                 if (noticeData.file_path.size > 1) {
                     indicator.visibility = View.VISIBLE
                 } else {
                     indicator.visibility = View.GONE
                 }
 
-                rcyImgPdf.layoutManager =
+                webView.visibility = View.GONE
+                rcyImgPDF.layoutManager =
                     LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                mnoticeboardImgPDFAdapter = FilePathAdapter(
-                    noticeData.file_path,
-                    context,
-                    Constant.isShimmerViewDisable
+                rcyImgPDF.adapter = FilePathAdapter(
+                    noticeData.file_path, context, Constant.isShimmerViewDisable
                 )
-                rcyImgPdf.adapter = mnoticeboardImgPDFAdapter
-                indicator.attachToRecyclerView(rcyImgPdf)
-            } else {
-                rcyImgPdf.visibility = View.GONE
-                indicator.visibility = View.GONE
+                indicator.attachToRecyclerView(rcyImgPDF)
             }
         }
 

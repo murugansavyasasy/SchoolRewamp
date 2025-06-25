@@ -483,11 +483,13 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                                     if (Constant.isAwsUploadedFiles.size == isSelectedFileListSize) {
                                         runOnUiThread {
                                             binding.circularProgressView.visibility = View.GONE
-                                            when (SELECTED_SCHOOL_MENU) {
-                                                M_ATTACHMENTS -> attachmentSendApi()
-                                                M_COMMUNICATION -> voiceSendApi()
-                                                M_NOTICEBOARD -> noticeboardsendapi()
-                                            }
+                                            Constant.showLoading(this@SchoolList)
+                                        }
+
+                                        when (SELECTED_SCHOOL_MENU) {
+                                            M_ATTACHMENTS -> attachmentSendApi()
+                                            M_COMMUNICATION -> voiceSendApi()
+                                            M_NOTICEBOARD -> noticeboardsendapi()
                                         }
                                     }
                                 }
@@ -693,7 +695,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             Log.d("link", link.toString())
 
             isIframe = extractVimeoUrlFromIframe(iframe.toString()).toString()
-            isFileSize = Constant.getFileSizeInMB(Constant.selectedFiles[0].path)
+            isFileSize = Constant.getFileSizeInMB(this,Constant.selectedFiles[0].path)
 
             Constant.isAwsUploadedFiles.add(
                 AwsUploadedFiles(

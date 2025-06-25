@@ -104,7 +104,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     private lateinit var dimOverlayManager: DimOverlayManager
 
 
-
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
@@ -379,7 +378,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     }
 
     private fun tapVisibility() {
-        Log.d("Tap Visibility Check","Tap Debug Check")
+        Log.d("Tap Visibility Check", "Tap Debug Check")
         if (isUserDetails!!.staff_role == Constant.isStaffRole) {
             if (SELECTED_SCHOOL_MENU == M_HOMEWORK) {
                 binding.nomessage.visibility = View.GONE
@@ -405,7 +404,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 changeTapBg(Constant.isSection)
 
                 //show send and specific student button
-            }else {
+            } else {
 
                 binding.nomessage.visibility = View.GONE
                 binding.nomessageEntire.visibility = View.GONE
@@ -441,7 +440,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 binding.tapStaffs.visibility = View.GONE
                 changeTapBg(Constant.isSection)
 
-            }else if (SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS) {
+            } else if (SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS) {
                 binding.textdesc.visibility = View.VISIBLE
                 binding.bottomLayout.visibility = View.VISIBLE
                 binding.nomessageEntire.visibility = View.VISIBLE
@@ -453,7 +452,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 changeTapBg(Constant.isSchool)
                 isSelectedType = 0
                 isGetAcademicYear()
-            }  else {
+            } else {
                 binding.textdesc.visibility = View.VISIBLE
                 binding.bottomLayout.visibility = View.VISIBLE
                 binding.nomessageEntire.visibility = View.VISIBLE
@@ -469,6 +468,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             }
         }
     }
+
     private fun isLoadStaffData(data: List<NameAndIds>) {
 
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
@@ -506,6 +506,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         )
         binding.recyclerView.adapter = isStandardListAdapter
     }
+
     private fun isLoadAcademicYear(isAcademicYear: List<AcademicYear>?) {
         val adapter = AcademicYearAdapter(this, isAcademicYear)
         binding.isSpinner.adapter = adapter
@@ -645,6 +646,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 intent.putStringArrayListExtra(Constant.isSelectedId, ArrayList(selectedIds))
                 startActivity(intent)
             }
+
             R.id.rytSend -> {
                 var isTypeOfName = ""
                 if (isSelectedType == 0) {
@@ -831,7 +833,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 binding.chAllSelect.visibility = View.GONE
                 binding.rytSubjectDropDown.visibility = View.GONE
                 binding.subjectlabel.visibility = View.GONE
-                if (SELECTED_SCHOOL_MENU == Constant.M_COMMUNICATION || SELECTED_SCHOOL_MENU == Constant.M_ATTACHMENTS) {
+                if (SELECTED_SCHOOL_MENU == M_COMMUNICATION || SELECTED_SCHOOL_MENU == Constant.M_ATTACHMENTS) {
                     binding.btnSpecificStudent.visibility = View.VISIBLE
                 } else {
                     binding.btnSpecificStudent.visibility = View.GONE
@@ -1064,7 +1066,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     }
 
 
-
     @RequiresApi(Build.VERSION_CODES.O)
     fun eventsendapi() {
 
@@ -1104,8 +1105,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             Log.d("VimeoIframe", iframe.toString())
             Log.d("link", link.toString())
             isIframe = extractVimeoUrlFromIframe(iframe.toString()).toString()
-            Log.d("isIframe",isIframe)
-            isFileSize = Constant.getFileSizeInMB(Constant.selectedFiles[0].path)
+            Log.d("isIframe", isIframe)
+            isFileSize = Constant.getFileSizeInMB(this,Constant.selectedFiles[0].path.toString())
 
             Constant.isAwsUploadedFiles.add(
                 AwsUploadedFiles(
@@ -1116,7 +1117,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 isHomeWorkSend()
             } else if (SELECTED_SCHOOL_MENU == Constant.M_ATTACHMENTS) {
                 attachmentSendApi()
-            }else if (SELECTED_SCHOOL_MENU == Constant.M_SCHOOL_CLASS_EVENTS) {
+            } else if (SELECTED_SCHOOL_MENU == Constant.M_SCHOOL_CLASS_EVENTS) {
                 eventsendapi()
             }
         }
@@ -1326,9 +1327,9 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                                         isSelectedFileListSize.toString()
                                     )
                                     if (Constant.isAwsUploadedFiles.size == isSelectedFileListSize) {
-
                                         runOnUiThread {
                                             binding.circularProgressView.visibility = View.GONE
+                                            Constant.showLoading(this@RecipientActivity)
                                         }
 
                                         Log.d(
@@ -1387,7 +1388,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     }
 
 
-
     @RequiresApi(Build.VERSION_CODES.O)
     fun isHomeWorkSend() {
         val sectionDetails = intent.getParcelableExtra<SectionDetails>(Constant.section_data)
@@ -1404,9 +1404,10 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             )
             appViewModel!!.isSendHomeWork(isAccessToken!!, jsonObject, this)
         } ?: run {
-            Constant.showValidationAlertPopup( getString(
-                R.string.alert
-            ),
+            Constant.showValidationAlertPopup(
+                getString(
+                    R.string.alert
+                ),
                 resources.getString(R.string.Section_details_missing), this
             )
         }

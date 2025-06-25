@@ -103,7 +103,7 @@ object VimeoVideoUpload {
                     val jsonResponse = JSONObject(response)
                     val upload = jsonResponse.getJSONObject(APIKeyNames.upload)
                     val embed = jsonResponse.getJSONObject(APIKeyNames.embed)
-                    val link = jsonResponse.getString(APIKeyNames.link)
+                    val link = jsonResponse.getString(APIKeyNames.player_embed_url)
 
                     val uploadLink = upload.getString(APIKeyNames.upload_link)
                     val iframe = embed.getString(APIKeyNames.html)

@@ -57,8 +57,6 @@ class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(
         binding.rcyFile.layoutManager = noScrollLayoutManager
         binding.rcyFile.adapter = adapter
 
-        // Setup indicator
-
         if (Constant.commonFileList.isNullOrEmpty()|| Constant.commonFileList.size==1) {
 //            binding.indicator.visibility = View.GONE
             binding.lnrNext.visibility = View.GONE

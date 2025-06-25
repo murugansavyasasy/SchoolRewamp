@@ -8,11 +8,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
-import android.view.View.OnTouchListener
 import android.view.ViewGroup
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebViewClient
+import android.widget.Filter
+import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
@@ -34,10 +35,18 @@ class AttachmentAdapter(
     private val listener: AttachmentClickListener,
     private val context: Context,
     var isLoading: Boolean
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
 
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
+
+    private var fullList: List<AttachmentData> = attachmentList ?: listOf()
+    private var filteredList: List<AttachmentData> = attachmentList ?: listOf()
+
+    init {
+        fullList = attachmentList ?: listOf()
+        filteredList = fullList
+    }
 
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
@@ -45,8 +54,7 @@ class AttachmentAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-            val shimmerView =
-                ShimmerUtil.wrapWithShimmer(parent, R.layout.homework_school_reportitem)
+            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.homework_school_reportitem)
             ShimmerViewHolder(shimmerView)
         } else {
             val view = LayoutInflater.from(parent.context)
@@ -55,18 +63,45 @@ class AttachmentAdapter(
         }
     }
 
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val query = constraint?.toString()?.lowercase()?.trim() ?: ""
+                val result = if (query.isEmpty()) {
+                    fullList
+                } else {
+                    fullList.filter {
+                        it.title.lowercase().contains(query) ||
+                                it.description.lowercase().contains(query)
+                    }
+                }
+                val filterResults = FilterResults()
+                filterResults.values = result
+                return filterResults
+            }
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                filteredList = results?.values as? List<AttachmentData> ?: listOf()
+                listener.onSearchResultEmpty(filteredList.isEmpty())
+                notifyDataSetChanged()
+            }
+        }
+    }
+
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (!isLoading && holder is DataViewHolder) {
-            holder.bind(attachmentList!![position], listener)
+            holder.bind(filteredList[position], listener)
         }
     }
 
     override fun getItemCount(): Int {
-        return if (isLoading) 5 else attachmentList?.size ?: 0
+        return if (isLoading) 5 else filteredList.size
     }
 
     fun updateList(newList: List<AttachmentData>) {
         this.attachmentList = newList
+        this.fullList = newList
+        this.filteredList = newList
         isLoading = false
         notifyDataSetChanged()
     }
@@ -95,79 +130,58 @@ class AttachmentAdapter(
             lblContentImage.text = item.description
             lblDateImage.text = Constant.convertDateTimeFormat(item.date)
 
-            webView.setOnTouchListener(object : OnTouchListener {
-                @SuppressLint("ClickableViewAccessibility")
-                override fun onTouch(v: View?, event: MotionEvent): Boolean {
-                    if (event.getAction() == MotionEvent.ACTION_MOVE) {
-                        return false
-                    }
+            webView.setOnTouchListener { _, event ->
+                if (event.action == MotionEvent.ACTION_UP) {
+                    Constant.commonFileList = item.file_path?.map {
+                        CommonFileData(type = it.type, path = it.url)
+                    } ?: emptyList()
+                    Constant.selectedFileIndex = position
 
-                    if (event.getAction() == MotionEvent.ACTION_UP) {
-                        Constant.commonFileList.isEmpty()
-                        Constant.selectedFileIndex = -1
-                        val commonList = item.file_path?.map {
-                            CommonFileData(
-                                type = it.type,
-                                path = it.url,
-                            )
-                        } ?: emptyList()
-
-                        Constant.commonFileList = commonList
-                        Constant.selectedFileIndex = position
-
-                        val intent = Intent(context, FullScreenViewerActivity::class.java)
-                        intent.putExtra(Constant.subjectName, item.title)
-                        context.startActivity(intent)
-                    }
-
-                    return false
+                    val intent = Intent(context, FullScreenViewerActivity::class.java)
+                    intent.putExtra(Constant.subjectName, item.title)
+                    context.startActivity(intent)
                 }
-            })
+                false
+            }
 
-            if (item.iframe != "") {
+            if (item.iframe.isNotEmpty()) {
                 webView.visibility = View.VISIBLE
                 rytList.visibility = View.VISIBLE
                 rcyImgPDF.visibility = View.GONE
-                webView.settings.javaScriptEnabled = true
-                webView.settings.domStorageEnabled = true
-                webView.settings.loadWithOverviewMode = true
-                webView.settings.useWideViewPort = true
+
+                webView.settings.apply {
+                    javaScriptEnabled = true
+                    domStorageEnabled = true
+                    loadWithOverviewMode = true
+                    useWideViewPort = true
+                }
 
                 webView.webViewClient = object : WebViewClient() {
-                    override fun onPageStarted(
-                        view: android.webkit.WebView, url: String, favicon: Bitmap?
-                    ) {
+                    override fun onPageStarted(view: android.webkit.WebView, url: String, favicon: Bitmap?) {
                         loadingBar.visibility = View.VISIBLE
                     }
 
-                    override fun onPageFinished(view: android.webkit.WebView?, url: String?) {
+                    override fun onPageFinished(view: android.webkit.WebView, url: String) {
                         loadingBar.visibility = View.GONE
                     }
 
                     override fun onReceivedError(
-                        view: android.webkit.WebView?,
-                        request: WebResourceRequest?,
-                        error: WebResourceError?
+                        view: android.webkit.WebView?, request: WebResourceRequest?, error: WebResourceError?
                     ) {
                         loadingBar.visibility = View.GONE
                         Log.e("WebViewError", "Error loading: ${error?.description}")
                     }
                 }
 
-                webView.loadUrl(item.file_path[0].url.toString())
-            } else {
+                webView.loadUrl(item.file_path.firstOrNull()?.url ?: "")
 
-                if (item.file_path.size > 1) {
-                    indicator.visibility = View.VISIBLE
-                } else {
-                    indicator.visibility = View.GONE
-                }
+            } else {
+                indicator.visibility = if (item.file_path.size > 1) View.VISIBLE else View.GONE
 
                 webView.visibility = View.GONE
                 rytList.visibility = View.VISIBLE
                 rcyImgPDF.visibility = View.VISIBLE
-                rcyImgPDF.layoutManager =
-                    LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                rcyImgPDF.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 rcyImgPDF.adapter = AttachmentFilePathAdapter(
                     item.file_path, context, Constant.isShimmerViewDisable
                 )
@@ -179,13 +193,12 @@ class AttachmentAdapter(
             }
         }
 
-        fun CircleIndicator2.attachToRecyclerView(recyclerView: RecyclerView) {
+        private fun CircleIndicator2.attachToRecyclerView(recyclerView: RecyclerView) {
             val adapter = recyclerView.adapter ?: return
             this.createIndicators(adapter.itemCount, 0)
 
             recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(rv: RecyclerView, dx: Int, dy: Int) {
-                    super.onScrolled(rv, dx, dy)
                     val layoutManager = rv.layoutManager as? LinearLayoutManager ?: return
                     val firstVisible = layoutManager.findFirstVisibleItemPosition()
                     this@attachToRecyclerView.animatePageSelected(firstVisible)
