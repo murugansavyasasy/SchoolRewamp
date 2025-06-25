@@ -87,6 +87,7 @@
             android:visibility="visible">
 
             <TextView
+                style="@style/CustomTextStylePoppinsBold"
                 android:id="@+id/lblAcademicYearPick"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -146,12 +147,12 @@
                 android:layout_height="wrap_content">
 
                 <TextView
+                    style="@style/CustomTextStylePoppinsBold"
                     android:id="@+id/date_header"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignStart="@+id/cardStart"
-                    android:layout_marginTop="@dimen/five"
-                    android:fontFamily="@font/poppins_bold"
+                    android:layout_marginTop="@dimen/ten"
                     android:text="@string/select_date"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
@@ -177,7 +178,7 @@
                     android:layout_height="@dimen/fifty"
                     android:layout_below="@+id/date_header"
                     android:layout_marginStart="@dimen/fifteen"
-                    android:layout_marginTop="@dimen/five"
+                    android:layout_marginTop="@dimen/twenty"
                     app:cardCornerRadius="@dimen/ten"
                     app:cardElevation="@dimen/zero">
 
@@ -262,7 +263,7 @@
                 android:layout_below="@+id/rlaSelectDate"
                 android:layout_marginStart="@dimen/fifteen"
                 android:layout_marginTop="@dimen/twenty"
-                android:fontFamily="@font/poppins_bold"
+                style="@style/CustomTextStylePoppinsBold"
                 android:text="@string/select_standard_and_section"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
@@ -287,6 +288,7 @@
                 android:id="@+id/lnrClasses"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ten"
                 android:layout_below="@+id/selectClassSection"
                 android:weightSum="1">
 
@@ -297,8 +299,7 @@
                     android:layout_marginStart="@dimen/fifteen"
                     android:layout_marginEnd="@dimen/fifteen"
                     android:layout_weight="0.5"
-                    android:background="@drawable/bg_white_light_radious"
-                   >
+                    android:background="@drawable/bg_white_light_radious">
 
                     <Spinner
                         android:id="@+id/isSpinnerStandard"
@@ -389,7 +390,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/fifteen"
             android:layout_marginTop="@dimen/fifteen"
-            android:fontFamily="@font/poppins_bold"
+            style="@style/CustomTextStylePoppinsBold"
             android:text="@string/select_attendance_type"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"

@@ -65,7 +65,7 @@ class AttendanceStudentReportAdapter(
         @SuppressLint("UseCompatLoadingForDrawables")
         fun bind(data: StudentAttendanceReportData, position: Int) {
             lblStudentName.text = data.student_name
-            lblAdmissionValue.text = data.admission_no
+            lblAdmissionValue.text =": "+ data.admission_no
             lblAttendanceStatus.text = data.att_status
 
             if (data.att_status == Constant.school) {

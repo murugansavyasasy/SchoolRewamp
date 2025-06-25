@@ -155,7 +155,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textColor="@color/black"
-                            android:textStyle="bold"
                             android:text=""
                             android:textSize="13sp"
                             style="@style/CustomTextStylePoppinsRegular">
@@ -193,13 +192,12 @@
                         android:id="@+id/lblacademicyear"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-
                         android:text=""
                         android:layout_marginEnd="@dimen/ten"
                         android:textColor="@color/black"
                         android:layout_marginBottom="@dimen/ten"
                         android:textSize="@dimen/thirteen_sp"
-                        style="@style/CustomTextStylePoppinsRegular">
+                        style="@style/CustomTextStylePoppinsBold">
 
                     </TextView>
 

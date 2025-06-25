@@ -139,12 +139,12 @@
                 android:padding="@dimen/ten">
 
                 <TextView
+                    style="@style/CustomTextStylePoppinsBold"
                     android:id="@+id/lblHeaderTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/ten"
                     android:layout_marginTop="@dimen/ten"
-                    android:fontFamily="@font/poppins_bold"
                     android:text="@string/create_leave_request"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
@@ -352,12 +352,12 @@
                     </TextView>
 
                     <TextView
+                        style="@style/CustomTextStylePoppinsBold"
                         android:id="@+id/lblEventDesc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/lblTotalDays"
                         android:layout_marginStart="@dimen/ten"
-                        android:fontFamily="@font/poppins_bold"
                         android:text="@string/reason_for_leave"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp"
