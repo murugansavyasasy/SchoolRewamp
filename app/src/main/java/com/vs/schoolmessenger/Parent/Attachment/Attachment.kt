@@ -6,11 +6,13 @@ import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Parent.Attachment.Adapter.AttachmentAdapter
 import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentClickListener
 import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentData
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ParentAttachmentBinding
@@ -136,6 +138,27 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
             binding.nomessage.visibility = View.GONE
             binding.txtNoData.visibility = View.GONE
             binding.recycleracademic.visibility = View.VISIBLE
+        }
+    }
+
+    override fun onUpdateArchiveStatus(type: String?, detailId: String?) {
+        val jsonObject = JsonObject().apply {
+            addProperty(APIKeyNames.type, type)
+            addProperty(APIKeyNames.detail_id, detailId)
+        }
+        isAccessToken?.let {
+            appViewModel?.isUpdateStatusArchive(it, jsonObject, this)
+        }
+    }
+
+    override fun onUpdateAttachmentStatus(type: String?, detailId: String?) {
+        val jsonObject = JsonObject().apply {
+            addProperty(APIKeyNames.type, type)
+            addProperty(APIKeyNames.detail_id, detailId)
+        }
+
+        isAccessToken?.let {
+            appViewModel?.isUpdateStatusCommunication(it, jsonObject, this)
         }
     }
 

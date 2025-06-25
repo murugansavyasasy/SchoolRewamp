@@ -342,6 +342,7 @@ object Constant {
     var size = "size"
     var upload = "upload"
     var view = "view"
+    var attachment = "Attachment"
     var unlisted = "unlisted"
     var download = "download"
     var privacy = "privacy"

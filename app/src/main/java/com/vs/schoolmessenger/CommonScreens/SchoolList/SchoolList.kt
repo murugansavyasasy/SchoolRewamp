@@ -161,7 +161,6 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             }
         }
 
-
         isLoadAcademicYear(isAcademicYearList)
         isAcademicYearId = isAcademicYearList!![0].id
 
@@ -387,7 +386,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         val isSelectedFileListSize = Constant.selectedFiles.size
         val iterator = Constant.selectedFiles.iterator()
 
-// Remove already uploaded AWS URLs
+        // Remove already uploaded AWS URLs
         while (iterator.hasNext()) {
             val fileItem = iterator.next()
             if (fileItem.path.contains("amazonaws.")) {
@@ -437,10 +436,9 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                         } catch (e: Exception) {
                             0L
                         }
-
                         Log.d(
                             "Compressor",
-                            "✅ Compressed: $outputPath (${compressedFile.length() / 1024}KB), Original: ${originalSizeKB / 1024}KB"
+                            "Compressed: $outputPath (${compressedFile.length() / 1024}KB), Original: ${originalSizeKB / 1024}KB"
                         )
                         newSelectedFiles.add(FileItem(path = outputPath, type = original.type))
                     } else {

@@ -11,12 +11,20 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Parent.Attachment.Adapter.AttachmentAdapter
+import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentClickListener
+import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentData
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.FileViewerAdapter
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
+import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.HomeworkViewImageDocumentBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -27,8 +35,10 @@ import java.io.File
 import java.io.FileOutputStream
 import java.net.URL
 
-class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(), View.OnClickListener {
+class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(), View.OnClickListener,AttachmentClickListener {
 
+    private var isAccessToken: String? = null
+    private var appViewModel: App? = null
     private lateinit var adapter: FileViewerAdapter
     private var currentPosition = 0
 
@@ -42,6 +52,9 @@ class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(
 
         val subjectName = intent.getStringExtra(Constant.subjectName) ?: ""
         binding.lblSubject.text = subjectName
+        val childDetails = SharedPreference.getChildDetails(this)
+        isAccessToken = childDetails?.access_token
+        appViewModel = ViewModelProvider(this).get(App::class.java).apply { init() }
 
         binding.imgBack.setOnClickListener(this)
         binding.lytDownload.setOnClickListener(this)
@@ -244,6 +257,38 @@ class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(
                     ).show()
                 }
             }
+        }
+    }
+
+    override fun onItemClick(
+        data: AttachmentData,
+        holder: AttachmentAdapter.DataViewHolder
+    ) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onSearchResultEmpty(isEmpty: Boolean) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onUpdateArchiveStatus(type: String?, detailId: String?) {
+        val jsonObject = JsonObject().apply {
+            addProperty(APIKeyNames.type, type)
+            addProperty(APIKeyNames.detail_id, detailId)
+        }
+        isAccessToken?.let {
+            appViewModel?.isUpdateStatusArchive(it, jsonObject, this)
+        }
+    }
+
+    override fun onUpdateAttachmentStatus(type: String?, detailId: String?) {
+        val jsonObject = JsonObject().apply {
+            addProperty(APIKeyNames.type, type)
+            addProperty(APIKeyNames.detail_id, detailId)
+        }
+
+        isAccessToken?.let {
+            appViewModel?.isUpdateStatusCommunication(it, jsonObject, this)
         }
     }
 }

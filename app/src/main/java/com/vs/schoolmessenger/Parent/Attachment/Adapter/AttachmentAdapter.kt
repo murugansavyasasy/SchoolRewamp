@@ -1,6 +1,5 @@
 package com.vs.schoolmessenger.Parent.Attachment.Adapter
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -9,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebViewClient
@@ -24,6 +24,7 @@ import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
 import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentClickListener
 import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentData
+import com.vs.schoolmessenger.Parent.Attachment.Model.CombinedAttachmentDataAndFile
 import com.vs.schoolmessenger.Parent.Homework.FullScreenViewerActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
@@ -113,6 +114,8 @@ class AttachmentAdapter(
         private val lblTitleImage: TextView = itemView.findViewById(R.id.lblTitleImage)
         private val lblContentImage: TextView = itemView.findViewById(R.id.lblContentImage)
         private val lblDateImage: TextView = itemView.findViewById(R.id.lblDateImage)
+        private val tvView: TextView = itemView.findViewById(R.id.tvView)
+        private val tvSeeMoreImage: TextView = itemView.findViewById(R.id.tvSeeMoreImage)
         private val rlaSelectText: RelativeLayout = itemView.findViewById(R.id.rlaSelectText)
         private val rytList: RelativeLayout = itemView.findViewById(R.id.rytList)
         private val rcyImgPDF: RecyclerView = itemView.findViewById(R.id.rcyImgPDF)
@@ -120,8 +123,35 @@ class AttachmentAdapter(
         private val webView: android.webkit.WebView = itemView.findViewById(R.id.webView)
         private val loadingBar: ProgressBar = itemView.findViewById(R.id.loadingBar)
         private val indicator: CircleIndicator2 = itemView.findViewById(R.id.indicator)
+        var isExpanded = false
 
         fun bind(item: AttachmentData, listener: AttachmentClickListener) {
+
+            val combinedList = item.file_path.map { attachmentFile ->
+                CombinedAttachmentDataAndFile(attachmentFile, item)
+            }
+
+            if (item.file_path.size > 1) {
+                if (item.is_unread) {
+                    if (item.iframe != "") {
+                        tvView.visibility = View.GONE
+                    } else {
+                        tvView.visibility = View.VISIBLE
+                    }
+                } else {
+                    tvView.visibility = View.GONE
+                }
+            } else {
+                if (item.is_unread) {
+                    if (item.iframe != "") {
+                        tvView.visibility = View.GONE
+                    } else {
+                        tvView.visibility = View.VISIBLE
+                    }
+                } else {
+                    tvView.visibility = View.GONE
+                }
+            }
 
             LblHWSubjectName.visibility = View.GONE
             imgNewImage.visibility = View.VISIBLE
@@ -130,8 +160,33 @@ class AttachmentAdapter(
             lblContentImage.text = item.description
             lblDateImage.text = Constant.convertDateTimeFormat(item.date)
 
+
+            lblContentImage.viewTreeObserver.addOnGlobalLayoutListener(object :
+                ViewTreeObserver.OnGlobalLayoutListener {
+                override fun onGlobalLayout() {
+                    lblContentImage.viewTreeObserver.removeOnGlobalLayoutListener(this)
+
+                    val isLongContent = lblContentImage.lineCount > 3
+
+                    if (item.is_unread) {
+                        tvSeeMoreImage.visibility = if (isLongContent) View.VISIBLE else View.GONE
+                        imgNewImage.visibility = View.VISIBLE
+                    } else {
+                        tvSeeMoreImage.visibility = if (isLongContent) View.VISIBLE else View.GONE
+                        imgNewImage.visibility = View.GONE
+                    }
+                }
+            })
+
             webView.setOnTouchListener { _, event ->
                 if (event.action == MotionEvent.ACTION_UP) {
+                    if (item.is_unread) {
+                        if (item.is_archive) {
+                            listener.onUpdateArchiveStatus(Constant.attachment, item.id)
+                        } else {
+                            listener.onUpdateAttachmentStatus(Constant.attachment, item.id)
+                        }
+                    }
                     Constant.commonFileList = item.file_path?.map {
                         CommonFileData(type = it.type, path = it.url)
                     } ?: emptyList()
@@ -154,6 +209,54 @@ class AttachmentAdapter(
                     domStorageEnabled = true
                     loadWithOverviewMode = true
                     useWideViewPort = true
+                }
+
+
+                tvView.setOnClickListener {
+                    isExpanded = !isExpanded
+                    tvView.visibility = View.GONE
+                    tvSeeMoreImage.visibility = View.GONE
+                    imgNewImage.visibility = View.GONE
+                    lblContentImage.maxLines = if (isExpanded) Int.MAX_VALUE else 3
+                    if (item.is_unread) {
+                        if (item.is_archive) {
+                            listener.onUpdateArchiveStatus(Constant.attachment, item.id)
+                        } else {
+                            listener.onUpdateAttachmentStatus(Constant.attachment, item.id)
+                        }
+                    }
+                }
+
+                lblContentImage.setOnClickListener {
+                    isExpanded = !isExpanded
+                    tvSeeMoreImage.visibility = View.GONE
+                    imgNewImage.visibility = View.GONE
+                    tvView.visibility = View.GONE
+                    lblContentImage.maxLines = if (isExpanded) Int.MAX_VALUE else 3
+                    if (item.is_unread) {
+                        if (item.is_archive) {
+                            listener.onUpdateArchiveStatus(Constant.attachment, item.id)
+                        } else {
+                            listener.onUpdateAttachmentStatus(Constant.attachment, item.id)
+                        }
+//                    item.is_unread = false
+                    }
+                }
+
+                tvSeeMoreImage.setOnClickListener {
+                    isExpanded = !isExpanded
+                    tvSeeMoreImage.visibility = View.GONE
+                    imgNewImage.visibility = View.GONE
+                    tvView.visibility = View.GONE
+                    lblContentImage.maxLines = if (isExpanded) Int.MAX_VALUE else 3
+                    if (item.is_unread) {
+                        if (item.is_archive) {
+                            listener.onUpdateArchiveStatus(Constant.attachment, item.id)
+                        } else {
+                            listener.onUpdateAttachmentStatus(Constant.attachment, item.id)
+                        }
+//                    item.is_unread = false
+                    }
                 }
 
                 webView.webViewClient = object : WebViewClient() {
@@ -183,7 +286,7 @@ class AttachmentAdapter(
                 rcyImgPDF.visibility = View.VISIBLE
                 rcyImgPDF.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 rcyImgPDF.adapter = AttachmentFilePathAdapter(
-                    item.file_path, context, Constant.isShimmerViewDisable
+                    combinedList, listener, context, Constant.isShimmerViewDisable
                 )
                 indicator.attachToRecyclerView(rcyImgPDF)
             }
