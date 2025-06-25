@@ -22,7 +22,6 @@ import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
 import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentClickListener
 import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentFile
-import com.vs.schoolmessenger.Parent.Attachment.Model.CombinedAttachmentDataAndFile
 import com.vs.schoolmessenger.Parent.Communication.UnifiedVoiceAdapter.ShimmerViewHolder
 import com.vs.schoolmessenger.Parent.Homework.FullScreenViewerActivity
 import com.vs.schoolmessenger.Parent.Noticeboard.Adapter.FilePathAdapter
@@ -33,8 +32,7 @@ import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class AttachmentFilePathAdapter (
 
-    private var GetFilePathDetailsData: List<CombinedAttachmentDataAndFile>?,
-    private val listener: AttachmentClickListener,
+    private var GetFilePathDetailsData: List<AttachmentFile>?,
     private var context: Context,
     private var isLoading: Boolean
 
@@ -67,7 +65,7 @@ class AttachmentFilePathAdapter (
         if (holder is DataViewHolder) {
             // Bind actual data when loading is complete
 
-            holder.bind(GetFilePathDetailsData!![position],listener,position, this)
+            holder.bind(GetFilePathDetailsData!![position],position, this)
         }
     }
     class DataViewHolder(itemView: View, private val context: Context) :
@@ -82,20 +80,19 @@ class AttachmentFilePathAdapter (
 
         @SuppressLint("ClickableViewAccessibility")
         fun bind(
-            data: CombinedAttachmentDataAndFile?,
-            listener: AttachmentClickListener,
+            data: AttachmentFile?,
             position: Int,
             adapter: AttachmentFilePathAdapter, ) {
 
             Log.d("GetFileDetails", data.toString())
-            if (data?.attachmentFile!!.url.isNullOrEmpty()) {
+            if (data?.url.isNullOrEmpty()) {
                 Log.e("FilePathAdapter", "Invalid URL at position $position")
                 return
             }
-            when (data?.attachmentFile!!.type?.uppercase()) {
+            when (data?.type?.uppercase()) {
                 Constant.IMAGE -> {
                     Glide.with(context)
-                        .load(data.attachmentFile!!.url)
+                        .load(data.url)
                         .placeholder(R.drawable.image_placeholder)
                         .into(DefaultImage)
 
@@ -106,44 +103,38 @@ class AttachmentFilePathAdapter (
 
                 Constant.PDF -> {
                     ImgOrDocumentType.setBackgroundResource(R.drawable.hw_pdf_img)
-                    openDocumentInWebView(data.attachmentFile!!.url)
+                    openDocumentInWebView(data.url)
                 }
 
                 Constant.DOC, Constant.DOCX -> {
                     ImgOrDocumentType.setBackgroundResource(R.drawable.microsoft_word_img)
-                    openDocumentInWebView(data.attachmentFile!!.url)
+                    openDocumentInWebView(data.url)
                 }
 
                 Constant.TXT -> {
                     ImgOrDocumentType.setBackgroundResource(R.drawable.txt_file_img)
-                    openDocumentInWebView(data.attachmentFile!!.url)
+                    openDocumentInWebView(data.url)
                 }
 
                 Constant.PPT, Constant.PPTX -> {
                     ImgOrDocumentType.setBackgroundResource(R.drawable.ppt_icon)
-                    openDocumentInWebView(data.attachmentFile!!.url)
+                    openDocumentInWebView(data.url)
                 }
 
                 Constant.EXCEL -> {
                     ImgOrDocumentType.setBackgroundResource(R.drawable.excel_icon)
-                    openDocumentInWebView(data.attachmentFile!!.url)
+                    openDocumentInWebView(data.url)
                 }
             }
 
             fileItem.setOnClickListener {
-                if (data.attachmentData.is_unread) {
-                    if (data.attachmentData.is_archive) {
-                        listener.onUpdateArchiveStatus(Constant.attachment, data.attachmentData.id)
-                    } else {
-                        listener.onUpdateAttachmentStatus(Constant.attachment, data.attachmentData.id)
-                    }
-                }
+
                 Constant.commonFileList.isEmpty()
                 Constant.selectedFileIndex=-1
                 val commonList = adapter.GetFilePathDetailsData?.map {
                     CommonFileData(
-                        type = it.attachmentFile!!.type,
-                        path = it.attachmentFile!!.url,
+                        type = it.type,
+                        path = it.url,
                     )
                 } ?: emptyList()
 
@@ -159,13 +150,7 @@ class AttachmentFilePathAdapter (
 
             WebViewThumbnail.setOnTouchListener(object : OnTouchListener {
                 override fun onTouch(v: View?, event: MotionEvent): Boolean {
-                    if (data.attachmentData.is_unread) {
-                        if (data.attachmentData.is_archive) {
-                            listener.onUpdateArchiveStatus(Constant.attachment, data.attachmentData.id)
-                        } else {
-                            listener.onUpdateAttachmentStatus(Constant.attachment, data.attachmentData.id)
-                        }
-                    }
+
                     if (event.getAction() == MotionEvent.ACTION_MOVE) {
                         return false
                     }
@@ -174,8 +159,8 @@ class AttachmentFilePathAdapter (
                         Constant.selectedFileIndex=-1
                         val commonList = adapter.GetFilePathDetailsData?.map {
                             CommonFileData(
-                                type = it.attachmentFile!!.type,
-                                path = it.attachmentFile!!.url,
+                                type = it.type,
+                                path = it.url,
                             )
                         } ?: emptyList()
 
