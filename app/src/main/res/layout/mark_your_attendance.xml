@@ -27,7 +27,7 @@
 
         <TextView
             android:id="@+id/btnCreate"
-            style="@style/CustomTextStylePoppinsMedium"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -39,7 +39,7 @@
 
         <TextView
             android:id="@+id/btnHistory"
-            style="@style/CustomTextStylePoppinsMedium"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -365,7 +365,7 @@
                 android:text="FD: Full Day"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
-                style="@style/CustomTextStylePoppinsMedium"/>
+                style="@style/CustomTextStylePoppinsBold" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -374,7 +374,7 @@
                 android:textSize="@dimen/thirteen_sp"
                 android:layout_marginTop="5dp"
                 android:id="@+id/fhtextview"
-                style="@style/CustomTextStylePoppinsMedium"/>
+                style="@style/CustomTextStylePoppinsBold" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -382,7 +382,7 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
                 android:layout_marginTop="5dp"
-                style="@style/CustomTextStylePoppinsMedium"/>
+                style="@style/CustomTextStylePoppinsBold" />
         </LinearLayout>
 
         <RelativeLayout
@@ -450,11 +450,11 @@
 
         <TextView
             android:id="@+id/lblAddLocation"
-            style="@style/Base.CardView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/five"
             android:text="@string/add_location"
+            style="@style/CustomTextStylePoppinsBold"
             android:textColor="@color/navi_blue3"
             android:textSize="@dimen/thirteen_sp">
 
