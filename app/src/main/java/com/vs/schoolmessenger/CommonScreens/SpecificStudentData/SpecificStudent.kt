@@ -271,7 +271,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                 attachmentSendApi()
             }
         } else {
-
+            binding.circularProgressView.visibility = View.VISIBLE
             val outputDir =
                 File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "CompressedOutput")
             val newSelectedFiles = mutableListOf<FileItem>()
@@ -346,6 +346,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                                     if (Constant.isAwsUploadedFiles.size == isSelectedFileListSize) {
                                         runOnUiThread {
                                             binding.circularProgressView.visibility = View.GONE
+                                            Constant.showLoading(this@SpecificStudent)
                                         }
                                         Log.d(
                                             "SELECTED_SCHOOL_MENU",
@@ -516,7 +517,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
             Log.d("VimeoIframe", iframe.toString())
             Log.d("link", link.toString())
             isIframe = extractVimeoUrlFromIframe(iframe.toString()).toString()
-            isFileSize = Constant.getFileSizeInMB(Constant.selectedFiles[0].path)
+            isFileSize = Constant.getFileSizeInMB(this,Constant.selectedFiles[0].path)
 
             Constant.isAwsUploadedFiles.add(
                 AwsUploadedFiles(

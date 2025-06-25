@@ -756,16 +756,24 @@ object Constant {
 
 
 
-    fun getFileSizeInMB(filePath: String): String {
-        val file = File(filePath)
-        if (!file.exists()) return "File not found"
+    fun getFileSizeInMB(context: Context, filePath: String): String {
+        return try {
+            val sizeBytes: Long = if (filePath.startsWith("content://")) {
+                val uri = Uri.parse(filePath)
+                context.contentResolver.openFileDescriptor(uri, "r")?.statSize ?: 0
+            } else {
+                val file = File(filePath)
+                if (file.exists()) file.length() else 0
+            }
 
-        val bytes = file.length()
-        val kilobytes = bytes / 1024.0
-        val megabytes = kilobytes / 1024.0
-
-        return String.format("%.2f MB", megabytes)
+            val megabytes = sizeBytes / 1024.0 / 1024.0
+            String.format("%.2f MB", megabytes)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            "0.00 MB"
+        }
     }
+
 
 
     @RequiresApi(Build.VERSION_CODES.O)

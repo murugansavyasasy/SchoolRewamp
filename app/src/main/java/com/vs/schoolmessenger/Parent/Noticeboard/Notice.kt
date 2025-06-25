@@ -9,5 +9,6 @@ data class Notice(
     val visible_to: String,
     val intended_for: String,
     val is_management: Boolean,
+    val iframe: String,
     val file_path: List<FilePath>
 )

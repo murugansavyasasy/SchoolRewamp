@@ -110,7 +110,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         Constant.hideLoading(this)
         isUserDetails = SharedPreference.getUserDetails(this)
 
-        if (SELECTED_SCHOOL_MENU == M_COMMUNICATION || SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_SCHEDULE_EXAM_TEST  || SELECTED_SCHOOL_MENU == M_ONLINE_MEETING) {
+        if (SELECTED_SCHOOL_MENU == M_COMMUNICATION || SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_SCHEDULE_EXAM_TEST || SELECTED_SCHOOL_MENU == M_ONLINE_MEETING) {
             isMultipleSchool = false
             if (Constant.isEmergencyVoiceNoticeBoard!!) {
                 binding.lnrTab.visibility = View.GONE
@@ -331,7 +331,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         Log.d("SELECTED_SCHOOL_MENU", SELECTED_SCHOOL_MENU.toString())
         SharedPreference.putStaffDetails(this, data)
 
-        if (SELECTED_SCHOOL_MENU == M_COMMUNICATION || SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_ASSIGNMENT || SELECTED_SCHOOL_MENU == M_ONLINE_MEETING  || SELECTED_SCHOOL_MENU == M_SCHEDULE_EXAM_TEST) {
+        if (SELECTED_SCHOOL_MENU == M_COMMUNICATION || SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_ASSIGNMENT || SELECTED_SCHOOL_MENU == M_ONLINE_MEETING || SELECTED_SCHOOL_MENU == M_SCHEDULE_EXAM_TEST) {
             val intent = Intent(this, RecipientActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             startActivity(intent)
@@ -348,7 +348,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                 val intent = Intent(this, CreateEvent::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 startActivity(intent)
-            }  else if (SELECTED_SCHOOL_MENU == M_ABSENTEES_REPORT) {
+            } else if (SELECTED_SCHOOL_MENU == M_ABSENTEES_REPORT) {
                 val intent = Intent(this, AbsenteesReport::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 startActivity(intent)
@@ -495,11 +495,13 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                                     if (Constant.isAwsUploadedFiles.size == isSelectedFileListSize) {
                                         runOnUiThread {
                                             binding.circularProgressView.visibility = View.GONE
-                                            when (SELECTED_SCHOOL_MENU) {
-                                                M_ATTACHMENTS -> attachmentSendApi()
-                                                M_COMMUNICATION -> voiceSendApi()
-                                                M_NOTICEBOARD -> noticeboardsendapi()
-                                            }
+                                            Constant.showLoading(this@SchoolList)
+                                        }
+
+                                        when (SELECTED_SCHOOL_MENU) {
+                                            M_ATTACHMENTS -> attachmentSendApi()
+                                            M_COMMUNICATION -> voiceSendApi()
+                                            M_NOTICEBOARD -> noticeboardsendapi()
                                         }
                                     }
                                 }
@@ -525,7 +527,6 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             )
         }
     }
-
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -706,7 +707,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             Log.d("link", link.toString())
 
             isIframe = extractVimeoUrlFromIframe(iframe.toString()).toString()
-            isFileSize = Constant.getFileSizeInMB(Constant.selectedFiles[0].path)
+            isFileSize = Constant.getFileSizeInMB(this,Constant.selectedFiles[0].path)
 
             Constant.isAwsUploadedFiles.add(
                 AwsUploadedFiles(
