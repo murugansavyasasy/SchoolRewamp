@@ -77,6 +77,7 @@ object APIMethods {
     const val getlpStaffReport = "lms/api/lesson-plan/staff-report"
     const val getlpViewReport = "lms/api/lesson-plan/view"
     const val getlpeditReport = "lms/api/lesson-plan/get-data-for-edit"
+    const val isupdatelessonplan = "lms/api/lesson-plan/update"
 }
 
 

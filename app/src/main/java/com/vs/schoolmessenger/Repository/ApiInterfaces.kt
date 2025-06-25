@@ -43,6 +43,7 @@ import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveActionResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveRequestResponse
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanEditModel.LessonPlanEditResponse
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummaryModel.AllClassResponse
+import com.vs.schoolmessenger.School.LessonPlan.LessonPlanUpdateModel.LessonPlanUpdateResponse
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanViewSummaryModel.LessonPlanViewSummaryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchHistoryResponse
@@ -460,6 +461,13 @@ interface ApiInterfaces {
         @Query(APIKeyNames.request_type) request_type: String?
     ): Call<LessonPlanEditResponse?>
 
+
+    @Headers("Content-Type: application/json")
+    @PUT(APIMethods.isupdatelessonplan)
+    fun isupdatelessonplan(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Body request: LeaveApproveRequest
+    ): Call<LessonPlanUpdateResponse?>
 
 
 }

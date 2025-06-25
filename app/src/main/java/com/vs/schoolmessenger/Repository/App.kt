@@ -40,6 +40,7 @@ import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveActionResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveRequestResponse
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanEditModel.LessonPlanEditResponse
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummaryModel.AllClassResponse
+import com.vs.schoolmessenger.School.LessonPlan.LessonPlanUpdateModel.LessonPlanUpdateResponse
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanViewSummaryModel.LessonPlanViewSummaryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchHistoryResponse
@@ -176,6 +177,8 @@ class App(application: Application) : AndroidViewModel(application) {
     var getlpViewReport: LiveData<LessonPlanViewSummaryResponse?>? = null
     var getlpeditReport: LiveData<LessonPlanEditResponse?>? = null
 
+    var isupdatelessonplan: LiveData<LessonPlanUpdateResponse?>? = null
+
 
 
 
@@ -237,6 +240,7 @@ class App(application: Application) : AndroidViewModel(application) {
         getleaverequest = apiSchoolRepositories.leaverequestLiveData
         getleaverequest =apiSchoolRepositories.leaverequestLiveData
         isleaverequestapprove = apiSchoolRepositories.isleaverequestapproveLiveData
+//        isupdatelessonplan = apiSchoolRepositories.isupdatelessonplanLiveData
 
         getlpStaffReport = apiSchoolRepositories.isgetlpStaffReportLiveData
         getlpViewReport = apiSchoolRepositories.isgetlpViewReportLiveData
@@ -556,7 +560,9 @@ class App(application: Application) : AndroidViewModel(application) {
     }
 
 
-
+//    fun isupdatelessonplan(isToken: String, request: LessonPlanUpdateResponse, activity: Activity) {
+//        apiSchoolRepositories.isupdatelessonplan(isToken,request,activity)
+//    }
 }
 
 

@@ -60,6 +60,7 @@
             android:layout_marginStart="30dp"
             android:background="@drawable/bg_green_radious"
             style="@style/CustomTextStylePoppinsMedium" />
+
     </LinearLayout>
 
 
