@@ -104,6 +104,7 @@
 
     <color name="dark_orange">#e26b26</color>
     <color name="green">#22b34d</color>
+    <color name="dark_blue1">#1886ff</color>
     <color name="dark_green1">#12451F</color>
     <color name="light_green">#92b879</color>
     <color name="light_green1">#cdffab</color>
@@ -169,6 +170,8 @@
 
     <color name="light_orange4">#f5a961</color>
     <color name="light_green9">#ebf9ee</color>
+    <color name="light_blue9">#e6f2ff</color>
+
 
     <color name="light_red4">#ffc4c1</color>
     <color name="light_sky_blue1">#DFF4F7</color>

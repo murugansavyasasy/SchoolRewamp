@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true"
     android:fillViewport="true"
     android:background="@color/white">
@@ -57,7 +58,7 @@
             </RelativeLayout>
         </LinearLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/rlaPieChartCount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -68,100 +69,159 @@
             android:padding="@dimen/twenty"
             android:background="@drawable/rect_shadow_white">
 
-            <com.vs.schoolmessenger.Utils.PieChartView
+
+
+            <com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/customPieChart"
-                android:layout_width="@dimen/one_fifty"
-                android:layout_height="@dimen/one_fifty"
-                android:layout_marginStart="@dimen/twenty"
+                android:layout_alignParentStart="true"
+                android:layout_width="@dimen/one_seventy"
+                android:layout_height="@dimen/one_seventy"
+                android:layout_marginStart="@dimen/five"
                 android:layout_gravity="center_vertical"
-                android:layout_marginEnd="@dimen/ten"/>
+               />
 
             <LinearLayout
+                android:layout_toEndOf="@+id/customPieChart"
+                android:layout_centerVertical="true"
                 android:id="@+id/data_card"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginStart="@dimen/five"
                 android:layout_gravity="center_vertical"
                 android:orientation="vertical">
 
-
                 <LinearLayout
+                    android:layout_marginTop="@dimen/five"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="center_vertical">
 
-                    <View
-                        android:layout_width="@dimen/fifteen"
-                        android:layout_height="@dimen/fifteen"
-                        android:background="@color/teal"
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="@dimen/ten"
+                        android:layout_height="@dimen/ten"
+                        app:cardCornerRadius="@dimen/five"
+                        app:cardBackgroundColor="@color/yellow"
                         android:layout_marginEnd="@dimen/eight"/>
 
                     <TextView
-                        android:id="@+id/students_data"
+                        android:id="@+id/staffCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Students - 543"
+                        android:text="Staff"
                         android:textStyle="bold"
                         android:textColor="@color/black"
-                        android:fontFamily="@font/poppins_medium"
-                        android:textSize="@dimen/thirteen_sp"/>
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:textSize="@dimen/twele_sp"/>
                 </LinearLayout>
 
-
                 <LinearLayout
+                    android:layout_marginTop="@dimen/five"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginTop="@dimen/fifteen">
+                    android:gravity="center_vertical">
 
-                    <View
-                        android:layout_width="@dimen/fifteen"
-                        android:layout_height="@dimen/fifteen"
-                        android:background="@color/red"
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="@dimen/ten"
+                        android:layout_height="@dimen/ten"
+                        app:cardCornerRadius="@dimen/five"
+                        app:cardBackgroundColor="@color/navi_blue2"
                         android:layout_marginEnd="@dimen/eight"/>
 
                     <TextView
-                        android:id="@+id/students_data1"
+                        android:id="@+id/totalStudentCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Staff - 63"
+                        android:text="Total Students"
                         android:textStyle="bold"
                         android:textColor="@color/black"
-                        android:fontFamily="@font/poppins_medium"
-                        android:textSize="@dimen/thirteen_sp"/>
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:textSize="@dimen/twele_sp"/>
                 </LinearLayout>
 
-
                 <LinearLayout
+                    android:layout_marginTop="@dimen/five"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginTop="@dimen/fifteen">
+                    android:gravity="center_vertical">
 
-                    <View
-                        android:layout_width="@dimen/fifteen"
-                        android:layout_height="@dimen/fifteen"
-                        android:background="@color/yellow"
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="@dimen/ten"
+                        android:layout_height="@dimen/ten"
+                        app:cardCornerRadius="@dimen/five"
+                        app:cardBackgroundColor="@color/pink"
                         android:layout_marginEnd="@dimen/eight"/>
 
                     <TextView
-                        android:id="@+id/students_data2"
+                        android:id="@+id/girlsCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Total - 606"
+                        android:text="Girls"
                         android:textStyle="bold"
                         android:textColor="@color/black"
-                        android:fontFamily="@font/poppins_medium"
-                        android:textSize="@dimen/thirteen_sp"/>
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:textSize="@dimen/twele_sp"/>
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="@dimen/five"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="@dimen/ten"
+                        android:layout_height="@dimen/ten"
+                        app:cardCornerRadius="@dimen/five"
+                        app:cardBackgroundColor="@color/teal"
+                        android:layout_marginEnd="@dimen/eight"/>
+
+                    <TextView
+                        android:id="@+id/boysCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Boys"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:textSize="@dimen/twele_sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="@dimen/five"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="@dimen/ten"
+                        android:layout_height="@dimen/ten"
+                        app:cardCornerRadius="@dimen/five"
+                        app:cardBackgroundColor="@color/green"
+                        android:layout_marginEnd="@dimen/eight"/>
+
+                    <TextView
+                        android:id="@+id/othersCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Others"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:textSize="@dimen/twele_sp"/>
+                </LinearLayout>
+
+
 
             </LinearLayout>
 
 
-        </LinearLayout>
+        </RelativeLayout>
 
 
 

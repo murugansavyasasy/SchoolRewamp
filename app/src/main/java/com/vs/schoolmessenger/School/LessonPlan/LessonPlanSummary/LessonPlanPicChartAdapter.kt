@@ -16,7 +16,8 @@ class LessonPlanPicChartAdapter(
     private var itemList: List<AllClassData>? = emptyList(),
     private val listener: LessonPlanChartClickListener,
     private val context: Context,
-    private val isLoading: Boolean
+    private val isLoading: Boolean,
+    private val requestType: String
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val TYPE_SHIMMER = 0
@@ -34,7 +35,8 @@ class LessonPlanPicChartAdapter(
         } else {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.lesson_plan_piechart, parent, false)
-            DataViewHolder(view, context)
+            DataViewHolder(view, context, requestType)
+
         }
     }
 
@@ -50,7 +52,7 @@ class LessonPlanPicChartAdapter(
         return if (isLoading) 5 else itemList?.size ?: 0
     }
 
-    class DataViewHolder(itemView: View, private val context: Context) :
+    class DataViewHolder(itemView: View, private val context: Context,private val requestType: String) :
         RecyclerView.ViewHolder(itemView) {
 
         private val lblSubject: TextView = itemView.findViewById(R.id.lblSubject)
@@ -72,7 +74,7 @@ class LessonPlanPicChartAdapter(
             customPieChart.setProgress(percentage)
 
             btnView.setOnClickListener {
-                listener.onItem(data)
+                listener.onItem(data, requestType)
             }
         }
 

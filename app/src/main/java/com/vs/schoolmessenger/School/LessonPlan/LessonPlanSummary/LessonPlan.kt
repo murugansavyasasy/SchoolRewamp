@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummary
 
 import android.content.Intent
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -22,6 +23,8 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(),
     override fun getViewBinding(): LessonPlanBinding {
         return LessonPlanBinding.inflate(layoutInflater)
     }
+
+    private var currentRequestType = "allclass"
 
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
@@ -51,36 +54,39 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(),
                 binding.nomessage.visibility = View.GONE
                 binding.txtNoData.visibility = View.GONE
                 binding.rcyLessonPlan.visibility = View.VISIBLE
-                islpStaffData(response.data)
+                islpStaffData(response.data, currentRequestType)
             } else {
                 binding.nomessage.visibility = View.VISIBLE
                 binding.txtNoData.visibility = View.VISIBLE
                 binding.rcyLessonPlan.visibility = View.GONE
             }
         }
+
         loadlpAllClassdata("allclass")
     }
 
-    private fun islpStaffData(data: List<AllClassData>?) {
-        lessonplanAdapter =
-            LessonPlanPicChartAdapter(data, this, this, Constant.isShimmerViewDisable)
+    private fun islpStaffData(data: List<AllClassData>?,requestType: String) {
+        lessonplanAdapter = LessonPlanPicChartAdapter(
+            data, this, this, Constant.isShimmerViewDisable, requestType
+        )
         binding.rcyLessonPlan.adapter = lessonplanAdapter
     }
 
     private fun loadlpAllClassdata(requestType: String) {
-        lessonplanAdapter = LessonPlanPicChartAdapter(null, this, this, Constant.isShimmerViewShow)
+        currentRequestType = requestType
+        lessonplanAdapter = LessonPlanPicChartAdapter(null, this, this, Constant.isShimmerViewShow, requestType)
         binding.rcyLessonPlan.layoutManager = LinearLayoutManager(this)
         binding.rcyLessonPlan.isNestedScrollingEnabled = false
         binding.rcyLessonPlan.adapter = lessonplanAdapter
 
         appViewModel!!.getlpStaffReport(isAccessToken!!, requestType, this@LessonPlan)
-
     }
+
 
     override fun onClick(view: View?) {
         when (view?.id) {
             R.id.btnCreate -> {
-                // MyClasses
+
                 binding.btnCreate.setTextColor(ContextCompat.getColor(this, R.color.white))
                 binding.btnCreate.background = ContextCompat.getDrawable(this, R.drawable.bg_blue)
                 binding.btnHistory.setTextColor(ContextCompat.getColor(this, R.color.black))
@@ -90,7 +96,7 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(),
             }
 
             R.id.btnHistory -> {
-                // AllClasses
+
                 binding.btnHistory.setTextColor(ContextCompat.getColor(this, R.color.white))
                 binding.btnHistory.background = ContextCompat.getDrawable(this, R.drawable.bg_blue)
                 binding.btnCreate.setTextColor(ContextCompat.getColor(this, R.color.black))
@@ -102,10 +108,12 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(),
         }
     }
 
-    override fun onItem(data: AllClassData) {
+    override fun onItem(data: AllClassData, requestType: String) {
         val intent = Intent(this@LessonPlan, LessonPlanViewDetails::class.java)
         intent.putExtra("section_subject_id", data.section_subject_id)
+        Log.d("section_subject_id",data.section_subject_id.toString())
+        intent.putExtra("request_type", requestType)
+        Log.d("request_type",requestType)
         startActivity(intent)
     }
-
 }

@@ -448,6 +448,8 @@ dependencies {
     implementation ("com.google.android.play:review-ktx:2.0.1")
     implementation ("com.google.android.gms:play-services-maps:18.2.0")
     implementation ("io.socket:socket.io-client:2.1.0") // stable version
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
 
     // Firebase BOM (manages all Firebase versions)
     implementation(platform("com.google.firebase:firebase-bom:32.7.3"))

@@ -1,5 +1,6 @@
 package com.vs.schoolmessenger.School.LessonPlan.LessonPlanViewSummary
 
+import android.content.Intent
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -9,6 +10,8 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanClickListener
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanData
+import com.vs.schoolmessenger.School.LessonPlan.LessonPlanEdit.LessonPlanEditActivity
+import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummary.LessonPlan
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanViewSummaryModel.LessonPlanViewSummaryDetail
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanViewSummaryModel.LessonPlanViewSummaryItem
 import com.vs.schoolmessenger.Utils.Constant
@@ -29,6 +32,7 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(),
 
     private lateinit var lessonplanViewAdapter: LessonPlanAdapter
     private var sectionSubjectId: String? = null
+    private var request_type: String? = null
     private var currentStatus: Int = 0
 
     override fun setupViews() {
@@ -50,7 +54,8 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(),
         binding.inprogressbutton.setOnClickListener(this)
         binding.completedbutton.setOnClickListener(this)
 
-        sectionSubjectId = intent.getStringExtra("section_subject_id")
+        sectionSubjectId = intent.getStringExtra("section_subject_id")!!
+        request_type = intent.getStringExtra("request_type")!!
 
         setupRecycler()
         highlightSelectedTab(binding.allbutton)
@@ -141,8 +146,11 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(),
         selectedView.isEnabled = false
     }
 
-    override fun onEditItem(data: LessonPlanData) {
-        showEditLessonPlanDialog()
+    override fun onEditItem(data: LessonPlanViewSummaryItem) {
+        val intent = Intent(this@LessonPlanViewDetails, LessonPlanEditActivity::class.java)
+        intent.putExtra("particular_id", data.particular_id)
+        intent.putExtra("request_type",request_type)
+        startActivity(intent)
     }
 
     override fun onDeleteItem(data: LessonPlanData) {
@@ -153,7 +161,4 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(),
         // Optional: Handle date filter here
     }
 
-    private fun showEditLessonPlanDialog() {
-        // Optional: Handle edit dialog
-    }
 }
