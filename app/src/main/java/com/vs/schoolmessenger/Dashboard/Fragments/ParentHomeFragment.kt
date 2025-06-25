@@ -40,13 +40,11 @@ import com.vs.schoolmessenger.Parent.Homework.HomeWork
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.InteractionWithStaff
 import com.vs.schoolmessenger.Parent.LSRW.LSRW
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoard
-import com.vs.schoolmessenger.Parent.OnlineMeeting.OnlineMeeting
 import com.vs.schoolmessenger.Parent.QuizExam.Quiz
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequest
 import com.vs.schoolmessenger.Parent.Timetable.TimeTable
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
-import com.vs.schoolmessenger.School.ExamSchedule.Exam
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ParentHomeFragmentBinding
@@ -317,7 +315,6 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
             Constant.M_COMMUNICATION -> Intent(requireActivity(), CommunicationParent::class.java)
             Constant.M_HOMEWORK -> Intent(requireActivity(), HomeWork::class.java)
-            Constant.M_EXAM -> Intent(requireActivity(), Exam::class.java)
             Constant.M_NOTICEBOARD -> Intent(requireActivity(), NoticeBoard::class.java)
             Constant.M_PARENT_CLASS_EVENTS -> Intent(requireActivity(), Event::class.java)
             Constant.M_ATTENDANCE_REPORT -> Intent(requireActivity(), AttendanceReport::class.java)
@@ -331,7 +328,6 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 //            15 -> Intent(requireActivity(), OnlineTextBook::class.java)
             Constant.M_ASSIGNMENT -> Intent(requireActivity(), Assignment::class.java)
 //            19 -> Intent(requireActivity(), Attachments::class.java)
-            Constant.M_ONLINE_MEETING -> Intent(requireActivity(), OnlineMeeting::class.java)
             Constant.M_QUIZ_EXAM -> Intent(requireActivity(), Quiz::class.java)
             Constant.M_LSRW -> Intent(requireActivity(), LSRW::class.java)
             Constant.M_CLASS_TIME_TABLE -> Intent(requireActivity(), TimeTable::class.java)

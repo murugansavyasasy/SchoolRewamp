@@ -42,7 +42,6 @@ import com.vs.schoolmessenger.School.Attachment.Attachment
 import com.vs.schoolmessenger.School.Communication.CommunicationSchool
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollection
 import com.vs.schoolmessenger.School.Event.CreateEvent
-import com.vs.schoolmessenger.School.ExamSchedule.Exam
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReport
 import com.vs.schoolmessenger.School.Homework.HomeWork
 import com.vs.schoolmessenger.School.ImportantInfo.ImportantInfo
@@ -52,7 +51,6 @@ import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummary.LessonPlan
 import com.vs.schoolmessenger.School.MarkYourAttendance.MarkYourAttendance
 import com.vs.schoolmessenger.School.MessageFromManagement.MessageFromManagement
 import com.vs.schoolmessenger.School.NoticeBoard.CreateNoticeBoard
-import com.vs.schoolmessenger.School.OnlineMeeting.OnlineMeeting
 import com.vs.schoolmessenger.School.SchoolNeeds.SchoolNeeds
 import com.vs.schoolmessenger.School.SchoolStrength.SchoolStrength
 import com.vs.schoolmessenger.School.StaffWiseAttendanceReport.StaffWiseAttendanceReport
@@ -465,7 +463,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             }
 
 
-            Constant.M_SCHEDULE_EXAM_TEST -> Exam::class.java
             Constant.M_MESSAGES_FROM_MANAGEMENT -> {
                 if (userDetails!!.staff_role == Constant.isStaffRole) {
                     MessageFromManagement::class.java
@@ -490,7 +487,6 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 }
             }
 
-            Constant.M_ONLINE_MEETING -> OnlineMeeting::class.java
 
             Constant.M_DAILY_COLLECTION -> {
                 if (userDetails!!.staff_role == Constant.isStaffRole) {

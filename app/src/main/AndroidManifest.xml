@@ -197,12 +197,6 @@
 
         </activity>
 
-        <activity
-            android:name=".School.OnlineMeeting.OnlineMeeting"
-            android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize">
-
-        </activity>
 
         <activity
             android:name=".School.LessonPlan.LessonPlanViewSummary.LessonPlanViewDetails"
@@ -211,12 +205,7 @@
 
         </activity>
 
-        <activity
-            android:name=".School.ExamSchedule.ExamSubjectList"
-            android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize">
 
-        </activity>
 
         <activity
             android:name=".CommonScreens.WebView"
@@ -224,12 +213,7 @@
             android:windowSoftInputMode="adjustPan|adjustResize">
 
         </activity>
-        <activity
-            android:name=".School.ExamSchedule.Exam"
-            android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize">
 
-        </activity>
 
         <activity
             android:name=".School.LessonPlan.LessonPlanSummary.LessonPlan"
@@ -334,16 +318,8 @@
 
         </activity>
 
-        <activity
-            android:name=".Parent.Video.ParentVideo"
-            android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize">
 
-        </activity>
-        <activity
-            android:name=".School.ImagePDF.ImagePdf"
-            android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+
 
         <activity
             android:name=".Dashboard.Settings.ReportTheBug.ReportTheBug"
@@ -426,13 +402,6 @@
         </activity>
 
         <activity
-            android:name=".School.Video.CreateVideo"
-            android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize">
-
-        </activity>
-
-        <activity
             android:name=".CommonScreens.ImageViewActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize">
@@ -465,12 +434,6 @@
 
         </activity>
 
-        <activity
-            android:name=".Parent.ImagesOrPdf.ImageOrPdf"
-            android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize">
-
-        </activity>
 
         <activity
             android:name=".Dashboard.Parent.ExamMark"
