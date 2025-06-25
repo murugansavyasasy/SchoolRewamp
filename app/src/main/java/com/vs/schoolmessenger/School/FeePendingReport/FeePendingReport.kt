@@ -15,6 +15,7 @@ import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportModel.FeePendingCollectionDisplayItem
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportModel.FeeData
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.Constant.isAcademicYearList
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.FeePendingReportBinding
 
@@ -52,28 +53,17 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
 
-        appViewModel!!.isGetAcademicList?.observe(this) { response ->
-            response?.data?.let { academicList ->
-                val reorderedList = academicList.sortedByDescending { it.current_academic_year }
-                if (isAcademicYear == reorderedList) return@observe
-                isAcademicYear = reorderedList
-                isValidAcademicYear = isAcademicYear?.any { it.current_academic_year == true } == true
 
-                isLoadAcademicYear(isAcademicYear)
-                isValidAcademicYear =
-                    isAcademicYear?.any { it.current_academic_year == true } == true
-                isAcademicYearId = isAcademicYear!![0].id
-                isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
-
-                if (isClassWiseSelected) {
-                    isGetDailyWiseCollection()
-                } else {
-                    isGetDailyCollection()
-                }
-            }
+        isLoadAcademicYear(isAcademicYearList)
+        isValidAcademicYear =
+            isAcademicYearList?.any { it.current_academic_year == true } == true
+        isAcademicYearId = isAcademicYearList!![0].id
+        isCurrentAcademicYear = isAcademicYearList!![0].current_academic_year
+        if (isClassWiseSelected) {
+            isGetDailyWiseCollection()
+        } else {
+            isGetDailyCollection()
         }
-
-        isGetAcademicYear()
 
         appViewModel?.isDetailedPendingReport?.observe(this) { response ->
             Constant.hideLoading(this@FeePendingReport)
@@ -114,10 +104,19 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
             pendingData.pending_details?.forEach { item ->
                 if (!item.category.isNullOrEmpty()) {
                     val feeList = item.pending_data?.map { fee ->
-                        FeePendingCollectionDisplayItem.Fee(fee.type_name ?: "Unknown", fee.amount ?: "0")
+                        FeePendingCollectionDisplayItem.Fee(
+                            fee.type_name ?: "Unknown",
+                            fee.amount ?: "0"
+                        )
                     } ?: emptyList()
 
-                    flatList.add(FeePendingCollectionDisplayItem.Header(item.category ?: "Unknown", item.total ?: "0", feeList))
+                    flatList.add(
+                        FeePendingCollectionDisplayItem.Header(
+                            item.category ?: "Unknown",
+                            item.total ?: "0",
+                            feeList
+                        )
+                    )
                 }
 
             }
@@ -242,10 +241,5 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
         }
     }
 
-    private fun isGetAcademicYear() {
-        appViewModel!!.isGetAcademicYear(
-            isAccessToken!!,
-            this
-        )
-    }
+
 }

@@ -30,6 +30,7 @@ import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.Mark
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportData
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportDataResponse
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.Constant.isAcademicYearList
 import com.vs.schoolmessenger.Utils.SectionDropDownListAdapter
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.AttendanceMarkBinding
@@ -127,45 +128,37 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                 if (response.status) {
                     Constant.hideLoading(this@AttendanceMark)
                     Log.d("isSendAbsenteeSMS", response.message)
-                    Constant.showDataValidation(resources.getString(R.string.success), response.message, this)
+                    Constant.showDataValidation(
+                        resources.getString(R.string.success),
+                        response.message,
+                        this
+                    )
                 } else {
-                    Constant.showDataValidation(resources.getString(R.string.fail), response.message, this)
+                    Constant.showDataValidation(
+                        resources.getString(R.string.fail),
+                        response.message,
+                        this
+                    )
                 }
             }
         }
 
-        isGetAcademicYear()
         val (dayOnly, dayOfWeek, fullDate, slashDate) = Constant.getCurrentDateInfo()
         binding.lblDate1.text = dayOnly
         binding.lblDay.text = dayOfWeek
         binding.lblDatePick.text = fullDate
         SelectedDate = slashDate
 
-        appViewModel!!.isGetAcademicList?.observe(this) { response ->
-            Constant.hideLoading(this@AttendanceMark)
-            if (response != null) {
-                if (response.status) {
-                    response.data.let { academicList ->
-                        Log.d("AcademicYearResponse", response.data.toString())
-                        val reorderedList =
-                            academicList.sortedByDescending { it.current_academic_year }
-                        if (isAcademicYear == reorderedList) return@observe
-                        isAcademicYear = reorderedList
-                        isValidAcademicYear =
-                            isAcademicYear?.any { it.current_academic_year == true } == true
-                        isAcademicYearId = isAcademicYear!![0].id
-                        isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
-                        isLoadAcademicYear(isAcademicYear)
-                        isGetStandardSection()
-                        binding.rlaAttendanceMarkCommonDetails.visibility = View.VISIBLE
 
-                    }
-                } else {
-                    binding.rlaMarkAttendanceCommon.visibility = View.GONE
-                    ErrorMessage(response.message)
-                }
-            }
-        }
+        isAcademicYear = isAcademicYearList
+        isValidAcademicYear =
+            isAcademicYear?.any { it.current_academic_year == true } == true
+        isAcademicYearId = isAcademicYear!![0].id
+        isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
+        isLoadAcademicYear(isAcademicYear)
+        isGetStandardSection()
+        binding.rlaAttendanceMarkCommonDetails.visibility = View.VISIBLE
+
 
         appViewModel!!.isStandardSectionList?.observe(this) { response ->
             Constant.hideLoading(this@AttendanceMark)
@@ -270,12 +263,6 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         appViewModel!!.isGetStandardSection(isAccessToken!!.toString(), isAcademicYearId, this)
     }
 
-    private fun isGetAcademicYear() {
-        Constant.showLoading(this@AttendanceMark)
-        appViewModel!!.isGetAcademicYear(
-            isAccessToken!!, this
-        )
-    }
 
     private fun updateStandardAndSection(standard: Standard?) {
         if (standard == null) {
@@ -369,7 +356,7 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
 
 
             R.id.rlaDayDatePicker -> {
-                Constant.showDatePicker(this,true) { selectedDate ->
+                Constant.showDatePicker(this, true) { selectedDate ->
                     Log.d("selectedDate", selectedDate)
                     binding.lblDatePick.text = Constant.covertDateFormate(selectedDate)
                     SelectedDate = selectedDate
@@ -443,8 +430,8 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
 
             R.id.btnCreate -> {
                 callApi = false
-                binding.btnHistory.isEnabled=true
-                binding.btnCreate.isEnabled=false
+                binding.btnHistory.isEnabled = true
+                binding.btnCreate.isEnabled = false
                 binding.txtSearchBox.text.clear()
                 binding.radioButtonFullDay.isChecked = false
                 binding.radioButtonHalfDay.isChecked = false
@@ -462,8 +449,8 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
 
             R.id.btnHistory -> {
                 callApi = true
-                binding.btnHistory.isEnabled=false
-                binding.btnCreate.isEnabled=true
+                binding.btnHistory.isEnabled = false
+                binding.btnCreate.isEnabled = true
                 binding.radioButtonFullDay.isChecked = false
                 binding.radioButtonHalfDay.isChecked = false
                 binding.radioButtonFirstHalf.isChecked = false

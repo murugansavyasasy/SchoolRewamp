@@ -21,6 +21,7 @@ import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.Standar
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.Constant.isAcademicYearList
 import com.vs.schoolmessenger.Utils.SectionDropDownListAdapter
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.Utils.SpinnerLoadingAdapter
@@ -95,45 +96,24 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
         binding.toolbarLayout.lblParentToolBar.visibility = View.VISIBLE
         binding.toolbarLayout.lblParentToolBar.text = getString(R.string.StudentReport)
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
-        isGetAcademicYear()
         setupGenderCaterotyType(filterGenderCaterotyType)
 
 
-        appViewModel!!.isGetAcademicList?.observe(this) { response ->
-            Constant.hideLoading(this@StudentReport)
-            if (response != null) {
-                if (response.status) {
-                    response.data.let { academicList ->
-                        Log.d("AcademicYearResponse", response.data.toString())
-                        val reorderedList =
-                            academicList.sortedByDescending { it.current_academic_year }
-                        if (isAcademicYear == reorderedList) return@observe
-                        isAcademicYear = reorderedList
-                        isLoadAcademicYear(isAcademicYear)
-                        isValidAcademicYear =
-                            isAcademicYear?.any { it.current_academic_year == true } == true
-                        isAcademicYearId = isAcademicYear!![0].id
-                        isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
-                        Log.d("isAcademicYearId", isAcademicYearId.toString())
-                        // Prevent immediate onItemSelected from re-triggering data load
-                        hasAcademicYearManuallyChanged = false
-                        if (filterSelectedOption != null) {
-                            isGetStandardSection()
-                        }
-                        binding.rlaStandardPicking.visibility = View.VISIBLE
 
-                    }
-                } else {
-                    binding.tabLayout.visibility = View.GONE
-                    originalStudentList = emptyList()
-                    currentFilteredList = emptyList()
-                    mAdapter.updateData(emptyList())
-                    binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
-                    binding.rlaStandardPicking.visibility = View.GONE
-                    ErrorMessage(response.message)
-                }
-            }
+
+        isLoadAcademicYear(Constant.isAcademicYearList)
+        isValidAcademicYear =
+            isAcademicYearList?.any { it.current_academic_year == true } == true
+        isAcademicYearId = isAcademicYearList!![0].id
+        isCurrentAcademicYear = isAcademicYearList!![0].current_academic_year
+        Log.d("isAcademicYearId", isAcademicYearId.toString())
+        // Prevent immediate onItemSelected from re-triggering data load
+        hasAcademicYearManuallyChanged = false
+        if (filterSelectedOption != null) {
+            isGetStandardSection()
         }
+        binding.rlaStandardPicking.visibility = View.VISIBLE
+
         appViewModel!!.isStudentReportList?.observe(this) { response ->
             Constant.hideLoading(this@StudentReport)
             if (response != null) {
@@ -272,13 +252,6 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
         sortList(SortType.NO_ASC)
     }
 
-    private fun isGetAcademicYear() {
-        Constant.showLoading(this@StudentReport)
-        appViewModel!!.isGetAcademicYear(
-            isAccessToken!!, this
-        )
-    }
-
     private fun isGetStandardSection() {
         Log.d("isAcademicYearId", isAcademicYearId.toString())
         Constant.showLoading(this@StudentReport)
@@ -333,7 +306,8 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
                     isAllSectionSelected = true
                     binding.isSpinnerSection.setSelection(0)
                     Log.d(
-                        "DropdownMenu", "Clicked Standard Year: ID = ${isStandard[position].id}, Year = ${isStandard[position].name}"
+                        "DropdownMenu",
+                        "Clicked Standard Year: ID = ${isStandard[position].id}, Year = ${isStandard[position].name}"
                     )
                     if (hasUserSelectedStandard) {
                         isGetStudentReport()
@@ -372,7 +346,8 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
                     val selectedOption = updatedSections[position]
 
                     Log.d(
-                        "DropdownMenu", "Clicked Section: ID = ${selectedOption.id}, Name = ${selectedOption.name}"
+                        "DropdownMenu",
+                        "Clicked Section: ID = ${selectedOption.id}, Name = ${selectedOption.name}"
                     )
 
                     if (hasUserSelectedSection) {
@@ -437,10 +412,10 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
 
     private fun highlightSelectedTab(selectedView: View) {
         // make all tabs to  clickable
-        binding.tapNoAsc.isEnabled=true
-        binding.tapNoDsc.isEnabled=true
-        binding.tapNameAsc.isEnabled=true
-        binding.tapNameDsc.isEnabled=true
+        binding.tapNoAsc.isEnabled = true
+        binding.tapNoDsc.isEnabled = true
+        binding.tapNameAsc.isEnabled = true
+        binding.tapNameDsc.isEnabled = true
         // Reset all tabs to white
         binding.tapNoAsc.setBackgroundResource(R.drawable.light_gray_radius)
         binding.tapNoDsc.setBackgroundResource(R.drawable.light_gray_radius)
@@ -450,7 +425,7 @@ class StudentReport : BaseActivity<StudentReportBinding>(), View.OnClickListener
         // Highlight the selected tab
         selectedView.setBackgroundResource(R.drawable.theme_colour_radius)
         // make the selected tab as not clickable
-        selectedView.isEnabled=false
+        selectedView.isEnabled = false
     }
 
 

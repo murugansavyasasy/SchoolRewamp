@@ -134,19 +134,14 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
 
         binding.selectdate.text = Constant.getCurrentDate()
 
-        appViewModel!!.isGetAcademicList?.observe(this) { response ->
-            response?.data?.let { academicList ->
-                val reorderedList = academicList.sortedByDescending { it.current_academic_year }
-                if (isAcademicYear == reorderedList) return@observe
-                isAcademicYear = reorderedList
-                isLoadAcademicYear(isAcademicYear)
-                isValidAcademicYear =
-                    isAcademicYear?.any { it.current_academic_year == true } == true
-                isAcademicYearId = isAcademicYear!![0].id
-                isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
-                isGetStandardSection()
-            }
-        }
+        isAcademicYear = Constant.isAcademicYearList
+        isLoadAcademicYear(isAcademicYear)
+        isValidAcademicYear =
+            isAcademicYear?.any { it.current_academic_year == true } == true
+        isAcademicYearId = isAcademicYear!![0].id
+        isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
+        isGetStandardSection()
+
 
         appViewModel!!.isStandardSectionList?.observe(this) { response ->
             if (response != null) {
@@ -455,7 +450,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
                 isBackRoundChange(binding.btnHistory)
                 binding.rlaHomeWorkReport.visibility = View.VISIBLE
                 binding.rlaHomework.visibility = View.GONE
-                isGetAcademicYear()
             }
 
             R.id.btnChooseRecipient -> {
@@ -494,12 +488,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         if (position == 0) {
             showBottomDialog()
         }
-    }
-
-    private fun isGetAcademicYear() {
-        appViewModel!!.isGetAcademicYear(
-            isAccessToken!!, this
-        )
     }
 
     private fun isRedirectToSectionStudents() {

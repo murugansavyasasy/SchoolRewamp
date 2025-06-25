@@ -42,6 +42,8 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserValidationData
 import com.vs.schoolmessenger.Auth.OTP.ForgetOtpData
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
+import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
+import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYearResponse
 import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolList
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
@@ -164,6 +166,9 @@ object Constant {
     var selectedFileIndex: Int = -1
     var isCommunicationType = 1
     var isVoiceType = 1
+
+    var isAcademicYearList: List<AcademicYear>? = null
+
 
 //    var isForward = false
     //MarkAttendanceDetails
