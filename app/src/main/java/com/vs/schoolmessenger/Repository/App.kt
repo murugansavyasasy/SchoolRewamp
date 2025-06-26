@@ -38,7 +38,9 @@ import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveActionResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveRequestResponse
+import com.vs.schoolmessenger.School.LessonPlan.LessonPlanEditModel.LessonPlanEditResponse
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummaryModel.AllClassResponse
+import com.vs.schoolmessenger.School.LessonPlan.LessonPlanUpdateModel.LessonPlanUpdateResponse
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanViewSummaryModel.LessonPlanViewSummaryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchHistoryResponse
@@ -173,6 +175,9 @@ class App(application: Application) : AndroidViewModel(application) {
 
     var getlpStaffReport: LiveData<AllClassResponse?>? = null
     var getlpViewReport: LiveData<LessonPlanViewSummaryResponse?>? = null
+    var getlpeditReport: LiveData<LessonPlanEditResponse?>? = null
+
+    var isupdatelessonplan: LiveData<LessonPlanUpdateResponse?>? = null
 
 
 
@@ -235,9 +240,11 @@ class App(application: Application) : AndroidViewModel(application) {
         getleaverequest = apiSchoolRepositories.leaverequestLiveData
         getleaverequest =apiSchoolRepositories.leaverequestLiveData
         isleaverequestapprove = apiSchoolRepositories.isleaverequestapproveLiveData
+//        isupdatelessonplan = apiSchoolRepositories.isupdatelessonplanLiveData
 
         getlpStaffReport = apiSchoolRepositories.isgetlpStaffReportLiveData
         getlpViewReport = apiSchoolRepositories.isgetlpViewReportLiveData
+        getlpeditReport = apiSchoolRepositories.isgetlpeditReportLiveData
 
     }
 
@@ -547,8 +554,15 @@ class App(application: Application) : AndroidViewModel(application) {
         apiSchoolRepositories.getlpViewReport(isToken,section_subject_id,lesson_plan_status,activity)
     }
 
+    fun getlpeditReport(isToken: String, particular_id: String, request_type: String, activity : Activity) {
+
+        apiSchoolRepositories.getlpeditReport(isToken,particular_id,request_type,activity)
+    }
 
 
+//    fun isupdatelessonplan(isToken: String, request: LessonPlanUpdateResponse, activity: Activity) {
+//        apiSchoolRepositories.isupdatelessonplan(isToken,request,activity)
+//    }
 }
 
 

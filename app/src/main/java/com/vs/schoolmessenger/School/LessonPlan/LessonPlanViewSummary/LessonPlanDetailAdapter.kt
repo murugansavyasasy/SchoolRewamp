@@ -33,4 +33,5 @@ class LessonPlanDetailAdapter(
     }
 
     override fun getItemCount(): Int = details.size
+
 }

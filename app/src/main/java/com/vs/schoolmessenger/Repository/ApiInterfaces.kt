@@ -41,7 +41,9 @@ import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveActionResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveRequestResponse
+import com.vs.schoolmessenger.School.LessonPlan.LessonPlanEditModel.LessonPlanEditResponse
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummaryModel.AllClassResponse
+import com.vs.schoolmessenger.School.LessonPlan.LessonPlanUpdateModel.LessonPlanUpdateResponse
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanViewSummaryModel.LessonPlanViewSummaryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchHistoryResponse
@@ -452,6 +454,20 @@ interface ApiInterfaces {
     ): Call<LessonPlanViewSummaryResponse?>
 
 
+    @GET(APIMethods.getlpeditReport)
+    fun getlpeditReport(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query(APIKeyNames.particular_id) particular_id: String?,
+        @Query(APIKeyNames.request_type) request_type: String?
+    ): Call<LessonPlanEditResponse?>
+
+
+    @Headers("Content-Type: application/json")
+    @PUT(APIMethods.isupdatelessonplan)
+    fun isupdatelessonplan(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Body request: LeaveApproveRequest
+    ): Call<LessonPlanUpdateResponse?>
 
 
 }
