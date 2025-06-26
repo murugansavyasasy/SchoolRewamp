@@ -127,6 +127,7 @@
                         android:layout_width="@dimen/ten"
                         android:layout_height="@dimen/ten"
                         app:cardCornerRadius="@dimen/five"
+                        android:visibility="gone"
                         app:cardBackgroundColor="@color/navi_blue2"
                         android:layout_marginEnd="@dimen/eight"/>
 
@@ -248,7 +249,7 @@
         android:layout_marginTop="@dimen/twenty"
         android:src="@drawable/nomessages"
         android:textColor="@color/black"
-        android:textSize="18sp"
+        android:textSize="@dimen/fifteen_sp"
         android:visibility="gone" />
 
     <TextView

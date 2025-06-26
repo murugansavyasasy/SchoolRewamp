@@ -571,6 +571,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/twenty"
+                    android:textSize="@dimen/fifteen_sp"
                     android:text="">
 
                 </TextView>

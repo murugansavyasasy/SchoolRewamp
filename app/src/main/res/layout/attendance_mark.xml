@@ -19,34 +19,32 @@
         android:layout_marginHorizontal="@dimen/ten"
         android:layout_marginTop="@dimen/fifteen"
         android:background="@drawable/bg_light_blue"
-        android:padding="@dimen/two">
+        android:padding="@dimen/one">
 
         <TextView
             android:id="@+id/btnCreate"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/white_bg_radius"
-            android:fontFamily="@font/poppins_bold"
-            android:gravity="center"
             android:padding="@dimen/ten"
+            android:background="@drawable/white_bg_radius"
+            android:gravity="center"
             android:text="@string/MarkAttendance"
             android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"
-            android:textStyle="bold" />
+            android:textSize="@dimen/thirteen_sp" />
 
         <TextView
             android:id="@+id/btnHistory"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:fontFamily="@font/poppins_bold"
             android:gravity="center"
             android:padding="@dimen/ten"
             android:text="@string/Reports"
             android:textColor="@color/dark_blue"
-            android:textSize="@dimen/thirteen_sp"
-            android:textStyle="bold" />
+            android:textSize="@dimen/thirteen_sp" />
 
     </LinearLayout>
 
@@ -413,6 +411,7 @@
 
         <LinearLayout
             android:id="@+id/lnrClasses1"
+            android:layout_marginTop="@dimen/ten"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/attendancetype_header"
