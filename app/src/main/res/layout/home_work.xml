@@ -103,12 +103,27 @@
                     android:layout_below="@+id/lblTitle"
                     android:layout_marginStart="@dimen/fifteen"
                     android:layout_marginTop="@dimen/ten"
+                    android:maxLength="50"
                     android:layout_marginEnd="@dimen/fifteen"
-                    android:hint="@string/Entertitle"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp">
 
                 </EditText>
+                <TextView
+                    android:id="@+id/lblTitleTextCount"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/edtTitle"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="@dimen/ten"
+                    android:layout_marginEnd="@dimen/fifteen"
+                    android:text="0 / 50"
+                    android:maxLength="50"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp">
+
+                </TextView>
 
                 <TextView
                     android:id="@+id/lblDescription"
@@ -152,8 +167,8 @@
                     android:focusable="true"
                     android:focusableInTouchMode="true"
                     android:gravity="start"
-                    android:hint="@string/Enterdescription"
-                    android:maxLength="100"
+                    android:hint="@string/Description"
+                    android:maxLength="500"
                     android:padding="@dimen/ten"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp">
@@ -170,7 +185,8 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/fifteen"
-                    android:text="0 / 100"
+                    android:text="0 / 500"
+                    android:maxLength="500"
                     android:textColor="@color/light_gray"
                     android:textSize="@dimen/thirteen_sp">
 

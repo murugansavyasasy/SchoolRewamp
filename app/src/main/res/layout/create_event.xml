@@ -10,7 +10,6 @@
         android:id="@+id/toolbarLayout"
         layout="@layout/school_side_tool_bar" />
 
-
     <ScrollView
         android:id="@+id/eventCreate"
         android:layout_width="match_parent"
@@ -61,7 +60,6 @@
                 android:layout_marginTop="@dimen/fifteen"
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/bg_edittext_view_line"
-                android:hint="@string/eg_chennai"
                 android:inputType="text"
                 android:paddingBottom="@dimen/ten"
                 android:textColor="@color/black"
@@ -109,7 +107,6 @@
                 android:layout_alignEnd="@+id/txtLocation"
                 android:layout_marginTop="@dimen/fifteen"
                 android:background="@drawable/bg_edittext_view_line"
-                android:hint="@string/eg_yoga_event"
                 android:inputType="text"
                 android:paddingBottom="@dimen/ten"
                 android:textColor="@color/black"
@@ -160,21 +157,27 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblEventDesc"
                 android:layout_alignStart="@+id/lblEventDesc"
-                android:layout_alignEnd="@+id/txtTitle"
-                android:layout_marginTop="@dimen/fifteen"
-                android:background="@drawable/bg_stroke_rect_black"
-                android:paddingHorizontal="@dimen/ten"
-                android:paddingVertical="@dimen/twenty">
+                >
+
 
                 <EditText
                     android:id="@+id/txtDesc"
-                    style="@style/CustomTextStylePoppinsRegular"
+                    style="@style/CustomTextStylePoppinsMedium"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
+                    android:layout_height="@dimen/hundred"
+                    android:layout_marginTop="@dimen/ten"
+                    android:background="@drawable/bg_stroke_rect_black"
+                    android:editable="true"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:gravity="start"
                     android:hint="@string/Description"
+                    android:maxLength="500"
+                    android:padding="@dimen/ten"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp" />
+                    android:textSize="@dimen/thirteen_sp">
+
+                </EditText>
 
 
             </RelativeLayout>

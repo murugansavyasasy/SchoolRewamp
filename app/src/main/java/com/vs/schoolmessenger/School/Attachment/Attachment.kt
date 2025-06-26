@@ -12,6 +12,8 @@ import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
 import android.provider.OpenableColumns
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.Gravity
 import android.view.View
@@ -74,6 +76,9 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
         setupToolbar()
         binding.btnChooseRecipient.setOnClickListener(this)
         binding.toolbarLayout.imgBack.setOnClickListener(this)
+        isStaffDetails = SharedPreference.getStaffDetails(this)
+//        binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
+//        binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
         saveDrawableToCache(R.drawable.add_image)?.let {
             Constant.selectedFiles.add(
                 FileItem(
@@ -174,6 +179,32 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
 
                 }
             }
+
+        binding.edtDescription.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val length = s?.length ?: 0
+                binding.lblTextCount.text = "$length/500"
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+
+            }
+        })
+
+
+        binding.edtTitle.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val length = s?.length ?: 0
+                binding.lblTitleTextCount.text = "$length/50"
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+            }
+        })
 
         binding.imgDelete.setOnClickListener {
             binding.videoView.visibility = View.GONE
