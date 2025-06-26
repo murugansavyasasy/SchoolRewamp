@@ -60,7 +60,6 @@
                 android:layout_marginTop="@dimen/fifteen"
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/bg_edittext_view_line"
-                android:hint="Title"
                 android:inputType="text"
                 android:paddingBottom="@dimen/ten"
                 android:textColor="@color/black"

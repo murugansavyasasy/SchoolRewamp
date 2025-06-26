@@ -90,9 +90,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(),OnImageClickListener,
         binding.lnrStartCalendar.setOnClickListener(this)
         binding.txtStartDate.setOnClickListener(this)
         binding.txtStartTime.setOnClickListener(this)
-
         Constant.editTextCounter(this,binding.txtDesc,500,binding.lbTextCount)
-
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
         binding.toolbarLayout.lblParentToolBar.text = "Create Event"
