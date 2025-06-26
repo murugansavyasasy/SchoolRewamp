@@ -77,8 +77,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
 
     companion object {
         private const val PICK_DOCUMENT_REQUEST = 1003
-        private const val PICK_IMAGE_REQUEST = 1001
-        internal const val CAMERA_IMAGE_REQUEST = 1004
         private const val MAX_FILES = 10
     }
 
@@ -532,30 +530,28 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
 
         val sectionDetails = SectionDetails(title, description)
         Constant.selectedFiles.removeAt(0)
-        Log.d("Constant.selectedFiles", Constant.selectedFiles.toString())
         val intent = Intent(this, RecipientActivity::class.java)
         intent.putExtra(Constant.section_data, sectionDetails)
         startActivity(intent)
     }
 
     private fun openAlbumSelectActivity(isFileType: String) {
+
         if (Constant.selectedFiles.size > 1) {
-            Log.d(
-                "Constant.selectedFiles[1].type.toString()",
-                Constant.selectedFiles[1].type.toString()
-            )
-            if (Constant.selectedFiles[1].type.toString() != isFileType) {
+            val secondType = Constant.selectedFiles[1].type.toString()
+            if (
+                (secondType == Constant.IMAGE && (isFileType == Constant.DOCUMENT || isFileType == Constant.VOICE)) ||
+                (secondType == Constant.DOCUMENT && (isFileType == Constant.IMAGE || isFileType == Constant.VOICE)) ||
+                (secondType == Constant.VOICE && (isFileType == Constant.IMAGE || isFileType == Constant.DOCUMENT))
+            ) {
                 Constant.selectedFiles.clear()
                 saveDrawableToCache(R.drawable.add_image)?.let {
-                    Constant.selectedFiles.add(
-                        FileItem(
-                            it, FileType.IMAGE
-                        )
-                    )
+                    Constant.selectedFiles.add(FileItem(it, FileType.IMAGE))
                 }
-                mAdapter!!.notifyDataSetChanged()
+                mAdapter?.notifyDataSetChanged()
             }
         }
+
         Log.d("FileComing", isFileType)
         val sdkInt = Build.VERSION.SDK_INT
         if (isFileType == Constant.DOCUMENT && sdkInt < Build.VERSION_CODES.R) {
@@ -879,7 +875,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         webView.settings.allowFileAccess = true
         webView.settings.allowContentAccess = true
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             webView.settings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
         }
 

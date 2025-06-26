@@ -120,7 +120,6 @@
             android:id="@+id/rytList"
             android:layout_width="match_parent"
             android:layout_height="@dimen/one_fifty"
-            android:layout_marginEnd="@dimen/ten"
             android:layout_below="@+id/LblHWSubjectName"
             android:layout_marginTop="@dimen/ten"
             android:visibility="gone">

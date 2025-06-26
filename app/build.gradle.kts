@@ -1,8 +1,8 @@
+import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
-import java.io.FileReader
 import java.io.FileInputStream
 import java.io.FileOutputStream
-import groovy.json.JsonOutput
+import java.io.FileReader
 
 
 plugins {
@@ -457,7 +457,13 @@ dependencies {
     implementation("com.google.firebase:firebase-crashlytics")
 
     implementation("com.github.chrisbanes:PhotoView:2.3.0")
-//    implementation("com.abedelazizshe.lightcompressor:lightcompressor:1.2.1")
+
+//    // Smallest version (no audio/video codecs)
+//    implementation("com.arthenica:ffmpeg-kit-min:4.5.LTS")
+//// Full version with video codecs
+//    implementation("com.arthenica:ffmpeg-kit-full:4.5.LTS")
+//// With HTTPS and extended support
+//    implementation("com.arthenica:ffmpeg-kit-full-gpl:4.5.LTS")
 
 
 

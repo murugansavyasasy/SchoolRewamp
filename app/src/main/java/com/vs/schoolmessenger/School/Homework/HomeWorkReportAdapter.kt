@@ -2,10 +2,13 @@ package com.vs.schoolmessenger.School.Homework
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
+import android.view.View.OnTouchListener
 import android.view.ViewGroup
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceError
@@ -17,10 +20,12 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.vs.schoolmessenger.CommonScreens.CommonFileData
 import com.vs.schoolmessenger.CommonScreens.ImageSliderAdapter
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReport
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.FullScreenViewerActivity
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 import me.relex.circleindicator.CircleIndicator2
 
@@ -119,16 +124,49 @@ class HomeWorkReportAdapter(
                 LinearLayoutManager(adapterContext, LinearLayoutManager.HORIZONTAL, false)
             rcyImgPDF.adapter = adapter
 
-            if (data.file_path.isNullOrEmpty()) {
+            if (data.file_path.isEmpty()) {
                 indicator.visibility = View.GONE
             } else {
-                indicator.visibility = View.VISIBLE
+                if (data.file_path.size > 1) {
+                    indicator.visibility = View.VISIBLE
+                } else {
+                    indicator.visibility = View.GONE
+                }
                 indicator.attachToRecyclerView(rcyImgPDF)
             }
 
             rlaSelectText.setOnClickListener {
                 listener.onClickListener(data)
             }
+
+            webView.setOnTouchListener(object : OnTouchListener {
+                override fun onTouch(v: View?, event: MotionEvent): Boolean {
+                    if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                        return false
+                    }
+
+                    if (event.getAction() == MotionEvent.ACTION_UP) {
+                        Constant.commonFileList.isEmpty()
+                        Constant.selectedFileIndex = -1
+                        val commonList = data.file_path?.map {
+                            CommonFileData(
+                                type = it.type,
+                                path = it.url
+                            )
+                        }?.toMutableList() ?: mutableListOf()
+
+                        Constant.commonFileList = commonList
+
+                        Constant.selectedFileIndex = position
+
+                        val intent = Intent(context, FullScreenViewerActivity::class.java)
+                        intent.putExtra(Constant.subjectName, data.subject_name)
+                        context.startActivity(intent)
+                    }
+
+                    return false
+                }
+            })
         }
 
         @SuppressLint("SetJavaScriptEnabled")

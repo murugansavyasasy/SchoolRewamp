@@ -162,7 +162,7 @@ object Constant {
     var staff = "staff"
     var isVoiceSendingData: VoiceSendingData? = null
     var isTextSendingData: TextSendingData? = null
-    var commonFileList: List<CommonFileData> = emptyList()
+    var commonFileList: MutableList<CommonFileData> = mutableListOf()
     var selectedFileIndex: Int = -1
     var isCommunicationType = 1
     var isVoiceType = 1

@@ -23,7 +23,7 @@ import com.vs.schoolmessenger.CommonScreens.CommonFileData
 import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentClickListener
 import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentFile
 import com.vs.schoolmessenger.Parent.Communication.UnifiedVoiceAdapter.ShimmerViewHolder
-import com.vs.schoolmessenger.Parent.Homework.FullScreenViewerActivity
+import com.vs.schoolmessenger.Utils.FullScreenViewerActivity
 import com.vs.schoolmessenger.Parent.Noticeboard.Adapter.FilePathAdapter
 import com.vs.schoolmessenger.Parent.Noticeboard.FilePath
 import com.vs.schoolmessenger.R
@@ -131,14 +131,10 @@ class AttachmentFilePathAdapter (
 
                 Constant.commonFileList.isEmpty()
                 Constant.selectedFileIndex=-1
-                val commonList = adapter.GetFilePathDetailsData?.map {
-                    CommonFileData(
-                        type = it.type,
-                        path = it.url,
-                    )
-                } ?: emptyList()
+                Constant.commonFileList = adapter.GetFilePathDetailsData?.map {
+                    CommonFileData(type = it.type, path = it.url)
+                }?.toMutableList() ?: mutableListOf()
 
-                Constant.commonFileList = commonList
                 Constant.selectedFileIndex = position
 
                 val intent = Intent(context, FullScreenViewerActivity::class.java)
@@ -160,11 +156,12 @@ class AttachmentFilePathAdapter (
                         val commonList = adapter.GetFilePathDetailsData?.map {
                             CommonFileData(
                                 type = it.type,
-                                path = it.url,
+                                path = it.url
                             )
-                        } ?: emptyList()
+                        }?.toMutableList() ?: mutableListOf()
 
                         Constant.commonFileList = commonList
+
                         Constant.selectedFileIndex = position
 
                         val intent = Intent(context, FullScreenViewerActivity::class.java)

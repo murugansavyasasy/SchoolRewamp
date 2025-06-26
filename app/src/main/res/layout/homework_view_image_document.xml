@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ImageLayout"
-    android:background="@color/white"
     android:layout_width="match_parent"
-    android:fitsSystemWindows="true"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true">
 
     <RelativeLayout
         android:id="@+id/rytHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_toStartOf="@+id/imgMoreOptions"
         android:paddingVertical="@dimen/twenty">
+
         <ImageView
             android:id="@+id/imgBack"
             android:layout_width="@dimen/thirty"
@@ -20,61 +21,42 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/fifteen"
             android:src="@drawable/arrow_back_black" />
+
         <TextView
             android:id="@+id/lblSubject"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_centerInParent="true"
             style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="match_parent"
+            android:layout_toEndOf="@+id/imgBack"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text=""
             android:textColor="@color/black"
-            android:textSize="@dimen/twenty_sp"
-            android:text="" />
+            android:textSize="@dimen/fifteen_sp"
+            android:visibility="visible" />
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/lytDownload"
+    <ImageView
+        android:id="@+id/imgMoreOptions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="@dimen/twenty"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <TextView
-            style="@style/CustomTextStylePoppinsBold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/ten"
-            android:text="@string/download"
-            android:textColor="@color/bpBlue"
-            android:textSize="@dimen/fifteen_sp">
-
-        </TextView>
-
-        <ImageView
-            android:layout_width="@dimen/thirty"
-            android:layout_height="@dimen/thirty"
-            android:layout_marginEnd="@dimen/ten"
-            android:src="@drawable/download_icon">
-
-        </ImageView>
-
-    </LinearLayout>
+        android:layout_marginEnd="@dimen/ten"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:padding="@dimen/five"
+        android:src="@drawable/ic_more_vert" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcyFile"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/rytHeader"
         android:layout_above="@+id/indicator"
-        android:orientation="horizontal"
-        android:layout_marginBottom="@dimen/ten"
-        android:overScrollMode="never"
-        android:scrollbars="horizontal"
+        android:layout_below="@+id/rytHeader"
         android:layout_marginTop="8dp"
-        />
+        android:layout_marginBottom="@dimen/ten"
+        android:orientation="horizontal"
+        android:overScrollMode="never"
+        android:scrollbars="horizontal" />
 
     <me.relex.circleindicator.CircleIndicator2
         android:id="@+id/indicator"
@@ -83,64 +65,50 @@
         android:layout_height="@dimen/thirty"
         android:layout_above="@+id/lnrPrevious"
         android:layout_centerInParent="true"
-        android:visibility="gone"
-        android:elevation="4dp"/>
+        android:elevation="4dp"
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/lnrPrevious"
-        android:layout_width="wrap_content"
-        android:background="@drawable/bg_white_light_radious"
+        android:layout_width="@dimen/seventy"
+        android:layout_height="@dimen/seventy"
         android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
         android:layout_margin="16dp"
+        android:background="@drawable/bg_round_radious_white"
         android:gravity="center"
         android:paddingStart="@dimen/fifteen"
-        android:paddingEnd="@dimen/twenty_five"
         android:paddingTop="@dimen/fifteen"
-        android:paddingBottom="@dimen/fifteen"
-        android:layout_alignParentBottom="true"
-        android:layout_height="wrap_content">
+        android:paddingEnd="@dimen/twenty_five"
+        android:paddingBottom="@dimen/fifteen">
+
         <ImageView
             android:id="@+id/imgPre"
             android:layout_width="@dimen/twenty"
-            android:src="@drawable/left_arrow"
-            android:layout_height="@dimen/twenty">
-        </ImageView>
-        <TextView
-            android:id="@+id/btnPrevious"
-            style="@style/CustomTextStylePoppinsBold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:text="Previous" />
+            android:layout_height="@dimen/twenty"
+            android:src="@drawable/left_arrow"></ImageView>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/lnrNext"
-        android:layout_width="wrap_content"
-        android:paddingStart="@dimen/twenty_five"
-        android:paddingEnd="@dimen/twenty_five"
-        android:paddingTop="@dimen/fifteen"
-        android:paddingBottom="@dimen/fifteen"
-        android:background="@drawable/bg_white_light_radious"
+        android:layout_width="@dimen/seventy"
+        android:layout_height="@dimen/seventy"
         android:layout_alignParentEnd="true"
-        android:layout_margin="16dp"
-        android:gravity="center"
         android:layout_alignParentBottom="true"
-        android:layout_height="wrap_content">
+        android:layout_margin="16dp"
+        android:background="@drawable/bg_round_radious_white"
+        android:gravity="center"
+        android:paddingStart="@dimen/twenty_five"
+        android:paddingTop="@dimen/fifteen"
+        android:paddingEnd="@dimen/twenty_five"
+        android:paddingBottom="@dimen/fifteen">
 
-        <TextView
-            android:id="@+id/btnNext"
-            android:layout_width="wrap_content"
-            style="@style/CustomTextStylePoppinsBold"
-            android:visibility="gone"
-            android:layout_height="wrap_content"
-            android:text="Next" />
 
         <ImageView
             android:id="@+id/imgNext"
             android:layout_width="@dimen/twenty"
-            android:src="@drawable/rightarrrow"
-            android:layout_height="@dimen/twenty">
+            android:layout_height="@dimen/twenty"
+            android:src="@drawable/rightarrrow">
         </ImageView>
     </LinearLayout>
 </RelativeLayout>

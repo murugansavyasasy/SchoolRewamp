@@ -22,7 +22,7 @@ import android.widget.ProgressBar
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.vs.schoolmessenger.Parent.Homework.FullScreenViewerActivity
+import com.vs.schoolmessenger.Utils.FullScreenViewerActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.FilePath
 import com.vs.schoolmessenger.Utils.Constant
@@ -105,14 +105,21 @@ class ImageSliderAdapter(
                 }
             }
 
-            // On item click: full screen viewer
             fileItem.setOnClickListener {
-                Constant.commonFileList =
-                    fullList.map { CommonFileData(type = it.type, path = it.url) }
+                Constant.commonFileList = fullList.map { file ->
+                    CommonFileData(
+                        type = file.type,
+                        path = file.url
+                    )
+                }.toMutableList()
+
                 Constant.selectedFileIndex = position
-                val intent = Intent(context, FullScreenViewerActivity::class.java)
-                intent.putExtra(Constant.subjectName, isSubjectName)
-                context.startActivity(intent)
+
+                context.startActivity(
+                    Intent(context, FullScreenViewerActivity::class.java).apply {
+                        putExtra(Constant.subjectName, isSubjectName)
+                    }
+                )
             }
 
             WebViewThumbnail.setOnTouchListener(object : OnTouchListener {
@@ -124,13 +131,12 @@ class ImageSliderAdapter(
                     if (event.action == MotionEvent.ACTION_UP) {
                         Constant.commonFileList.isEmpty()
                         Constant.selectedFileIndex = -1
-                        val commonList = fullList.map {
+                        Constant.commonFileList = fullList.map { file ->
                             CommonFileData(
-                                type = it.type, path = it.url
+                                type = file.type,
+                                path = file.url
                             )
-                        }
-
-                        Constant.commonFileList = commonList
+                        }.toMutableList()
                         Constant.selectedFileIndex = position
                         val intent = Intent(context, FullScreenViewerActivity::class.java)
                         intent.putExtra(Constant.subjectName, isSubjectName)
