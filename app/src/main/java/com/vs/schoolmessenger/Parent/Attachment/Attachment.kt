@@ -131,7 +131,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
         if (isEmpty) {
             binding.nomessage.visibility = View.VISIBLE
             binding.txtNoData.visibility = View.VISIBLE
-            binding.txtNoData.text = "No matching attachment found"
+            binding.txtNoData.text = getString(R.string.no_matching_attachment_found)
             binding.recycleracademic.visibility = View.GONE
         } else {
             binding.nomessage.visibility = View.GONE

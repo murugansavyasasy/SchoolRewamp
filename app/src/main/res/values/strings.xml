@@ -568,5 +568,8 @@
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="updated_on">Updated On</string>
+    <string name="no_matching_notices_found">No matching notices found</string>
+    <string name="no_matching_attachment_found">No matching attachment found</string>
+    <string name="event_holiday"><![CDATA[Event & Holiday]]></string>
 
 </resources>
