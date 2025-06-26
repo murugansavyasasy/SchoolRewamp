@@ -104,6 +104,9 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickL
         binding.txtEndDate.setOnClickListener(this)
         binding.lnrStartCalendar.setOnClickListener(this)
         binding.lnrEndCalendar.setOnClickListener(this)
+        isStaffDetails = SharedPreference.getStaffDetails(this)
+//        binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
+//        binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
 
 
         val (dayOnly, dayOfWeek, fullDate, slashDate, customFormat) = Constant.getCurrentDateInfo()
