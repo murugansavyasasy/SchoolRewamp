@@ -41,6 +41,7 @@ import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveActionResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveRequestResponse
+import com.vs.schoolmessenger.School.LessonPlan.LessonPlanDeleteModel.LPDeleteResponse
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanEditModel.LessonPlanEditResponse
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummaryModel.AllClassResponse
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanUpdateModel.LessonPlanUpdateResponse
@@ -52,6 +53,8 @@ import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffLocationR
 import com.vs.schoolmessenger.School.NoticeBoard.Response.NoticeBoardSendResponse
 import com.vs.schoolmessenger.School.SchoolStrength.Model.SchoolStrengthResponse
 import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
+import okhttp3.RequestBody
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -466,8 +469,14 @@ interface ApiInterfaces {
     @PUT(APIMethods.isupdatelessonplan)
     fun isupdatelessonplan(
         @Header(APIKeyNames.Authorization) token: String,
-        @Body request: LeaveApproveRequest
+        @Body requestBody: RequestBody
     ): Call<LessonPlanUpdateResponse?>
 
+    @Headers("Content-Type: application/json")
+    @PUT(APIMethods.islessonplandelete)
+    fun islessonplandelete(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Body requestBody: RequestBody
+    ): Call<LPDeleteResponse?>
 
 }

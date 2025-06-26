@@ -38,6 +38,7 @@ import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveActionResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveRequestResponse
+import com.vs.schoolmessenger.School.LessonPlan.LessonPlanDeleteModel.LPDeleteResponse
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanEditModel.LessonPlanEditResponse
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummaryModel.AllClassResponse
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanUpdateModel.LessonPlanUpdateResponse
@@ -49,6 +50,8 @@ import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffLocationR
 import com.vs.schoolmessenger.School.NoticeBoard.Response.NoticeBoardSendResponse
 import com.vs.schoolmessenger.School.SchoolStrength.Model.SchoolStrengthResponse
 import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
+import okhttp3.RequestBody
+import org.json.JSONObject
 
 class App(application: Application) : AndroidViewModel(application) {
 
@@ -179,6 +182,8 @@ class App(application: Application) : AndroidViewModel(application) {
 
     var isupdatelessonplan: LiveData<LessonPlanUpdateResponse?>? = null
 
+    var islessonplandelete: LiveData<LPDeleteResponse?>? = null
+
 
 
 
@@ -240,11 +245,13 @@ class App(application: Application) : AndroidViewModel(application) {
         getleaverequest = apiSchoolRepositories.leaverequestLiveData
         getleaverequest =apiSchoolRepositories.leaverequestLiveData
         isleaverequestapprove = apiSchoolRepositories.isleaverequestapproveLiveData
-//        isupdatelessonplan = apiSchoolRepositories.isupdatelessonplanLiveData
+        isupdatelessonplan = apiSchoolRepositories.isupdatelessonplanLiveData
 
         getlpStaffReport = apiSchoolRepositories.isgetlpStaffReportLiveData
         getlpViewReport = apiSchoolRepositories.isgetlpViewReportLiveData
         getlpeditReport = apiSchoolRepositories.isgetlpeditReportLiveData
+
+        islessonplandelete = apiSchoolRepositories.islessonplandeleteLiveData
 
     }
 
@@ -541,9 +548,7 @@ class App(application: Application) : AndroidViewModel(application) {
         apiSchoolRepositories.getleaverequest(isToken, member_type, activity)
     }
 
-    fun isleaverequestapprove(isToken: String, request: LeaveApproveRequest, activity: Activity) {
-        apiSchoolRepositories.isleaverequestapprove(isToken,request,activity)
-    }
+
 
     fun getlpStaffReport(isToken: String, request_type: String, activity: Activity) {
         apiSchoolRepositories.getlpStaffReport(isToken,request_type,activity)
@@ -559,10 +564,18 @@ class App(application: Application) : AndroidViewModel(application) {
         apiSchoolRepositories.getlpeditReport(isToken,particular_id,request_type,activity)
     }
 
+    fun isleaverequestapprove(isToken: String, request: LeaveApproveRequest, activity: Activity) {
+        apiSchoolRepositories.isleaverequestapprove(isToken,request,activity)
+    }
 
-//    fun isupdatelessonplan(isToken: String, request: LessonPlanUpdateResponse, activity: Activity) {
-//        apiSchoolRepositories.isupdatelessonplan(isToken,request,activity)
-//    }
+    fun isupdatelessonplan(isToken: String, requestBody: RequestBody, activity: Activity) {
+        apiSchoolRepositories.isupdatelessonplan(isToken,requestBody,activity)
+    }
+
+    fun islessonplandelete(isToken: String,requestBody: RequestBody, activity: Activity) {
+        apiSchoolRepositories.islessonplandelete(isToken,requestBody,activity)
+    }
+
 }
 
 

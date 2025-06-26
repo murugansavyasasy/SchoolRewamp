@@ -5,5 +5,5 @@ import com.vs.schoolmessenger.School.LessonPlan.LessonPlanViewSummaryModel.Lesso
 
 interface LessonPlanClickListener {
     fun onEditItem(data: LessonPlanViewSummaryItem)
-    fun onDeleteItem(data: LessonPlanData)
+    fun onDeleteItem(data: LessonPlanViewSummaryItem)
 }
