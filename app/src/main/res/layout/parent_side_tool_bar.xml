@@ -85,6 +85,7 @@
             android:id="@+id/lblRightSideBar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_weight="1"
             android:background="@drawable/white_radious"
             android:gravity="center"
@@ -99,6 +100,7 @@
 
         <TextView
             android:id="@+id/lblLeftSideBar"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"

@@ -29,11 +29,11 @@
             android:layout_weight="1"
             android:background="@drawable/white_bg_radius"
             android:gravity="center"
-            android:padding="@dimen/ten"
+            android:padding="@dimen/seven"
             android:text="@string/request"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"
-            android:textStyle="bold" />
+            style="@style/CustomTextStylePoppinsBold" />
 
         <TextView
             android:id="@+id/lblParent"
@@ -41,12 +41,12 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:padding="@dimen/ten"
+            android:padding="@dimen/seven"
             android:text="@string/certificates"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"
             android:layout_marginStart="@dimen/two"
-            android:textStyle="bold" />
+            style="@style/CustomTextStylePoppinsBold" />
 
     </LinearLayout>
 
@@ -70,7 +70,7 @@
             android:textStyle="bold"
             android:layout_marginTop="@dimen/twenty"
             android:layout_marginStart="@dimen/ten"
-            android:fontFamily="@font/poppins_bold"
+            style="@style/CustomTextStylePoppinsBold"
             android:textSize="@dimen/thirteen_sp"/>
 
         <Spinner
@@ -78,7 +78,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/thirty_five"
             android:layout_below="@+id/header_text"
-            android:layout_marginTop="@dimen/five"
+            android:layout_marginTop="@dimen/ten"
             android:layout_marginStart="@dimen/ten"
             android:background="@drawable/spinner_bg"
             android:layout_marginEnd="@dimen/ten">
@@ -94,7 +94,7 @@
             android:layout_marginTop="@dimen/twenty"
             android:layout_marginStart="@dimen/ten"
             android:layout_below="@+id/spinner_text"
-            android:fontFamily="@font/poppins_bold"
+            style="@style/CustomTextStylePoppinsBold"
             android:textSize="@dimen/thirteen_sp"/>
 
         <RadioGroup
@@ -104,7 +104,7 @@
             android:layout_below="@+id/header_text1"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginEnd="@dimen/ten"
-            android:layout_marginTop="@dimen/five"
+            android:layout_marginTop="@dimen/ten"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -132,9 +132,8 @@
                     android:layout_marginStart="@dimen/five"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/thirteen_sp"
-                    android:textStyle="bold"
+                    style="@style/CustomTextStylePoppinsBold"
                     android:layout_gravity="center_vertical"
-                    android:fontFamily="@font/poppins_medium"
                     android:button="@android:color/transparent"/>
             </LinearLayout>
 
@@ -161,11 +160,10 @@
                     android:layout_height="wrap_content"
                     android:button="@android:color/transparent"
                     android:text="@string/urgent"
+                    style="@style/CustomTextStylePoppinsBold"
                     android:layout_marginStart="@dimen/five"
                     android:textSize="@dimen/thirteen_sp"
-                    android:fontFamily="@font/poppins_medium"
                     android:layout_gravity="center_vertical"
-                    android:textStyle="bold"
                     android:textColor="@android:color/black"/>
             </LinearLayout>
 
@@ -183,7 +181,7 @@
             android:padding="@dimen/five"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginEnd="@dimen/ten"
-            android:layout_marginTop="@dimen/fifteen"
+            android:layout_marginTop="@dimen/twenty"
             android:layout_below="@+id/radioGroup"
             android:fontFamily="@font/poppins_medium"
             android:textSize="@dimen/thirteen_sp"
@@ -198,6 +196,7 @@
             android:background="@drawable/bg_orange"
             android:textColor="@color/white"
             android:textSize="@dimen/eleven_sp"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_marginBottom="@dimen/twele"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/twenty_five"

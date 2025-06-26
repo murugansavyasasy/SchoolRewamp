@@ -27,7 +27,7 @@
 
             <TextView
                 android:id="@+id/from_date"
-                style="@style/CustomTextStylePoppinsMedium"
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/ten"
@@ -84,7 +84,7 @@
 
             <TextView
                 android:id="@+id/from_date1"
-                style="@style/CustomTextStylePoppinsMedium"
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/ten"
@@ -154,7 +154,7 @@
 
         <TextView
             android:id="@+id/category_name"
-            style="@style/CustomTextStylePoppinsMedium"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginStart="2dp"
@@ -172,7 +172,7 @@
 
         <TextView
             android:id="@+id/class_name"
-            style="@style/CustomTextStylePoppinsMedium"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginStart="2dp"
@@ -191,7 +191,7 @@
 
         <TextView
             android:id="@+id/mode_name"
-            style="@style/CustomTextStylePoppinsMedium"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginStart="2dp"

@@ -3,7 +3,6 @@ package com.vs.schoolmessenger.Parent.Attachment
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.JsonObject
@@ -125,7 +124,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
     }
 
     override fun onItemClick(data: AttachmentData, holder: AttachmentAdapter.DataViewHolder) {
-        Toast.makeText(this, "Clicked: ${data.title}", Toast.LENGTH_SHORT).show()
+
     }
 
     override fun onSearchResultEmpty(isEmpty: Boolean) {

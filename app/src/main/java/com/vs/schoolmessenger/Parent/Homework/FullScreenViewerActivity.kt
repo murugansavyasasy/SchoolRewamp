@@ -35,7 +35,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.net.URL
 
-class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(), View.OnClickListener,AttachmentClickListener {
+class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(), View.OnClickListener {
 
     private var isAccessToken: String? = null
     private var appViewModel: App? = null
@@ -260,35 +260,6 @@ class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(
         }
     }
 
-    override fun onItemClick(
-        data: AttachmentData,
-        holder: AttachmentAdapter.DataViewHolder
-    ) {
-        TODO("Not yet implemented")
-    }
 
-    override fun onSearchResultEmpty(isEmpty: Boolean) {
-        TODO("Not yet implemented")
-    }
 
-    override fun onUpdateArchiveStatus(type: String?, detailId: String?) {
-        val jsonObject = JsonObject().apply {
-            addProperty(APIKeyNames.type, type)
-            addProperty(APIKeyNames.detail_id, detailId)
-        }
-        isAccessToken?.let {
-            appViewModel?.isUpdateStatusArchive(it, jsonObject, this)
-        }
-    }
-
-    override fun onUpdateAttachmentStatus(type: String?, detailId: String?) {
-        val jsonObject = JsonObject().apply {
-            addProperty(APIKeyNames.type, type)
-            addProperty(APIKeyNames.detail_id, detailId)
-        }
-
-        isAccessToken?.let {
-            appViewModel?.isUpdateStatusCommunication(it, jsonObject, this)
-        }
-    }
 }

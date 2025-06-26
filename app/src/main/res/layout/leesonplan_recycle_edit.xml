@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:padding="10dp"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <TextView
         android:layout_width="wrap_content"
@@ -12,26 +12,75 @@
         android:text="Month :"
         android:textColor="@color/black"
         android:layout_marginStart="15dp"
-        android:textSize="@dimen/eighteen_sp"
+        android:textSize="15sp"
         style="@style/CustomTextStylePoppinsBold"/>
 
-
-    <TextView
+    <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/headerlabe1l"
         android:layout_below="@+id/headerlabel"
         android:text="Value"
         android:textColor="@color/black"
-        android:background="@drawable/gray_bg_radius_textview"
+        android:background="@drawable/gray_bg_radius"
         android:padding="10dp"
+        android:visibility="gone"
         android:gravity="start"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:textSize="@dimen/eighteen_sp"
+        android:textSize="15sp"
+        android:layout_marginTop="10dp"
+        style="@style/CustomTextStylePoppinsMedium"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/headerdatelabe1l"
+        android:layout_below="@+id/headerlabe1l"
+        android:text="Value"
+        android:textColor="@color/black"
+        android:background="@drawable/gray_bg_radius"
+        android:padding="10dp"
+        android:visibility="gone"
+        android:gravity="start"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:textSize="15sp"
         android:layout_marginTop="10dp"
         style="@style/CustomTextStylePoppinsMedium"/>
 
 
+    <LinearLayout
+        android:id="@+id/SpinnerItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/headerdatelabe1l"
+        android:background="@drawable/gray_bg_radius"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:visibility="gone"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:weightSum="1">
+
+        <RelativeLayout
+            android:id="@+id/spinnerdropdown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/fifteen"
+            android:layout_marginEnd="@dimen/fifteen"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="0.5"
+            android:gravity="center">
+
+            <Spinner
+                android:id="@+id/isSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_spinner_background" />
+
+        </RelativeLayout>
+    </LinearLayout>
 
 </RelativeLayout>
