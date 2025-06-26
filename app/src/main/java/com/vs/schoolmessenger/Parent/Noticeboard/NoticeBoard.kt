@@ -86,7 +86,7 @@ class NoticeBoard : BaseActivity<NoticeBoardBinding>(), View.OnClickListener,
         if (isEmpty) {
             binding.nomessage.visibility = View.VISIBLE
             binding.txtNoData.visibility = View.VISIBLE
-            binding.txtNoData.text = "No matching notices found"
+            binding.txtNoData.text = getString(R.string.no_matching_notices_found)
             binding.rcyNoticeBoard.visibility = View.GONE
         } else {
             binding.nomessage.visibility = View.GONE

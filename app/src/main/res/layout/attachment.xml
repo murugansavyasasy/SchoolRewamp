@@ -60,18 +60,33 @@
                     android:layout_marginStart="@dimen/fifteen"
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/fifteen"
-                    android:hint="@string/Entertitle"
+                    android:maxLength="50"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp">
 
                 </EditText>
-
                 <TextView
-                    android:id="@+id/lblDescription"
+                    android:id="@+id/lblTitleTextCount"
                     style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/edtTitle"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="@dimen/five"
+                    android:layout_marginEnd="@dimen/fifteen"
+                    android:text="0 / 50"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp">
+
+                </TextView>
+
+                <TextView
+
+                    android:id="@+id/lblDescription"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lblTitleTextCount"
                     android:layout_marginStart="@dimen/twenty"
                     android:layout_marginTop="@dimen/eight"
                     android:text="@string/Description"
@@ -88,7 +103,7 @@
                     android:layout_toEndOf="@id/lblDescription"
                     android:text="@string/mandatory"
                     android:layout_marginTop="@dimen/eight"
-                    android:layout_below="@+id/edtTitle"
+                    android:layout_below="@+id/lblTitleTextCount"
                     android:layout_marginStart="@dimen/two"
                     android:textColor="@color/red"
                     android:textSize="@dimen/thirteen_sp" />
@@ -109,7 +124,7 @@
                     android:focusableInTouchMode="true"
                     android:gravity="start"
                     android:hint="@string/Enterdescription"
-                    android:maxLength="100"
+                    android:maxLength="500"
                     android:padding="@dimen/ten"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp">
@@ -119,15 +134,15 @@
 
                 <TextView
                     android:id="@+id/lblTextCount"
-                    style="@style/CustomTextStylePoppinsMedium"
+                    style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/edtDescription"
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="@dimen/ten"
                     android:layout_marginEnd="@dimen/fifteen"
-                    android:text="0 / 100"
-                    android:textColor="@color/light_gray"
+                    android:text="0 / 500"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp">
 
                 </TextView>
@@ -156,6 +171,7 @@
                 </TextView>
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/lblOptional"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

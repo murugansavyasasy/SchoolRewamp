@@ -1025,7 +1025,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                                 this
                             )
                         }
-
                     } else {
                         isFileUploadInAws(
                             isStaffDetails!!.school_id,
