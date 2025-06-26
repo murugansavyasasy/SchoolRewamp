@@ -111,7 +111,7 @@
                 </EditText>
                 <TextView
                     android:id="@+id/lblTitleTextCount"
-                    style="@style/CustomTextStylePoppinsMedium"
+                    style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/edtTitle"
@@ -178,7 +178,7 @@
 
                 <TextView
                     android:id="@+id/lblTextCount"
-                    style="@style/CustomTextStylePoppinsMedium"
+                    style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/edtDescription"
@@ -187,7 +187,7 @@
                     android:layout_marginEnd="@dimen/fifteen"
                     android:text="0 / 500"
                     android:maxLength="500"
-                    android:textColor="@color/light_gray"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp">
 
                 </TextView>
@@ -587,6 +587,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/twenty"
+                    android:textSize="@dimen/fifteen_sp"
                     android:text="">
 
                 </TextView>

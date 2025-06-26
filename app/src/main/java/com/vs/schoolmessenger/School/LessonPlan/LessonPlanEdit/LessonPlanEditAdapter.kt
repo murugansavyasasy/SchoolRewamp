@@ -3,9 +3,12 @@ package com.vs.schoolmessenger.School.LessonPlan.LessonPlanEdit
 import android.app.DatePickerDialog
 import android.content.Context
 import android.icu.text.SimpleDateFormat
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.LinearLayout
@@ -16,6 +19,8 @@ import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanEditModel.EditClassData
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanEditModel.LessonPlanEditClickListener
+import org.json.JSONArray
+import org.json.JSONObject
 import java.util.Calendar
 import java.util.Locale
 
@@ -60,6 +65,17 @@ class LessonPlanEditAdapter(
         return if (isLoading) 5 else itemList?.size ?: 0
     }
 
+    fun getUpdatedFieldsForApi(): JSONArray {
+        val jsonArray = JSONArray()
+        itemList?.filter { !it.is_disable && it.value.isNotEmpty() }?.forEach { data ->
+            val obj = JSONObject()
+            obj.put("field_id", data.field_id)
+            obj.put("value", data.value)
+            jsonArray.put(obj)
+        }
+        return jsonArray
+    }
+
     class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(data: EditClassData) {
             val nameTextView = itemView.findViewById<TextView>(R.id.headerlabel)
@@ -85,6 +101,19 @@ class LessonPlanEditAdapter(
                         isSpinner.setSelection(selectedIndex)
                     }
 
+                    isSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                        override fun onItemSelected(
+                            parent: AdapterView<*>,
+                            view: View?,
+                            position: Int,
+                            id: Long
+                        ) {
+                            data.value = options[position]
+                        }
+
+                        override fun onNothingSelected(parent: AdapterView<*>) {}
+                    }
+
                     spinnerItem.visibility = View.VISIBLE
                     headerdatelabe1l.visibility = View.GONE
                     valueTextView.visibility = View.GONE
@@ -92,8 +121,29 @@ class LessonPlanEditAdapter(
                 }
 
                 "text" -> {
-
                     valueTextView.setText(data.value)
+                    valueTextView.addTextChangedListener(object : TextWatcher {
+                        override fun afterTextChanged(s: Editable?) {
+                            data.value = s.toString()
+                        }
+
+                        override fun beforeTextChanged(
+                            s: CharSequence?,
+                            start: Int,
+                            count: Int,
+                            after: Int
+                        ) {
+                        }
+
+                        override fun onTextChanged(
+                            s: CharSequence?,
+                            start: Int,
+                            before: Int,
+                            count: Int
+                        ) {
+                        }
+                    })
+
                     spinnerItem.visibility = View.GONE
                     headerdatelabe1l.visibility = View.GONE
                     valueTextView.visibility = View.VISIBLE

@@ -33,8 +33,10 @@ import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveActionResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveRequestResponse
+import com.vs.schoolmessenger.School.LessonPlan.LessonPlanDeleteModel.LPDeleteResponse
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanEditModel.LessonPlanEditResponse
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummaryModel.AllClassResponse
+import com.vs.schoolmessenger.School.LessonPlan.LessonPlanUpdateModel.LessonPlanUpdateResponse
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanViewSummaryModel.LessonPlanViewSummaryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchHistoryResponse
@@ -44,6 +46,8 @@ import com.vs.schoolmessenger.School.NoticeBoard.Response.NoticeBoardSendRespons
 import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
 import com.vs.schoolmessenger.School.SchoolStrength.Model.SchoolStrengthResponse
 import com.vs.schoolmessenger.Utils.SharedPreference
+import okhttp3.RequestBody
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -109,6 +113,9 @@ class SchoolServices {
     var getlpStaffReport: MutableLiveData<AllClassResponse?>
     var getlpViewReport: MutableLiveData<LessonPlanViewSummaryResponse?>
     var getlpeditReport: MutableLiveData<LessonPlanEditResponse?>
+    var isupdatelessonplan: MutableLiveData<LessonPlanUpdateResponse?>
+    var islessonplandelete: MutableLiveData<LPDeleteResponse?>
+
 
     init {
         client_auth = RestClient()
@@ -162,6 +169,8 @@ class SchoolServices {
         getlpStaffReport = MutableLiveData()
         getlpViewReport = MutableLiveData()
         getlpeditReport = MutableLiveData()
+        isupdatelessonplan = MutableLiveData()
+        islessonplandelete = MutableLiveData()
     }
 
 
@@ -1898,11 +1907,6 @@ class SchoolServices {
 
 
 
-
-
-
-
-
     fun getlpStaffReport(
         isToken: String, request_type: String, activity: Activity
     ) {
@@ -2014,6 +2018,64 @@ class SchoolServices {
 
     val isgetlpeditReportLiveData: LiveData<LessonPlanEditResponse?>
         get() = getlpeditReport
+
+
+
+    fun isupdatelessonplan(isToken: String, requestBody: RequestBody, activity: Activity) {
+        RestClient.apiInterfaces.isupdatelessonplan(isToken, requestBody)
+            ?.enqueue(object : Callback<LessonPlanUpdateResponse?> {
+                override fun onResponse(
+                    call: Call<LessonPlanUpdateResponse?>,
+                    response: Response<LessonPlanUpdateResponse?>
+                ) {
+                    Log.d("isGetCountryList", "${response.code()} - $response")
+                    if (response.code() == 200 && response.body() != null) {
+                        isupdatelessonplan.postValue(response.body())
+                    } else {
+                        isupdatelessonplan.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<LessonPlanUpdateResponse?>, t: Throwable) {
+                    isGetAds.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+
+    val isupdatelessonplanLiveData: LiveData<LessonPlanUpdateResponse?>
+        get() = isupdatelessonplan
+
+
+
+
+    fun islessonplandelete(isToken: String,requestBody: RequestBody, activity: Activity) {
+        RestClient.apiInterfaces.islessonplandelete(isToken, requestBody)
+            ?.enqueue(object : Callback<LPDeleteResponse?> {
+                override fun onResponse(
+                    call: Call<LPDeleteResponse?>,
+                    response: Response<LPDeleteResponse?>
+                ) {
+                    Log.d("isGetCountryList", "${response.code()} - $response")
+                    if (response.code() == 200 && response.body() != null) {
+                        islessonplandelete.postValue(response.body())
+                    } else {
+                        islessonplandelete.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<LPDeleteResponse?>, t: Throwable) {
+                    isGetAds.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+
+    val islessonplandeleteLiveData: LiveData<LPDeleteResponse?>
+        get() = islessonplandelete
+
 
 
 
