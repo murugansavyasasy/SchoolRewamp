@@ -99,7 +99,6 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
                     } else if (isCommunicationType == 3) {
                         isFilterType = Constant.READ
                     }
-
                     applyCombinedFilter()
                 }
 
@@ -126,6 +125,7 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
                 }
             }
         }
+
         binding.lblAll.setOnClickListener {
             isChangeBackgroundFilter(binding.lblAll)
         }
@@ -137,7 +137,6 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
         binding.lblRead.setOnClickListener {
             isChangeBackgroundFilter(binding.lblRead)
         }
-
         fetchInitialData()
     }
 

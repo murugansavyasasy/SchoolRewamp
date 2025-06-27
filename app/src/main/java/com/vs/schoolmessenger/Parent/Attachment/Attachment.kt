@@ -3,6 +3,7 @@ package com.vs.schoolmessenger.Parent.Attachment
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.widget.RadioGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.JsonObject
@@ -13,10 +14,12 @@ import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentData
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ParentAttachmentBinding
 
-class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener, AttachmentClickListener {
+class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener,
+    AttachmentClickListener {
 
     override fun getViewBinding(): ParentAttachmentBinding {
         return ParentAttachmentBinding.inflate(layoutInflater)
@@ -26,7 +29,9 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
     private var appViewModel: App? = null
     lateinit var mAdapter: AttachmentAdapter
     private var hasFetchedMore = false
+    var isFilterShow = false
     private var allAttachmentData = mutableListOf<AttachmentData>()
+    private var filteredAttachmentData = mutableListOf<AttachmentData>()
 
     override fun setupViews() {
         super.setupViews()
@@ -37,15 +42,15 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
 
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
         binding.seeMoreLabel.setOnClickListener(this)
-        binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
+        binding.imgFilter.setOnClickListener(this)
         binding.toolbarLayout.lblStudentName.text = childDetails?.name
         binding.toolbarLayout.lblParentToolBar.text = getString(R.string.lblAttachment)
         binding.toolbarLayout.lblStudentSection.text =
             "${childDetails?.standard_name} - ${childDetails?.section_name}"
-
+        binding.linearlayout1.visibility = View.VISIBLE
         appViewModel = ViewModelProvider(this).get(App::class.java).apply { init() }
 
-        binding.toolbarLayout.txtVideoMenu.addTextChangedListener(object : TextWatcher {
+        binding.txtSearchMenu.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (::mAdapter.isInitialized) {
@@ -55,6 +60,15 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
 
             override fun afterTextChanged(s: Editable?) {}
         })
+
+        binding.rdgFiles.setOnCheckedChangeListener { _: RadioGroup, checkedId: Int ->
+            when (checkedId) {
+                R.id.RdbAll -> filterAttachments(Constant.ALL)
+                R.id.RdbImage -> filterAttachments(Constant.IMAGE)
+                R.id.RdbVideo -> filterAttachments(Constant.VIDEO)
+                R.id.RdbDocuments -> filterAttachments(Constant.DOCUMENT)
+            }
+        }
 
 
         observeAttachmentResponse()
@@ -69,7 +83,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
                 binding.recycleracademic.visibility = View.VISIBLE
                 appendData(response.data)
             } else {
-                showEmptyState(response?.message ?: "No data found")
+                showEmptyState(response?.message ?: getString(R.string.no_data_found))
             }
         }
 
@@ -103,11 +117,53 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
 
     private fun appendData(newData: List<AttachmentData>) {
         allAttachmentData.addAll(newData)
-        if (mAdapter == null || mAdapter?.isLoading == true) {
-            mAdapter = AttachmentAdapter(allAttachmentData, this, this, isLoading = false)
-            binding.recycleracademic.adapter = mAdapter
+        filterAttachments("ALL")
+    }
+
+    private fun filterAttachments(filter: String) {
+        filteredAttachmentData = when (filter) {
+            "IMAGE" -> allAttachmentData.filter {
+                it.file_path.any { file ->
+                    file.type.equals(
+                        "IMAGE", true
+                    )
+                }
+            }.toMutableList()
+
+            "VIDEO" -> allAttachmentData.filter {
+                it.file_path.any { file ->
+                    file.type.equals(
+                        "VIDEO", true
+                    )
+                }
+            }.toMutableList()
+
+            "DOCUMENT" -> allAttachmentData.filter {
+                it.file_path.any { file ->
+                    file.type.equals("PDF", true) || file.type.equals(
+                        "DOCX",
+                        true
+                    ) || file.type.equals("DOC", true) || file.type.equals(
+                        "PPT",
+                        true
+                    ) || file.type.equals("PPTX", true) || file.type.equals(
+                        "XLS",
+                        true
+                    ) || file.type.equals("XLSX", true) || file.type.equals("TXT", true)
+                }
+            }.toMutableList()
+
+            else -> allAttachmentData.toMutableList()
+        }
+
+        if (filteredAttachmentData.isEmpty()) {
+            showEmptyState(getString(R.string.no_matching_attachment_found))
         } else {
-            mAdapter?.updateList(allAttachmentData)
+            binding.nomessage.visibility = View.GONE
+            binding.txtNoData.visibility = View.GONE
+            binding.recycleracademic.visibility = View.VISIBLE
+            mAdapter = AttachmentAdapter(filteredAttachmentData, this, this, isLoading = false)
+            binding.recycleracademic.adapter = mAdapter
         }
     }
 
@@ -120,12 +176,20 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
                     fetchMoreData()
                 }
             }
+
+            R.id.imgFilter -> {
+                if (!isFilterShow) {
+                    isFilterShow = true
+                    binding.rytFilter.visibility = View.VISIBLE
+                } else {
+                    isFilterShow = false
+                    binding.rytFilter.visibility = View.GONE
+                }
+            }
         }
     }
 
-    override fun onItemClick(data: AttachmentData, holder: AttachmentAdapter.DataViewHolder) {
-
-    }
+    override fun onItemClick(data: AttachmentData, holder: AttachmentAdapter.DataViewHolder) {}
 
     override fun onSearchResultEmpty(isEmpty: Boolean) {
         if (isEmpty) {

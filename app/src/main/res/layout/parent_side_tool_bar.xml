@@ -126,6 +126,8 @@
         android:background="@drawable/rect_grey"
         android:visibility="gone">
 
+
+
         <ImageView
             android:id="@+id/imgSearch"
             android:layout_width="@dimen/thirty"
