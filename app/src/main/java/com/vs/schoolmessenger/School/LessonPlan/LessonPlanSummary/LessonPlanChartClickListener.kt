@@ -4,4 +4,5 @@ import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummaryModel.AllClassD
 
 interface LessonPlanChartClickListener {
     fun onItem(data: AllClassData, requestType: String)
+    fun onSearchResultEmpty(isEmpty: Boolean)
 }

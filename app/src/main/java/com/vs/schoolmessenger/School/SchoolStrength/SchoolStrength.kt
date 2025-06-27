@@ -228,7 +228,7 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
         // loading chart
         binding.customPieChart.invalidate()
         binding.staffCount.text = "Staff - ${totalStaffStrength.toInt()}"
-        binding.totalStudentCount.text = "Students - ${totalStudentStrength.toInt()}"
+        binding.totalStudentCount.text = "  Students - ${totalStudentStrength.toInt()}"
         binding.girlsCount.text = "Girls - ${totalGirlsStrength.toInt()}"
         binding.boysCount.text = "Boys - ${totalBoysStrength.toInt()}"
         binding.othersCount.text = "Others - ${totalothersStrength.toInt()}"
