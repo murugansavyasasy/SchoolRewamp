@@ -1264,7 +1264,4 @@ object Constant {
 
         return Bitmap.createScaledBitmap(bitmap, newWidth, newHeight, true)
     }
-
-
-
 }

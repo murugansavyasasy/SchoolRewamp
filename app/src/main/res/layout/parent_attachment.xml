@@ -2,18 +2,20 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@drawable/bg_parent_backround"
     android:fitsSystemWindows="true">
 
     <include
         android:id="@+id/toolbarLayout"
         layout="@layout/parent_side_tool_bar" />
 
+
     <LinearLayout
         android:id="@+id/linearlayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbarLayout"
+        android:visibility="gone"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -21,10 +23,9 @@
             android:id="@+id/imgFilter"
             android:layout_width="@dimen/thirty"
             android:layout_height="@dimen/thirty"
-            android:layout_marginStart="@dimen/ten"
+            android:layout_marginStart="@dimen/fifteen"
             android:layout_marginEnd="@dimen/ten"
-            android:src="@drawable/filter_icon"
-            android:visibility="gone" />
+            android:src="@drawable/filter_icon" />
 
         <RelativeLayout
             android:id="@+id/rytSearch"
@@ -32,8 +33,7 @@
             android:layout_height="@dimen/thirty_five"
             android:layout_margin="@dimen/ten"
             android:layout_weight="1"
-            android:background="@drawable/rect_grey"
-            android:visibility="gone">
+            android:background="@drawable/rect_grey">
 
             <ImageView
                 android:id="@+id/imgSearch"
@@ -57,12 +57,81 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/rytFilter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearlayout1"
+        android:layout_marginTop="@dimen/ten"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none">
+
+            <RadioGroup
+                android:id="@+id/rdgFiles"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginEnd="@dimen/thirty"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/RdbAll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/ten"
+                    android:background="@drawable/bg_gray_radious"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:padding="@dimen/five"
+                    android:text="@string/all" />
+
+                <RadioButton
+                    android:id="@+id/RdbImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/ten"
+                    android:background="@drawable/bg_gray_radious"
+                    android:gravity="center"
+                    android:padding="@dimen/five"
+                    android:text="Image" />
+
+                <RadioButton
+                    android:id="@+id/RdbVideo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/ten"
+                    android:background="@drawable/bg_gray_radious"
+                    android:gravity="center"
+                    android:padding="@dimen/five"
+                    android:text="@string/Video" />
+
+                <RadioButton
+                    android:id="@+id/RdbDocuments"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/ten"
+                    android:background="@drawable/bg_gray_radious"
+                    android:gravity="center"
+                    android:padding="@dimen/five"
+                    android:text="Document" />
+
+            </RadioGroup>
+        </HorizontalScrollView>
+    </LinearLayout>
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleracademic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/rytFilter"
         android:layout_above="@+id/seeMoreLabel"
-        android:layout_below="@+id/linearlayout1"
+        android:layout_marginTop="@dimen/ten"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginEnd="@dimen/ten">
 
@@ -72,8 +141,8 @@
     <LinearLayout
         android:id="@+id/lytList"
         android:layout_width="match_parent"
+        android:layout_centerInParent="true"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbarLayout"
         android:orientation="vertical">
 
         <ImageView

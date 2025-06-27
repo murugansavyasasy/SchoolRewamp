@@ -1,17 +1,27 @@
 package com.vs.schoolmessenger.School.LessonPlan.LessonPlanViewSummary
 
+import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
 import android.os.Build
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.util.TypedValue
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.widget.FrameLayout
+import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
+import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanClickListener
@@ -21,6 +31,8 @@ import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummary.LessonPlan
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanViewSummaryModel.LessonPlanViewSummaryDetail
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanViewSummaryModel.LessonPlanViewSummaryItem
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.Constant.isAwsUploadedFiles
+import com.vs.schoolmessenger.Utils.Constant.selectedFiles
 import com.vs.schoolmessenger.Utils.OnDateSelectedListener
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.LessonplanViewDetailsBinding
@@ -65,8 +77,14 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(),
         binding.inprogressbutton.setOnClickListener(this)
         binding.completedbutton.setOnClickListener(this)
 
-        sectionSubjectId = intent.getStringExtra("section_subject_id")!!
-        request_type = intent.getStringExtra("request_type")!!
+        sectionSubjectId = intent.getStringExtra("section_subject_id")
+        request_type = intent.getStringExtra("request_type")
+
+        if (sectionSubjectId.isNullOrEmpty() || request_type.isNullOrEmpty()) {
+            finish()
+            return
+        }
+
 
         setupRecycler()
         highlightSelectedTab(binding.allbutton)
@@ -91,16 +109,16 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(),
             if (response != null) {
                 if (response.status) {
                     Log.d("UpdateSuccess", "Lesson plan updated successfully")
-                    Constant.showTopAlertPopup(response.message, this)
+                    showTopAlertLessonPlanViewPopup(response.message, this)
                 } else {
                     Log.w("UpdateFailed", "Lesson plan update failed: ${response.message}")
-                    Constant.showTopAlertPopup(
+                    showTopAlertLessonPlanViewPopup(
                         response.message ?: "Update failed. Try again later.", this
                     )
                 }
             } else {
                 Log.e("UpdateError", "Null response received from server.")
-                Constant.showTopAlertPopup("Something went wrong. Please try again later.", this)
+                showTopAlertLessonPlanViewPopup("Something went wrong. Please try again later.", this)
             }
         }
 
@@ -118,14 +136,20 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(),
     }
 
     private fun setupRecycler() {
-        lessonplanViewAdapter = LessonPlanAdapter(null, this, this, Constant.isShimmerViewShow)
+        lessonplanViewAdapter = LessonPlanAdapter(
+            null, this, this, Constant.isShimmerViewShow, request_type ?: ""
+        )
+
         binding.rcyLessonViewPlan.layoutManager = LinearLayoutManager(this)
         binding.rcyLessonViewPlan.isNestedScrollingEnabled = false
         binding.rcyLessonViewPlan.adapter = lessonplanViewAdapter
     }
 
     private fun loadLessonPlanData(status: Int, sectionSubjectId: String?) {
-        lessonplanViewAdapter = LessonPlanAdapter(null, this, this, Constant.isShimmerViewShow)
+        lessonplanViewAdapter = LessonPlanAdapter(
+            null, this, this, Constant.isShimmerViewShow, request_type ?: ""
+        )
+
         binding.rcyLessonViewPlan.adapter = lessonplanViewAdapter
 
         appViewModel?.getlpViewReport(
@@ -138,8 +162,10 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(),
 
 
     private fun islpViewData(data: List<LessonPlanViewSummaryItem>?) {
-        lessonplanViewAdapter =
-            LessonPlanAdapter(data, this, this, Constant.isShimmerViewDisable)
+        lessonplanViewAdapter = LessonPlanAdapter(
+            data, this, this, Constant.isShimmerViewDisable, request_type ?: ""
+        )
+
         binding.rcyLessonViewPlan.adapter = lessonplanViewAdapter
     }
 
@@ -207,18 +233,124 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(),
         val intent = Intent(this@LessonPlanViewDetails, LessonPlanEditActivity::class.java)
         intent.putExtra("particular_id", data.particular_id)
         intent.putExtra("request_type",request_type)
+        intent.putExtra("section_subject_id",sectionSubjectId)
         startActivity(intent)
     }
 
-    override fun onDeleteItem(data: LessonPlanViewSummaryItem) {
-        val requestJson = JSONObject().apply {
-            put("particular_id", data.particular_id)
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun showTopDeleteAlertPopup(data: LessonPlanViewSummaryItem) {
+        val rootView = window.decorView.findViewById<ViewGroup>(android.R.id.content)
+        val inflater = LayoutInflater.from(this)
+        val view = inflater.inflate(R.layout.delete_update, null)
+        val okButton = view.findViewById<TextView>(R.id.btnOk)
+        val btnCancel = view.findViewById<TextView>(R.id.btnCancel)
+
+        val dimView = View(this).apply {
+            setBackgroundColor(Color.parseColor("#80000000"))
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
+            )
+            isClickable = true
         }
-        Log.d("LessonPlanUpdateRequest", requestJson.toString())
-        val requestBody = requestJson.toString()
-            .toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
-        appViewModel?.islessonplandelete(isAccessToken ?: "", requestBody, this)
-        Constant.showLoading(this@LessonPlanViewDetails)
+
+        val popupLayoutParams = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT
+        ).apply {
+            gravity = Gravity.CENTER
+            val margin = TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, 20f, resources.displayMetrics
+            ).toInt()
+            setMargins(margin, 0, margin, 0)
+        }
+
+        rootView.addView(dimView)
+        rootView.addView(view, popupLayoutParams)
+
+        val closePopup = {
+            rootView.removeView(view)
+            rootView.removeView(dimView)
+        }
+
+        okButton.setOnClickListener {
+            val requestJson = JSONObject().apply {
+                put("particular_id", data.particular_id)
+            }
+            Log.d("LessonPlanUpdateRequest", requestJson.toString())
+            val requestBody = requestJson.toString()
+                .toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
+
+            appViewModel?.islessonplandelete(isAccessToken ?: "", requestBody, this)
+            Constant.showLoading(this)
+            closePopup()
+        }
+
+        btnCancel.setOnClickListener {
+            closePopup()
+        }
+    }
+
+    override fun onDeleteItem(data: LessonPlanViewSummaryItem) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            showTopDeleteAlertPopup(data)
+        } else {
+            Toast.makeText(this, "Delete popup requires Android O or higher", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+
+
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun showTopAlertLessonPlanViewPopup(message: String, activity: Activity) {
+        val inflater = LayoutInflater.from(activity)
+        val view = inflater.inflate(R.layout.success_popup, null)
+
+        val messageText = view.findViewById<TextView>(R.id.alertMessage)
+        val okButton = view.findViewById<TextView>(R.id.btnOk)
+        messageText.text = message
+
+        val rootView = activity.findViewById<ViewGroup>(android.R.id.content)
+
+        val dimView = View(activity).apply {
+            setBackgroundColor(Color.parseColor("#80000000"))
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
+            )
+            isClickable = true // prevent clicks on background
+        }
+
+        val marginInPx = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP, 20f, activity.resources.displayMetrics
+        ).toInt()
+
+        val popupLayoutParams = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT
+        ).apply {
+            gravity = Gravity.CENTER
+            setMargins(marginInPx, 0, marginInPx, 0)
+        }
+
+        rootView.addView(dimView)
+        rootView.addView(view, popupLayoutParams)
+
+        val closePopup = {
+            rootView.removeView(view)
+            rootView.removeView(dimView)
+        }
+
+        okButton.setOnClickListener {
+            isAwsUploadedFiles.clear()
+            selectedFiles.clear()
+            val intent = Intent(activity, LessonPlanViewDetails::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            intent.putExtra("section_subject_id", sectionSubjectId)
+            intent.putExtra("request_type", request_type)
+            activity.startActivity(intent)
+            closePopup()
+        }
+        dimView.isFocusable = true
+        dimView.isFocusableInTouchMode = true
 
     }
 

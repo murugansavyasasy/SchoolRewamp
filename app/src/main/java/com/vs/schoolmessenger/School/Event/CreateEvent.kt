@@ -22,6 +22,7 @@ import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -77,6 +78,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(),OnImageClickListener,
     private var isStaffDetails: StaffDetails? = null
     private var selectedDateField: Int = 0
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
         setupToolbar()
@@ -104,6 +106,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(),OnImageClickListener,
             )
         }
 
+        binding.txtStartTime.text = Constant.getCurrentTime()
         binding.rcyImages.visibility = View.VISIBLE
         mAdapter = ImagePickingAdapter(this, Constant.selectedFiles!!, this)
         binding.rcyImages.layoutManager = GridLayoutManager(this, 3)

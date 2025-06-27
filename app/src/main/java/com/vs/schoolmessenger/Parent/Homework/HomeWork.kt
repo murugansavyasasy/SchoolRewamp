@@ -16,7 +16,6 @@ import com.vs.schoolmessenger.databinding.HomeWorkParentBinding
 
 class HomeWork : BaseActivity<HomeWorkParentBinding>(), View.OnClickListener,
     HomeWorkDateClickListener {
-
     private var isAccessToken: String? = null
     private var appViewModel: App? = null
     private var mAdapter: HomeWorkAdapter? = null

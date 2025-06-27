@@ -1,5 +1,4 @@
 package com.vs.schoolmessenger.School.LessonPlan.LessonPlanViewSummary
-
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -22,7 +21,8 @@ class LessonPlanAdapter(
     private var itemList: List<LessonPlanViewSummaryItem>?,
     private val listener: LessonPlanClickListener,
     private val context: Context,
-    private val isLoading: Boolean
+    private val isLoading: Boolean,
+    private val requestType: String
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
 
     private var fullList: List<LessonPlanViewSummaryItem> = itemList ?: listOf()
@@ -59,6 +59,8 @@ class LessonPlanAdapter(
         return if (isLoading) 5 else filteredList.size
     }
 
+
+
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(item: LessonPlanViewSummaryItem) {
             val recyclerView = itemView.findViewById<RecyclerView>(R.id.detailsRecyclerView)
@@ -70,6 +72,12 @@ class LessonPlanAdapter(
 
             recyclerView.layoutManager = LinearLayoutManager(context)
             recyclerView.adapter = LessonPlanDetailAdapter(item.details)
+
+            if (requestType == "allclass") {
+                btndelete.visibility = View.GONE
+            } else {
+                btndelete.visibility = View.VISIBLE
+            }
 
             when (item.lesson_plan_status) {
                 3 -> {

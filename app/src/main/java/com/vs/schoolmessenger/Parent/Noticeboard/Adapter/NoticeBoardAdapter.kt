@@ -54,14 +54,12 @@ class NoticeBoardAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-//            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.noticeboard_report_item)
             val shimmerView =
                 ShimmerUtil.wrapWithShimmer(parent, R.layout.homework_school_reportitem)
             ShimmerViewHolder(shimmerView)
         }
         else {
             val view = LayoutInflater.from(parent.context)
-//                .inflate(R.layout.noticeboard_report_item, parent, false)
                 .inflate(R.layout.homework_school_reportitem, parent, false)
             DataViewHolder(view, context)
         }
