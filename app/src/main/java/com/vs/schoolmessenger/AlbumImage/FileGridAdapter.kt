@@ -107,7 +107,7 @@ class FileGridAdapter(
                 selected.remove(uri)
             } else {
                 if (selected.size >= limit) {
-                    Toast.makeText(context, "Limit is $limit", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "You can select up to $limit items only", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
                 selected.add(uri)
