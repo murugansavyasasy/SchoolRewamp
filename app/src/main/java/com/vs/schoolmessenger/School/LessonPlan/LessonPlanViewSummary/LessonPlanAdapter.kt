@@ -1,7 +1,6 @@
 package com.vs.schoolmessenger.School.LessonPlan.LessonPlanViewSummary
 
 import android.content.Context
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,10 +12,10 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
+import android.widget.Filter
+import android.widget.Filterable
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanClickListener
-import com.vs.schoolmessenger.School.LessonPlan.LessonPlanData
-import com.vs.schoolmessenger.School.LessonPlan.LessonPlanViewSummaryModel.LessonPlanViewSummaryDetail
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanViewSummaryModel.LessonPlanViewSummaryItem
 
 class LessonPlanAdapter(
@@ -24,7 +23,10 @@ class LessonPlanAdapter(
     private val listener: LessonPlanClickListener,
     private val context: Context,
     private val isLoading: Boolean
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
+
+    private var fullList: List<LessonPlanViewSummaryItem> = itemList ?: listOf()
+    private var filteredList: List<LessonPlanViewSummaryItem> = itemList ?: listOf()
 
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
@@ -47,14 +49,14 @@ class LessonPlanAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder && !isLoading) {
-            itemList?.get(position)?.let { data ->
+            filteredList.getOrNull(position)?.let { data ->
                 holder.bind(data)
             }
         }
     }
 
     override fun getItemCount(): Int {
-        return if (isLoading) 5 else itemList?.size ?: 0
+        return if (isLoading) 5 else filteredList.size
     }
 
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -65,41 +67,70 @@ class LessonPlanAdapter(
             val status_textlabel = itemView.findViewById<TextView>(R.id.status_textlabel)
             val btnedit = itemView.findViewById<LinearLayout>(R.id.btnEditContainer)
             val btndelete = itemView.findViewById<LinearLayout>(R.id.btnDeleteContainer)
+
             recyclerView.layoutManager = LinearLayoutManager(context)
             recyclerView.adapter = LessonPlanDetailAdapter(item.details)
 
-            if(item.lesson_plan_status == 3) {
-                bottomstatusrelative_layout.setBackgroundResource(R.drawable.bg_green_radoius_20dp)
-                status_text1label.setImageResource(R.drawable.correcticonsvg)
-                status_textlabel.setTextColor(ContextCompat.getColor(context, R.color.green));
-                status_textlabel.setText("Completed")
-            } else if (item.lesson_plan_status == 2) {
-                bottomstatusrelative_layout.setBackgroundResource(R.drawable.bg_blue_radoius_20dp)
-                status_text1label.setImageResource(R.drawable.refreshicon)
-                status_textlabel.setTextColor(ContextCompat.getColor(context, R.color.iconBlue));
-                status_textlabel.setText("In Progress")
-            } else if (item.lesson_plan_status == 1) {
-                bottomstatusrelative_layout.setBackgroundResource(R.drawable.bg_orange_radoius_20dp)
-                status_text1label.setImageResource(R.drawable.sandclockicon)
-                status_textlabel.setTextColor(ContextCompat.getColor(context, R.color.dark_orange));
-                status_textlabel.setText("Yet to Start")
+            when (item.lesson_plan_status) {
+                3 -> {
+                    bottomstatusrelative_layout.setBackgroundResource(R.drawable.bg_green_radoius_20dp)
+                    status_text1label.setImageResource(R.drawable.correcticonsvg)
+                    status_textlabel.setTextColor(ContextCompat.getColor(context, R.color.green))
+                    status_textlabel.text = "Completed"
+                }
+                2 -> {
+                    bottomstatusrelative_layout.setBackgroundResource(R.drawable.bg_blue_radoius_20dp)
+                    status_text1label.setImageResource(R.drawable.refreshicon)
+                    status_textlabel.setTextColor(ContextCompat.getColor(context, R.color.iconBlue))
+                    status_textlabel.text = "In Progress"
+                }
+                1 -> {
+                    bottomstatusrelative_layout.setBackgroundResource(R.drawable.bg_orange_radoius_20dp)
+                    status_text1label.setImageResource(R.drawable.sandclockicon)
+                    status_textlabel.setTextColor(ContextCompat.getColor(context, R.color.dark_orange))
+                    status_textlabel.text = "Yet to Start"
+                }
             }
-            btnedit.setOnClickListener {
-                listener.onEditItem(item)
-            }
-
-            btndelete.setOnClickListener {
-                listener.onDeleteItem(item)
-            }
+            btnedit.setOnClickListener { listener.onEditItem(item) }
+            btndelete.setOnClickListener { listener.onDeleteItem(item) }
         }
     }
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val shimmerLayout: ShimmerFrameLayout =
-            itemView.findViewById(R.id.shimmer_view_container)
-
+        private val shimmerLayout: ShimmerFrameLayout = itemView.findViewById(R.id.shimmer_view_container)
         init {
             shimmerLayout.startShimmer()
         }
+    }
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val query = constraint?.toString()?.trim()?.lowercase() ?: ""
+                val resultList = if (query.isEmpty()) {
+                    fullList
+                } else {
+                    fullList.filter { item ->
+                        item.details.any { detail ->
+                            detail.name.lowercase().contains(query) ||
+                                    detail.value.lowercase().contains(query)
+                        }
+                    }
+                }
+                return FilterResults().apply { values = resultList }
+            }
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                filteredList = results?.values as? List<LessonPlanViewSummaryItem> ?: listOf()
+                notifyDataSetChanged()
+                listener.onSearchResultEmpty(filteredList.isEmpty())
+            }
+        }
+    }
+
+    fun updateData(newData: List<LessonPlanViewSummaryItem>) {
+        fullList = newData
+        filteredList = newData
+        notifyDataSetChanged()
     }
 }

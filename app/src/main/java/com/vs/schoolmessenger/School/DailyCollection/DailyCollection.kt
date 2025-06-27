@@ -160,6 +160,22 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
         binding.totalsummary1.layoutManager = LinearLayoutManager(this)
         binding.totalsummary1.adapter = mAdapter
 
+        //Disabling the current tab to avoid clicking that again
+        if (selectedType=="1"){
+            binding.categoryName.isEnabled=false
+            binding.className.isEnabled=true
+            binding.modeName.isEnabled=true}
+        if (selectedType=="2"){
+            binding.className.isEnabled=false
+            binding.categoryName.isEnabled=true
+            binding.modeName.isEnabled=true
+        }
+        if (selectedType=="3"){
+            binding.modeName.isEnabled=false
+            binding.categoryName.isEnabled=true
+            binding.className.isEnabled=true
+        }
+
         Constant.showLoading(this@DailyCollection)
         appViewModel?.isGetDailyCollectionReport(
             isAccessToken ?: "",

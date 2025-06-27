@@ -471,6 +471,7 @@
                             android:layout_marginStart="@dimen/twenty_five"
                             android:layout_marginTop="@dimen/thirty"
                             android:layout_marginEnd="@dimen/twenty_five"
+                            android:layout_marginBottom="@dimen/thirty"
                             android:background="@drawable/rect_btn_orange"
                             android:gravity="center"
                             android:padding="@dimen/ten"

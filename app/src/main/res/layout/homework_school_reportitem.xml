@@ -121,7 +121,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/one_fifty"
             android:layout_below="@+id/LblHWSubjectName"
-            android:layout_marginTop="@dimen/ten"
+            android:layout_marginTop="@dimen/five"
             android:visibility="gone">
 
 
@@ -162,7 +162,6 @@
             android:layout_below="@+id/rytList"
             android:layout_centerInParent="true"
             android:visibility="gone"
-            android:layout_marginTop="@dimen/five"
             android:elevation="4dp"/>
 
 
@@ -172,7 +171,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/indicator"
             android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/fifteen"
             android:text="Annual Day celebrations"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"

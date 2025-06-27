@@ -23,9 +23,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/ten"
-            android:padding="@dimen/ten"
             android:layout_marginTop="@dimen/ten"
-            android:layout_marginEnd="@dimen/ten">
+            android:layout_marginEnd="@dimen/ten"
+            android:padding="@dimen/ten">
 
 
             <TextView
@@ -156,8 +156,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblEventDesc"
-                android:layout_alignStart="@+id/lblEventDesc"
-                >
+                android:layout_alignStart="@+id/lblEventDesc">
 
 
                 <EditText
@@ -462,6 +461,7 @@
                             android:layout_below="@id/rytRecyclewview"
                             android:layout_marginStart="@dimen/twenty_five"
                             android:layout_marginTop="@dimen/fifty"
+                            android:layout_marginBottom="@dimen/thirty"
                             android:layout_marginEnd="@dimen/twenty_five"
                             android:background="@drawable/rect_btn_orange"
                             android:gravity="center"
