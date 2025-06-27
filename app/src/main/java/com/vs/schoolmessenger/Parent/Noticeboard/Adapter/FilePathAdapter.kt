@@ -22,7 +22,7 @@ import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.gson.Gson
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
 import com.vs.schoolmessenger.Parent.Communication.UnifiedVoiceAdapter.ShimmerViewHolder
-import com.vs.schoolmessenger.Parent.Homework.FullScreenViewerActivity
+import com.vs.schoolmessenger.Utils.FullScreenViewerActivity
 import com.vs.schoolmessenger.Parent.Noticeboard.FilePath
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
@@ -132,9 +132,10 @@ class FilePathAdapter (
                         type = it.type,
                         path = it.url,
                     )
-                } ?: emptyList()
+                }?.toMutableList() ?: mutableListOf()
 
                 Constant.commonFileList = commonList
+
                 Constant.selectedFileIndex = position
 
                 val intent = Intent(context, FullScreenViewerActivity::class.java)
@@ -157,9 +158,10 @@ class FilePathAdapter (
                                 type = it.type,
                                 path = it.url,
                             )
-                        } ?: emptyList()
+                        }?.toMutableList() ?: mutableListOf()
 
                         Constant.commonFileList = commonList
+
                         Constant.selectedFileIndex = position
 
                         val intent = Intent(context, FullScreenViewerActivity::class.java)

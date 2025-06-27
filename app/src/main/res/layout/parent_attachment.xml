@@ -22,9 +22,9 @@
             android:layout_width="@dimen/thirty"
             android:layout_height="@dimen/thirty"
             android:layout_marginStart="@dimen/ten"
-            android:visibility="gone"
             android:layout_marginEnd="@dimen/ten"
-            android:src="@drawable/filter_icon" />
+            android:src="@drawable/filter_icon"
+            android:visibility="gone" />
 
         <RelativeLayout
             android:id="@+id/rytSearch"
@@ -32,8 +32,8 @@
             android:layout_height="@dimen/thirty_five"
             android:layout_margin="@dimen/ten"
             android:layout_weight="1"
-            android:visibility="gone"
-            android:background="@drawable/rect_grey">
+            android:background="@drawable/rect_grey"
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/imgSearch"
@@ -59,12 +59,12 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleracademic"
-        android:layout_marginStart="@dimen/ten"
-        android:layout_marginEnd="@dimen/ten"
         android:layout_width="match_parent"
-        android:layout_above="@+id/seeMoreLabel"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/linearlayout1">
+        android:layout_above="@+id/seeMoreLabel"
+        android:layout_below="@+id/linearlayout1"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten">
 
     </androidx.recyclerview.widget.RecyclerView>
 
@@ -85,7 +85,7 @@
             android:layout_marginTop="@dimen/twenty"
             android:src="@drawable/nomessages"
             android:textColor="@color/black"
-            android:textSize="@dimen/eighteen"
+            android:textSize="@dimen/fifteen_sp"
             android:visibility="gone" />
 
         <TextView
@@ -93,11 +93,11 @@
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_marginTop="@dimen/twenty"
+            android:gravity="center"
             android:text="@string/no_list_found"
             android:textColor="@color/black"
-            android:textSize="@dimen/fifteen"
+            android:textSize="@dimen/fifteen_sp"
             android:visibility="gone" />
 
 
@@ -109,8 +109,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="@dimen/twenty"
         android:layout_alignParentBottom="true"
+        android:layout_marginEnd="@dimen/twenty"
         android:layout_marginBottom="@dimen/fifteen"
         android:text="@string/see_more"
         android:textColor="@color/navi_blue2"

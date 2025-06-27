@@ -63,7 +63,8 @@ class LessonPlanAdapter(
             val bottomstatusrelative_layout = itemView.findViewById<RelativeLayout>(R.id.bottomstatusrelative_layout)
             val status_text1label = itemView.findViewById<ImageView>(R.id.status_text1label)
             val status_textlabel = itemView.findViewById<TextView>(R.id.status_textlabel)
-            val btnedit = itemView.findViewById<TextView>(R.id.btnedit)
+            val btnedit = itemView.findViewById<LinearLayout>(R.id.btnEditContainer)
+            val btndelete = itemView.findViewById<LinearLayout>(R.id.btnDeleteContainer)
             recyclerView.layoutManager = LinearLayoutManager(context)
             recyclerView.adapter = LessonPlanDetailAdapter(item.details)
 
@@ -85,6 +86,10 @@ class LessonPlanAdapter(
             }
             btnedit.setOnClickListener {
                 listener.onEditItem(item)
+            }
+
+            btndelete.setOnClickListener {
+                listener.onDeleteItem(item)
             }
         }
     }

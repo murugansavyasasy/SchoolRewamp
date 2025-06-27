@@ -23,7 +23,7 @@ import com.google.gson.Gson
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
 import com.vs.schoolmessenger.Parent.Communication.UnifiedVoiceAdapter
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.FilePath
-import com.vs.schoolmessenger.Parent.Homework.FullScreenViewerActivity
+import com.vs.schoolmessenger.Utils.FullScreenViewerActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
@@ -132,11 +132,12 @@ class EventFilePathAdapter (
                 val commonList = adapter.GetFilePathDetailsData?.map {
                     CommonFileData(
                         type = it.type,
-                        path = it.url,
+                        path = it.url
                     )
-                } ?: emptyList()
+                }?.toMutableList() ?: mutableListOf()
 
                 Constant.commonFileList = commonList
+
                 Constant.selectedFileIndex = position
 
                 val intent = Intent(context, FullScreenViewerActivity::class.java)
@@ -157,11 +158,12 @@ class EventFilePathAdapter (
                         val commonList = adapter.GetFilePathDetailsData?.map {
                             CommonFileData(
                                 type = it.type,
-                                path = it.url,
+                                path = it.url
                             )
-                        } ?: emptyList()
+                        }?.toMutableList() ?: mutableListOf()
 
                         Constant.commonFileList = commonList
+
                         Constant.selectedFileIndex = position
 
                         val intent = Intent(context, FullScreenViewerActivity::class.java)

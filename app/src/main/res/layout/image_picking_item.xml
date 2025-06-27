@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_width="@dimen/ninety"
+    android:layout_height="@dimen/ninety"
     android:layout_marginStart="@dimen/twenty"
     android:layout_marginTop="@dimen/ten"
     android:layout_marginEnd="@dimen/twenty"
@@ -10,9 +10,9 @@
     <ImageView
         android:id="@+id/imgPicking"
         android:layout_width="match_parent"
-        android:layout_height="85dp"
-        android:layout_marginTop="@dimen/fifteen"
-        android:layout_marginEnd="@dimen/twenty"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
         android:scaleType="centerCrop"
         android:src="@drawable/add_image">
 

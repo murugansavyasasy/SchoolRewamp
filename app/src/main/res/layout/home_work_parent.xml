@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/white"
-    android:fitsSystemWindows="true"
-    android:layout_height="match_parent">
+    android:fitsSystemWindows="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -12,44 +12,43 @@
 
 
         <include
-        android:id="@+id/toolbarLayout"
-        layout="@layout/parent_side_tool_bar" />
+            android:id="@+id/toolbarLayout"
+            layout="@layout/parent_side_tool_bar" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcyHomework"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/toolbarLayout">
-    </androidx.recyclerview.widget.RecyclerView>
-
-    <LinearLayout
-        android:id="@+id/rytNORecordFound"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbarLayout"
-        android:layout_marginTop="@dimen/hundred"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-
-        <ImageView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcyHomework"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/two_hundred"
-            android:src="@drawable/no_data_found"></ImageView>
+            android:layout_height="match_parent"
+            android:layout_below="@+id/toolbarLayout"></androidx.recyclerview.widget.RecyclerView>
 
-        <TextView
-            android:id="@+id/lblNoRecordFound"
-            style="@style/CustomTextStylePoppinsBold"
+        <LinearLayout
+            android:id="@+id/rytNORecordFound"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/fifty"
-            android:textSize="@dimen/fifteen"
-            android:gravity="center">
+            android:layout_below="@+id/toolbarLayout"
+            android:layout_marginTop="@dimen/hundred"
+            android:orientation="vertical"
+            android:visibility="gone">
 
-        </TextView>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/two_hundred"
+                android:src="@drawable/no_data_found"></ImageView>
+
+            <TextView
+                android:id="@+id/lblNoRecordFound"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fifty"
+                android:gravity="center"
+                android:textSize="@dimen/fifteen_sp">
+
+            </TextView>
 
 
-    </LinearLayout>
+        </LinearLayout>
 
 
     </RelativeLayout>
@@ -59,13 +58,13 @@
         style="@style/CustomTextStylePoppinsBold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/twenty"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:textSize="@dimen/fifteen_sp"
+        android:layout_marginTop="@dimen/twenty"
         android:layout_marginEnd="@dimen/twenty"
         android:layout_marginBottom="@dimen/twenty"
-        android:text="@string/SeeMore">
-    </TextView>
+        android:text="@string/SeeMore"
+        android:textColor="@color/navi_blue2"
+        android:textSize="@dimen/fifteen_sp"></TextView>
 
 </RelativeLayout>

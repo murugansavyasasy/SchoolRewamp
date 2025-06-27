@@ -273,17 +273,19 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickL
     }
 
     private fun openAlbumSelectActivity(isFileType: String) {
+
         if (Constant.selectedFiles.size > 1) {
-            if (Constant.selectedFiles[1].type.toString() != isFileType) {
+            val secondType = Constant.selectedFiles[1].type.toString()
+            if (
+                (secondType == Constant.IMAGE && (isFileType == Constant.DOCUMENT || isFileType == Constant.VOICE)) ||
+                (secondType == Constant.DOCUMENT && (isFileType == Constant.IMAGE || isFileType == Constant.VOICE)) ||
+                (secondType == Constant.VOICE && (isFileType == Constant.IMAGE || isFileType == Constant.DOCUMENT))
+            ) {
                 Constant.selectedFiles.clear()
                 saveDrawableToCache(R.drawable.add_image)?.let {
-                    Constant.selectedFiles.add(
-                        FileItem(
-                            it, FileType.IMAGE
-                        )
-                    )
+                    Constant.selectedFiles.add(FileItem(it, FileType.IMAGE))
                 }
-                mAdapter!!.notifyDataSetChanged()
+                mAdapter?.notifyDataSetChanged()
             }
         }
         Log.d("FileComing", isFileType)

@@ -22,7 +22,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
-import com.vs.schoolmessenger.Parent.Homework.FullScreenViewerActivity
+import com.vs.schoolmessenger.Utils.FullScreenViewerActivity
 import com.vs.schoolmessenger.Parent.Noticeboard.Notice
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardClickListener
 import com.vs.schoolmessenger.R
@@ -148,9 +148,10 @@ class NoticeBoardAdapter(
                                 type = it.type,
                                 path = it.url,
                             )
-                        } ?: emptyList()
+                        }?.toMutableList() ?: mutableListOf()
 
                         Constant.commonFileList = commonList
+
                         Constant.selectedFileIndex = position
 
                         val intent = Intent(context, FullScreenViewerActivity::class.java)

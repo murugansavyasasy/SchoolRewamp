@@ -24,7 +24,7 @@ import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
 import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentClickListener
 import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentData
-import com.vs.schoolmessenger.Parent.Homework.FullScreenViewerActivity
+import com.vs.schoolmessenger.Utils.FullScreenViewerActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
@@ -136,9 +136,11 @@ class AttachmentAdapter(
 
             webView.setOnTouchListener { _, event ->
                 if (event.action == MotionEvent.ACTION_UP) {
-                    Constant.commonFileList = item.file_path?.map {
-                        CommonFileData(type = it.type, path = it.url)
-                    } ?: emptyList()
+
+                    Constant.commonFileList = item.file_path?.map { file ->
+                        CommonFileData(type = file.type, path = file.url)
+                    }?.toMutableList() ?: mutableListOf()
+
                     Constant.selectedFileIndex = position
 
                     val intent = Intent(context, FullScreenViewerActivity::class.java)

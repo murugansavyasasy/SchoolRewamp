@@ -1,9 +1,13 @@
 package com.vs.schoolmessenger.School.LessonPlan.LessonPlanViewSummary
 
 import android.content.Intent
+import android.os.Build
+import android.util.Log
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
@@ -18,6 +22,9 @@ import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.OnDateSelectedListener
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.LessonplanViewDetailsBinding
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONObject
 
 class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(),
     View.OnClickListener, LessonPlanClickListener, OnDateSelectedListener {
@@ -35,6 +42,7 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(),
     private var request_type: String? = null
     private var currentStatus: Int = 0
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
         setupToolbar()
@@ -71,6 +79,25 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(),
                 binding.nomessage.visibility = View.VISIBLE
                 binding.txtNoData.visibility = View.VISIBLE
                 binding.rcyLessonViewPlan.visibility = View.GONE
+            }
+        }
+
+        appViewModel!!.islessonplandelete?.observe(this) { response ->
+            Constant.hideLoading(this@LessonPlanViewDetails)
+
+            if (response != null) {
+                if (response.status) {
+                    Log.d("UpdateSuccess", "Lesson plan updated successfully")
+                    Constant.showTopAlertPopup(response.message, this)
+                } else {
+                    Log.w("UpdateFailed", "Lesson plan update failed: ${response.message}")
+                    Constant.showTopAlertPopup(
+                        response.message ?: "Update failed. Try again later.", this
+                    )
+                }
+            } else {
+                Log.e("UpdateError", "Null response received from server.")
+                Constant.showTopAlertPopup("Something went wrong. Please try again later.", this)
             }
         }
     }
@@ -153,12 +180,21 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(),
         startActivity(intent)
     }
 
-    override fun onDeleteItem(data: LessonPlanData) {
-        // Optional: Add delete logic here
+    override fun onDeleteItem(data: LessonPlanViewSummaryItem) {
+        val requestJson = JSONObject().apply {
+            put("particular_id", data.particular_id)
+        }
+        Log.d("LessonPlanUpdateRequest", requestJson.toString())
+        val requestBody = requestJson.toString()
+            .toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
+        appViewModel?.islessonplandelete(isAccessToken ?: "", requestBody, this)
+        Constant.showLoading(this@LessonPlanViewDetails)
+
     }
 
     override fun onDateSelected(date: String) {
-        // Optional: Handle date filter here
+
+
     }
 
 }

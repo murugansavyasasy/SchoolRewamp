@@ -21,7 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
-import com.vs.schoolmessenger.Parent.Homework.FullScreenViewerActivity
+import com.vs.schoolmessenger.Utils.FullScreenViewerActivity
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetDateWiseHomeworkData
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkDetails
 import com.vs.schoolmessenger.R
@@ -94,6 +94,7 @@ class HomeWorkItemAdapter(
             lblDateImage.text = Constant.convertDateTimeFormat(data!!.date)
             lblSubjectName.text = homeworkData.subject_name
             rlaSelectText.visibility = View.GONE
+
             webView.setOnTouchListener(object : OnTouchListener {
                 override fun onTouch(v: View?, event: MotionEvent): Boolean {
                     if (event.getAction() == MotionEvent.ACTION_MOVE) {
@@ -106,11 +107,12 @@ class HomeWorkItemAdapter(
                         val commonList = homeworkData.file_path?.map {
                             CommonFileData(
                                 type = it.type,
-                                path = it.url,
+                                path = it.url
                             )
-                        } ?: emptyList()
+                        }?.toMutableList() ?: mutableListOf()
 
                         Constant.commonFileList = commonList
+
                         Constant.selectedFileIndex = position
 
                         val intent = Intent(context, FullScreenViewerActivity::class.java)

@@ -175,9 +175,15 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
         // on below line we are creating array list and
         // adding data to it to display in pie chart
         val entries: ArrayList<PieEntry> = ArrayList()
-        entries.add(PieEntry(totalStaffStrength))
-        entries.add(PieEntry(totalBoysStrength))
-        entries.add(PieEntry(totalGirlsStrength))
+        if (!data[0].totalStaffStrength.equals("0")) {
+            entries.add(PieEntry(totalStaffStrength))
+        }
+        if (!data[0].totalBoysStrength.equals("0")) {
+            entries.add(PieEntry(totalBoysStrength))
+        }
+        if (!data[0].totalGirlsStrength.equals("0")) {
+            entries.add(PieEntry(totalGirlsStrength))
+        }
         if (!data[0].totalOthersStrength.equals("0")) {
             entries.add(PieEntry(totalothersStrength))
         }
@@ -191,9 +197,15 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
         dataSet.selectionShift = 5f
         // add a lot of colors to list
         val colors: ArrayList<Int> = ArrayList()
-        colors.add(resources.getColor(R.color.yellow))
-        colors.add(resources.getColor(R.color.teal))
-        colors.add(resources.getColor(R.color.pink))
+        if (!data[0].totalStaffStrength.equals("0")) {
+            colors.add(resources.getColor(R.color.yellow))
+        }
+        if (!data[0].totalBoysStrength.equals("0")) {
+            colors.add(resources.getColor(R.color.teal))
+        }
+        if (!data[0].totalGirlsStrength.equals("0")) {
+            colors.add(resources.getColor(R.color.pink))
+        }
         if (!data[0].totalOthersStrength.equals("0")) {
             colors.add(resources.getColor(R.color.green))
         }
