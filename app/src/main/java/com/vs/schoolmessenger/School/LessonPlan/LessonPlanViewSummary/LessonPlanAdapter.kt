@@ -1,5 +1,4 @@
 package com.vs.schoolmessenger.School.LessonPlan.LessonPlanViewSummary
-
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View

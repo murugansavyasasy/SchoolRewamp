@@ -148,6 +148,7 @@
         android:textSize="18sp"
         android:visibility="gone" />
 
+
     <TextView
         android:id="@+id/txtNoData"
         style="@style/CustomTextStylePoppinsBold"
