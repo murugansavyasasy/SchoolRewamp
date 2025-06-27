@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebViewClient
+import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -80,6 +81,7 @@ class HomeWorkItemAdapter(
         private val rytList: RelativeLayout = itemView.findViewById(R.id.rytList)
         private val webView: android.webkit.WebView = itemView.findViewById(R.id.webView)
         private val loadingBar: ProgressBar = itemView.findViewById(R.id.loadingBar)
+        private val imgNewImage: ImageView = itemView.findViewById(R.id.imgNewImage)
 
         private var mHomeworkImgPDFAdapter: HomeworkImgPDFAdapter? = null
 
@@ -101,6 +103,7 @@ class HomeWorkItemAdapter(
 //            val time = parts.getOrNull(1) + " " + (parts.getOrNull(2) ?: "")
             lblDateImage.text = Constant.convertDateTimeFormat(date)
             lblTimeImage.visibility=View.GONE
+            imgNewImage.visibility = View.GONE
 
             webView.setOnTouchListener(object : OnTouchListener {
                 override fun onTouch(v: View?, event: MotionEvent): Boolean {

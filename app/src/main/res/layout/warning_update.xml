@@ -15,8 +15,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/fifteen"
         android:gravity="center"
-        android:text="@string/isSuccess"
+        android:text="Confirm"
         android:textColor="#000"
+        android:visibility="visible"
         android:textSize="@dimen/eighteen_sp"
         android:textStyle="bold" />
 
@@ -29,7 +30,8 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="@dimen/fifteen"
         android:gravity="center"
-        android:text=""
+        style="@style/CustomTextStylePoppinsMedium"
+        android:text="Are you sure you want to update this lesson plan?"
         android:textColor="#444"
         android:textSize="@dimen/fifteen_sp" />
 
@@ -49,12 +51,14 @@
             android:layout_width="match_parent"
             android:gravity="center"
             android:layout_weight="1"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_height="wrap_content"
             android:padding="@dimen/ten"
             android:text="@string/Cancel"
             android:textColor="@color/navi_blue2"
             android:textSize="@dimen/fifteen_sp" />
+
+
 
 
         <TextView

@@ -381,16 +381,11 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         Log.d("Tap Visibility Check", "Tap Debug Check")
         if (isUserDetails!!.staff_role == Constant.isStaffRole) {
             if (SELECTED_SCHOOL_MENU == M_HOMEWORK) {
+
                 binding.nomessage.visibility = View.GONE
                 binding.nomessageEntire.visibility = View.GONE
-                binding.tapEntireSchool.visibility = View.GONE
-                binding.tapStandards.visibility = View.GONE
-                binding.tabSectionsStudent.visibility = View.VISIBLE
-                binding.tabGroups.visibility = View.GONE
-                binding.tapStaffs.visibility = View.GONE
+                binding.tabLayout.visibility = View.GONE
                 changeTapBg(Constant.isSection)
-
-                //show send button only
 
             } else if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT) {
 

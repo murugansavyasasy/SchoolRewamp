@@ -207,7 +207,7 @@ class SchoolStrength : BaseActivity<SchoolStrengthBinding>(), View.OnClickListen
             colors.add(resources.getColor(R.color.pink))
         }
         if (!data[0].totalOthersStrength.equals("0")) {
-            colors.add(resources.getColor(R.color.green))
+            colors.add(resources.getColor(R.color.grey))
         }
         // on below line we are setting colors.
         dataSet.colors = colors
