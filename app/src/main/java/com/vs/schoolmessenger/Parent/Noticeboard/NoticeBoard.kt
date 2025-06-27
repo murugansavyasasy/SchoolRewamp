@@ -31,7 +31,9 @@ class NoticeBoard : BaseActivity<NoticeBoardBinding>(), View.OnClickListener,
         val isChildDetails = SharedPreference.getChildDetails(this)
         isAccessToken = isChildDetails?.access_token
         isGetNoticeBoardList()
-
+        binding.toolbarLayout.lblStudentName.text = isChildDetails?.name
+        binding.toolbarLayout.lblStudentSection.text =
+            "${isChildDetails?.standard_name} ${isChildDetails?.section_name}"
         binding.toolbarLayout.lblParentToolBar.text = getString(R.string.NoticeBoard)
         binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
         binding.toolbarLayout.imgBack.setOnClickListener(this)

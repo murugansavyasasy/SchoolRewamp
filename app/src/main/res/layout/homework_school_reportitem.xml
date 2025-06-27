@@ -62,27 +62,43 @@
             android:textColor="@color/black"
             android:textSize="@dimen/eighteen_sp" />
 
-
-        <TextView
-            android:id="@+id/lblDateImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/lblContentImage"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="@dimen/ten"
+        <LinearLayout
+            android:gravity="end|center"
             android:layout_marginEnd="@dimen/ten"
-            android:fontFamily="@font/poppins_regular"
-            android:text="15 Nov 2024"
-            android:layout_alignStart="@+id/rlaSelectText"
-            android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"
-            android:textStyle="normal" />
+            android:id="@+id/lnrDataTime"
+            android:layout_marginTop="@dimen/five"
+            android:layout_marginBottom="@dimen/two"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/lblEventTimeImage"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/lblDateImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/five"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:text="15 Nov 2024"
+                android:textSize="@dimen/twele_sp"
+                android:textColor="@color/black"
+                android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/lblTimeImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:text="99:99 AM"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/twele_sp"
+                android:textStyle="normal" />
+
+        </LinearLayout>
 
         <RelativeLayout
             android:id="@+id/rlaSelectText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lblDateImage"
+            android:layout_below="@+id/lnrDataTime"
             android:layout_marginBottom="@dimen/twenty"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="@dimen/ten"
@@ -153,12 +169,11 @@
 
         </RelativeLayout>
 
-
         <me.relex.circleindicator.CircleIndicator2
             android:id="@+id/indicator"
             style="@style/IndicatorStyle"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/thirty"
+            android:layout_height="@dimen/twenty"
             android:layout_below="@+id/rytList"
             android:layout_centerInParent="true"
             android:visibility="gone"
@@ -186,6 +201,21 @@
             android:layout_marginEnd="10dp"
             android:maxLines="3"
             android:text="If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress."
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp"
+            android:textStyle="normal" />
+
+        <TextView
+            android:id="@+id/lblEventTimeImage"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblContentImage"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/five"
+            android:layout_marginEnd="10dp"
+            android:maxLines="3"
+            android:text="Event Starts at"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"
             android:textStyle="normal" />

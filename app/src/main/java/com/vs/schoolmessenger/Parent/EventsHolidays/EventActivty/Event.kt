@@ -1,8 +1,10 @@
 package com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty
 
+import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -45,11 +47,12 @@ class Event : BaseActivity<EventParentBinding>(), View.OnClickListener, EventCli
         binding.toolbarLayout.lblParentToolBar.text = getString(R.string.event_holiday)
         binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
         binding.toolbarLayout.lnrParent.visibility = View.VISIBLE
-        binding.toolbarLayout.lblStudentName.text = ""
-        binding.toolbarLayout.lblStudentSection.text = ""
 
         binding.toolbarLayout.lblLeftSideBar.text = resources.getText(R.string.HoliDay)
         binding.toolbarLayout.lblRightSideBar.text = resources.getText(R.string.Event)
+        binding.toolbarLayout.lblStudentName.text = isChildDetails?.name
+        binding.toolbarLayout.lblStudentSection.text =
+            "${isChildDetails?.standard_name} ${isChildDetails?.section_name}"
 
         loadeventdata()
 
@@ -131,6 +134,7 @@ class Event : BaseActivity<EventParentBinding>(), View.OnClickListener, EventCli
     }
 
     private fun loadeventdata() {
+        clearSearchText()
         mAdapter = EventAdapter(null, this, this, Constant.isShimmerViewShow)
         binding.rcyEvent.layoutManager = LinearLayoutManager(this)
         binding.rcyEvent.isNestedScrollingEnabled = false
@@ -138,7 +142,15 @@ class Event : BaseActivity<EventParentBinding>(), View.OnClickListener, EventCli
         appViewModel!!.IsGetEventReport(isAccessToken!!, this)
     }
 
+    fun clearSearchText(){
+        binding.toolbarLayout.txtVideoMenu.text.clear()
+        binding.toolbarLayout.txtVideoMenu.clearFocus();
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(binding.toolbarLayout.txtVideoMenu.windowToken, 0)
+    }
+
     private fun loadHolidayData() {
+        clearSearchText()
         isHolidayAdapter = HolidayAdapter(null, this, Constant.isShimmerViewShow,this)
         binding.rcyEvent.layoutManager = LinearLayoutManager(this)
         binding.rcyEvent.isNestedScrollingEnabled = false

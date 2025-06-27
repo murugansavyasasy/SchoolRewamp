@@ -1,5 +1,6 @@
 package com.vs.schoolmessenger.Parent.RequestLeave
 
+import android.graphics.Color
 import android.os.Build
 import android.util.Log
 import android.view.View
@@ -130,7 +131,10 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
         }
 
         binding.toolbarLayout.lblRightSideBar.setOnClickListener {
-            isBackRoundChange(binding.toolbarLayout.lblRightSideBar)
+            binding.toolbarLayout.lblRightSideBar.setBackgroundResource(R.drawable.white_radious)
+            binding.toolbarLayout.lblRightSideBar.setTextColor(Color.BLACK)
+            binding.toolbarLayout.lblLeftSideBar.setBackgroundResource(R.drawable.bg_light_green)
+//            isBackRoundChange(binding.toolbarLayout.lblRightSideBar)
             binding.rlaCreateLeaveRequest.visibility = View.VISIBLE
             binding.rlaHistory.visibility = View.GONE
         }
@@ -138,7 +142,11 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
         binding.toolbarLayout.lblLeftSideBar.setOnClickListener {
             binding.rlaHistory.visibility = View.VISIBLE
             binding.rlaCreateLeaveRequest.visibility = View.GONE
-            isBackRoundChange(binding.toolbarLayout.lblLeftSideBar)
+            binding.toolbarLayout.lblLeftSideBar.setBackgroundResource(R.drawable.white_radious)
+            binding.toolbarLayout.lblLeftSideBar.setTextColor(Color.BLACK)
+            binding.toolbarLayout.lblRightSideBar.setBackgroundResource(R.drawable.bg_light_green)
+
+//            isBackRoundChange(binding.toolbarLayout.lblLeftSideBar)
             isGetLeaveRequestList()
 
         }
@@ -322,7 +330,7 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
         }
 
         isClickingId.background =
-            ContextCompat.getDrawable(this, R.drawable.bg_gradient_parent_clickbar)
+            ContextCompat.getDrawable(this, R.drawable.bg_light_green)
         isClickingId.setTextColor(ContextCompat.getColor(this, R.color.white))
 
     }

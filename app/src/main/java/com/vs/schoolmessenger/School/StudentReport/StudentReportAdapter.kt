@@ -61,6 +61,7 @@ class StudentReportAdapter(
         private val lblAdmissionNumber: TextView = itemView.findViewById(R.id.lblAdmisionNumber)
         private val lblGender: TextView = itemView.findViewById(R.id.lblGender)
         private val lblDOB: TextView = itemView.findViewById(R.id.lblDOB)
+        private val lblRollNo: TextView = itemView.findViewById(R.id.lblRollNo)
         private val lblStudentName: TextView = itemView.findViewById(R.id.lblStudentName)
         private val lblFatherName: TextView = itemView.findViewById(R.id.lblFatherName)
         private val lblTeacherName: TextView = itemView.findViewById(R.id.lblTeacherName)
@@ -75,6 +76,7 @@ class StudentReportAdapter(
             lblAdmissionNumber.text = data.admission_no
             lblGender.text = data.gender
             lblDOB.text = data.dob
+            lblRollNo.text = data.roll_no
             lblStudentName.text = data.name
             lblFatherName.text = data.father_name
             lblTeacherName.text = data.class_teacher
