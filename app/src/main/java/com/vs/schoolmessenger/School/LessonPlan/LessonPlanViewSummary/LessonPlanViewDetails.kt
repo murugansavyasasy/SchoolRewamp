@@ -2,6 +2,8 @@ package com.vs.schoolmessenger.School.LessonPlan.LessonPlanViewSummary
 
 import android.content.Intent
 import android.os.Build
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import androidx.annotation.RequiresApi
@@ -38,6 +40,7 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(),
     private var isStaffDetails: StaffDetails? = null
 
     private lateinit var lessonplanViewAdapter: LessonPlanAdapter
+    private lateinit var lessonplandetailViewAdapter: LessonPlanDetailAdapter
     private var sectionSubjectId: String? = null
     private var request_type: String? = null
     private var currentStatus: Int = 0
@@ -100,6 +103,18 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(),
                 Constant.showTopAlertPopup("Something went wrong. Please try again later.", this)
             }
         }
+
+        binding.txtSearchMenu.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (::lessonplanViewAdapter.isInitialized) {
+                    lessonplanViewAdapter.filter.filter(s)
+                }
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
+
     }
 
     private fun setupRecycler() {
@@ -126,6 +141,21 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(),
         lessonplanViewAdapter =
             LessonPlanAdapter(data, this, this, Constant.isShimmerViewDisable)
         binding.rcyLessonViewPlan.adapter = lessonplanViewAdapter
+    }
+
+    override fun onSearchResultEmpty(isEmpty: Boolean) {
+        if (isEmpty) {
+
+            binding.nomessage.visibility = View.VISIBLE
+            binding.txtNoData.visibility = View.VISIBLE
+            binding.txtNoData.text = "No matching details found"
+            binding.rcyLessonViewPlan.visibility = View.GONE
+        } else {
+
+            binding.nomessage.visibility = View.GONE
+            binding.txtNoData.visibility = View.GONE
+            binding.rcyLessonViewPlan.visibility = View.VISIBLE
+        }
     }
 
 

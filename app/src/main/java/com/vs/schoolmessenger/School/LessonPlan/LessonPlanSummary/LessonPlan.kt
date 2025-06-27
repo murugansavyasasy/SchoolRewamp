@@ -2,6 +2,8 @@ package com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummary
 
 import android.content.Intent
 import android.graphics.Color
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -11,7 +13,6 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
-import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummary.LessonPlanChartClickListener
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanViewSummary.LessonPlanViewDetails
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummaryModel.AllClassData
 import com.vs.schoolmessenger.Utils.Constant
@@ -64,6 +65,19 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(),
         }
 
         loadlpAllClassdata("allclass")
+
+
+        binding.txtSearchMenu.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (::lessonplanAdapter.isInitialized) {
+                    lessonplanAdapter.filter.filter(s)
+                }
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
+
     }
 
     private fun islpStaffData(data: List<AllClassData>?,requestType: String) {
@@ -74,6 +88,14 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(),
     }
 
     private fun loadlpAllClassdata(requestType: String) {
+        if (requestType=="allclass"){
+            binding.btnCreate.isEnabled=false
+            binding.btnHistory.isEnabled=true
+        }
+        if (requestType=="myclass"){
+            binding.btnHistory.isEnabled=false
+            binding.btnCreate.isEnabled=true
+        }
         currentRequestType = requestType
         lessonplanAdapter = LessonPlanPicChartAdapter(null, this, this, Constant.isShimmerViewShow, requestType)
         binding.rcyLessonPlan.layoutManager = LinearLayoutManager(this)
@@ -84,16 +106,31 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(),
     }
 
 
+
+
+    override fun onSearchResultEmpty(isEmpty: Boolean) {
+        if (isEmpty) {
+
+            binding.nomessage.visibility = View.VISIBLE
+            binding.txtNoData.visibility = View.VISIBLE
+            binding.txtNoData.text = "No matching lesson plan found"
+            binding.rcyLessonPlan.visibility = View.GONE
+        } else {
+
+            binding.nomessage.visibility = View.GONE
+            binding.txtNoData.visibility = View.GONE
+            binding.rcyLessonPlan.visibility = View.VISIBLE
+        }
+    }
+
+
     override fun onClick(view: View?) {
         when (view?.id) {
             R.id.btnCreate -> {
-
                 binding.btnCreate.setTextColor(Color.BLACK)
                 binding.btnCreate.background = ContextCompat.getDrawable(this, R.drawable.white_radious)
                 binding.btnHistory.setTextColor(Color.BLACK)
-
                 binding.btnHistory.setBackgroundResource(R.drawable.bg_light_blue)
-
                 loadlpAllClassdata("allclass")
             }
 
