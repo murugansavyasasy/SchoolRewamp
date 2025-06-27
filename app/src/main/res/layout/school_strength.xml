@@ -203,7 +203,7 @@
                         android:layout_width="@dimen/ten"
                         android:layout_height="@dimen/ten"
                         app:cardCornerRadius="@dimen/five"
-                        app:cardBackgroundColor="@color/green"
+                        app:cardBackgroundColor="@color/grey"
                         android:layout_marginEnd="@dimen/eight"/>
 
                     <TextView
