@@ -117,39 +117,39 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
 
     private fun appendData(newData: List<AttachmentData>) {
         allAttachmentData.addAll(newData)
-        filterAttachments("ALL")
+        filterAttachments(Constant.ALL)
     }
 
     private fun filterAttachments(filter: String) {
         filteredAttachmentData = when (filter) {
-            "IMAGE" -> allAttachmentData.filter {
+            Constant.IMAGE -> allAttachmentData.filter {
                 it.file_path.any { file ->
                     file.type.equals(
-                        "IMAGE", true
+                        Constant.IMAGE, true
                     )
                 }
             }.toMutableList()
 
-            "VIDEO" -> allAttachmentData.filter {
+            Constant.VIDEO -> allAttachmentData.filter {
                 it.file_path.any { file ->
                     file.type.equals(
-                        "VIDEO", true
+                        Constant.VIDEO, true
                     )
                 }
             }.toMutableList()
 
-            "DOCUMENT" -> allAttachmentData.filter {
+            Constant.DOCUMENT -> allAttachmentData.filter {
                 it.file_path.any { file ->
-                    file.type.equals("PDF", true) || file.type.equals(
-                        "DOCX",
+                    file.type.equals(Constant.PDF, true) || file.type.equals(
+                        Constant.DOCX,
                         true
-                    ) || file.type.equals("DOC", true) || file.type.equals(
-                        "PPT",
+                    ) || file.type.equals(Constant.DOC, true) || file.type.equals(
+                        Constant.PPT,
                         true
-                    ) || file.type.equals("PPTX", true) || file.type.equals(
-                        "XLS",
+                    ) || file.type.equals(Constant.PPTX, true) || file.type.equals(
+                        Constant.XLS,
                         true
-                    ) || file.type.equals("XLSX", true) || file.type.equals("TXT", true)
+                    ) || file.type.equals(Constant.XLSX, true) || file.type.equals(Constant.TXT, true)
                 }
             }.toMutableList()
 
