@@ -1,19 +1,33 @@
 package com.vs.schoolmessenger.School.LessonPlan.LessonPlanEdit
 
+import android.app.Activity
+import android.content.Intent
+import android.graphics.Color
 import android.os.Build
 import android.util.Log
+import android.util.TypedValue
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.widget.FrameLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
+import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanEditModel.EditClassData
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanEditModel.LessonPlanEditClickListener
+import com.vs.schoolmessenger.School.LessonPlan.LessonPlanViewSummary.LessonPlanViewDetails
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.Constant.isAwsUploadedFiles
+import com.vs.schoolmessenger.Utils.Constant.selectedFiles
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.LessonPlanEditBinding
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -32,6 +46,7 @@ class LessonPlanEditActivity : BaseActivity<LessonPlanEditBinding>(),
     private var isStaffDetails: StaffDetails? = null
     private var particularId: String = ""
     private var requestType: String = ""
+    private var sectionSubjectId: String = ""
 
     private lateinit var lessonplaneditAdapter: LessonPlanEditAdapter
 
@@ -51,6 +66,7 @@ class LessonPlanEditActivity : BaseActivity<LessonPlanEditBinding>(),
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.updatebutton.setOnClickListener(this)
         binding.cancelbutton.setOnClickListener(this)
+        sectionSubjectId = intent.getStringExtra("section_subject_id") ?: ""
         particularId = intent.getStringExtra("particular_id") ?: ""
         requestType = intent.getStringExtra("request_type") ?: ""
         Log.d("particular_id", particularId)
@@ -75,16 +91,16 @@ class LessonPlanEditActivity : BaseActivity<LessonPlanEditBinding>(),
             if (response != null) {
                 if (response.status) {
                     Log.d("UpdateSuccess", "Lesson plan updated successfully")
-                    Constant.showTopAlertPopup(response.message, this)
+                    showTopLessonPlanAlertPopup(response.message, this)
                 } else {
                     Log.w("UpdateFailed", "Lesson plan update failed: ${response.message}")
-                    Constant.showTopAlertPopup(
+                    showTopLessonPlanAlertPopup(
                         response.message ?: "Update failed. Try again later.", this
                     )
                 }
             } else {
                 Log.e("UpdateError", "Null response received from server.")
-                Constant.showTopAlertPopup("Something went wrong. Please try again later.", this)
+                showTopLessonPlanAlertPopup("Something went wrong. Please try again later.", this)
             }
         }
 
@@ -113,8 +129,9 @@ class LessonPlanEditActivity : BaseActivity<LessonPlanEditBinding>(),
     override fun onClick(view: View?) {
         when (view?.id) {
             R.id.imgBack -> onBackPressed()
+
             R.id.updatebutton -> {
-                lessonplaneditupdate()
+                showTopEditAlertPopup()
             }
 
             R.id.cancelbutton -> {
@@ -144,6 +161,113 @@ class LessonPlanEditActivity : BaseActivity<LessonPlanEditBinding>(),
 
     fun lessonplaneditcancel() {
         onBackPressed()
+    }
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun showTopEditAlertPopup() {
+        val rootView = window.decorView.findViewById<ViewGroup>(android.R.id.content)
+        val inflater = LayoutInflater.from(this)
+        val view = inflater.inflate(R.layout.warning_update, null)
+        val okButton = view.findViewById<TextView>(R.id.btnOk)
+        val btnCancel = view.findViewById<TextView>(R.id.btnCancel)
+
+        val dimView = View(this).apply {
+            setBackgroundColor(Color.parseColor("#80000000"))
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
+            )
+            isClickable = true
+        }
+
+        val popupLayoutParams = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT
+        ).apply {
+            gravity = Gravity.CENTER
+            val margin = TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, 20f, resources.displayMetrics
+            ).toInt()
+            setMargins(margin, 0, margin, 0)
+        }
+
+        rootView.addView(dimView)
+        rootView.addView(view, popupLayoutParams)
+
+        val closePopup = {
+            rootView.removeView(view)
+            rootView.removeView(dimView)
+        }
+
+        okButton.setOnClickListener {
+            lessonplaneditupdate()
+            closePopup()
+        }
+
+        btnCancel.setOnClickListener {
+            closePopup()
+        }
+    }
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun showTopLessonPlanAlertPopup(message: String, activity: Activity) {
+        val inflater = LayoutInflater.from(activity)
+        val view = inflater.inflate(R.layout.success_popup, null)
+
+        val messageText = view.findViewById<TextView>(R.id.alertMessage)
+        val okButton = view.findViewById<TextView>(R.id.btnOk)
+        messageText.text = message
+
+        val rootView = activity.findViewById<ViewGroup>(android.R.id.content)
+
+        val dimView = View(activity).apply {
+            setBackgroundColor(Color.parseColor("#80000000"))
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
+            )
+            isClickable = true
+        }
+
+        val marginInPx = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP, 20f, activity.resources.displayMetrics
+        ).toInt()
+
+        val popupLayoutParams = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT
+        ).apply {
+            gravity = Gravity.CENTER
+            setMargins(marginInPx, 0, marginInPx, 0)
+        }
+
+        rootView.addView(dimView)
+        rootView.addView(view, popupLayoutParams)
+
+        val closePopup = {
+            rootView.removeView(view)
+            rootView.removeView(dimView)
+        }
+
+        okButton.setOnClickListener {
+            try {
+                isAwsUploadedFiles.clear()
+                selectedFiles.clear()
+                val intent = Intent(activity, LessonPlanViewDetails::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+                intent.putExtra("section_subject_id", sectionSubjectId)
+                intent.putExtra("request_type", requestType)
+                activity.startActivity(intent)
+                activity.finish()
+            } catch (e: Exception) {
+                Log.e("LessonPlanPopup", "Redirection failed: ${e.localizedMessage}")
+                Toast.makeText(activity, "Oops! Couldn’t go back.", Toast.LENGTH_SHORT).show()
+            } finally {
+                closePopup()
+            }
+        }
+
+        dimView.isFocusable = true
+        dimView.isFocusableInTouchMode = true
+
     }
 
 }
