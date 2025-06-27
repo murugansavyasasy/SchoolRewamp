@@ -328,7 +328,6 @@ object Constant {
     var isCommonTitle = ""
     var isCommonDescription = ""
 
-
     // VIMEO
     var isVimeoToken = "8d74d8bf6b5742d39971cc7d3ffbb51a"
     var isVimeoUrl = "https://api.vimeo.com/me/videos"
