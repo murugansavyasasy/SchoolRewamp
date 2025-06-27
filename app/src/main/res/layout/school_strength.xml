@@ -64,7 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/AcademicYear"
             android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/fifteen"
+            android:layout_marginTop="@dimen/ten"
             android:layout_marginEnd="@dimen/ten"
             android:padding="@dimen/twenty"
             android:background="@drawable/rect_shadow_white">
@@ -262,7 +262,7 @@
         android:layout_marginTop="@dimen/twenty"
         android:text="@string/no_list_found"
         android:textColor="@color/black"
-        android:textSize="18sp"
+        android:textSize="@dimen/fifteen_sp"
       android:layout_below="@+id/nomessage"
         android:visibility="gone" />
 </RelativeLayout>
