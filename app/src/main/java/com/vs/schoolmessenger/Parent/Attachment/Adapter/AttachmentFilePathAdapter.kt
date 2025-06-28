@@ -20,19 +20,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
-import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentClickListener
+import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentData
 import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentFile
+import com.vs.schoolmessenger.Parent.Attachment.OnChildItemClickListener
 import com.vs.schoolmessenger.Parent.Communication.UnifiedVoiceAdapter.ShimmerViewHolder
-import com.vs.schoolmessenger.Utils.FullScreenViewerActivity
-import com.vs.schoolmessenger.Parent.Noticeboard.Adapter.FilePathAdapter
-import com.vs.schoolmessenger.Parent.Noticeboard.FilePath
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.FullScreenViewerActivity
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class AttachmentFilePathAdapter (
 
     private var GetFilePathDetailsData: List<AttachmentFile>?,
+    private val parentData: AttachmentData,
+    private var listener: OnChildItemClickListener,
     private var context: Context,
     private var isLoading: Boolean
 
@@ -51,7 +52,7 @@ class AttachmentFilePathAdapter (
             val view =
                 LayoutInflater.from(parent.context)
                     .inflate(R.layout.homework_img_pdf_item, parent, false)
-            DataViewHolder(view, context)
+            DataViewHolder(view, context, listener)
         }
     }
 
@@ -65,10 +66,15 @@ class AttachmentFilePathAdapter (
         if (holder is DataViewHolder) {
             // Bind actual data when loading is complete
 
-            holder.bind(GetFilePathDetailsData!![position],position, this)
+            holder.bind(GetFilePathDetailsData!![position], parentData, position, this)
         }
     }
-    class DataViewHolder(itemView: View, private val context: Context) :
+
+    class DataViewHolder(
+        itemView: View,
+        private val context: Context,
+        private val listener: OnChildItemClickListener
+    ) :
         RecyclerView.ViewHolder(itemView) {
         private val DefaultImage: ImageView = itemView.findViewById(R.id.ImgPDF)
         private val ImgOrDocumentType:ImageView=itemView.findViewById(R.id.imageOrDocumentType)
@@ -81,8 +87,10 @@ class AttachmentFilePathAdapter (
         @SuppressLint("ClickableViewAccessibility")
         fun bind(
             data: AttachmentFile?,
+            item: AttachmentData,
             position: Int,
-            adapter: AttachmentFilePathAdapter, ) {
+            adapter: AttachmentFilePathAdapter,
+        ) {
 
             Log.d("GetFileDetails", data.toString())
             if (data?.url.isNullOrEmpty()) {
@@ -128,29 +136,37 @@ class AttachmentFilePathAdapter (
             }
 
             fileItem.setOnClickListener {
+                data?.let {
+                    if (item.is_unread) {
+                        listener.onChildItemClick(it, item)
+                    }
+                    Constant.commonFileList.isEmpty()
+                    Constant.selectedFileIndex = -1
+                    Constant.commonFileList = adapter.GetFilePathDetailsData?.map {
+                        CommonFileData(type = it.type, path = it.url)
+                    }?.toMutableList() ?: mutableListOf()
 
-                Constant.commonFileList.isEmpty()
-                Constant.selectedFileIndex=-1
-                Constant.commonFileList = adapter.GetFilePathDetailsData?.map {
-                    CommonFileData(type = it.type, path = it.url)
-                }?.toMutableList() ?: mutableListOf()
+                    Constant.selectedFileIndex = position
 
-                Constant.selectedFileIndex = position
-
-                val intent = Intent(context, FullScreenViewerActivity::class.java)
-                context.startActivity(intent)
+                    val intent = Intent(context, FullScreenViewerActivity::class.java)
+                    context.startActivity(intent)
+                }
             }
-
 
 
 
             WebViewThumbnail.setOnTouchListener(object : OnTouchListener {
                 override fun onTouch(v: View?, event: MotionEvent): Boolean {
 
-                    if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                    if (event.action == MotionEvent.ACTION_MOVE) {
                         return false
                     }
-                    if (event.getAction() == MotionEvent.ACTION_UP) {
+                    if (event.action == MotionEvent.ACTION_UP) {
+                        data?.let {
+                            if (item.is_unread) {
+                                listener.onChildItemClick(it, item)
+                            }
+                        }
                         Constant.commonFileList.isEmpty()
                         Constant.selectedFileIndex=-1
                         val commonList = adapter.GetFilePathDetailsData?.map {

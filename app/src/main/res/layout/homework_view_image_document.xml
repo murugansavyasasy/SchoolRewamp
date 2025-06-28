@@ -79,6 +79,7 @@
         android:background="@drawable/bg_round_radious_white"
         android:gravity="center"
         android:paddingStart="@dimen/fifteen"
+        android:visibility="gone"
         android:paddingTop="@dimen/fifteen"
         android:paddingEnd="@dimen/twenty_five"
         android:paddingBottom="@dimen/fifteen">
@@ -99,6 +100,7 @@
         android:layout_margin="16dp"
         android:background="@drawable/bg_round_radious_white"
         android:gravity="center"
+        android:visibility="gone"
         android:paddingStart="@dimen/twenty_five"
         android:paddingTop="@dimen/fifteen"
         android:paddingEnd="@dimen/twenty_five"

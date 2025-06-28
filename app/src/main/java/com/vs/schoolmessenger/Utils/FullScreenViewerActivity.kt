@@ -62,6 +62,16 @@ class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(
         binding.lnrNext.setOnClickListener(this)
         binding.lnrPrevious.setOnClickListener(this)
 
+        if (Constant.commonFileList.isNotEmpty()) {
+            val first = Constant.commonFileList[0]
+            if (first.type != FileType.VIDEO.toString() && !first.path.startsWith("content://") && !first.path.contains(
+                    "amazonaws."
+                )
+            ) {
+                Constant.commonFileList.removeAt(0)
+            }
+        }
+
         adapter = FileViewerAdapter(this, Constant.commonFileList)
         val noScrollLayoutManager = object : LinearLayoutManager(this, HORIZONTAL, false) {
             override fun canScrollHorizontally(): Boolean = false
@@ -75,8 +85,8 @@ class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(
             if (Constant.commonFileList.size <= 1) View.GONE else View.VISIBLE
         binding.lnrPrevious.visibility =
             if (Constant.commonFileList.size <= 1) View.GONE else View.VISIBLE
-        if (Constant.commonFileList.size > 1) binding.indicator.attachToRecyclerView(binding.rcyFile)
 
+        if (Constant.commonFileList.size > 1) binding.indicator.attachToRecyclerView(binding.rcyFile)
         binding.rcyFile.setOnTouchListener { _, _ -> true }
         currentPosition = Constant.selectedFileIndex
         scrollToPosition(currentPosition)

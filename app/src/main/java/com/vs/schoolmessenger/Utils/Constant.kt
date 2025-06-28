@@ -241,6 +241,7 @@ object Constant {
     var Gallery = "Gallery"
     var Images = "Images"
     var images_ = "images"
+    var ATTACHMENT = "ATTACHMENT"
     var ALL = "ALL"
     var fromArchive = "fromArchive"
     var UNREAD = "UNREAD"

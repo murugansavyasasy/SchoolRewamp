@@ -135,8 +135,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
 
         isAcademicYear = Constant.isAcademicYearList
         isLoadAcademicYear(isAcademicYear)
-        isValidAcademicYear =
-            isAcademicYear?.any { it.current_academic_year == true } == true
+        isValidAcademicYear = isAcademicYear?.any { it.current_academic_year == true } == true
         isAcademicYearId = isAcademicYear!![0].id
         isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
         isGetStandardSection()
@@ -230,18 +229,15 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
                             mimeType?.startsWith("audio/") == true -> FileType.AUDIO
                             fileName.endsWith(".pdf", true) -> FileType.PDF
                             fileName.endsWith(".doc", true) || fileName.endsWith(
-                                ".docx",
-                                true
+                                ".docx", true
                             ) -> FileType.DOC
 
                             fileName.endsWith(".xls", true) || fileName.endsWith(
-                                ".xlsx",
-                                true
+                                ".xlsx", true
                             ) -> FileType.EXCEL
 
                             fileName.endsWith(".ppt", true) || fileName.endsWith(
-                                ".pptx",
-                                true
+                                ".pptx", true
                             ) -> FileType.PPT
 
                             fileName.endsWith(".txt", true) -> FileType.TXT
@@ -276,9 +272,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
 
                     if ((selectedUris?.size ?: 0) > remaining) {
                         Toast.makeText(
-                            this,
-                            "Only $remaining files added (max $MAX_FILES)",
-                            Toast.LENGTH_SHORT
+                            this, "Only $remaining files added (max $MAX_FILES)", Toast.LENGTH_SHORT
                         ).show()
                     }
                 }
@@ -399,9 +393,10 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
             fullHomeworkList
         } else {
             fullHomeworkList.filter {
-                it.title.lowercase(Locale.getDefault()).contains(lowerQuery) ||
-                        it.description.lowercase(Locale.getDefault()).contains(lowerQuery) ||
-                        it.subject_name.lowercase(Locale.getDefault()).contains(lowerQuery)
+                it.title.lowercase(Locale.getDefault())
+                    .contains(lowerQuery) || it.description.lowercase(Locale.getDefault())
+                    .contains(lowerQuery) || it.subject_name.lowercase(Locale.getDefault())
+                    .contains(lowerQuery)
             }
         }
 
@@ -539,11 +534,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
 
         if (Constant.selectedFiles.size > 1) {
             val secondType = Constant.selectedFiles[1].type.toString()
-            if (
-                (secondType == Constant.IMAGE && (isFileType == Constant.DOCUMENT || isFileType == Constant.VOICE)) ||
-                (secondType == Constant.DOCUMENT && (isFileType == Constant.IMAGE || isFileType == Constant.VOICE)) ||
-                (secondType == Constant.VOICE && (isFileType == Constant.IMAGE || isFileType == Constant.DOCUMENT))
-            ) {
+            if ((secondType == Constant.IMAGE && (isFileType == Constant.DOCUMENT || isFileType == Constant.VOICE)) || (secondType == Constant.DOCUMENT && (isFileType == Constant.IMAGE || isFileType == Constant.VOICE)) || (secondType == Constant.VOICE && (isFileType == Constant.IMAGE || isFileType == Constant.DOCUMENT))) {
                 Constant.selectedFiles.clear()
                 saveDrawableToCache(R.drawable.add_image)?.let {
                     Constant.selectedFiles.add(FileItem(it, FileType.IMAGE))
@@ -648,9 +639,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
 
             if (photoFile != null) {
                 val photoURI = FileProvider.getUriForFile(
-                    this,
-                    "${applicationContext.packageName}.fileprovider",
-                    photoFile
+                    this, "${applicationContext.packageName}.fileprovider", photoFile
                 )
                 cameraImageFilePath = photoFile.absolutePath
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
@@ -689,8 +678,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
                 fileName.endsWith(".pdf", true) -> FileType.PDF
                 fileName.endsWith(".doc", true) || fileName.endsWith(".docx", true) -> FileType.DOC
                 fileName.endsWith(".xls", true) || fileName.endsWith(
-                    ".xlsx",
-                    true
+                    ".xlsx", true
                 ) -> FileType.EXCEL
 
                 fileName.endsWith(".ppt", true) || fileName.endsWith(".pptx", true) -> FileType.PPT
@@ -882,9 +870,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         webView.webChromeClient = WebChromeClient()
         webView.webViewClient = object : WebViewClient() {
             override fun onPageStarted(
-                view: android.webkit.WebView?,
-                url: String?,
-                favicon: Bitmap?
+                view: android.webkit.WebView?, url: String?, favicon: Bitmap?
             ) {
                 binding.loadingBar.visibility = View.VISIBLE
             }

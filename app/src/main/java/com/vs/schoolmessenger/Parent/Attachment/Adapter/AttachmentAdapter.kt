@@ -1,5 +1,6 @@
 package com.vs.schoolmessenger.Parent.Attachment.Adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -8,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebViewClient
@@ -24,14 +24,17 @@ import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
 import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentClickListener
 import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentData
-import com.vs.schoolmessenger.Utils.FullScreenViewerActivity
+import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentFile
+import com.vs.schoolmessenger.Parent.Attachment.OnChildItemClickListener
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.FullScreenViewerActivity
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 import me.relex.circleindicator.CircleIndicator2
 
 class AttachmentAdapter(
     private var attachmentList: List<AttachmentData>?,
+    private val childClickListener: OnChildItemClickListener,
     private val listener: AttachmentClickListener,
     private val context: Context,
     var isLoading: Boolean
@@ -59,7 +62,7 @@ class AttachmentAdapter(
         } else {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.homework_school_reportitem, parent, false)
-            DataViewHolder(view, context)
+            DataViewHolder(view, context, childClickListener)
         }
     }
 
@@ -90,7 +93,7 @@ class AttachmentAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (!isLoading && holder is DataViewHolder) {
-            holder.bind(filteredList[position], listener)
+            holder.bind(filteredList[position], position, listener)
         }
     }
 
@@ -106,7 +109,9 @@ class AttachmentAdapter(
         notifyDataSetChanged()
     }
 
-    class DataViewHolder(itemView: View, private val context: Context) :
+    class DataViewHolder(
+        itemView: View, private val context: Context, private val listener: OnChildItemClickListener
+    ) :
         RecyclerView.ViewHolder(itemView) {
 
         private val LblHWSubjectName: TextView = itemView.findViewById(R.id.LblHWSubjectName)
@@ -124,11 +129,18 @@ class AttachmentAdapter(
         private val loadingBar: ProgressBar = itemView.findViewById(R.id.loadingBar)
         private val indicator: CircleIndicator2 = itemView.findViewById(R.id.indicator)
 
-        fun bind(item: AttachmentData, listener: AttachmentClickListener) {
+        @SuppressLint("ClickableViewAccessibility")
+        fun bind(item: AttachmentData, position: Int, listener: AttachmentClickListener) {
 
 
             LblHWSubjectName.visibility = View.GONE
-            imgNewImage.visibility = View.VISIBLE
+
+            if (item.is_unread) {
+                imgNewImage.visibility = View.VISIBLE
+            } else {
+                imgNewImage.visibility = View.GONE
+            }
+
             rlaSelectText.visibility = View.GONE
             lblTitleImage.text = item.title
             lblContentImage.text = item.description
@@ -138,12 +150,15 @@ class AttachmentAdapter(
 
             webView.setOnTouchListener { _, event ->
                 if (event.action == MotionEvent.ACTION_UP) {
-
-                    Constant.commonFileList = item.file_path?.map { file ->
+                    if (item.is_unread) {
+                        imgNewImage.visibility = View.GONE
+                        listener.onItemClick(item, this)
+                    }
+                    Constant.commonFileList = item.file_path.map { file ->
                         CommonFileData(type = file.type, path = file.url)
                     }?.toMutableList() ?: mutableListOf()
 
-                    Constant.selectedFileIndex = position
+                    Constant.selectedFileIndex = 0
 
                     val intent = Intent(context, FullScreenViewerActivity::class.java)
                     intent.putExtra(Constant.subjectName, item.title)
@@ -183,22 +198,30 @@ class AttachmentAdapter(
                 }
 
                 webView.loadUrl(item.file_path.firstOrNull()?.url ?: "")
-
             } else {
                 indicator.visibility = if (item.file_path.size > 1) View.VISIBLE else View.GONE
-
                 webView.visibility = View.GONE
                 rytList.visibility = View.VISIBLE
                 rcyImgPDF.visibility = View.VISIBLE
                 rcyImgPDF.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                rcyImgPDF.adapter = AttachmentFilePathAdapter(
-                    item.file_path, context, Constant.isShimmerViewDisable
-                )
-                indicator.attachToRecyclerView(rcyImgPDF)
-            }
 
-            itemView.setOnClickListener {
-                listener.onItemClick(item, this)
+                rcyImgPDF.adapter = AttachmentFilePathAdapter(
+                    item.file_path, item, object : OnChildItemClickListener {
+                        override fun onChildItemClick(
+                            file: AttachmentFile, parent: AttachmentData
+                        ) {
+                            Log.d(
+                                "AttachmentAdapter",
+                                "Clicked file: ${file.url}, from parent: ${parent.title}"
+                            )
+                            imgNewImage.visibility = View.GONE
+                            (context as? OnChildItemClickListener)?.onChildItemClick(file, parent)
+                        }
+                    }, context, Constant.isShimmerViewDisable
+                )
+
+
+                indicator.attachToRecyclerView(rcyImgPDF)
             }
         }
 
