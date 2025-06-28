@@ -49,7 +49,7 @@
                             android:layout_height="match_parent"
                             android:text="Mar 31, 2023"
                             android:textColor="@color/navi_blue2"
-                            android:textSize="@dimen/fourteen_sp" />
+                            android:textSize="@dimen/twele_sp" />
 
                         <ImageView
                             android:id="@+id/imagearrow_view"
@@ -67,9 +67,10 @@
                             android:layout_height="wrap_content"
                             android:text="Apr 2 -2023"
                             android:textColor="@color/navi_blue2"
-                            android:textSize="@dimen/fourteen_sp"
                             android:layout_marginStart="2dp"
-                            style="@style/CustomTextStylePoppinsBold1" />
+                            style="@style/CustomTextStylePoppinsBold1"
+                            android:textSize="@dimen/twele_sp"
+                            />
                     </LinearLayout>
 
                     <RelativeLayout
@@ -92,14 +93,14 @@
 
                         <TextView
                             android:id="@+id/lblStatus"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="@dimen/ten"
                             android:layout_toEndOf="@+id/imgStatus"
                             android:padding="@dimen/five"
                             android:text="@string/status"
                             android:textColor="@color/white"
                             style="@style/CustomTextStylePoppinsMedium1"
+                            android:textSize="@dimen/twele_sp"
                             >
 
                         </TextView>
@@ -120,8 +121,9 @@
                         android:layout_height="wrap_content"
                         android:text="Reason"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/fourteen_sp"
-                        style="@style/CustomTextStylePoppinsMedium1" />
+                        style="@style/CustomTextStylePoppinsBold1"
+                        android:textSize="@dimen/thirteen_sp"
+                        />
 
                     <TextView
                         android:id="@+id/dotlabel3"
@@ -160,8 +162,9 @@
                         android:layout_height="wrap_content"
                         android:text="No.Of.Days"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/fourteen_sp"
-                        style="@style/CustomTextStylePoppinsMedium1" />
+                        style="@style/CustomTextStylePoppinsBold1"
+                        android:textSize="@dimen/thirteen_sp"
+                        />
                     <TextView
                         android:id="@+id/dotlabel2"
                         android:layout_width="wrap_content"
@@ -194,11 +197,11 @@
                     <TextView
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
-
                         android:text="Applied On"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/fourteen_sp"
-                        style="@style/CustomTextStylePoppinsMedium1" />
+                        style="@style/CustomTextStylePoppinsBold1"
+                        android:textSize="@dimen/thirteen_sp"
+                        />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -236,8 +239,9 @@
                         android:layout_height="wrap_content"
                         android:text="@string/updated_on"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/fourteen_sp"
-                        style="@style/CustomTextStylePoppinsMedium1" />
+                        style="@style/CustomTextStylePoppinsBold1"
+                        android:textSize="@dimen/thirteen_sp"
+                        />
 
                     <TextView
                         android:layout_width="wrap_content"

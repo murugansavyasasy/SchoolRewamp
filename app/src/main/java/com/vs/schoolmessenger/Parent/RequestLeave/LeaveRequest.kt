@@ -101,8 +101,10 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
                 binding.rcyLeaveRequestHistory.visibility = View.VISIBLE
                 binding.nomessage.visibility = View.GONE
                 binding.txtNoData.visibility = View.GONE
+                binding.lnrStatusBar.visibility=View.VISIBLE
                 isloadleaverequestData(response.data)
             } else {
+                binding.lnrStatusBar.visibility=View.GONE
                 binding.rcyLeaveRequestHistory.visibility = View.GONE
                 binding.nomessage.visibility = View.VISIBLE
                 binding.txtNoData.visibility = View.VISIBLE

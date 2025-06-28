@@ -169,6 +169,17 @@
                     android:textSize="@dimen/thirteen_sp">
 
                 </TextView>
+                <TextView
+                    android:id="@+id/lblStar3"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/lblAddPhoto"
+                    android:text="@string/mandatory"
+                    android:layout_marginTop="@dimen/eight"
+                    android:layout_marginStart="@dimen/two"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/thirteen_sp" />
 
                 <TextView
                     android:visibility="gone"

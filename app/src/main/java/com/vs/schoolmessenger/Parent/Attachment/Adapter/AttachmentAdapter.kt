@@ -3,6 +3,7 @@ package com.vs.schoolmessenger.Parent.Attachment.Adapter
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -109,6 +110,7 @@ class AttachmentAdapter(
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
 
+        private var isTextExpanded = false
         private val LblHWSubjectName: TextView = itemView.findViewById(R.id.LblHWSubjectName)
         private val lblTitleImage: TextView = itemView.findViewById(R.id.lblTitleImage)
         private val lblContentImage: TextView = itemView.findViewById(R.id.lblContentImage)
@@ -134,6 +136,10 @@ class AttachmentAdapter(
             lblContentImage.text = item.description
             lblDateImage.text = Constant.convertDateTimeFormat(item.date)
             lblTimeImage.text =item.time
+            isSeeMoreVisibility(lblContentImage, tvSeeMoreImage)
+            tvSeeMoreImage.setOnClickListener {
+                isSeeMoreExpanded(tvSeeMoreImage, lblContentImage)
+            }
 
 
             webView.setOnTouchListener { _, event ->
@@ -220,6 +226,31 @@ class AttachmentAdapter(
                 }
             })
         }
+
+        private fun isSeeMoreExpanded(tvSeeMore: TextView, lblContent: TextView) {
+            if (isTextExpanded) {
+                isTextExpanded = false
+                lblContent.maxLines = 3
+                lblContent.ellipsize = TextUtils.TruncateAt.END
+                tvSeeMore.text = itemView.context.getString(R.string.SeeMore)
+            } else {
+                isTextExpanded = true
+                lblContent.maxLines = Integer.MAX_VALUE
+                lblContent.ellipsize = null
+                tvSeeMore.text = itemView.context.getString(R.string.SeeLess)
+            }
+        }
+
+        private fun isSeeMoreVisibility(lblContent: TextView, tvSeeMore: TextView) {
+            lblContent.post {
+                if (lblContent.lineCount > 3) {
+                    tvSeeMore.visibility = View.VISIBLE
+                    lblContent.maxLines = 3
+                    lblContent.ellipsize = TextUtils.TruncateAt.END
+                }
+            }
+        }
+
     }
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

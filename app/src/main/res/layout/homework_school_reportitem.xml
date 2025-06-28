@@ -135,7 +135,7 @@
         <RelativeLayout
             android:id="@+id/rytList"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/one_fifty"
+            android:layout_height="@dimen/one_ten"
             android:layout_below="@+id/LblHWSubjectName"
             android:layout_marginTop="@dimen/five"
             android:visibility="gone">
@@ -174,6 +174,7 @@
             style="@style/IndicatorStyle"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/twenty"
+            android:layout_marginTop="@dimen/five"
             android:layout_below="@+id/rytList"
             android:layout_centerInParent="true"
             android:visibility="gone"
@@ -186,6 +187,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/indicator"
             android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/five"
             android:text="Annual Day celebrations"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"
@@ -210,7 +212,7 @@
             android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lblContentImage"
+            android:layout_below="@+id/tvView"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/five"
             android:layout_marginEnd="10dp"
@@ -227,7 +229,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/lblContentImage"
             android:layout_marginStart="@dimen/ten"
-            android:layout_marginBottom="@dimen/ten"
             android:text="@string/SeeMore"
             android:textColor="@android:color/holo_blue_dark"
             android:visibility="gone" />
@@ -238,7 +239,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvSeeMoreImage"
             android:layout_marginStart="@dimen/ten"
-            android:layout_marginBottom="@dimen/ten"
+            android:layout_marginTop="@dimen/five"
             android:text="@string/View"
             android:textColor="@android:color/holo_blue_dark"
             android:visibility="gone" />
