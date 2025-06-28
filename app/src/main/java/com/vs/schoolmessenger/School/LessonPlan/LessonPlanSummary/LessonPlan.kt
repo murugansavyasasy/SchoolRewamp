@@ -19,8 +19,8 @@ import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.LessonPlanBinding
 
-class LessonPlan : BaseActivity<LessonPlanBinding>(),
-    View.OnClickListener, LessonPlanChartClickListener {
+class LessonPlan : BaseActivity<LessonPlanBinding>(), View.OnClickListener,
+    LessonPlanChartClickListener {
 
     override fun getViewBinding(): LessonPlanBinding {
         return LessonPlanBinding.inflate(layoutInflater)
@@ -74,13 +74,14 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(),
                     lessonplanAdapter.filter.filter(s)
                 }
             }
+
             override fun afterTextChanged(s: Editable?) {}
         })
 
 
     }
 
-    private fun islpStaffData(data: List<AllClassData>?,requestType: String) {
+    private fun islpStaffData(data: List<AllClassData>?, requestType: String) {
         lessonplanAdapter = LessonPlanPicChartAdapter(
             data, this, this, Constant.isShimmerViewDisable, requestType
         )
@@ -88,24 +89,23 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(),
     }
 
     private fun loadlpAllClassdata(requestType: String) {
-        if (requestType=="allclass"){
-            binding.btnCreate.isEnabled=false
-            binding.btnHistory.isEnabled=true
+        if (requestType == "allclass") {
+            binding.btnCreate.isEnabled = false
+            binding.btnHistory.isEnabled = true
         }
-        if (requestType=="myclass"){
-            binding.btnHistory.isEnabled=false
-            binding.btnCreate.isEnabled=true
+        if (requestType == "myclass") {
+            binding.btnHistory.isEnabled = false
+            binding.btnCreate.isEnabled = true
         }
         currentRequestType = requestType
-        lessonplanAdapter = LessonPlanPicChartAdapter(null, this, this, Constant.isShimmerViewShow, requestType)
+        lessonplanAdapter =
+            LessonPlanPicChartAdapter(null, this, this, Constant.isShimmerViewShow, requestType)
         binding.rcyLessonPlan.layoutManager = LinearLayoutManager(this)
         binding.rcyLessonPlan.isNestedScrollingEnabled = false
         binding.rcyLessonPlan.adapter = lessonplanAdapter
 
         appViewModel!!.getlpStaffReport(isAccessToken!!, requestType, this@LessonPlan)
     }
-
-
 
 
     override fun onSearchResultEmpty(isEmpty: Boolean) {
@@ -128,7 +128,8 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(),
         when (view?.id) {
             R.id.btnCreate -> {
                 binding.btnCreate.setTextColor(Color.BLACK)
-                binding.btnCreate.background = ContextCompat.getDrawable(this, R.drawable.white_radious)
+                binding.btnCreate.background =
+                    ContextCompat.getDrawable(this, R.drawable.white_radious)
                 binding.btnHistory.setTextColor(Color.BLACK)
                 binding.btnHistory.setBackgroundResource(R.drawable.bg_light_blue)
                 loadlpAllClassdata("allclass")
@@ -137,7 +138,8 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(),
             R.id.btnHistory -> {
 
                 binding.btnHistory.setTextColor(Color.BLACK)
-                binding.btnHistory.background = ContextCompat.getDrawable(this, R.drawable.white_radious)
+                binding.btnHistory.background =
+                    ContextCompat.getDrawable(this, R.drawable.white_radious)
                 binding.btnCreate.setTextColor(Color.BLACK)
                 binding.btnCreate.setBackgroundResource(R.drawable.bg_light_blue)
                 loadlpAllClassdata("myclass")
@@ -150,9 +152,9 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(),
     override fun onItem(data: AllClassData, requestType: String) {
         val intent = Intent(this@LessonPlan, LessonPlanViewDetails::class.java)
         intent.putExtra("section_subject_id", data.section_subject_id)
-        Log.d("section_subject_id",data.section_subject_id.toString())
+        Log.d("section_subject_id", data.section_subject_id.toString())
         intent.putExtra("request_type", requestType)
-        Log.d("request_type",requestType)
+        Log.d("request_type", requestType)
         startActivity(intent)
     }
 }

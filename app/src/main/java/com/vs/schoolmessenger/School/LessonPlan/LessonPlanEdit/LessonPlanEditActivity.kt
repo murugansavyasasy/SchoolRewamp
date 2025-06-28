@@ -14,12 +14,10 @@ import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
-import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanEditModel.EditClassData
@@ -34,8 +32,8 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
 
-class LessonPlanEditActivity : BaseActivity<LessonPlanEditBinding>(),
-    View.OnClickListener, LessonPlanEditClickListener {
+class LessonPlanEditActivity : BaseActivity<LessonPlanEditBinding>(), View.OnClickListener,
+    LessonPlanEditClickListener {
 
     override fun getViewBinding(): LessonPlanEditBinding {
         return LessonPlanEditBinding.inflate(layoutInflater)
