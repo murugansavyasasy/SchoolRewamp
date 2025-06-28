@@ -40,8 +40,8 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
 
-class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(),
-    View.OnClickListener, LessonPlanClickListener, OnDateSelectedListener {
+class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(), View.OnClickListener,
+    LessonPlanClickListener, OnDateSelectedListener {
 
     override fun getViewBinding(): LessonplanViewDetailsBinding {
         return LessonplanViewDetailsBinding.inflate(layoutInflater)
@@ -52,10 +52,11 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(),
     private var isStaffDetails: StaffDetails? = null
 
     private lateinit var lessonplanViewAdapter: LessonPlanAdapter
-    private lateinit var lessonplandetailViewAdapter: LessonPlanDetailAdapter
     private var sectionSubjectId: String? = null
     private var request_type: String? = null
     private var currentStatus: Int = 0
+
+    private var fullLessonPlanList: List<LessonPlanViewSummaryItem> = listOf()
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
@@ -85,10 +86,9 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(),
             return
         }
 
-
         setupRecycler()
         highlightSelectedTab(binding.allbutton)
-        loadLessonPlanData(currentStatus, sectionSubjectId)
+        fetchLessonPlanData(sectionSubjectId)
 
         appViewModel?.getlpViewReport?.observe(this) { response ->
             if (response != null && response.status) {
@@ -105,20 +105,12 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(),
 
         appViewModel!!.islessonplandelete?.observe(this) { response ->
             Constant.hideLoading(this@LessonPlanViewDetails)
-
             if (response != null) {
-                if (response.status) {
-                    Log.d("UpdateSuccess", "Lesson plan updated successfully")
-                    showTopAlertLessonPlanViewPopup(response.message, this)
-                } else {
-                    Log.w("UpdateFailed", "Lesson plan update failed: ${response.message}")
-                    showTopAlertLessonPlanViewPopup(
-                        response.message ?: "Update failed. Try again later.", this
-                    )
-                }
+                showTopAlertLessonPlanViewPopup(response.message, this)
             } else {
-                Log.e("UpdateError", "Null response received from server.")
-                showTopAlertLessonPlanViewPopup("Something went wrong. Please try again later.", this)
+                showTopAlertLessonPlanViewPopup(
+                    "Something went wrong. Please try again later.", this
+                )
             }
         }
 
@@ -129,55 +121,20 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(),
                     lessonplanViewAdapter.filter.filter(s)
                 }
             }
-            override fun afterTextChanged(s: Editable?) {}
+
+            override fun afterTextChanged(s: Editable?) {
+
+            }
         })
-
-
-    }
-
-    private fun setupRecycler() {
-        lessonplanViewAdapter = LessonPlanAdapter(
-            null, this, this, Constant.isShimmerViewShow, request_type ?: ""
-        )
-
-        binding.rcyLessonViewPlan.layoutManager = LinearLayoutManager(this)
-        binding.rcyLessonViewPlan.isNestedScrollingEnabled = false
-        binding.rcyLessonViewPlan.adapter = lessonplanViewAdapter
-    }
-
-    private fun loadLessonPlanData(status: Int, sectionSubjectId: String?) {
-        lessonplanViewAdapter = LessonPlanAdapter(
-            null, this, this, Constant.isShimmerViewShow, request_type ?: ""
-        )
-
-        binding.rcyLessonViewPlan.adapter = lessonplanViewAdapter
-
-        appViewModel?.getlpViewReport(
-            isToken = isAccessToken!!,
-            section_subject_id = sectionSubjectId!!,
-            lesson_plan_status = status,
-            activity = this@LessonPlanViewDetails
-        )
-    }
-
-
-    private fun islpViewData(data: List<LessonPlanViewSummaryItem>?) {
-        lessonplanViewAdapter = LessonPlanAdapter(
-            data, this, this, Constant.isShimmerViewDisable, request_type ?: ""
-        )
-
-        binding.rcyLessonViewPlan.adapter = lessonplanViewAdapter
     }
 
     override fun onSearchResultEmpty(isEmpty: Boolean) {
         if (isEmpty) {
-
             binding.nomessage.visibility = View.VISIBLE
             binding.txtNoData.visibility = View.VISIBLE
             binding.txtNoData.text = "No matching details found"
             binding.rcyLessonViewPlan.visibility = View.GONE
         } else {
-
             binding.nomessage.visibility = View.GONE
             binding.txtNoData.visibility = View.GONE
             binding.rcyLessonViewPlan.visibility = View.VISIBLE
@@ -185,46 +142,96 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(),
     }
 
 
+    private fun setupRecycler() {
+        lessonplanViewAdapter = LessonPlanAdapter(
+            null, this, this, Constant.isShimmerViewShow, request_type ?: ""
+        )
+        binding.rcyLessonViewPlan.layoutManager = LinearLayoutManager(this)
+        binding.rcyLessonViewPlan.isNestedScrollingEnabled = false
+        binding.rcyLessonViewPlan.adapter = lessonplanViewAdapter
+    }
+
+    private fun fetchLessonPlanData(sectionSubjectId: String?) {
+        lessonplanViewAdapter = LessonPlanAdapter(
+            null, this, this, Constant.isShimmerViewShow, request_type ?: ""
+        )
+        binding.rcyLessonViewPlan.adapter = lessonplanViewAdapter
+
+        appViewModel?.getlpViewReport(
+            isToken = isAccessToken!!,
+            section_subject_id = sectionSubjectId!!,
+            lesson_plan_status = 0,
+            activity = this@LessonPlanViewDetails
+        )
+    }
+
+    private fun islpViewData(data: List<LessonPlanViewSummaryItem>?) {
+        fullLessonPlanList = data ?: listOf()
+        filterAndShowData(currentStatus)
+    }
+
+    private fun filterAndShowData(status: Int) {
+        val filteredList = when (status) {
+            1 -> fullLessonPlanList.filter { it.lesson_plan_status == 1 }
+            2 -> fullLessonPlanList.filter { it.lesson_plan_status == 2 }
+            3 -> fullLessonPlanList.filter { it.lesson_plan_status == 3 }
+            else -> fullLessonPlanList
+        }
+
+        if (filteredList.isEmpty()) {
+            binding.nomessage.visibility = View.VISIBLE
+            binding.txtNoData.visibility = View.VISIBLE
+            binding.txtNoData.text = "No lesson plans found"
+            binding.rcyLessonViewPlan.visibility = View.GONE
+        } else {
+            binding.nomessage.visibility = View.GONE
+            binding.txtNoData.visibility = View.GONE
+            binding.rcyLessonViewPlan.visibility = View.VISIBLE
+        }
+
+        lessonplanViewAdapter = LessonPlanAdapter(
+            filteredList, this, this, Constant.isShimmerViewDisable, request_type ?: ""
+        )
+        binding.rcyLessonViewPlan.adapter = lessonplanViewAdapter
+    }
+
     override fun onClick(view: View?) {
         when (view?.id) {
             R.id.imgBack -> onBackPressed()
             R.id.allbutton -> {
                 currentStatus = 0
                 highlightSelectedTab(binding.allbutton)
-                loadLessonPlanData(currentStatus, sectionSubjectId)
+                filterAndShowData(currentStatus)
             }
 
             R.id.ytsbutton -> {
                 currentStatus = 1
                 highlightSelectedTab(binding.ytsbutton)
-                loadLessonPlanData(currentStatus, sectionSubjectId)
+                filterAndShowData(currentStatus)
             }
 
             R.id.inprogressbutton -> {
                 currentStatus = 2
                 highlightSelectedTab(binding.inprogressbutton)
-                loadLessonPlanData(currentStatus, sectionSubjectId)
+                filterAndShowData(currentStatus)
             }
 
             R.id.completedbutton -> {
                 currentStatus = 3
                 highlightSelectedTab(binding.completedbutton)
-                loadLessonPlanData(currentStatus, sectionSubjectId)
+                filterAndShowData(currentStatus)
             }
         }
     }
 
     private fun highlightSelectedTab(selectedView: View) {
-        binding.allbutton.isEnabled = true
-        binding.ytsbutton.isEnabled = true
-        binding.inprogressbutton.isEnabled = true
-        binding.completedbutton.isEnabled = true
-
-        binding.allbutton.setBackgroundResource(R.drawable.light_gray_radius)
-        binding.ytsbutton.setBackgroundResource(R.drawable.light_gray_radius)
-        binding.inprogressbutton.setBackgroundResource(R.drawable.light_gray_radius)
-        binding.completedbutton.setBackgroundResource(R.drawable.light_gray_radius)
-
+        val buttons = listOf(
+            binding.allbutton, binding.ytsbutton, binding.inprogressbutton, binding.completedbutton
+        )
+        buttons.forEach {
+            it.isEnabled = true
+            it.setBackgroundResource(R.drawable.light_gray_radius)
+        }
         selectedView.setBackgroundResource(R.drawable.theme_colour_radius)
         selectedView.isEnabled = false
     }
@@ -232,8 +239,8 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(),
     override fun onEditItem(data: LessonPlanViewSummaryItem) {
         val intent = Intent(this@LessonPlanViewDetails, LessonPlanEditActivity::class.java)
         intent.putExtra("particular_id", data.particular_id)
-        intent.putExtra("request_type",request_type)
-        intent.putExtra("section_subject_id",sectionSubjectId)
+        intent.putExtra("request_type", request_type)
+        intent.putExtra("section_subject_id", sectionSubjectId)
         startActivity(intent)
     }
 
@@ -275,7 +282,6 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(),
             val requestJson = JSONObject().apply {
                 put("particular_id", data.particular_id)
             }
-            Log.d("LessonPlanUpdateRequest", requestJson.toString())
             val requestBody = requestJson.toString()
                 .toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
 
@@ -284,22 +290,17 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(),
             closePopup()
         }
 
-        btnCancel.setOnClickListener {
-            closePopup()
-        }
+        btnCancel.setOnClickListener { closePopup() }
     }
 
     override fun onDeleteItem(data: LessonPlanViewSummaryItem) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             showTopDeleteAlertPopup(data)
         } else {
-            Toast.makeText(this, "Delete popup requires Android O or higher", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Delete popup requires Android O or higher", Toast.LENGTH_SHORT)
+                .show()
         }
     }
-
-
-
-
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun showTopAlertLessonPlanViewPopup(message: String, activity: Activity) {
@@ -317,7 +318,7 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(),
             layoutParams = ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
             )
-            isClickable = true // prevent clicks on background
+            isClickable = true
         }
 
         val marginInPx = TypedValue.applyDimension(
@@ -349,14 +350,8 @@ class LessonPlanViewDetails : BaseActivity<LessonplanViewDetailsBinding>(),
             activity.startActivity(intent)
             closePopup()
         }
-        dimView.isFocusable = true
-        dimView.isFocusableInTouchMode = true
-
     }
 
-    override fun onDateSelected(date: String) {
-
-
-    }
-
+    override fun onDateSelected(date: String) {}
 }
+

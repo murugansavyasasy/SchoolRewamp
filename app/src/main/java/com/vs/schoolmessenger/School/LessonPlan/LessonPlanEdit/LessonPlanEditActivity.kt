@@ -34,8 +34,8 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
 
-class LessonPlanEditActivity : BaseActivity<LessonPlanEditBinding>(),
-    View.OnClickListener, LessonPlanEditClickListener {
+class LessonPlanEditActivity : BaseActivity<LessonPlanEditBinding>(), View.OnClickListener,
+    LessonPlanEditClickListener {
 
     override fun getViewBinding(): LessonPlanEditBinding {
         return LessonPlanEditBinding.inflate(layoutInflater)

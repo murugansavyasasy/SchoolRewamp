@@ -1,6 +1,6 @@
 package com.vs.schoolmessenger.School.LessonPlan.LessonPlanViewSummaryModel
 
-data class LessonPlanViewSummaryDetail (
+data class LessonPlanViewSummaryDetail(
     val name: String,
     val value: String
 )

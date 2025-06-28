@@ -11,6 +11,7 @@ import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.compose.ui.graphics.Color
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
@@ -121,29 +122,38 @@ class LessonPlanPicChartAdapter(
             itemView.findViewById(R.id.totalrelative_layout)
 
         fun bind(data: AllClassData, position: Int, listener: LessonPlanChartClickListener) {
-        lblSubject.text = data.subject_name.orEmpty()
+            lblSubject.text = data.subject_name.orEmpty()
             lblSection.text = "${data.class_name} - ${data.section_name}"
             lblStaffName.text = data.staff_name.orEmpty()
             lblStatus.text = "Items Completed: ${data.items_completed}"
 
-            val percentage = data.percentage_value?.toFloatOrNull() ?: 0f
-            customPieChart.setProgress(percentage)
+            val percentage = data.percentage_value
+            customPieChart.setProgress(data.percentage_value)
 
-            val colorResId = if (percentage == 0f) {
-                R.color.light_red1
+
+
+            if (percentage == 0) {
+                Log.d("percentangelblview", percentage.toString())
+                lblView.setBackgroundColor(
+                    ContextCompat.getColor(
+                        context,
+                        android.R.color.darker_gray
+                    )
+                )
+            } else if (percentage == 100) {
+                lblView.setBackgroundColor(ContextCompat.getColor(context, R.color.green))
             } else {
-                R.color.light_orange5
+                lblView.setBackgroundColor(ContextCompat.getColor(context, R.color.light_orange4))
             }
-            lblView.setTextColor(ContextCompat.getColor(context, colorResId))
 
-            imgPunchHistory.visibility = if (percentage == 0f) {
+            imgPunchHistory.visibility = if (percentage == 0) {
                 View.INVISIBLE
             } else {
                 View.VISIBLE
             }
 
             totalrelative_layout.setOnClickListener {
-                if (percentage == 0f) {
+                if (percentage == 0) {
                     Log.d("Listener Status", "The percentage value is zero")
                 } else {
                     listener.onItem(data, requestType)
