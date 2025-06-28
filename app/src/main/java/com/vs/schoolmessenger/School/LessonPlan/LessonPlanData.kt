@@ -6,5 +6,5 @@ data class LessonPlanData(
     val ToDate: String,
     val Unit: String,
     val Remarks: String,
-    val Status:Int
+    val Status: Int
 )

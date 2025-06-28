@@ -367,15 +367,15 @@
                     <EditText
                         android:id="@+id/txtDesc"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/hundred"
                         android:layout_below="@+id/lblEventDesc"
                         android:layout_marginStart="@dimen/ten"
                         android:layout_marginTop="@dimen/fifteen"
                         android:layout_marginEnd="@dimen/ten"
+                        android:gravity="start"
+                        android:padding="@dimen/ten"
                         android:background="@drawable/bg_stroke_rect_black"
                         android:hint="@string/Description"
-                        android:paddingHorizontal="@dimen/ten"
-                        android:paddingVertical="@dimen/thirty"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp" />
 

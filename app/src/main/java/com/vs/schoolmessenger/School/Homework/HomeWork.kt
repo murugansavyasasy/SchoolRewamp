@@ -98,6 +98,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
     var mHomeWorkReportAdapter: HomeWorkReportAdapter? = null
     private var fullHomeworkList: List<HomeWorkReport> = listOf()
     var isSectionId = -1
+    var isAcademicServerLoad=false
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
@@ -460,15 +461,26 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
             }
 
             R.id.btnCreate -> {
+                binding.btnCreate.isEnabled=false
+                binding.btnHistory.isEnabled=true
                 isBackRoundChange(binding.btnCreate)
                 binding.rlaHomeWorkReport.visibility = View.GONE
                 binding.rlaHomework.visibility = View.VISIBLE
+                //Now once it is tab is swapped the academic year is already assigned so fetchHomeWorkReportData() will not be call
+                //So we are handling it by make it isAcademicServerLoad as true
+                isAcademicServerLoad=true
             }
 
             R.id.btnHistory -> {
+                binding.btnHistory.isEnabled=false
+                binding.btnCreate.isEnabled=true
                 isBackRoundChange(binding.btnHistory)
                 binding.rlaHomeWorkReport.visibility = View.VISIBLE
                 binding.rlaHomework.visibility = View.GONE
+                //At initial swap we are avoiding the fetchHomeWorkReportData because Academic Year dropdown is doing fetchHomeWorkReportData
+                if (isAcademicServerLoad){
+                fetchHomeWorkReportData()
+                }
             }
 
             R.id.btnChooseRecipient -> {

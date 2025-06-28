@@ -113,11 +113,15 @@ class Event : BaseActivity<EventParentBinding>(), View.OnClickListener, EventCli
 
 
         binding.toolbarLayout.lblRightSideBar.setOnClickListener {
+            binding.toolbarLayout.lblRightSideBar.isEnabled=false
+            binding.toolbarLayout.lblLeftSideBar.isEnabled=true
             isBackRoundChange(binding.toolbarLayout.lblRightSideBar)
             loadeventdata()
         }
 
         binding.toolbarLayout.lblLeftSideBar.setOnClickListener {
+            binding.toolbarLayout.lblLeftSideBar.isEnabled=false
+            binding.toolbarLayout.lblRightSideBar.isEnabled=true
             isBackRoundChange(binding.toolbarLayout.lblLeftSideBar)
             loadHolidayData()
         }

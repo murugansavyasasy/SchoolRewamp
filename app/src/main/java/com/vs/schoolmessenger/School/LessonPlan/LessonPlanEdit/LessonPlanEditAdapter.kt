@@ -90,9 +90,7 @@ class LessonPlanEditAdapter(
                 "dropdown" -> {
                     val options = data.field_data ?: listOf()
                     val adapter = ArrayAdapter(
-                        itemView.context,
-                        android.R.layout.simple_spinner_item,
-                        options
+                        itemView.context, android.R.layout.simple_spinner_item, options
                     )
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                     isSpinner.adapter = adapter
@@ -103,10 +101,7 @@ class LessonPlanEditAdapter(
 
                     isSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                         override fun onItemSelected(
-                            parent: AdapterView<*>,
-                            view: View?,
-                            position: Int,
-                            id: Long
+                            parent: AdapterView<*>, view: View?, position: Int, id: Long
                         ) {
                             data.value = options[position]
                         }
@@ -128,18 +123,12 @@ class LessonPlanEditAdapter(
                         }
 
                         override fun beforeTextChanged(
-                            s: CharSequence?,
-                            start: Int,
-                            count: Int,
-                            after: Int
+                            s: CharSequence?, start: Int, count: Int, after: Int
                         ) {
                         }
 
                         override fun onTextChanged(
-                            s: CharSequence?,
-                            start: Int,
-                            before: Int,
-                            count: Int
+                            s: CharSequence?, start: Int, before: Int, count: Int
                         ) {
                         }
                     })
@@ -169,16 +158,14 @@ class LessonPlanEditAdapter(
                             val day = calendar.get(Calendar.DAY_OF_MONTH)
 
                             val datePickerDialog = DatePickerDialog(
-                                itemView.context,
-                                { _, selectedYear, selectedMonth, selectedDay ->
+                                itemView.context, { _, selectedYear, selectedMonth, selectedDay ->
                                     val cal = Calendar.getInstance()
                                     cal.set(selectedYear, selectedMonth, selectedDay)
                                     val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
                                     val formattedDate = sdf.format(cal.time)
                                     headerdatelabe1l.text = formattedDate
                                     data.value = formattedDate
-                                },
-                                year, month, day
+                                }, year, month, day
                             )
                             datePickerDialog.show()
                         }

@@ -6,25 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
-import android.widget.Filter.FilterResults
 import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.AbsenteesReport.Adapter.AbsenteesStudentListDetailAdapter
-import com.vs.schoolmessenger.School.AbsenteesReport.Adapter.AbsenteesStudentListDetailAdapter.ShimmerViewHolder
-import com.vs.schoolmessenger.School.AbsenteesReport.Model.Student
-import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummary.LessonPlanChartClickListener
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummaryModel.AllClassData
-import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.CustomPieChartView
 import com.vs.schoolmessenger.Utils.ShimmerUtil
-import kotlin.collections.component1
-import kotlin.collections.component2
 
 class LessonPlanPicChartAdapter(
     private var itemList: List<AllClassData>? = emptyList(),
@@ -64,7 +55,7 @@ class LessonPlanPicChartAdapter(
 
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is LessonPlanPicChartAdapter.DataViewHolder) {
+        if (holder is DataViewHolder) {
             holder.bind(filteredList[position], position, listener)
         } else if (holder is LessonPlanPicChartAdapter.ShimmerViewHolder) {
             holder.startShimmer()
@@ -121,29 +112,38 @@ class LessonPlanPicChartAdapter(
             itemView.findViewById(R.id.totalrelative_layout)
 
         fun bind(data: AllClassData, position: Int, listener: LessonPlanChartClickListener) {
-        lblSubject.text = data.subject_name.orEmpty()
+            lblSubject.text = data.subject_name.orEmpty()
             lblSection.text = "${data.class_name} - ${data.section_name}"
             lblStaffName.text = data.staff_name.orEmpty()
             lblStatus.text = "Items Completed: ${data.items_completed}"
 
-            val percentage = data.percentage_value?.toFloatOrNull() ?: 0f
-            customPieChart.setProgress(percentage)
+            val percentage = data.percentage_value
+            customPieChart.setProgress(data.percentage_value)
 
-            val colorResId = if (percentage == 0f) {
-                R.color.light_red1
+
+
+            if (percentage == 0) {
+                Log.d("percentangelblview", percentage.toString())
+                lblView.setBackgroundColor(
+                    ContextCompat.getColor(
+                        context,
+                        android.R.color.darker_gray
+                    )
+                )
+            } else if (percentage == 100) {
+                lblView.setBackgroundColor(ContextCompat.getColor(context, R.color.green))
             } else {
-                R.color.light_orange5
+                lblView.setBackgroundColor(ContextCompat.getColor(context, R.color.light_orange4))
             }
-            lblView.setTextColor(ContextCompat.getColor(context, colorResId))
 
-            imgPunchHistory.visibility = if (percentage == 0f) {
+            imgPunchHistory.visibility = if (percentage == 0) {
                 View.INVISIBLE
             } else {
                 View.VISIBLE
             }
 
             totalrelative_layout.setOnClickListener {
-                if (percentage == 0f) {
+                if (percentage == 0) {
                     Log.d("Listener Status", "The percentage value is zero")
                 } else {
                     listener.onItem(data, requestType)

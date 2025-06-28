@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -108,12 +109,14 @@ class EventAdapter (
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
 
+        private var isTextExpanded = false
         private val LblHWSubjectName: TextView = itemView.findViewById(R.id.LblHWSubjectName)
         private val lblTitleImage: TextView = itemView.findViewById(R.id.lblTitleImage)
         private val lblEventTimeImage: TextView = itemView.findViewById(R.id.lblEventTimeImage)
         private val lblContentImage: TextView = itemView.findViewById(R.id.lblContentImage)
         private val lblDateImage: TextView = itemView.findViewById(R.id.lblDateImage)
         private val lblTimeImage: TextView = itemView.findViewById(R.id.lblTimeImage)
+        private val tvSeeMoreImage: TextView = itemView.findViewById(R.id.tvSeeMoreImage)
         private val rlaSelectText: RelativeLayout = itemView.findViewById(R.id.rlaSelectText)
         private val rytList: RelativeLayout = itemView.findViewById(R.id.rytList)
         private val rcyImgPDF: RecyclerView = itemView.findViewById(R.id.rcyImgPDF)
@@ -143,6 +146,10 @@ class EventAdapter (
             lblDateImage.text = Constant.convertDateTimeFormat(data.date)
             lblTimeImage.text = data.time
             lblEventTimeImage.text="🕒 Event starts at: "+data.time
+            isSeeMoreVisibility(lblContentImage, tvSeeMoreImage)
+            tvSeeMoreImage.setOnClickListener {
+                isSeeMoreExpanded(tvSeeMoreImage, lblContentImage)
+            }
 
 
             webView.setOnTouchListener(object : OnTouchListener {
@@ -250,6 +257,30 @@ class EventAdapter (
                     this@attachToRecyclerView.createIndicators(adapter.itemCount, 0)
                 }
             })
+        }
+
+        private fun isSeeMoreExpanded(tvSeeMore: TextView, lblContent: TextView) {
+            if (isTextExpanded) {
+                isTextExpanded = false
+                lblContent.maxLines = 3
+                lblContent.ellipsize = TextUtils.TruncateAt.END
+                tvSeeMore.text = itemView.context.getString(R.string.SeeMore)
+            } else {
+                isTextExpanded = true
+                lblContent.maxLines = Integer.MAX_VALUE
+                lblContent.ellipsize = null
+                tvSeeMore.text = itemView.context.getString(R.string.SeeLess)
+            }
+        }
+
+        private fun isSeeMoreVisibility(lblContent: TextView, tvSeeMore: TextView) {
+            lblContent.post {
+                if (lblContent.lineCount > 3) {
+                    tvSeeMore.visibility = View.VISIBLE
+                    lblContent.maxLines = 3
+                    lblContent.ellipsize = TextUtils.TruncateAt.END
+                }
+            }
         }
     }
 }

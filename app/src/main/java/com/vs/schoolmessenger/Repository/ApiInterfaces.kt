@@ -217,15 +217,11 @@ interface ApiInterfaces {
         @Query(APIKeyNames.bucketPath) bucketPath: String?,
         @Query(APIKeyNames.fileType) fileType: String?
     ): Call<PreSignedUrl?>?
-
-
     @POST(APIMethods.isUpdateStatusCommunication)
     fun isUpdateStatusCommunication(
         @Header(APIKeyNames.Authorization) token: String,
         @Body request: JsonObject
     ): Call<StatusArchiveResponse>?
-
-
     @POST(APIMethods.isUpdateStatusArchive)
     fun isUpdateStatusArchive(
         @Header(APIKeyNames.Authorization) token: String,

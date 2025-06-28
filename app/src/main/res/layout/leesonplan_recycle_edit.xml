@@ -24,7 +24,7 @@
         android:textColor="@color/black"
         android:background="@drawable/gray_bg_radius"
         android:padding="10dp"
-        android:visibility="gone"
+        android:visibility="visible"
         android:gravity="start"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
@@ -41,7 +41,7 @@
         android:textColor="@color/black"
         android:background="@drawable/gray_bg_radius"
         android:padding="10dp"
-        android:visibility="gone"
+        android:visibility="visible"
         android:gravity="start"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
@@ -58,7 +58,7 @@
         android:background="@drawable/gray_bg_radius"
         android:orientation="horizontal"
         android:layout_marginTop="10dp"
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:weightSum="1">
@@ -67,10 +67,7 @@
             android:id="@+id/spinnerdropdown"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/fifteen"
-            android:layout_marginEnd="@dimen/fifteen"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
+            android:padding="8dp"
             android:layout_weight="0.5"
             android:gravity="center">
 

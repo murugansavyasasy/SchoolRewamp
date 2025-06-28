@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -107,7 +108,7 @@ class NoticeBoardAdapter(
 
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
-
+        private var isTextExpanded = false
         private val LblHWSubjectName: TextView = itemView.findViewById(R.id.LblHWSubjectName)
         private val lblTitleImage: TextView = itemView.findViewById(R.id.lblTitleImage)
         private val lblContentImage: TextView = itemView.findViewById(R.id.lblContentImage)
@@ -115,6 +116,7 @@ class NoticeBoardAdapter(
         private val lblTimeImage: TextView = itemView.findViewById(R.id.lblTimeImage)
         private val rlaSelectText: RelativeLayout = itemView.findViewById(R.id.rlaSelectText)
         private val rytList: RelativeLayout = itemView.findViewById(R.id.rytList)
+        private val tvSeeMoreImage: TextView = itemView.findViewById(R.id.tvSeeMoreImage)
         private val rcyImgPDF: RecyclerView = itemView.findViewById(R.id.rcyImgPDF)
         private val imgNewImage: ImageView = itemView.findViewById(R.id.imgNewImage)
         private val webView: android.webkit.WebView = itemView.findViewById(R.id.webView)
@@ -137,6 +139,12 @@ class NoticeBoardAdapter(
             lblDateImage.text = Constant.convertDateTimeFormat(date)
             lblTimeImage.text=time
 //            lblDateImage.text = Constant.convertDateTimeFormat(noticeData.created_on)
+
+            isSeeMoreVisibility(lblContentImage, tvSeeMoreImage)
+            tvSeeMoreImage.setOnClickListener {
+                isSeeMoreExpanded(tvSeeMoreImage, lblContentImage)
+            }
+
 
             webView.setOnTouchListener(object : OnTouchListener {
                 @SuppressLint("ClickableViewAccessibility")
@@ -243,7 +251,35 @@ class NoticeBoardAdapter(
                 }
             })
         }
+
+        private fun isSeeMoreExpanded(tvSeeMore: TextView, lblContent: TextView) {
+            if (isTextExpanded) {
+                isTextExpanded = false
+                lblContent.maxLines = 3
+                lblContent.ellipsize = TextUtils.TruncateAt.END
+                tvSeeMore.text = itemView.context.getString(R.string.SeeMore)
+            } else {
+                isTextExpanded = true
+                lblContent.maxLines = Integer.MAX_VALUE
+                lblContent.ellipsize = null
+                tvSeeMore.text = itemView.context.getString(R.string.SeeLess)
+            }
+        }
+
+        private fun isSeeMoreVisibility(lblContent: TextView, tvSeeMore: TextView) {
+            lblContent.post {
+                if (lblContent.lineCount > 3) {
+                    tvSeeMore.visibility = View.VISIBLE
+                    lblContent.maxLines = 3
+                    lblContent.ellipsize = TextUtils.TruncateAt.END
+                }
+            }
+        }
+
+
+
     }
+
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun startShimmer() {

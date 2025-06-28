@@ -7,6 +7,8 @@ import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.DecelerateInterpolator
+import androidx.core.content.ContextCompat
+import com.vs.schoolmessenger.R
 
 class CustomPieChartView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -34,20 +36,25 @@ class CustomPieChartView @JvmOverloads constructor(
     }
 
     private val rect = RectF()
-    private var progress = 0f // Current progress percentage
+    private var progress = 0 // Now using Int instead of Float
 
-    fun setProgress(value: Float) {
-        val animator = ValueAnimator.ofFloat(0f, value).apply {
+    fun setProgress(value: Int) {
+        progressPaint.color = if (value == 100) {
+            ContextCompat.getColor(context, R.color.green)
+        } else {
+            Color.parseColor("#FFA726") // default orange
+        }
+
+        val animator = ValueAnimator.ofInt(0, value).apply {
             duration = 1500
             interpolator = DecelerateInterpolator()
             addUpdateListener { animation ->
-                progress = animation.animatedValue as Float
+                progress = animation.animatedValue as Int
                 invalidate()
             }
         }
         animator.start()
     }
-
 
 
     override fun onDraw(canvas: Canvas) {
@@ -67,10 +74,11 @@ class CustomPieChartView @JvmOverloads constructor(
         canvas.drawArc(rect, 0f, 360f, false, backgroundPaint)
 
         // Draw progress ring
-        val sweepAngle = (progress / 100) * 360
+        val sweepAngle = (progress / 100f) * 360f // keep this as float for arc drawing
         canvas.drawArc(rect, -90f, sweepAngle, false, progressPaint)
 
         // Draw percentage text in center
-        canvas.drawText("${progress.toInt()}%", centerX, centerY + textPaint.textSize / 3, textPaint)
+        canvas.drawText("$progress%", centerX, centerY + textPaint.textSize / 3, textPaint)
     }
 }
+
