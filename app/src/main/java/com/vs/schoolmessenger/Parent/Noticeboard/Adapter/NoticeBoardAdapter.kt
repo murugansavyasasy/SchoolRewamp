@@ -112,6 +112,7 @@ class NoticeBoardAdapter(
         private val lblTitleImage: TextView = itemView.findViewById(R.id.lblTitleImage)
         private val lblContentImage: TextView = itemView.findViewById(R.id.lblContentImage)
         private val lblDateImage: TextView = itemView.findViewById(R.id.lblDateImage)
+        private val lblTimeImage: TextView = itemView.findViewById(R.id.lblTimeImage)
         private val rlaSelectText: RelativeLayout = itemView.findViewById(R.id.rlaSelectText)
         private val rytList: RelativeLayout = itemView.findViewById(R.id.rytList)
         private val rcyImgPDF: RecyclerView = itemView.findViewById(R.id.rcyImgPDF)
@@ -129,7 +130,13 @@ class NoticeBoardAdapter(
             rlaSelectText.visibility = View.GONE
             lblTitleImage.text = noticeData.title
             lblContentImage.text = noticeData.description
-            lblDateImage.text = Constant.convertDateTimeFormat(noticeData.created_on)
+            val dateTime =noticeData.created_on
+            val parts = dateTime.split(" ")
+            val date = parts.getOrNull(0) ?: ""
+            val time = parts.getOrNull(1) + " " + (parts.getOrNull(2) ?: "")
+            lblDateImage.text = Constant.convertDateTimeFormat(date)
+            lblTimeImage.text=time
+//            lblDateImage.text = Constant.convertDateTimeFormat(noticeData.created_on)
 
             webView.setOnTouchListener(object : OnTouchListener {
                 @SuppressLint("ClickableViewAccessibility")

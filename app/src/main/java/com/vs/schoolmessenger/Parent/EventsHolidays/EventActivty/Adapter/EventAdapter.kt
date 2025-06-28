@@ -110,8 +110,10 @@ class EventAdapter (
 
         private val LblHWSubjectName: TextView = itemView.findViewById(R.id.LblHWSubjectName)
         private val lblTitleImage: TextView = itemView.findViewById(R.id.lblTitleImage)
+        private val lblEventTimeImage: TextView = itemView.findViewById(R.id.lblEventTimeImage)
         private val lblContentImage: TextView = itemView.findViewById(R.id.lblContentImage)
         private val lblDateImage: TextView = itemView.findViewById(R.id.lblDateImage)
+        private val lblTimeImage: TextView = itemView.findViewById(R.id.lblTimeImage)
         private val rlaSelectText: RelativeLayout = itemView.findViewById(R.id.rlaSelectText)
         private val rytList: RelativeLayout = itemView.findViewById(R.id.rytList)
         private val rcyImgPDF: RecyclerView = itemView.findViewById(R.id.rcyImgPDF)
@@ -129,12 +131,19 @@ class EventAdapter (
             adapter: EventAdapter
         ) {
 
+            LblHWSubjectName.visibility = View.VISIBLE
+            lblEventTimeImage.visibility=View.VISIBLE
+            LblHWSubjectName.text="📍 "+data.venue
+            imgNewImage.visibility = View.VISIBLE
             LblHWSubjectName.visibility = View.GONE
             imgNewImage.visibility = View.GONE
             rlaSelectText.visibility = View.GONE
             lblTitleImage.text = data.title
             lblContentImage.text = data.description
             lblDateImage.text = Constant.convertDateTimeFormat(data.date)
+            lblTimeImage.text = data.time
+            lblEventTimeImage.text="🕒 Event starts at: "+data.time
+
 
             webView.setOnTouchListener(object : OnTouchListener {
                 @SuppressLint("ClickableViewAccessibility")

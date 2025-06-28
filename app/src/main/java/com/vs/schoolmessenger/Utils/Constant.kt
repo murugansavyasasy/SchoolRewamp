@@ -261,9 +261,11 @@ object Constant {
 
     var IMAGE = "IMAGE"
     var PDF = "PDF"
+    var XLS = "PDF"
     var DOC = "DOC"
     var DOCX = "DOCX"
     var PPT = "PPT"
+    var XLSX = "PPT"
     var PPTX = "PPTX"
     var TXT = "TXT"
     var EXCEL = "EXCEL"

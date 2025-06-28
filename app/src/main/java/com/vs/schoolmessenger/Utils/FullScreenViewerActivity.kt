@@ -38,7 +38,8 @@ import java.io.FileOutputStream
 import java.net.HttpURLConnection
 import java.net.URL
 
-class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(), View.OnClickListener {
+class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
+    View.OnClickListener {
     private var isAccessToken: String? = null
     private var appViewModel: App? = null
     private lateinit var adapter: FileViewerAdapter
@@ -70,8 +71,10 @@ class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(
         binding.rcyFile.layoutManager = noScrollLayoutManager
         binding.rcyFile.adapter = adapter
 
-        binding.lnrNext.visibility = if (Constant.commonFileList.size <= 1) View.GONE else View.VISIBLE
-        binding.lnrPrevious.visibility = if (Constant.commonFileList.size <= 1) View.GONE else View.VISIBLE
+        binding.lnrNext.visibility =
+            if (Constant.commonFileList.size <= 1) View.GONE else View.VISIBLE
+        binding.lnrPrevious.visibility =
+            if (Constant.commonFileList.size <= 1) View.GONE else View.VISIBLE
         if (Constant.commonFileList.size > 1) binding.indicator.attachToRecyclerView(binding.rcyFile)
 
         binding.rcyFile.setOnTouchListener { _, _ -> true }
@@ -108,7 +111,8 @@ class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(
 
     private fun updateNavButtons() {
         binding.lnrPrevious.visibility = if (currentPosition > 0) View.VISIBLE else View.GONE
-        binding.lnrNext.visibility = if (currentPosition < Constant.commonFileList.size - 1) View.VISIBLE else View.GONE
+        binding.lnrNext.visibility =
+            if (currentPosition < Constant.commonFileList.size - 1) View.VISIBLE else View.GONE
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -313,7 +317,11 @@ class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(
                         }
                     }
                 }
-                val uri = FileProvider.getUriForFile(this@FullScreenViewerActivity, "$packageName.fileprovider", file)
+                val uri = FileProvider.getUriForFile(
+                    this@FullScreenViewerActivity,
+                    "$packageName.fileprovider",
+                    file
+                )
                 val mimeType =
                     MimeTypeMap.getSingleton().getMimeTypeFromExtension(file.extension.lowercase())
                         ?: contentType
@@ -328,7 +336,11 @@ class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(
             } catch (e: Exception) {
                 Log.e("ShareFile", "Error sharing: ${e.message}", e)
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(this@FullScreenViewerActivity, "Failed to share file", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@FullScreenViewerActivity,
+                        "Failed to share file",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
                 withContext(Dispatchers.Main) {
                     binding.lnrDownloadStatus.visibility = View.GONE
@@ -339,9 +351,15 @@ class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(
 
     private fun checkStoragePermission(): Boolean {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_GRANTED
+            ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.READ_MEDIA_IMAGES
+            ) == PackageManager.PERMISSION_GRANTED
         } else {
-            ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+            ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) == PackageManager.PERMISSION_GRANTED
         }
     }
 
@@ -352,7 +370,13 @@ class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(
         ActivityCompat.requestPermissions(this, permission, 101)
     }
 
-    data class VimeoDownload(val quality: String?, val type: String?, val width: Int?, val link: String?)
+    data class VimeoDownload(
+        val quality: String?,
+        val type: String?,
+        val width: Int?,
+        val link: String?
+    )
+
     data class VimeoVideoResponse(val name: String?, val download: List<VimeoDownload>?)
 
     interface VimeoApiService {
@@ -397,7 +421,11 @@ class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(
                         }
                     } else {
                         withContext(Dispatchers.Main) {
-                            Toast.makeText(this@FullScreenViewerActivity, "No downloadable .mp4 found", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                this@FullScreenViewerActivity,
+                                "No downloadable .mp4 found",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                         withContext(Dispatchers.Main) {
                             binding.lnrDownloadStatus.visibility = View.GONE

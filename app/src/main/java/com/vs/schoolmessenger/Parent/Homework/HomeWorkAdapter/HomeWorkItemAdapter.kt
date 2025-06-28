@@ -70,6 +70,7 @@ class HomeWorkItemAdapter(
 
         private var isTextExpanded = false
         private val lblDateImage: TextView = itemView.findViewById(R.id.lblDateImage)
+        private val lblTimeImage: TextView = itemView.findViewById(R.id.lblTimeImage)
         private val lblTitleImage: TextView = itemView.findViewById(R.id.lblTitleImage)
         private val lblContentImage: TextView = itemView.findViewById(R.id.lblContentImage)
         private val tvSeeMoreImage: TextView = itemView.findViewById(R.id.tvSeeMoreImage)
@@ -93,9 +94,15 @@ class HomeWorkItemAdapter(
         ) {
             lblTitleImage.text = homeworkData.title
             lblContentImage.text = homeworkData.description
-            lblDateImage.text = Constant.convertDateTimeFormat(data!!.date)
+//            lblDateImage.text = Constant.convertDateTimeFormat(data!!.date)
             lblSubjectName.text = homeworkData.subject_name
             rlaSelectText.visibility = View.GONE
+            val dateTime =data!!.date
+            val parts = dateTime.split(" ")
+            val date = parts.getOrNull(0) ?: ""
+//            val time = parts.getOrNull(1) + " " + (parts.getOrNull(2) ?: "")
+            lblDateImage.text = Constant.convertDateTimeFormat(date)
+            lblTimeImage.visibility=View.GONE
             imgNewImage.visibility = View.GONE
 
             webView.setOnTouchListener(object : OnTouchListener {

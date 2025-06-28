@@ -113,6 +113,7 @@ class AttachmentAdapter(
         private val lblTitleImage: TextView = itemView.findViewById(R.id.lblTitleImage)
         private val lblContentImage: TextView = itemView.findViewById(R.id.lblContentImage)
         private val lblDateImage: TextView = itemView.findViewById(R.id.lblDateImage)
+        private val lblTimeImage: TextView = itemView.findViewById(R.id.lblTimeImage)
         private val tvView: TextView = itemView.findViewById(R.id.tvView)
         private val tvSeeMoreImage: TextView = itemView.findViewById(R.id.tvSeeMoreImage)
         private val rlaSelectText: RelativeLayout = itemView.findViewById(R.id.rlaSelectText)
@@ -132,6 +133,7 @@ class AttachmentAdapter(
             lblTitleImage.text = item.title
             lblContentImage.text = item.description
             lblDateImage.text = Constant.convertDateTimeFormat(item.date)
+            lblTimeImage.text =item.time
 
 
             webView.setOnTouchListener { _, event ->
