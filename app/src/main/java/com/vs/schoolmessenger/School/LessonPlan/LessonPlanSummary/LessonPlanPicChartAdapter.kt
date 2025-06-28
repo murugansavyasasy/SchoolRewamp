@@ -6,26 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
-import android.widget.Filter.FilterResults
 import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.compose.ui.graphics.Color
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.AbsenteesReport.Adapter.AbsenteesStudentListDetailAdapter
-import com.vs.schoolmessenger.School.AbsenteesReport.Adapter.AbsenteesStudentListDetailAdapter.ShimmerViewHolder
-import com.vs.schoolmessenger.School.AbsenteesReport.Model.Student
-import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummary.LessonPlanChartClickListener
 import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummaryModel.AllClassData
-import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.CustomPieChartView
 import com.vs.schoolmessenger.Utils.ShimmerUtil
-import kotlin.collections.component1
-import kotlin.collections.component2
 
 class LessonPlanPicChartAdapter(
     private var itemList: List<AllClassData>? = emptyList(),
