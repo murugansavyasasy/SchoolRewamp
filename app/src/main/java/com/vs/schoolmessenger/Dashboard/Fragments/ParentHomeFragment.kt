@@ -83,7 +83,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         childDetails = SharedPreference.getChildDetails(requireActivity())
         userDetails = SharedPreference.getUserDetails(requireActivity())
         val currentDate = Calendar.getInstance().time
-        val dateFormat = SimpleDateFormat("dd, MMM yyyy", Locale.ENGLISH)
+        val dateFormat = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
         val formattedDate = dateFormat.format(currentDate)
         binding.lblDate.text = formattedDate
         binding.lblStudentName.text = childDetails!!.name

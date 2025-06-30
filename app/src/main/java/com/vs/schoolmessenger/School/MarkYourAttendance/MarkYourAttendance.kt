@@ -89,7 +89,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnCli
         binding.btnCreate.setOnClickListener(this)
         binding.btnHistory.setOnClickListener(this)
 
-        binding.toolbarLayout.lblParentToolBar.text = getString(R.string.Geometric_Attendance)
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel?.init()

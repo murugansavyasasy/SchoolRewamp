@@ -168,6 +168,8 @@ object Constant {
     var isVoiceType = 1
 
     var isAcademicYearList: List<AcademicYear>? = null
+    var isParentMenuName=""
+    var isSchoolMenuName=""
 
 
 //    var isForward = false

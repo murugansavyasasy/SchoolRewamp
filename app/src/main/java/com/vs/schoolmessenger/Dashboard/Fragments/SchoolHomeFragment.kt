@@ -91,7 +91,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         binding.changeroll.setOnClickListener(this)
         binding.imgSearchCancel.setOnClickListener(this)
         val currentDate = Calendar.getInstance().time
-        val dateFormat = SimpleDateFormat("dd, MMM yyyy", Locale.ENGLISH)
+        val dateFormat = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
         val formattedDate = dateFormat.format(currentDate)
         binding.lblDate.text = formattedDate
         appViewModel = ViewModelProvider(this)[App::class.java]

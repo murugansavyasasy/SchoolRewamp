@@ -46,7 +46,7 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
         binding.linearLayout3.setOnClickListener(this)
         binding.linearLayout5.setOnClickListener(this)
         isStaffDetails = SharedPreference.getStaffDetails(this)
-        binding.toolbarLayout.lblParentToolBar.text = getString(R.string.daily_collection_fees)
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
 

@@ -49,7 +49,7 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
         binding.categoryName.setOnClickListener(this)
         binding.className.setOnClickListener(this)
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
-        binding.toolbarLayout.lblParentToolBar.text = "Fee Pending"
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
 
@@ -73,8 +73,10 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
             if (response != null && response.status && !response.data.isNullOrEmpty()) {
                 isFirstLoad = true
                 isLoadDailyCollectionData(response.data)
+                binding.relativeLayout6.visibility=View.VISIBLE
             } else {
                 showNoDataMessage(response?.message ?: "No fee pending data available.")
+                binding.relativeLayout6.visibility=View.GONE
             }
         }
 
@@ -86,8 +88,10 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
             if (response != null && response.status && !response.data.isNullOrEmpty()) {
                 isFirstLoad = true
                 isLoadDailyCollectionData(response.data)
+                binding.relativeLayout6.visibility=View.VISIBLE
             } else {
                 showNoDataMessage(response?.message ?: "No fee pending data available.")
+                binding.relativeLayout6.visibility=View.GONE
             }
         }
     }

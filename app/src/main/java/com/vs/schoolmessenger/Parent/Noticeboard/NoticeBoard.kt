@@ -34,7 +34,7 @@ class NoticeBoard : BaseActivity<NoticeBoardBinding>(), View.OnClickListener,
         binding.toolbarLayout.lblStudentName.text = isChildDetails?.name
         binding.toolbarLayout.lblStudentSection.text =
             "${isChildDetails?.standard_name} ${isChildDetails?.section_name}"
-        binding.toolbarLayout.lblParentToolBar.text = getString(R.string.NoticeBoard)
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isParentMenuName
         binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
         binding.toolbarLayout.imgBack.setOnClickListener(this)
 

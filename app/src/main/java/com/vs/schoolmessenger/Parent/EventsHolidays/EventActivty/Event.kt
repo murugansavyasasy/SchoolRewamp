@@ -44,7 +44,7 @@ class Event : BaseActivity<EventParentBinding>(), View.OnClickListener, EventCli
         isAccessToken = isChildDetails?.access_token
 
         binding.toolbarLayout.imgBack.setOnClickListener(this)
-        binding.toolbarLayout.lblParentToolBar.text = getString(R.string.event_holiday)
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isParentMenuName
         binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
         binding.toolbarLayout.lnrParent.visibility = View.VISIBLE
 

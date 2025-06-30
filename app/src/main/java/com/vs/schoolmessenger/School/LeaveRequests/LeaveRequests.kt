@@ -42,7 +42,7 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
         isAccessToken = isStaffDetails!!.access_token
         isGetLeaveRequestList()
         binding.toolbarLayout.imgBack.setOnClickListener(this)
-        binding.toolbarLayout.lblParentToolBar.text = "Leave Request"
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
         binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name

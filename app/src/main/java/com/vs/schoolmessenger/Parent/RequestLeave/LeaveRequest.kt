@@ -83,7 +83,7 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
         binding.lblTotalDays.text = "$totalLeaveDays Days"
 
 
-        binding.toolbarLayout.lblParentToolBar.text = resources.getText(R.string.Leave_Request)
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isParentMenuName
         binding.toolbarLayout.lnrParent.visibility = View.VISIBLE
         isAccessToken = isChildDetails?.access_token
 

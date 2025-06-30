@@ -89,13 +89,16 @@ class CreateEvent : BaseActivity<CreateEventBinding>(),OnImageClickListener,
         binding.rytStartDate.setOnClickListener(this)
         binding.rytStart.setOnClickListener(this)
         binding.rytStartTime.setOnClickListener(this)
+        binding.lblDay.setOnClickListener(this)
+        binding.lblDate.setOnClickListener(this)
+        binding.imgDateDown.setOnClickListener(this)
         binding.lnrStartCalendar.setOnClickListener(this)
         binding.txtStartDate.setOnClickListener(this)
         binding.txtStartTime.setOnClickListener(this)
         Constant.editTextCounter(this,binding.txtDesc,500,binding.lbTextCount)
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
-        binding.toolbarLayout.lblParentToolBar.text = "Create Event"
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
         saveDrawableToCache(R.drawable.add_image)?.let {
@@ -308,7 +311,8 @@ class CreateEvent : BaseActivity<CreateEventBinding>(),OnImageClickListener,
                 onBackPressed()
             }
 
-            R.id.rytStartDate,R.id.txtStartDate,R.id.lnrStartCalendar -> {
+            R.id.rytStartDate,R.id.txtStartDate,R.id.lnrStartCalendar,R.id.imgDateDown,R.id.lblDay,R.id.lblDate -> {
+
                 selectedDateField = 1
                 Constant.showDatePicker(this,false) { selectedDate ->
                     Log.d("selectedDate", selectedDate)
