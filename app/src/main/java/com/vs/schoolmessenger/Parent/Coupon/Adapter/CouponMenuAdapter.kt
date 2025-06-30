@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.R
 
-class CouponSummaryAdapter (
+class CouponMenuAdapter (
 
     private var context: Context,
     private var isLoading: Boolean
@@ -30,7 +30,7 @@ class CouponSummaryAdapter (
             DataViewHolder.ShimmerViewHolder(view)
         } else {
             val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_coupon, parent, false)
+                .inflate(R.layout.coupon_menu, parent, false)
             DataViewHolder(view, context)
         }
     }

@@ -50,7 +50,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class CreateEvent : BaseActivity<CreateEventBinding>(),OnImageClickListener,
+class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
     View.OnClickListener, OnDateSelectedListener, EventClickListener, TimeSelectedListener {
 
     override fun getViewBinding(): CreateEventBinding {
@@ -95,7 +95,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(),OnImageClickListener,
         binding.lnrStartCalendar.setOnClickListener(this)
         binding.txtStartDate.setOnClickListener(this)
         binding.txtStartTime.setOnClickListener(this)
-        Constant.editTextCounter(this,binding.txtDesc,500,binding.lbTextCount)
+        Constant.editTextCounter(this, binding.txtDesc, 500, binding.lbTextCount)
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
@@ -224,8 +224,8 @@ class CreateEvent : BaseActivity<CreateEventBinding>(),OnImageClickListener,
             binding.videoView.start()
         }
 
-        Constant.editTextCounter(this,binding.txtDesc,500,binding.lbTextCount)
-        Constant.editTextCounter(this,binding.txtTitle,50,binding.lbtitleTextCount)
+        Constant.editTextCounter(this, binding.txtDesc, 500, binding.lbTextCount)
+        Constant.editTextCounter(this, binding.txtTitle, 50, binding.lbtitleTextCount)
 
     }
 
@@ -311,12 +311,13 @@ class CreateEvent : BaseActivity<CreateEventBinding>(),OnImageClickListener,
                 onBackPressed()
             }
 
-            R.id.rytStartDate,R.id.txtStartDate,R.id.lnrStartCalendar,R.id.imgDateDown,R.id.lblDay,R.id.lblDate -> {
+            R.id.rytStartDate, R.id.txtStartDate, R.id.lnrStartCalendar, R.id.imgDateDown, R.id.lblDay, R.id.lblDate -> {
 
                 selectedDateField = 1
-                Constant.showDatePicker(this,false) { selectedDate ->
+                Constant.showDatePicker(this, false) { selectedDate ->
                     Log.d("selectedDate", selectedDate)
-                    binding.txtStartDate.text = Constant.covertDateFormate(selectedDate) // 13 may 2222
+                    binding.txtStartDate.text =
+                        Constant.covertDateFormate(selectedDate) // 13 may 2222
                     val parts = binding.txtStartDate.text.split(" ")
                     val day = parts[0]
                     val Date = parts[1]
