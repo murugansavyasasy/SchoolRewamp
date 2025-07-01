@@ -168,6 +168,7 @@ object Constant {
     var isVoiceType = 1
 
     var isAcademicYearList: List<AcademicYear>? = null
+    var isParentMenuName=""
 
 
 //    var isForward = false
@@ -1266,5 +1267,17 @@ object Constant {
         }
 
         return Bitmap.createScaledBitmap(bitmap, newWidth, newHeight, true)
+    }
+
+    fun showNotificationPermissionDialog(packageName: String, activity: Activity,isTitle: String,isContent: String) {
+        AlertDialog.Builder(activity).setTitle(isTitle)
+            .setMessage(isContent)
+            .setPositiveButton("Go to Settings") { dialog, _ ->
+                dialog.dismiss()
+                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                    data = Uri.fromParts("package", packageName, null)
+                }
+                activity.startActivity(intent)
+            }.setCancelable(false).show()
     }
 }

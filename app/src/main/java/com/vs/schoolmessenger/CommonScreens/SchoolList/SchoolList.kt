@@ -686,7 +686,11 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    override fun onUploadComplete(success: Boolean, iframe: String?, link: String?) {
+    override fun onUploadComplete(
+        success: Boolean,
+        iframe: String?,
+        link: String?,
+    ) {
         runOnUiThread {
             Log.d("Vimeo_Video_upload", success.toString())
             Log.d("VimeoIframe", iframe.toString())

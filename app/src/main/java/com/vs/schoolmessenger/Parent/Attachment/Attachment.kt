@@ -48,7 +48,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
         binding.toolbarLayout.lblStudentName.text = childDetails?.name
         binding.toolbarLayout.lblParentToolBar.text = getString(R.string.lblAttachment)
         binding.toolbarLayout.lblStudentSection.text =
-            "${childDetails?.standard_name} - ${childDetails?.section_name}"
+            childDetails?.standard_name + " - " + childDetails?.section_name
         binding.linearlayout1.visibility = View.VISIBLE
         appViewModel = ViewModelProvider(this).get(App::class.java).apply { init() }
 
@@ -203,7 +203,6 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
             isAccessToken?.let {
                 appViewModel?.isUpdateStatusArchive(it, jsonObject, this)
             }
-
         } else {
             isAccessToken?.let {
                 appViewModel?.isUpdateStatusCommunication(it, jsonObject, this)
@@ -244,7 +243,6 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
             isAccessToken?.let {
                 appViewModel?.isUpdateStatusArchive(it, jsonObject, this)
             }
-
         } else {
             isAccessToken?.let {
                 appViewModel?.isUpdateStatusCommunication(it, jsonObject, this)

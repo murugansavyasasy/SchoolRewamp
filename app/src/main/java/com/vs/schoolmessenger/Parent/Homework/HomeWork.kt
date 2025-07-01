@@ -39,7 +39,7 @@ class HomeWork : BaseActivity<HomeWorkParentBinding>(), View.OnClickListener,
         binding.toolbarLayout.lblParentToolBar.text = getString(R.string.HomeWork)
         binding.toolbarLayout.lblStudentName.text = childDetails?.name
         binding.toolbarLayout.lblStudentSection.text =
-            "${childDetails?.standard_name} ${childDetails?.section_name}"
+            childDetails?.standard_name+ " - " +childDetails?.section_name
 
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
         binding.lblSeeMore.setOnClickListener(this)

@@ -716,7 +716,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 Constant.isEmergencyVoiceNoticeBoard = false
                 Constant.isAccessType = Constant.isNonEmergency
                 isEmergency = false
-                if (binding.SwitchEmergencyVoice.isChecked() == true) {
+                if (binding.SwitchEmergencyVoice.isChecked()) {
                     binding.SwitchEmergencyVoice.setChecked(true)
                 } else {
                     binding.SwitchEmergencyVoice.setChecked(false)

@@ -1,8 +1,11 @@
 package com.vs.schoolmessenger.AlbumImage
 
 import android.Manifest
+import android.app.AlertDialog
+import android.content.ActivityNotFoundException
 import android.content.ContentUris
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -23,12 +26,11 @@ class AlbumSelectActivity : AppCompatActivity() {
     private lateinit var adapter: FileGridAdapter
     private lateinit var documentPickerLauncher: ActivityResultLauncher<Array<String>>
     private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
-    private var shouldReload = false
     private var fileType: String = Constant.IMAGE
-
+    private var shouldReload = false
+    private var hasOpenedSettingsOnce = false
 
     companion object {
-        private const val REQUEST_CODE_MANAGE_ALL_FILES = 100
         private val SUPPORTED_EXTENSIONS =
             listOf("pdf", "doc", "docx", "ppt", "pptx", "xls", "xlsx", "txt")
         private const val TAG = "DocumentScan"
@@ -43,16 +45,15 @@ class AlbumSelectActivity : AppCompatActivity() {
         fileType = intent.getStringExtra(Constant.isFileType) ?: Constant.IMAGE
         setupPermissionLauncher()
         setupDocumentPicker()
+
         binding.toolbarLayout.tvSelectionCount.text =
             "Selected Files : 0 / ${Constant.isFileLimit}"
+
         adapter = FileGridAdapter(Constant.isFileLimit, onSelectionChanged = { selectedUris ->
             binding.toolbarLayout.tvSelectionCount.text =
                 "Selected Files : ${selectedUris.size} / ${Constant.isFileLimit}"
-            if (selectedUris.isEmpty()) {
-                binding.toolbarLayout.btnDone.visibility = View.GONE
-            } else {
-                binding.toolbarLayout.btnDone.visibility = View.VISIBLE
-            }
+            binding.toolbarLayout.btnDone.visibility =
+                if (selectedUris.isEmpty()) View.GONE else View.VISIBLE
         }, onItemClicked = { uri ->
             Log.d("AlbumSelectActivity", "Clicked file: $uri")
         })
@@ -80,13 +81,56 @@ class AlbumSelectActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        if (fileType.uppercase() == Constant.DOCUMENT &&
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.R &&
-            android.os.Environment.isExternalStorageManager()
-        ) {
-            if (shouldReload) {
-                loadDocumentsOrOpenPicker()
+
+        if (!shouldReload) return
+
+        if (fileType.uppercase() == Constant.DOCUMENT) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                if (android.os.Environment.isExternalStorageManager()) {
+                    loadDocumentsOrOpenPicker()
+                    shouldReload = false
+                    hasOpenedSettingsOnce = false
+                } else {
+                    if (hasOpenedSettingsOnce) {
+                        shouldReload = false
+                        hasOpenedSettingsOnce = false
+                        showPermissionSettingsDialog()
+                    }
+                }
+            } else {
+                val granted =
+                    checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+                if (granted) {
+                    loadDocumentsOrOpenPicker()
+                    shouldReload = false
+                    hasOpenedSettingsOnce = false
+                } else {
+                    if (hasOpenedSettingsOnce) {
+                        shouldReload = false
+                        hasOpenedSettingsOnce = false
+                        showPermissionSettingsDialog()
+                    }
+                }
+            }
+        } else {
+            val granted = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                checkSelfPermission(Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_GRANTED ||
+                        checkSelfPermission(Manifest.permission.READ_MEDIA_VIDEO) == PackageManager.PERMISSION_GRANTED ||
+                        checkSelfPermission(Manifest.permission.READ_MEDIA_AUDIO) == PackageManager.PERMISSION_GRANTED
+            } else {
+                checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+            }
+
+            if (granted) {
+                loadMediaFiles()
                 shouldReload = false
+                hasOpenedSettingsOnce = false
+            } else {
+                if (hasOpenedSettingsOnce) {
+                    shouldReload = false
+                    hasOpenedSettingsOnce = false
+                    showPermissionSettingsDialog()
+                }
             }
         }
     }
@@ -95,18 +139,45 @@ class AlbumSelectActivity : AppCompatActivity() {
         permissionLauncher =
             registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
                 val allGranted = permissions.entries.all { it.value }
+
                 if (fileType.uppercase() == Constant.DOCUMENT) {
                     if (allGranted || (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R &&
                                 android.os.Environment.isExternalStorageManager())
                     ) {
                         loadDocumentsOrOpenPicker()
+                    } else {
+                        showPermissionSettingsDialog()
                     }
                 } else {
                     if (allGranted) {
                         loadMediaFiles()
+                    } else {
+                        showPermissionSettingsDialog()
                     }
                 }
             }
+    }
+
+    private fun showPermissionSettingsDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("Permission Required")
+            .setMessage("This feature requires storage permission. Please grant it in app settings.")
+            .setCancelable(false)
+            .setPositiveButton("Go to Settings") { _, _ ->
+                try {
+                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                        data = Uri.parse("package:$packageName")
+                    }
+                    startActivity(intent)
+                } catch (e: ActivityNotFoundException) {
+                    e.printStackTrace()
+                }
+            }
+            .setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+                finish()
+            }
+            .show()
     }
 
     private fun setupDocumentPicker() {
@@ -117,35 +188,38 @@ class AlbumSelectActivity : AppCompatActivity() {
                 }
             }
     }
-
     private fun checkAndRequestPermissionsForDocuments() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             if (android.os.Environment.isExternalStorageManager()) {
                 loadDocumentsOrOpenPicker()
             } else {
                 shouldReload = true
+                hasOpenedSettingsOnce = true
                 val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
                 intent.data = Uri.parse("package:$packageName")
-                startActivityForResult(intent, REQUEST_CODE_MANAGE_ALL_FILES)
+                startActivity(intent)
             }
         } else {
+            shouldReload = true
             permissionLauncher.launch(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE))
         }
     }
 
     private fun checkAndRequestPermissionsForMedia() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            permissionLauncher.launch(
+        shouldReload = true
+        permissionLauncher.launch(
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 arrayOf(
                     Manifest.permission.READ_MEDIA_IMAGES,
                     Manifest.permission.READ_MEDIA_VIDEO,
                     Manifest.permission.READ_MEDIA_AUDIO
                 )
-            )
-        } else {
-            permissionLauncher.launch(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE))
-        }
+            } else {
+                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
+            }
+        )
     }
+
 
     private fun loadMediaFiles() {
         val mediaList = when (fileType.uppercase()) {
@@ -256,17 +330,14 @@ class AlbumSelectActivity : AppCompatActivity() {
             "application/msword",
             "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
         )
-
         "ppt" -> listOf(
             "application/vnd.ms-powerpoint",
             "application/vnd.openxmlformats-officedocument.presentationml.presentation"
         )
-
         "xls" -> listOf(
             "application/vnd.ms-excel",
             "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         )
-
         "txt" -> listOf("text/plain")
         else -> emptyList()
     }
