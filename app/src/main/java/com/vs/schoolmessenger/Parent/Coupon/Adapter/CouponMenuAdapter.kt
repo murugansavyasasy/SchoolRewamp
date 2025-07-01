@@ -4,67 +4,74 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.facebook.shimmer.ShimmerFrameLayout
+import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponMenu.Category
 import com.vs.schoolmessenger.R
 
-class CouponMenuAdapter (
+class CouponMenuAdapter(
+    private val context: Context,
+    private val listener: OnCategoryClickListener?
+) : RecyclerView.Adapter<CouponMenuAdapter.ViewHolder>() {
 
-    private var context: Context,
-    private var isLoading: Boolean
-) : RecyclerView.Adapter<RecyclerView.ViewHolder> () {
-    private val TYPE_SHIMMER = 0
-    private val TYPE_DATA = 1
-
-
-    override fun getItemViewType(position: Int): Int {
-        return if (isLoading) TYPE_SHIMMER else TYPE_DATA
+    interface OnCategoryClickListener {
+        fun onCategoryClick(category: Category?)
     }
 
+    private var categoryList: MutableList<Category> = mutableListOf()
+    private var selectedPosition = RecyclerView.NO_POSITION
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return if (viewType == TYPE_SHIMMER) {
-            val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.shimmer_view_small_list, parent, false)
-            DataViewHolder.ShimmerViewHolder(view)
+    fun setData(newList: List<Category>) {
+        categoryList.clear()
+        categoryList.addAll(newList)
+        notifyDataSetChanged()
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view: View = LayoutInflater.from(context).inflate(R.layout.coupon_menu, parent, false)
+        return ViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val category = categoryList[position]
+        holder.textView.text = category.categoryName
+
+        if (category.drawableResId != -1) {
+            holder.imageView.setImageResource(category.drawableResId)
         } else {
-            val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.coupon_menu, parent, false)
-            DataViewHolder(view, context)
+            Glide.with(context)
+                .load(category.categoryImage)
+                .placeholder(R.drawable.allimage)
+                .into(holder.imageView)
+        }
+
+        if (position == selectedPosition) {
+            holder.imageView.setBackgroundResource(R.drawable.custom_coupon_rounded_background_click)
+            holder.textView.setTextColor(ContextCompat.getColor(context, R.color.gnt_blue))
+        } else {
+            holder.imageView.setBackgroundResource(R.drawable.custom_coupon_rounded_background)
+            holder.textView.setTextColor(ContextCompat.getColor(context, R.color.black))
+        }
+
+        holder.relativeLayout.setOnClickListener {
+            val previousSelected = selectedPosition
+            selectedPosition = holder.adapterPosition
+            notifyItemChanged(previousSelected)
+            notifyItemChanged(selectedPosition)
+            listener?.onCategoryClick(category)
         }
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is DataViewHolder) {
+    override fun getItemCount(): Int = categoryList.size
 
-
-
-        }
-    }
-
-
-    override fun getItemCount(): Int {
-        TODO("Not yet implemented")
-    }
-
-
-    class DataViewHolder(itemView: View, private val context: Context) :
-        RecyclerView.ViewHolder(itemView) {
-
-
-        fun bind(
-
-        ) {
-
-        }
-
-        class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-            private val shimmerLayout: ShimmerFrameLayout =
-                itemView.findViewById(R.id.shimmer_view_container)
-            init {
-                shimmerLayout.startShimmer()
-            }
-        }
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val imageView: ImageView = itemView.findViewById(R.id.imageView1)
+        val textView: TextView = itemView.findViewById(R.id.textView)
+        val relativeLayout: RelativeLayout = itemView.findViewById(R.id.relative_layout)
     }
 }

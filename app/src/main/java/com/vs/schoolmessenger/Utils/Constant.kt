@@ -143,6 +143,8 @@ object Constant {
     val M_ATTACHMENTS = 39
     val M_FINANCE = 194
 
+    val M_COUPON_PACKET = 40
+
     var SELECTED_SCHOOL_MENU = 0
     var SELECTED_PARENT_MENU = 0
 

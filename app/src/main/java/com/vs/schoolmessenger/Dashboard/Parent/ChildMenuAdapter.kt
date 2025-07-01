@@ -192,6 +192,10 @@ class ChildMenuAdapter(
                 Constant.M_CERTIFICATE_REQUEST -> {
                     imgMenu.setImageResource(R.drawable.certificate_request)
                 }
+
+                Constant.M_COUPON_PACKET -> {
+                    imgMenu.setImageResource(R.drawable.certificate_request)
+                }
             }
 
             rlaMenu.setOnClickListener {
