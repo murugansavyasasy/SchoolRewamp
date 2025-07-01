@@ -1351,7 +1351,11 @@ object Constant {
         promptInfo = BiometricPrompt.PromptInfo.Builder()
             .setTitle("Login with Fingerprint")
             .setSubtitle("Use your fingerprint to access the app")
-            .setNegativeButtonText("Cancel")
+            .setAllowedAuthenticators(
+                BiometricManager.Authenticators.BIOMETRIC_STRONG or
+                        BiometricManager.Authenticators.DEVICE_CREDENTIAL
+            )
+//            .setNegativeButtonText("Cancel")
             .build()
     }
      fun showEnrollDialog(activity: Activity) {
@@ -1366,7 +1370,7 @@ object Constant {
                 }
                 activity.startActivity(enrollIntent)
             }
-            .setNegativeButton("Cancel", null)
+//            .setNegativeButton("Cancel", null)
             .show()
     }
 }
