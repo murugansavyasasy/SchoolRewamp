@@ -1282,7 +1282,8 @@ object Constant {
      fun checkBiometricSupport(activity: Activity): Boolean {
         val biometricManager = BiometricManager.from(activity)
          var status = false
-         return when (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG)) {
+         return when (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG or
+                 BiometricManager.Authenticators.DEVICE_CREDENTIAL)) {
             BiometricManager.BIOMETRIC_SUCCESS -> {
                 val  fingerPrintEnabled = SharedPreference.isFingerprintEnabled(activity)
                 if(fingerPrintEnabled){
@@ -1341,6 +1342,28 @@ object Constant {
                     super.onAuthenticationError(errorCode, errString)
                     listener.onAuthenticate("Authentication error: $errString",false)
 //                    Toast.makeText(applicationContext, "Authentication error: $errString", Toast.LENGTH_SHORT).show()
+                    Log.d("errorCodeValue", errorCode.toString())
+                    when (errorCode) {
+                        BiometricPrompt.ERROR_LOCKOUT,
+                        BiometricPrompt.ERROR_LOCKOUT_PERMANENT -> {
+                            // Automatically redirect to passcode screen
+                        }
+                        BiometricPrompt.ERROR_USER_CANCELED ->{
+
+                            AlertDialog.Builder(activity)
+                                .setTitle("School Chimes is locked")
+                                .setMessage("Authentication is required to access the School Chimes")
+                                .setPositiveButton("Unlock now") { _, _ ->
+                                    authenticate(activity)
+                                }
+
+                                .show()
+
+                        }
+                        else -> {
+                            Toast.makeText(activity, "Authentication error: $errString", Toast.LENGTH_SHORT).show()
+                        }
+                    }
                 }
 
                 override fun onAuthenticationFailed() {
