@@ -103,7 +103,7 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
         Log.d("isAccessToken", isStaffDetails!!.access_token)
-        binding.toolbarLayout.lblParentToolBar.text = getString(R.string.MarkAttendance)
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
 

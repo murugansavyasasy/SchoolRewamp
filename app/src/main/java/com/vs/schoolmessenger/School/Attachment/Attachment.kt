@@ -87,7 +87,7 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
             )
         }
         isUserDetails = SharedPreference.getUserDetails(this)
-        binding.toolbarLayout.lblParentToolBar.text = getString(R.string.lblAttachment)
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
         if (isUserDetails!!.staff_details.size > 1) {
             isMultipleSchool = true
         } else {

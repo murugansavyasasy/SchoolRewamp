@@ -1,16 +1,18 @@
 package com.vs.schoolmessenger.Auth.MobilePasswordSignIn
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Paint
+import android.provider.Settings
 import android.text.InputType
+import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.biometric.BiometricPrompt
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
-import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.MobileNumber
 import com.vs.schoolmessenger.Auth.OTP.OTP
-import com.vs.schoolmessenger.Auth.Splash.Splash
 import com.vs.schoolmessenger.Dashboard.Combination.PrioritySelection
 import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.R
@@ -18,9 +20,10 @@ import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.Auth
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
+import com.vs.schoolmessenger.Utils.fingerPrintAunthenticateListener
 import com.vs.schoolmessenger.databinding.LoginBinding
 
-class Login : BaseActivity<LoginBinding>(), View.OnClickListener {
+class Login : BaseActivity<LoginBinding>(), View.OnClickListener, fingerPrintAunthenticateListener {
 
     private var isPasswordVisible = false
     override fun getViewBinding(): LoginBinding {
@@ -28,13 +31,30 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener {
     }
 
     var authViewModel: Auth? = null
+    private lateinit var biometricPrompt: BiometricPrompt
+    private lateinit var promptInfo: BiometricPrompt.PromptInfo
 
     override fun setupViews() {
         super.setupViews()
         binding.imgHide.setOnClickListener(this)
         binding.btnLoginContinue.setOnClickListener(this)
         binding.lblForgetPassword.setOnClickListener(this)
+        binding.rytFingerPrint.setOnClickListener(this)
         isToolBarWhiteTheme()
+
+        if (SharedPreference.isFingerprintEnabled(this)) {
+            if (SharedPreference.isLoggedIn(this)){
+                binding.rytFingerPrint.visibility = View.VISIBLE
+                Constant.setupBiometricPrompt(this,this)
+                Constant.authenticate(this)
+             }
+            else{
+                binding.rytFingerPrint.visibility = View.GONE
+            }
+        }
+        else{
+            binding.rytFingerPrint.visibility = View.GONE
+        }
 
         authViewModel = ViewModelProvider(this).get(Auth::class.java)
         authViewModel!!.init()
@@ -71,7 +91,7 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener {
                                 Constant.pageType = Constant.SignInScreen
                                 startActivity(intent)
                             } else {
-
+                                SharedPreference.setLoggedIn(this, true)
                                 if (Constant.user_data!![0].user_details.is_staff && Constant.user_data!![0].user_details.is_parent) {
                                     val intent = Intent(this@Login, PrioritySelection::class.java)
                                     startActivity(intent)
@@ -181,19 +201,19 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener {
         isPasswordVisible = !isPasswordVisible
     }
 
-    private fun isValidateUser() {
+    private fun isValidateUser(mobileNumber: String,password: String) {
         Constant.showLoading(this@Login)
         val jsonObject = JsonObject()
         val isSecureId = Constant.getAndroidSecureId(this@Login)
 
-        Constant.isMobileNumber = binding.txtMobileNumber.text.toString()
+        Constant.isMobileNumber = mobileNumber
         jsonObject.addProperty(
             APIKeyNames.Req_mobile_number,
-            binding.txtMobileNumber.text.toString()
+            mobileNumber
         )
         jsonObject.addProperty(APIKeyNames.Req_device_type, Constant.isDeviceType)
         jsonObject.addProperty(APIKeyNames.Req_secure_id, isSecureId)
-        jsonObject.addProperty(APIKeyNames.Req_password, binding.txtPassword.text.toString())
+        jsonObject.addProperty(APIKeyNames.Req_password, password)
 
         authViewModel!!.isValidateUser(jsonObject, this)
     }
@@ -207,7 +227,7 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener {
 
             R.id.btnLoginContinue -> {
                 if (isUserNamePasswordValidation()) {
-                    isValidateUser()
+                    isValidateUser(binding.txtMobileNumber.text.toString(), binding.txtPassword.text.toString())
                 }
             }
 
@@ -217,6 +237,12 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener {
                 } else {
                     Toast.makeText(this, R.string.EnterTheMobileNumber, Toast.LENGTH_SHORT).show()
                 }
+            }
+
+            R.id.rytFingerPrint -> {
+                Constant.setupBiometricPrompt(this,this)
+                Constant.authenticate(this)
+
             }
         }
     }
@@ -233,11 +259,25 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener {
         return isValidation
     }
 
+
     override fun onPause() {
         super.onPause()
     }
 
     override fun onResume() {
         super.onResume()
+    }
+
+    override fun onAuthenticate(message: String, status: Boolean) {
+        Log.d("athentication_status",message)
+        if(status){
+            //go to dashboard
+            val mobileNumber = SharedPreference.getMobileNumber(this)
+            val password = SharedPreference.getPassWord(this)
+            isValidateUser(mobileNumber!!,password!!)
+        }
+        else{
+//            Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+        }
     }
 }

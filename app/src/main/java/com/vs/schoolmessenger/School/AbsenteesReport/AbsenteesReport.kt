@@ -16,6 +16,7 @@ import com.vs.schoolmessenger.School.AbsenteesReport.Listener.AbsenteesDetailCli
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeData
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteesDetailData
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.ClassWise
+import com.vs.schoolmessenger.Utils.Constant
 
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.AbsenteesReportBinding
@@ -41,7 +42,7 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
         super.setupViews()
         setupToolbar()
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
-        binding.toolbarLayout.lblParentToolBar.text = "Absentees Report"
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
         isStaffDetails = SharedPreference.getStaffDetails(this)
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails?.school_name ?: ""

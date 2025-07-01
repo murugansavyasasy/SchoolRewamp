@@ -84,7 +84,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         childDetails = SharedPreference.getChildDetails(requireActivity())
         userDetails = SharedPreference.getUserDetails(requireActivity())
         val currentDate = Calendar.getInstance().time
-        val dateFormat = SimpleDateFormat("dd, MMM yyyy", Locale.ENGLISH)
+        val dateFormat = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
         val formattedDate = dateFormat.format(currentDate)
         binding.lblDate.text = formattedDate
         binding.lblStudentName.text = childDetails!!.name
@@ -92,6 +92,8 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         binding.lblSchoolAddress.text = childDetails!!.student_address
         binding.lblChangeRoll.paintFlags =
             binding.lblChangeRoll.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+
+        Constant.checkBiometricSupport(requireActivity())
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()

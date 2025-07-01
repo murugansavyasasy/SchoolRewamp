@@ -58,7 +58,7 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
         }
 
         binding.toolbarLayout.lblStudentName.text = isChildDetails!!.name
-        binding.toolbarLayout.lblParentToolBar.text = getString(R.string.Communication)
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isParentMenuName
         binding.toolbarLayout.lblStudentSection.text =
             isChildDetails.standard_name + " - " + isChildDetails.section_name
 

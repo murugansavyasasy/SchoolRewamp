@@ -199,6 +199,7 @@ class ChildMenuAdapter(
             }
 
             rlaMenu.setOnClickListener {
+                Constant.isParentMenuName=data.name
                 Constant.SELECTED_PARENT_MENU = data.id
                 listener.onClick(data)
             }

@@ -58,7 +58,7 @@ class FeeDetails : BaseActivity<FeeDetailsBinding>(), View.OnClickListener,Invoi
         isAccessToken = isChildDetails?.access_token
 
         binding.toolbarLayout.lblStudentName.text = isChildDetails!!.name
-        binding.toolbarLayout.lblParentToolBar.text = "Fee Details"
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isParentMenuName
         binding.toolbarLayout.lblStudentSection.text = isChildDetails!!.standard_name + " - " + isChildDetails!!.section_name
 
         appViewModel = ViewModelProvider(this)[App::class.java]

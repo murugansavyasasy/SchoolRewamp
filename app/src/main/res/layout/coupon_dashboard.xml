@@ -2,6 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:background="@drawable/dual_color_background">
 
     <ProgressBar
@@ -12,7 +13,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
         android:visibility="visible">
-
     </ProgressBar>
 
 

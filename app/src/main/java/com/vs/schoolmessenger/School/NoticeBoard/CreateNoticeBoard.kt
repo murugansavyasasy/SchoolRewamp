@@ -116,12 +116,17 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickL
 //        binding.lblEndDate.text = dayOnly
         binding.lblEndDay.text = dayOnly
 
-        binding.txtStartDate.text = customFormat
-        binding.txtEndDate.text = customFormat
+        txtStartDate = fullDate
+        txtEndDate = fullDate
+        val parts = txtStartDate!!.split(" ")
+        val Month = parts[1]
+        val Year=parts[2]
+        binding.txtStartDate.text= Month+" "+Year
+        binding.txtEndDate.text=Month+" "+Year
 
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
-        binding.toolbarLayout.lblParentToolBar.text = getString(R.string.NoticeBoard)
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
         binding.toolbarLayout.lblSchoolName.visibility = View.GONE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
         saveDrawableToCache(R.drawable.add_image)?.let {
@@ -332,10 +337,12 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickL
                 selectedDateField = 1
                 Constant.showDatePicker(this,false) { selectedDate ->
                     Log.d("selectedDate", selectedDate)
-                    binding.txtStartDate.text = Constant.covertDateFormate(selectedDate)
-                    val parts = binding.txtStartDate.text.split(" ")
+                    txtStartDate= Constant.covertDateFormate(selectedDate)
+                    val parts = txtStartDate!!.split(" ")
                     val day = parts[0]
-                    val Date = parts[1]
+                    val Month = parts[1]
+                    val Year=parts[2]
+                    binding.txtStartDate.text = Month+" "+Year
                     binding.lblDay.text = day
 //                    binding.lblDate.text = Date
                 }
@@ -345,10 +352,12 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickL
                 selectedDateField = 2
                 Constant.showDatePicker(this,false) { selectedDate ->
                     Log.d("selectedDate", selectedDate)
-                    binding.txtEndDate.text = Constant.covertDateFormate(selectedDate)
-                    val parts = binding.txtEndDate.text.split(" ")
+                    txtEndDate= Constant.covertDateFormate(selectedDate)
+                    val parts =txtEndDate!!.split(" ")
                     val day = parts[0]
-                    val Date = parts[1]
+                    val Month = parts[1]
+                    val Year=parts[2]
+                    binding.txtEndDate.text = Month+" "+Year
                     binding.lblEndDay.text = day
 //                    binding.lblEndDate.text = Date
                 }
@@ -618,8 +627,8 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickL
     private fun isRedirectToSchoolList() {
         val title = binding.txtTitle.text.toString().trim()
         val description = binding.txtDesc.text.toString().trim()
-        val txtEndDate = Constant.convertDateFormat(binding.txtEndDate.text.toString())
-        val txtStartDate = Constant.convertDateFormat(binding.txtStartDate.text.toString())
+        val txtEndDate = Constant.convertDateFormat(txtEndDate!!)
+        val txtStartDate = Constant.convertDateFormat(txtStartDate!!)
         if (title.isEmpty()) {
             binding.txtTitle.error = getString(R.string.Title_required)
             binding.txtTitle.requestFocus()
