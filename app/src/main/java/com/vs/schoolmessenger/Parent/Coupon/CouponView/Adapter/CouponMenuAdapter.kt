@@ -15,35 +15,32 @@ import com.vs.schoolmessenger.R
 
 class CouponMenuAdapter(
     private val context: Context,
-    categoryList: MutableList<Category>,
-    initiallySelectedPosition: Int,
-    listener: OnCategoryClickListener?
-) : RecyclerView.Adapter<CouponMenuAdapter.ViewHolder?>() {
+    private val listener: OnCategoryClickListener?
+) : RecyclerView.Adapter<CouponMenuAdapter.ViewHolder>() {
+
     interface OnCategoryClickListener {
         fun onCategoryClick(category: Category?)
     }
 
-    private val categoryList: MutableList<Category>
-    private val listener: OnCategoryClickListener?
+    private val categoryList: MutableList<Category> = mutableListOf()
     private var selectedPosition = RecyclerView.NO_POSITION
 
-    init {
-        this.categoryList = categoryList
-        this.listener = listener
-        this.selectedPosition = initiallySelectedPosition
+    fun setData(newList: List<Category>) {
+        categoryList.clear()
+        categoryList.addAll(newList)
+        notifyDataSetChanged()
     }
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view: View = LayoutInflater.from(context).inflate(R.layout.coupon_menu, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.coupon_menu, parent, false)
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val category: Category = categoryList.get(position)
-        holder.textView.setText(category.categoryName)
+        val category = categoryList[position]
+        holder.textView.text = category.categoryName
 
-        if (category.drawableResId !== -1) {
+        if (category.drawableResId != -1) {
             holder.imageView.setImageResource(category.drawableResId)
         } else {
             Glide.with(context)
@@ -60,31 +57,20 @@ class CouponMenuAdapter(
             holder.textView.setTextColor(ContextCompat.getColor(context, R.color.black))
         }
 
-        holder.relative_layout.setOnClickListener(View.OnClickListener { v: View? ->
-            val previousSelected = selectedPosition
-            selectedPosition = holder.getAdapterPosition()
-            notifyItemChanged(previousSelected)
+        holder.relativeLayout.setOnClickListener {
+            val previous = selectedPosition
+            selectedPosition = holder.adapterPosition
+            notifyItemChanged(previous)
             notifyItemChanged(selectedPosition)
-            if (listener != null) {
-                listener.onCategoryClick(category)
-            }
-        })
+            listener?.onCategoryClick(category)
+        }
     }
 
-
-    override fun getItemCount(): Int {
-        return categoryList.size
-    }
+    override fun getItemCount(): Int = categoryList.size
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var imageView: ImageView
-        var textView: TextView
-        var relative_layout: RelativeLayout
-
-        init {
-            imageView = itemView.findViewById<ImageView?>(R.id.imageView1)
-            textView = itemView.findViewById<TextView?>(R.id.textView)
-            relative_layout = itemView.findViewById<RelativeLayout?>(R.id.relative_layout)
-        }
+        val imageView: ImageView = itemView.findViewById(R.id.imageView1)
+        val textView: TextView = itemView.findViewById(R.id.textView)
+        val relativeLayout: RelativeLayout = itemView.findViewById(R.id.relative_layout)
     }
 }

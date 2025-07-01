@@ -3,7 +3,7 @@ package com.vs.schoolmessenger.Parent.Coupon.CouponModel.TicketActivateCoupon
 import com.google.gson.annotations.SerializedName
 
 class ActivateCouponData {
-    // Getters for all fields
+
     @SerializedName("coupons")
     val coupons: MutableList<ActivateCoupon?>? = null
 

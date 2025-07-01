@@ -34,6 +34,7 @@ import com.vs.schoolmessenger.Parent.Attachment.Attachment
 import com.vs.schoolmessenger.Parent.Attendance.AttendanceReport
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificateRequest
 import com.vs.schoolmessenger.Parent.Communication.CommunicationParent
+import com.vs.schoolmessenger.Parent.Coupon.CouponView.CouponDashboard.CouponMainClassActivity
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Event
 import com.vs.schoolmessenger.Parent.FeeDetails.FeeDetails
 import com.vs.schoolmessenger.Parent.Homework.HomeWork
@@ -338,6 +339,13 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 requireActivity(),
                 CertificateRequest::class.java
             )
+
+            Constant.M_COUPON_PACKET -> Intent(
+                requireActivity(),
+                CouponMainClassActivity::class.java
+            )
+
+
 
             else -> null
         }
