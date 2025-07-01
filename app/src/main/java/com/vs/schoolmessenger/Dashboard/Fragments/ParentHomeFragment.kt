@@ -92,6 +92,8 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         binding.lblChangeRoll.paintFlags =
             binding.lblChangeRoll.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
+        Constant.checkBiometricSupport(requireActivity())
+
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
 //        isDashBoardData()

@@ -98,6 +98,8 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         appViewModel!!.init()
         binding.changeroll.paintFlags = binding.changeroll.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
+        Constant.checkBiometricSupport(requireActivity())
+
         userDetails = SharedPreference.getUserDetails(requireActivity())
         staffDetails = SharedPreference.getStaffDetails(requireActivity())
         Log.d("school_logo", staffDetails!!.school_logo)

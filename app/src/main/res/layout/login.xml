@@ -193,6 +193,35 @@
                         android:text="@string/logintext"
                         android:textColor="@color/white"
                         android:textSize="@dimen/fifteen_sp" />
+                    
+                    <RelativeLayout
+                        android:id="@+id/rytFingerPrint"
+                        android:visibility="gone"
+                        android:layout_marginTop="@dimen/ten"
+                        android:layout_below="@+id/btnLoginContinue"
+                        android:layout_centerVertical="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        
+                        <ImageView
+                            android:id="@+id/imgFingerPrint"
+                            android:layout_width="@dimen/fourty"
+                            android:layout_height="@dimen/fourty"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/ic_fingerprint"/>
+
+                        <TextView
+                            android:layout_marginStart="@dimen/ten"
+                            android:layout_toEndOf="@+id/imgFingerPrint"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/thirteen_sp"
+                            android:layout_centerVertical="true"
+                            android:textColor="@color/black"
+                            android:text="Use Fingerprint or Mobile Number to login"/>
+                        
+                    </RelativeLayout>
 
 
                 </RelativeLayout>

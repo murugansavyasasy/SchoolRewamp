@@ -74,6 +74,7 @@ class PassWord : BaseActivity<PassWordBinding>(), View.OnClickListener {
                             Constant.pageType = Constant.PasswordScreen
                             startActivity(intent)
                         } else {
+                            SharedPreference.setLoggedIn(this, true)
                             if (Constant.user_data!![0].user_details.is_staff && Constant.user_data!![0].user_details.is_parent) {
                                 val intent = Intent(this@PassWord, PrioritySelection::class.java)
                                 startActivity(intent)
