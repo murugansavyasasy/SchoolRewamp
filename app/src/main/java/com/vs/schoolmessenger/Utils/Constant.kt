@@ -33,6 +33,7 @@ import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.GridView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
@@ -1288,6 +1289,7 @@ object Constant {
                     data = Uri.fromParts("package", packageName, null)
                 }
                 activity.startActivity(intent)
+
             }.setCancelable(false).show()
     }
 
@@ -1360,6 +1362,34 @@ object Constant {
                     super.onAuthenticationError(errorCode, errString)
                     listener.onAuthenticate("Authentication error: $errString", false)
 //                    Toast.makeText(applicationContext, "Authentication error: $errString", Toast.LENGTH_SHORT).show()
+                    Log.d("errorCodeValue", errorCode.toString())
+                    when (errorCode) {
+                        BiometricPrompt.ERROR_LOCKOUT,
+                        BiometricPrompt.ERROR_LOCKOUT_PERMANENT -> {
+                            // Automatically redirect to passcode screen
+                        }
+
+                        BiometricPrompt.ERROR_USER_CANCELED -> {
+
+                            AlertDialog.Builder(activity)
+                                .setTitle("School Chimes is locked")
+                                .setMessage("Authentication is required to access the School Chimes")
+                                .setPositiveButton("Unlock now") { _, _ ->
+                                    authenticate(activity)
+                                }
+
+                                .show()
+
+                        }
+
+                        else -> {
+                            Toast.makeText(
+                                activity,
+                                "Authentication error: $errString",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
                 }
 
                 override fun onAuthenticationFailed() {
