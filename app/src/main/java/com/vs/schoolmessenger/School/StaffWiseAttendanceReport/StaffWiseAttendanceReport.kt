@@ -70,8 +70,7 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
         binding.btnCreate.setOnClickListener(this)
         binding.btnHistory.setOnClickListener(this)
 //        binding.rlaStaff.setOnClickListener(this)
-        binding.toolbarLayout.lblParentToolBar.text =
-            getString(R.string.Staffwise_Attendance_Report)
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
         getStaffAttendanceReport(Constant.getCurrentDate(), "", "")

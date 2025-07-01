@@ -36,7 +36,7 @@ class HomeWork : BaseActivity<HomeWorkParentBinding>(), View.OnClickListener,
         val childDetails = SharedPreference.getChildDetails(this)
         isAccessToken = childDetails?.access_token
 
-        binding.toolbarLayout.lblParentToolBar.text = getString(R.string.HomeWork)
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isParentMenuName
         binding.toolbarLayout.lblStudentName.text = childDetails?.name
         binding.toolbarLayout.lblStudentSection.text =
             childDetails?.standard_name+ " - " +childDetails?.section_name

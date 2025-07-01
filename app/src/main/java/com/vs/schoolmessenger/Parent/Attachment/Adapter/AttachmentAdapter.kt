@@ -225,8 +225,6 @@ class AttachmentAdapter(
                         }
                     }, context, Constant.isShimmerViewDisable
                 )
-
-
                 indicator.attachToRecyclerView(rcyImgPDF)
             }
         }

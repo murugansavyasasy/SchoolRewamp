@@ -71,6 +71,12 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         binding.lnrChangePassword.setOnClickListener(this)
         binding.lnrSignalCheck.setOnClickListener(this)
 
+        binding.switchFingerprint.isChecked = SharedPreference.isFingerprintEnabled(requireActivity())
+        binding.switchFingerprint.setOnCheckedChangeListener { _, isChecked ->
+            SharedPreference.setFingerprintEnabled(requireActivity(), isChecked)
+            Toast.makeText(requireActivity(), "Fingerprint login ${if (isChecked) "enabled" else "disabled"}", Toast.LENGTH_SHORT).show()
+        }
+
         if (Constant.isParentChoose) {
             binding.rlaLblSettings.setBackgroundResource(com.vs.schoolmessenger.R.drawable.gradient_theme_parent)
         } else {
@@ -147,8 +153,10 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         }
 
         rlaLogout.setOnClickListener {
-            SharedPreference.putMobileNumberPassWord(requireActivity(), "", "")
+//            SharedPreference.putMobileNumberPassWord(requireActivity(), "", "")
             SharedPreference.putLogout(requireActivity(), true)
+//            SharedPreference.setLoggedIn(requireActivity(), false)
+//            SharedPreference.setFingerprintEnabled(requireActivity(), false)
             startActivity(Intent(requireActivity(), Login::class.java))
         }
 

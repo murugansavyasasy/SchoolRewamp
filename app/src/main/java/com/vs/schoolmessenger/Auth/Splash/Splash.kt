@@ -46,6 +46,7 @@ import com.vs.schoolmessenger.Utils.AppSignatureHelper
 import com.vs.schoolmessenger.Utils.ChangeLanguage
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
+import com.vs.schoolmessenger.Utils.fingerPrintAunthenticateListener
 import com.vs.schoolmessenger.databinding.SplashBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -53,7 +54,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 
-class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
+class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
+    fingerPrintAunthenticateListener {
 
     override fun attachBaseContext(newBase: Context) {
         val savedLanguage = ChangeLanguage.getPersistedLanguage(newBase)
@@ -139,6 +141,7 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
                             Constant.pageType = Constant.SplashScreen
                             startActivity(intent)
                         } else {
+                            SharedPreference.setLoggedIn(this, true)
                             SharedPreference.putMobileNumberPassWord(
                                 this@Splash,
                                 mobile_number,
@@ -332,7 +335,19 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
         Log.d("mobile_number", mobile_number.toString())
         Log.d("password", password.toString())
         if (!mobile_number.equals("") && !password.equals("")) {
-            isValidateUser()
+            //isValidateUser()
+            if (SharedPreference.isFingerprintEnabled(this)) {
+                if (SharedPreference.isLoggedIn(this)){
+                    Constant.setupBiometricPrompt(this,this)
+                    Constant.authenticate(this)
+                }
+                else{
+                    isValidateUser()
+                }
+            }
+            else{
+                isValidateUser()
+            }
         } else {
             val isLogout = SharedPreference.getLogout(this)
             if (isLogout!!) {
@@ -490,5 +505,16 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener {
         }
         alertDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         alertDialog.show()
+    }
+
+    override fun onAuthenticate(message: String, status: Boolean) {
+        Log.d("athentication_status",message)
+        if(status){
+            //go to dashboard
+            isValidateUser()
+        }
+        else{
+//            Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+        }
     }
 }

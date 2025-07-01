@@ -210,6 +210,7 @@ class SchoolMenuAdapter(
             }
 
             rlaMenu.setOnClickListener {
+                Constant.isSchoolMenuName=data.name
                 Constant.SELECTED_SCHOOL_MENU = data.id
                 listener.onClick(data)
 

@@ -73,7 +73,7 @@ class PasswordGeneration : BaseActivity<PasswordGenerationBinding>(), View.OnCli
                         Constant.isMobileNumber,
                         binding.txtConfirmPassword.text.toString()
                     )
-
+                    SharedPreference.setLoggedIn(this, true)
                     if (Constant.user_data!![0].user_details.is_staff && Constant.user_data!![0].user_details.is_parent) {
                         val intent = Intent(this@PasswordGeneration, PrioritySelection::class.java)
                         startActivity(intent)

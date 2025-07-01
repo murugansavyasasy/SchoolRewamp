@@ -117,6 +117,8 @@ class LessonPlanPicChartAdapter(
             lblStaffName.text = data.staff_name.orEmpty()
             lblStatus.text = "Items Completed: ${data.items_completed}"
 
+            val itemscompleted = data.items_completed
+
             val percentage = data.percentage_value
             customPieChart.setProgress(data.percentage_value)
 
@@ -136,14 +138,14 @@ class LessonPlanPicChartAdapter(
                 lblView.setBackgroundColor(ContextCompat.getColor(context, R.color.light_orange4))
             }
 
-            imgPunchHistory.visibility = if (percentage == 0) {
+            imgPunchHistory.visibility = if (itemscompleted == "0 / 0") {
                 View.INVISIBLE
             } else {
                 View.VISIBLE
             }
 
             totalrelative_layout.setOnClickListener {
-                if (percentage == 0) {
+                if (itemscompleted == "0 / 0") {
                     Log.d("Listener Status", "The percentage value is zero")
                 } else {
                     listener.onItem(data, requestType)

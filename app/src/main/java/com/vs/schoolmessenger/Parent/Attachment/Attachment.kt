@@ -46,7 +46,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
         binding.seeMoreLabel.setOnClickListener(this)
         binding.imgFilter.setOnClickListener(this)
         binding.toolbarLayout.lblStudentName.text = childDetails?.name
-        binding.toolbarLayout.lblParentToolBar.text = getString(R.string.lblAttachment)
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isParentMenuName
         binding.toolbarLayout.lblStudentSection.text =
             childDetails?.standard_name + " - " + childDetails?.section_name
         binding.linearlayout1.visibility = View.VISIBLE

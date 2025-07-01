@@ -192,10 +192,14 @@ class ChildMenuAdapter(
                 Constant.M_CERTIFICATE_REQUEST -> {
                     imgMenu.setImageResource(R.drawable.certificate_request)
                 }
+
+                Constant.M_COUPON_PACKET -> {
+                    imgMenu.setImageResource(R.drawable.certificate_request)
+                }
             }
 
             rlaMenu.setOnClickListener {
-                Constant.isParentMenuName = data.name
+                Constant.isParentMenuName=data.name
                 Constant.SELECTED_PARENT_MENU = data.id
                 listener.onClick(data)
             }

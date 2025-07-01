@@ -86,7 +86,7 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
                             val intent = Intent(this@OTP, PassWord::class.java)
                             startActivity(intent)
                         } else {
-
+                            SharedPreference.setLoggedIn(this, true)
                             if (Constant.user_data!![0].user_details.is_staff && Constant.user_data!![0].user_details.is_parent) {
                                 val intent = Intent(this@OTP, PrioritySelection::class.java)
                                 startActivity(intent)

@@ -2,6 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:background="@drawable/dual_color_background">
 
     <ProgressBar
@@ -12,7 +13,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
         android:visibility="visible">
-
     </ProgressBar>
 
 
@@ -193,7 +193,7 @@
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/bottomlnrtab"
+        android:layout_above="@+id/bottomcouponlayout"
         android:layout_below="@+id/text_view"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
@@ -203,7 +203,9 @@
         android:scrollIndicators="none"
         android:scrollbars="vertical" />
 
-    <include layout="@layout/bottom_coupon" />
+    <include
+        android:id="@+id/bottomcouponlayout"
+        layout="@layout/bottom_coupon" />
 
     <TextView
         android:id="@+id/lblNoRecord"
@@ -220,6 +222,7 @@
 
     </TextView>
 
-    <include layout="@layout/bottom_coupon" />
+
+
 
 </RelativeLayout>

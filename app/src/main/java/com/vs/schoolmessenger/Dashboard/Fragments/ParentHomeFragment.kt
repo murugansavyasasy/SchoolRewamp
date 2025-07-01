@@ -34,6 +34,7 @@ import com.vs.schoolmessenger.Parent.Attachment.Attachment
 import com.vs.schoolmessenger.Parent.Attendance.AttendanceReport
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificateRequest
 import com.vs.schoolmessenger.Parent.Communication.CommunicationParent
+import com.vs.schoolmessenger.Parent.Coupon.CouponView.CouponDashboard.CouponMainClassActivity
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Event
 import com.vs.schoolmessenger.Parent.FeeDetails.FeeDetails
 import com.vs.schoolmessenger.Parent.Homework.HomeWork
@@ -83,7 +84,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         childDetails = SharedPreference.getChildDetails(requireActivity())
         userDetails = SharedPreference.getUserDetails(requireActivity())
         val currentDate = Calendar.getInstance().time
-        val dateFormat = SimpleDateFormat("dd, MMM yyyy", Locale.ENGLISH)
+        val dateFormat = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
         val formattedDate = dateFormat.format(currentDate)
         binding.lblDate.text = formattedDate
         binding.lblStudentName.text = childDetails!!.name
@@ -91,6 +92,8 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         binding.lblSchoolAddress.text = childDetails!!.student_address
         binding.lblChangeRoll.paintFlags =
             binding.lblChangeRoll.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+
+        Constant.checkBiometricSupport(requireActivity())
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
@@ -338,6 +341,13 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 requireActivity(),
                 CertificateRequest::class.java
             )
+
+            Constant.M_COUPON_PACKET -> Intent(
+                requireActivity(),
+                CouponMainClassActivity::class.java
+            )
+
+
 
             else -> null
         }

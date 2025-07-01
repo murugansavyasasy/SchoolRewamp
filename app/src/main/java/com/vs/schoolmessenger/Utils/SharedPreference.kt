@@ -26,8 +26,81 @@ object SharedPreference {
     private const val SH_BASEURL = "isBaseUrl"
     private const val SH_BIOMETRIC_ENABLED = "isBiometricEnabled"
     private const val SH_BIOMETRIC_SKIP = "isBiometricSkip"
+    private const val KEY_FINGERPRINT_ENABLED = "fingerprint_enabled"
+    private const val KEY_LOGGED_IN = "logged_in"
+    private const val KEY_FINGER_PRINT_SKIPPED = "finger_print_skipped"
+
 
     val masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
+
+
+    fun setFingerprintEnabled(activity: Activity, enabled: Boolean) {
+        val sharedPreferences = EncryptedSharedPreferences.create(
+            SH_PREF,
+            masterKeyAlias,
+            activity,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
+        sharedPreferences.edit() { putBoolean(KEY_FINGERPRINT_ENABLED, enabled) }
+    }
+
+    fun isFingerprintEnabled(activity: Activity): Boolean {
+        val sharedPreferences = EncryptedSharedPreferences.create(
+            SH_PREF,
+            masterKeyAlias,
+            activity,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
+        return sharedPreferences.getBoolean(KEY_FINGERPRINT_ENABLED, false)
+    }
+
+    fun setLoggedIn(activity: Activity, loggedIn: Boolean) {
+
+        val sharedPreferences = EncryptedSharedPreferences.create(
+            SH_PREF,
+            masterKeyAlias,
+            activity,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
+        sharedPreferences.edit() { putBoolean(KEY_LOGGED_IN, loggedIn) }
+    }
+
+    fun isLoggedIn(activity: Activity): Boolean {
+        val sharedPreferences = EncryptedSharedPreferences.create(
+            SH_PREF,
+            masterKeyAlias,
+            activity,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
+        return sharedPreferences.getBoolean(KEY_LOGGED_IN, false)
+    }
+
+
+    fun setFingerPrintSkipped(activity: Activity, loggedIn: Boolean) {
+        val sharedPreferences = EncryptedSharedPreferences.create(
+            SH_PREF,
+            masterKeyAlias,
+            activity,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
+        sharedPreferences.edit() { putBoolean(KEY_FINGER_PRINT_SKIPPED, loggedIn) }
+    }
+
+    fun isFingerPrintSkipped(activity: Activity): Boolean {
+        val sharedPreferences = EncryptedSharedPreferences.create(
+            SH_PREF,
+            masterKeyAlias,
+            activity,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
+        return sharedPreferences.getBoolean(KEY_FINGER_PRINT_SKIPPED, false)
+    }
 
     fun putMobileNumberPassWord(activity: Activity, isMobileNumber: String?, isPassWord: String?) {
         val sharedPreferences = EncryptedSharedPreferences.create(

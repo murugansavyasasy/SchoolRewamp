@@ -30,7 +30,7 @@ class AttendanceReport : BaseActivity<AttendanceReportParentBinding>(), View.OnC
 
         // Toolbar setup
         binding.toolbarLayout.imgBack.setOnClickListener(this)
-        binding.toolbarLayout.lblParentToolBar.text = getString(R.string.AttendanceReport)
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isParentMenuName
         binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
 
 
