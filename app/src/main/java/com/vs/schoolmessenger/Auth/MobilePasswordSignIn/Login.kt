@@ -32,6 +32,9 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener, fingerPrintAun
     private lateinit var biometricPrompt: BiometricPrompt
     private lateinit var promptInfo: BiometricPrompt.PromptInfo
 
+    var mobile_number : String? = ""
+    var password : String? = ""
+
     override fun setupViews() {
         super.setupViews()
         binding.imgHide.setOnClickListener(this)
@@ -76,8 +79,8 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener, fingerPrintAun
 
                     SharedPreference.putMobileNumberPassWord(
                         this@Login,
-                        binding.txtMobileNumber.text.toString(),
-                        binding.txtPassword.text.toString()
+                        mobile_number,
+                        password
                     )
 
                     if (Constant.user_data!![0].is_number_exists) {
@@ -221,8 +224,10 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener, fingerPrintAun
 
             R.id.btnLoginContinue -> {
                 if (isUserNamePasswordValidation()) {
+                    mobile_number =  binding.txtMobileNumber.text.toString()
+                    password =  binding.txtPassword.text.toString()
                     isValidateUser(
-                        binding.txtMobileNumber.text.toString(), binding.txtPassword.text.toString()
+                        mobile_number!!, password!!
                     )
                 }
             }
@@ -269,10 +274,11 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener, fingerPrintAun
         Log.d("athentication_status", message)
         if (status) {
             //go to dashboard
-            val mobileNumber = SharedPreference.getMobileNumber(this)
-            val password = SharedPreference.getPassWord(this)
-            isValidateUser(mobileNumber!!, password!!)
-        } else {
+            mobile_number = SharedPreference.getMobileNumber(this)
+            password = SharedPreference.getPassWord(this)
+            isValidateUser(mobile_number!!, password!!)
+        }
+        else {
 //            Toast.makeText(this, message, Toast.LENGTH_LONG).show()
         }
     }
