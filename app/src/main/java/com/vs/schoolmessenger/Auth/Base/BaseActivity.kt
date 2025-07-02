@@ -1,6 +1,5 @@
 package com.vs.schoolmessenger.Auth.Base
 
-import CustomDatePickerDialog
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.AnimatorSet
@@ -12,15 +11,18 @@ import android.app.DatePickerDialog
 import android.app.Dialog
 import android.app.TimePickerDialog
 import android.content.Context
+import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.PorterDuff
+import android.graphics.Typeface
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -740,17 +742,6 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         datePickerDialog.show()
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun showCustomDatePickerDialog(
-        fragmentManager: FragmentManager,
-        listener: OnDateSelectedListener
-    ) {
-        val dialog = CustomDatePickerDialog { selectedDate: LocalDate ->
-            val formattedDate = selectedDate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.getDefault()))
-            listener.onDateSelected(formattedDate)
-        }
-        dialog.show(fragmentManager, "CustomDatePickerDialog")
-    }
 
 
     //Homework report sender
@@ -792,7 +783,6 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
         datePickerDialog.show()
     }
-
 
 
 

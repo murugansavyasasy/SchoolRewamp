@@ -46,6 +46,7 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
 
 
         userDetails = SharedPreference.getUserDetails(this@PrioritySelection)
+        Constant.checkBiometricSupport(this)
 
         val isStaff = userDetails?.is_staff == true
         val isParent = userDetails?.is_parent == true
@@ -190,8 +191,10 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
         }
 
         rlaLogout.setOnClickListener {
-            SharedPreference.putMobileNumberPassWord(this, "", "")
+//            SharedPreference.putMobileNumberPassWord(this, "", "")
             SharedPreference.putLogout(this, true)
+//            SharedPreference.setLoggedIn(this, false)
+//            SharedPreference.setFingerprintEnabled(this, false)
             val intent = Intent(this, Login::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)

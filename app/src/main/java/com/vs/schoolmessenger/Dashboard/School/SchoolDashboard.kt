@@ -1,17 +1,18 @@
 package com.vs.schoolmessenger.Dashboard.School
 
+import android.Manifest
 import android.content.Context
-import android.content.Intent
-import android.os.Build
+import android.content.pm.PackageManager
 import android.util.Log
 import android.view.View
-import android.view.WindowManager
-import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
-import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.Login
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
@@ -31,6 +32,9 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
         val context = ChangeLanguage.setLocale(newBase, savedLanguage)
         super.attachBaseContext(context)
     }
+    private lateinit var contactPermissionLauncher: ActivityResultLauncher<String>
+
+
 
     var authViewModel: Auth? = null
     private var appViewModel: App? = null
@@ -101,6 +105,14 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
                   isAcademicYearList = data
             }
         }
+
+        contactPermissionLauncher =
+            registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+                Log.d("Permission", "Contact granted: $isGranted")
+
+            }
+        requestContactPermission()
+
         isGetAcademicYear()
     }
 
@@ -108,6 +120,33 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
         appViewModel!!.isGetAcademicYear(access_token, this)
 
     }
+
+    private fun requestContactPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS)
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+            // Show rationale if user previously denied
+            if (ActivityCompat.shouldShowRequestPermissionRationale(
+                    this,
+                    Manifest.permission.READ_CONTACTS
+                )
+            ) {
+                Constant.showNotificationPermissionDialog(
+                    packageName,
+                    this,
+                    "Contact Permission Required",
+                    "This app needs access to your contacts to function properly."
+                )
+
+            } else {
+                // No rationale needed, ask directly
+                contactPermissionLauncher.launch(Manifest.permission.READ_CONTACTS)
+            }
+        } else {
+
+        }
+    }
+
 
     private fun isUpdateDeviceToken(token: String) {
         val jsonObject = JsonObject()

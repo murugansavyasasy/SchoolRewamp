@@ -75,6 +75,7 @@ class HomeWorkReportAdapter(
 
         private val rlaImageReport: RelativeLayout = itemView.findViewById(R.id.rlaImageReport)
         private val lblDateImage: TextView = itemView.findViewById(R.id.lblDateImage)
+        private val lblTimeImage: TextView = itemView.findViewById(R.id.lblTimeImage)
         private val lblTitleImage: TextView = itemView.findViewById(R.id.lblTitleImage)
         private val lblContentImage: TextView = itemView.findViewById(R.id.lblContentImage)
         private val rcyImgPDF: RecyclerView = itemView.findViewById(R.id.rcyImgPDF)
@@ -93,6 +94,7 @@ class HomeWorkReportAdapter(
             listener: HomeWorkReportClickListener,
             adapterContext: Context
         ) {
+            lblTimeImage.visibility=View.GONE
             rlaImageReport.visibility = View.VISIBLE
             LblHWSubjectName.text = data.subject_name
             lblTitleImage.text = data.title

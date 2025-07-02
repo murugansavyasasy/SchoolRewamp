@@ -18,17 +18,5 @@ class InteractionWithStaff : BaseActivity<IntectionWithStaffBinding>() {
     override fun setupViews() {
         super.setupViews()
         setupToolbar()
-        binding.Btn.setOnClickListener {
-            showCustomDatePickerDialog(supportFragmentManager, object : OnDateSelectedListener {
-                override fun onDateSelected(date: String) {
-                    binding.SelDate.text = date
-// Handle selected date (e.g., update UI)
-                    Toast.makeText(this@InteractionWithStaff, "Selected: $date", Toast.LENGTH_SHORT)
-                        .show()
-                }
-            })
-        }
     }
-
-
 }

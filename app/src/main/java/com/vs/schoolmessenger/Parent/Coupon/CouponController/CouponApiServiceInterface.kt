@@ -15,12 +15,15 @@ import retrofit2.http.POST
 import retrofit2.http.Query
 import retrofit2.http.QueryMap
 
+
 interface CouponAPIServiceInterface {
     @GET("get_category_list")
     fun getCategories(
-        @Header("Partner-Name") parentName: String?,
-        @Header("api-key") apiKey: String?
-    ): Call<CouponMenuResponse?>?
+        @Header("Partner-Name") parentName: String,
+        @Header("api-key") apiKey: String
+    ): Call<CouponMenuResponse>
+
+
 
     @POST("get_campaigns")
     fun getCoupons(

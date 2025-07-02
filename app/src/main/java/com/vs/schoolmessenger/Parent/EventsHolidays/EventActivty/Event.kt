@@ -37,7 +37,7 @@ class Event : BaseActivity<EventParentBinding>(), View.OnClickListener, EventCli
     override fun setupViews() {
         super.setupViews()
         setUpGradientParent()
-        appViewModel = ViewModelProvider(this).get(App::class.java)
+        appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel?.init()
 
         val isChildDetails = SharedPreference.getChildDetails(this)
@@ -52,7 +52,7 @@ class Event : BaseActivity<EventParentBinding>(), View.OnClickListener, EventCli
         binding.toolbarLayout.lblRightSideBar.text = resources.getText(R.string.Event)
         binding.toolbarLayout.lblStudentName.text = isChildDetails?.name
         binding.toolbarLayout.lblStudentSection.text =
-            "${isChildDetails?.standard_name} ${isChildDetails?.section_name}"
+            isChildDetails?.standard_name + " - " + isChildDetails?.section_name
 
         loadeventdata()
 
@@ -90,7 +90,7 @@ class Event : BaseActivity<EventParentBinding>(), View.OnClickListener, EventCli
                 binding.toolbarLayout.rytSearch.visibility = View.GONE
                 binding.nomessage.visibility = View.VISIBLE
                 binding.txtNoData.visibility = View.VISIBLE
-                binding.txtNoData.text = response?.message ?: "No data found"
+                binding.txtNoData.text = response?.message ?: getString(R.string.no_data_found)
             }
         }
 
@@ -107,7 +107,7 @@ class Event : BaseActivity<EventParentBinding>(), View.OnClickListener, EventCli
                 binding.toolbarLayout.rytSearch.visibility = View.GONE
                 binding.nomessage.visibility = View.VISIBLE
                 binding.txtNoData.visibility = View.VISIBLE
-                binding.txtNoData.text = response?.message ?: "No data found"
+                binding.txtNoData.text = response?.message ?: getString(R.string.no_data_found)
             }
         }
 
