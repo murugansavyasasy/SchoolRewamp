@@ -29,10 +29,33 @@ object SharedPreference {
     private const val KEY_FINGERPRINT_ENABLED = "fingerprint_enabled"
     private const val KEY_LOGGED_IN = "logged_in"
     private const val KEY_FINGER_PRINT_SKIPPED = "finger_print_skipped"
+    private const val KEY_FINGER_PRINT_SETUP_SKIP = "finger_print_setup_skip"
 
 
     val masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
 
+
+    fun setFingerPrintSetupSkip(activity: Activity, enabled: Boolean) {
+        val sharedPreferences = EncryptedSharedPreferences.create(
+            SH_PREF,
+            masterKeyAlias,
+            activity,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
+        sharedPreferences.edit() { putBoolean(KEY_FINGER_PRINT_SETUP_SKIP, enabled) }
+    }
+
+    fun isFingerprintSetupSkip(activity: Activity): Boolean {
+        val sharedPreferences = EncryptedSharedPreferences.create(
+            SH_PREF,
+            masterKeyAlias,
+            activity,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
+        return sharedPreferences.getBoolean(KEY_FINGER_PRINT_SETUP_SKIP, false)
+    }
 
     fun setFingerprintEnabled(activity: Activity, enabled: Boolean) {
         val sharedPreferences = EncryptedSharedPreferences.create(

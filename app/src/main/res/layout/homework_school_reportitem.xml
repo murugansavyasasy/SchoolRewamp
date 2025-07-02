@@ -135,7 +135,7 @@
         <RelativeLayout
             android:id="@+id/rytList"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/one_ten"
+            android:layout_height="@dimen/one_fifty"
             android:layout_below="@+id/LblHWSubjectName"
             android:layout_marginTop="@dimen/five"
             android:visibility="gone">
@@ -144,17 +144,19 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcyImgPDF"
                 android:layout_width="match_parent"
+                android:visibility="gone"
                 android:layout_height="match_parent">
 
             </androidx.recyclerview.widget.RecyclerView>
+
 
             <android.webkit.WebView
                 android:id="@+id/webView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="gone">
+                android:background="#000000"
+                android:visibility="gone" />
 
-            </android.webkit.WebView>
 
             <ProgressBar
                 android:id="@+id/loadingBar"

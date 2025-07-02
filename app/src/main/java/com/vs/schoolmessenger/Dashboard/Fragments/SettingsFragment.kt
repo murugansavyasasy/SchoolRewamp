@@ -71,10 +71,21 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         binding.lnrChangePassword.setOnClickListener(this)
         binding.lnrSignalCheck.setOnClickListener(this)
 
+        if(Constant.checkBiometricSupport(requireActivity())){
+           binding.lnrEnableFingerPrint.visibility = View.VISIBLE
+        }
+        else{
+            binding.lnrEnableFingerPrint.visibility = View.GONE
+        }
+
         binding.switchFingerprint.isChecked = SharedPreference.isFingerprintEnabled(requireActivity())
         binding.switchFingerprint.setOnCheckedChangeListener { _, isChecked ->
-            SharedPreference.setFingerprintEnabled(requireActivity(), isChecked)
-            Toast.makeText(requireActivity(), "Fingerprint login ${if (isChecked) "enabled" else "disabled"}", Toast.LENGTH_SHORT).show()
+                SharedPreference.setFingerprintEnabled(requireActivity(), isChecked)
+                Toast.makeText(
+                    requireActivity(),
+                    "Fingerprint login ${if (isChecked) "enabled" else "disabled"}",
+                    Toast.LENGTH_SHORT
+                ).show()
         }
 
         if (Constant.isParentChoose) {
@@ -155,7 +166,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         rlaLogout.setOnClickListener {
 //            SharedPreference.putMobileNumberPassWord(requireActivity(), "", "")
             SharedPreference.putLogout(requireActivity(), true)
-//            SharedPreference.setLoggedIn(requireActivity(), false)
+            SharedPreference.setLoggedIn(requireActivity(), false)
 //            SharedPreference.setFingerprintEnabled(requireActivity(), false)
             startActivity(Intent(requireActivity(), Login::class.java))
         }

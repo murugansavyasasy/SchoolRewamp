@@ -193,7 +193,7 @@ class PrioritySelection : BaseActivity<RoleSelecionBinding>(), View.OnClickListe
         rlaLogout.setOnClickListener {
 //            SharedPreference.putMobileNumberPassWord(this, "", "")
             SharedPreference.putLogout(this, true)
-//            SharedPreference.setLoggedIn(this, false)
+            SharedPreference.setLoggedIn(this, false)
 //            SharedPreference.setFingerprintEnabled(this, false)
             val intent = Intent(this, Login::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

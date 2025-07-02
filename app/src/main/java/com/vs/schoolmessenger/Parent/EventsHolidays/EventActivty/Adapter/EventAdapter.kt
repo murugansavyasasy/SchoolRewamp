@@ -153,8 +153,8 @@ class EventAdapter (
 
 
             webView.setOnTouchListener(object : OnTouchListener {
-                @SuppressLint("ClickableViewAccessibility")
                 override fun onTouch(v: View?, event: MotionEvent): Boolean {
+                    webView.onPause()
                     if (event.getAction() == MotionEvent.ACTION_MOVE) {
                         return false
                     }
