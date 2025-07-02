@@ -43,8 +43,10 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener, fingerPrintAun
         binding.rytFingerPrint.setOnClickListener(this)
         isToolBarWhiteTheme()
 
+        val mobile_number = SharedPreference.getMobileNumber(this)
+        val password = SharedPreference.getPassWord(this)
         if (SharedPreference.isFingerprintEnabled(this)) {
-            if (SharedPreference.isLoggedIn(this)) {
+            if (!mobile_number.equals("") && !password.equals("")) {
                 binding.rytFingerPrint.visibility = View.VISIBLE
                 Constant.setupBiometricPrompt(this, this)
                 Constant.authenticate(this)

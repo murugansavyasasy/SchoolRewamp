@@ -270,7 +270,8 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
                     Constant.authenticate(this)
                 }
                 else{
-                    isValidateUser()
+                    val intent = Intent(this@Splash, Login::class.java)
+                    startActivity(intent)
                 }
             }
             else{
