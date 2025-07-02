@@ -136,6 +136,7 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
                             Constant.pageType = Constant.SplashScreen
                             startActivity(intent)
                         } else {
+                            SharedPreference.setLoggedIn(this, true)
                             SharedPreference.putMobileNumberPassWord(
                                 this@Splash,
                                 mobile_number,
@@ -262,7 +263,19 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
         Log.d("mobile_number", mobile_number.toString())
         Log.d("password", password.toString())
         if (!mobile_number.equals("") && !password.equals("")) {
-            isValidateUser()
+           // isValidateUser()
+            if (SharedPreference.isFingerprintEnabled(this)) {
+                if (SharedPreference.isLoggedIn(this)){
+                    Constant.setupBiometricPrompt(this,this)
+                    Constant.authenticate(this)
+                }
+                else{
+                    isValidateUser()
+                }
+            }
+            else{
+                isValidateUser()
+            }
         } else {
             val isLogout = SharedPreference.getLogout(this)
             if (isLogout!!) {
