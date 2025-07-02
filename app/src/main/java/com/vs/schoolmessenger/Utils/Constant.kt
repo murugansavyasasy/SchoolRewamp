@@ -178,7 +178,8 @@ object Constant {
 
     var isAcademicYearList: List<AcademicYear>? = null
     var isParentMenuName=""
-    var isSchoolMenuName=""
+
+    var isSchoolMenuName = ""
 
 
 //    var isForward = false
@@ -1279,19 +1280,30 @@ object Constant {
         return Bitmap.createScaledBitmap(bitmap, newWidth, newHeight, true)
     }
 
-     fun checkBiometricSupport(activity: Activity): Boolean {
-        val biometricManager = BiometricManager.from(activity)
-         var status = false
-         return when (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG or
-                 BiometricManager.Authenticators.DEVICE_CREDENTIAL)) {
-            BiometricManager.BIOMETRIC_SUCCESS -> {
-                val  fingerPrintEnabled = SharedPreference.isFingerprintEnabled(activity)
-                if(fingerPrintEnabled){
-                    status= true
+    fun showNotificationPermissionDialog(packageName: String, activity: Activity,isTitle: String,isContent: String) {
+        AlertDialog.Builder(activity).setTitle(isTitle)
+            .setMessage(isContent)
+            .setPositiveButton("Go to Settings") { dialog, _ ->
+                dialog.dismiss()
+                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                    data = Uri.fromParts("package", packageName, null)
                 }
-                else{
+                activity.startActivity(intent)
+
+            }.setCancelable(false).show()
+    }
+
+    fun checkBiometricSupport(activity: Activity): Boolean {
+        val biometricManager = BiometricManager.from(activity)
+        var status = false
+        return when (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG)) {
+            BiometricManager.BIOMETRIC_SUCCESS -> {
+                val fingerPrintEnabled = SharedPreference.isFingerprintEnabled(activity)
+                if (fingerPrintEnabled) {
+                    status = true
+                } else {
                     val fingerPrintSkipped = SharedPreference.isFingerPrintSkipped(activity)
-                    if(!fingerPrintSkipped) {
+                    if (!fingerPrintSkipped) {
                         AlertDialog.Builder(activity)
                             .setTitle("Enable Fingerprint Login?")
                             .setMessage("Would you like to enable fingerprint authentication for faster and secure access in the future?")
@@ -1300,47 +1312,55 @@ object Constant {
                             }
                             .setNegativeButton("No") { _, _ ->
                                 status = false
-                                SharedPreference.setFingerPrintSkipped(activity,true)
+                                SharedPreference.setFingerPrintSkipped(activity, true)
                             }
                             .show()
                     }
                 }
                 status
             }
+
             BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> {
 //                Toast.makeText(activity, "No biometric features available on this device.", Toast.LENGTH_LONG).show()
                 false
             }
+
             BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
 //                Toast.makeText(activity, "Biometric features are currently unavailable.", Toast.LENGTH_LONG).show()
                 false
             }
+
             BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
                 showEnrollDialog(activity)
                 false
             }
+
             else -> false
         }
     }
 
-    fun authenticate(activity: Activity){
+    fun authenticate(activity: Activity) {
         biometricPrompt.authenticate(promptInfo)
     }
 
-     fun setupBiometricPrompt(activity: FragmentActivity,listener: fingerPrintAunthenticateListener) {
+    fun setupBiometricPrompt(
+        activity: FragmentActivity,
+        listener: fingerPrintAunthenticateListener
+    ) {
         val executor = ContextCompat.getMainExecutor(activity)
-        biometricPrompt = BiometricPrompt(activity, executor,
+        biometricPrompt = BiometricPrompt(
+            activity, executor,
             object : BiometricPrompt.AuthenticationCallback() {
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                     super.onAuthenticationSucceeded(result)
 //                    Toast.makeText(activity, "Authentication succeeded!", Toast.LENGTH_SHORT).show()
-                    listener.onAuthenticate("Authentication succeeded!",true)
+                    listener.onAuthenticate("Authentication succeeded!", true)
                     // Navigate to dashboard or home screen
                 }
 
                 override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                     super.onAuthenticationError(errorCode, errString)
-                    listener.onAuthenticate("Authentication error: $errString",false)
+                    listener.onAuthenticate("Authentication error: $errString", false)
 //                    Toast.makeText(applicationContext, "Authentication error: $errString", Toast.LENGTH_SHORT).show()
                     Log.d("errorCodeValue", errorCode.toString())
                     when (errorCode) {
@@ -1348,7 +1368,8 @@ object Constant {
                         BiometricPrompt.ERROR_LOCKOUT_PERMANENT -> {
                             // Automatically redirect to passcode screen
                         }
-                        BiometricPrompt.ERROR_USER_CANCELED ->{
+
+                        BiometricPrompt.ERROR_USER_CANCELED -> {
 
                             AlertDialog.Builder(activity)
                                 .setTitle("School Chimes is locked")
@@ -1360,15 +1381,20 @@ object Constant {
                                 .show()
 
                         }
+
                         else -> {
-                            Toast.makeText(activity, "Authentication error: $errString", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                activity,
+                                "Authentication error: $errString",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
                 }
 
                 override fun onAuthenticationFailed() {
                     super.onAuthenticationFailed()
-                    listener.onAuthenticate("Authentication failed",false)
+                    listener.onAuthenticate("Authentication failed", false)
 //                    Toast.makeText(applicationContext, "Authentication failed", Toast.LENGTH_SHORT).show()
                 }
             })
@@ -1383,15 +1409,18 @@ object Constant {
 //            .setNegativeButtonText("Cancel")
             .build()
     }
-     fun showEnrollDialog(activity: Activity) {
+
+    fun showEnrollDialog(activity: Activity) {
         AlertDialog.Builder(activity)
             .setTitle("Fingerprint not set up")
             .setMessage("To use fingerprint login, please add at least one fingerprint in your device settings.")
             .setPositiveButton("Go to Settings") { _, _ ->
                 // Open biometric enrollment screen
                 val enrollIntent = Intent(Settings.ACTION_BIOMETRIC_ENROLL).apply {
-                    putExtra(Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED,
-                        BiometricManager.Authenticators.BIOMETRIC_STRONG or BiometricManager.Authenticators.DEVICE_CREDENTIAL)
+                    putExtra(
+                        Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED,
+                        BiometricManager.Authenticators.BIOMETRIC_STRONG or BiometricManager.Authenticators.DEVICE_CREDENTIAL
+                    )
                 }
                 activity.startActivity(enrollIntent)
             }

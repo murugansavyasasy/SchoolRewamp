@@ -1,9 +1,7 @@
 package com.vs.schoolmessenger.Auth.MobilePasswordSignIn
 
-import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Paint
-import android.provider.Settings
 import android.text.InputType
 import android.util.Log
 import android.view.View
@@ -43,16 +41,14 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener, fingerPrintAun
         isToolBarWhiteTheme()
 
         if (SharedPreference.isFingerprintEnabled(this)) {
-            if (SharedPreference.isLoggedIn(this)){
+            if (SharedPreference.isLoggedIn(this)) {
                 binding.rytFingerPrint.visibility = View.VISIBLE
-                Constant.setupBiometricPrompt(this,this)
+                Constant.setupBiometricPrompt(this, this)
                 Constant.authenticate(this)
-             }
-            else{
+            } else {
                 binding.rytFingerPrint.visibility = View.GONE
             }
-        }
-        else{
+        } else {
             binding.rytFingerPrint.visibility = View.GONE
         }
 
@@ -109,8 +105,7 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener, fingerPrintAun
                                             startActivity(intent)
                                         } else {
                                             val intent = Intent(
-                                                this@Login,
-                                                SchoolDashboard::class.java
+                                                this@Login, SchoolDashboard::class.java
                                             )
                                             SharedPreference.putStaffDetails(
                                                 this,
@@ -201,15 +196,14 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener, fingerPrintAun
         isPasswordVisible = !isPasswordVisible
     }
 
-    private fun isValidateUser(mobileNumber: String,password: String) {
+    private fun isValidateUser(mobileNumber: String, password: String) {
         Constant.showLoading(this@Login)
         val jsonObject = JsonObject()
         val isSecureId = Constant.getAndroidSecureId(this@Login)
 
         Constant.isMobileNumber = mobileNumber
         jsonObject.addProperty(
-            APIKeyNames.Req_mobile_number,
-            mobileNumber
+            APIKeyNames.Req_mobile_number, mobileNumber
         )
         jsonObject.addProperty(APIKeyNames.Req_device_type, Constant.isDeviceType)
         jsonObject.addProperty(APIKeyNames.Req_secure_id, isSecureId)
@@ -227,7 +221,9 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener, fingerPrintAun
 
             R.id.btnLoginContinue -> {
                 if (isUserNamePasswordValidation()) {
-                    isValidateUser(binding.txtMobileNumber.text.toString(), binding.txtPassword.text.toString())
+                    isValidateUser(
+                        binding.txtMobileNumber.text.toString(), binding.txtPassword.text.toString()
+                    )
                 }
             }
 
@@ -240,9 +236,8 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener, fingerPrintAun
             }
 
             R.id.rytFingerPrint -> {
-                Constant.setupBiometricPrompt(this,this)
+                Constant.setupBiometricPrompt(this, this)
                 Constant.authenticate(this)
-
             }
         }
     }
@@ -253,7 +248,9 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener, fingerPrintAun
             isValidation = true
         } else {
             binding.txtMobileNumber.error =
-                resources.getString(R.string.Enter_the) + Constant.country_details!!.mobile_number_length + resources.getString(R.string.digit_mobile_number)
+                resources.getString(R.string.Enter_the) + Constant.country_details!!.mobile_number_length + resources.getString(
+                    R.string.digit_mobile_number
+                )
             isValidation = false
         }
         return isValidation
@@ -269,8 +266,8 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener, fingerPrintAun
     }
 
     override fun onAuthenticate(message: String, status: Boolean) {
-        Log.d("athentication_status",message)
-        if(status){
+        Log.d("athentication_status", message)
+        if (status) {
             //go to dashboard
             val mobileNumber = SharedPreference.getMobileNumber(this)
             val password = SharedPreference.getPassWord(this)
@@ -279,6 +276,9 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener, fingerPrintAun
             isValidateUser(mobileNumber!!,password!!)
         }
         else{
+            isValidateUser(mobileNumber!!, password!!)
+        } else {
+
 //            Toast.makeText(this, message, Toast.LENGTH_LONG).show()
         }
     }

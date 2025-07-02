@@ -20,7 +20,6 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 object VimeoVideoUpload {
-
     fun uploadVideo(
         activity: Activity,
         title: String,
@@ -29,24 +28,19 @@ object VimeoVideoUpload {
         listener: UploadCompletionListener
     ) {
         createVimeoUploadURL(
-            activity, title, description, videoFilePath,
-            object : VimeoUploadURLListener {
-                override fun onUploadURLGenerated(uploadLink: String?, iframe: String?, link: String?) {
+            activity, title, description, videoFilePath, object : VimeoUploadURLListener {
+                override fun onUploadURLGenerated(
+                    uploadLink: String?, iframe: String?, link: String?
+                ) {
                     uploadVideoToVimeo(
-                        activity,
-                        iframe,
-                        link,
-                        uploadLink,
-                        videoFilePath,
-                        listener
+                        activity, iframe, link, uploadLink, videoFilePath, listener
                     )
                 }
 
                 override fun onFailure(errorMessage: String?) {
                     listener.onFailure(errorMessage)
                 }
-            }
-        )
+            })
     }
 
     private fun createVimeoUploadURL(
@@ -76,7 +70,10 @@ object VimeoVideoUpload {
                 val url = URL(Constant.isVimeoUrl)
                 val conn = url.openConnection() as HttpURLConnection
                 conn.requestMethod = Constant.POST
-                conn.setRequestProperty(APIKeyNames.Authorization, APIKeyNames.Bearer + Constant.isVimeoToken)
+                conn.setRequestProperty(
+                    APIKeyNames.Authorization,
+                    APIKeyNames.Bearer + Constant.isVimeoToken
+                )
                 conn.setRequestProperty(Constant.Content_Type, Constant.application_json)
                 conn.setRequestProperty(Constant.Accept, Constant.application_vimeo_jsonversion)
                 conn.doOutput = true
@@ -104,13 +101,35 @@ object VimeoVideoUpload {
                     val upload = jsonResponse.getJSONObject(APIKeyNames.upload)
                     val embed = jsonResponse.getJSONObject(APIKeyNames.embed)
                     val link = jsonResponse.getString(APIKeyNames.player_embed_url)
-
                     val uploadLink = upload.getString(APIKeyNames.upload_link)
                     val iframe = embed.getString(APIKeyNames.html)
 
                     withContext(Dispatchers.Main) {
-                        listener.onUploadURLGenerated(uploadLink, iframe, link)
+                        listener.onUploadURLGenerated(
+                            uploadLink, iframe, link
+                        )
                     }
+
+//                    val uriId = jsonResponse.getString("uri")
+//                    val videoId = uriId.split("/").last()
+//                    Log.d("videoId", videoId)
+//                    val token = Constant.isVimeoToken
+//                    Log.d("token", token)
+//                    VimeoThumbnailUploader.uploadThumbnailToVimeo(
+//                        activity, videoId, videoFilePath, token
+//                    ) { success, thumbnailUrl ->
+//                        if (success) {
+//                            Log.d("Thumbnail", "Done! URL: $thumbnailUrl")
+//
+////                    withContext(Dispatchers.Main) {
+//                            listener.onUploadURLGenerated(
+//                                uploadLink, iframe, link, "isThumbnailUrl"
+//                            )
+////                    }
+//                        } else {
+//                            Log.e("Thumbnail", "Upload failed or URL not found")
+//                        }
+//                    }
                 } else {
                     withContext(Dispatchers.Main) {
                         listener.onFailure("HTTP error code: $responseCode")
@@ -160,17 +179,32 @@ object VimeoVideoUpload {
 
                 val offsetConn = URL(uploadLink).openConnection() as HttpURLConnection
                 offsetConn.requestMethod = Constant.HEAD
-                offsetConn.setRequestProperty(Constant.HETus_ResumableAD, Constant.HETus_ResumableAD_Version)
-                offsetConn.setRequestProperty(APIKeyNames.Authorization, APIKeyNames.Bearer + Constant.isVimeoToken)
+                offsetConn.setRequestProperty(
+                    Constant.HETus_ResumableAD,
+                    Constant.HETus_ResumableAD_Version
+                )
+                offsetConn.setRequestProperty(
+                    APIKeyNames.Authorization,
+                    APIKeyNames.Bearer + Constant.isVimeoToken
+                )
                 val offset = offsetConn.getHeaderField(Constant.Upload_Offset)?.toLongOrNull() ?: 0L
                 offsetConn.disconnect()
 
                 val conn = URL(uploadLink).openConnection() as HttpURLConnection
                 conn.requestMethod = Constant.PATCH
-                conn.setRequestProperty(APIKeyNames.Authorization, APIKeyNames.Bearer + Constant.isVimeoToken)
-                conn.setRequestProperty(Constant.Content_Type, Constant.application_offset_octet_stream)
+                conn.setRequestProperty(
+                    APIKeyNames.Authorization,
+                    APIKeyNames.Bearer + Constant.isVimeoToken
+                )
+                conn.setRequestProperty(
+                    Constant.Content_Type,
+                    Constant.application_offset_octet_stream
+                )
                 conn.setRequestProperty(Constant.Upload_Offset, offset.toString())
-                conn.setRequestProperty(Constant.HETus_ResumableAD, Constant.HETus_ResumableAD_Version)
+                conn.setRequestProperty(
+                    Constant.HETus_ResumableAD,
+                    Constant.HETus_ResumableAD_Version
+                )
                 conn.doOutput = true
 
                 inputStream?.skip(offset)
@@ -221,13 +255,19 @@ object VimeoVideoUpload {
     }
 
     interface UploadCompletionListener {
-        fun onUploadComplete(success: Boolean, iframe: String?, link: String?)
+        fun onUploadComplete(
+            success: Boolean, iframe: String?, link: String?
+        )
+
         fun onFailure(errorMessage: String?)
         fun onProgressUpdate(percent: Int)
     }
 
     private interface VimeoUploadURLListener {
-        fun onUploadURLGenerated(uploadLink: String?, iframe: String?, link: String?)
+        fun onUploadURLGenerated(
+            uploadLink: String?, iframe: String?, link: String?
+        )
+
         fun onFailure(errorMessage: String?)
     }
 }

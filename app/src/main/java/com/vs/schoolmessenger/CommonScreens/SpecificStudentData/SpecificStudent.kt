@@ -209,7 +209,6 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
     }
 
 
-
     private fun isStudentData() {
         binding.rcySpecificStudent.layoutManager = LinearLayoutManager(this)
         mAdapter =
@@ -314,7 +313,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
 
                     for (i in Constant.selectedFiles.indices) {
                         isAwsUploadingPreSigned!!.getPreSignedUrl(
-                            Constant.selectedFiles[i].path.toString(),
+                            Constant.selectedFiles[i].path,
                             schoolId,
                             isFileType!!,
                             this,
@@ -511,13 +510,17 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    override fun onUploadComplete(success: Boolean, iframe: String?, link: String?) {
+    override fun onUploadComplete(
+        success: Boolean,
+        iframe: String?,
+        link: String?
+    ) {
         runOnUiThread {
             Log.d("Vimeo_Video_upload", success.toString())
             Log.d("VimeoIframe", iframe.toString())
             Log.d("link", link.toString())
             isIframe = extractVimeoUrlFromIframe(iframe.toString()).toString()
-            isFileSize = Constant.getFileSizeInMB(this,Constant.selectedFiles[0].path)
+            isFileSize = Constant.getFileSizeInMB(this, Constant.selectedFiles[0].path)
 
             Constant.isAwsUploadedFiles.add(
                 AwsUploadedFiles(
@@ -535,7 +538,6 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
         val match = regex.find(iframeHtml)
         return match?.groups?.get(1)?.value
     }
-
 
     override fun onFailure(errorMessage: String?) {
         runOnUiThread {
@@ -574,7 +576,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
             R.id.rytSend -> {
                 selectedIds = isSpecificStudent.map { it.id.toString() }.toMutableList()
                 for (id in selectedIds) {
-                    Log.d("isSelectedIds", id.toString())
+                    Log.d("isSelectedIds", id)
                 }
                 if (selectedIds.isNotEmpty()) {
 
@@ -636,9 +638,6 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
             super.onBackPressed()
         }
     }
-
-
-
 
 
     override fun onIdCheck(data: NameAndIds) {
