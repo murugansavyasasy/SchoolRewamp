@@ -1,6 +1,5 @@
 package com.vs.schoolmessenger.Parent.Coupon.CouponView.CouponDashboard
 
-import android.graphics.Color
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
@@ -9,7 +8,6 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponMenu.Category
 import com.vs.schoolmessenger.Parent.Coupon.CouponView.Adapter.CouponMenuAdapter
 import com.vs.schoolmessenger.Parent.Coupon.CouponController.CouponViewModel
-import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.databinding.CouponDashboardBinding
 
 
@@ -19,7 +17,6 @@ class CouponMainClassActivity : BaseActivity<CouponDashboardBinding>(),
     override fun getViewBinding(): CouponDashboardBinding {
         return CouponDashboardBinding.inflate(layoutInflater)
     }
-
     private lateinit var viewModel: CouponViewModel
     private lateinit var adapter: CouponMenuAdapter
 
