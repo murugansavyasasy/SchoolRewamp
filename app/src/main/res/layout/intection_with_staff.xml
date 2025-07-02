@@ -1,8 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    android:gravity="center"
     android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/SelDate"
+        android:text="Sample"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </TextView>
+    <TextView
+        android:id="@+id/Btn"
+        android:layout_width="match_parent"
+        android:text="Calendar"
+        android:layout_marginTop="@dimen/fifty"
+        android:gravity="center"
+        android:layout_height="wrap_content">
+
+    </TextView>
+
+</LinearLayout>

@@ -75,6 +75,8 @@
 
 
 
+
+
     <style name="CustomTextStylePoppinsMedium1" parent="TextAppearance.AppCompat">
         <item name="fontFamily">@font/poppins_medium</item>
         <item name="android:textSize">@dimen/thirteen_sp</item>

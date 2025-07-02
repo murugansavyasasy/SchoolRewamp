@@ -50,9 +50,8 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickListener,
-    OnDateSelectedListener, NoticeBoardClickListener,
-    View.OnClickListener  {
+class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClickListener,
+    OnDateSelectedListener, NoticeBoardClickListener, View.OnClickListener {
 
 
     override fun getViewBinding(): CreateNoticeBoardBinding {
@@ -108,7 +107,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickL
 //        binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
 //        binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
 
-
         val (dayOnly, dayOfWeek, fullDate, slashDate, customFormat) = Constant.getCurrentDateInfo()
 //        binding.lblDate.text = dayOnly
         binding.lblDay.text = dayOnly
@@ -120,9 +118,9 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickL
         txtEndDate = fullDate
         val parts = txtStartDate!!.split(" ")
         val Month = parts[1]
-        val Year=parts[2]
-        binding.txtStartDate.text= Month+" "+Year
-        binding.txtEndDate.text=Month+" "+Year
+        val Year = parts[2]
+        binding.txtStartDate.text = Month + " " + Year
+        binding.txtEndDate.text = Month + " " + Year
 
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
@@ -168,18 +166,15 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickL
                             mimeType?.startsWith("audio/") == true -> FileType.AUDIO
                             fileName.endsWith(".pdf", true) -> FileType.PDF
                             fileName.endsWith(".doc", true) || fileName.endsWith(
-                                ".docx",
-                                true
+                                ".docx", true
                             ) -> FileType.DOC
 
                             fileName.endsWith(".xls", true) || fileName.endsWith(
-                                ".xlsx",
-                                true
+                                ".xlsx", true
                             ) -> FileType.EXCEL
 
                             fileName.endsWith(".ppt", true) || fileName.endsWith(
-                                ".pptx",
-                                true
+                                ".pptx", true
                             ) -> FileType.PPT
 
                             fileName.endsWith(".txt", true) -> FileType.TXT
@@ -245,8 +240,9 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickL
             binding.videoView.visibility = View.VISIBLE
             binding.videoView.start()
         }
-        Constant.editTextCounter(this,binding.txtDesc,500,binding.lbTextCount)
-        Constant.editTextCounter(this,binding.txtTitle,50,binding.lbtitleTextCount)
+
+        Constant.editTextCounter(this, binding.txtDesc, 500, binding.lbTextCount)
+        Constant.editTextCounter(this, binding.txtTitle, 50, binding.lbtitleTextCount)
 
 
     }
@@ -281,11 +277,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickL
 
         if (Constant.selectedFiles.size > 1) {
             val secondType = Constant.selectedFiles[1].type.toString()
-            if (
-                (secondType == Constant.IMAGE && (isFileType == Constant.DOCUMENT || isFileType == Constant.VOICE)) ||
-                (secondType == Constant.DOCUMENT && (isFileType == Constant.IMAGE || isFileType == Constant.VOICE)) ||
-                (secondType == Constant.VOICE && (isFileType == Constant.IMAGE || isFileType == Constant.DOCUMENT))
-            ) {
+            if ((secondType == Constant.IMAGE && (isFileType == Constant.DOCUMENT || isFileType == Constant.VOICE)) || (secondType == Constant.DOCUMENT && (isFileType == Constant.IMAGE || isFileType == Constant.VOICE)) || (secondType == Constant.VOICE && (isFileType == Constant.IMAGE || isFileType == Constant.DOCUMENT))) {
                 Constant.selectedFiles.clear()
                 saveDrawableToCache(R.drawable.add_image)?.let {
                     Constant.selectedFiles.add(FileItem(it, FileType.IMAGE))
@@ -333,31 +325,31 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickL
                 onBackPressed()
             }
 
-            R.id.txtStartDate,R.id.rytStartDate,R.id.txtStartDate,R.id.lnrStartCalendar-> {
+            R.id.txtStartDate, R.id.rytStartDate, R.id.txtStartDate, R.id.lnrStartCalendar -> {
                 selectedDateField = 1
-                Constant.showDatePicker(this,false) { selectedDate ->
+                Constant.showDatePicker(this, false) { selectedDate ->
                     Log.d("selectedDate", selectedDate)
-                    txtStartDate= Constant.covertDateFormate(selectedDate)
+                    txtStartDate = Constant.covertDateFormate(selectedDate)
                     val parts = txtStartDate!!.split(" ")
                     val day = parts[0]
                     val Month = parts[1]
-                    val Year=parts[2]
-                    binding.txtStartDate.text = Month+" "+Year
+                    val Year = parts[2]
+                    binding.txtStartDate.text = Month + " " + Year
                     binding.lblDay.text = day
 //                    binding.lblDate.text = Date
                 }
             }
 
-            R.id.rytEndDate,R.id.lnrEndCalendar,R.id.txtEndDate, -> {
+            R.id.rytEndDate, R.id.lnrEndCalendar, R.id.txtEndDate -> {
                 selectedDateField = 2
-                Constant.showDatePicker(this,false) { selectedDate ->
+                Constant.showDatePicker(this, false) { selectedDate ->
                     Log.d("selectedDate", selectedDate)
-                    txtEndDate= Constant.covertDateFormate(selectedDate)
-                    val parts =txtEndDate!!.split(" ")
+                    txtEndDate = Constant.covertDateFormate(selectedDate)
+                    val parts = txtEndDate!!.split(" ")
                     val day = parts[0]
                     val Month = parts[1]
-                    val Year=parts[2]
-                    binding.txtEndDate.text = Month+" "+Year
+                    val Year = parts[2]
+                    binding.txtEndDate.text = Month + " " + Year
                     binding.lblEndDay.text = day
 //                    binding.lblEndDate.text = Date
                 }
@@ -371,13 +363,11 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickL
     }
 
 
-
     override fun onImageClick(position: Int) {
         if (position == 0) {
             showBottomDialog()
         }
     }
-
 
 
     private fun showBottomDialog() {
@@ -596,7 +586,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickL
         val storageDir: File = getExternalFilesDir(Environment.DIRECTORY_PICTURES) ?: cacheDir
         return File.createTempFile("IMG_${timeStamp}_", ".jpg", storageDir)
     }
-
 
 
     override fun onDateSelected(date: String) {

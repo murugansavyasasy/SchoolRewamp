@@ -135,6 +135,6 @@ class AbsenteesReport : BaseActivity<AbsenteesReportBinding>(), View.OnClickList
     }
 
     override fun onClassSelected(data: ClassWise) {
-        Toast.makeText(this, "Class clicked: ${data.name}", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Class clicked: ${data.class_name}", Toast.LENGTH_SHORT).show()
     }
 }

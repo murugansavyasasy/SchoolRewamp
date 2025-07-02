@@ -83,13 +83,13 @@ class AbsenteesStudentListAdapter(
             Log.d("BindViewHolder", "Binding student at position $position: ${data.student_name}")
 
             Constant.isAbsenteesReportDataSending?.let { report ->
-                val sectionNamesCombined = report.section_wise?.joinToString(", ") { it.name } ?: ""
-                val combinedText = "${report.name ?: ""} - $sectionNamesCombined"
+                val sectionNamesCombined = report.section_wise?.joinToString(", ") { it.section_name } ?: ""
+                val combinedText = "${report.class_name ?: ""} - $sectionNamesCombined"
 
                 section_values.text = combinedText
                 badge_count.text = report.total_absentees ?: "0"
 
-                Log.d("BindViewHolder", "Class: ${report.name}, Date: ${report.date}, Sections: $sectionNamesCombined, Absentees: ${report.total_absentees}")
+                Log.d("BindViewHolder", "Class: ${report.class_name}, Date: ${report.date}, Sections: $sectionNamesCombined, Absentees: ${report.total_absentees}")
             }
 
             if (adapter.selectedPosition == position) {

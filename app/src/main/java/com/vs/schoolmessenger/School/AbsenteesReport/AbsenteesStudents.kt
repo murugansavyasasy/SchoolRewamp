@@ -37,7 +37,7 @@ class AbsenteesStudents : BaseActivity<AbsenteesStudentlistBinding>(),
         super.setupViews()
         setupToolbar()
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
-        binding.toolbarLayout.lblParentToolBar.text = "Absentees Report"
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
         isStaffDetails = SharedPreference.getStaffDetails(this)
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails?.school_name ?: ""
@@ -89,7 +89,7 @@ class AbsenteesStudents : BaseActivity<AbsenteesStudentlistBinding>(),
 
 
         val absent_on = Constant.isAbsenteesReportDataSending?.date ?: ""
-        val section_id = Constant.isAbsenteesReportDataSending?.section_wise?.firstOrNull()?.id ?: ""
+        val section_id = Constant.isAbsenteesReportDataSending?.section_wise?.firstOrNull()?.section_id ?: ""
 
         Log.d("API_CALL", "Fetching for date: $absent_on, section: $section_id")
 

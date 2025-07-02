@@ -133,7 +133,8 @@ class EventAdapter (
             listener: EventClickListener,
             adapter: EventAdapter
         ) {
-
+            lblTimeImage.visibility=View.GONE
+            lblDateImage.visibility=View.GONE
             LblHWSubjectName.visibility = View.VISIBLE
             lblEventTimeImage.visibility=View.VISIBLE
             LblHWSubjectName.text="📍 "+data.venue
@@ -143,9 +144,8 @@ class EventAdapter (
             rlaSelectText.visibility = View.GONE
             lblTitleImage.text = data.title
             lblContentImage.text = data.description
-            lblDateImage.text = Constant.convertDateTimeFormat(data.date)
             lblTimeImage.text = data.time
-            lblEventTimeImage.text="🕒 Event starts at: "+data.time
+            lblEventTimeImage.text="🕒 Event starts at: "+data.time+", "+"📆 "+Constant.convertDateTimeFormat(data.date)
             isSeeMoreVisibility(lblContentImage, tvSeeMoreImage)
             tvSeeMoreImage.setOnClickListener {
                 isSeeMoreExpanded(tvSeeMoreImage, lblContentImage)

@@ -203,6 +203,7 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
             }
 
             override fun afterTextChanged(p0: Editable?) {
+
             }
         })
 

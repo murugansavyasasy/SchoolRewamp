@@ -99,6 +99,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
     private var fullHomeworkList: List<HomeWorkReport> = listOf()
     var isSectionId = -1
     var isAcademicServerLoad=false
+    var isSelectedDate=""
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
@@ -132,7 +133,9 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
         binding.rcyImages.adapter = mAdapter
 
-        binding.selectdate.text = Constant.getCurrentDate()
+        isSelectedDate=Constant.getCurrentDate()
+        binding.selectdate.text = Constant.convertToReadableDate(Constant.getCurrentDate())
+
 
         isAcademicYear = Constant.isAcademicYearList
         isLoadAcademicYear(isAcademicYear)
@@ -457,7 +460,8 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
             }
 
             R.id.Calendar -> {
-                showDatePickerDialog(this, this)
+                showDatePickerDialogSelectedDate(this,isSelectedDate, this)
+
             }
 
             R.id.btnCreate -> {
@@ -496,7 +500,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         binding.rcyHomeWorkReport.isNestedScrollingEnabled = false
         binding.rcyHomeWorkReport.adapter = mHomeWorkReportAdapter
         appViewModel?.isGetHomeWorkReport(
-            isAccessToken!!, isSectionId, isAcademicYearId, binding.selectdate.text.toString(), this
+            isAccessToken!!, isSectionId, isAcademicYearId, isSelectedDate, this
         )
     }
 
@@ -793,8 +797,16 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         return File.createTempFile("IMG_${timeStamp}_", ".jpg", storageDir)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onDateSelected(date: String) {
-        binding.selectdate.text = date
+        isSelectedDate=date
+        if (Constant.getCurrentDate()==isSelectedDate){
+            binding.lblDateFormat.text=getString(R.string.today)
+        }
+        else{
+            binding.lblDateFormat.text=getString(R.string.past_date)
+        }
+        binding.selectdate.text = Constant.convertToReadableDate(date)
         fetchHomeWorkReportData()
     }
 
