@@ -464,6 +464,7 @@
                     android:layout_marginBottom="@dimen/fifteen"
                     android:layout_marginEnd="@dimen/thirty"
                     android:gravity="center"
+                    android:visibility="gone"
                     android:orientation="horizontal"
                     android:weightSum="1">
 
