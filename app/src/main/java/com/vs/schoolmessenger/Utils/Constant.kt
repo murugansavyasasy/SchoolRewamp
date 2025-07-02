@@ -1296,7 +1296,7 @@ object Constant {
     fun checkBiometricSupport(activity: Activity): Boolean {
         val biometricManager = BiometricManager.from(activity)
         var status = false
-        return when (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG)) {
+        return when (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG or BiometricManager.Authenticators.DEVICE_CREDENTIAL)) {
             BiometricManager.BIOMETRIC_SUCCESS -> {
                 val fingerPrintEnabled = SharedPreference.isFingerprintEnabled(activity)
                 if (fingerPrintEnabled) {
