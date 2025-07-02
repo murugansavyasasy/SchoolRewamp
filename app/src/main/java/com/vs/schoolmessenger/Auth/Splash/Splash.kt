@@ -1,12 +1,10 @@
 package com.vs.schoolmessenger.Auth.Splash
 
 import android.Manifest
-import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import android.util.Log
@@ -62,13 +60,15 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
         val context = ChangeLanguage.setLocale(newBase, savedLanguage)
         super.attachBaseContext(context)
     }
-    private lateinit var notificationPermissionLauncher: ActivityResultLauncher<String>
 
     private lateinit var appUpdateManager: AppUpdateManager
+
+    private lateinit var notificationPermissionLauncher: ActivityResultLauncher<String>
+
     private val updateLauncher = registerForActivityResult(
         ActivityResultContracts.StartIntentSenderForResult()
     ) { result ->
-        if (result.resultCode != Activity.RESULT_OK) {
+        if (result.resultCode != RESULT_OK) {
             Snackbar.make(
                 findViewById(android.R.id.content),
                 resources.getString(R.string.Update_failed),
@@ -81,7 +81,6 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
     override fun getViewBinding(): SplashBinding {
         return SplashBinding.inflate(layoutInflater)
     }
-
     private var authViewModel: Auth? = null
 
     override fun setupViews() {
@@ -99,26 +98,22 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
         for (signature in appSignatures) {
             Log.d("AppHash", signature)
         }
-
-        notificationPermissionLauncher =
-            registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-                if (isGranted) {
-                    Log.d("NotificationPermission", "Notification permission granted")
-                    val countryId = SharedPreference.getCountryId(this@Splash)
-                    Log.d("countryId", countryId.toString())
-                    if (countryId != 0) {
-                        isVersionCheck()
-                    } else {
-                        startActivity(Intent(this@Splash, CountryScreen::class.java))
-                        finish()
-                    }
-                } else {
-                    Log.d("NotificationPermission", "Notification permission denied")
-                    Constant.showNotificationPermissionDialog(packageName,this,"Notification Permission Required","This app needs permission to send you important updates and alerts.")
-                }
+        notificationPermissionLauncher = registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted ->
+            if (isGranted) {
+                isInterNetChecking()
+                Log.d("PermissionResult", "✅ User clicked ALLOW for notification permission")
+            } else {
+                isInterNetChecking()
+                Log.d(
+                    "PermissionResult",
+                    "❌ User clicked DENY or DISMISSED the notification permission dialog"
+                )
             }
+        }
 
-
+        askNotificationPermission()
         authViewModel!!.isUserValidation?.observe(this) { response ->
             Constant.hideLoading(this@Splash)
             if (response != null) {
@@ -141,7 +136,6 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
                             Constant.pageType = Constant.SplashScreen
                             startActivity(intent)
                         } else {
-                            SharedPreference.setLoggedIn(this, true)
                             SharedPreference.putMobileNumberPassWord(
                                 this@Splash,
                                 mobile_number,
@@ -226,49 +220,33 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
         }
     }
 
-    private fun requestNotificationPermission() {
+    private fun askNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (ContextCompat.checkSelfPermission(
-                    this, Manifest.permission.POST_NOTIFICATIONS
-                ) != PackageManager.PERMISSION_GRANTED
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+                != PackageManager.PERMISSION_GRANTED
             ) {
                 notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            } else {
+                isInterNetChecking()
             }
+        } else {
+            isInterNetChecking()
         }
     }
 
 
-//    private fun isInterNetChecking() {
-//        lifecycleScope.launch {
-//            delay(2000) // 2-second delay
-//            withContext(Dispatchers.Main) {
-//                if (Constant.isInternetAvailable(this@Splash)) {
-//                    requestNotificationPermission()
-//
-//                } else {
-//                    Log.e("Network Error", "No Internet Connection")
-//                    isNoInterNet()
-//                }
-//            }
-//        }
-//    }
-
     private fun isInterNetChecking() {
         lifecycleScope.launch {
-            delay(2000)
+            delay(2000) // 2-second delay
             withContext(Dispatchers.Main) {
                 if (Constant.isInternetAvailable(this@Splash)) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                        requestNotificationPermission()
+                    val countryId = SharedPreference.getCountryId(this@Splash)
+                    Log.d("countryId", countryId.toString())
+                    if (countryId != 0) {
+                        isVersionCheck()
                     } else {
-                        val countryId = SharedPreference.getCountryId(this@Splash)
-                        Log.d("countryId", countryId.toString())
-                        if (countryId != 0) {
-                            isVersionCheck()
-                        } else {
-                            startActivity(Intent(this@Splash, CountryScreen::class.java))
-                            finish()
-                        }
+                        startActivity(Intent(this@Splash, CountryScreen::class.java))
+                        finish()
                     }
                 } else {
                     Log.e("Network Error", "No Internet Connection")
@@ -278,26 +256,13 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
         }
     }
 
-
     private fun autoLoginFlowCheck(isVersionData: List<VersionData>) {
         val mobile_number = SharedPreference.getMobileNumber(this)
         val password = SharedPreference.getPassWord(this)
         Log.d("mobile_number", mobile_number.toString())
         Log.d("password", password.toString())
         if (!mobile_number.equals("") && !password.equals("")) {
-            //isValidateUser()
-            if (SharedPreference.isFingerprintEnabled(this)) {
-                if (SharedPreference.isLoggedIn(this)){
-                    Constant.setupBiometricPrompt(this,this)
-                    Constant.authenticate(this)
-                }
-                else{
-                    isValidateUser()
-                }
-            }
-            else{
-                isValidateUser()
-            }
+            isValidateUser()
         } else {
             val isLogout = SharedPreference.getLogout(this)
             if (isLogout!!) {
@@ -329,10 +294,10 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
         val jsonObject = JsonObject()
         val isSecureId = Constant.getAndroidSecureId(this@Splash)
         val isMobileNumber = SharedPreference.getMobileNumber(this)
+        val isPassWord = SharedPreference.getPassWord(this)
         jsonObject.addProperty(APIKeyNames.Req_mobile_number, isMobileNumber)
         jsonObject.addProperty(APIKeyNames.Req_device_type, Constant.isDeviceType)
         jsonObject.addProperty(APIKeyNames.Req_secure_id, isSecureId)
-        val isPassWord = SharedPreference.getPassWord(this)
         jsonObject.addProperty(APIKeyNames.Req_password, isPassWord)
         Log.d("jsonObject", jsonObject.toString())
         authViewModel!!.isValidateUser(jsonObject, this)
@@ -393,7 +358,6 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
         }
     }
 
-
     private fun startInAppUpdate() {
         val appUpdateInfoTask = appUpdateManager.appUpdateInfo
         appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
@@ -415,13 +379,7 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
         }
     }
 
-    override fun onPause() {
-        isInterNetChecking()
-        super.onPause()
-    }
-
     override fun onResume() {
-        isInterNetChecking()
         super.onResume()
         appUpdateManager.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
             if (appUpdateInfo.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
@@ -458,12 +416,11 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
     }
 
     override fun onAuthenticate(message: String, status: Boolean) {
-        Log.d("athentication_status",message)
-        if(status){
+        Log.d("athentication_status", message)
+        if (status) {
             //go to dashboard
             isValidateUser()
-        }
-        else{
+        } else {
 //            Toast.makeText(this, message, Toast.LENGTH_LONG).show()
         }
     }
