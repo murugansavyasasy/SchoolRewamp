@@ -23,11 +23,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
-import com.vs.schoolmessenger.Utils.FullScreenViewerActivity
 import com.vs.schoolmessenger.Parent.Noticeboard.Notice
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardClickListener
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.FullScreenViewerActivity
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 import me.relex.circleindicator.CircleIndicator2
 
@@ -58,8 +58,7 @@ class NoticeBoardAdapter(
             val shimmerView =
                 ShimmerUtil.wrapWithShimmer(parent, R.layout.homework_school_reportitem)
             ShimmerViewHolder(shimmerView)
-        }
-        else {
+        } else {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.homework_school_reportitem, parent, false)
             DataViewHolder(view, context)
@@ -69,9 +68,9 @@ class NoticeBoardAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
             holder.bind(filteredList[position], position, this)
-        }  else if (holder is ShimmerViewHolder) {
-        holder.startShimmer()
-    }
+        } else if (holder is ShimmerViewHolder) {
+            holder.startShimmer()
+        }
     }
 
     override fun getItemCount(): Int {
@@ -104,8 +103,6 @@ class NoticeBoardAdapter(
         }
     }
 
-
-
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
         private var isTextExpanded = false
@@ -132,12 +129,12 @@ class NoticeBoardAdapter(
             rlaSelectText.visibility = View.GONE
             lblTitleImage.text = noticeData.title
             lblContentImage.text = noticeData.description
-            val dateTime =noticeData.created_on
+            val dateTime = noticeData.created_on
             val parts = dateTime.split(" ")
             val date = parts.getOrNull(0) ?: ""
             val time = parts.getOrNull(1) + " " + (parts.getOrNull(2) ?: "")
             lblDateImage.text = Constant.convertDateTimeFormat(date)
-            lblTimeImage.text=time
+            lblTimeImage.text = time
 //            lblDateImage.text = Constant.convertDateTimeFormat(noticeData.created_on)
 
             isSeeMoreVisibility(lblContentImage, tvSeeMoreImage)
@@ -149,6 +146,7 @@ class NoticeBoardAdapter(
             webView.setOnTouchListener(object : OnTouchListener {
                 @SuppressLint("ClickableViewAccessibility")
                 override fun onTouch(v: View?, event: MotionEvent): Boolean {
+                    webView.onPause()
                     if (event.getAction() == MotionEvent.ACTION_MOVE) {
                         return false
                     }
@@ -275,7 +273,6 @@ class NoticeBoardAdapter(
                 }
             }
         }
-
 
 
     }

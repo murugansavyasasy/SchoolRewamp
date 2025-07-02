@@ -329,13 +329,10 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
         val dialog = BottomSheetDialog(context)
         val view = LayoutInflater.from(context).inflate(R.layout.layout_bottom_sheet, null)
         dialog.setContentView(view)
-
         val btnClose = view.findViewById<CardView>(R.id.btnClose)
-
         btnClose.setOnClickListener {
             finish()
         }
-
         dialog.show()
     }
 
