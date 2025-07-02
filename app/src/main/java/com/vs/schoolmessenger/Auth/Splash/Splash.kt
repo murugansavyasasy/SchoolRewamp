@@ -136,6 +136,7 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
                             Constant.pageType = Constant.SplashScreen
                             startActivity(intent)
                         } else {
+                            SharedPreference.setLoggedIn(this, true)
                             SharedPreference.putMobileNumberPassWord(
                                 this@Splash,
                                 mobile_number,
@@ -256,63 +257,26 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
         }
     }
 
-    private fun showBiometricPrompt() {
-        val executor = ContextCompat.getMainExecutor(this)
-        val biometricPrompt = BiometricPrompt(
-            this, executor,
-            object : BiometricPrompt.AuthenticationCallback() {
-                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                    super.onAuthenticationSucceeded(result)
-                    Toast.makeText(
-                        applicationContext,
-                        resources.getString(R.string.Authentication_Successful),
-                        Toast.LENGTH_LONG
-                    ).show()
-
-                    // Navigate to the next screen after authentication
-                    startActivity(Intent(this@Splash, CountryScreen::class.java))
-                    finish()
-                }
-
-                override fun onAuthenticationError(
-                    errorCode: Int,
-                    errString: CharSequence
-                ) {
-                    super.onAuthenticationError(errorCode, errString)
-                    Toast.makeText(
-                        applicationContext,
-                        "Authentication Error: $errString",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-
-                override fun onAuthenticationFailed() {
-                    super.onAuthenticationFailed()
-                    Toast.makeText(
-                        applicationContext,
-                        resources.getString(R.string.Authentication_Failed),
-                        Toast.LENGTH_LONG
-                    )
-                        .show()
-                }
-            })
-
-        val promptInfo = BiometricPrompt.PromptInfo.Builder()
-            .setTitle(resources.getString(R.string.biometric_authentications))
-            .setSubtitle(resources.getString(R.string.fingerprint_authenticate))
-            .setNegativeButtonText(resources.getString(R.string.Cancel))
-            .build()
-
-        biometricPrompt.authenticate(promptInfo);
-    }
-
     private fun autoLoginFlowCheck(isVersionData: List<VersionData>) {
         val mobile_number = SharedPreference.getMobileNumber(this)
         val password = SharedPreference.getPassWord(this)
         Log.d("mobile_number", mobile_number.toString())
         Log.d("password", password.toString())
         if (!mobile_number.equals("") && !password.equals("")) {
-            isValidateUser()
+           // isValidateUser()
+            if (SharedPreference.isFingerprintEnabled(this)) {
+                if (SharedPreference.isLoggedIn(this)){
+                    Constant.setupBiometricPrompt(this,this)
+                    Constant.authenticate(this)
+                }
+                else{
+                    val intent = Intent(this@Splash, Login::class.java)
+                    startActivity(intent)
+                }
+            }
+            else{
+                isValidateUser()
+            }
         } else {
             val isLogout = SharedPreference.getLogout(this)
             if (isLogout!!) {
