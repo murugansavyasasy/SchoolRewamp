@@ -56,10 +56,10 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
 
         val currentDate = dateFormat.format(calendar.time)
         to_Date = currentDate
-        binding.fromDate3.text = currentDate
+        binding.fromDate3.text =Constant.convertToReadableDate(currentDate)
 
         from_Date = currentDate
-        binding.fromDate2.text = currentDate
+        binding.fromDate2.text =Constant.convertToReadableDate(currentDate)
 
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel?.init()
@@ -80,8 +80,10 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
 
             if (response.status) {
                 isLoadDailyCollectionData(response.data)
+                binding.relativeLayout6.visibility=View.VISIBLE
             } else {
                 showErrorUI(response.message ?: "No data available")
+                binding.relativeLayout6.visibility=View.GONE
             }
         }
     }
@@ -92,6 +94,7 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
         binding.txtNoData.visibility = View.VISIBLE
         binding.totalsummary1.visibility = View.GONE
         binding.relativeLayout5.visibility = View.GONE
+
     }
 
 
@@ -237,12 +240,12 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
     override fun onDateSelected(date: String) {
         when (selectedDateTarget) {
             R.id.linear_layout3 -> {
-                binding.fromDate2.text = date
+                binding.fromDate2.text = Constant.convertToReadableDate(date)
                 from_Date = date
             }
 
             R.id.linear_layout5 -> {
-                binding.fromDate3.text = date
+                binding.fromDate3.text = Constant.convertToReadableDate(date)
                 to_Date = date
             }
         }

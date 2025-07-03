@@ -117,8 +117,8 @@ class AbsenteesStudentListDetailAdapter(
                 .into(imageView)
 
             Constant.isAbsenteesReportDataSending?.let { report ->
-                val sectionNamesCombined = report.section_wise?.joinToString(", ") { it.name } ?: ""
-                sectionValue.text = "${report.name ?: ""} - $sectionNamesCombined"
+                val sectionNamesCombined = report.section_wise?.joinToString(", ") { it.section_name } ?: ""
+                sectionValue.text = "${report.class_name ?: ""} - $sectionNamesCombined"
             }
 
             itemView.setOnClickListener {

@@ -39,6 +39,7 @@ import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Country.Country
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
@@ -1016,6 +1017,42 @@ object Constant {
         return currentDate.format(formatter)
     }
 
+//We use this to convert the Date Format 12 May 2025 to 12 Mon(we get Date And Day)
+fun getDayAndDateOnly(inputDateStr: String): Pair<String, String> {
+    return try {
+        val inputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+        val dayNameFormat = SimpleDateFormat("EEE", Locale.getDefault()) // e.g., Fri
+        val dayNumberFormat = SimpleDateFormat("dd", Locale.getDefault()) // e.g., 13
+
+        val date = inputFormat.parse(inputDateStr)!!
+        val dayName = dayNameFormat.format(date)     // "Fri"
+        val dayNumber = dayNumberFormat.format(date) // "13"
+
+        Pair(dayNumber, dayName)
+    } catch (e: Exception) {
+        e.printStackTrace()
+        Pair("", "") // fallback
+    }
+}
+
+
+    //Convert dd-MM-YYYY to dd MMM YYYY (12-02-2025 to 12 Feb 2025)
+    fun convertToReadableDate(inputDateStr: String): String {
+        return try {
+            val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+            val date = inputFormat.parse(inputDateStr)
+            outputFormat.format(date!!)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            inputDateStr // fallback: return input if format fails
+        }
+    }
+
+
+
+
+
     fun getCurrentDateInfo(): List<String> {
         val calendar = android.icu.util.Calendar.getInstance()
 
@@ -1051,6 +1088,8 @@ object Constant {
         }
 
     }
+
+
 
 
 

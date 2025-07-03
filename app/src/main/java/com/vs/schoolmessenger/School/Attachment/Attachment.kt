@@ -197,6 +197,7 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
                 binding.lblTitleTextCount.text = "$length/50"
             }
             override fun afterTextChanged(p0: Editable?) {
+
             }
         })
 
