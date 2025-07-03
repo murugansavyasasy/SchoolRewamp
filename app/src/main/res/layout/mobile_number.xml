@@ -24,6 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:textSize="@dimen/fifteen_sp"
             android:text="@string/welcome_aboard"
            style="@style/CustomTextStylePoppinsBold"
             android:textStyle="bold">
@@ -36,6 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/ten"
             android:gravity="center"
+            android:textSize="@dimen/fifteen_sp"
             android:text="@string/seamless_school_communication_anytime_anywhere_effortlessly_connecting_student_teachers_and_parents_at_all_times"
             style="@style/CustomTextStylePoppinsRegular">
 
@@ -58,7 +60,7 @@
                     android:layout_marginTop="@dimen/twenty_five"
                     android:gravity="center"
                     android:text="@string/let_s_get_started"
-                    style="@style/CustomTextStylePoppinsRegular"
+                    style="@style/CustomTextStylePoppinsBold"
                     android:textSize="@dimen/eighteen_sp"
                     android:textColor="@color/white"
                     />
@@ -124,6 +126,7 @@
 
                 <TextView
                     android:id="@+id/btnLoginContinue"
+                    style="@style/CustomTextStylePoppinsBold"
                     android:layout_below="@+id/rytMobile"
                     android:layout_marginStart="@dimen/ten"
                     android:layout_marginTop="@dimen/thirty"

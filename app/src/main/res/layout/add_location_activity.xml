@@ -148,8 +148,8 @@
 
                         <ImageView
                             android:id="@+id/imgBack"
-                            android:layout_width="@dimen/twenty"
-                            android:layout_height="@dimen/twenty"
+                            android:layout_width="@dimen/twenty_five"
+                            android:layout_height="@dimen/twenty_five"
                             android:src="@drawable/arrow_back_black">
 
                         </ImageView>

@@ -17,11 +17,13 @@
         android:gravity="center"
         android:text="@string/isSuccess"
         android:textColor="#000"
+        style="@style/CustomTextStylePoppinsBold"
         android:textSize="@dimen/eighteen_sp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/alertMessage"
+        style="@style/CustomTextStylePoppinsRegular"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

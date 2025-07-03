@@ -23,12 +23,12 @@
             android:id="@+id/lblEnter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/CustomTextStylePoppinsBold"
+            style="@style/CustomTextStylePoppinsRegular"
             android:layout_margin="@dimen/ten"
             android:gravity="center"
             android:text="@string/your_password_has_been_securely_stored_and_encrypted_for_protection_for_security_reasons_it_cannot_be_displayed_in_plain_text"
             android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp">
+            android:textSize="@dimen/fifteen_sp">
 
         </TextView>
 
@@ -141,18 +141,18 @@
                 <TextView
                     android:id="@+id/lblDidNot"
                     android:layout_width="wrap_content"
-                    style="@style/CustomTextStylePoppinsMedium"
-
+                    style="@style/CustomTextStylePoppinsRegular"
                     android:layout_height="wrap_content"
                     android:text="@string/lblDidntreceive"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/thirteen_sp" />
+                    android:textSize="@dimen/fifteen_sp" />
 
                 <TextView
                     android:id="@+id/lblOtpTimer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/fifteen"
+                    style="@style/CustomTextStylePoppinsRegular"
                     android:layout_toEndOf="@+id/lblDidNot"
                     android:text="@string/_00_00"
                     android:textColor="@color/system_pink"
@@ -182,10 +182,10 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/ten"
                 android:gravity="center"
-                style="@style/CustomTextStylePoppinsMedium"
+                style="@style/CustomTextStylePoppinsRegular"
                 android:text="@string/if_you_don_t_recive_the_otp_please_contact_any_of_the_below_number"
                 android:textColor="@color/white"
-                android:textSize="@dimen/thirteen_sp">
+                android:textSize="@dimen/fifteen_sp">
 
             </TextView>
 
@@ -208,6 +208,7 @@
             <TextView
                 android:id="@+id/btnNext"
                 android:layout_below="@+id/lblDidNot"
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginTop="@dimen/thirty"
                 android:layout_marginEnd="@dimen/ten"

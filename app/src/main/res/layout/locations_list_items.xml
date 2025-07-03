@@ -27,6 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/five"
                 android:text="T.nagar"
+                style="@style/CustomTextStylePoppinsRegular"
                 android:textColor="@color/bpBlue"
                 android:textSize="@dimen/fifteen_sp" />
 
@@ -35,6 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblPlaceName"
+                style="@style/CustomTextStylePoppinsRegular"
                 android:layout_marginTop="@dimen/five"
                 android:text=""
                 android:textColor="@color/black"
@@ -46,6 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblLatLong"
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_marginTop="@dimen/five"
                 android:layout_marginBottom="@dimen/ten"
                 android:text="10 Meters"
@@ -65,7 +68,7 @@
                 android:id="@+id/imgEdit"
                 android:layout_width="@dimen/twenty"
                 android:layout_height="@dimen/twenty_five"
-                android:layout_marginEnd="@dimen/ten"
+                android:layout_marginEnd="@dimen/twenty"
                 android:src="@drawable/edit_icon_blue"
                 android:visibility="visible" />
 
