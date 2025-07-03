@@ -113,11 +113,11 @@ class HomeWorkItemAdapter(
             webView.setOnTouchListener(object : View.OnTouchListener {
                 override fun onTouch(v: View?, event: MotionEvent): Boolean {
                     webView.onPause()
-                    if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                    if (event.action == MotionEvent.ACTION_MOVE) {
                         return false
                     }
 
-                    if (event.getAction() == MotionEvent.ACTION_UP) {
+                    if (event.action == MotionEvent.ACTION_UP) {
                         Constant.commonFileList.isEmpty()
                         Constant.selectedFileIndex = -1
                         val commonList = homeworkData.file_path?.map {
@@ -130,7 +130,6 @@ class HomeWorkItemAdapter(
                         Constant.commonFileList = commonList
 
                         Constant.selectedFileIndex = position
-
                         val intent = Intent(context, FullScreenViewerActivity::class.java)
                         intent.putExtra(Constant.subjectName, homeworkData.subject_name)
                         context.startActivity(intent)

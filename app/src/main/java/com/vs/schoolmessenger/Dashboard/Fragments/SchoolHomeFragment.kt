@@ -398,7 +398,15 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
         val activityClass = when (data.id) {
             Constant.M_COMMUNICATION -> CommunicationSchool::class.java
             Constant.M_ASSIGNMENT -> {
-                Assignment::class.java
+                if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
+                    Assignment::class.java
+                } else {
+                    if (userDetails!!.staff_details.size > 1) {
+                        SchoolList::class.java
+                    } else {
+                        Assignment::class.java
+                    }
+                }
             }
 
             Constant.M_HOMEWORK -> {

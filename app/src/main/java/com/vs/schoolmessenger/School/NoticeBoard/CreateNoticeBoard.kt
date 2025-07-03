@@ -83,8 +83,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(),OnImageClickL
 
 
     private var isStaffDetails: StaffDetails? = null
-
-
     private var selectedDateField: Int = 0
     private var txtStartDate: String? = null
     private var txtEndDate: String? = null

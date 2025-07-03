@@ -61,7 +61,6 @@ class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(
         binding.imgMoreOptions.setOnClickListener(this)
         binding.lnrNext.setOnClickListener(this)
         binding.lnrPrevious.setOnClickListener(this)
-
         if (Constant.commonFileList.isNotEmpty()) {
             val first = Constant.commonFileList[0]
             if (first.type != FileType.VIDEO.toString() && !first.path.startsWith("content://") && !first.path.contains(
@@ -69,6 +68,12 @@ class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(
                 )
             ) {
                 Constant.commonFileList.removeAt(0)
+            }
+
+            if (first.path.contains("amazonaws.") || first.type == FileType.VIDEO.toString()) {
+                binding.imgMoreOptions.visibility = View.VISIBLE
+            } else {
+                binding.imgMoreOptions.visibility = View.GONE
             }
         }
 
@@ -116,7 +121,6 @@ class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(
         adapter.notifyItemChanged(position)
         val currentUrl = Constant.commonFileList.getOrNull(position)?.path ?: "Unknown"
         Log.d("CurrentURL", "Currently displayed file: $currentUrl")
-        binding.imgMoreOptions.visibility = View.VISIBLE
     }
 
     private fun updateNavButtons() {
@@ -220,7 +224,6 @@ class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(
                 } else {
                     Log.e("VimeoAPI", "${response.code()} ${response.errorBody()?.string()}")
                 }
-
             } catch (e: Exception) {
                 Log.e("VimeoAPI", "Error: ${e.message}", e)
                 withContext(Dispatchers.Main) {

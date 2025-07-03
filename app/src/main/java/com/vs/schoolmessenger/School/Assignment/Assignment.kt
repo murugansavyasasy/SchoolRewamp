@@ -1,10 +1,9 @@
 package com.vs.schoolmessenger.School.Assignment
 
 import android.app.Dialog
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.Gravity
 import android.view.View
@@ -12,11 +11,18 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.AdapterView
 import android.widget.RelativeLayout
+import androidx.activity.result.ActivityResultLauncher
+import androidx.lifecycle.ViewModelProvider
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
+import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.CommonScreens.ImagePickingData
 import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.OnDateSelectedListener
+import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.Utils.SpinnerLoadingAdapter
 import com.vs.schoolmessenger.Utils.TimeSelectedListener
 import com.vs.schoolmessenger.databinding.AssignmentBinding
@@ -28,13 +34,6 @@ class Assignment : BaseActivity<AssignmentBinding>(),
     override fun getViewBinding(): AssignmentBinding {
         return AssignmentBinding.inflate(layoutInflater)
     }
-
-    private val itemsAssignmentType = listOf(
-        "Text",
-        "Image",
-        "PDF",
-        "Video"
-    )
     private val itemsCategory = listOf(
         "General",
         "Class Work",
@@ -42,79 +41,43 @@ class Assignment : BaseActivity<AssignmentBinding>(),
         "Project"
     )
 
+    private lateinit var albumResultLauncher: ActivityResultLauncher<Intent>
+    private var cameraPermissionDeniedCount = 0
 
+    companion object {
+        private const val PICK_DOCUMENT_REQUEST = 1003
+        private const val PICK_IMAGE_REQUEST = 1001
+        internal const val CAMERA_IMAGE_REQUEST = 1004
+        private const val MAX_FILES = 10
+    }
+
+    private var cameraImageFilePath: String? = null
+    private val CAMERA_PERMISSION_REQUEST_CODE = 200
+    private var mAdapter: ImagePickingAdapter? = null
+
+    private var appViewModel: App? = null
+    private var isAccessToken: String? = null
+
+
+    private var isStaffDetails: StaffDetails? = null
     private lateinit var imageList: MutableList<ImagePickingData>
+
     override fun setupViews() {
         super.setupViews()
         setupToolbar()
-        binding.imgBack.setOnClickListener(this)
+        binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.btnChooseRecipient.setOnClickListener(this)
-//        binding.rlaTypeofSending.setOnClickListener(this)
-//        binding.spinnerAssignment.setOnClickListener(this)
         binding.lblDatePick.setOnClickListener(this)
         binding.lblTimePick.setOnClickListener(this)
+        appViewModel = ViewModelProvider(this)[App::class.java]
+        appViewModel!!.init()
 
-        setupAssignmentTypeSpinner()
+        isStaffDetails = SharedPreference.getStaffDetails(this)
+        isAccessToken = isStaffDetails!!.access_token
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
+        binding.toolbarLayout.lblSchoolName.visibility = View.GONE
+        binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
         spinnerType()
-
-        imageList = mutableListOf(
-            ImagePickingData(R.drawable.add_image),
-            ImagePickingData(R.drawable.student_image),
-            ImagePickingData(R.drawable.circle_image),
-            ImagePickingData(R.drawable.image_file),
-            ImagePickingData(R.drawable.pause_icon)
-        )
-
-        // Set up RecyclerView with a GridLayoutManager
-//        binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
-//        binding.rcyImages.adapter = ImagePickingAdapter(imageList, this, this)
-
-        binding.edtDescription.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // No action needed before text changes
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                // Update the character count
-                val charCount = s?.length ?: 0
-                binding.lblTextCount.text = "$charCount / 100"
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                // Ensure the text doesn't exceed 100 characters (optional safeguard)
-                if (s?.length ?: 0 > 100) {
-                    val truncatedText = s?.substring(0, 100)
-                    binding.edtDescription.setText(truncatedText)
-                    binding.edtDescription.setSelection(
-                        truncatedText?.length ?: 0
-                    ) // Keep cursor at the end
-                }
-            }
-        })
-    }
-
-    private fun setupAssignmentTypeSpinner() {
-        val adapter = SpinnerLoadingAdapter(this, itemsAssignmentType)
-        binding.spinnerAssignment.adapter = adapter
-
-        binding.spinnerAssignment.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    adapter.selectedPosition = position
-                    adapter.notifyDataSetChanged()
-
-                    val selectedOption = itemsAssignmentType[position]
-                    binding.rlaFilePicking.visibility =
-                        if (selectedOption == "Text") View.GONE else View.VISIBLE
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>) {}
-            }
     }
 
     private fun spinnerType() {

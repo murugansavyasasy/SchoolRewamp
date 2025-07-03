@@ -66,11 +66,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = getViewBinding()
         setContentView(binding.root)
-
-        // Common setup for all activities
-        // setupToolbar()
         setupViews()
-        //  applyCustomFontToViews()
     }
 
     open fun setupViews() {

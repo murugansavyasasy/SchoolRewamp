@@ -21,10 +21,10 @@ import com.bumptech.glide.Glide
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
 import com.vs.schoolmessenger.Parent.Communication.UnifiedVoiceAdapter.ShimmerViewHolder
-import com.vs.schoolmessenger.Utils.FullScreenViewerActivity
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.FullScreenViewerActivity
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class HomeworkImgPDFAdapter(
@@ -130,17 +130,12 @@ class HomeworkImgPDFAdapter(
                 }.toMutableList()
 
                 Constant.commonFileList = commonList
-
                 Constant.selectedFileIndex = 0
 
                 val intent = Intent(context, FullScreenViewerActivity::class.java)
                 intent.putExtra(Constant.subjectName, SubjectName)
                 context.startActivity(intent)
             }
-
-
-
-
 
             WebViewThumbnail.setOnTouchListener(object : OnTouchListener {
                 override fun onTouch(v: View?, event: MotionEvent): Boolean {
