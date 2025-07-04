@@ -25,8 +25,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventClickListener
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventDataClass
-import com.vs.schoolmessenger.Utils.FullScreenViewerActivity
-import com.vs.schoolmessenger.Parent.Noticeboard.Adapter.FilePathAdapter
+import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
@@ -174,7 +173,7 @@ class EventAdapter (
 
                         Constant.selectedFileIndex = position
 
-                        val intent = Intent(context, FullScreenViewerActivity::class.java)
+                        val intent = Intent(context, FilesViewActivity::class.java)
                         intent.putExtra(Constant.subjectName, data.title)
                         context.startActivity(intent)
                     }

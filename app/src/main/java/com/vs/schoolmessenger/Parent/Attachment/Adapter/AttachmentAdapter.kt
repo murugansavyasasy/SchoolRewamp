@@ -29,7 +29,7 @@ import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentFile
 import com.vs.schoolmessenger.Parent.Attachment.OnChildItemClickListener
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
-import com.vs.schoolmessenger.Utils.FullScreenViewerActivity
+import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 import me.relex.circleindicator.CircleIndicator2
 
@@ -167,7 +167,7 @@ class AttachmentAdapter(
 
                     Constant.selectedFileIndex = 0
 
-                    val intent = Intent(context, FullScreenViewerActivity::class.java)
+                    val intent = Intent(context, FilesViewActivity::class.java)
                     intent.putExtra(Constant.subjectName, item.title)
                     context.startActivity(intent)
                 }

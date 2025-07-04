@@ -25,7 +25,7 @@ import com.bumptech.glide.Glide
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.FilePath
 import com.vs.schoolmessenger.Utils.Constant
-import com.vs.schoolmessenger.Utils.FullScreenViewerActivity
+import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class ImageSliderAdapter(
@@ -116,7 +116,7 @@ class ImageSliderAdapter(
                 Constant.selectedFileIndex = position
 
                 context.startActivity(
-                    Intent(context, FullScreenViewerActivity::class.java).apply {
+                    Intent(context, FilesViewActivity::class.java).apply {
                         putExtra(Constant.subjectName, isSubjectName)
                     }
                 )
@@ -138,7 +138,7 @@ class ImageSliderAdapter(
                             )
                         }.toMutableList()
                         Constant.selectedFileIndex = position
-                        val intent = Intent(context, FullScreenViewerActivity::class.java)
+                        val intent = Intent(context, FilesViewActivity::class.java)
                         intent.putExtra(Constant.subjectName, isSubjectName)
                         context.startActivity(intent)
                     }

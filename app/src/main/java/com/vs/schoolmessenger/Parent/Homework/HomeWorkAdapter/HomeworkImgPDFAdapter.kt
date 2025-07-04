@@ -24,7 +24,7 @@ import com.vs.schoolmessenger.Parent.Communication.UnifiedVoiceAdapter.ShimmerVi
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
-import com.vs.schoolmessenger.Utils.FullScreenViewerActivity
+import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class HomeworkImgPDFAdapter(
@@ -132,7 +132,7 @@ class HomeworkImgPDFAdapter(
                 Constant.commonFileList = commonList
                 Constant.selectedFileIndex = 0
 
-                val intent = Intent(context, FullScreenViewerActivity::class.java)
+                val intent = Intent(context, FilesViewActivity::class.java)
                 intent.putExtra(Constant.subjectName, SubjectName)
                 context.startActivity(intent)
             }
@@ -157,7 +157,7 @@ class HomeworkImgPDFAdapter(
 
                         Constant.selectedFileIndex = position
 
-                        val intent = Intent(context, FullScreenViewerActivity::class.java)
+                        val intent = Intent(context, FilesViewActivity::class.java)
                         intent.putExtra(Constant.subjectName, SubjectName)
                         context.startActivity(intent)
                     }

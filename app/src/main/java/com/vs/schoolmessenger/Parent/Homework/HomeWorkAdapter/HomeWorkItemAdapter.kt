@@ -4,17 +4,14 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.Color
 import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebChromeClient
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
-import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -23,14 +20,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
-import com.masoudss.lib.utils.Utils
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetDateWiseHomeworkData
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
-import com.vs.schoolmessenger.Utils.FullScreenViewerActivity
-import com.vs.schoolmessenger.Utils.fetchVimeoThumbnail
+import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import me.relex.circleindicator.CircleIndicator2
 
 class HomeWorkItemAdapter(
@@ -130,7 +125,7 @@ class HomeWorkItemAdapter(
                         Constant.commonFileList = commonList
 
                         Constant.selectedFileIndex = position
-                        val intent = Intent(context, FullScreenViewerActivity::class.java)
+                        val intent = Intent(context, FilesViewActivity::class.java)
                         intent.putExtra(Constant.subjectName, homeworkData.subject_name)
                         context.startActivity(intent)
                     }

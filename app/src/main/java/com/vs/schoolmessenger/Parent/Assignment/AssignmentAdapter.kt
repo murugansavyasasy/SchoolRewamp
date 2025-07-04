@@ -29,7 +29,7 @@ import com.vs.schoolmessenger.CommonScreens.ImageSliderAdapter
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Assignment.DataClass.AssignmentData
 import com.vs.schoolmessenger.Utils.Constant
-import com.vs.schoolmessenger.Utils.FullScreenViewerActivity
+import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import me.relex.circleindicator.CircleIndicator2
 
 class AssignmentAdapter(
@@ -143,7 +143,7 @@ class AssignmentAdapter(
                         CommonFileData(it.type, it.url)
                     }.toMutableList()
                     Constant.selectedFileIndex = position
-                    val intent = Intent(context, FullScreenViewerActivity::class.java)
+                    val intent = Intent(context, FilesViewActivity::class.java)
                     intent.putExtra(Constant.subjectName, data.subject)
                     context.startActivity(intent)
                 }

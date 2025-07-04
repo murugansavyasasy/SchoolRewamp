@@ -27,7 +27,7 @@ import com.vs.schoolmessenger.Parent.Noticeboard.Notice
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardClickListener
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
-import com.vs.schoolmessenger.Utils.FullScreenViewerActivity
+import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 import me.relex.circleindicator.CircleIndicator2
 
@@ -165,7 +165,7 @@ class NoticeBoardAdapter(
 
                         Constant.selectedFileIndex = position
 
-                        val intent = Intent(context, FullScreenViewerActivity::class.java)
+                        val intent = Intent(context, FilesViewActivity::class.java)
                         intent.putExtra(Constant.subjectName, noticeData.title)
                         context.startActivity(intent)
                     }

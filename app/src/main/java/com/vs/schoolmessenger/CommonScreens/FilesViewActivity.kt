@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.Utils
+package com.vs.schoolmessenger.CommonScreens
 
 import android.Manifest
 import android.content.Intent
@@ -21,6 +21,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.FileType
+import com.vs.schoolmessenger.Utils.FileViewerAdapter
+import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.HomeworkViewImageDocumentBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -38,7 +42,7 @@ import java.io.FileOutputStream
 import java.net.HttpURLConnection
 import java.net.URL
 
-class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
+class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
     View.OnClickListener {
     private var isAccessToken: String? = null
     private var appViewModel: App? = null
@@ -67,7 +71,8 @@ class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(
                     "amazonaws."
                 )
             ) {
-                Constant.commonFileList.removeAt(0)
+                Log.d("Constant.commonFileList",Constant.commonFileList.get(0).path)
+               Constant.commonFileList.removeAt(0)
             }
 
             if (first.path.contains("amazonaws.") || first.type == FileType.VIDEO.toString()) {
@@ -212,7 +217,7 @@ class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(
                     } else {
                         withContext(Dispatchers.Main) {
                             Toast.makeText(
-                                this@FullScreenViewerActivity,
+                                this@FilesViewActivity,
                                 "No downloadable .mp4 found",
                                 Toast.LENGTH_SHORT
                             ).show()
@@ -278,7 +283,7 @@ class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(
                     }
 
                     MediaScannerConnection.scanFile(
-                        this@FullScreenViewerActivity,
+                        this@FilesViewActivity,
                         arrayOf(file.absolutePath),
                         null,
                         null
@@ -288,7 +293,7 @@ class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(
                 withContext(Dispatchers.Main) {
                     binding.lnrDownloadStatus.visibility = View.GONE
                     Toast.makeText(
-                        this@FullScreenViewerActivity,
+                        this@FilesViewActivity,
                         "File saved to Downloads/$baseFolderName/$subFolderPath/$fileName",
                         Toast.LENGTH_LONG
                     ).show()
@@ -299,7 +304,7 @@ class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(
                 withContext(Dispatchers.Main) {
                     binding.lnrDownloadStatus.visibility = View.GONE
                     Toast.makeText(
-                        this@FullScreenViewerActivity,
+                        this@FilesViewActivity,
                         "Download failed",
                         Toast.LENGTH_SHORT
                     ).show()
@@ -331,7 +336,7 @@ class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(
                     }
                 }
                 val uri = FileProvider.getUriForFile(
-                    this@FullScreenViewerActivity,
+                    this@FilesViewActivity,
                     "$packageName.fileprovider",
                     file
                 )
@@ -340,17 +345,18 @@ class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(
                         ?: contentType
                 withContext(Dispatchers.Main) {
                     val shareIntent = Intent(Intent.ACTION_SEND).apply {
-                        type = mimeType
+                        setType(mimeType)
                         putExtra(Intent.EXTRA_STREAM, uri)
                         addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                     }
                     startActivity(Intent.createChooser(shareIntent, "Share File"))
                 }
+
             } catch (e: Exception) {
                 Log.e("ShareFile", "Error sharing: ${e.message}", e)
                 withContext(Dispatchers.Main) {
                     Toast.makeText(
-                        this@FullScreenViewerActivity,
+                        this@FilesViewActivity,
                         "Failed to share file",
                         Toast.LENGTH_SHORT
                     ).show()
@@ -435,7 +441,7 @@ class FullScreenViewerActivity : BaseActivity<HomeworkViewImageDocumentBinding>(
                     } else {
                         withContext(Dispatchers.Main) {
                             Toast.makeText(
-                                this@FullScreenViewerActivity,
+                                this@FilesViewActivity,
                                 "No downloadable .mp4 found",
                                 Toast.LENGTH_SHORT
                             ).show()
