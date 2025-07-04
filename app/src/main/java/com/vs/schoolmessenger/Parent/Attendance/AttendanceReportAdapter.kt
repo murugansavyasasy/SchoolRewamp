@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filter.FilterResults
 import android.widget.Filterable
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -20,6 +21,7 @@ import com.vs.schoolmessenger.Parent.Noticeboard.Adapter.NoticeBoardAdapter
 import com.vs.schoolmessenger.Parent.Noticeboard.Notice
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardClickListener
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class AttendanceReportAdapter(
@@ -50,14 +52,14 @@ class AttendanceReportAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
             val shimmerView =
-                ShimmerUtil.wrapWithShimmer(parent, R.layout.attendace_report_student)
+                ShimmerUtil.wrapWithShimmer(parent, R.layout.attendance_report_student)
             com.vs.schoolmessenger.Parent.Communication.UnifiedVoiceAdapter.ShimmerViewHolder(
                 shimmerView
             )
         } else {
             val view =
                 LayoutInflater.from(parent.context)
-                    .inflate(R.layout.attendace_report_student, parent, false)
+                    .inflate(R.layout.attendance_report_student, parent, false)
             DataViewHolder(view, context) // Pass context to DataViewHolder
         }
     }
@@ -104,26 +106,24 @@ class AttendanceReportAdapter(
 
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
-        private val lblStudentName: TextView = itemView.findViewById(R.id.lblStudentName)
-        private val lblAdmissionValue: TextView = itemView.findViewById(R.id.lblAdmissionValue)
-        private val lblAttendanceStatus: TextView = itemView.findViewById(R.id.lblAttendanceStatus)
-        private val rlaAttendance: RelativeLayout = itemView.findViewById(R.id.rlaAttendance)
-        private val lblMonth: TextView = itemView.findViewById(R.id.lblMonth)
-        private val lnrDate: RelativeLayout = itemView.findViewById(R.id.lnrDate)
-        private val lblAdmission: TextView = itemView.findViewById(R.id.lblAdmission)
-        private val lblNameOfTheDate: TextView = itemView.findViewById(R.id.lblNameOfTheDate)
-        private val lblDate: TextView = itemView.findViewById(R.id.lblDate)
+
+        private val lnrDateCircle: LinearLayout = itemView.findViewById(R.id.lnrDateCircle)
+        private val tvMonth: TextView = itemView.findViewById(R.id.tvMonth)
+        private val tvDay: TextView = itemView.findViewById(R.id.tvDay)
+        private val tvFullDate: TextView = itemView.findViewById(R.id.tvFullDate)
+        private val tvDayName: TextView = itemView.findViewById(R.id.tvDayName)
+        private val tvStatus: TextView = itemView.findViewById(R.id.tvStatus)
+
+
         @SuppressLint("UseCompatLoadingForDrawables")
         fun bind(data: AttendanceReportStudentData, position: Int, adapter: AttendanceReportAdapter) {
 
             if (data.type == "Absent") {
-                lblAttendanceStatus.setBackgroundDrawable(context.resources.getDrawable(R.drawable.rounded_top_right_bottom_end_red))
-                rlaAttendance.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_outline_red))
-                lnrDate.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_light_red_radious))
-                lblMonth.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_red_radious_top_left_different))
-                lblAdmission.text = data.date
-                lblAttendanceStatus.text = data.type
-                lblNameOfTheDate.text = data.day
+                lnrDateCircle.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_date_circle))
+                tvStatus.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_status_badge))
+                tvFullDate.text = Constant.convertDateTimeFormat(data.date)
+                tvStatus.text = data.type
+                tvDayName.text = data.day
 
                 val inputDate = data.date
                 val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
@@ -132,22 +132,18 @@ class AttendanceReportAdapter(
 
                 try {
                     val dateObj = inputFormat.parse(inputDate)
-                    lblMonth.text = outputMonthFormat.format(dateObj)
-                    lblDate.text = outputDayFormat.format(dateObj)
+                    tvMonth.text = outputMonthFormat.format(dateObj)
+                    tvDay.text = outputDayFormat.format(dateObj)
                 } catch (e: ParseException) {
                     e.printStackTrace()
-                    lblMonth.text = ""
-                    lblDate.text = ""
+                    tvMonth.text = ""
+                    tvDay.text = ""
                 }
 
-            }else {
-                    lblAttendanceStatus.setBackgroundDrawable(context.resources.getDrawable(R.drawable.rounded_top_right_bottom_end_green))
-                    rlaAttendance.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_outline_green))
-                    lnrDate.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_light_green_radious))
-                    lblMonth.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_green_radious))
-                    lblAdmission.text = data.date
-                    lblAttendanceStatus.text = data.type
-                    lblNameOfTheDate.text = data.day
+            }
+            else {
+                lnrDateCircle.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_date_circle_light_green))
+                tvStatus.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_status_badge_green))
                 }
 
 

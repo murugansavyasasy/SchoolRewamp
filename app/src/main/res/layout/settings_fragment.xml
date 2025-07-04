@@ -337,7 +337,6 @@
                     android:layout_below="@+id/isViewAppLanguage"
                     android:layout_marginStart="@dimen/thirty"
                     android:layout_marginTop="@dimen/twenty"
-                    android:layout_marginBottom="@dimen/ten"
                     android:layout_marginEnd="@dimen/thirty"
                     android:gravity="center"
                     android:orientation="horizontal"
@@ -391,7 +390,6 @@
                     android:layout_below="@+id/isViewSaveContact"
                     android:layout_marginStart="@dimen/thirty"
                     android:layout_marginTop="@dimen/twenty"
-                    android:layout_marginBottom="@dimen/fifteen"
                     android:layout_marginEnd="@dimen/thirty"
                     android:gravity="center"
                     android:orientation="horizontal"
@@ -561,12 +559,14 @@
                 android:layout_below="@+id/rytGeneral"
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/twenty"
+                style="@style/CustomTextStylePoppinsRegular"
                 android:text="@string/lblFEEDBACK"
                 android:textSize="@dimen/fifteen_sp">
 
             </TextView>
 
             <RelativeLayout
+                android:layout_marginTop="@dimen/ten"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblFeedBack"
@@ -680,6 +680,7 @@
                     android:layout_marginStart="@dimen/thirty"
                     android:layout_marginTop="@dimen/twenty"
                     android:layout_marginEnd="@dimen/thirty"
+                    android:layout_marginBottom="@dimen/ten"
                     android:gravity="center"
                     android:orientation="horizontal"
                     android:weightSum="1">

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class StudentReportAdapter(
@@ -75,7 +76,7 @@ class StudentReportAdapter(
             // Bind actual data to the views
             lblAdmissionNumber.text = data.admission_no
             lblGender.text = data.gender
-            lblDOB.text = data.dob
+            lblDOB.text = Constant.convertDateTimeFormat(data.dob)
             lblRollNo.text = data.roll_no
             lblStudentName.text = data.name
             lblFatherName.text = data.father_name
