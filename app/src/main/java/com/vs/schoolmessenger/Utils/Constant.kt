@@ -39,6 +39,7 @@ import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Country.Country
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
@@ -1016,6 +1017,42 @@ object Constant {
         return currentDate.format(formatter)
     }
 
+//We use this to convert the Date Format 12 May 2025 to 12 Mon(we get Date And Day)
+fun getDayAndDateOnly(inputDateStr: String): Pair<String, String> {
+    return try {
+        val inputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+        val dayNameFormat = SimpleDateFormat("EEE", Locale.getDefault()) // e.g., Fri
+        val dayNumberFormat = SimpleDateFormat("dd", Locale.getDefault()) // e.g., 13
+
+        val date = inputFormat.parse(inputDateStr)!!
+        val dayName = dayNameFormat.format(date)     // "Fri"
+        val dayNumber = dayNumberFormat.format(date) // "13"
+
+        Pair(dayNumber, dayName)
+    } catch (e: Exception) {
+        e.printStackTrace()
+        Pair("", "") // fallback
+    }
+}
+
+
+    //Convert dd-MM-YYYY to dd MMM YYYY (12-02-2025 to 12 Feb 2025)
+    fun convertToReadableDate(inputDateStr: String): String {
+        return try {
+            val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+            val date = inputFormat.parse(inputDateStr)
+            outputFormat.format(date!!)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            inputDateStr // fallback: return input if format fails
+        }
+    }
+
+
+
+
+
     fun getCurrentDateInfo(): List<String> {
         val calendar = android.icu.util.Calendar.getInstance()
 
@@ -1051,6 +1088,8 @@ object Constant {
         }
 
     }
+
+
 
 
 
@@ -1295,13 +1334,10 @@ object Constant {
 
     fun checkBiometricSupport(activity: Activity): Boolean {
         val biometricManager = BiometricManager.from(activity)
-        var status = false
         return when (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG)) {
             BiometricManager.BIOMETRIC_SUCCESS -> {
                 val fingerPrintEnabled = SharedPreference.isFingerprintEnabled(activity)
-                if (fingerPrintEnabled) {
-                    status = true
-                } else {
+                if (!fingerPrintEnabled) {
                     val fingerPrintSkipped = SharedPreference.isFingerPrintSkipped(activity)
                     if (!fingerPrintSkipped) {
                         AlertDialog.Builder(activity)
@@ -1311,26 +1347,28 @@ object Constant {
                                 SharedPreference.setFingerprintEnabled(activity, true)
                             }
                             .setNegativeButton("No") { _, _ ->
-                                status = false
                                 SharedPreference.setFingerPrintSkipped(activity, true)
+                                SharedPreference.setFingerprintEnabled(activity, false)
+
                             }
                             .show()
                     }
                 }
-                status
+                true
             }
 
             BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> {
+                SharedPreference.setFingerprintEnabled(activity, false)
 //                Toast.makeText(activity, "No biometric features available on this device.", Toast.LENGTH_LONG).show()
                 false
             }
             BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
+                SharedPreference.setFingerprintEnabled(activity, false)
 //                Toast.makeText(activity, "Biometric features are currently unavailable.", Toast.LENGTH_LONG).show()
                 false
             }
             BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
                 SharedPreference.setFingerprintEnabled(activity, false)
-                showEnrollDialog(activity)
                 false
             }
 
@@ -1372,7 +1410,7 @@ object Constant {
                                 .setPositiveButton("Unlock now") { _, _ ->
                                     authenticate(activity)
                                 }
-                                    .show()
+                                .show()
                         }
                         else -> {
                             Toast.makeText(
@@ -1390,32 +1428,43 @@ object Constant {
                 }
             })
 
-        promptInfo = BiometricPrompt.PromptInfo.Builder()
-            .setTitle("Login with Fingerprint")
-            .setSubtitle("Use your fingerprint to access the app")
-            .setAllowedAuthenticators(
-                BiometricManager.Authenticators.BIOMETRIC_STRONG or
-                        BiometricManager.Authenticators.DEVICE_CREDENTIAL
-            )
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+
+            promptInfo = BiometricPrompt.PromptInfo.Builder()
+                .setTitle("Login with Fingerprint")
+                .setSubtitle("Use your fingerprint to access the app")
+                .setAllowedAuthenticators(
+                    BiometricManager.Authenticators.BIOMETRIC_STRONG or
+                            BiometricManager.Authenticators.DEVICE_CREDENTIAL
+                )
 //            .setNegativeButtonText("Cancel")
-            .build()
+                .build()
+        } else {
+            promptInfo = BiometricPrompt.PromptInfo.Builder()
+                .setTitle("Login with Fingerprint")
+                .setSubtitle("Use your fingerprint to access the app")
+                .setDeviceCredentialAllowed(true)
+//            .setNegativeButtonText("Cancel")
+                .build()
+        }
     }
 
-    fun showEnrollDialog(activity: Activity) {
-        AlertDialog.Builder(activity)
-            .setTitle("Fingerprint not set up")
-            .setMessage("To use fingerprint login, please add at least one fingerprint in your device settings.")
-            .setPositiveButton("Go to Settings") { _, _ ->
-                // Open biometric enrollment screen
-                val enrollIntent = Intent(Settings.ACTION_BIOMETRIC_ENROLL).apply {
-                    putExtra(
-                        Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED,
-                        BiometricManager.Authenticators.BIOMETRIC_STRONG or BiometricManager.Authenticators.DEVICE_CREDENTIAL
-                    )
-                }
-                activity.startActivity(enrollIntent)
-            }
-//            .setNegativeButton("Cancel", null)
-            .show()
-    }
+//    fun showEnrollDialog(activity: Activity) {
+//        AlertDialog.Builder(activity)
+//            .setTitle("Fingerprint not set up")
+//            .setMessage("To use fingerprint login, please add at least one fingerprint in your device settings.")
+//            .setPositiveButton("Go to Settings") { _, _ ->
+//                // Open biometric enrollment screen
+//                val enrollIntent = Intent(Settings.ACTION_BIOMETRIC_ENROLL).apply {
+//                    putExtra(
+//                        Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED,
+//                        BiometricManager.Authenticators.BIOMETRIC_STRONG or BiometricManager.Authenticators.DEVICE_CREDENTIAL
+//                    )
+//                }
+//                activity.startActivity(enrollIntent)
+//            }
+//            .setNegativeButton("SKIP") { _, _ ->
+//            }
+//            .show()
+//    }
 }

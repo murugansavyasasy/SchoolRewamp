@@ -91,17 +91,11 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.btnNext.setOnClickListener(this)
         binding.rytStartDate.setOnClickListener(this)
-        binding.rytStart.setOnClickListener(this)
-        binding.rytStartTime.setOnClickListener(this)
-        binding.lblDay.setOnClickListener(this)
-        binding.lblDate.setOnClickListener(this)
-        binding.imgDateDown.setOnClickListener(this)
-        binding.lnrStartCalendar.setOnClickListener(this)
-        binding.txtStartDate.setOnClickListener(this)
         binding.txtStartTime.setOnClickListener(this)
         Constant.editTextCounter(this, binding.txtDesc, 500, binding.lbTextCount)
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
+
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
@@ -353,18 +347,16 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
                 onBackPressed()
             }
 
-            R.id.rytStartDate, R.id.txtStartDate, R.id.lnrStartCalendar, R.id.imgDateDown, R.id.lblDay, R.id.lblDate -> {
+            R.id.rytStartDate-> {
 
                 selectedDateField = 1
                 Constant.showDatePicker(this, false) { selectedDate ->
                     Log.d("selectedDate", selectedDate)
                     binding.txtStartDate.text =
                         Constant.covertDateFormate(selectedDate) // 13 may 2222
-                    val parts = binding.txtStartDate.text.split(" ")
-                    val day = parts[0]
-                    val Date = parts[1]
-                    binding.lblDay.text = day
-                    binding.lblDate.text = Date
+                    val (day, formattedDate) = Constant.getDayAndDateOnly(binding.txtStartDate.text.toString())// 13 Mon
+                    binding.lblDay.text = formattedDate
+                    binding.lblDate.text = day
                 }
             }
 

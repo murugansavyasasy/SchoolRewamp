@@ -57,18 +57,14 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
         return AttachmentBinding.inflate(layoutInflater)
     }
     private var cameraPermissionDeniedCount = 0
-
     private lateinit var albumResultLauncher: ActivityResultLauncher<Intent>
-
     companion object {
         private const val PICK_DOCUMENT_REQUEST = 1003
         private const val PICK_IMAGE_REQUEST = 1001
         private const val CAMERA_IMAGE_REQUEST = 1004
         private const val MAX_FILES = 10
     }
-
     private var isUserDetails: UserDetails? = null
-
     var isMultipleSchool = false
     private var isStaffDetails: StaffDetails? = null
     private var cameraImageFilePath: String? = null
@@ -152,7 +148,6 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
                         if (type.toString() == Constant.VIDEO) {
                             binding.thumbnailView.visibility = View.VISIBLE
                             binding.rcyImages.visibility = View.GONE
-
                             // Extract and show video thumbnail
                             val bitmap = Constant.getVideoThumbnail(this, uri!!)
                             binding.thumbnailView.setImageBitmap(bitmap)
@@ -180,33 +175,29 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-
                 }
             }
 
         binding.edtDescription.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 val length = s?.length ?: 0
                 binding.lblTextCount.text = "$length/500"
             }
 
             override fun afterTextChanged(p0: Editable?) {
-
             }
         })
 
 
         binding.edtTitle.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 val length = s?.length ?: 0
                 binding.lblTitleTextCount.text = "$length/50"
             }
-
             override fun afterTextChanged(p0: Editable?) {
+
             }
         })
 
@@ -217,6 +208,7 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
             binding.rcyImages.visibility = View.VISIBLE
             binding.thumbnailView.visibility = View.GONE
             Constant.selectedFiles.clear()
+
             saveDrawableToCache(R.drawable.add_image)?.let {
                 Constant.selectedFiles.add(
                     FileItem(

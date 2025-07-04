@@ -21,6 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/twenty"
+            android:textSize="@dimen/fifteen_sp"
             android:text="@string/lblChoosecountry"
             style="@style/CustomTextStylePoppinsBold"
             app:layout_constraintTop_toTopOf="parent"
@@ -33,6 +34,7 @@
             android:layout_marginStart="@dimen/twenty"
             android:layout_marginEnd="@dimen/twenty"
             android:layout_marginTop="@dimen/twenty"
+            android:textSize="@dimen/fifteen_sp"
             style="@style/CustomTextStylePoppinsRegular"
             android:lineSpacingExtra="@dimen/five"
             android:text="@string/lblCountryNotes"
@@ -99,7 +101,7 @@
                     style="@style/CustomTextStylePoppinsBold"
                     android:textColor="@color/navi_blue6"
                     android:layout_marginTop="@dimen/five"
-                    android:textSize="@dimen/thirteen_sp" />
+                    android:textSize="@dimen/fifteen_sp" />
 
                 <View
                     android:layout_width="match_parent"

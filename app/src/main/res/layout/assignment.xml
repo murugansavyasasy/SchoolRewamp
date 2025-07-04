@@ -9,56 +9,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/rytHeader"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/primary_light"
-            android:paddingVertical="@dimen/twenty">
-
-            <ImageView
-                android:id="@+id/imgBack"
-                android:layout_width="@dimen/thirty"
-                android:layout_height="@dimen/thirty"
-                android:layout_marginStart="@dimen/fifteen"
-                android:src="@drawable/arrow_back_black" />
-
-            <TextView
-                android:id="@+id/lblCreateNoticeBoard"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/five"
-                android:text="@string/Assignment"
-                android:textColor="@color/black"
-                android:textSize="@dimen/twenty_sp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-        <RelativeLayout
-            android:id="@+id/rytType"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/rytHeader"
-            android:layout_marginStart="@dimen/fifteen"
-            android:layout_marginTop="@dimen/ten"
-            android:layout_marginEnd="@dimen/fifteen"
-            android:padding="@dimen/ten"
-            android:background="@drawable/bg_white_light_radious"
-            android:gravity="center">
-
-            <Spinner
-                android:id="@+id/spinnerAssignment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/custom_spinner_background" />
-        </RelativeLayout>
+        <include
+            android:id="@+id/toolbarLayout"
+            layout="@layout/school_side_tool_bar" />
 
         <TextView
             android:id="@+id/lblCategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/rytType"
+            android:layout_below="@+id/toolbarLayout"
             android:layout_marginStart="@dimen/twenty"
             android:layout_marginTop="@dimen/ten"
             android:fontFamily="@font/poppins_bold"
@@ -112,7 +71,6 @@
             android:layout_marginTop="@dimen/ten"
             android:layout_marginEnd="@dimen/fifteen"
             android:fontFamily="@font/poppins_medium"
-            android:hint="@string/Entertitle"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"
             android:textStyle="normal">
@@ -148,7 +106,7 @@
             android:focusableInTouchMode="true"
             android:fontFamily="@font/poppins_regular"
             android:gravity="start"
-            android:hint="@string/Enterdescription"
+            android:hint="@string/Description"
             android:maxLength="100"
             android:padding="@dimen/ten"
             android:textColor="@color/black"
@@ -167,7 +125,7 @@
             android:layout_marginTop="@dimen/ten"
             android:layout_marginEnd="@dimen/fifteen"
             android:fontFamily="@font/poppins_medium"
-            android:text="0 / 100"
+            android:text="0 / 500"
             android:textColor="@color/light_gray"
             android:textSize="@dimen/thirteen_sp"
             android:textStyle="normal">
@@ -238,64 +196,151 @@
         <RelativeLayout
             android:id="@+id/rlaFilePicking"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_below="@+id/lblTimePick"
-            android:layout_marginTop="@dimen/five"
-            android:visibility="gone">
+            android:layout_marginTop="@dimen/five">
 
             <TextView
                 android:id="@+id/lblAddPhoto"
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/fifteen"
                 android:layout_marginTop="@dimen/ten"
-                android:text="@string/AddPhoto"
+                android:text="Add Attachment"
                 android:textColor="@color/black"
-                android:textSize="@dimen/fifteen_sp"
-                android:textStyle="bold">
+                android:textSize="@dimen/thirteen_sp">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/lblOptional"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_toEndOf="@+id/lblAddPhoto"
+                android:text="@string/Optional"
+                android:textColor="@color/mild_grey1"
+                android:layout_marginStart="8dp"
+                android:textSize="@dimen/thirteen_sp">
 
             </TextView>
 
             <ImageView
-                android:id="@+id/lmgCamera"
                 android:layout_width="@dimen/twenty_five"
                 android:layout_height="@dimen/twenty_five"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/twenty"
-                android:src="@drawable/camera_icon"></ImageView>
+                android:src="@drawable/ic_attach_file">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rcyImages"
+            </ImageView>
+
+            <RelativeLayout
+                android:id="@+id/rytRecyclewview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/lmgCamera"
-                android:orientation="vertical">
+                android:layout_below="@+id/lblAddPhoto">
 
-            </androidx.recyclerview.widget.RecyclerView>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcyImages"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ten"
+                    android:orientation="vertical">
 
+                </androidx.recyclerview.widget.RecyclerView>
+
+                <VideoView
+                    android:id="@+id/videoView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/one_eighty"
+                    android:layout_marginStart="@dimen/twenty"
+                    android:layout_marginTop="@dimen/thirty"
+                    android:layout_marginEnd="@dimen/twenty"
+                    android:visibility="gone">
+
+                </VideoView>
+
+                <android.webkit.WebView
+                    android:id="@+id/webView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/one_eighty"
+                    android:layout_marginStart="@dimen/twenty"
+                    android:layout_marginTop="@dimen/thirty"
+                    android:layout_marginEnd="@dimen/twenty"
+                    android:visibility="gone">
+
+                </android.webkit.WebView>
+
+                <ProgressBar
+                    android:id="@+id/loadingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:indeterminateDrawable="@drawable/progress_bar_white"
+                    android:indeterminateOnly="true"
+                    android:visibility="gone">
+
+                </ProgressBar>
+
+
+                <ImageView
+                    android:id="@+id/thumbnailView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/one_eighty"
+                    android:layout_marginStart="@dimen/twenty"
+                    android:layout_marginTop="@dimen/twenty_five"
+                    android:layout_marginEnd="@dimen/twenty"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/imgDelete"
+                    android:layout_width="@dimen/twenty_five"
+                    android:layout_height="@dimen/twenty_five"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="@dimen/twenty"
+                    android:layout_marginTop="@dimen/twenty_five"
+                    android:layout_marginEnd="@dimen/twenty"
+                    android:background="@drawable/white_circle_bg"
+                    android:padding="@dimen/five"
+                    android:src="@drawable/del_icon"
+                    android:visibility="gone">
+
+                </ImageView>
+
+                <ImageView
+                    android:id="@+id/imgPlay"
+                    android:layout_width="@dimen/fifty"
+                    android:layout_height="@dimen/fifty"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/video_play"
+                    android:visibility="gone">
+
+                </ImageView>
+
+            </RelativeLayout>
+
+
+            <TextView
+                android:id="@+id/btnChooseRecipient"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/twenty_five"
+                android:layout_below="@id/rytRecyclewview"
+                android:layout_marginTop="@dimen/fifty"
+                android:layout_marginEnd="@dimen/twenty_five"
+                android:layout_marginBottom="@dimen/thirty"
+                android:background="@drawable/rect_btn_orange"
+                android:gravity="center"
+                android:padding="@dimen/ten"
+                android:text="@string/ChooseRecipients"
+                android:textColor="@color/white"
+                android:textSize="@dimen/thirteen_sp">
+
+            </TextView>
         </RelativeLayout>
-
-
-        <TextView
-            android:id="@+id/btnChooseRecipient"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/rlaFilePicking"
-            android:layout_marginStart="@dimen/twenty_five"
-            android:layout_marginTop="@dimen/fifteen"
-            android:layout_marginEnd="@dimen/twenty_five"
-            android:layout_marginBottom="@dimen/ten"
-            android:background="@drawable/rect_btn_orange"
-            android:fontFamily="@font/poppins_bold"
-            android:gravity="center"
-            android:padding="@dimen/ten"
-            android:text="@string/ChooseRecipients"
-            android:textColor="@color/white"
-            android:textSize="@dimen/thirteen_sp"
-            android:textStyle="bold">
-
-        </TextView>
-
     </RelativeLayout>
 </ScrollView>

@@ -139,6 +139,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
+                style="@style/CustomTextStylePoppinsRegular"
                 android:textColor="@color/bpBlue"
                 android:textSize="@dimen/thirteen_sp"
                 android:textStyle="bold"
@@ -166,6 +167,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/five"
                     android:text=""
+                    style="@style/CustomTextStylePoppinsRegular"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp"
                     android:textStyle="normal"
@@ -173,6 +175,7 @@
 
                 <TextView
                     android:id="@+id/lblCheckoutTime"
+                    style="@style/CustomTextStylePoppinsRegular"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/lblCheckInTime"
@@ -189,6 +192,7 @@
                 android:id="@+id/lblWorkingHours"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                style="@style/CustomTextStylePoppinsRegular"
                 android:layout_below="@+id/rytCheckInTime"
                 android:layout_marginTop="@dimen/five"
                 android:layout_marginBottom="@dimen/twenty"

@@ -1,6 +1,5 @@
 package com.vs.schoolmessenger.Utils
 
-import com.vs.schoolmessenger.Repository.APIKeyNames
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -9,7 +8,6 @@ import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.json.JSONObject
-import java.util.concurrent.TimeUnit
 
 
 fun fetchVimeoThumbnail(videoId: String, callback: (String?) -> Unit) {

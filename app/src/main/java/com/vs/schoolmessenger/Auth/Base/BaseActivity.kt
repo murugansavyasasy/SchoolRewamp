@@ -6,24 +6,30 @@ import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.app.TimePickerDialog
 import android.content.Context
+import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.PorterDuff
+import android.graphics.Typeface
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.DatePicker
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -31,12 +37,16 @@ import android.widget.ListView
 import android.widget.PopupWindow
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
+import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIds
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SectionList.Section
@@ -54,8 +64,11 @@ import com.vs.schoolmessenger.Utils.TimeSelectedListener
 import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Locale
+import java.util.TimeZone
 
 abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
@@ -66,11 +79,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = getViewBinding()
         setContentView(binding.root)
-
-        // Common setup for all activities
-        // setupToolbar()
         setupViews()
-        //  applyCustomFontToViews()
     }
 
     open fun setupViews() {
@@ -726,6 +735,48 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
             },
             year, month, day
         )
+        datePickerDialog.show()
+    }
+
+
+
+    //Homework report sender
+    fun showDatePickerDialogSelectedDate(
+        context: Context,
+        isSelectedDate: String?, // "dd-MM-yyyy" or null
+        listener: OnDateSelectedListener
+    ) {
+        val calendar = Calendar.getInstance()
+
+        // Try to parse last selected date if available
+        if (!isSelectedDate.isNullOrEmpty()) {
+            try {
+                val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                val selectedDate = sdf.parse(isSelectedDate)
+                calendar.time = selectedDate!!
+            } catch (e: Exception) {
+                e.printStackTrace() // fallback to current date
+            }
+        }
+
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(
+            context,
+            { _, selectedYear, selectedMonth, selectedDay ->
+                val selectedCalendar = Calendar.getInstance()
+                selectedCalendar.set(selectedYear, selectedMonth, selectedDay)
+                val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                val formattedDate = sdf.format(selectedCalendar.time)
+                listener.onDateSelected(formattedDate)
+            },
+            year, month, day
+        )
+        datePickerDialog.datePicker.maxDate = Calendar.getInstance().timeInMillis
+
+
         datePickerDialog.show()
     }
 

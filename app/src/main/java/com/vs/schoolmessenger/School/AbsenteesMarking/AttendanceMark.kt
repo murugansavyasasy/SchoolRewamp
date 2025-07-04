@@ -360,11 +360,9 @@ class AttendanceMark : BaseActivity<AttendanceMarkBinding>(),
                     Log.d("selectedDate", selectedDate)
                     binding.lblDatePick.text = Constant.covertDateFormate(selectedDate)
                     SelectedDate = selectedDate
-                    val parts = binding.lblDatePick.text.split(" ")
-                    val day = parts[0]
-                    val Date = parts[1]
-                    binding.lblDay.text = day
-                    binding.lblDate1.text = Date
+                    val (day, formattedDate) = Constant.getDayAndDateOnly(binding.lblDatePick.text.toString())// 13 Mon
+                    binding.lblDay.text = formattedDate
+                    binding.lblDate1.text = day
                     if (callApi) {
                         loadData()
                     }

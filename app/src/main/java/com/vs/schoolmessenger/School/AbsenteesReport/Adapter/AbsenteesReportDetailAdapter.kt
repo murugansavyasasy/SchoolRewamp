@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.School.AbsenteesReport.Adapter
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -81,9 +82,10 @@ class AbsenteesReportDetailAdapter(
             adapter: AbsenteesReportDetailAdapter,
             selectedDate: String
         ) {
-            grade_view.text = data.name
+            grade_view.text = data.class_name
             badge_count.text = data.total_absentees
-            date_view.text = selectedDate
+            date_view.text = Constant.convertToReadableDate(selectedDate)
+
 
             relative_layout.setOnClickListener {
                 val intent = Intent(context, AbsenteesStudents::class.java).apply {
@@ -95,8 +97,8 @@ class AbsenteesReportDetailAdapter(
 
         private fun isSaveAbsenteesReportDetails(data: ClassWise, selectedDate: String) {
             val saveAbsenteesReportData = ClassWise(
-                id = data.id,
-                name = data.name,
+                class_id = data.class_id,
+                class_name = data.class_name,
                 section_wise = data.section_wise,
                 total_absentees = data.total_absentees,
                 date = selectedDate

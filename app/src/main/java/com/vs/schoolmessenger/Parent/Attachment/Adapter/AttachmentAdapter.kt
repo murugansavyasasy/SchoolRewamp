@@ -155,6 +155,7 @@ class AttachmentAdapter(
 
 
             webView.setOnTouchListener { _, event ->
+                webView.onPause()
                 if (event.action == MotionEvent.ACTION_UP) {
                     if (item.is_unread) {
                         imgNewImage.visibility = View.GONE
