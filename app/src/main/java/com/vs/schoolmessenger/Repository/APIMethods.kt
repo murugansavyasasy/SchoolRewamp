@@ -36,7 +36,7 @@ object APIMethods {
     const val isSendVoice = "comm/api/voice/send-voice"
     const val isUpdateStatusArchive = "comm/api/communication/read-status-update-archive"
     const val isGetAcademicYear = "comm/api/recipient/get-academic-year-list"
-    const val isHomeWorkDetails="comm/api/homework/list"
+    const val isHomeWorkDetails = "comm/api/homework/list"
 
     const val send_homework = "comm/api/homework/send-homework"
     const val homework_reports = "comm/api/homework/get-homework-report"
@@ -47,19 +47,22 @@ object APIMethods {
     const val attachments_list_archive = "comm/api/communication/attachment-list-archive"
 
 
-    const val punch_giometric_attendance =  "staff-attd/api/geometric/entry-using-app"
-    const val add_giometric_location =  "staff-attd/api/geometric/set-geometric-location"
-    const val giometric_location_history =  "staff-attd/api/geometric/get-geometric-location-history"
-    const val staff_locations =  "staff-attd/api/geometric/get-staff-geometric-location"
-    const val remove_location =  "staff-attd/api/geometric/remove-geometric-location"
-    const val update_location =  "staff-attd/api/geometric/update-geometric-location"
-    const val giometric_staff_attendance_report =  "staff-attd/api/geometric/geometric-staff-attendance-report"
-    const val giometric_principal_attendance_report =  "staff-attd/api/geometric/geometric-principal-attendance-report"
-    const val punch_history =  "staff-attd/api/geometric/geometric-punch-history"
-    const val student_report= "admin/api/get-student-report"
+    const val punch_giometric_attendance = "staff-attd/api/geometric/entry-using-app"
+    const val add_giometric_location = "staff-attd/api/geometric/set-geometric-location"
+    const val giometric_location_history = "staff-attd/api/geometric/get-geometric-location-history"
+    const val staff_locations = "staff-attd/api/geometric/get-staff-geometric-location"
+    const val remove_location = "staff-attd/api/geometric/remove-geometric-location"
+    const val update_location = "staff-attd/api/geometric/update-geometric-location"
+    const val giometric_staff_attendance_report =
+        "staff-attd/api/geometric/geometric-staff-attendance-report"
+    const val giometric_principal_attendance_report =
+        "staff-attd/api/geometric/geometric-principal-attendance-report"
+    const val punch_history = "staff-attd/api/geometric/geometric-punch-history"
+    const val student_report = "admin/api/get-student-report"
     const val IsGetEventReport = "admin/api/school-event/get-event"
     const val send_absentee_sms = "stud-attd/api/attendance/send-absentees-sms-with-session-type"
-    const val get_student_attendance_report_for_scchool = "stud-attd/api/attendance/student-attendance-report"
+    const val get_student_attendance_report_for_scchool =
+        "stud-attd/api/attendance/student-attendance-report"
     const val get_child_attendance_report = "stud-attd/api/attendance/get-absent-dates-for-child"
     const val IsGetHolidayReport = "admin/api/school-event/view-holidays"
     const val getabsenteescountbydate = "stud-attd/api/attendance/get-absentees-count-by-date"
@@ -70,6 +73,7 @@ object APIMethods {
     const val sendevent = "admin/api/school-event/send-event"
     const val sendAttachment = "comm/api/attachment/send-attachment"
     const val attachmentList = "comm/api/attachment/list"
+    const val get_category_list = "get_category_list"
     const val attachmentListArchive = "comm/api/attachment/list-archive"
     const val leave_request_apply = "comm/api/leave-req/apply"
     const val getleaverequest = "comm/api/leave-req/list"
@@ -79,6 +83,9 @@ object APIMethods {
     const val getlpeditReport = "lms/api/lesson-plan/get-data-for-edit"
     const val isupdatelessonplan = "lms/api/lesson-plan/update"
     const val islessonplandelete = "lms/api/lesson-plan/delete"
+    const val get_campaigns = "get_campaigns"
+
+    const val my_coupons= "my_coupons"
 }
 
 

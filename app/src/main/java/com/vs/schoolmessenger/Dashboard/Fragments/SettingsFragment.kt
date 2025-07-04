@@ -155,7 +155,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         rlaLogout.setOnClickListener {
 //            SharedPreference.putMobileNumberPassWord(requireActivity(), "", "")
             SharedPreference.putLogout(requireActivity(), true)
-//            SharedPreference.setLoggedIn(requireActivity(), false)
+            SharedPreference.setLoggedIn(requireActivity(), false)
 //            SharedPreference.setFingerprintEnabled(requireActivity(), false)
             startActivity(Intent(requireActivity(), Login::class.java))
         }

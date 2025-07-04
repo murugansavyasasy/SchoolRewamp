@@ -1,0 +1,102 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/dual_color_background">
+
+
+
+    <TextView
+        android:id="@+id/lblNoRecord"
+        android:layout_width="match_parent"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:visibility="gone"
+        android:textSize="15dp"
+        android:layout_centerInParent="true"
+        android:text="No records found."
+        android:gravity="center"
+        android:layout_height="wrap_content">
+
+    </TextView>
+
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/relative_layout">
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/left_arrow"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="20dp"/>
+        <TextView
+            android:id="@+id/backtext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="My Coupons"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_toEndOf="@id/back"
+            android:layout_marginStart="8dp"
+            android:layout_alignTop="@id/back"/>
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:id="@+id/linearlayout"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_margin="16dp"
+        android:orientation="horizontal"
+        android:paddingHorizontal="12dp"
+        android:layout_below="@+id/relative_layout"
+        android:background="@drawable/bg_search"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/imgSearch"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/search_icon" />
+
+        <EditText
+            android:id="@+id/editSearch"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:hint="Search"
+            android:background="@null"
+            android:textColor="#000000"
+            android:textColorHint="#847c81"
+            android:visibility="visible"
+            android:inputType="text"
+            android:textSize="16sp"/>
+    </LinearLayout>
+
+
+    <include
+        android:id="@+id/coupontablayout"
+        layout="@layout/coupon_tablayout"/>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="377dp"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/coupontablayout"
+        android:clipToPadding="false"
+        android:scrollIndicators="none"
+        android:layout_alignStart="@+id/linearlayout"
+        android:layout_alignEnd="@+id/linearlayout"
+        android:layout_marginBottom="5dp"
+        android:scrollbars="vertical"
+        android:layout_marginTop="5dp"/>
+
+
+
+</RelativeLayout>

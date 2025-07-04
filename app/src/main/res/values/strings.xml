@@ -1,6 +1,6 @@
 <resources>
 
-<!--    <string name="app_name">School Chimes</string>-->
+    <!--    <string name="app_name">School Chimes</string>-->
     <string name="app_name">School Chimes-Beta</string>
     <string name="isPasswordMisMatching">Password is mismatching</string>
     <string name="SuccessfullyPasswordCreation">Successfully creation your password</string>
@@ -571,5 +571,7 @@
     <string name="no_matching_notices_found">No matching notices found</string>
     <string name="no_matching_attachment_found">No matching attachment found</string>
     <string name="event_holiday"><![CDATA[Event & Holiday]]></string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

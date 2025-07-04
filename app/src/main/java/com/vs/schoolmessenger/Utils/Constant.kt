@@ -1324,13 +1324,12 @@ object Constant {
 //                Toast.makeText(activity, "No biometric features available on this device.", Toast.LENGTH_LONG).show()
                 false
             }
-
             BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
 //                Toast.makeText(activity, "Biometric features are currently unavailable.", Toast.LENGTH_LONG).show()
                 false
             }
-
             BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
+                SharedPreference.setFingerprintEnabled(activity, false)
                 showEnrollDialog(activity)
                 false
             }
@@ -1353,15 +1352,12 @@ object Constant {
             object : BiometricPrompt.AuthenticationCallback() {
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                     super.onAuthenticationSucceeded(result)
-//                    Toast.makeText(activity, "Authentication succeeded!", Toast.LENGTH_SHORT).show()
                     listener.onAuthenticate("Authentication succeeded!", true)
-                    // Navigate to dashboard or home screen
                 }
 
                 override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                     super.onAuthenticationError(errorCode, errString)
                     listener.onAuthenticate("Authentication error: $errString", false)
-//                    Toast.makeText(applicationContext, "Authentication error: $errString", Toast.LENGTH_SHORT).show()
                     Log.d("errorCodeValue", errorCode.toString())
                     when (errorCode) {
                         BiometricPrompt.ERROR_LOCKOUT,
@@ -1370,18 +1366,14 @@ object Constant {
                         }
 
                         BiometricPrompt.ERROR_USER_CANCELED -> {
-
                             AlertDialog.Builder(activity)
                                 .setTitle("School Chimes is locked")
                                 .setMessage("Authentication is required to access the School Chimes")
                                 .setPositiveButton("Unlock now") { _, _ ->
                                     authenticate(activity)
                                 }
-
-                                .show()
-
+                                    .show()
                         }
-
                         else -> {
                             Toast.makeText(
                                 activity,
@@ -1395,7 +1387,6 @@ object Constant {
                 override fun onAuthenticationFailed() {
                     super.onAuthenticationFailed()
                     listener.onAuthenticate("Authentication failed", false)
-//                    Toast.makeText(applicationContext, "Authentication failed", Toast.LENGTH_SHORT).show()
                 }
             })
 
