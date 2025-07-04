@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.Repository
 
 import android.app.Activity
+import android.util.JsonToken
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -15,16 +16,16 @@ import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
 import com.vs.schoolmessenger.Parent.Communication.VoiceDataResponse
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventResponse
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.HolidayResponse
-import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
-import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
-import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
-
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.SendAbsenteeSMSResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportDataResponse
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeStudentsResponse
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteesResponse
+import com.vs.schoolmessenger.School.Assignment.DataClass.AssignmentResponse
+import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
+import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
+import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionModel.DailyCollectionReportResponse
 import com.vs.schoolmessenger.School.Event.Response.EventSendResponse
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportModel.FeePendingReportResponse
@@ -43,11 +44,10 @@ import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchHistoryRe
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffAttendanceReportResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffLocationResponse
 import com.vs.schoolmessenger.School.NoticeBoard.Response.NoticeBoardSendResponse
-import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
 import com.vs.schoolmessenger.School.SchoolStrength.Model.SchoolStrengthResponse
+import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
 import com.vs.schoolmessenger.Utils.SharedPreference
 import okhttp3.RequestBody
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -68,9 +68,12 @@ class SchoolServices {
     var isGetVoiceHistory: MutableLiveData<VoiceDetails?>
     var isGetTextHistory: MutableLiveData<TextDetailsResponse?>
     var isGetHomeWorkReport: MutableLiveData<HomeWorkReportApiResponse?>
+    var isGetAssignmentReport: MutableLiveData<AssignmentResponse?>
+    var isAssignmentDelete: MutableLiveData<LPDeleteResponse?>
     var isGetDailyCollectionReport: MutableLiveData<DailyCollectionReportResponse?>
     var isSendText: MutableLiveData<TextSendResponse?>
     var isSendHomeWork: MutableLiveData<HomeWorkSendResponse?>
+    var isSendAssignment: MutableLiveData<HomeWorkSendResponse?>
     var isSendVoice: MutableLiveData<TextSendResponse?>
     var isUpdateStatusArchive: MutableLiveData<StatusArchiveResponse?>
     var isAcademicYear: MutableLiveData<AcademicYearResponse?>
@@ -132,10 +135,13 @@ class SchoolServices {
         isGetVoiceHistory = MutableLiveData()
         isGetTextHistory = MutableLiveData()
         isGetHomeWorkReport = MutableLiveData()
+        isGetAssignmentReport = MutableLiveData()
+        isAssignmentDelete = MutableLiveData()
         isNoticeBoardReport = MutableLiveData()
         isGetDailyCollectionReport = MutableLiveData()
         isSendText = MutableLiveData()
         isSendHomeWork = MutableLiveData()
+        isSendAssignment = MutableLiveData()
         isSendVoice = MutableLiveData()
         isUpdateStatusArchive = MutableLiveData()
         isAcademicYear = MutableLiveData()
@@ -624,6 +630,78 @@ class SchoolServices {
     val isGetHomeWorkReportLiveData: LiveData<HomeWorkReportApiResponse?>
         get() = isGetHomeWorkReport
 
+    fun isGetAssignmentReport(
+        isToken: String, isAcademicYearId: Int, activity: Activity
+    ) {
+        RestClient.apiInterfaces.isGetAssignmentReport(isToken, isAcademicYearId)
+            ?.enqueue(object : Callback<AssignmentResponse?> {
+                override fun onResponse(
+                    call: Call<AssignmentResponse?>,
+                    response: Response<AssignmentResponse?>
+                ) {
+                    Log.d(
+                        "isGetCountryList", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isGetAssignmentReport.postValue(response.body())
+                            } else {
+                                isGetAssignmentReport.postValue(response.body())
+                            }
+                        }
+                    } else {
+                        isGetAssignmentReport.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<AssignmentResponse?>, t: Throwable) {
+                    isGetAssignmentReport.postValue(null)
+                    Log.d("t.printStackTrace()", t.printStackTrace().toString())
+                }
+            })
+    }
+
+    val isGetAssignmentReportLiveData: LiveData<AssignmentResponse?>
+        get() = isGetAssignmentReport
+
+    fun isDeleteAssignment(
+        isToken: String, jsonObject: JsonObject, activity: Activity
+    ) {
+        RestClient.apiInterfaces.isAssignmentDelete(isToken, jsonObject)
+            ?.enqueue(object : Callback<LPDeleteResponse?> {
+                override fun onResponse(
+                    call: Call<LPDeleteResponse?>,
+                    response: Response<LPDeleteResponse?>
+                ) {
+                    Log.d(
+                        "isGetCountryList", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isAssignmentDelete.postValue(response.body())
+                            } else {
+                                isAssignmentDelete.postValue(response.body())
+                            }
+                        }
+                    } else {
+                        isAssignmentDelete.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<LPDeleteResponse?>, t: Throwable) {
+                    isAssignmentDelete.postValue(null)
+                    Log.d("t.printStackTrace()", t.printStackTrace().toString())
+                }
+            })
+    }
+
+    val isDeleteAssignmentLiveData: LiveData<LPDeleteResponse?>
+        get() = isAssignmentDelete
+
 
     fun isNoticeBoardReport(
         isToken: String, activity: Activity
@@ -938,6 +1016,33 @@ class SchoolServices {
 
     val isSendHomeWorkLiveData: LiveData<HomeWorkSendResponse?>
         get() = isSendHomeWork
+
+    fun isSendAssignment(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        RestClient.changeApiBaseUrl(SharedPreference.getBaseUrl(activity).toString())
+        RestClient.apiInterfaces.isAssignmentSend(isToken, jsonObject)
+            ?.enqueue(object : Callback<HomeWorkSendResponse?> {
+                override fun onResponse(
+                    call: Call<HomeWorkSendResponse?>, response: Response<HomeWorkSendResponse?>
+                ) {
+                    if (response.code() == 200 && response.body() != null) {
+                        isSendAssignment.postValue(response.body())
+                    } else {
+                        isSendAssignment.postValue(response.body())
+                    }
+
+                    Log.d("isGetCountryList", "${response.code()} - ${response}")
+                }
+
+                override fun onFailure(call: Call<HomeWorkSendResponse?>, t: Throwable) {
+                    isSendAssignment.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+
+    val isSendAssignmentLiveData: LiveData<HomeWorkSendResponse?>
+        get() = isSendAssignment
 
 
     fun isUpdateStatusArchive(isToken: String, jsonObject: JsonObject, activity: Activity) {

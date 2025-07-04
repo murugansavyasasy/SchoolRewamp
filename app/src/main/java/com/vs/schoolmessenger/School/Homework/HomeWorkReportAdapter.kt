@@ -143,6 +143,7 @@ class HomeWorkReportAdapter(
 
             webView.setOnTouchListener(object : OnTouchListener {
                 override fun onTouch(v: View?, event: MotionEvent): Boolean {
+                    webView.onPause()
                     if (event.getAction() == MotionEvent.ACTION_MOVE) {
                         return false
                     }

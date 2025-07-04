@@ -79,8 +79,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
 
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
-
-
     private var isStaffDetails: StaffDetails? = null
     private var selectedDateField: Int = 0
     private var txtStartDate: String? = null

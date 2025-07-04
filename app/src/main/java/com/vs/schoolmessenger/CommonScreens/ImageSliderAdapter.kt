@@ -22,10 +22,10 @@ import android.widget.ProgressBar
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.vs.schoolmessenger.Utils.FullScreenViewerActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.FilePath
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.FullScreenViewerActivity
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class ImageSliderAdapter(
@@ -86,7 +86,7 @@ class ImageSliderAdapter(
                 Constant.IMAGE -> {
                     Glide.with(context).load(data.url).placeholder(R.drawable.image_placeholder)
                         .into(DefaultImage)
-                    ImgOrDocumentType.setBackgroundResource(R.drawable.default_image_icon)
+//                    ImgOrDocumentType.setBackgroundResource(R.drawable.default_image_icon)
                 }
 
 //                Constant.VIDEO -> {

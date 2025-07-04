@@ -572,5 +572,7 @@
     <string name="no_matching_attachment_found">No matching attachment found</string>
     <string name="event_holiday"><![CDATA[Event & Holiday]]></string>
     <string name="past_date">Past date</string>
+    <string name="assignmentdetails_missing">Assignment details is missing.</string>
+    <string name="submitted">Submitted</string>
 
 </resources>
