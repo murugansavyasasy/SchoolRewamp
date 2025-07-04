@@ -14,6 +14,11 @@ import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsRespo
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
 import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
 import com.vs.schoolmessenger.Parent.Communication.VoiceDataResponse
+import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponMenu.CouponMenuResponse
+import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponSummary.CampaignResponse
+import com.vs.schoolmessenger.Parent.Coupon.CouponModel.TicketCouponSummary.MyCouponSummaryRequest
+import com.vs.schoolmessenger.Parent.Coupon.CouponModel.TicketCouponSummary.TicketSummaryResponse
+import com.vs.schoolmessenger.Parent.Coupon.CouponRequestModel.CategorySummaryRequest
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventResponse
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.HolidayResponse
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
@@ -118,6 +123,10 @@ class SchoolServices {
     var getlpeditReport: MutableLiveData<LessonPlanEditResponse?>
     var isupdatelessonplan: MutableLiveData<LessonPlanUpdateResponse?>
     var islessonplandelete: MutableLiveData<LPDeleteResponse?>
+    var getcouponmenu: MutableLiveData<CouponMenuResponse?>
+    var getCouponsSummary: MutableLiveData<CampaignResponse?>
+    var getCouponsCategorySummary: MutableLiveData<CampaignResponse?>
+    var getmycoupons: MutableLiveData<TicketSummaryResponse?>
 
 
     init {
@@ -177,6 +186,10 @@ class SchoolServices {
         getlpeditReport = MutableLiveData()
         isupdatelessonplan = MutableLiveData()
         islessonplandelete = MutableLiveData()
+        getcouponmenu = MutableLiveData()
+        getCouponsSummary = MutableLiveData()
+        getCouponsCategorySummary = MutableLiveData()
+        getmycoupons = MutableLiveData()
     }
 
 
@@ -2184,4 +2197,146 @@ class SchoolServices {
 
 
 
+    fun getcouponmenu(
+       parentname: String, apiKey: String
+    ) {
+        RestClient.couponApiInterfaces.getcouponmenu(parentname, apiKey)
+            ?.enqueue(object : Callback<CouponMenuResponse?> {
+                override fun onResponse(
+                    call: Call<CouponMenuResponse?>, response: Response<CouponMenuResponse?>
+                ) {
+                    Log.d(
+                        "isGetCountryList", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                          response.body()?.data?.let {
+                          getcouponmenu.postValue(response.body())
+                          } ?: run {
+                          getcouponmenu.postValue(response.body())
+                      }
+
+
+                        }
+                    }
+                    else{
+                        getcouponmenu.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<CouponMenuResponse?>, t: Throwable) {
+                    getcouponmenu.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val getcouponmenuLiveData: LiveData<CouponMenuResponse?>
+        get() = getcouponmenu
+
+
+
+    fun getCouponsSummary(
+        mobile_no:String,parentname: String, apiKey: String
+    ) {
+        RestClient.couponApiInterfaces.getCouponsSummary(mobile_no,parentname, apiKey)
+            ?.enqueue(object : Callback<CampaignResponse?> {
+                override fun onResponse(
+                    call: Call<CampaignResponse?>, response: Response<CampaignResponse?>
+                ) {
+                    Log.d(
+                        "isGetCountryList", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            response.body()?.data?.let {
+                                getCouponsSummary.postValue(response.body())
+                            } ?: run {
+                                getCouponsSummary.postValue(response.body())
+                            }
+
+
+                        }
+                    }
+                    else{
+                        getCouponsSummary.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<CampaignResponse?>, t: Throwable) {
+                    getCouponsSummary.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val getCouponsSummaryLiveData: LiveData<CampaignResponse?>
+        get() = getCouponsSummary
+
+    fun getCouponsCategorySummary(
+        category_id: String,
+        mobile_no: String,
+        parentName: String,
+        apiKey: String
+    ) {
+        val request = CategorySummaryRequest(
+            category_id = category_id,
+            mobile_no = mobile_no
+        )
+        RestClient.couponApiInterfaces.getCouponsCategorySummary(parentName,apiKey,request)
+            ?.enqueue(object : Callback<CampaignResponse?> {
+                override fun onResponse(
+                    call: Call<CampaignResponse?>, response: Response<CampaignResponse?>
+                ) {
+                    if (response.code() == 200) {
+                        getCouponsCategorySummary.postValue(response.body())
+                    } else {
+                        getCouponsCategorySummary.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<CampaignResponse?>, t: Throwable) {
+                    getCouponsCategorySummary.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+
+    val getCouponsCategorySummaryLiveData: LiveData<CampaignResponse?>
+        get() = getCouponsCategorySummary
+
+
+    fun getmycouponsSummary(
+        coupon_status: String,
+        mobile_no: String,
+        parentName: String,
+        apiKey: String
+    ) {
+        val request = MyCouponSummaryRequest(
+            coupon_status = coupon_status,
+            mobile_no = mobile_no
+        )
+        RestClient.couponApiInterfaces.getmycoupons(parentName,apiKey,request)
+            ?.enqueue(object : Callback<TicketSummaryResponse?> {
+                override fun onResponse(
+                    call: Call<TicketSummaryResponse?>, response: Response<TicketSummaryResponse?>
+                ) {
+                    if (response.code() == 200) {
+                        getmycoupons.postValue(response.body())
+                    } else {
+                        getmycoupons.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<TicketSummaryResponse?>, t: Throwable) {
+                    getmycoupons.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+
+    val getmycouponsSummaryLiveData: LiveData<TicketSummaryResponse?>
+        get() = getmycoupons
 }

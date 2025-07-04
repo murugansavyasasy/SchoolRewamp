@@ -16,6 +16,9 @@ import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentResponse
 import com.vs.schoolmessenger.Parent.Attendance.ChildAttendanceResponse
 import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
 import com.vs.schoolmessenger.Parent.Communication.VoiceDataResponse
+import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponMenu.CouponMenuResponse
+import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponSummary.CampaignResponse
+import com.vs.schoolmessenger.Parent.Coupon.CouponModel.TicketCouponSummary.TicketSummaryResponse
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventResponse
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.HolidayResponse
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
@@ -195,6 +198,13 @@ class App(application: Application) : AndroidViewModel(application) {
 
     var islessonplandelete: LiveData<LPDeleteResponse?>? = null
 
+    var getcouponmenu: LiveData<CouponMenuResponse?>? = null
+
+    var getCouponsSummary: LiveData<CampaignResponse?>? = null
+
+    var getCouponsCategorySummary: LiveData<CampaignResponse?>? = null
+    var getmycouponsSummary: LiveData<TicketSummaryResponse?>? = null
+
 
 
 
@@ -266,6 +276,12 @@ class App(application: Application) : AndroidViewModel(application) {
         getlpeditReport = apiSchoolRepositories.isgetlpeditReportLiveData
 
         islessonplandelete = apiSchoolRepositories.islessonplandeleteLiveData
+
+        getcouponmenu = apiSchoolRepositories.getcouponmenuLiveData
+
+        getCouponsSummary = apiSchoolRepositories.getCouponsSummaryLiveData
+        getCouponsCategorySummary = apiSchoolRepositories.getCouponsCategorySummaryLiveData
+        getmycouponsSummary = apiSchoolRepositories.getmycouponsSummaryLiveData
 
     }
 
@@ -617,6 +633,22 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun islessonplandelete(isToken: String,requestBody: RequestBody, activity: Activity) {
         apiSchoolRepositories.islessonplandelete(isToken,requestBody,activity)
+    }
+
+    fun getcouponmenu(parentName: String, apiKey: String) {
+        apiSchoolRepositories.getcouponmenu(parentName,apiKey)
+    }
+
+    fun getCouponsSummary(mobile_no:String,parentName: String, apiKey: String) {
+        apiSchoolRepositories.getCouponsSummary(mobile_no,parentName,apiKey)
+    }
+
+    fun getCouponsCategorySummary(category_id: String, mobile_no:String, parentName: String, apiKey: String) {
+        apiSchoolRepositories.getCouponsCategorySummary(category_id,mobile_no,parentName,apiKey)
+    }
+
+    fun getmycouponsSummary(coupon_status: String, mobile_no:String, parentName: String, apiKey: String) {
+        apiSchoolRepositories.getmycouponsSummary(coupon_status,mobile_no,parentName,apiKey)
     }
 
 }

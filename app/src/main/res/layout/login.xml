@@ -29,8 +29,9 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/welcome_back"
+                style="@style/CustomTextStylePoppinsBold"
                 android:textColor="@color/black"
-                android:textSize="@dimen/eighteen_sp"
+                android:textSize="@dimen/fifteen_sp"
                 android:textStyle="bold">
 
             </TextView>
@@ -40,9 +41,10 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/ten"
                 android:gravity="center"
+                style="@style/CustomTextStylePoppinsRegular"
                 android:text="@string/seamless_school_communication_anytime_anywhere_effortlessly_connecting_student_teachers_and_parents_at_all_times"
                 android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp">
+                android:textSize="@dimen/fifteen_sp">
 
             </TextView>
 
@@ -69,7 +71,7 @@
 
                     <TextView
                         android:id="@+id/lblMobile"
-                        style="@style/CustomTextStylePoppinsBold"
+                        style="@style/CustomTextStylePoppinsRegular"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/lblLogin"
@@ -108,6 +110,7 @@
                         <EditText
                             android:id="@+id/txtMobileNumber"
                             android:layout_width="match_parent"
+                            style="@style/CustomTextStylePoppinsRegular"
                             android:layout_height="match_parent"
                             android:layout_toEndOf="@+id/vwMobile"
                             android:background="@null"
@@ -124,7 +127,7 @@
 
                     <TextView
                         android:id="@+id/lblPassword"
-                        style="@style/CustomTextStylePoppinsBold"
+                        style="@style/CustomTextStylePoppinsRegular"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/rytMobile"
@@ -145,6 +148,7 @@
 
                         <EditText
                             android:id="@+id/txtPassword"
+                            style="@style/CustomTextStylePoppinsRegular"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@null"

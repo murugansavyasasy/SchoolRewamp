@@ -21,6 +21,11 @@ import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentResponse
 import com.vs.schoolmessenger.Parent.Attendance.ChildAttendanceResponse
 import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
 import com.vs.schoolmessenger.Parent.Communication.VoiceDataResponse
+import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponMenu.CouponMenuResponse
+import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponSummary.CampaignResponse
+import com.vs.schoolmessenger.Parent.Coupon.CouponModel.TicketCouponSummary.MyCouponSummaryRequest
+import com.vs.schoolmessenger.Parent.Coupon.CouponModel.TicketCouponSummary.TicketSummaryResponse
+import com.vs.schoolmessenger.Parent.Coupon.CouponRequestModel.CategorySummaryRequest
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventResponse
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.HolidayResponse
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
@@ -63,6 +68,7 @@ import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Query
+import retrofit2.http.QueryMap
 
 interface ApiInterfaces {
 
@@ -207,14 +213,12 @@ interface ApiInterfaces {
 
     @POST(APIMethods.isSendText)
     fun isSendText(
-        @Header(APIKeyNames.Authorization) token: String,
-        @Body jsonObject: JsonObject
+        @Header(APIKeyNames.Authorization) token: String, @Body jsonObject: JsonObject
     ): Call<TextSendResponse>?
 
     @POST(APIMethods.isSendHomeWork)
     fun isSendHomeWork(
-        @Header(APIKeyNames.Authorization) token: String,
-        @Body jsonObject: JsonObject
+        @Header(APIKeyNames.Authorization) token: String, @Body jsonObject: JsonObject
     ): Call<HomeWorkSendResponse>?
 
     @POST(APIMethods.isAssignmentSend)
@@ -225,8 +229,7 @@ interface ApiInterfaces {
 
     @POST(APIMethods.isSendVoice)
     fun isSendVoice(
-        @Header(APIKeyNames.Authorization) token: String,
-        @Body jsonObject: JsonObject
+        @Header(APIKeyNames.Authorization) token: String, @Body jsonObject: JsonObject
     ): Call<TextSendResponse>?
 
     @GET("get-s3-presigned-url")
@@ -236,15 +239,15 @@ interface ApiInterfaces {
         @Query(APIKeyNames.bucketPath) bucketPath: String?,
         @Query(APIKeyNames.fileType) fileType: String?
     ): Call<PreSignedUrl?>?
+
     @POST(APIMethods.isUpdateStatusCommunication)
     fun isUpdateStatusCommunication(
-        @Header(APIKeyNames.Authorization) token: String,
-        @Body request: JsonObject
+        @Header(APIKeyNames.Authorization) token: String, @Body request: JsonObject
     ): Call<StatusArchiveResponse>?
+
     @POST(APIMethods.isUpdateStatusArchive)
     fun isUpdateStatusArchive(
-        @Header(APIKeyNames.Authorization) token: String,
-        @Body request: JsonObject
+        @Header(APIKeyNames.Authorization) token: String, @Body request: JsonObject
     ): Call<StatusArchiveResponse>?
 
     @GET(APIMethods.isGetAcademicYear)
@@ -266,26 +269,22 @@ interface ApiInterfaces {
 
     @POST(APIMethods.punch_giometric_attendance)
     fun punchGiometricAttendance(
-        @Header(APIKeyNames.Authorization) token: String,
-        @Body request: JsonObject
+        @Header(APIKeyNames.Authorization) token: String, @Body request: JsonObject
     ): Call<StatusMessageModel>?
 
     @POST(APIMethods.add_giometric_location)
     fun addGiometricLocation(
-        @Header(APIKeyNames.Authorization) token: String,
-        @Body request: JsonObject
+        @Header(APIKeyNames.Authorization) token: String, @Body request: JsonObject
     ): Call<StatusMessageModel>?
 
     @POST(APIMethods.remove_location)
     fun removeLocation(
-        @Header(APIKeyNames.Authorization) token: String,
-        @Body request: JsonObject
+        @Header(APIKeyNames.Authorization) token: String, @Body request: JsonObject
     ): Call<StatusMessageModel>?
 
     @POST(APIMethods.update_location)
     fun updateLocation(
-        @Header(APIKeyNames.Authorization) token: String,
-        @Body request: JsonObject
+        @Header(APIKeyNames.Authorization) token: String, @Body request: JsonObject
     ): Call<StatusMessageModel>?
 
     @GET(APIMethods.giometric_location_history)
@@ -378,8 +377,7 @@ interface ApiInterfaces {
 
     @POST(APIMethods.send_absentee_sms)
     fun UpdateSendAbsenteeSMS(
-        @Header(APIKeyNames.Authorization) token: String,
-        @Body request: JsonObject
+        @Header(APIKeyNames.Authorization) token: String, @Body request: JsonObject
     ): Call<SendAbsenteeSMSResponse>?
 
     @GET(APIMethods.get_student_attendance_report_for_scchool)
@@ -410,21 +408,18 @@ interface ApiInterfaces {
 
     @POST(APIMethods.sendnotice)
     fun sendnotice(
-        @Header(APIKeyNames.Authorization) token: String,
-        @Body request: JsonObject
+        @Header(APIKeyNames.Authorization) token: String, @Body request: JsonObject
     ): Call<NoticeBoardSendResponse>?
 
 
     @POST(APIMethods.sendevent)
     fun sendevent(
-        @Header(APIKeyNames.Authorization) token: String,
-        @Body request: JsonObject
+        @Header(APIKeyNames.Authorization) token: String, @Body request: JsonObject
     ): Call<EventSendResponse>?
 
     @POST(APIMethods.sendAttachment)
     fun sendAttachment(
-        @Header(APIKeyNames.Authorization) token: String,
-        @Body request: JsonObject
+        @Header(APIKeyNames.Authorization) token: String, @Body request: JsonObject
     ): Call<NoticeBoardSendResponse>?
 
     @GET(APIMethods.attachmentList)
@@ -439,8 +434,7 @@ interface ApiInterfaces {
 
     @POST(APIMethods.leave_request_apply)
     fun LeaveRequestApply(
-        @Header(APIKeyNames.Authorization) token: String,
-        @Body request: JsonObject
+        @Header(APIKeyNames.Authorization) token: String, @Body request: JsonObject
     ): Call<LeaveRequestApplyResponse>?
 
     @GET(APIMethods.getleaverequest)
@@ -452,8 +446,7 @@ interface ApiInterfaces {
     @Headers("Content-Type: application/json")
     @PUT(APIMethods.isleaverequestapprove)
     fun isleaverequestapprove(
-        @Header(APIKeyNames.Authorization) token: String,
-        @Body request: LeaveApproveRequest
+        @Header(APIKeyNames.Authorization) token: String, @Body request: LeaveApproveRequest
     ): Call<LeaveActionResponse?>
 
 
@@ -483,15 +476,45 @@ interface ApiInterfaces {
     @Headers("Content-Type: application/json")
     @PUT(APIMethods.isupdatelessonplan)
     fun isupdatelessonplan(
-        @Header(APIKeyNames.Authorization) token: String,
-        @Body requestBody: RequestBody
+        @Header(APIKeyNames.Authorization) token: String, @Body requestBody: RequestBody
     ): Call<LessonPlanUpdateResponse?>
 
     @Headers("Content-Type: application/json")
     @PUT(APIMethods.islessonplandelete)
     fun islessonplandelete(
-        @Header(APIKeyNames.Authorization) token: String,
-        @Body requestBody: RequestBody
+        @Header(APIKeyNames.Authorization) token: String, @Body requestBody: RequestBody
     ): Call<LPDeleteResponse?>
+
+
+    @GET(APIMethods.get_category_list)
+    fun getcouponmenu(
+        @Header("Partner-Name") partnerName: String, @Header("api-key") apiKey: String
+    ): Call<CouponMenuResponse?>
+
+
+    @POST(APIMethods.get_campaigns)
+    fun getCouponsSummary(
+        @Header("mobile_no") mobile_no: String?,
+        @Header("Partner-Name") parentName: String?,
+        @Header("api-key") apiKey: String?
+    ): Call<CampaignResponse?>?
+
+
+    @POST(APIMethods.get_campaigns)
+    fun getCouponsCategorySummary(
+        @Header("Partner-Name") parentName: String?,
+        @Header("api-key") apiKey: String?,
+        @Body request: CategorySummaryRequest,
+    ): Call<CampaignResponse?>?
+
+
+    @POST(APIMethods.my_coupons)
+    fun getmycoupons(
+        @Header("Partner-Name") parentName: String?,
+        @Header("api-key") apiKey: String?,
+        @Body request: MyCouponSummaryRequest,
+    ): Call<TicketSummaryResponse?>?
+
+
 
 }

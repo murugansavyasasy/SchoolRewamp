@@ -2,17 +2,9 @@ package com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponMenu
 
 import com.google.gson.annotations.SerializedName
 
-class Category {
-    @SerializedName("id")
-    var id: Int = 0
-
-
-    @SerializedName("category_name")
-    var categoryName: String? = null
-
-    @SerializedName("category_image")
-    var categoryImage: String? = null
-
-
+data class Category(
+    @SerializedName("id") val id: Int?,
+    @SerializedName("category_name") val categoryName: String?,
+    @SerializedName("category_image") val categoryImage: String?,
     var drawableResId: Int = -1
-}
+)

@@ -7,7 +7,7 @@
         android:id="@+id/lblTextItem"
         android:padding="@dimen/ten"
         android:text=""
-        style="@style/CustomTextStylePoppinsBold"
+        style="@style/CustomTextStylePoppinsMedium"
         android:textSize="@dimen/eleven_sp"
         android:layout_marginEnd="@dimen/ten"
         android:layout_width="match_parent"

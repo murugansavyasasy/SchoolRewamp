@@ -276,12 +276,15 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener, fingerPrintAun
         Log.d("athentication_status", message)
         if (status) {
             //go to dashboard
+            val mobileNumber = SharedPreference.getMobileNumber(this)
+            val password = SharedPreference.getPassWord(this)
+            isValidateUser(mobileNumber!!,password!!)
+        } else {
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show()
             mobile_number = SharedPreference.getMobileNumber(this)
             password = SharedPreference.getPassWord(this)
             isValidateUser(mobile_number!!, password!!)
         }
-        else {
-//            Toast.makeText(this, message, Toast.LENGTH_LONG).show()
-        }
+
     }
 }

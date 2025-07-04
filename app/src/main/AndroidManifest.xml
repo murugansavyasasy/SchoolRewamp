@@ -113,7 +113,8 @@
         <activity
             android:name=".School.MarkYourAttendance.AddLocationActivity"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
+        </activity>
 
 
         <activity
@@ -225,12 +226,16 @@
 
             android:name=".Dashboard.Parent.ParentDashboard"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
 
         <activity
             android:name=".School.Assignment.Assignment"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
 
         <activity
             android:name=".School.SchoolStrength.SchoolStrength"
@@ -291,7 +296,8 @@
         <activity
             android:name=".Dashboard.Settings.Notification.Notification"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
+        </activity>
 
 
         <activity
@@ -315,7 +321,8 @@
             android:name=".Dashboard.Settings.ReportTheBug.ReportTheBug"
 
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
+        </activity>
 
 
         <activity
@@ -404,7 +411,8 @@
         <activity
             android:name=".CommonScreens.SchoolList.SchoolList"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize">
+        </activity>
 
         <activity
             android:name=".Parent.RequestLeave.LeaveRequest"
@@ -428,7 +436,7 @@
         </activity>
 
         <activity
-            android:name=".Parent.Coupon.CouponView.CouponDashboard.CouponMainClassActivity"
+            android:name=".Parent.Coupon.CouponFragment.CouponDashboardActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize">
 

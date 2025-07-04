@@ -197,7 +197,7 @@
                         android:textColor="@color/black"
                         android:layout_marginBottom="@dimen/ten"
                         android:textSize="@dimen/thirteen_sp"
-                        style="@style/CustomTextStylePoppinsBold">
+                        style="@style/CustomTextStylePoppinsRegular">
 
                     </TextView>
 
