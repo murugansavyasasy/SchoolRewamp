@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <ImageView
+            android:id="@+id/image_banner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            />
+
+        <ImageView
+            android:id="@+id/image_top_left"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="12dp"
+            android:src="@drawable/left_arrow"
+            android:scaleType="centerInside"
+            android:background="@drawable/rounded_bg"
+            android:padding="8dp"
+            android:layout_gravity="top|start" />
+    </RelativeLayout>
+
+    <include
+        android:id="@+id/bottom_layout"
+        layout="@layout/layout_coupon_bottom_sheet"/>
+
+    <Button
+        android:id="@+id/btn_activate_coupon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ACTIVATE COUPON"
+        android:textColor="@android:color/black"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        android:textSize="17sp"
+        android:gravity="center"
+        android:background="@drawable/bg_background_coupon"
+        android:layout_marginBottom="40dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="130dp" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -23,9 +23,14 @@ import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
 import com.vs.schoolmessenger.Parent.Communication.VoiceDataResponse
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponMenu.CouponMenuResponse
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponSummary.CampaignResponse
+import com.vs.schoolmessenger.Parent.Coupon.CouponModel.TicketActivateCoupon.ActivateCouponResponse
+import com.vs.schoolmessenger.Parent.Coupon.CouponModel.TicketActivateCouponSummary.ActivateCouponSummaryResponse
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.TicketCouponSummary.MyCouponSummaryRequest
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.TicketCouponSummary.TicketSummaryResponse
+import com.vs.schoolmessenger.Parent.Coupon.CouponRequestModel.ActivateCouponRequest
 import com.vs.schoolmessenger.Parent.Coupon.CouponRequestModel.CategorySummaryRequest
+import com.vs.schoolmessenger.Parent.Coupon.CouponRequestModel.CouponDetailsRequest
+import com.vs.schoolmessenger.Parent.Coupon.CouponRequestModel.CouponSummaryRequest
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventResponse
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.HolidayResponse
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
@@ -59,7 +64,6 @@ import com.vs.schoolmessenger.School.NoticeBoard.Response.NoticeBoardSendRespons
 import com.vs.schoolmessenger.School.SchoolStrength.Model.SchoolStrengthResponse
 import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
 import okhttp3.RequestBody
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -68,7 +72,6 @@ import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Query
-import retrofit2.http.QueryMap
 
 interface ApiInterfaces {
 
@@ -475,9 +478,9 @@ interface ApiInterfaces {
 
     @POST(APIMethods.get_campaigns)
     fun getCouponsSummary(
-        @Header("mobile_no") mobile_no: String?,
         @Header("Partner-Name") parentName: String?,
-        @Header("api-key") apiKey: String?
+        @Header("api-key") apiKey: String?,
+        @Body request: CouponSummaryRequest,
     ): Call<CampaignResponse?>?
 
 
@@ -495,6 +498,22 @@ interface ApiInterfaces {
         @Header("api-key") apiKey: String?,
         @Body request: MyCouponSummaryRequest,
     ): Call<TicketSummaryResponse?>?
+
+    @POST(APIMethods.get_campaign_details)
+    fun getCouponDetails(
+        @Header("Partner-Name") parentName: String?,
+        @Header("api-key") apiKey: String?,
+        @Body request: CouponDetailsRequest,
+    ): Call<ActivateCouponSummaryResponse?>?
+
+
+    @POST(APIMethods.activate_coupon)
+    fun sendactivatecoupon(
+        @Header("Partner-Name") parentName: String?,
+        @Header("api-key") apiKey: String?,
+        @Body request: ActivateCouponRequest,
+    ): Call<ActivateCouponResponse?>?
+
 
 
 

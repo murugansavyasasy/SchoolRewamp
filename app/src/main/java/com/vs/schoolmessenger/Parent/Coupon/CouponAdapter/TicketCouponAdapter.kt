@@ -1,16 +1,18 @@
 package com.vs.schoolmessenger.Parent.Coupon.CouponAdapter
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.vs.schoolmessenger.Parent.Coupon.CouponAdapter.CouponMenuAdapter.ShimmerViewHolder
+import com.vs.schoolmessenger.Parent.Coupon.CouponView.MycouponViewActivity
 import com.vs.schoolmessenger.Parent.Coupon.CouponListener.TicketCouponClickListener
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.TicketCouponSummary.TicketSummary
 import com.vs.schoolmessenger.R
@@ -60,52 +62,73 @@ class TicketCouponAdapter(
         private val merchantName: TextView = itemView.findViewById(R.id.merchantname)
         private val couponStatus: TextView = itemView.findViewById(R.id.couponstatus)
 
+        private val card_view: CardView = itemView.findViewById(R.id.card_view)
+
         fun bind(data: TicketSummary, position: Int) {
-            // Set basic info
             categoryName.text = data.merchant_name
             discount.text = data.offer_to_show
             merchantName.text = "Expires in ${data.expires_in} days"
 
-            // Debug log for image URL
-            Log.d("TicketCouponAdapter", "Loading image for position $position: '${data.merchant_logo}'")
+            Log.d(
+                "TicketCouponAdapter",
+                "Loading image for position $position: '${data.merchant_logo}'"
+            )
 
-            // Load image using Glide with error/placeholder handling
             if (!data.merchant_logo.isNullOrEmpty()) {
-                Glide.with(itemView.context)
-                    .load(data.merchant_logo)
-                    .placeholder(R.drawable.allimage)
-                    .error(R.drawable.allimage)
-                    .into(centerImage)
-                Log.w("TicketCouponAdapter++", "merchant_logo is null or empty for position $position")
+                Glide.with(itemView.context).load(data.merchant_logo)
+                    .placeholder(R.drawable.allimage).error(R.drawable.allimage).into(centerImage)
+                Log.w(
+                    "TicketCouponAdapter++", "merchant_logo is null or empty for position $position"
+                )
 
             } else {
                 centerImage.setImageResource(R.drawable.allimage)
-                Log.w("TicketCouponAdapter++", "merchant_logo is null or empty for position $position")
+                Log.w(
+                    "TicketCouponAdapter++", "merchant_logo is null or empty for position $position"
+                )
             }
 
-            // Set status
             when (data.coupon_status) {
                 "activated" -> {
                     couponStatus.visibility = View.GONE
                 }
+
                 "claimed" -> {
                     couponStatus.visibility = View.VISIBLE
                     couponStatus.background =
                         ContextCompat.getDrawable(context, R.drawable.redeemed_backgroundgreen)
                     couponStatus.text = "Redeemed"
                 }
+
                 "expired" -> {
                     couponStatus.visibility = View.VISIBLE
                     couponStatus.background =
                         ContextCompat.getDrawable(context, R.drawable.redeemed_backgroundgrey)
                     couponStatus.text = "Expired"
                 }
+
                 else -> {
                     couponStatus.visibility = View.GONE
                 }
             }
 
 
+            card_view.setOnClickListener {
+                val intent = Intent(context, MycouponViewActivity::class.java)
+                val locationList: MutableList<TicketSummary.Location?> =
+                    data.location_list ?: mutableListOf()
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                intent.putExtra("merchant_name", data.merchant_name)
+                intent.putExtra("offer_to_show", data.offer_to_show)
+                intent.putExtra("how_to_use", data.how_to_use)
+                intent.putExtra("coupon_code", data.coupon_code)
+                intent.putExtra("cover_image", data.cover_image)
+                intent.putExtra("expiry_date", data.expiry_date)
+                intent.putExtra("expiry_type", data.expiry_type)
+                intent.putExtra("merchant_logo", data.merchant_logo)
+                intent.putExtra("location_list", ArrayList(locationList))
+                context.startActivity(intent)
+            }
         }
     }
 

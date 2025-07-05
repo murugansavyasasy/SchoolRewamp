@@ -18,6 +18,8 @@ import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
 import com.vs.schoolmessenger.Parent.Communication.VoiceDataResponse
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponMenu.CouponMenuResponse
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponSummary.CampaignResponse
+import com.vs.schoolmessenger.Parent.Coupon.CouponModel.TicketActivateCoupon.ActivateCouponResponse
+import com.vs.schoolmessenger.Parent.Coupon.CouponModel.TicketActivateCouponSummary.ActivateCouponSummaryResponse
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.TicketCouponSummary.TicketSummaryResponse
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventResponse
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.HolidayResponse
@@ -194,6 +196,9 @@ class App(application: Application) : AndroidViewModel(application) {
     var getCouponsCategorySummary: LiveData<CampaignResponse?>? = null
     var getmycouponsSummary: LiveData<TicketSummaryResponse?>? = null
 
+    var getCouponDetails: LiveData<ActivateCouponSummaryResponse?>? = null
+    var sendactivatecoupon: LiveData<ActivateCouponResponse?>? = null
+
 
 
 
@@ -268,6 +273,8 @@ class App(application: Application) : AndroidViewModel(application) {
         getCouponsSummary = apiSchoolRepositories.getCouponsSummaryLiveData
         getCouponsCategorySummary = apiSchoolRepositories.getCouponsCategorySummaryLiveData
         getmycouponsSummary = apiSchoolRepositories.getmycouponsSummaryLiveData
+        getCouponDetails = apiSchoolRepositories.getCouponDetailsLiveData
+        sendactivatecoupon = apiSchoolRepositories.sendactivatecouponLiveData
 
     }
 
@@ -606,6 +613,14 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun getmycouponsSummary(coupon_status: String, mobile_no:String, parentName: String, apiKey: String) {
         apiSchoolRepositories.getmycouponsSummary(coupon_status,mobile_no,parentName,apiKey)
+    }
+
+    fun getCouponDetails(source_link: String, mobile_no:String, parentName: String, apiKey: String) {
+        apiSchoolRepositories.getCouponDetails(source_link,mobile_no,parentName,apiKey)
+    }
+
+    fun sendactivatecoupon(source_link: String, mobile_no:String, parentName: String, apiKey: String) {
+        apiSchoolRepositories.sendactivatecoupon(source_link,mobile_no,parentName,apiKey)
     }
 
 }

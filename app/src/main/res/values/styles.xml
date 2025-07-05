@@ -111,5 +111,10 @@
 
     </style>
 
+    <style name="ImageMediumRoundedCorners" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">10dp</item>
+    </style>
+
 
 </resources>

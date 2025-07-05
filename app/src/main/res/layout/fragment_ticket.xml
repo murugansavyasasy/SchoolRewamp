@@ -23,9 +23,10 @@
 
 
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/relative_layout">
+
         <ImageView
             android:id="@+id/back"
             android:layout_width="wrap_content"
@@ -97,6 +98,17 @@
         android:scrollbars="vertical"
         android:layout_marginTop="5dp"/>
 
+
+    <ProgressBar
+        android:id="@+id/isProgressBar"
+        android:layout_width="50dp"
+        android:visibility="visible"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:layout_below="@+id/coupontablayout"
+        android:layout_height="50dp">
+
+    </ProgressBar>
 
 
 </RelativeLayout>

@@ -1,5 +1,6 @@
 package com.vs.schoolmessenger.Parent.Coupon.CouponFragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,7 +11,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.vs.schoolmessenger.Parent.Coupon.CouponListener.AppCredentials
+import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
+import com.vs.schoolmessenger.Parent.Coupon.CouponCredentials.AppCredentials
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponMenu.Category
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponSummary.CampaignItem
 import com.vs.schoolmessenger.Parent.Coupon.CouponAdapter.CouponMenuAdapter
@@ -35,14 +37,18 @@ class HomeFragment : Fragment(), View.OnClickListener, CouponMenuClickListener,
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        binding.relativeLayout.setOnClickListener {
+            onBackPressed()
+        }
 
         AppCredentials.init(requireContext())
-
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel.init()
+
         binding.recyclerview1.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
+
         fetchCouponMenu()
         fetchCouponSummary()
 
@@ -56,6 +62,7 @@ class HomeFragment : Fragment(), View.OnClickListener, CouponMenuClickListener,
         }
 
         appViewModel.getCouponsSummary?.observe(viewLifecycleOwner) { response ->
+            hideProgressBar()
             val campaignsList = response?.data?.campaigns?.data
             if (campaignsList.isNullOrEmpty()) {
                 showCouponSummaryErrorUI("No coupon summary data available")
@@ -65,6 +72,7 @@ class HomeFragment : Fragment(), View.OnClickListener, CouponMenuClickListener,
         }
 
         appViewModel.getCouponsCategorySummary?.observe(viewLifecycleOwner) { response ->
+            hideProgressBar()
             val campaignsList = response?.data?.campaigns?.data
             if (campaignsList.isNullOrEmpty()) {
                 showCategorySummaryErrorUI("No coupon summary data available")
@@ -74,6 +82,22 @@ class HomeFragment : Fragment(), View.OnClickListener, CouponMenuClickListener,
         }
 
         return binding.root
+    }
+
+    private fun onBackPressed(){
+        val intent = Intent(context, ParentDashboard::class.java)
+        context?.startActivity(intent)
+    }
+
+    private fun showProgressBar() {
+        binding.isProgressBar.visibility = View.VISIBLE
+        binding.recyclerView.visibility = View.GONE
+        binding.lblNoRecord.visibility = View.GONE
+    }
+
+    private fun hideProgressBar() {
+        binding.isProgressBar.visibility = View.GONE
+        binding.recyclerView.visibility = View.VISIBLE
     }
 
     private fun showCouponSummaryErrorUI(message: String) {
@@ -93,22 +117,23 @@ class HomeFragment : Fragment(), View.OnClickListener, CouponMenuClickListener,
     }
 
     private fun fetchCouponSummary() {
+        showProgressBar()
         appViewModel.getCouponsSummary(
-            "+91${AppCredentials.isMobileNumber}",
+            "91${AppCredentials.isMobileNumber}",
             AppCredentials.PARTNER_NAME,
             AppCredentials.API_KEY
         )
     }
 
     private fun fetchCategoryCouponSummary(categoryId: String) {
+        showProgressBar()
         appViewModel.getCouponsCategorySummary(
             categoryId,
-            "+91${AppCredentials.isMobileNumber}",
+            "91${AppCredentials.isMobileNumber}",
             AppCredentials.PARTNER_NAME,
             AppCredentials.API_KEY,
         )
     }
-
 
     private fun isLoadCouponMenuData(data: List<Category>) {
         binding.nomessage.visibility = View.GONE
@@ -127,7 +152,6 @@ class HomeFragment : Fragment(), View.OnClickListener, CouponMenuClickListener,
         menuadapter.selectPosition(0)
         fetchCouponSummary()
     }
-
 
     private fun isLoadCouponSummaryData(data: List<CampaignItem>) {
         binding.nomessage.visibility = View.GONE
@@ -148,17 +172,15 @@ class HomeFragment : Fragment(), View.OnClickListener, CouponMenuClickListener,
         }
     }
 
-
     override fun onSummaryClick(campaignItem: CampaignItem?) {
-        Log.d("SummaryClicked", campaignItem?.campaignName ?: "null")
+//        Log.d("SummaryClicked", campaignItem?.campaignName ?: "null")
     }
 
-    override fun onClick(v: View?) {
-
-    }
+    override fun onClick(v: View?) {}
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 }
+

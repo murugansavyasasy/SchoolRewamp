@@ -86,6 +86,9 @@ object APIMethods {
     const val get_campaigns = "get_campaigns"
 
     const val my_coupons= "my_coupons"
+
+    const val get_campaign_details = "get_campaign_details"
+    const val activate_coupon = "activate_coupon"
 }
 
 

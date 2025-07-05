@@ -1,5 +1,6 @@
 package com.vs.schoolmessenger.Parent.Coupon.CouponFragment
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,12 +11,13 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.vs.schoolmessenger.Parent.Coupon.CouponAdapter.CouponMenuAdapter
 import com.vs.schoolmessenger.Parent.Coupon.CouponAdapter.CouponSummaryAdapter
 import com.vs.schoolmessenger.Parent.Coupon.CouponAdapter.TicketCouponAdapter
-import com.vs.schoolmessenger.Parent.Coupon.CouponListener.AppCredentials
+import com.vs.schoolmessenger.Parent.Coupon.CouponCredentials.AppCredentials
 import com.vs.schoolmessenger.Parent.Coupon.CouponListener.CouponMenuClickListener
 import com.vs.schoolmessenger.Parent.Coupon.CouponListener.CouponSummaryClickListener
 import com.vs.schoolmessenger.Parent.Coupon.CouponListener.TicketCouponClickListener
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponSummary.CampaignItem
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.TicketCouponSummary.TicketSummary
+import com.vs.schoolmessenger.Parent.Coupon.CouponView.CouponDashboardActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.databinding.FragmentHomeBinding
@@ -39,6 +41,9 @@ class TicketFragment : Fragment(), View.OnClickListener, TicketCouponClickListen
         binding.coupontablayout.activetext.setOnClickListener(this)
         binding.coupontablayout.expiredtext.setOnClickListener(this)
         binding.coupontablayout.redeemedtext.setOnClickListener(this)
+        binding.relativeLayout.setOnClickListener {
+            onBackPressed()
+        }
 
         previouslySelectedView = binding.coupontablayout.alltext
 
@@ -48,11 +53,10 @@ class TicketFragment : Fragment(), View.OnClickListener, TicketCouponClickListen
 
         binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
 
-
         fetchticketsummary("all")
 
-
         appViewModel.getmycouponsSummary?.observe(viewLifecycleOwner) { response ->
+            hideProgressBar()
             val couponList = response?.data?.coupon_list?.data?.filterNotNull()
             if (couponList.isNullOrEmpty()) {
                 showMyCouponSummaryErrorUI("No coupon summary data available")
@@ -65,6 +69,7 @@ class TicketFragment : Fragment(), View.OnClickListener, TicketCouponClickListen
     }
 
     private fun fetchticketsummary(couponstatus: String) {
+        showProgressBar()
         appViewModel.getmycouponsSummary(
             couponstatus,
             "91${AppCredentials.isMobileNumber}",
@@ -85,15 +90,23 @@ class TicketFragment : Fragment(), View.OnClickListener, TicketCouponClickListen
         binding.recyclerView.visibility = View.GONE
     }
 
+    private fun showProgressBar() {
+        binding.isProgressBar.visibility = View.VISIBLE
+        binding.recyclerView.visibility = View.GONE
+        binding.lblNoRecord.visibility = View.GONE
+    }
+
+    private fun hideProgressBar() {
+        binding.isProgressBar.visibility = View.GONE
+    }
+
     override fun onClick(v: View?) {
         if (v != null) {
-
             previouslySelectedView?.setBackgroundResource(0)
-
-
             v.setBackgroundResource(R.drawable.green_radious)
             previouslySelectedView = v
 
+            // Show progress bar when changing tabs (new fetch begins)
             when (v.id) {
                 R.id.alltext -> fetchticketsummary("all")
                 R.id.activetext -> fetchticketsummary("activated")
@@ -101,6 +114,11 @@ class TicketFragment : Fragment(), View.OnClickListener, TicketCouponClickListen
                 R.id.redeemedtext -> fetchticketsummary("expired")
             }
         }
+    }
+
+    private fun onBackPressed() {
+        val intent = Intent(context, CouponDashboardActivity::class.java)
+        context?.startActivity(intent)
     }
 
     override fun onDestroyView() {
@@ -112,3 +130,4 @@ class TicketFragment : Fragment(), View.OnClickListener, TicketCouponClickListen
         // TODO: Handle item click
     }
 }
+

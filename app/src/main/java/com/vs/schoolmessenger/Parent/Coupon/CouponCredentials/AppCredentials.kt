@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.Parent.Coupon.CouponListener
+package com.vs.schoolmessenger.Parent.Coupon.CouponCredentials
 
 import android.content.Context
 import android.util.Log

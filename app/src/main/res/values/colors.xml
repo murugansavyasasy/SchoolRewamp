@@ -46,9 +46,11 @@
 
 
     <color name="light_gray">#616159</color>
-
+    <color name="clr_green">#16C117</color>
     <color name="bpWhite">#ffffff</color>
+    <color name="teacher_clr_grey_dark">#4B4B4D</color>
     <color name="white">#fff</color>
+    <color name="light_yellow_color">#F0C743</color>
     <color name="light_white">#f8f8f8</color>
     <color name="mild_grey0">#f4f3f0</color>
     <color name="mild_grey1">#cccccc</color>
@@ -119,6 +121,7 @@
     <color name="purble">#c489d7</color>
     <color name="light_purble">#ece4f4</color>
     <color name="red">#E43C2F</color>
+    <color name="clr_red">#FF7575</color>
     <color name="light_red1">#f89696</color>
     <color name="dashboar_bg">#f2f4fb</color>
 

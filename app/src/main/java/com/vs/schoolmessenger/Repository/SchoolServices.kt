@@ -15,9 +15,14 @@ import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
 import com.vs.schoolmessenger.Parent.Communication.VoiceDataResponse
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponMenu.CouponMenuResponse
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponSummary.CampaignResponse
+import com.vs.schoolmessenger.Parent.Coupon.CouponModel.TicketActivateCoupon.ActivateCouponResponse
+import com.vs.schoolmessenger.Parent.Coupon.CouponModel.TicketActivateCouponSummary.ActivateCouponSummaryResponse
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.TicketCouponSummary.MyCouponSummaryRequest
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.TicketCouponSummary.TicketSummaryResponse
+import com.vs.schoolmessenger.Parent.Coupon.CouponRequestModel.ActivateCouponRequest
 import com.vs.schoolmessenger.Parent.Coupon.CouponRequestModel.CategorySummaryRequest
+import com.vs.schoolmessenger.Parent.Coupon.CouponRequestModel.CouponDetailsRequest
+import com.vs.schoolmessenger.Parent.Coupon.CouponRequestModel.CouponSummaryRequest
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventResponse
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.HolidayResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
@@ -124,6 +129,8 @@ class SchoolServices {
     var getCouponsSummary: MutableLiveData<CampaignResponse?>
     var getCouponsCategorySummary: MutableLiveData<CampaignResponse?>
     var getmycoupons: MutableLiveData<TicketSummaryResponse?>
+    var getCouponDetails: MutableLiveData<ActivateCouponSummaryResponse?>
+    var sendactivatecoupon: MutableLiveData<ActivateCouponResponse?>
 
 
     init {
@@ -184,6 +191,8 @@ class SchoolServices {
         getCouponsSummary = MutableLiveData()
         getCouponsCategorySummary = MutableLiveData()
         getmycoupons = MutableLiveData()
+        getCouponDetails = MutableLiveData()
+        sendactivatecoupon = MutableLiveData()
     }
 
 
@@ -304,8 +313,7 @@ class SchoolServices {
                                 isGetStaffList.postValue(response.body())
                             }
                         }
-                    }
-                    else{
+                    } else {
                         isGetStaffList.postValue(null)
                     }
                 }
@@ -340,8 +348,7 @@ class SchoolServices {
                                 isGetSubjectList.postValue(response.body())
                             }
                         }
-                    }
-                    else{
+                    } else {
                         isGetSubjectList.postValue(null)
                     }
                 }
@@ -375,8 +382,7 @@ class SchoolServices {
                                 isGetStandardSection.postValue(response.body())
                             }
                         }
-                    }
-                    else{
+                    } else {
                         isGetStandardSection.postValue(null)
                     }
                 }
@@ -412,8 +418,7 @@ class SchoolServices {
                                 isGetStudentList.postValue(response.body())
                             }
                         }
-                    }
-                    else{
+                    } else {
                         isGetStudentList.postValue(null)
                     }
                 }
@@ -447,8 +452,7 @@ class SchoolServices {
                                 isGetCommmunicationlist.postValue(response.body())
                             }
                         }
-                    }
-                    else{
+                    } else {
                         isGetCommmunicationlist.postValue(null)
                     }
                 }
@@ -481,8 +485,7 @@ class SchoolServices {
                                 isGetCommmunicationlistload.postValue(response.body())
                             }
                         }
-                    }
-                    else{
+                    } else {
                         isGetCommmunicationlistload.postValue(null)
                     }
                 }
@@ -516,8 +519,7 @@ class SchoolServices {
                                 isGetGroupList.postValue(response.body())
                             }
                         }
-                    }
-                    else{
+                    } else {
                         isGetGroupList.postValue(null)
                     }
                 }
@@ -551,8 +553,7 @@ class SchoolServices {
                                 isGetVoiceHistory.postValue(response.body())
                             }
                         }
-                    }
-                    else{
+                    } else {
                         isGetVoiceHistory.postValue(null)
                     }
                 }
@@ -583,8 +584,7 @@ class SchoolServices {
                             isGetTextHistory.postValue(response.body())
 
                         }
-                    }
-                    else{
+                    } else {
                         isGetTextHistory.postValue(null)
                     }
                 }
@@ -621,8 +621,7 @@ class SchoolServices {
                                 isGetHomeWorkReport.postValue(response.body())
                             }
                         }
-                    }
-                    else{
+                    } else {
                         isGetHomeWorkReport.postValue(null)
                     }
                 }
@@ -659,8 +658,7 @@ class SchoolServices {
                                 isNoticeBoardReport.postValue(response.body())
                             }
                         }
-                    }
-                    else{
+                    } else {
                         isNoticeBoardReport.postValue(null)
                     }
                 }
@@ -697,8 +695,7 @@ class SchoolServices {
                                 IsGetEventReport.postValue(response.body())
                             }
                         }
-                    }
-                    else{
+                    } else {
                         IsGetEventReport.postValue(null)
                     }
                 }
@@ -734,8 +731,7 @@ class SchoolServices {
                                 IsGetHolidayReport.postValue(response.body())
                             }
                         }
-                    }
-                    else{
+                    } else {
                         IsGetHolidayReport.postValue(null)
                     }
                 }
@@ -749,7 +745,6 @@ class SchoolServices {
 
     val IsGetHolidayReportLiveData: LiveData<HolidayResponse?>
         get() = IsGetHolidayReport
-
 
 
     fun isGetDailyCollectionReport(
@@ -773,8 +768,7 @@ class SchoolServices {
                                 isGetDailyCollectionReport.postValue(response.body())
                             }
                         }
-                    }
-                    else{
+                    } else {
                         isGetDailyCollectionReport.postValue(null)
                     }
                 }
@@ -808,8 +802,7 @@ class SchoolServices {
                                 isGetSchoolStrengthReport.postValue(response.body())
                             }
                         }
-                    }
-                    else{
+                    } else {
                         isGetSchoolStrengthReport.postValue(null)
                     }
                 }
@@ -844,8 +837,7 @@ class SchoolServices {
                                 isDetailedPendingReport.postValue(response.body())
                             }
                         }
-                    }
-                    else{
+                    } else {
                         isDetailedPendingReport.postValue(null)
                     }
                 }
@@ -880,8 +872,7 @@ class SchoolServices {
                                 isDetailedWisePendingReport.postValue(response.body())
                             }
                         }
-                    }
-                    else{
+                    } else {
                         isDetailedWisePendingReport.postValue(null)
                     }
                 }
@@ -1054,8 +1045,7 @@ class SchoolServices {
                                 isAcademicYear.postValue(response.body())
                             }
                         }
-                    }
-                    else{
+                    } else {
                         isAcademicYear.postValue(null)
                     }
                 }
@@ -1087,8 +1077,7 @@ class SchoolServices {
                             Log.d("GetHomeworkDataRespone", response.body().toString())
 
                         }
-                    }
-                    else{
+                    } else {
                         isHomeWorkDetailsData.postValue(null)
                     }
                 }
@@ -1121,8 +1110,7 @@ class SchoolServices {
                             Log.d("GetHomeworkDataRespone", response.body().toString())
 
                         }
-                    }
-                    else{
+                    } else {
                         isHomeWorkDetailsData.postValue(null)
                     }
                 }
@@ -1152,8 +1140,7 @@ class SchoolServices {
                         if (response.body() != null) {
                             isPunchAttendance.postValue(response.body())
                         }
-                    }
-                    else{
+                    } else {
                         isPunchAttendance.postValue(null)
                     }
                 }
@@ -1187,8 +1174,7 @@ class SchoolServices {
                                 isAddLocation.postValue(response.body())
                             }
                         }
-                    }
-                    else{
+                    } else {
                         isAddLocation.postValue(null)
                     }
                 }
@@ -1223,8 +1209,7 @@ class SchoolServices {
                                 isRemoveLocation.postValue(response.body())
                             }
                         }
-                    }
-                    else{
+                    } else {
                         isRemoveLocation.postValue(null)
                     }
                 }
@@ -1259,8 +1244,7 @@ class SchoolServices {
                                 isUpdateLocation.postValue(response.body())
                             }
                         }
-                    }
-                    else{
+                    } else {
                         isUpdateLocation.postValue(null)
                     }
                 }
@@ -1295,8 +1279,7 @@ class SchoolServices {
                                 isStaffLocations.postValue(response.body())
                             }
                         }
-                    }
-                    else{
+                    } else {
                         isStaffLocations.postValue(null)
                     }
                 }
@@ -1333,8 +1316,7 @@ class SchoolServices {
                                 isLocationHistory.postValue(response.body())
                             }
                         }
-                    }
-                    else{
+                    } else {
                         isLocationHistory.postValue(null)
                     }
                 }
@@ -1374,8 +1356,7 @@ class SchoolServices {
                             isPunchHistory.postValue(response.body())
                         }
 //                        }
-                    }
-                    else{
+                    } else {
                         isPunchHistory.postValue(null)
                     }
                 }
@@ -1417,8 +1398,7 @@ class SchoolServices {
                                 isStaffAttendanceReport.postValue(response.body())
                             }
                         }
-                    }
-                    else{
+                    } else {
                         isStaffAttendanceReport.postValue(null)
                     }
                 }
@@ -1459,8 +1439,7 @@ class SchoolServices {
                                 isStaffWiseAttendanceReport.postValue(response.body())
                             }
                         }
-                    }
-                    else{
+                    } else {
                         isStaffWiseAttendanceReport.postValue(null)
                     }
                 }
@@ -1500,8 +1479,7 @@ class SchoolServices {
                             isStaffWiseAttendanceReportList.postValue(response.body())
                         }
                     }
-                }
-                else{
+                } else {
                     isStaffWiseAttendanceReportList.postValue(null)
                 }
             }
@@ -1526,7 +1504,7 @@ class SchoolServices {
         section_id: Int? = null,
         activity: Activity
     ) {
-        RestClient.apiInterfaces.getStudentReport(isToken,isAcademicYearId, class_id, section_id)
+        RestClient.apiInterfaces.getStudentReport(isToken, isAcademicYearId, class_id, section_id)
             ?.enqueue(object : Callback<GetStudentReportData?> {
                 override fun onResponse(
                     call: Call<GetStudentReportData?>,
@@ -1547,8 +1525,7 @@ class SchoolServices {
                                 isStudentReportList.postValue(response.body())
                             }
                         }
-                    }
-                    else{
+                    } else {
                         isStudentReportList.postValue(null)
                     }
                 }
@@ -1566,8 +1543,6 @@ class SchoolServices {
 
     val isStudentReportLiveData: LiveData<GetStudentReportData?>
         get() = isStudentReportList
-
-
 
 
     fun getabsenteescountbydate(
@@ -1595,8 +1570,7 @@ class SchoolServices {
                                 getabsenteescountbydate.postValue(response.body())
                             }
                         }
-                    }
-                    else{
+                    } else {
                         getabsenteescountbydate.postValue(null)
                     }
                 }
@@ -1614,8 +1588,6 @@ class SchoolServices {
 
     val getabsenteescountbydateLiveData: LiveData<AbsenteesResponse?>
         get() = getabsenteescountbydate
-
-
 
 
     fun getabsenteesstudentbydate(
@@ -1646,8 +1618,7 @@ class SchoolServices {
                                 getabsenteesstudentbydate.postValue(response.body())
                             }
                         }
-                    }
-                    else{
+                    } else {
                         getabsenteesstudentbydate.postValue(null)
                     }
                 }
@@ -1686,8 +1657,7 @@ class SchoolServices {
                                 isSendAbsenteeSMS.postValue(response.body())
                             }
                         }
-                    }
-                    else{
+                    } else {
                         isSendAbsenteeSMS.postValue(null)
                     }
                 }
@@ -1703,7 +1673,6 @@ class SchoolServices {
         get() = isSendAbsenteeSMS
 
 
-
     fun getStudentAttendanceReportForSchool(
         isToken: String,
         section_id: String,
@@ -1712,7 +1681,13 @@ class SchoolServices {
         class_id: String,
         activity: Activity
     ) {
-        RestClient.apiInterfaces.isGetStudentAttendanceReportForSchool(isToken,section_id,from_date,to_date,class_id)
+        RestClient.apiInterfaces.isGetStudentAttendanceReportForSchool(
+            isToken,
+            section_id,
+            from_date,
+            to_date,
+            class_id
+        )
             ?.enqueue(object : Callback<StudentAttendanceReportDataResponse?> {
                 override fun onResponse(
                     call: Call<StudentAttendanceReportDataResponse?>,
@@ -1751,15 +1726,13 @@ class SchoolServices {
         get() = isStudentAttendanceReportForSchool
 
 
-
-
-
     fun sendnotice(isToken: String, jsonObject: JsonObject, activity: Activity) {
         RestClient.changeApiBaseUrl(SharedPreference.getBaseUrl(activity).toString())
         RestClient.apiInterfaces.sendnotice(isToken, jsonObject)
             ?.enqueue(object : Callback<NoticeBoardSendResponse?> {
                 override fun onResponse(
-                    call: Call<NoticeBoardSendResponse?>, response: Response<NoticeBoardSendResponse?>
+                    call: Call<NoticeBoardSendResponse?>,
+                    response: Response<NoticeBoardSendResponse?>
                 ) {
                     if (response.code() == 200 && response.body() != null) {
                         sendnotice.postValue(response.body())
@@ -1810,13 +1783,13 @@ class SchoolServices {
         get() = sendevent
 
 
-
     fun sendAttachment(isToken: String, jsonObject: JsonObject, activity: Activity) {
         RestClient.changeApiBaseUrl(SharedPreference.getBaseUrl(activity).toString())
         RestClient.apiInterfaces.sendAttachment(isToken, jsonObject)
             ?.enqueue(object : Callback<NoticeBoardSendResponse?> {
                 override fun onResponse(
-                    call: Call<NoticeBoardSendResponse?>, response: Response<NoticeBoardSendResponse?>
+                    call: Call<NoticeBoardSendResponse?>,
+                    response: Response<NoticeBoardSendResponse?>
                 ) {
                     if (response.code() == 200 && response.body() != null) {
                         isSendAttachment.postValue(response.body())
@@ -1839,7 +1812,6 @@ class SchoolServices {
         get() = isSendAttachment
 
 
-
     fun getleaverequest(
         isToken: String, member_type: String, activity: Activity
     ) {
@@ -1860,8 +1832,7 @@ class SchoolServices {
                                 getleaverequest.postValue(response.body())
                             }
                         }
-                    }
-                    else{
+                    } else {
                         getleaverequest.postValue(null)
                     }
                 }
@@ -1875,9 +1846,6 @@ class SchoolServices {
 
     val leaverequestLiveData: LiveData<LeaveRequestResponse?>
         get() = getleaverequest
-
-
-
 
 
     fun isleaverequestapprove(
@@ -1900,8 +1868,7 @@ class SchoolServices {
                                 isleaverequestapprove.postValue(response.body())
                             }
                         }
-                    }
-                    else{
+                    } else {
                         isleaverequestapprove.postValue(null)
                     }
                 }
@@ -1915,9 +1882,6 @@ class SchoolServices {
 
     val isleaverequestapproveLiveData: LiveData<LeaveActionResponse?>
         get() = isleaverequestapprove
-
-
-
 
 
     fun getlpStaffReport(
@@ -1940,8 +1904,7 @@ class SchoolServices {
                                 getlpStaffReport.postValue(response.body())
                             }
                         }
-                    }
-                    else{
+                    } else {
                         getlpStaffReport.postValue(null)
                     }
                 }
@@ -1957,14 +1920,14 @@ class SchoolServices {
         get() = getlpStaffReport
 
 
-
     fun getlpViewReport(
         isToken: String, section_subject_id: String, lesson_plan_status: Int, activity: Activity
     ) {
         RestClient.apiInterfaces.getlpViewReport(isToken, section_subject_id, lesson_plan_status)
             ?.enqueue(object : Callback<LessonPlanViewSummaryResponse?> {
                 override fun onResponse(
-                    call: Call<LessonPlanViewSummaryResponse?>, response: Response<LessonPlanViewSummaryResponse?>
+                    call: Call<LessonPlanViewSummaryResponse?>,
+                    response: Response<LessonPlanViewSummaryResponse?>
                 ) {
                     Log.d(
                         "isGetCountryList", response.code().toString() + " - " + response.toString()
@@ -1978,8 +1941,7 @@ class SchoolServices {
                                 getlpViewReport.postValue(response.body())
                             }
                         }
-                    }
-                    else{
+                    } else {
                         getlpViewReport.postValue(null)
                     }
                 }
@@ -1993,7 +1955,6 @@ class SchoolServices {
 
     val isgetlpViewReportLiveData: LiveData<LessonPlanViewSummaryResponse?>
         get() = getlpViewReport
-
 
 
     fun getlpeditReport(
@@ -2016,8 +1977,7 @@ class SchoolServices {
                                 getlpeditReport.postValue(response.body())
                             }
                         }
-                    }
-                    else{
+                    } else {
                         getlpeditReport.postValue(null)
                     }
                 }
@@ -2031,7 +1991,6 @@ class SchoolServices {
 
     val isgetlpeditReportLiveData: LiveData<LessonPlanEditResponse?>
         get() = getlpeditReport
-
 
 
     fun isupdatelessonplan(isToken: String, requestBody: RequestBody, activity: Activity) {
@@ -2061,9 +2020,7 @@ class SchoolServices {
         get() = isupdatelessonplan
 
 
-
-
-    fun islessonplandelete(isToken: String,requestBody: RequestBody, activity: Activity) {
+    fun islessonplandelete(isToken: String, requestBody: RequestBody, activity: Activity) {
         RestClient.apiInterfaces.islessonplandelete(isToken, requestBody)
             ?.enqueue(object : Callback<LPDeleteResponse?> {
                 override fun onResponse(
@@ -2090,10 +2047,8 @@ class SchoolServices {
         get() = islessonplandelete
 
 
-
-
     fun getcouponmenu(
-       parentname: String, apiKey: String
+        parentname: String, apiKey: String
     ) {
         RestClient.couponApiInterfaces.getcouponmenu(parentname, apiKey)
             ?.enqueue(object : Callback<CouponMenuResponse?> {
@@ -2105,16 +2060,15 @@ class SchoolServices {
                     )
                     if (response.code() == 200) {
                         if (response.body() != null) {
-                          response.body()?.data?.let {
-                          getcouponmenu.postValue(response.body())
-                          } ?: run {
-                          getcouponmenu.postValue(response.body())
-                      }
+                            response.body()?.data?.let {
+                                getcouponmenu.postValue(response.body())
+                            } ?: run {
+                                getcouponmenu.postValue(response.body())
+                            }
 
 
                         }
-                    }
-                    else{
+                    } else {
                         getcouponmenu.postValue(null)
                     }
                 }
@@ -2130,11 +2084,15 @@ class SchoolServices {
         get() = getcouponmenu
 
 
-
     fun getCouponsSummary(
-        mobile_no:String,parentname: String, apiKey: String
+        mobile_no: String,
+        parentName: String,
+        apiKey: String
     ) {
-        RestClient.couponApiInterfaces.getCouponsSummary(mobile_no,parentname, apiKey)
+        val request = CouponSummaryRequest(
+            mobile_no = mobile_no
+        )
+        RestClient.couponApiInterfaces.getCouponsSummary(parentName, apiKey, request)
             ?.enqueue(object : Callback<CampaignResponse?> {
                 override fun onResponse(
                     call: Call<CampaignResponse?>, response: Response<CampaignResponse?>
@@ -2152,8 +2110,7 @@ class SchoolServices {
 
 
                         }
-                    }
-                    else{
+                    } else {
                         getCouponsSummary.postValue(null)
                     }
                 }
@@ -2178,7 +2135,7 @@ class SchoolServices {
             category_id = category_id,
             mobile_no = mobile_no
         )
-        RestClient.couponApiInterfaces.getCouponsCategorySummary(parentName,apiKey,request)
+        RestClient.couponApiInterfaces.getCouponsCategorySummary(parentName, apiKey, request)
             ?.enqueue(object : Callback<CampaignResponse?> {
                 override fun onResponse(
                     call: Call<CampaignResponse?>, response: Response<CampaignResponse?>
@@ -2212,7 +2169,7 @@ class SchoolServices {
             coupon_status = coupon_status,
             mobile_no = mobile_no
         )
-        RestClient.couponApiInterfaces.getmycoupons(parentName,apiKey,request)
+        RestClient.couponApiInterfaces.getmycoupons(parentName, apiKey, request)
             ?.enqueue(object : Callback<TicketSummaryResponse?> {
                 override fun onResponse(
                     call: Call<TicketSummaryResponse?>, response: Response<TicketSummaryResponse?>
@@ -2234,4 +2191,73 @@ class SchoolServices {
 
     val getmycouponsSummaryLiveData: LiveData<TicketSummaryResponse?>
         get() = getmycoupons
+
+
+    fun getCouponDetails(
+        source_link: String,
+        mobile_no: String,
+        parentName: String,
+        apiKey: String
+    ) {
+        val request = CouponDetailsRequest(
+            source_link = source_link,
+            mobile_no = mobile_no
+        )
+        RestClient.couponApiInterfaces.getCouponDetails(parentName, apiKey, request)
+            ?.enqueue(object : Callback<ActivateCouponSummaryResponse?> {
+                override fun onResponse(
+                    call: Call<ActivateCouponSummaryResponse?>,
+                    response: Response<ActivateCouponSummaryResponse?>
+                ) {
+                    if (response.code() == 200) {
+                        getCouponDetails.postValue(response.body())
+                    } else {
+                        getCouponDetails.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<ActivateCouponSummaryResponse?>, t: Throwable) {
+                    getCouponDetails.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+
+    val getCouponDetailsLiveData: LiveData<ActivateCouponSummaryResponse?>
+        get() = getCouponDetails
+
+
+    fun sendactivatecoupon(
+        source_link: String,
+        mobile_no: String,
+        parentName: String,
+        apiKey: String
+    ) {
+        val request = ActivateCouponRequest(
+            source_link = source_link,
+            mobile_no = mobile_no
+        )
+        RestClient.couponApiInterfaces.sendactivatecoupon(parentName, apiKey, request)
+            ?.enqueue(object : Callback<ActivateCouponResponse?> {
+                override fun onResponse(
+                    call: Call<ActivateCouponResponse?>, response: Response<ActivateCouponResponse?>
+                ) {
+                    if (response.code() == 200) {
+                        sendactivatecoupon.postValue(response.body())
+                    } else {
+                        sendactivatecoupon.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<ActivateCouponResponse?>, t: Throwable) {
+                    sendactivatecoupon.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+
+    val sendactivatecouponLiveData: LiveData<ActivateCouponResponse?>
+        get() = sendactivatecoupon
 }

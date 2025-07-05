@@ -7,13 +7,23 @@
     android:fitsSystemWindows="true"
     tools:context=".Parent.Coupon.CouponFragment.HomeFragment">
 
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
         android:background="@drawable/dual_color_background">
 
+        <ProgressBar
+            android:id="@+id/isProgressBar"
+            android:layout_width="50dp"
+            android:visibility="visible"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:layout_below="@+id/text_view"
+            android:layout_height="50dp">
 
+        </ProgressBar>
 
 
         <RelativeLayout

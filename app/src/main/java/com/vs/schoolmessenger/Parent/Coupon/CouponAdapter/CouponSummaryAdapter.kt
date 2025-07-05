@@ -4,12 +4,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.content.Intent
+import android.util.Log
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.vs.schoolmessenger.Parent.Coupon.CouponFragment.HomeFragment
 import com.vs.schoolmessenger.Parent.Coupon.CouponListener.CouponSummaryClickListener
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponSummary.CampaignItem
+import com.vs.schoolmessenger.Parent.Coupon.CouponView.CouponActivateActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 import java.text.ParseException
@@ -31,7 +36,6 @@ class CouponSummaryAdapter(
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
     }
-
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -69,14 +73,16 @@ class CouponSummaryAdapter(
         private val imgProduct: ImageView = itemView.findViewById(R.id.imgProduct)
         private val imgOverlay: ImageView = itemView.findViewById(R.id.imgOverlay)
 
+        private val header: LinearLayout = itemView.findViewById(R.id.header)
+
         fun bind(data: CampaignItem, position: Int) {
 
-            lblProductName.text = data.categoryName
+            lblProductName.text = data.category_name
             lblProductOffer.text = "${data.discount ?: "0"}% Off"
-            lblCompanyName.text = data.merchantName
+            lblCompanyName.text = data.merchant_name
 
 
-            val expiryDateStr: String = data.expiryDate
+            val expiryDateStr: String = data.expiry_date
 
             val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
 
@@ -88,7 +94,7 @@ class CouponSummaryAdapter(
                 val daysLeft = TimeUnit.MILLISECONDS.toDays(diffInMillies)
 
                 if (daysLeft >= 0) {
-                    lblDays.text =(daysLeft.toString() + " days")
+                    lblDays.text = (daysLeft.toString() + " days")
                 } else {
                     lblDays.text = "Expired"
                 }
@@ -102,11 +108,25 @@ class CouponSummaryAdapter(
                 .into(imgProduct)
 
             Glide.with(context)
-                .load(data.merchantLogo)
+                .load(data.merchant_logo)
                 .into(imgOverlay)
 
             itemView.setOnClickListener {
                 listener.onSummaryClick(data)
+            }
+
+            header.setOnClickListener {
+                val intent = Intent(itemView.context, CouponActivateActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                intent.putExtra("category_name", data.category_name)
+                intent.putExtra("discount", data.discount)
+                intent.putExtra("merchant_name", data.merchant_name)
+                intent.putExtra("thumbnail", data.thumbnail)
+                intent.putExtra("source_link", data.source_link)
+                intent.putExtra("coupon_status", data.coupon_status)
+//                Log.d("coupon_status",data.coupon_status)
+                intent.putExtra("merchant_logo", data.merchant_logo)
+                itemView.context.startActivity(intent)
             }
         }
     }
