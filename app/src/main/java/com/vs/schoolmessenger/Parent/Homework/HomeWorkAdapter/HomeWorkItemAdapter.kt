@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
@@ -104,7 +105,7 @@ class HomeWorkItemAdapter(
             lblTimeImage.visibility=View.GONE
             imgNewImage.visibility = View.GONE
 
-
+            webView.setBackgroundColor(Color.BLACK)
             webView.setOnTouchListener(object : View.OnTouchListener {
                 override fun onTouch(v: View?, event: MotionEvent): Boolean {
                     webView.onPause()

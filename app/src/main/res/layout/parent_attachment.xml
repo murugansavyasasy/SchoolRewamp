@@ -16,6 +16,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbarLayout"
         android:visibility="gone"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -131,7 +133,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/rytFilter"
         android:layout_above="@+id/seeMoreLabel"
-        android:layout_marginTop="@dimen/ten"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginEnd="@dimen/ten">
 

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
@@ -153,7 +154,7 @@ class AttachmentAdapter(
                 isSeeMoreExpanded(tvSeeMoreImage, lblContentImage)
             }
 
-
+            webView.setBackgroundColor(Color.BLACK)
             webView.setOnTouchListener { _, event ->
                 webView.onPause()
                 if (event.action == MotionEvent.ACTION_UP) {

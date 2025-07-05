@@ -71,7 +71,6 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
                     "amazonaws."
                 )
             ) {
-                Log.d("Constant.commonFileList",Constant.commonFileList.get(0).path)
                Constant.commonFileList.removeAt(0)
             }
 
@@ -172,7 +171,6 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
                     else requestStoragePermission()
                     true
                 }
-
                 else -> false
             }
         }

@@ -122,7 +122,9 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/thirty_five"
         android:layout_below="@id/lnrParent"
-        android:layout_margin="@dimen/ten"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginStart="@dimen/twenty"
+        android:layout_marginEnd="@dimen/twenty"
         android:background="@drawable/rect_grey"
         android:visibility="gone">
 

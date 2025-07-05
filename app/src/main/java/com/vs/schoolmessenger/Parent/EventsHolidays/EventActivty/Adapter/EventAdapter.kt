@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
@@ -150,7 +151,7 @@ class EventAdapter (
                 isSeeMoreExpanded(tvSeeMoreImage, lblContentImage)
             }
 
-
+            webView.setBackgroundColor(Color.BLACK)
             webView.setOnTouchListener(object : OnTouchListener {
                 override fun onTouch(v: View?, event: MotionEvent): Boolean {
                     webView.onPause()

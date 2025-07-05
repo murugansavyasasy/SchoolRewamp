@@ -15,6 +15,7 @@ import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.provider.Settings
 import android.util.Log
+import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -201,7 +202,7 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
                             binding.videoView.setMediaController(MediaController(this))
                             binding.videoView.requestFocus()
                         } else {
-                            binding.videoView.visibility = View.GONE
+                            binding.videoContainer.visibility = View.GONE
                             binding.imgDelete.visibility = View.GONE
                             binding.thumbnailView.visibility = View.GONE
                             binding.rcyImages.visibility = View.VISIBLE
@@ -222,7 +223,7 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
             }
 
         binding.imgDelete.setOnClickListener {
-            binding.videoView.visibility = View.GONE
+            binding.videoContainer.visibility = View.GONE
             binding.imgDelete.visibility = View.GONE
             binding.imgPlay.visibility = View.GONE
             binding.rcyImages.visibility = View.VISIBLE
@@ -241,9 +242,20 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
         binding.imgPlay.setOnClickListener {
             binding.thumbnailView.visibility = View.GONE
             binding.imgPlay.visibility = View.GONE
-            binding.videoView.visibility = View.VISIBLE
+            binding.videoContainer.visibility = View.VISIBLE
             binding.videoView.start()
         }
+        binding.videoView.setOnPreparedListener { mp ->
+            // Fill width, and let it scale properly in the fixed height
+            mp.setOnVideoSizeChangedListener { _, _, _ ->
+                val layoutParams = binding.videoView.layoutParams
+                layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT
+                // Height is already 100dp via FrameLayout, no need to reset
+                binding.videoView.layoutParams = layoutParams
+                binding.videoView.start()
+            }
+        }
+
 
 //        Constant.editTextCounter(this, binding.txtDesc, 500, binding.lbTextCount)
 //        Constant.editTextCounter(this, binding.txtTitle, 50, binding.lbtitleTextCount)

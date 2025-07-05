@@ -237,6 +237,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/one_eighty"
                         android:layout_marginStart="@dimen/twenty"
+                        android:background="@color/black"
                         android:layout_marginTop="@dimen/thirty"
                         android:layout_marginEnd="@dimen/twenty"
                         android:visibility="gone">

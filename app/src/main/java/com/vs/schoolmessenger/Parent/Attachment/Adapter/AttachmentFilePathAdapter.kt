@@ -104,7 +104,7 @@ class AttachmentFilePathAdapter (
                         .placeholder(R.drawable.image_placeholder)
                         .into(DefaultImage)
 
-                    ImgOrDocumentType.setBackgroundResource(R.drawable.default_image_icon)
+//                    ImgOrDocumentType.setBackgroundResource(R.drawable.default_image_icon)
                     WebViewThumbnail.visibility = View.GONE
                     DefaultImage.visibility = View.VISIBLE
                 }
