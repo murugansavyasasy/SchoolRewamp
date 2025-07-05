@@ -55,11 +55,13 @@ class LessonPlan : BaseActivity<LessonPlanBinding>(), View.OnClickListener,
             if (response != null && response.status) {
                 binding.nomessage.visibility = View.GONE
                 binding.txtNoData.visibility = View.GONE
+                binding.rytSearch.visibility = View.VISIBLE
                 binding.rcyLessonPlan.visibility = View.VISIBLE
                 islpStaffData(response.data, currentRequestType)
             } else {
                 binding.nomessage.visibility = View.VISIBLE
                 binding.txtNoData.visibility = View.VISIBLE
+                binding.rytSearch.visibility = View.GONE
                 binding.rcyLessonPlan.visibility = View.GONE
             }
         }

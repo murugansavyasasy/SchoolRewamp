@@ -763,16 +763,20 @@ object Constant {
 
 
     fun covertDateFormate(input: String): String {
+        Log.d("Input Date Format",input.toString())
         return try {
             val inputFormat = SimpleDateFormat(dd_MM_yyyy, Locale.getDefault())
-//            val outputFormat = SimpleDateFormat(EEE_dd_MMM_yyyy, Locale.getDefault())
             val outputFormat = SimpleDateFormat(dd_MMM_yyyy, Locale.getDefault())
             val date = inputFormat.parse(input)
+            Log.d("OutPut Date Format",date.toString())
             outputFormat.format(date!!)
+
         } catch (e: Exception) {
-            input // return original if there's a parsing error
+            input
         }
     }
+
+
 
 
 
