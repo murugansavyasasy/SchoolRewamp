@@ -19,11 +19,10 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.facebook.shimmer.ShimmerFrameLayout
-import com.google.gson.Gson
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
 import com.vs.schoolmessenger.Parent.Communication.UnifiedVoiceAdapter
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.FilePath
-import com.vs.schoolmessenger.Utils.FullScreenViewerActivity
+import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
@@ -140,7 +139,7 @@ class EventFilePathAdapter (
 
                 Constant.selectedFileIndex = position
 
-                val intent = Intent(context, FullScreenViewerActivity::class.java)
+                val intent = Intent(context, FilesViewActivity::class.java)
                 context.startActivity(intent)
             }
 
@@ -166,7 +165,7 @@ class EventFilePathAdapter (
 
                         Constant.selectedFileIndex = position
 
-                        val intent = Intent(context, FullScreenViewerActivity::class.java)
+                        val intent = Intent(context, FilesViewActivity::class.java)
                         context.startActivity(intent)
                     }
 

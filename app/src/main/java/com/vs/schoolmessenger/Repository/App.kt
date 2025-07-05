@@ -26,12 +26,11 @@ import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.Holida
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestApplyResponse
-
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.SendAbsenteeSMSResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportDataResponse
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeStudentsResponse
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteesResponse
-
+import com.vs.schoolmessenger.School.Assignment.DataClass.AssignmentResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
@@ -56,7 +55,6 @@ import com.vs.schoolmessenger.School.NoticeBoard.Response.NoticeBoardSendRespons
 import com.vs.schoolmessenger.School.SchoolStrength.Model.SchoolStrengthResponse
 import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
 import okhttp3.RequestBody
-import org.json.JSONObject
 
 class App(application: Application) : AndroidViewModel(application) {
 
@@ -103,6 +101,14 @@ class App(application: Application) : AndroidViewModel(application) {
     var isGetHomeWorkReport: LiveData<HomeWorkReportApiResponse?>? = null
         private set
 
+    var isGetAssignmentReport: LiveData<AssignmentResponse?>? = null
+        private set
+
+    var isAssignmentDelete: LiveData<LPDeleteResponse?>? = null
+        private set
+
+
+
     var isGetDailyCollectionReport: LiveData<DailyCollectionReportResponse?>? = null
         private set
 
@@ -129,6 +135,11 @@ class App(application: Application) : AndroidViewModel(application) {
 
     var isSendHomeWork: LiveData<HomeWorkSendResponse?>? = null
         private set
+
+    var isAssignmentSend: LiveData<HomeWorkSendResponse?>? = null
+        private set
+
+
 
     var isVoiceSend: LiveData<TextSendResponse?>? = null
         private set
@@ -216,6 +227,8 @@ class App(application: Application) : AndroidViewModel(application) {
         isGetVoiceHistory = apiSchoolRepositories.isGetVoiceHistoryLiveData
         isGetTextHistory = apiSchoolRepositories.isGetTextHistoryLiveData
         isGetHomeWorkReport = apiSchoolRepositories.isGetHomeWorkReportLiveData
+        isGetAssignmentReport = apiSchoolRepositories.isGetAssignmentReportLiveData
+        isAssignmentDelete = apiSchoolRepositories.isDeleteAssignmentLiveData
         isNoticeBoardReport = apiSchoolRepositories.isNoticeBoardReportLiveData
         isGetDailyCollectionReport = apiSchoolRepositories.isGetDailyCollectionReportLiveData
         isGetSchoolStrengthReport = apiSchoolRepositories.isGetSchoolStrengthReportLiveData
@@ -223,6 +236,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isDetailedWisePendingReport = apiSchoolRepositories.isDetailedWisePendingReportLiveData
         isSendText = apiSchoolRepositories.isSendTextLiveData
         isSendHomeWork = apiSchoolRepositories.isSendHomeWorkLiveData
+        isAssignmentSend = apiSchoolRepositories.isSendAssignmentLiveData
         IsGetEventReport = apiSchoolRepositories.IsGetEventReportLiveData
         IsGetHolidayReport = apiSchoolRepositories.IsGetHolidayReportLiveData
         isVoiceSend = apiSchoolRepositories.isSendVoiceLiveData
@@ -347,6 +361,31 @@ class App(application: Application) : AndroidViewModel(application) {
         )
     }
 
+
+    fun isGetAssignmentReport(
+        isToken: String,
+        isAcademicYearId: Int,
+        activity: Activity
+    ) {
+        apiSchoolRepositories.isGetAssignmentReport(
+            isToken,
+            isAcademicYearId,
+            activity
+        )
+    }
+
+    fun isAssignmentDelete(
+        isToken: String,
+        jsonObject: JsonObject,
+        activity: Activity
+    ) {
+        apiSchoolRepositories.isDeleteAssignment(
+            isToken,
+            jsonObject,
+            activity
+        )
+    }
+
     fun isGetDailyCollectionReport(
         isToken: String,
         istype: String,
@@ -401,6 +440,10 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun isSendHomeWork(isToken: String, josnObject: JsonObject, activity: Activity) {
         apiSchoolRepositories.isSendHomeWork(isToken, josnObject, activity)
+    }
+
+    fun isSendAssignment(isToken: String, josnObject: JsonObject, activity: Activity) {
+        apiSchoolRepositories.isSendAssignment(isToken, josnObject, activity)
     }
 
     fun isVoiceSend(isToken: String, josnObject: JsonObject, activity: Activity) {

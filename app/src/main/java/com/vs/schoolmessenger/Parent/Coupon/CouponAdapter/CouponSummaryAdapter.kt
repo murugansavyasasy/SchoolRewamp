@@ -6,6 +6,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.content.Intent
 import android.util.Log
+import android.widget.Filter
+import android.widget.Filter.FilterResults
+import android.widget.Filterable
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -16,6 +19,7 @@ import com.vs.schoolmessenger.Parent.Coupon.CouponListener.CouponSummaryClickLis
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponSummary.CampaignItem
 import com.vs.schoolmessenger.Parent.Coupon.CouponView.CouponActivateActivity
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.LessonPlan.LessonPlanSummaryModel.AllClassData
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -28,7 +32,15 @@ class CouponSummaryAdapter(
     private val listener: CouponSummaryClickListener,
     private val context: HomeFragment,
     private val isLoading: Boolean
-) : RecyclerView.Adapter<RecyclerView.ViewHolder?>() {
+) : RecyclerView.Adapter<RecyclerView.ViewHolder?>(), Filterable {
+
+    private var fullList: List<CampaignItem> = itemList ?: listOf()
+    private var filteredList: List<CampaignItem> = itemList ?: listOf()
+
+    init {
+        fullList = itemList ?: listOf()
+        filteredList = fullList
+    }
 
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
@@ -51,15 +63,40 @@ class CouponSummaryAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
-            holder.bind(itemList[position], position)
+            holder.bind(filteredList[position], position)
         } else if (holder is ShimmerViewHolder) {
             holder.startShimmer()
         }
     }
 
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val query = constraint?.toString()?.lowercase()?.trim() ?: ""
+                val result = if (query.isEmpty()) {
+                    fullList
+                } else {
+                    fullList.filter {
+                        it.category_name.lowercase().contains(query) ||
+                                it.merchant_name.lowercase().contains(query) ||
+                                it.campaign_name.lowercase().contains(query)
+
+                    }
+                }
+                return FilterResults().apply { values = result }
+            }
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                filteredList = results?.values as? List<CampaignItem> ?: listOf()
+                listener.onSearchResultEmpty(filteredList.isEmpty())
+                notifyDataSetChanged()
+            }
+        }
+    }
+
 
     override fun getItemCount(): Int {
-        return if (isLoading) 10 else itemList.size
+        return if (isLoading) 10 else filteredList.size
     }
 
 

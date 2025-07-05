@@ -89,7 +89,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/ten"
-                android:layout_marginEnd="25dp"
                 android:button="@drawable/ch_square"
                 android:padding="@dimen/five"
                 android:text="@string/Selectallaspresent"

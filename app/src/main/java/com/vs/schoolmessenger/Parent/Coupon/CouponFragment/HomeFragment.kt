@@ -2,6 +2,8 @@ package com.vs.schoolmessenger.Parent.Coupon.CouponFragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -81,8 +83,22 @@ class HomeFragment : Fragment(), View.OnClickListener, CouponMenuClickListener,
             }
         }
 
+
+        binding.editSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (::summaryadapter.isInitialized) {
+                    summaryadapter.filter.filter(s)
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
         return binding.root
     }
+
+
 
     private fun onBackPressed(){
         val intent = Intent(context, ParentDashboard::class.java)
@@ -167,13 +183,30 @@ class HomeFragment : Fragment(), View.OnClickListener, CouponMenuClickListener,
         Log.d("CategoryClicked", category?.categoryName ?: "null")
         if (!categoryId.isNullOrEmpty()) {
             fetchCategoryCouponSummary(categoryId)
+            binding.textView.text = category?.categoryName + " Coupons"
         } else {
             fetchCouponSummary()
+            binding.textView.text = "All Coupons"
         }
     }
 
     override fun onSummaryClick(campaignItem: CampaignItem?) {
 //        Log.d("SummaryClicked", campaignItem?.campaignName ?: "null")
+    }
+
+    override fun onSearchResultEmpty(isEmpty: Boolean) {
+        if (isEmpty) {
+
+            binding.nomessage.visibility = View.VISIBLE
+            binding.txtNoData.visibility = View.VISIBLE
+            binding.txtNoData.text = "No matching coupon found"
+            binding.recyclerView.visibility = View.GONE
+        } else {
+
+            binding.nomessage.visibility = View.GONE
+            binding.txtNoData.visibility = View.GONE
+            binding.recyclerView.visibility = View.VISIBLE
+        }
     }
 
     override fun onClick(v: View?) {}

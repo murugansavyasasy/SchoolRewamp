@@ -8,6 +8,6 @@
     </corners>
 
     <solid
-        android:color="@color/emerald"/>
+        android:color="@color/holo_blue_light"/>
 
 </shape>

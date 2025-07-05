@@ -2,6 +2,8 @@ package com.vs.schoolmessenger.Parent.Coupon.CouponFragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -65,6 +67,17 @@ class TicketFragment : Fragment(), View.OnClickListener, TicketCouponClickListen
             }
         }
 
+        binding.editSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (::ticketcouponadapter.isInitialized) {
+                    ticketcouponadapter.filter.filter(s)
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
         return binding.root
     }
 
@@ -116,6 +129,21 @@ class TicketFragment : Fragment(), View.OnClickListener, TicketCouponClickListen
         }
     }
 
+    override fun onSearchResultEmpty(isEmpty: Boolean) {
+        if (isEmpty) {
+
+            binding.nomessage.visibility = View.VISIBLE
+            binding.txtNoData.visibility = View.VISIBLE
+            binding.txtNoData.text = "No matching coupon found"
+            binding.recyclerView.visibility = View.GONE
+        } else {
+
+            binding.nomessage.visibility = View.GONE
+            binding.txtNoData.visibility = View.GONE
+            binding.recyclerView.visibility = View.VISIBLE
+        }
+    }
+
     private fun onBackPressed() {
         val intent = Intent(context, CouponDashboardActivity::class.java)
         context?.startActivity(intent)
@@ -125,6 +153,8 @@ class TicketFragment : Fragment(), View.OnClickListener, TicketCouponClickListen
         super.onDestroyView()
         _binding = null
     }
+
+
 
     override fun onticketCouponSummaryClick(ticketSummary: TicketSummary?) {
         // TODO: Handle item click

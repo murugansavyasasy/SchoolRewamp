@@ -574,5 +574,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="past_date">Past date</string>
+    <string name="assignmentdetails_missing">Assignment details is missing.</string>
+    <string name="submitted">Submitted</string>
 
 </resources>

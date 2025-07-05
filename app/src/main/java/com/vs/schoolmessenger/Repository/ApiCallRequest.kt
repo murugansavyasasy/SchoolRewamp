@@ -120,6 +120,52 @@ object ApiCallRequest {
         return jsonObject
     }
 
+    fun isSendAssignment(
+        targetType: Int,
+        iframe: String,
+        file_size: String,
+        isAcademicYearId: Int,
+        selectedIds: MutableList<String>,
+        title: String,
+        description: String,
+        assignmentType: String,
+        date: String,
+        time: String,
+        subjectId: Int
+    ): JsonObject {
+
+        val jsonObject = JsonObject()
+        val sectionArray = JsonArray()
+        selectedIds.forEach { sectionArray.add(it) }
+        val filePathArray = JsonArray()
+
+        for (i in Constant.isAwsUploadedFiles.indices) {
+            val isSelectedObject = JsonObject()
+            isSelectedObject.addProperty(APIKeyNames.url, Constant.isAwsUploadedFiles[i].isFileUrl)
+            isSelectedObject.addProperty(
+                APIKeyNames.type,
+                Constant.isAwsUploadedFiles[i].isFileType.toString()
+            )
+            filePathArray.add(isSelectedObject)
+        }
+
+        jsonObject.addProperty(APIKeyNames.academic_year_id, isAcademicYearId)
+        jsonObject.add(APIKeyNames.target_code, sectionArray)
+        jsonObject.addProperty(APIKeyNames.target_type, targetType)
+        jsonObject.addProperty(APIKeyNames.title, title)
+        jsonObject.addProperty("submission_date", date)
+        jsonObject.addProperty("category", assignmentType)
+        jsonObject.addProperty(APIKeyNames.time, time)
+        jsonObject.addProperty(APIKeyNames.iframe, iframe)
+        jsonObject.addProperty(APIKeyNames.file_size, file_size)
+        jsonObject.addProperty(APIKeyNames.description, description)
+        jsonObject.addProperty(
+            APIKeyNames.subject_id,
+            subjectId.toString()
+        )
+        jsonObject.add(APIKeyNames.file_path, filePathArray)
+        return jsonObject
+    }
 
     fun isSendAttachment(
         isAcademicYearId: Int,

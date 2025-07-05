@@ -8,6 +8,7 @@
 
 
     <RelativeLayout
+        android:id="@+id/relative_layout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -19,6 +20,7 @@
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
             />
+
 
         <ImageView
             android:id="@+id/image_top_left"
@@ -32,9 +34,21 @@
             android:layout_gravity="top|start" />
     </RelativeLayout>
 
+    <ProgressBar
+        android:id="@+id/isProgressBar"
+        android:layout_width="50dp"
+        android:visibility="visible"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:layout_gravity="center"
+        android:layout_below="@+id/relative_layout2"
+        android:layout_height="50dp">
+    </ProgressBar>
+
     <include
         android:id="@+id/bottom_layout"
         layout="@layout/layout_coupon_bottom_sheet"/>
+
 
     <Button
         android:id="@+id/btn_activate_coupon"

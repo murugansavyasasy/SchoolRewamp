@@ -26,7 +26,7 @@ import com.vs.schoolmessenger.Parent.Attachment.OnChildItemClickListener
 import com.vs.schoolmessenger.Parent.Communication.UnifiedVoiceAdapter.ShimmerViewHolder
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
-import com.vs.schoolmessenger.Utils.FullScreenViewerActivity
+import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class AttachmentFilePathAdapter (
@@ -148,7 +148,7 @@ class AttachmentFilePathAdapter (
 
                     Constant.selectedFileIndex = position
 
-                    val intent = Intent(context, FullScreenViewerActivity::class.java)
+                    val intent = Intent(context, FilesViewActivity::class.java)
                     context.startActivity(intent)
                 }
             }
@@ -180,7 +180,7 @@ class AttachmentFilePathAdapter (
 
                         Constant.selectedFileIndex = position
 
-                        val intent = Intent(context, FullScreenViewerActivity::class.java)
+                        val intent = Intent(context, FilesViewActivity::class.java)
                         context.startActivity(intent)
                     }
 

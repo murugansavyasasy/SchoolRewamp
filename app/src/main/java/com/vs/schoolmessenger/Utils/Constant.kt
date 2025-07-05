@@ -39,7 +39,6 @@ import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Country.Country
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
@@ -237,6 +236,7 @@ object Constant {
     var section_data = "section_data"
     var notice_data = "notice_data"
     var event_data = "event_data"
+    var assignment_data = "assignment_data"
     var isFileUrl = "isFileUrl"
     var isFileType = "isFileType"
     var isTitle = "isTitle"

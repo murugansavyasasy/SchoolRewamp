@@ -1,0 +1,18 @@
+package com.vs.schoolmessenger.School.Assignment.DataClass
+
+import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.FilePath
+
+data class AssignmentData(val id: String,
+                          val title: String,
+                          val description: String,
+                          val category: String,
+                          val subject: String,
+                          val created_date: String,
+                          val created_time: String,
+                          val submitted_count: Int,
+                          val total_count: Int,
+                          val end_date: String,
+                          val iframe: String,
+                          val file_size: String,
+                          val thumbnail: String,
+                          val file_path: List<FilePath>)

@@ -16,7 +16,6 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
-import com.vs.schoolmessenger.Utils.FullScreenViewerActivity
 import java.io.File
 
 class ImagePickingAdapter(
@@ -78,29 +77,14 @@ class ImagePickingAdapter(
                 Constant.commonFileList = Constant.selectedFiles.map {
                     CommonFileData(type = it.type.toString(), path = it.path)
                 }.toMutableList()
-                Constant.selectedFileIndex = pos
-                val intent = Intent(context, FullScreenViewerActivity::class.java)
+                Constant.selectedFileIndex = pos - 1
+                val intent = Intent(context, FilesViewActivity::class.java)
                 intent.putExtra(Constant.subjectName, "Your Files")
                 context.startActivity(intent)
             } else {
                 listener.onImageClick(pos)
             }
         }
-
-
-//        holder.itemView.setOnClickListener {
-//            if (pos != 0) {
-//                Constant.commonFileList = Constant.selectedFiles.map {
-//                    CommonFileData(type = it.type.toString(), path = it.path)
-//                }
-//                Constant.selectedFileIndex = pos
-//                val intent = Intent(context, FullScreenViewerActivity::class.java)
-//                intent.putExtra(Constant.subjectName, "Your Files")
-//                context.startActivity(intent)
-//            } else {
-//                listener.onImageClick(pos)
-//            }
-//        }
     }
 
     override fun getItemCount() = items.size

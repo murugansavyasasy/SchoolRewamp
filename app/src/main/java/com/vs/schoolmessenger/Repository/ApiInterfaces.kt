@@ -40,6 +40,7 @@ import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.Send
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportDataResponse
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeStudentsResponse
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteesResponse
+import com.vs.schoolmessenger.School.Assignment.DataClass.AssignmentResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
@@ -201,6 +202,19 @@ interface ApiInterfaces {
     ): Call<HomeWorkReportApiResponse?>
 
 
+    @GET(APIMethods.isGetAssignmentReport)
+    fun isGetAssignmentReport(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query(APIKeyNames.academic_year_id) isAcademicYearId: Int,
+    ): Call<AssignmentResponse?>
+
+    @PUT(APIMethods.isAssignmentDelete)
+    fun isAssignmentDelete(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Body requestBody: JsonObject
+    ): Call<LPDeleteResponse?>
+
+
     @POST(APIMethods.isSendText)
     fun isSendText(
         @Header(APIKeyNames.Authorization) token: String, @Body jsonObject: JsonObject
@@ -209,6 +223,12 @@ interface ApiInterfaces {
     @POST(APIMethods.isSendHomeWork)
     fun isSendHomeWork(
         @Header(APIKeyNames.Authorization) token: String, @Body jsonObject: JsonObject
+    ): Call<HomeWorkSendResponse>?
+
+    @POST(APIMethods.isAssignmentSend)
+    fun isAssignmentSend(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Body jsonObject: JsonObject
     ): Call<HomeWorkSendResponse>?
 
     @POST(APIMethods.isSendVoice)

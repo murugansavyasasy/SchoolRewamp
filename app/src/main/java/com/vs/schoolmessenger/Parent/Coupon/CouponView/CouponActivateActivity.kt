@@ -106,6 +106,8 @@ class CouponActivateActivity : BaseActivity<BottomSheetBinding>(), View.OnClickL
         }
 
         appViewModel.sendactivatecoupon?.observe(this) { response ->
+            binding.btnActivateCoupon.isEnabled = true
+            binding.isProgressBar.visibility = View.GONE
             response?.data?.let { data ->
                 val intent = Intent(this, CouponOrderActivity::class.java).apply {
                     putExtra("coupon_code", data.coupon_code)
@@ -131,6 +133,8 @@ class CouponActivateActivity : BaseActivity<BottomSheetBinding>(), View.OnClickL
 
 
         binding.btnActivateCoupon.setOnClickListener {
+            binding.btnActivateCoupon.isEnabled = false
+            binding.isProgressBar.visibility = View.VISIBLE
             appViewModel?.sendactivatecoupon(
                 source_link, "91${AppCredentials.isMobileNumber}",
                 AppCredentials.PARTNER_NAME,

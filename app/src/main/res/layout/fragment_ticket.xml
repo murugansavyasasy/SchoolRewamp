@@ -110,5 +110,33 @@
 
     </ProgressBar>
 
+    <ImageView
+        android:id="@+id/nomessage"
+        android:layout_width="@dimen/two_fifty"
+        android:layout_height="@dimen/two_fifty"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/twenty"
+        android:src="@drawable/nomessages"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/txtNoData"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/twenty"
+        android:text="@string/no_list_found"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:layout_below="@+id/nomessage"
+        android:gravity="center"
+        android:visibility="gone" />
+
+
 
 </RelativeLayout>

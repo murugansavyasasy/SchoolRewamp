@@ -6,6 +6,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filter.FilterResults
+import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
@@ -14,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.vs.schoolmessenger.Parent.Coupon.CouponView.MycouponViewActivity
 import com.vs.schoolmessenger.Parent.Coupon.CouponListener.TicketCouponClickListener
+import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponSummary.CampaignItem
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.TicketCouponSummary.TicketSummary
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.ShimmerUtil
@@ -23,7 +27,15 @@ class TicketCouponAdapter(
     private val listener: TicketCouponClickListener,
     private val context: Context,
     private val isLoading: Boolean
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
+
+    private var fullList: List<TicketSummary> = itemList ?: listOf()
+    private var filteredList: List<TicketSummary> = itemList ?: listOf()
+
+    init {
+        fullList = itemList ?: listOf()
+        filteredList = fullList
+    }
 
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
@@ -45,14 +57,38 @@ class TicketCouponAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
-            holder.bind(itemList[position], position)
+            holder.bind(filteredList[position], position)
         } else if (holder is ShimmerViewHolder) {
             holder.startShimmer()
         }
     }
 
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val query = constraint?.toString()?.lowercase()?.trim() ?: ""
+                val result = if (query.isEmpty()) {
+                    fullList
+                } else {
+                    fullList.filter {
+                        (it.merchant_name?.lowercase()?.contains(query) == true) ||
+                                (it.campaign_name?.lowercase()?.contains(query) == true)
+                    }
+
+                }
+                return FilterResults().apply { values = result }
+            }
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                filteredList = results?.values as? List<TicketSummary> ?: listOf()
+                listener.onSearchResultEmpty(filteredList.isEmpty())
+                notifyDataSetChanged()
+            }
+        }
+    }
+
     override fun getItemCount(): Int {
-        return if (isLoading) 10 else itemList.size
+        return if (isLoading) 10 else filteredList.size
     }
 
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

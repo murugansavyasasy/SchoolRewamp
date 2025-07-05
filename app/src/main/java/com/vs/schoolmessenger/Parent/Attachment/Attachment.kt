@@ -26,7 +26,6 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
     override fun getViewBinding(): ParentAttachmentBinding {
         return ParentAttachmentBinding.inflate(layoutInflater)
     }
-
     private var isAccessToken: String? = null
     private var appViewModel: App? = null
     lateinit var mAdapter: AttachmentAdapter
@@ -71,8 +70,6 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
                 R.id.RdbDocuments -> filterAttachments(Constant.DOCUMENT)
             }
         }
-
-
         observeAttachmentResponse()
         showInitialShimmer()
         fetchInitialData()

@@ -42,6 +42,7 @@ import com.vs.schoolmessenger.CommonScreens.SpecificStudentData.SpecificStudent
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.ApiCallRequest
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.Assignment.DataClass.AssignmentSendingData
 import com.vs.schoolmessenger.School.Event.Model.EventDetails
 import com.vs.schoolmessenger.School.Homework.SectionDetails
 import com.vs.schoolmessenger.Utils.AwsUploadedFiles
@@ -293,6 +294,15 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
             }
         }
 
+        appViewModel!!.isAssignmentSend?.observe(this) { response ->
+            Constant.hideLoading(this@RecipientActivity)
+            if (response != null) {
+                Log.d("Response", response.status.toString())
+                Constant.showTopAlertPopup(response.message, this)
+
+            }
+        }
+
         appViewModel!!.isVoiceSend?.observe(this) { response ->
             Constant.hideLoading(this@RecipientActivity)
             if (response != null) {
@@ -391,11 +401,13 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
                 binding.nomessage.visibility = View.GONE
                 binding.nomessageEntire.visibility = View.GONE
-                binding.tapEntireSchool.visibility = View.GONE
-                binding.tapStandards.visibility = View.GONE
-                binding.tabSectionsStudent.visibility = View.VISIBLE
-                binding.tabGroups.visibility = View.GONE
-                binding.tapStaffs.visibility = View.GONE
+                binding.tabLayout.visibility = View.GONE
+
+//                binding.tapEntireSchool.visibility = View.GONE
+//                binding.tapStandards.visibility = View.GONE
+//                binding.tabSectionsStudent.visibility = View.VISIBLE
+//                binding.tabGroups.visibility = View.GONE
+//                binding.tapStaffs.visibility = View.GONE
                 changeTapBg(Constant.isSection)
 
                 //show send and specific student button
@@ -1051,6 +1063,28 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 } else {
                     eventsendapi()
                 }
+            } else if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT) {
+                if (Constant.selectedFiles.isNotEmpty()) {
+                    val videoFiles = Constant.selectedFiles.filter { it.type == FileType.VIDEO }
+                    if (videoFiles.isNotEmpty()) {
+                        val sizeInMB = Constant.getVideoSizeInMB(Constant.selectedFiles[0].path)
+                        if (sizeInMB <= 500) {
+                            videoUploading()
+                        } else {
+                            Constant.showValidationAlertPopup(
+                                getString(R.string.alert),
+                                "Please select a video less than 500 MB.",
+                                this
+                            )
+                        }
+                    } else {
+                        isFileUploadInAws(
+                            isStaffDetails!!.school_id, "file"
+                        )
+                    }
+                } else {
+                    isAssignmentSend()
+                }
             }
         }
 
@@ -1117,6 +1151,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 attachmentSendApi()
             } else if (SELECTED_SCHOOL_MENU == Constant.M_SCHOOL_CLASS_EVENTS) {
                 eventsendapi()
+            } else if (SELECTED_SCHOOL_MENU == Constant.M_ASSIGNMENT) {
+                isAssignmentSend()
             }
         }
     }
@@ -1180,7 +1216,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         }
 
         val idString = isSectionSelectedIds.joinToString(",") { it.id.toString() }
-        if (SELECTED_SCHOOL_MENU == M_HOMEWORK) {
+        if (SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == M_ASSIGNMENT) {
             isGetSubjectList(idString)
         }
         binding.chAllSelect.isChecked = isSectionSelectedIds.size == isSection?.size
@@ -1213,7 +1249,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         }
 
         val idString = isSectionSelectedIds.joinToString(",") { it.id.toString() }
-        if (SELECTED_SCHOOL_MENU == M_HOMEWORK) {
+        if (SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == M_ASSIGNMENT) {
             isGetSubjectList(idString)
         }
     }
@@ -1247,6 +1283,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 isHomeWorkSend()
             } else if (SELECTED_SCHOOL_MENU == M_COMMUNICATION) {
                 voiceSendApi()
+            } else if (SELECTED_SCHOOL_MENU == Constant.M_ASSIGNMENT) {
+                isAssignmentSend()
             }
         } else {
             val outputDir =
@@ -1334,15 +1372,24 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                                             "SELECTED_SCHOOL_MENU",
                                             SELECTED_SCHOOL_MENU.toString()
                                         )
-                                        if (SELECTED_SCHOOL_MENU == M_HOMEWORK) {
-                                            isHomeWorkSend()
-                                        } else if (SELECTED_SCHOOL_MENU == Constant.M_COMMUNICATION) {
-                                            voiceSendApi()
-                                        } else if (SELECTED_SCHOOL_MENU == Constant.M_ATTACHMENTS) {
-                                            attachmentSendApi()
-                                        } else if (SELECTED_SCHOOL_MENU == Constant.M_SCHOOL_CLASS_EVENTS) {
-                                            eventsendapi()
+                                        when (SELECTED_SCHOOL_MENU) {
+                                            M_HOMEWORK -> {
+                                                isHomeWorkSend()
+                                            }
+                                            Constant.M_COMMUNICATION -> {
+                                                voiceSendApi()
+                                            }
+                                            Constant.M_ATTACHMENTS -> {
+                                                attachmentSendApi()
+                                            }
+                                            Constant.M_SCHOOL_CLASS_EVENTS -> {
+                                                eventsendapi()
+                                            }
+                                            Constant.M_ASSIGNMENT -> {
+                                                isAssignmentSend()
+                                            }
                                         }
+
 
                                     } else {
                                         Log.d("isFileNotMatching", "isFileNotMatching")
@@ -1383,6 +1430,35 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         )
         appViewModel!!.sendAttachment(isAccessToken!!, jsonObject, this)
 
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun isAssignmentSend() {
+        val isAssignmentData =
+            intent.getParcelableExtra<AssignmentSendingData>(Constant.assignment_data)
+        isAssignmentData?.let {
+            val jsonObject = ApiCallRequest.isSendAssignment(
+                targetType = isTargetType!!,
+                iframe = isIframe,
+                file_size = isFileSize,
+                isAcademicYearId = isAcademicYearId,
+                selectedIds = selectedIds,
+                title = it.isTitle,
+                description = it.isDescription,
+                assignmentType = it.isAssignmentType,
+                date = it.isDate,
+                time = it.isTime,
+                subjectId = isSubjectId,
+            )
+            appViewModel!!.isSendAssignment(isAccessToken!!, jsonObject, this)
+        } ?: run {
+            Constant.showValidationAlertPopup(
+                getString(
+                    R.string.alert
+                ),
+                "Assignment details is missing.", this
+            )
+        }
     }
 
 

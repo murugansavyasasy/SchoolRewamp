@@ -36,7 +36,6 @@
                 android:text="@string/permission_settings"
                 android:textColor="@color/black"
                 android:textSize="@dimen/twenty_sp"
-                android:fontFamily="@font/poppins_bold"
                 android:textStyle="bold">
 
             </TextView>
@@ -50,8 +49,7 @@
             android:layout_marginStart="@dimen/twenty"
             android:layout_marginTop="@dimen/twenty"
             android:text="@string/lblGENERAL"
-            android:textStyle="normal"
-            android:fontFamily="@font/poppins_regular"
+            style="@style/CustomTextStylePoppinsRegular"
             android:textSize="@dimen/fifteen_sp">
 
         </TextView>
@@ -94,10 +92,9 @@
                         android:layout_marginStart="@dimen/thirty"
                         android:layout_weight="0.8"
                         android:text="@string/lblNotifications"
+                        style="@style/CustomTextStylePoppinsRegular"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp"
-                        android:fontFamily="@font/poppins_bold"
-                        android:textStyle="bold">
+                        android:textSize="@dimen/thirteen_sp">
 
                     </TextView>
 
@@ -148,9 +145,7 @@
                         android:layout_weight="0.8"
                         android:text="@string/lblFAQ"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp"
-                        android:fontFamily="@font/poppins_bold"
-                        android:textStyle="bold">
+                        android:textSize="@dimen/thirteen_sp">
 
                     </TextView>
 
@@ -202,9 +197,7 @@
                         android:layout_weight="0.8"
                         android:text="@string/lblContact"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp"
-                        android:fontFamily="@font/poppins_bold"
-                        android:textStyle="bold">
+                        android:textSize="@dimen/thirteen_sp">
 
                     </TextView>
 
@@ -256,9 +249,7 @@
                         android:layout_weight="0.8"
                         android:text="@string/lblTermsCondition"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp"
-                        android:fontFamily="@font/poppins_bold"
-                        android:textStyle="bold">
+                        android:textSize="@dimen/thirteen_sp">
 
                     </TextView>
 
@@ -313,9 +304,7 @@
                         android:layout_weight="0.8"
                         android:text="@string/lblChangeLanguage"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp"
-                        android:fontFamily="@font/poppins_bold"
-                        android:textStyle="bold">
+                        android:textSize="@dimen/thirteen_sp">
 
                     </TextView>
 
@@ -348,7 +337,6 @@
                     android:layout_below="@+id/isViewAppLanguage"
                     android:layout_marginStart="@dimen/thirty"
                     android:layout_marginTop="@dimen/twenty"
-                    android:layout_marginBottom="@dimen/ten"
                     android:layout_marginEnd="@dimen/thirty"
                     android:gravity="center"
                     android:orientation="horizontal"
@@ -370,9 +358,7 @@
                         android:layout_weight="0.8"
                         android:text="@string/change_password"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp"
-                        android:fontFamily="@font/poppins_bold"
-                        android:textStyle="bold">
+                        android:textSize="@dimen/thirteen_sp">
 
                     </TextView>
 
@@ -404,7 +390,6 @@
                     android:layout_below="@+id/isViewSaveContact"
                     android:layout_marginStart="@dimen/thirty"
                     android:layout_marginTop="@dimen/twenty"
-                    android:layout_marginBottom="@dimen/fifteen"
                     android:layout_marginEnd="@dimen/thirty"
                     android:gravity="center"
                     android:orientation="horizontal"
@@ -426,9 +411,7 @@
                         android:layout_weight="0.8"
                         android:text="@string/save_contact_to_avoid"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp"
-                        android:fontFamily="@font/poppins_bold"
-                        android:textStyle="bold">
+                        android:textSize="@dimen/thirteen_sp">
 
                     </TextView>
 
@@ -487,7 +470,6 @@
                             android:layout_height="wrap_content"
                             android:text="Enable Fingerprint Login"
                             android:fontFamily="@font/poppins_bold"
-                            android:textStyle="bold"
                             android:textSize="@dimen/thirteen_sp"
                             android:textColor="@color/black"/>
 
@@ -552,9 +534,7 @@
                         android:layout_weight="0.8"
                         android:text="@string/check_network_speed"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp"
-                        android:fontFamily="@font/poppins_bold"
-                        android:textStyle="bold">
+                        android:textSize="@dimen/thirteen_sp">
 
                     </TextView>
 
@@ -579,14 +559,14 @@
                 android:layout_below="@+id/rytGeneral"
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/twenty"
+                style="@style/CustomTextStylePoppinsRegular"
                 android:text="@string/lblFEEDBACK"
-                android:textStyle="normal"
-                android:fontFamily="@font/poppins_regular"
                 android:textSize="@dimen/fifteen_sp">
 
             </TextView>
 
             <RelativeLayout
+                android:layout_marginTop="@dimen/ten"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblFeedBack"
@@ -619,9 +599,7 @@
                         android:layout_weight="0.8"
                         android:text="@string/lblReportbug"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp"
-                        android:fontFamily="@font/poppins_bold"
-                        android:textStyle="bold">
+                        android:textSize="@dimen/thirteen_sp">
 
                     </TextView>
 
@@ -670,9 +648,7 @@
                         android:layout_weight="0.8"
                         android:text="@string/lblRateus"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/thirteen_sp"
-                        android:fontFamily="@font/poppins_bold"
-                        android:textStyle="bold">
+                        android:textSize="@dimen/thirteen_sp">
 
                     </TextView>
 
@@ -704,6 +680,7 @@
                     android:layout_marginStart="@dimen/thirty"
                     android:layout_marginTop="@dimen/twenty"
                     android:layout_marginEnd="@dimen/thirty"
+                    android:layout_marginBottom="@dimen/ten"
                     android:gravity="center"
                     android:orientation="horizontal"
                     android:weightSum="1">
@@ -723,7 +700,6 @@
                         android:text="@string/lblLogout"
                         android:textColor="@color/red"
                         android:textSize="@dimen/thirteen_sp"
-                        android:fontFamily="@font/poppins_bold"
                         android:textStyle="bold">
 
                     </TextView>

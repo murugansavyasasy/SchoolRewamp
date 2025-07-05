@@ -4,5 +4,7 @@ import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponSummary.CampaignIt
 
 interface CouponSummaryClickListener {
     fun onSummaryClick(campaignItem: CampaignItem?)
+    fun onSearchResultEmpty(isEmpty: Boolean)
+
 
 }
