@@ -1,13 +1,14 @@
-package com.vs.schoolmessenger.Parent.Coupon.CouponFragment
+package com.vs.schoolmessenger.Parent.Coupon.CouponView
 
 import android.graphics.Color
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Parent.Coupon.CouponFragment.HomeFragment
+import com.vs.schoolmessenger.Parent.Coupon.CouponFragment.TicketFragment
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.databinding.FragmentCouponDashboardBinding
-
 
 class CouponDashboardActivity : BaseActivity<FragmentCouponDashboardBinding>(), View.OnClickListener {
 

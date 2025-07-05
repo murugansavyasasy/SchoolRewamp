@@ -60,7 +60,7 @@ class NotificationAdapter(
         val lblSendBy: TextView = itemView.findViewById(R.id.lblSendBy)
         val lblTitle: TextView = itemView.findViewById(R.id.lblTitle)
         val lblContent: TextView = itemView.findViewById(R.id.lblContent)
-        val lblView: TextView = itemView.findViewById(R.id.lblView)
+        val first_letter: TextView = itemView.findViewById(R.id.first_letter)
         val lblNotification: TextView = itemView.findViewById(R.id.lblNotification)
 
         fun bind(data: NotificationDataClass, position: Int) {
@@ -68,6 +68,7 @@ class NotificationAdapter(
             lblSendBy.text = data.sendBy
             lblTitle.text = data.title
             lblContent.text = data.content
+            first_letter.text = data.sendBy.first().toString()
             when (position) {
                 1 -> {
                     lblNotification.visibility = View.VISIBLE

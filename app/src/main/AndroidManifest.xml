@@ -436,7 +436,26 @@
         </activity>
 
         <activity
-            android:name=".Parent.Coupon.CouponFragment.CouponDashboardActivity"
+            android:name=".Parent.Coupon.CouponView.CouponDashboardActivity"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
+        <activity
+            android:name=".Parent.Coupon.CouponView.MycouponViewActivity"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
+        <activity
+            android:name=".Parent.Coupon.CouponView.CouponActivateActivity"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize">
+
+        </activity>
+
+        <activity
+            android:name=".Parent.Coupon.CouponView.CouponOrderActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize">
 

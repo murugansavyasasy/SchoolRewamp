@@ -57,7 +57,7 @@ class LessonPlanPicChartAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
             holder.bind(filteredList[position], position, listener)
-        } else if (holder is LessonPlanPicChartAdapter.ShimmerViewHolder) {
+        } else if (holder is ShimmerViewHolder) {
             holder.startShimmer()
         }
     }

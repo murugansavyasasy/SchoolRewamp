@@ -80,7 +80,7 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
 
         // Set default leave days = 1
         totalLeaveDays = 1
-        binding.lblTotalDays.text = "$totalLeaveDays Days"
+        binding.lblTotalDays.text = "No of Days - $totalLeaveDays"
 
 
         binding.toolbarLayout.lblParentToolBar.text = Constant.isParentMenuName
@@ -92,7 +92,7 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
             isChildDetails.standard_name + " - " + isChildDetails.section_name
 
         binding.toolbarLayout.lblLeftSideBar.text = resources.getText(R.string.History)
-        binding.toolbarLayout.lblRightSideBar.text = resources.getText(R.string.Create)
+        binding.toolbarLayout.lblRightSideBar.text = "Leave Request"
         binding.rlaCreateLeaveRequest.visibility = View.VISIBLE
 
 
@@ -206,13 +206,11 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
 
 //                    val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
                     val result = getDayAndDate(selectedDate, dateFormat)
-
-                    result?.let { (dayOfWeek, dayOfMonth) ->
-                        binding.lblDay.text = dayOfWeek
-//                        binding.lblDate.text = dayOfMonth
-                        binding.lblEndDay.text = dayOfWeek
-//                        binding.lblEndDate.text = dayOfMonth
+                    val dayOfMonth = getDayAndDate(selectedDate, dateFormat)
+                    dayOfMonth?.let {
+                        binding.lblDay.text = it
                     }
+
 
                     // Auto-set To Date = From Date
                     toDateMillis = fromDateMillis
@@ -228,7 +226,7 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
                         totalLeaveDays = 1
                     }
 
-                    binding.lblTotalDays.text = "$totalLeaveDays Days"
+                    binding.lblTotalDays.text = "No of Days - $totalLeaveDays"
 
                 }
             }
@@ -255,13 +253,13 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
                         fromDateMillis = toDateMillis // fallback to same date
                     }
 
-                    binding.lblTotalDays.text = "$totalLeaveDays Days"
+                    binding.lblTotalDays.text = "No of Days - $totalLeaveDays"
 //                    val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                    val result = getDayAndDate(selectedDate, dateFormat)
-                    result?.let { (dayOfWeek, dayOfMonth) ->
-                        binding.lblEndDay.text = dayOfWeek
-//                        binding.lblEndDate.text = dayOfMonth
+                    val dayOfMonth = getDayAndDate(selectedDate, dateFormat)
+                    dayOfMonth?.let {
+                        binding.lblEndDay.text = it
                     }
+
                 }
             }
         }
@@ -269,19 +267,14 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
     }
 
 
-    fun getDayAndDate(dateString: String, dateFormat: SimpleDateFormat): Pair<String, String>? {
+    fun getDayAndDate(dateString: String, dateFormat: SimpleDateFormat): String? {
         val dateObj = dateFormat.parse(dateString)
         return dateObj?.let {
             val calendar = Calendar.getInstance().apply { time = it }
-
-            val dayOfWeek =
-                SimpleDateFormat("EEE", Locale.getDefault()).format(calendar.time)  // e.g., "Sat"
-            val dayOfMonth =
-                String.format("%02d", calendar.get(Calendar.DAY_OF_MONTH))         // e.g., "14"
-
-            Pair(dayOfWeek, dayOfMonth)
+            String.format("%02d", calendar.get(Calendar.DAY_OF_MONTH)) // e.g., "18"
         }
     }
+
 
 
     private fun isloadleaverequestData(newData: List<LeaveData>?) {

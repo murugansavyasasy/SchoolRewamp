@@ -34,7 +34,6 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
     private var isStaffDetails: StaffDetails? = null
     private var mAdapter: FeePendingReportAdapter? = null
     var isFirstLoad = false
-
     private var isClassWiseSelected = false
 
     override fun setupViews() {
@@ -226,6 +225,7 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
 
 
             R.id.category_name -> {
+                if (!isClassWiseSelected) return
                 isClassWiseSelected = false
                 binding.categoryName.setBackgroundResource(R.drawable.white_radious)
                 binding.categoryName.setTextColor(Color.BLACK)
@@ -235,6 +235,7 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
             }
 
             R.id.class_name -> {
+                if (isClassWiseSelected) return
                 isClassWiseSelected = true
                 binding.className.setBackgroundResource(R.drawable.white_radious)
                 binding.className.setTextColor(Color.BLACK)

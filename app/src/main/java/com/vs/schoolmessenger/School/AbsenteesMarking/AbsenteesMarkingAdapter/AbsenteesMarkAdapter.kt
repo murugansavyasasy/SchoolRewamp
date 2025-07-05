@@ -89,7 +89,7 @@ class AbsenteesMarkAdapter(
                 lblRollNo.text = ""
                 lnrRollno.setBackgroundResource(0)
             }
-            lblAdmisNo.text = data.admission_no
+            lblAdmisNo.text = "ADMIS NO: "+data.admission_no
 
             val id = data.id.toString()
 
