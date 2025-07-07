@@ -1,6 +1,5 @@
 package com.vs.schoolmessenger.Parent.Coupon.CouponFragment
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -12,8 +11,6 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
-import com.vs.schoolmessenger.Dashboard.Parent.ParentDashboard
 import com.vs.schoolmessenger.Parent.Coupon.CouponCredentials.AppCredentials
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponMenu.Category
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponSummary.CampaignItem
@@ -21,7 +18,6 @@ import com.vs.schoolmessenger.Parent.Coupon.CouponAdapter.CouponMenuAdapter
 import com.vs.schoolmessenger.Parent.Coupon.CouponAdapter.CouponSummaryAdapter
 import com.vs.schoolmessenger.Parent.Coupon.CouponListener.CouponMenuClickListener
 import com.vs.schoolmessenger.Parent.Coupon.CouponListener.CouponSummaryClickListener
-import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.databinding.FragmentHomeBinding
 
@@ -40,7 +36,7 @@ class HomeFragment : Fragment(), View.OnClickListener, CouponMenuClickListener,
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         binding.relativeLayout.setOnClickListener {
-            onBackPressed()
+            requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
         AppCredentials.init(requireContext())
@@ -98,12 +94,6 @@ class HomeFragment : Fragment(), View.OnClickListener, CouponMenuClickListener,
         return binding.root
     }
 
-
-
-    private fun onBackPressed(){
-        val intent = Intent(context, ParentDashboard::class.java)
-        context?.startActivity(intent)
-    }
 
     private fun showProgressBar() {
         binding.isProgressBar.visibility = View.VISIBLE

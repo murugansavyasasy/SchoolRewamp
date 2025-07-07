@@ -32,6 +32,7 @@ class MycouponViewActivity : BaseActivity<MycouponViewBinding>(), View.OnClickLi
         binding = MycouponViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.back.setOnClickListener(this)
+        binding.copyIcon.setOnClickListener(this)
         merchant_name = intent.getStringExtra("merchant_name") ?: ""
         offer_to_show = intent.getStringExtra("offer_to_show") ?: ""
         how_to_use = intent.getStringExtra("how_to_use") ?: ""
