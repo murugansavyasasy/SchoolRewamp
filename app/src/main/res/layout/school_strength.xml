@@ -64,9 +64,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/AcademicYear"
             android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/ten"
             android:layout_marginEnd="@dimen/ten"
-            android:padding="@dimen/twenty"
+            android:padding="@dimen/ten"
             android:background="@drawable/rect_shadow_white">
 
 
@@ -76,7 +75,6 @@
                 android:layout_alignParentStart="true"
                 android:layout_width="@dimen/one_seventy"
                 android:layout_height="@dimen/one_seventy"
-                android:layout_marginStart="@dimen/five"
                 android:layout_gravity="center_vertical"
                />
 
