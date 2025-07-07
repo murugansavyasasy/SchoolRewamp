@@ -74,7 +74,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="15dp"
-                android:text="0 of 50"
+                android:text="0 / 50"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp" />
 
@@ -139,7 +139,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="15dp"
-                android:text="@string/_0_of_500"
+                android:text="0 / 500"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp" />
 

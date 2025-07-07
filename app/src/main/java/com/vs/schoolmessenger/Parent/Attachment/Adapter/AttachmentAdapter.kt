@@ -135,7 +135,6 @@ class AttachmentAdapter(
         @SuppressLint("ClickableViewAccessibility")
         fun bind(item: AttachmentData, position: Int, listener: AttachmentClickListener) {
 
-
             LblHWSubjectName.visibility = View.GONE
 
             if (item.is_unread) {

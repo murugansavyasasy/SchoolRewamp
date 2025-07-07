@@ -14,6 +14,7 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.provider.Settings
+import android.text.InputFilter
 import android.util.Log
 import android.view.Gravity
 import android.view.View
@@ -67,7 +68,6 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         private const val PICK_DOCUMENT_REQUEST = 1003
         private const val PICK_IMAGE_REQUEST = 1001
         internal const val CAMERA_IMAGE_REQUEST = 1004
-        private const val MAX_FILES = 10
     }
 
 
@@ -123,7 +123,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
                 if (result.resultCode == RESULT_OK) {
                     val selectedUris =
                         result.data?.getParcelableArrayListExtra<Uri>(Constant.isSelectedFiles)
-                    val remaining = MAX_FILES - Constant.selectedFiles.size
+                    val remaining = Constant.MAX_FILES - Constant.selectedFiles.size
 
                     selectedUris?.take(remaining)?.forEach { uri ->
                         val mimeType = contentResolver.getType(uri)
@@ -191,7 +191,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
                     if ((selectedUris?.size ?: 0) > remaining) {
                         Toast.makeText(
                             this,
-                            "Only $remaining files added (max ${MAX_FILES})",
+                            "Only $remaining files added (max ${Constant.MAX_FILES})",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
@@ -222,8 +222,20 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
             binding.videoView.start()
         }
 
-        Constant.editTextCounter(this, binding.txtDesc, 500, binding.lbTextCount)
-        Constant.editTextCounter(this, binding.txtTitle, 50, binding.lbtitleTextCount)
+        binding.txtTitle.filters = arrayOf(InputFilter.LengthFilter(Constant.isTitleLength))
+        binding.txtDesc.filters = arrayOf(InputFilter.LengthFilter(Constant.isDescriptionLength))
+        Constant.editTextCounter(
+            this,
+            binding.txtDesc,
+            Constant.isDescriptionLength,
+            binding.lbTextCount
+        )
+        Constant.editTextCounter(
+            this,
+            binding.txtTitle,
+            Constant.isTitleLength,
+            binding.lbtitleTextCount
+        )
 
     }
 
@@ -409,25 +421,25 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         val rlaVideoPick = dialog.findViewById<RelativeLayout>(R.id.rlaVideoPick)
 
         rlaGallery.setOnClickListener {
-            Constant.isFileLimit = 5
+            Constant.MAX_FILES = 10
             openAlbumSelectActivity(Constant.IMAGE)
             dialog.dismiss()
         }
 
         rlaVoice.setOnClickListener {
-            Constant.isFileLimit = 1
+            Constant.MAX_FILES = 10
             openAlbumSelectActivity(Constant.AUDIO)
             dialog.dismiss()
         }
 
         rlaVideoPick.setOnClickListener {
-            Constant.isFileLimit = 1
+            Constant.MAX_FILES = 1
             openAlbumSelectActivity(Constant.VIDEO)
             dialog.dismiss()
         }
 
         rlaDocument.setOnClickListener {
-            Constant.isFileLimit = 5
+            Constant.MAX_FILES = 10
             openAlbumSelectActivity(Constant.DOCUMENT)
             dialog.dismiss()
         }
@@ -492,15 +504,16 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
 
         if (resultCode != RESULT_OK) return
 
-        val remaining = MAX_FILES - Constant.selectedFiles.size
+        val remaining = Constant.MAX_FILES - Constant.selectedFiles.size
         if (remaining <= 0) {
-            Toast.makeText(this, "Max ${MAX_FILES} files allowed", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Max ${Constant.MAX_FILES} files allowed", Toast.LENGTH_SHORT)
+                .show()
             return
         }
 
         fun addPath(uri: Uri) {
             Log.d("isFilePickingUrl", uri.toString())
-            if (Constant.selectedFiles.size >= MAX_FILES) return
+            if (Constant.selectedFiles.size >= Constant.MAX_FILES) return
 
             val mimeType = contentResolver.getType(uri)
             if (mimeType?.startsWith("video/") == true || mimeType?.startsWith("audio/") == true) {

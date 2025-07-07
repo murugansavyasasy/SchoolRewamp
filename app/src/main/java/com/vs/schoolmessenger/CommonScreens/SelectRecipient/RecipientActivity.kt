@@ -56,6 +56,7 @@ import com.vs.schoolmessenger.Utils.Constant.SELECTED_SCHOOL_MENU
 import com.vs.schoolmessenger.Utils.DimOverlayManager
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
+import com.vs.schoolmessenger.Utils.ProgressDialogHelper
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SelectRecipientBinding
 import com.vs.schoolmessenger.util.VimeoVideoUpload
@@ -843,7 +844,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 binding.btnSpecificStudent.isEnabled = false
                 binding.btnSpecificStudent.background =
                     ContextCompat.getDrawable(this@RecipientActivity, R.drawable.bg_gray)
-
             }
 
             Constant.isGroup -> {
@@ -1117,7 +1117,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS) {
             Constant.selectedFiles.removeAt(0)
         }
-        binding.circularProgressView.visibility = View.VISIBLE
+        ProgressDialogHelper.show(this@RecipientActivity)
         VimeoVideoUpload.uploadVideo(
             this, "quiz", "quiz", Constant.selectedFiles[0].path, this
         )
@@ -1163,10 +1163,10 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     override fun onProgressUpdate(percent: Int) {
         runOnUiThread {
             Log.d("isPercentage", percent.toString())
-            binding.circularProgressView.setProgress(percent)
+            ProgressDialogHelper.show(this@RecipientActivity)
+            ProgressDialogHelper.updateProgress(percent)
             if (percent == 100) {
-                binding.circularProgressView.visibility = View.GONE
-                //  dimOverlayManager.hideDim()
+                ProgressDialogHelper.dismiss()
                 Constant.showLoading(this)
             }
         }
@@ -1262,8 +1262,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         Constant.isAwsUploadedFiles.clear()
         val isSelectedFileListSize = Constant.selectedFiles.size
         val iterator = Constant.selectedFiles.iterator()
-        binding.circularProgressView.visibility = View.VISIBLE
-
+        ProgressDialogHelper.show(this@RecipientActivity)
         while (iterator.hasNext()) {
             val fileItem = iterator.next()
             if (fileItem.path.contains("amazonaws.")) {
@@ -1347,7 +1346,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                                     val percent = (uploadedFiles * 100) / isSelectedFileListSize
 
                                     runOnUiThread {
-                                        binding.circularProgressView.setProgress(percent)
+                                        ProgressDialogHelper.show(this@RecipientActivity)
+                                        ProgressDialogHelper.updateProgress(percent)
                                     }
 
                                     Constant.isAwsUploadedFiles.add(
@@ -1366,7 +1366,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                                     )
                                     if (Constant.isAwsUploadedFiles.size == isSelectedFileListSize) {
                                         runOnUiThread {
-                                            binding.circularProgressView.visibility = View.GONE
+                                           ProgressDialogHelper.dismiss()
                                             Constant.showLoading(this@RecipientActivity)
                                         }
 
@@ -1403,12 +1403,13 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                                     uploadedFiles++
                                     val percent = (uploadedFiles * 100) / isSelectedFileListSize
                                     runOnUiThread {
-                                        binding.circularProgressView.setProgress(percent)
+                                        ProgressDialogHelper.show(this@RecipientActivity)
+                                        ProgressDialogHelper.updateProgress(percent)
                                     }
 
                                     if (uploadedFiles == isSelectedFileListSize) {
                                         runOnUiThread {
-                                            binding.circularProgressView.visibility = View.GONE
+                                            ProgressDialogHelper.dismiss()
                                         }
                                     }
                                 }

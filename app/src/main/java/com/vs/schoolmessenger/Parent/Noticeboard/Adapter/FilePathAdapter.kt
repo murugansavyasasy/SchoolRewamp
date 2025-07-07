@@ -20,8 +20,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
-import com.vs.schoolmessenger.Parent.Communication.UnifiedVoiceAdapter.ShimmerViewHolder
 import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
+import com.vs.schoolmessenger.Parent.Communication.UnifiedVoiceAdapter.ShimmerViewHolder
 import com.vs.schoolmessenger.Parent.Noticeboard.FilePath
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
@@ -125,7 +125,6 @@ class FilePathAdapter (
 
             fileItem.setOnClickListener {
                 Constant.commonFileList.isEmpty()
-                Constant.selectedFileIndex=-1
                 val commonList = adapter.GetFilePathDetailsData?.map {
                     CommonFileData(
                         type = it.type,

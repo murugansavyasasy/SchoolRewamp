@@ -9,9 +9,9 @@
         android:id="@+id/rlaDateItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/twenty"
+        android:layout_marginStart="@dimen/ten"
         android:layout_marginTop="@dimen/ten"
-        android:layout_marginEnd="@dimen/twenty"
+        android:layout_marginEnd="@dimen/ten"
         android:background="@drawable/rect_black_outline"
         android:padding="@dimen/ten">
 
@@ -52,8 +52,6 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcyHomeWorkItem"
         android:layout_width="match_parent"
-        android:layout_marginStart="@dimen/fifteen"
-        android:layout_marginEnd="@dimen/fifteen"
         android:visibility="gone"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rlaDateItem">

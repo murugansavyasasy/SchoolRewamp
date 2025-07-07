@@ -15,6 +15,7 @@ import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
 import android.text.Editable
+import android.text.InputFilter
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
@@ -281,29 +282,13 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
         })
 
-        binding.edtTitleTextMessage.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+        binding.edtTitleTextMessage.filters = arrayOf(InputFilter.LengthFilter(Constant.isTitleLength))
+        binding.lblCountOfTitleVoice.filters = arrayOf(InputFilter.LengthFilter(Constant.isTitleLength))
+        binding.edtContentTextMessage.filters = arrayOf(InputFilter.LengthFilter(Constant.isDescriptionLength))
+        Constant.editTextCounter(this, binding.edtContentTextMessage, Constant.isDescriptionLength, binding.lblCountOfDescription)
+        Constant.editTextCounter(this, binding.edtTitleTextMessage, Constant.isTitleLength, binding.lblCountOfTitle)
+        Constant.editTextCounter(this, binding.edtTitle, Constant.isTitleLength, binding.lblCountOfTitleVoice)
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                val length = s?.length ?: 0
-                binding.lblCountOfTitle.text = "$length/50"
-            }
-
-            override fun afterTextChanged(p0: Editable?) {
-            }
-        })
-
-        binding.edtTitle.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                val length = s?.length ?: 0
-                binding.lblCountOfTitleVoice.text = "$length/50"
-            }
-
-            override fun afterTextChanged(p0: Editable?) {
-            }
-        })
     }
 
     private fun loadTextHistoryData(isTextHistoryDetails: List<TextDetail>) {

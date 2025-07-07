@@ -579,7 +579,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/ten"
                             android:layout_marginEnd="@dimen/ten"
-                            android:maxLength="50"
                             android:textSize="@dimen/thirteen_sp">
 
                         </EditText>
@@ -625,7 +624,6 @@
                             android:gravity="start|top"
                             android:hint="@string/Description"
                             android:inputType="textMultiLine"
-                            android:maxLength="500"
                             android:padding="@dimen/ten"
                             android:textSize="@dimen/thirteen_sp" />
 
@@ -931,7 +929,6 @@
                                 android:id="@+id/edtTitle"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:maxLength="50"
                                 android:textSize="@dimen/thirteen_sp"></EditText>
                         </RelativeLayout>
 

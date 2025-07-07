@@ -128,10 +128,26 @@
             </EditText>
 
             <TextView
-                android:id="@+id/lblDescription"
+                android:id="@+id/lblTitleTextCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/edtTitle"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/five"
+                android:layout_marginEnd="@dimen/fifteen"
+                android:fontFamily="@font/poppins_medium"
+                android:text="0 / 50"
+                android:textColor="@color/light_gray"
+                android:textSize="@dimen/thirteen_sp"
+                android:textStyle="normal">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/lblDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblTitleTextCount"
                 android:layout_marginStart="@dimen/twenty"
                 android:layout_marginTop="@dimen/ten"
                 android:fontFamily="@font/poppins_bold"
@@ -157,7 +173,6 @@
                 android:fontFamily="@font/poppins_regular"
                 android:gravity="start"
                 android:hint="@string/Description"
-                android:maxLength="100"
                 android:padding="@dimen/ten"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"

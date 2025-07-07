@@ -20,13 +20,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
+import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentData
 import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentFile
 import com.vs.schoolmessenger.Parent.Attachment.OnChildItemClickListener
 import com.vs.schoolmessenger.Parent.Communication.UnifiedVoiceAdapter.ShimmerViewHolder
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
-import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class AttachmentFilePathAdapter (
@@ -141,14 +141,12 @@ class AttachmentFilePathAdapter (
                         listener.onChildItemClick(it, item)
                     }
                     Constant.commonFileList.isEmpty()
-                    Constant.selectedFileIndex = -1
                     Constant.commonFileList = adapter.GetFilePathDetailsData?.map {
                         CommonFileData(type = it.type, path = it.url)
                     }?.toMutableList() ?: mutableListOf()
-
                     Constant.selectedFileIndex = position
-
                     val intent = Intent(context, FilesViewActivity::class.java)
+                    intent.putExtra(Constant.subjectName, item.title)
                     context.startActivity(intent)
                 }
             }
@@ -168,7 +166,6 @@ class AttachmentFilePathAdapter (
                             }
                         }
                         Constant.commonFileList.isEmpty()
-                        Constant.selectedFileIndex=-1
                         val commonList = adapter.GetFilePathDetailsData?.map {
                             CommonFileData(
                                 type = it.type,
@@ -177,10 +174,10 @@ class AttachmentFilePathAdapter (
                         }?.toMutableList() ?: mutableListOf()
 
                         Constant.commonFileList = commonList
-
                         Constant.selectedFileIndex = position
 
                         val intent = Intent(context, FilesViewActivity::class.java)
+                        intent.putExtra(Constant.subjectName, item.title)
                         context.startActivity(intent)
                     }
 

@@ -161,7 +161,6 @@ class EventAdapter (
 
                     if (event.getAction() == MotionEvent.ACTION_UP) {
                         Constant.commonFileList.isEmpty()
-                        Constant.selectedFileIndex = -1
                         val commonList = data.file_path?.map {
                             CommonFileData(
                                 type = it.type,

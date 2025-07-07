@@ -132,9 +132,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rytFilter"
-        android:layout_above="@+id/seeMoreLabel"
-        android:layout_marginStart="@dimen/ten"
-        android:layout_marginEnd="@dimen/ten">
+        android:layout_above="@+id/seeMoreLabel">
 
     </androidx.recyclerview.widget.RecyclerView>
 
