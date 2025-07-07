@@ -385,6 +385,10 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
     private fun isFileUploadInAws(
         schoolId: String, isFileType: String?
     ) {
+        if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_NOTICEBOARD) {
+            Constant.selectedFiles.removeAt(0)
+        }
+
         binding.circularProgressView.visibility = View.VISIBLE
         Constant.isAwsUploadedFiles.clear()
 
@@ -606,8 +610,6 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         }
         okButton.setOnClickListener {
             alertDialog.dismiss()
-//            Constant.showLoading(this@SchoolList)
-
             if (SELECTED_SCHOOL_MENU == M_COMMUNICATION) {
                 if (Constant.isCommunicationType == 3) {
                     val jsonObject = ApiCallRequest.isSendText(
@@ -631,10 +633,10 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                 }
             } else if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS) {
 
-                if (Constant.selectedFiles.isNotEmpty()) {
+                if (Constant.selectedFiles.size != 1) {
                     val videoFiles = Constant.selectedFiles.filter { it.type == FileType.VIDEO }
                     if (videoFiles.isNotEmpty()) {
-                        val sizeInMB = Constant.getVideoSizeInMB(Constant.selectedFiles[0].path)
+                        val sizeInMB = Constant.getVideoSizeInMB(Constant.selectedFiles[1].path)
                         if (sizeInMB <= 500) {
                             videoSending()
                         } else {
@@ -652,10 +654,10 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                 }
 
             } else if (SELECTED_SCHOOL_MENU == M_NOTICEBOARD) {
-                if (Constant.selectedFiles.isNotEmpty()) {
+                if (Constant.selectedFiles.size != 1) {
                     val videoFiles = Constant.selectedFiles.filter { it.type == FileType.VIDEO }
                     if (videoFiles.isNotEmpty()) {
-                        val sizeInMB = Constant.getVideoSizeInMB(Constant.selectedFiles[0].path)
+                        val sizeInMB = Constant.getVideoSizeInMB(Constant.selectedFiles[1].path)
                         if (sizeInMB <= 500) {
                             videoSending()
                         } else {
@@ -683,6 +685,9 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
 
     private fun videoSending() {
         binding.circularProgressView.visibility = View.VISIBLE
+        if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_NOTICEBOARD) {
+            Constant.selectedFiles.removeAt(0)
+        }
         VimeoVideoUpload.uploadVideo(
             this@SchoolList,
             "quiz", "quiz", Constant.selectedFiles[0].path,

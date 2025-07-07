@@ -81,10 +81,6 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
             onBackPressed()
         }
 
-
-        isLoadYear(Constant.isAcademicYearList)
-
-
         appViewModel!!.isStaffWiseAttendanceReport?.observe(this) { response ->
             if (response != null) {
                 if (response.status) {
@@ -369,6 +365,7 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
     override fun onClick(p0: View?) {
         when (p0?.id) {
             R.id.btnHistory -> {
+                isLoadYear(Constant.isAcademicYearList)
                 isTodayList = false
                 isBackgroundChange(binding.btnHistory)
             }
@@ -377,16 +374,6 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
                 isTodayList = true
                 isBackgroundChange(binding.btnCreate)
             }
-
-//            R.id.rlaStaff -> {
-//                isDropDownLoadData(
-//                    binding.rlaStaff, this, isGetStaffListData
-//                ) { selectStaffId ->
-//                    binding.lblStaff.text = selectStaffId.first
-//                    isStaffId = selectStaffId.second
-//                    getStaffAttendanceReport("", isSelectedYear!!, selectedMonthNumber!!)
-//                }
-//            }
         }
     }
 
@@ -395,8 +382,6 @@ class StaffWiseAttendanceReport : BaseActivity<StaffAttendanceReportBinding>(),
             isAccessToken!!, this
         )
     }
-
-
 
     fun getStaffAttendanceReport(
         isCurrentDate: String,

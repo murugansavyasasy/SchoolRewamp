@@ -28,6 +28,7 @@ import com.vs.schoolmessenger.Repository.ApiCallRequest
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.AwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.Constant.M_ATTACHMENTS
 import com.vs.schoolmessenger.Utils.Constant.M_COMMUNICATION
 import com.vs.schoolmessenger.Utils.Constant.SELECTED_SCHOOL_MENU
 import com.vs.schoolmessenger.Utils.FileItem
@@ -244,6 +245,11 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
     private fun isFileUploadInAws(
         schoolId: String, isFileType: String?
     ) {
+
+        if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS) {
+            Constant.selectedFiles.removeAt(0)
+        }
+
         Constant.isAwsUploadedFiles.clear()
         val isSelectedFileListSize = Constant.selectedFiles.size
         val iterator = Constant.selectedFiles.iterator()
@@ -446,12 +452,11 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
 
         okButton.setOnClickListener {
             alertDialog.dismiss()
-//            Constant.showLoading(this@SpecificStudent)
             if (SELECTED_SCHOOL_MENU == Constant.M_ATTACHMENTS) {
-                if (Constant.selectedFiles.isNotEmpty()) {
+                if (Constant.selectedFiles.size != 1) {
                     val videoFiles = Constant.selectedFiles.filter { it.type == FileType.VIDEO }
                     if (videoFiles.isNotEmpty()) {
-                        val sizeInMB = Constant.getVideoSizeInMB(Constant.selectedFiles[0].path)
+                        val sizeInMB = Constant.getVideoSizeInMB(Constant.selectedFiles[1].path)
                         if (sizeInMB <= 500) {
                             videoUploading()
                         } else {
@@ -498,9 +503,12 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
         }
     }
 
-
     private fun videoUploading() {
         binding.circularProgressView.visibility = View.VISIBLE
+
+        if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS) {
+            Constant.selectedFiles.removeAt(0)
+        }
         VimeoVideoUpload.uploadVideo(
             this@SpecificStudent,
             "quiz",
@@ -551,7 +559,6 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
             binding.circularProgressView.setProgress(percent)
             if (percent == 100) {
                 binding.circularProgressView.visibility = View.GONE
-                //  dimOverlayManager.hideDim()
                 Constant.showLoading(this)
             }
         }

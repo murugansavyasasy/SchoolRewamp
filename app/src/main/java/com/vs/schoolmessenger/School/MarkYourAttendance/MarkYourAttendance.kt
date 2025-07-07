@@ -112,7 +112,6 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnCli
         gpsStatusReceiver = GPSStatusReceiver(this)
 
 
-        isLoadYear(Constant.isAcademicYearList)
 
         appViewModel!!.isStaffLocations?.observe(this) { response ->
             if (response != null) {
@@ -356,13 +355,13 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnCli
             )
         } else {
             if (Constant.isGPSEnabled(this)) {
-                binding.rytGPSRedirect.setVisibility(View.GONE)
+                binding.rytGPSRedirect.visibility = View.GONE
                 getCurrentLocation(Constant.new)
             } else {
-                binding.rytGPSRedirect.setVisibility(View.VISIBLE)
-                binding.rytNoLocationList.setVisibility(View.GONE)
-                binding.rytErrorMessage.setVisibility(View.GONE)
-                binding.rytPresentlayout.setVisibility(View.GONE)
+                binding.rytGPSRedirect.visibility = View.VISIBLE
+                binding.rytNoLocationList.visibility = View.GONE
+                binding.rytErrorMessage.visibility = View.GONE
+                binding.rytPresentlayout.visibility = View.GONE
             }
         }
     }
@@ -392,6 +391,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnCli
             }
 
             R.id.btnHistory -> {
+                isLoadYear(Constant.isAcademicYearList)
                 binding.rytAddLocation.visibility = View.GONE
                 binding.rytProgressBar.visibility = View.GONE
                 isBackgroundChange(binding.btnHistory)
@@ -497,7 +497,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnCli
 
     private fun showLegacyBiometricPrompt() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val keyguardManager = getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
+            val keyguardManager = getSystemService(KEYGUARD_SERVICE) as KeyguardManager
 
             if (keyguardManager.isKeyguardSecure) {
                 val intent = keyguardManager.createConfirmDeviceCredentialIntent(
@@ -515,7 +515,7 @@ class MarkYourAttendance : BaseActivity<MarkYourAttendanceBinding>(), View.OnCli
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 1001) {
-            if (resultCode == Activity.RESULT_OK) {
+            if (resultCode == RESULT_OK) {
                 Log.d("BiometricAuth", "PIN/Pattern auth succeeded")
                 isPunchAttendance()
             } else {

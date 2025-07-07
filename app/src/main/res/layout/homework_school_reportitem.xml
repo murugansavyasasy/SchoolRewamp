@@ -56,7 +56,6 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/fifteen"
             android:text="Annual Day celebrations"
             android:textColor="@color/black"
             android:textSize="@dimen/eighteen_sp" />

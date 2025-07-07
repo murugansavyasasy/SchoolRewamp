@@ -95,7 +95,7 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
         }
 
         binding.rcyImages.visibility = View.VISIBLE
-        mAdapter = ImagePickingAdapter(this, Constant.selectedFiles!!, this)
+        mAdapter = ImagePickingAdapter(this, Constant.selectedFiles, this)
         binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
         binding.rcyImages.adapter = mAdapter
 
@@ -599,21 +599,24 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
         }
 
         val isStaffRole = isUserDetails!!.staff_role
-        Constant.selectedFiles.removeAt(0)
+//        Constant.selectedFiles.removeAt(0)
         if (isMultipleSchool) {
-            if (isStaffRole == Constant.isGroupHeadRole || isStaffRole == Constant.isPrincipalRole || isStaffRole == Constant.isAdminRole
+            if (isStaffRole ==   Constant.isGroupHeadRole || isStaffRole == Constant.isPrincipalRole || isStaffRole == Constant.isAdminRole
             ) {
                 val intent = Intent(this, SchoolList::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
                 startActivity(intent)
             } else {
                 val intent = Intent(this, RecipientActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
                 startActivity(intent)
             }
         } else {
             val intent = Intent(this, RecipientActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
             startActivity(intent)
         }
     }

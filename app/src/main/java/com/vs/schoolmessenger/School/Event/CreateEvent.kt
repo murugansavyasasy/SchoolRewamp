@@ -663,9 +663,9 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
 
         val eventDetails = EventDetails(txtLocation, txtTitle, txtDesc, txtStartDate, txtStartTime)
 
-        if (Constant.selectedFiles.isNotEmpty()) {
-            Constant.selectedFiles.removeAt(0)
-        }
+//        if (Constant.selectedFiles.isNotEmpty()) {
+//            Constant.selectedFiles.removeAt(0)
+//        }
 
         val intent = Intent(this, RecipientActivity::class.java)
         intent.putExtra(Constant.event_data, eventDetails)

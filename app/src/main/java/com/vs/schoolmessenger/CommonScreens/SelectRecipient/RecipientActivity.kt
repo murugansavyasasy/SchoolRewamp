@@ -48,6 +48,7 @@ import com.vs.schoolmessenger.School.Homework.SectionDetails
 import com.vs.schoolmessenger.Utils.AwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
+import com.vs.schoolmessenger.Utils.Constant.M_ATTACHMENTS
 import com.vs.schoolmessenger.Utils.Constant.M_COMMUNICATION
 import com.vs.schoolmessenger.Utils.Constant.M_HOMEWORK
 import com.vs.schoolmessenger.Utils.Constant.M_SCHOOL_CLASS_EVENTS
@@ -402,12 +403,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 binding.nomessage.visibility = View.GONE
                 binding.nomessageEntire.visibility = View.GONE
                 binding.tabLayout.visibility = View.GONE
-
-//                binding.tapEntireSchool.visibility = View.GONE
-//                binding.tapStandards.visibility = View.GONE
-//                binding.tabSectionsStudent.visibility = View.VISIBLE
-//                binding.tabGroups.visibility = View.GONE
-//                binding.tapStaffs.visibility = View.GONE
                 changeTapBg(Constant.isSection)
 
                 //show send and specific student button
@@ -973,10 +968,10 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         okButton.setOnClickListener {
             alertDialog.dismiss()
             if (SELECTED_SCHOOL_MENU == M_HOMEWORK) {
-                if (Constant.selectedFiles.isNotEmpty()) {
+                if (Constant.selectedFiles.size != 1) {
                     val videoFiles = Constant.selectedFiles.filter { it.type == FileType.VIDEO }
                     if (videoFiles.isNotEmpty()) {
-                        val sizeInMB = Constant.getVideoSizeInMB(Constant.selectedFiles[0].path)
+                        val sizeInMB = Constant.getVideoSizeInMB(Constant.selectedFiles[1].path)
                         if (sizeInMB <= 500) {
                             videoUploading()
                         } else {
@@ -1018,10 +1013,10 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     }
                 }
             } else if (SELECTED_SCHOOL_MENU == Constant.M_ATTACHMENTS) {
-                if (Constant.selectedFiles.isNotEmpty()) {
+                if (Constant.selectedFiles.size != 1) {
                     val videoFiles = Constant.selectedFiles.filter { it.type == FileType.VIDEO }
                     if (videoFiles.isNotEmpty()) {
-                        val sizeInMB = Constant.getVideoSizeInMB(Constant.selectedFiles[0].path)
+                        val sizeInMB = Constant.getVideoSizeInMB(Constant.selectedFiles[1].path)
 
                         if (sizeInMB <= 500) {
                             videoUploading()
@@ -1040,10 +1035,10 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     }
                 }
             } else if (SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS) {
-                if (Constant.selectedFiles.isNotEmpty()) {
+                if (Constant.selectedFiles.size != 1) {
                     val videoFiles = Constant.selectedFiles.filter { it.type == FileType.VIDEO }
                     if (videoFiles.isNotEmpty()) {
-                        val sizeInMB = Constant.getVideoSizeInMB(Constant.selectedFiles[0].path)
+                        val sizeInMB = Constant.getVideoSizeInMB(Constant.selectedFiles[1].path)
                         if (sizeInMB <= 500) {
                             videoUploading()
                         } else {
@@ -1064,10 +1059,10 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     eventsendapi()
                 }
             } else if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT) {
-                if (Constant.selectedFiles.isNotEmpty()) {
+                if (Constant.selectedFiles.size != 1) {
                     val videoFiles = Constant.selectedFiles.filter { it.type == FileType.VIDEO }
                     if (videoFiles.isNotEmpty()) {
-                        val sizeInMB = Constant.getVideoSizeInMB(Constant.selectedFiles[0].path)
+                        val sizeInMB = Constant.getVideoSizeInMB(Constant.selectedFiles[1].path)
                         if (sizeInMB <= 500) {
                             videoUploading()
                         } else {
@@ -1119,7 +1114,9 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     }
 
     private fun videoUploading() {
-        //  dimOverlayManager.showDim()
+        if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS) {
+            Constant.selectedFiles.removeAt(0)
+        }
         binding.circularProgressView.visibility = View.VISIBLE
         VimeoVideoUpload.uploadVideo(
             this, "quiz", "quiz", Constant.selectedFiles[0].path, this
@@ -1258,6 +1255,10 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     private fun isFileUploadInAws(
         schoolId: String, isFileType: String?
     ) {
+        if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS || SELECTED_SCHOOL_MENU == M_ASSIGNMENT) {
+            Constant.selectedFiles.removeAt(0)  // Remove the plus icon from array list
+        }
+
         Constant.isAwsUploadedFiles.clear()
         val isSelectedFileListSize = Constant.selectedFiles.size
         val iterator = Constant.selectedFiles.iterator()
@@ -1277,13 +1278,14 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         }
 
         val isCountryId = SharedPreference.getCountryId(this)
+
         Log.d("isSelectedFiles", Constant.selectedFiles.size.toString())
         if (Constant.selectedFiles.isEmpty()) {
             if (SELECTED_SCHOOL_MENU == M_HOMEWORK) {
                 isHomeWorkSend()
             } else if (SELECTED_SCHOOL_MENU == M_COMMUNICATION) {
                 voiceSendApi()
-            } else if (SELECTED_SCHOOL_MENU == Constant.M_ASSIGNMENT) {
+            } else if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT) {
                 isAssignmentSend()
             }
         } else {

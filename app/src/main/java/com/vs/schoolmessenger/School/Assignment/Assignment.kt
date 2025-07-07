@@ -766,7 +766,7 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
             isSelectedDate,
             binding.lblTimePick.text.toString()
         )
-        Constant.selectedFiles.removeAt(0)
+//        Constant.selectedFiles.removeAt(0)
         val intent = Intent(this, RecipientActivity::class.java)
         intent.putExtra(Constant.assignment_data, isAssignmentSendingData)
         startActivity(intent)

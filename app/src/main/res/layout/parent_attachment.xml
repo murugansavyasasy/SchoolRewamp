@@ -65,6 +65,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/linearlayout1"
         android:layout_marginTop="@dimen/ten"
+        android:layout_marginStart="@dimen/twenty"
+        android:layout_marginEnd="@dimen/thirty"
         android:orientation="vertical"
         android:visibility="gone">
 
@@ -77,8 +79,6 @@
                 android:id="@+id/rdgFiles"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/twenty"
-                android:layout_marginEnd="@dimen/thirty"
                 android:orientation="horizontal">
 
                 <RadioButton

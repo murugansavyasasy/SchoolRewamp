@@ -588,7 +588,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         }
 
         val sectionDetails = SectionDetails(title, description)
-        Constant.selectedFiles.removeAt(0)
+//        Constant.selectedFiles.removeAt(0)
         val intent = Intent(this, RecipientActivity::class.java)
         intent.putExtra(Constant.section_data, sectionDetails)
         startActivity(intent)
