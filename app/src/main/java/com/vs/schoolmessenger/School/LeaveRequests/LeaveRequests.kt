@@ -30,6 +30,7 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
     private var isStaffDetails: StaffDetails? = null
+    private var leaveRequestList: List<LeaveData>? = null
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
@@ -42,6 +43,9 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
         isAccessToken = isStaffDetails!!.access_token
         isGetLeaveRequestList()
         binding.toolbarLayout.imgBack.setOnClickListener(this)
+        binding.tabWaiting.setOnClickListener(this)
+        binding.tabApproved.setOnClickListener(this)
+        binding.tabCancelled.setOnClickListener(this)
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
         binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
@@ -63,8 +67,22 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
                 binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
                 binding.nomessage.visibility = View.GONE
                 binding.txtNoData.visibility = View.GONE
-                isloadleaverequestData(response.data)
+                leaveRequestList =  response.data
+                val waitingList = leaveRequestList!!.filter { it.status == "Waiting for approval" }
+                if(waitingList.isNotEmpty()) {
+                    binding.rcyleaverequest.visibility = View.VISIBLE
+                    binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
+                    binding.nomessage.visibility = View.GONE
+                    binding.txtNoData.visibility = View.GONE
+                    isloadleaverequestData(waitingList)
+                }
+                else{
+                    visibleNodataFound()
+                }
             } else {
+                binding.tabWaiting.visibility = View.GONE
+                binding.tabApproved.visibility = View.GONE
+                binding.tabCancelled.visibility = View.GONE
                 binding.rcyleaverequest.visibility = View.GONE
                 binding.toolbarLayout.rytSearch.visibility = View.GONE
                 binding.nomessage.visibility = View.VISIBLE
@@ -90,7 +108,68 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
     override fun onClick(p0: View?) {
         when (p0?.id) {
             R.id.imgBack -> onBackPressed()
+
+            R.id.tabWaiting -> {
+                binding.tabWaiting.setBackgroundResource(R.drawable.bg_leave_waiting)
+                binding.tabApproved.setBackgroundResource(R.drawable.bg_leave_grey)
+                binding.tabCancelled.setBackgroundResource(R.drawable.bg_leave_grey)
+                val waitingList = leaveRequestList!!.filter { it.status == "Waiting for approval" }
+                if(waitingList.isNotEmpty()) {
+                    binding.rcyleaverequest.visibility = View.VISIBLE
+                    binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
+                    binding.nomessage.visibility = View.GONE
+                    binding.txtNoData.visibility = View.GONE
+                    isloadleaverequestData(waitingList)
+                }
+                else{
+                  visibleNodataFound()
+                }
+
+            }
+            R.id.tabApproved -> {
+                binding.tabWaiting.setBackgroundResource(R.drawable.bg_leave_grey)
+                binding.tabApproved.setBackgroundResource(R.drawable.bg_leave_waiting)
+                binding.tabCancelled.setBackgroundResource(R.drawable.bg_leave_grey)
+                val approvedList = leaveRequestList!!.filter { it.status == "Approved" }
+                if(approvedList.isNotEmpty()) {
+                    binding.rcyleaverequest.visibility = View.VISIBLE
+                    binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
+                    binding.nomessage.visibility = View.GONE
+                    binding.txtNoData.visibility = View.GONE
+                    isloadleaverequestData(approvedList)
+                }
+                else{
+                    visibleNodataFound()
+                }
+
+            }
+            R.id.tabCancelled -> {
+                binding.tabWaiting.setBackgroundResource(R.drawable.bg_leave_grey)
+                binding.tabApproved.setBackgroundResource(R.drawable.bg_leave_grey)
+                binding.tabCancelled.setBackgroundResource(R.drawable.bg_leave_waiting)
+                val rejectedList = leaveRequestList!!.filter { it.status == "Rejected" }
+                if(rejectedList.isNotEmpty()) {
+                    binding.rcyleaverequest.visibility = View.VISIBLE
+                    binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
+                    binding.nomessage.visibility = View.GONE
+                    binding.txtNoData.visibility = View.GONE
+                    Log.d("rejectedList",rejectedList.size.toString())
+                    isloadleaverequestData(rejectedList)
+                }
+                else{
+                    visibleNodataFound()
+                }
+            }
         }
+    }
+
+    private fun visibleNodataFound() {
+        binding.rcyleaverequest.visibility = View.GONE
+        binding.toolbarLayout.rytSearch.visibility = View.GONE
+        binding.nomessage.visibility = View.VISIBLE
+        binding.txtNoData.visibility = View.VISIBLE
+        binding.txtNoData.text =  "No data found"
+
     }
 
     override fun onSearchResultEmpty(isEmpty: Boolean) {
@@ -126,6 +205,8 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
         mAdapter =
             LeaveRequestAdapter(newData, this, this, Constant.isShimmerViewDisable)
         binding.rcyleaverequest.adapter = mAdapter
+        mAdapter.notifyDataSetChanged()
+
     }
 
     private fun isGetLeaveRequestList() {

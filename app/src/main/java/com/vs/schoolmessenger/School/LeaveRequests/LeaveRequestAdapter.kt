@@ -6,6 +6,7 @@ import android.graphics.PorterDuff
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Filter
 import android.widget.Filter.FilterResults
 import android.widget.Filterable
@@ -53,12 +54,12 @@ class LeaveRequestAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.leave_request_list)
+            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.leave_request_list_item)
             ShimmerViewHolder(shimmerView)
         } else {
             val view =
                 LayoutInflater.from(parent.context)
-                    .inflate(R.layout.leave_request_list, parent, false)
+                    .inflate(R.layout.leave_request_list_item, parent, false)
             DataViewHolder(view, context,listener)
         }
 
@@ -78,6 +79,11 @@ class LeaveRequestAdapter(
     override fun getItemCount(): Int {
         return if (isLoading) 20
         else filteredList?.size ?: 0
+    }
+
+    fun updateData(newList: List<LeaveData>) {
+        this.fullList = newList
+        notifyDataSetChanged()
     }
 
     override fun getFilter(): Filter {
@@ -111,66 +117,58 @@ class LeaveRequestAdapter(
     class DataViewHolder(itemView: View, private val context: Context,    private val listener: SchoolLRClickListener
     ) :
         RecyclerView.ViewHolder(itemView) {
-        private val lblName: TextView = itemView.findViewById(R.id.lblName)
-        private val lblSection: TextView = itemView.findViewById(R.id.lblSection)
-        private val lblFromData: TextView = itemView.findViewById(R.id.lblFromData)
-        private val lblToDate: TextView = itemView.findViewById(R.id.lblToDate)
-        private val lbldays: TextView = itemView.findViewById(R.id.lbldays)
-        private val lbldate: TextView = itemView.findViewById(R.id.lbldate)
-        private val leaverequestdesc: TextView = itemView.findViewById(R.id.leaverequestdesc)
-        private  val bottomlinear_layout: LinearLayout = itemView.findViewById(R.id.bottomlinear_layout)
-        private val bottomstatuslinear_layout: LinearLayout = itemView.findViewById(R.id.bottomstatuslinear_layout)
-        private val bottomstatusrelative_layout: RelativeLayout = itemView.findViewById(R.id.bottomstatusrelative_layout)
-        private val status_textlabel: TextView = itemView.findViewById(R.id.status_textlabel)
-        private val relative_layout: RelativeLayout = itemView.findViewById(R.id.relative_layout)
-        private val statustext_top: TextView = itemView.findViewById(R.id.statustext_top)
-        private val btnrejected: RelativeLayout = itemView.findViewById(R.id.btnrejected)
-        private val btnapprove: RelativeLayout = itemView.findViewById(R.id.btnapprove)
-        private val imagearrow_view: ImageView = itemView.findViewById(R.id.imagearrow_view)
+
+        private val textName: TextView = itemView.findViewById(R.id.textName)
+        private val textDate: TextView = itemView.findViewById(R.id.textDate)
+        private val textReason: TextView = itemView.findViewById(R.id.textReason)
+        private val textNoOfDays: TextView = itemView.findViewById(R.id.textNoOfDays)
+        private val textFirstLetter: TextView = itemView.findViewById(R.id.textFirstLetter)
+        private val btnCancel: TextView = itemView.findViewById(R.id.btnCancel)
+        private val btnApprove: TextView = itemView.findViewById(R.id.btnApprove)
+
+
+
         @SuppressLint("UseCompatLoadingForDrawables")
         fun bind(data: LeaveData, position: Int) {
-            lblName.text = data.student_name
-            lblSection.text = data.class_name
-            lblFromData.text = Constant.convertDateTimeFormat(data.leave_from.toString())
-            lblToDate.text = Constant.convertDateTimeFormat(data.leave_to.toString())
-            lbldays.text = data.no_of_days
-            lbldate.text =data.applied_on
-            leaverequestdesc.text = data.reason
-            imagearrow_view.setColorFilter(ContextCompat.getColor(context, R.color.navi_blue2), PorterDuff.Mode.SRC_IN)
-
+            textName.text = data.student_name
+            textFirstLetter.text = data.student_name.first().toString()
+//            lblSection.text = data.class_name
+            textDate.text =  Constant.convertDateTimeFormat(data.leave_from.toString()) + " - "+Constant.convertDateTimeFormat(data.leave_to.toString())
+            if(data.no_of_days.equals("1")){
+                textNoOfDays.text = "( "+data.no_of_days+" Day )"
+            }
+            else{
+                textNoOfDays.text = "( "+data.no_of_days+" Days )"
+            }
+           // lbldate.text =data.applied_on
+            textReason.text = data.reason
 
             if (data.status == "Rejected") {
-                bottomlinear_layout.visibility = View.GONE
-                bottomstatuslinear_layout.visibility = View.VISIBLE
-                bottomstatusrelative_layout.setBackgroundResource(R.drawable.bg_red_radoius_10dp)
-                status_textlabel.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.red));
-                relative_layout.setBackgroundResource(R.drawable.bg_red_radoius_15dp)
-                statustext_top.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.white));
-                statustext_top.text = data.status
-                status_textlabel.text = "Rejected On"+ data.updated_on
+                btnCancel.text ="Cancelled"
+                btnCancel.visibility = View.VISIBLE
+                btnApprove.visibility = View.GONE
 
             } else if (data.status == "Approved") {
-                bottomlinear_layout.visibility = View.GONE
-                bottomstatuslinear_layout.visibility = View.VISIBLE
-                bottomstatusrelative_layout.setBackgroundResource(R.drawable.bg_green_radoius_10dp)
-                status_textlabel.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.white));
-                relative_layout.setBackgroundResource(R.drawable.bg_green_radoius_10dp)
-                statustext_top.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.white));
-                status_textlabel.text = "Approved On"+ data.updated_on
-                statustext_top.text = data.status
+                btnApprove.text = "Approved"
+                btnCancel.visibility = View.GONE
+                btnApprove.visibility = View.VISIBLE
 
             } else if (data.status == "Waiting for approval") {
-                bottomstatuslinear_layout.visibility = View.GONE
-                bottomlinear_layout.visibility = View.VISIBLE
-                relative_layout.setBackgroundResource(R.drawable.bg_orange_radoius_10dp)
-                statustext_top.text = "Pending"
-                statustext_top.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.white));
+                btnCancel.visibility = View.VISIBLE
+                btnApprove.visibility = View.VISIBLE
+                btnCancel.text ="Cancel"
+                btnApprove.text = "Approve"
+
             }
-            btnapprove.setOnClickListener {
-                listener.onApproveClicked(data, position)
+            btnApprove.setOnClickListener {
+                if(data.status.equals("Waiting for approval")) {
+                    listener.onApproveClicked(data, position)
+                }
             }
-            btnrejected.setOnClickListener {
-                listener.onRejectClicked(data, position)
+            btnCancel.setOnClickListener {
+                if(data.status.equals("Waiting for approval")) {
+                    listener.onRejectClicked(data, position)
+                }
             }
         }
 
