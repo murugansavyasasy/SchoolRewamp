@@ -657,19 +657,19 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         val txtStartTime = binding.txtStartTime.text.toString().trim()
 
         if (txtLocation.isEmpty()) {
-            binding.txtLocation.error = "Location is required"
+            binding.txtLocation.error = getString(R.string.This_field_required)
             binding.txtLocation.requestFocus()
             return
         }
 
         if (txtTitle.isEmpty()) {
-            binding.txtTitle.error = getString(R.string.Title_required)
+            binding.txtTitle.error = getString(R.string.This_field_required)
             binding.txtTitle.requestFocus()
             return
         }
 
         if (txtDesc.isEmpty()) {
-            binding.txtDesc.error = "Description is required"
+            binding.txtDesc.error = getString(R.string.This_field_required)
             binding.txtDesc.requestFocus()
             return
         }

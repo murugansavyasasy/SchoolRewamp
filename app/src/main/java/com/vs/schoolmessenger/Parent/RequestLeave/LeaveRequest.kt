@@ -166,7 +166,7 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
 
 
         if (reason.isEmpty()) {
-            binding.txtDesc.error = "Description is required"
+            binding.txtDesc.error = getString(R.string.This_field_required)
             binding.txtDesc.requestFocus()
             return
         }

@@ -827,21 +827,20 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
 
             R.id.rlaSendText -> {
-                if (binding.edtTitleTextMessage.text.toString() != "") {
-                    if (binding.edtContentTextMessage.text.toString() != "") {
-                        isGoToRecipient()
-                    } else {
-                        Constant.showValidationAlertPopup(
-                            getString(R.string.alert),
-                            getString(R.string.Enter_title_description), this
-                        )
-                    }
-                } else {
-                    Constant.showValidationAlertPopup(
-                        getString(R.string.alert),
-                        getString(R.string.Enter_title_description), this
-                    )
+
+                val title = binding.edtTitleTextMessage.text.toString().trim()
+                val description = binding.edtContentTextMessage.text.toString().trim()
+                if (title.isEmpty()) {
+                    binding.edtTitleTextMessage.error = getString(R.string.This_field_required)
+                    binding.edtTitleTextMessage.requestFocus()
+                    return
                 }
+                if (description.isEmpty()) {
+                    binding.edtContentTextMessage.error = getString(R.string.This_field_required)
+                    binding.edtContentTextMessage.requestFocus()
+                    return
+                }
+                isGoToRecipient()
             }
 
             R.id.rlaAcademicYear -> {
@@ -858,9 +857,10 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
 
             R.id.rlaSendVoice -> {
+
                 if (Constant.isVoiceType == 3) {
                     if (Constant.isAwsUploadedFiles.isNotEmpty()) {
-                        if (binding.edtTitle.text.toString() != "") {
+                        if (binding.edtTitle.text.toString().isNotBlank()) {
                             if (isScheduleCall) {
                                 if (selectedDates.isNotEmpty()) {
                                     isGoToRecipient()
@@ -874,10 +874,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                                 isGoToRecipient()
                             }
                         } else {
-                            Constant.showValidationAlertPopup(
-                                getString(R.string.alert),
-                                getString(R.string.Voice_title_required), this
-                            )
+                            binding.edtTitle.error = getString(R.string.This_field_required)
                         }
                     } else {
                         Constant.showValidationAlertPopup(
@@ -887,7 +884,7 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     }
                 } else {
                     if (Constant.selectedFiles.isNotEmpty()) {
-                        if (binding.edtTitle.text.toString() != "") {
+                        if (binding.edtTitle.text.toString().isNotBlank()) {
                             if (isScheduleCall) {
                                 if (selectedDates.isNotEmpty()) {
                                     isGoToRecipient()
@@ -900,12 +897,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                             } else {
                                 isGoToRecipient()
                             }
-
                         } else {
-                            Constant.showValidationAlertPopup(
-                                getString(R.string.alert),
-                                getString(R.string.Voice_title_required), this
-                            )
+                            binding.edtTitle.error = getString(R.string.This_field_required)
                         }
                     } else {
                         Constant.showValidationAlertPopup(

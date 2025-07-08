@@ -660,13 +660,13 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         val txtEndDate = Constant.convertDateFormat(txtEndDate!!)
         val txtStartDate = Constant.convertDateFormat(txtStartDate!!)
         if (title.isEmpty()) {
-            binding.txtTitle.error = getString(R.string.Title_required)
+            binding.txtTitle.error = getString(R.string.This_field_required)
             binding.txtTitle.requestFocus()
             return
         }
 
         if (description.isEmpty()) {
-            binding.txtDesc.error = "Description is required"
+            binding.txtDesc.error = getString(R.string.This_field_required)
             binding.txtDesc.requestFocus()
             return
         }

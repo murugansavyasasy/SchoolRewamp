@@ -97,10 +97,8 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
         binding.rcyFile.layoutManager = layoutManager
         binding.rcyFile.adapter = adapter
 
-        // Prevent touch-based scrolling if not only images
         binding.rcyFile.setOnTouchListener { _, _ -> !onlyImages }
 
-        // Show/hide nav buttons
         if (!onlyImages && Constant.commonFileList.size > 1) {
             binding.lnrNext.visibility = View.VISIBLE
             binding.lnrPrevious.visibility = View.VISIBLE
@@ -108,8 +106,6 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
             binding.lnrNext.visibility = View.GONE
             binding.lnrPrevious.visibility = View.GONE
         }
-
-        // Show indicator only for image list
         if (onlyImages && Constant.commonFileList.size > 1) {
             binding.indicator.attachToRecyclerView(binding.rcyFile)
         }
@@ -128,6 +124,11 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
                 val layoutManager = rv.layoutManager as? LinearLayoutManager ?: return
                 val firstVisible = layoutManager.findFirstVisibleItemPosition()
                 this@attachToRecyclerView.animatePageSelected(firstVisible)
+
+                if (firstVisible != RecyclerView.NO_POSITION) {
+                    currentPosition = firstVisible
+                    updateNavButtons()
+                }
             }
         })
         adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {

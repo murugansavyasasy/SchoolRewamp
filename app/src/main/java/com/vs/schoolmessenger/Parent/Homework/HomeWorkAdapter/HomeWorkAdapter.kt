@@ -47,7 +47,7 @@ class HomeWorkAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
-            holder.bind(DateWiseHomeworkData!![position], position, this)
+            holder.bind(DateWiseHomeworkData!![position], position, this, listener)
         }
     }
 
@@ -62,6 +62,7 @@ class HomeWorkAdapter(
         private val rlaDateItem: RelativeLayout = itemView.findViewById(R.id.rlaDateItem)
         private val rcyHomeWorkItem: RecyclerView = itemView.findViewById(R.id.rcyHomeWorkItem)
         private val imgDown: ImageView = itemView.findViewById(R.id.imgDown)
+        private val lblSeeMore: TextView = itemView.findViewById(R.id.lblSeeMore)
         var mHomeWorkItemAdapter: HomeWorkItemAdapter? = null
 
 
@@ -69,6 +70,7 @@ class HomeWorkAdapter(
             item: GetDateWiseHomeworkData,
             position: Int,
             adapter: HomeWorkAdapter,
+            listener: HomeWorkDateClickListener
         ) {
             lblDate.text = Constant.convertDateTimeFormat(item.date)
 
@@ -80,6 +82,17 @@ class HomeWorkAdapter(
             if (isExpanded) {
                 loadData(item.homework, item)
             }
+
+            if (position == adapter.itemCount - 1) {
+                lblSeeMore.visibility = View.VISIBLE
+            } else {
+                lblSeeMore.visibility = View.GONE
+            }
+
+            lblSeeMore.setOnClickListener {
+                listener.onItemClick(item, this@DataViewHolder)
+            }
+
 
             rlaDateItem.setOnClickListener {
                 val previouslyExpanded = adapter.expandedPosition

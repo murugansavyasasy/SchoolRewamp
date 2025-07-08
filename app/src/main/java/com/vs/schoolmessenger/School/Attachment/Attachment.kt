@@ -570,12 +570,12 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
         val title = binding.edtTitle.text.toString().trim()
         val description = binding.edtDescription.text.toString().trim()
         if (title.isEmpty()) {
-            binding.edtTitle.error = getString(R.string.Title_required)
+            binding.edtTitle.error = getString(R.string.This_field_required)
             binding.edtTitle.requestFocus()
             return
         }
         if (description.isEmpty()) {
-            binding.edtDescription.error = getString(R.string.Description_required)
+            binding.edtDescription.error = getString(R.string.This_field_required)
             binding.edtDescription.requestFocus()
             return
         }
