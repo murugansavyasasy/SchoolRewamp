@@ -44,6 +44,7 @@
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginEnd="@dimen/fifteen"
                 android:layout_marginTop="@dimen/ten"
+                style="@style/CustomTextStylePoppinsRegular"
                 android:text="Play Quiz games to improve the learning in a funnier way it will reduce the stress and improve the brain activities "
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp">

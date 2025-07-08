@@ -194,10 +194,10 @@
             android:layout_marginTop="@dimen/ten"
             android:layout_marginEnd="10dp"
             android:maxLines="3"
+            style="@style/CustomTextStylePoppinsMedium"
             android:text="If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress."
             android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"
-            android:textStyle="normal" />
+            android:textSize="@dimen/thirteen_sp" />
 
         <TextView
             android:id="@+id/lblEventTimeImage"
