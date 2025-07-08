@@ -83,6 +83,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/five"
                 android:text="Casual"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp" />
 

@@ -2,5 +2,5 @@ package com.vs.schoolmessenger.Parent.Timetable
 
 interface TimeTableListener {
 
-    fun onItemClick(data: TimeTableData, holder: TimeTableAdapter.DataViewHolder)
+    fun onItemClick(data: TimeTableListData, holder: TimeTableAdapter.DataViewHolder)
 }

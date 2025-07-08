@@ -38,6 +38,7 @@ import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.Holida
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestApplyResponse
+import com.vs.schoolmessenger.Parent.Timetable.TimeTableResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.SendAbsenteeSMSResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportDataResponse
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeStudentsResponse
@@ -415,6 +416,12 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String
     ): Call<CertificatesListResponse?>
 
+
+    @GET(APIMethods.get_time_table)
+    fun isGetTimeTable(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query(APIKeyNames.day_id) day_id: Int?,
+    ): Call<TimeTableResponse?>
 
     @GET(APIMethods.getabsenteescountbydate)
     fun getabsenteescountbydate(

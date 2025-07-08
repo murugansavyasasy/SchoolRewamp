@@ -31,15 +31,46 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_below="@+id/linear_layout1"
-        android:layout_marginTop="@dimen/ten"
         android:layout_height="wrap_content">
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/sixteen"
+            android:padding="@dimen/ten"
             android:scrollbars="vertical" />
     </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/lnrNoRecords"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/nomessage"
+            android:layout_width="@dimen/two_fifty"
+            android:layout_height="@dimen/two_fifty"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/twenty"
+            android:src="@drawable/nomessages"
+            android:textColor="@color/black"
+            android:textSize="@dimen/fifteen_sp" />
+
+        <TextView
+            android:id="@+id/txtNoData"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/twenty"
+            android:text="@string/no_list_found"
+            android:textColor="@color/black"
+            android:textSize="@dimen/fifteen_sp" />
+    </LinearLayout>
+
 
 
 

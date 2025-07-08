@@ -71,6 +71,7 @@ object APIMethods {
     const val get_certificate_types = "comm/api/certificate/types"
     const val send_certificate_request = "comm/api/certificate/send-request"
     const val get_certificates_list = "comm/api/certificate/request-list"
+    const val get_time_table = "lms/api/time-table/get-schedule"
     const val IsGetHolidayReport = "admin/api/school-event/view-holidays"
     const val getabsenteescountbydate = "stud-attd/api/attendance/get-absentees-count-by-date"
 

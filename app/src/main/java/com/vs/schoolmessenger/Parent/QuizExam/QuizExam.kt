@@ -5,7 +5,11 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.QuizExamBinding
 
 class QuizExam : BaseActivity<QuizExamBinding>(), View.OnClickListener {
@@ -15,13 +19,29 @@ class QuizExam : BaseActivity<QuizExamBinding>(), View.OnClickListener {
     private lateinit var selectedAnswers: IntArray
     private lateinit var optionsArray: Array<TextView>
 
+    private var appViewModel: App? = null
+    private var isAccessToken: String? = null
+    private var isChildDetails: ChildDetails? = null
+
     override fun getViewBinding(): QuizExamBinding {
         return QuizExamBinding.inflate(layoutInflater)
     }
 
     override fun setupViews() {
         super.setupViews()
-        setupToolbar()
+        setUpGradientParent()
+
+        // Toolbar setup
+        binding.toolbarLayout.imgBack.setOnClickListener(this)
+        binding.toolbarLayout.lblLeftSideBar.setOnClickListener(this)
+        binding.toolbarLayout.lblRightSideBar.setOnClickListener(this)
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isParentMenuName
+        binding.toolbarLayout.rytSearch.visibility = View.GONE
+        isChildDetails = SharedPreference.getChildDetails(this)
+        binding.toolbarLayout.lblStudentName.text = isChildDetails?.name ?: ""
+        binding.toolbarLayout.lblStudentSection.text =
+            isChildDetails?.standard_name + " - " + isChildDetails?.section_name
+
 
         optionsArray = arrayOf(binding.option1, binding.option2, binding.option3, binding.option4)
 
@@ -59,6 +79,9 @@ class QuizExam : BaseActivity<QuizExamBinding>(), View.OnClickListener {
                     currentQuestionIndex--
                     displayQuestion()
                 }
+            }
+            R.id.imgBack -> {
+                onBackPressed()
             }
         }
     }
