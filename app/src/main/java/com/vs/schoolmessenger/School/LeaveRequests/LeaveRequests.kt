@@ -68,7 +68,7 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
                 binding.nomessage.visibility = View.GONE
                 binding.txtNoData.visibility = View.GONE
                 leaveRequestList =  response.data
-                val waitingList = leaveRequestList!!.filter { it.status == "Waiting for approval" }
+                val waitingList = leaveRequestList!!.filter { it.status == Constant.waiting_for_approval}
                 if(waitingList.isNotEmpty()) {
                     binding.rcyleaverequest.visibility = View.VISIBLE
                     binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
@@ -113,7 +113,7 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
                 binding.tabWaiting.setBackgroundResource(R.drawable.bg_leave_waiting)
                 binding.tabApproved.setBackgroundResource(R.drawable.bg_leave_grey)
                 binding.tabCancelled.setBackgroundResource(R.drawable.bg_leave_grey)
-                val waitingList = leaveRequestList!!.filter { it.status == "Waiting for approval" }
+                val waitingList = leaveRequestList!!.filter { it.status == Constant.waiting_for_approval }
                 if(waitingList.isNotEmpty()) {
                     binding.rcyleaverequest.visibility = View.VISIBLE
                     binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
@@ -130,7 +130,7 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
                 binding.tabWaiting.setBackgroundResource(R.drawable.bg_leave_grey)
                 binding.tabApproved.setBackgroundResource(R.drawable.bg_leave_waiting)
                 binding.tabCancelled.setBackgroundResource(R.drawable.bg_leave_grey)
-                val approvedList = leaveRequestList!!.filter { it.status == "Approved" }
+                val approvedList = leaveRequestList!!.filter { it.status == Constant.approved }
                 if(approvedList.isNotEmpty()) {
                     binding.rcyleaverequest.visibility = View.VISIBLE
                     binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
@@ -147,7 +147,7 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
                 binding.tabWaiting.setBackgroundResource(R.drawable.bg_leave_grey)
                 binding.tabApproved.setBackgroundResource(R.drawable.bg_leave_grey)
                 binding.tabCancelled.setBackgroundResource(R.drawable.bg_leave_waiting)
-                val rejectedList = leaveRequestList!!.filter { it.status == "Rejected" }
+                val rejectedList = leaveRequestList!!.filter { it.status == Constant.rejected }
                 if(rejectedList.isNotEmpty()) {
                     binding.rcyleaverequest.visibility = View.VISIBLE
                     binding.toolbarLayout.rytSearch.visibility = View.VISIBLE

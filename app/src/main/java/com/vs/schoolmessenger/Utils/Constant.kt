@@ -850,6 +850,7 @@ object Constant {
             val intent = Intent(activity, SchoolDashboard::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             activity.startActivity(intent)
+            activity.finish()
             closePopup()
         }
     }

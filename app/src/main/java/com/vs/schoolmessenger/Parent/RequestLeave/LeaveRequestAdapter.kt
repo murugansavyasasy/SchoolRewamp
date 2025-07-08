@@ -64,15 +64,14 @@ class LeaveRequestAdapter(
 
         private var isTextExpanded = false
 
-        private val lblFrom: TextView = itemView.findViewById(R.id.lblFromData)
-        private val lblTo: TextView = itemView.findViewById(R.id.lblToDate)
-        private val lblStatus: TextView = itemView.findViewById(R.id.lblStatus)
-        private val lblReason: TextView = itemView.findViewById(R.id.leaverequestdesc)
-//        private val tvSeeMoreImage: TextView = itemView.findViewById(R.id.tvSeeMoreImage)
-        private val rlaStatus: RelativeLayout = itemView.findViewById(R.id.rlaStatus)
-        private val imgStatus: ImageView = itemView.findViewById(R.id.imgStatus)
-        private val lnrUpdatedOn: LinearLayout = itemView.findViewById(R.id.lnrUpdatedOn)
-        private val lblUpdatedOn: TextView = itemView.findViewById(R.id.lblUpdatedOn)
+        private val textName: TextView = itemView.findViewById(R.id.textName)
+        private val textDate: TextView = itemView.findViewById(R.id.textDate)
+        private val textReason: TextView = itemView.findViewById(R.id.textReason)
+        private val textNoOfDays: TextView = itemView.findViewById(R.id.textNoOfDays)
+        private val textFirstLetter: TextView = itemView.findViewById(R.id.textFirstLetter)
+        private val btnCancel: TextView = itemView.findViewById(R.id.btnCancel)
+        private val btnApprove: TextView = itemView.findViewById(R.id.btnApprove)
+
 
         @SuppressLint("ClickableViewAccessibility")
         fun bind(
@@ -81,70 +80,45 @@ class LeaveRequestAdapter(
             listener: LeaveRequestClickListener,
             adapter: LeaveRequestAdapter
         ) {
-
-            lblFrom.text = data.leave_from
-            lblTo.text = data.leave_to
-            lblStatus.text = data.status
-            lblReason.text = data.reason
-            lblUpdatedOn.text = data.updated_on
-//            isSeeMoreVisibility(lblReason, tvSeeMoreImage)
-
-            if (data.status==Constant.waiting_for_approval){
-                lnrUpdatedOn.visibility=View.GONE
+            textName.text = data.student_name
+            textFirstLetter.text = data.student_name.first().toString()
+//            lblSection.text = data.class_name
+            textDate.text =  Constant.convertDateTimeFormat(data.leave_from.toString()) + " - "+Constant.convertDateTimeFormat(data.leave_to.toString())
+            if(data.no_of_days.equals("1")){
+                textNoOfDays.text = "( "+data.no_of_days+" Day )"
             }
             else{
-                lnrUpdatedOn.visibility=View.VISIBLE
-
+                textNoOfDays.text = "( "+data.no_of_days+" Days )"
             }
+            // lbldate.text =data.applied_on
+            textReason.text = data.reason
             when (data.status) {
 
                 Constant.waiting_for_approval -> {
-                    rlaStatus.setBackgroundResource(R.drawable.bg_light_orange)
-                    lblStatus.text=Constant.in_review
-                    imgStatus.setImageResource(R.drawable.waiting_for_approval)
+                    btnCancel.visibility = View.GONE
+                    btnApprove.visibility = View.VISIBLE
+                    btnApprove.setBackgroundResource(R.drawable.bg_leave_waiting)
+                    btnApprove.text = "Waiting"
                 }
 
                 Constant.approved -> {
-                    rlaStatus.setBackgroundResource(R.drawable.bg_dark_green_radius_10dp)
-                    imgStatus.setImageResource(R.drawable.approval_icon)
+                    btnCancel.visibility = View.GONE
+                    btnApprove.visibility = View.VISIBLE
+                    btnApprove.setBackgroundResource(R.drawable.bg_leave_approved)
+                    btnApprove.text = "Approved"
                 }
 
                 Constant.rejected-> {
-                    rlaStatus.setBackgroundResource(R.drawable.bg_red_radious__all_side_same)
-                    imgStatus.setImageResource(R.drawable.close_icon_red)
+                    btnCancel.visibility = View.GONE
+                    btnApprove.visibility = View.VISIBLE
+                    btnApprove.setBackgroundResource(R.drawable.bg_leave_rejected)
+                    btnApprove.text = "Rejected"
                 }
             }
 
-            //We don't have this requiremnet now!
-//            tvSeeMoreImage.setOnClickListener {
-//                isSeeMoreExpanded(tvSeeMoreImage, lblReason)
-//            }
-        }
 
-//        private fun isSeeMoreExpanded(tvSeeMore: TextView, lblContent: TextView) {
-//
-//            if (isTextExpanded) {
-//                isTextExpanded = false
-//                lblContent.maxLines = 3
-//                lblContent.ellipsize = TextUtils.TruncateAt.END
-//                tvSeeMore.text = context.getString(R.string.SeeMore)
-//            } else {
-//                isTextExpanded = true
-//                lblContent.maxLines = Integer.MAX_VALUE
-//                lblContent.ellipsize = null
-//                tvSeeMore.text = context.getString(R.string.SeeLess)
-//            }
-//        }
-//        private fun isSeeMoreVisibility(lblContent: TextView, tvSeeMore: TextView) {
-//            lblContent.post {
-//                if (lblContent.lineCount > 3) {
-//                    tvSeeMore.visibility = View.VISIBLE
-//                    lblContent.maxLines = 3
-//                    lblContent.ellipsize = TextUtils.TruncateAt.END
-//                }
-//            }
-//        }
-    }
+        }
+        }
 
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
