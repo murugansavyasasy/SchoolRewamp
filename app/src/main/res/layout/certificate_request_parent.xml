@@ -10,53 +10,14 @@
         android:id="@+id/toolbarLayout"
         layout="@layout/parent_side_tool_bar" />
 
-    <LinearLayout
-        android:id="@+id/lnrParent"
+
+    <RelativeLayout
+
+        android:id="@+id/rytRequestTap"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbarLayout"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/fifteen"
-        android:layout_alignStart="@+id/rellay1"
-        android:layout_alignEnd="@+id/rellay1"
-        android:padding="@dimen/two"
-        android:background="@drawable/bg_light_green">
 
-        <TextView
-            android:id="@+id/lblTeacher"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/white_bg_radius"
-            android:gravity="center"
-            android:padding="@dimen/seven"
-            android:text="@string/request"
-            android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"
-            style="@style/CustomTextStylePoppinsBold" />
-
-        <TextView
-            android:id="@+id/lblParent"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:padding="@dimen/seven"
-            android:text="@string/certificates"
-            android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"
-            android:layout_marginStart="@dimen/two"
-            style="@style/CustomTextStylePoppinsBold" />
-
-    </LinearLayout>
-
-    <RelativeLayout
-        android:id="@+id/rellay1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/lnrParent"
-        android:layout_marginStart="@dimen/fifteen"
-        android:layout_marginEnd="@dimen/fifteen"
         android:layout_marginTop="@dimen/ten"
         android:background="@drawable/rect_shadow_white"
         android:visibility="visible">
@@ -91,7 +52,7 @@
             android:text="@string/select_urgency_level"
             android:textColor="@color/black"
             android:textStyle="bold"
-            android:layout_marginTop="@dimen/twenty"
+            android:layout_marginTop="@dimen/fifteen"
             android:layout_marginStart="@dimen/ten"
             android:layout_below="@+id/spinner_text"
             style="@style/CustomTextStylePoppinsBold"
@@ -170,15 +131,13 @@
         </RadioGroup>
 
 
-
-
         <EditText
-            android:id="@+id/edit_text"
+            android:id="@+id/txtReason"
             android:layout_width="match_parent"
             android:layout_height="@dimen/two_hundred"
             android:gravity="top"
-            android:hint="@string/enter_reason_for_certificate"
-            android:padding="@dimen/five"
+            android:hint="Enter Reason"
+            android:padding="@dimen/ten"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginEnd="@dimen/ten"
             android:layout_marginTop="@dimen/twenty"
@@ -187,12 +146,12 @@
             android:textSize="@dimen/thirteen_sp"
             android:background="@drawable/text_bg"/>
 
-
         <Button
+            android:id="@+id/btnSendCertificateRequest"
             android:layout_width="@dimen/two_fifty"
-            android:layout_height="@dimen/fourty_five"
+            android:layout_height="@dimen/fourty"
             android:text="@string/request_certificate"
-            android:layout_below="@+id/edit_text"
+            android:layout_below="@+id/txtReason"
             android:background="@drawable/bg_orange"
             android:textColor="@color/white"
             android:textSize="@dimen/eleven_sp"
@@ -208,8 +167,41 @@
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/lnrParent"
+        android:layout_below="@+id/toolbarLayout"
         android:visibility="gone"
         android:layout_marginTop="@dimen/ten" />
+
+
+    <LinearLayout
+        android:id="@+id/lnrNoRecords"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/nomessage"
+            android:layout_width="@dimen/two_fifty"
+            android:layout_height="@dimen/two_fifty"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/twenty"
+            android:src="@drawable/nomessages"
+            android:textColor="@color/black"
+            android:textSize="@dimen/fifteen_sp" />
+
+        <TextView
+            android:id="@+id/txtNoData"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/twenty"
+            android:text="@string/no_list_found"
+            android:textColor="@color/black"
+            android:textSize="@dimen/fifteen_sp" />
+    </LinearLayout>
+
 
 </RelativeLayout>

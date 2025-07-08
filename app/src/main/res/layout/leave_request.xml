@@ -376,7 +376,7 @@
                         android:gravity="start"
                         android:padding="@dimen/ten"
                         android:background="@drawable/bg_stroke_rect_black"
-                        android:hint="@string/Description"
+                        android:hint="Reason"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp" />
 

@@ -19,6 +19,8 @@ import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsRespo
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
 import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentResponse
 import com.vs.schoolmessenger.Parent.Attendance.ChildAttendanceResponse
+import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesListResponse
+import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesTypesResponse
 import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
 import com.vs.schoolmessenger.Parent.Communication.VoiceDataResponse
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponMenu.CouponMenuResponse
@@ -397,6 +399,22 @@ interface ApiInterfaces {
     fun isGetChildAttendanceReport(
         @Header(APIKeyNames.Authorization) token: String
     ): Call<ChildAttendanceResponse?>
+
+    @GET(APIMethods.get_certificate_types)
+    fun isGetCertificatesTypes(
+        @Header(APIKeyNames.Authorization) token: String
+    ): Call<CertificatesTypesResponse?>
+
+    @POST(APIMethods.send_certificate_request)
+    fun sendCertificateRequest(
+        @Header(APIKeyNames.Authorization) token: String,@Body request: JsonObject
+    ): Call<StatusMessageModel?>
+
+    @GET(APIMethods.get_certificates_list)
+    fun isGetCertificateRequests(
+        @Header(APIKeyNames.Authorization) token: String
+    ): Call<CertificatesListResponse?>
+
 
     @GET(APIMethods.getabsenteescountbydate)
     fun getabsenteescountbydate(
