@@ -28,6 +28,7 @@ import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.Holida
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestApplyResponse
+import com.vs.schoolmessenger.Parent.Timetable.TimeTableResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.SendAbsenteeSMSResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportDataResponse
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeStudentsResponse
@@ -179,6 +180,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var isCertificateType: LiveData<CertificatesTypesResponse?>? = null
     var isSendCertificateRequest: LiveData<StatusMessageModel?>? = null
     var isCertificateRequestList: LiveData<CertificatesListResponse?>? = null
+    var isTimeTabletList: LiveData<TimeTableResponse?>? = null
 
     var isAttachmentResponse: LiveData<AttachmentResponse?>? = null
     var isAttachmentResponseArchive: LiveData<AttachmentResponse?>? = null
@@ -270,6 +272,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isCertificateType = apiParentRepositories.isCertificateTypesLiveData
         isCertificateRequestList = apiParentRepositories.isCertificateRequestListLiveData
         isSendCertificateRequest = apiParentRepositories.isSendCertificateLiveData
+        isTimeTabletList = apiParentRepositories.isTimeTableListLiveData
         isAttachmentResponse = apiParentRepositories.isAttachmentResponseLiveData
         isAttachmentResponseArchive = apiParentRepositories.isAttachmentResponseArchiveLiveData
         getabsenteescountbydate = apiSchoolRepositories.getabsenteescountbydateLiveData
@@ -600,37 +603,20 @@ class App(application: Application) : AndroidViewModel(application) {
         isToken: String,
         activity: Activity
     ) {
-        apiParentRepositories.getCertificateTypes(
-            isToken,
-            activity
-        )
+        apiParentRepositories.getCertificateTypes(isToken, activity)
     }
 
-    fun getCertificateRequestList(
-        isToken: String,
-        activity: Activity
-    ) {
-        apiParentRepositories.getCertificateRequestList(
-            isToken,
-            activity
-        )
+    fun getCertificateRequestList(isToken: String, activity: Activity) {
+        apiParentRepositories.getCertificateRequestList(isToken, activity)
     }
 
-    fun sendCertificateRequest(
-        isToken: String,
-        jsonObject: JsonObject,
-        activity: Activity
-    ) {
-        apiParentRepositories.sendCertificateRequest(
-            isToken,
-            jsonObject,
-            activity
-        )
+    fun sendCertificateRequest(isToken: String, jsonObject: JsonObject, activity: Activity) {
+        apiParentRepositories.sendCertificateRequest(isToken, jsonObject, activity)
     }
 
-
-
-
+    fun getTimeTable(isToken: String, day_id: Int, activity: Activity) {
+        apiParentRepositories.getTimeTable(isToken, day_id, activity)
+    }
 
     fun sendnotice(isToken: String, josnObject: JsonObject, activity: Activity) {
         apiSchoolRepositories.sendnotice(isToken, josnObject, activity)

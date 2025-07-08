@@ -10,6 +10,7 @@ import com.vs.schoolmessenger.Parent.Attendance.ChildAttendanceResponse
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesListResponse
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesTypesResponse
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestApplyResponse
+import com.vs.schoolmessenger.Parent.Timetable.TimeTableResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -23,16 +24,18 @@ class ParentServices {
     var isCertificatetypes: MutableLiveData<CertificatesTypesResponse?>
     var isSendCertificateRequest: MutableLiveData<StatusMessageModel?>
     var isCertificateRequestList: MutableLiveData<CertificatesListResponse?>
+    var isTimeTable: MutableLiveData<TimeTableResponse?>
 
     init {
         client_auth = RestClient()
         isChildAttendanceReport = MutableLiveData()
         isAttachmentResponse = MutableLiveData()
         isAttachmentResponseArchive = MutableLiveData()
-        isLeaveRequestApplyResponse=MutableLiveData()
-        isCertificatetypes=MutableLiveData()
-        isSendCertificateRequest=MutableLiveData()
-        isCertificateRequestList=MutableLiveData()
+        isLeaveRequestApplyResponse = MutableLiveData()
+        isCertificatetypes = MutableLiveData()
+        isSendCertificateRequest = MutableLiveData()
+        isCertificateRequestList = MutableLiveData()
+        isTimeTable = MutableLiveData()
     }
 
     fun getChildAttendanceReport(
@@ -180,8 +183,7 @@ class ParentServices {
                                 isLeaveRequestApplyResponse.postValue(response.body())
                             }
                         }
-                    }
-                    else{
+                    } else {
                         isLeaveRequestApplyResponse.postValue(null)
                     }
                 }
@@ -195,7 +197,6 @@ class ParentServices {
 
     val leaveRequestLiveData: LiveData<LeaveRequestApplyResponse?>
         get() = isLeaveRequestApplyResponse
-
 
 
     fun getCertificateTypes(
@@ -286,7 +287,7 @@ class ParentServices {
         jsonObject: JsonObject,
         activity: Activity
     ) {
-        RestClient.apiInterfaces.sendCertificateRequest(isToken,jsonObject)
+        RestClient.apiInterfaces.sendCertificateRequest(isToken, jsonObject)
             ?.enqueue(object : Callback<StatusMessageModel?> {
                 override fun onResponse(
                     call: Call<StatusMessageModel?>,
@@ -322,6 +323,49 @@ class ParentServices {
 
     val isSendCertificateLiveData: LiveData<StatusMessageModel?>
         get() = isSendCertificateRequest
+
+
+    fun getTimeTable(
+        isToken: String,
+        day_id: Int,
+        activity: Activity
+    ) {
+        RestClient.apiInterfaces.isGetTimeTable(isToken, day_id)
+            ?.enqueue(object : Callback<TimeTableResponse?> {
+                override fun onResponse(
+                    call: Call<TimeTableResponse?>,
+                    response: Response<TimeTableResponse?>
+                ) {
+                    Log.d(
+                        "Timetable list Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                isTimeTable.postValue(response.body())
+                            } else {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                isTimeTable.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<TimeTableResponse?>,
+                    t: Throwable
+                ) {
+                    isTimeTable.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isTimeTableListLiveData: LiveData<TimeTableResponse?>
+        get() = isTimeTable
 
 
 }
