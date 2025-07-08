@@ -457,7 +457,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
 
         okButton.setOnClickListener {
             alertDialog.dismiss()
-            if (SELECTED_SCHOOL_MENU == Constant.M_ATTACHMENTS) {
+            if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS) {
                 if (Constant.selectedFiles.size != 1) {
                     val videoFiles = Constant.selectedFiles.filter { it.type == FileType.VIDEO }
                     if (videoFiles.isNotEmpty()) {
