@@ -14,6 +14,8 @@ import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsRespo
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
 import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentResponse
 import com.vs.schoolmessenger.Parent.Attendance.ChildAttendanceResponse
+import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesListResponse
+import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesTypesResponse
 import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
 import com.vs.schoolmessenger.Parent.Communication.VoiceDataResponse
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponMenu.CouponMenuResponse
@@ -174,6 +176,10 @@ class App(application: Application) : AndroidViewModel(application) {
         private set
     var isSendAbsenteeSMS: LiveData<SendAbsenteeSMSResponse?>? = null
     var isChildAttendanceReport: LiveData<ChildAttendanceResponse?>? = null
+    var isCertificateType: LiveData<CertificatesTypesResponse?>? = null
+    var isSendCertificateRequest: LiveData<StatusMessageModel?>? = null
+    var isCertificateRequestList: LiveData<CertificatesListResponse?>? = null
+
     var isAttachmentResponse: LiveData<AttachmentResponse?>? = null
     var isAttachmentResponseArchive: LiveData<AttachmentResponse?>? = null
 
@@ -261,6 +267,9 @@ class App(application: Application) : AndroidViewModel(application) {
         isSendAbsenteeSMS = apiSchoolRepositories.isSendAbsenteeSMSLiveData
 
         isChildAttendanceReport = apiParentRepositories.isChildAttendanceReportLiveData
+        isCertificateType = apiParentRepositories.isCertificateTypesLiveData
+        isCertificateRequestList = apiParentRepositories.isCertificateRequestListLiveData
+        isSendCertificateRequest = apiParentRepositories.isSendCertificateLiveData
         isAttachmentResponse = apiParentRepositories.isAttachmentResponseLiveData
         isAttachmentResponseArchive = apiParentRepositories.isAttachmentResponseArchiveLiveData
         getabsenteescountbydate = apiSchoolRepositories.getabsenteescountbydateLiveData
@@ -506,6 +515,8 @@ class App(application: Application) : AndroidViewModel(application) {
         apiSchoolRepositories.getGiometricStaffAttendancereport(isToken, attendance_dt, activity)
     }
 
+
+
     fun getStaffWiseAttendanceReport(isToken: String, isCurrentDate: String, activity: Activity) {
         apiSchoolRepositories.getGiometricStaffWiseAttendancereport(
             isToken,
@@ -584,6 +595,41 @@ class App(application: Application) : AndroidViewModel(application) {
             activity
         )
     }
+
+    fun getCertificateTypes(
+        isToken: String,
+        activity: Activity
+    ) {
+        apiParentRepositories.getCertificateTypes(
+            isToken,
+            activity
+        )
+    }
+
+    fun getCertificateRequestList(
+        isToken: String,
+        activity: Activity
+    ) {
+        apiParentRepositories.getCertificateRequestList(
+            isToken,
+            activity
+        )
+    }
+
+    fun sendCertificateRequest(
+        isToken: String,
+        jsonObject: JsonObject,
+        activity: Activity
+    ) {
+        apiParentRepositories.sendCertificateRequest(
+            isToken,
+            jsonObject,
+            activity
+        )
+    }
+
+
+
 
 
     fun sendnotice(isToken: String, josnObject: JsonObject, activity: Activity) {

@@ -16,6 +16,7 @@
         android:layout_below="@+id/toolbarLayout"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginEnd="@dimen/ten"
+        android:layout_marginTop="@dimen/ten"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

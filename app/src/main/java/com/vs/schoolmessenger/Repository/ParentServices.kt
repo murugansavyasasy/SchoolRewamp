@@ -7,8 +7,9 @@ import androidx.lifecycle.MutableLiveData
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentResponse
 import com.vs.schoolmessenger.Parent.Attendance.ChildAttendanceResponse
+import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesListResponse
+import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesTypesResponse
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestApplyResponse
-import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.SendAbsenteeSMSResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -19,6 +20,9 @@ class ParentServices {
     var isAttachmentResponse: MutableLiveData<AttachmentResponse?>
     var isAttachmentResponseArchive: MutableLiveData<AttachmentResponse?>
     var isLeaveRequestApplyResponse: MutableLiveData<LeaveRequestApplyResponse?>
+    var isCertificatetypes: MutableLiveData<CertificatesTypesResponse?>
+    var isSendCertificateRequest: MutableLiveData<StatusMessageModel?>
+    var isCertificateRequestList: MutableLiveData<CertificatesListResponse?>
 
     init {
         client_auth = RestClient()
@@ -26,6 +30,9 @@ class ParentServices {
         isAttachmentResponse = MutableLiveData()
         isAttachmentResponseArchive = MutableLiveData()
         isLeaveRequestApplyResponse=MutableLiveData()
+        isCertificatetypes=MutableLiveData()
+        isSendCertificateRequest=MutableLiveData()
+        isCertificateRequestList=MutableLiveData()
     }
 
     fun getChildAttendanceReport(
@@ -191,10 +198,130 @@ class ParentServices {
 
 
 
+    fun getCertificateTypes(
+        isToken: String,
+        activity: Activity
+    ) {
+        RestClient.apiInterfaces.isGetCertificatesTypes(isToken)
+            ?.enqueue(object : Callback<CertificatesTypesResponse?> {
+                override fun onResponse(
+                    call: Call<CertificatesTypesResponse?>,
+                    response: Response<CertificatesTypesResponse?>
+                ) {
+                    Log.d(
+                        "GetCertificate Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                isCertificatetypes.postValue(response.body())
+                            } else {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                isCertificatetypes.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<CertificatesTypesResponse?>,
+                    t: Throwable
+                ) {
+                    isCertificatetypes.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isCertificateTypesLiveData: LiveData<CertificatesTypesResponse?>
+        get() = isCertificatetypes
+
+    fun getCertificateRequestList(
+        isToken: String,
+        activity: Activity
+    ) {
+        RestClient.apiInterfaces.isGetCertificateRequests(isToken)
+            ?.enqueue(object : Callback<CertificatesListResponse?> {
+                override fun onResponse(
+                    call: Call<CertificatesListResponse?>,
+                    response: Response<CertificatesListResponse?>
+                ) {
+                    Log.d(
+                        "certificate list Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                isCertificateRequestList.postValue(response.body())
+                            } else {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                isCertificateRequestList.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<CertificatesListResponse?>,
+                    t: Throwable
+                ) {
+                    isCertificateRequestList.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isCertificateRequestListLiveData: LiveData<CertificatesListResponse?>
+        get() = isCertificateRequestList
 
 
+    fun sendCertificateRequest(
+        isToken: String,
+        jsonObject: JsonObject,
+        activity: Activity
+    ) {
+        RestClient.apiInterfaces.sendCertificateRequest(isToken,jsonObject)
+            ?.enqueue(object : Callback<StatusMessageModel?> {
+                override fun onResponse(
+                    call: Call<StatusMessageModel?>,
+                    response: Response<StatusMessageModel?>
+                ) {
+                    Log.d(
+                        "send certificate Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                isSendCertificateRequest.postValue(response.body())
+                            } else {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                isSendCertificateRequest.postValue(response.body())
+                            }
+                        }
+                    }
+                }
 
+                override fun onFailure(
+                    call: Call<StatusMessageModel?>,
+                    t: Throwable
+                ) {
+                    isSendCertificateRequest.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
 
+    val isSendCertificateLiveData: LiveData<StatusMessageModel?>
+        get() = isSendCertificateRequest
 
 
 }

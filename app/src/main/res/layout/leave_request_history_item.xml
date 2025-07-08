@@ -56,7 +56,8 @@
                 android:text="Alex Smith"
                 android:textColor="#000"
                 android:textSize="@dimen/thirteen_sp"
-                android:textStyle="bold" />
+                style="@style/CustomTextStylePoppinsBold"
+                />
 
             <TextView
                 android:id="@+id/textDate"
@@ -65,7 +66,7 @@
                 android:layout_marginTop="@dimen/five"
                 android:text="15 - 22 Jun 2023"
                 android:textColor="#999"
-                android:textSize="@dimen/twele_sp" />
+                android:textSize="@dimen/thirteen_sp" />
 
             <TextView
                 android:id="@+id/textNoOfDays"
@@ -74,7 +75,7 @@
                 android:layout_marginTop="@dimen/five"
                 android:text="3 Days"
                 android:textColor="#999"
-                android:textSize="@dimen/twele_sp" />
+                android:textSize="@dimen/thirteen_sp" />
 
             <TextView
                 android:id="@+id/textReason"
@@ -82,8 +83,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/five"
                 android:text="Casual"
-                android:textColor="#666"
-                android:textSize="@dimen/twele_sp" />
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp" />
 
 
         </LinearLayout>
@@ -106,7 +107,7 @@
                 android:background="@drawable/bg_leave_rejected"
                 android:paddingHorizontal="12dp"
                 android:paddingVertical="6dp"
-                android:text="Cancel"
+                android:text="Reject"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
