@@ -143,30 +143,32 @@ class LeaveRequestAdapter(
            // lbldate.text =data.applied_on
             textReason.text = data.reason
 
-            if (data.status == "Rejected") {
-                btnCancel.text ="Cancelled"
+            if (data.status == Constant.rejected) {
+                btnCancel.text ="Rejected"
                 btnCancel.visibility = View.VISIBLE
                 btnApprove.visibility = View.GONE
 
-            } else if (data.status == "Approved") {
+            } else if (data.status == Constant.approved) {
                 btnApprove.text = "Approved"
                 btnCancel.visibility = View.GONE
                 btnApprove.visibility = View.VISIBLE
 
-            } else if (data.status == "Waiting for approval") {
+            } else if (data.status == Constant.waiting_for_approval) {
                 btnCancel.visibility = View.VISIBLE
                 btnApprove.visibility = View.VISIBLE
-                btnCancel.text ="Cancel"
+                btnCancel.text ="Reject"
                 btnApprove.text = "Approve"
 
             }
+
+
             btnApprove.setOnClickListener {
-                if(data.status.equals("Waiting for approval")) {
+                if(data.status.equals(Constant.waiting_for_approval)) {
                     listener.onApproveClicked(data, position)
                 }
             }
             btnCancel.setOnClickListener {
-                if(data.status.equals("Waiting for approval")) {
+                if(data.status.equals(Constant.waiting_for_approval)) {
                     listener.onRejectClicked(data, position)
                 }
             }

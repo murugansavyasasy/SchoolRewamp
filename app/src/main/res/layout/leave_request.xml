@@ -22,6 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/ten"
+            android:visibility="gone"
             android:background="@color/mild_grey2"
             android:orientation="horizontal"
             android:padding="@dimen/ten"

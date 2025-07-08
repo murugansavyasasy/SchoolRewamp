@@ -52,7 +52,7 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Cancelled"
+            android:text="Rejected"
             android:textAlignment="center"
             android:background="@drawable/bg_leave_grey"
             android:paddingVertical="6dp"
