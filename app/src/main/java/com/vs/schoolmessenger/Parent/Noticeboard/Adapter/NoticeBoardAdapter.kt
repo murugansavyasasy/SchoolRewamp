@@ -24,11 +24,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
+import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import com.vs.schoolmessenger.Parent.Noticeboard.Notice
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardClickListener
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
-import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 import me.relex.circleindicator.CircleIndicator2
 
@@ -123,7 +123,6 @@ class NoticeBoardAdapter(
 
         @SuppressLint("ClickableViewAccessibility")
         fun bind(noticeData: Notice, position: Int, adapter: NoticeBoardAdapter) {
-
 
             LblHWSubjectName.visibility = View.GONE
             imgNewImage.visibility = View.VISIBLE

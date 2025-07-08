@@ -128,14 +128,12 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                 mAdapter.selectAll(false)
             }
         }
-
         appViewModel!!.isAttachmentSend?.observe(this) { response ->
             Constant.hideLoading(this@SpecificStudent)
             if (response != null && response.status) {
                 Constant.showTopAlertPopup(response.message, this)
             }
         }
-
         appViewModel!!.isVoiceSend?.observe(this) { response ->
             Constant.hideLoading(this@SpecificStudent)
             if (response != null && response.status) {
@@ -612,7 +610,6 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                             ),
                             isAcademicYearNote.toString()
                         )
-
                 } else {
                     Constant.showValidationAlertPopup(
                         getString(

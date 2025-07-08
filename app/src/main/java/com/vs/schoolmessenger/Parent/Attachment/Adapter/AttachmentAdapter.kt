@@ -24,13 +24,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
+import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentClickListener
 import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentData
 import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentFile
 import com.vs.schoolmessenger.Parent.Attachment.OnChildItemClickListener
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
-import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 import me.relex.circleindicator.CircleIndicator2
 
@@ -136,7 +136,6 @@ class AttachmentAdapter(
         fun bind(item: AttachmentData, position: Int, listener: AttachmentClickListener) {
 
             LblHWSubjectName.visibility = View.GONE
-
             if (item.is_unread) {
                 imgNewImage.visibility = View.VISIBLE
             } else {
@@ -154,10 +153,12 @@ class AttachmentAdapter(
             }
 
             webView.setBackgroundColor(Color.BLACK)
+
             webView.setOnTouchListener { _, event ->
                 webView.onPause()
                 if (event.action == MotionEvent.ACTION_UP) {
                     if (item.is_unread) {
+                        item.is_unread = false
                         imgNewImage.visibility = View.GONE
                         listener.onItemClick(item, this)
                     }

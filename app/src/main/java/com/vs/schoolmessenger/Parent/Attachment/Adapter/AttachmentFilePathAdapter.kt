@@ -138,6 +138,7 @@ class AttachmentFilePathAdapter (
             fileItem.setOnClickListener {
                 data?.let {
                     if (item.is_unread) {
+                        item.is_unread=false
                         listener.onChildItemClick(it, item)
                     }
                     Constant.commonFileList.isEmpty()
