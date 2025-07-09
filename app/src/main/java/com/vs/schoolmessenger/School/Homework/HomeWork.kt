@@ -16,6 +16,7 @@ import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.provider.Settings
 import android.text.Editable
+import android.text.InputFilter
 import android.text.TextWatcher
 import android.util.Log
 import android.view.Gravity
@@ -79,7 +80,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
 
     companion object {
         private const val PICK_DOCUMENT_REQUEST = 1003
-        private const val MAX_FILES = 10
     }
 
     private var cameraPermissionDeniedCount = 0
@@ -148,30 +148,10 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         isCurrentAcademicYear = isAcademicYear!![0].current_academic_year
         isGetStandardSection()
 
-        binding.edtTitle.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                val length = s?.length ?: 0
-                binding.lblTitleTextCount.text = "$length/50"
-            }
-
-            override fun afterTextChanged(p0: Editable?) {
-            }
-        })
-
-        binding.edtDescription.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                val length = s?.length ?: 0
-                binding.lblTextCount.text = "$length/500"
-            }
-
-            override fun afterTextChanged(p0: Editable?) {
-
-            }
-        })
+        binding.edtTitle.filters = arrayOf(InputFilter.LengthFilter(Constant.isTitleLength))
+        binding.edtDescription.filters = arrayOf(InputFilter.LengthFilter(Constant.isDescriptionLength))
+        Constant.editTextCounter(this, binding.edtDescription, Constant.isDescriptionLength, binding.lblTextCount)
+        Constant.editTextCounter(this, binding.edtTitle, Constant.isTitleLength, binding.lblTitleTextCount)
 
 
         appViewModel!!.isStandardSectionList?.observe(this) { response ->
@@ -222,7 +202,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
                 if (result.resultCode == RESULT_OK) {
                     val selectedUris =
                         result.data?.getParcelableArrayListExtra<Uri>(Constant.isSelectedFiles)
-                    val remaining = MAX_FILES - Constant.selectedFiles.size
+                    val remaining = Constant.MAX_FILES - Constant.selectedFiles.size
 
                     selectedUris?.take(remaining)?.forEach { uri ->
                         val mimeType = contentResolver.getType(uri)
@@ -286,7 +266,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
 
                     if ((selectedUris?.size ?: 0) > remaining) {
                         Toast.makeText(
-                            this, "Only $remaining files added (max $MAX_FILES)", Toast.LENGTH_SHORT
+                            this, "Only $remaining files added (max $Constant.MAX_FILES)", Toast.LENGTH_SHORT
                         ).show()
                     }
                 }
@@ -577,18 +557,18 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         val title = binding.edtTitle.text.toString().trim()
         val description = binding.edtDescription.text.toString().trim()
         if (title.isEmpty()) {
-            binding.edtTitle.error = getString(R.string.Title_required)
+            binding.edtTitle.error = getString(R.string.This_field_required)
             binding.edtTitle.requestFocus()
             return
         }
         if (description.isEmpty()) {
-            binding.edtDescription.error = getString(R.string.Title_required)
+            binding.edtDescription.error = getString(R.string.This_field_required)
             binding.edtDescription.requestFocus()
             return
         }
 
         val sectionDetails = SectionDetails(title, description)
-        Constant.selectedFiles.removeAt(0)
+//        Constant.selectedFiles.removeAt(0)
         val intent = Intent(this, RecipientActivity::class.java)
         intent.putExtra(Constant.section_data, sectionDetails)
         startActivity(intent)
@@ -641,25 +621,25 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         val rlaVideoPick = dialog.findViewById<RelativeLayout>(R.id.rlaVideoPick)
 
         rlaGallery.setOnClickListener {
-            Constant.isFileLimit = 5
+            Constant.MAX_FILES = 10
             openAlbumSelectActivity(Constant.IMAGE)
             dialog.dismiss()
         }
 
         rlaVoice.setOnClickListener {
-            Constant.isFileLimit = 1
+            Constant.MAX_FILES = 10
             openAlbumSelectActivity(Constant.AUDIO)
             dialog.dismiss()
         }
 
         rlaVideoPick.setOnClickListener {
-            Constant.isFileLimit = 1
+            Constant.MAX_FILES = 1
             openAlbumSelectActivity(Constant.VIDEO)
             dialog.dismiss()
         }
 
         rlaDocument.setOnClickListener {
-            Constant.isFileLimit = 5
+            Constant.MAX_FILES = 10
             openAlbumSelectActivity(Constant.DOCUMENT)
             dialog.dismiss()
         }
@@ -721,15 +701,15 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
 
         if (resultCode != RESULT_OK) return
 
-        val remaining = MAX_FILES - Constant.selectedFiles.size
+        val remaining = Constant.MAX_FILES - Constant.selectedFiles.size
         if (remaining <= 0) {
-            Toast.makeText(this, "Max $MAX_FILES files allowed", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Max $Constant.MAX_FILES files allowed", Toast.LENGTH_SHORT).show()
             return
         }
 
         fun addPath(uri: Uri) {
             Log.d("isFilePickingUrl", uri.toString())
-            if (Constant.selectedFiles.size >= MAX_FILES) return
+            if (Constant.selectedFiles.size >= Constant.MAX_FILES) return
 
             val mimeType = contentResolver.getType(uri)
             if (mimeType?.startsWith("video/") == true || mimeType?.startsWith("audio/") == true) {

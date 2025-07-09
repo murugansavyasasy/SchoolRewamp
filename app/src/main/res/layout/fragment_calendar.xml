@@ -161,14 +161,12 @@
             android:id="@+id/holidaylabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="12dp"
+            android:padding="12dp"
             android:visibility="visible"
-            android:layout_marginStart="10dp"
             android:text="Independence Day (2025-08-15)"
             android:textColor="@color/black"
             android:textSize="14sp"
-            style="@style/CustomTextStylePoppinsMedium"/>
-
-
+            style="@style/CustomTextStylePoppinsBold"/>
     </LinearLayout>
 </RelativeLayout>

@@ -22,11 +22,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
+import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetDateWiseHomeworkData
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
-import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import me.relex.circleindicator.CircleIndicator2
 
 class HomeWorkItemAdapter(
@@ -97,12 +97,12 @@ class HomeWorkItemAdapter(
 //            lblDateImage.text = Constant.convertDateTimeFormat(data!!.date)
             lblSubjectName.text = homeworkData.subject_name
             rlaSelectText.visibility = View.GONE
-            val dateTime =data!!.date
+            val dateTime = data!!.date
             val parts = dateTime.split(" ")
             val date = parts.getOrNull(0) ?: ""
 //            val time = parts.getOrNull(1) + " " + (parts.getOrNull(2) ?: "")
             lblDateImage.text = Constant.convertDateTimeFormat(date)
-            lblTimeImage.visibility=View.GONE
+            lblTimeImage.visibility = View.GONE
             imgNewImage.visibility = View.GONE
 
             webView.setBackgroundColor(Color.BLACK)
@@ -115,7 +115,6 @@ class HomeWorkItemAdapter(
 
                     if (event.action == MotionEvent.ACTION_UP) {
                         Constant.commonFileList.isEmpty()
-                        Constant.selectedFileIndex = -1
                         val commonList = homeworkData.file_path?.map {
                             CommonFileData(
                                 type = it.type,
@@ -259,7 +258,9 @@ class HomeWorkItemAdapter(
         }
 
         class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-            private val shimmerLayout: ShimmerFrameLayout = itemView.findViewById(R.id.shimmer_view_container)
+            private val shimmerLayout: ShimmerFrameLayout =
+                itemView.findViewById(R.id.shimmer_view_container)
+
             init {
                 shimmerLayout.startShimmer()
             }

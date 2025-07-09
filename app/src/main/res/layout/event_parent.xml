@@ -7,7 +7,6 @@
     android:background="@drawable/bg_parent_backround"
     android:fitsSystemWindows="true">
 
-
     <include
         android:id="@+id/toolbarLayout"
         layout="@layout/parent_side_tool_bar" />
@@ -20,6 +19,7 @@
         android:layout_below="@+id/toolbarLayout"
         />
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcyEvent"
         android:layout_width="match_parent"
@@ -28,6 +28,7 @@
         android:layout_marginStart="@dimen/ten"
         android:layout_marginEnd="@dimen/ten"
         android:visibility="gone">
+    >
     </androidx.recyclerview.widget.RecyclerView>
 
     <LinearLayout

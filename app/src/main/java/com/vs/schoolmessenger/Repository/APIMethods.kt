@@ -68,6 +68,10 @@ object APIMethods {
     const val get_student_attendance_report_for_scchool =
         "stud-attd/api/attendance/student-attendance-report"
     const val get_child_attendance_report = "stud-attd/api/attendance/get-absent-dates-for-child"
+    const val get_certificate_types = "comm/api/certificate/types"
+    const val send_certificate_request = "comm/api/certificate/send-request"
+    const val get_certificates_list = "comm/api/certificate/request-list"
+    const val get_time_table = "lms/api/time-table/get-schedule"
     const val IsGetHolidayReport = "admin/api/school-event/view-holidays"
     const val getabsenteescountbydate = "stud-attd/api/attendance/get-absentees-count-by-date"
 

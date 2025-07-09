@@ -48,6 +48,7 @@ import com.vs.schoolmessenger.School.Homework.SectionDetails
 import com.vs.schoolmessenger.Utils.AwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
+import com.vs.schoolmessenger.Utils.Constant.M_ATTACHMENTS
 import com.vs.schoolmessenger.Utils.Constant.M_COMMUNICATION
 import com.vs.schoolmessenger.Utils.Constant.M_HOMEWORK
 import com.vs.schoolmessenger.Utils.Constant.M_SCHOOL_CLASS_EVENTS
@@ -55,6 +56,7 @@ import com.vs.schoolmessenger.Utils.Constant.SELECTED_SCHOOL_MENU
 import com.vs.schoolmessenger.Utils.DimOverlayManager
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
+import com.vs.schoolmessenger.Utils.ProgressDialogHelper
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SelectRecipientBinding
 import com.vs.schoolmessenger.util.VimeoVideoUpload
@@ -402,12 +404,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 binding.nomessage.visibility = View.GONE
                 binding.nomessageEntire.visibility = View.GONE
                 binding.tabLayout.visibility = View.GONE
-
-//                binding.tapEntireSchool.visibility = View.GONE
-//                binding.tapStandards.visibility = View.GONE
-//                binding.tabSectionsStudent.visibility = View.VISIBLE
-//                binding.tabGroups.visibility = View.GONE
-//                binding.tapStaffs.visibility = View.GONE
                 changeTapBg(Constant.isSection)
 
                 //show send and specific student button
@@ -848,7 +844,6 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                 binding.btnSpecificStudent.isEnabled = false
                 binding.btnSpecificStudent.background =
                     ContextCompat.getDrawable(this@RecipientActivity, R.drawable.bg_gray)
-
             }
 
             Constant.isGroup -> {
@@ -973,10 +968,10 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         okButton.setOnClickListener {
             alertDialog.dismiss()
             if (SELECTED_SCHOOL_MENU == M_HOMEWORK) {
-                if (Constant.selectedFiles.isNotEmpty()) {
+                if (Constant.selectedFiles.size != 1) {
                     val videoFiles = Constant.selectedFiles.filter { it.type == FileType.VIDEO }
                     if (videoFiles.isNotEmpty()) {
-                        val sizeInMB = Constant.getVideoSizeInMB(Constant.selectedFiles[0].path)
+                        val sizeInMB = Constant.getVideoSizeInMB(Constant.selectedFiles[1].path)
                         if (sizeInMB <= 500) {
                             videoUploading()
                         } else {
@@ -1018,10 +1013,10 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     }
                 }
             } else if (SELECTED_SCHOOL_MENU == Constant.M_ATTACHMENTS) {
-                if (Constant.selectedFiles.isNotEmpty()) {
+                if (Constant.selectedFiles.size != 1) {
                     val videoFiles = Constant.selectedFiles.filter { it.type == FileType.VIDEO }
                     if (videoFiles.isNotEmpty()) {
-                        val sizeInMB = Constant.getVideoSizeInMB(Constant.selectedFiles[0].path)
+                        val sizeInMB = Constant.getVideoSizeInMB(Constant.selectedFiles[1].path)
 
                         if (sizeInMB <= 500) {
                             videoUploading()
@@ -1040,10 +1035,10 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     }
                 }
             } else if (SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS) {
-                if (Constant.selectedFiles.isNotEmpty()) {
+                if (Constant.selectedFiles.size != 1) {
                     val videoFiles = Constant.selectedFiles.filter { it.type == FileType.VIDEO }
                     if (videoFiles.isNotEmpty()) {
-                        val sizeInMB = Constant.getVideoSizeInMB(Constant.selectedFiles[0].path)
+                        val sizeInMB = Constant.getVideoSizeInMB(Constant.selectedFiles[1].path)
                         if (sizeInMB <= 500) {
                             videoUploading()
                         } else {
@@ -1064,10 +1059,10 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                     eventsendapi()
                 }
             } else if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT) {
-                if (Constant.selectedFiles.isNotEmpty()) {
+                if (Constant.selectedFiles.size != 1) {
                     val videoFiles = Constant.selectedFiles.filter { it.type == FileType.VIDEO }
                     if (videoFiles.isNotEmpty()) {
-                        val sizeInMB = Constant.getVideoSizeInMB(Constant.selectedFiles[0].path)
+                        val sizeInMB = Constant.getVideoSizeInMB(Constant.selectedFiles[1].path)
                         if (sizeInMB <= 500) {
                             videoUploading()
                         } else {
@@ -1119,8 +1114,10 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     }
 
     private fun videoUploading() {
-        //  dimOverlayManager.showDim()
-        binding.circularProgressView.visibility = View.VISIBLE
+        if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS) {
+            Constant.selectedFiles.removeAt(0)
+        }
+        ProgressDialogHelper.show(this@RecipientActivity)
         VimeoVideoUpload.uploadVideo(
             this, "quiz", "quiz", Constant.selectedFiles[0].path, this
         )
@@ -1166,10 +1163,10 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     override fun onProgressUpdate(percent: Int) {
         runOnUiThread {
             Log.d("isPercentage", percent.toString())
-            binding.circularProgressView.setProgress(percent)
+            ProgressDialogHelper.show(this@RecipientActivity)
+            ProgressDialogHelper.updateProgress(percent)
             if (percent == 100) {
-                binding.circularProgressView.visibility = View.GONE
-                //  dimOverlayManager.hideDim()
+                ProgressDialogHelper.dismiss()
                 Constant.showLoading(this)
             }
         }
@@ -1258,11 +1255,14 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     private fun isFileUploadInAws(
         schoolId: String, isFileType: String?
     ) {
+        if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS || SELECTED_SCHOOL_MENU == M_ASSIGNMENT) {
+            Constant.selectedFiles.removeAt(0)  // Remove the plus icon from array list
+        }
+
         Constant.isAwsUploadedFiles.clear()
         val isSelectedFileListSize = Constant.selectedFiles.size
         val iterator = Constant.selectedFiles.iterator()
-        binding.circularProgressView.visibility = View.VISIBLE
-
+        ProgressDialogHelper.show(this@RecipientActivity)
         while (iterator.hasNext()) {
             val fileItem = iterator.next()
             if (fileItem.path.contains("amazonaws.")) {
@@ -1277,13 +1277,14 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
         }
 
         val isCountryId = SharedPreference.getCountryId(this)
+
         Log.d("isSelectedFiles", Constant.selectedFiles.size.toString())
         if (Constant.selectedFiles.isEmpty()) {
             if (SELECTED_SCHOOL_MENU == M_HOMEWORK) {
                 isHomeWorkSend()
             } else if (SELECTED_SCHOOL_MENU == M_COMMUNICATION) {
                 voiceSendApi()
-            } else if (SELECTED_SCHOOL_MENU == Constant.M_ASSIGNMENT) {
+            } else if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT) {
                 isAssignmentSend()
             }
         } else {
@@ -1345,7 +1346,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                                     val percent = (uploadedFiles * 100) / isSelectedFileListSize
 
                                     runOnUiThread {
-                                        binding.circularProgressView.setProgress(percent)
+                                        ProgressDialogHelper.show(this@RecipientActivity)
+                                        ProgressDialogHelper.updateProgress(percent)
                                     }
 
                                     Constant.isAwsUploadedFiles.add(
@@ -1364,7 +1366,7 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                                     )
                                     if (Constant.isAwsUploadedFiles.size == isSelectedFileListSize) {
                                         runOnUiThread {
-                                            binding.circularProgressView.visibility = View.GONE
+                                           ProgressDialogHelper.dismiss()
                                             Constant.showLoading(this@RecipientActivity)
                                         }
 
@@ -1401,12 +1403,13 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                                     uploadedFiles++
                                     val percent = (uploadedFiles * 100) / isSelectedFileListSize
                                     runOnUiThread {
-                                        binding.circularProgressView.setProgress(percent)
+                                        ProgressDialogHelper.show(this@RecipientActivity)
+                                        ProgressDialogHelper.updateProgress(percent)
                                     }
 
                                     if (uploadedFiles == isSelectedFileListSize) {
                                         runOnUiThread {
-                                            binding.circularProgressView.visibility = View.GONE
+                                            ProgressDialogHelper.dismiss()
                                         }
                                     }
                                 }

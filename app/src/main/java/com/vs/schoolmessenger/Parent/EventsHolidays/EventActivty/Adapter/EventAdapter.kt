@@ -10,7 +10,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
-import android.view.View.OnTouchListener
 import android.view.ViewGroup
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
@@ -24,9 +23,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
+import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventClickListener
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventDataClass
-import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
@@ -133,6 +132,7 @@ class EventAdapter (
             listener: EventClickListener,
             adapter: EventAdapter
         ) {
+
             lblTimeImage.visibility=View.GONE
             lblDateImage.visibility=View.GONE
             LblHWSubjectName.visibility = View.VISIBLE
@@ -152,7 +152,7 @@ class EventAdapter (
             }
 
             webView.setBackgroundColor(Color.BLACK)
-            webView.setOnTouchListener(object : OnTouchListener {
+            webView.setOnTouchListener(object : View.OnTouchListener {
                 override fun onTouch(v: View?, event: MotionEvent): Boolean {
                     webView.onPause()
                     if (event.getAction() == MotionEvent.ACTION_MOVE) {
@@ -161,19 +161,14 @@ class EventAdapter (
 
                     if (event.getAction() == MotionEvent.ACTION_UP) {
                         Constant.commonFileList.isEmpty()
-                        Constant.selectedFileIndex = -1
                         val commonList = data.file_path?.map {
                             CommonFileData(
                                 type = it.type,
                                 path = it.url
                             )
                         }?.toMutableList() ?: mutableListOf()
-
                         Constant.commonFileList = commonList
-
-
                         Constant.selectedFileIndex = position
-
                         val intent = Intent(context, FilesViewActivity::class.java)
                         intent.putExtra(Constant.subjectName, data.title)
                         context.startActivity(intent)

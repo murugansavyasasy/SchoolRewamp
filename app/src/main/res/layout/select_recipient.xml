@@ -66,34 +66,37 @@
         android:textStyle="normal"
         android:visibility="gone" />
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/lnrAcademicYearView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/sendlabel"
-        android:layout_marginStart="@dimen/fifteen"
+        android:layout_marginStart="@dimen/ten"
         android:layout_marginTop="@dimen/five"
-        android:layout_marginEnd="@dimen/fifteen"
+        android:layout_marginEnd="@dimen/five"
         android:gravity="center_vertical"
         android:visibility="visible">
 
         <TextView
+            android:layout_alignParentStart="true"
             android:id="@+id/tvAcademicYearLabel"
             style="@style/CustomTextStylePoppinsBold"
+            android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/lblchoose_academic_year"
-            android:layout_marginEnd="@dimen/ten"
+            android:layout_marginEnd="@dimen/five"
             android:textColor="@color/light_gray"
             android:textSize="@dimen/thirteen_sp" />
 
         <RelativeLayout
+            android:layout_toEndOf="@+id/tvAcademicYearLabel"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
             android:id="@+id/rytAcademicYearDropDown"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lblCategory"
-            android:layout_marginStart="@dimen/fifteen"
-            android:layout_marginEnd="@dimen/fifteen"
+            android:layout_marginEnd="@dimen/five"
             android:background="@drawable/bg_white_light_radious"
             android:gravity="center">
 
@@ -104,7 +107,7 @@
                 android:background="@drawable/custom_spinner_background" />
 
         </RelativeLayout>
-    </LinearLayout>
+    </RelativeLayout>
 
 
     <LinearLayout
@@ -128,7 +131,7 @@
             android:background="@drawable/white_radious"
             android:fontFamily="@font/poppins_bold"
             android:gravity="center"
-          style="@style/CustomTextStylePoppinsBold"
+            style="@style/CustomTextStylePoppinsBold"
             android:text="@string/entire_school"
             android:textColor="@color/black"
             android:textSize="@dimen/ten_sp">
@@ -502,11 +505,4 @@
 
         </TextView>
     </LinearLayout>
-
-    <com.vs.schoolmessenger.Utils.CircularProgressView
-        android:id="@+id/circularProgressView"
-        android:layout_width="150dp"
-        android:layout_height="210dp"
-        android:layout_centerInParent="true"
-        android:visibility="gone" />
 </RelativeLayout>

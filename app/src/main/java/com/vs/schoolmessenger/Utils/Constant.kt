@@ -26,6 +26,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -153,7 +154,7 @@ object Constant {
 
     var isNonEmergency = 100
     var isEmergency = 101
-     var isFileLimit = 0
+//     var isFileLimit = 0
     var isSchool = 1
 
     var isStandard = 2
@@ -175,6 +176,10 @@ object Constant {
     var selectedFileIndex: Int = -1
     var isCommunicationType = 1
     var isVoiceType = 1
+
+    var isTitleLength = 50
+    var isDescriptionLength = 500
+    var MAX_FILES = 10
 
     var isAcademicYearList: List<AcademicYear>? = null
     var isParentMenuName=""
@@ -845,6 +850,7 @@ object Constant {
             val intent = Intent(activity, SchoolDashboard::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             activity.startActivity(intent)
+            activity.finish()
             closePopup()
         }
     }
@@ -1471,4 +1477,5 @@ fun getDayAndDateOnly(inputDateStr: String): Pair<String, String> {
 //            }
 //            .show()
 //    }
+
 }

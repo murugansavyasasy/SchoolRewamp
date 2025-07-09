@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificateListener
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificateRequestAdapter
-import com.vs.schoolmessenger.Parent.CertificateRequest.CertificateRequestData
 import com.vs.schoolmessenger.R
 
 class QuizUpcomingAdapter (

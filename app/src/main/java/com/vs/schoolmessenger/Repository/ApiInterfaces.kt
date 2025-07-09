@@ -19,6 +19,8 @@ import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsRespo
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
 import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentResponse
 import com.vs.schoolmessenger.Parent.Attendance.ChildAttendanceResponse
+import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesListResponse
+import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesTypesResponse
 import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
 import com.vs.schoolmessenger.Parent.Communication.VoiceDataResponse
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponMenu.CouponMenuResponse
@@ -36,6 +38,7 @@ import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.Holida
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestApplyResponse
+import com.vs.schoolmessenger.Parent.Timetable.TimeTableResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.SendAbsenteeSMSResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportDataResponse
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeStudentsResponse
@@ -397,6 +400,28 @@ interface ApiInterfaces {
     fun isGetChildAttendanceReport(
         @Header(APIKeyNames.Authorization) token: String
     ): Call<ChildAttendanceResponse?>
+
+    @GET(APIMethods.get_certificate_types)
+    fun isGetCertificatesTypes(
+        @Header(APIKeyNames.Authorization) token: String
+    ): Call<CertificatesTypesResponse?>
+
+    @POST(APIMethods.send_certificate_request)
+    fun sendCertificateRequest(
+        @Header(APIKeyNames.Authorization) token: String,@Body request: JsonObject
+    ): Call<StatusMessageModel?>
+
+    @GET(APIMethods.get_certificates_list)
+    fun isGetCertificateRequests(
+        @Header(APIKeyNames.Authorization) token: String
+    ): Call<CertificatesListResponse?>
+
+
+    @GET(APIMethods.get_time_table)
+    fun isGetTimeTable(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query(APIKeyNames.day_id) day_id: Int?,
+    ): Call<TimeTableResponse?>
 
     @GET(APIMethods.getabsenteescountbydate)
     fun getabsenteescountbydate(

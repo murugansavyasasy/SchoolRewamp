@@ -53,9 +53,7 @@ class AttendanceReportAdapter(
         return if (viewType == TYPE_SHIMMER) {
             val shimmerView =
                 ShimmerUtil.wrapWithShimmer(parent, R.layout.attendance_report_student)
-            com.vs.schoolmessenger.Parent.Communication.UnifiedVoiceAdapter.ShimmerViewHolder(
-                shimmerView
-            )
+           ShimmerViewHolder(shimmerView)
         } else {
             val view =
                 LayoutInflater.from(parent.context)

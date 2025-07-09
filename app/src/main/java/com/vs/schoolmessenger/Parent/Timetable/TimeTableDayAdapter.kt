@@ -4,7 +4,9 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.R
@@ -18,11 +20,19 @@ class TimeTableDayAdapter  (
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder> () {
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
-    private var selectedPosition = RecyclerView.NO_POSITION
+    private var selectedPosition = 0
+
 
 
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
+    }
+
+    fun setSelectedPosition(position: Int) {
+        val previousPosition = selectedPosition
+        selectedPosition = position
+        notifyItemChanged(previousPosition)
+        notifyItemChanged(selectedPosition)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -50,11 +60,10 @@ class TimeTableDayAdapter  (
     }
 
 
-
-
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
         private val day_values: TextView = itemView.findViewById(R.id.btnDay)
+        private val btnDay: TextView = itemView.findViewById(R.id.btnDay)
 
         fun bind(
             data: TimeTableDayData,
@@ -63,6 +72,17 @@ class TimeTableDayAdapter  (
             adapter: TimeTableDayAdapter
         ) {
             day_values.text = data.day_values
+
+            if (adapter.selectedPosition == position) {
+                btnDay.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_light_green_radious))
+            } else {
+                btnDay.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_leave_grey))
+            }
+            btnDay.setOnClickListener{
+                listener.onItemClick(data)
+                adapter.setSelectedPosition(position)
+
+            }
 
         }
 

@@ -127,7 +127,6 @@ class EventFilePathAdapter (
 
             fileItem.setOnClickListener {
                 Constant.commonFileList.isEmpty()
-                Constant.selectedFileIndex=-1
                 val commonList = adapter.GetFilePathDetailsData?.map {
                     CommonFileData(
                         type = it.type,
@@ -153,7 +152,6 @@ class EventFilePathAdapter (
                     }
                     if (event.getAction() == MotionEvent.ACTION_UP) {
                         Constant.commonFileList.isEmpty()
-                        Constant.selectedFileIndex=-1
                         val commonList = adapter.GetFilePathDetailsData?.map {
                             CommonFileData(
                                 type = it.type,

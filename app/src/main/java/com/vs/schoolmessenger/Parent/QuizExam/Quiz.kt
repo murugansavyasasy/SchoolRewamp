@@ -13,13 +13,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificateListener
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificateRequestAdapter
-import com.vs.schoolmessenger.Parent.CertificateRequest.CertificateRequestData
 import com.vs.schoolmessenger.Parent.LSRW.LSRWAdapter
 import com.vs.schoolmessenger.Parent.LSRW.LSRWClickListener
 import com.vs.schoolmessenger.Parent.LSRW.LSRWData
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.CertificateRequestParentBinding
 import com.vs.schoolmessenger.databinding.LsrwBinding
 import com.vs.schoolmessenger.databinding.QuizExamBinding
@@ -32,22 +35,39 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
     private val quizcompletedlist = mutableListOf<QuizCompletedData>()
 
 
+    private var appViewModel: App? = null
+    private var isAccessToken: String? = null
+    private var isChildDetails: ChildDetails? = null
+
+
     override fun getViewBinding(): QuizBinding {
         return QuizBinding.inflate(layoutInflater)
     }
 
     override fun setupViews() {
         super.setupViews()
-        setupToolbar()
-        binding.lblTeacher.setOnClickListener(this)
-        binding.lblParent.setOnClickListener(this)
+        setUpGradientParent()
+
+        // Toolbar setup
+        binding.toolbarLayout.imgBack.setOnClickListener(this)
+        binding.toolbarLayout.lblLeftSideBar.setOnClickListener(this)
+        binding.toolbarLayout.lblRightSideBar.setOnClickListener(this)
+        binding.toolbarLayout.lblParentToolBar.text = Constant.isParentMenuName
+        binding.toolbarLayout.rytSearch.visibility = View.GONE
+        binding.toolbarLayout.lnrParent.visibility = View.VISIBLE
+        binding.toolbarLayout.lblLeftSideBar.text = "Completed"
+        binding.toolbarLayout.lblRightSideBar.text = "Upcomming"
+        isChildDetails = SharedPreference.getChildDetails(this)
+        binding.toolbarLayout.lblStudentName.text = isChildDetails?.name ?: ""
+        binding.toolbarLayout.lblStudentSection.text =
+            isChildDetails?.standard_name + " - " + isChildDetails?.section_name
+
         isUpcoming()
-//        isCompleted()
         setupRecyclerView()
         loadHardcodedData()
 
-          setupRecyclerView1()
-         loadHardcodedData1()
+        setupRecyclerView1()
+        loadHardcodedData1()
 
     }
 
@@ -68,11 +88,46 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
 
     private fun loadHardcodedData() {
         quizupcominglist.apply {
-            add(QuizUpcomingData("Online Quiz", "Play Quiz games to improve the learning in a funnier way it will reduce the stress and improve the brain activities ", "Subject : Tamil","15 Questions"))
-            add(QuizUpcomingData("Online Quiz", "Play Quiz games to improve the learning in a funnier way it will reduce the stress and improve the brain activities ", "Subject : Tamil","15 Questions"))
-            add(QuizUpcomingData("Online Quiz", "Play Quiz games to improve the learning in a funnier way it will reduce the stress and improve the brain activities ", "Subject : Tamil","15 Questions"))
-            add(QuizUpcomingData("Online Quiz", "Play Quiz games to improve the learning in a funnier way it will reduce the stress and improve the brain activities ", "Subject : Tamil","15 Questions"))
-            add(QuizUpcomingData("Online Quiz", "Play Quiz games to improve the learning in a funnier way it will reduce the stress and improve the brain activities ", "Subject : Tamil","15 Questions"))
+            add(
+                QuizUpcomingData(
+                    "Online Quiz",
+                    "Play Quiz games to improve the learning in a funnier way it will reduce the stress and improve the brain activities ",
+                    "Subject : Tamil",
+                    "15 Questions"
+                )
+            )
+            add(
+                QuizUpcomingData(
+                    "Online Quiz",
+                    "Play Quiz games to improve the learning in a funnier way it will reduce the stress and improve the brain activities ",
+                    "Subject : Tamil",
+                    "15 Questions"
+                )
+            )
+            add(
+                QuizUpcomingData(
+                    "Online Quiz",
+                    "Play Quiz games to improve the learning in a funnier way it will reduce the stress and improve the brain activities ",
+                    "Subject : Tamil",
+                    "15 Questions"
+                )
+            )
+            add(
+                QuizUpcomingData(
+                    "Online Quiz",
+                    "Play Quiz games to improve the learning in a funnier way it will reduce the stress and improve the brain activities ",
+                    "Subject : Tamil",
+                    "15 Questions"
+                )
+            )
+            add(
+                QuizUpcomingData(
+                    "Online Quiz",
+                    "Play Quiz games to improve the learning in a funnier way it will reduce the stress and improve the brain activities ",
+                    "Subject : Tamil",
+                    "15 Questions"
+                )
+            )
         }
         adapter.notifyDataSetChanged()
     }
@@ -94,51 +149,92 @@ class Quiz : BaseActivity<QuizBinding>(), View.OnClickListener {
 
     private fun loadHardcodedData1() {
         quizcompletedlist.apply {
-            add(QuizCompletedData("What is the capital of Germany", "Berlin", "Munich","Frankurt","Hamburg"))
-            add(QuizCompletedData("What is the capital of Germany", "Berlin ", "Munich","Frankurt","Hamburg"))
-            add(QuizCompletedData("What is the capital of Germany", "Berlin", "Munich","1Frankurt","Hamburg"))
-            add(QuizCompletedData("What is the capital of Germany", "Berlin ", "Munich","Frankurt","Hamburg"))
-            add(QuizCompletedData("What is the capital of Germany", "Berlin", "Munich","Frankurt","Hamburg"))
+            add(
+                QuizCompletedData(
+                    "What is the capital of Germany",
+                    "Berlin",
+                    "Munich",
+                    "Frankurt",
+                    "Hamburg"
+                )
+            )
+            add(
+                QuizCompletedData(
+                    "What is the capital of Germany",
+                    "Berlin ",
+                    "Munich",
+                    "Frankurt",
+                    "Hamburg"
+                )
+            )
+            add(
+                QuizCompletedData(
+                    "What is the capital of Germany",
+                    "Berlin",
+                    "Munich",
+                    "1Frankurt",
+                    "Hamburg"
+                )
+            )
+            add(
+                QuizCompletedData(
+                    "What is the capital of Germany",
+                    "Berlin ",
+                    "Munich",
+                    "Frankurt",
+                    "Hamburg"
+                )
+            )
+            add(
+                QuizCompletedData(
+                    "What is the capital of Germany",
+                    "Berlin",
+                    "Munich",
+                    "Frankurt",
+                    "Hamburg"
+                )
+            )
         }
         adapter1.notifyDataSetChanged()
     }
 
 
-
     override fun onClick(v: View?) {
         if (v == null) return
         when (v.id) {
+            R.id.lblLeftSideBar ->{
 
-            R.id.lblTeacher -> {
-
+                binding.toolbarLayout.lblRightSideBar.setBackgroundResource(R.drawable.bg_light_green)
+                binding.toolbarLayout.lblRightSideBar.setTextColor(Color.BLACK)
+                binding.toolbarLayout.lblLeftSideBar.setBackgroundResource(R.drawable.white_radious)
+                binding.recyclerView.visibility = View.VISIBLE
+                isCompleted()
+            }
+            R.id.lblRightSideBar ->{
+                binding.toolbarLayout.lblRightSideBar.setBackgroundResource(R.drawable.white_radious)
+                binding.toolbarLayout.lblRightSideBar.setTextColor(Color.BLACK)
+                binding.toolbarLayout.lblLeftSideBar.setBackgroundResource(R.drawable.bg_light_green)
+                binding.recyclerView.visibility = View.VISIBLE
                 isUpcoming()
             }
 
-            com.vs.schoolmessenger.R.id.lblParent -> {
-                isCompleted()
-            }
+            R.id.imgBack -> onBackPressed()
 
         }
     }
 
-    fun isUpcoming(){
-        binding.lblTeacher.setBackgroundResource(com.vs.schoolmessenger.R.drawable.bg_radiantgreen1)
-        binding.lblTeacher.setTextColor(Color.BLACK)
-        binding.lblParent.setBackgroundResource(R.drawable.bg_radiantwhite1)
-        binding.lblParent.setTextColor(Color.GRAY)
-        binding.correctanswers.visibility =View.GONE
-        binding.incorrectanswers.visibility =View.GONE
+    fun isUpcoming() {
+
+        binding.correctanswers.visibility = View.GONE
+        binding.incorrectanswers.visibility = View.GONE
         binding.recyclerView1.visibility = View.GONE
         binding.recyclerView.visibility = View.VISIBLE
     }
 
     fun isCompleted() {
-        binding.lblParent.setBackgroundResource(com.vs.schoolmessenger.R.drawable.bg_radiantgreen1)
-        binding.lblParent.setTextColor(Color.BLACK)
-        binding.lblTeacher.setBackgroundResource(R.drawable.bg_radiantwhite1)
-        binding.lblTeacher.setTextColor(Color.GRAY)
-        binding.correctanswers.visibility =View.VISIBLE
-        binding.incorrectanswers.visibility =View.VISIBLE
+
+        binding.correctanswers.visibility = View.VISIBLE
+        binding.incorrectanswers.visibility = View.VISIBLE
         binding.recyclerView1.visibility = View.VISIBLE
         binding.recyclerView.visibility = View.GONE
 

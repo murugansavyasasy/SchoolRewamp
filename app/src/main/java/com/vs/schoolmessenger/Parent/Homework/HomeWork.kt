@@ -42,8 +42,6 @@ class HomeWork : BaseActivity<HomeWorkParentBinding>(), View.OnClickListener,
             childDetails?.standard_name+ " - " +childDetails?.section_name
 
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
-        binding.lblSeeMore.setOnClickListener(this)
-
         binding.rcyHomework.layoutManager = LinearLayoutManager(this)
         binding.rcyHomework.isNestedScrollingEnabled = false
 
@@ -141,15 +139,15 @@ class HomeWork : BaseActivity<HomeWorkParentBinding>(), View.OnClickListener,
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.lblSeeMore -> {
-                if (!hasFetchedMore) {
-                    hasFetchedMore = true
-                    binding.lblSeeMore.visibility = View.GONE
-                    fetchMoreData()
-                }
-            }
         }
     }
 
-    override fun onItemClick(data: HomeWorkDateData, holder: HomeWorkAdapter.DataViewHolder) {}
+    override fun onItemClick(data: GetDateWiseHomeworkData, holder: HomeWorkAdapter.DataViewHolder) {
+
+        if (!hasFetchedMore) {
+            hasFetchedMore = true
+            fetchMoreData()
+        }
+
+    }
 }

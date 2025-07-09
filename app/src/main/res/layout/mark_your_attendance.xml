@@ -307,7 +307,7 @@
             <RelativeLayout
                 android:id="@+id/rytYears"
                 android:layout_width="@dimen/one_fifty"
-                android:layout_height="@dimen/fifty_five"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/thirty"
                 android:background="@drawable/bg_white_light_radious"
                 android:gravity="center">
@@ -326,7 +326,7 @@
             <RelativeLayout
                 android:id="@+id/rytMonths"
                 android:layout_width="@dimen/one_fifty"
-                android:layout_height="@dimen/fifty_five"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/five"
                 android:layout_marginEnd="@dimen/thirty"
                 android:background="@drawable/bg_white_light_radious"

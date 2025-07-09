@@ -103,7 +103,6 @@
                     android:layout_below="@+id/lblTitle"
                     android:layout_marginStart="@dimen/fifteen"
                     android:layout_marginTop="@dimen/ten"
-                    android:maxLength="50"
                     android:layout_marginEnd="@dimen/fifteen"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp">
@@ -168,7 +167,6 @@
                     android:focusableInTouchMode="true"
                     android:gravity="start"
                     android:hint="@string/Description"
-                    android:maxLength="500"
                     android:padding="@dimen/ten"
                     android:textColor="@color/black"
                     android:textSize="@dimen/thirteen_sp">

@@ -58,7 +58,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/ten"
                         android:gravity="end"
-                        android:text="Kodaikanal International School"
+                        android:text=""
                         android:textColor="@color/black"
                         style="@style/CustomTextStylePoppinsBold"
                         android:textSize="@dimen/thirteen_sp">
@@ -88,7 +88,7 @@
                         android:layout_below="@+id/lblSchoolRegionalName"
                         android:layout_marginEnd="@dimen/ten"
                         android:gravity="end"
-                        android:text="Kodaikanal"
+                        android:text=""
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp"
                         style="@style/CustomTextStylePoppinsRegular">
@@ -129,10 +129,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/eight"
-                        android:text="Sathish"
+                        android:text=""
                         android:layout_marginEnd="@dimen/ten"
                         android:textColor="@color/black"
-                        style="@style/CustomTextStylePoppinsRegular"
+                        style="@style/CustomTextStylePoppinsBold"
                         android:textSize="@dimen/thirteen_sp">
                     </TextView>
 
@@ -145,8 +145,7 @@
                         android:layout_width="match_parent"
                         android:gravity="center"
                         android:layout_height="wrap_content"
-                        android:id="@+id/relative_layout2"
-                        >
+                        android:id="@+id/relative_layout2">
 
 
                         <TextView
@@ -154,7 +153,7 @@
                             android:id="@+id/lblRegisterNumber"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/black"
+                            android:textColor="@color/clr_grey_dark"
                             android:text=""
                             android:textSize="13sp"
                             style="@style/CustomTextStylePoppinsRegular">
@@ -178,11 +177,11 @@
                         android:id="@+id/lblClass"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/eight"
-                        android:text="IIX - A"
+                        android:layout_marginTop="@dimen/five"
+                        android:text=""
                         android:layout_marginEnd="@dimen/ten"
-                        android:textColor="@color/black"
-                        android:layout_marginBottom="@dimen/ten"
+                        android:textColor="@color/clr_grey_dark"
+                        android:layout_marginBottom="@dimen/five"
                         android:textSize="@dimen/thirteen_sp"
                         style="@style/CustomTextStylePoppinsRegular">
 
@@ -194,7 +193,7 @@
                         android:layout_height="wrap_content"
                         android:text=""
                         android:layout_marginEnd="@dimen/ten"
-                        android:textColor="@color/black"
+                        android:textColor="@color/clr_grey_dark"
                         android:layout_marginBottom="@dimen/ten"
                         android:textSize="@dimen/thirteen_sp"
                         style="@style/CustomTextStylePoppinsRegular">

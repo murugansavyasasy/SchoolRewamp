@@ -65,13 +65,14 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
         binding.imgMoreOptions.setOnClickListener(this)
         binding.lnrNext.setOnClickListener(this)
         binding.lnrPrevious.setOnClickListener(this)
+
         if (Constant.commonFileList.isNotEmpty()) {
             val first = Constant.commonFileList[0]
-            if (first.type != FileType.VIDEO.toString() && !first.path.startsWith("content://") && !first.path.contains(
-                    "amazonaws."
-                )
+            if (first.type != FileType.VIDEO.toString()
+                && !first.path.startsWith("content://")
+                && !first.path.contains("amazonaws.")
             ) {
-               Constant.commonFileList.removeAt(0)
+                Constant.commonFileList.removeAt(0)
             }
 
             if (first.path.contains("amazonaws.") || first.type == FileType.VIDEO.toString()) {
@@ -82,21 +83,33 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
         }
 
         adapter = FileViewerAdapter(this, Constant.commonFileList)
-        val noScrollLayoutManager = object : LinearLayoutManager(this, HORIZONTAL, false) {
-            override fun canScrollHorizontally(): Boolean = false
-            override fun canScrollVertically(): Boolean = false
+
+        val onlyImages = Constant.commonFileList.all { it.type == FileType.IMAGE.toString() }
+
+        val layoutManager = if (onlyImages) {
+            LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
+        } else {
+            object : LinearLayoutManager(this, RecyclerView.HORIZONTAL, false) {
+                override fun canScrollHorizontally(): Boolean = false
+            }
         }
 
-        binding.rcyFile.layoutManager = noScrollLayoutManager
+        binding.rcyFile.layoutManager = layoutManager
         binding.rcyFile.adapter = adapter
 
-        binding.lnrNext.visibility =
-            if (Constant.commonFileList.size <= 1) View.GONE else View.VISIBLE
-        binding.lnrPrevious.visibility =
-            if (Constant.commonFileList.size <= 1) View.GONE else View.VISIBLE
+        binding.rcyFile.setOnTouchListener { _, _ -> !onlyImages }
 
-        if (Constant.commonFileList.size > 1) binding.indicator.attachToRecyclerView(binding.rcyFile)
-        binding.rcyFile.setOnTouchListener { _, _ -> true }
+        if (!onlyImages && Constant.commonFileList.size > 1) {
+            binding.lnrNext.visibility = View.VISIBLE
+            binding.lnrPrevious.visibility = View.VISIBLE
+        } else {
+            binding.lnrNext.visibility = View.GONE
+            binding.lnrPrevious.visibility = View.GONE
+        }
+        if (onlyImages && Constant.commonFileList.size > 1) {
+            binding.indicator.attachToRecyclerView(binding.rcyFile)
+        }
+
         currentPosition = Constant.selectedFileIndex
         scrollToPosition(currentPosition)
         updateNavButtons()
@@ -111,6 +124,11 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
                 val layoutManager = rv.layoutManager as? LinearLayoutManager ?: return
                 val firstVisible = layoutManager.findFirstVisibleItemPosition()
                 this@attachToRecyclerView.animatePageSelected(firstVisible)
+
+                if (firstVisible != RecyclerView.NO_POSITION) {
+                    currentPosition = firstVisible
+                    updateNavButtons()
+                }
             }
         })
         adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
@@ -171,6 +189,7 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
                     else requestStoragePermission()
                     true
                 }
+
                 else -> false
             }
         }

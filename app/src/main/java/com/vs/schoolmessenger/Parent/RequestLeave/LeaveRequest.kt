@@ -101,10 +101,10 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
                 binding.rcyLeaveRequestHistory.visibility = View.VISIBLE
                 binding.nomessage.visibility = View.GONE
                 binding.txtNoData.visibility = View.GONE
-                binding.lnrStatusBar.visibility=View.VISIBLE
+//                binding.lnrStatusBar.visibility=View.VISIBLE
                 isloadleaverequestData(response.data)
             } else {
-                binding.lnrStatusBar.visibility=View.GONE
+//                binding.lnrStatusBar.visibility=View.GONE
                 binding.rcyLeaveRequestHistory.visibility = View.GONE
                 binding.nomessage.visibility = View.VISIBLE
                 binding.txtNoData.visibility = View.VISIBLE
@@ -166,7 +166,7 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
 
 
         if (reason.isEmpty()) {
-            binding.txtDesc.error = "Description is required"
+            binding.txtDesc.error = getString(R.string.This_field_required)
             binding.txtDesc.requestFocus()
             return
         }

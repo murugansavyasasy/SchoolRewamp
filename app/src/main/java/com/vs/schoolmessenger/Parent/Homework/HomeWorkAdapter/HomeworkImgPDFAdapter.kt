@@ -78,7 +78,7 @@ class HomeworkImgPDFAdapter(
 
             SubjectName: String,
             data: GetFilePathDetails?,
-            position: Int,
+            isPosition: Int,
             adapter: HomeworkImgPDFAdapter,
         ) {
 
@@ -120,18 +120,36 @@ class HomeworkImgPDFAdapter(
                 }
             }
 
-            fileItem.setOnClickListener {
-                val originalList = adapter.GetFilePathDetailsData ?: emptyList()
-                if (originalList.isEmpty()) return@setOnClickListener
+//            fileItem.setOnClickListener {
+//                val originalList = adapter.GetFilePathDetailsData ?: emptyList()
+//                if (originalList.isEmpty()) return@setOnClickListener
+//
+//                val rotatedList = originalList.drop(position) + originalList.take(position)
+//                val commonList = rotatedList.map {
+//                    CommonFileData(type = it.type, path = it.url)
+//                }.toMutableList()
+//
+//                Constant.commonFileList = commonList
+//                Constant.selectedFileIndex = isPosition
+//                Log.d("isFilePosition", Constant.selectedFileIndex.toString())
+//
+//                val intent = Intent(context, FilesViewActivity::class.java)
+//                intent.putExtra(Constant.subjectName, SubjectName)
+//                context.startActivity(intent)
+//            }
 
-                val rotatedList = originalList.drop(position) + originalList.take(position)
-                val commonList = rotatedList.map {
-                    CommonFileData(type = it.type, path = it.url)
-                }.toMutableList()
+            fileItem.setOnClickListener {
+                Constant.commonFileList.isEmpty()
+                val commonList = adapter.GetFilePathDetailsData?.map {
+                    CommonFileData(
+                        type = it.type,
+                        path = it.url,
+                    )
+                }?.toMutableList() ?: mutableListOf()
 
                 Constant.commonFileList = commonList
-                Constant.selectedFileIndex = 0
 
+                Constant.selectedFileIndex = isPosition
                 val intent = Intent(context, FilesViewActivity::class.java)
                 intent.putExtra(Constant.subjectName, SubjectName)
                 context.startActivity(intent)
@@ -145,7 +163,6 @@ class HomeworkImgPDFAdapter(
 
                     if (event.getAction() == MotionEvent.ACTION_UP) {
                         Constant.commonFileList.isEmpty()
-                        Constant.selectedFileIndex = -1
                         val commonList = adapter.GetFilePathDetailsData?.map {
                             CommonFileData(
                                 type = it.type,
@@ -155,7 +172,7 @@ class HomeworkImgPDFAdapter(
 
                         Constant.commonFileList = commonList
 
-                        Constant.selectedFileIndex = position
+                        Constant.selectedFileIndex = isPosition
 
                         val intent = Intent(context, FilesViewActivity::class.java)
                         intent.putExtra(Constant.subjectName, SubjectName)

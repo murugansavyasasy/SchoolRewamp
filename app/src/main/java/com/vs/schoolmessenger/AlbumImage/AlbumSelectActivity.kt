@@ -47,11 +47,11 @@ class AlbumSelectActivity : AppCompatActivity() {
         setupDocumentPicker()
 
         binding.toolbarLayout.tvSelectionCount.text =
-            "Selected Files : 0 / ${Constant.isFileLimit}"
+            "Selected Files : 0 / ${Constant.MAX_FILES}"
 
-        adapter = FileGridAdapter(Constant.isFileLimit, onSelectionChanged = { selectedUris ->
+        adapter = FileGridAdapter(Constant.MAX_FILES, onSelectionChanged = { selectedUris ->
             binding.toolbarLayout.tvSelectionCount.text =
-                "Selected Files : ${selectedUris.size} / ${Constant.isFileLimit}"
+                "Selected Files : ${selectedUris.size} / ${Constant.MAX_FILES}"
             binding.toolbarLayout.btnDone.visibility =
                 if (selectedUris.isEmpty()) View.GONE else View.VISIBLE
         }, onItemClicked = { uri ->

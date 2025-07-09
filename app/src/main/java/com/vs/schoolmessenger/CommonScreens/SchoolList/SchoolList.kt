@@ -67,6 +67,7 @@ import com.vs.schoolmessenger.Utils.Constant.SELECTED_SCHOOL_MENU
 import com.vs.schoolmessenger.Utils.Constant.isAcademicYearList
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
+import com.vs.schoolmessenger.Utils.ProgressDialogHelper
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SchoolListActivityBinding
 import com.vs.schoolmessenger.util.VimeoVideoUpload
@@ -78,7 +79,6 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
     override fun getViewBinding(): SchoolListActivityBinding {
         return SchoolListActivityBinding.inflate(layoutInflater)
     }
-
     private val selectedSchoolIds = mutableListOf<String>()
     var isMultipleSchool = false
     private lateinit var mAdapter: SchoolListAdapter
@@ -255,20 +255,13 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                 }
                 if (selectedSchoolIds.isNotEmpty()) {
                     if (SELECTED_SCHOOL_MENU == M_COMMUNICATION) {
-                        if (Constant.isCommunicationType == 3) {
-                            showConfirmationAlert(
-                                resources.getString(R.string.selected_target_1) + selectedSchoolIds.size.toString(),
+                        showConfirmationAlert(
+                            resources.getString(R.string.selected_target_1) + selectedSchoolIds.size.toString() + " ",
                                 resources.getString(R.string.are_you_sure_want_to_send_this_message)
                             )
-                        } else {
-                            showConfirmationAlert(
-                                resources.getString(R.string.selected_target_1) + selectedSchoolIds.size.toString(),
-                                resources.getString(R.string.are_you_sure_want_to_send_this_message)
-                            )
-                        }
                     } else if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS) {
                         showConfirmationAlert(
-                            resources.getString(R.string.selected_target_1) + selectedSchoolIds.size.toString(),
+                            resources.getString(R.string.selected_target_1) + selectedSchoolIds.size.toString() + " ",
                             resources.getString(R.string.are_you_sure_want_to_send_this_attachment)
                         )
                     } else if (SELECTED_SCHOOL_MENU == M_NOTICEBOARD) {
@@ -284,7 +277,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                         }
 
                         showConfirmationAlert(
-                            resources.getString(R.string.selected_target_1) + selectedSchoolIds.size.toString(),
+                            resources.getString(R.string.selected_target_1) + selectedSchoolIds.size.toString() + " ",
                             resources.getString(R.string.are_you_sure_want_to_send_this_attachment)
                         )
                     }
@@ -385,7 +378,11 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
     private fun isFileUploadInAws(
         schoolId: String, isFileType: String?
     ) {
-        binding.circularProgressView.visibility = View.VISIBLE
+        if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_NOTICEBOARD) {
+            Constant.selectedFiles.removeAt(0)
+        }
+        ProgressDialogHelper.show(this@SchoolList)
+
         Constant.isAwsUploadedFiles.clear()
 
         val isSelectedFileListSize = Constant.selectedFiles.size
@@ -473,7 +470,8 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                                     val percent = (uploadedFiles * 100) / isSelectedFileListSize
 
                                     runOnUiThread {
-                                        binding.circularProgressView.setProgress(percent)
+                                        ProgressDialogHelper.show(this@SchoolList)
+                                        ProgressDialogHelper.updateProgress(percent)
                                     }
 
                                     Constant.isAwsUploadedFiles.add(
@@ -485,7 +483,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
 
                                     if (Constant.isAwsUploadedFiles.size == isSelectedFileListSize) {
                                         runOnUiThread {
-                                            binding.circularProgressView.visibility = View.GONE
+                                            ProgressDialogHelper.dismiss()
                                             Constant.showLoading(this@SchoolList)
                                         }
 
@@ -502,12 +500,13 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                                     val percent = (uploadedFiles * 100) / isSelectedFileListSize
 
                                     runOnUiThread {
-                                        binding.circularProgressView.setProgress(percent)
+                                        ProgressDialogHelper.show(this@SchoolList)
+                                        ProgressDialogHelper.updateProgress(percent)
                                     }
 
                                     if (uploadedFiles == isSelectedFileListSize) {
                                         runOnUiThread {
-                                            binding.circularProgressView.visibility = View.GONE
+                                            ProgressDialogHelper.dismiss()
                                         }
                                     }
                                 }
@@ -606,8 +605,6 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         }
         okButton.setOnClickListener {
             alertDialog.dismiss()
-//            Constant.showLoading(this@SchoolList)
-
             if (SELECTED_SCHOOL_MENU == M_COMMUNICATION) {
                 if (Constant.isCommunicationType == 3) {
                     val jsonObject = ApiCallRequest.isSendText(
@@ -631,10 +628,10 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                 }
             } else if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS) {
 
-                if (Constant.selectedFiles.isNotEmpty()) {
+                if (Constant.selectedFiles.size != 1) {
                     val videoFiles = Constant.selectedFiles.filter { it.type == FileType.VIDEO }
                     if (videoFiles.isNotEmpty()) {
-                        val sizeInMB = Constant.getVideoSizeInMB(Constant.selectedFiles[0].path)
+                        val sizeInMB = Constant.getVideoSizeInMB(Constant.selectedFiles[1].path)
                         if (sizeInMB <= 500) {
                             videoSending()
                         } else {
@@ -652,10 +649,10 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                 }
 
             } else if (SELECTED_SCHOOL_MENU == M_NOTICEBOARD) {
-                if (Constant.selectedFiles.isNotEmpty()) {
+                if (Constant.selectedFiles.size != 1) {
                     val videoFiles = Constant.selectedFiles.filter { it.type == FileType.VIDEO }
                     if (videoFiles.isNotEmpty()) {
-                        val sizeInMB = Constant.getVideoSizeInMB(Constant.selectedFiles[0].path)
+                        val sizeInMB = Constant.getVideoSizeInMB(Constant.selectedFiles[1].path)
                         if (sizeInMB <= 500) {
                             videoSending()
                         } else {
@@ -682,7 +679,10 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
 
 
     private fun videoSending() {
-        binding.circularProgressView.visibility = View.VISIBLE
+        ProgressDialogHelper.show(this@SchoolList)
+        if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_NOTICEBOARD) {
+            Constant.selectedFiles.removeAt(0)
+        }
         VimeoVideoUpload.uploadVideo(
             this@SchoolList,
             "quiz", "quiz", Constant.selectedFiles[0].path,
@@ -722,10 +722,10 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
     override fun onProgressUpdate(percent: Int) {
         runOnUiThread {
             Log.d("isPercentage", percent.toString())
-            binding.circularProgressView.setProgress(percent)
+            ProgressDialogHelper.show(this@SchoolList)
+            ProgressDialogHelper.updateProgress(percent)
             if (percent == 100) {
-                binding.circularProgressView.visibility = View.GONE
-                //  dimOverlayManager.hideDim()
+                ProgressDialogHelper.dismiss()
                 Constant.showLoading(this)
             }
         }

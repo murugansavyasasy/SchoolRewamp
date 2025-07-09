@@ -32,8 +32,8 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener, fingerPrintAun
     private lateinit var biometricPrompt: BiometricPrompt
     private lateinit var promptInfo: BiometricPrompt.PromptInfo
 
-    var mobile_number : String? = ""
-    var password : String? = ""
+    var Mobile_Number : String? = ""
+    var Password : String? = ""
 
     override fun setupViews() {
         super.setupViews()
@@ -81,8 +81,8 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener, fingerPrintAun
 
                     SharedPreference.putMobileNumberPassWord(
                         this@Login,
-                        mobile_number,
-                        password
+                        Mobile_Number,
+                        Password
                     )
 
                     if (Constant.user_data!![0].is_number_exists) {
@@ -226,10 +226,10 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener, fingerPrintAun
 
             R.id.btnLoginContinue -> {
                 if (isUserNamePasswordValidation()) {
-                    mobile_number =  binding.txtMobileNumber.text.toString()
-                    password =  binding.txtPassword.text.toString()
+                    Mobile_Number =  binding.txtMobileNumber.text.toString()
+                    Password =  binding.txtPassword.text.toString()
                     isValidateUser(
-                        mobile_number!!, password!!
+                        Mobile_Number!!, Password!!
                     )
                 }
             }
@@ -276,15 +276,11 @@ class Login : BaseActivity<LoginBinding>(), View.OnClickListener, fingerPrintAun
         Log.d("athentication_status", message)
         if (status) {
             //go to dashboard
-            val mobileNumber = SharedPreference.getMobileNumber(this)
-            val password = SharedPreference.getPassWord(this)
-            isValidateUser(mobileNumber!!,password!!)
-        } else {
-            Toast.makeText(this, message, Toast.LENGTH_LONG).show()
-            mobile_number = SharedPreference.getMobileNumber(this)
-            password = SharedPreference.getPassWord(this)
-            isValidateUser(mobile_number!!, password!!)
+             Mobile_Number = SharedPreference.getMobileNumber(this)
+             Password = SharedPreference.getPassWord(this)
+             isValidateUser(Mobile_Number!!,Password!!)
         }
+
 
     }
 }

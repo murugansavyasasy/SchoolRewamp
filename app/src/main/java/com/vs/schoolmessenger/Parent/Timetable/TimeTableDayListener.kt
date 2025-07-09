@@ -5,5 +5,5 @@ import com.vs.schoolmessenger.Parent.LSRW.LSRWData
 
 interface TimeTableDayListener{
 
-    fun onItemClick(data: TimeTableDayData, holder: TimeTableDayAdapter.DataViewHolder)
+    fun onItemClick(data: TimeTableDayData)
 }

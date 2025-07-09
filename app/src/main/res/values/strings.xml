@@ -576,5 +576,6 @@
     <string name="past_date">Past date</string>
     <string name="assignmentdetails_missing">Assignment details is missing.</string>
     <string name="submitted">Submitted</string>
+    <string name="This_field_required">This field is required.</string>
 
 </resources>

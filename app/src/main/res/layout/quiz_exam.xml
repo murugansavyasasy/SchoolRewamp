@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:fitsSystemWindows="true"
+    android:background="@color/white"
     android:layout_height="match_parent">
 
 
@@ -172,6 +173,7 @@
                     android:enabled="false"
                     android:background="@drawable/bg_button_blue_color"
                     android:textColor="@color/white"
+                    android:textSize="@dimen/thirteen_sp"
                     android:text="@string/lblPrevious" />
 
                 <View
@@ -183,6 +185,7 @@
                     android:layout_width="@dimen/one_fifty"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
+                    android:textSize="@dimen/thirteen_sp"
                     android:background="@drawable/bg_button_blue_color"
                     android:text="@string/NEXT" />
             </LinearLayout>

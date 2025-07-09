@@ -1,7 +1,6 @@
 package com.vs.schoolmessenger.CommonScreens.SpecificStudentData
 
 import android.app.AlertDialog
-import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -13,7 +12,6 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
@@ -28,10 +26,12 @@ import com.vs.schoolmessenger.Repository.ApiCallRequest
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.AwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.Constant.M_ATTACHMENTS
 import com.vs.schoolmessenger.Utils.Constant.M_COMMUNICATION
 import com.vs.schoolmessenger.Utils.Constant.SELECTED_SCHOOL_MENU
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
+import com.vs.schoolmessenger.Utils.ProgressDialogHelper
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.SpecificStudentBinding
 import com.vs.schoolmessenger.util.VimeoVideoUpload
@@ -103,10 +103,14 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                     isStudentData = isStudentList
                     isStudentData()
                 } else {
+                    binding.toolbarLayout.cbSelect.visibility = View.GONE
+                    binding.toolbarLayout.rytSearch.visibility = View.GONE
                     binding.rcySpecificStudent.visibility = View.GONE
                     ErrorMessage(response.message)
                 }
             } else {
+                binding.toolbarLayout.cbSelect.visibility = View.GONE
+                binding.toolbarLayout.rytSearch.visibility = View.GONE
                 binding.rcySpecificStudent.visibility = View.GONE
                 ErrorMessage(getString(R.string.no_student_found))
             }
@@ -124,14 +128,12 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                 mAdapter.selectAll(false)
             }
         }
-
         appViewModel!!.isAttachmentSend?.observe(this) { response ->
             Constant.hideLoading(this@SpecificStudent)
             if (response != null && response.status) {
                 Constant.showTopAlertPopup(response.message, this)
             }
         }
-
         appViewModel!!.isVoiceSend?.observe(this) { response ->
             Constant.hideLoading(this@SpecificStudent)
             if (response != null && response.status) {
@@ -146,28 +148,23 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
             }
         }
 
-        binding.toolbarLayout.txtSearch.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) {
-                binding.toolbarLayout.cbSelect.visibility = View.GONE
-            }
-        }
-
 
         binding.toolbarLayout.txtSearch.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-
-            }
-
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 filter(s.toString())
+                binding.toolbarLayout.cbSelect.visibility =
+                    if (!s.isNullOrEmpty()) View.GONE else View.VISIBLE
             }
-        })
 
+            override fun afterTextChanged(s: Editable?) {}
+        })
     }
 
     fun ShowData() {
+        binding.toolbarLayout.cbSelect.visibility = View.VISIBLE
+        binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
         binding.rcySpecificStudent.visibility = View.VISIBLE
         binding.lytNoDataFound.visibility = View.GONE
     }
@@ -244,6 +241,11 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
     private fun isFileUploadInAws(
         schoolId: String, isFileType: String?
     ) {
+
+        if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS) {
+            Constant.selectedFiles.removeAt(0)
+        }
+
         Constant.isAwsUploadedFiles.clear()
         val isSelectedFileListSize = Constant.selectedFiles.size
         val iterator = Constant.selectedFiles.iterator()
@@ -270,7 +272,8 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                 attachmentSendApi()
             }
         } else {
-            binding.circularProgressView.visibility = View.VISIBLE
+            ProgressDialogHelper.show(this)
+//            binding.circularProgressView.visibility = View.VISIBLE
             val outputDir =
                 File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "CompressedOutput")
             val newSelectedFiles = mutableListOf<FileItem>()
@@ -331,7 +334,9 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                                     val percent = (uploadedFiles * 100) / isSelectedFileListSize
 
                                     runOnUiThread {
-                                        binding.circularProgressView.setProgress(percent)
+                                        ProgressDialogHelper.show(this@SpecificStudent)
+                                        ProgressDialogHelper.updateProgress(percent)
+//                                        binding.circularProgressView.setProgress(percent)
                                     }
 
 
@@ -344,7 +349,8 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
 
                                     if (Constant.isAwsUploadedFiles.size == isSelectedFileListSize) {
                                         runOnUiThread {
-                                            binding.circularProgressView.visibility = View.GONE
+                                            ProgressDialogHelper.dismiss()
+//                                            binding.circularProgressView.visibility = View.GONE
                                             Constant.showLoading(this@SpecificStudent)
                                         }
                                         Log.d(
@@ -367,12 +373,15 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                                     val percent = (uploadedFiles * 100) / isSelectedFileListSize
 
                                     runOnUiThread {
-                                        binding.circularProgressView.setProgress(percent)
+                                        ProgressDialogHelper.show(this@SpecificStudent)
+                                        ProgressDialogHelper.updateProgress(percent)
+//                                        binding.circularProgressView.setProgress(percent)
                                     }
 
                                     if (uploadedFiles == isSelectedFileListSize) {
                                         runOnUiThread {
-                                            binding.circularProgressView.visibility = View.GONE
+                                            ProgressDialogHelper.dismiss()
+//                                            binding.circularProgressView.visibility = View.GONE
                                         }
                                     }
                                 }
@@ -446,12 +455,11 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
 
         okButton.setOnClickListener {
             alertDialog.dismiss()
-//            Constant.showLoading(this@SpecificStudent)
-            if (SELECTED_SCHOOL_MENU == Constant.M_ATTACHMENTS) {
-                if (Constant.selectedFiles.isNotEmpty()) {
+            if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS) {
+                if (Constant.selectedFiles.size != 1) {
                     val videoFiles = Constant.selectedFiles.filter { it.type == FileType.VIDEO }
                     if (videoFiles.isNotEmpty()) {
-                        val sizeInMB = Constant.getVideoSizeInMB(Constant.selectedFiles[0].path)
+                        val sizeInMB = Constant.getVideoSizeInMB(Constant.selectedFiles[1].path)
                         if (sizeInMB <= 500) {
                             videoUploading()
                         } else {
@@ -498,9 +506,12 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
         }
     }
 
-
     private fun videoUploading() {
-        binding.circularProgressView.visibility = View.VISIBLE
+//        binding.circularProgressView.visibility = View.VISIBLE
+        ProgressDialogHelper.show(this@SpecificStudent)
+        if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS) {
+            Constant.selectedFiles.removeAt(0)
+        }
         VimeoVideoUpload.uploadVideo(
             this@SpecificStudent,
             "quiz",
@@ -548,10 +559,12 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
     override fun onProgressUpdate(percent: Int) {
         runOnUiThread {
             Log.d("isPercentage", percent.toString())
-            binding.circularProgressView.setProgress(percent)
+//            binding.circularProgressView.setProgress(percent)
+            ProgressDialogHelper.show(this@SpecificStudent)
+            ProgressDialogHelper.updateProgress(percent)
             if (percent == 100) {
-                binding.circularProgressView.visibility = View.GONE
-                //  dimOverlayManager.hideDim()
+                ProgressDialogHelper.dismiss()
+//                binding.circularProgressView.visibility = View.GONE
                 Constant.showLoading(this)
             }
         }
@@ -591,21 +604,12 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                             resources.getString(R.string.are_you_sure_want_to_send_this_message)
                     }
 
-                    if (Constant.isCommunicationType == 3) {
-                        showSendConfirmationDialog(
-                            resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + resources.getString(
+                    showSendConfirmationDialog(
+                            resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + " " + resources.getString(
                                 R.string.Student_s
                             ),
                             isAcademicYearNote.toString()
                         )
-                    } else {
-                        showSendConfirmationDialog(
-                            resources.getString(R.string.selected_target_1) + selectedIds.size.toString() + resources.getString(
-                                R.string.Student_s
-                            ),
-                            isAcademicYearNote.toString()
-                        )
-                    }
                 } else {
                     Constant.showValidationAlertPopup(
                         getString(
@@ -620,31 +624,10 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
         }
     }
 
-    override fun onBackPressed() {
-        val searchText = binding.toolbarLayout.txtSearch.text.toString().trim()
-
-        if (binding.toolbarLayout.txtSearch.hasFocus()) {
-            binding.toolbarLayout.txtSearch.clearFocus()
-
-            // Hide keyboard
-            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(binding.toolbarLayout.txtSearch.windowToken, 0)
-
-            // Show checkbox only if search is empty
-            if (searchText.isEmpty()) {
-                binding.toolbarLayout.cbSelect.visibility = View.VISIBLE
-            }
-        } else {
-            super.onBackPressed()
-        }
-    }
-
-
     override fun onIdCheck(data: NameAndIds) {
         if (!isSpecificStudent.any { it.id == data.id }) {
             isSpecificStudent.add(data)
         }
-//        binding.toolbarLayout.cbSelect.isChecked = isSpecificStudent.size == isStudentData?.size
         binding.toolbarLayout.cbSelect.isChecked = isSpecificStudent.size == isStudentList.size
 
     }
@@ -652,6 +635,5 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
     override fun onIdUnchecked(data: NameAndIds) {
         isSpecificStudent.removeAll { it.id == data.id }
         binding.toolbarLayout.cbSelect.isChecked = false
-
     }
 }

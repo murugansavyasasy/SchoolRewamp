@@ -15,6 +15,7 @@
     <dimen name="minus_ten">-10dp</dimen>
     <dimen name="minus_five">-5dp</dimen>
     <dimen name="zero">0dp</dimen>
+    <dimen name="line_spacing">5dp</dimen>
     <dimen name="point_one">0.1dp</dimen>
     <dimen name="point_five">0.5dp</dimen>
     <dimen name="point_six">0.6dp</dimen>

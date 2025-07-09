@@ -223,8 +223,8 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
 
     override fun onResume() {
         super.onResume()
-        allAttachmentData.clear()
-        fetchInitialData()
+//        allAttachmentData.clear()
+//        fetchInitialData()
     }
 
     override fun onChildItemClick(
