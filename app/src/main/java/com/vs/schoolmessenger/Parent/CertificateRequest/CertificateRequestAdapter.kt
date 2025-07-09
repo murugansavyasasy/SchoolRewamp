@@ -36,7 +36,7 @@ class CertificateRequestAdapter (
             DataViewHolder.ShimmerViewHolder(shimmerView)
         } else {
             val view = LayoutInflater.from(parent.context).inflate(R.layout.item_certificaterequest, parent, false)
-               DataViewHolder(view, context) // Pass context to DataViewHolder
+            DataViewHolder(view, context) // Pass context to DataViewHolder
         }
     }
 
