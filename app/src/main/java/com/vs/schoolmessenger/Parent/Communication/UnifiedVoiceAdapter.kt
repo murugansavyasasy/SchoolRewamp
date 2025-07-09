@@ -88,6 +88,7 @@ class UnifiedVoiceAdapter(
         } else if (holder is ShimmerViewHolder) {
             holder.startShimmer()
         }
+
     }
 
     override fun getItemCount(): Int {
@@ -217,38 +218,58 @@ class UnifiedVoiceAdapter(
 
                 } else {
                     lblnewiconText.visibility = View.GONE
-                    lblSeeMore.visibility = View.GONE
+                    lblSeeMore.text = "see more"
                 }
+
 
                 rlaText.setOnClickListener {
                     isExpanded = !isExpanded
-                    lblSeeMore.visibility = View.GONE
-                    lblnewiconText.visibility = View.GONE
-                    lblContentText.maxLines = if (isExpanded) Int.MAX_VALUE else 3
-                    if (data.is_unread!!) {
-                        if (data.is_archive!!) {
+                    if (isExpanded) {
+                        lblContentText.maxLines = Int.MAX_VALUE
+                        lblSeeMore.text = "see less"
+                        lblnewiconText.visibility = View.GONE
+                    } else {
+                        lblContentText.maxLines = 3
+                        lblSeeMore.text = "see more"
+                        lblnewiconText.visibility = View.GONE
+                    }
+
+                    if (data.is_unread == true) {
+                        if (data.is_archive == true) {
                             listener.onUpdateArchiveStatus(data.type, data.id)
                         } else {
                             listener.onUpdateCommunicationStatus(data.type, data.id)
                         }
                         data.is_unread = false
                     }
+
                     listener.onItemClick(data, this@DataViewHolder)
                 }
 
+
                 lblSeeMore.setOnClickListener {
                     isExpanded = !isExpanded
-                    lblSeeMore.visibility = View.GONE
-                    lblnewiconText.visibility = View.GONE
-                    lblContentText.maxLines = if (isExpanded) Int.MAX_VALUE else 3
-                    if (data.is_unread!!) {
-                        if (data.is_archive!!) {
+
+                    if (isExpanded) {
+                        lblContentText.maxLines = Int.MAX_VALUE
+                        lblSeeMore.text = "see less"
+                        lblnewiconText.visibility = View.GONE
+                    } else {
+                        lblContentText.maxLines = 3
+                        lblSeeMore.text = "see more"
+                        lblnewiconText.visibility = View.GONE
+                    }
+                    if (data.is_unread == true) {
+                        if (data.is_archive == true) {
                             listener.onUpdateArchiveStatus(data.type, data.id)
                         } else {
                             listener.onUpdateCommunicationStatus(data.type, data.id)
                         }
                         data.is_unread = false
                     }
+
+
+
                     listener.onItemClick(data, this@DataViewHolder)
                 }
             }

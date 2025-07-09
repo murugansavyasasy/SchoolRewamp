@@ -16,8 +16,6 @@ import com.vs.schoolmessenger.Parent.EventsHolidays.CalendarFragment
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Adapter.EventAdapter
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventClickListener
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventDataClass
-import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Adapter.HolidayAdapter
-import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.Holiday
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.HolidayClickListener
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
@@ -33,7 +31,6 @@ class Event : BaseActivity<EventParentBinding>(), View.OnClickListener, EventCli
     }
 
     lateinit var mAdapter: EventAdapter
-    lateinit var isHolidayAdapter: HolidayAdapter
 
     private var appViewModel: App? = null
     private var isAccessToken: String? = null

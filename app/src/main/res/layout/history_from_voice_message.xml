@@ -34,6 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginTop="@dimen/five"
+                android:visibility="gone"
                 android:layout_marginEnd="@dimen/ten"
                 android:background="@drawable/rect_shadow_white">
 
@@ -139,7 +140,8 @@
                         android:layout_marginEnd="@dimen/sixteen"
                         android:text="10:56 AM"
                         android:textColor="@color/grey"
-                        android:textSize="12sp"></TextView>
+                        android:textSize="12sp">
+                    </TextView>
 
                     <TextView
                         android:id="@+id/lblDate"
@@ -151,7 +153,8 @@
                         android:text="01 Apr 2024"
                         android:textColor="@color/black"
                         android:textSize="12sp"
-                        android:visibility="visible"></TextView>
+                        android:visibility="visible">
+                    </TextView>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -173,7 +176,8 @@
                         android:layout_height="@dimen/fifteen"
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="@dimen/five"
-                        android:src="@drawable/send_icon_white"></ImageView>
+                        android:src="@drawable/send_icon_white">
+                    </ImageView>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -184,7 +188,8 @@
                         android:text="@string/select"
                         android:textColor="@color/white"
                         android:textSize="@dimen/thirteen_sp"
-                        android:textStyle="bold"></TextView>
+                        android:textStyle="bold">
+                    </TextView>
                 </RelativeLayout>
 
             </RelativeLayout>
@@ -199,7 +204,7 @@
             android:id="@+id/rlaText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <ImageView
                 android:id="@+id/lblnewiconText"
@@ -231,7 +236,8 @@
                     android:layout_marginEnd="@dimen/ten"
                     android:text="Friday Leave"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"></TextView>
+                    android:textSize="@dimen/thirteen_sp">
+                </TextView>
 
 
                 <TextView
@@ -246,7 +252,8 @@
                     android:maxLines="3"
                     android:text="Dear (Recipient's Name), I am writing to request leave from school for (number of days) days, starting from (start date) to (end date). The reason for my leave is (briefly state the reason, e.g., a family function, medical treatment, personal reasons)."
                     android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"></TextView>
+                    android:textSize="@dimen/thirteen_sp">
+                </TextView>
 
                 <TextView
                     android:id="@+id/lblSeeMore"
@@ -279,7 +286,8 @@
                         android:layout_marginEnd="@dimen/sixteen"
                         android:text="10:56 AM"
                         android:textColor="@color/grey"
-                        android:textSize="@dimen/twele_sp"></TextView>
+                        android:textSize="@dimen/twele_sp">
+                    </TextView>
 
                     <TextView
                         android:id="@+id/lblDateText"
@@ -291,7 +299,8 @@
                         android:text="01 Apr 2024"
                         android:textColor="@color/black"
                         android:textSize="@dimen/twele_sp"
-                        android:visibility="visible"></TextView>
+                        android:visibility="visible">
+                    </TextView>
 
                     <RelativeLayout
                         android:id="@+id/rlaSelectText"
@@ -341,7 +350,8 @@
         android:layout_marginBottom="@dimen/twenty"
         android:text="@string/SeeMore"
         android:textColor="@color/navi_blue2"
-        android:textSize="@dimen/fifteen_sp"></TextView>
+        android:textSize="@dimen/fifteen_sp">
+    </TextView>
 
 
 </RelativeLayout>
