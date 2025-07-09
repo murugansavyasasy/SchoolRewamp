@@ -309,11 +309,10 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
 
                 withContext(Dispatchers.Main) {
                     binding.lnrDownloadStatus.visibility = View.GONE
-                    Toast.makeText(
-                        this@FilesViewActivity,
-                        "File saved to Downloads/$baseFolderName/$subFolderPath/$fileName",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    Constant.showValidationAlertPopup(
+                        "Successfully Download...✅",
+                        "File saved to Downloads/$baseFolderName/$subFolderPath/$fileName", this@FilesViewActivity
+                    )
                 }
 
             } catch (e: Exception) {
