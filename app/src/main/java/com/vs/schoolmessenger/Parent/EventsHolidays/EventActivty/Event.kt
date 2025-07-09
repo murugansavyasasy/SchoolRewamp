@@ -6,10 +6,13 @@ import android.text.TextWatcher
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.tabs.TabLayout
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Parent.EventsHolidays.CalendarFragment
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Adapter.EventAdapter
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventClickListener
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventDataClass
@@ -22,7 +25,8 @@ import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.EventParentBinding
 
-class Event : BaseActivity<EventParentBinding>(), View.OnClickListener, EventClickListener, HolidayClickListener {
+class Event : BaseActivity<EventParentBinding>(), View.OnClickListener, EventClickListener,
+    HolidayClickListener {
 
     override fun getViewBinding(): EventParentBinding {
         return EventParentBinding.inflate(layoutInflater)
@@ -33,6 +37,8 @@ class Event : BaseActivity<EventParentBinding>(), View.OnClickListener, EventCli
 
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
+
+
 
     override fun setupViews() {
         super.setupViews()
@@ -51,9 +57,7 @@ class Event : BaseActivity<EventParentBinding>(), View.OnClickListener, EventCli
         binding.toolbarLayout.lblLeftSideBar.text = resources.getText(R.string.HoliDay)
         binding.toolbarLayout.lblRightSideBar.text = resources.getText(R.string.Event)
         binding.toolbarLayout.lblStudentName.text = isChildDetails?.name
-        binding.toolbarLayout.lblStudentSection.text =
-            isChildDetails?.standard_name + " - " + isChildDetails?.section_name
-
+        binding.toolbarLayout.lblStudentSection.text = isChildDetails?.standard_name + " - " + isChildDetails?.section_name
         loadeventdata()
 
         binding.toolbarLayout.txtVideoMenu.addTextChangedListener(object : TextWatcher {
@@ -67,15 +71,16 @@ class Event : BaseActivity<EventParentBinding>(), View.OnClickListener, EventCli
         })
 
 
-        binding.toolbarLayout.txtVideoMenu.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (::isHolidayAdapter.isInitialized) {
-                    isHolidayAdapter.filter.filter(s)
-                }
-            }
-            override fun afterTextChanged(s: Editable?) {}
-        })
+//        binding.toolbarLayout.txtVideoMenu.addTextChangedListener(object : TextWatcher {
+//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+//                if (::isHolidayAdapter.isInitialized) {
+//                    isHolidayAdapter.filter.filter(s)
+//                }
+//            }
+//
+//            override fun afterTextChanged(s: Editable?) {}
+//        })
 
 
         appViewModel?.IsGetEventReport?.observe(this) { response ->
@@ -97,13 +102,19 @@ class Event : BaseActivity<EventParentBinding>(), View.OnClickListener, EventCli
 
         appViewModel?.IsGetHolidayReport?.observe(this) { response ->
             if (response?.status == true && !response.data.isNullOrEmpty()) {
-                binding.rcyEvent.visibility = View.VISIBLE
-                binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
+                binding.rcyEvent.visibility = View.GONE
+                binding.toolbarLayout.rytSearch.visibility = View.GONE
                 binding.nomessage.visibility = View.GONE
                 binding.txtNoData.visibility = View.GONE
-                isloadholidayData(response.data)
+                binding.calendarFragmentContainer.visibility = View.VISIBLE
+//                isloadholidayData(response.data)
+                val calendarFragment = CalendarFragment.newInstance(response.data)
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.calendarFragmentContainer, calendarFragment)
+                    .commit()
             } else {
                 binding.rcyEvent.visibility = View.GONE
+                binding.calendarFragmentContainer.visibility = View.GONE
                 binding.toolbarLayout.rytSearch.visibility = View.GONE
                 binding.nomessage.visibility = View.VISIBLE
                 binding.txtNoData.visibility = View.VISIBLE
@@ -113,15 +124,15 @@ class Event : BaseActivity<EventParentBinding>(), View.OnClickListener, EventCli
 
 
         binding.toolbarLayout.lblRightSideBar.setOnClickListener {
-            binding.toolbarLayout.lblRightSideBar.isEnabled=false
-            binding.toolbarLayout.lblLeftSideBar.isEnabled=true
+            binding.toolbarLayout.lblRightSideBar.isEnabled = false
+            binding.toolbarLayout.lblLeftSideBar.isEnabled = true
             isBackRoundChange(binding.toolbarLayout.lblRightSideBar)
             loadeventdata()
         }
 
         binding.toolbarLayout.lblLeftSideBar.setOnClickListener {
-            binding.toolbarLayout.lblLeftSideBar.isEnabled=false
-            binding.toolbarLayout.lblRightSideBar.isEnabled=true
+            binding.toolbarLayout.lblLeftSideBar.isEnabled = false
+            binding.toolbarLayout.lblRightSideBar.isEnabled = true
             isBackRoundChange(binding.toolbarLayout.lblLeftSideBar)
             loadHolidayData()
         }
@@ -132,10 +143,10 @@ class Event : BaseActivity<EventParentBinding>(), View.OnClickListener, EventCli
         binding.rcyEvent.adapter = mAdapter
     }
 
-    private fun isloadholidayData(newData: List<Holiday>?) {
-        isHolidayAdapter = HolidayAdapter(newData, this, Constant.isShimmerViewDisable, this)
-        binding.rcyEvent.adapter = isHolidayAdapter
-    }
+//    private fun isloadholidayData(newData: List<Holiday>?) {
+//        isHolidayAdapter = HolidayAdapter(newData, this, Constant.isShimmerViewDisable, this)
+//        binding.rcyEvent.adapter = isHolidayAdapter
+////    }
 
     private fun loadeventdata() {
         clearSearchText()
@@ -146,7 +157,7 @@ class Event : BaseActivity<EventParentBinding>(), View.OnClickListener, EventCli
         appViewModel!!.IsGetEventReport(isAccessToken!!, this)
     }
 
-    fun clearSearchText(){
+    fun clearSearchText() {
         binding.toolbarLayout.txtVideoMenu.text.clear()
         binding.toolbarLayout.txtVideoMenu.clearFocus();
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -155,10 +166,7 @@ class Event : BaseActivity<EventParentBinding>(), View.OnClickListener, EventCli
 
     private fun loadHolidayData() {
         clearSearchText()
-        isHolidayAdapter = HolidayAdapter(null, this, Constant.isShimmerViewShow,this)
-        binding.rcyEvent.layoutManager = LinearLayoutManager(this)
-        binding.rcyEvent.isNestedScrollingEnabled = false
-        binding.rcyEvent.adapter = isHolidayAdapter
+//        isHolidayAdapter = HolidayAdapter(null, this, Constant.isShimmerViewShow, this)
         appViewModel!!.IsGetHolidayReport(isAccessToken!!, this)
     }
 
@@ -195,26 +203,42 @@ class Event : BaseActivity<EventParentBinding>(), View.OnClickListener, EventCli
         }
     }
 
-
+    private fun loadCalendarFragment() {
+        val fragment = CalendarFragment()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.calendarFragmentContainer, fragment)
+            .commit()
+    }
 
 
     private fun isBackRoundChange(isClickingId: TextView) {
         if (isClickingId == binding.toolbarLayout.lblRightSideBar) {
             binding.toolbarLayout.lblLeftSideBar.background = null
+            binding.relativeLayout.setBackgroundResource(R.drawable.bg_parent_backround)
             binding.toolbarLayout.lblLeftSideBar.setTextColor(
                 ContextCompat.getColor(this, R.color.dark_blue)
             )
+
+            binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
+            binding.rcyEvent.visibility = View.VISIBLE
+            binding.calendarFragmentContainer.visibility = View.GONE
         }
 
         if (isClickingId == binding.toolbarLayout.lblLeftSideBar) {
             binding.toolbarLayout.lblRightSideBar.background = null
+            binding.relativeLayout.setBackgroundResource(R.color.white)
             binding.toolbarLayout.lblRightSideBar.setTextColor(
                 ContextCompat.getColor(this, R.color.dark_blue)
             )
+
+            binding.toolbarLayout.rytSearch.visibility = View.GONE
+            binding.rcyEvent.visibility = View.GONE
+            binding.calendarFragmentContainer.visibility = View.VISIBLE
+            loadCalendarFragment()
         }
 
-        isClickingId.background =
-            ContextCompat.getDrawable(this, R.drawable.white_radious)
+        isClickingId.background = ContextCompat.getDrawable(this, R.drawable.white_radious)
         isClickingId.setTextColor(ContextCompat.getColor(this, R.color.black))
     }
+
 }
