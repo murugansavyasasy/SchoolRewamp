@@ -266,6 +266,9 @@ class ParentServices {
                             }
                         }
                     }
+                    else{
+                        isCertificateRequestList.postValue(null)
+                    }
                 }
 
                 override fun onFailure(
@@ -309,6 +312,9 @@ class ParentServices {
                             }
                         }
                     }
+                    else{
+                        isSendCertificateRequest.postValue(null)
+                    }
                 }
 
                 override fun onFailure(
@@ -351,6 +357,9 @@ class ParentServices {
                                 isTimeTable.postValue(response.body())
                             }
                         }
+                    }
+                    else{
+                        isTimeTable.postValue(null)
                     }
                 }
 

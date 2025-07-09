@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.JsonObject
@@ -64,30 +65,30 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
         appViewModel!!.isCertificateRequestList?.observe(this) { response ->
             if (response != null && response.status) {
                 certificateRequestList = response.data
-                if(certificateRequestList.isNotEmpty()) {
+                if (certificateRequestList.isNotEmpty()) {
                     binding.recyclerView.visibility = View.VISIBLE
                     binding.lnrNoRecords.visibility = View.GONE
                     setupRecyclerView()
                 }
-            }
-            else{
-               binding.recyclerView.visibility = View.GONE
-               binding.lnrNoRecords.visibility = View.VISIBLE
-               binding.txtNoData.text = response!!.message
+            } else {
+                binding.recyclerView.visibility = View.GONE
+                binding.lnrNoRecords.visibility = View.VISIBLE
+                binding.txtNoData.text = "No data found!"
             }
         }
 
         appViewModel!!.isCertificateType?.observe(this) { response ->
             if (response != null && response.status) {
-                 certificateTypes = response.data
-                 loadCertificates(certificateTypes)
+                certificateTypes = response.data
+                loadCertificates(certificateTypes)
             }
         }
 
         appViewModel!!.isSendCertificateRequest?.observe(this) { response ->
             Constant.hideLoading(this)
+            if (response != null) {
                 Constant.showTopAlertPopup(response!!.message, this)
-
+            }
         }
 
     }
@@ -102,9 +103,10 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
                 adapter.selectedPosition = position
                 val selectedOption = certificateTypes!![position]
                 isSelectedCertificateName = selectedOption.certificateName
-                Log.d("isSelectedCertificateName",isSelectedCertificateName!!)
+                Log.d("isSelectedCertificateName", isSelectedCertificateName!!)
 
             }
+
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
     }
@@ -173,29 +175,39 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
                 binding.lnrNoRecords.visibility = View.GONE
 
             }
+
             R.id.ivradio -> {
                 urgency_level = "Not Urgent"
-                binding.ivradio.setImageResource(com.vs.schoolmessenger.R.drawable.selected_radio_button)
-                binding.ivradio1.setImageResource(com.vs.schoolmessenger.R.drawable.unselected_radio_button)
+                binding.ivradio.setImageResource(R.drawable.selected_radio_button)
+                binding.ivradio1.setImageResource(R.drawable.unselected_radio_button)
             }
+
             R.id.ivradio1 -> {
                 urgency_level = "Urgent"
-                binding.ivradio.setImageResource(com.vs.schoolmessenger.R.drawable.unselected_radio_button)
-                binding.ivradio1.setImageResource(com.vs.schoolmessenger.R.drawable.selected_radio_button)
+                binding.ivradio.setImageResource(R.drawable.unselected_radio_button)
+                binding.ivradio1.setImageResource(R.drawable.selected_radio_button)
             }
 
             R.id.imgBack -> onBackPressed()
 
-            R.id.btnSendCertificateRequest ->{
-                Constant.showLoading(this)
+            R.id.btnSendCertificateRequest -> {
+                if (binding.txtReason.text.isNotEmpty()) {
+                    Constant.showLoading(this)
+                    val jsonObject = JsonObject()
+                    jsonObject.addProperty("requested_for", isSelectedCertificateName)
+                    jsonObject.addProperty("urgency_level", urgency_level)
+                    jsonObject.addProperty("reason", binding.txtReason.text.toString())
+                    appViewModel?.sendCertificateRequest(
+                        isAccessToken.orEmpty(), jsonObject, activity = this
+                    )
+                } else {
+                    Toast.makeText(
+                        this,
+                        "Please enter the reason",
+                        Toast.LENGTH_SHORT
+                    ).show()
 
-                val jsonObject = JsonObject()
-                jsonObject.addProperty("requested_for", isSelectedCertificateName)
-                jsonObject.addProperty("urgency_level", urgency_level)
-                jsonObject.addProperty("reason", binding.txtReason.text.toString())
-                appViewModel?.sendCertificateRequest(
-                    isAccessToken.orEmpty(),jsonObject, activity = this
-                )
+                }
             }
         }
     }

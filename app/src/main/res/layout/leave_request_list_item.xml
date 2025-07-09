@@ -7,124 +7,139 @@
     android:elevation="2dp"
     android:padding="@dimen/ten">
 
-
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:elevation="2dp"
-        android:padding="@dimen/five">
-
-        <LinearLayout
-            android:id="@+id/lnrDateCircle"
-            android:layout_width="@dimen/fifty"
-            android:layout_height="@dimen/fifty"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/five"
-            android:layout_marginEnd="12dp"
-            android:background="@drawable/bg_light_blue_circle"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/textFirstLetter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="A"
-                android:textColor="#000000"
-                android:textSize="@dimen/twele_sp" />
-
-        </LinearLayout>
+        android:layout_height="wrap_content">
 
 
-        <LinearLayout
-            android:id="@+id/lnrDetails"
+        <RelativeLayout
+            android:id="@+id/rytCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_toStartOf="@+id/lnrButtons"
-            android:layout_toEndOf="@+id/lnrDateCircle"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:layout_marginBottom="8dp"
+            android:elevation="2dp"
+            android:padding="@dimen/five">
 
-            <TextView
-                android:id="@+id/textName"
+            <LinearLayout
+                android:id="@+id/lnrDateCircle"
+                android:layout_width="@dimen/fifty"
+                android:layout_height="@dimen/fifty"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="@dimen/five"
+                android:layout_marginEnd="12dp"
+                android:background="@drawable/bg_light_blue_circle"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textFirstLetter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="A"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/twele_sp" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/lnrDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_toStartOf="@+id/lnrButtons"
+                android:layout_toEndOf="@+id/lnrDateCircle"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Alex Smith"
+                    android:textColor="#000"
+                    android:textSize="@dimen/thirteen_sp"
+                    style="@style/CustomTextStylePoppinsBold" />
+
+                <TextView
+                    android:id="@+id/textDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/five"
+                    android:text="15 - 22 Jun 2023"
+                    android:textColor="#999"
+                    android:textSize="@dimen/thirteen_sp" />
+
+                <TextView
+                    android:id="@+id/textNoOfDays"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/five"
+                    android:text="3 Days"
+                    android:textColor="#999"
+                    android:textSize="@dimen/thirteen_sp" />
+
+                <!--            <TextView-->
+                <!--                android:id="@+id/textReason"-->
+                <!--                android:layout_width="wrap_content"-->
+                <!--                android:layout_height="wrap_content"-->
+                <!--                android:layout_marginTop="@dimen/five"-->
+                <!--                android:text="Casual"-->
+                <!--                style="@style/CustomTextStylePoppinsMedium"-->
+                <!--                android:textColor="@color/black"-->
+                <!--                android:textSize="@dimen/thirteen_sp" />-->
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lnrButtons"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Alex Smith"
-                android:textColor="#000"
-                android:textSize="@dimen/thirteen_sp"
-                style="@style/CustomTextStylePoppinsBold"
-               />
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/five"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/five"
-                android:text="15 - 22 Jun 2023"
-                android:textColor="#999"
-                android:textSize="@dimen/thirteen_sp" />
+                <TextView
+                    android:id="@+id/btnCancel"
+                    android:layout_width="@dimen/eighty"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/ten"
+                    android:background="@drawable/bg_leave_rejected"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="6dp"
+                    android:text="Reject"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
 
-            <TextView
-                android:id="@+id/textNoOfDays"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/five"
-                android:text="3 Days"
-                android:textColor="#999"
-                android:textSize="@dimen/thirteen_sp" />
+                <TextView
+                    android:id="@+id/btnApprove"
+                    android:layout_width="@dimen/eighty"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_leave_approved"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="6dp"
+                    android:text="Approve"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/textReason"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/five"
-                android:text="Casual"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp" />
+        </RelativeLayout>
 
-
-        </LinearLayout>
-
-        <!-- Buttons -->
-        <LinearLayout
-            android:id="@+id/lnrButtons"
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_below="@+id/rytCard"
+            android:layout_marginBottom="@dimen/ten"
+            android:id="@+id/textReason"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/five"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/btnCancel"
-                android:layout_width="@dimen/eighty"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:background="@drawable/bg_leave_rejected"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="6dp"
-                android:text="Cancel"
-
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/btnApprove"
-                android:layout_width="@dimen/eighty"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/ten"
-                android:background="@drawable/bg_leave_approved"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="6dp"
-                android:text="Approve"
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                android:textSize="12sp" />
-        </LinearLayout>
+            android:text="Casual"
+            android:layout_marginStart="@dimen/eighty"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp" />
     </RelativeLayout>
+
+    <!-- Buttons -->
 </androidx.cardview.widget.CardView>

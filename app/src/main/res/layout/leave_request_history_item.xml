@@ -7,8 +7,13 @@
     android:elevation="2dp"
     android:padding="@dimen/ten">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
 
     <RelativeLayout
+        android:id="@+id/rytCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -20,7 +25,6 @@
             android:layout_width="@dimen/fifty"
             android:layout_height="@dimen/fifty"
             android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/five"
             android:layout_marginEnd="12dp"
             android:background="@drawable/bg_light_blue_circle"
@@ -42,7 +46,6 @@
             android:id="@+id/lnrDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/ten"
             android:layout_toStartOf="@+id/lnrButtons"
             android:layout_toEndOf="@+id/lnrDateCircle"
@@ -56,8 +59,7 @@
                 android:text="Alex Smith"
                 android:textColor="#000"
                 android:textSize="@dimen/thirteen_sp"
-                style="@style/CustomTextStylePoppinsBold"
-                />
+                style="@style/CustomTextStylePoppinsBold" />
 
             <TextView
                 android:id="@+id/textDate"
@@ -77,26 +79,24 @@
                 android:textColor="#999"
                 android:textSize="@dimen/thirteen_sp" />
 
-            <TextView
-                android:id="@+id/textReason"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/five"
-                android:text="Casual"
-                style="@style/CustomTextStylePoppinsMedium"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp" />
+<!--            <TextView-->
+<!--                android:id="@+id/textReason"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="@dimen/five"-->
+<!--                android:text="Casual"-->
+<!--                style="@style/CustomTextStylePoppinsMedium"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textSize="@dimen/thirteen_sp" />-->
 
 
         </LinearLayout>
 
-        <!-- Buttons -->
         <LinearLayout
             android:id="@+id/lnrButtons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/five"
             android:orientation="vertical">
 
@@ -104,7 +104,7 @@
                 android:id="@+id/btnCancel"
                 android:layout_width="@dimen/eighty"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
+                android:layout_marginBottom="@dimen/ten"
                 android:background="@drawable/bg_leave_rejected"
                 android:paddingHorizontal="12dp"
                 android:paddingVertical="6dp"
@@ -117,7 +117,6 @@
                 android:id="@+id/btnApprove"
                 android:layout_width="@dimen/eighty"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/ten"
                 android:background="@drawable/bg_leave_approved"
                 android:paddingHorizontal="12dp"
                 android:paddingVertical="6dp"
@@ -126,5 +125,21 @@
                 android:textColor="@color/white"
                 android:textSize="12sp" />
         </LinearLayout>
+
     </RelativeLayout>
+
+        <TextView
+            android:layout_below="@+id/rytCard"
+            android:layout_marginBottom="@dimen/ten"
+            android:id="@+id/textReason"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Casual"
+            android:layout_marginStart="@dimen/eighty"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp" />
+    </RelativeLayout>
+
+        <!-- Buttons -->
 </androidx.cardview.widget.CardView>

@@ -37,7 +37,7 @@
         <Spinner
             android:id="@+id/spinner_text"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/thirty_five"
+            android:layout_height="@dimen/fourty"
             android:layout_below="@+id/header_text"
             android:layout_marginTop="@dimen/ten"
             android:layout_marginStart="@dimen/ten"

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/white"
-    android:fitsSystemWindows="true"
-    android:layout_height="match_parent">
+    android:fitsSystemWindows="true">
 
     <include
         android:id="@+id/toolbarLayout"
@@ -11,84 +11,85 @@
 
 
     <LinearLayout
+        android:id="@+id/relative_layout8"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/relative_layout8"
         android:layout_below="@+id/toolbarLayout"
-        android:weightSum="2"
-        android:gravity="center_vertical"
         android:layout_marginStart="7dp"
-        android:layout_marginEnd="7dp"
         android:layout_marginTop="15dp"
-        android:background="@drawable/bg_light_blue">
+        android:layout_marginEnd="7dp"
+        android:background="@drawable/bg_light_blue"
+        android:gravity="center_vertical"
+        android:weightSum="2">
 
 
         <TextView
             android:id="@+id/category_name"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@drawable/white_radious"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="CATEGORY WISE"
-            android:textColor="@color/black"
-            android:textSize="13sp"
+            android:layout_marginStart="2dp"
             android:layout_marginTop="2dp"
             android:layout_marginBottom="2dp"
-            android:layout_marginStart="2dp"
+            android:layout_weight="1"
+            android:background="@drawable/white_radious"
+            android:gravity="center"
             android:padding="@dimen/eight"
-            style="@style/CustomTextStylePoppinsBold">
-        </TextView>
+            android:text="CATEGORY WISE"
+            android:textColor="@color/black"
+            android:textSize="13sp"></TextView>
 
         <TextView
             android:id="@+id/class_name"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="2dp"
+            android:layout_marginBottom="2dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/eight"
             android:text="CLASS WISE"
             android:textColor="@color/black"
-            android:textSize="13sp"
-            android:layout_weight="1"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp"
-            android:layout_marginStart="2dp"
-            android:layout_marginEnd="2dp"
-            android:padding="@dimen/eight"
-            android:gravity="center"
-            style="@style/CustomTextStylePoppinsBold">
-        </TextView>
+            android:textSize="13sp"></TextView>
 
     </LinearLayout>
 
-    <LinearLayout
-            android:id="@+id/AcademicYear"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+    <RelativeLayout
+        android:id="@+id/AcademicYear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/relative_layout8"
-            android:orientation="horizontal"
         android:layout_marginStart="@dimen/fifteen"
         android:layout_marginTop="@dimen/fifteen"
         android:layout_marginEnd="@dimen/fifteen"
         android:background="@drawable/gray_bg_radius"
-        android:weightSum="1">
+        android:orientation="horizontal">
 
-            <TextView
-                style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/fifteen"
-                android:layout_weight="0.5"
-                android:text="@string/academic_year"
-                android:textSize="@dimen/thirteen_sp">
+        <TextView
+            android:id="@+id/lblAcademicYear"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_alignParentStart="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/fifteen"
+            android:text="@string/academic_year"
+            android:textSize="@dimen/thirteen_sp">
 
-            </TextView>
+        </TextView>
 
         <RelativeLayout
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/lblAcademicYear"
+            android:layout_alignParentEnd="true"
             android:id="@+id/rytAcademicYearDropDown"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/fifteen"
             android:layout_marginEnd="@dimen/fifteen"
-            android:layout_weight="0.5"
             android:gravity="center">
 
             <Spinner
@@ -98,7 +99,7 @@
                 android:background="@drawable/custom_spinner_background" />
 
         </RelativeLayout>
-        </LinearLayout>
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/relative_layout5"
@@ -137,18 +138,18 @@
         android:id="@+id/relative_layout6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/relative_layout5"
-        >
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/paymenthistorylabel"
-        android:text="Payment history"
-        android:textColor="@color/light_gray"
-        style="@style/CustomTextStylePoppinsMedium"
-        android:textSize="13sp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="8dp"/>
+        android:layout_below="@+id/relative_layout5">
+
+        <TextView
+            android:id="@+id/paymenthistorylabel"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="8dp"
+            android:text="Payment history"
+            android:textColor="@color/light_gray"
+            android:textSize="13sp" />
 
         <ImageView
             android:id="@+id/img_payment"
@@ -176,8 +177,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/relative_layout8"
-            android:layout_marginTop="@dimen/ten">
-        </androidx.recyclerview.widget.RecyclerView>
+            android:layout_marginTop="@dimen/ten"></androidx.recyclerview.widget.RecyclerView>
 
         <ImageView
             android:id="@+id/nomessage"
@@ -199,14 +199,13 @@
             android:layout_centerInParent="true"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/twenty"
+            android:gravity="center"
             android:text="@string/no_list_found"
             android:textColor="@color/black"
             android:textSize="@dimen/fifteen_sp"
-            android:gravity="center"
             android:visibility="gone" />
 
     </LinearLayout>
-
 
 
 </RelativeLayout>

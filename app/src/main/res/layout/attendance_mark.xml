@@ -27,9 +27,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:padding="@dimen/ten"
             android:background="@drawable/white_bg_radius"
             android:gravity="center"
+            android:padding="@dimen/ten"
             android:text="@string/MarkAttendance"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp" />
@@ -74,7 +74,7 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/lnrAcademicDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -85,40 +85,28 @@
             android:visibility="visible">
 
             <TextView
-                style="@style/CustomTextStylePoppinsBold"
                 android:id="@+id/lblAcademicYearPick"
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/fifteen"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/ten"
                 android:text="@string/choose_academic_year"
                 android:textColor="@color/black"
                 android:textSize="@dimen/fifteen_sp"
                 android:textStyle="bold"></TextView>
 
-            <!--            <TextView-->
-            <!--                android:id="@+id/dropdownAcademicYear"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_marginStart="@dimen/ten"-->
-            <!--                android:layout_marginEnd="@dimen/twenty"-->
-            <!--                android:background="@drawable/bg_white_light_radious"-->
-            <!--                android:drawableEnd="@drawable/down_arrow"-->
-            <!--                android:gravity="center_vertical"-->
-            <!--                android:padding="@dimen/fifteen"-->
-            <!--                android:text="2024-2025"-->
-            <!--                android:textColor="@color/black"-->
-            <!--                android:textSize="@dimen/thirteen_sp"-->
-            <!--                android:textStyle="bold" />-->
 
             <RelativeLayout
                 android:id="@+id/rytAcademicYear"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/lblCategory"
-                android:layout_marginStart="@dimen/fifteen"
-                android:layout_marginEnd="@dimen/fifteen"
-                android:background="@drawable/bg_white_light_radious"
-                android:gravity="center">
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/five"
+                android:layout_toEndOf="@+id/lblAcademicYearPick"
+                android:background="@drawable/bg_white_light_radious">
 
                 <Spinner
                     android:id="@+id/isSpinner"
@@ -129,7 +117,7 @@
             </RelativeLayout>
 
 
-        </LinearLayout>
+        </RelativeLayout>
 
 
         <RelativeLayout
@@ -145,8 +133,8 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    style="@style/CustomTextStylePoppinsBold"
                     android:id="@+id/date_header"
+                    style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignStart="@+id/cardStart"
@@ -161,12 +149,12 @@
                     android:id="@+id/lblStar"
                     style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="wrap_content"
-                    android:layout_toEndOf="@id/date_header"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/two"
+                    android:layout_marginTop="@dimen/three"
+                    android:layout_toEndOf="@id/date_header"
                     android:text="@string/mandatory"
                     android:textColor="@color/red"
-                    android:layout_marginTop="@dimen/three"
-                    android:layout_marginStart="@dimen/two"
                     android:textSize="@dimen/thirteen_sp" />
 
 
@@ -256,12 +244,12 @@
 
             <TextView
                 android:id="@+id/selectClassSection"
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rlaSelectDate"
                 android:layout_marginStart="@dimen/fifteen"
                 android:layout_marginTop="@dimen/twenty"
-                style="@style/CustomTextStylePoppinsBold"
                 android:text="@string/select_standard_and_section"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
@@ -272,12 +260,12 @@
                 android:id="@+id/lblStar2"
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
-                android:layout_toEndOf="@id/selectClassSection"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/eighteen"
                 android:layout_below="@id/rlaSelectDate"
-                android:text="@string/mandatory"
                 android:layout_marginStart="@dimen/two"
+                android:layout_marginTop="@dimen/eighteen"
+                android:layout_toEndOf="@id/selectClassSection"
+                android:text="@string/mandatory"
                 android:textColor="@color/red"
                 android:textSize="@dimen/thirteen_sp" />
 
@@ -286,8 +274,8 @@
                 android:id="@+id/lnrClasses"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/ten"
                 android:layout_below="@+id/selectClassSection"
+                android:layout_marginTop="@dimen/ten"
                 android:weightSum="1">
 
                 <RelativeLayout
@@ -305,29 +293,6 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_spinner_background" />
 
-
-                    <!--                    <ImageView-->
-                    <!--                        android:id="@+id/imgStandard"-->
-                    <!--                        android:layout_width="@dimen/fifteen"-->
-                    <!--                        android:layout_height="@dimen/twenty"-->
-                    <!--                        android:layout_alignParentEnd="true"-->
-                    <!--                        android:layout_centerVertical="true"-->
-                    <!--                        android:layout_marginEnd="@dimen/ten"-->
-                    <!--                        android:src="@drawable/downarrow">-->
-
-                    <!--                    </ImageView>-->
-
-                    <!--                    <TextView-->
-                    <!--                        android:id="@+id/lblStandard"-->
-                    <!--                        android:layout_width="wrap_content"-->
-                    <!--                        android:layout_height="wrap_content"-->
-                    <!--                        android:layout_centerVertical="true"-->
-                    <!--                        android:layout_marginStart="@dimen/fifteen"-->
-                    <!--                        android:fontFamily="@font/poppins_bold"-->
-                    <!--                        android:text="@string/standard"-->
-                    <!--                        android:textColor="@color/black"-->
-                    <!--                        android:textSize="@dimen/twele_sp"-->
-                    <!--                        android:textStyle="bold"></TextView>-->
                 </RelativeLayout>
 
 
@@ -338,8 +303,7 @@
                     android:layout_marginStart="@dimen/fifteen"
                     android:layout_marginEnd="@dimen/fifteen"
                     android:layout_weight="0.5"
-                    android:background="@drawable/bg_white_light_radious"
-                    >
+                    android:background="@drawable/bg_white_light_radious">
 
                     <Spinner
                         android:id="@+id/isSpinnerSection"
@@ -347,48 +311,26 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_spinner_background" />
 
-
-                    <!--                    <ImageView-->
-                    <!--                        android:id="@+id/imgSection"-->
-                    <!--                        android:layout_width="@dimen/fifteen"-->
-                    <!--                        android:layout_height="@dimen/twenty"-->
-                    <!--                        android:layout_alignParentEnd="true"-->
-                    <!--                        android:layout_centerVertical="true"-->
-                    <!--                        android:layout_marginEnd="@dimen/ten"-->
-                    <!--                        android:src="@drawable/downarrow">-->
-
-                    <!--                    </ImageView>-->
-
-                    <!--                    <TextView-->
-                    <!--                        android:id="@+id/lblSection"-->
-                    <!--                        android:layout_width="wrap_content"-->
-                    <!--                        android:layout_height="wrap_content"-->
-                    <!--                        android:layout_centerVertical="true"-->
-                    <!--                        android:layout_marginStart="@dimen/fifteen"-->
-                    <!--                        android:fontFamily="@font/poppins_bold"-->
-                    <!--                        android:text="@string/section"-->
-                    <!--                        android:textColor="@color/black"-->
-                    <!--                        android:textSize="@dimen/twele"-->
-                    <!--                        android:textStyle="bold"></TextView>-->
                 </RelativeLayout>
 
             </LinearLayout>
         </RelativeLayout>
     </RelativeLayout>
+
     <RelativeLayout
-        android:visibility="visible"
         android:id="@+id/rlaMarkAttendance"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rlaAttendanceMarkCommonDetails">
+        android:layout_below="@+id/rlaAttendanceMarkCommonDetails"
+        android:visibility="visible">
 
         <TextView
             android:id="@+id/attendancetype_header"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/fifteen"
             android:layout_marginTop="@dimen/fifteen"
-            style="@style/CustomTextStylePoppinsBold"
             android:text="@string/select_attendance_type"
             android:textColor="@color/black"
             android:textSize="@dimen/thirteen_sp"
@@ -400,21 +342,21 @@
             android:id="@+id/lblStar3"
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
-            android:layout_toEndOf="@id/attendancetype_header"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/thirteen"
-            android:text="@string/mandatory"
             android:layout_marginStart="@dimen/two"
+            android:layout_marginTop="@dimen/thirteen"
+            android:layout_toEndOf="@id/attendancetype_header"
+            android:text="@string/mandatory"
             android:textColor="@color/red"
             android:textSize="@dimen/thirteen_sp" />
 
 
         <LinearLayout
             android:id="@+id/lnrClasses1"
-            android:layout_marginTop="@dimen/ten"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/attendancetype_header"
+            android:layout_marginTop="@dimen/ten"
             android:visibility="visible"
             android:weightSum="1">
 
@@ -755,8 +697,6 @@
         </TextView>
 
     </LinearLayout>
-
-
 
 
 </RelativeLayout>
