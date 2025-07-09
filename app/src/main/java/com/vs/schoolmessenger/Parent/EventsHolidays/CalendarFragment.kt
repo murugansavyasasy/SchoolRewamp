@@ -1,0 +1,189 @@
+package com.vs.schoolmessenger.Parent.EventsHolidays
+
+import android.graphics.Canvas
+import android.graphics.Color
+import android.os.Build
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.annotation.RequiresApi
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import android.graphics.Paint
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.SpannableStringBuilder
+import android.text.style.ImageSpan
+import androidx.appcompat.content.res.AppCompatResources
+import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.Holiday
+import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.databinding.FragmentCalendarBinding
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
+
+class CalendarFragment : Fragment() {
+    private var _binding: FragmentCalendarBinding? = null
+    private val binding get() = _binding!!
+    private val calendar = Calendar.getInstance()
+    private var holidayList: List<Holiday> = emptyList()
+
+    companion object {
+        private const val ARG_HOLIDAY_LIST = "holiday_list"
+        fun newInstance(holidays: List<Holiday>): CalendarFragment {
+            val fragment = CalendarFragment()
+            val args = Bundle()
+            args.putSerializable(ARG_HOLIDAY_LIST, ArrayList(holidays))
+            fragment.arguments = args
+            return fragment
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            holidayList = it.getSerializable(ARG_HOLIDAY_LIST) as? ArrayList<Holiday> ?: emptyList()
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentCalendarBinding.inflate(inflater, container, false)
+
+        setupCalendar()
+
+        binding.dateRecyclerView.addItemDecoration(object : RecyclerView.ItemDecoration() {
+            private val dividerPaint = Paint().apply {
+                color = Color.parseColor("#DDDDDD")
+                strokeWidth = 1f
+            }
+
+            override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
+                for (i in 0 until parent.childCount) {
+                    val view = parent.getChildAt(i)
+                    c.drawLine(
+                        view.right.toFloat(),
+                        view.top.toFloat(),
+                        view.right.toFloat(),
+                        view.bottom.toFloat(),
+                        dividerPaint
+                    )
+                    c.drawLine(
+                        view.left.toFloat(),
+                        view.bottom.toFloat(),
+                        view.right.toFloat(),
+                        view.bottom.toFloat(),
+                        dividerPaint
+                    )
+                }
+            }
+        })
+
+        return binding.root
+    }
+
+
+    private fun setupCalendar() {
+        binding.dateRecyclerView.layoutManager = GridLayoutManager(requireContext(), 7)
+        val dateAdapter = CustomDateAdapter(
+            context = requireContext(), onDateClick = { selectedDates ->
+
+            }, holidays = holidayList, isSelectionEnabled = false
+        )
+
+
+        binding.dateRecyclerView.adapter = dateAdapter
+
+        updateCalendar()
+
+
+        binding.prevMonthButton.isEnabled = true
+        binding.nextMonthButton.isEnabled = true
+
+
+
+        binding.prevMonthButton.setOnClickListener {
+            calendar.add(Calendar.MONTH, -1)
+            updateCalendar()
+        }
+
+        binding.nextMonthButton.setOnClickListener {
+            calendar.add(Calendar.MONTH, 1)
+            updateCalendar()
+        }
+    }
+
+
+    private fun updateCalendar() {
+        val monthFormat = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
+        val fullDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val currentMonthYear = monthFormat.format(calendar.time)
+        binding.currentMonthText.text = currentMonthYear
+
+        val dates = mutableListOf<CustomDateItem>()
+        val firstDayOfMonth = calendar.clone() as Calendar
+        firstDayOfMonth.set(Calendar.DAY_OF_MONTH, 1)
+        val daysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
+        val firstDayOfWeek = firstDayOfMonth.get(Calendar.DAY_OF_WEEK)
+
+        for (i in 1 until firstDayOfWeek) {
+            dates.add(CustomDateItem(null, false))
+        }
+
+        for (i in 1..daysInMonth) {
+            val currentDate = calendar.clone() as Calendar
+            currentDate.set(Calendar.DAY_OF_MONTH, i)
+
+            val dateStr = fullDateFormat.format(currentDate.time)
+            val isHoliday = holidayList.any { it.date == dateStr }
+
+            dates.add(CustomDateItem(i, isSelectable = false, isHoliday = isHoliday))
+        }
+
+        (binding.dateRecyclerView.adapter as? CustomDateAdapter)?.submitDates(dates)
+
+        val currentMonth = calendar.get(Calendar.MONTH)
+        val currentYear = calendar.get(Calendar.YEAR)
+
+        val visibleHolidays = holidayList.filter {
+            val parsedDate = fullDateFormat.parse(it.date)
+            val cal = Calendar.getInstance().apply { time = parsedDate!! }
+            cal.get(Calendar.MONTH) == currentMonth && cal.get(Calendar.YEAR) == currentYear
+        }
+
+        if (visibleHolidays.isNotEmpty()) {
+            val builder = SpannableStringBuilder()
+            builder.append("Holidays for $currentMonthYear\n\n")
+
+            val icon =
+                AppCompatResources.getDrawable(requireContext(), R.drawable.ic_holiday_dot_circle)
+            val iconSize =
+                resources.getDimensionPixelSize(R.dimen.holiday_dot_size) // e.g., 16dp or 24dp
+            icon?.setBounds(0, 0, iconSize, iconSize)
+
+            visibleHolidays.forEach { holiday ->
+                val spanText = SpannableString("  ${holiday.name} (${holiday.date})\n\n")
+                icon?.let {
+                    val imageSpan = ImageSpan(it, ImageSpan.ALIGN_BOTTOM)
+                    spanText.setSpan(imageSpan, 0, 1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
+                }
+                builder.append(spanText)
+            }
+
+            binding.holidaylabel.text = builder
+        } else {
+            binding.holidaylabel.text = "No holidays in $currentMonthYear"
+        }
+
+    }
+
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+}

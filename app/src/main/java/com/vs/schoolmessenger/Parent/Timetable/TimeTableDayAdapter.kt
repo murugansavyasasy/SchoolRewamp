@@ -74,7 +74,7 @@ class TimeTableDayAdapter  (
             day_values.text = data.day_values
 
             if (adapter.selectedPosition == position) {
-                btnDay.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_leave_approved))
+                btnDay.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_light_green_radious))
             } else {
                 btnDay.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_leave_grey))
             }

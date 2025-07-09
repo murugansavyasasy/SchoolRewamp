@@ -35,9 +35,8 @@ class CertificateRequestAdapter (
                 ShimmerUtil.wrapWithShimmer(parent, R.layout.item_certificaterequest)
             DataViewHolder.ShimmerViewHolder(shimmerView)
         } else {
-            val view = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.item_certificaterequest, parent, false)
-               DataViewHolder(view, context) // Pass context to DataViewHolder
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_certificaterequest, parent, false)
+            DataViewHolder(view, context) // Pass context to DataViewHolder
         }
     }
 
@@ -61,6 +60,7 @@ class CertificateRequestAdapter (
         private val created_value: TextView = itemView.findViewById(R.id.created_value)
         private val lblStatus: TextView = itemView.findViewById(R.id.lblStatus)
         private val rytStatus: RelativeLayout = itemView.findViewById(R.id.rytStatus)
+        private val rytDownload: RelativeLayout = itemView.findViewById(R.id.rytDownload)
 
         fun bind(
             data: CertificateListData,
@@ -73,6 +73,13 @@ class CertificateRequestAdapter (
             created_value.text =  Constant.convertDateTimeFormat(data.requested_on)
             lblStatus.text = data.status
             lblStatus.text = data.status
+
+            if(data.url.isNotEmpty()){
+                rytDownload.visibility = View.VISIBLE
+            }
+            else{
+                rytDownload.visibility = View.GONE
+            }
 
             if(data.status.equals("Approved")) {
                 rytStatus.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_leave_approved))

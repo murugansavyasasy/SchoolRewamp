@@ -44,7 +44,7 @@ class TicketFragment : Fragment(), View.OnClickListener, TicketCouponClickListen
         binding.coupontablayout.expiredtext.setOnClickListener(this)
         binding.coupontablayout.redeemedtext.setOnClickListener(this)
         binding.relativeLayout.setOnClickListener {
-            onBackPressed()
+            requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
         previouslySelectedView = binding.coupontablayout.alltext
@@ -144,10 +144,7 @@ class TicketFragment : Fragment(), View.OnClickListener, TicketCouponClickListen
         }
     }
 
-    private fun onBackPressed() {
-        val intent = Intent(context, CouponDashboardActivity::class.java)
-        context?.startActivity(intent)
-    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

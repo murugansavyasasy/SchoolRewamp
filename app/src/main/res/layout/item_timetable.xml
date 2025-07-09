@@ -56,16 +56,16 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 app:cardCornerRadius="@dimen/eight"
+                app:cardElevation="5dp"
+                app:cardUseCompatPadding="true"
                 android:background="@color/white"
-                android:layout_marginStart="@dimen/fifteen"
-                android:layout_marginEnd="@dimen/five"
-                android:layout_marginTop="@dimen/five"
-                android:layout_marginBottom="@dimen/five">
+                android:layout_marginStart="@dimen/five">
                 <LinearLayout
                     android:id="@+id/subjectname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:padding="@dimen/ten"
                     android:layout_marginTop="@dimen/eight">
                     <TextView
                         android:id="@+id/subject_value"
@@ -91,7 +91,7 @@
                         android:orientation="horizontal"
                         android:weightSum="1"
                         android:layout_marginTop="@dimen/eight"
-                        android:layout_marginBottom="@dimen/eight">
+                        android:layout_marginBottom="@dimen/five">
                         <TextView
                             android:id="@+id/lblFromToTime"
                             android:layout_width="wrap_content"

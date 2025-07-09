@@ -77,6 +77,7 @@ class CouponOrderActivity : BaseActivity<BottomSheetOrderBinding>(), View.OnClic
         binding.bottomLayout.remember.setOnClickListener(this)
         binding.bottomLayout.remember1.setOnClickListener(this)
         binding.bottomLayout.rememberSymbol.setOnClickListener(this)
+        binding.bottomLayout.copylinearlayout.setOnClickListener(this)
         binding.bottomLayout.rememberSymbol1.setOnClickListener(this)
         binding.imageTopLeft.setOnClickListener {
             onBackPressed()

@@ -121,6 +121,7 @@
     <dimen name="two_hundred_sp">200sp</dimen>
     <dimen name="two_fifty_sp">250sp</dimen>
     <dimen name="three_hundred_sp">300sp</dimen>
+    <dimen name="holiday_dot_size" >16dp</dimen>
 
 
 </resources>

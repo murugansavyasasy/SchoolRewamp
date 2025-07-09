@@ -124,6 +124,7 @@ class LessonPlanPicChartAdapter(
 
 
 
+
             if (percentage == 0) {
                 Log.d("percentangelblview", percentage.toString())
                 lblView.setBackgroundColor(

@@ -70,7 +70,7 @@ class TimeTable : BaseActivity<TimeTableBinding>(),
             else{
                 binding.recyclerView.visibility = View.GONE
                 binding.lnrNoRecords.visibility = View.VISIBLE
-                binding.txtNoData.text = response!!.message
+                binding.txtNoData.text = "No data found!"
             }
         }
     }

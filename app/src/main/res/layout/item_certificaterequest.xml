@@ -72,6 +72,7 @@
                 android:layout_weight="2"
                 android:text=": Attendance Type"
                 android:textColor="@color/black"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:textSize="@dimen/thirteen_sp"
                 android:gravity="start"
                 android:maxLines="3"
@@ -106,6 +107,7 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
                 android:gravity="start"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:ellipsize="end" />
         </LinearLayout>
 
@@ -135,6 +137,7 @@
                 android:text=": 21 Jan 2024"
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp"
+                style="@style/CustomTextStylePoppinsMedium"
                 android:gravity="start"
                 android:maxLines="100"
                 android:ellipsize="end" />
@@ -142,7 +145,7 @@
 
 
         <RelativeLayout
-            android:id="@+id/linear_layout8"
+            android:id="@+id/rytDownload"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
