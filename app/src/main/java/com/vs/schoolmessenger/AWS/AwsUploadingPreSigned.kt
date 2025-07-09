@@ -32,43 +32,43 @@ class AwsUploadingPreSigned {
         uploadCallback: UploadCallback
     ) {
 
-////        if (isCountryId == "4") {
-////            if (isProfilePage) {
-////                if (isCommunication) {
-////                    isBucket = AWSKeys.THAI_SCHOOL_PHOTOS
-////                    bucketPath = instituteID
-////                } else {
-////                    isBucket = AWSKeys.THAI_SCHOOL_DOCS
-////                    bucketPath = instituteID + "/" + "profile"
-////                }
-////            } else {
-////                if (isCommunication) {
-////                    isBucket = AWSKeys.THAI_SCHOOL_CHIMES_COMMUNICATION
-////                    bucketPath = currentDate + "/" + instituteID
-////                } else {
-////                    isBucket = AWSKeys.THAI_SCHOOL_CHIMES_LMS
-////                    bucketPath = instituteID + "/" + "lsrw"
-////                }
-////            }
-////        } else {
-////            if (isProfilePage) {
-////                if (isCommunication) {
-////                    isBucket = AWSKeys.SCHOOL_PHOTOS
-////                    bucketPath = instituteID
-////                } else {
-////                    isBucket = AWSKeys.SCHOOL_DOCS
-////                    bucketPath = instituteID + "/" + "profile"
-////                }
-////            } else {
-////                if (isCommunication) {
+//        if (isCountryId == "4") {
+//            if (isProfilePage) {
+//                if (isCommunication) {
+//                    isBucket = AWSKeys.THAI_SCHOOL_PHOTOS
+//                    bucketPath = instituteID
+//                } else {
+//                    isBucket = AWSKeys.THAI_SCHOOL_DOCS
+//                    bucketPath = instituteID + "/" + "profile"
+//                }
+//            } else {
+//                if (isCommunication) {
+//                    isBucket = AWSKeys.THAI_SCHOOL_CHIMES_COMMUNICATION
+//                    bucketPath = currentDate + "/" + instituteID
+//                } else {
+//                    isBucket = AWSKeys.THAI_SCHOOL_CHIMES_LMS
+//                    bucketPath = instituteID + "/" + "lsrw"
+//                }
+//            }
+//        } else {
+//            if (isProfilePage) {
+//                if (isCommunication) {
+//                    isBucket = AWSKeys.SCHOOL_PHOTOS
+//                    bucketPath = instituteID
+//                } else {
+//                    isBucket = AWSKeys.SCHOOL_DOCS
+//                    bucketPath = instituteID + "/" + "profile"
+//                }
+//            } else {
+//                if (isCommunication) {
 //                    isBucket = AWSKeys.SCHOOL_CHIMES_COMMUNICATION
 //                    bucketPath = currentDate + "/" + instituteID
-////                } else {
-////                    isBucket = AWSKeys.SCHOOL_CHIMES_LMS
-////                    bucketPath = instituteID + "/" + "lsrw"
-////                }
-//        // }
-////        }
+//                } else {
+//                    isBucket = AWSKeys.SCHOOL_CHIMES_LMS
+//                    bucketPath = instituteID + "/" + "lsrw"
+//                }
+        // }
+//        }
 
 
         var bucketPath: String? = ""
@@ -82,7 +82,7 @@ class AwsUploadingPreSigned {
         Log.d("isBucket", isBucket)
 
         var mediaType: MediaType? = null
-        fileExtension = getFileExtensionFromUri(activity,isFilePathUrl.toUri())
+        fileExtension = getFileExtensionFromUri(activity, isFilePathUrl.toUri())
         try {
             mediaType = getMediaType(fileExtension)
             Log.d("MediaType", mediaType.toString())
@@ -94,8 +94,8 @@ class AwsUploadingPreSigned {
         RestClient.changeApiBaseUrl(baseURL)
         val apiService = RestClient.apiInterfaces
 
-        val isFileName = getFileNameFromPath(activity,isFilePathUrl)
-        Log.d("isFileName", isFileName.toString())
+        val isFileName = getFileNameFromPath(activity, isFilePathUrl)
+        Log.d("isFileName", isFileName)
         val call =
             apiService.getPreSignedUrl(isBucket, isFileName, bucketPath, mediaType.toString())
         call!!.enqueue(object : retrofit2.Callback<PreSignedUrl?> {
@@ -166,7 +166,6 @@ class AwsUploadingPreSigned {
     }
 
 
-
     @RequiresApi(Build.VERSION_CODES.O)
     private fun isAwsUpload(
         activity: Activity,
@@ -176,8 +175,8 @@ class AwsUploadingPreSigned {
         uploadCallback: UploadCallback
     ) {
 
-        val imageData = getImageData(activity,filePath)
-        val fileExtension = getFileExtensionFromUri(activity,filePath.toUri())
+        val imageData = getImageData(activity, filePath)
+        val fileExtension = getFileExtensionFromUri(activity, filePath.toUri())
         var mediaType: MediaType? = null
         try {
             mediaType = getMediaType(fileExtension)

@@ -4,8 +4,14 @@
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/ten"
     android:layout_marginEnd="@dimen/ten"
-    android:background="@drawable/rect_shadow_white"
     android:fitsSystemWindows="true">
+
+    <RelativeLayout
+        android:id="@+id/rytListItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rect_shadow_white">
+
 
     <ImageView
         android:id="@+id/imgNewImage"
@@ -95,8 +101,8 @@
 
         <RelativeLayout
             android:id="@+id/rlaSelectText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/hundred"
+            android:layout_height="@dimen/fourty"
             android:layout_below="@+id/lnrDataTime"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="@dimen/three"
@@ -237,4 +243,20 @@
             android:visibility="gone" />
 
     </RelativeLayout>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/lblSeeMoreClick"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rytListItem"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/twenty"
+        android:layout_marginEnd="@dimen/twenty"
+        android:visibility="gone"
+        android:layout_marginBottom="@dimen/twenty"
+        android:text="@string/SeeMore"
+        android:textColor="@color/navi_blue2"
+        android:textSize="@dimen/fifteen_sp"></TextView>
 </RelativeLayout>

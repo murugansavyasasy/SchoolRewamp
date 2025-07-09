@@ -31,6 +31,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
     lateinit var mAdapter: AttachmentAdapter
     private var hasFetchedMore = false
     var isFilterShow = false
+    var isSeeMoreClick = true
     private var allAttachmentData = mutableListOf<AttachmentData>()
     private var filteredAttachmentData = mutableListOf<AttachmentData>()
 
@@ -42,8 +43,8 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
         isAccessToken = childDetails?.access_token
 
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
-        binding.seeMoreLabel.setOnClickListener(this)
         binding.imgFilter.setOnClickListener(this)
+        binding.seeMoreLabel.setOnClickListener(this)
         binding.toolbarLayout.lblStudentName.text = childDetails?.name
         binding.toolbarLayout.lblParentToolBar.text = Constant.isParentMenuName
         binding.toolbarLayout.lblStudentSection.text =
@@ -79,6 +80,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
         appViewModel?.isAttachmentResponse?.observe(this) { response ->
             if (response?.status == true && !response.data.isNullOrEmpty()) {
                 binding.txtNoData.visibility = View.GONE
+                binding.seeMoreLabel.visibility = View.GONE
                 binding.recycleracademic.visibility = View.VISIBLE
                 appendData(response.data)
             } else {
@@ -94,7 +96,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
     }
 
     private fun showInitialShimmer() {
-        mAdapter = AttachmentAdapter(null, this, this, this, isLoading = true)
+        mAdapter = AttachmentAdapter(null, this, this, this, isLoading = true, isSeeMoreClick)
         binding.recycleracademic.layoutManager = LinearLayoutManager(this)
         binding.recycleracademic.adapter = mAdapter
     }
@@ -104,6 +106,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
         binding.nomessage.visibility = View.VISIBLE
         binding.txtNoData.text = message
         binding.txtNoData.visibility = View.VISIBLE
+        binding.seeMoreLabel.visibility = View.VISIBLE
     }
 
     private fun fetchInitialData() {
@@ -160,23 +163,23 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
         } else {
             binding.nomessage.visibility = View.GONE
             binding.txtNoData.visibility = View.GONE
+            binding.seeMoreLabel.visibility = View.GONE
             binding.recycleracademic.visibility = View.VISIBLE
             mAdapter =
-                AttachmentAdapter(filteredAttachmentData, this, this, this, isLoading = false)
+                AttachmentAdapter(
+                    filteredAttachmentData,
+                    this,
+                    this,
+                    this,
+                    isLoading = false,
+                    isSeeMoreClick
+                )
             binding.recycleracademic.adapter = mAdapter
         }
     }
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.seeMoreLabel -> {
-                if (!hasFetchedMore) {
-                    hasFetchedMore = true
-                    binding.seeMoreLabel.visibility = View.GONE
-                    fetchMoreData()
-                }
-            }
-
             R.id.imgFilter -> {
                 if (!isFilterShow) {
                     isFilterShow = true
@@ -186,11 +189,18 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
                     binding.rytFilter.visibility = View.GONE
                 }
             }
+            R.id.seeMoreLabel -> {
+                if (!hasFetchedMore) {
+                    hasFetchedMore = true
+                    isSeeMoreClick=false
+                    binding.seeMoreLabel.visibility = View.GONE
+                    fetchMoreData()
+                }
+            }
         }
     }
 
     override fun onItemClick(data: AttachmentData, holder: AttachmentAdapter.DataViewHolder) {
-
         Log.d("isClickView", data.id)
         val jsonObject = JsonObject().apply {
             addProperty(APIKeyNames.type, Constant.ATTACHMENT)
@@ -205,7 +215,17 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
                 appViewModel?.isUpdateStatusCommunication(it, jsonObject, this)
             }
         }
+    }
 
+    override fun onSeeMoreClick(
+        data: AttachmentData,
+        holder: AttachmentAdapter.DataViewHolder
+    ) {
+        if (!hasFetchedMore) {
+            hasFetchedMore = true
+            isSeeMoreClick=false
+            fetchMoreData()
+        }
     }
 
     override fun onSearchResultEmpty(isEmpty: Boolean) {

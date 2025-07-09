@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -21,11 +22,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
+import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import com.vs.schoolmessenger.CommonScreens.ImageSliderAdapter
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReport
 import com.vs.schoolmessenger.Utils.Constant
-import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 import me.relex.circleindicator.CircleIndicator2
 
@@ -87,6 +88,9 @@ class HomeWorkReportAdapter(
         private val LblHWSubjectName: TextView = itemView.findViewById(R.id.LblHWSubjectName)
         private val rlaSelectText: RelativeLayout = itemView.findViewById(R.id.rlaSelectText)
 
+        private var isExpanded = false
+
+
         @SuppressLint("ClickableViewAccessibility")
         fun bind(
             data: HomeWorkReport,
@@ -99,6 +103,13 @@ class HomeWorkReportAdapter(
             LblHWSubjectName.text = data.subject_name
             lblTitleImage.text = data.title
             lblContentImage.text = data.description
+            isSeeMoreVisibility(lblContentImage, tvSeeMoreImage)
+
+
+            tvSeeMoreImage.setOnClickListener {
+                isExpanded = !isExpanded
+                updateTextView()
+            }
 
             if (data.file_path.isNotEmpty()) {
                 rytList.visibility = View.VISIBLE
@@ -170,6 +181,28 @@ class HomeWorkReportAdapter(
                     return false
                 }
             })
+        }
+
+        private fun updateTextView() {
+            if (isExpanded) {
+                lblContentImage.maxLines = Int.MAX_VALUE
+                tvSeeMoreImage.text = context.getString(R.string.see_less)
+            } else {
+                lblContentImage.maxLines = 3
+                tvSeeMoreImage.text = context.getString(R.string.see_more)
+            }
+        }
+
+        private fun isSeeMoreVisibility(lblContent: TextView, tvSeeMore: TextView) {
+            lblContent.post {
+                if (lblContent.lineCount > 3) {
+                    tvSeeMore.visibility = View.VISIBLE
+                    lblContent.maxLines = 3
+                    lblContent.ellipsize = TextUtils.TruncateAt.END
+                } else {
+                    tvSeeMore.visibility = View.GONE
+                }
+            }
         }
 
         @SuppressLint("SetJavaScriptEnabled")

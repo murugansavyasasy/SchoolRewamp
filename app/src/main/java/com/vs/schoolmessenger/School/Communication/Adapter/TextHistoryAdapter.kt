@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.School.Communication.Adapter
 
 import android.content.Context
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,9 +9,9 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.Communication.Adapter.TextHistoryAdapter.DataViewHolder.ShimmerViewHolder
 import com.vs.schoolmessenger.School.Communication.DataClass.TextDetail
 import com.vs.schoolmessenger.School.Communication.Interface.TextHistoryClickListener
-import com.vs.schoolmessenger.School.Communication.Adapter.TextHistoryAdapter.DataViewHolder.ShimmerViewHolder
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
@@ -78,7 +79,7 @@ class TextHistoryAdapter(
             lblTime.text = time
             lblDate.text = Constant.convertDateTimeFormat(date)
             lblContent.text = data.content
-
+            isSeeMoreVisibility(lblContent, lblSeeMore)
             lblSeeMore.setOnClickListener {
                 isExpanded = !isExpanded
                 updateTextView()
@@ -90,15 +91,26 @@ class TextHistoryAdapter(
 
         }
 
+        private fun isSeeMoreVisibility(lblContent: TextView, tvSeeMore: TextView) {
+            lblContent.post {
+                if (lblContent.lineCount > 3) {
+                    tvSeeMore.visibility = View.VISIBLE
+                    lblContent.maxLines = 3
+                    lblContent.ellipsize = TextUtils.TruncateAt.END
+                } else {
+                    tvSeeMore.visibility = View.GONE
+                }
+            }
+        }
+
+
         private fun updateTextView() {
             if (isExpanded) {
-                // Expand the TextView to show all lines
                 lblContent.maxLines = Int.MAX_VALUE
-                lblSeeMore.text =context.getString(R.string.see_less) // Change button text to "See Less"
+                lblSeeMore.text = context.getString(R.string.see_less)
             } else {
-                // Collapse the TextView to show a maximum of 3 lines
                 lblContent.maxLines = 3
-                lblSeeMore.text = context.getString(R.string.see_more) // Change button text back to "See More"
+                lblSeeMore.text = context.getString(R.string.see_more)
             }
         }
 

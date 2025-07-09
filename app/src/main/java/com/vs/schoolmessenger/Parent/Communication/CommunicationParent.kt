@@ -34,6 +34,8 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
     private var hasFetchedMore = false
     private var isFilterType: String = Constant.ALL
     private var isCommunicationType = 1
+    var isSeeMoreClick = true
+
     private var currentSearchQuery: String = ""
 
     override fun setupViews() {
@@ -209,7 +211,7 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
             }
         }
 
-        adapter?.updateList(filteredList)
+        adapter?.updateList(filteredList,isSeeMoreClick)
         checkAndShowNoData(filteredList)
     }
 
@@ -249,6 +251,7 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
             R.id.seeMoreLabel -> {
                 if (!hasFetchedMore) {
                     hasFetchedMore = true
+                    isSeeMoreClick=false
                     binding.seeMoreLabel.visibility = View.GONE
                     fetchMoreData()
                 }
@@ -268,7 +271,7 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
 
     private fun appendData(newData: List<VoiceData>?, archiveFlag: Boolean) {
         if (isInitialLoad) allVoiceData.clear()
-
+        Log.d("isSeeMoreClick",isSeeMoreClick.toString())
         newData.let {
             val processedData = it!!.map { item -> item.copy(is_archive = archiveFlag) }
             allVoiceData.addAll(processedData)
@@ -281,14 +284,15 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
                     Constant.isShimmerViewDisable,
                     this,
                     isAccessToken.orEmpty(),
-                    archiveFlag
+                    archiveFlag,
+                    isSeeMoreClick
                 )
                 binding.recyclerInitial.layoutManager = LinearLayoutManager(this)
                 binding.recyclerInitial.isNestedScrollingEnabled = false
                 binding.recyclerInitial.adapter = adapter
             } else {
                 adapter?.setIsFromArchive(archiveFlag)
-                adapter?.updateList(allVoiceData)
+                adapter?.updateList(allVoiceData,isSeeMoreClick)
             }
             applyCombinedFilter()
         }
@@ -299,6 +303,7 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
         val listToCheck = filteredList ?: allVoiceData
         val isEmpty = listToCheck.isEmpty()
         binding.txtNoData.visibility = if (isEmpty) View.VISIBLE else View.GONE
+        binding.seeMoreLabel.visibility = if (isEmpty) View.VISIBLE else View.GONE
         binding.nomessage.visibility = if (isEmpty) View.VISIBLE else View.GONE
         binding.recyclerInitial.visibility = if (isEmpty) View.GONE else View.VISIBLE
 
@@ -316,7 +321,8 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
             Constant.isShimmerViewShow,
             this,
             isAccessToken.orEmpty(),
-            isFromArchive
+            isFromArchive,
+            isSeeMoreClick
         )
         binding.recyclerInitial.layoutManager = LinearLayoutManager(this)
         binding.recyclerInitial.isNestedScrollingEnabled = false
@@ -346,6 +352,17 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
 
     override fun onItemClick(data: VoiceData, holder: UnifiedVoiceAdapter.DataViewHolder) {
 
+    }
+
+    override fun onSeeMoreClick(
+        data: VoiceData,
+        holder: UnifiedVoiceAdapter.DataViewHolder
+    ) {
+        isSeeMoreClick = false
+        if (!hasFetchedMore) {
+            hasFetchedMore = true
+            fetchMoreData()
+        }
     }
 
     private fun isChangeBackRoundCommunicationType(

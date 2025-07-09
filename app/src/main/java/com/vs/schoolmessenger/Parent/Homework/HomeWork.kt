@@ -22,6 +22,8 @@ class HomeWork : BaseActivity<HomeWorkParentBinding>(), View.OnClickListener,
     private var fullHomeworkList = mutableListOf<GetDateWiseHomeworkData>()
     private var filteredHomeworkList = listOf<GetDateWiseHomeworkData>()
     private var hasFetchedMore = false
+    var isSeeMoreClick = true
+
 
     override fun getViewBinding(): HomeWorkParentBinding {
         return HomeWorkParentBinding.inflate(layoutInflater)
@@ -35,11 +37,11 @@ class HomeWork : BaseActivity<HomeWorkParentBinding>(), View.OnClickListener,
         binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
         val childDetails = SharedPreference.getChildDetails(this)
         isAccessToken = childDetails?.access_token
-
+        binding.lblSeeMore.setOnClickListener(this)
         binding.toolbarLayout.lblParentToolBar.text = Constant.isParentMenuName
         binding.toolbarLayout.lblStudentName.text = childDetails?.name
         binding.toolbarLayout.lblStudentSection.text =
-            childDetails?.standard_name+ " - " +childDetails?.section_name
+            childDetails?.standard_name + " - " + childDetails?.section_name
 
         binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
         binding.rcyHomework.layoutManager = LinearLayoutManager(this)
@@ -54,6 +56,7 @@ class HomeWork : BaseActivity<HomeWorkParentBinding>(), View.OnClickListener,
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 filterHomework(s.toString())
             }
+
             override fun afterTextChanged(s: Editable?) {}
         })
     }
@@ -79,13 +82,14 @@ class HomeWork : BaseActivity<HomeWorkParentBinding>(), View.OnClickListener,
     }
 
     private fun showInitialShimmer() {
-        mAdapter = HomeWorkAdapter(null, this, this, Constant.isShimmerViewShow)
+        mAdapter = HomeWorkAdapter(null, this, this, Constant.isShimmerViewShow, isSeeMoreClick)
         binding.rcyHomework.adapter = mAdapter
     }
 
     private fun showEmptyState(message: String) {
         binding.rcyHomework.visibility = View.GONE
         binding.rytNORecordFound.visibility = View.VISIBLE
+        binding.lblSeeMore.visibility = View.VISIBLE
         binding.lblNoRecordFound.text = message
     }
 
@@ -105,7 +109,13 @@ class HomeWork : BaseActivity<HomeWorkParentBinding>(), View.OnClickListener,
         fullHomeworkList.addAll(newItems)
         filteredHomeworkList = fullHomeworkList
 
-        mAdapter = HomeWorkAdapter(filteredHomeworkList, this, this, Constant.isShimmerViewDisable)
+        mAdapter = HomeWorkAdapter(
+            filteredHomeworkList,
+            this,
+            this,
+            Constant.isShimmerViewDisable,
+            isSeeMoreClick
+        )
         binding.rcyHomework.adapter = mAdapter
     }
 
@@ -132,22 +142,39 @@ class HomeWork : BaseActivity<HomeWorkParentBinding>(), View.OnClickListener,
             binding.rytNORecordFound.visibility = View.GONE
             binding.rcyHomework.visibility = View.VISIBLE
             mAdapter =
-                HomeWorkAdapter(filteredHomeworkList, this, this, Constant.isShimmerViewDisable)
+                HomeWorkAdapter(
+                    filteredHomeworkList,
+                    this,
+                    this,
+                    Constant.isShimmerViewDisable,
+                    isSeeMoreClick
+                )
             binding.rcyHomework.adapter = mAdapter
         }
     }
 
     override fun onClick(v: View?) {
         when (v?.id) {
+            R.id.lblSeeMore -> {
+                if (!hasFetchedMore) {
+                    hasFetchedMore = true
+                    isSeeMoreClick = false
+                    binding.lblSeeMore.visibility = View.GONE
+                    fetchMoreData()
+                }
+            }
         }
     }
 
-    override fun onItemClick(data: GetDateWiseHomeworkData, holder: HomeWorkAdapter.DataViewHolder) {
+    override fun onItemClick(
+        data: GetDateWiseHomeworkData,
+        holder: HomeWorkAdapter.DataViewHolder
+    ) {
 
         if (!hasFetchedMore) {
             hasFetchedMore = true
+            isSeeMoreClick = false
             fetchMoreData()
         }
-
     }
 }

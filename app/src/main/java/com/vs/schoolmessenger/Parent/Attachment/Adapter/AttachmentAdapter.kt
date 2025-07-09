@@ -39,7 +39,8 @@ class AttachmentAdapter(
     private val childClickListener: OnChildItemClickListener,
     private val listener: AttachmentClickListener,
     private val context: Context,
-    var isLoading: Boolean
+    var isLoading: Boolean,
+    var isSeeMoreClick: Boolean
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
 
     private val TYPE_SHIMMER = 0
@@ -95,7 +96,7 @@ class AttachmentAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (!isLoading && holder is DataViewHolder) {
-            holder.bind(filteredList[position], position, listener)
+            holder.bind(filteredList[position], position, listener, this)
         }
     }
 
@@ -123,7 +124,6 @@ class AttachmentAdapter(
         private val lblDateImage: TextView = itemView.findViewById(R.id.lblDateImage)
         private val lblTimeImage: TextView = itemView.findViewById(R.id.lblTimeImage)
         private val tvView: TextView = itemView.findViewById(R.id.tvView)
-        private val tvSeeMoreImage: TextView = itemView.findViewById(R.id.tvSeeMoreImage)
         private val rlaSelectText: RelativeLayout = itemView.findViewById(R.id.rlaSelectText)
         private val rytList: RelativeLayout = itemView.findViewById(R.id.rytList)
         private val rcyImgPDF: RecyclerView = itemView.findViewById(R.id.rcyImgPDF)
@@ -131,15 +131,37 @@ class AttachmentAdapter(
         private val webView: android.webkit.WebView = itemView.findViewById(R.id.webView)
         private val loadingBar: ProgressBar = itemView.findViewById(R.id.loadingBar)
         private val indicator: CircleIndicator2 = itemView.findViewById(R.id.indicator)
+        private val tvSeeMoreImage: TextView = itemView.findViewById(R.id.tvSeeMoreImage)
+        private val lblSeeMoreClick: TextView = itemView.findViewById(R.id.lblSeeMoreClick)
+
 
         @SuppressLint("ClickableViewAccessibility")
-        fun bind(item: AttachmentData, position: Int, listener: AttachmentClickListener) {
+        fun bind(
+            item: AttachmentData,
+            position: Int,
+            listener: AttachmentClickListener,
+            adapter: AttachmentAdapter,
+        ) {
 
             LblHWSubjectName.visibility = View.GONE
             if (item.is_unread) {
                 imgNewImage.visibility = View.VISIBLE
             } else {
                 imgNewImage.visibility = View.GONE
+            }
+
+            if (position == adapter.itemCount - 1) {
+                if (adapter.isSeeMoreClick) {
+                    lblSeeMoreClick.visibility = View.VISIBLE
+                } else {
+                    lblSeeMoreClick.visibility = View.GONE
+                }
+            } else {
+                lblSeeMoreClick.visibility = View.GONE
+            }
+
+            lblSeeMoreClick.setOnClickListener {
+                listener.onSeeMoreClick(item, this@DataViewHolder)
             }
 
             rlaSelectText.visibility = View.GONE

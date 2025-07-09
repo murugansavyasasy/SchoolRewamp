@@ -79,6 +79,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
     override fun getViewBinding(): SchoolListActivityBinding {
         return SchoolListActivityBinding.inflate(layoutInflater)
     }
+
     private val selectedSchoolIds = mutableListOf<String>()
     var isMultipleSchool = false
     private lateinit var mAdapter: SchoolListAdapter
@@ -257,8 +258,8 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                     if (SELECTED_SCHOOL_MENU == M_COMMUNICATION) {
                         showConfirmationAlert(
                             resources.getString(R.string.selected_target_1) + selectedSchoolIds.size.toString() + " ",
-                                resources.getString(R.string.are_you_sure_want_to_send_this_message)
-                            )
+                            resources.getString(R.string.are_you_sure_want_to_send_this_message)
+                        )
                     } else if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS) {
                         showConfirmationAlert(
                             resources.getString(R.string.selected_target_1) + selectedSchoolIds.size.toString() + " ",
@@ -382,12 +383,9 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             Constant.selectedFiles.removeAt(0)
         }
         ProgressDialogHelper.show(this@SchoolList)
-
         Constant.isAwsUploadedFiles.clear()
-
         val isSelectedFileListSize = Constant.selectedFiles.size
         val iterator = Constant.selectedFiles.iterator()
-
         // Remove already uploaded AWS URLs
         while (iterator.hasNext()) {
             val fileItem = iterator.next()
@@ -400,9 +398,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                 iterator.remove()
             }
         }
-
         val isCountryId = SharedPreference.getCountryId(this)
-
         if (Constant.selectedFiles.isEmpty()) {
             when (SELECTED_SCHOOL_MENU) {
                 M_COMMUNICATION -> voiceSendApi()
@@ -412,9 +408,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             val outputDir =
                 File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "CompressedOutput")
             val newSelectedFiles = mutableListOf<FileItem>()
-
             var uploadedFiles = 0
-
             Constant.compressImageFilesOnly(
                 context = this,
                 files = Constant.selectedFiles,
@@ -450,7 +444,6 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                 onComplete = {
                     Constant.selectedFiles.clear()
                     Constant.selectedFiles.addAll(newSelectedFiles)
-
                     for (fileItem in Constant.selectedFiles) {
                         isAwsUploadingPreSigned!!.getPreSignedUrl(
                             fileItem.path,
@@ -468,25 +461,21 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                                 ) {
                                     uploadedFiles++
                                     val percent = (uploadedFiles * 100) / isSelectedFileListSize
-
                                     runOnUiThread {
                                         ProgressDialogHelper.show(this@SchoolList)
                                         ProgressDialogHelper.updateProgress(percent)
                                     }
-
                                     Constant.isAwsUploadedFiles.add(
                                         AwsUploadedFiles(
                                             isFileUrl = isFileUploaded!!,
                                             isFileType = fileItem.type.toString()
                                         )
                                     )
-
                                     if (Constant.isAwsUploadedFiles.size == isSelectedFileListSize) {
                                         runOnUiThread {
                                             ProgressDialogHelper.dismiss()
                                             Constant.showLoading(this@SchoolList)
                                         }
-
                                         when (SELECTED_SCHOOL_MENU) {
                                             M_ATTACHMENTS -> attachmentSendApi()
                                             M_COMMUNICATION -> voiceSendApi()
@@ -494,7 +483,6 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                                         }
                                     }
                                 }
-
                                 override fun onUploadError(error: String?) {
                                     uploadedFiles++
                                     val percent = (uploadedFiles * 100) / isSelectedFileListSize
@@ -503,7 +491,6 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                                         ProgressDialogHelper.show(this@SchoolList)
                                         ProgressDialogHelper.updateProgress(percent)
                                     }
-
                                     if (uploadedFiles == isSelectedFileListSize) {
                                         runOnUiThread {
                                             ProgressDialogHelper.dismiss()
@@ -517,7 +504,6 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             )
         }
     }
-
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun voiceSendApi() {
@@ -702,7 +688,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             Log.d("link", link.toString())
 
             isIframe = extractVimeoUrlFromIframe(iframe.toString()).toString()
-            isFileSize = Constant.getFileSizeInMB(this,Constant.selectedFiles[0].path)
+            isFileSize = Constant.getFileSizeInMB(this, Constant.selectedFiles[0].path)
 
             Constant.isAwsUploadedFiles.add(
                 AwsUploadedFiles(

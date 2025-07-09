@@ -31,7 +31,8 @@ class UnifiedVoiceAdapter(
     private var isLoading: Boolean,
     private var lifecycleOwner: LifecycleOwner,
     private var isAccessToken: String,
-    private var isFromArchive: Boolean
+    private var isFromArchive: Boolean,
+    private var isSeeMoreClick: Boolean
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val TYPE_SHIMMER = 0
@@ -102,6 +103,7 @@ class UnifiedVoiceAdapter(
     ) : RecyclerView.ViewHolder(itemView) {
 
         private val lblSeeMore: TextView = itemView.findViewById(R.id.lblSeeMore)
+        private val lblSeeMoreClick: TextView = itemView.findViewById(R.id.lblSeeMoreClick)
         private val lblTitle: TextView = itemView.findViewById(R.id.lblTitle)
         private val lblDate: TextView = itemView.findViewById(R.id.lblDate)
         private val lblTime: TextView = itemView.findViewById(R.id.lblTime)
@@ -144,6 +146,20 @@ class UnifiedVoiceAdapter(
             listener: VoiceClickListener,
             adapter: UnifiedVoiceAdapter
         ) {
+            if (position == adapter.itemCount - 1) {
+                if (adapter.isSeeMoreClick) {
+                    lblSeeMoreClick.visibility = View.VISIBLE
+                } else {
+                    lblSeeMoreClick.visibility = View.GONE
+                }
+            } else {
+                lblSeeMoreClick.visibility = View.GONE
+            }
+
+            lblSeeMoreClick.setOnClickListener {
+                listener.onSeeMoreClick(data, this@DataViewHolder)
+            }
+
             if (data.type.equals(Constant.VOICE)) {
                 rlaVoice.visibility = View.VISIBLE
                 rlaText.visibility = View.GONE
@@ -155,9 +171,7 @@ class UnifiedVoiceAdapter(
                 rlaSendVoice.visibility = View.GONE
                 lblContentText.text = data.content ?: ""
                 lblEndDuration.text = String.format(
-                    "%02d:%02d",
-                    data.duration!!.toInt() / 60,
-                    data.duration!!.toInt() % 60
+                    "%02d:%02d", data.duration!!.toInt() / 60, data.duration!!.toInt() % 60
                 )
 
                 imgVoicePlay.setOnClickListener {
@@ -335,8 +349,9 @@ class UnifiedVoiceAdapter(
         currentlyPlayingHolder = null
     }
 
-    fun updateList(newList: List<VoiceData>) {
+    fun updateList(newList: List<VoiceData>, isSeeMoreData: Boolean) {
         this.itemList = ArrayList(newList)
+        isSeeMoreClick = isSeeMoreData
         notifyDataSetChanged()
     }
 

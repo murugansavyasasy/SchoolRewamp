@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,7 +23,8 @@ class HomeWorkAdapter(
     private var DateWiseHomeworkData: List<GetDateWiseHomeworkData>?,
     private var listener: HomeWorkDateClickListener,
     private var context: Context,
-    private var isLoading: Boolean
+    private var isLoading: Boolean,
+    private var isSeeMoreClick: Boolean,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val TYPE_SHIMMER = 0
@@ -65,7 +67,6 @@ class HomeWorkAdapter(
         private val lblSeeMore: TextView = itemView.findViewById(R.id.lblSeeMore)
         var mHomeWorkItemAdapter: HomeWorkItemAdapter? = null
 
-
         fun bind(
             item: GetDateWiseHomeworkData,
             position: Int,
@@ -82,9 +83,12 @@ class HomeWorkAdapter(
             if (isExpanded) {
                 loadData(item.homework, item)
             }
-
             if (position == adapter.itemCount - 1) {
-                lblSeeMore.visibility = View.VISIBLE
+                if (adapter.isSeeMoreClick){
+                    lblSeeMore.visibility = View.VISIBLE
+                }else{
+                    lblSeeMore.visibility = View.GONE
+                }
             } else {
                 lblSeeMore.visibility = View.GONE
             }
@@ -92,7 +96,6 @@ class HomeWorkAdapter(
             lblSeeMore.setOnClickListener {
                 listener.onItemClick(item, this@DataViewHolder)
             }
-
 
             rlaDateItem.setOnClickListener {
                 val previouslyExpanded = adapter.expandedPosition
@@ -108,26 +111,25 @@ class HomeWorkAdapter(
         }
 
         private fun loadData(
-            homeworkDetails: List<GetHomeworkDetails>,
-            DateWiseHomeWorkdata: GetDateWiseHomeworkData
+            homeworkDetails: List<GetHomeworkDetails>, DateWiseHomeWorkdata: GetDateWiseHomeworkData
         ) {
             mHomeWorkItemAdapter =
                 HomeWorkItemAdapter(null, null, context, Constant.isShimmerViewShow)
             rcyHomeWorkItem.layoutManager = LinearLayoutManager(context)
             rcyHomeWorkItem.adapter = mHomeWorkItemAdapter
-             mHomeWorkItemAdapter =
-                    HomeWorkItemAdapter(
-                        DateWiseHomeWorkdata,
-                        homeworkDetails,
-                        context,
-                        Constant.isShimmerViewDisable,
-                    )
+            mHomeWorkItemAdapter = HomeWorkItemAdapter(
+                DateWiseHomeWorkdata,
+                homeworkDetails,
+                context,
+                Constant.isShimmerViewDisable,
+            )
             rcyHomeWorkItem.adapter = mHomeWorkItemAdapter
         }
 
         class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             private val shimmerLayout: ShimmerFrameLayout =
                 itemView.findViewById(R.id.shimmer_view_container)
+
             init {
                 shimmerLayout.startShimmer()
             }
