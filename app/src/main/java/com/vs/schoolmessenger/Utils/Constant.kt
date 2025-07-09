@@ -1283,7 +1283,7 @@ fun getDayAndDateOnly(inputDateStr: String): Pair<String, String> {
                         }
 
                         val scaledBitmap = scaleBitmap(bitmap, maxWidth, maxHeight)
-                        val outputFile = File(outputFolder, "compressed_${System.currentTimeMillis()}.webp")
+                        val outputFile = File(outputFolder, "SchoolChimes_${System.currentTimeMillis()}.webp")
 
                         try {
                             FileOutputStream(outputFile).use { out ->

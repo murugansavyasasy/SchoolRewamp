@@ -2,10 +2,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="300dp"
+    android:layout_height="250dp"
     android:layout_gravity="center"
-    android:layout_marginLeft="@dimen/twenty"
-    android:layout_marginRight="@dimen/twenty"
     android:gravity="center">
 
     <LinearLayout
@@ -37,8 +35,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
                 android:gravity="center"
                 android:text="You are 400pts. away from \n unlocking rewards. quit Earning?"
                 android:textSize="18dp"
@@ -48,18 +46,18 @@
     </LinearLayout>
 
     <FrameLayout
-        android:id="@+id/frmNo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="75dp"
-        android:layout_marginRight="45dp">
+        android:id="@+id/frmNo"
+        android:layout_marginRight="45dp"
+        android:layout_marginTop="75dp">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:src="@android:color/transparent"
-            app:backgroundTint="@color/light_gray" />
+            app:backgroundTint="@color/gray" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -68,15 +66,15 @@
             android:elevation="6dp"
             android:text="No"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/red"
+            android:textColor="@android:color/white"
             android:textStyle="bold" />
     </FrameLayout>
 
     <FrameLayout
-        android:id="@+id/frmOk"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:id="@+id/frmOk"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="75dp">
 
@@ -84,7 +82,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:src="@android:color/transparent"
-            app:backgroundTint="@color/light_gray" />
+            app:backgroundTint="@color/gray" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -93,7 +91,7 @@
             android:elevation="6dp"
             android:text="Ok"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/green"
+            android:textColor="@android:color/white"
             android:textStyle="bold" />
     </FrameLayout>
 </FrameLayout>

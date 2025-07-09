@@ -890,13 +890,20 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
             }
             Constant.selectedFiles.addAll(mappedList)
         }
-        if (Constant.selectedFiles[1].type.toString() == Constant.VIDEO) {
-            binding.thumbnailView.visibility = View.GONE
-            binding.webView.visibility = View.VISIBLE
-            binding.rcyImages.visibility = View.GONE
-            binding.thumbnailView.visibility = View.GONE
-            binding.imgDelete.visibility = View.VISIBLE
-            loadVideo(binding.webView, Constant.selectedFiles.get(1).path.toString())
+        if (Constant.selectedFiles.size > 1) {
+            if (Constant.selectedFiles[1].type.toString() == Constant.VIDEO) {
+                binding.thumbnailView.visibility = View.GONE
+                binding.webView.visibility = View.VISIBLE
+                binding.rcyImages.visibility = View.GONE
+                binding.thumbnailView.visibility = View.GONE
+                binding.imgDelete.visibility = View.VISIBLE
+                loadVideo(binding.webView, Constant.selectedFiles.get(1).path.toString())
+            } else {
+                binding.rcyImages.visibility = View.VISIBLE
+                mAdapter = ImagePickingAdapter(this, Constant.selectedFiles, this)
+                binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
+                binding.rcyImages.adapter = mAdapter
+            }
         } else {
             binding.rcyImages.visibility = View.VISIBLE
             mAdapter = ImagePickingAdapter(this, Constant.selectedFiles, this)
