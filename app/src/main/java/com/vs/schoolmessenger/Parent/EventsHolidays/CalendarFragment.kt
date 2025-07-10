@@ -16,11 +16,15 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.style.ImageSpan
+import android.util.Log
 import androidx.appcompat.content.res.AppCompatResources
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.Holiday
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.databinding.FragmentCalendarBinding
 import java.text.SimpleDateFormat
+import java.time.DayOfWeek
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Locale
 
@@ -117,6 +121,12 @@ class CalendarFragment : Fragment() {
         }
     }
 
+    fun isSunday(dateString: String, pattern: String = "yyyy-MM-dd"): Boolean {
+        val formatter = DateTimeFormatter.ofPattern(pattern)
+        val date = LocalDate.parse(dateString, formatter)
+        return date.dayOfWeek == DayOfWeek.SUNDAY
+    }
+
 
     private fun updateCalendar() {
         val monthFormat = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
@@ -137,11 +147,11 @@ class CalendarFragment : Fragment() {
         for (i in 1..daysInMonth) {
             val currentDate = calendar.clone() as Calendar
             currentDate.set(Calendar.DAY_OF_MONTH, i)
-
             val dateStr = fullDateFormat.format(currentDate.time)
+            val isSunday = isSunday(dateStr)  // returns true if it's a Sunday
+            Log.d("DayCheck", "Is Sunday? $isSunday")
             val isHoliday = holidayList.any { it.date == dateStr }
-
-            dates.add(CustomDateItem(i, isSelectable = false, isHoliday = isHoliday))
+            dates.add(CustomDateItem(i, isSelectable = false, isHoliday = isHoliday,isSunday = isSunday))
         }
 
         (binding.dateRecyclerView.adapter as? CustomDateAdapter)?.submitDates(dates)
