@@ -16,7 +16,11 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.style.ImageSpan
+import android.view.Gravity
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.compose.foundation.gestures.snapping.SnapPosition
+import androidx.compose.ui.text.resolveDefaults
+import androidx.core.content.ContextCompat
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.Holiday
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.databinding.FragmentCalendarBinding
@@ -162,11 +166,21 @@ class CalendarFragment : Fragment() {
             val icon =
                 AppCompatResources.getDrawable(requireContext(), R.drawable.ic_holiday_dot_circle)
             val iconSize =
-                resources.getDimensionPixelSize(R.dimen.holiday_dot_size) // e.g., 16dp or 24dp
+                resources.getDimensionPixelSize(R.dimen.holiday_dot_size)
             icon?.setBounds(0, 0, iconSize, iconSize)
 
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+
             visibleHolidays.forEach { holiday ->
-                val spanText = SpannableString("  ${holiday.name} (${holiday.date})\n\n")
+                val formattedDate = try {
+                    val parsedDate = inputFormat.parse(holiday.date)
+                    outputFormat.format(parsedDate!!)
+                } catch (e: Exception) {
+                    holiday.date
+                }
+
+                val spanText = SpannableString("  ${holiday.name} ($formattedDate)\n\n")
                 icon?.let {
                     val imageSpan = ImageSpan(it, ImageSpan.ALIGN_BOTTOM)
                     spanText.setSpan(imageSpan, 0, 1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
@@ -174,9 +188,20 @@ class CalendarFragment : Fragment() {
                 builder.append(spanText)
             }
 
+
             binding.holidaylabel.text = builder
+            binding.holidaylabel.gravity = Gravity.START
+            binding.holidaylabel.setTextColor(
+                ContextCompat.getColor(requireContext(), android.R.color.black)
+            )
+
         } else {
             binding.holidaylabel.text = "No holidays in $currentMonthYear"
+            binding.holidaylabel.gravity = Gravity.CENTER
+            binding.holidaylabel.setTextColor(
+                ContextCompat.getColor(requireContext(), android.R.color.holo_red_dark)
+            )
+
         }
 
     }
