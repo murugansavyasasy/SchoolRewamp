@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.Parent.Homework
 
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,7 +24,6 @@ class HomeWork : BaseActivity<HomeWorkParentBinding>(), View.OnClickListener,
     private var filteredHomeworkList = listOf<GetDateWiseHomeworkData>()
     private var hasFetchedMore = false
     var isSeeMoreClick = true
-
 
     override fun getViewBinding(): HomeWorkParentBinding {
         return HomeWorkParentBinding.inflate(layoutInflater)
@@ -73,11 +73,11 @@ class HomeWork : BaseActivity<HomeWorkParentBinding>(), View.OnClickListener,
         }
 
         appViewModel?.isHomeWorkDetailsListArchive?.observe(this) { response ->
-            if (response?.status == true && !response.data.isNullOrEmpty()) {
-                appendData(response.data)
-            } else {
-                showEmptyState(response?.message ?: "No more data")
-            }
+//            if (response?.status == true && !response.data.isNullOrEmpty()) {
+                appendData(response!!.data)
+//            } else {
+//                showEmptyState(response?.message ?: "No more data")
+//            }
         }
     }
 
@@ -87,10 +87,13 @@ class HomeWork : BaseActivity<HomeWorkParentBinding>(), View.OnClickListener,
     }
 
     private fun showEmptyState(message: String) {
-        binding.rcyHomework.visibility = View.GONE
-        binding.rytNORecordFound.visibility = View.VISIBLE
-        binding.lblSeeMore.visibility = View.VISIBLE
-        binding.lblNoRecordFound.text = message
+        Log.d("filteredHomeworkList", filteredHomeworkList.size.toString())
+        if (filteredHomeworkList.isEmpty()) {
+            binding.rcyHomework.visibility = View.GONE
+            binding.rytNORecordFound.visibility = View.VISIBLE
+            binding.lblSeeMore.visibility = View.VISIBLE
+            binding.lblNoRecordFound.text = message
+        }
     }
 
     private fun fetchInitialData() {
@@ -170,7 +173,6 @@ class HomeWork : BaseActivity<HomeWorkParentBinding>(), View.OnClickListener,
         data: GetDateWiseHomeworkData,
         holder: HomeWorkAdapter.DataViewHolder
     ) {
-
         if (!hasFetchedMore) {
             hasFetchedMore = true
             isSeeMoreClick = false

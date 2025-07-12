@@ -84,9 +84,10 @@ class HomeWorkAdapter(
                 loadData(item.homework, item)
             }
             if (position == adapter.itemCount - 1) {
-                if (adapter.isSeeMoreClick){
+                if (adapter.isSeeMoreClick) {
+                    Log.d("isComing", "isComing")
                     lblSeeMore.visibility = View.VISIBLE
-                }else{
+                } else {
                     lblSeeMore.visibility = View.GONE
                 }
             } else {

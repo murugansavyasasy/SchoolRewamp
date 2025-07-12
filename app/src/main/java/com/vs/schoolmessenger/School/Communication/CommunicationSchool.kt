@@ -282,12 +282,24 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             }
         })
 
-        binding.edtTitleTextMessage.filters = arrayOf(InputFilter.LengthFilter(Constant.isTitleLength))
-        binding.lblCountOfTitleVoice.filters = arrayOf(InputFilter.LengthFilter(Constant.isTitleLength))
-        binding.edtContentTextMessage.filters = arrayOf(InputFilter.LengthFilter(Constant.isDescriptionLength))
-        Constant.editTextCounter(this, binding.edtContentTextMessage, Constant.isDescriptionLength, binding.lblCountOfDescription)
-        Constant.editTextCounter(this, binding.edtTitleTextMessage, Constant.isTitleLength, binding.lblCountOfTitle)
-        Constant.editTextCounter(this, binding.edtTitle, Constant.isTitleLength, binding.lblCountOfTitleVoice)
+        binding.edtTitleTextMessage.filters =
+            arrayOf(InputFilter.LengthFilter(Constant.isTitleLength))
+        binding.lblCountOfTitleVoice.filters =
+            arrayOf(InputFilter.LengthFilter(Constant.isTitleLength))
+        binding.edtContentTextMessage.filters =
+            arrayOf(InputFilter.LengthFilter(Constant.isDescriptionLength))
+        Constant.editTextCounter(
+            this,
+            binding.edtContentTextMessage,
+            Constant.isDescriptionLength,
+            binding.lblCountOfDescription
+        )
+        Constant.editTextCounter(
+            this, binding.edtTitleTextMessage, Constant.isTitleLength, binding.lblCountOfTitle
+        )
+        Constant.editTextCounter(
+            this, binding.edtTitle, Constant.isTitleLength, binding.lblCountOfTitleVoice
+        )
 
     }
 
@@ -867,7 +879,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                                 } else {
                                     Constant.showValidationAlertPopup(
                                         getString(R.string.alert),
-                                        getString(R.string.Select_schedule_date), this
+                                        getString(R.string.Select_schedule_date),
+                                        this
                                     )
                                 }
                             } else {
@@ -879,7 +892,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     } else {
                         Constant.showValidationAlertPopup(
                             getString(R.string.alert),
-                            getString(R.string.Voice_title_required), this
+                            getString(R.string.Voice_title_required),
+                            this
                         )
                     }
                 } else {
@@ -891,7 +905,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                                 } else {
                                     Constant.showValidationAlertPopup(
                                         getString(R.string.alert),
-                                        getString(R.string.Select_schedule_date), this
+                                        getString(R.string.Select_schedule_date),
+                                        this
                                     )
                                 }
                             } else {
@@ -903,7 +918,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     } else {
                         Constant.showValidationAlertPopup(
                             getString(R.string.alert),
-                            getString(R.string.Voice_title_required), this
+                            getString(R.string.Voice_title_required),
+                            this
                         )
                     }
                 }
@@ -998,7 +1014,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                 binding.gridViewScheduleCall.adapter = selectedDatesAdapter
 
                 val datePickerPopup = CustomDatePicker(
-                    context = this, preSelectedDates = selectedDates.toList(),
+                    context = this,
+                    preSelectedDates = selectedDates.toList(),
                     dateAdapter = dateAdapter
                 ) { newSelectedDates ->
                     selectedDates.clear()

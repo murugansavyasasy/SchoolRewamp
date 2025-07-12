@@ -36,6 +36,7 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
     private var isCommunicationType = 1
     var isSeeMoreClick = true
 
+    var isFilterClick = false
     private var currentSearchQuery: String = ""
 
     override fun setupViews() {
@@ -160,7 +161,7 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
             }
         } else if (isSelectedFilter == binding.lblUnread) {
             isCommunicationType = 2
-            if (binding.RdbAll.isChecked == true) {
+            if (binding.RdbAll.isChecked) {
                 isFilterType = Constant.UNREAD
             } else if (binding.RdbText.isChecked == true) {
                 isFilterType = Constant.TEXT_UNREAD
@@ -221,6 +222,7 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
             R.id.imgBack -> onBackPressed()
 
             R.id.imgFilter -> {
+                isFilterClick = true
                 if (binding.rytFilter.isVisible) {
                     binding.rytFilter.visibility = View.GONE
                 } else {
@@ -275,7 +277,7 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
         newData.let {
             val processedData = it!!.map { item -> item.copy(is_archive = archiveFlag) }
             allVoiceData.addAll(processedData)
-
+            binding.recyclerInitial.visibility = View.VISIBLE
             if (adapter == null) {
                 adapter = UnifiedVoiceAdapter(
                     allVoiceData as ArrayList<VoiceData>,
@@ -303,7 +305,10 @@ class CommunicationParent : BaseActivity<CommunicationBinding>(), View.OnClickLi
         val listToCheck = filteredList ?: allVoiceData
         val isEmpty = listToCheck.isEmpty()
         binding.txtNoData.visibility = if (isEmpty) View.VISIBLE else View.GONE
-        binding.seeMoreLabel.visibility = if (isEmpty) View.VISIBLE else View.GONE
+
+        if (!isFilterClick) {
+            binding.seeMoreLabel.visibility = if (isEmpty) View.VISIBLE else View.GONE
+        }
         binding.nomessage.visibility = if (isEmpty) View.VISIBLE else View.GONE
         binding.recyclerInitial.visibility = if (isEmpty) View.GONE else View.VISIBLE
 

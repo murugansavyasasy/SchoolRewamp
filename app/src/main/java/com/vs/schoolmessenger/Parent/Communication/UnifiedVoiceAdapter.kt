@@ -147,6 +147,7 @@ class UnifiedVoiceAdapter(
             listener: VoiceClickListener,
             adapter: UnifiedVoiceAdapter
         ) {
+
             if (position == adapter.itemCount - 1) {
                 if (adapter.isSeeMoreClick) {
                     lblSeeMoreClick.visibility = View.VISIBLE

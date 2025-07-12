@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/ten"
                 android:layout_marginTop="@dimen/five"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:layout_marginEnd="@dimen/ten"
                 android:background="@drawable/rect_shadow_white">
 
@@ -50,7 +50,6 @@
                     android:textSize="@dimen/thirteen_sp">
 
                 </TextView>
-
 
                 <RelativeLayout
                     android:id="@+id/rlaVoiceHistory"
@@ -204,7 +203,7 @@
             android:id="@+id/rlaText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/lblnewiconText"
