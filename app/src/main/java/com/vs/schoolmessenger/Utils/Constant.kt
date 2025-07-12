@@ -52,6 +52,7 @@ import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYear
 import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolList
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
+import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.StaffDataSending
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.MarkAttendanceDataSending
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.ClassWise
@@ -191,6 +192,8 @@ object Constant {
     //MarkAttendanceDetails
 
     var isMarkAttendanceDataSending: MarkAttendanceDataSending? = null
+
+    var StaffDataSending: StaffDataSending? = null
     var isAbsenteesReportDataSending: ClassWise? = null
 
     var secondHalf = "SH"

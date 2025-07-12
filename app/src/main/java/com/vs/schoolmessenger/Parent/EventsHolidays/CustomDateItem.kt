@@ -7,7 +7,8 @@ import java.util.Locale
 data class CustomDateItem (
     val day: Int?,
     val isSelectable: Boolean,
-    val isHoliday: Boolean = false
+    val isHoliday: Boolean = false,
+    val isSunday: Boolean = false,
 ) {
     fun getFormattedDate(): String? {
         if (day == null) return null

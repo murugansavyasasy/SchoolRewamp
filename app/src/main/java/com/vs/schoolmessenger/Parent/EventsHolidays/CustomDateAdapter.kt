@@ -55,6 +55,8 @@ class CustomDateAdapter(
                 return
             }
 
+
+
             dateBox.text = dateItem.day.toString()
             dateBox.isClickable = isSelectionEnabled && dateItem.isSelectable
             dateBox.setBackgroundColor(Color.TRANSPARENT)
@@ -82,7 +84,14 @@ class CustomDateAdapter(
                 )
             }
 
-
+            if(dateItem.isSunday){
+                dateBox.setTextColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.red
+                    )
+                )
+            }
 
             if (isSelectionEnabled && dateItem.isSelectable) {
                 dateBox.setOnClickListener {

@@ -26,6 +26,9 @@ import com.vs.schoolmessenger.Parent.Coupon.CouponModel.TicketCouponSummary.Tick
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventResponse
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.HolidayResponse
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
+import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.ChatModel.AnswerResponse
+import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.InteractionWithStaffResponse
+import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.QuestionModelResponse
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestApplyResponse
 import com.vs.schoolmessenger.Parent.Timetable.TimeTableResponse
@@ -58,6 +61,7 @@ import com.vs.schoolmessenger.School.NoticeBoard.Response.NoticeBoardSendRespons
 import com.vs.schoolmessenger.School.SchoolStrength.Model.SchoolStrengthResponse
 import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
 import okhttp3.RequestBody
+import retrofit2.http.Query
 
 class App(application: Application) : AndroidViewModel(application) {
 
@@ -111,7 +115,6 @@ class App(application: Application) : AndroidViewModel(application) {
         private set
 
 
-
     var isGetDailyCollectionReport: LiveData<DailyCollectionReportResponse?>? = null
         private set
 
@@ -141,7 +144,6 @@ class App(application: Application) : AndroidViewModel(application) {
 
     var isAssignmentSend: LiveData<HomeWorkSendResponse?>? = null
         private set
-
 
 
     var isVoiceSend: LiveData<TextSendResponse?>? = null
@@ -217,8 +219,9 @@ class App(application: Application) : AndroidViewModel(application) {
 
     var getCouponDetails: LiveData<ActivateCouponSummaryResponse?>? = null
     var sendactivatecoupon: LiveData<ActivateCouponResponse?>? = null
-
-
+    var getdetailsforchat: LiveData<InteractionWithStaffResponse?>? = null
+    var getstaffanswers: LiveData<AnswerResponse?>? = null
+    var sendquestion: LiveData<QuestionModelResponse?>? = null
 
 
     fun init() {
@@ -284,7 +287,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isAttachmentSend = apiSchoolRepositories.sendAttachmentLiveData
         isLeaveRequest = apiParentRepositories.leaveRequestLiveData
         getleaverequest = apiSchoolRepositories.leaverequestLiveData
-        getleaverequest =apiSchoolRepositories.leaverequestLiveData
+        getleaverequest = apiSchoolRepositories.leaverequestLiveData
         isleaverequestapprove = apiSchoolRepositories.isleaverequestapproveLiveData
         isupdatelessonplan = apiSchoolRepositories.isupdatelessonplanLiveData
 
@@ -301,6 +304,9 @@ class App(application: Application) : AndroidViewModel(application) {
         getmycouponsSummary = apiSchoolRepositories.getmycouponsSummaryLiveData
         getCouponDetails = apiSchoolRepositories.getCouponDetailsLiveData
         sendactivatecoupon = apiSchoolRepositories.sendactivatecouponLiveData
+        getdetailsforchat = apiParentRepositories.getdetailsforchatLiveData
+        getstaffanswers = apiParentRepositories.getstaffanswersLiveData
+//        sendquestion = apiParentRepositories.sendquestionLiveData
 
     }
 
@@ -519,7 +525,6 @@ class App(application: Application) : AndroidViewModel(application) {
     }
 
 
-
     fun getStaffWiseAttendanceReport(isToken: String, isCurrentDate: String, activity: Activity) {
         apiSchoolRepositories.getGiometricStaffWiseAttendancereport(
             isToken,
@@ -647,56 +652,116 @@ class App(application: Application) : AndroidViewModel(application) {
     }
 
 
-
     fun getlpStaffReport(isToken: String, request_type: String, activity: Activity) {
-        apiSchoolRepositories.getlpStaffReport(isToken,request_type,activity)
+        apiSchoolRepositories.getlpStaffReport(isToken, request_type, activity)
     }
 
-    fun getlpViewReport(isToken: String, section_subject_id: String, lesson_plan_status: Int, activity : Activity) {
+    fun getlpViewReport(
+        isToken: String,
+        section_subject_id: String,
+        lesson_plan_status: Int,
+        activity: Activity
+    ) {
 
-        apiSchoolRepositories.getlpViewReport(isToken,section_subject_id,lesson_plan_status,activity)
+        apiSchoolRepositories.getlpViewReport(
+            isToken,
+            section_subject_id,
+            lesson_plan_status,
+            activity
+        )
     }
 
-    fun getlpeditReport(isToken: String, particular_id: String, request_type: String, activity : Activity) {
+    fun getlpeditReport(
+        isToken: String,
+        particular_id: String,
+        request_type: String,
+        activity: Activity
+    ) {
 
-        apiSchoolRepositories.getlpeditReport(isToken,particular_id,request_type,activity)
+        apiSchoolRepositories.getlpeditReport(isToken, particular_id, request_type, activity)
     }
 
     fun isleaverequestapprove(isToken: String, request: LeaveApproveRequest, activity: Activity) {
-        apiSchoolRepositories.isleaverequestapprove(isToken,request,activity)
+        apiSchoolRepositories.isleaverequestapprove(isToken, request, activity)
     }
 
     fun isupdatelessonplan(isToken: String, requestBody: RequestBody, activity: Activity) {
-        apiSchoolRepositories.isupdatelessonplan(isToken,requestBody,activity)
+        apiSchoolRepositories.isupdatelessonplan(isToken, requestBody, activity)
     }
 
-    fun islessonplandelete(isToken: String,requestBody: RequestBody, activity: Activity) {
-        apiSchoolRepositories.islessonplandelete(isToken,requestBody,activity)
+    fun islessonplandelete(isToken: String, requestBody: RequestBody, activity: Activity) {
+        apiSchoolRepositories.islessonplandelete(isToken, requestBody, activity)
     }
 
     fun getcouponmenu(parentName: String, apiKey: String) {
-        apiSchoolRepositories.getcouponmenu(parentName,apiKey)
+        apiSchoolRepositories.getcouponmenu(parentName, apiKey)
     }
 
-    fun getCouponsSummary(mobile_no:String,parentName: String, apiKey: String) {
-        apiSchoolRepositories.getCouponsSummary(mobile_no,parentName,apiKey)
+    fun getCouponsSummary(mobile_no: String, parentName: String, apiKey: String) {
+        apiSchoolRepositories.getCouponsSummary(mobile_no, parentName, apiKey)
     }
 
-    fun getCouponsCategorySummary(category_id: String, mobile_no:String, parentName: String, apiKey: String) {
-        apiSchoolRepositories.getCouponsCategorySummary(category_id,mobile_no,parentName,apiKey)
+    fun getCouponsCategorySummary(
+        category_id: String,
+        mobile_no: String,
+        parentName: String,
+        apiKey: String
+    ) {
+        apiSchoolRepositories.getCouponsCategorySummary(category_id, mobile_no, parentName, apiKey)
     }
 
-    fun getmycouponsSummary(coupon_status: String, mobile_no:String, parentName: String, apiKey: String) {
-        apiSchoolRepositories.getmycouponsSummary(coupon_status,mobile_no,parentName,apiKey)
+    fun getmycouponsSummary(
+        coupon_status: String,
+        mobile_no: String,
+        parentName: String,
+        apiKey: String
+    ) {
+        apiSchoolRepositories.getmycouponsSummary(coupon_status, mobile_no, parentName, apiKey)
     }
 
-    fun getCouponDetails(source_link: String, mobile_no:String, parentName: String, apiKey: String) {
-        apiSchoolRepositories.getCouponDetails(source_link,mobile_no,parentName,apiKey)
+    fun getCouponDetails(
+        source_link: String,
+        mobile_no: String,
+        parentName: String,
+        apiKey: String
+    ) {
+        apiSchoolRepositories.getCouponDetails(source_link, mobile_no, parentName, apiKey)
     }
 
-    fun sendactivatecoupon(source_link: String, mobile_no:String, parentName: String, apiKey: String) {
-        apiSchoolRepositories.sendactivatecoupon(source_link,mobile_no,parentName,apiKey)
+    fun sendactivatecoupon(
+        source_link: String,
+        mobile_no: String,
+        parentName: String,
+        apiKey: String
+    ) {
+        apiSchoolRepositories.sendactivatecoupon(source_link, mobile_no, parentName, apiKey)
     }
+
+    fun getdetailsforchat(isToken: String, activity: Activity) {
+        apiParentRepositories.getdetailsforchat(isToken, activity)
+    }
+
+    fun getstaffanswers(
+        isToken: String,
+        staff_id: String,
+        subject_id: String,
+        offset: Int,
+        is_class_teacher: Boolean,
+        activity: Activity
+    ) {
+        apiParentRepositories.getstaffanswers(isToken,staff_id,subject_id,offset,is_class_teacher, activity)
+    }
+
+
+//    fun sendactivatecoupon(
+//        staff_id: String,
+//        subject_id: String,
+//        question: String,
+//        is_class_teacher: String,
+//        file_path: String
+//    ) {
+//        apiSchoolRepositories.sendactivatecoupon(isToken, mobile_no, parentName, apiKey)
+//    }
 
 }
 

@@ -4,7 +4,7 @@
     android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="20dp"
+    android:layout_marginTop="0dp"
    >
 
     <LinearLayout
@@ -40,7 +40,7 @@
                 android:text="January 2024"
                 android:textColor="@color/colorPrimary"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                style="@style/CustomTextStylePoppinsBold" />
 
             <View
                 android:layout_width="0dp"

@@ -36,6 +36,10 @@ import com.vs.schoolmessenger.Parent.Coupon.CouponRequestModel.CouponSummaryRequ
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventResponse
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.HolidayResponse
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
+import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.ChatModel.AnswerResponse
+import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.InteractionWithStaffResponse
+import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.QuestionModelResponse
+import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.Request.QuestionModelRequest
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestApplyResponse
 import com.vs.schoolmessenger.Parent.Timetable.TimeTableResponse
@@ -408,7 +412,7 @@ interface ApiInterfaces {
 
     @POST(APIMethods.send_certificate_request)
     fun sendCertificateRequest(
-        @Header(APIKeyNames.Authorization) token: String,@Body request: JsonObject
+        @Header(APIKeyNames.Authorization) token: String, @Body request: JsonObject
     ): Call<StatusMessageModel?>
 
     @GET(APIMethods.get_certificates_list)
@@ -560,6 +564,26 @@ interface ApiInterfaces {
     ): Call<ActivateCouponResponse?>?
 
 
+    @GET(APIMethods.staff_details_for_chat)
+    fun getdetailsforchat(
+        @Header(APIKeyNames.Authorization) token: String
+    ): Call<InteractionWithStaffResponse?>?
+
+    @GET(APIMethods.get_staff_answers)
+    fun getstaffanswers(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query(APIKeyNames.staff_id) request_type: String?,
+        @Query(APIKeyNames.subject_id) subject_id: String?,
+        @Query(APIKeyNames.offset) offset: Int?,
+        @Query(APIKeyNames.is_class_teacher) is_class_teacher: Boolean?
+    ): Call<AnswerResponse?>?
+
+
+    @POST(APIMethods.student_ask_question)
+    fun sendquestion(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Body request: QuestionModelRequest,
+    ): Call<QuestionModelResponse?>?
 
 
 }
