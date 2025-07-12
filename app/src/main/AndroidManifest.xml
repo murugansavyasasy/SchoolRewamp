@@ -241,8 +241,8 @@
             android:name=".School.SchoolStrength.SchoolStrength"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize">
-
         </activity>
+
 
         <activity
             android:name=".Auth.OTP.OTP"
@@ -283,8 +283,13 @@
             android:name=".School.InteractionWithStudent.InteractionWithStudent"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize">
-
         </activity>
+
+        <activity
+            android:name=".Parent.InteractionWithStaff.InteractionwithStaffChatScreen"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustResize" />
+
 
         <activity
             android:name=".Auth.Country.CountryScreen"

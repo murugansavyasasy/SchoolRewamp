@@ -97,6 +97,12 @@ object APIMethods {
 
     const val get_campaign_details = "get_campaign_details"
     const val activate_coupon = "activate_coupon"
+
+    const val staff_details_for_chat = "/comm/api/interaction/staff-details-for-chat"
+
+    const val get_staff_answers = "/comm/api/interaction/get-staff-answers"
+
+
 }
 
 
