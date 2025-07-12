@@ -93,7 +93,7 @@ object APIMethods {
     const val islessonplandelete = "lms/api/lesson-plan/delete"
     const val get_campaigns = "get_campaigns"
 
-    const val my_coupons= "my_coupons"
+    const val my_coupons = "my_coupons"
 
     const val get_campaign_details = "get_campaign_details"
     const val activate_coupon = "activate_coupon"
@@ -101,6 +101,7 @@ object APIMethods {
     const val staff_details_for_chat = "/comm/api/interaction/staff-details-for-chat"
 
     const val get_staff_answers = "/comm/api/interaction/get-staff-answers"
+    const val student_ask_question = "/comm/api/interaction/student-ask-question"
 
 
 }
