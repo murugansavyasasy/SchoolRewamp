@@ -3,7 +3,6 @@ package com.vs.schoolmessenger.Parent.InteractionWithStaff
 import android.os.Build
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,6 +10,8 @@ import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Adapter.InteractionWithStaffChatAdapter
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.ChatModel.AnswerData
+import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.Request.FilePath
+import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.Request.QuestionModelRequest
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
@@ -63,7 +64,20 @@ class InteractionwithStaffChatScreen : BaseActivity<StaffchatScreenBinding>(),
             }
         }
 
-
+        appViewModel!!.sendquestion?.observe(this) { response ->
+            if (response != null) {
+                if (response.status) {
+                    Constant.hideLoading(this@InteractionwithStaffChatScreen)
+                    Constant.showDataValidation(
+                        resources.getString(R.string.success), response.message, this
+                    )
+                } else {
+                    Constant.showDataValidation(
+                        resources.getString(R.string.fail), response.message, this
+                    )
+                }
+            }
+        }
     }
 
 
@@ -104,11 +118,40 @@ class InteractionwithStaffChatScreen : BaseActivity<StaffchatScreenBinding>(),
         binding.rcystaffchatdata.visibility = View.GONE
     }
 
+    private fun isMessageSend() {
+
+        var question = binding.edtMessage.text.toString()
+
+
+        if (question.isEmpty()) {
+            binding.edtMessage.error = getString(R.string.This_field_required)
+            return
+        }
+
+        val fileList = listOf(
+            FilePath(
+                url = "",
+                type = ""
+            )
+        )
+
+        val request = QuestionModelRequest(
+            staff_id = staffData?.id ?: "",
+            subject_id = staffData?.subject_id ?: "",
+            question = question,
+            is_class_teacher = staffData?.is_class_teacher ?: false,
+            file_path = fileList
+        )
+
+        appViewModel?.sendquestion(isAccessToken!!, request)
+
+    }
+
 
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btnSend -> {
-                Toast.makeText(this, "Development Work In Progress", Toast.LENGTH_SHORT).show()
+                isMessageSend()
             }
 
         }

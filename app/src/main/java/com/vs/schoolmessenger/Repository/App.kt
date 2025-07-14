@@ -29,6 +29,7 @@ import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.ChatModel.AnswerResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.InteractionWithStaffResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.QuestionModelResponse
+import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.Request.QuestionModelRequest
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestApplyResponse
 import com.vs.schoolmessenger.Parent.Timetable.TimeTableResponse
@@ -306,7 +307,7 @@ class App(application: Application) : AndroidViewModel(application) {
         sendactivatecoupon = apiSchoolRepositories.sendactivatecouponLiveData
         getdetailsforchat = apiParentRepositories.getdetailsforchatLiveData
         getstaffanswers = apiParentRepositories.getstaffanswersLiveData
-//        sendquestion = apiParentRepositories.sendquestionLiveData
+        sendquestion = apiParentRepositories.sendquestionLiveData
 
     }
 
@@ -753,15 +754,12 @@ class App(application: Application) : AndroidViewModel(application) {
     }
 
 
-//    fun sendactivatecoupon(
-//        staff_id: String,
-//        subject_id: String,
-//        question: String,
-//        is_class_teacher: String,
-//        file_path: String
-//    ) {
-//        apiSchoolRepositories.sendactivatecoupon(isToken, mobile_no, parentName, apiKey)
-//    }
+    fun sendquestion(
+        isToken: String,
+        request: QuestionModelRequest
+    ) {
+        apiParentRepositories.sendquestion(isToken, request)
+    }
 
 }
 

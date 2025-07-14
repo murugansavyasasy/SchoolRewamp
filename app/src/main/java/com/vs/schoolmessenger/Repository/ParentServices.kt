@@ -11,6 +11,8 @@ import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesListResponse
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesTypesResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.ChatModel.AnswerResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.InteractionWithStaffResponse
+import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.QuestionModelResponse
+import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.Request.QuestionModelRequest
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestApplyResponse
 import com.vs.schoolmessenger.Parent.Timetable.TimeTableResponse
 import retrofit2.Call
@@ -29,6 +31,7 @@ class ParentServices {
     var isTimeTable: MutableLiveData<TimeTableResponse?>
     var getdetailsforchat: MutableLiveData<InteractionWithStaffResponse?>
     var getstaffanswers: MutableLiveData<AnswerResponse?>
+    var sendquestion: MutableLiveData<QuestionModelResponse?>
 
     init {
         client_auth = RestClient()
@@ -42,6 +45,7 @@ class ParentServices {
         isTimeTable = MutableLiveData()
         getdetailsforchat = MutableLiveData()
         getstaffanswers = MutableLiveData()
+        sendquestion = MutableLiveData()
     }
 
     fun getChildAttendanceReport(
@@ -475,6 +479,37 @@ class ParentServices {
 
     val getstaffanswersLiveData: LiveData<AnswerResponse?>
         get() = getstaffanswers
+
+
+
+    fun sendquestion(
+        isToken: String,
+        request: QuestionModelRequest
+    ) {
+        RestClient.apiInterfaces.sendquestion(isToken, request)
+            ?.enqueue(object : Callback<QuestionModelResponse?> {
+                override fun onResponse(
+                    call: Call<QuestionModelResponse?>,
+                    response: Response<QuestionModelResponse?>
+                ) {
+                    if (response.code() == 200 && response.body() != null) {
+                        sendquestion.postValue(response.body())
+                    } else {
+                        sendquestion.postValue(response.body())
+                    }
+                }
+
+                override fun onFailure(call: Call<QuestionModelResponse?>, t: Throwable) {
+                    sendquestion.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+
+    val sendquestionLiveData: LiveData<QuestionModelResponse?>
+        get() = sendquestion
+
 
 
 }
