@@ -103,7 +103,6 @@ class InteractionWithStaff : BaseActivity<IntectionWithStaffBinding>(), View.OnC
     }
 
 
-
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.imgBack -> onBackPressed()

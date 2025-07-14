@@ -155,7 +155,7 @@ object Constant {
 
     var isNonEmergency = 100
     var isEmergency = 101
-//     var isFileLimit = 0
+     var isFileLimit = 0
     var isSchool = 1
 
     var isStandard = 2
@@ -180,7 +180,7 @@ object Constant {
 
     var isTitleLength = 50
     var isDescriptionLength = 500
-    var MAX_FILES = 10
+//    var MAX_FILES = 10
 
     var isAcademicYearList: List<AcademicYear>? = null
     var isParentMenuName=""

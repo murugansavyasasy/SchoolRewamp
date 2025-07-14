@@ -750,7 +750,14 @@ class App(application: Application) : AndroidViewModel(application) {
         is_class_teacher: Boolean,
         activity: Activity
     ) {
-        apiParentRepositories.getstaffanswers(isToken,staff_id,subject_id,offset,is_class_teacher, activity)
+        apiParentRepositories.getstaffanswers(
+            isToken,
+            staff_id,
+            subject_id,
+            offset,
+            is_class_teacher,
+            activity
+        )
     }
 
 

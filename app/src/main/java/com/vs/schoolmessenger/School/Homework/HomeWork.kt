@@ -80,6 +80,8 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
 
     companion object {
         private const val PICK_DOCUMENT_REQUEST = 1003
+        private const val MAX_FILES = 10
+
     }
 
     private var cameraPermissionDeniedCount = 0
@@ -102,6 +104,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
     var mHomeWorkReportAdapter: HomeWorkReportAdapter? = null
     private var fullHomeworkList: List<HomeWorkReport> = listOf()
     var isSectionId = -1
+
     var isAcademicServerLoad=false
     var isSelectedDate=""
 
@@ -202,7 +205,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
                 if (result.resultCode == RESULT_OK) {
                     val selectedUris =
                         result.data?.getParcelableArrayListExtra<Uri>(Constant.isSelectedFiles)
-                    val remaining = Constant.MAX_FILES - Constant.selectedFiles.size
+                    val remaining = MAX_FILES - Constant.selectedFiles.size
 
                     selectedUris?.take(remaining)?.forEach { uri ->
                         val mimeType = contentResolver.getType(uri)
@@ -266,7 +269,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
 
                     if ((selectedUris?.size ?: 0) > remaining) {
                         Toast.makeText(
-                            this, "Only $remaining files added (max $Constant.MAX_FILES)", Toast.LENGTH_SHORT
+                            this, "Only $remaining files added (max $MAX_FILES)", Toast.LENGTH_SHORT
                         ).show()
                     }
                 }
@@ -621,25 +624,25 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         val rlaVideoPick = dialog.findViewById<RelativeLayout>(R.id.rlaVideoPick)
 
         rlaGallery.setOnClickListener {
-            Constant.MAX_FILES = 10
+            Constant.isFileLimit = 10
             openAlbumSelectActivity(Constant.IMAGE)
             dialog.dismiss()
         }
 
         rlaVoice.setOnClickListener {
-            Constant.MAX_FILES = 10
+            Constant.isFileLimit = 10
             openAlbumSelectActivity(Constant.AUDIO)
             dialog.dismiss()
         }
 
         rlaVideoPick.setOnClickListener {
-            Constant.MAX_FILES = 1
+            Constant.isFileLimit = 1
             openAlbumSelectActivity(Constant.VIDEO)
             dialog.dismiss()
         }
 
         rlaDocument.setOnClickListener {
-            Constant.MAX_FILES = 10
+            Constant.isFileLimit = 10
             openAlbumSelectActivity(Constant.DOCUMENT)
             dialog.dismiss()
         }
@@ -701,15 +704,15 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
 
         if (resultCode != RESULT_OK) return
 
-        val remaining = Constant.MAX_FILES - Constant.selectedFiles.size
+        val remaining = MAX_FILES - Constant.selectedFiles.size
         if (remaining <= 0) {
-            Toast.makeText(this, "Max $Constant.MAX_FILES files allowed", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Max $MAX_FILES files allowed", Toast.LENGTH_SHORT).show()
             return
         }
 
         fun addPath(uri: Uri) {
             Log.d("isFilePickingUrl", uri.toString())
-            if (Constant.selectedFiles.size >= Constant.MAX_FILES) return
+            if (Constant.selectedFiles.size >= MAX_FILES) return
 
             val mimeType = contentResolver.getType(uri)
             if (mimeType?.startsWith("video/") == true || mimeType?.startsWith("audio/") == true) {

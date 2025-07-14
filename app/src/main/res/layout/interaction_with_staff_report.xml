@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/relative_layout"
     android:padding="10dp"
     android:layout_marginTop="5dp"
     android:layout_height="wrap_content">
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/profileImage"
         android:layout_width="40dp"
         android:layout_height="40dp"
@@ -15,7 +15,8 @@
         android:scaleType="centerCrop"
         android:layout_marginTop="3dp"
         android:layout_alignParentStart="true"
-        android:background="@drawable/circle_image" />
+        app:shapeAppearanceOverlay="@style/CircleImageShape" />
+
 
     <TextView
         android:id="@+id/nameheader"
@@ -26,6 +27,16 @@
         style="@style/CustomTextStylePoppinsBold"
         android:layout_marginStart="10dp"
         android:layout_toEndOf="@id/profileImage" />
+
+    <TextView
+        android:id="@+id/yesterdayheader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Yesterday"
+        android:textColor="@color/Emerald1"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_marginStart="10dp"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:id="@+id/subjectheader"
@@ -49,6 +60,7 @@
         android:textColor="@color/white"
         android:scaleType="centerCrop"
         android:gravity="center"
+        android:layout_below="@+id/yesterdayheader"
         android:layout_marginEnd="10dp"
         android:layout_alignParentEnd="true"
         android:background="@drawable/circle_background_green" />

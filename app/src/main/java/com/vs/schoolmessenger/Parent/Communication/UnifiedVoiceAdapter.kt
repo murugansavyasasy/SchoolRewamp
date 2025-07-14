@@ -5,6 +5,7 @@ import android.content.Context
 import android.media.MediaPlayer
 import android.os.Handler
 import android.os.Looper
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -159,6 +160,7 @@ class UnifiedVoiceAdapter(
             }
 
             lblSeeMoreClick.setOnClickListener {
+                lblSeeMoreClick.visibility = View.GONE
                 listener.onSeeMoreClick(data, this@DataViewHolder)
             }
 
@@ -216,24 +218,23 @@ class UnifiedVoiceAdapter(
                 if (data.is_unread!!) {
                     lblnewiconText.visibility = View.VISIBLE
                     lblSeeMore.visibility = View.VISIBLE
-
                 } else {
                     lblnewiconText.visibility = View.GONE
-                    lblSeeMore.text = "see more"
+                    if (lblContentText.lineCount > 3) {
+                        lblSeeMore.visibility = View.VISIBLE
+                        lblnewiconText.visibility = View.GONE
+                        lblContentText.maxLines = 3
+                        lblContentText.ellipsize = TextUtils.TruncateAt.END
+                        lblSeeMore.text = "see more"
+                    }else{
+                        lblSeeMore.visibility = View.GONE
+                    }
                 }
+                isSeeMoreVisibility(lblContentText, lblSeeMore)
 
 
                 rlaText.setOnClickListener {
                     isExpanded = !isExpanded
-                    if (isExpanded) {
-                        lblContentText.maxLines = Int.MAX_VALUE
-                        lblSeeMore.text = "see less"
-                        lblnewiconText.visibility = View.GONE
-                    } else {
-                        lblContentText.maxLines = 3
-                        lblSeeMore.text = "see more"
-                        lblnewiconText.visibility = View.GONE
-                    }
 
                     if (data.is_unread == true) {
                         if (data.is_archive == true) {
@@ -247,19 +248,12 @@ class UnifiedVoiceAdapter(
                     listener.onItemClick(data, this@DataViewHolder)
                 }
 
+                isSeeMoreVisibility(lblContentText, lblSeeMore)
+
 
                 lblSeeMore.setOnClickListener {
                     isExpanded = !isExpanded
 
-                    if (isExpanded) {
-                        lblContentText.maxLines = Int.MAX_VALUE
-                        lblSeeMore.text = "see less"
-                        lblnewiconText.visibility = View.GONE
-                    } else {
-                        lblContentText.maxLines = 3
-                        lblSeeMore.text = "see more"
-                        lblnewiconText.visibility = View.GONE
-                    }
                     if (data.is_unread == true) {
                         if (data.is_archive == true) {
                             listener.onUpdateArchiveStatus(data.type, data.id)
@@ -268,9 +262,6 @@ class UnifiedVoiceAdapter(
                         }
                         data.is_unread = false
                     }
-
-
-
                     listener.onItemClick(data, this@DataViewHolder)
                 }
             }
@@ -290,6 +281,17 @@ class UnifiedVoiceAdapter(
                 setOnCompletionListener {
                     resetPlaybackState()
                     lblStartDuration.text = "00:00"
+                }
+            }
+        }
+
+        private fun isSeeMoreVisibility(lblContent: TextView, tvSeeMore: TextView) {
+            lblContent.post {
+                if (lblContent.lineCount > 3) {
+                    tvSeeMore.visibility = View.VISIBLE
+                    lblnewiconText.visibility = View.GONE
+                    lblContent.maxLines = 3
+                    lblContent.ellipsize = TextUtils.TruncateAt.END
                 }
             }
         }

@@ -75,6 +75,7 @@ class VoiceHistoryAdapter(
         private val lblEndDuration: TextView = itemView.findViewById(R.id.lblEndDuration)
         private val lblTime: TextView = itemView.findViewById(R.id.lblTime)
         private val rlaSendVoice: RelativeLayout = itemView.findViewById(R.id.rlaSendVoice)
+        private val lblSeeMoreClick: TextView = itemView.findViewById(R.id.lblSeeMoreClick)
 
         private lateinit var mediaPlayer: MediaPlayer
         private var isPrepared = false
@@ -103,7 +104,7 @@ class VoiceHistoryAdapter(
             adapter: VoiceHistoryAdapter
         ) {
             lblTitle.text = data.title
-
+            lblSeeMoreClick.visibility = View.GONE
 
             val parts = data.sentOn.split(" ")
             if (parts.size >= 3) {
