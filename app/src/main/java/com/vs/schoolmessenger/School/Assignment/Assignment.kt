@@ -89,6 +89,8 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
         private const val PICK_DOCUMENT_REQUEST = 1003
         private const val PICK_IMAGE_REQUEST = 1001
         internal const val CAMERA_IMAGE_REQUEST = 1004
+        private const val MAX_FILES = 10
+
     }
 
     var isAcademicServerLoad = false
@@ -150,7 +152,7 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
                 if (result.resultCode == RESULT_OK) {
                     val selectedUris =
                         result.data?.getParcelableArrayListExtra<Uri>(Constant.isSelectedFiles)
-                    val remaining = Constant.MAX_FILES - Constant.selectedFiles.size
+                    val remaining = MAX_FILES - Constant.selectedFiles.size
 
                     selectedUris?.take(remaining)?.forEach { uri ->
                         val mimeType = contentResolver.getType(uri)
@@ -215,7 +217,7 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
                     if ((selectedUris?.size ?: 0) > remaining) {
                         Toast.makeText(
                             this,
-                            "Only $remaining files added (max ${Constant.MAX_FILES})",
+                            "Only $remaining files added (max ${MAX_FILES})",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
@@ -534,29 +536,28 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
         val rlaVideoPick = dialog.findViewById<RelativeLayout>(R.id.rlaVideoPick)
 
         rlaGallery.setOnClickListener {
-            Constant.MAX_FILES = 10
+            Constant.isFileLimit = 10
             openAlbumSelectActivity(Constant.IMAGE)
             dialog.dismiss()
         }
 
         rlaVoice.setOnClickListener {
-            Constant.MAX_FILES = 10
+            Constant.isFileLimit = 10
             openAlbumSelectActivity(Constant.AUDIO)
             dialog.dismiss()
         }
 
         rlaVideoPick.setOnClickListener {
-            Constant.MAX_FILES = 1
+            Constant.isFileLimit = 1
             openAlbumSelectActivity(Constant.VIDEO)
             dialog.dismiss()
         }
 
         rlaDocument.setOnClickListener {
-            Constant.MAX_FILES = 10
+            Constant.isFileLimit = 10
             openAlbumSelectActivity(Constant.DOCUMENT)
             dialog.dismiss()
         }
-
         rlaCamera.setOnClickListener {
             if (Constant.selectedFiles.size > 1) {
                 if (Constant.selectedFiles[1].type.toString() != Constant.IMAGE) {
@@ -624,15 +625,15 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
 
         if (resultCode != RESULT_OK) return
 
-        val remaining = Constant.MAX_FILES - Constant.selectedFiles.size
+        val remaining = MAX_FILES - Constant.selectedFiles.size
         if (remaining <= 0) {
-            Toast.makeText(this, "Max ${Constant.MAX_FILES} files allowed", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Max ${MAX_FILES} files allowed", Toast.LENGTH_SHORT).show()
             return
         }
 
         fun addPath(uri: Uri) {
             Log.d("isFilePickingUrl", uri.toString())
-            if (Constant.selectedFiles.size >= Constant.MAX_FILES) return
+            if (Constant.selectedFiles.size >= MAX_FILES) return
 
             val mimeType = contentResolver.getType(uri)
             if (mimeType?.startsWith("video/") == true || mimeType?.startsWith("audio/") == true) {
