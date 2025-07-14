@@ -161,6 +161,7 @@ class AttachmentAdapter(
             }
 
             lblSeeMoreClick.setOnClickListener {
+                lblSeeMoreClick.visibility= View.GONE
                 listener.onSeeMoreClick(item, this@DataViewHolder)
             }
 
