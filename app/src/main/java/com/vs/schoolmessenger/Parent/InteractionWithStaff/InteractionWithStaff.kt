@@ -2,6 +2,8 @@ package com.vs.schoolmessenger.Parent.InteractionWithStaff
 
 import android.content.Intent
 import android.os.Build
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import androidx.annotation.RequiresApi
@@ -57,6 +59,17 @@ class InteractionWithStaff : BaseActivity<IntectionWithStaffBinding>(), View.OnC
 
         fetchstaffdata()
 
+        binding.toolbarLayout.txtVideoMenu.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (::interactionWithStaffAdapter.isInitialized) {
+                    interactionWithStaffAdapter.filter.filter(s)
+                }
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
+
         appViewModel?.getdetailsforchat?.observe(this) { response ->
             Log.d("response++", response.toString())
             if (response == null) {
@@ -110,9 +123,17 @@ class InteractionWithStaff : BaseActivity<IntectionWithStaffBinding>(), View.OnC
     }
 
     override fun onSearchResultEmpty(isEmpty: Boolean) {
-        TODO("Not yet implemented")
+        if (isEmpty) {
+            binding.nomessage.visibility = View.VISIBLE
+            binding.txtNoData.visibility = View.VISIBLE
+            binding.txtNoData.text = getString(R.string.no_matching_notices_found)
+            binding.rcystaffdata.visibility = View.GONE
+        } else {
+            binding.nomessage.visibility = View.GONE
+            binding.txtNoData.visibility = View.GONE
+            binding.rcystaffdata.visibility = View.VISIBLE
+        }
     }
-
     override fun onClickItem(data: Staff) {
         val intent = Intent(this@InteractionWithStaff, InteractionwithStaffChatScreen::class.java)
         val saveStaffData = StaffDataSending(

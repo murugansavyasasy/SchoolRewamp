@@ -69,7 +69,7 @@ class LeaveRequestAdapter(
         private val textReason: TextView = itemView.findViewById(R.id.textReason)
         private val textNoOfDays: TextView = itemView.findViewById(R.id.textNoOfDays)
         private val textFirstLetter: TextView = itemView.findViewById(R.id.textFirstLetter)
-        private val btnCancel: TextView = itemView.findViewById(R.id.btnCancel)
+//        private val btnCancel: TextView = itemView.findViewById(R.id.btnCancel)
         private val btnApprove: TextView = itemView.findViewById(R.id.btnApprove)
 
 
@@ -95,21 +95,21 @@ class LeaveRequestAdapter(
             when (data.status) {
 
                 Constant.waiting_for_approval -> {
-                    btnCancel.visibility = View.GONE
+//                    btnCancel.visibility = View.GONE
                     btnApprove.visibility = View.VISIBLE
                     btnApprove.setBackgroundResource(R.drawable.bg_leave_waiting)
                     btnApprove.text = "Waiting"
                 }
 
                 Constant.approved -> {
-                    btnCancel.visibility = View.GONE
+//                    btnCancel.visibility = View.GONE
                     btnApprove.visibility = View.VISIBLE
                     btnApprove.setBackgroundResource(R.drawable.bg_leave_approved)
                     btnApprove.text = "Approved"
                 }
 
                 Constant.rejected-> {
-                    btnCancel.visibility = View.GONE
+//                    btnCancel.visibility = View.GONE
                     btnApprove.visibility = View.VISIBLE
                     btnApprove.setBackgroundResource(R.drawable.bg_leave_rejected)
                     btnApprove.text = "Rejected"

@@ -28,6 +28,7 @@ import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardData
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuClickListener
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuDetail
 import com.vs.schoolmessenger.Dashboard.Parent.ChildMenuAdapter
+import com.vs.schoolmessenger.Dashboard.Parent.ExamMark
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.Notification
 import com.vs.schoolmessenger.Parent.Assignment.Assignment
 import com.vs.schoolmessenger.Parent.Attachment.Attachment
@@ -346,6 +347,11 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             Constant.M_COUPON_PACKET -> Intent(
                 requireActivity(),
                 CouponDashboardActivity::class.java
+            )
+
+            Constant.M_EXAM -> Intent(
+                requireActivity(),
+                ExamMark::class.java
             )
 
 

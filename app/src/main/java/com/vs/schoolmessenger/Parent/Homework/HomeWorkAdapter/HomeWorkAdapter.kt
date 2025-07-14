@@ -85,7 +85,6 @@ class HomeWorkAdapter(
             }
             if (position == adapter.itemCount - 1) {
                 if (adapter.isSeeMoreClick) {
-                    Log.d("isComing", "isComing")
                     lblSeeMore.visibility = View.VISIBLE
                 } else {
                     lblSeeMore.visibility = View.GONE
@@ -95,6 +94,7 @@ class HomeWorkAdapter(
             }
 
             lblSeeMore.setOnClickListener {
+                lblSeeMore.visibility= View.GONE
                 listener.onItemClick(item, this@DataViewHolder)
             }
 

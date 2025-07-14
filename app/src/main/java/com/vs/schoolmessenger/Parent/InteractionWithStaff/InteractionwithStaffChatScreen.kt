@@ -40,6 +40,8 @@ class InteractionwithStaffChatScreen : BaseActivity<StaffchatScreenBinding>(),
         super.setupViews()
         setUpGradientParent()
 
+        binding.imgBack.setOnClickListener(this)
+
         binding.btnSend.setOnClickListener(this)
         isChildDetails = SharedPreference.getChildDetails(this)
 
@@ -147,6 +149,10 @@ class InteractionwithStaffChatScreen : BaseActivity<StaffchatScreenBinding>(),
         when (v?.id) {
             R.id.btnSend -> {
                 isMessageSend()
+            }
+
+            R.id.imgBack -> {
+                onBackPressed()
             }
 
         }

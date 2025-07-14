@@ -125,7 +125,7 @@ class NoticeBoardAdapter(
         fun bind(noticeData: Notice, position: Int, adapter: NoticeBoardAdapter) {
 
             LblHWSubjectName.visibility = View.GONE
-            imgNewImage.visibility = View.VISIBLE
+            imgNewImage.visibility = View.GONE
             rlaSelectText.visibility = View.GONE
             lblTitleImage.text = noticeData.title
             lblContentImage.text = noticeData.description
@@ -135,8 +135,6 @@ class NoticeBoardAdapter(
             val time = parts.getOrNull(1) + " " + (parts.getOrNull(2) ?: "")
             lblDateImage.text = Constant.convertDateTimeFormat(date)
             lblTimeImage.text = time
-//            lblDateImage.text = Constant.convertDateTimeFormat(noticeData.created_on)
-
             isSeeMoreVisibility(lblContentImage, tvSeeMoreImage)
             tvSeeMoreImage.setOnClickListener {
                 isSeeMoreExpanded(tvSeeMoreImage, lblContentImage)
@@ -273,10 +271,7 @@ class NoticeBoardAdapter(
                 }
             }
         }
-
-
     }
-
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun startShimmer() {

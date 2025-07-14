@@ -1255,14 +1255,18 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     private fun isFileUploadInAws(
         schoolId: String, isFileType: String?
     ) {
-        if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS || SELECTED_SCHOOL_MENU == M_ASSIGNMENT) {
-            Constant.selectedFiles.removeAt(0)  // Remove the plus icon from array list
+        if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_HOMEWORK ||
+            SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS || SELECTED_SCHOOL_MENU == M_ASSIGNMENT
+        ) {
+            Constant.selectedFiles.removeAt(0) // Remove plus icon
         }
 
         Constant.isAwsUploadedFiles.clear()
         val isSelectedFileListSize = Constant.selectedFiles.size
         val iterator = Constant.selectedFiles.iterator()
+
         ProgressDialogHelper.show(this@RecipientActivity)
+
         while (iterator.hasNext()) {
             val fileItem = iterator.next()
             if (fileItem.path.contains("amazonaws.")) {
@@ -1278,25 +1282,24 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
         val isCountryId = SharedPreference.getCountryId(this)
 
-        Log.d("isSelectedFiles", Constant.selectedFiles.size.toString())
         if (Constant.selectedFiles.isEmpty()) {
-            if (SELECTED_SCHOOL_MENU == M_HOMEWORK) {
-                isHomeWorkSend()
-            } else if (SELECTED_SCHOOL_MENU == M_COMMUNICATION) {
-                voiceSendApi()
-            } else if (SELECTED_SCHOOL_MENU == M_ASSIGNMENT) {
-                isAssignmentSend()
+            when (SELECTED_SCHOOL_MENU) {
+                M_HOMEWORK -> isHomeWorkSend()
+                M_COMMUNICATION -> voiceSendApi()
+                M_ASSIGNMENT -> isAssignmentSend()
             }
         } else {
             val outputDir =
                 File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "CompressedOutput")
+            outputDir.mkdirs()
             val newSelectedFiles = mutableListOf<FileItem>()
             var uploadedFiles = 0
+
             Constant.compressImageFilesOnly(
                 context = this,
                 files = Constant.selectedFiles,
                 outputDir = outputDir.absolutePath,
-                format = Bitmap.CompressFormat.WEBP_LOSSY,
+                format = Bitmap.CompressFormat.JPEG,
                 quality = 80,
                 maxWidth = 1280,
                 maxHeight = 1280,
@@ -1308,28 +1311,32 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                                 contentResolver.openFileDescriptor(
                                     Uri.parse(original.path),
                                     "r"
-                                )?.statSize ?: 0
+                                )?.statSize
+                                    ?: 0
                             } else {
                                 File(original.path).length()
                             }
                         } catch (e: Exception) {
                             0L
                         }
+
                         Log.d(
                             "Compressor",
-                            " Compressed: $outputPath (${compressedFile.length() / 1024}KB), Original: ${originalSizeKB / 1024}KB"
+                            "Compressed: $outputPath (${compressedFile.length() / 1024}KB), Original: ${originalSizeKB / 1024}KB"
                         )
+
                         newSelectedFiles.add(FileItem(path = outputPath, type = original.type))
                     } else {
-                        Log.e("Compressor", " Failed: ${original.path}")
+                        Log.e("Compressor", "Failed: ${original.path}")
                     }
                 },
                 onComplete = {
                     Constant.selectedFiles.clear()
                     Constant.selectedFiles.addAll(newSelectedFiles)
+
                     for (i in Constant.selectedFiles.indices) {
-                        isAwsUploadingPreSigned!!.getPreSignedUrl(
-                            Constant.selectedFiles[i].path.toString(),
+                        isAwsUploadingPreSigned?.getPreSignedUrl(
+                            Constant.selectedFiles[i].path,
                             schoolId,
                             isFileType!!,
                             this,
@@ -1339,12 +1346,11 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                             object : UploadCallback {
                                 @RequiresApi(Build.VERSION_CODES.O)
                                 override fun onUploadSuccess(
-                                    response: String?, isFileUploaded: String?
+                                    response: String?,
+                                    isFileUploaded: String?
                                 ) {
-
                                     uploadedFiles++
                                     val percent = (uploadedFiles * 100) / isSelectedFileListSize
-
                                     runOnUiThread {
                                         ProgressDialogHelper.show(this@RecipientActivity)
                                         ProgressDialogHelper.updateProgress(percent)
@@ -1353,50 +1359,24 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                                     Constant.isAwsUploadedFiles.add(
                                         AwsUploadedFiles(
                                             isFileUrl = isFileUploaded!!,
-                                            isFileType = Constant.selectedFiles[i].type.toString()
+                                            isFileType = Constant.selectedFiles[i].type.name
                                         )
                                     )
-                                    Log.d(
-                                        "Constant.isAwsUploadedFiles",
-                                        Constant.isAwsUploadedFiles.size.toString()
-                                    )
-                                    Log.d(
-                                        "Constant.isAwsUploadedFiles",
-                                        isSelectedFileListSize.toString()
-                                    )
+
                                     if (Constant.isAwsUploadedFiles.size == isSelectedFileListSize) {
                                         runOnUiThread {
-                                           ProgressDialogHelper.dismiss()
+                                            ProgressDialogHelper.dismiss()
                                             Constant.showLoading(this@RecipientActivity)
                                         }
 
-                                        Log.d(
-                                            "SELECTED_SCHOOL_MENU",
-                                            SELECTED_SCHOOL_MENU.toString()
-                                        )
                                         when (SELECTED_SCHOOL_MENU) {
-                                            M_HOMEWORK -> {
-                                                isHomeWorkSend()
-                                            }
-                                            Constant.M_COMMUNICATION -> {
-                                                voiceSendApi()
-                                            }
-                                            Constant.M_ATTACHMENTS -> {
-                                                attachmentSendApi()
-                                            }
-                                            Constant.M_SCHOOL_CLASS_EVENTS -> {
-                                                eventsendapi()
-                                            }
-                                            Constant.M_ASSIGNMENT -> {
-                                                isAssignmentSend()
-                                            }
+                                            M_HOMEWORK -> isHomeWorkSend()
+                                            M_COMMUNICATION -> voiceSendApi()
+                                            M_ATTACHMENTS -> attachmentSendApi()
+                                            M_SCHOOL_CLASS_EVENTS -> eventsendapi()
+                                            M_ASSIGNMENT -> isAssignmentSend()
                                         }
-
-
-                                    } else {
-                                        Log.d("isFileNotMatching", "isFileNotMatching")
                                     }
-                                    Log.d("isSuccessFullUpload", "isSuccessFullUpload")
                                 }
 
                                 override fun onUploadError(error: String?) {
@@ -1415,7 +1395,8 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
                                 }
                             })
                     }
-                    Log.d("Compressor", " All files compressed and updated.")
+
+                    Log.d("Compressor", "All files compressed and uploaded.")
                 }
             )
         }

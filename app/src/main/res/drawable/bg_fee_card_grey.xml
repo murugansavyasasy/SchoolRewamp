@@ -1,0 +1,20 @@
+<!-- res/drawable/bg_fee_card.xml -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/light_gray1" />
+            <corners android:radius="10dp" />
+        </shape>
+    </item>
+
+    <item android:left="0dp" android:width="6dp">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/gnt_gray" />
+            <corners
+                android:topLeftRadius="10dp"
+                android:bottomLeftRadius="10dp" />
+        </shape>
+    </item>
+
+</layer-list>

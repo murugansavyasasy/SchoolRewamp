@@ -413,7 +413,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                 context = this,
                 files = Constant.selectedFiles,
                 outputDir = outputDir.absolutePath,
-                format = Bitmap.CompressFormat.WEBP_LOSSY,
+                format = Bitmap.CompressFormat.JPEG,
                 quality = 80,
                 maxWidth = 1280,
                 maxHeight = 1280,
@@ -592,6 +592,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         okButton.setOnClickListener {
             alertDialog.dismiss()
             if (SELECTED_SCHOOL_MENU == M_COMMUNICATION) {
+                Log.d("Constant.isCommunicationType", Constant.isCommunicationType.toString())
                 if (Constant.isCommunicationType == 3) {
                     val jsonObject = ApiCallRequest.isSendText(
                         isAcademicYearId = isAcademicYearId,
@@ -695,7 +696,10 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                     isFileUrl = link.toString(), isFileType = Constant.VIDEO
                 )
             )
-            attachmentSendApi()
+            when (SELECTED_SCHOOL_MENU) {
+                M_ATTACHMENTS -> attachmentSendApi()
+                M_NOTICEBOARD -> noticeboardsendapi()
+            }
         }
     }
 

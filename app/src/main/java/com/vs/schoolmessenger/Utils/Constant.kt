@@ -26,7 +26,6 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -155,7 +154,7 @@ object Constant {
 
     var isNonEmergency = 100
     var isEmergency = 101
-     var isFileLimit = 0
+    var isFileLimit = 0
     var isSchool = 1
 
     var isStandard = 2
@@ -183,7 +182,7 @@ object Constant {
 //    var MAX_FILES = 10
 
     var isAcademicYearList: List<AcademicYear>? = null
-    var isParentMenuName=""
+    var isParentMenuName = ""
 
     var isSchoolMenuName = ""
 
@@ -203,12 +202,10 @@ object Constant {
     var some_Absent = "F"
     var Absent = "Absent"
     var halfDay = "H"
-    var approved="Approved"
-    var rejected="Rejected"
-    var waiting_for_approval="Waiting for approval"
-    var in_review="In review"
-
-
+    var approved = "Approved"
+    var rejected = "Rejected"
+    var waiting_for_approval = "Waiting for approval"
+    var in_review = "In review"
 
 
     // String fields
@@ -568,7 +565,7 @@ object Constant {
 
     }
 
-     fun getVideoThumbnail(context: Activity,uri: Uri): Bitmap? {
+    fun getVideoThumbnail(context: Activity, uri: Uri): Bitmap? {
         return try {
             val retriever = MediaMetadataRetriever()
             retriever.setDataSource(context, uri)
@@ -597,7 +594,7 @@ object Constant {
         val titleText = dialogView.findViewById<TextView>(R.id.alertTitle)
         val messageText = dialogView.findViewById<TextView>(R.id.alertMessage)
         val okButton = dialogView.findViewById<TextView>(R.id.btnOk)
-        messageText.text = content +" Please try again "
+        messageText.text = content + " Please try again "
         titleText.text = "Oops! Wrong Password"
         okButton.setOnClickListener {
             alertDialog.dismiss()
@@ -690,6 +687,7 @@ object Constant {
         okButton.setOnClickListener {
             isAwsUploadedFiles.clear()
             selectedFiles.clear()
+            isCommunicationType = 1
             val intent = Intent(activity, SchoolDashboard::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             activity.startActivity(intent)
@@ -700,7 +698,9 @@ object Constant {
 
     }
 
-     fun showDatePicker(context: Context,dateFormatType: Boolean, onDateSelected: (String) -> Unit) {
+    fun showDatePicker(
+        context: Context, dateFormatType: Boolean, onDateSelected: (String) -> Unit
+    ) {
         val calendar = Calendar.getInstance()
 
         val year = calendar.get(Calendar.YEAR)
@@ -766,27 +766,19 @@ object Constant {
     }
 
 
-
-
-
-
     fun covertDateFormate(input: String): String {
-        Log.d("Input Date Format",input.toString())
+        Log.d("Input Date Format", input.toString())
         return try {
             val inputFormat = SimpleDateFormat(dd_MM_yyyy, Locale.getDefault())
             val outputFormat = SimpleDateFormat(dd_MMM_yyyy, Locale.getDefault())
             val date = inputFormat.parse(input)
-            Log.d("OutPut Date Format",date.toString())
+            Log.d("OutPut Date Format", date.toString())
             outputFormat.format(date!!)
 
         } catch (e: Exception) {
             input
         }
     }
-
-
-
-
 
 
     fun getFileSizeInMB(context: Context, filePath: String): String {
@@ -806,7 +798,6 @@ object Constant {
             "0.00 MB"
         }
     }
-
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -1030,23 +1021,23 @@ object Constant {
         return currentDate.format(formatter)
     }
 
-//We use this to convert the Date Format 12 May 2025 to 12 Mon(we get Date And Day)
-fun getDayAndDateOnly(inputDateStr: String): Pair<String, String> {
-    return try {
-        val inputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
-        val dayNameFormat = SimpleDateFormat("EEE", Locale.getDefault()) // e.g., Fri
-        val dayNumberFormat = SimpleDateFormat("dd", Locale.getDefault()) // e.g., 13
+    //We use this to convert the Date Format 12 May 2025 to 12 Mon(we get Date And Day)
+    fun getDayAndDateOnly(inputDateStr: String): Pair<String, String> {
+        return try {
+            val inputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+            val dayNameFormat = SimpleDateFormat("EEE", Locale.getDefault()) // e.g., Fri
+            val dayNumberFormat = SimpleDateFormat("dd", Locale.getDefault()) // e.g., 13
 
-        val date = inputFormat.parse(inputDateStr)!!
-        val dayName = dayNameFormat.format(date)     // "Fri"
-        val dayNumber = dayNumberFormat.format(date) // "13"
+            val date = inputFormat.parse(inputDateStr)!!
+            val dayName = dayNameFormat.format(date)     // "Fri"
+            val dayNumber = dayNumberFormat.format(date) // "13"
 
-        Pair(dayNumber, dayName)
-    } catch (e: Exception) {
-        e.printStackTrace()
-        Pair("", "") // fallback
+            Pair(dayNumber, dayName)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Pair("", "") // fallback
+        }
     }
-}
 
 
     //Convert dd-MM-YYYY to dd MMM YYYY (12-02-2025 to 12 Feb 2025)
@@ -1063,9 +1054,6 @@ fun getDayAndDateOnly(inputDateStr: String): Pair<String, String> {
     }
 
 
-
-
-
     fun getCurrentDateInfo(): List<String> {
         val calendar = android.icu.util.Calendar.getInstance()
 
@@ -1073,7 +1061,8 @@ fun getDayAndDateOnly(inputDateStr: String): Pair<String, String> {
         val dayOfWeek = SimpleDateFormat("EEE", Locale.getDefault()).format(calendar.time)
         val fullDate = SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(calendar.time)
         val slashDate = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(calendar.time)
-        val customFormat = SimpleDateFormat("EEE, MMM yyyy", Locale.getDefault()).format(calendar.time)
+        val customFormat =
+            SimpleDateFormat("EEE, MMM yyyy", Locale.getDefault()).format(calendar.time)
 
         return listOf(dayOnly, dayOfWeek, fullDate, slashDate, customFormat)
     }
@@ -1090,6 +1079,7 @@ fun getDayAndDateOnly(inputDateStr: String): Pair<String, String> {
         }
 
     }
+
     fun convertDateFormat1(input: String): String {
         return try {
             val inputFormat = SimpleDateFormat(dd_MMM_yyyy_2, Locale.getDefault())
@@ -1101,9 +1091,6 @@ fun getDayAndDateOnly(inputDateStr: String): Pair<String, String> {
         }
 
     }
-
-
-
 
 
     fun convertDateTimeFormat(input: String): String {
@@ -1180,59 +1167,6 @@ fun getDayAndDateOnly(inputDateStr: String): Pair<String, String> {
     }
 
 
-    fun compressImagesOneByOne(
-        inputPaths: List<String>,
-        outputDir: String,
-        format: Bitmap.CompressFormat = Bitmap.CompressFormat.JPEG,
-        quality: Int = 85,
-        maxWidth: Int = 1080,
-        maxHeight: Int = 1920,
-        onEachCompressed: (originalPath: String, compressedPath: String?, success: Boolean) -> Unit,
-        onComplete: () -> Unit
-    ) {
-        inputPaths.forEachIndexed { index, path ->
-            try {
-                val originalBitmap = BitmapFactory.decodeFile(path)
-                val resizedBitmap = resizeBitmap(originalBitmap, maxWidth, maxHeight)
-                val fileName = "compressed_${index}_${File(path).name}"
-                val outputFile = File(outputDir, fileName)
-                val outputStream = FileOutputStream(outputFile)
-                val success = resizedBitmap.compress(format, quality, outputStream)
-
-                outputStream.flush()
-                outputStream.close()
-                originalBitmap.recycle()
-                resizedBitmap.recycle()
-
-                if (success) {
-                    onEachCompressed(path, outputFile.absolutePath, true)
-                } else {
-                    onEachCompressed(path, null, false)
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-                onEachCompressed(path, null, false)
-            }
-        }
-        onComplete()
-    }
-
-    fun resizeBitmap(original: Bitmap, maxWidth: Int, maxHeight: Int): Bitmap {
-        val width = original.width
-        val height = original.height
-        val aspectRatio = width.toFloat() / height.toFloat()
-
-        val (newWidth, newHeight) = if (width > height) {
-            val newW = minOf(width, maxWidth)
-            Pair(newW, (newW / aspectRatio).toInt())
-        } else {
-            val newH = minOf(height, maxHeight)
-            Pair((newH * aspectRatio).toInt(), newH)
-        }
-
-        return Bitmap.createScaledBitmap(original, newWidth, newHeight, true)
-    }
-
     fun getVideoSizeInMB(videoPath: String): Long {
         val file = File(videoPath)
         return file.length() / (1024 * 1024)  // Convert bytes to MB
@@ -1243,11 +1177,11 @@ fun getDayAndDateOnly(inputDateStr: String): Pair<String, String> {
         context: Context,
         files: List<FileItem>,
         outputDir: String,
-        format: Bitmap.CompressFormat = Bitmap.CompressFormat.WEBP_LOSSY,
+        format: Bitmap.CompressFormat = Bitmap.CompressFormat.JPEG, // Safe default
         quality: Int = 80,
         maxWidth: Int = 1280,
         maxHeight: Int = 1280,
-        onEachProcessed: (original: FileItem, compressedPath: String?, success: Boolean) -> Unit,
+        onEachProcessed: (original: FileItem, outputPath: String?, success: Boolean) -> Unit,
         onComplete: () -> Unit
     ) {
         Thread {
@@ -1267,13 +1201,24 @@ fun getDayAndDateOnly(inputDateStr: String): Pair<String, String> {
                 if (fileItem.type == FileType.IMAGE) {
                     try {
                         val uri = Uri.parse(fileItem.path)
+
                         val bitmap: Bitmap? = try {
-                            if (fileItem.path.startsWith("content://")) {
-                                context.contentResolver.openInputStream(uri)?.use { inputStream ->
-                                    BitmapFactory.decodeStream(inputStream)
+                            when {
+                                fileItem.path.startsWith("content://") -> {
+                                    context.contentResolver.openInputStream(uri)
+                                        ?.use { inputStream ->
+                                            BitmapFactory.decodeStream(inputStream)
+                                        }
                                 }
-                            } else {
-                                BitmapFactory.decodeFile(fileItem.path)
+
+                                fileItem.path.startsWith("file://") -> {
+                                    val cleanPath = uri.path // strips "file://"
+                                    BitmapFactory.decodeFile(cleanPath)
+                                }
+
+                                else -> {
+                                    BitmapFactory.decodeFile(fileItem.path)
+                                }
                             }
                         } catch (e: Exception) {
                             Log.e("Compressor", "❌ Error decoding: ${fileItem.path}", e)
@@ -1281,28 +1226,63 @@ fun getDayAndDateOnly(inputDateStr: String): Pair<String, String> {
                         }
 
                         if (bitmap == null) {
+                            Log.e("Compressor", "❌ Bitmap is null for: ${fileItem.path}")
                             onEachProcessed(fileItem, null, false)
                             continue
                         }
 
                         val scaledBitmap = scaleBitmap(bitmap, maxWidth, maxHeight)
-                        val outputFile = File(outputFolder, "SchoolChimes_${System.currentTimeMillis()}.webp")
 
-                        try {
+                        // Select safe compression format and extension
+                        val (safeFormat, extension) = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && format != Bitmap.CompressFormat.JPEG) {
+                            Pair(
+                                format, when (format) {
+                                    Bitmap.CompressFormat.PNG -> "png"
+                                    Bitmap.CompressFormat.WEBP -> "webp"
+                                    else -> "jpg"
+                                }
+                            )
+                        } else {
+                            Pair(Bitmap.CompressFormat.JPEG, "jpg")
+                        }
+
+                        val outputFile = File(
+                            outputFolder,
+                            "SchoolChimes_${System.currentTimeMillis()}.$extension"
+                        )
+                        Log.d(
+                            "Compressor",
+                            "Writing file: ${outputFile.absolutePath}, Format=$safeFormat"
+                        )
+
+                        val success = try {
                             FileOutputStream(outputFile).use { out ->
-                                val success = scaledBitmap.compress(format, quality, out)
+                                val result = scaledBitmap.compress(safeFormat, quality, out)
                                 out.flush()
-                                onEachProcessed(fileItem, outputFile.absolutePath, success)
+                                result
                             }
                         } catch (e: Exception) {
-                            Log.e("Compressor", "❌ Failed to write compressed file: ${outputFile.absolutePath}", e)
+                            Log.e("Compressor", "❌ Failed to write: ${outputFile.absolutePath}", e)
+                            false
+                        }
+
+                        if (success) {
+                            Log.d(
+                                "Compressor",
+                                "✅ Compressed: ${outputFile.absolutePath} (${outputFile.length() / 1024} KB)"
+                            )
+                            onEachProcessed(fileItem, outputFile.absolutePath, true)
+                        } else {
+                            Log.e("Compressor", "❌ Compress failed for: ${fileItem.path}")
                             onEachProcessed(fileItem, null, false)
                         }
+
                     } catch (e: Exception) {
                         Log.e("Compressor", "❌ Exception compressing ${fileItem.path}", e)
                         onEachProcessed(fileItem, null, false)
                     }
                 } else {
+                    // Non-image, pass original path
                     onEachProcessed(fileItem, fileItem.path, true)
                 }
             }
@@ -1321,7 +1301,7 @@ fun getDayAndDateOnly(inputDateStr: String): Pair<String, String> {
         val newWidth: Int
         val newHeight: Int
 
-        if (maxWidth / ratio <= maxHeight) {
+        if (ratio > 1) {
             newWidth = maxWidth
             newHeight = (maxWidth / ratio).toInt()
         } else {
@@ -1332,7 +1312,9 @@ fun getDayAndDateOnly(inputDateStr: String): Pair<String, String> {
         return Bitmap.createScaledBitmap(bitmap, newWidth, newHeight, true)
     }
 
-    fun showNotificationPermissionDialog(packageName: String, activity: Activity,isTitle: String,isContent: String) {
+    fun showNotificationPermissionDialog(
+        packageName: String, activity: Activity, isTitle: String, isContent: String
+    ) {
         AlertDialog.Builder(activity).setTitle(isTitle)
             .setMessage(isContent)
             .setPositiveButton("Go to Settings") { dialog, _ ->
@@ -1375,11 +1357,13 @@ fun getDayAndDateOnly(inputDateStr: String): Pair<String, String> {
 //                Toast.makeText(activity, "No biometric features available on this device.", Toast.LENGTH_LONG).show()
                 false
             }
+
             BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
                 SharedPreference.setFingerprintEnabled(activity, false)
 //                Toast.makeText(activity, "Biometric features are currently unavailable.", Toast.LENGTH_LONG).show()
                 false
             }
+
             BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
                 SharedPreference.setFingerprintEnabled(activity, false)
                 false
@@ -1425,6 +1409,7 @@ fun getDayAndDateOnly(inputDateStr: String): Pair<String, String> {
                                 }
                                 .show()
                         }
+
                         else -> {
                             Toast.makeText(
                                 activity,

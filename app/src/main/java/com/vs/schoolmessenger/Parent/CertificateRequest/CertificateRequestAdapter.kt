@@ -1,12 +1,21 @@
 package com.vs.schoolmessenger.Parent.CertificateRequest
 
+import android.R.id.bold
 import android.content.Context
+import android.graphics.Color
+import android.graphics.PorterDuff
 import android.view.LayoutInflater
 import android.view.View
+import androidx.core.text.buildSpannedString
+import androidx.core.text.bold
+import androidx.core.text.color
+
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.core.text.buildSpannedString
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
@@ -62,6 +71,8 @@ class CertificateRequestAdapter (
         private val rytStatus: RelativeLayout = itemView.findViewById(R.id.rytStatus)
         private val rytDownload: RelativeLayout = itemView.findViewById(R.id.rytDownload)
 
+        private val icon: ImageView = itemView.findViewById(R.id.icon)
+
         fun bind(
             data: CertificateListData,
             position: Int,
@@ -69,7 +80,11 @@ class CertificateRequestAdapter (
             adapter: CertificateRequestAdapter
         ) {
             certificate_value.text = data.type
-            reason_value.text = data.reason
+            reason_value.text = buildSpannedString {
+                bold { color(Color.BLACK) { append("Reason : ") } }
+                append(data.reason)
+            }
+
             created_value.text =  Constant.convertDateTimeFormat(data.requested_on)
             lblStatus.text = data.status
             lblStatus.text = data.status
@@ -83,9 +98,12 @@ class CertificateRequestAdapter (
 
             if(data.status.equals("Approved")) {
                 rytStatus.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_leave_approved))
+                icon.setImageResource(R.drawable.checkimage)
             }
             else {
                 rytStatus.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_leave_waiting))
+                icon.setImageResource(R.drawable.sandclockicon)
+                icon.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN)
             }
 
         }

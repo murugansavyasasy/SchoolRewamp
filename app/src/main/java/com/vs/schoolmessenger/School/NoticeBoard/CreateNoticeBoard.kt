@@ -72,7 +72,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
 
     }
 
-
     private var cameraImageFilePath: String? = null
     private val CAMERA_PERMISSION_REQUEST_CODE = 200
     private var mAdapter: ImagePickingAdapter? = null
@@ -675,9 +674,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
 
         val noticeboardDetails = NoticeBoardDetails(title, description, txtStartDate, txtEndDate)
 
-//        if (Constant.selectedFiles.isNotEmpty()) {
-//            Constant.selectedFiles.removeAt(0)
-//        }
         val intent = Intent(this, SchoolList::class.java)
         intent.putExtra(Constant.notice_data, noticeboardDetails)
         startActivity(intent)

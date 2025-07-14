@@ -273,7 +273,6 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
             }
         } else {
             ProgressDialogHelper.show(this)
-//            binding.circularProgressView.visibility = View.VISIBLE
             val outputDir =
                 File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "CompressedOutput")
             val newSelectedFiles = mutableListOf<FileItem>()
@@ -282,7 +281,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                 context = this,
                 files = Constant.selectedFiles,
                 outputDir = outputDir.absolutePath,
-                format = Bitmap.CompressFormat.WEBP_LOSSY,
+                format = Bitmap.CompressFormat.JPEG,
                 quality = 80,
                 maxWidth = 1280,
                 maxHeight = 1280,

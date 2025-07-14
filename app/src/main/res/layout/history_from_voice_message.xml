@@ -158,37 +158,41 @@
 
                 <RelativeLayout
                     android:id="@+id/rlaSendVoice"
-                    android:layout_width="@dimen/seventy"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/eighty"
+                    android:layout_height="@dimen/thirty_five"
                     android:layout_below="@+id/relative_layout"
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="@dimen/ten"
                     android:layout_marginBottom="@dimen/eight"
                     android:background="@drawable/rect_blue_and_green_small_radious"
-                    android:gravity="center"
                     android:padding="@dimen/five"
                     android:visibility="gone">
 
-                    <ImageView
-                        android:id="@+id/imgSend"
-                        android:layout_width="@dimen/fifteen"
-                        android:layout_height="@dimen/fifteen"
-                        android:layout_centerVertical="true"
-                        android:layout_marginEnd="@dimen/five"
-                        android:src="@drawable/send_icon_white">
-                    </ImageView>
-
-                    <TextView
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:layout_toEndOf="@+id/imgSend"
-                        android:fontFamily="@font/poppins_medium"
-                        android:text="@string/select"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/thirteen_sp"
-                        android:textStyle="bold">
-                    </TextView>
+                        android:layout_marginTop="@dimen/two"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/imgSend"
+                            android:layout_width="@dimen/fifteen"
+                            android:layout_height="@dimen/fifteen"
+                            android:layout_marginEnd="@dimen/five"
+                            android:layout_marginStart="@dimen/five"
+                            android:contentDescription="@string/send"
+                            android:src="@drawable/send_icon_white" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_medium"
+                            android:text="@string/select"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/thirteen_sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
                 </RelativeLayout>
 
             </RelativeLayout>
