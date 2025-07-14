@@ -12,11 +12,21 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/headerrecyclerview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/eight"
         android:layout_below="@+id/toolbarLayout"
+        android:layout_marginTop="@dimen/five"
+        android:layout_marginBottom="16dp"/>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/footerrecyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/eight"
+        android:layout_below="@+id/headerrecyclerview"
         android:layout_marginTop="@dimen/five"
         android:layout_marginBottom="16dp"/>
 
