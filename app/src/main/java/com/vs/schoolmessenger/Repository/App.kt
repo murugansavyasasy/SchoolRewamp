@@ -25,6 +25,9 @@ import com.vs.schoolmessenger.Parent.Coupon.CouponModel.TicketActivateCouponSumm
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.TicketCouponSummary.TicketSummaryResponse
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventResponse
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.HolidayResponse
+import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkModel.ExamResponse
+import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkResultsModel.ExamMarksResponse
+import com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamTimeTableResponse
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.ChatModel.AnswerResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.InteractionWithStaffResponse
@@ -223,6 +226,9 @@ class App(application: Application) : AndroidViewModel(application) {
     var getdetailsforchat: LiveData<InteractionWithStaffResponse?>? = null
     var getstaffanswers: LiveData<AnswerResponse?>? = null
     var sendquestion: LiveData<QuestionModelResponse?>? = null
+    var getexams: LiveData<ExamTimeTableResponse?>? = null
+    var getexamslist: LiveData<ExamResponse?>? = null
+    var getviewmarks: LiveData<ExamMarksResponse?>? = null
 
 
     fun init() {
@@ -308,6 +314,9 @@ class App(application: Application) : AndroidViewModel(application) {
         getdetailsforchat = apiParentRepositories.getdetailsforchatLiveData
         getstaffanswers = apiParentRepositories.getstaffanswersLiveData
         sendquestion = apiParentRepositories.sendquestionLiveData
+        getexams = apiParentRepositories.getexamsLiveData
+        getexamslist = apiParentRepositories.getexamslistLiveData
+        getviewmarks = apiParentRepositories.getviewmarksLiveData
 
     }
 
@@ -766,6 +775,25 @@ class App(application: Application) : AndroidViewModel(application) {
         request: QuestionModelRequest
     ) {
         apiParentRepositories.sendquestion(isToken, request)
+    }
+    fun getexams(
+        isToken: String
+    ) {
+        apiParentRepositories.getexams(isToken)
+    }
+
+    fun getexamslist(
+        isToken: String
+    ) {
+        apiParentRepositories.getexamslist(isToken)
+    }
+
+
+    fun getviewmarks(
+        isToken: String,
+        exam_id: String
+    ) {
+        apiParentRepositories.getviewmarks(isToken,exam_id)
     }
 
 }

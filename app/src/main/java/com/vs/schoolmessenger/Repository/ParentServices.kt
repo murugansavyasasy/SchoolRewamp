@@ -9,6 +9,9 @@ import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentResponse
 import com.vs.schoolmessenger.Parent.Attendance.ChildAttendanceResponse
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesListResponse
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesTypesResponse
+import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkModel.ExamResponse
+import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkResultsModel.ExamMarksResponse
+import com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamTimeTableResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.ChatModel.AnswerResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.InteractionWithStaffResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.QuestionModelResponse
@@ -32,6 +35,9 @@ class ParentServices {
     var getdetailsforchat: MutableLiveData<InteractionWithStaffResponse?>
     var getstaffanswers: MutableLiveData<AnswerResponse?>
     var sendquestion: MutableLiveData<QuestionModelResponse?>
+    var getexams: MutableLiveData<ExamTimeTableResponse?>
+    var getexamslist: MutableLiveData<ExamResponse?>
+    var getviewmarks: MutableLiveData<ExamMarksResponse?>
 
     init {
         client_auth = RestClient()
@@ -46,6 +52,9 @@ class ParentServices {
         getdetailsforchat = MutableLiveData()
         getstaffanswers = MutableLiveData()
         sendquestion = MutableLiveData()
+        getexams = MutableLiveData()
+        getexamslist = MutableLiveData()
+        getviewmarks = MutableLiveData()
     }
 
     fun getChildAttendanceReport(
@@ -510,6 +519,139 @@ class ParentServices {
     val sendquestionLiveData: LiveData<QuestionModelResponse?>
         get() = sendquestion
 
+
+
+    fun getexams(
+        isToken: String
+    ) {
+        RestClient.apiInterfaces.getexams(isToken)
+            ?.enqueue(object : Callback<ExamTimeTableResponse?> {
+                override fun onResponse(
+                    call: Call<ExamTimeTableResponse?>,
+                    response: Response<ExamTimeTableResponse?>
+                ) {
+                    Log.d(
+                        "certificate list Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                getexams.postValue(response.body())
+                            } else {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                getexams.postValue(response.body())
+                            }
+                        }
+                    }
+                    else{
+                        getexams.postValue(null)
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<ExamTimeTableResponse?>,
+                    t: Throwable
+                ) {
+                    getexams.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val getexamsLiveData: LiveData<ExamTimeTableResponse?>
+        get() = getexams
+
+
+    fun getexamslist(
+        isToken: String
+    ) {
+        RestClient.apiInterfaces.getexamslist(isToken)
+            ?.enqueue(object : Callback<ExamResponse?> {
+                override fun onResponse(
+                    call: Call<ExamResponse?>,
+                    response: Response<ExamResponse?>
+                ) {
+                    Log.d(
+                        "certificate list Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                getexamslist.postValue(response.body())
+                            } else {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                getexamslist.postValue(response.body())
+                            }
+                        }
+                    }
+                    else{
+                        getexamslist.postValue(null)
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<ExamResponse?>,
+                    t: Throwable
+                ) {
+                    getexamslist.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val getexamslistLiveData: LiveData<ExamResponse?>
+        get() = getexamslist
+
+
+    fun getviewmarks(
+        isToken: String,
+        exam_id: String
+    ) {
+        RestClient.apiInterfaces.getviewmarks(isToken,exam_id)
+            ?.enqueue(object : Callback<ExamMarksResponse?> {
+                override fun onResponse(
+                    call: Call<ExamMarksResponse?>,
+                    response: Response<ExamMarksResponse?>
+                ) {
+                    Log.d(
+                        "certificate list Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                getviewmarks.postValue(response.body())
+                            } else {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                getviewmarks.postValue(response.body())
+                            }
+                        }
+                    }
+                    else{
+                        getviewmarks.postValue(null)
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<ExamMarksResponse?>,
+                    t: Throwable
+                ) {
+                    getviewmarks.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val getviewmarksLiveData: LiveData<ExamMarksResponse?>
+        get() = getviewmarks
 
 
 }

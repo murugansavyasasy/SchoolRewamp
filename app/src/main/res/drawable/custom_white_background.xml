@@ -1,0 +1,25 @@
+<!-- res/drawable/bg_fee_card.xml -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Base white background with gray border -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@android:color/white" />
+            <corners android:radius="10dp" />
+            <stroke
+                android:width="1dp"
+                android:color="#87878a" />
+        </shape>
+    </item>
+
+    <!-- Top colored strip -->
+    <item android:top="0dp" android:height="6dp">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/navi_blue6" />
+            <corners
+                android:topLeftRadius="10dp"
+                android:topRightRadius="10dp" />
+        </shape>
+    </item>
+
+</layer-list>

@@ -35,6 +35,9 @@ import com.vs.schoolmessenger.Parent.Coupon.CouponRequestModel.CouponDetailsRequ
 import com.vs.schoolmessenger.Parent.Coupon.CouponRequestModel.CouponSummaryRequest
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventResponse
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.HolidayResponse
+import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkModel.ExamResponse
+import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkResultsModel.ExamMarksResponse
+import com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamTimeTableResponse
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.ChatModel.AnswerResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.InteractionWithStaffResponse
@@ -584,6 +587,25 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String,
         @Body request: QuestionModelRequest,
     ): Call<QuestionModelResponse?>?
+
+
+    @GET(APIMethods.get_exams)
+    fun getexams(
+        @Header(APIKeyNames.Authorization) token: String
+    ): Call<ExamTimeTableResponse?>?
+
+
+    @GET(APIMethods.exam_list)
+    fun getexamslist(
+        @Header(APIKeyNames.Authorization) token: String
+    ): Call<ExamResponse?>?
+
+
+    @GET(APIMethods.view_marks)
+    fun getviewmarks(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query (APIKeyNames.exam_id) exam_id: String
+    ): Call<ExamMarksResponse?>?
 
 
 }

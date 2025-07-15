@@ -23,8 +23,7 @@
             android:text="@string/subject_name"
             android:textSize="@dimen/thirteen_sp"
             android:textColor="@color/black"
-            android:fontFamily="@font/poppins_medium"
-            android:textStyle="bold">
+            style="@style/CustomTextStylePoppinsBold">
         </TextView>
 
         <TextView
@@ -33,10 +32,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.80"
             android:text="80 /100"
-            android:textStyle="bold"
+         style="@style/CustomTextStylePoppinsBold"
             android:textSize="@dimen/thirteen_sp"
             android:textColor="@color/black"
-            android:fontFamily="@font/poppins_medium">
+         >
         </TextView>
 
 
@@ -52,14 +51,14 @@
         <ProgressBar
             android:layout_weight="0.9"
             android:id="@+id/progressBarOutOf100"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="@dimen/zero"
+            android:layout_width="match_parent"
             android:layout_marginStart="@dimen/ten"
-            android:layout_height="@dimen/ten"
-            android:max="100"
-            android:progress="0"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_height="10dp"
             android:progressDrawable="@android:drawable/progress_horizontal"
-            android:progressTint="@color/black" />
+            android:progressTint="@color/azure_radiance" />
+
+
         <ImageView
             android:layout_weight="0.1"
             android:src="@drawable/arrow_down_round"

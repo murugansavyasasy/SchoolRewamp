@@ -4,5 +4,5 @@ import com.vs.schoolmessenger.Dashboard.Parent.ExamMarkAdapter
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificateRequestAdapter
 
 interface ExamMarkListener  {
-    fun onItemClick(data: ExamMarkDataModel, holder: ExamMarkResultsAdapter.DataViewHolder)
+   fun onSearchResultEmpty(isEmpty: Boolean)
 }

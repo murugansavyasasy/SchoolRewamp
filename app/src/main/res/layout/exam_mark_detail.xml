@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
@@ -10,51 +11,9 @@
         android:id="@+id/toolbarLayout"
         layout="@layout/parent_side_tool_bar" />
 
-    <LinearLayout
-        android:id="@+id/search"
-        android:layout_below="@+id/toolbarLayout"
-        android:layout_margin="@dimen/twenty_five"
-        android:background="@drawable/search_bg"
-        android:weightSum="1"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/fourty">
 
-        <ImageView
-            android:layout_marginStart="@dimen/zero"
-            android:layout_weight="0.1"
-            android:layout_width="@dimen/zero"
-            android:src="@drawable/search_icon"
-            android:layout_height="@dimen/twenty_five">
-        </ImageView>
-
-        <EditText
-            android:id="@+id/searchText"
-            android:textSize="@dimen/sixteen_sp"
-            android:background="@android:color/transparent"
-            android:layout_weight="0.85"
-            android:layout_width="@dimen/zero"
-            android:hint="@string/lblSearch"
-            android:minHeight="@dimen/fifty"
-            android:textStyle="normal"
-            android:fontFamily="@font/poppins_medium"
-            android:layout_height="wrap_content">
-        </EditText>
-
-        <ImageView
-            android:id="@+id/close"
-            android:clickable="true"
-            android:visibility="gone"
-            android:layout_marginEnd="@dimen/ten"
-            android:layout_weight="0.05"
-            android:layout_width="@dimen/zero"
-            android:src="@drawable/close_icon_red"
-            android:layout_height="@dimen/thirty">
-        </ImageView>
-    </LinearLayout>
     <ScrollView
-        android:layout_below="@+id/search"
+        android:layout_below="@+id/toolbarLayout"
         android:layout_width="match_parent"
         android:background="@color/athens_gray"
         android:layout_marginStart="@dimen/ten"
@@ -70,9 +29,9 @@
                 android:layout_marginTop="@dimen/ten"
                 android:id="@+id/examheading"
                 android:layout_width="match_parent"
-                android:text="@string/exam_mark"
+                android:text="Subject Marks"
                 android:textColor="@color/jumbo"
-                android:textStyle="bold"
+                style="@style/CustomTextStylePoppinsBold"
                 android:textSize="@dimen/thirteen_sp"
                 android:layout_marginStart="@dimen/fifteen"
                 android:layout_height="wrap_content">
@@ -126,9 +85,8 @@
                             android:layout_weight="0.25"
                             android:text="@string/total"
                             android:textSize="@dimen/fifteen_sp"
-                            android:textStyle="bold"
+                            style="@style/CustomTextStylePoppinsBold"
                             android:textColor="@color/black"
-                            android:fontFamily="@font/poppins_medium"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
@@ -137,7 +95,7 @@
                             android:id="@+id/MarkOutOf500"
                             android:layout_weight="0.75"
                             android:text="372 / 500"
-                            android:textStyle="bold"
+                            style="@style/CustomTextStylePoppinsBold"
                             android:textSize="@dimen/fifteen_sp"
                             android:layout_width="match_parent"
                             android:textColor="@color/black"
@@ -166,33 +124,71 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                         <TextView
+                            android:id="@+id/rankingvalue"
                             android:layout_weight="0.95"
                             android:textSize="@dimen/fourteen_sp"
-                            android:textStyle="bold"
+                            style="@style/CustomTextStylePoppinsBold"
                             android:textColor="@color/black"
-                            android:fontFamily="@font/poppins_medium"
                             android:layout_width="match_parent"
                             android:text="Rank : 8"
                             android:layout_height="wrap_content">
 
                         </TextView>
                         <TextView
+                            android:id="@+id/medalranknumber"
                             android:layout_weight="0.05"
-                            android:textStyle="bold"
-                            android:textSize="@dimen/sixteen_sp"
-                            android:gravity="center"
-                            android:background="@drawable/rank_medal_icon"
                             android:layout_width="@dimen/fourty"
-                            android:layout_height="@dimen/fourty">
+                            android:layout_height="@dimen/fourty"
+                            android:gravity="center_horizontal"
+                            android:text="1"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:textSize="20sp"
+                            android:background="@drawable/rank_medal_icon"
+                            />
 
-                        </TextView>
 
                     </LinearLayout>
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
+            <LinearLayout
+                android:id="@+id/lytList"
+                android:layout_width="match_parent"
+                android:layout_centerInParent="true"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/nomessage"
+                    android:layout_width="@dimen/two_fifty"
+                    android:layout_height="@dimen/two_fifty"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/twenty"
+                    android:src="@drawable/nomessages"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/fifteen_sp"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/txtNoData"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/twenty"
+                    android:gravity="center"
+                    android:text="@string/no_list_found"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/fifteen_sp"
+                    android:visibility="gone" />
+
+
+
+            </LinearLayout>
 
         </RelativeLayout>
+
+
     </ScrollView>
 
 

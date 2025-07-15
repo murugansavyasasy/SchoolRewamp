@@ -13,6 +13,7 @@ object APIKeyNames {
     const val distance = "distance"
     const val all_present = "all_present"
     const val session_type = "session_type"
+    const val exam_id = "exam_id"
     const val attendance_date = "attendance_date"
     const val student_id = "student_id"
     const val is_approve = "is_approve"
