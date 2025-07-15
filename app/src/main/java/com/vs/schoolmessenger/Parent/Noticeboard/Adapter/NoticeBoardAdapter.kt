@@ -41,7 +41,6 @@ class NoticeBoardAdapter(
 
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
-
     private var fullList: List<Notice> = itemList ?: listOf()
     private var filteredList: List<Notice> = itemList ?: listOf()
 
