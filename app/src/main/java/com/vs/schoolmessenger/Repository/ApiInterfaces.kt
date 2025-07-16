@@ -38,6 +38,7 @@ import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.Holida
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkModel.ExamResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkResultsModel.ExamMarksResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamTimeTableResponse
+import com.vs.schoolmessenger.Parent.ExamMarks.ProgressCardResponse
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.ChatModel.AnswerResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.InteractionWithStaffResponse
@@ -622,5 +623,13 @@ interface ApiInterfaces {
     fun isleaverequestdelete(
         @Header(APIKeyNames.Authorization) token: String, @Body request: LeaveRequestDelete
     ): Call<LeaveRequestDeleteResponse?>
+
+
+
+    @GET(APIMethods.progress_card)
+    fun getProgressMarks(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query (APIKeyNames.exam_id) exam_id: String
+    ): Call<ProgressCardResponse?>?
 
 }

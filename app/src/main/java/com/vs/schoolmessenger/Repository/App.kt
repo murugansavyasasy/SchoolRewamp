@@ -28,6 +28,7 @@ import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.Holida
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkModel.ExamResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkResultsModel.ExamMarksResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamTimeTableResponse
+import com.vs.schoolmessenger.Parent.ExamMarks.ProgressCardResponse
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.ChatModel.AnswerResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.InteractionWithStaffResponse
@@ -235,6 +236,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var getviewmarks: LiveData<ExamMarksResponse?>? = null
     var isleaverequestupdate: LiveData<LeaveUpdateResponse?>? = null
     var isleaverequestdelete: LiveData<LeaveRequestDeleteResponse?>? = null
+    var getProgressMarks: LiveData<ProgressCardResponse?>? = null
 
 
     fun init() {
@@ -324,6 +326,7 @@ class App(application: Application) : AndroidViewModel(application) {
         getexamslist = apiParentRepositories.getexamslistLiveData
         getviewmarks = apiParentRepositories.getviewmarksLiveData
         isleaverequestupdate = apiParentRepositories.isleaverequestupdateLiveData
+        getProgressMarks = apiParentRepositories.getProgressMarksLiveData
 
     }
 
@@ -810,6 +813,13 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun isleaverequestdelete(isToken: String, request: LeaveRequestDelete, activity: Activity) {
         apiParentRepositories.isleaverequestdelete(isToken, request, activity)
+    }
+
+    fun getProgressMarks(
+        isToken: String,
+        exam_id: String
+    ) {
+        apiParentRepositories.getProgressMarks(isToken,exam_id)
     }
 }
 

@@ -15,6 +15,7 @@ import android.widget.TextView
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkListener
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkModel.ExamData
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkResults
+import com.vs.schoolmessenger.Parent.ExamMarks.ExamProgressActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 class ExamMarkAdapter(
@@ -90,6 +91,7 @@ class ExamMarkAdapter(
         RecyclerView.ViewHolder(itemView) {
         private val textExamTitle: TextView = itemView.findViewById(R.id.textExamTitle)
         private val btnViewMarks: Button = itemView.findViewById(R.id.btnViewMarks)
+        private val btnViewProgress: Button = itemView.findViewById(R.id.btnViewProgress)
         @SuppressLint("ClickableViewAccessibility")
         fun bind(exam: ExamData, position: Int, adapter: ExamMarkAdapter) {
             textExamTitle.text = exam.name
@@ -99,6 +101,17 @@ class ExamMarkAdapter(
                 intent.putExtra("exam_id", exam.id)
                 context.startActivity(intent)
             }
+            btnViewProgress.setOnClickListener {
+                val context = itemView.context
+                val intent = Intent(context, ExamProgressActivity::class.java)
+                intent.putExtra("exam_id", exam.id)
+                context.startActivity(intent)
+            }
+
+
+
+
+
         }
     }
 

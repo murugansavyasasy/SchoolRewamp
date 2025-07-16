@@ -12,6 +12,7 @@ import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesTypesRespons
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkModel.ExamResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkResultsModel.ExamMarksResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamTimeTableResponse
+import com.vs.schoolmessenger.Parent.ExamMarks.ProgressCardResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.ChatModel.AnswerResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.InteractionWithStaffResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.QuestionModelResponse
@@ -46,6 +47,7 @@ class ParentServices {
     var getviewmarks: MutableLiveData<ExamMarksResponse?>
     var isleaverequestupdate: MutableLiveData<LeaveUpdateResponse?>
     var isleaverequestdelete: MutableLiveData<LeaveRequestDeleteResponse?>
+    var getProgressMarks: MutableLiveData<ProgressCardResponse?>
 
     init {
         client_auth = RestClient()
@@ -65,6 +67,7 @@ class ParentServices {
         getviewmarks = MutableLiveData()
         isleaverequestupdate = MutableLiveData()
         isleaverequestdelete = MutableLiveData()
+        getProgressMarks = MutableLiveData()
     }
 
     fun getChildAttendanceReport(
@@ -741,5 +744,52 @@ class ParentServices {
 
     val isleaverequestdeleteLiveData: LiveData<LeaveRequestDeleteResponse?>
         get() = isleaverequestdelete
+
+
+
+    fun getProgressMarks(
+        isToken: String,
+        exam_id: String
+    ) {
+        RestClient.apiInterfaces.getProgressMarks(isToken,exam_id)
+            ?.enqueue(object : Callback<ProgressCardResponse?> {
+                override fun onResponse(
+                    call: Call<ProgressCardResponse?>,
+                    response: Response<ProgressCardResponse?>
+                ) {
+                    Log.d(
+                        "certificate list Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                getProgressMarks.postValue(response.body())
+                            } else {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                getProgressMarks.postValue(response.body())
+                            }
+                        }
+                    }
+                    else{
+                        getProgressMarks.postValue(null)
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<ProgressCardResponse?>,
+                    t: Throwable
+                ) {
+                    getProgressMarks.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val getProgressMarksLiveData: LiveData<ProgressCardResponse?>
+        get() = getProgressMarks
+
 
 }
