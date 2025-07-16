@@ -1,14 +1,12 @@
 package com.vs.schoolmessenger.Parent.ExamMarks
 
-import android.graphics.Color
-import android.graphics.PorterDuff
+
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkResultsModel.ExamMarkData
-import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkResultsModel.SubjectMark
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
@@ -22,6 +20,7 @@ class ExamMarkResults : BaseActivity<ExamMarkDetailBinding>(), View.OnClickListe
     }
 
     private lateinit var exammarkresultadapter: ExamMarkResultsAdapter
+    private lateinit var examGroupActivity: ExamGroupActivity
     private var exam_id: String = ""
     private var isAccessToken: String? = null
     private var appViewModel: App? = null
@@ -41,7 +40,8 @@ class ExamMarkResults : BaseActivity<ExamMarkDetailBinding>(), View.OnClickListe
             lblParentToolBar.text = Constant.isParentMenuName
             lnrParent.visibility = View.GONE
             lblStudentName.text = childDetails?.name
-            lblStudentSection.text = "${childDetails?.standard_name} - ${childDetails?.section_name}"
+            lblStudentSection.text =
+                "${childDetails?.standard_name} - ${childDetails?.section_name}"
         }
 
         exam_id = intent.getStringExtra("exam_id") ?: ""
@@ -71,6 +71,9 @@ class ExamMarkResults : BaseActivity<ExamMarkDetailBinding>(), View.OnClickListe
             showErrorUI("No exam mark data available")
             return
         }
+
+        val grouplist = data.flatMap { it.groups ?: emptyList() }
+
 
         val allSubjects = data.flatMap { it.subject_marks ?: emptyList() }
 
@@ -105,10 +108,15 @@ class ExamMarkResults : BaseActivity<ExamMarkDetailBinding>(), View.OnClickListe
         binding.nomessage.visibility = View.GONE
         binding.txtNoData.visibility = View.GONE
         binding.ExamMarkRV.visibility = View.VISIBLE
+        binding.GroupCardRV.visibility = View.VISIBLE
 
         binding.ExamMarkRV.layoutManager = LinearLayoutManager(this)
         exammarkresultadapter = ExamMarkResultsAdapter(allSubjects, this, false)
         binding.ExamMarkRV.adapter = exammarkresultadapter
+
+        binding.GroupCardRV.layoutManager = LinearLayoutManager(this)
+        examGroupActivity = ExamGroupActivity(grouplist, this, false)
+        binding.GroupCardRV.adapter = examGroupActivity
     }
 
 
@@ -117,6 +125,7 @@ class ExamMarkResults : BaseActivity<ExamMarkDetailBinding>(), View.OnClickListe
         binding.txtNoData.text = message
         binding.txtNoData.visibility = View.VISIBLE
         binding.ExamMarkRV.visibility = View.GONE
+        binding.GroupCardRV.visibility = View.GONE
     }
 
     private fun fetchexammark() {

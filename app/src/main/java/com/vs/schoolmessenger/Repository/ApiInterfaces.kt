@@ -45,6 +45,10 @@ import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.Qu
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.Request.QuestionModelRequest
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestApplyResponse
+import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestDelete
+import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestDeleteResponse
+import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestUpdate
+import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveUpdateResponse
 import com.vs.schoolmessenger.Parent.Timetable.TimeTableResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.SendAbsenteeSMSResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportDataResponse
@@ -607,5 +611,16 @@ interface ApiInterfaces {
         @Query (APIKeyNames.exam_id) exam_id: String
     ): Call<ExamMarksResponse?>?
 
+    @Headers("Content-Type: application/json")
+    @PUT(APIMethods.isleaverequestupdate)
+    fun isleaverequestupdate(
+        @Header(APIKeyNames.Authorization) token: String, @Body request: LeaveRequestUpdate
+    ): Call<LeaveUpdateResponse?>
+
+    @Headers("Content-Type: application/json")
+    @PUT(APIMethods.isleaverequestdelete)
+    fun isleaverequestdelete(
+        @Header(APIKeyNames.Authorization) token: String, @Body request: LeaveRequestDelete
+    ): Call<LeaveRequestDeleteResponse?>
 
 }

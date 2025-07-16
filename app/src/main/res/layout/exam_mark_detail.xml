@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     android:background="@color/white"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:fitsSystemWindows="true">
 
     <include
         android:id="@+id/toolbarLayout"
@@ -13,149 +12,197 @@
 
 
     <ScrollView
-        android:layout_below="@+id/toolbarLayout"
         android:layout_width="match_parent"
-        android:background="@color/athens_gray"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbarLayout"
         android:layout_marginStart="@dimen/ten"
-        android:layout_marginBottom="@dimen/twenty_five"
         android:layout_marginEnd="@dimen/ten"
-        android:layout_height="match_parent">
+        android:layout_marginBottom="@dimen/twenty_five"
+        android:background="@color/athens_gray">
 
         <RelativeLayout
-            android:layout_marginBottom="@dimen/fifty"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/fifty">
+
             <TextView
-                android:layout_marginTop="@dimen/ten"
                 android:id="@+id/examheading"
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginTop="@dimen/ten"
                 android:text="Subject Marks"
                 android:textColor="@color/jumbo"
-                style="@style/CustomTextStylePoppinsBold"
-                android:textSize="@dimen/thirteen_sp"
-                android:layout_marginStart="@dimen/fifteen"
-                android:layout_height="wrap_content">
+                android:textSize="@dimen/thirteen_sp">
 
             </TextView>
+
             <androidx.cardview.widget.CardView
-                app:cardCornerRadius="@dimen/ten"
                 android:id="@+id/examMarkCard"
                 android:layout_width="match_parent"
-                android:layout_marginStart="@dimen/fifteen"
-                android:layout_marginEnd="@dimen/fifteen"
-                android:layout_marginTop="@dimen/fifteen"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/examheading"
-                app:cardElevation="@dimen/five"
-                android:layout_height="wrap_content">
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginTop="@dimen/fifteen"
+                android:layout_marginEnd="@dimen/fifteen"
+                app:cardCornerRadius="@dimen/ten"
+                app:cardElevation="@dimen/five">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="match_parent"
                     android:id="@+id/ExamMarkRV"
-                    android:layout_margin="@dimen/ten"
-                    android:layout_height="wrap_content">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/ten">
 
                 </androidx.recyclerview.widget.RecyclerView>
 
             </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/groupheading"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_below="@+id/examMarkCard"
+                android:layout_marginTop="@dimen/ten"
+                android:text="Group Evaluation"
+                android:textColor="@color/jumbo"
+                android:textSize="@dimen/thirteen_sp">
+
+            </TextView>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/groupcard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/groupheading"
+                android:layout_marginStart="@dimen/fifteen"
+                android:layout_marginTop="@dimen/fifteen"
+                android:layout_marginEnd="@dimen/fifteen"
+                app:cardCornerRadius="@dimen/ten"
+                app:cardElevation="@dimen/five">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/GroupCardRV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/ten">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+            </androidx.cardview.widget.CardView>
+
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/examRankCard"
-                app:cardCornerRadius="@dimen/ten"
                 android:layout_width="match_parent"
-                android:layout_marginTop="@dimen/five"
-                android:layout_below="@+id/examMarkCard"
-                app:cardElevation="@dimen/five"
-                android:layout_marginBottom="@dimen/ten"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/groupcard"
                 android:layout_alignStart="@+id/examMarkCard"
                 android:layout_alignEnd="@+id/examMarkCard"
-                android:layout_height="wrap_content">
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="@dimen/ten"
+                app:cardCornerRadius="@dimen/ten"
+                app:cardElevation="@dimen/five">
+
                 <LinearLayout
-                    android:layout_marginBottom="@dimen/ten"
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/ten"
+                    android:orientation="vertical">
+
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:orientation="horizontal"
-                        android:weightSum="1"
-                        android:gravity="center"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/ten"
-                        android:layout_height="wrap_content">
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
                         <TextView
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/fifteen"
                             android:layout_weight="0.25"
                             android:text="@string/total"
-                            android:textSize="@dimen/fifteen_sp"
-                            style="@style/CustomTextStylePoppinsBold"
                             android:textColor="@color/black"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:textSize="@dimen/fifteen_sp">
 
                         </TextView>
+
                         <TextView
                             android:id="@+id/MarkOutOf500"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_weight="0.75"
                             android:text="372 / 500"
-                            style="@style/CustomTextStylePoppinsBold"
-                            android:textSize="@dimen/fifteen_sp"
-                            android:layout_width="match_parent"
                             android:textColor="@color/black"
-                            android:layout_height="wrap_content">
+                            android:textSize="@dimen/fifteen_sp">
                         </TextView>
 
 
                     </LinearLayout>
+
                     <ProgressBar
-                        android:layout_marginTop="@dimen/fifteen"
                         android:id="@+id/progressBarOutOf500"
                         style="?android:attr/progressBarStyleHorizontal"
                         android:layout_width="match_parent"
-                        android:layout_marginStart="@dimen/ten"
-                        android:layout_marginEnd="@dimen/fifty"
                         android:layout_height="@dimen/ten"
+                        android:layout_marginStart="@dimen/ten"
+                        android:layout_marginTop="@dimen/fifteen"
+                        android:layout_marginEnd="@dimen/fifty"
                         android:max="100"
                         android:progress="0"
                         android:progressDrawable="@android:drawable/progress_horizontal"
                         android:progressTint="@color/azure_radiance" />
+
                     <LinearLayout
-                        android:layout_margin="@dimen/ten"
-                        android:orientation="horizontal"
-                        android:weightSum="1"
-                        android:gravity="center"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/ten"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
                         <TextView
                             android:id="@+id/rankingvalue"
-                            android:layout_weight="0.95"
-                            android:textSize="@dimen/fourteen_sp"
                             style="@style/CustomTextStylePoppinsBold"
-                            android:textColor="@color/black"
                             android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.95"
                             android:text="Rank : 8"
-                            android:layout_height="wrap_content">
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/fourteen_sp">
 
                         </TextView>
+
                         <TextView
                             android:id="@+id/medalranknumber"
-                            android:layout_weight="0.05"
+                            style="@style/CustomTextStylePoppinsBold"
                             android:layout_width="@dimen/fourty"
                             android:layout_height="@dimen/fourty"
+                            android:layout_weight="0.05"
+                            android:background="@drawable/rank_medal_icon"
                             android:gravity="center_horizontal"
                             android:text="1"
-                            style="@style/CustomTextStylePoppinsBold"
-                            android:textSize="20sp"
-                            android:background="@drawable/rank_medal_icon"
-                            />
+                            android:textSize="20sp" />
 
 
                     </LinearLayout>
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
+
             <LinearLayout
                 android:id="@+id/lytList"
                 android:layout_width="match_parent"
-                android:layout_centerInParent="true"
                 android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
                 android:orientation="vertical">
 
                 <ImageView
@@ -183,14 +230,12 @@
                     android:visibility="gone" />
 
 
-
             </LinearLayout>
 
         </RelativeLayout>
 
 
     </ScrollView>
-
 
 
 </RelativeLayout>

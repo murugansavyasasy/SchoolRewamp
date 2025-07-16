@@ -43,19 +43,18 @@ class TimeTableDayAdapter  (
         } else {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_day, parent, false)
-            DataViewHolder(view, context) // Pass context to DataViewHolder
+            DataViewHolder(view, context)
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
-            // Bind actual data when loading is complete
-            holder.bind(itemList!![position], position, listener, this) // Pass adapter reference
+            holder.bind(itemList!![position], position, listener, this)
         }
     }
 
     override fun getItemCount(): Int {
-        return if (isLoading) 20 // Show shimmer items while loading
+        return if (isLoading) 20
         else itemList?.size ?: 0
     }
 
@@ -74,7 +73,7 @@ class TimeTableDayAdapter  (
             day_values.text = data.day_values
 
             if (adapter.selectedPosition == position) {
-                btnDay.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_light_green_radious))
+                btnDay.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_light_blue))
             } else {
                 btnDay.setBackgroundDrawable(context.resources.getDrawable(R.drawable.bg_leave_grey))
             }
@@ -90,7 +89,7 @@ class TimeTableDayAdapter  (
             private val shimmerLayout: ShimmerFrameLayout =
                 itemView.findViewById(R.id.shimmer_view_container)
             init {
-                shimmerLayout.startShimmer() // Start shimmer effect
+                shimmerLayout.startShimmer()
             }
         }
     }

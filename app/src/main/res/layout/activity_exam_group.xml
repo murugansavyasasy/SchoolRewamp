@@ -31,11 +31,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.80"
-            android:text="80 /100"
-         style="@style/CustomTextStylePoppinsBold"
+            android:text="80"
+            android:gravity="end"
+            style="@style/CustomTextStylePoppinsBold"
             android:textSize="@dimen/thirteen_sp"
             android:textColor="@color/black"
-         >
+            >
         </TextView>
 
 

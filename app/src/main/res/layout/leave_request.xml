@@ -10,73 +10,41 @@
         android:id="@+id/toolbarLayout"
         layout="@layout/parent_side_tool_bar" />
 
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayoutStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbarLayout"
+        android:layout_marginTop="@dimen/ten"
+        android:visibility="gone"
+        android:background="@color/white"
+        app:tabIndicatorColor="@color/skydark_blue"
+        app:tabSelectedTextColor="@color/skydark_blue"
+        app:tabBackground="@color/grey_mild"
+        app:tabTextColor="@color/black"
+        app:tabMode="fixed"
+        app:tabGravity="fill"/>
+
+
+
+
     <RelativeLayout
         android:id="@+id/rlaHistory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbarLayout"
+        android:layout_below="@+id/tabLayoutStatus"
+        android:layout_marginTop="10dp"
         android:visibility="gone">
 
-        <LinearLayout
-            android:id="@+id/lnrStatusBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/ten"
-            android:visibility="gone"
-            android:background="@color/mild_grey2"
-            android:orientation="horizontal"
-            android:padding="@dimen/ten"
-            android:weightSum="3">
-
-            <TextView
-                style="@style/CustomTextStyleAttendanceReportDashBoard"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/from"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp"
-                android:textStyle="bold">
-
-            </TextView>
-
-            <TextView
-                style="@style/CustomTextStyleAttendanceReportDashBoard"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/to"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp"
-                android:textStyle="bold">
-
-            </TextView>
-
-            <TextView
-                style="@style/CustomTextStyleAttendanceReportDashBoard"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/status"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp"
-                android:textStyle="bold">
-
-            </TextView>
-        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcyLeaveRequestHistory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lnrStatusBar"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/ten"
             android:layout_marginEnd="@dimen/ten">
-
         </androidx.recyclerview.widget.RecyclerView>
 
         <LinearLayout
@@ -426,6 +394,23 @@
                         android:fontFamily="@font/poppins_bold"
                         android:gravity="center"
                         android:text="@string/submit"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/thirteen_sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/btnupdate"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/fourty"
+                        android:layout_below="@+id/lbTextCount"
+                        android:layout_marginStart="@dimen/ten"
+                        android:layout_marginTop="@dimen/thirty"
+                        android:layout_marginEnd="@dimen/ten"
+                        android:background="@drawable/rect_btn_orange"
+                        android:fontFamily="@font/poppins_bold"
+                        android:gravity="center"
+                        android:text="Update"
+                        android:visibility="gone"
                         android:textColor="@color/white"
                         android:textSize="@dimen/thirteen_sp"
                         android:textStyle="bold" />

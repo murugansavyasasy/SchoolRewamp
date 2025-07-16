@@ -86,6 +86,85 @@
 
         </LinearLayout>
 
+
+
+            <ImageView
+                android:id="@+id/options"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:gravity="center"
+                android:visibility="gone"
+                android:src="@drawable/threedot" />
+
+        <RelativeLayout
+            android:id="@+id/relbuttons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:background="@drawable/rect_shadow_white_2"
+            android:visibility="gone"
+            android:layout_marginEnd="@dimen/five"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/deletebutton"
+                android:layout_width="@dimen/eighty"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:gravity="center_vertical"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/del_icon"
+                android:layout_marginEnd="6dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Delete"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/editbutton"
+                android:layout_width="@dimen/eighty"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@id/deletebutton"
+                android:layout_alignStart="@id/deletebutton"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="10dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/edit_icon"
+                android:layout_marginEnd="6dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Edit"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:textSize="15sp" />
+            </LinearLayout>
+        </RelativeLayout>
+
         <LinearLayout
             android:id="@+id/lnrButtons"
             android:layout_width="wrap_content"
@@ -93,6 +172,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:gravity="center"
+            android:visibility="visible"
             android:layout_marginEnd="@dimen/five"
             android:orientation="vertical">
 

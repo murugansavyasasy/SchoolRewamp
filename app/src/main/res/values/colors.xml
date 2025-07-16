@@ -46,6 +46,8 @@
 
 
     <color name="light_gray">#616159</color>
+    <color name="light_sky_blue_color">#bde6fc</color>
+    <color name="gray_color">#f2f1f6</color>
     <color name="clr_green">#16C117</color>
     <color name="bpWhite">#ffffff</color>
     <color name="teacher_clr_grey_dark">#4B4B4D</color>

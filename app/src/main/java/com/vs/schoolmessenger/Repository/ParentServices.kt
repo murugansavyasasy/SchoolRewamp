@@ -17,7 +17,13 @@ import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.InteractionWithS
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.QuestionModelResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.Request.QuestionModelRequest
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestApplyResponse
+import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestDelete
+import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestDeleteResponse
+import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestUpdate
+import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveUpdateResponse
 import com.vs.schoolmessenger.Parent.Timetable.TimeTableResponse
+import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
+import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveActionResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -38,6 +44,8 @@ class ParentServices {
     var getexams: MutableLiveData<ExamTimeTableResponse?>
     var getexamslist: MutableLiveData<ExamResponse?>
     var getviewmarks: MutableLiveData<ExamMarksResponse?>
+    var isleaverequestupdate: MutableLiveData<LeaveUpdateResponse?>
+    var isleaverequestdelete: MutableLiveData<LeaveRequestDeleteResponse?>
 
     init {
         client_auth = RestClient()
@@ -55,6 +63,8 @@ class ParentServices {
         getexams = MutableLiveData()
         getexamslist = MutableLiveData()
         getviewmarks = MutableLiveData()
+        isleaverequestupdate = MutableLiveData()
+        isleaverequestdelete = MutableLiveData()
     }
 
     fun getChildAttendanceReport(
@@ -653,5 +663,83 @@ class ParentServices {
     val getviewmarksLiveData: LiveData<ExamMarksResponse?>
         get() = getviewmarks
 
+
+
+    fun isleaverequestupdate(
+        isToken: String, request: LeaveRequestUpdate, activity: Activity
+    ) {
+        RestClient.apiInterfaces.isleaverequestupdate(isToken, request)
+            ?.enqueue(object : Callback<LeaveUpdateResponse?> {
+                override fun onResponse(
+                    call: Call<LeaveUpdateResponse?>, response: Response<LeaveUpdateResponse?>
+                ) {
+                    Log.d(
+                        "isGetCountryList", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isleaverequestupdate.postValue(response.body())
+                            } else {
+                                isleaverequestupdate.postValue(response.body())
+                            }
+                        }
+                    } else {
+                        isleaverequestupdate.postValue(null)
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<LeaveUpdateResponse?>,
+                    t: Throwable
+                ) {
+                    isleaverequestupdate.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isleaverequestupdateLiveData: LiveData<LeaveUpdateResponse?>
+        get() = isleaverequestupdate
+
+
+    fun isleaverequestdelete(
+        isToken: String, request: LeaveRequestDelete, activity: Activity
+    ) {
+        RestClient.apiInterfaces.isleaverequestdelete(isToken, request)
+            ?.enqueue(object : Callback<LeaveRequestDeleteResponse?> {
+                override fun onResponse(
+                    call: Call<LeaveRequestDeleteResponse?>, response: Response<LeaveRequestDeleteResponse?>
+                ) {
+                    Log.d(
+                        "isGetCountryList", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isleaverequestdelete.postValue(response.body())
+                            } else {
+                                isleaverequestdelete.postValue(response.body())
+                            }
+                        }
+                    } else {
+                        isleaverequestdelete.postValue(null)
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<LeaveRequestDeleteResponse?>,
+                    t: Throwable
+                ) {
+                    isleaverequestdelete.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isleaverequestdeleteLiveData: LiveData<LeaveRequestDeleteResponse?>
+        get() = isleaverequestdelete
 
 }

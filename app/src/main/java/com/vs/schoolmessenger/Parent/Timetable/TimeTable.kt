@@ -45,13 +45,14 @@ class TimeTable : BaseActivity<TimeTableBinding>(),
         setupRecyclerViewDays()
         loadHardcodedDays()
 
-        // Toolbar setup
+
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.toolbarLayout.lblParentToolBar.text = Constant.isParentMenuName
         binding.toolbarLayout.rytSearch.visibility = View.GONE
         isChildDetails = SharedPreference.getChildDetails(this)
         binding.toolbarLayout.lblStudentName.text = isChildDetails?.name ?: ""
-        binding.toolbarLayout.lblStudentSection.text = isChildDetails?.standard_name+ " - " +isChildDetails?.section_name
+        binding.toolbarLayout.lblStudentSection.text =
+            isChildDetails?.standard_name + " - " + isChildDetails?.section_name
 
         isAccessToken = isChildDetails?.access_token
         appViewModel = ViewModelProvider(this)[App::class.java]
@@ -61,13 +62,12 @@ class TimeTable : BaseActivity<TimeTableBinding>(),
         appViewModel!!.isTimeTabletList?.observe(this) { response ->
             if (response != null && response.status) {
                 timeTableDataList = response.data
-                if(timeTableDataList.isNotEmpty()) {
+                if (timeTableDataList.isNotEmpty()) {
                     binding.recyclerView.visibility = View.VISIBLE
                     binding.lnrNoRecords.visibility = View.GONE
                     setupRecyclerView()
                 }
-            }
-            else{
+            } else {
                 binding.recyclerView.visibility = View.GONE
                 binding.lnrNoRecords.visibility = View.VISIBLE
                 binding.txtNoData.text = "No data found!"
@@ -78,7 +78,7 @@ class TimeTable : BaseActivity<TimeTableBinding>(),
     private fun loadTimeTable() {
         showShimmer()
         appViewModel?.getTimeTable(
-            isAccessToken.orEmpty(),day_id!!, activity = this
+            isAccessToken.orEmpty(), day_id!!, activity = this
         )
     }
 
@@ -88,7 +88,7 @@ class TimeTable : BaseActivity<TimeTableBinding>(),
                 data: TimeTableListData,
                 holder: TimeTableAdapter.DataViewHolder
             ) {
-                // Handle item click
+
             }
         }, this, Constant.isShimmerViewShow)
 
@@ -104,7 +104,7 @@ class TimeTable : BaseActivity<TimeTableBinding>(),
                 data: TimeTableListData,
                 holder: TimeTableAdapter.DataViewHolder
             ) {
-                // Handle item click
+
 
             }
         }, this, Constant.isShimmerViewDisable)
@@ -119,15 +119,15 @@ class TimeTable : BaseActivity<TimeTableBinding>(),
             override fun onItemClick(
                 data: TimeTableDayData
             ) {
-                // Handle item click
-                Log.d("selected_day_id",data.day_id.toString())
+
+                Log.d("selected_day_id", data.day_id.toString())
                 day_id = data.day_id
                 loadTimeTable()
             }
         }, this, false)
 
         binding.recyclerViewDays.layoutManager =
-            LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false)
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.recyclerViewDays.adapter = adapter2
 
         adapter2.setSelectedPosition(0)
@@ -137,13 +137,13 @@ class TimeTable : BaseActivity<TimeTableBinding>(),
 
     private fun loadHardcodedDays() {
         timetabledayList.apply {
-            add(TimeTableDayData("Mon",1))
-            add(TimeTableDayData("Tue",2))
-            add(TimeTableDayData("Wed",3))
-            add(TimeTableDayData("Thu",4))
-            add(TimeTableDayData("Fri",5))
-            add(TimeTableDayData("Sat",6))
-            add(TimeTableDayData("Sun",7))
+            add(TimeTableDayData("Mon", 1))
+            add(TimeTableDayData("Tue", 2))
+            add(TimeTableDayData("Wed", 3))
+            add(TimeTableDayData("Thu", 4))
+            add(TimeTableDayData("Fri", 5))
+            add(TimeTableDayData("Sat", 6))
+            add(TimeTableDayData("Sun", 7))
         }
         adapter2.notifyDataSetChanged()
     }

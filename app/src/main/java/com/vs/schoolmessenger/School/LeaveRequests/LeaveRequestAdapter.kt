@@ -113,6 +113,18 @@ class LeaveRequestAdapter(
         }
     }
 
+    fun filterByStatus(status: String) {
+        filteredList = if (status == "All") {
+            fullList
+        } else {
+            fullList.filter { it.status.equals(status, ignoreCase = true) }
+        }
+
+        listener.onSearchResultEmpty(filteredList.isEmpty())
+        notifyDataSetChanged()
+    }
+
+
 
     class DataViewHolder(itemView: View, private val context: Context,    private val listener: SchoolLRClickListener
     ) :
@@ -132,7 +144,6 @@ class LeaveRequestAdapter(
         fun bind(data: LeaveData, position: Int) {
             textName.text = data.student_name
             textFirstLetter.text = data.student_name.first().toString()
-//            lblSection.text = data.class_name
             textDate.text =  Constant.convertDateTimeFormat(data.leave_from.toString()) + " - "+Constant.convertDateTimeFormat(data.leave_to.toString())
             if(data.no_of_days.equals("1")){
                 textNoOfDays.text = "( "+data.no_of_days+" Day )"
@@ -140,7 +151,6 @@ class LeaveRequestAdapter(
             else{
                 textNoOfDays.text = "( "+data.no_of_days+" Days )"
             }
-           // lbldate.text =data.applied_on
             textReason.text = data.reason
 
             if (data.status == Constant.rejected) {

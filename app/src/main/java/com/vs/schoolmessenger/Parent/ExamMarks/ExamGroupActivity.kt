@@ -1,35 +1,27 @@
 package com.vs.schoolmessenger.Parent.ExamMarks
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.content.res.ColorStateList
-import android.graphics.Color
-import android.graphics.PorterDuff
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Filter
-import android.widget.Filter.FilterResults
-import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
-import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat
+import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.facebook.shimmer.ShimmerFrameLayout
-import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkResultsModel.ExamMarkData
+import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkResultsModel.Group
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkResultsModel.SubjectMark
-import com.vs.schoolmessenger.Parent.InteractionWithStaff.Adapter.InteractionWithStaffAdapter
-import com.vs.schoolmessenger.Parent.InteractionWithStaff.Listener.InteractionWithStaffListener
-import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.Staff
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
-class ExamMarkResultsAdapter(
-    private var itemList: List<SubjectMark>?,
+class ExamGroupActivity (
+    private var itemList: List<Group>?,
     private var context: Context,
     private var isLoading: Boolean
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -42,11 +34,11 @@ class ExamMarkResultsAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.exam_mark_recycledetail)
+            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.activity_exam_group)
             ShimmerViewHolder(shimmerView)
         } else {
             val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.exam_mark_recycledetail, parent, false)
+                .inflate(R.layout.activity_exam_group, parent, false)
             DataViewHolder(view)
         }
     }
@@ -72,26 +64,15 @@ class ExamMarkResultsAdapter(
         private val progressBarOutOf100: ProgressBar =
             itemView.findViewById(R.id.progressBarOutOf100)
 
-        fun bind(examMark: SubjectMark) {
+        fun bind(examMark: Group) {
             subjectname.text = examMark.name
 
-            val markString = "${examMark.mark_obtained} / ${examMark.max_mark}"
-            totalmarklabel.text = markString
-            markOutOf100.text = markString
+            markOutOf100.text = examMark.mark
 
-                try {
-                val split = markString.split("/").map { it.trim() }
+            totalmarklabel.text = examMark.subgroups.joinToString(", ") { it.name } + "-" + examMark.subgroups.joinToString(", ") { it.mark }
 
-                if (split.size == 2) {
-                    val obtained = split[0].toFloatOrNull() ?: 0f
-                    val total = split[1].toFloatOrNull() ?: 100f
-                    val percent = ((obtained / total) * 100).toInt()
 
-                   progressBarOutOf100.progress = percent
-                }
-            } catch (e: Exception) {
-                Log.e("ProgressError", "Error parsing markString: $markString", e)
-            }
+
 
             downarrowicon.setOnClickListener {
                 if (totalmarklabel.visibility == View.VISIBLE) {
@@ -110,7 +91,7 @@ class ExamMarkResultsAdapter(
 
         }
     }
-        inner class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun startShimmer() {
             ShimmerUtil.startShimmer(itemView)
         }
