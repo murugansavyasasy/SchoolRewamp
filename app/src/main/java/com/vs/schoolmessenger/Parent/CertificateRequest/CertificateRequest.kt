@@ -1,10 +1,13 @@
 package com.vs.schoolmessenger.Parent.CertificateRequest
 
 import android.graphics.Color
+import android.os.Build
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.JsonObject
@@ -33,6 +36,7 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
         return CertificateRequestParentBinding.inflate(layoutInflater)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
         setUpGradientParent()
@@ -40,7 +44,6 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
         binding.ivradio.setOnClickListener(this)
         binding.ivradio1.setOnClickListener(this)
 
-        // Toolbar setup
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.toolbarLayout.lblLeftSideBar.setOnClickListener(this)
         binding.toolbarLayout.lblRightSideBar.setOnClickListener(this)
@@ -79,10 +82,12 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
 
         appViewModel!!.isCertificateType?.observe(this) { response ->
             if (response != null && response.status) {
-                certificateTypes = response.data
-                loadCertificates(certificateTypes)
+                val certificateTypeList = response.data
+                loadCertificates(certificateTypeList)
             }
         }
+
+
 
         appViewModel!!.isSendCertificateRequest?.observe(this) { response ->
             Constant.hideLoading(this)
@@ -93,31 +98,30 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
 
     }
 
-    private fun loadCertificates(certificateTypes: List<CertificateTypesData>) {
-        val adapter = CertificateTypeAdapter(this, certificateTypes)
+    private fun loadCertificates(certificateTypes: List<String>) {
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, certificateTypes)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spinnerText.adapter = adapter
+
         binding.spinnerText.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>, view: View?, position: Int, id: Long
             ) {
-                adapter.selectedPosition = position
-                val selectedOption = certificateTypes!![position]
-                isSelectedCertificateName = selectedOption.certificateName
+                isSelectedCertificateName = certificateTypes[position]
                 Log.d("isSelectedCertificateName", isSelectedCertificateName!!)
-
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
     }
 
+
     private fun setupRecyclerView() {
         adapter = CertificateRequestAdapter(certificateRequestList, object : CertificateListener {
             override fun onItemClick(
-                data: CertificateListData,
-                holder: CertificateRequestAdapter.DataViewHolder
+                data: CertificateListData, holder: CertificateRequestAdapter.DataViewHolder
             ) {
-                // Handle item click
+
             }
         }, this, Constant.isShimmerViewDisable)
 
@@ -128,10 +132,9 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
     private fun showShimmer() {
         adapter = CertificateRequestAdapter(null, object : CertificateListener {
             override fun onItemClick(
-                data: CertificateListData,
-                holder: CertificateRequestAdapter.DataViewHolder
+                data: CertificateListData, holder: CertificateRequestAdapter.DataViewHolder
             ) {
-                // Handle item click
+
             }
         }, this, Constant.isShimmerViewShow)
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
@@ -202,9 +205,7 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
                     )
                 } else {
                     Toast.makeText(
-                        this,
-                        "Please enter the reason",
-                        Toast.LENGTH_SHORT
+                        this, "Please enter the reason", Toast.LENGTH_SHORT
                     ).show()
 
                 }

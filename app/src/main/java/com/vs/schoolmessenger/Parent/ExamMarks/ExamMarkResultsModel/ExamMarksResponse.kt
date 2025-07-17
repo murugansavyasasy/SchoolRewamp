@@ -5,3 +5,5 @@ data class ExamMarksResponse (
     val message: String,
     val data: List<ExamMarkData>
 )
+
+

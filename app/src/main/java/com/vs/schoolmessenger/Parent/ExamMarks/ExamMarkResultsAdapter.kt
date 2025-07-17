@@ -1,30 +1,16 @@
 package com.vs.schoolmessenger.Parent.ExamMarks
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.content.res.ColorStateList
-import android.graphics.Color
-import android.graphics.PorterDuff
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Filter
-import android.widget.Filter.FilterResults
-import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
-import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.facebook.shimmer.ShimmerFrameLayout
-import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkResultsModel.ExamMarkData
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkResultsModel.SubjectMark
-import com.vs.schoolmessenger.Parent.InteractionWithStaff.Adapter.InteractionWithStaffAdapter
-import com.vs.schoolmessenger.Parent.InteractionWithStaff.Listener.InteractionWithStaffListener
-import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.Staff
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 

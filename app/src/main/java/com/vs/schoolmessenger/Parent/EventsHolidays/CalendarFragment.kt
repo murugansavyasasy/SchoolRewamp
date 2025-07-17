@@ -19,8 +19,6 @@ import android.text.style.ImageSpan
 import android.view.Gravity
 import android.util.Log
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.compose.foundation.gestures.snapping.SnapPosition
-import androidx.compose.ui.text.resolveDefaults
 import androidx.core.content.ContextCompat
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.Holiday
 import com.vs.schoolmessenger.R

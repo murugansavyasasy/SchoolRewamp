@@ -36,19 +36,18 @@ class TimeTableAdapter(
             DataViewHolder(
                 view,
                 context
-            ) // Pass context to DataViewHolder
+            )
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
-            // Bind actual data when loading is complete
-            holder.bind(itemList!![position], position, listener, this) // Pass adapter reference
+            holder.bind(itemList!![position], position, listener, this)
         }
     }
 
     override fun getItemCount(): Int {
-        return if (isLoading) 20 // Show shimmer items while loading
+        return if (isLoading) 20
         else itemList?.size ?: 0
     }
 

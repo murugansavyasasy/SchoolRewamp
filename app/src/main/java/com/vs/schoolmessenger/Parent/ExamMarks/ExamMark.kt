@@ -12,20 +12,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkListener
-import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkResultsAdapter
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamTimeTable.ExamSubjectAdapter
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamTimeTable.ExamTimeTableAdapter
 import com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamData
-import com.vs.schoolmessenger.Parent.InteractionWithStaff.Adapter.InteractionWithStaffAdapter
-import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.Staff
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ExamMarkBinding
-import com.vs.schoolmessenger.databinding.FeeDetailsBinding
 
-class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener , ExamMarkListener{
+class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMarkListener {
     override fun getViewBinding(): ExamMarkBinding {
         return ExamMarkBinding.inflate(layoutInflater)
     }
@@ -37,6 +33,12 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener , ExamMar
     private var isAccessToken: String? = null
     private var isChildDetails: ChildDetails? = null
     private var appViewModel: App? = null
+
+    private var currentTab = TabType.EXAM_TIMETABLE
+
+    private enum class TabType {
+        EXAM_MARKS, EXAM_TIMETABLE
+    }
 
     override fun setupViews() {
         super.setupViews()
@@ -55,6 +57,7 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener , ExamMar
                     exammarkadapter.filter.filter(s)
                 }
             }
+
             override fun afterTextChanged(s: Editable?) {}
         })
 
@@ -110,17 +113,26 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener , ExamMar
         fetchexamtimetable()
 
         binding.toolbarLayout.lblRightSideBar.setOnClickListener {
+            if (currentTab == TabType.EXAM_TIMETABLE) return@setOnClickListener
+            currentTab = TabType.EXAM_TIMETABLE
+
             it.setBackgroundResource(R.drawable.white_radious)
             (it as TextView).setTextColor(Color.BLACK)
             binding.toolbarLayout.lblLeftSideBar.setBackgroundResource(R.drawable.bg_light_green)
+
             binding.headerrecyclerview.visibility = View.VISIBLE
             binding.subjectRecyclerView.visibility = View.VISIBLE
             binding.exammarkrecyclerview.visibility = View.GONE
             binding.toolbarLayout.rytSearch.visibility = View.GONE
+            binding.nomessage.visibility = View.GONE
+            binding.txtNoData.visibility = View.GONE
             fetchexamtimetable()
         }
 
+
         binding.toolbarLayout.lblLeftSideBar.setOnClickListener {
+            if (currentTab == TabType.EXAM_MARKS) return@setOnClickListener
+            currentTab = TabType.EXAM_MARKS
             it.setBackgroundResource(R.drawable.white_radious)
             (it as TextView).setTextColor(Color.BLACK)
             binding.toolbarLayout.lblRightSideBar.setBackgroundResource(R.drawable.bg_light_green)
@@ -151,15 +163,13 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener , ExamMar
             showErrorUI("No staff data available")
             return
         }
-
         binding.nomessage.visibility = View.GONE
         binding.txtNoData.visibility = View.GONE
         binding.exammarkrecyclerview.layoutManager = GridLayoutManager(this, 2)
-
-        exammarkadapter = ExamMarkAdapter(data,this,this,false)
-
+        exammarkadapter = ExamMarkAdapter(data, this, this, false)
         binding.exammarkrecyclerview.adapter = exammarkadapter
     }
+
     private fun showErrorUI(message: String) {
         binding.nomessage.visibility = View.VISIBLE
         binding.txtNoData.text = message
@@ -172,6 +182,7 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener , ExamMar
             isAccessToken ?: ""
         )
     }
+
     private fun fetchexammark() {
         appViewModel?.getexamslist(
             isAccessToken ?: ""
@@ -184,6 +195,8 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener , ExamMar
             showErrorUI("No examimage data available")
             return
         }
+        binding.nomessage.visibility = View.GONE
+        binding.txtNoData.visibility = View.GONE
 
         binding.headerrecyclerview.apply {
             layoutManager =

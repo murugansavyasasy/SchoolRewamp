@@ -1,31 +1,14 @@
 package com.vs.schoolmessenger.Parent.ExamMarks
 
-import android.graphics.Color
-import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
-import com.vs.schoolmessenger.Dashboard.Parent.ExamMarkAdapter
-import com.vs.schoolmessenger.Parent.ExamMarks.ExamTimeTable.ExamSubjectAdapter
-import com.vs.schoolmessenger.Parent.ExamMarks.ExamTimeTable.ExamTimeTableAdapter
-import com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamData
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
-import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ActivityExamProgressBinding
-import com.vs.schoolmessenger.databinding.ExamMarkBinding
 
 class ExamProgressActivity : BaseActivity<ActivityExamProgressBinding>(), View.OnClickListener {
     override fun getViewBinding(): ActivityExamProgressBinding {
