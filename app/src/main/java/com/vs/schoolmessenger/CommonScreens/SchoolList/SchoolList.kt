@@ -385,6 +385,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         ProgressDialogHelper.show(this@SchoolList)
         Constant.isAwsUploadedFiles.clear()
         val isSelectedFileListSize = Constant.selectedFiles.size
+
         val iterator = Constant.selectedFiles.iterator()
         // Remove already uploaded AWS URLs
         while (iterator.hasNext()) {
