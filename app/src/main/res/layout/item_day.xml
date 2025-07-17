@@ -8,11 +8,12 @@
     <TextView
         android:id="@+id/btnDay"
         android:layout_width="@dimen/one_thirty"
-        android:layout_height="@dimen/seventy"
+        android:layout_height="45dp"
         android:textColor="@color/black"
         android:gravity="center"
+        android:text="Sunday"
         android:textSize="@dimen/sixteen_sp"
-        style="@style/CustomTextStylePoppinsBold"
+        style="@style/CustomTextStylePoppinsMedium"
         android:layout_marginStart="@dimen/five"
         android:layout_marginEnd="@dimen/five"
         android:background="@drawable/buttonradius"/>

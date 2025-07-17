@@ -9,12 +9,22 @@ import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentResponse
 import com.vs.schoolmessenger.Parent.Attendance.ChildAttendanceResponse
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesListResponse
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesTypesResponse
+import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkModel.ExamResponse
+import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkResultsModel.ExamMarksResponse
+import com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamTimeTableResponse
+import com.vs.schoolmessenger.Parent.ExamMarks.ProgressCardResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.ChatModel.AnswerResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.InteractionWithStaffResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.QuestionModelResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.Request.QuestionModelRequest
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestApplyResponse
+import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestDelete
+import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestDeleteResponse
+import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestUpdate
+import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveUpdateResponse
 import com.vs.schoolmessenger.Parent.Timetable.TimeTableResponse
+import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
+import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveActionResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -32,6 +42,12 @@ class ParentServices {
     var getdetailsforchat: MutableLiveData<InteractionWithStaffResponse?>
     var getstaffanswers: MutableLiveData<AnswerResponse?>
     var sendquestion: MutableLiveData<QuestionModelResponse?>
+    var getexams: MutableLiveData<ExamTimeTableResponse?>
+    var getexamslist: MutableLiveData<ExamResponse?>
+    var getviewmarks: MutableLiveData<ExamMarksResponse?>
+    var isleaverequestupdate: MutableLiveData<LeaveUpdateResponse?>
+    var isleaverequestdelete: MutableLiveData<LeaveRequestDeleteResponse?>
+    var getProgressMarks: MutableLiveData<ProgressCardResponse?>
 
     init {
         client_auth = RestClient()
@@ -46,6 +62,12 @@ class ParentServices {
         getdetailsforchat = MutableLiveData()
         getstaffanswers = MutableLiveData()
         sendquestion = MutableLiveData()
+        getexams = MutableLiveData()
+        getexamslist = MutableLiveData()
+        getviewmarks = MutableLiveData()
+        isleaverequestupdate = MutableLiveData()
+        isleaverequestdelete = MutableLiveData()
+        getProgressMarks = MutableLiveData()
     }
 
     fun getChildAttendanceReport(
@@ -510,6 +532,264 @@ class ParentServices {
     val sendquestionLiveData: LiveData<QuestionModelResponse?>
         get() = sendquestion
 
+
+
+    fun getexams(
+        isToken: String
+    ) {
+        RestClient.apiInterfaces.getexams(isToken)
+            ?.enqueue(object : Callback<ExamTimeTableResponse?> {
+                override fun onResponse(
+                    call: Call<ExamTimeTableResponse?>,
+                    response: Response<ExamTimeTableResponse?>
+                ) {
+                    Log.d(
+                        "certificate list Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                getexams.postValue(response.body())
+                            } else {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                getexams.postValue(response.body())
+                            }
+                        }
+                    }
+                    else{
+                        getexams.postValue(null)
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<ExamTimeTableResponse?>,
+                    t: Throwable
+                ) {
+                    getexams.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val getexamsLiveData: LiveData<ExamTimeTableResponse?>
+        get() = getexams
+
+
+    fun getexamslist(
+        isToken: String
+    ) {
+        RestClient.apiInterfaces.getexamslist(isToken)
+            ?.enqueue(object : Callback<ExamResponse?> {
+                override fun onResponse(
+                    call: Call<ExamResponse?>,
+                    response: Response<ExamResponse?>
+                ) {
+                    Log.d(
+                        "certificate list Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                getexamslist.postValue(response.body())
+                            } else {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                getexamslist.postValue(response.body())
+                            }
+                        }
+                    }
+                    else{
+                        getexamslist.postValue(null)
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<ExamResponse?>,
+                    t: Throwable
+                ) {
+                    getexamslist.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val getexamslistLiveData: LiveData<ExamResponse?>
+        get() = getexamslist
+
+
+    fun getviewmarks(
+        isToken: String,
+        exam_id: String
+    ) {
+        RestClient.apiInterfaces.getviewmarks(isToken,exam_id)
+            ?.enqueue(object : Callback<ExamMarksResponse?> {
+                override fun onResponse(
+                    call: Call<ExamMarksResponse?>,
+                    response: Response<ExamMarksResponse?>
+                ) {
+                    Log.d(
+                        "certificate list Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                getviewmarks.postValue(response.body())
+                            } else {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                getviewmarks.postValue(response.body())
+                            }
+                        }
+                    }
+                    else{
+                        getviewmarks.postValue(null)
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<ExamMarksResponse?>,
+                    t: Throwable
+                ) {
+                    getviewmarks.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val getviewmarksLiveData: LiveData<ExamMarksResponse?>
+        get() = getviewmarks
+
+
+
+    fun isleaverequestupdate(
+        isToken: String, request: LeaveRequestUpdate, activity: Activity
+    ) {
+        RestClient.apiInterfaces.isleaverequestupdate(isToken, request)
+            ?.enqueue(object : Callback<LeaveUpdateResponse?> {
+                override fun onResponse(
+                    call: Call<LeaveUpdateResponse?>, response: Response<LeaveUpdateResponse?>
+                ) {
+                    Log.d(
+                        "isGetCountryList", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isleaverequestupdate.postValue(response.body())
+                            } else {
+                                isleaverequestupdate.postValue(response.body())
+                            }
+                        }
+                    } else {
+                        isleaverequestupdate.postValue(null)
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<LeaveUpdateResponse?>,
+                    t: Throwable
+                ) {
+                    isleaverequestupdate.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isleaverequestupdateLiveData: LiveData<LeaveUpdateResponse?>
+        get() = isleaverequestupdate
+
+
+    fun isleaverequestdelete(
+        isToken: String, request: LeaveRequestDelete, activity: Activity
+    ) {
+        RestClient.apiInterfaces.isleaverequestdelete(isToken, request)
+            ?.enqueue(object : Callback<LeaveRequestDeleteResponse?> {
+                override fun onResponse(
+                    call: Call<LeaveRequestDeleteResponse?>, response: Response<LeaveRequestDeleteResponse?>
+                ) {
+                    Log.d(
+                        "isGetCountryList", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isleaverequestdelete.postValue(response.body())
+                            } else {
+                                isleaverequestdelete.postValue(response.body())
+                            }
+                        }
+                    } else {
+                        isleaverequestdelete.postValue(null)
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<LeaveRequestDeleteResponse?>,
+                    t: Throwable
+                ) {
+                    isleaverequestdelete.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isleaverequestdeleteLiveData: LiveData<LeaveRequestDeleteResponse?>
+        get() = isleaverequestdelete
+
+
+
+    fun getProgressMarks(
+        isToken: String,
+        exam_id: String
+    ) {
+        RestClient.apiInterfaces.getProgressMarks(isToken,exam_id)
+            ?.enqueue(object : Callback<ProgressCardResponse?> {
+                override fun onResponse(
+                    call: Call<ProgressCardResponse?>,
+                    response: Response<ProgressCardResponse?>
+                ) {
+                    Log.d(
+                        "certificate list Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                getProgressMarks.postValue(response.body())
+                            } else {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                getProgressMarks.postValue(response.body())
+                            }
+                        }
+                    }
+                    else{
+                        getProgressMarks.postValue(null)
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<ProgressCardResponse?>,
+                    t: Throwable
+                ) {
+                    getProgressMarks.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val getProgressMarksLiveData: LiveData<ProgressCardResponse?>
+        get() = getProgressMarks
 
 
 }

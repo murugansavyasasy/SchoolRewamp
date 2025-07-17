@@ -25,6 +25,10 @@ import com.vs.schoolmessenger.Parent.Coupon.CouponModel.TicketActivateCouponSumm
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.TicketCouponSummary.TicketSummaryResponse
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventResponse
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.HolidayResponse
+import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkModel.ExamResponse
+import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkResultsModel.ExamMarksResponse
+import com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamTimeTableResponse
+import com.vs.schoolmessenger.Parent.ExamMarks.ProgressCardResponse
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.ChatModel.AnswerResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.InteractionWithStaffResponse
@@ -32,6 +36,10 @@ import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.Qu
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.Request.QuestionModelRequest
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestApplyResponse
+import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestDelete
+import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestDeleteResponse
+import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestUpdate
+import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveUpdateResponse
 import com.vs.schoolmessenger.Parent.Timetable.TimeTableResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.SendAbsenteeSMSResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportDataResponse
@@ -223,6 +231,12 @@ class App(application: Application) : AndroidViewModel(application) {
     var getdetailsforchat: LiveData<InteractionWithStaffResponse?>? = null
     var getstaffanswers: LiveData<AnswerResponse?>? = null
     var sendquestion: LiveData<QuestionModelResponse?>? = null
+    var getexams: LiveData<ExamTimeTableResponse?>? = null
+    var getexamslist: LiveData<ExamResponse?>? = null
+    var getviewmarks: LiveData<ExamMarksResponse?>? = null
+    var isleaverequestupdate: LiveData<LeaveUpdateResponse?>? = null
+    var isleaverequestdelete: LiveData<LeaveRequestDeleteResponse?>? = null
+    var getProgressMarks: LiveData<ProgressCardResponse?>? = null
 
 
     fun init() {
@@ -308,6 +322,11 @@ class App(application: Application) : AndroidViewModel(application) {
         getdetailsforchat = apiParentRepositories.getdetailsforchatLiveData
         getstaffanswers = apiParentRepositories.getstaffanswersLiveData
         sendquestion = apiParentRepositories.sendquestionLiveData
+        getexams = apiParentRepositories.getexamsLiveData
+        getexamslist = apiParentRepositories.getexamslistLiveData
+        getviewmarks = apiParentRepositories.getviewmarksLiveData
+        isleaverequestupdate = apiParentRepositories.isleaverequestupdateLiveData
+        getProgressMarks = apiParentRepositories.getProgressMarksLiveData
 
     }
 
@@ -767,7 +786,41 @@ class App(application: Application) : AndroidViewModel(application) {
     ) {
         apiParentRepositories.sendquestion(isToken, request)
     }
+    fun getexams(
+        isToken: String
+    ) {
+        apiParentRepositories.getexams(isToken)
+    }
 
+    fun getexamslist(
+        isToken: String
+    ) {
+        apiParentRepositories.getexamslist(isToken)
+    }
+
+
+    fun getviewmarks(
+        isToken: String,
+        exam_id: String
+    ) {
+        apiParentRepositories.getviewmarks(isToken,exam_id)
+    }
+
+
+    fun isleaverequestupdate(isToken: String, request: LeaveRequestUpdate, activity: Activity) {
+        apiParentRepositories.isleaverequestupdate(isToken, request, activity)
+    }
+
+    fun isleaverequestdelete(isToken: String, request: LeaveRequestDelete, activity: Activity) {
+        apiParentRepositories.isleaverequestdelete(isToken, request, activity)
+    }
+
+    fun getProgressMarks(
+        isToken: String,
+        exam_id: String
+    ) {
+        apiParentRepositories.getProgressMarks(isToken,exam_id)
+    }
 }
 
 

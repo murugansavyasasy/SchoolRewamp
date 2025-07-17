@@ -35,6 +35,10 @@ import com.vs.schoolmessenger.Parent.Coupon.CouponRequestModel.CouponDetailsRequ
 import com.vs.schoolmessenger.Parent.Coupon.CouponRequestModel.CouponSummaryRequest
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventResponse
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.HolidayResponse
+import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkModel.ExamResponse
+import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkResultsModel.ExamMarksResponse
+import com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamTimeTableResponse
+import com.vs.schoolmessenger.Parent.ExamMarks.ProgressCardResponse
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.ChatModel.AnswerResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.InteractionWithStaffResponse
@@ -42,6 +46,10 @@ import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.Qu
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.Request.QuestionModelRequest
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestApplyResponse
+import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestDelete
+import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestDeleteResponse
+import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestUpdate
+import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveUpdateResponse
 import com.vs.schoolmessenger.Parent.Timetable.TimeTableResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.SendAbsenteeSMSResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportDataResponse
@@ -585,5 +593,43 @@ interface ApiInterfaces {
         @Body request: QuestionModelRequest,
     ): Call<QuestionModelResponse?>?
 
+
+    @GET(APIMethods.get_exams)
+    fun getexams(
+        @Header(APIKeyNames.Authorization) token: String
+    ): Call<ExamTimeTableResponse?>?
+
+
+    @GET(APIMethods.exam_list)
+    fun getexamslist(
+        @Header(APIKeyNames.Authorization) token: String
+    ): Call<ExamResponse?>?
+
+
+    @GET(APIMethods.view_marks)
+    fun getviewmarks(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query (APIKeyNames.exam_id) exam_id: String
+    ): Call<ExamMarksResponse?>?
+
+    @Headers("Content-Type: application/json")
+    @PUT(APIMethods.isleaverequestupdate)
+    fun isleaverequestupdate(
+        @Header(APIKeyNames.Authorization) token: String, @Body request: LeaveRequestUpdate
+    ): Call<LeaveUpdateResponse?>
+
+    @Headers("Content-Type: application/json")
+    @PUT(APIMethods.isleaverequestdelete)
+    fun isleaverequestdelete(
+        @Header(APIKeyNames.Authorization) token: String, @Body request: LeaveRequestDelete
+    ): Call<LeaveRequestDeleteResponse?>
+
+
+
+    @GET(APIMethods.progress_card)
+    fun getProgressMarks(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query (APIKeyNames.exam_id) exam_id: String
+    ): Call<ProgressCardResponse?>?
 
 }

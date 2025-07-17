@@ -59,6 +59,7 @@ class TimeTableAdapter(
         private val name_value: TextView = itemView.findViewById(R.id.name_value)
         private val lblFromToTime: TextView = itemView.findViewById(R.id.lblFromToTime)
         private val duration_value: TextView = itemView.findViewById(R.id.duration_value)
+        private val hourvalue: TextView = itemView.findViewById(R.id.hourvalue)
 
 
         fun bind(
@@ -67,7 +68,9 @@ class TimeTableAdapter(
             listener: TimeTableListener,
             adapter: TimeTableAdapter
         ) {
-            time.text = data.name
+            time.text = data.start_time
+            hourvalue.text = data.name
+
 
             if (data.subject_name.isNotEmpty()) {
                 subject_value.visibility = View.VISIBLE
@@ -83,7 +86,7 @@ class TimeTableAdapter(
                 name_value.visibility = View.GONE
             }
             lblFromToTime.text = data.start_time + " - " + data.end_time
-            duration_value.text = data.duration + " Minutes"
+            duration_value.text = data.duration
         }
 
         class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

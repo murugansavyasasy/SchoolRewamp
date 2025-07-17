@@ -134,6 +134,7 @@ class InteractionWithStaff : BaseActivity<IntectionWithStaffBinding>(), View.OnC
             binding.rcystaffdata.visibility = View.VISIBLE
         }
     }
+
     override fun onClickItem(data: Staff) {
         val intent = Intent(this@InteractionWithStaff, InteractionwithStaffChatScreen::class.java)
         val saveStaffData = StaffDataSending(

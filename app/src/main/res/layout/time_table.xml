@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="@dimen/ten"
-       android:layout_below="@+id/toolbarLayout">
+        android:layout_below="@+id/toolbarLayout">
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewDays"
             android:layout_width="match_parent"

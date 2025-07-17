@@ -1,0 +1,7 @@
+package com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkResultsModel
+
+data class SplitMark(
+    val name: String,
+    val max_mark: String,
+    val mark_obtained: String
+)
