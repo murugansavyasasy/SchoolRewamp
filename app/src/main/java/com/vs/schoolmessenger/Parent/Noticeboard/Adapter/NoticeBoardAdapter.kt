@@ -38,7 +38,6 @@ class NoticeBoardAdapter(
     private var context: Context,
     private var isLoading: Boolean
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
-
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
     private var fullList: List<Notice> = itemList ?: listOf()
