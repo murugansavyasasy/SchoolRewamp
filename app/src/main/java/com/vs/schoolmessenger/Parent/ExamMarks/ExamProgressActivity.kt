@@ -50,9 +50,7 @@ class ExamProgressActivity : BaseActivity<ActivityExamProgressBinding>(), View.O
     }
 
     private fun showErrorUI(message: String) {
-        binding.nomessage.visibility = View.VISIBLE
-        binding.txtNoData.text = message
-        binding.txtNoData.visibility = View.VISIBLE
+
     }
 
 
@@ -66,8 +64,7 @@ class ExamProgressActivity : BaseActivity<ActivityExamProgressBinding>(), View.O
     }
 
     private fun isLoadProgress(pdfList: List<String>) {
-        binding.nomessage.visibility = View.GONE
-        binding.txtNoData.visibility = View.GONE
+
 
         val pdfUrl = pdfList.firstOrNull()
 
