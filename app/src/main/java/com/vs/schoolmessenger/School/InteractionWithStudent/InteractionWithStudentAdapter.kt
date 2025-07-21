@@ -102,13 +102,9 @@ class InteractionWithStudentAdapter(
             subjectheader.text = student.subject_name
 //            unreadcount.text = student.unread_count
 
-//            relative_layout.setOnClickListener {
-//                if (student.is_assigned == true) {
-//                    listener.onClickItem(student)
-//                } else {
-//                    Log.d("Listener Status", "The isAssigned Value is False")
-//                }
-//            }
+            relative_layout.setOnClickListener {
+                    listener.onClickItem(student)
+            }
 
         }
     }

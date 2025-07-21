@@ -1,18 +1,23 @@
 package com.vs.schoolmessenger.School.InteractionWithStudent
 
+import android.content.Intent
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
+import com.vs.schoolmessenger.Parent.InteractionWithStaff.InteractionwithStaffChatScreen
+import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.StaffDataSending
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.InteractionWithStudent.Model.QuestionDataSending
 import com.vs.schoolmessenger.School.InteractionWithStudent.Model.StudentChatData
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.InteractionWithStudentListener
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.IntrectionWithStudentBinding
+import kotlin.String
 
 class InteractionWithStudent : BaseActivity<IntrectionWithStudentBinding>(), View.OnClickListener,
     InteractionWithStudentListener {
@@ -106,6 +111,18 @@ class InteractionWithStudent : BaseActivity<IntrectionWithStudentBinding>(), Vie
     }
 
     override fun onClickItem(data: StudentChatData) {
-        TODO("Not yet implemented")
+        val intent = Intent(this@InteractionWithStudent, InteractionWithStudentChatScreen::class.java)
+
+        val saveStaffQuestionData = QuestionDataSending(
+            id = data.id,
+            name = data.name,
+            section_id = data.section_id!!,
+            section_name = data.section_name!!,
+            subject_id = data.subject_id,
+            subject_name = data.subject_name,
+            is_class_teacher = data.is_class_teacher,
+        )
+        Constant.QuestionDataSending = saveStaffQuestionData
+        startActivity(intent)
     }
 }

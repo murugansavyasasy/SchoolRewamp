@@ -206,6 +206,11 @@
             android:name=".Parent.InteractionWithStaff.InteractionwithStaffChatScreen"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".School.InteractionWithStudent.InteractionWithStudentChatScreen"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".Auth.Country.CountryScreen"
             android:theme="@style/AppTheme"

@@ -65,6 +65,7 @@ import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportModel.FeeP
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.InteractionWithStudentResponse
+import com.vs.schoolmessenger.School.InteractionWithStudent.Response.QuestionResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveActionResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveRequestResponse
@@ -591,6 +592,16 @@ interface ApiInterfaces {
         @Query(APIKeyNames.offset) offset: Int?,
         @Query(APIKeyNames.is_class_teacher) is_class_teacher: Boolean?
     ): Call<AnswerResponse?>?
+
+
+    @GET(APIMethods.staff_get_questions)
+    fun getstaffquestions(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query(APIKeyNames.is_class_teacher) is_class_teacher: Boolean?,
+        @Query(APIKeyNames.section_id) section_id: String?,
+        @Query(APIKeyNames.subject_id) subject_id: String?,
+        @Query(APIKeyNames.offset) offset: String?
+    ): Call<QuestionResponse?>?
 
 
     @POST(APIMethods.student_ask_question)

@@ -55,6 +55,7 @@ import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportModel.FeeP
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.InteractionWithStudentResponse
+import com.vs.schoolmessenger.School.InteractionWithStudent.Response.QuestionResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveActionResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveRequestResponse
@@ -232,6 +233,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var getdetailsforchat: LiveData<InteractionWithStaffResponse?>? = null
     var getstudentdetailsforchat: LiveData<InteractionWithStudentResponse?>? = null
     var getstaffanswers: LiveData<AnswerResponse?>? = null
+    var getstaffquestions: LiveData<QuestionResponse?>? = null
     var sendquestion: LiveData<QuestionModelResponse?>? = null
     var getexams: LiveData<ExamTimeTableResponse?>? = null
     var getexamslist: LiveData<ExamResponse?>? = null
@@ -323,6 +325,7 @@ class App(application: Application) : AndroidViewModel(application) {
         sendactivatecoupon = apiSchoolRepositories.sendactivatecouponLiveData
         getdetailsforchat = apiParentRepositories.getdetailsforchatLiveData
         getstaffanswers = apiParentRepositories.getstaffanswersLiveData
+        getstaffquestions = apiSchoolRepositories.getstaffquestionsLiveData
         sendquestion = apiParentRepositories.sendquestionLiveData
         getexams = apiParentRepositories.getexamsLiveData
         getexamslist = apiParentRepositories.getexamslistLiveData
@@ -783,6 +786,22 @@ class App(application: Application) : AndroidViewModel(application) {
             offset,
             is_class_teacher,
             activity
+        )
+    }
+
+ fun getstaffquestions(
+        isToken: String,
+        is_class_teacher: Boolean,
+        section_id: String,
+        subject_id: String,
+        offset: String
+ ) {
+        apiSchoolRepositories.getstaffquestions(
+            isToken,
+            is_class_teacher,
+            section_id,
+            subject_id,
+            offset
         )
     }
 

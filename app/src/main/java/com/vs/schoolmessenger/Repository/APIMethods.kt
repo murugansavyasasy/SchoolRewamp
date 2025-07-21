@@ -102,6 +102,7 @@ object APIMethods {
     const val student_details_for_chat = "/comm/api/interaction/classes-for-chat"
 
     const val get_staff_answers = "/comm/api/interaction/get-staff-answers"
+    const val staff_get_questions = "/comm/api/interaction/staff-get-questions"
     const val student_ask_question = "/comm/api/interaction/student-ask-question"
     const val get_exams = "/exam/api/exam/get-exams"
     const val exam_list = "/exam/api/exam/list"

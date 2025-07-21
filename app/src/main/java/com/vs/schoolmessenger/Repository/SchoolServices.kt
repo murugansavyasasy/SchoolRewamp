@@ -27,6 +27,7 @@ import com.vs.schoolmessenger.Parent.Coupon.CouponRequestModel.CouponSummaryRequ
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventResponse
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.HolidayResponse
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
+import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.ChatModel.AnswerResponse
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.SendAbsenteeSMSResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportDataResponse
@@ -41,6 +42,7 @@ import com.vs.schoolmessenger.School.Event.Response.EventSendResponse
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportModel.FeePendingReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
+import com.vs.schoolmessenger.School.InteractionWithStudent.Response.QuestionResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveActionResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveRequestResponse
@@ -134,6 +136,7 @@ class SchoolServices {
     var getmycoupons: MutableLiveData<TicketSummaryResponse?>
     var getCouponDetails: MutableLiveData<ActivateCouponSummaryResponse?>
     var sendactivatecoupon: MutableLiveData<ActivateCouponResponse?>
+    var getstaffquestions: MutableLiveData<QuestionResponse?>
 
 
     init {
@@ -199,6 +202,7 @@ class SchoolServices {
         getmycoupons = MutableLiveData()
         getCouponDetails = MutableLiveData()
         sendactivatecoupon = MutableLiveData()
+        getstaffquestions = MutableLiveData()
     }
 
 
@@ -2365,4 +2369,55 @@ class SchoolServices {
 
     val sendactivatecouponLiveData: LiveData<ActivateCouponResponse?>
         get() = sendactivatecoupon
+
+
+
+    fun getstaffquestions(
+        isToken: String,
+        is_class_teacher: Boolean,
+        section_id: String,
+        subject_id: String,
+        offset: String
+    ) {
+        RestClient.apiInterfaces.getstaffquestions(isToken,is_class_teacher,
+            section_id,
+            subject_id,
+            offset,)
+            ?.enqueue(object : Callback<QuestionResponse?> {
+                override fun onResponse(
+                    call: Call<QuestionResponse?>,
+                    response: Response<QuestionResponse?>
+                ) {
+                    Log.d(
+                        "GetChildAttendanceReportData Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                getstaffquestions.postValue(response.body())
+                            } else {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                getstaffquestions.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<QuestionResponse?>,
+                    t: Throwable
+                ) {
+                    getstaffquestions.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val getstaffquestionsLiveData: LiveData<QuestionResponse?>
+        get() = getstaffquestions
+
+
 }
