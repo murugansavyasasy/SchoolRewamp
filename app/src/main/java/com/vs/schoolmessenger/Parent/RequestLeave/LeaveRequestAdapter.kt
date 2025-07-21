@@ -161,7 +161,6 @@ class LeaveRequestAdapter(
         }
     }
 
-
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun startShimmer() {
             ShimmerUtil.startShimmer(itemView)

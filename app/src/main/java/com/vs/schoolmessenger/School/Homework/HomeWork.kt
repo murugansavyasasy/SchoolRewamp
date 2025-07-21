@@ -85,7 +85,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
     }
 
     private var cameraPermissionDeniedCount = 0
-
     private val CAMERA_IMAGE_REQUEST = 1001
     var isFirstLoad = false
     private var cameraImageFilePath: String? = null
@@ -105,8 +104,8 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
     private var fullHomeworkList: List<HomeWorkReport> = listOf()
     var isSectionId = -1
 
-    var isAcademicServerLoad=false
-    var isSelectedDate=""
+    var isAcademicServerLoad = false
+    var isSelectedDate = ""
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
@@ -140,7 +139,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
         binding.rcyImages.adapter = mAdapter
 
-        isSelectedDate=Constant.getCurrentDate()
+        isSelectedDate = Constant.getCurrentDate()
         binding.selectdate.text = Constant.convertToReadableDate(Constant.getCurrentDate())
 
 
@@ -152,9 +151,14 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         isGetStandardSection()
 
         binding.edtTitle.filters = arrayOf(InputFilter.LengthFilter(Constant.isTitleLength))
-        binding.edtDescription.filters = arrayOf(InputFilter.LengthFilter(Constant.isDescriptionLength))
-        Constant.editTextCounter(this, binding.edtDescription, Constant.isDescriptionLength, binding.lblTextCount)
-        Constant.editTextCounter(this, binding.edtTitle, Constant.isTitleLength, binding.lblTitleTextCount)
+        binding.edtDescription.filters =
+            arrayOf(InputFilter.LengthFilter(Constant.isDescriptionLength))
+        Constant.editTextCounter(
+            this, binding.edtDescription, Constant.isDescriptionLength, binding.lblTextCount
+        )
+        Constant.editTextCounter(
+            this, binding.edtTitle, Constant.isTitleLength, binding.lblTitleTextCount
+        )
 
 
         appViewModel!!.isStandardSectionList?.observe(this) { response ->
@@ -183,16 +187,16 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
                 if (response.status) {
                     binding.rcyHomeWorkReport.visibility = View.VISIBLE
                     binding.lytNoDataFound.visibility = View.GONE
-                    binding.search.visibility=View.VISIBLE
-                    binding.line1.visibility=View.VISIBLE
-                    binding.line2.visibility=View.VISIBLE
+                    binding.search.visibility = View.VISIBLE
+                    binding.line1.visibility = View.VISIBLE
+                    binding.line2.visibility = View.VISIBLE
                     val isHomeWorkReport = response.data
                     isHomeWorkReportData = isHomeWorkReport
                     loadHomeWorkReportData(isHomeWorkReportData!!)
                 } else {
-                    binding.search.visibility=View.GONE
-                    binding.line1.visibility=View.GONE
-                    binding.line2.visibility=View.GONE
+                    binding.search.visibility = View.GONE
+                    binding.line1.visibility = View.GONE
+                    binding.line2.visibility = View.GONE
                     binding.rcyHomeWorkReport.visibility = View.GONE
                     binding.lytNoDataFound.visibility = View.VISIBLE
                     binding.noDataFound.text = response.message
@@ -412,24 +416,20 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
 
     private fun checkCameraPermissionAndOpenCamera() {
         if (ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.CAMERA
+                this, Manifest.permission.CAMERA
             ) == PackageManager.PERMISSION_GRANTED
         ) {
             openCameraIntent()
         } else {
             // Show rationale if user has denied permission before
             if (cameraPermissionDeniedCount >= 2 && !ActivityCompat.shouldShowRequestPermissionRationale(
-                    this,
-                    Manifest.permission.CAMERA
+                    this, Manifest.permission.CAMERA
                 )
             ) {
                 showCameraPermissionSettingsDialog()
             } else {
                 ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(Manifest.permission.CAMERA),
-                    CAMERA_PERMISSION_REQUEST_CODE
+                    this, arrayOf(Manifest.permission.CAMERA), CAMERA_PERMISSION_REQUEST_CODE
                 )
             }
         }
@@ -446,8 +446,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
             } else {
                 cameraPermissionDeniedCount++
                 if (!ActivityCompat.shouldShowRequestPermissionRationale(
-                        this,
-                        Manifest.permission.CAMERA
+                        this, Manifest.permission.CAMERA
                     )
                 ) {
                     showCameraPermissionSettingsDialog()
@@ -459,20 +458,16 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
     }
 
     private fun showCameraPermissionSettingsDialog() {
-        AlertDialog.Builder(this)
-            .setTitle("Permission Required")
+        AlertDialog.Builder(this).setTitle("Permission Required")
             .setMessage("Camera permission is permanently denied. Please enable it from app settings.")
-            .setCancelable(false)
-            .setPositiveButton("Go to Settings") { _, _ ->
+            .setCancelable(false).setPositiveButton("Go to Settings") { _, _ ->
                 val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
                     data = Uri.parse("package:$packageName")
                 }
                 startActivity(intent)
-            }
-            .setNegativeButton("Cancel") { dialog, _ ->
+            }.setNegativeButton("Cancel") { dialog, _ ->
                 dialog.dismiss()
-            }
-            .show()
+            }.show()
     }
 
 
@@ -491,30 +486,30 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
             }
 
             R.id.Calendar -> {
-                showDatePickerDialogSelectedDate(this,isSelectedDate, this)
+                showDatePickerDialogSelectedDate(this, isSelectedDate, this)
 
             }
 
             R.id.btnCreate -> {
-                binding.btnCreate.isEnabled=false
-                binding.btnHistory.isEnabled=true
+                binding.btnCreate.isEnabled = false
+                binding.btnHistory.isEnabled = true
                 isBackRoundChange(binding.btnCreate)
                 binding.rlaHomeWorkReport.visibility = View.GONE
                 binding.rlaHomework.visibility = View.VISIBLE
                 //Now once it is tab is swapped the academic year is already assigned so fetchHomeWorkReportData() will not be call
                 //So we are handling it by make it isAcademicServerLoad as true
-                isAcademicServerLoad=true
+                isAcademicServerLoad = true
             }
 
             R.id.btnHistory -> {
-                binding.btnHistory.isEnabled=false
-                binding.btnCreate.isEnabled=true
+                binding.btnHistory.isEnabled = false
+                binding.btnCreate.isEnabled = true
                 isBackRoundChange(binding.btnHistory)
                 binding.rlaHomeWorkReport.visibility = View.VISIBLE
                 binding.rlaHomework.visibility = View.GONE
                 //At initial swap we are avoiding the fetchHomeWorkReportData because Academic Year dropdown is doing fetchHomeWorkReportData
-                if (isAcademicServerLoad){
-                fetchHomeWorkReportData()
+                if (isAcademicServerLoad) {
+                    fetchHomeWorkReportData()
                 }
             }
 
@@ -675,7 +670,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
     }
 
     private fun openCameraIntent() {
-        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)`
         if (intent.resolveActivity(packageManager) != null) {
             val photoFile: File? = try {
                 createImageFile()
@@ -830,12 +825,11 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onDateSelected(date: String) {
-        isSelectedDate=date
-        if (Constant.getCurrentDate()==isSelectedDate){
-            binding.lblDateFormat.text=getString(R.string.today)
-        }
-        else{
-            binding.lblDateFormat.text=getString(R.string.past_date)
+        isSelectedDate = date
+        if (Constant.getCurrentDate() == isSelectedDate) {
+            binding.lblDateFormat.text = getString(R.string.today)
+        } else {
+            binding.lblDateFormat.text = getString(R.string.past_date)
         }
         binding.selectdate.text = Constant.convertToReadableDate(date)
         fetchHomeWorkReportData()
