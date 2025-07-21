@@ -26,9 +26,9 @@
             android:id="@+id/lblSubject"
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="match_parent"
-            android:layout_toEndOf="@+id/imgBack"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:layout_toEndOf="@+id/imgBack"
             android:text=""
             android:textColor="@color/black"
             android:textSize="@dimen/fifteen_sp"
@@ -41,11 +41,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="@dimen/twenty"
-        android:visibility="gone"
         android:layout_marginEnd="@dimen/ten"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:padding="@dimen/five"
-        android:src="@drawable/ic_more_vert" />
+        android:src="@drawable/ic_more_vert"
+        android:visibility="gone" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcyFile"
@@ -53,12 +53,12 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/indicator"
         android:layout_below="@+id/rytHeader"
-        android:visibility="visible"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="@dimen/ten"
         android:orientation="horizontal"
         android:overScrollMode="never"
-        android:scrollbars="horizontal" />
+        android:scrollbars="horizontal"
+        android:visibility="visible" />
 
     <me.relex.circleindicator.CircleIndicator2
         android:id="@+id/indicator"
@@ -80,10 +80,10 @@
         android:background="@drawable/bg_round_radious_white"
         android:gravity="center"
         android:paddingStart="@dimen/fifteen"
-        android:visibility="gone"
         android:paddingTop="@dimen/fifteen"
         android:paddingEnd="@dimen/twenty_five"
-        android:paddingBottom="@dimen/fifteen">
+        android:paddingBottom="@dimen/fifteen"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/imgPre"
@@ -101,11 +101,11 @@
         android:layout_margin="16dp"
         android:background="@drawable/bg_round_radious_white"
         android:gravity="center"
-        android:visibility="gone"
         android:paddingStart="@dimen/twenty_five"
         android:paddingTop="@dimen/fifteen"
         android:paddingEnd="@dimen/twenty_five"
-        android:paddingBottom="@dimen/fifteen">
+        android:paddingBottom="@dimen/fifteen"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/imgNext"
@@ -119,13 +119,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:background="#80000000"
         android:layout_marginEnd="@dimen/twenty_five"
+        android:background="#80000000"
+        android:elevation="10dp"
         android:gravity="center"
         android:orientation="horizontal"
         android:padding="12dp"
-        android:visibility="gone"
-        android:elevation="10dp">
+        android:visibility="gone">
 
         <ProgressBar
             android:id="@+id/progressBar"

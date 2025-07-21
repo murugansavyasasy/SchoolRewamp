@@ -14,9 +14,7 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.provider.Settings
-import android.text.InputFilter
 import android.util.Log
-import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -78,8 +76,6 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
         "General", "Class Work", "Research Paper", "Project"
     )
 
-    var isFirstLoad = false
-
     var isAssignmentType = ""
     var isSelectedDate = ""
     private lateinit var albumResultLauncher: ActivityResultLauncher<Intent>
@@ -90,14 +86,11 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
         private const val PICK_IMAGE_REQUEST = 1001
         internal const val CAMERA_IMAGE_REQUEST = 1004
         private const val MAX_FILES = 10
-
     }
 
     var isAcademicServerLoad = false
     private var isAssignmentReportData: List<AssignmentData>? = null
-
     var isAssignmentAdapter: AssignmentAdapter? = null
-
     var isValidAcademicYear = false
     var isAcademicYearId = -1
     var isCurrentAcademicYear = true
