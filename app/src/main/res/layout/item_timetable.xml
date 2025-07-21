@@ -101,8 +101,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-
-
                         android:paddingStart="@dimen/five"
                         android:paddingEnd="@dimen/five">
 
@@ -118,15 +116,16 @@
 
                         <TextView
                             android:id="@+id/duration_value"
-                            android:layout_width="wrap_content"
+                            android:layout_width="90dp"
                             android:layout_height="wrap_content"
-                            android:text="30 mins"
-                            android:textColor="@color/grey"
+                            android:text="1 hr"
+                            android:textColor="@color/black"
                             android:background="@drawable/rect_shadow_white_2"
                             android:gravity="center"
                             android:textSize="@dimen/thirteen_sp"
                             android:paddingStart="15dp"
                             android:paddingEnd="15dp"
+                            style="@style/CustomTextStylePoppinsMedium"
                             android:paddingTop="15dp"
                             android:paddingBottom="15dp" />
                     </LinearLayout>

@@ -670,7 +670,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
     }
 
     private fun openCameraIntent() {
-        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)`
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         if (intent.resolveActivity(packageManager) != null) {
             val photoFile: File? = try {
                 createImageFile()

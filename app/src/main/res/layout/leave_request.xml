@@ -394,26 +394,56 @@
                         android:fontFamily="@font/poppins_bold"
                         android:gravity="center"
                         android:text="@string/submit"
+                        android:visibility="visible"
                         android:textColor="@color/white"
                         android:textSize="@dimen/thirteen_sp"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/btnupdate"
+                    <LinearLayout
+                        android:id="@+id/linear_layout9"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/fourty"
-                        android:layout_below="@+id/lbTextCount"
-                        android:layout_marginStart="@dimen/ten"
-                        android:layout_marginTop="@dimen/thirty"
-                        android:layout_marginEnd="@dimen/ten"
-                        android:background="@drawable/rect_btn_orange"
-                        android:fontFamily="@font/poppins_bold"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_alignParentBottom="true"
+                        android:orientation="horizontal"
                         android:gravity="center"
-                        android:text="Update"
                         android:visibility="gone"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/thirteen_sp"
-                        android:textStyle="bold" />
+                        android:layout_below="@+id/lbTextCount"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp">
+
+                        <TextView
+                            android:id="@+id/btncancel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cancel"
+                            android:textSize="13sp"
+                            android:textColor="@color/white"
+                            android:padding="10dp"
+                            android:paddingStart="@dimen/eighteen_sp"
+                            android:paddingEnd="@dimen/eighteen_sp"
+                            android:layout_marginEnd="12dp"
+                            android:background="@drawable/bg_red_radious__all_side_same"
+                            style="@style/CustomTextStylePoppinsMedium" />
+
+                        <TextView
+                            android:id="@+id/btnupdate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Update"
+                            android:textSize="13sp"
+                            android:textColor="@color/white"
+                            android:padding="10dp"
+                            android:paddingStart="@dimen/eighteen_sp"
+                            android:paddingEnd="@dimen/eighteen_sp"
+                            android:layout_marginStart="30dp"
+                            android:background="@drawable/bg_green_radious"
+                            style="@style/CustomTextStylePoppinsMedium" />
+
+                    </LinearLayout>
+
+
+
 
 
                 </RelativeLayout>

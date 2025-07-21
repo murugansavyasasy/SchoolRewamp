@@ -1,5 +1,6 @@
 package com.vs.schoolmessenger.Parent.RequestLeave
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.util.Log
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Dashboard.Parent.ExamMark
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestDelete
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestUpdate
 import com.vs.schoolmessenger.R
@@ -39,7 +41,14 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
     private var totalLeaveDays: Int = 0
     private val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
 
-     private val txtDesc : String = ""
+    private var currentTab = TabType.LeaveRequest
+
+    private enum class TabType {
+        LeaveRequest, History
+    }
+
+    private val txtDesc: String = ""
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
@@ -59,6 +68,7 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
         binding.lnrEndCalendar.setOnClickListener(this)
         binding.btnNext.setOnClickListener(this)
         binding.btnupdate.setOnClickListener(this)
+        binding.btncancel.setOnClickListener(this)
         val (dayOnly, dayOfWeek, fullDate, slashDate, customFormat) = Constant.getCurrentDateInfo()
 
         val today = Calendar.getInstance()
@@ -112,15 +122,11 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
                 if (response.status) {
                     Constant.hideLoading(this@LeaveRequest)
                     Constant.showDataValidation(
-                        resources.getString(R.string.success),
-                        response.message,
-                        this
+                        resources.getString(R.string.success), response.message, this
                     )
                 } else {
                     Constant.showDataValidation(
-                        resources.getString(R.string.fail),
-                        response.message,
-                        this
+                        resources.getString(R.string.fail), response.message, this
                     )
                 }
             }
@@ -132,9 +138,13 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
                 if (response.status) {
                     Constant.hideLoading(this@LeaveRequest)
                     Log.d("isleaverequestdelete", response.message)
-                    Constant.showDataValidation(resources.getString(R.string.success), response.message, this)
+                    Constant.showDataValidation(
+                        resources.getString(R.string.success), response.message, this
+                    )
                 } else {
-                    Constant.showDataValidation(resources.getString(R.string.fail), response.message, this)
+                    Constant.showDataValidation(
+                        resources.getString(R.string.fail), response.message, this
+                    )
                 }
             }
         }
@@ -144,16 +154,30 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
                 if (response.status) {
                     Constant.hideLoading(this@LeaveRequest)
                     Log.d("isleaverequestupdate", response.message)
-                    Constant.showDataValidation(resources.getString(R.string.success), response.message, this)
+                    Constant.showDataValidation(
+                        resources.getString(R.string.success), response.message, this
+                    )
                 } else {
-                    Constant.showDataValidation(resources.getString(R.string.fail), response.message, this)
+                    Constant.showDataValidation(
+                        resources.getString(R.string.fail), response.message, this
+                    )
                 }
             }
+        }
+
+        binding.btncancel.setOnClickListener {
+            val intent = Intent(this, LeaveRequest::class.java)
+            startActivity(intent)
+            finish()
         }
 
 
 
         binding.toolbarLayout.lblRightSideBar.setOnClickListener {
+
+            if (currentTab == TabType.LeaveRequest) return@setOnClickListener
+            currentTab = TabType.LeaveRequest
+
             binding.toolbarLayout.lblRightSideBar.setBackgroundResource(R.drawable.white_radious)
             binding.toolbarLayout.lblRightSideBar.setTextColor(Color.BLACK)
             binding.toolbarLayout.lblLeftSideBar.setBackgroundResource(R.drawable.bg_light_green)
@@ -163,12 +187,18 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
         }
 
         binding.toolbarLayout.lblLeftSideBar.setOnClickListener {
+            if (currentTab == TabType.History) return@setOnClickListener
+            currentTab = TabType.History
+
             binding.rlaHistory.visibility = View.VISIBLE
             binding.tabLayoutStatus.visibility = View.VISIBLE
             binding.rlaCreateLeaveRequest.visibility = View.GONE
+
             binding.toolbarLayout.lblLeftSideBar.setBackgroundResource(R.drawable.white_radious)
             binding.toolbarLayout.lblLeftSideBar.setTextColor(Color.BLACK)
             binding.toolbarLayout.lblRightSideBar.setBackgroundResource(R.drawable.bg_light_green)
+
+            binding.tabLayoutStatus.removeAllTabs()
 
             val tabTitles = listOf("All", "Approved", "Rejected", "Waiting")
 
@@ -183,17 +213,22 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
                 binding.tabLayoutStatus.addTab(binding.tabLayoutStatus.newTab().setText(title))
             }
 
-            binding.tabLayoutStatus.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            binding.tabLayoutStatus.clearOnTabSelectedListeners()
+
+            binding.tabLayoutStatus.addOnTabSelectedListener(object :
+                TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab) {
                     val selectedTitle = tab.text.toString()
                     val filterStatus = tabStatusMap[selectedTitle] ?: "All"
                     mAdapter.filterByStatus(filterStatus)
 
                     if (mAdapter.itemCount == 0) {
-                        binding.lytList.visibility = View.VISIBLE
+                        binding.txtNoData.visibility = View.VISIBLE
+                        binding.nomessage.visibility = View.VISIBLE
                         binding.rcyLeaveRequestHistory.visibility = View.GONE
                     } else {
-                        binding.lytList.visibility = View.GONE
+                        binding.txtNoData.visibility = View.GONE
+                        binding.nomessage.visibility = View.GONE
                         binding.rcyLeaveRequestHistory.visibility = View.VISIBLE
                     }
                 }
@@ -202,11 +237,9 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
                 override fun onTabReselected(tab: TabLayout.Tab?) {}
             })
 
-
-
             isGetLeaveRequestList()
-
         }
+
 
         Constant.editTextCounter(this, binding.txtDesc, 500, binding.lbTextCount)
 
@@ -249,9 +282,7 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
             R.id.txtStartDate, R.id.rytStartDate, R.id.lnrStartCalendar -> {
                 val todayMillis = Calendar.getInstance().timeInMillis
                 Constant.handleRestrictDatePicker(
-                    this,
-                    minDate = todayMillis,
-                    preSelectedDateMillis = fromDateMillis
+                    this, minDate = todayMillis, preSelectedDateMillis = fromDateMillis
 
                 ) { selectedDate ->
                     Log.d("selectedDate", selectedDate)
@@ -279,11 +310,8 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
 
             R.id.txtEndDate, R.id.rytEndDate, R.id.lnrEndCalendar -> {
                 Constant.handleRestrictDatePicker(
-                    this,
-                    minDate = fromDateMillis,
-                    preSelectedDateMillis = toDateMillis
-                )
-                { selectedDate ->
+                    this, minDate = fromDateMillis, preSelectedDateMillis = toDateMillis
+                ) { selectedDate ->
                     Log.d("selectedDate", selectedDate)
                     binding.txtEndDate.text = Constant.covertDateFormate(selectedDate)
                     val toDate = dateFormat.parse(selectedDate)
@@ -294,7 +322,7 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
                         totalLeaveDays = ((diffInMillis / (1000 * 60 * 60 * 24)) + 1).toInt()
                     } else {
                         totalLeaveDays = 1
-                        fromDateMillis = toDateMillis // fallback to same date
+                        fromDateMillis = toDateMillis
                     }
 
                     binding.lblTotalDays.text = "No of Days - $totalLeaveDays"
@@ -319,24 +347,16 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
     }
 
 
-
     private fun isloadleaverequestData(newData: List<LeaveData>?) {
-        mAdapter =
-            LeaveRequestAdapter(
-                newData,
-                this,
-                this,
-                Constant.isShimmerViewDisable
-            )
+        mAdapter = LeaveRequestAdapter(
+            newData, this, this, Constant.isShimmerViewDisable
+        )
         binding.rcyLeaveRequestHistory.adapter = mAdapter
     }
 
     private fun isGetLeaveRequestList() {
         mAdapter = LeaveRequestAdapter(
-            null,
-            this,
-            this,
-            Constant.isShimmerViewShow
+            null, this, this, Constant.isShimmerViewDisable
         )
         binding.rcyLeaveRequestHistory.layoutManager = LinearLayoutManager(this)
         binding.rcyLeaveRequestHistory.isNestedScrollingEnabled = false
@@ -345,7 +365,6 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
             isAccessToken!!, "STUDENT", this
         )
     }
-
 
 
     override fun onItemImageClick(data: LeaveRequestHistoryData) {
@@ -373,7 +392,9 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
         binding.rlaHistory.visibility = View.GONE
         binding.txtDesc.setText(data.reason)
         binding.btnNext.visibility = View.GONE
-        binding.btnupdate.visibility = View.VISIBLE
+        binding.linearLayout9.visibility = View.VISIBLE
+        binding.tabLayoutStatus.visibility = View.GONE
+        binding.toolbarLayout.lnrParent.visibility = View.GONE
         binding.lblHeaderTitle.setText("Edit Leave Request")
 
         try {
@@ -433,9 +454,6 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
             appViewModel?.isleaverequestupdate(isAccessToken!!, updatedRequest, this)
         }
     }
-
-
-
 
 
 }
