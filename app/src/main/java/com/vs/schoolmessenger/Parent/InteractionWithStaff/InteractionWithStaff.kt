@@ -66,6 +66,7 @@ class InteractionWithStaff : BaseActivity<IntectionWithStaffBinding>(), View.OnC
                     interactionWithStaffAdapter.filter.filter(s)
                 }
             }
+
             override fun afterTextChanged(s: Editable?) {}
         })
 
@@ -87,8 +88,7 @@ class InteractionWithStaff : BaseActivity<IntectionWithStaffBinding>(), View.OnC
 
     private fun fetchstaffdata() {
         appViewModel?.getdetailsforchat(
-            isAccessToken ?: "",
-            this
+            isAccessToken ?: "", this
         )
     }
 

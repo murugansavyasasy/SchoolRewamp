@@ -64,6 +64,7 @@ import com.vs.schoolmessenger.School.Event.Response.EventSendResponse
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportModel.FeePendingReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
+import com.vs.schoolmessenger.School.InteractionWithStudent.Response.InteractionWithStudentResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveActionResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveRequestResponse
@@ -576,6 +577,11 @@ interface ApiInterfaces {
     fun getdetailsforchat(
         @Header(APIKeyNames.Authorization) token: String
     ): Call<InteractionWithStaffResponse?>?
+
+  @GET(APIMethods.student_details_for_chat)
+    fun getstudentdetailsforchat(
+        @Header(APIKeyNames.Authorization) token: String
+    ): Call<InteractionWithStudentResponse?>?
 
     @GET(APIMethods.get_staff_answers)
     fun getstaffanswers(

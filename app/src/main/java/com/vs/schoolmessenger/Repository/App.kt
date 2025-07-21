@@ -54,6 +54,7 @@ import com.vs.schoolmessenger.School.Event.Response.EventSendResponse
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportModel.FeePendingReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
+import com.vs.schoolmessenger.School.InteractionWithStudent.Response.InteractionWithStudentResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveActionResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveRequestResponse
@@ -229,6 +230,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var getCouponDetails: LiveData<ActivateCouponSummaryResponse?>? = null
     var sendactivatecoupon: LiveData<ActivateCouponResponse?>? = null
     var getdetailsforchat: LiveData<InteractionWithStaffResponse?>? = null
+    var getstudentdetailsforchat: LiveData<InteractionWithStudentResponse?>? = null
     var getstaffanswers: LiveData<AnswerResponse?>? = null
     var sendquestion: LiveData<QuestionModelResponse?>? = null
     var getexams: LiveData<ExamTimeTableResponse?>? = null
@@ -327,6 +329,7 @@ class App(application: Application) : AndroidViewModel(application) {
         getviewmarks = apiParentRepositories.getviewmarksLiveData
         isleaverequestupdate = apiParentRepositories.isleaverequestupdateLiveData
         getProgressMarks = apiParentRepositories.getProgressMarksLiveData
+        getstudentdetailsforchat = apiParentRepositories.getstudentdetailsforchatLiveData
 
     }
 
@@ -759,6 +762,10 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun getdetailsforchat(isToken: String, activity: Activity) {
         apiParentRepositories.getdetailsforchat(isToken, activity)
+    }
+
+    fun getstudentdetailsforchat(isToken: String, activity: Activity) {
+        apiParentRepositories.getstudentdetailsforchat(isToken, activity)
     }
 
     fun getstaffanswers(
