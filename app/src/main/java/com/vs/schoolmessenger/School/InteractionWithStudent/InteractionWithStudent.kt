@@ -118,9 +118,9 @@ class InteractionWithStudent : BaseActivity<IntrectionWithStudentBinding>(), Vie
             name = data.name,
             section_id = data.section_id!!,
             section_name = data.section_name!!,
-            subject_id = data.subject_id,
-            subject_name = data.subject_name,
-            is_class_teacher = data.is_class_teacher,
+            subject_id = data.subject_id!!,
+            subject_name = data.subject_name!!,
+            is_class_teacher = data.is_class_teacher!!,
         )
         Constant.QuestionDataSending = saveStaffQuestionData
         startActivity(intent)

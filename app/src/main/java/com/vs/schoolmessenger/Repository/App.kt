@@ -54,6 +54,8 @@ import com.vs.schoolmessenger.School.Event.Response.EventSendResponse
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportModel.FeePendingReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
+import com.vs.schoolmessenger.School.InteractionWithStudent.Model.AnswerModelRequest
+import com.vs.schoolmessenger.School.InteractionWithStudent.Response.AnswerModelResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.InteractionWithStudentResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.QuestionResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
@@ -235,6 +237,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var getstaffanswers: LiveData<AnswerResponse?>? = null
     var getstaffquestions: LiveData<QuestionResponse?>? = null
     var sendquestion: LiveData<QuestionModelResponse?>? = null
+    var sendanswer: LiveData<AnswerModelResponse?>? = null
     var getexams: LiveData<ExamTimeTableResponse?>? = null
     var getexamslist: LiveData<ExamResponse?>? = null
     var getviewmarks: LiveData<ExamMarksResponse?>? = null
@@ -327,6 +330,7 @@ class App(application: Application) : AndroidViewModel(application) {
         getstaffanswers = apiParentRepositories.getstaffanswersLiveData
         getstaffquestions = apiSchoolRepositories.getstaffquestionsLiveData
         sendquestion = apiParentRepositories.sendquestionLiveData
+        sendanswer = apiSchoolRepositories.sendanswerLiveData
         getexams = apiParentRepositories.getexamsLiveData
         getexamslist = apiParentRepositories.getexamslistLiveData
         getviewmarks = apiParentRepositories.getviewmarksLiveData
@@ -794,7 +798,7 @@ class App(application: Application) : AndroidViewModel(application) {
         is_class_teacher: Boolean,
         section_id: String,
         subject_id: String,
-        offset: String
+        offset: Int
  ) {
         apiSchoolRepositories.getstaffquestions(
             isToken,
@@ -811,6 +815,13 @@ class App(application: Application) : AndroidViewModel(application) {
         request: QuestionModelRequest
     ) {
         apiParentRepositories.sendquestion(isToken, request)
+    }
+
+    fun sendanswer(
+        isToken: String,
+        request: AnswerModelRequest
+    ) {
+        apiSchoolRepositories.sendanswer(isToken, request)
     }
     fun getexams(
         isToken: String

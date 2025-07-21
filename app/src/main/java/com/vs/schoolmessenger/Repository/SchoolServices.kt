@@ -28,6 +28,8 @@ import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventResp
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.HolidayResponse
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.ChatModel.AnswerResponse
+import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.QuestionModelResponse
+import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.Request.QuestionModelRequest
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.SendAbsenteeSMSResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportDataResponse
@@ -42,6 +44,8 @@ import com.vs.schoolmessenger.School.Event.Response.EventSendResponse
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportModel.FeePendingReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
+import com.vs.schoolmessenger.School.InteractionWithStudent.Model.AnswerModelRequest
+import com.vs.schoolmessenger.School.InteractionWithStudent.Response.AnswerModelResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.QuestionResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveActionResponse
@@ -137,6 +141,7 @@ class SchoolServices {
     var getCouponDetails: MutableLiveData<ActivateCouponSummaryResponse?>
     var sendactivatecoupon: MutableLiveData<ActivateCouponResponse?>
     var getstaffquestions: MutableLiveData<QuestionResponse?>
+    var sendanswer: MutableLiveData<AnswerModelResponse?>
 
 
     init {
@@ -203,6 +208,7 @@ class SchoolServices {
         getCouponDetails = MutableLiveData()
         sendactivatecoupon = MutableLiveData()
         getstaffquestions = MutableLiveData()
+        sendanswer = MutableLiveData()
     }
 
 
@@ -2377,7 +2383,7 @@ class SchoolServices {
         is_class_teacher: Boolean,
         section_id: String,
         subject_id: String,
-        offset: String
+        offset: Int
     ) {
         RestClient.apiInterfaces.getstaffquestions(isToken,is_class_teacher,
             section_id,
@@ -2418,6 +2424,36 @@ class SchoolServices {
 
     val getstaffquestionsLiveData: LiveData<QuestionResponse?>
         get() = getstaffquestions
+
+
+
+    fun sendanswer(
+        isToken: String,
+        request: AnswerModelRequest
+    ) {
+        RestClient.apiInterfaces.sendanswer(isToken, request)
+            ?.enqueue(object : Callback<AnswerModelResponse?> {
+                override fun onResponse(
+                    call: Call<AnswerModelResponse?>,
+                    response: Response<AnswerModelResponse?>
+                ) {
+                    if (response.code() == 200 && response.body() != null) {
+                        sendanswer.postValue(response.body())
+                    } else {
+                        sendanswer.postValue(response.body())
+                    }
+                }
+
+                override fun onFailure(call: Call<AnswerModelResponse?>, t: Throwable) {
+                    sendanswer.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+
+    val sendanswerLiveData: LiveData<AnswerModelResponse?>
+        get() = sendanswer
 
 
 }
