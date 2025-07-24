@@ -45,6 +45,7 @@ class HomeFragment : Fragment(), View.OnClickListener, CouponMenuClickListener,
 
         binding.recyclerview1.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+
         binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
 
         fetchCouponMenu()

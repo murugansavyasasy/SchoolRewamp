@@ -1,38 +1,34 @@
 package com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty
 
-import android.content.Context
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
-import android.view.inputmethod.InputMethodManager
-import android.widget.TextView
-import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.tabs.TabLayout
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
-import com.vs.schoolmessenger.Parent.EventsHolidays.CalendarFragment
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Adapter.EventAdapter
+import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Adapter.EventCategoryAdapter
+import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Adapter.EventCompletedAdapter
+import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Adapter.EventUpcomingAdapter
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventClickListener
-import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventDataClass
-import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.HolidayClickListener
+import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.RewampModelEvent.Category
+import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.RewampModelEvent.EventItem
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
-import com.vs.schoolmessenger.databinding.EventParentBinding
 import com.vs.schoolmessenger.databinding.EventRewampBinding
 
-class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener{
+class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventClickListener {
 
     override fun getViewBinding(): EventRewampBinding {
         return EventRewampBinding.inflate(layoutInflater)
     }
 
     lateinit var mAdapter: EventAdapter
+    lateinit var categoryadapter: EventCategoryAdapter
+    lateinit var eventupcomingadapter: EventUpcomingAdapter
+    lateinit var eventcompletedadapter: EventCompletedAdapter
 
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
@@ -50,194 +46,100 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener{
 
         binding.imgBack.setOnClickListener(this)
         binding.rytSearch.setOnClickListener(this)
-//        binding.toolbarLayout.lblParentToolBar.text = Constant.isParentMenuName
-//        binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
-//        binding.toolbarLayout.lnrParent.visibility = View.VISIBLE
-//
-//        binding.toolbarLayout.lblLeftSideBar.text = resources.getText(R.string.HoliDay)
-//        binding.toolbarLayout.lblRightSideBar.text = resources.getText(R.string.Event)
         binding.lblStudentName.text = isChildDetails?.name
-        binding.lblStudentSection.text = isChildDetails?.standard_name + " - " + isChildDetails?.section_name
-//        loadeventdata()
-//
-//        binding.toolbarLayout.txtVideoMenu.addTextChangedListener(object : TextWatcher {
-//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-//                if (::mAdapter.isInitialized) {
-//                    mAdapter.filter.filter(s)
-//                }
-//            }
-//            override fun afterTextChanged(s: Editable?) {}
-//        })
+        binding.lblStudentSection.text =
+            isChildDetails?.standard_name + " - " + isChildDetails?.section_name
+        binding.rcyongoingevent.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding.rcycategoryEvent.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding.rcyupcomingevent.layoutManager = LinearLayoutManager(this)
+        binding.rcycompletedevent.layoutManager = LinearLayoutManager(this)
+
+        loadeventdata()
 
 
-//        binding.toolbarLayout.txtVideoMenu.addTextChangedListener(object : TextWatcher {
-//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-//                if (::isHolidayAdapter.isInitialized) {
-//                    isHolidayAdapter.filter.filter(s)
-//                }
-//            }
-//
-//            override fun afterTextChanged(s: Editable?) {}
-//        })
+        appViewModel?.IsGetEventReport?.observe(this) { response ->
+            if (response?.status == true && !response.data.isNullOrEmpty()) {
+                val onGoingList = response.data[0].on_going
+                val CategoryList = response.data[0].categories
+                val UpcomingList = response.data[0].up_coming
+                val CompletedList = response.data[0].completed
+                binding.rcyongoingevent.visibility = View.VISIBLE
+                binding.rcycategoryEvent.visibility = View.VISIBLE
+                binding.rcyupcomingevent.visibility = View.VISIBLE
+                isloadeventData(onGoingList)
+                isloadCategoryData(CategoryList)
+                isloadUpcomingData(UpcomingList)
+                isloadCompletedData(CompletedList)
 
-
-//        appViewModel?.IsGetEventReport?.observe(this) { response ->
-//            if (response?.status == true && !response.data.isNullOrEmpty()) {
-//                binding.rcyEvent.visibility = View.VISIBLE
-//                binding.tool5barLayout.rytSearch.visibility = View.VISIBLE
-//                binding.nomessage.visibility = View.GONE
-//                binding.txtNoData.visibility = View.GONE
-//                isloadeventData(response.data)
-//            } else {
-//                binding.rcyEvent.visibility = View.GONE
-//                binding.toolbarLayout.rytSearch.visibility = View.GONE
-//                binding.nomessage.visibility = View.VISIBLE
-//                binding.txtNoData.visibility = View.VISIBLE
-//                binding.txtNoData.text = response?.message ?: getString(R.string.no_data_found)
-//            }
-//        }
-//
-
-//        appViewModel?.IsGetHolidayReport?.observe(this) { response ->
-//            if (response?.status == true && !response.data.isNullOrEmpty()) {
-//                binding.rcyEvent.visibility = View.GONE
-//                binding.toolbarLayout.rytSearch.visibility = View.GONE
-//                binding.nomessage.visibility = View.GONE
-//                binding.txtNoData.visibility = View.GONE
-//                binding.calendarFragmentContainer.visibility = View.VISIBLE
-////                isloadholidayData(response.data)
-//                val calendarFragment = CalendarFragment.newInstance(response.data)
-//                supportFragmentManager.beginTransaction()
-//                    .replace(R.id.calendarFragmentContainer, calendarFragment)
-//                    .commit()
-//            } else {
-//                binding.rcyEvent.visibility = View.GONE
-//                binding.calendarFragmentContainer.visibility = View.GONE
-//                binding.toolbarLayout.rytSearch.visibility = View.GONE
-//                binding.nomessage.visibility = View.VISIBLE
-//                binding.txtNoData.visibility = View.VISIBLE
-//                binding.txtNoData.text = response?.message ?: getString(R.string.no_data_found)
-//            }
-//        }
-//
-//
-//        binding.toolbarLayout.lblRightSideBar.setOnClickListener {
-//            binding.toolbarLayout.lblRightSideBar.isEnabled = false
-//            binding.toolbarLayout.lblLeftSideBar.isEnabled = true
-//            isBackRoundChange(binding.toolbarLayout.lblRightSideBar)
-//            loadeventdata()
-//        }
-//
-//        binding.toolbarLayout.lblLeftSideBar.setOnClickListener {
-//            binding.toolbarLayout.lblLeftSideBar.isEnabled = false
-//            binding.toolbarLayout.lblRightSideBar.isEnabled = true
-//            isBackRoundChange(binding.toolbarLayout.lblLeftSideBar)
-//            loadHolidayData()
-//        }
-//    }
-//
-//    private fun isloadeventData(newData: List<EventDataClass>?) {
-//        mAdapter = EventAdapter(newData, this, this, Constant.isShimmerViewDisable)
-//        binding.rcyEvent.adapter = mAdapter
-//    }
-//
-////    private fun isloadholidayData(newData: List<Holiday>?) {
-////        isHolidayAdapter = HolidayAdapter(newData, this, Constant.isShimmerViewDisable, this)
-////        binding.rcyEvent.adapter = isHolidayAdapter
-//////    }
-//
-//    private fun loadeventdata() {
-//        clearSearchText()
-//        mAdapter = EventAdapter(null, this, this, Constant.isShimmerViewShow)
-//        binding.rcyEvent.layoutManager = LinearLayoutManager(this)
-//        binding.rcyEvent.isNestedScrollingEnabled = false
-//        binding.rcyEvent.adapter = mAdapter
-//        appViewModel!!.IsGetEventReport(isAccessToken!!, this)
-//    }
-//
-//    fun clearSearchText() {
-//        binding.toolbarLayout.txtVideoMenu.text.clear()
-//        binding.toolbarLayout.txtVideoMenu.clearFocus();
-//        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-//        imm.hideSoftInputFromWindow(binding.toolbarLayout.txtVideoMenu.windowToken, 0)
-//    }
-//
-//    private fun loadHolidayData() {
-//        clearSearchText()
-////        isHolidayAdapter = HolidayAdapter(null, this, Constant.isShimmerViewShow, this)
-//        appViewModel!!.IsGetHolidayReport(isAccessToken!!, this)
-//    }
-//
-
-//
-//
-//    override fun onSearchResultEmpty(isEmpty: Boolean) {
-//        if (isEmpty) {
-//            binding.nomessage.visibility = View.VISIBLE
-//            binding.txtNoData.visibility = View.VISIBLE
-//            binding.txtNoData.text = "No matching Event found"
-//            binding.rcyEvent.visibility = View.GONE
-//        } else {
-//            binding.nomessage.visibility = View.GONE
-//            binding.txtNoData.visibility = View.GONE
-//            binding.rcyEvent.visibility = View.VISIBLE
-//        }
-//    }
-//
-//    override fun onSearchHolidayResultEmpty(isEmpty: Boolean) {
-//        if (isEmpty) {
-//            binding.nomessage.visibility = View.VISIBLE
-//            binding.txtNoData.visibility = View.VISIBLE
-//            binding.txtNoData.text = "No matching Holiday found"
-//            binding.rcyEvent.visibility = View.GONE
-//        } else {
-//            binding.nomessage.visibility = View.GONE
-//            binding.txtNoData.visibility = View.GONE
-//            binding.rcyEvent.visibility = View.VISIBLE
-//        }
-//    }
-//
-//    private fun loadCalendarFragment() {
-//        val fragment = CalendarFragment()
-//        supportFragmentManager.beginTransaction()
-//            .replace(R.id.calendarFragmentContainer, fragment)
-//            .commit()
-//    }
-//
-//
-//    private fun isBackRoundChange(isClickingId: TextView) {
-//        if (isClickingId == binding.toolbarLayout.lblRightSideBar) {
-//            binding.toolbarLayout.lblLeftSideBar.background = null
-//            binding.relativeLayout.setBackgroundResource(R.drawable.bg_parent_backround)
-//            binding.toolbarLayout.lblLeftSideBar.setTextColor(
-//                ContextCompat.getColor(this, R.color.dark_blue)
-//            )
-//
-//            binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
-//            binding.rcyEvent.visibility = View.VISIBLE
-//            binding.calendarFragmentContainer.visibility = View.GONE
-//        }
-//
-//        if (isClickingId == binding.toolbarLayout.lblLeftSideBar) {
-//            binding.toolbarLayout.lblRightSideBar.background = null
-//            binding.relativeLayout.setBackgroundResource(R.color.white)
-//            binding.toolbarLayout.lblRightSideBar.setTextColor(
-//                ContextCompat.getColor(this, R.color.dark_blue)
-//            )
-//
-//            binding.toolbarLayout.rytSearch.visibility = View.GONE
-//            binding.rcyEvent.visibility = View.GONE
-//            binding.calendarFragmentContainer.visibility = View.VISIBLE
-//            loadCalendarFragment()
-//        }
-//
-//        isClickingId.background = ContextCompat.getDrawable(this, R.drawable.white_radious)
-//        isClickingId.setTextColor(ContextCompat.getColor(this, R.color.black))
-//    }
+            } else {
+                binding.rcyongoingevent.visibility = View.GONE
+                binding.rcycategoryEvent.visibility = View.GONE
+                binding.rcyupcomingevent.visibility = View.GONE
+                binding.rcycompletedevent.visibility = View.GONE
+            }
+        }
 
     }
+
+
+    private fun isloadeventData(newData: List<EventItem>?) {
+        mAdapter = EventAdapter(newData, this, this, Constant.isShimmerViewDisable)
+        binding.rcyongoingevent.adapter = mAdapter
+    }
+
+    private fun isloadCategoryData(newData: List<Category>?) {
+        categoryadapter = EventCategoryAdapter(newData, this, this, Constant.isShimmerViewDisable)
+        binding.rcycategoryEvent.adapter = categoryadapter
+    }
+
+    private fun isloadUpcomingData(newData: List<EventItem>?) {
+        eventupcomingadapter =
+            EventUpcomingAdapter(newData, this, this, Constant.isShimmerViewDisable)
+        binding.rcyupcomingevent.adapter = eventupcomingadapter
+    }
+
+    private fun isloadCompletedData(newData: List<EventItem>?) {
+        eventcompletedadapter =
+            EventCompletedAdapter(newData, this, this, Constant.isShimmerViewDisable)
+        binding.rcycompletedevent.adapter = eventcompletedadapter
+    }
+
+
+    private fun loadeventdata() {
+        mAdapter = EventAdapter(null, this, this, Constant.isShimmerViewShow)
+        binding.rcyongoingevent.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding.rcyongoingevent.isNestedScrollingEnabled = false
+        binding.rcyongoingevent.adapter = mAdapter
+
+
+        categoryadapter = EventCategoryAdapter(null, this, this, Constant.isShimmerViewShow)
+        binding.rcycategoryEvent.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding.rcycategoryEvent.isNestedScrollingEnabled = false
+        binding.rcycategoryEvent.adapter = categoryadapter
+
+
+        eventupcomingadapter = EventUpcomingAdapter(null, this, this, Constant.isShimmerViewShow)
+        binding.rcyupcomingevent.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.rcyupcomingevent.isNestedScrollingEnabled = false
+        binding.rcyupcomingevent.adapter = eventupcomingadapter
+
+
+        eventcompletedadapter = EventCompletedAdapter(null, this, this, Constant.isShimmerViewShow)
+        binding.rcycompletedevent.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.rcycompletedevent.isNestedScrollingEnabled = false
+        binding.rcycompletedevent.adapter = eventupcomingadapter
+
+
+
+        appViewModel!!.IsGetEventReport(isAccessToken!!, this)
+    }
+
 
     override fun onClick(p0: View?) {
         when (p0?.id) {
@@ -248,5 +150,13 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener{
                 binding.rytSearch1.visibility = View.VISIBLE
             }
         }
+    }
+
+    override fun onSearchResultEmpty(isEmpty: Boolean) {
+
+    }
+
+    override fun onCategoryClicked(data: Category) {
+        TODO("Not yet implemented")
     }
 }

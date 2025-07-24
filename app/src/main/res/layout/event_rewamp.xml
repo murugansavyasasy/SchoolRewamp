@@ -103,18 +103,16 @@
             </RelativeLayout>
 
 
-
             <RelativeLayout
                 android:id="@+id/rytSearch1"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/thirty_five"
                 android:layout_below="@id/headerview"
-                android:layout_marginTop="@dimen/ten"
                 android:layout_marginStart="15dp"
+                android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="15dp"
                 android:background="@drawable/rect_white_search"
                 android:visibility="gone">
-
 
 
                 <ImageView
@@ -137,128 +135,23 @@
             </RelativeLayout>
 
 
-
-            <LinearLayout
-                android:id="@+id/linear_layout"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcyongoingevent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:fadeScrollbars="false"
+                android:layout_marginTop="5dp"
                 android:layout_below="@+id/rytSearch1"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="15dp"
-                android:background="@drawable/dark_pink_background"
-                android:orientation="vertical"
-                android:paddingStart="20dp"
-                android:paddingTop="20dp">
-
-
-                <TextView
-                    android:id="@+id/event_header"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Christmas Day Celebration"
-                    android:textColor="@color/white"
-                    android:textSize="25sp" />
-
-                <TextView
-                    android:id="@+id/event_description"
-                    style="@style/CustomTextStylePoppinsMedium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="10dp"
-                    android:text="Everyone are welcome to the celebration . Kindly wear the color dress for the celebration"
-                    android:textColor="@color/white"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:id="@+id/event_time_description"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="10dp"
-                    android:text="Event Started At : 12.27 AM , 21 Jul 2025"
-                    android:textColor="@color/white"
-                    android:textSize="15sp" />
-
-                <LinearLayout
-                    android:id="@+id/linear_layout10"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:orientation="horizontal">
-
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/goingg"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:background="@drawable/bg_image_background_white_coupon"
-                        android:src="@drawable/profile"
-                        app:shapeAppearanceOverlay="@style/RoundedSquare" />
-
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/goinggwewe"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:background="@drawable/bg_image_background_white_coupon"
-                        android:src="@drawable/profile"
-                        app:shapeAppearanceOverlay="@style/RoundedSquare" />
-
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/goinggwe"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:background="@drawable/bg_image_background_white_coupon"
-                        android:src="@drawable/profile"
-                        app:shapeAppearanceOverlay="@style/RoundedSquare" />
-
-                    <TextView
-                        android:id="@+id/goingewrwe"
-                        style="@style/CustomTextStylePoppinsMedium"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_marginTop="9dp"
-                        android:layout_marginBottom="9dp"
-                        android:background="@drawable/bg_image_background_white_coupon"
-                        android:gravity="center"
-                        android:text="+9"
-                        android:textColor="@color/black"
-                        android:textSize="15sp" />
-
-
-                </LinearLayout>
-
-
-                <TextView
-                    android:id="@+id/going"
-                    style="@style/CustomTextStylePoppinsMedium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/bg_background_white_coupon"
-                    android:paddingStart="20dp"
-                    android:paddingTop="10dp"
-                    android:paddingEnd="20dp"
-                    android:paddingBottom="10dp"
-                    android:text="On Going"
-                    android:textColor="@color/black"
-                    android:textSize="15sp" />
-
-            </LinearLayout>
+                android:paddingHorizontal="10dp"
+                android:scrollbars="none" />
 
 
             <ImageView
                 android:id="@+id/dotindicator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/linear_layout"
+                android:layout_below="@+id/rcyongoingevent"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
                 android:src="@drawable/dotindicator" />
@@ -277,55 +170,17 @@
                 android:textSize="20sp" />
 
 
-            <LinearLayout
-                android:id="@+id/categorylinear_layout"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcycategory_event"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:fadeScrollbars="false"
+                android:layout_marginTop="5dp"
                 android:layout_below="@+id/category_headerview"
-                android:orientation="horizontal">
+                android:paddingHorizontal="10dp"
+                android:scrollbars="none" />
 
-                <LinearLayout
-                    android:id="@+id/linear_layout_categorychild"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/category_white_box"
-                    android:orientation="vertical">
-
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/category_image"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="10dp"
-                        android:src="@drawable/ic_account"
-                        app:shapeAppearanceOverlay="@style/RoundedSquare" />
-
-                    <TextView
-                        android:id="@+id/category_name"
-                        style="@style/CustomTextStylePoppinsMedium"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="25dp"
-                        android:paddingStart="20dp"
-                        android:paddingTop="10dp"
-                        android:paddingEnd="20dp"
-                        android:paddingBottom="25dp"
-                        android:gravity="center"
-                        android:text="Annual Day"
-                        android:maxLines="1"
-                        android:ellipsize="end"
-                        android:textColor="@color/black"
-                        android:textSize="15sp"
-                        android:maxWidth="130dp" />
-
-
-
-                </LinearLayout>
-
-
-            </LinearLayout>
 
 
             <TextView
@@ -333,7 +188,7 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/categorylinear_layout"
+                android:layout_below="@+id/rcycategory_event"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
                 android:text="Upcoming Events"
@@ -341,125 +196,42 @@
                 android:textSize="20sp" />
 
 
-            <LinearLayout
-                android:id="@+id/linear_layout5"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcyupcomingevent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:fadeScrollbars="false"
+                android:layout_marginTop="5dp"
                 android:layout_below="@+id/upcomingevent_headerview"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="15dp"
-                android:background="@drawable/black_background"
-                android:orientation="vertical"
-                android:paddingStart="20dp"
-                android:paddingTop="20dp">
+                android:paddingHorizontal="10dp"
+                android:scrollbars="none" />
 
 
-                <TextView
-                    android:id="@+id/event_header1"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Annual Day"
-                    android:textColor="@color/white"
-                    android:textSize="21sp" />
 
-                <TextView
-                    android:id="@+id/event_description1"
-                    style="@style/CustomTextStylePoppinsMedium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="10dp"
-                    android:text="Event Starts At 10.00am , 22 Jul 2025"
-                    android:textColor="@color/gray"
-                    android:textSize="15sp" />
+            <TextView
+                android:id="@+id/completedevent_headerview"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rcyupcomingevent"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:text="Completed Events"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
 
 
-                <TextView
-                    android:id="@+id/event_description2"
-                    style="@style/CustomTextStylePoppinsMedium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="10dp"
-                    android:text="Everyone children need to attend the function with thier parents"
-                    android:textColor="@color/gray"
-                    android:textSize="15sp" />
-
-
-                <LinearLayout
-                    android:id="@+id/linear_layout9"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:orientation="horizontal">
-
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/goinggwsdde"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:background="@drawable/bg_image_background_white_coupon"
-                        android:src="@drawable/profile"
-                        app:shapeAppearanceOverlay="@style/RoundedSquare" />
-
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/goinggwdskdde"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:background="@drawable/bg_image_background_white_coupon"
-                        android:src="@drawable/profile"
-                        app:shapeAppearanceOverlay="@style/RoundedSquare" />
-
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/goinggsdsadwe"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:background="@drawable/bg_image_background_white_coupon"
-                        android:src="@drawable/profile"
-                        app:shapeAppearanceOverlay="@style/RoundedSquare" />
-
-                    <TextView
-                        android:id="@+id/going6"
-                        style="@style/CustomTextStylePoppinsMedium"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:background="@drawable/bg_image_background_white_coupon"
-
-                        android:gravity="center"
-                        android:text="+9"
-                        android:textColor="@color/black"
-                        android:textSize="15sp" />
-
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_weight="1" />
-
-
-                    <ImageView
-                        android:id="@+id/going9"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginEnd="20dp"
-                        android:layout_marginBottom="10dp"
-                        android:background="@drawable/dark_pink_background"
-                        android:paddingStart="10dp"
-                        android:paddingTop="8dp"
-                        android:paddingEnd="10dp"
-                        android:paddingBottom="8dp"
-                        android:src="@drawable/arrow_right_white" />
-
-                </LinearLayout>
-
-            </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcycompletedevent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:fadeScrollbars="false"
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/completedevent_headerview"
+                android:paddingHorizontal="10dp"
+                android:scrollbars="none" />
 
 
         </RelativeLayout>

@@ -24,7 +24,7 @@ import com.vs.schoolmessenger.Parent.Coupon.CouponRequestModel.ActivateCouponReq
 import com.vs.schoolmessenger.Parent.Coupon.CouponRequestModel.CategorySummaryRequest
 import com.vs.schoolmessenger.Parent.Coupon.CouponRequestModel.CouponDetailsRequest
 import com.vs.schoolmessenger.Parent.Coupon.CouponRequestModel.CouponSummaryRequest
-import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventResponse
+import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.RewampModelEvent.EventResponse
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.HolidayResponse
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkData
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.ChatModel.AnswerResponse

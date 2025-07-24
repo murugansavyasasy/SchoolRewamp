@@ -2,38 +2,18 @@ package com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.Color
-import android.text.TextUtils
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebResourceError
-import android.webkit.WebResourceRequest
-import android.webkit.WebViewClient
-import android.widget.Filter
-import android.widget.Filterable
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.vs.schoolmessenger.CommonScreens.CommonFileData
-import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventClickListener
-import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventDataClass
-import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.RewampModelEvent.EventData
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.RewampModelEvent.EventItem
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
-import me.relex.circleindicator.CircleIndicator2
 
-class EventAdapter(
+class EventUpcomingAdapter (
     private var itemList: List<EventItem>?,
     private var listener: EventClickListener,
     private var context: Context,
@@ -45,6 +25,8 @@ class EventAdapter(
     private val TYPE_DATA = 1
 
 
+
+
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
     }
@@ -52,11 +34,11 @@ class EventAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
             val shimmerView =
-                ShimmerUtil.wrapWithShimmer(parent, R.layout.event_ongoing_recyclerview)
+                ShimmerUtil.wrapWithShimmer(parent, R.layout.event_upcoming_recyclerview)
             ShimmerViewHolder(shimmerView)
         } else {
             val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.event_ongoing_recyclerview, parent, false)
+                .inflate(R.layout.event_upcoming_recyclerview, parent, false)
             DataViewHolder(view, context)
         }
     }
@@ -77,29 +59,26 @@ class EventAdapter(
     }
 
 
+
+
+
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
 
         private val event_header: TextView = itemView.findViewById(R.id.event_header)
         private val event_time: TextView = itemView.findViewById(R.id.event_time)
         private val event_location: TextView = itemView.findViewById(R.id.event_location)
-        private val status_event: TextView = itemView.findViewById(R.id.status_event)
 
         @SuppressLint("ClickableViewAccessibility")
         fun bind(
-            data: EventItem, position: Int, listener: EventClickListener, adapter: EventAdapter
+            data: EventItem,
+            position: Int,
+            listener: EventClickListener,
+            adapter: EventUpcomingAdapter
         ) {
             event_header.text = data.title
-            event_time.text =
-                "Event started at" + " " + data.time + " - " + Constant.convertDateTimeFormat(data.date)
+            event_time.text = "Event will start at"+" "+data.time + " - " + Constant.convertDateTimeFormat(data.date)
             event_location.text = data.venue
-            status_event.text = "Today's Event"
         }
-    }
-}
-
-class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    fun startShimmer() {
-        ShimmerUtil.startShimmer(itemView)
     }
 }
