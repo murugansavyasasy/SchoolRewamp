@@ -28,6 +28,19 @@
             android:textColor="@color/white"
             android:textSize="25sp" />
 
+        <TextView
+            android:id="@+id/eventdesc"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:text="Festival 10:00 AM -17/07"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
         <LinearLayout
             android:id="@+id/datelinear_layout"
             android:layout_width="wrap_content"
@@ -82,63 +95,77 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/linear_layout10"
+            android:id="@+id/rytList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginBottom="10dp"
             android:orientation="horizontal">
 
+            <LinearLayout
+                android:id="@+id/rytList2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/bg_radiantwhite1"
+                android:orientation="horizontal">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcyImgPDF"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/total_numbers"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/bg_image_background_white_coupon"
+                    android:text="+9"
+                    android:gravity="center"
+                    android:textSize="15sp"
+                    android:visibility="gone"
+                    android:layout_marginStart="-10dp"
+                    android:textColor="@color/black"
+                    style="@style/CustomTextStylePoppinsBold"/>
+
+            </LinearLayout>
+
+
+            <android.webkit.WebView
+                android:id="@+id/webView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/ten"
+                android:background="@drawable/bg_image_background_white_coupon"
+                android:visibility="gone" />
+
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/goingg"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:id="@+id/video_player"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/bg_image_background_white_coupon"
-                android:src="@drawable/profile"
+                android:scaleType="fitXY"
+                android:src="@drawable/video_play"
+                android:visibility="gone"
                 app:shapeAppearanceOverlay="@style/RoundedSquare" />
 
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/goinggwewe"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginStart="-10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/bg_image_background_white_coupon"
-                android:src="@drawable/profile"
-                app:shapeAppearanceOverlay="@style/RoundedSquare" />
+            <ProgressBar
+                android:id="@+id/loadingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminateDrawable="@drawable/progress_bar_white"
+                android:indeterminateOnly="true"
+                android:visibility="gone">
 
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/goinggwe"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginStart="-10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/bg_image_background_white_coupon"
-                android:src="@drawable/profile"
-                app:shapeAppearanceOverlay="@style/RoundedSquare" />
-
-            <TextView
-                android:id="@+id/goingewrwe"
-                style="@style/CustomTextStylePoppinsMedium"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginStart="-10dp"
-                android:layout_marginTop="9dp"
-                android:layout_marginBottom="9dp"
-                android:background="@drawable/bg_image_background_white_coupon"
-                android:gravity="center"
-                android:text="+9"
-                android:textColor="@color/black"
-                android:textSize="15sp" />
+            </ProgressBar>
 
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_weight="1" />
-
 
             <TextView
                 android:id="@+id/status_event"
@@ -156,8 +183,17 @@
                 android:text="Today's Event"
                 android:textColor="@color/black" />
 
-
         </LinearLayout>
+
+        <me.relex.circleindicator.CircleIndicator2
+            android:id="@+id/indicator"
+            style="@style/IndicatorStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/twenty"
+            android:layout_below="@+id/rytList"
+            android:layout_centerInParent="true"
+            android:elevation="4dp"
+            android:visibility="gone" />
 
 
     </LinearLayout>

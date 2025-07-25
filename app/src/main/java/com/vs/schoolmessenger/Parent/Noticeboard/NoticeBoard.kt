@@ -4,6 +4,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Parent.Noticeboard.Adapter.NoticeBoardAdapter
@@ -12,12 +13,13 @@ import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.NoticeBoardBinding
+import com.vs.schoolmessenger.databinding.NoticeRevampBinding
 
-class NoticeBoard : BaseActivity<NoticeBoardBinding>(), View.OnClickListener,
+class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
     NoticeBoardClickListener {
 
-    override fun getViewBinding(): NoticeBoardBinding {
-        return NoticeBoardBinding.inflate(layoutInflater)
+    override fun getViewBinding(): NoticeRevampBinding {
+        return NoticeRevampBinding.inflate(layoutInflater)
     }
 
     lateinit var mAdapter: NoticeBoardAdapter
@@ -31,14 +33,17 @@ class NoticeBoard : BaseActivity<NoticeBoardBinding>(), View.OnClickListener,
         val isChildDetails = SharedPreference.getChildDetails(this)
         isAccessToken = isChildDetails?.access_token
         isGetNoticeBoardList()
-        binding.toolbarLayout.lblStudentName.text = isChildDetails?.name
-        binding.toolbarLayout.lblStudentSection.text =
-            isChildDetails?.standard_name+ " - " +isChildDetails?.section_name
-        binding.toolbarLayout.lblParentToolBar.text = Constant.isParentMenuName
-        binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
-        binding.toolbarLayout.imgBack.setOnClickListener(this)
+        binding.lblStudentName.text = isChildDetails?.name
+        binding.lblStudentSection.text =
+            isChildDetails?.standard_name + " - " + isChildDetails?.section_name
+//        binding.toolbarLayout.lblStudentName.text = isChildDetails?.name
+//        binding.toolbarLayout.lblStudentSection.text =
+//            isChildDetails?.standard_name+ " - " +isChildDetails?.section_name
+//        binding.toolbarLayout.lblParentToolBar.text = Constant.isParentMenuName
+//        binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
+//        binding.toolbarLayout.imgBack.setOnClickListener(this)
 
-        binding.toolbarLayout.txtVideoMenu.addTextChangedListener(object : TextWatcher {
+        binding.txtVideoMenu.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (::mAdapter.isInitialized) {
@@ -52,13 +57,13 @@ class NoticeBoard : BaseActivity<NoticeBoardBinding>(), View.OnClickListener,
         appViewModel?.isNoticeBoardReport?.observe(this) { response ->
             if (response?.status == true && !response.data.isNullOrEmpty()) {
                 binding.rcyNoticeBoard.visibility = View.VISIBLE
-                binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
+                binding.rytSearch.visibility = View.VISIBLE
                 binding.nomessage.visibility = View.GONE
                 binding.txtNoData.visibility = View.GONE
                 isloadhomeworkData(response.data)
             } else {
                 binding.rcyNoticeBoard.visibility = View.GONE
-                binding.toolbarLayout.rytSearch.visibility = View.GONE
+                binding.rytSearch.visibility = View.GONE
                 binding.nomessage.visibility = View.VISIBLE
                 binding.txtNoData.visibility = View.VISIBLE
                 binding.txtNoData.text = response?.message ?: "No data found"
@@ -100,7 +105,7 @@ class NoticeBoard : BaseActivity<NoticeBoardBinding>(), View.OnClickListener,
 
     private fun isGetNoticeBoardList() {
         mAdapter = NoticeBoardAdapter(null, this, this, Constant.isShimmerViewShow)
-        binding.rcyNoticeBoard.layoutManager = LinearLayoutManager(this)
+        binding.rcyNoticeBoard.layoutManager = GridLayoutManager(this, 2)
         binding.rcyNoticeBoard.isNestedScrollingEnabled = false
         binding.rcyNoticeBoard.adapter = mAdapter
         appViewModel!!.isNoticeBoardReport(

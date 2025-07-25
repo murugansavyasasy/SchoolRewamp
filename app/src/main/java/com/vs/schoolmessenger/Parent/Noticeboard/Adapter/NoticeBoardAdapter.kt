@@ -55,11 +55,11 @@ class NoticeBoardAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
             val shimmerView =
-                ShimmerUtil.wrapWithShimmer(parent, R.layout.homework_school_reportitem)
+                ShimmerUtil.wrapWithShimmer(parent, R.layout.notice_board_rewamp_card)
             ShimmerViewHolder(shimmerView)
         } else {
             val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.homework_school_reportitem, parent, false)
+                .inflate(R.layout.notice_board_rewamp_card, parent, false)
             DataViewHolder(view, context)
         }
     }
@@ -104,17 +104,17 @@ class NoticeBoardAdapter(
 
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
-        private var isTextExpanded = false
+//        private var isTextExpanded = false
         private val LblHWSubjectName: TextView = itemView.findViewById(R.id.LblHWSubjectName)
         private val lblTitleImage: TextView = itemView.findViewById(R.id.lblTitleImage)
         private val lblContentImage: TextView = itemView.findViewById(R.id.lblContentImage)
         private val lblDateImage: TextView = itemView.findViewById(R.id.lblDateImage)
         private val lblTimeImage: TextView = itemView.findViewById(R.id.lblTimeImage)
-        private val rlaSelectText: RelativeLayout = itemView.findViewById(R.id.rlaSelectText)
+//        private val rlaSelectText: RelativeLayout = itemView.findViewById(R.id.rlaSelectText)
         private val rytList: RelativeLayout = itemView.findViewById(R.id.rytList)
-        private val tvSeeMoreImage: TextView = itemView.findViewById(R.id.tvSeeMoreImage)
+//        private val tvSeeMoreImage: TextView = itemView.findViewById(R.id.tvSeeMoreImage)
         private val rcyImgPDF: RecyclerView = itemView.findViewById(R.id.rcyImgPDF)
-        private val imgNewImage: ImageView = itemView.findViewById(R.id.imgNewImage)
+//        private val imgNewImage: ImageView = itemView.findViewById(R.id.imgNewImage)
         private val webView: android.webkit.WebView = itemView.findViewById(R.id.webView)
         private val loadingBar: ProgressBar = itemView.findViewById(R.id.loadingBar)
         private val indicator: CircleIndicator2 = itemView.findViewById(R.id.indicator)
@@ -123,8 +123,8 @@ class NoticeBoardAdapter(
         fun bind(noticeData: Notice, position: Int, adapter: NoticeBoardAdapter) {
 
             LblHWSubjectName.visibility = View.GONE
-            imgNewImage.visibility = View.GONE
-            rlaSelectText.visibility = View.GONE
+//            imgNewImage.visibility = View.GONE
+//            rlaSelectText.visibility = View.GONE
             lblTitleImage.text = noticeData.title
             lblContentImage.text = noticeData.description
             val dateTime = noticeData.created_on
@@ -133,10 +133,10 @@ class NoticeBoardAdapter(
             val time = parts.getOrNull(1) + " " + (parts.getOrNull(2) ?: "")
             lblDateImage.text = Constant.convertDateTimeFormat(date)
             lblTimeImage.text = time
-            isSeeMoreVisibility(lblContentImage, tvSeeMoreImage)
-            tvSeeMoreImage.setOnClickListener {
-                isSeeMoreExpanded(tvSeeMoreImage, lblContentImage)
-            }
+//            isSeeMoreVisibility(lblContentImage, tvSeeMoreImage)
+////            tvSeeMoreImage.setOnClickListener {
+////                isSeeMoreExpanded(tvSeeMoreImage, lblContentImage)
+////            }
 
             webView.setBackgroundColor(Color.BLACK)
             webView.setOnTouchListener(object : OnTouchListener {
@@ -211,7 +211,7 @@ class NoticeBoardAdapter(
                 }
 
                 if (noticeData.file_path.size > 1) {
-                    indicator.visibility = View.VISIBLE
+                    indicator.visibility = View.GONE
                 } else {
                     indicator.visibility = View.GONE
                 }
@@ -246,19 +246,19 @@ class NoticeBoardAdapter(
             })
         }
 
-        private fun isSeeMoreExpanded(tvSeeMore: TextView, lblContent: TextView) {
-            if (isTextExpanded) {
-                isTextExpanded = false
-                lblContent.maxLines = 3
-                lblContent.ellipsize = TextUtils.TruncateAt.END
-                tvSeeMore.text = itemView.context.getString(R.string.SeeMore)
-            } else {
-                isTextExpanded = true
-                lblContent.maxLines = Integer.MAX_VALUE
-                lblContent.ellipsize = null
-                tvSeeMore.text = itemView.context.getString(R.string.SeeLess)
-            }
-        }
+//        private fun isSeeMoreExpanded(tvSeeMore: TextView, lblContent: TextView) {
+//            if (isTextExpanded) {
+//                isTextExpanded = false
+//                lblContent.maxLines = 3
+//                lblContent.ellipsize = TextUtils.TruncateAt.END
+//                tvSeeMore.text = itemView.context.getString(R.string.SeeMore)
+//            } else {
+//                isTextExpanded = true
+//                lblContent.maxLines = Integer.MAX_VALUE
+//                lblContent.ellipsize = null
+//                tvSeeMore.text = itemView.context.getString(R.string.SeeLess)
+//            }
+//        }
 
         private fun isSeeMoreVisibility(lblContent: TextView, tvSeeMore: TextView) {
             lblContent.post {

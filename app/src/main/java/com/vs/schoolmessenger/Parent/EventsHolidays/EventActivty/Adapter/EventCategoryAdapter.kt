@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -18,14 +19,16 @@ import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class EventCategoryAdapter(
     private var itemList: List<Category>?,
-    private var listener: EventClickListener,
-    private var context: Context,
+    val listener: EventClickListener,
+    private val context: Context,
     private var isLoading: Boolean
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
     private val TYPE_STATIC = 2
+
+    private var selectedPosition = 0 // "All" selected by default
 
     override fun getItemViewType(position: Int): Int {
         return when {
@@ -38,7 +41,8 @@ class EventCategoryAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             TYPE_SHIMMER -> {
-                val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.event_category_rewamp)
+                val shimmerView =
+                    ShimmerUtil.wrapWithShimmer(parent, R.layout.event_category_rewamp)
                 ShimmerViewHolder(shimmerView)
             }
 
@@ -58,19 +62,19 @@ class EventCategoryAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is DataViewHolder -> {
-                val actualPosition = position - 1
-                itemList?.getOrNull(actualPosition)?.let {
-                    holder.bind(it, actualPosition, listener, this)
-                }
-            }
-
-            is ShimmerViewHolder -> {
-                holder.startShimmer()
-            }
+            is ShimmerViewHolder -> holder.startShimmer()
 
             is StaticViewHolder -> {
-                holder.bind(listener)
+                val isSelected = position == selectedPosition
+                holder.bind(isSelected, this)
+            }
+
+            is DataViewHolder -> {
+                val actualPosition = position - 1
+                val isSelected = position == selectedPosition
+                itemList?.getOrNull(actualPosition)?.let {
+                    holder.bind(it, actualPosition, isSelected, this)
+                }
             }
         }
     }
@@ -79,44 +83,60 @@ class EventCategoryAdapter(
         return if (isLoading) 10 else (itemList?.size ?: 0) + 1
     }
 
+    fun onCategorySelected(newPosition: Int) {
+        val oldPosition = selectedPosition
+        selectedPosition = newPosition
+        notifyItemChanged(oldPosition)
+        notifyItemChanged(newPosition)
+    }
+
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
 
-        private val category_name: TextView = itemView.findViewById(R.id.category_name)
-        private val category_image: ImageView = itemView.findViewById(R.id.category_image)
+        private val categoryName: TextView = itemView.findViewById(R.id.category_name)
+        private val categoryImage: ImageView = itemView.findViewById(R.id.category_image)
+        private val layout: LinearLayout = itemView.findViewById(R.id.linear_layout_categorychild)
 
         fun bind(
-            data: Category,
-            position: Int,
-            listener: EventClickListener,
-            adapter: EventCategoryAdapter
+            data: Category, position: Int, isSelected: Boolean, adapter: EventCategoryAdapter
         ) {
-            category_name.text = data.name
-            Glide.with(context)
-                .load(data.url)
-                .placeholder(R.drawable.allimage)
-                .into(category_image)
+            categoryName.text = data.name
+            Glide.with(context).load(data.url).placeholder(R.drawable.allimage).into(categoryImage)
 
-//            itemView.setOnClickListener {
-//                listener.onCategoryClicked(data)
-//            }
+            layout.setBackgroundResource(
+                if (isSelected) R.drawable.custom_coupon_rounded_background_click
+                else R.drawable.category_white_box
+            )
+
+            layout.setOnClickListener {
+                adapter.onCategorySelected(adapterPosition)
+                adapter.listener.onCategoryClicked(data)
+            }
         }
     }
 
     class StaticViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
 
-        private val category_name: TextView = itemView.findViewById(R.id.category_name)
-        private val category_image: ImageView = itemView.findViewById(R.id.category_image)
+        private val categoryName: TextView = itemView.findViewById(R.id.category_name)
+        private val categoryImage: ImageView = itemView.findViewById(R.id.category_image)
+        private val layout: LinearLayout = itemView.findViewById(R.id.linear_layout_categorychild)
 
-        fun bind(listener: EventClickListener) {
-            category_name.text = "All"
-            category_image.setImageResource(R.drawable.allimage)
+        fun bind(
+            isSelected: Boolean, adapter: EventCategoryAdapter
+        ) {
+            categoryName.text = "All"
+            categoryImage.setImageResource(R.drawable.allimage)
 
-//            itemView.setOnClickListener {
-//                val staticCategory = Category(1, "All","")
-//            }
+            layout.setBackgroundResource(
+                if (isSelected) R.drawable.custom_coupon_rounded_background_click
+                else R.drawable.category_white_box
+            )
+
+            itemView.setOnClickListener {
+                adapter.onCategorySelected(adapterPosition)
+                adapter.listener.onCategoryClicked(Category(0, "All", ""))
+            }
         }
     }
-
 }

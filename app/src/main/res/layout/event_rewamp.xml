@@ -2,8 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/dual_gradient_backgroundcolor"
-    android:fitsSystemWindows="true">
+    android:background="@color/white">
 
     <RelativeLayout
         android:id="@+id/rytHeader"
@@ -57,7 +56,29 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/thirteen_sp" />
         </LinearLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/rytSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/thirty_five"
+            android:layout_alignTop="@id/imgBack"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="20dp"
+            android:visibility="visible">
+
+
+            <ImageView
+                android:id="@+id/imgSearch"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_search" />
+
+        </RelativeLayout>
+
     </RelativeLayout>
+
 
     <ScrollView
         android:id="@+id/scroll_container"
@@ -78,29 +99,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
-                android:text="Events"
+                android:text="Ongoing Events"
                 android:textColor="@color/black"
-                android:textSize="25sp" />
+                android:textSize="18sp" />
 
 
-            <RelativeLayout
-                android:id="@+id/rytSearch"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/thirty_five"
-                android:layout_alignTop="@id/headerview"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="20dp"
-                android:visibility="visible">
-
-
-                <ImageView
-                    android:id="@+id/imgSearch"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/ic_search" />
-
-            </RelativeLayout>
 
 
             <RelativeLayout
@@ -111,7 +114,7 @@
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="15dp"
-                android:background="@drawable/rect_white_search"
+                android:background="@drawable/rect_grey"
                 android:visibility="gone">
 
 
@@ -167,7 +170,7 @@
                 android:layout_marginTop="20dp"
                 android:text="Events Categories"
                 android:textColor="@color/black"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
 
             <androidx.recyclerview.widget.RecyclerView
@@ -193,7 +196,7 @@
                 android:layout_marginTop="20dp"
                 android:text="Upcoming Events"
                 android:textColor="@color/black"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
 
             <androidx.recyclerview.widget.RecyclerView
@@ -219,7 +222,7 @@
                 android:layout_marginTop="20dp"
                 android:text="Completed Events"
                 android:textColor="@color/black"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
 
             <androidx.recyclerview.widget.RecyclerView

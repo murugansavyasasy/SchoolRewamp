@@ -64,9 +64,9 @@
         style="@style/CustomTextStylePoppinsBold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/rytHeader"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:layout_below="@+id/rytHeader"
         android:text="Notice Board"
         android:textColor="@color/black"
         android:textSize="25sp" />
@@ -75,10 +75,10 @@
         android:id="@+id/rytSearch"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/thirty_five"
-        android:layout_alignTop="@id/headerview"
+        android:layout_alignTop="@id/rytHeader"
         android:layout_alignParentEnd="true"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="20dp"
-        android:layout_below="@+id/rytHeader"
         android:visibility="visible">
 
 
@@ -91,23 +91,56 @@
 
     </RelativeLayout>
 
+
+    <RelativeLayout
+        android:id="@+id/rytsearch"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/thirty_five"
+        android:layout_below="@id/headerview"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/rect_white_search"
+        android:visibility="visible">
+
+
+        <ImageView
+            android:id="@+id/imgSearch1"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/ten"
+            android:src="@drawable/ic_search_grey" />
+
+        <EditText
+            android:id="@+id/txtVideoMenu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@id/imgSearch1"
+            android:background="@android:color/transparent"
+            android:hint="@string/lblSearch"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp" />
+    </RelativeLayout>
+
+
     <LinearLayout
         android:id="@+id/horizonatal_linearlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/headerview"
-        android:layout_marginTop="20dp"
-        android:weightSum="4"
-        android:background="@drawable/bg_white_box"
+        android:layout_below="@+id/rytsearch"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
-        android:orientation="horizontal">
+        android:background="@drawable/bg_white_box"
+        android:orientation="horizontal"
+        android:weightSum="4">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
             android:layout_weight="1"
+            android:gravity="center_horizontal"
             android:orientation="vertical">
 
             <TextView
@@ -133,8 +166,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
             android:layout_weight="1"
+            android:gravity="center_horizontal"
             android:orientation="vertical">
 
             <TextView
@@ -152,7 +185,7 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Read"
+                android:text="Today"
                 android:textColor="@color/iconBlue"
                 android:textSize="15sp" />
         </LinearLayout>
@@ -160,8 +193,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
             android:layout_weight="1"
+            android:gravity="center_horizontal"
             android:orientation="vertical">
 
             <TextView
@@ -179,7 +212,7 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Unread"
+                android:text="With Files"
                 android:textColor="@color/red"
                 android:textSize="15sp" />
         </LinearLayout>
@@ -187,8 +220,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
             android:layout_weight="1"
+            android:gravity="center_horizontal"
             android:orientation="vertical">
 
             <TextView
@@ -206,12 +239,69 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="With Files"
+                android:text="With Out Files"
                 android:textColor="@color/black"
                 android:textSize="15sp" />
         </LinearLayout>
 
+    </LinearLayout>
 
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcyNoticeBoard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/horizonatal_linearlayout"
+        android:layout_marginTop="5dp"
+        android:clipToPadding="false"
+        android:fadeScrollbars="false"
+        android:paddingHorizontal="10dp"
+        android:scrollbars="none" />
+
+
+    <me.relex.circleindicator.CircleIndicator2
+        android:id="@+id/indicator"
+        style="@style/IndicatorStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/thirty"
+        android:layout_below="@+id/rcyNoticeBoard"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="@dimen/five"
+        android:elevation="4dp"
+        android:visibility="gone" />
+
+
+    <LinearLayout
+        android:id="@+id/lytList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/horizonatal_linearlayout"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/nomessage"
+            android:layout_width="@dimen/two_fifty"
+            android:layout_height="@dimen/two_fifty"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/twenty"
+            android:src="@drawable/nomessages"
+            android:textColor="@color/black"
+            android:textSize="@dimen/fifteen_sp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/txtNoData"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/twenty"
+            android:text="@string/no_list_found"
+            android:textColor="@color/black"
+            android:textSize="@dimen/fifteen_sp"
+            android:visibility="gone" />
 
 
     </LinearLayout>
