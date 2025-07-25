@@ -1,15 +1,14 @@
 package com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import com.vs.schoolmessenger.Repository.APIKeyNames
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class GetHomeworkDetails(
-        @SerializedName(APIKeyNames.title)
-        val title:String,
-        @SerializedName(APIKeyNames.description)
-        val description:String,
-        @SerializedName(APIKeyNames.subject_name)
-        val subject_name:String,
-        @SerializedName(APIKeyNames.file_path)
+        val title: String,
+        val description: String,
+        val subject_name: String,
         val file_path: List<GetFilePathDetails>
-)
+) : Parcelable
