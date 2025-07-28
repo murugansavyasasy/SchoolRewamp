@@ -3,7 +3,7 @@
     android:id="@+id/header"
     android:layout_below="@+id/horizonatal_linearlayout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="250dp"
     android:layout_margin="8dp"
     android:background="@drawable/bg_white_radious_medium"
     android:clipChildren="false"
