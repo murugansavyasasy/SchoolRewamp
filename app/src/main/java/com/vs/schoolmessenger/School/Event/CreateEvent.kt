@@ -31,6 +31,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.AlbumImage.AlbumSelectActivity
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
@@ -39,7 +41,13 @@ import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.Event.Adapter.SchoolEventAdapter
+import com.vs.schoolmessenger.School.Event.Adapter.SchoolEventCompletedAdapter
+import com.vs.schoolmessenger.School.Event.Adapter.SchoolEventUpcomingAdapter
+import com.vs.schoolmessenger.School.Event.Listener.SchoolEventClickListener
 import com.vs.schoolmessenger.School.Event.Model.EventDetails
+import com.vs.schoolmessenger.School.Event.Model.SchoolEventItem
+import com.vs.schoolmessenger.School.NoticeBoard.SchoolNoticeBoardAdapter
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
@@ -47,6 +55,9 @@ import com.vs.schoolmessenger.Utils.OnDateSelectedListener
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.Utils.TimeSelectedListener
 import com.vs.schoolmessenger.databinding.CreateEventBinding
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONObject
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -54,7 +65,8 @@ import java.util.Date
 import java.util.Locale
 
 class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
-    View.OnClickListener, OnDateSelectedListener, EventClickListener, TimeSelectedListener {
+    View.OnClickListener, OnDateSelectedListener, EventClickListener, TimeSelectedListener,
+    SchoolEventClickListener {
 
     override fun getViewBinding(): CreateEventBinding {
         return CreateEventBinding.inflate(layoutInflater)
@@ -84,6 +96,16 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
     private var isStaffDetails: StaffDetails? = null
     private var selectedDateField: Int = 0
 
+    lateinit var schooleventAdapter: SchoolEventAdapter
+
+    lateinit var eventupcomingadapter: SchoolEventUpcomingAdapter
+    lateinit var eventcompletedadapter: SchoolEventCompletedAdapter
+
+    private var allOngoingEvents: List<SchoolEventItem>? = null
+    private var allUpcomingEvents: List<SchoolEventItem>? = null
+    private var allCompletedEvents: List<SchoolEventItem>? = null
+
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
@@ -94,6 +116,8 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         binding.btnNext.setOnClickListener(this)
         binding.rytStartDate.setOnClickListener(this)
         binding.txtStartTime.setOnClickListener(this)
+        binding.lnrTabOneName.setOnClickListener(this)
+        binding.lnrTabTwoName.setOnClickListener(this)
         Constant.editTextCounter(this, binding.txtDesc, 500, binding.lbTextCount)
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
@@ -239,7 +263,150 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
             binding.lbtitleTextCount
         )
 
+
+        appViewModel?.IsGetEventSchoolReport?.observe(this) { response ->
+            if (response?.status == true && !response.data.isNullOrEmpty()) {
+                val data = response.data[0]
+
+                allOngoingEvents = data.on_going
+                allUpcomingEvents = data.up_coming
+                allCompletedEvents = data.completed
+                updateVisibility(
+                    allOngoingEvents,
+                    binding.rcyongoingevent,
+                    binding.headerview,
+                    binding.dotindicator
+                )
+                updateVisibility(
+                    allUpcomingEvents, binding.rcyupcomingevent, binding.upcomingeventHeaderview
+                )
+                updateVisibility(
+                    allCompletedEvents, binding.rcycompletedevent, binding.completedeventHeaderview
+                )
+
+                isloadeventData(allOngoingEvents)
+                isloadUpcomingData(allUpcomingEvents)
+                isloadCompletedData(allCompletedEvents)
+
+            } else {
+                hideAllSections()
+            }
+        }
+
     }
+
+
+    private fun <T> updateVisibility(
+        dataList: List<T>?, recyclerView: RecyclerView, vararg headers: View
+    ) {
+        if (!dataList.isNullOrEmpty()) {
+            recyclerView.visibility = View.VISIBLE
+            headers.forEach { it.visibility = View.VISIBLE }
+        } else {
+            recyclerView.visibility = View.GONE
+            headers.forEach { it.visibility = View.GONE }
+        }
+    }
+
+
+    private fun hideAllSections() {
+        updateVisibility(
+            emptyList<Any>(), binding.rcyongoingevent, binding.headerview, binding.dotindicator
+        )
+        updateVisibility(
+            emptyList<Any>(), binding.rcyupcomingevent, binding.upcomingeventHeaderview
+        )
+        updateVisibility(
+            emptyList<Any>(), binding.rcycompletedevent, binding.completedeventHeaderview
+        )
+    }
+
+
+    private fun loadeventdata() {
+        schooleventAdapter = SchoolEventAdapter(null, this, this, Constant.isShimmerViewDisable)
+        binding.rcyongoingevent.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding.rcyongoingevent.isNestedScrollingEnabled = false
+        binding.rcyongoingevent.adapter = mAdapter
+
+        eventupcomingadapter = SchoolEventUpcomingAdapter(null, this, this, Constant.isShimmerViewDisable)
+        binding.rcyupcomingevent.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.rcyupcomingevent.isNestedScrollingEnabled = false
+        binding.rcyupcomingevent.adapter = eventupcomingadapter
+
+
+        eventcompletedadapter =
+            SchoolEventCompletedAdapter(null, this, this, Constant.isShimmerViewDisable)
+        binding.rcycompletedevent.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.rcycompletedevent.isNestedScrollingEnabled = false
+        binding.rcycompletedevent.adapter = eventcompletedadapter
+
+
+
+        appViewModel!!.IsGetEventSchoolReport(isAccessToken!!, this)
+    }
+
+
+    private fun isloadeventData(newData: List<SchoolEventItem>?) {
+        schooleventAdapter = SchoolEventAdapter(newData, this, this, Constant.isShimmerViewDisable)
+        binding.rcyongoingevent.adapter = schooleventAdapter
+    }
+
+
+    private fun isloadUpcomingData(newData: List<SchoolEventItem>?) {
+        eventupcomingadapter =
+            SchoolEventUpcomingAdapter(newData, this, this, Constant.isShimmerViewDisable)
+        binding.rcyupcomingevent.adapter = eventupcomingadapter
+    }
+
+    private fun isloadCompletedData(newData: List<SchoolEventItem>?) {
+        eventcompletedadapter =
+            SchoolEventCompletedAdapter(newData, this, this, Constant.isShimmerViewDisable)
+        binding.rcycompletedevent.adapter = eventcompletedadapter
+    }
+
+
+
+    override fun onSearchResultEmpty(adapterTag: String, isEmpty: Boolean) {
+        when (adapterTag) {
+            "ONGOING" -> binding.rcyongoingevent.visibility =
+                if (isEmpty) View.GONE else View.VISIBLE
+
+            "COMPLETED" -> binding.rcycompletedevent.visibility =
+                if (isEmpty) View.GONE else View.VISIBLE
+
+            "UPCOMING" -> binding.rcyupcomingevent.visibility =
+                if (isEmpty) View.GONE else View.VISIBLE
+        }
+    }
+
+    override fun onDeleteEvent(type: String?, id: String?, position: Int)  {
+        val json = JSONObject()
+        json.put("id", id)
+        val requestBody = json.toString().toRequestBody("application/json".toMediaTypeOrNull())
+
+        appViewModel?.isEventDelete(isAccessToken!!, requestBody, this)
+
+        appViewModel!!.isEventDelete?.observe(this) { response ->
+            if (response != null) {
+                if (response.status) {
+                    Constant.hideLoading(this@CreateEvent)
+
+                    eventupcomingadapter.removeItemAt(position)
+
+                } else {
+                    Constant.showDataValidation(
+                        resources.getString(R.string.fail),
+                        response.message,
+                        this
+                    )
+                }
+            }
+        }
+    }
+
 
     private fun checkCameraPermissionAndOpenCamera() {
         if (ContextCompat.checkSelfPermission(
@@ -355,6 +522,28 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
 
     override fun onClick(v: View?) {
         when (v?.id) {
+
+            R.id.lnrTabOneName -> {
+                binding.eventCreate.visibility = View.VISIBLE
+                binding.line1.setBackgroundResource(R.color.iconBlue)
+                binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
+                binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.black))
+                binding.line2.setBackgroundResource(R.color.white)
+                binding.scrollContainer.visibility = View.GONE
+                binding.rytRecyclewview.visibility = View.VISIBLE
+
+            }
+
+            R.id.lnrTabTwoName -> {
+                binding.eventCreate.visibility = View.GONE
+                binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.black))
+                binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
+                binding.line2.setBackgroundResource(R.color.iconBlue)
+                binding.line1.setBackgroundResource(R.color.white)
+                binding.scrollContainer.visibility = View.VISIBLE
+                binding.rytRecyclewview.visibility = View.GONE
+                loadeventdata()
+            }
             R.id.imgBack -> {
                 Constant.selectedFiles.clear()
                 Constant.isAwsUploadedFiles.clear()
@@ -386,6 +575,10 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
             }
         }
     }
+
+
+
+
 
     override fun onDateSelected(date: String) {
         when (selectedDateField) {

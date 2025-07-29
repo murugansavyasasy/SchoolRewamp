@@ -4,6 +4,9 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
@@ -37,16 +40,22 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
 import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
 import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolList
+import com.vs.schoolmessenger.Parent.Noticeboard.Adapter.NoticeBoardAdapter
+import com.vs.schoolmessenger.Parent.Noticeboard.Notice
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Event.CreateEvent
 import com.vs.schoolmessenger.School.NoticeBoard.Model.NoticeBoardDetails
+import com.vs.schoolmessenger.School.NoticeBoard.Model.NoticeStaffData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
 import com.vs.schoolmessenger.Utils.OnDateSelectedListener
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.CreateNoticeBoardBinding
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONObject
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -84,6 +93,10 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
     private var txtEndDate: String? = null
 
 
+    lateinit var noticeboardadapter: SchoolNoticeBoardAdapter
+
+
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
@@ -103,6 +116,8 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         binding.txtEndDate.setOnClickListener(this)
         binding.lnrStartCalendar.setOnClickListener(this)
         binding.lnrEndCalendar.setOnClickListener(this)
+        binding.lnrTabOneName.setOnClickListener(this)
+        binding.lnrTabTwoName.setOnClickListener(this)
         isStaffDetails = SharedPreference.getStaffDetails(this)
 //        binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
 //        binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
@@ -248,7 +263,95 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         Constant.editTextCounter(this, binding.txtTitle, Constant.isTitleLength, binding.lbtitleTextCount)
 
 
+
+        appViewModel?.isNoticeBoardStaffReport?.observe(this) { response ->
+            if (response?.status == true && !response.data.isNullOrEmpty()) {
+                binding.rcyNoticeBoard.visibility = View.VISIBLE
+                binding.nomessage.visibility = View.GONE
+                binding.txtNoData.visibility = View.GONE
+                isloadhomeworkData(response.data)
+            } else {
+                binding.rcyNoticeBoard.visibility = View.GONE
+                binding.nomessage.visibility = View.VISIBLE
+                binding.txtNoData.visibility = View.VISIBLE
+                binding.txtNoData.text = response?.message ?: "No data found"
+            }
+        }
+
+        val channel = NotificationChannel(
+            "reminder_channel",
+            "Reminders",
+            NotificationManager.IMPORTANCE_HIGH
+        )
+        val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        manager.createNotificationChannel(channel)
+
+
+
+
     }
+
+
+    private fun isloadhomeworkData(newData: List<NoticeStaffData>?) {
+        noticeboardadapter =
+            SchoolNoticeBoardAdapter(newData, this, this, Constant.isShimmerViewDisable)
+        binding.rcyNoticeBoard.adapter = noticeboardadapter
+    }
+
+
+    override fun onSearchResultEmpty(isEmpty: Boolean) {
+        if (isEmpty) {
+            binding.nomessage.visibility = View.VISIBLE
+            binding.txtNoData.visibility = View.VISIBLE
+            binding.txtNoData.text = getString(R.string.no_matching_notices_found)
+            binding.rcyNoticeBoard.visibility = View.GONE
+        } else {
+            binding.nomessage.visibility = View.GONE
+            binding.txtNoData.visibility = View.GONE
+            binding.rcyNoticeBoard.visibility = View.VISIBLE
+        }
+    }
+
+
+
+    override fun onDeleteNotice(type: String?, id: String?, position: Int) {
+        val json = JSONObject()
+        json.put("id", id)
+        val requestBody = json.toString().toRequestBody("application/json".toMediaTypeOrNull())
+
+        appViewModel?.isnoticeboarddelete(isAccessToken!!, requestBody, this)
+
+        appViewModel!!.isnoticeboarddelete?.observe(this) { response ->
+            if (response != null) {
+                if (response.status) {
+                    Constant.hideLoading(this@CreateNoticeBoard)
+
+                    noticeboardadapter.removeItemAt(position)
+
+                } else {
+                    Constant.showDataValidation(
+                        resources.getString(R.string.fail),
+                        response.message,
+                        this
+                    )
+                }
+            }
+        }
+    }
+
+
+
+
+    private fun isGetNoticeBoardList() {
+        noticeboardadapter = SchoolNoticeBoardAdapter(null, this, this, Constant.isShimmerViewShow)
+        binding.rcyNoticeBoard.layoutManager = GridLayoutManager(this, 2)
+        binding.rcyNoticeBoard.isNestedScrollingEnabled = false
+        binding.rcyNoticeBoard.adapter = noticeboardadapter
+        appViewModel!!.isNoticeBoardStaffReport(
+            isAccessToken!!, this
+        )
+    }
+
 
     private fun checkCameraPermissionAndOpenCamera() {
         if (ContextCompat.checkSelfPermission(
@@ -365,6 +468,26 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                 Constant.selectedFiles.clear()
                 Constant.isAwsUploadedFiles.clear()
                 onBackPressed()
+            }
+
+            R.id.lnrTabOneName -> {
+                binding.noticeboardCreate.visibility = View.VISIBLE
+                binding.line1.setBackgroundResource(R.color.iconBlue)
+                binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
+                binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.black))
+                binding.line2.setBackgroundResource(R.color.white)
+                binding.rcyNoticeBoard.visibility = View.GONE
+
+            }
+
+            R.id.lnrTabTwoName -> {
+                binding.noticeboardCreate.visibility = View.GONE
+                binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.black))
+                binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
+                binding.line2.setBackgroundResource(R.color.iconBlue)
+                binding.line1.setBackgroundResource(R.color.white)
+                binding.rcyNoticeBoard.visibility = View.VISIBLE
+                isGetNoticeBoardList()
             }
 
             R.id.txtStartDate, R.id.rytStartDate, R.id.txtStartDate, R.id.lnrStartCalendar -> {
