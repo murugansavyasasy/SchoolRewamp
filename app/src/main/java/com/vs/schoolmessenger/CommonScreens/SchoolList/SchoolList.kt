@@ -95,7 +95,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
     var isFileSize = ""
 
 
-    @RequiresApi(Build.VERSION_CODES.O)
+    
     override fun setupViews() {
         super.setupViews()
         setupToolbar()
@@ -229,7 +229,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
             }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+    
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.imgBack -> {
@@ -375,7 +375,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+    
     private fun isFileUploadInAws(
         schoolId: String, isFileType: String?
     ) {
@@ -455,7 +455,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
                             true,
                             false,
                             object : UploadCallback {
-                                @RequiresApi(Build.VERSION_CODES.O)
+                                
                                 override fun onUploadSuccess(
                                     response: String?,
                                     isFileUploaded: String?
@@ -506,7 +506,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+    
     fun voiceSendApi() {
         val isVoiceData = Constant.isVoiceSendingData
         val jsonObject = ApiCallRequest.isVoiceSend(
@@ -527,7 +527,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
 
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+    
     fun attachmentSendApi() {
         val jsonObject = ApiCallRequest.isSendAttachment(
             isAcademicYearId = isAcademicYearId,
@@ -542,7 +542,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
 
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+    
     fun noticeboardsendapi() {
         val selectedRadioId = binding.radioGroupSendTo.checkedRadioButtonId
         var intendedFor = ""
@@ -570,7 +570,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+    
     fun showConfirmationAlert(isSelectTarget: String, isMessage: String) {
         val isTextData = Constant.isTextSendingData
 
@@ -678,7 +678,7 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         )
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+    
     override fun onUploadComplete(
         success: Boolean,
         iframe: String?,

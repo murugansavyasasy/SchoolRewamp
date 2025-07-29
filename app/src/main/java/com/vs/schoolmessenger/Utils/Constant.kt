@@ -649,7 +649,7 @@ object Constant {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+    
     fun showTopAlertPopup(message: String, activity: Activity) {
         val inflater = LayoutInflater.from(activity)
         val view = inflater.inflate(R.layout.success_popup, null)
@@ -803,7 +803,7 @@ object Constant {
     }
 
 
-    @RequiresApi(Build.VERSION_CODES.O)
+    
     fun showDataValidation(title: String, message: String, activity: Activity) {
         val inflater = LayoutInflater.from(activity)
         val view = inflater.inflate(R.layout.success_popup, null)
@@ -852,7 +852,7 @@ object Constant {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+    
     fun showValidationAlertPopup(isTitle: String, message: String, activity: Activity) {
         val inflater = LayoutInflater.from(activity)
         val view = inflater.inflate(R.layout.success_popup, null)
@@ -902,7 +902,7 @@ object Constant {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+    
     fun showSendConfirmationDialog(
         activity: Activity,
         istitle: String,
@@ -1010,14 +1010,14 @@ object Constant {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+    
     fun getCurrentTime(): String {
         val currentTime = LocalTime.now()
         val formatter = DateTimeFormatter.ofPattern(hh_mm_a)
         return currentTime.format(formatter)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+    
     fun getCurrentDate(): String {
         val currentDate = LocalDate.now()
         val formatter = DateTimeFormatter.ofPattern(ddMMyyyy)
