@@ -459,6 +459,7 @@ dependencies {
     implementation("com.github.chrisbanes:PhotoView:2.3.0")
     implementation("androidx.lifecycle:lifecycle-process:2.7.0")
 
+
 //    // Smallest version (no audio/video codecs)
 //    implementation("com.arthenica:ffmpeg-kit-min:4.5.LTS")
 //// Full version with video codecs

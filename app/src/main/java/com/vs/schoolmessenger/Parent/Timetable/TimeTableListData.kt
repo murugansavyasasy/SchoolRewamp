@@ -9,4 +9,5 @@ data class TimeTableListData (
     val hour_type: String,
     val subject_name: String,
     val staff_name: String,
+    val facalty_name: String
 )
