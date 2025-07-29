@@ -3,14 +3,12 @@ package com.vs.schoolmessenger.Parent.Timetable
 import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import java.text.SimpleDateFormat
 import java.util.*
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.R
@@ -27,21 +25,13 @@ class TimeTable : BaseActivity<TimeTableBinding>(), View.OnClickListener {
     private var day_id: Int = 1
     private var timeTableDataList: List<TimeTableListData> = emptyList()
     private var isBottomSheetShown = false
-
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
     private var isChildDetails: ChildDetails? = null
-
-    private val scheduleMap = mutableMapOf<String, List<TimeTableListData>>()
-
-    private lateinit var dayAdapter: TimeTableDayAdapter
     private lateinit var scheduleAdapter: TimeTableAdapter
-    private lateinit var bottomSheetLayout: LinearLayout
-
     private lateinit var recyclerViewDays: RecyclerView
     private lateinit var recyclerViewSchedule: RecyclerView
     private lateinit var dayHeader: TextView
-    private lateinit var bottomSheetDialog: BottomSheetDialog
 
     private val allDays =
         listOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
@@ -52,12 +42,12 @@ class TimeTable : BaseActivity<TimeTableBinding>(), View.OnClickListener {
 
     override fun setupViews() {
         super.setupViews()
+        setupToolbarBlue()
 
         isChildDetails = SharedPreference.getChildDetails(this)
         isAccessToken = isChildDetails?.access_token
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel?.init()
-
         recyclerViewDays = binding.recyclerViewDays
         dayHeader = binding.bottomsheettimetable.dayHeader
         recyclerViewSchedule = binding.bottomsheettimetable.recyclerViewSchedule
@@ -86,12 +76,10 @@ class TimeTable : BaseActivity<TimeTableBinding>(), View.OnClickListener {
         if (timeTableDataList.isNotEmpty()) {
             val sortedList = timeTableDataList.toMutableList()
             val upcomingIndex = getUpcomingItemPosition(sortedList)
-
             if (upcomingIndex != -1) {
                 val upcomingItem = sortedList.removeAt(upcomingIndex)
                 sortedList.add(0, upcomingItem)
             }
-
             scheduleAdapter = TimeTableAdapter(
                 itemList = sortedList,
                 listener = object : TimeTableListener {
@@ -99,33 +87,24 @@ class TimeTable : BaseActivity<TimeTableBinding>(), View.OnClickListener {
                         data: TimeTableListData,
                         holder: TimeTableAdapter.DataViewHolder
                     ) {
-
                     }
                 },
                 context = this,
                 isLoading = false
             )
-
             recyclerViewSchedule.layoutManager = LinearLayoutManager(this)
             recyclerViewSchedule.adapter = scheduleAdapter
-
             recyclerViewSchedule.visibility = View.VISIBLE
-            binding.lnrNoRecords.visibility = View.GONE
         } else {
             recyclerViewSchedule.visibility = View.GONE
-            binding.lnrNoRecords.visibility = View.VISIBLE
-            binding.txtNoData.text = "No data found!"
         }
-
         val calendar = Calendar.getInstance()
         val dateFormat = SimpleDateFormat("EEE, dd MMM yy", Locale.getDefault())
         val shortDate = dateFormat.format(calendar.time)
         binding.tvToday.text = shortDate
-
         binding.ivBack.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
-
     }
 
     private fun setupRecyclerViewDays() {
@@ -133,15 +112,20 @@ class TimeTable : BaseActivity<TimeTableBinding>(), View.OnClickListener {
             override fun onItemClick(data: TimeTableDayData) {
                 day_id = data.day_id
                 loadTimeTable(day_id)
+                val position = timetabledayList.indexOfFirst { it.day_id == day_id }
+                val layoutManager = binding.recyclerViewDays.layoutManager as LinearLayoutManager
+                val viewAtPosition = layoutManager.findViewByPosition(position)
+                val itemWidth = viewAtPosition?.width ?: 0
+                val screenWidth = resources.displayMetrics.widthPixels
+                val offset = (screenWidth / 2) - (itemWidth / 2)
+                layoutManager.scrollToPositionWithOffset(position, offset)
             }
         }, this, false)
 
         binding.recyclerViewDays.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.recyclerViewDays.adapter = adapter2
-
         loadHardcodedDays()
-
         val calendar = Calendar.getInstance()
         val todayIndex = when (calendar.get(Calendar.DAY_OF_WEEK)) {
             Calendar.MONDAY -> 0
@@ -155,20 +139,20 @@ class TimeTable : BaseActivity<TimeTableBinding>(), View.OnClickListener {
         }
         adapter2.setSelectedPosition(todayIndex)
         binding.recyclerViewDays.scrollToPosition(todayIndex)
-        day_id = todayIndex + 1 // Mon = 1 ... Sun = 7
+        day_id = todayIndex + 1
         loadTimeTable(day_id)
     }
 
     private fun loadHardcodedDays() {
         timetabledayList.apply {
             clear()
-            add(TimeTableDayData("Mon", 1)) // index 0
-            add(TimeTableDayData("Tue", 2)) // index 1
+            add(TimeTableDayData("Mon", 1))
+            add(TimeTableDayData("Tue", 2))
             add(TimeTableDayData("Wed", 3))
             add(TimeTableDayData("Thu", 4))
             add(TimeTableDayData("Fri", 5))
             add(TimeTableDayData("Sat", 6))
-            add(TimeTableDayData("Sun", 7)) // index 6
+            add(TimeTableDayData("Sun", 7))
         }
         adapter2.notifyDataSetChanged()
     }
@@ -206,7 +190,7 @@ class TimeTable : BaseActivity<TimeTableBinding>(), View.OnClickListener {
         }
         val calendar = Calendar.getInstance()
         val todayIndex = calendar.get(Calendar.DAY_OF_WEEK)
-        val todayDayId = if (todayIndex == 1) 7 else todayIndex - 1 // Adjust Sunday to 7
+        val todayDayId = if (todayIndex == 1) 7 else todayIndex - 1
         val todayName = getDayNameFromId(todayDayId)
         day_id = todayDayId
         loadTimeTable(day_id)
@@ -222,22 +206,23 @@ class TimeTable : BaseActivity<TimeTableBinding>(), View.OnClickListener {
 
         appViewModel?.isTimeTabletList?.observe(this) { response ->
             Log.d("API_RESULT", "API response received: $response")
-            if (response != null && response.status) {
+            val dayName = getDayNameFromId(day_id)
+            dayHeader.text = dayName
+            if (response != null && response.status && response.data.isNotEmpty()) {
                 timeTableDataList = response.data
-                val dayName = getDayNameFromId(day_id)
-                dayHeader.text = dayName // Set the day name in the header
+                recyclerViewSchedule.visibility = View.VISIBLE
+                binding.bottomsheettimetable.lnrNoRecords.visibility = View.GONE
+                binding.bottomsheettimetable.imgNoData.visibility = View.GONE
+                binding.bottomsheettimetable.txtNoData.visibility = View.GONE
 
-                if (timeTableDataList.isNotEmpty()) {
-                    recyclerViewSchedule.visibility = View.VISIBLE
-                    binding.lnrNoRecords.visibility = View.GONE
-                    setupScheduleRecyclerView()
-                } else {
-                    recyclerViewSchedule.visibility = View.GONE
-                    binding.lnrNoRecords.visibility = View.VISIBLE
-                    binding.txtNoData.text = "No data found!"
-                }
+                setupScheduleRecyclerView()
             } else {
-                Log.e("API_FAILURE", "Failed to load timetable: ${response?.message}")
+                timeTableDataList = emptyList()
+                recyclerViewSchedule.visibility = View.GONE
+                binding.bottomsheettimetable.lnrNoRecords.visibility = View.VISIBLE
+                binding.bottomsheettimetable.imgNoData.visibility = View.VISIBLE
+                binding.bottomsheettimetable.txtNoData.visibility = View.VISIBLE
+                binding.bottomsheettimetable.txtNoData.text = response?.message ?: "No timetable available."
             }
         }
     }
