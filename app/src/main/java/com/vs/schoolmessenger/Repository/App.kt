@@ -23,7 +23,7 @@ import com.vs.schoolmessenger.Parent.Coupon.CouponModel.CouponSummary.CampaignRe
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.TicketActivateCoupon.ActivateCouponResponse
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.TicketActivateCouponSummary.ActivateCouponSummaryResponse
 import com.vs.schoolmessenger.Parent.Coupon.CouponModel.TicketCouponSummary.TicketSummaryResponse
-import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventResponse
+import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.RewampModelEvent.EventResponse
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.HolidayResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkModel.ExamResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkResultsModel.ExamMarksResponse
@@ -74,7 +74,6 @@ import com.vs.schoolmessenger.School.NoticeBoard.Response.NoticeBoardSendRespons
 import com.vs.schoolmessenger.School.SchoolStrength.Model.SchoolStrengthResponse
 import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
 import okhttp3.RequestBody
-import retrofit2.http.Query
 
 class App(application: Application) : AndroidViewModel(application) {
 
@@ -244,6 +243,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var isleaverequestupdate: LiveData<LeaveUpdateResponse?>? = null
     var isleaverequestdelete: LiveData<LeaveRequestDeleteResponse?>? = null
     var getProgressMarks: LiveData<ProgressCardResponse?>? = null
+    var isHomeWorkComplete: LiveData<StatusMessageModel?>? = null
 
 
     fun init() {
@@ -336,6 +336,7 @@ class App(application: Application) : AndroidViewModel(application) {
         getviewmarks = apiParentRepositories.getviewmarksLiveData
         isleaverequestupdate = apiParentRepositories.isleaverequestupdateLiveData
         getProgressMarks = apiParentRepositories.getProgressMarksLiveData
+        isHomeWorkComplete = apiParentRepositories.isUpdateCompleteHomeWorkLiveData
         getstudentdetailsforchat = apiParentRepositories.getstudentdetailsforchatLiveData
 
     }
@@ -851,6 +852,11 @@ class App(application: Application) : AndroidViewModel(application) {
     fun isleaverequestdelete(isToken: String, request: LeaveRequestDelete, activity: Activity) {
         apiParentRepositories.isleaverequestdelete(isToken, request, activity)
     }
+
+    fun isHomeWorkComplete(isToken: String, jsonObject: JsonObject) {
+        apiParentRepositories.isHomeWorkComplete(isToken,jsonObject)
+    }
+
 
     fun getProgressMarks(
         isToken: String,

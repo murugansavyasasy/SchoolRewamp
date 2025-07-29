@@ -210,8 +210,11 @@
     </LinearLayout>
 
     <RelativeLayout
+        android:layout_margin="@dimen/fifteen"
+        android:padding="@dimen/ten"
+        android:background="@drawable/rounded_grey_bg"
         android:id="@+id/relative_layout5"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/relative_layout8"
         android:layout_centerInParent="true"
@@ -224,31 +227,31 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:gravity="center"
-            android:text="Total Collection Today"
+            android:text="TOTAL COLLECTION TODAY"
             android:textColor="@color/grey"
             android:textSize="13sp" />
 
         <TextView
             android:id="@+id/total_collection"
-            style="@style/CustomTextStylePoppinsMedium"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/totalcollectionlabel"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="5dp"
             android:gravity="center"
             android:text="88,000.00"
             android:textColor="@color/black"
-            android:textSize="25sp" />
+            android:textSize="35sp" />
     </RelativeLayout>
 
 
     <RelativeLayout
         android:id="@+id/relative_layout6"
         android:layout_width="match_parent"
+        android:visibility="gone"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/relative_layout5"
-       >
+        android:layout_below="@+id/relative_layout5">
 
         <TextView
             android:id="@+id/paymenthistorylabel"
@@ -281,8 +284,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/relative_layout6"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginStart="@dimen/fifteen"
+        android:layout_marginEnd="@dimen/fifteen"
         android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView

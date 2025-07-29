@@ -258,5 +258,6 @@
         android:layout_marginBottom="@dimen/twenty"
         android:text="@string/SeeMore"
         android:textColor="@color/navi_blue2"
-        android:textSize="@dimen/fifteen_sp"></TextView>
+        android:textSize="@dimen/fifteen_sp">
+    </TextView>
 </RelativeLayout>

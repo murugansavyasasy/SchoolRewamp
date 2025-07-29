@@ -1,11 +1,11 @@
 package com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass
 
-import com.google.gson.annotations.SerializedName
-import com.vs.schoolmessenger.Repository.APIKeyNames
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
+
+@Parcelize
 data class GetFilePathDetails(
-    @SerializedName(APIKeyNames.type)
     val type: String,
-    @SerializedName(APIKeyNames.url)
-    val url: String,
-)
+    val url: String
+) : Parcelable

@@ -80,7 +80,7 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
 
             if (response.status) {
                 isLoadDailyCollectionData(response.data)
-                binding.relativeLayout6.visibility=View.VISIBLE
+                binding.relativeLayout6.visibility=View.GONE
             } else {
                 showErrorUI(response.message ?: "No data available")
                 binding.relativeLayout6.visibility=View.GONE

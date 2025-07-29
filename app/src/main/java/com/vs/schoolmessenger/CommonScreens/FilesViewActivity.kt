@@ -54,7 +54,7 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
 
     override fun setupViews() {
         super.setupViews()
-        setUpGradientParent()
+        setupToolbarBlue()
         val subjectName = intent.getStringExtra(Constant.subjectName) ?: ""
         binding.lblSubject.text = subjectName
         val childDetails = SharedPreference.getChildDetails(this)

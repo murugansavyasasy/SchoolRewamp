@@ -247,26 +247,26 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
 
                         Constant.selectedFiles.add(FileItem(uri.toString(), type))
 
-                        if (type.toString() == Constant.VIDEO) {
-                            binding.thumbnailView.visibility = View.VISIBLE
-                            binding.rcyImages.visibility = View.GONE
+//                        if (type.toString() == Constant.VIDEO) {
+////                            binding.thumbnailView.visibility = View.VISIBLE
+//                            binding.rcyImages.visibility = View.GONE
 
                             // Extract and show video thumbnail
-                            val bitmap = Constant.getVideoThumbnail(this, uri!!)
-                            binding.thumbnailView.setImageBitmap(bitmap)
-                            binding.thumbnailView.visibility = View.VISIBLE
-                            binding.imgDelete.visibility = View.VISIBLE
-                            binding.imgPlay.visibility = View.VISIBLE
-                            binding.videoView.setVideoURI(uri)
-                            binding.videoView.setMediaController(MediaController(this))
-                            binding.videoView.requestFocus()
-                        } else {
-                            binding.videoView.visibility = View.GONE
-                            binding.imgDelete.visibility = View.GONE
-                            binding.thumbnailView.visibility = View.GONE
-                            binding.rcyImages.visibility = View.VISIBLE
-                            mAdapter?.notifyDataSetChanged()
-                        }
+//                            val bitmap = Constant.getVideoThumbnail(this, uri!!)
+//                            binding.thumbnailView.setImageBitmap(bitmap)
+//                            binding.thumbnailView.visibility = View.VISIBLE
+//                            binding.imgDelete.visibility = View.VISIBLE
+//                            binding.imgPlay.visibility = View.VISIBLE
+//                            binding.videoView.setVideoURI(uri)
+//                            binding.videoView.setMediaController(MediaController(this))
+//                            binding.videoView.requestFocus()
+//                        } else {
+//                            binding.videoView.visibility = View.GONE
+//                            binding.imgDelete.visibility = View.GONE
+//                            binding.thumbnailView.visibility = View.GONE
+//                            binding.rcyImages.visibility = View.VISIBLE
+//                            mAdapter?.notifyDataSetChanged()
+//                        }
 
                         Log.d("SelectedFile", "URI: $uri, Type: $type")
                     }
@@ -279,30 +279,30 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
                 }
             }
 
-        binding.imgDelete.setOnClickListener {
-            binding.videoView.visibility = View.GONE
-            binding.webView.visibility = View.GONE
-            binding.imgDelete.visibility = View.GONE
-            binding.imgPlay.visibility = View.GONE
-            binding.rcyImages.visibility = View.VISIBLE
-            binding.thumbnailView.visibility = View.GONE
-            Constant.selectedFiles.clear()
-            saveDrawableToCache(R.drawable.add_image)?.let {
-                Constant.selectedFiles.add(
-                    FileItem(
-                        it, FileType.IMAGE
-                    )
-                )
-            }
-            mAdapter!!.notifyDataSetChanged()
-        }
+//        binding.imgDelete.setOnClickListener {
+//            binding.videoView.visibility = View.GONE
+//            binding.webView.visibility = View.GONE
+//            binding.imgDelete.visibility = View.GONE
+//            binding.imgPlay.visibility = View.GONE
+//            binding.rcyImages.visibility = View.VISIBLE
+//            binding.thumbnailView.visibility = View.GONE
+//            Constant.selectedFiles.clear()
+//            saveDrawableToCache(R.drawable.add_image)?.let {
+//                Constant.selectedFiles.add(
+//                    FileItem(
+//                        it, FileType.IMAGE
+//                    )
+//                )
+//            }
+//            mAdapter!!.notifyDataSetChanged()
+//        }
 
-        binding.imgPlay.setOnClickListener {
-            binding.thumbnailView.visibility = View.GONE
-            binding.imgPlay.visibility = View.GONE
-            binding.videoView.visibility = View.VISIBLE
-            binding.videoView.start()
-        }
+//        binding.imgPlay.setOnClickListener {
+//            binding.thumbnailView.visibility = View.GONE
+//            binding.imgPlay.visibility = View.GONE
+//            binding.videoView.visibility = View.VISIBLE
+//            binding.videoView.start()
+//        }
 
         binding.edtSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -574,16 +574,16 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
 
     private fun openAlbumSelectActivity(isFileType: String) {
 
-        if (Constant.selectedFiles.size > 1) {
-            val secondType = Constant.selectedFiles[1].type.toString()
-            if ((secondType == Constant.IMAGE && (isFileType == Constant.DOCUMENT || isFileType == Constant.VOICE)) || (secondType == Constant.DOCUMENT && (isFileType == Constant.IMAGE || isFileType == Constant.VOICE)) || (secondType == Constant.VOICE && (isFileType == Constant.IMAGE || isFileType == Constant.DOCUMENT))) {
-                Constant.selectedFiles.clear()
-                saveDrawableToCache(R.drawable.add_image)?.let {
-                    Constant.selectedFiles.add(FileItem(it, FileType.IMAGE))
-                }
-                mAdapter?.notifyDataSetChanged()
-            }
-        }
+//        if (Constant.selectedFiles.size > 1) {
+//            val secondType = Constant.selectedFiles[1].type.toString()
+//            if ((secondType == Constant.IMAGE && (isFileType == Constant.DOCUMENT || isFileType == Constant.VOICE)) || (secondType == Constant.DOCUMENT && (isFileType == Constant.IMAGE || isFileType == Constant.VOICE)) || (secondType == Constant.VOICE && (isFileType == Constant.IMAGE || isFileType == Constant.DOCUMENT))) {
+////                Constant.selectedFiles.clear()
+//                saveDrawableToCache(R.drawable.add_image)?.let {
+//                    Constant.selectedFiles.add(FileItem(it, FileType.IMAGE))
+//                }
+//                mAdapter?.notifyDataSetChanged()
+//            }
+//        }
 
         Log.d("FileComing", isFileType)
         val sdkInt = Build.VERSION.SDK_INT
@@ -631,7 +631,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         }
 
         rlaVideoPick.setOnClickListener {
-            Constant.isFileLimit = 1
+            Constant.isFileLimit = 10
             openAlbumSelectActivity(Constant.VIDEO)
             dialog.dismiss()
         }
@@ -643,19 +643,19 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         }
 
         rlaCamera.setOnClickListener {
-            if (Constant.selectedFiles.size > 1) {
-                if (Constant.selectedFiles[1].type.toString() != Constant.IMAGE) {
-                    Constant.selectedFiles.clear()
-                    saveDrawableToCache(R.drawable.add_image)?.let {
-                        Constant.selectedFiles.add(
-                            FileItem(
-                                it, FileType.IMAGE
-                            )
-                        )
-                    }
-                    mAdapter!!.notifyDataSetChanged()
-                }
-            }
+//            if (Constant.selectedFiles.size > 1) {
+//                if (Constant.selectedFiles[1].type.toString() != Constant.IMAGE) {
+//                    Constant.selectedFiles.clear()
+//                    saveDrawableToCache(R.drawable.add_image)?.let {
+//                        Constant.selectedFiles.add(
+//                            FileItem(
+//                                it, FileType.IMAGE
+//                            )
+//                        )
+//                    }
+//                    mAdapter!!.notifyDataSetChanged()
+//                }
+//            }
             checkCameraPermissionAndOpenCamera()
             dialog.dismiss()
         }
@@ -857,11 +857,11 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
     override fun onClickListener(data: HomeWorkReport) {
         Constant.isAwsUploadedFiles.clear()
         Constant.selectedFiles.clear()
-        binding.webView.visibility = View.GONE
-        binding.thumbnailView.visibility = View.GONE
-        binding.rcyImages.visibility = View.GONE
-        binding.thumbnailView.visibility = View.GONE
-        binding.imgDelete.visibility = View.GONE
+//        binding.webView.visibility = View.GONE
+//        binding.thumbnailView.visibility = View.GONE
+//        binding.rcyImages.visibility = View.GONE
+//        binding.thumbnailView.visibility = View.GONE
+//        binding.imgDelete.visibility = View.GONE
 
         saveDrawableToCache(R.drawable.add_image)?.let {
             Constant.selectedFiles.add(
@@ -888,19 +888,18 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
             Constant.selectedFiles.addAll(mappedList)
         }
         if (Constant.selectedFiles.size > 1) {
-            if (Constant.selectedFiles[1].type.toString() == Constant.VIDEO) {
-                binding.thumbnailView.visibility = View.GONE
-                binding.webView.visibility = View.VISIBLE
-                binding.rcyImages.visibility = View.GONE
-                binding.thumbnailView.visibility = View.GONE
-                binding.imgDelete.visibility = View.VISIBLE
-                loadVideo(binding.webView, Constant.selectedFiles.get(1).path.toString())
-            } else {
+//            if (Constant.selectedFiles[1].type.toString() == Constant.VIDEO) {
+//                binding.thumbnailView.visibility = View.GONE
+//                binding.webView.visibility = View.VISIBLE
+//                binding.rcyImages.visibility = View.GONE
+//                binding.imgDelete.visibility = View.VISIBLE
+//                loadVideo(binding.webView, Constant.selectedFiles.get(1).path.toString())
+//            } else {
                 binding.rcyImages.visibility = View.VISIBLE
                 mAdapter = ImagePickingAdapter(this, Constant.selectedFiles, this)
                 binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
                 binding.rcyImages.adapter = mAdapter
-            }
+         //   }
         } else {
             binding.rcyImages.visibility = View.VISIBLE
             mAdapter = ImagePickingAdapter(this, Constant.selectedFiles, this)
@@ -911,7 +910,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
 
     @SuppressLint("SetJavaScriptEnabled")
     fun loadVideo(webView: android.webkit.WebView, url: String) {
-        binding.loadingBar.visibility = View.VISIBLE
+//        binding.loadingBar.visibility = View.VISIBLE
         webView.settings.javaScriptEnabled = true
         webView.settings.domStorageEnabled = true
         webView.settings.useWideViewPort = true
@@ -928,11 +927,11 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
             override fun onPageStarted(
                 view: android.webkit.WebView?, url: String?, favicon: Bitmap?
             ) {
-                binding.loadingBar.visibility = View.VISIBLE
+               // binding.loadingBar.visibility = View.VISIBLE
             }
 
             override fun onPageFinished(view: android.webkit.WebView?, url: String?) {
-                binding.loadingBar.visibility = View.GONE
+             //   binding.loadingBar.visibility = View.GONE
             }
 
             override fun onReceivedError(
@@ -940,7 +939,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
                 request: WebResourceRequest?,
                 error: WebResourceError?
             ) {
-                binding.loadingBar.visibility = View.GONE
+              //  binding.loadingBar.visibility = View.GONE
                 Log.e("WebViewError", "Error loading: ${error?.description}")
             }
         }

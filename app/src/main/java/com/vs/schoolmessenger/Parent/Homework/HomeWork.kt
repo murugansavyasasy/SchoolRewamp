@@ -1,182 +1,190 @@
 package com.vs.schoolmessenger.Parent.Homework
 
+import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
-import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.HomeWorkAdapter
+import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.CalendarAdapter
+import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.ChildHomeWork
+import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.HomeworkParentAdapter
+import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.CalendarDate
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetDateWiseHomeworkData
+import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkDetails
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
-import com.vs.schoolmessenger.databinding.HomeWorkParentBinding
+import com.vs.schoolmessenger.databinding.ParentHomeworkActivityBinding
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
-class HomeWork : BaseActivity<HomeWorkParentBinding>(), View.OnClickListener,
+class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickListener,
     HomeWorkDateClickListener {
     private var isAccessToken: String? = null
     private var appViewModel: App? = null
-    private var mAdapter: HomeWorkAdapter? = null
-    private var fullHomeworkList = mutableListOf<GetDateWiseHomeworkData>()
-    private var filteredHomeworkList = listOf<GetDateWiseHomeworkData>()
-    private var hasFetchedMore = false
-    var isSeeMoreClick = true
+    private var isHomeWorkDate = ""
+    private var mAdapter: HomeworkParentAdapter? = null
+    var isHomeWorkData: List<GetDateWiseHomeworkData>? = null
+    private lateinit var dateList: List<CalendarDate>
+    private lateinit var calendarAdapter: CalendarAdapter
 
-    override fun getViewBinding(): HomeWorkParentBinding {
-        return HomeWorkParentBinding.inflate(layoutInflater)
+    override fun getViewBinding(): ParentHomeworkActivityBinding {
+        return ParentHomeworkActivityBinding.inflate(layoutInflater)
     }
 
     override fun setupViews() {
         super.setupViews()
-        setUpGradientParent()
+        setupToolbarBlue()
 
         appViewModel = ViewModelProvider(this)[App::class.java].apply { init() }
-        binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
         val childDetails = SharedPreference.getChildDetails(this)
         isAccessToken = childDetails?.access_token
-        binding.lblSeeMore.setOnClickListener(this)
-        binding.toolbarLayout.lblParentToolBar.text = Constant.isParentMenuName
-        binding.toolbarLayout.lblStudentName.text = childDetails?.name
-        binding.toolbarLayout.lblStudentSection.text =
-            childDetails?.standard_name + " - " + childDetails?.section_name
+        binding.lblName.text = childDetails!!.name
+        binding.lblSection.text = childDetails!!.standard_name + " - " + childDetails.section_name
+        binding.imgBack.setOnClickListener(this)
+        binding.imgSearch.setOnClickListener(this)
+        binding.recyclerViewCalendar.layoutManager =
+            LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
 
-        binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
-        binding.rcyHomework.layoutManager = LinearLayoutManager(this)
-        binding.rcyHomework.isNestedScrollingEnabled = false
+        dateList = generateCalendarDates()
 
-        observeHomeworkResponse()
-        showInitialShimmer()
-        fetchInitialData()
-
-        binding.toolbarLayout.txtVideoMenu.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                filterHomework(s.toString())
-            }
-
-            override fun afterTextChanged(s: Editable?) {}
-        })
-    }
-
-    private fun observeHomeworkResponse() {
-        appViewModel?.isHomeWorkDetailsList?.observe(this) { response ->
-            if (response?.status == true && !response.data.isNullOrEmpty()) {
-                binding.rytNORecordFound.visibility = View.GONE
-                binding.rcyHomework.visibility = View.VISIBLE
-                appendData(response.data)
+        val todayDate =
+            SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Calendar.getInstance().time)
+        isHomeWorkDate = todayDate
+        calendarAdapter = CalendarAdapter(dateList, todayDate) {
+            Toast.makeText(this, "Selected: ${it.fullDate}", Toast.LENGTH_SHORT).show()
+            isHomeWorkDate = it.fullDate
+            val isHomeWorkData = isHomeWorkData?.find { it.date == isHomeWorkDate }
+            if (isHomeWorkData != null) {
+                binding.cytNoDataFound.visibility = View.GONE
+                binding.recyclerView.visibility = View.VISIBLE
+                mAdapter!!.updateList(isHomeWorkData.homework, isHomeWorkData.date)
             } else {
-                showEmptyState(response?.message ?: "No data found")
+                binding.cytNoDataFound.visibility = View.VISIBLE
+                binding.recyclerView.visibility = View.GONE
+                mAdapter!!.updateList(emptyList(), "")
             }
         }
 
-        appViewModel?.isHomeWorkDetailsListArchive?.observe(this) { response ->
-//            if (response?.status == true && !response.data.isNullOrEmpty()) {
-                appendData(response!!.data)
-//            } else {
-//                showEmptyState(response?.message ?: "No more data")
-//            }
+        isHomeWorkList()
+        binding.recyclerViewCalendar.adapter = calendarAdapter
+
+        binding.recyclerViewCalendar.post {
+            val centerOffset = binding.recyclerViewCalendar.width / 2 - 35
+            (binding.recyclerViewCalendar.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(
+                10, centerOffset
+            )
         }
-    }
+        binding.edtSearch.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                mAdapter!!.filter(s.toString())
+            }
 
-    private fun showInitialShimmer() {
-        mAdapter = HomeWorkAdapter(null, this, this, Constant.isShimmerViewShow, isSeeMoreClick)
-        binding.rcyHomework.adapter = mAdapter
-    }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
-    private fun showEmptyState(message: String) {
-        Log.d("filteredHomeworkList", filteredHomeworkList.size.toString())
-        if (filteredHomeworkList.isEmpty()) {
-            binding.rcyHomework.visibility = View.GONE
-            binding.rytNORecordFound.visibility = View.VISIBLE
-            binding.lblSeeMore.visibility = View.VISIBLE
-            binding.lblNoRecordFound.text = message
-        }
-    }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
 
-    private fun fetchInitialData() {
-        appViewModel?.isHomeWorkDetails(isAccessToken.orEmpty(), this)
-    }
-
-    private fun fetchMoreData() {
-        appViewModel?.isHomeworkListArchive(isAccessToken.orEmpty(), this)
-    }
-
-    private fun appendData(newData: List<GetDateWiseHomeworkData>) {
-        val newItems = newData.filter { newItem ->
-            fullHomeworkList.none { existingItem -> existingItem.date == newItem.date }
-        }
-
-        fullHomeworkList.addAll(newItems)
-        filteredHomeworkList = fullHomeworkList
-
-        mAdapter = HomeWorkAdapter(
-            filteredHomeworkList,
-            this,
-            this,
-            Constant.isShimmerViewDisable,
-            isSeeMoreClick
-        )
-        binding.rcyHomework.adapter = mAdapter
-    }
-
-    private fun filterHomework(query: String) {
-        filteredHomeworkList = if (query.isEmpty()) {
-            fullHomeworkList
-        } else {
-            fullHomeworkList.mapNotNull { dateWise ->
-                val filtered = dateWise.homework.filter {
-                    it.title.contains(query, true) || it.description.contains(
-                        query,
-                        true
-                    ) || it.subject_name.contains(query, true)
+        appViewModel?.isHomeWorkDetailsList?.observe(this) { response ->
+            if (response!!.status) {
+                isHomeWorkData = response.data
+                val isHomeWorkData = isHomeWorkData?.find { it.date == isHomeWorkDate }
+                if (isHomeWorkData != null) {
+                    binding.cytNoDataFound.visibility = View.GONE
+                    binding.recyclerView.visibility = View.VISIBLE
+                    isLoadHomeWorkData(isHomeWorkData.homework, isHomeWorkData.date)
+                } else {
+                    binding.cytNoDataFound.visibility = View.VISIBLE
+                    binding.recyclerView.visibility = View.GONE
+                    isLoadHomeWorkData(emptyList(), "")
                 }
-                if (filtered.isNotEmpty()) {
-                    dateWise.copy(homework = filtered)
-                } else null
             }
         }
-
-        if (filteredHomeworkList.isEmpty()) {
-            showEmptyState("No matching homework found.")
-        } else {
-            binding.rytNORecordFound.visibility = View.GONE
-            binding.rcyHomework.visibility = View.VISIBLE
-            mAdapter =
-                HomeWorkAdapter(
-                    filteredHomeworkList,
-                    this,
-                    this,
-                    Constant.isShimmerViewDisable,
-                    isSeeMoreClick
-                )
-            binding.rcyHomework.adapter = mAdapter
-        }
     }
+
+    fun isLoadHomeWorkData(data: List<GetHomeworkDetails>, isHomeWorkDate: String) {
+        mAdapter = HomeworkParentAdapter(data, this, Constant.isShimmerViewDisable, isHomeWorkDate)
+        binding.recyclerView.layoutManager =
+            GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
+        binding.recyclerView.adapter = mAdapter
+        binding.recyclerView.setHasFixedSize(true)
+    }
+
+    fun generateCalendarDates(): List<CalendarDate> {
+        val list = mutableListOf<CalendarDate>()
+        val calendar = Calendar.getInstance()
+
+        calendar.add(Calendar.DATE, -10)
+
+        val dayFormatter = SimpleDateFormat("EEE", Locale.getDefault())
+        val dateFormatter = SimpleDateFormat("dd", Locale.getDefault())
+        val fullFormatter = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+        val monthFormatter = SimpleDateFormat("MMM", Locale.getDefault()) // NEW
+
+        for (i in 0..20) {
+            val date = calendar.time
+            list.add(
+                CalendarDate(
+                    day = dayFormatter.format(date),
+                    date = dateFormatter.format(date),
+                    fullDate = fullFormatter.format(date),
+                    month = monthFormatter.format(date) // ADD MONTH
+                )
+            )
+            calendar.add(Calendar.DATE, 1)
+        }
+
+        return list
+    }
+
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.lblSeeMore -> {
-                if (!hasFetchedMore) {
-                    hasFetchedMore = true
-                    isSeeMoreClick = false
-                    binding.lblSeeMore.visibility = View.GONE
-                    fetchMoreData()
-                }
+            R.id.imgBack -> {
+                onBackPressed()
+            }
+
+            R.id.imgSearch -> {
+                binding.lytSearch.visibility = View.VISIBLE
             }
         }
     }
 
-    override fun onItemClick(
-        data: GetDateWiseHomeworkData,
-        holder: HomeWorkAdapter.DataViewHolder
-    ) {
-        if (!hasFetchedMore) {
-            hasFetchedMore = true
-            isSeeMoreClick = false
-            fetchMoreData()
+    fun isHomeWorkList() {
+        mAdapter = HomeworkParentAdapter(
+            emptyList(), this, Constant.isShimmerViewShow, isHomeWorkDate
+        )
+        binding.recyclerView.layoutManager =
+            GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
+        binding.recyclerView.adapter = mAdapter
+        binding.recyclerView.setHasFixedSize(true)
+        appViewModel?.isHomeWorkDetails(isAccessToken!!, this)
+    }
+
+    override fun onItemClick(data: GetHomeworkDetails, isHomeWorkDate: String) {
+        if (data.is_unread) {
+            val jsonObject = JsonObject().apply {
+                addProperty(APIKeyNames.type, "HOMEWORK")
+                addProperty(APIKeyNames.detail_id, data.id)
+            }
+            isAccessToken?.let {
+                appViewModel?.isUpdateStatusCommunication(it, jsonObject, this)
+            }
         }
+
+        val intent = Intent(this@HomeWork, ChildHomeWork::class.java)
+        intent.putExtra("isHomeWorkData", data)
+        intent.putExtra("isHomeWorkDate", isHomeWorkDate)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        startActivity(intent)
     }
 }
