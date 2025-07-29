@@ -1,8 +1,12 @@
 package com.vs.schoolmessenger.Parent.Noticeboard
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -41,7 +45,9 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
 //            isChildDetails?.standard_name+ " - " +isChildDetails?.section_name
 //        binding.toolbarLayout.lblParentToolBar.text = Constant.isParentMenuName
 //        binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
-//        binding.toolbarLayout.imgBack.setOnClickListener(this)
+        binding.imgBack.setOnClickListener(this)
+
+        binding.rytSearch.setOnClickListener(this)
 
         binding.txtVideoMenu.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -70,7 +76,16 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
             }
         }
 
+        val channel = NotificationChannel(
+            "reminder_channel",
+            "Reminders",
+            NotificationManager.IMPORTANCE_HIGH
+        )
+        val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        manager.createNotificationChannel(channel)
+
     }
+
 
 
     private fun isloadhomeworkData(newData: List<Notice>?) {
@@ -83,7 +98,13 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
 
         when (p0?.id) {
             R.id.imgBack -> onBackPressed()
+            R.id.rytSearch -> if (binding.rytsearch.isVisible) {
+                binding.rytsearch.visibility = View.GONE
+            } else {
+                binding.rytsearch.visibility = View.VISIBLE
+            }
         }
+
 
 
     }

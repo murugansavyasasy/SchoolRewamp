@@ -21,14 +21,13 @@
             android:background="@drawable/category_white_box"
             android:orientation="vertical">
 
-            <com.google.android.material.imageview.ShapeableImageView
+            <ImageView
                 android:id="@+id/category_image"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:src="@drawable/allimage"
-                app:shapeAppearanceOverlay="@style/RoundedSquare" />
+                android:src="@drawable/allimage" />
 
             <TextView
                 android:id="@+id/category_name"

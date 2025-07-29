@@ -20,6 +20,7 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.facebook.shimmer.ShimmerFrameLayout
+import com.google.android.material.imageview.ShapeableImageView
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
 import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import com.vs.schoolmessenger.Parent.Communication.UnifiedVoiceAdapter.ShimmerViewHolder
@@ -30,12 +31,15 @@ import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class FilePathAdapter (
 
-    private var GetFilePathDetailsData: List<FilePath>?,
+    private var visibleList: List<FilePath>,
+    private var fullList: List<FilePath>,
     private var context: Context,
     private var isLoading: Boolean
 ):RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
+
+    private var visibleCount = 3
 
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
@@ -52,22 +56,30 @@ class FilePathAdapter (
         }
     }
 
-    override fun getItemCount(): Int {
-        return if (isLoading) 20
-        else GetFilePathDetailsData?.size ?: 0
 
+    override fun getItemCount(): Int {
+        return if (isLoading) {
+            20
+        } else {
+            visibleList.size
+        }
     }
+
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
-            // Bind actual data when loading is complete
-
-            holder.bind(GetFilePathDetailsData!![position],position, this)
+            holder.bind(visibleList[position], position, fullList, context)
         }
     }
+
+
+
+
+
+
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
-        private val DefaultImage: ImageView = itemView.findViewById(R.id.ImgPDF)
+        private val DefaultImage: ShapeableImageView = itemView.findViewById(R.id.ImgPDF)
 //        private val ImgOrDocumentType:ImageView=itemView.findViewById(R.id.imageOrDocumentType)
 //        private val WebViewThumbnail:WebView=itemView.findViewById(R.id.WVThumbnaildocument)
 
@@ -79,7 +91,9 @@ class FilePathAdapter (
         fun bind(
             data: FilePath?,
             position: Int,
-            adapter: FilePathAdapter, ) {
+            fullList: List<FilePath>,
+            context: Context
+            ) {
 
             Log.d("GetFileDetails", data.toString())
             if (data?.url.isNullOrEmpty()) {
@@ -99,43 +113,38 @@ class FilePathAdapter (
                 }
 
                 Constant.PDF -> {
-//                    ImgOrDocumentType.setBackgroundResource(R.drawable.hw_pdf_img)
+                    DefaultImage.setBackgroundResource(R.drawable.hw_pdf_img)
                     openDocumentInWebView(data.url)
                 }
 
                 Constant.DOC, Constant.DOCX -> {
-//                    ImgOrDocumentType.setBackgroundResource(R.drawable.microsoft_word_img)
+                    DefaultImage.setBackgroundResource(R.drawable.microsoft_word_img)
                     openDocumentInWebView(data.url)
                 }
 
                 Constant.TXT -> {
-//                    ImgOrDocumentType.setBackgroundResource(R.drawable.txt_file_img)
+                    DefaultImage.setBackgroundResource(R.drawable.txt_file_img)
                     openDocumentInWebView(data.url)
                 }
 
                 Constant.PPT, Constant.PPTX -> {
-//                    ImgOrDocumentType.setBackgroundResource(R.drawable.ppt_icon)
+                    DefaultImage.setBackgroundResource(R.drawable.ppt_icon)
                     openDocumentInWebView(data.url)
                 }
 
                 Constant.EXCEL -> {
-//                    ImgOrDocumentType.setBackgroundResource(R.drawable.excel_icon)
+                    DefaultImage.setBackgroundResource(R.drawable.excel_icon)
                     openDocumentInWebView(data.url)
                 }
             }
 
             fileItem.setOnClickListener {
-                Constant.commonFileList.isEmpty()
-                val commonList = adapter.GetFilePathDetailsData?.map {
-                    CommonFileData(
-                        type = it.type,
-                        path = it.url,
-                    )
-                }?.toMutableList() ?: mutableListOf()
+                val commonList = fullList.map {
+                    CommonFileData(type = it.type, path = it.url)
+                }.toMutableList()
 
                 Constant.commonFileList = commonList
-
-                Constant.selectedFileIndex = position
+                Constant.selectedFileIndex = fullList.indexOf(data)
 
                 val intent = Intent(context, FilesViewActivity::class.java)
                 context.startActivity(intent)

@@ -124,10 +124,10 @@ class EventAdapter(
         private val total_numbers: TextView = itemView.findViewById(R.id.total_numbers)
 
         private val rcyImgPDF: RecyclerView = itemView.findViewById(R.id.rcyImgPDF)
-        private val video_player: ShapeableImageView = itemView.findViewById(R.id.video_player)
+        private val video_player: ImageView = itemView.findViewById(R.id.video_player)
         private val loadingBar: ProgressBar = itemView.findViewById(R.id.loadingBar)
         private val rytList: LinearLayout = itemView.findViewById(R.id.rytList)
-        private val arrow_icon: ImageView = itemView.findViewById(R.id.arrow_icon)
+//        private val arrow_icon: ImageView = itemView.findViewById(R.id.arrow_icon)
         private val indicator: CircleIndicator2 = itemView.findViewById(R.id.indicator)
 
         @SuppressLint("ClickableViewAccessibility")
@@ -164,13 +164,13 @@ class EventAdapter(
             } else {
                 if (data.file_path.isNullOrEmpty()) {
 //                    rytList.visibility = View.GONE
-                    arrow_icon.visibility = View.VISIBLE
+//                    arrow_icon.visibility = View.VISIBLE
                     rcyImgPDF.visibility = View.GONE
                     total_numbers.visibility = View.GONE
                     video_player.visibility = View.GONE
                 } else {
                     rytList.visibility = View.VISIBLE
-                    arrow_icon.visibility = View.VISIBLE
+//                    arrow_icon.visibility = View.VISIBLE
                     rcyImgPDF.visibility = View.VISIBLE
                     video_player.visibility = View.GONE
 

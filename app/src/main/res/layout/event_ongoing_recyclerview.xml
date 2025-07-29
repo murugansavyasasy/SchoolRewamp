@@ -33,7 +33,6 @@
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:ellipsize="end"
             android:maxLines="3"
@@ -112,6 +111,8 @@
                     android:id="@+id/rcyImgPDF"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
                     android:visibility="gone" />
 
                 <TextView
@@ -140,7 +141,7 @@
                 android:background="@drawable/bg_image_background_white_coupon"
                 android:visibility="gone" />
 
-            <com.google.android.material.imageview.ShapeableImageView
+            <ImageView
                 android:id="@+id/video_player"
                 android:layout_width="50dp"
                 android:layout_height="50dp"

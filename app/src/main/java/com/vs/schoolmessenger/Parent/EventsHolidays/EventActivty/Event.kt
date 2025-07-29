@@ -171,21 +171,21 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
 
 
     private fun loadeventdata() {
-        mAdapter = EventAdapter(null, this, this, Constant.isShimmerViewDisable)
+        mAdapter = EventAdapter(null, this, this, Constant.isShimmerViewShow)
         binding.rcyongoingevent.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.rcyongoingevent.isNestedScrollingEnabled = false
         binding.rcyongoingevent.adapter = mAdapter
 
 
-        categoryadapter = EventCategoryAdapter(null, this, this, Constant.isShimmerViewDisable)
+        categoryadapter = EventCategoryAdapter(null, this, this, Constant.isShimmerViewShow)
         binding.rcycategoryEvent.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.rcycategoryEvent.isNestedScrollingEnabled = false
         binding.rcycategoryEvent.adapter = categoryadapter
 
 
-        eventupcomingadapter = EventUpcomingAdapter(null, this, this, Constant.isShimmerViewDisable)
+        eventupcomingadapter = EventUpcomingAdapter(null, this, this, Constant.isShimmerViewShow)
         binding.rcyupcomingevent.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.rcyupcomingevent.isNestedScrollingEnabled = false
@@ -193,7 +193,7 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
 
 
         eventcompletedadapter =
-            EventCompletedAdapter(null, this, this, Constant.isShimmerViewDisable)
+            EventCompletedAdapter(null, this, this, Constant.isShimmerViewShow)
         binding.rcycompletedevent.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.rcycompletedevent.isNestedScrollingEnabled = false

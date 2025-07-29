@@ -1,10 +1,17 @@
 package com.vs.schoolmessenger.Parent.Noticeboard.Adapter
 
 import android.annotation.SuppressLint
+import android.app.AlarmManager
+import android.app.DatePickerDialog
+import android.app.PendingIntent
+import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.net.Uri
+import android.os.Build
+import android.provider.Settings
 import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
@@ -18,11 +25,14 @@ import android.webkit.WebViewClient
 import android.widget.Filter
 import android.widget.Filterable
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.imageview.ShapeableImageView
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
 import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import com.vs.schoolmessenger.Parent.Noticeboard.Notice
@@ -31,6 +41,7 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 import me.relex.circleindicator.CircleIndicator2
+import java.util.Calendar
 
 class NoticeBoardAdapter(
     private var itemList: List<Notice>?,
@@ -54,8 +65,7 @@ class NoticeBoardAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
-            val shimmerView =
-                ShimmerUtil.wrapWithShimmer(parent, R.layout.notice_board_rewamp_card)
+            val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.notice_board_rewamp_card)
             ShimmerViewHolder(shimmerView)
         } else {
             val view = LayoutInflater.from(parent.context)
@@ -66,15 +76,22 @@ class NoticeBoardAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
-            holder.bind(filteredList[position], position, this)
+            filteredList?.get(position)?.let {
+                holder.bind(it, position,  this)
+            }
         } else if (holder is ShimmerViewHolder) {
             holder.startShimmer()
         }
     }
 
     override fun getItemCount(): Int {
-        return if (isLoading) 20 else filteredList.size
+        return if (isLoading) {
+            3
+        } else {
+            filteredList?.size ?: 0
+        }
     }
+
 
     override fun getFilter(): Filter {
         return object : Filter() {
@@ -84,8 +101,8 @@ class NoticeBoardAdapter(
                     fullList
                 } else {
                     fullList.filter {
-                        it.title.lowercase().contains(query) ||
-                                it.description.lowercase().contains(query)
+                        it.title.lowercase().contains(query) || it.description.lowercase()
+                            .contains(query)
                     }
                 }
                 val filterResults = FilterResults()
@@ -104,25 +121,33 @@ class NoticeBoardAdapter(
 
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
-//        private var isTextExpanded = false
-        private val LblHWSubjectName: TextView = itemView.findViewById(R.id.LblHWSubjectName)
+        //        private var isTextExpanded = false
+//        private val LblHWSubjectName: TextView = itemView.findViewById(R.id.LblHWSubjectName)
         private val lblTitleImage: TextView = itemView.findViewById(R.id.lblTitleImage)
         private val lblContentImage: TextView = itemView.findViewById(R.id.lblContentImage)
         private val lblDateImage: TextView = itemView.findViewById(R.id.lblDateImage)
         private val lblTimeImage: TextView = itemView.findViewById(R.id.lblTimeImage)
-//        private val rlaSelectText: RelativeLayout = itemView.findViewById(R.id.rlaSelectText)
-        private val rytList: RelativeLayout = itemView.findViewById(R.id.rytList)
-//        private val tvSeeMoreImage: TextView = itemView.findViewById(R.id.tvSeeMoreImage)
+
+        //        private val rlaSelectText: RelativeLayout = itemView.findViewById(R.id.rlaSelectText)
+        private val rytList: LinearLayout = itemView.findViewById(R.id.rytList)
+
+        //        private val tvSeeMoreImage: TextView = itemView.findViewById(R.id.tvSeeMoreImage)
         private val rcyImgPDF: RecyclerView = itemView.findViewById(R.id.rcyImgPDF)
-//        private val imgNewImage: ImageView = itemView.findViewById(R.id.imgNewImage)
+
+        //        private val imgNewImage: ImageView = itemView.findViewById(R.id.imgNewImage)
         private val webView: android.webkit.WebView = itemView.findViewById(R.id.webView)
         private val loadingBar: ProgressBar = itemView.findViewById(R.id.loadingBar)
         private val indicator: CircleIndicator2 = itemView.findViewById(R.id.indicator)
 
+        private val video_player: ImageView = itemView.findViewById(R.id.video_player)
+
+        private val total_numbers: TextView = itemView.findViewById(R.id.total_numbers)
+        private val remaindertag: TextView = itemView.findViewById(R.id.remaindertag)
+
         @SuppressLint("ClickableViewAccessibility")
         fun bind(noticeData: Notice, position: Int, adapter: NoticeBoardAdapter) {
 
-            LblHWSubjectName.visibility = View.GONE
+//            LblHWSubjectName.visibility = View.GONE
 //            imgNewImage.visibility = View.GONE
 //            rlaSelectText.visibility = View.GONE
             lblTitleImage.text = noticeData.title
@@ -133,16 +158,55 @@ class NoticeBoardAdapter(
             val time = parts.getOrNull(1) + " " + (parts.getOrNull(2) ?: "")
             lblDateImage.text = Constant.convertDateTimeFormat(date)
             lblTimeImage.text = time
-//            isSeeMoreVisibility(lblContentImage, tvSeeMoreImage)
+            video_player.visibility = View.GONE
+            loadingBar.visibility = View.GONE
+
+
+            remaindertag.setOnClickListener {
+                val context = it.context
+                val calendar = Calendar.getInstance()
+
+
+                DatePickerDialog(
+                    context,
+                    { _, year, month, day ->
+                        calendar.set(Calendar.YEAR, year)
+                        calendar.set(Calendar.MONTH, month)
+                        calendar.set(Calendar.DAY_OF_MONTH, day)
+
+                        TimePickerDialog(
+                            context,
+                            { _, hour, minute ->
+                                calendar.set(Calendar.HOUR_OF_DAY, hour)
+                                calendar.set(Calendar.MINUTE, minute)
+                                calendar.set(Calendar.SECOND, 0)
+
+                                scheduleNotification(context, calendar.timeInMillis)
+
+                            },
+                            calendar.get(Calendar.HOUR_OF_DAY),
+                            calendar.get(Calendar.MINUTE),
+                            false
+                        ).show()
+
+                    },
+                    calendar.get(Calendar.YEAR),
+                    calendar.get(Calendar.MONTH),
+                    calendar.get(Calendar.DAY_OF_MONTH)
+                ).show()
+            }
+
+
+            //            isSeeMoreVisibility(lblContentImage, tvSeeMoreImage)
 ////            tvSeeMoreImage.setOnClickListener {
 ////                isSeeMoreExpanded(tvSeeMoreImage, lblContentImage)
 ////            }
 
-            webView.setBackgroundColor(Color.BLACK)
-            webView.setOnTouchListener(object : OnTouchListener {
+
+
+            video_player.setOnTouchListener(object : OnTouchListener {
                 @SuppressLint("ClickableViewAccessibility")
                 override fun onTouch(v: View?, event: MotionEvent): Boolean {
-                    webView.onPause()
                     if (event.getAction() == MotionEvent.ACTION_MOVE) {
                         return false
                     }
@@ -171,34 +235,10 @@ class NoticeBoardAdapter(
             })
 
             if (noticeData.iframe != "") {
+                video_player.visibility = View.GONE
                 webView.visibility = View.VISIBLE
                 rytList.visibility = View.VISIBLE
                 rcyImgPDF.visibility = View.GONE
-                webView.settings.javaScriptEnabled = true
-                webView.settings.domStorageEnabled = true
-                webView.settings.loadWithOverviewMode = true
-                webView.settings.useWideViewPort = true
-
-                webView.webViewClient = object : WebViewClient() {
-                    override fun onPageStarted(
-                        view: android.webkit.WebView, url: String, favicon: Bitmap?
-                    ) {
-                        loadingBar.visibility = View.VISIBLE
-                    }
-
-                    override fun onPageFinished(view: android.webkit.WebView?, url: String?) {
-                        loadingBar.visibility = View.GONE
-                    }
-
-                    override fun onReceivedError(
-                        view: android.webkit.WebView?,
-                        request: WebResourceRequest?,
-                        error: WebResourceError?
-                    ) {
-                        loadingBar.visibility = View.GONE
-                        Log.e("WebViewError", "Error loading: ${error?.description}")
-                    }
-                }
 
                 webView.loadUrl(noticeData.file_path[0].url.toString())
             } else {
@@ -216,11 +256,22 @@ class NoticeBoardAdapter(
                     indicator.visibility = View.GONE
                 }
 
-                webView.visibility = View.GONE
+                val fileList = noticeData.file_path
+                val totalFiles = fileList.size
+
+                if (totalFiles > 3) {
+                    total_numbers.text = "+${totalFiles - 3}"
+                    total_numbers.visibility = View.VISIBLE
+                } else {
+                    total_numbers.visibility = View.GONE
+                }
+
+                val visibleList = if (totalFiles > 3) fileList.subList(0, 3) else fileList
+
                 rcyImgPDF.layoutManager =
                     LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 rcyImgPDF.adapter = FilePathAdapter(
-                    noticeData.file_path, context, Constant.isShimmerViewDisable
+                    visibleList, fileList, context, Constant.isShimmerViewDisable
                 )
                 indicator.attachToRecyclerView(rcyImgPDF)
             }
@@ -245,6 +296,24 @@ class NoticeBoardAdapter(
                 }
             })
         }
+
+
+        fun scheduleNotification(context: Context, triggerTime: Long) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+                if (!alarmManager.canScheduleExactAlarms()) {
+                    val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM).apply {
+                        data = Uri.parse("package:${context.packageName}")
+                    }
+                    context.startActivity(intent)
+                    Toast.makeText(context, "Please allow exact alarm permission to schedule reminders", Toast.LENGTH_LONG).show()
+                    return // prevent crash
+                }
+            }
+        }
+
+
+
 
 //        private fun isSeeMoreExpanded(tvSeeMore: TextView, lblContent: TextView) {
 //            if (isTextExpanded) {

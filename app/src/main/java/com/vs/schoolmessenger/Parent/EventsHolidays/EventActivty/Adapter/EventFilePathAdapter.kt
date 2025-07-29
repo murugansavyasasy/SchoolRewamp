@@ -12,6 +12,7 @@ import android.widget.RelativeLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.facebook.shimmer.ShimmerFrameLayout
+import com.google.android.material.imageview.ShapeableImageView
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
 import com.vs.schoolmessenger.Parent.Communication.UnifiedVoiceAdapter
 import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
@@ -72,7 +73,7 @@ class EventFilePathAdapter(
 
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
-        private val DefaultImage: ImageView = itemView.findViewById(R.id.ImgPDF)
+        private val DefaultImage: ShapeableImageView = itemView.findViewById(R.id.ImgPDF)
 //        private val ImgOrDocumentType: ImageView = itemView.findViewById(R.id.imageOrDocumentType)
 //        private val WebViewThumbnail: WebView = itemView.findViewById(R.id.WVThumbnaildocument)
 //        private val loadingBar: ProgressBar = itemView.findViewById(R.id.loadingBar)
@@ -99,34 +100,33 @@ class EventFilePathAdapter(
                         .load(data.url)
                         .placeholder(R.drawable.image_placeholder)
                         .into(DefaultImage)
-
 //                    ImgOrDocumentType.setBackgroundResource(R.drawable.default_image_icon)
 //                    WebViewThumbnail.visibility = View.GONE
                     DefaultImage.visibility = View.VISIBLE
                 }
 
                 Constant.PDF -> {
-//                    ImgOrDocumentType.setBackgroundResource(R.drawable.hw_pdf_img)
+                    DefaultImage.setBackgroundResource(R.drawable.hw_pdf_img)
                     openDocumentInWebView(data.url)
                 }
 
                 Constant.DOC, Constant.DOCX -> {
-//                    ImgOrDocumentType.setBackgroundResource(R.drawable.microsoft_word_img)
+                    DefaultImage.setBackgroundResource(R.drawable.microsoft_word_img)
                     openDocumentInWebView(data.url)
                 }
 
                 Constant.TXT -> {
-//                    ImgOrDocumentType.setBackgroundResource(R.drawable.txt_file_img)
+                    DefaultImage.setBackgroundResource(R.drawable.txt_file_img)
                     openDocumentInWebView(data.url)
                 }
 
                 Constant.PPT, Constant.PPTX -> {
-//                    ImgOrDocumentType.setBackgroundResource(R.drawable.ppt_icon)
+                    DefaultImage.setBackgroundResource(R.drawable.ppt_icon)
                     openDocumentInWebView(data.url)
                 }
 
                 Constant.EXCEL -> {
-//                    ImgOrDocumentType.setBackgroundResource(R.drawable.excel_icon)
+                    DefaultImage.setBackgroundResource(R.drawable.excel_icon)
                     openDocumentInWebView(data.url)
                 }
             }

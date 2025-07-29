@@ -123,7 +123,7 @@ class EventCompletedAdapter(
         private val total_numbers: TextView = itemView.findViewById(R.id.total_numbers)
 
         private val rcyImgPDF: RecyclerView = itemView.findViewById(R.id.rcyImgPDF)
-        private val video_player: ShapeableImageView = itemView.findViewById(R.id.video_player)
+        private val video_player: ImageView = itemView.findViewById(R.id.video_player)
         private val loadingBar: ProgressBar = itemView.findViewById(R.id.loadingBar)
         private val rytList: LinearLayout = itemView.findViewById(R.id.rytList)
         private val arrow_icon: ImageView = itemView.findViewById(R.id.arrow_icon)

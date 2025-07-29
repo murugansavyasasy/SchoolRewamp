@@ -2,14 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/dual_gradient_backgroundcolor"
+    android:background="@color/AthensGray"
     android:fitsSystemWindows="true">
 
     <RelativeLayout
         android:id="@+id/rytHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="@color/AthensGray"
         android:paddingVertical="@dimen/fifteen">
 
         <ImageView
@@ -41,7 +41,7 @@
 
             <TextView
                 android:id="@+id/lblStudentName"
-                style="@style/CustomTextStylePoppinsMedium"
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
@@ -100,8 +100,8 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="10dp"
-        android:background="@drawable/rect_white_search"
-        android:visibility="visible">
+        android:background="@drawable/rect_grey"
+        android:visibility="gone">
 
 
         <ImageView
@@ -154,7 +154,7 @@
         android:id="@+id/lytList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/horizonatal_linearlayout"
+        android:layout_below="@+id/rcyNoticeBoard"
         android:orientation="vertical">
 
         <ImageView
