@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_marginEnd="@dimen/fifteen"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/ten"
+            android:layout_marginTop="@dimen/five"
             android:button="@drawable/ch_square"
             android:text="@string/Selectallaspresent"
             android:visibility="visible" />
@@ -41,6 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:visibility="gone"
             android:layout_below="@+id/toolbarLayout"
             android:orientation="horizontal">
 
@@ -199,7 +200,7 @@
         android:layout_marginStart="@dimen/twenty_five"
         android:layout_marginEnd="@dimen/twenty_five"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/bg_orange"
+        android:background="@drawable/bg_btn_blue"
         android:gravity="center"
         android:padding="@dimen/eight">
 
@@ -210,7 +211,7 @@
             android:layout_centerVertical="true"
             android:fontFamily="@font/poppins_regular"
             android:gravity="center_horizontal"
-            android:text="@string/lblSubmit"
+            android:text="@string/confirm_submit_attendance"
             android:textColor="@color/white"
             android:textSize="@dimen/fifteen_sp"
             android:textStyle="normal" />
@@ -222,6 +223,7 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/five"
             android:layout_marginEnd="@dimen/five"
+            android:visibility="gone"
             android:layout_toEndOf="@+id/lblSend"
             android:src="@drawable/send_icon_white" />
     </RelativeLayout>

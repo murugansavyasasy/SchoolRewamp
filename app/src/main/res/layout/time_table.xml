@@ -1,77 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:fitsSystemWindows="true">
+    android:background="#6467D2"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
 
-    <include
-        android:id="@+id/toolbarLayout"
-        layout="@layout/parent_side_tool_bar" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ten"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/fourteen_sp">
 
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="@dimen/twenty_five"
+            android:layout_height="@dimen/twenty_five"
+            android:layout_marginStart="@dimen/five"
+            android:src="@drawable/ic_arrow_back" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/twele"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/saranraj_shanmugam"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/fourteen_sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvClass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/four"
+                android:text="@string/i_b"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/fourteen_sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/twenty"
+        android:paddingTop="@dimen/ten"
+        android:paddingBottom="@dimen/eight">
+
+        <!-- Left: Timetable Title -->
+        <TextView
+            android:id="@+id/tvTimetableTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:text="@string/timetable"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/twenty_four"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/ten"
+                android:text="@string/today"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/fifteen"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvToday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mon_28_jul_25"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/fourteen_sp" />
+        </LinearLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linear_layout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbarLayout"
-        android:layout_marginTop="@dimen/ten"
-        android:orientation="horizontal">
+        android:layout_marginTop="@dimen/fifteen"
+        android:layout_marginBottom="@dimen/twenty"
+        android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewDays"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/twenty"
+            android:layout_marginEnd="@dimen/eight"
+            android:clipToPadding="false"
             android:orientation="horizontal"
+            android:paddingBottom="@dimen/eight"
             android:scrollbars="none"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     </LinearLayout>
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/linear_layout1">
+    <include
+        android:id="@+id/bottomsheettimetable"
+        layout="@layout/bottom_sheet_timetable"
+        android:visibility="gone" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/ten"
-            android:scrollbars="vertical" />
-    </ScrollView>
-
-    <LinearLayout
-        android:id="@+id/lnrNoRecords"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <ImageView
-            android:id="@+id/nomessage"
-            android:layout_width="@dimen/two_fifty"
-            android:layout_height="@dimen/two_fifty"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/twenty"
-            android:src="@drawable/nomessages"
-            android:textColor="@color/black"
-            android:textSize="@dimen/fifteen_sp" />
-
-        <TextView
-            android:id="@+id/txtNoData"
-            style="@style/CustomTextStylePoppinsBold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/twenty"
-            android:text="@string/no_list_found"
-            android:textColor="@color/black"
-            android:textSize="@dimen/fifteen_sp" />
-    </LinearLayout>
-
-
-</RelativeLayout>
+</LinearLayout>

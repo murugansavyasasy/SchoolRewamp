@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:id="@+id/rytCard"
+    android:layout_width="@dimen/seventy"
+    android:layout_height="@dimen/seventy"
+    android:layout_margin="@dimen/five"
+    android:background="@drawable/day_unselected"
     android:fitsSystemWindows="true"
     android:orientation="horizontal">
 
     <TextView
         android:id="@+id/btnDay"
-        android:layout_width="@dimen/one_thirty"
-        android:layout_height="45dp"
-        android:textColor="@color/black"
+        style="@style/CustomTextStylePoppinsMedium"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="@dimen/five"
         android:gravity="center"
         android:text="Sunday"
-        android:textSize="@dimen/sixteen_sp"
-        style="@style/CustomTextStylePoppinsMedium"
-        android:layout_marginStart="@dimen/five"
-        android:layout_marginEnd="@dimen/five"
-        android:background="@drawable/buttonradius"/>
+        android:textColor="@color/white"
+        android:textSize="@dimen/sixteen_sp" />
 
 </RelativeLayout>

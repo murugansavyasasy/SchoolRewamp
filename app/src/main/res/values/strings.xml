@@ -583,5 +583,18 @@
     <string name="Overall_Grade">Overall Grade: </string>
     <string name="Something_went_wrong_Please_try_again">Something went wrong. Please try again.</string>
     <string name="set_remainder">Set remainder</string>
+    <string name="confirm_submit_attendance"><![CDATA[Confirm & Submit Attendance]]></string>
+    <string name="no_data">no_data</string>
+    <string name="monday">Monday</string>
+    <string name="no_timetable_available">No timetable available</string>
+    <string name="saranraj_shanmugam">SARANRAJ SHANMUGAM</string>
+    <string name="i_b">I - B</string>
+    <string name="timetable">Timetable</string>
+    <string name="mon_28_jul_25">Mon, 28 Jul 25</string>
+    <string name="_09_30_nam">09:30\nAM</string>
+    <string name="_10_30_nam">10:30\nAM</string>
+    <string name="music">MUSIC</string>
+    <string name="sathishkumar_g">SATHISHKUMAR G</string>
+    <string name="duration_1h">Duration – 1h</string>
 
 </resources>

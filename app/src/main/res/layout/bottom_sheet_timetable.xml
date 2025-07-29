@@ -1,0 +1,58 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottom_sheet"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/timetable_item_bg"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/day_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/fifteen"
+        android:layout_marginEnd="@dimen/ten"
+        android:padding="@dimen/sixteen_sp"
+        android:text="@string/monday"
+        android:textColor="@color/black"
+        android:textSize="@dimen/eighteen"
+        android:textStyle="bold" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewSchedule"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten" />
+
+    <LinearLayout
+        android:id="@+id/lnrNoRecords"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/hundred_fifty"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/imgNoData"
+            android:layout_width="@dimen/four_hundred"
+            android:layout_height="@dimen/three_hundred"
+            android:contentDescription="@string/no_data"
+            android:src="@drawable/no_data_available" />
+
+        <TextView
+            android:id="@+id/txtNoData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/no_timetable_available"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sixteen"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+
+</LinearLayout>

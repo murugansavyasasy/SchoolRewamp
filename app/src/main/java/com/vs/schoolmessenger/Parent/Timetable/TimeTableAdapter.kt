@@ -6,20 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.facebook.shimmer.ShimmerFrameLayout
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class TimeTableAdapter(
     private var itemList: List<TimeTableListData>?,
-    private var listener: TimeTableListener,
-    private var context: Context,
+    private val listener: TimeTableListener,
+    private val context: Context,
     private var isLoading: Boolean
-
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
-    private var selectedPosition = RecyclerView.NO_POSITION
 
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
@@ -29,14 +26,10 @@ class TimeTableAdapter(
         return if (viewType == TYPE_SHIMMER) {
             val shimmerView = ShimmerUtil.wrapWithShimmer(parent, R.layout.item_timetable)
             DataViewHolder.ShimmerViewHolder(shimmerView)
-
         } else {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_timetable, parent, false)
-            DataViewHolder(
-                view,
-                context
-            )
+            DataViewHolder(view, context)
         }
     }
 
@@ -47,19 +40,17 @@ class TimeTableAdapter(
     }
 
     override fun getItemCount(): Int {
-        return if (isLoading) 20
-        else itemList?.size ?: 0
+        return if (isLoading) 10 else itemList?.size ?: 0
+    }
+
+    fun updateData(newData: List<TimeTableListData>) {
+        itemList = newData
+        isLoading = false
+        notifyDataSetChanged()
     }
 
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
-        private val time: TextView = itemView.findViewById(R.id.time_value)
-        private val subject_value: TextView = itemView.findViewById(R.id.subject_value)
-        private val name_value: TextView = itemView.findViewById(R.id.name_value)
-        private val lblFromToTime: TextView = itemView.findViewById(R.id.lblFromToTime)
-        private val duration_value: TextView = itemView.findViewById(R.id.duration_value)
-        private val hourvalue: TextView = itemView.findViewById(R.id.hourvalue)
-
 
         fun bind(
             data: TimeTableListData,
@@ -67,25 +58,38 @@ class TimeTableAdapter(
             listener: TimeTableListener,
             adapter: TimeTableAdapter
         ) {
-            time.text = data.start_time
-            hourvalue.text = data.name
+            val startTime: TextView = itemView.findViewById(R.id.start_time)
+            val endTime: TextView = itemView.findViewById(R.id.end_time)
+            val subjectValue: TextView = itemView.findViewById(R.id.subject_value)
+            val facultyName: TextView = itemView.findViewById(R.id.name_value)
+            val durationValue: TextView = itemView.findViewById(R.id.duration_value)
 
+            startTime.text = data.start_time.replace(" ", "\n")
+            endTime.text = data.end_time.replace(" ", "\n")
 
-            if (data.subject_name.isNotEmpty()) {
-                subject_value.visibility = View.VISIBLE
-                subject_value.text = data.subject_name
-            } else {
-                subject_value.visibility = View.GONE
+            val durationOnly = data.duration.trim()
+            durationValue.text = "Duration – $durationOnly"
+
+            when (data.hour_type) {
+                "1" -> {
+                    // Hour Type 1: Show subject_name and faculty_name
+                    subjectValue.text =
+                        if (data.subject_name.isNotEmpty()) data.subject_name else "—"
+                    facultyName.text =
+                        if (data.facalty_name.isNotEmpty()) data.facalty_name else "—"
+                }
+
+                "2" -> {
+                    // Hour Type 2: Show name and staff_name
+                    subjectValue.text = if (data.name.isNotEmpty()) data.name else "—"
+                    facultyName.text = if (data.staff_name.isNotEmpty()) data.staff_name else "—"
+                }
+
+                else -> {
+                    subjectValue.text = "—"
+                    facultyName.text = "—"
+                }
             }
-
-            if (data.staff_name.isNotEmpty()) {
-                name_value.visibility = View.VISIBLE
-                name_value.text = data.staff_name
-            } else {
-                name_value.visibility = View.GONE
-            }
-            lblFromToTime.text = data.start_time + " - " + data.end_time
-            duration_value.text = data.duration
         }
 
         class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
