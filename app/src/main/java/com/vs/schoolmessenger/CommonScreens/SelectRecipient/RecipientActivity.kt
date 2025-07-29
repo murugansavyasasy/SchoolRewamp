@@ -16,6 +16,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.AdapterView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -45,6 +46,7 @@ import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Assignment.DataClass.AssignmentSendingData
 import com.vs.schoolmessenger.School.Event.Model.EventDetails
 import com.vs.schoolmessenger.School.Homework.SectionDetails
+import com.vs.schoolmessenger.Utils.AwsFileUploader
 import com.vs.schoolmessenger.Utils.AwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
@@ -70,6 +72,10 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
     override fun getViewBinding(): SelectRecipientBinding {
         return SelectRecipientBinding.inflate(layoutInflater)
     }
+
+    private var currentUploadIndex = 0
+    private val uploadedFilesList = mutableListOf<AwsUploadedFiles>()
+
 
     val isGroupSelectedIds = mutableListOf<NameAndIds>()
     val isStandardSelectedIds = mutableListOf<Standard>()
@@ -652,33 +658,43 @@ class RecipientActivity : BaseActivity<SelectRecipientBinding>(), View.OnClickLi
 
             R.id.rytSend -> {
                 var isTypeOfName = ""
-                if (isSelectedType == 0) {
-                    isTargetType = Constant.isSchool
-                    isCircularType = Constant.school
-                    selectedIds.clear()
-                    isStaffDetails!!.school_id.let {
-                        selectedIds.add(it)
+                when (isSelectedType) {
+                    0 -> {
+                        isTargetType = Constant.isSchool
+                        isCircularType = Constant.school
+                        selectedIds.clear()
+                        isStaffDetails!!.school_id.let {
+                            selectedIds.add(it)
+                        }
                     }
-                } else if (isSelectedType == 1) {
-                    isTargetType = Constant.isStandard
-                    isCircularType = Constant.standard
-                    isTypeOfName = resources.getString(R.string.Standard)
-                    selectedIds = isStandardSelectedIds.map { it.id.toString() }.toMutableList()
-                } else if (isSelectedType == 2) {
-                    isTargetType = Constant.isSection
-                    isCircularType = Constant.section
-                    isTypeOfName = resources.getString(R.string.Section)
-                    selectedIds = isSectionSelectedIds.map { it.id.toString() }.toMutableList()
-                } else if (isSelectedType == 3) {
-                    selectedIds = isGroupSelectedIds.map { it.id.toString() }.toMutableList()
-                    isTargetType = Constant.isGroup
-                    isCircularType = Constant.group
-                    isTypeOfName = resources.getString(R.string.Group)
-                } else if (isSelectedType == 4) {
-                    selectedIds = isGroupSelectedIds.map { it.id.toString() }.toMutableList()
-                    isTypeOfName = resources.getString(R.string.Staff)
-                    isTargetType = Constant.isStaff
-                    isCircularType = Constant.staff
+
+                    1 -> {
+                        isTargetType = Constant.isStandard
+                        isCircularType = Constant.standard
+                        isTypeOfName = resources.getString(R.string.Standard)
+                        selectedIds = isStandardSelectedIds.map { it.id.toString() }.toMutableList()
+                    }
+
+                    2 -> {
+                        isTargetType = Constant.isSection
+                        isCircularType = Constant.section
+                        isTypeOfName = resources.getString(R.string.Section)
+                        selectedIds = isSectionSelectedIds.map { it.id.toString() }.toMutableList()
+                    }
+
+                    3 -> {
+                        selectedIds = isGroupSelectedIds.map { it.id.toString() }.toMutableList()
+                        isTargetType = Constant.isGroup
+                        isCircularType = Constant.group
+                        isTypeOfName = resources.getString(R.string.Group)
+                    }
+
+                    4 -> {
+                        selectedIds = isGroupSelectedIds.map { it.id.toString() }.toMutableList()
+                        isTypeOfName = resources.getString(R.string.Staff)
+                        isTargetType = Constant.isStaff
+                        isCircularType = Constant.staff
+                    }
                 }
 
                 for (id in selectedIds) {

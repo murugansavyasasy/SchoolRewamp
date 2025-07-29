@@ -93,7 +93,7 @@ class Testing : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickListe
                 CalendarDate(
                     dayFormatter.format(date),
                     dateFormatter.format(date),
-                    fullFormatter.format(date)
+                    fullFormatter.format(date),""
                 )
             )
             calendar.add(Calendar.DATE, 1)

@@ -23,17 +23,17 @@
         android:text="Sathish"
         android:textColor="@color/black"
         android:textSize="@dimen/twenty_five_sp"
-        app:layout_constraintEnd_toStartOf="@+id/lblSubject"
+        app:layout_constraintEnd_toStartOf="@+id/lblPostedDate"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toEndOf="@id/imgBack"
         app:layout_constraintTop_toTopOf="@id/imgBack" />
 
     <TextView
-        android:id="@+id/lblSubject"
+        android:id="@+id/lblPostedDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/ten"
-        android:text="Today"
+        android:text="Posted on : Today"
         android:textColor="@color/black"
         android:textSize="@dimen/fifteen_sp"
         app:layout_constraintBottom_toBottomOf="@id/lblSubjectName"
@@ -69,6 +69,45 @@
         app:layout_constraintTop_toBottomOf="@id/lbltitle" />
 
     <TextView
+        android:id="@+id/lblClickComplete"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/thirty"
+        android:layout_marginEnd="@dimen/ten"
+        android:text=""
+        android:textColor="@color/dark_blue_1"
+        android:textSize="@dimen/fifteen_sp"
+        app:layout_constraintEnd_toStartOf="@+id/thumbContainer"
+        app:layout_constraintTop_toBottomOf="@id/lblDescription" />
+
+    <FrameLayout
+        android:id="@+id/thumbContainer"
+        android:layout_width="@dimen/fifty"
+        android:layout_height="@dimen/fifty"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginEnd="@dimen/fifteen"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lblDescription">
+
+        <ImageView
+            android:id="@+id/imgThumbsUp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/thumbs_up"
+            android:visibility="visible" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottieView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            app:lottie_autoPlay="false"
+            app:lottie_fileName="thumbs_up.json"
+            app:lottie_loop="true" />
+    </FrameLayout>
+
+    <TextView
         android:id="@+id/lblAttachments"
         style="@style/CustomTextStylePoppinsBold"
         android:layout_width="0dp"
@@ -80,7 +119,7 @@
         android:textSize="@dimen/twenty"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/lblDescription" />
+        app:layout_constraintTop_toBottomOf="@id/lblClickComplete" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcChildHW"
@@ -89,10 +128,26 @@
         android:layout_marginStart="@dimen/fifteen"
         android:layout_marginTop="@dimen/ten"
         android:layout_marginEnd="@dimen/fifteen"
-        android:layout_marginBottom="@dimen/fifteen"
+        android:layout_marginBottom="@dimen/thirty"
         app:layout_constraintTop_toBottomOf="@id/lblAttachments"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+
+    <TextView
+        android:id="@+id/lblPostedBy"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/ten"
+        android:layout_marginBottom="@dimen/ten"
+        android:text="SathishKumar G"
+        android:textColor="@color/black"
+        android:textSize="@dimen/thirteen_sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rcChildHW">
+
+    </TextView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

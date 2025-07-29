@@ -236,6 +236,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var isleaverequestupdate: LiveData<LeaveUpdateResponse?>? = null
     var isleaverequestdelete: LiveData<LeaveRequestDeleteResponse?>? = null
     var getProgressMarks: LiveData<ProgressCardResponse?>? = null
+    var isHomeWorkComplete: LiveData<StatusMessageModel?>? = null
 
 
     fun init() {
@@ -326,6 +327,7 @@ class App(application: Application) : AndroidViewModel(application) {
         getviewmarks = apiParentRepositories.getviewmarksLiveData
         isleaverequestupdate = apiParentRepositories.isleaverequestupdateLiveData
         getProgressMarks = apiParentRepositories.getProgressMarksLiveData
+        isHomeWorkComplete = apiParentRepositories.isUpdateCompleteHomeWorkLiveData
 
     }
 
@@ -813,6 +815,11 @@ class App(application: Application) : AndroidViewModel(application) {
     fun isleaverequestdelete(isToken: String, request: LeaveRequestDelete, activity: Activity) {
         apiParentRepositories.isleaverequestdelete(isToken, request, activity)
     }
+
+    fun isHomeWorkComplete(isToken: String, jsonObject: JsonObject) {
+        apiParentRepositories.isHomeWorkComplete(isToken,jsonObject)
+    }
+
 
     fun getProgressMarks(
         isToken: String,

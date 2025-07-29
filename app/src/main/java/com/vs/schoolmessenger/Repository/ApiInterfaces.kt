@@ -281,6 +281,14 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String,
     ): Call<GetHomeworkData?>
 
+
+    @Headers("Content-Type: application/json")
+    @PUT(APIMethods.isHomeWorkComplete)
+    fun isHomeWorkComplete(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Body jsonObject: JsonObject
+    ): Call<StatusMessageModel?>
+
     @GET(APIMethods.homework_list_archive)
     fun homework_list_archive(
         @Header(APIKeyNames.Authorization) token: String,

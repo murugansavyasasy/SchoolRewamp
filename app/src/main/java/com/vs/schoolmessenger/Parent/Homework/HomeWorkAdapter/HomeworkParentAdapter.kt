@@ -14,11 +14,13 @@ import java.util.Locale
 class HomeworkParentAdapter(
     private var isHomeWorkData: List<GetHomeworkDetails>,
     private val listener: HomeWorkDateClickListener,
-    private var isLoading: Boolean
+    private var isLoading: Boolean,
+    isHomeWorkDate: String
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
+    var isDate = isHomeWorkDate
 
     private var originalList: List<GetHomeworkDetails> = isHomeWorkData
 
@@ -41,7 +43,7 @@ class HomeworkParentAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
             val item = isHomeWorkData[position]
-            holder.bind(item, listener)
+            holder.bind(item, listener, isDate)
         }
     }
 
@@ -49,10 +51,11 @@ class HomeworkParentAdapter(
         return if (isLoading) 5 else isHomeWorkData.size
     }
 
-    fun updateList(newData: List<GetHomeworkDetails>) {
+    fun updateList(newData: List<GetHomeworkDetails>, date: String) {
         isHomeWorkData = newData
         originalList = newData
         isLoading = false
+        isDate = date
         notifyDataSetChanged()
     }
 
@@ -77,12 +80,26 @@ class HomeworkParentAdapter(
     class DataViewHolder(private val binding: HomeworkParentItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: GetHomeworkDetails, listener: HomeWorkDateClickListener) {
+        fun bind(item: GetHomeworkDetails, listener: HomeWorkDateClickListener, isDate: String) {
             binding.lblSubject.text = item.subject_name
             binding.lblTitle.text = item.title
 
+            if (item.is_completed) {
+                binding.progressContainer.visibility = View.GONE
+                binding.imgSuccess.visibility = View.VISIBLE
+            } else {
+                binding.progressContainer.visibility = View.VISIBLE
+                binding.imgSuccess.visibility = View.GONE
+            }
+            if (item.is_unread) {
+                binding.redDot.visibility = View.VISIBLE
+            } else {
+                binding.redDot.visibility = View.GONE
+            }
             binding.cardRoot.setOnClickListener {
-                listener.onItemClick(item)
+                item.is_unread = false
+                binding.redDot.visibility = View.GONE
+                listener.onItemClick(item, isDate)
             }
         }
     }

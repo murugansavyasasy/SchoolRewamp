@@ -18,7 +18,7 @@
             android:layout_width="@dimen/thirty_five"
             android:layout_height="@dimen/thirty_five"
             android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/thirty"
+            android:layout_marginTop="@dimen/twenty_five"
             android:src="@drawable/arrow_left_white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"></ImageView>
@@ -32,7 +32,7 @@
             android:layout_marginTop="@dimen/ten"
             android:text="Sathish"
             android:textColor="@color/white"
-            android:textSize="@dimen/thirty_sp"
+            android:textSize="@dimen/twenty_five"
             app:layout_constraintStart_toEndOf="@+id/imgBack"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -131,5 +131,38 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lytSearch" />
 
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cytNoDataFound"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/fifty"
+        app:layout_constraintTop_toBottomOf="@+id/lytSearch"
+
+        >
+
+        <ImageView
+            android:id="@+id/imgNoDataFound"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/two_hundred"
+            android:src="@drawable/no_data_found"
+            app:layout_constraintStart_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></ImageView>
+
+
+        <TextView
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/twenty_five"
+            android:gravity="center"
+            android:text="No Homework Found!"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp"
+            app:layout_constraintTop_toBottomOf="@+id/imgNoDataFound">
+
+        </TextView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

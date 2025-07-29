@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.CalendarAdapter
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.ChildHomeWork
@@ -17,6 +18,7 @@ import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.CalendarDate
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetDateWiseHomeworkData
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkDetails
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
@@ -46,6 +48,8 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
         appViewModel = ViewModelProvider(this)[App::class.java].apply { init() }
         val childDetails = SharedPreference.getChildDetails(this)
         isAccessToken = childDetails?.access_token
+        binding.lblName.text = childDetails!!.name
+        binding.lblSection.text = childDetails!!.standard_name + " - " + childDetails.section_name
         binding.imgBack.setOnClickListener(this)
         binding.imgSearch.setOnClickListener(this)
         binding.recyclerViewCalendar.layoutManager =
@@ -61,9 +65,13 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
             isHomeWorkDate = it.fullDate
             val isHomeWorkData = isHomeWorkData?.find { it.date == isHomeWorkDate }
             if (isHomeWorkData != null) {
-                mAdapter!!.updateList(isHomeWorkData.homework)
+                binding.cytNoDataFound.visibility = View.GONE
+                binding.recyclerView.visibility = View.VISIBLE
+                mAdapter!!.updateList(isHomeWorkData.homework, isHomeWorkData.date)
             } else {
-                mAdapter!!.updateList(emptyList())
+                binding.cytNoDataFound.visibility = View.VISIBLE
+                binding.recyclerView.visibility = View.GONE
+                mAdapter!!.updateList(emptyList(), "")
             }
         }
 
@@ -73,8 +81,7 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
         binding.recyclerViewCalendar.post {
             val centerOffset = binding.recyclerViewCalendar.width / 2 - 35
             (binding.recyclerViewCalendar.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(
-                10,
-                centerOffset
+                10, centerOffset
             )
         }
         binding.edtSearch.addTextChangedListener(object : TextWatcher {
@@ -87,24 +94,25 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
 
-
         appViewModel?.isHomeWorkDetailsList?.observe(this) { response ->
             if (response!!.status) {
                 isHomeWorkData = response.data
                 val isHomeWorkData = isHomeWorkData?.find { it.date == isHomeWorkDate }
                 if (isHomeWorkData != null) {
-                    isLoadHomeWorkData(isHomeWorkData.homework)
+                    binding.cytNoDataFound.visibility = View.GONE
+                    binding.recyclerView.visibility = View.VISIBLE
+                    isLoadHomeWorkData(isHomeWorkData.homework, isHomeWorkData.date)
                 } else {
-                    isLoadHomeWorkData(emptyList())
+                    binding.cytNoDataFound.visibility = View.VISIBLE
+                    binding.recyclerView.visibility = View.GONE
+                    isLoadHomeWorkData(emptyList(), "")
                 }
-            } else {
-
             }
         }
     }
 
-    fun isLoadHomeWorkData(data: List<GetHomeworkDetails>) {
-        mAdapter = HomeworkParentAdapter(data, this, Constant.isShimmerViewDisable)
+    fun isLoadHomeWorkData(data: List<GetHomeworkDetails>, isHomeWorkDate: String) {
+        mAdapter = HomeworkParentAdapter(data, this, Constant.isShimmerViewDisable, isHomeWorkDate)
         binding.recyclerView.layoutManager =
             GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
         binding.recyclerView.adapter = mAdapter
@@ -120,20 +128,24 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
         val dayFormatter = SimpleDateFormat("EEE", Locale.getDefault())
         val dateFormatter = SimpleDateFormat("dd", Locale.getDefault())
         val fullFormatter = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+        val monthFormatter = SimpleDateFormat("MMM", Locale.getDefault()) // NEW
 
         for (i in 0..20) {
             val date = calendar.time
             list.add(
                 CalendarDate(
-                    dayFormatter.format(date),
-                    dateFormatter.format(date),
-                    fullFormatter.format(date)
+                    day = dayFormatter.format(date),
+                    date = dateFormatter.format(date),
+                    fullDate = fullFormatter.format(date),
+                    month = monthFormatter.format(date) // ADD MONTH
                 )
             )
             calendar.add(Calendar.DATE, 1)
         }
+
         return list
     }
+
 
     override fun onClick(v: View?) {
         when (v?.id) {
@@ -148,7 +160,9 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
     }
 
     fun isHomeWorkList() {
-        mAdapter = HomeworkParentAdapter(emptyList(), this, Constant.isShimmerViewShow)
+        mAdapter = HomeworkParentAdapter(
+            emptyList(), this, Constant.isShimmerViewShow, isHomeWorkDate
+        )
         binding.recyclerView.layoutManager =
             GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
         binding.recyclerView.adapter = mAdapter
@@ -156,19 +170,20 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
         appViewModel?.isHomeWorkDetails(isAccessToken!!, this)
     }
 
-    override fun onItemClick(data: GetHomeworkDetails) {
-
-//        val jsonObject = JsonObject().apply {
-//            addProperty(APIKeyNames.type, ite)
-//            addProperty(APIKeyNames.detail_id, id)
-//        }
-//
-//        isAccessToken?.let {
-//            appViewModel?.isUpdateStatusCommunication(it, jsonObject, this)
-//        }
+    override fun onItemClick(data: GetHomeworkDetails, isHomeWorkDate: String) {
+        if (data.is_unread) {
+            val jsonObject = JsonObject().apply {
+                addProperty(APIKeyNames.type, "HOMEWORK")
+                addProperty(APIKeyNames.detail_id, data.id)
+            }
+            isAccessToken?.let {
+                appViewModel?.isUpdateStatusCommunication(it, jsonObject, this)
+            }
+        }
 
         val intent = Intent(this@HomeWork, ChildHomeWork::class.java)
         intent.putExtra("isHomeWorkData", data)
+        intent.putExtra("isHomeWorkDate", isHomeWorkDate)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         startActivity(intent)
     }

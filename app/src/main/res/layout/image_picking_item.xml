@@ -19,6 +19,17 @@
     </ImageView>
 
     <ImageView
+        android:id="@+id/imgVideoPlay"
+        android:layout_width="@dimen/twenty_five"
+        android:layout_height="@dimen/twenty_five"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:background="@drawable/white_circle_bg"
+        android:src="@drawable/video_play">
+
+    </ImageView>
+
+    <ImageView
         android:id="@+id/imgDelete"
         android:layout_width="@dimen/twenty_five"
         android:layout_height="@dimen/twenty_five"

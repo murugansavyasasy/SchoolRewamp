@@ -47,4 +47,14 @@
         android:textColor="#FFFFFF"
         android:textStyle="bold"
         android:layout_marginTop="4dp"/>
+
+    <TextView
+        android:id="@+id/txtMonth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="12sp"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="2dp"/>
+
 </LinearLayout>
