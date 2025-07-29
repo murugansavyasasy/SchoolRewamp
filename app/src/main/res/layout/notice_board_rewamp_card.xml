@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/header"
     android:layout_width="match_parent"
@@ -9,96 +8,104 @@
     android:layout_margin="8dp"
     android:clipChildren="false"
     android:clipToPadding="false"
-    android:orientation="vertical"
     android:foreground="?attr/selectableItemBackground"
+    android:orientation="vertical"
+    app:cardBackgroundColor="@android:color/white"
     app:cardCornerRadius="10dp"
-    app:cardElevation="4dp"
-    app:cardBackgroundColor="@android:color/white">
+    app:cardElevation="4dp">
 
     <LinearLayout
+        android:id="@+id/linear_layout90"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/linear_layout90"
         android:orientation="vertical">
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/linear_layout91"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="10dp"
-        android:orientation="horizontal">
+        <LinearLayout
+            android:id="@+id/linear_layout91"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
 
-        <ImageView
+            <ImageView
+                android:id="@+id/image_view109"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/indicator_active_green" />
+
+            <ImageView
+                android:id="@+id/image_view99"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:src="@drawable/file_noticeboard" />
+
+
+
+            <TextView
+                android:id="@+id/lblDateImage"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="4dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="21 Jul 25"
+                android:textColor="@color/grey"
+                android:textSize="12sp" />
+
+
+            <ImageView
+                android:id="@+id/options"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp" />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/lblTitleImage"
+            style="@style/CustomTextStylePoppinsBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/image_view109"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/indicator_active_green"/>
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="3dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingTop="4dp"
+            android:text="Good Morning All"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
 
-        <ImageView
+
+        <TextView
+            android:id="@+id/lblContentImage"
+            style="@style/CustomTextStylePoppinsMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/image_view99"
-            android:layout_marginStart="8dp"
-            android:src="@drawable/file_noticeboard"/>
-
-    <TextView
-        android:id="@+id/lblDateImage"
-        style="@style/CustomTextStylePoppinsBold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="4dp"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:text="21 Jul 25"
-       android:textColor="@color/grey"
-        android:textSize="12sp" />
-
-    </LinearLayout>
-
-
-
-    <TextView
-        android:id="@+id/lblTitleImage"
-        style="@style/CustomTextStylePoppinsBold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="3dp"
-        android:layout_marginTop="10dp"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:paddingTop="4dp"
-        android:text="Good Morning All"
-        android:textColor="@color/black"
-        android:textSize="15sp" />
-
-
-    <TextView
-        android:id="@+id/lblContentImage"
-        style="@style/CustomTextStylePoppinsMedium"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="4dp"
-        android:ellipsize="end"
-        android:maxLines="5"
-        android:paddingTop="4dp"
-        android:lines="5"
-        android:text="Please use school chimes from tomorrow fir any news fro the school"
-        android:textColor="@color/black"
-        android:textSize="15sp" />
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="4dp"
+            android:ellipsize="end"
+            android:lines="5"
+            android:maxLines="5"
+            android:paddingTop="4dp"
+            android:text="Please use school chimes from tomorrow fir any news fro the school"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
 
 
         <LinearLayout
             android:id="@+id/rytList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="2dp"
             android:layout_marginStart="5dp"
+            android:layout_marginBottom="2dp"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -108,6 +115,7 @@
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/bg_radiantwhite1"
                 android:orientation="horizontal">
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rcyImgPDF"
                     android:layout_width="match_parent"
@@ -118,19 +126,19 @@
 
                 <TextView
                     android:id="@+id/total_numbers"
+                    style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
+                    android:layout_marginStart="-15dp"
                     android:layout_marginTop="10dp"
+                    android:layout_marginEnd="5dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/bg_image_background_white_coupon"
-                    android:text="+9"
                     android:gravity="center"
-                    android:textSize="15sp"
-                    android:visibility="gone"
-                    android:layout_marginStart="-15dp"
-                    android:layout_marginEnd="5dp"
+                    android:text="+9"
                     android:textColor="@color/black"
-                    style="@style/CustomTextStylePoppinsBold"/>
+                    android:textSize="15sp"
+                    android:visibility="gone" />
 
             </LinearLayout>
 
@@ -182,9 +190,9 @@
                 android:paddingStart="10dp"
                 android:paddingTop="8dp"
                 android:paddingEnd="10dp"
-                android:visibility="gone"
                 android:paddingBottom="8dp"
-                android:src="@drawable/arrow_right_white" />
+                android:src="@drawable/arrow_right_white"
+                android:visibility="gone" />
 
         </LinearLayout>
 
@@ -199,53 +207,53 @@
             android:visibility="gone" />
 
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/grey"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:id="@+id/viewline"/>
-
-
-    <LinearLayout
-        android:id="@+id/lnrDataTime"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginEnd="@dimen/ten"
-        android:weightSum="2">
-
-        <TextView
-            android:id="@+id/lblTimeImage"
-            style="@style/CustomTextStylePoppinsMedium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="99:99 AM"
-            android:textColor="@color/grey"
-            android:textSize="13sp"
-            android:textStyle="normal" />
-
         <View
-            android:layout_width="0dp"
+            android:id="@+id/viewline"
+            android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_weight="1" />
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/grey" />
 
-        <TextView
-            android:id="@+id/remaindertag"
-            style="@style/CustomTextStylePoppinsMedium"
-            android:layout_width="wrap_content"
+
+        <LinearLayout
+            android:id="@+id/lnrDataTime"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:text="Reminder"
-            android:drawableStart="@drawable/notification_bell"
-            android:textColor="@color/grey"
-            android:textSize="12sp"
-            android:textStyle="normal" />
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="@dimen/ten"
+            android:layout_marginBottom="10dp"
+            android:weightSum="2">
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/lblTimeImage"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="99:99 AM"
+                android:textColor="@color/grey"
+                android:textSize="13sp"
+                android:textStyle="normal" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/remaindertag"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/notification_bell"
+                android:gravity="center_vertical"
+                android:text="Reminder"
+                android:textColor="@color/grey"
+                android:textSize="12sp"
+                android:textStyle="normal" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
