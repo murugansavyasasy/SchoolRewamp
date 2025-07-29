@@ -1,13 +1,11 @@
-package com.vs.schoolmessenger.Parent.ExamMarks
+package com.vs.schoolmessenger.Parent.ExamMarks.ViewMarksAdapter
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkResultsModel.Group
 import com.vs.schoolmessenger.R
@@ -20,6 +18,8 @@ class ExamGroupActivity (
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
+    private lateinit var groupExamMarkResultsAdapter: GroupExamMarkResultsAdapter
+
 
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
@@ -49,40 +49,26 @@ class ExamGroupActivity (
     }
 
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val subjectname: TextView = itemView.findViewById(R.id.subjectname)
-        private val markOutOf100: TextView = itemView.findViewById(R.id.markoutof100)
-        private val downarrowicon: ImageView = itemView.findViewById(R.id.downarrowicon)
-        private val totalmarklabel: TextView = itemView.findViewById(R.id.totalmarklabel)
-        private val linear_layout1: LinearLayout = itemView.findViewById(R.id.linear_layout1)
-        private val progressBarOutOf100: ProgressBar =
-            itemView.findViewById(R.id.progressBarOutOf100)
+        private val groupSubjectname: TextView = itemView.findViewById(R.id.groupSubjectname)
+        private val mark: TextView = itemView.findViewById(R.id.mark)
+        private val rcGroupSplitMark: RecyclerView = itemView.findViewById(R.id.rcGroupSplitMark)
 
-        fun bind(examMark: Group) {
-            subjectname.text = examMark.name
+        fun bind(groupExamMark: Group) {
+            groupSubjectname.text = groupExamMark.name
+            mark.text = groupExamMark.mark
 
-            markOutOf100.text = examMark.mark
-
-            totalmarklabel.text = examMark.subgroups.joinToString(", ") { it.name } + "-" + examMark.subgroups.joinToString(", ") { it.mark }
-
-
-
-
-            downarrowicon.setOnClickListener {
-                if (totalmarklabel.visibility == View.VISIBLE) {
-                    totalmarklabel.visibility = View.GONE
-                } else {
-                    totalmarklabel.visibility = View.VISIBLE
-                }
+            if (groupExamMark.sub_groups.size<=1) {
+                rcGroupSplitMark.visibility = View.GONE
             }
-            linear_layout1.setOnClickListener {
-                if (totalmarklabel.visibility == View.VISIBLE) {
-                    totalmarklabel.visibility = View.GONE
-                } else {
-                    totalmarklabel.visibility = View.VISIBLE
-                }
+            else{
+                rcGroupSplitMark.visibility=View.VISIBLE
+                rcGroupSplitMark.layoutManager = LinearLayoutManager(itemView.context, LinearLayoutManager.VERTICAL, false)
+                groupExamMarkResultsAdapter = GroupExamMarkResultsAdapter(groupExamMark.sub_groups, itemView.context, false)
+                rcGroupSplitMark.isNestedScrollingEnabled = false
+                rcGroupSplitMark.adapter = groupExamMarkResultsAdapter
             }
-
         }
+
     }
     inner class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun startShimmer() {

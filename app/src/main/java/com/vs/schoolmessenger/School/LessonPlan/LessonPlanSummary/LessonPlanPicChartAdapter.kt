@@ -10,6 +10,7 @@ import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
@@ -108,6 +109,7 @@ class LessonPlanPicChartAdapter(
         private val lblView: TextView = itemView.findViewById(R.id.lblView)
         private val customPieChart: CustomPieChartView = itemView.findViewById(R.id.customPieChart)
         private val imgPunchHistory: ImageView = itemView.findViewById(R.id.imgPunchHistory)
+        private val rootHeader: CardView = itemView.findViewById(R.id.rootHeader)
         private val totalrelative_layout: RelativeLayout =
             itemView.findViewById(R.id.totalrelative_layout)
 
@@ -121,6 +123,14 @@ class LessonPlanPicChartAdapter(
 
             val percentage = data.percentage_value
             customPieChart.setProgress(data.percentage_value)
+
+            val context = rootHeader.context
+            val color = ContextCompat.getColor(
+                context,
+                if (position % 2 == 0) R.color.lightpink else R.color.lightyellow
+            )
+            (rootHeader as CardView).setCardBackgroundColor(color)
+
 
 
 

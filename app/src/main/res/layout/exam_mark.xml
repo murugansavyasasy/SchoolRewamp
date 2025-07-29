@@ -6,36 +6,188 @@
     android:background="@color/white"
     android:fitsSystemWindows="true">
 
-    <include
-        android:id="@+id/toolbarLayout"
-        layout="@layout/parent_side_tool_bar" />
 
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/headerrecyclerview"
+    <RelativeLayout
+        android:id="@+id/rytHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/eight"
+        android:background="@color/white"
+        android:paddingVertical="@dimen/fifteen">
+
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_width="@dimen/thirty_five"
+            android:layout_centerVertical="true"
+            android:layout_height="@dimen/thirty_five"
+            android:src="@drawable/left_arrow">
+
+        </ImageView>
+
+
+        <LinearLayout
+            android:layout_centerVertical="true"
+            android:id="@+id/rlaStudentName"
+            android:layout_toStartOf="@+id/imgSearch"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_width="wrap_content"
+            android:layout_toEndOf="@+id/imgBack"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/ten"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/lblStudentName"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SATISH KUMAR"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp">
+
+            </TextView>
+
+            <TextView
+                android:layout_marginTop="@dimen/ten"
+                android:id="@+id/lblStudentSection"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblStudentName"
+                android:text="I-B"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp">
+
+            </TextView>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@id/imgSearch"
+            android:layout_width="@dimen/thirty"
+            android:src="@drawable/search_icon"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/twenty"
+            android:layout_alignParentEnd="true"
+            android:layout_height="@dimen/thirty">
+
+        </ImageView>
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
+        android:layout_below="@+id/rytHeader"
+        android:id="@+id/toolbarLayout"
+        android:weightSum="1"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/lnrTabOneName"
+            android:layout_weight="0.5"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:gravity="center"
+                android:text="Exam Timetable"
+                android:id="@+id/tabOneName"
+                android:textColor="@color/iconBlue"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </TextView>
+            <View
+                android:id="@+id/line1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/three"
+                android:layout_below="@+id/groupheading"
+                android:layout_marginTop="@dimen/five"
+                android:background="@color/iconBlue">
+            </View>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/lnrTabTwoName"
+            android:layout_weight="0.5"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:gravity="center"
+                android:text="Exam Marks"
+                style="@style/CustomTextStylePoppinsBold"
+                android:id="@+id/tabTwoName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </TextView>
+            <View
+                android:id="@+id/line2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/three"
+                android:layout_below="@+id/groupheading"
+                android:layout_marginTop="@dimen/five"
+                android:background="@color/gray_color">
+            </View>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_marginTop="@dimen/ten"
         android:layout_below="@+id/toolbarLayout"
-        android:layout_marginTop="@dimen/five"
-        android:layout_marginBottom="5dp"/>
+        android:id="@+id/rytSearch"
+        android:layout_width="match_parent"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
+        android:background="@drawable/rect_grey"
+        android:layout_height="@dimen/thirty_five"
+        android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/imgSearch"
+                android:layout_centerVertical="true"
+                android:layout_width="@dimen/thirty"
+                android:layout_height="@dimen/thirty"
+                android:layout_marginStart="@dimen/ten"
+                android:src="@drawable/ic_search" />
+
+            <EditText
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/imgSearch"
+                android:id="@+id/txtVideoMenu"
+                android:layout_marginStart="@dimen/five"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:hint="@string/lblSearch"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp" />
+    </RelativeLayout>
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/exammarkrecyclerview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/eight"
-        android:layout_below="@+id/toolbarLayout"
         android:layout_marginTop="@dimen/five"
+        android:layout_below="@+id/rytSearch"
         android:layout_marginBottom="5dp"/>
 
 
+
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/subjectRecyclerView"
+        android:id="@+id/rcExamTimeTable"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/eight"
-        android:layout_below="@+id/headerrecyclerview"
-        android:layout_marginTop="0dp"
+        android:layout_below="@+id/exammarkrecyclerview"
+        android:layout_marginTop="@dimen/five"
         android:layout_marginBottom="16dp"/>
 
 
@@ -69,9 +221,6 @@
             android:textColor="@color/black"
             android:textSize="@dimen/fifteen_sp"
             android:visibility="gone" />
-
-
-
     </LinearLayout>
 
 </RelativeLayout>

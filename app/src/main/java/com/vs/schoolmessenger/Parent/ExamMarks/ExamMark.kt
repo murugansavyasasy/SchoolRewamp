@@ -1,19 +1,17 @@
 package com.vs.schoolmessenger.Dashboard.Parent
 
-import android.graphics.Color
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkListener
-import com.vs.schoolmessenger.Parent.ExamMarks.ExamTimeTable.ExamSubjectAdapter
-import com.vs.schoolmessenger.Parent.ExamMarks.ExamTimeTable.ExamTimeTableAdapter
+import com.vs.schoolmessenger.Parent.ExamMarks.ExamTimeTableAdapter
 import com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamData
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
@@ -21,13 +19,12 @@ import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ExamMarkBinding
 
-class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMarkListener {
+class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMarkListener{
     override fun getViewBinding(): ExamMarkBinding {
         return ExamMarkBinding.inflate(layoutInflater)
     }
 
     private lateinit var examAdapter: ExamTimeTableAdapter
-    private lateinit var subjectAdapter: ExamSubjectAdapter
     private lateinit var exammarkadapter: ExamMarkAdapter
 
     private var isAccessToken: String? = null
@@ -50,11 +47,42 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
         val isChildDetails = SharedPreference.getChildDetails(this)
         isAccessToken = isChildDetails?.access_token
 
-        binding.toolbarLayout.txtVideoMenu.addTextChangedListener(object : TextWatcher {
+        binding.imgSearch.setOnClickListener {
+            if (binding.rytSearch.visibility == View.VISIBLE) {
+                binding.rytSearch.visibility = View.GONE
+            } else {
+                binding.rytSearch.visibility = View.VISIBLE
+                binding.txtVideoMenu.text.clear()
+            }
+        }
+
+
+
+        binding.apply {
+            imgBack.setOnClickListener(this@ExamMark)
+            lblStudentName.text = isChildDetails!!.name
+            lblStudentSection.text =
+                "${isChildDetails.standard_name} - ${isChildDetails.section_name}"
+            tabOneName.text = "Exam TimeTable"
+            tabTwoName.text = "Exam Marks"
+        }
+
+        binding.txtVideoMenu.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (::exammarkadapter.isInitialized) {
-                    exammarkadapter.filter.filter(s)
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int){
+                val query = s?.toString() ?: ""
+                when (currentTab) {
+                    TabType.EXAM_MARKS -> {
+                        if (::exammarkadapter.isInitialized) {
+                            exammarkadapter.filter.filter(query)
+                        }
+                    }
+
+                    TabType.EXAM_TIMETABLE -> {
+                        if (::examAdapter.isInitialized) {
+                            examAdapter.filter.filter(query)
+                        }
+                    }
                 }
             }
 
@@ -62,37 +90,19 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
         })
 
 
-        binding.toolbarLayout.apply {
-            imgBack.setOnClickListener(this@ExamMark)
-            lblParentToolBar.text = Constant.isParentMenuName
-            lnrParent.visibility = View.VISIBLE
-            lblStudentName.text = isChildDetails!!.name
-            lblStudentSection.text =
-                "${isChildDetails.standard_name} - ${isChildDetails.section_name}"
-            lblLeftSideBar.text = "Exam Marks"
-            lblRightSideBar.text = "Exam TimeTable"
-        }
-
-        examAdapter = ExamTimeTableAdapter(emptyList()) { selectedSubjects ->
-            subjectAdapter.updateData(selectedSubjects)
-        }
-
-        binding.headerrecyclerview.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        binding.headerrecyclerview.adapter = examAdapter
-
-
         appViewModel?.getexams?.observe(this) { response ->
             Log.d("response++", response.toString())
             if (response == null || !response.status || response.data.isNullOrEmpty()) {
-                examAdapter.updateData(emptyList())
+                Constant.hideLoading(this)
                 showErrorUI(response?.message ?: "No data available")
                 return@observe
             }
 
             if (response.status) {
+                Constant.hideLoading(this)
                 isLoadexams(response.data)
             } else {
+                Constant.hideLoading(this)
                 showErrorUI(response.message ?: "No data available")
             }
         }
@@ -112,34 +122,32 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
 
         fetchexamtimetable()
 
-        binding.toolbarLayout.lblRightSideBar.setOnClickListener {
+        binding.lnrTabOneName.setOnClickListener {
             if (currentTab == TabType.EXAM_TIMETABLE) return@setOnClickListener
             currentTab = TabType.EXAM_TIMETABLE
-
-            it.setBackgroundResource(R.drawable.white_radious)
-            (it as TextView).setTextColor(Color.BLACK)
-            binding.toolbarLayout.lblLeftSideBar.setBackgroundResource(R.drawable.bg_light_green)
-
-            binding.headerrecyclerview.visibility = View.VISIBLE
-            binding.subjectRecyclerView.visibility = View.VISIBLE
+            binding.txtVideoMenu.text.clear()
+            binding.line1.setBackgroundResource(R.color.iconBlue)
+            binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
+            binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.black))
+            binding.line2.setBackgroundResource(R.color.white)
+            binding.rcExamTimeTable.visibility = View.VISIBLE
             binding.exammarkrecyclerview.visibility = View.GONE
-            binding.toolbarLayout.rytSearch.visibility = View.GONE
             binding.nomessage.visibility = View.GONE
             binding.txtNoData.visibility = View.GONE
             fetchexamtimetable()
         }
 
 
-        binding.toolbarLayout.lblLeftSideBar.setOnClickListener {
+        binding.lnrTabTwoName.setOnClickListener {
             if (currentTab == TabType.EXAM_MARKS) return@setOnClickListener
             currentTab = TabType.EXAM_MARKS
-            it.setBackgroundResource(R.drawable.white_radious)
-            (it as TextView).setTextColor(Color.BLACK)
-            binding.toolbarLayout.lblRightSideBar.setBackgroundResource(R.drawable.bg_light_green)
-            binding.headerrecyclerview.visibility = View.GONE
-            binding.subjectRecyclerView.visibility = View.GONE
+            binding.txtVideoMenu.text.clear()
+            binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.black))
+            binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
+            binding.line2.setBackgroundResource(R.color.iconBlue)
+            binding.line1.setBackgroundResource(R.color.white)
+            binding.rcExamTimeTable.visibility = View.GONE
             binding.exammarkrecyclerview.visibility = View.VISIBLE
-            binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
             fetchexammark()
         }
     }
@@ -149,16 +157,32 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
             binding.nomessage.visibility = View.VISIBLE
             binding.txtNoData.visibility = View.VISIBLE
             binding.txtNoData.text = getString(R.string.no_matching_notices_found)
+
+            // Hide both RecyclerViews first
             binding.exammarkrecyclerview.visibility = View.GONE
+            binding.rcExamTimeTable.visibility = View.GONE
+
         } else {
             binding.nomessage.visibility = View.GONE
             binding.txtNoData.visibility = View.GONE
-            binding.exammarkrecyclerview.visibility = View.VISIBLE
+
+            // Show only the current tab's RecyclerView
+            when (currentTab) {
+                TabType.EXAM_MARKS -> {
+                    binding.exammarkrecyclerview.visibility = View.VISIBLE
+                    binding.rcExamTimeTable.visibility = View.GONE
+                }
+                TabType.EXAM_TIMETABLE -> {
+                    binding.rcExamTimeTable.visibility = View.VISIBLE
+                    binding.exammarkrecyclerview.visibility = View.GONE
+                }
+            }
         }
     }
 
 
-    private fun isLoadExamList(data: List<com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkModel.ExamData>?) {
+
+    private fun isLoadExamList(data: List<ExamData>) {
         if (data.isNullOrEmpty()) {
             showErrorUI("No staff data available")
             return
@@ -174,10 +198,11 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
         binding.nomessage.visibility = View.VISIBLE
         binding.txtNoData.text = message
         binding.txtNoData.visibility = View.VISIBLE
-        binding.subjectRecyclerView.visibility = View.GONE
+        binding.rcExamTimeTable.visibility = View.GONE
     }
 
     private fun fetchexamtimetable() {
+        Constant.showLoading(this)
         appViewModel?.getexams(
             isAccessToken ?: ""
         )
@@ -198,19 +223,10 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
         binding.nomessage.visibility = View.GONE
         binding.txtNoData.visibility = View.GONE
 
-        binding.headerrecyclerview.apply {
-            layoutManager =
-                LinearLayoutManager(this@ExamMark, LinearLayoutManager.HORIZONTAL, false)
-            examAdapter = ExamTimeTableAdapter(data) { selectedSubjects ->
-                subjectAdapter.updateData(selectedSubjects)
-            }
-            adapter = examAdapter
-        }
-
-        binding.subjectRecyclerView.apply {
+        binding.rcExamTimeTable.apply {
             layoutManager = LinearLayoutManager(this@ExamMark)
-            subjectAdapter = ExamSubjectAdapter(data[0].exam_subject_details)
-            adapter = subjectAdapter
+            examAdapter = ExamTimeTableAdapter(data,this@ExamMark)
+            binding.rcExamTimeTable.adapter = examAdapter
         }
     }
 

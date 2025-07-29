@@ -577,5 +577,11 @@
     <string name="assignmentdetails_missing">Assignment details is missing.</string>
     <string name="submitted">Submitted</string>
     <string name="This_field_required">This field is required.</string>
+    <string name="No_subject_marks_found">No subject marks found</string>
+    <string name="No_exam_mark_data_available">No exam mark data available</string>
+    <string name="Out_of">Out of </string>
+    <string name="Overall_Grade">Overall Grade: </string>
+    <string name="Something_went_wrong_Please_try_again">Something went wrong. Please try again.</string>
+    <string name="set_remainder">Set remainder</string>
 
 </resources>

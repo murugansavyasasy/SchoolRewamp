@@ -1,28 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:id="@+id/rootHeader"
     android:layout_height="wrap_content"
-    android:padding="8dp"
-    android:background="@drawable/custom_white_background"
+    android:padding="14dp"
+    android:background="@drawable/bg_exam_card_base"
     android:orientation="vertical"
     android:elevation="4dp"
     android:layout_margin="8dp">
+
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_marginTop="5dp"
         android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/exam_subject_icon" />
 
             <TextView
                 android:id="@+id/subjectname"
@@ -31,50 +22,81 @@
                 android:text="TAMIL"
                 style="@style/CustomTextStylePoppinsBold"
                 android:textSize="16sp"
-                android:textColor="@color/black"
-                android:layout_marginStart="6dp" />
-        </LinearLayout>
+                android:textColor="@color/black" />
 
         <TextView
             android:id="@+id/maxmarkvalue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Max Mark 60"
-            android:textSize="12sp"
+            android:text=""
+            android:textSize="13sp"
             android:textColor="@android:color/white"
             android:background="@drawable/light_green_radius"
             android:paddingHorizontal="10dp"
             android:paddingVertical="4dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            style="@style/CustomTextStylePoppinsMedium"/>
+            style="@style/CustomTextStylePoppinsBold"/>
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/syllabusvalue"
+        android:layout_marginTop="@dimen/five"
+        android:layout_width="match_parent"
+        style="@style/CustomTextStylePoppinsMedium"
+        android:text="Unit"
+        android:textSize="@dimen/fifteen_sp"
+        android:layout_height="wrap_content">
+    </TextView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/imgCalendar"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/calendar_icon"
+            />
+        <TextView
+
+            android:id="@+id/datevalue"
+            android:layout_toStartOf="@+id/layoutAlarm"
+            android:layout_toEndOf="@+id/imgCalendar"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="02-05-2002"
+            style="@style/CustomTextStylePoppinsMedium"
+            android:layout_height="wrap_content">
+        </TextView>
+        <LinearLayout
+            android:id="@+id/layoutAlarm"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="@dimen/fourty"
+                android:src="@drawable/alarm_clock"
+                android:layout_height="@dimen/fourty">
+
+            </ImageView>
+            <TextView
+                android:layout_width="wrap_content"
+                style="@style/CustomTextStylePoppinsRegular"
+                android:text="@string/set_remainder"
+                android:layout_height="wrap_content">
+            </TextView>
+        </LinearLayout>
+
     </RelativeLayout>
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
 
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/calender_icon_color"
-            android:background="@drawable/pink_background"
-            android:padding="4dp" />
-
-        <TextView
-            android:id="@+id/datevalue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Date&amp;Time  :  04 Aug 2025"
-            android:textSize="14sp"
-            android:layout_marginStart="10dp"
-            android:textColor="@color/black"
-            style="@style/CustomTextStylePoppinsMedium"/>
-    </LinearLayout>
 
 
     <LinearLayout
@@ -87,15 +109,14 @@
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:src="@drawable/custom_exam"
-            android:background="@drawable/circle_background"
-            android:padding="4dp" />
+            android:src="@drawable/clock_icon"
+            />
 
         <TextView
-            android:id="@+id/syllabusvalue"
+            android:id="@+id/lblTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Syllabus  :  Unit 1"
+            android:text="00:00 PM"
             android:textSize="14sp"
             android:layout_marginStart="10dp"
             style="@style/CustomTextStylePoppinsMedium"

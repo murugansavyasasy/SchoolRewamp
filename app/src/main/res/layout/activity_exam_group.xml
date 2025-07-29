@@ -1,95 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/white"
     android:fitsSystemWindows="true"
-    android:orientation="vertical"
-    android:padding="@dimen/ten"
-    android:layout_height="wrap_content">
+    android:layout_marginBottom="@dimen/ten"
+    >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:weightSum="1">
+    <!-- Colored Dot -->
+    <View
+        android:id="@+id/groupColourPercent"
+        android:layout_width="@dimen/twenty"
+        android:layout_height="@dimen/twenty"
+        android:background="@drawable/circle_dark_blue"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:id="@+id/subjectname"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="0dp"
-            android:layout_weight="0.25"
-            android:text="@string/subject_name"
-            android:textSize="@dimen/thirteen_sp"
-            android:textColor="@color/black"
-            style="@style/CustomTextStylePoppinsBold">
-        </TextView>
-
-        <TextView
-            android:id="@+id/markoutof100"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.80"
-            android:text="80"
-            android:gravity="end"
-            style="@style/CustomTextStylePoppinsBold"
-            android:textSize="@dimen/thirteen_sp"
-            android:textColor="@color/black"
-            >
-        </TextView>
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linear_layout1"
-        android:gravity="center"
-        android:weightSum="1"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_marginTop="@dimen/five"
-        android:layout_height="wrap_content">
-        <ProgressBar
-            android:layout_weight="0.9"
-            android:id="@+id/progressBarOutOf100"
-            android:layout_width="match_parent"
-            android:layout_marginStart="@dimen/ten"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_height="10dp"
-            android:progressDrawable="@android:drawable/progress_horizontal"
-            android:progressTint="@color/azure_radiance" />
-
-
-        <ImageView
-            android:id="@+id/downarrowicon"
-            android:layout_weight="0.1"
-            android:src="@drawable/arrow_down_round"
-            android:layout_width="@dimen/twenty"
-            android:layout_height="@dimen/twenty">
-        </ImageView>
-
-    </LinearLayout>
-
+    <!-- Subject Name -->
     <TextView
-        android:id="@+id/totalmarklabel"
+        android:id="@+id/groupSubjectname"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/five"
+        android:layout_marginEnd="@dimen/five"
+        android:text="@string/subject_name"
+        android:textSize="@dimen/thirteen_sp"
+        android:textColor="@color/black"
+        style="@style/CustomTextStylePoppinsMedium"
+        app:layout_constraintStart_toEndOf="@id/groupColourPercent"
+        app:layout_constraintTop_toTopOf="@id/groupColourPercent"
+        app:layout_constraintEnd_toStartOf="@id/mark"
+        app:layout_constraintHorizontal_bias="0" />
+
+    <!-- Marks -->
+    <TextView
+        android:id="@+id/mark"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="marks - 45/60"
-        android:layout_marginStart="10dp"
+        android:text=""
+        android:gravity="end"
+        android:textSize="@dimen/thirteen_sp"
+        android:textColor="@color/black"
         style="@style/CustomTextStylePoppinsMedium"
-        android:textColor="@color/light_gray"
-        android:layout_marginTop="5dp"
-        android:visibility="gone"
-        android:layout_marginBottom="5dp"/>
+        app:layout_constraintTop_toTopOf="@id/groupSubjectname"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-
-    <LinearLayout
+    <!-- RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcGroupSplitMark"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/five"
-        android:layout_width="match_parent"
+        android:layout_marginEnd="@dimen/five"
+        app:layout_constraintTop_toBottomOf="@id/groupSubjectname"
+        app:layout_constraintStart_toStartOf="@id/groupSubjectname"
+        app:layout_constraintEnd_toEndOf="@id/mark"
+        android:nestedScrollingEnabled="false" />
+
+    <!-- Divider Line -->
+    <View
+        android:layout_width="0dp"
+        android:layout_height="@dimen/one"
+        android:layout_marginTop="@dimen/ten"
         android:background="@color/iron"
-        android:layout_height="@dimen/two">
-    </LinearLayout>
+        app:layout_constraintTop_toBottomOf="@id/rcGroupSplitMark"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
