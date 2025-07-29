@@ -1,0 +1,136 @@
+package com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter
+
+import android.content.Context
+import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.Drawable
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
+import com.vs.schoolmessenger.CommonScreens.CommonFileData
+import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
+import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
+import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.databinding.FileviewItemBinding
+
+class HomeWorkChildAdapter(
+    private var context: Context,
+    private var filePathDetails: List<GetFilePathDetails>,
+    var isSubjectName: String
+) : RecyclerView.Adapter<HomeWorkChildAdapter.DataViewHolder>() {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataViewHolder {
+        val binding = FileviewItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return DataViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
+        holder.bind(filePathDetails[position], position, context, filePathDetails,isSubjectName)
+    }
+
+    override fun getItemCount(): Int = filePathDetails.size
+
+    class DataViewHolder(private val binding: FileviewItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(
+            item: GetFilePathDetails,
+            position: Int,
+            context: Context,
+            fullList: List<GetFilePathDetails>,
+            isSubjectName: String
+        ) {
+            binding.progressBar.visibility = View.VISIBLE
+            binding.imgView.visibility = View.VISIBLE
+            binding.imgView.setBackgroundColor(Color.TRANSPARENT)
+
+            when (item.type.uppercase()) {
+                Constant.IMAGE -> {
+                    Glide.with(binding.root.context)
+                        .load(item.url)
+                        .listener(object : RequestListener<Drawable> {
+                            override fun onLoadFailed(
+                                e: GlideException?,
+                                model: Any?,
+                                target: Target<Drawable?>,
+                                isFirstResource: Boolean
+                            ): Boolean {
+                                binding.progressBar.visibility = View.GONE
+                                return false
+                            }
+
+                            override fun onResourceReady(
+                                resource: Drawable,
+                                model: Any,
+                                target: Target<Drawable?>?,
+                                dataSource: com.bumptech.glide.load.DataSource,
+                                isFirstResource: Boolean
+                            ): Boolean {
+                                binding.progressBar.visibility = View.GONE
+                                return false
+                            }
+                        })
+                        .into(binding.imgView)
+                }
+
+                Constant.VIDEO -> {
+                    binding.imgView.setBackgroundColor(Color.BLACK)
+                    binding.imgView.setImageResource(R.drawable.video_play)
+                    binding.progressBar.visibility = View.GONE
+                }
+
+                Constant.PDF -> {
+                    binding.imgView.setImageResource(R.drawable.hw_pdf_img)
+                    binding.progressBar.visibility = View.GONE
+                }
+
+                Constant.DOC, Constant.DOCX -> {
+                    binding.imgView.setImageResource(R.drawable.microsoft_word_img)
+                    binding.progressBar.visibility = View.GONE
+                }
+
+                Constant.TXT -> {
+                    binding.imgView.setImageResource(R.drawable.txt_file_img)
+                    binding.progressBar.visibility = View.GONE
+                }
+
+                Constant.PPT, Constant.PPTX -> {
+                    binding.imgView.setImageResource(R.drawable.ppt_icon)
+                    binding.progressBar.visibility = View.GONE
+                }
+
+                Constant.EXCEL -> {
+                    binding.imgView.setImageResource(R.drawable.excel_icon)
+                    binding.progressBar.visibility = View.GONE
+                }
+
+                else -> {
+                    binding.imgView.setImageResource(R.drawable.excel_icon)
+                    binding.progressBar.visibility = View.GONE
+                }
+            }
+
+            binding.root.setOnClickListener {
+                val commonList = fullList.map {
+                    CommonFileData(
+                        type = it.type,
+                        path = it.url
+                    )
+                }.toMutableList()
+
+                Constant.commonFileList = commonList
+                Constant.selectedFileIndex = position
+
+                val intent = Intent(context, FilesViewActivity::class.java)
+                intent.putExtra(Constant.subjectName, isSubjectName)
+                context.startActivity(intent)
+            }
+        }
+    }
+}

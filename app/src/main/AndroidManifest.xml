@@ -6,6 +6,7 @@
         android:name="android.hardware.camera"
         android:required="true"
         tools:node="replace" />
+
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
@@ -73,6 +74,7 @@
 
         <activity
             android:name=".Auth.Splash.Splash"
+
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/AppTheme">
@@ -454,6 +456,18 @@
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".AlbumImage.AlbumSelectActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+
+        <activity
+            android:name=".Testing.Testing"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+
+        <activity
+            android:name=".Parent.Homework.HomeWorkAdapter.ChildHomeWork"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />

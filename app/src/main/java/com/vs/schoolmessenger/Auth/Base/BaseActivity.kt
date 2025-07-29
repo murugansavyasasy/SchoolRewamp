@@ -107,45 +107,45 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
 
     fun isToolBarBlackTheme() {
-        if (Build.VERSION.SDK_INT >= 21) {
-            val window = this.window
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-            window.statusBarColor = this.resources.getColor(R.color.black)
-            window.navigationBarColor = this.resources.getColor(R.color.white)
-        }
+        val window = this.window
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        window.statusBarColor = this.resources.getColor(R.color.black)
+        window.navigationBarColor = this.resources.getColor(R.color.white)
     }
 
     // Example: Setup common toolbar
     protected open fun setupToolbar() {
-        if (Build.VERSION.SDK_INT >= 21) {
-            val window = this.window
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            window.statusBarColor = Color.TRANSPARENT
-            window.navigationBarColor = Color.TRANSPARENT
-            window.setBackgroundDrawableResource(R.drawable.gradient_theme_school)
-        }
+        val window = this.window
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.statusBarColor = Color.TRANSPARENT
+        window.navigationBarColor = Color.TRANSPARENT
+        window.setBackgroundDrawableResource(R.drawable.gradient_theme_school)
+    }
+
+    protected open fun setupToolbarBlue() {
+        val window = this.window
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.statusBarColor = Color.TRANSPARENT
+        window.navigationBarColor = Color.TRANSPARENT
+        window.setBackgroundDrawableResource(R.drawable.bg_blue_backround)
     }
 
     protected open fun setUpGradientParent() {
-        if (Build.VERSION.SDK_INT >= 21) {
-            val window = this.window
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            window.statusBarColor = Color.TRANSPARENT
-            window.navigationBarColor = Color.TRANSPARENT
-            window.setBackgroundDrawableResource(R.drawable.gradient_theme_parent)
-        }
+        val window = this.window
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.statusBarColor = Color.TRANSPARENT
+        window.navigationBarColor = Color.TRANSPARENT
+        window.setBackgroundDrawableResource(R.drawable.gradient_theme_parent)
     }
 
     protected open fun setUpGradientSchool() {
-        if (Build.VERSION.SDK_INT >= 21) {
-            val window = this.window
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-            window.statusBarColor = Color.TRANSPARENT
-            window.navigationBarColor = Color.TRANSPARENT
-            window.setBackgroundDrawableResource(R.drawable.gradient_theme_school)
-        }
+        val window = this.window
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        window.statusBarColor = Color.TRANSPARENT
+        window.navigationBarColor = Color.TRANSPARENT
+        window.setBackgroundDrawableResource(R.drawable.gradient_theme_school)
     }
 
     fun saveDrawableToCache(drawableResId: Int): String? {
@@ -781,7 +781,6 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
         datePickerDialog.show()
     }
-
 
 
     fun changeDateFormat(inputDate: String): String {

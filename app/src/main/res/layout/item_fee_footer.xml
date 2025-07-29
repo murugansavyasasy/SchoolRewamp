@@ -1,12 +1,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:layout_marginVertical="8dp"
     android:orientation="horizontal"
     android:gravity="center"
     android:background="@drawable/bg_fee_card_red"
-    android:padding="12dp"
+    android:padding="10dp"
     android:elevation="2dp">
+
+    <RelativeLayout
+        android:background="@drawable/bg_rect_white_solid"
+        android:padding="@dimen/fifteen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/fee_icon"
@@ -14,6 +20,7 @@
         android:layout_height="24dp"
         android:src="@drawable/collect"
          />
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="0dp"
