@@ -65,6 +65,7 @@ import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 import kotlin.math.ceil
 
@@ -648,7 +649,7 @@ object Constant {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+    
     fun showTopAlertPopup(message: String, activity: Activity) {
         val inflater = LayoutInflater.from(activity)
         val view = inflater.inflate(R.layout.success_popup, null)
@@ -802,7 +803,7 @@ object Constant {
     }
 
 
-    @RequiresApi(Build.VERSION_CODES.O)
+    
     fun showDataValidation(title: String, message: String, activity: Activity) {
         val inflater = LayoutInflater.from(activity)
         val view = inflater.inflate(R.layout.success_popup, null)
@@ -851,7 +852,7 @@ object Constant {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+    
     fun showValidationAlertPopup(isTitle: String, message: String, activity: Activity) {
         val inflater = LayoutInflater.from(activity)
         val view = inflater.inflate(R.layout.success_popup, null)
@@ -901,7 +902,7 @@ object Constant {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+    
     fun showSendConfirmationDialog(
         activity: Activity,
         istitle: String,
@@ -1009,14 +1010,14 @@ object Constant {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+    
     fun getCurrentTime(): String {
         val currentTime = LocalTime.now()
         val formatter = DateTimeFormatter.ofPattern(hh_mm_a)
         return currentTime.format(formatter)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+    
     fun getCurrentDate(): String {
         val currentDate = LocalDate.now()
         val formatter = DateTimeFormatter.ofPattern(ddMMyyyy)
@@ -1447,6 +1448,28 @@ object Constant {
 //            .setNegativeButtonText("Cancel")
                 .build()
         }
+    }
+
+    fun formatDateSmart(dateStr: String): String {
+        val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+        val displayFormat = SimpleDateFormat("dd MMM, yyyy", Locale.getDefault())
+
+        val inputDate: Date = inputFormat.parse(dateStr) ?: return dateStr
+
+        val calendarInput = Calendar.getInstance().apply { time = inputDate }
+        val calendarToday = Calendar.getInstance()
+        val calendarYesterday = Calendar.getInstance().apply { add(Calendar.DATE, -1) }
+
+        return when {
+            isSameDay(calendarInput, calendarToday) -> "Today"
+            isSameDay(calendarInput, calendarYesterday) -> "Yesterday"
+            else -> displayFormat.format(inputDate)
+        }
+    }
+
+    fun isSameDay(cal1: Calendar, cal2: Calendar): Boolean {
+        return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
+                cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR)
     }
 
 //    fun showEnrollDialog(activity: Activity) {

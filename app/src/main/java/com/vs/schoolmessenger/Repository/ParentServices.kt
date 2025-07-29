@@ -24,8 +24,6 @@ import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequest
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveUpdateResponse
 import com.vs.schoolmessenger.Parent.Timetable.TimeTableResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.InteractionWithStudentResponse
-import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
-import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveActionResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -50,6 +48,7 @@ class ParentServices {
     var isleaverequestupdate: MutableLiveData<LeaveUpdateResponse?>
     var isleaverequestdelete: MutableLiveData<LeaveRequestDeleteResponse?>
     var getProgressMarks: MutableLiveData<ProgressCardResponse?>
+    var isUpdateCompleteHomeWork: MutableLiveData<StatusMessageModel?>
 
     init {
         client_auth = RestClient()
@@ -70,6 +69,7 @@ class ParentServices {
         isleaverequestupdate = MutableLiveData()
         isleaverequestdelete = MutableLiveData()
         getProgressMarks = MutableLiveData()
+        isUpdateCompleteHomeWork = MutableLiveData()
         getstudentdetailsforchat = MutableLiveData()
     }
 
@@ -835,6 +835,33 @@ class ParentServices {
 
     val getProgressMarksLiveData: LiveData<ProgressCardResponse?>
         get() = getProgressMarks
+
+
+    fun isHomeWorkComplete(
+        isToken: String,
+        jsonObject: JsonObject
+    ) {
+        RestClient.apiInterfaces.isHomeWorkComplete(isToken,jsonObject)
+            ?.enqueue(object : Callback<StatusMessageModel?> {
+                override fun onResponse(
+                    call: Call<StatusMessageModel?>, response: Response<StatusMessageModel?>
+                ) {
+                    Log.d(
+                        "isGetCountryList", response.code().toString() + " - " + response.toString()
+                    )
+
+                    isUpdateCompleteHomeWork.postValue(response.body())
+
+                }
+
+                override fun onFailure(call: Call<StatusMessageModel?>, t: Throwable) {
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isUpdateCompleteHomeWorkLiveData: LiveData<StatusMessageModel?>
+        get() = isUpdateCompleteHomeWork
 
 
 }

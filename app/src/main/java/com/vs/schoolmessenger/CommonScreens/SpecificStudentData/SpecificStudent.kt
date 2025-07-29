@@ -61,7 +61,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
     var isIframe = ""
     var isFileSize = ""
 
-    @RequiresApi(Build.VERSION_CODES.O)
+    
     override fun setupViews() {
         super.setupViews()
         setupToolbar()
@@ -237,7 +237,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
         )
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+    
     private fun isFileUploadInAws(
         schoolId: String, isFileType: String?
     ) {
@@ -323,7 +323,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
                             true,
                             false,
                             object : UploadCallback {
-                                @RequiresApi(Build.VERSION_CODES.O)
+                                
                                 override fun onUploadSuccess(
                                     response: String?, isFileUploaded: String?
                                 ) {
@@ -390,7 +390,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+    
     fun voiceSendApi() {
         val isVoiceData = Constant.isVoiceSendingData
 
@@ -429,7 +429,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
 
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+    
     fun showSendConfirmationDialog(isSelectTarget: String, isMessage: String) {
         val dialogView = LayoutInflater.from(this).inflate(R.layout.alert_popup, null)
         val builder = AlertDialog.Builder(this)
@@ -519,7 +519,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
         )
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+    
     override fun onUploadComplete(
         success: Boolean,
         iframe: String?,
@@ -578,7 +578,7 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
         Constant.stopDelay()
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+    
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.imgBack -> {

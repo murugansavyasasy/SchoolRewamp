@@ -5,8 +5,13 @@ import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.gif.GifDrawable
+import com.bumptech.glide.request.target.ImageViewTarget
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkResultsModel.ExamMarkData
+import com.vs.schoolmessenger.Parent.ExamMarks.ViewMarksAdapter.ExamGroupActivity
+import com.vs.schoolmessenger.Parent.ExamMarks.ViewMarksAdapter.ExamMarkResultsAdapter
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
@@ -22,6 +27,7 @@ class ExamMarkResults : BaseActivity<ExamMarkDetailBinding>(), View.OnClickListe
     private lateinit var exammarkresultadapter: ExamMarkResultsAdapter
     private lateinit var examGroupActivity: ExamGroupActivity
     private var exam_id: String = ""
+    private var exam_title: String = ""
     private var isAccessToken: String? = null
     private var appViewModel: App? = null
 
@@ -32,19 +38,22 @@ class ExamMarkResults : BaseActivity<ExamMarkDetailBinding>(), View.OnClickListe
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel?.init()
 
+
+
+
         val childDetails = SharedPreference.getChildDetails(this)
         isAccessToken = childDetails?.access_token
 
-        binding.toolbarLayout.apply {
+        binding.apply {
             imgBack.setOnClickListener(this@ExamMarkResults)
-            lblParentToolBar.text = Constant.isParentMenuName
-            lnrParent.visibility = View.GONE
             lblStudentName.text = childDetails?.name
             lblStudentSection.text =
                 "${childDetails?.standard_name} - ${childDetails?.section_name}"
         }
 
         exam_id = intent.getStringExtra("exam_id") ?: ""
+        exam_title = intent.getStringExtra("exam_title") ?: ""
+        binding.lblexamTitle.text=exam_title
 
         appViewModel?.getviewmarks?.observe(this) { response ->
             Log.d("response++", response.toString())
@@ -82,28 +91,11 @@ class ExamMarkResults : BaseActivity<ExamMarkDetailBinding>(), View.OnClickListe
             return
         }
 
-        val assessments = data.flatMap { it.assessments ?: emptyList() }
+        binding.lblTotalObtainaed.text=data.get(0).assessments.get(0).total_obtained
+        binding.lblTotalMark.text="Out of "+ data.get(0).assessments.get(0).total_mark
+        binding.lblRemark.text=data.get(0).assessments.get(0).Remarks
+        binding.lblGrade.text="Overall Grade: "+data.get(0).assessments.get(0).Rank
 
-
-        val totalAssessment = assessments.find { it.name.equals("Total", ignoreCase = true) }
-        binding.MarkOutOf500.text = totalAssessment?.value ?: "-"
-
-
-        totalAssessment?.value?.let { totalValue ->
-            val split = totalValue.split("/").map { it.trim() }
-            if (split.size == 2) {
-                val obtained = split[0].toFloatOrNull() ?: 0f
-                val total = split[1].toFloatOrNull() ?: 100f
-                val percent = ((obtained / total) * 100).toInt()
-
-                binding.progressBarOutOf500.max = 100
-                binding.progressBarOutOf500.progress = percent
-            }
-        }
-
-        val totalAssessment1 = assessments.find { it.name.equals("Rank", ignoreCase = true) }
-        binding.rankingvalue.text = "Rank : " + (totalAssessment1?.value ?: "-")
-        binding.medalranknumber.text = totalAssessment1?.value ?: "-"
 
         binding.nomessage.visibility = View.GONE
         binding.txtNoData.visibility = View.GONE

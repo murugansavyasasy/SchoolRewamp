@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.Filter
 import android.widget.Filterable
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkListener
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkModel.ExamData
@@ -19,16 +20,16 @@ import com.vs.schoolmessenger.Parent.ExamMarks.ExamProgressActivity
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 class ExamMarkAdapter(
-    private var itemList: List<ExamData>?,
+    private var itemList: List<com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamData>,
     private var listener: ExamMarkListener,
     private var context: Context,
-    private var isLoading: Boolean
+    private var isLoading: Boolean,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
 
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
-    private var fullList: List<ExamData> = itemList ?: listOf()
-    private var filteredList: List<ExamData> = itemList ?: listOf()
+    private var fullList: List<com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamData> = itemList ?: listOf()
+    private var filteredList: List<com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamData> = itemList ?: listOf()
 
     init {
         fullList = itemList ?: listOf()
@@ -63,6 +64,7 @@ class ExamMarkAdapter(
         return if (isLoading) 20 else filteredList.size
     }
 
+
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
@@ -80,24 +82,28 @@ class ExamMarkAdapter(
             }
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                filteredList = results?.values as? List<ExamData> ?: listOf()
+                filteredList = results?.values as? List<com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamData> ?: listOf()
                 listener.onSearchResultEmpty(filteredList.isEmpty())
                 notifyDataSetChanged()
             }
         }
     }
 
+
     inner class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
         private val textExamTitle: TextView = itemView.findViewById(R.id.textExamTitle)
         private val btnViewMarks: Button = itemView.findViewById(R.id.btnViewMarks)
         private val btnViewProgress: Button = itemView.findViewById(R.id.btnViewProgress)
+        private val rootHeader: LinearLayout = itemView.findViewById(R.id.rootHeader)
         @SuppressLint("ClickableViewAccessibility")
-        fun bind(exam: ExamData, position: Int, adapter: ExamMarkAdapter) {
+        fun bind(exam: com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamData, position: Int, adapter: ExamMarkAdapter) {
+            rootHeader.background.alpha = (0.2f * 255).toInt()
             textExamTitle.text = exam.name
             btnViewMarks.setOnClickListener {
                 val context = itemView.context
                 val intent = Intent(context, ExamMarkResults::class.java)
+                intent.putExtra("exam_title", exam.name)
                 intent.putExtra("exam_id", exam.id)
                 context.startActivity(intent)
             }
@@ -108,12 +114,9 @@ class ExamMarkAdapter(
                 context.startActivity(intent)
             }
 
-
-
-
-
         }
     }
+
 
     inner class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun startShimmer() {

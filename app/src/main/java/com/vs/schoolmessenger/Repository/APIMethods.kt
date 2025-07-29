@@ -41,6 +41,7 @@ object APIMethods {
     const val isUpdateStatusArchive = "comm/api/communication/read-status-update-archive"
     const val isGetAcademicYear = "comm/api/recipient/get-academic-year-list"
     const val isHomeWorkDetails = "comm/api/homework/list"
+    const val isHomeWorkComplete = "comm/api/homework/mark-complete"
 
     const val send_homework = "comm/api/homework/send-homework"
     const val homework_reports = "comm/api/homework/get-homework-report"

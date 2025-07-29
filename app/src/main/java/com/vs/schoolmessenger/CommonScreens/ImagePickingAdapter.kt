@@ -27,6 +27,7 @@ class ImagePickingAdapter(
     inner class FileViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         val img: ImageView = v.findViewById(R.id.imgPicking)
         val del: ImageView = v.findViewById(R.id.imgDelete)
+        val imgVideoPlay: ImageView = v.findViewById(R.id.imgVideoPlay)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FileViewHolder {
@@ -39,6 +40,12 @@ class ImagePickingAdapter(
         val item = items[pos]
         Log.d("isFileType", item.type.toString())
         Log.d("isFilePath", item.path.toString())
+
+        if (item.type.toString() == Constant.VIDEO) {
+            holder.imgVideoPlay.visibility = View.VISIBLE
+        } else {
+            holder.imgVideoPlay.visibility = View.GONE
+        }
 
         val filePath = item.path
         val fileUri = when {

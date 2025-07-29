@@ -8,7 +8,6 @@ import com.vs.schoolmessenger.Utils.Constant
 
 object ApiCallRequest {
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun isVoiceSend(
         isAcademicYearId: Int,
         isCommunicationType: Int,

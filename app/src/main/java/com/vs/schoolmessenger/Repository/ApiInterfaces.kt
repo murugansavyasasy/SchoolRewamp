@@ -33,7 +33,7 @@ import com.vs.schoolmessenger.Parent.Coupon.CouponRequestModel.ActivateCouponReq
 import com.vs.schoolmessenger.Parent.Coupon.CouponRequestModel.CategorySummaryRequest
 import com.vs.schoolmessenger.Parent.Coupon.CouponRequestModel.CouponDetailsRequest
 import com.vs.schoolmessenger.Parent.Coupon.CouponRequestModel.CouponSummaryRequest
-import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventResponse
+import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.RewampModelEvent.EventResponse
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.HolidayResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkModel.ExamResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkResultsModel.ExamMarksResponse
@@ -282,6 +282,14 @@ interface ApiInterfaces {
     fun isHomeWorkDetails(
         @Header(APIKeyNames.Authorization) token: String,
     ): Call<GetHomeworkData?>
+
+
+    @Headers("Content-Type: application/json")
+    @PUT(APIMethods.isHomeWorkComplete)
+    fun isHomeWorkComplete(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Body jsonObject: JsonObject
+    ): Call<StatusMessageModel?>
 
     @GET(APIMethods.homework_list_archive)
     fun homework_list_archive(

@@ -1,6 +1,7 @@
 package com.vs.schoolmessenger.School.AbsenteesMarking
 
 import android.content.Context
+import android.graphics.PorterDuff
 import android.os.Build
 import android.text.Editable
 import android.text.TextWatcher
@@ -9,6 +10,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.JsonArray
@@ -66,8 +68,21 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
         isSectionName = Constant.isMarkAttendanceDataSending?.section_name.toString()
         isSectionId = Constant.isMarkAttendanceDataSending?.section_id
         isAcademicYearId = Constant.isMarkAttendanceDataSending?.academic_year_id!!
-        binding.toolbarLayout.cbSelect.visibility = View.VISIBLE
-        binding.toolbarLayout.cbSelect.text = getString(R.string.Selectall)
+        binding.cbSelect.visibility = View.VISIBLE
+        binding.cbSelect.text = getString(R.string.Selectall)
+
+        binding.toolbarLayout.imgSearch.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_IN)
+        binding.toolbarLayout.imgBack.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_IN)
+
+        binding.toolbarLayout.imgSearch.setOnClickListener{
+            if (binding.rlaSortSearch.visibility == View.VISIBLE) {
+                binding.rlaSortSearch.visibility = View.GONE
+            } else {
+                binding.rlaSortSearch.visibility = View.VISIBLE
+                binding.txtSearchMenu.text.clear()
+            }
+        }
+
 
         val filterCaterotyType = listOf(
             getString(R.string.nameasc),
@@ -79,14 +94,14 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
         )
 
 
-        binding.txtSearchMenu.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) {
-                binding.toolbarLayout.cbSelect.visibility = View.GONE
-            }
-        }
+//        binding.txtSearchMenu.setOnFocusChangeListener { _, hasFocus ->
+//            if (hasFocus) {
+//                binding.cbSelect.visibility = View.GONE
+//            }
+//        }
 
-        binding.toolbarLayout.cbSelect.setOnClickListener {
-            if (binding.toolbarLayout.cbSelect.isChecked) {
+        binding.cbSelect.setOnClickListener {
+            if (binding.cbSelect.isChecked) {
                 isSpecificStudent.clear()
                 studentsList?.forEach {
                     isSpecificStudent.add(it)
@@ -96,14 +111,15 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
                 isSpecificStudent.clear()
                 mAdapter.setAllAbsent(false)
             }
+            isCountAttendance()
         }
+
 
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblParentToolBar.visibility = View.VISIBLE
-        binding.toolbarLayout.lblParentToolBar.text = getString(R.string.MarkAttendance)
+        binding.toolbarLayout.lblParentToolBar.text = isStandardName + "-" + isSectionName
         binding.toolbarLayout.lblSchoolName.text =
-            isStaffDetails!!.school_name + " | " + isStandardName + "-" + isSectionName
-
+            isStaffDetails!!.school_name
 
         appViewModel!!.isSendAbsenteeSMS?.observe(this) { response ->
             if (response != null) {
@@ -118,14 +134,12 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
         }
 
 
-
         appViewModel!!.isStudentList!!.observe(this) { response ->
             if (response != null) {
                 if (response.status) {
                     binding.lnrHeader.visibility = View.VISIBLE
                     binding.recycleStudents.visibility = View.VISIBLE
-                    binding.rlaSortSearch.visibility = View.VISIBLE
-                    binding.toolbarLayout.cbSelect.visibility = View.VISIBLE
+                    binding.cbSelect.visibility = View.VISIBLE
                     binding.rytSend.visibility = View.VISIBLE
                     studentsList = response.data
                     loadStudentAbsenteesList(studentsList!!)
@@ -134,14 +148,14 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
                     binding.lnrHeader.visibility = View.GONE
                     binding.recycleStudents.visibility = View.GONE
                     binding.rlaSortSearch.visibility = View.GONE
-                    binding.toolbarLayout.cbSelect.visibility = View.GONE
+                    binding.cbSelect.visibility = View.GONE
                     binding.rytSend.visibility = View.GONE
                     ErrorMessage(response.message)
                 }
             } else {
                 binding.recycleStudents.visibility = View.GONE
                 binding.rlaSortSearch.visibility = View.GONE
-                binding.toolbarLayout.cbSelect.visibility = View.GONE
+                binding.cbSelect.visibility = View.GONE
                 binding.rytSend.visibility = View.GONE
                 ErrorMessage(getString(R.string.no_student_found))
             }
@@ -158,10 +172,13 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 filter(s.toString())
+                binding.cbSelect.visibility =
+                    if (!s.isNullOrEmpty()) View.GONE else View.VISIBLE
 
             }
         })
     }
+
 
     private fun setupFilterCaterotyType(filterCaterotyType: List<String>) {
         val adapter = SpinnerLoadingAdapter(this, filterCaterotyType)
@@ -280,6 +297,7 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
     }
 
     fun loadStudentAbsenteesList(studentsList: List<NameAndIds>) {
+        isCountAttendance()
         mAdapter =
             AbsenteesMarkAdapter(
                 studentsList, this, Constant.isShimmerViewDisable, this, this
@@ -351,23 +369,23 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
 
     }
 
-    override fun onBackPressed() {
-        val searchText = binding.txtSearchMenu.text.toString().trim()
-        if (binding.txtSearchMenu.hasFocus()) {
-            binding.txtSearchMenu.clearFocus()
-
-            // Hide keyboard
-            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(binding.txtSearchMenu.windowToken, 0)
-
-            // Show checkbox only if search is empty
-            if (searchText.isEmpty()) {
-                binding.toolbarLayout.cbSelect.visibility = View.VISIBLE
-            }
-        } else {
-            super.onBackPressed()
-        }
-    }
+//    override fun onBackPressed() {
+//        val searchText = binding.txtSearchMenu.text.toString().trim()
+//        if (binding.txtSearchMenu.hasFocus()) {
+//            binding.txtSearchMenu.clearFocus()
+//
+//            // Hide keyboard
+//            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+//            imm.hideSoftInputFromWindow(binding.txtSearchMenu.windowToken, 0)
+//
+//            // Show checkbox only if search is empty
+//            if (searchText.isEmpty()) {
+//                binding.cbSelect.visibility = View.VISIBLE
+//            }
+//        } else {
+//            super.onBackPressed()
+//        }
+//    }
 
     override fun onSelectionChanged(selectedIds: List<String>) {
         Log.d("ActivitySelectedIDs", selectedIds.toString())
@@ -378,11 +396,19 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
         if (!isSpecificStudent.any { it.id == data.id }) {
             isSpecificStudent.add(data)
         }
-        binding.toolbarLayout.cbSelect.isChecked = isSpecificStudent.size == studentsList?.size
+        binding.cbSelect.isChecked = isSpecificStudent.size == studentsList?.size
+        isCountAttendance()
+    }
+    fun isCountAttendance(){
+        var presentCount= studentsList?.size?.minus(isSpecificStudent.size)
+        binding.toolbarLayout.tvPresentCount.text=presentCount.toString()
+        binding.toolbarLayout.tvAbsentCount.text=isSpecificStudent.size.toString()
     }
 
     override fun onIdUnchecked(data: NameAndIds) {
         isSpecificStudent.removeAll { it.id == data.id }
-        binding.toolbarLayout.cbSelect.isChecked = false
+        binding.cbSelect.isChecked = false
+        isCountAttendance()
+
     }
 }

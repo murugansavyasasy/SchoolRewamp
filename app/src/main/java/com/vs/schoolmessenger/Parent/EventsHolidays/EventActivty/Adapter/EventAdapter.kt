@@ -3,46 +3,40 @@ package com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Adapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.Color
-import android.text.TextUtils
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebResourceError
-import android.webkit.WebResourceRequest
-import android.webkit.WebViewClient
 import android.widget.Filter
 import android.widget.Filterable
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.ProgressBar
-import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.imageview.ShapeableImageView
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
 import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventClickListener
-import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventDataClass
+import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.RewampModelEvent.EventItem
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 import me.relex.circleindicator.CircleIndicator2
 
-class EventAdapter (
-    private var itemList: List<EventDataClass>?,
+class EventAdapter(
+    private var itemList: List<EventItem>?,
     private var listener: EventClickListener,
     private var context: Context,
     private var isLoading: Boolean
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
 
+
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
 
-    private var fullList: List<EventDataClass> = itemList ?: listOf()
-    private var filteredList: List<EventDataClass> = itemList ?: listOf()
+    private var fullList: List<EventItem> = itemList ?: listOf()
+    private var filteredList: List<EventItem> = itemList ?: listOf()
     init {
         fullList = itemList ?: listOf()
         filteredList = fullList
@@ -56,25 +50,32 @@ class EventAdapter (
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_SHIMMER) {
             val shimmerView =
-                ShimmerUtil.wrapWithShimmer(parent, R.layout.homework_school_reportitem)
+                ShimmerUtil.wrapWithShimmer(parent, R.layout.event_ongoing_recyclerview)
             ShimmerViewHolder(shimmerView)
         } else {
             val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.homework_school_reportitem, parent, false)
-            DataViewHolder(view, context) // Pass context to DataViewHolder
+                .inflate(R.layout.event_ongoing_recyclerview, parent, false)
+            DataViewHolder(view, context)
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
-            holder.bind(filteredList[position], position, listener, this)
-        }  else if (holder is ShimmerViewHolder) {
+            filteredList?.get(position)?.let {
+                holder.bind(it, position, listener, this)
+            }
+        } else if (holder is ShimmerViewHolder) {
             holder.startShimmer()
         }
     }
 
+
     override fun getItemCount(): Int {
-        return if (isLoading) 20 else filteredList.size
+        return if (isLoading) {
+            3
+        } else {
+            filteredList?.size ?: 0
+        }
     }
 
 
@@ -91,192 +92,128 @@ class EventAdapter (
                                 it.venue.lowercase().contains(query)
                     }
                 }
-
                 val filterResults = FilterResults()
                 filterResults.values = result
                 return filterResults
             }
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                filteredList = results?.values as? List<EventDataClass> ?: listOf()
-                listener.onSearchResultEmpty(filteredList.isEmpty())
+                filteredList = results?.values as? List<EventItem> ?: listOf()
+                listener.onSearchResultEmpty("ONGOING", filteredList.isEmpty())
                 notifyDataSetChanged()
             }
         }
     }
 
+    fun updateList(newList: List<EventItem>?) {
+        this.itemList = newList
+        notifyDataSetChanged()
+    }
+
+
+
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
 
-        private var isTextExpanded = false
-        private val LblHWSubjectName: TextView = itemView.findViewById(R.id.LblHWSubjectName)
-        private val lblTitleImage: TextView = itemView.findViewById(R.id.lblTitleImage)
-        private val lblEventTimeImage: TextView = itemView.findViewById(R.id.lblEventTimeImage)
-        private val lblContentImage: TextView = itemView.findViewById(R.id.lblContentImage)
-        private val lblDateImage: TextView = itemView.findViewById(R.id.lblDateImage)
-        private val lblTimeImage: TextView = itemView.findViewById(R.id.lblTimeImage)
-        private val tvSeeMoreImage: TextView = itemView.findViewById(R.id.tvSeeMoreImage)
-        private val rlaSelectText: RelativeLayout = itemView.findViewById(R.id.rlaSelectText)
-        private val rytList: RelativeLayout = itemView.findViewById(R.id.rytList)
-        private val rcyImgPDF: RecyclerView = itemView.findViewById(R.id.rcyImgPDF)
-        private val imgNewImage: ImageView = itemView.findViewById(R.id.imgNewImage)
-        private val webView: android.webkit.WebView = itemView.findViewById(R.id.webView)
-        private val loadingBar: ProgressBar = itemView.findViewById(R.id.loadingBar)
-        private val indicator: CircleIndicator2 = itemView.findViewById(R.id.indicator)
+        private val event_header: TextView = itemView.findViewById(R.id.event_header)
+        private val event_time: TextView = itemView.findViewById(R.id.event_time)
+        private val event_location: TextView = itemView.findViewById(R.id.event_location)
+        private val status_event: TextView = itemView.findViewById(R.id.status_event)
 
+        private val eventdesc: TextView = itemView.findViewById(R.id.eventdesc)
+        private val total_numbers: TextView = itemView.findViewById(R.id.total_numbers)
+
+        private val rcyImgPDF: RecyclerView = itemView.findViewById(R.id.rcyImgPDF)
+        private val video_player: ImageView = itemView.findViewById(R.id.video_player)
+        private val loadingBar: ProgressBar = itemView.findViewById(R.id.loadingBar)
+        private val rytList: LinearLayout = itemView.findViewById(R.id.rytList)
+//        private val arrow_icon: ImageView = itemView.findViewById(R.id.arrow_icon)
+        private val indicator: CircleIndicator2 = itemView.findViewById(R.id.indicator)
 
         @SuppressLint("ClickableViewAccessibility")
         fun bind(
-            data: EventDataClass,
-            position: Int,
-            listener: EventClickListener,
-            adapter: EventAdapter
+            data: EventItem, position: Int, listener: EventClickListener, adapter: EventAdapter
         ) {
+            event_header.text = data.title
+            event_time.text =
+                "Event started at" + " " + data.time + " - " + Constant.convertDateTimeFormat(data.date)
+            event_location.text = data.venue
+            status_event.text = "Today's Event"
+            eventdesc.text = data.description
 
-            lblTimeImage.visibility=View.GONE
-            lblDateImage.visibility=View.GONE
-            LblHWSubjectName.visibility = View.VISIBLE
-            lblEventTimeImage.visibility=View.VISIBLE
-            LblHWSubjectName.text="📍 "+data.venue
-            imgNewImage.visibility = View.VISIBLE
-            LblHWSubjectName.visibility = View.GONE
-            imgNewImage.visibility = View.GONE
-            rlaSelectText.visibility = View.GONE
-            lblTitleImage.text = data.title
-            lblContentImage.text = data.description
-            lblTimeImage.text = data.time
-            lblEventTimeImage.text="🕒 Event starts at: "+data.time+", "+"📆 "+Constant.convertDateTimeFormat(data.date)
-            isSeeMoreVisibility(lblContentImage, tvSeeMoreImage)
-            tvSeeMoreImage.setOnClickListener {
-                isSeeMoreExpanded(tvSeeMoreImage, lblContentImage)
-            }
+            video_player.visibility = View.GONE
+            loadingBar.visibility = View.GONE
 
-            webView.setBackgroundColor(Color.BLACK)
-            webView.setOnTouchListener(object : View.OnTouchListener {
-                override fun onTouch(v: View?, event: MotionEvent): Boolean {
-                    webView.onPause()
-                    if (event.getAction() == MotionEvent.ACTION_MOVE) {
-                        return false
-                    }
-
-                    if (event.getAction() == MotionEvent.ACTION_UP) {
-                        Constant.commonFileList.isEmpty()
-                        val commonList = data.file_path?.map {
-                            CommonFileData(
-                                type = it.type,
-                                path = it.url
-                            )
-                        }?.toMutableList() ?: mutableListOf()
-                        Constant.commonFileList = commonList
-                        Constant.selectedFileIndex = position
-                        val intent = Intent(context, FilesViewActivity::class.java)
-                        intent.putExtra(Constant.subjectName, data.title)
-                        context.startActivity(intent)
-                    }
-
-                    return false
-                }
-            })
-
-            if (data.iframe != "") {
-                webView.visibility = View.VISIBLE
+            if (!data.iframe.isNullOrEmpty()) {
+                video_player.visibility = View.VISIBLE
                 rytList.visibility = View.VISIBLE
                 rcyImgPDF.visibility = View.GONE
-                webView.settings.javaScriptEnabled = true
-                webView.settings.domStorageEnabled = true
-                webView.settings.loadWithOverviewMode = true
-                webView.settings.useWideViewPort = true
 
-                webView.webViewClient = object : WebViewClient() {
-                    override fun onPageStarted(
-                        view: android.webkit.WebView, url: String, favicon: Bitmap?
-                    ) {
-                        loadingBar.visibility = View.VISIBLE
-                    }
+                video_player.setOnClickListener {
+                    val commonList = data.file_path?.map {
+                        CommonFileData(type = it.type, path = it.url)
+                    }?.toMutableList() ?: mutableListOf()
 
-                    override fun onPageFinished(view: android.webkit.WebView?, url: String?) {
-                        loadingBar.visibility = View.GONE
-                    }
+                    Constant.commonFileList = commonList
+                    Constant.selectedFileIndex = position
 
-                    override fun onReceivedError(
-                        view: android.webkit.WebView?,
-                        request: WebResourceRequest?,
-                        error: WebResourceError?
-                    ) {
-                        loadingBar.visibility = View.GONE
-                        Log.e("WebViewError", "Error loading: ${error?.description}")
-                    }
+                    val intent = Intent(context, FilesViewActivity::class.java)
+                    intent.putExtra(Constant.subjectName, data.title)
+                    context.startActivity(intent)
                 }
-
-                webView.loadUrl(data.file_path[0].url.toString())
             } else {
-                if (data.file_path.isEmpty()) {
-                    rytList.visibility = View.GONE
+                if (data.file_path.isNullOrEmpty()) {
+//                    rytList.visibility = View.GONE
+//                    arrow_icon.visibility = View.VISIBLE
                     rcyImgPDF.visibility = View.GONE
+                    total_numbers.visibility = View.GONE
+                    video_player.visibility = View.GONE
                 } else {
                     rytList.visibility = View.VISIBLE
+//                    arrow_icon.visibility = View.VISIBLE
                     rcyImgPDF.visibility = View.VISIBLE
+                    video_player.visibility = View.GONE
+
+                    val fileList = data.file_path
+                    val totalFiles = fileList.size
+
+                    val adapter =
+                        EventFilePathAdapter(fileList, context, Constant.isShimmerViewDisable)
+                    rcyImgPDF.layoutManager =
+                        LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                    rcyImgPDF.adapter = adapter
+
+                    if (totalFiles > 3) {
+                        total_numbers.text = "+${totalFiles - 3}"
+                        total_numbers.visibility = View.VISIBLE
+                    } else {
+                        total_numbers.visibility = View.GONE
+                    }
                 }
 
-                if (data.file_path.size > 1) {
-                    indicator.visibility = View.VISIBLE
-                } else {
-                    indicator.visibility = View.GONE
-                }
+            }
 
-                webView.visibility = View.GONE
-                rcyImgPDF.layoutManager =
-                    LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                rcyImgPDF.adapter = EventFilePathAdapter(
-                    data.file_path, context, Constant.isShimmerViewDisable
-                )
-                indicator.attachToRecyclerView(rcyImgPDF)
+            fun CircleIndicator2.attachToRecyclerView(recyclerView: RecyclerView) {
+                val adapter = recyclerView.adapter ?: return
+                this.createIndicators(adapter.itemCount, 0)
+
+                recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                    override fun onScrolled(rv: RecyclerView, dx: Int, dy: Int) {
+                        super.onScrolled(rv, dx, dy)
+                        val layoutManager = rv.layoutManager as? LinearLayoutManager ?: return
+                        val firstVisible = layoutManager.findFirstVisibleItemPosition()
+                        this@attachToRecyclerView.animatePageSelected(firstVisible)
+                    }
+                })
+
+                adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+                    override fun onChanged() {
+                        this@attachToRecyclerView.createIndicators(adapter.itemCount, 0)
+                    }
+                })
             }
         }
 
-        fun CircleIndicator2.attachToRecyclerView(recyclerView: RecyclerView) {
-            val adapter = recyclerView.adapter ?: return
-            this.createIndicators(adapter.itemCount, 0)
-
-            recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrolled(rv: RecyclerView, dx: Int, dy: Int) {
-                    super.onScrolled(rv, dx, dy)
-                    val layoutManager = rv.layoutManager as? LinearLayoutManager ?: return
-                    val firstVisible = layoutManager.findFirstVisibleItemPosition()
-                    this@attachToRecyclerView.animatePageSelected(firstVisible)
-                }
-            })
-
-            adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
-                override fun onChanged() {
-                    this@attachToRecyclerView.createIndicators(adapter.itemCount, 0)
-                }
-            })
-        }
-
-        private fun isSeeMoreExpanded(tvSeeMore: TextView, lblContent: TextView) {
-            if (isTextExpanded) {
-                isTextExpanded = false
-                lblContent.maxLines = 3
-                lblContent.ellipsize = TextUtils.TruncateAt.END
-                tvSeeMore.text = itemView.context.getString(R.string.SeeMore)
-            } else {
-                isTextExpanded = true
-                lblContent.maxLines = Integer.MAX_VALUE
-                lblContent.ellipsize = null
-                tvSeeMore.text = itemView.context.getString(R.string.SeeLess)
-            }
-        }
-
-        private fun isSeeMoreVisibility(lblContent: TextView, tvSeeMore: TextView) {
-            lblContent.post {
-                if (lblContent.lineCount > 3) {
-                    tvSeeMore.visibility = View.VISIBLE
-                    lblContent.maxLines = 3
-                    lblContent.ellipsize = TextUtils.TruncateAt.END
-                }
-            }
-        }
     }
 }
 

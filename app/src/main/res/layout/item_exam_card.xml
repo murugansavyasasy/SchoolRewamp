@@ -9,8 +9,10 @@
     app:cardElevation="@dimen/four">
 
     <LinearLayout
+        android:id="@+id/rootHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/exam_marks_grade_icon"
         android:orientation="vertical"
         android:padding="@dimen/twele"
         android:gravity="center_horizontal">

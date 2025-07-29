@@ -1,14 +1,13 @@
-package com.vs.schoolmessenger.Parent.ExamMarks
+package com.vs.schoolmessenger.Parent.ExamMarks.ViewMarksAdapter
 
 import android.content.Context
-import android.util.Log
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkResultsModel.SubjectMark
 import com.vs.schoolmessenger.R
@@ -21,6 +20,8 @@ class ExamMarkResultsAdapter(
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
+    private lateinit var splitExamMarkResultAdapter: SplitExamMarkResultsAdapter
+
 
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
@@ -52,48 +53,37 @@ class ExamMarkResultsAdapter(
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val subjectname: TextView = itemView.findViewById(R.id.subjectname)
         private val markOutOf100: TextView = itemView.findViewById(R.id.markoutof100)
-        private val downarrowicon: ImageView = itemView.findViewById(R.id.downarrowicon)
-        private val totalmarklabel: TextView = itemView.findViewById(R.id.totalmarklabel)
-        private val linear_layout1: LinearLayout = itemView.findViewById(R.id.linear_layout1)
-        private val progressBarOutOf100: ProgressBar =
-            itemView.findViewById(R.id.progressBarOutOf100)
+        private val rcSplitMark: RecyclerView = itemView.findViewById(R.id.rcSplitMark)
+        private val colourPercent: View = itemView.findViewById(R.id.colourPercent)
 
         fun bind(examMark: SubjectMark) {
             subjectname.text = examMark.name
-
             val markString = "${examMark.mark_obtained} / ${examMark.max_mark}"
-            totalmarklabel.text = markString
             markOutOf100.text = markString
 
-                try {
-                val split = markString.split("/").map { it.trim() }
+            val percentageStr = examMark.percentage ?: "0%"
+            val cleanedPercentageStr = percentageStr.replace("%", "").trim()
+            val percentage = cleanedPercentageStr.toFloatOrNull() ?: 0f
 
-                if (split.size == 2) {
-                    val obtained = split[0].toFloatOrNull() ?: 0f
-                    val total = split[1].toFloatOrNull() ?: 100f
-                    val percent = ((obtained / total) * 100).toInt()
-
-                   progressBarOutOf100.progress = percent
-                }
-            } catch (e: Exception) {
-                Log.e("ProgressError", "Error parsing markString: $markString", e)
+            val bgDrawable = colourPercent.background.mutate() as GradientDrawable
+            when {
+                percentage <= 50 -> bgDrawable.setColor(Color.RED)
+                percentage <= 75 -> bgDrawable.setColor(Color.parseColor("#FFA500")) // Orange
+                else -> bgDrawable.setColor(Color.GREEN)
             }
+            colourPercent.background = bgDrawable
 
-            downarrowicon.setOnClickListener {
-                if (totalmarklabel.visibility == View.VISIBLE) {
-                    totalmarklabel.visibility = View.GONE
-                } else {
-                    totalmarklabel.visibility = View.VISIBLE
-                }
-            }
-            linear_layout1.setOnClickListener {
-                if (totalmarklabel.visibility == View.VISIBLE) {
-                    totalmarklabel.visibility = View.GONE
-                } else {
-                    totalmarklabel.visibility = View.VISIBLE
-                }
-            }
 
+            if (examMark.split.size<=1) {
+                rcSplitMark.visibility = View.GONE
+            }
+            else{
+                rcSplitMark.visibility=View.VISIBLE
+                rcSplitMark.layoutManager = LinearLayoutManager(itemView.context, LinearLayoutManager.VERTICAL, false)
+                splitExamMarkResultAdapter = SplitExamMarkResultsAdapter(examMark.split, itemView.context, false)
+                rcSplitMark.isNestedScrollingEnabled = false
+                rcSplitMark.adapter = splitExamMarkResultAdapter
+            }
         }
     }
         inner class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

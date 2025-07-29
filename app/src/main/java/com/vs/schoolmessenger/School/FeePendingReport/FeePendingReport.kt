@@ -72,7 +72,7 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
             if (response != null && response.status && !response.data.isNullOrEmpty()) {
                 isFirstLoad = true
                 isLoadDailyCollectionData(response.data)
-                binding.relativeLayout6.visibility=View.VISIBLE
+                binding.relativeLayout6.visibility=View.GONE
             } else {
                 showNoDataMessage(response?.message ?: "No fee pending data available.")
                 binding.relativeLayout6.visibility=View.GONE
@@ -87,7 +87,7 @@ class FeePendingReport : BaseActivity<FeePendingReportBinding>(), View.OnClickLi
             if (response != null && response.status && !response.data.isNullOrEmpty()) {
                 isFirstLoad = true
                 isLoadDailyCollectionData(response.data)
-                binding.relativeLayout6.visibility=View.VISIBLE
+                binding.relativeLayout6.visibility=View.GONE
             } else {
                 showNoDataMessage(response?.message ?: "No fee pending data available.")
                 binding.relativeLayout6.visibility=View.GONE
