@@ -77,7 +77,7 @@ class NoticeBoardAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
             filteredList?.get(position)?.let {
-                holder.bind(it, position,  this)
+                holder.bind(it, position, this)
             }
         } else if (holder is ShimmerViewHolder) {
             holder.startShimmer()
@@ -197,11 +197,10 @@ class NoticeBoardAdapter(
             }
 
 
-            //            isSeeMoreVisibility(lblContentImage, tvSeeMoreImage)
+//                        isSeeMoreVisibility(lblContentImage, tvSeeMoreImage)
 ////            tvSeeMoreImage.setOnClickListener {
 ////                isSeeMoreExpanded(tvSeeMoreImage, lblContentImage)
 ////            }
-
 
 
             video_player.setOnTouchListener(object : OnTouchListener {
@@ -306,13 +305,15 @@ class NoticeBoardAdapter(
                         data = Uri.parse("package:${context.packageName}")
                     }
                     context.startActivity(intent)
-                    Toast.makeText(context, "Please allow exact alarm permission to schedule reminders", Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        context,
+                        "Please allow exact alarm permission to schedule reminders",
+                        Toast.LENGTH_LONG
+                    ).show()
                     return // prevent crash
                 }
             }
         }
-
-
 
 
 //        private fun isSeeMoreExpanded(tvSeeMore: TextView, lblContent: TextView) {
