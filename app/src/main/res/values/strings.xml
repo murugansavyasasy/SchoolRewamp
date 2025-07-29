@@ -583,5 +583,6 @@
     <string name="Overall_Grade">Overall Grade: </string>
     <string name="Something_went_wrong_Please_try_again">Something went wrong. Please try again.</string>
     <string name="set_remainder">Set remainder</string>
+    <string name="confirm_submit_attendance"><![CDATA[Confirm & Submit Attendance]]></string>
 
 </resources>
