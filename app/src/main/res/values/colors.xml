@@ -78,6 +78,7 @@
 
 
     <color name="light_blue_color">#f0f4f9</color>
+    <color name="purple_color_lite">#bf80ff</color>
 
     <color name="navi_blue0">#0e4275</color>
     <color name="light_navi_blue0">#B9D7F3</color>
@@ -214,6 +215,12 @@
     <color name="hospitalization_leave">#A5E5FB</color>
     <color name="medical_leave">#FFB8E1</color>
     <color name="children_leave">#FFB556</color>
+    <color name="dark_blue_9">#477cee</color>
+    <color name="light_blue2">#E9F2FF</color>
+    <color name="light_lavender">#EAE6FF</color>
+    <color name="lightpink">#f4e5e7</color>
+    <color name="lightyellow">#fcf1ce</color>
+
 
 
 

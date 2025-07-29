@@ -19,7 +19,20 @@
 
         <include
             android:id="@+id/toolbarLayout"
-            layout="@layout/school_side_tool_bar" />
+            layout="@layout/absentees_mark_common" />
+
+        <CheckBox
+            android:layout_alignParentEnd="true"
+            android:id="@+id/cbSelect"
+            style="@style/CustomCheckBox"
+            android:layout_below="@+id/rlaSortSearch"
+            android:layout_width="wrap_content"
+            android:layout_marginEnd="@dimen/fifteen"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten"
+            android:button="@drawable/ch_square"
+            android:text="@string/Selectallaspresent"
+            android:visibility="visible" />
 
 
         <LinearLayout
@@ -93,12 +106,14 @@
 
         </LinearLayout>
 
+
+
         <!-- Header row -->
         <LinearLayout
             android:id="@+id/lnrHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/rlaSortSearch"
+            android:layout_below="@id/cbSelect"
             android:layout_marginTop="@dimen/five"
             android:background="@drawable/rect_light_blue"
             android:orientation="horizontal">

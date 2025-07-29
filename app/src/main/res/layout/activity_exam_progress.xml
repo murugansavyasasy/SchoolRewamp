@@ -37,10 +37,19 @@
             android:textSize="@dimen/fifteen_sp"
             android:visibility="gone" />
 
-        <WebView
+<!--        <WebView-->
+<!--            android:id="@+id/webViewPdf"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:visibility="gone" />-->
+
+        <ImageView
             android:id="@+id/webViewPdf"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone" />
+
+            >
+
+        </ImageView>
     </LinearLayout>
 </RelativeLayout>

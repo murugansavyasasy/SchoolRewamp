@@ -3,6 +3,7 @@ package com.vs.schoolmessenger.Parent.ExamMarks
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.R
@@ -40,6 +41,8 @@ class ExamProgressActivity : BaseActivity<ActivityExamProgressBinding>(), View.O
 
             if (response.status) {
                 isLoadProgress(response.data)
+                binding.lytList.visibility=View.GONE
+                binding.webViewPdf.visibility=View.VISIBLE
             } else {
                 showErrorUI(response.message ?: "No data available")
             }
@@ -50,6 +53,9 @@ class ExamProgressActivity : BaseActivity<ActivityExamProgressBinding>(), View.O
     }
 
     private fun showErrorUI(message: String) {
+        binding.webViewPdf.visibility=View.GONE
+        binding.lytList.visibility=View.VISIBLE
+        binding.txtNoData.text=message
 
     }
 
@@ -69,17 +75,22 @@ class ExamProgressActivity : BaseActivity<ActivityExamProgressBinding>(), View.O
         val pdfUrl = pdfList.firstOrNull()
 
         if (pdfUrl.isNullOrEmpty()) {
-            showErrorUI("No PDF available")
+            showErrorUI("No Data available")
             return
         }
 
-        binding.webViewPdf.apply {
-            visibility = View.VISIBLE
-            settings.javaScriptEnabled = true
-            settings.loadWithOverviewMode = true
-            settings.useWideViewPort = true
-            loadUrl("https://docs.google.com/gview?embedded=true&url=$pdfUrl")
-        }
+//        binding.webViewPdf.apply {
+//            visibility = View.VISIBLE
+//            settings.javaScriptEnabled = true
+//            settings.loadWithOverviewMode = true
+//            settings.useWideViewPort = true
+//            loadUrl("https://docs.google.com/gview?embedded=true&url=$pdfUrl")
+//        }
+        Log.d("pdfurl",pdfUrl)
+        Glide.with(this)
+            .load(pdfUrl)
+            .into(binding.webViewPdf);
+
     }
 
     override fun onClick(p0: View?) {
