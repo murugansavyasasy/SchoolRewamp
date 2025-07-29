@@ -57,6 +57,7 @@ import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.Mark
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.ClassWise
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendingData
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceSendingData
+import com.vs.schoolmessenger.School.InteractionWithStudent.Model.QuestionDataSending
 import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
@@ -194,6 +195,7 @@ object Constant {
     var isMarkAttendanceDataSending: MarkAttendanceDataSending? = null
 
     var StaffDataSending: StaffDataSending? = null
+    var QuestionDataSending: QuestionDataSending? = null
     var isAbsenteesReportDataSending: ClassWise? = null
 
     var secondHalf = "SH"

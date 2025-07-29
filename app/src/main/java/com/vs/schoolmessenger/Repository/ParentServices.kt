@@ -23,6 +23,7 @@ import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequest
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestUpdate
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveUpdateResponse
 import com.vs.schoolmessenger.Parent.Timetable.TimeTableResponse
+import com.vs.schoolmessenger.School.InteractionWithStudent.Response.InteractionWithStudentResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -38,6 +39,7 @@ class ParentServices {
     var isCertificateRequestList: MutableLiveData<CertificatesListResponse?>
     var isTimeTable: MutableLiveData<TimeTableResponse?>
     var getdetailsforchat: MutableLiveData<InteractionWithStaffResponse?>
+    var getstudentdetailsforchat: MutableLiveData<InteractionWithStudentResponse?>
     var getstaffanswers: MutableLiveData<AnswerResponse?>
     var sendquestion: MutableLiveData<QuestionModelResponse?>
     var getexams: MutableLiveData<ExamTimeTableResponse?>
@@ -68,6 +70,7 @@ class ParentServices {
         isleaverequestdelete = MutableLiveData()
         getProgressMarks = MutableLiveData()
         isUpdateCompleteHomeWork = MutableLiveData()
+        getstudentdetailsforchat = MutableLiveData()
     }
 
     fun getChildAttendanceReport(
@@ -451,6 +454,48 @@ class ParentServices {
 
     val getdetailsforchatLiveData: LiveData<InteractionWithStaffResponse?>
         get() = getdetailsforchat
+
+
+    fun getstudentdetailsforchat(
+        isToken: String,
+        activity: Activity
+    ) {
+        RestClient.apiInterfaces.getstudentdetailsforchat(isToken)
+            ?.enqueue(object : Callback<InteractionWithStudentResponse?> {
+                override fun onResponse(
+                    call: Call<InteractionWithStudentResponse?>,
+                    response: Response<InteractionWithStudentResponse?>
+                ) {
+                    Log.d(
+                        "GetChildAttendanceReportData Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                getstudentdetailsforchat.postValue(response.body())
+                            } else {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                getstudentdetailsforchat.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<InteractionWithStudentResponse?>,
+                    t: Throwable
+                ) {
+                    getstudentdetailsforchat.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val getstudentdetailsforchatLiveData: LiveData<InteractionWithStudentResponse?>
+        get() = getstudentdetailsforchat
 
 
 

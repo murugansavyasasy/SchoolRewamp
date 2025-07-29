@@ -64,6 +64,10 @@ import com.vs.schoolmessenger.School.Event.Response.EventSendResponse
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportModel.FeePendingReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkSendResponse
+import com.vs.schoolmessenger.School.InteractionWithStudent.Model.AnswerModelRequest
+import com.vs.schoolmessenger.School.InteractionWithStudent.Response.AnswerModelResponse
+import com.vs.schoolmessenger.School.InteractionWithStudent.Response.InteractionWithStudentResponse
+import com.vs.schoolmessenger.School.InteractionWithStudent.Response.QuestionResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveApproveRequest
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveActionResponse
 import com.vs.schoolmessenger.School.LeaveRequests.Response.LeaveRequestResponse
@@ -225,8 +229,7 @@ interface ApiInterfaces {
 
     @PUT(APIMethods.isAssignmentDelete)
     fun isAssignmentDelete(
-        @Header(APIKeyNames.Authorization) token: String,
-        @Body requestBody: JsonObject
+        @Header(APIKeyNames.Authorization) token: String, @Body requestBody: JsonObject
     ): Call<LPDeleteResponse?>
 
 
@@ -242,8 +245,7 @@ interface ApiInterfaces {
 
     @POST(APIMethods.isAssignmentSend)
     fun isAssignmentSend(
-        @Header(APIKeyNames.Authorization) token: String,
-        @Body jsonObject: JsonObject
+        @Header(APIKeyNames.Authorization) token: String, @Body jsonObject: JsonObject
     ): Call<HomeWorkSendResponse>?
 
     @POST(APIMethods.isSendVoice)
@@ -585,6 +587,11 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String
     ): Call<InteractionWithStaffResponse?>?
 
+    @GET(APIMethods.student_details_for_chat)
+    fun getstudentdetailsforchat(
+        @Header(APIKeyNames.Authorization) token: String
+    ): Call<InteractionWithStudentResponse?>?
+
     @GET(APIMethods.get_staff_answers)
     fun getstaffanswers(
         @Header(APIKeyNames.Authorization) token: String,
@@ -595,11 +602,28 @@ interface ApiInterfaces {
     ): Call<AnswerResponse?>?
 
 
+    @GET(APIMethods.staff_get_questions)
+    fun getstaffquestions(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query(APIKeyNames.is_class_teacher) is_class_teacher: Boolean?,
+        @Query(APIKeyNames.section_id) section_id: String?,
+        @Query(APIKeyNames.subject_id) subject_id: String?,
+        @Query(APIKeyNames.offset) offset: Int?
+    ): Call<QuestionResponse?>?
+
+
     @POST(APIMethods.student_ask_question)
     fun sendquestion(
         @Header(APIKeyNames.Authorization) token: String,
         @Body request: QuestionModelRequest,
     ): Call<QuestionModelResponse?>?
+
+
+    @POST(APIMethods.staff_ans_question)
+    fun sendanswer(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Body request: AnswerModelRequest,
+    ): Call<AnswerModelResponse?>?
 
 
     @GET(APIMethods.get_exams)
@@ -617,7 +641,7 @@ interface ApiInterfaces {
     @GET(APIMethods.view_marks)
     fun getviewmarks(
         @Header(APIKeyNames.Authorization) token: String,
-        @Query (APIKeyNames.exam_id) exam_id: String
+        @Query(APIKeyNames.exam_id) exam_id: String
     ): Call<ExamMarksResponse?>?
 
     @Headers("Content-Type: application/json")
@@ -633,11 +657,10 @@ interface ApiInterfaces {
     ): Call<LeaveRequestDeleteResponse?>
 
 
-
     @GET(APIMethods.progress_card)
     fun getProgressMarks(
         @Header(APIKeyNames.Authorization) token: String,
-        @Query (APIKeyNames.exam_id) exam_id: String
+        @Query(APIKeyNames.exam_id) exam_id: String
     ): Call<ProgressCardResponse?>?
 
 }
