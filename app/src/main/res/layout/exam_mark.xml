@@ -94,6 +94,7 @@
                 android:gravity="center"
                 android:text="Exam Timetable"
                 android:id="@+id/tabOneName"
+                android:layout_marginEnd="@dimen/five"
                 android:textColor="@color/iconBlue"
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="match_parent"
@@ -103,6 +104,7 @@
                 android:id="@+id/line1"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/three"
+                android:layout_marginEnd="@dimen/five"
                 android:layout_below="@+id/groupheading"
                 android:layout_marginTop="@dimen/five"
                 android:background="@color/iconBlue">
@@ -120,6 +122,7 @@
             <TextView
                 android:gravity="center"
                 android:text="Exam Marks"
+                android:layout_marginStart="@dimen/five"
                 style="@style/CustomTextStylePoppinsBold"
                 android:id="@+id/tabTwoName"
                 android:layout_width="match_parent"
@@ -129,16 +132,17 @@
                 android:id="@+id/line2"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/three"
+                android:layout_marginStart="@dimen/five"
                 android:layout_below="@+id/groupheading"
                 android:layout_marginTop="@dimen/five"
-                android:background="@color/gray_color">
+                >
             </View>
         </LinearLayout>
 
     </LinearLayout>
 
     <RelativeLayout
-        android:layout_marginTop="@dimen/ten"
+        android:layout_marginTop="@dimen/fifteen"
         android:layout_below="@+id/toolbarLayout"
         android:id="@+id/rytSearch"
         android:layout_width="match_parent"
@@ -161,6 +165,7 @@
                 android:layout_toEndOf="@+id/imgSearch"
                 android:id="@+id/txtVideoMenu"
                 android:layout_marginStart="@dimen/five"
+                android:maxLines="1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
@@ -185,7 +190,6 @@
         android:id="@+id/rcExamTimeTable"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/eight"
         android:layout_below="@+id/exammarkrecyclerview"
         android:layout_marginTop="@dimen/five"
         android:layout_marginBottom="16dp"/>

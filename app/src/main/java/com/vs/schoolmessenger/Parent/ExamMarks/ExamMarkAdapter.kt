@@ -13,11 +13,13 @@ import android.widget.Filter
 import android.widget.Filterable
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.vs.schoolmessenger.CommonScreens.CommonFileData
+import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkListener
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkModel.ExamData
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkResults
-import com.vs.schoolmessenger.Parent.ExamMarks.ExamProgressActivity
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 class ExamMarkAdapter(
     private var itemList: List<com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamData>,
@@ -108,10 +110,8 @@ class ExamMarkAdapter(
                 context.startActivity(intent)
             }
             btnViewProgress.setOnClickListener {
-                val context = itemView.context
-                val intent = Intent(context, ExamProgressActivity::class.java)
-                intent.putExtra("exam_id", exam.id)
-                context.startActivity(intent)
+                listener.onExamSelected(exam.id ?: "", exam.name ?: "")
+
             }
 
         }

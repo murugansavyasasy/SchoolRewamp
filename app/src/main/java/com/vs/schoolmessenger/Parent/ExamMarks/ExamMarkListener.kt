@@ -5,4 +5,6 @@ import com.vs.schoolmessenger.Parent.CertificateRequest.CertificateRequestAdapte
 
 interface ExamMarkListener  {
    fun onSearchResultEmpty(isEmpty: Boolean)
+   fun onExamSelected(examid: String, examName: String)
+
 }

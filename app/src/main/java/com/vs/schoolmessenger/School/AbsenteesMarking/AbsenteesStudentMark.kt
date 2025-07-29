@@ -24,7 +24,6 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingAdapter.AbsenteesMarkAdapter
-import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.MarkAttendanceDataSending
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.Utils.SpinnerLoadingAdapter
@@ -57,7 +56,7 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
-        setupToolbar()
+        setupToolbarBlue()
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.rytSend.setOnClickListener(this)
         appViewModel = ViewModelProvider(this)[App::class.java]
@@ -92,13 +91,6 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
             getString(R.string.rollasc),
             getString(R.string.rolldsc)
         )
-
-
-//        binding.txtSearchMenu.setOnFocusChangeListener { _, hasFocus ->
-//            if (hasFocus) {
-//                binding.cbSelect.visibility = View.GONE
-//            }
-//        }
 
         binding.cbSelect.setOnClickListener {
             if (binding.cbSelect.isChecked) {
@@ -137,6 +129,7 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
         appViewModel!!.isStudentList!!.observe(this) { response ->
             if (response != null) {
                 if (response.status) {
+                    binding.imgSearch.isEnabled=true
                     binding.lnrHeader.visibility = View.VISIBLE
                     binding.recycleStudents.visibility = View.VISIBLE
                     binding.cbSelect.visibility = View.VISIBLE
@@ -146,6 +139,7 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
 
                 } else {
                     binding.lnrHeader.visibility = View.GONE
+                    binding.imgSearch.isEnabled=false
                     binding.recycleStudents.visibility = View.GONE
                     binding.rlaSortSearch.visibility = View.GONE
                     binding.cbSelect.visibility = View.GONE
@@ -153,6 +147,7 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
                     ErrorMessage(response.message)
                 }
             } else {
+                binding.imgSearch.isEnabled=false
                 binding.recycleStudents.visibility = View.GONE
                 binding.rlaSortSearch.visibility = View.GONE
                 binding.cbSelect.visibility = View.GONE
@@ -317,7 +312,19 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
             }
 
             R.id.rytSend -> {
-                isMarkAttendance()
+                Constant.showSendConfirmationDialog(
+                    this,
+                    getString(R.string.confirmation),
+                    getString(R.string.permission_ok),
+                    getString(R.string.Cancel),
+                    "",
+                    getString(R.string.are_you_sure_want_to_submit_the_attendance)
+                ) { confirmed ->
+                    if (confirmed) {
+                        Constant.showLoading(this)
+                        isMarkAttendance()
+                    }
+                }
             }
         }
     }
@@ -369,23 +376,7 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
 
     }
 
-//    override fun onBackPressed() {
-//        val searchText = binding.txtSearchMenu.text.toString().trim()
-//        if (binding.txtSearchMenu.hasFocus()) {
-//            binding.txtSearchMenu.clearFocus()
-//
-//            // Hide keyboard
-//            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-//            imm.hideSoftInputFromWindow(binding.txtSearchMenu.windowToken, 0)
-//
-//            // Show checkbox only if search is empty
-//            if (searchText.isEmpty()) {
-//                binding.cbSelect.visibility = View.VISIBLE
-//            }
-//        } else {
-//            super.onBackPressed()
-//        }
-//    }
+
 
     override fun onSelectionChanged(selectedIds: List<String>) {
         Log.d("ActivitySelectedIDs", selectedIds.toString())
@@ -399,11 +390,15 @@ class AbsenteesStudentMark : BaseActivity<AbsenteesStudentMarkingBinding>(),
         binding.cbSelect.isChecked = isSpecificStudent.size == studentsList?.size
         isCountAttendance()
     }
-    fun isCountAttendance(){
-        var presentCount= studentsList?.size?.minus(isSpecificStudent.size)
-        binding.toolbarLayout.tvPresentCount.text=presentCount.toString()
-        binding.toolbarLayout.tvAbsentCount.text=isSpecificStudent.size.toString()
+
+    fun isCountAttendance() {
+        val presentCount = studentsList?.size?.minus(isSpecificStudent.size) ?: 0
+        val absentCount = isSpecificStudent.size
+        binding.toolbarLayout.tvPresentCount.text = if (presentCount > 0) String.format("%02d", presentCount) else "0"
+        binding.toolbarLayout.tvAbsentCount.text = if (absentCount > 0) String.format("%02d", absentCount) else "0"
     }
+
+
 
     override fun onIdUnchecked(data: NameAndIds) {
         isSpecificStudent.removeAll { it.id == data.id }

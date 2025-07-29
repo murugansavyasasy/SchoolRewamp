@@ -1,15 +1,19 @@
 package com.vs.schoolmessenger.Dashboard.Parent
 
+import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
+import com.vs.schoolmessenger.CommonScreens.CommonFileData
+import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkListener
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamTimeTableAdapter
 import com.vs.schoolmessenger.Parent.ExamMarks.Model.ExamData
@@ -30,6 +34,7 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
     private var isAccessToken: String? = null
     private var isChildDetails: ChildDetails? = null
     private var appViewModel: App? = null
+    var examTitle=""
 
     private var currentTab = TabType.EXAM_TIMETABLE
 
@@ -120,6 +125,25 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
             }
         }
 
+        appViewModel?.getProgressMarks?.observe(this) { response ->
+            if (response == null || !response.status || response.data.isNullOrEmpty()) {
+                Toast.makeText(this, response!!.message, Toast.LENGTH_SHORT).show()
+                return@observe
+            }
+
+            if (response.status) {
+                Constant.commonFileList.add(0,
+                    CommonFileData(response.data[0],Constant.PDF)
+                )
+                val intent = Intent(this, FilesViewActivity::class.java)
+                intent.putExtra(Constant.subjectName, examTitle)
+                this.startActivity(intent)
+            }
+            else {
+                Toast.makeText(this, response.message, Toast.LENGTH_SHORT).show()
+            }
+        }
+
         fetchexamtimetable()
 
         binding.lnrTabOneName.setOnClickListener {
@@ -180,6 +204,10 @@ class ExamMark : BaseActivity<ExamMarkBinding>(), View.OnClickListener, ExamMark
         }
     }
 
+    override fun onExamSelected(examid: String, examName: String) {
+        appViewModel?.getProgressMarks(isAccessToken ?: "",examid)
+        examTitle=examName
+    }
 
 
     private fun isLoadExamList(data: List<ExamData>) {

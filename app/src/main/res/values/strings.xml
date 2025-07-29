@@ -584,5 +584,7 @@
     <string name="Something_went_wrong_Please_try_again">Something went wrong. Please try again.</string>
     <string name="set_remainder">Set remainder</string>
     <string name="confirm_submit_attendance"><![CDATA[Confirm & Submit Attendance]]></string>
+    <string name="are_you_sure_want_to_submit_the_attendance">Are you sure want to submit the attendance?</string>
+
 
 </resources>
