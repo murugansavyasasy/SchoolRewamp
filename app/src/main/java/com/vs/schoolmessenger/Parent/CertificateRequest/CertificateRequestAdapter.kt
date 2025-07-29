@@ -105,7 +105,6 @@ class CertificateRequestAdapter (
                 icon.setImageResource(R.drawable.sandclockicon)
                 icon.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN)
             }
-
         }
 
         class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

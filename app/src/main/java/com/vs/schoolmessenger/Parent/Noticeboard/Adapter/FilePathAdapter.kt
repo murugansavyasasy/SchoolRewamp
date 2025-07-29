@@ -24,6 +24,7 @@ import com.google.android.material.imageview.ShapeableImageView
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
 import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import com.vs.schoolmessenger.Parent.Communication.UnifiedVoiceAdapter.ShimmerViewHolder
+import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Adapter.EventFilePathAdapter
 import com.vs.schoolmessenger.Parent.Noticeboard.FilePath
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
@@ -39,7 +40,7 @@ class FilePathAdapter (
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
 
-    private var visibleCount = 3
+    private var visibleCount = 2
 
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
@@ -69,8 +70,16 @@ class FilePathAdapter (
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
             holder.bind(visibleList[position], position, fullList, context)
+            val layoutParams = holder.itemView.layoutParams as ViewGroup.MarginLayoutParams
+            val scale = holder.itemView.context.resources.displayMetrics.density
+            val overlapMargin = (10 * scale + 0.5f).toInt()
+            layoutParams.marginStart = if (position != 0) -overlapMargin else 0
+            holder.itemView.layoutParams = layoutParams
         }
     }
+
+
+
 
 
 

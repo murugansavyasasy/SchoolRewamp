@@ -10,11 +10,75 @@
         android:id="@+id/toolbarLayout"
         layout="@layout/school_side_tool_bar" />
 
+    <LinearLayout
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
+        android:layout_below="@+id/toolbarLayout"
+        android:id="@+id/toolbarLayout1"
+        android:weightSum="1"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/lnrTabOneName"
+            android:layout_weight="0.5"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:gravity="center"
+                android:text="Create"
+                android:id="@+id/tabOneName"
+                android:textColor="@color/iconBlue"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </TextView>
+            <View
+                android:id="@+id/line1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/three"
+                android:layout_below="@+id/groupheading"
+                android:layout_marginTop="@dimen/five"
+                android:background="@color/iconBlue">
+            </View>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/lnrTabTwoName"
+            android:layout_weight="0.5"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:gravity="center"
+                android:text="Report"
+                style="@style/CustomTextStylePoppinsBold"
+                android:id="@+id/tabTwoName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </TextView>
+            <View
+                android:id="@+id/line2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/three"
+                android:layout_below="@+id/groupheading"
+                android:layout_marginTop="@dimen/five"
+                android:background="@color/gray_color">
+            </View>
+        </LinearLayout>
+
+    </LinearLayout>
+
     <ScrollView
         android:id="@+id/noticeboardCreate"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbarLayout"
+        android:layout_below="@+id/toolbarLayout1"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginTop="@dimen/ten"
         android:layout_marginEnd="@dimen/ten"
@@ -276,7 +340,8 @@
                             android:layout_width="@dimen/sixteen"
                             android:layout_height="@dimen/sixteen"
                             android:layout_weight="1"
-                            android:src="@drawable/exchangearrow"></ImageView>
+                            android:src="@drawable/exchangearrow">
+                        </ImageView>
 
 
                         <RelativeLayout
@@ -482,5 +547,60 @@
                 </RelativeLayout>
             </RelativeLayout>
         </RelativeLayout>
+
+
+
     </ScrollView>
+
+
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcyNoticeBoard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbarLayout1"
+        android:layout_marginTop="5dp"
+        android:clipToPadding="false"
+        android:visibility="gone"
+        android:fadeScrollbars="false"
+        android:paddingHorizontal="10dp"
+        android:scrollbars="none" />
+
+
+    <LinearLayout
+        android:id="@+id/lytList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rcyNoticeBoard"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/nomessage"
+            android:layout_width="@dimen/two_fifty"
+            android:layout_height="@dimen/two_fifty"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/twenty"
+            android:src="@drawable/nomessages"
+            android:textColor="@color/black"
+            android:textSize="@dimen/fifteen_sp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/txtNoData"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/twenty"
+            android:text="@string/no_list_found"
+            android:textColor="@color/black"
+            android:textSize="@dimen/fifteen_sp"
+            android:visibility="gone" />
+
+
+    </LinearLayout>
+
 </RelativeLayout>

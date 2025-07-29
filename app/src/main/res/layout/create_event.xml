@@ -10,11 +10,76 @@
         android:id="@+id/toolbarLayout"
         layout="@layout/school_side_tool_bar" />
 
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
+        android:layout_below="@+id/toolbarLayout"
+        android:id="@+id/toolbarLayout1"
+        android:weightSum="1"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/lnrTabOneName"
+            android:layout_weight="0.5"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:gravity="center"
+                android:text="Create"
+                android:id="@+id/tabOneName"
+                android:textColor="@color/iconBlue"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </TextView>
+            <View
+                android:id="@+id/line1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/three"
+                android:layout_below="@+id/groupheading"
+                android:layout_marginTop="@dimen/five"
+                android:background="@color/iconBlue">
+            </View>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/lnrTabTwoName"
+            android:layout_weight="0.5"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:gravity="center"
+                android:text="Report"
+                style="@style/CustomTextStylePoppinsBold"
+                android:id="@+id/tabTwoName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </TextView>
+            <View
+                android:id="@+id/line2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/three"
+                android:layout_below="@+id/groupheading"
+                android:layout_marginTop="@dimen/five"
+                android:background="@color/gray_color">
+            </View>
+        </LinearLayout>
+
+    </LinearLayout>
+
     <ScrollView
         android:id="@+id/eventCreate"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbarLayout"
+        android:layout_below="@+id/toolbarLayout1"
         android:scrollbars="none"
         android:visibility="visible"
         app:layout_constraintTop_toBottomOf="@+id/toolbarLayout">
@@ -476,4 +541,145 @@
             </RelativeLayout>
         </RelativeLayout>
     </ScrollView>
+
+
+    <ScrollView
+        android:id="@+id/scroll_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:layout_below="@id/toolbarLayout1"
+        android:fillViewport="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="16dp">
+
+            <TextView
+                android:id="@+id/headerview"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:text="Ongoing Events"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+
+
+
+            <RelativeLayout
+                android:id="@+id/rytSearch1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/thirty_five"
+                android:layout_below="@id/headerview"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="15dp"
+                android:background="@drawable/rect_grey"
+                android:visibility="gone">
+
+
+                <ImageView
+                    android:id="@+id/imgSearch1"
+                    android:layout_width="@dimen/thirty"
+                    android:layout_height="@dimen/thirty"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/ten"
+                    android:src="@drawable/ic_search_grey" />
+
+                <EditText
+                    android:id="@+id/txtVideoMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toEndOf="@id/imgSearch1"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/lblSearch"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp" />
+            </RelativeLayout>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcyongoingevent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:fadeScrollbars="false"
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/rytSearch1"
+                android:paddingHorizontal="10dp"
+                android:scrollbars="none" />
+
+
+            <ImageView
+                android:id="@+id/dotindicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rcyongoingevent"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/dotindicator" />
+
+
+
+
+
+            <TextView
+                android:id="@+id/upcomingevent_headerview"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/dotindicator"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:text="Upcoming Events"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcyupcomingevent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:fadeScrollbars="false"
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/upcomingevent_headerview"
+                android:paddingHorizontal="10dp"
+                android:scrollbars="none" />
+
+
+
+            <TextView
+                android:id="@+id/completedevent_headerview"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rcyupcomingevent"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:text="Completed Events"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcycompletedevent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:fadeScrollbars="false"
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/completedevent_headerview"
+                android:paddingHorizontal="10dp"
+                android:scrollbars="none" />
+
+
+        </RelativeLayout>
+    </ScrollView>
+
+
 </RelativeLayout>

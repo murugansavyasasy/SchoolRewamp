@@ -585,6 +585,9 @@
     <string name="set_remainder">Set remainder</string>
     <string name="confirm_submit_attendance"><![CDATA[Confirm & Submit Attendance]]></string>
     <string name="are_you_sure_want_to_submit_the_attendance">Are you sure want to submit the attendance?</string>
+    <string name="no_data">no_data</string>
+    <string name="monday">Monday</string>
+    <string name="no_timetable_available">No timetable available</string>
 
 
 </resources>

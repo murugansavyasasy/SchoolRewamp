@@ -60,6 +60,8 @@ import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionModel.DailyCollectionReportResponse
+import com.vs.schoolmessenger.School.Event.Model.EventDeleteResponse
+import com.vs.schoolmessenger.School.Event.Model.SchoolEventResponse
 import com.vs.schoolmessenger.School.Event.Response.EventSendResponse
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportModel.FeePendingReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
@@ -80,6 +82,8 @@ import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistor
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffAttendanceReportResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffLocationResponse
+import com.vs.schoolmessenger.School.NoticeBoard.Model.NoticeBoardStaffResponse
+import com.vs.schoolmessenger.School.NoticeBoard.Response.NoticeBoardDeleteResponse
 import com.vs.schoolmessenger.School.NoticeBoard.Response.NoticeBoardSendResponse
 import com.vs.schoolmessenger.School.SchoolStrength.Model.SchoolStrengthResponse
 import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
@@ -394,10 +398,20 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String
     ): Call<NoticeBoardResponse?>?
 
+    @GET(APIMethods.isNoticeBoardStaffReport)
+    fun isNoticeBoardStaffReport(
+        @Header(APIKeyNames.Authorization) token: String
+    ): Call<NoticeBoardStaffResponse?>?
+
     @GET(APIMethods.IsGetEventReport)
     fun IsGetEventReport(
         @Header(APIKeyNames.Authorization) token: String
     ): Call<EventResponse?>?
+
+    @GET(APIMethods.IsGetEventSchoolReport)
+    fun IsGetEventSchoolReport(
+        @Header(APIKeyNames.Authorization) token: String
+    ): Call<SchoolEventResponse?>?
 
     @GET(APIMethods.IsGetHolidayReport)
     fun IsGetHolidayReport(
@@ -662,5 +676,20 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String,
         @Query(APIKeyNames.exam_id) exam_id: String
     ): Call<ProgressCardResponse?>?
+
+
+    @Headers("Content-Type: application/json")
+    @PUT(APIMethods.isnoticeboarddelete)
+    fun isnoticeboarddelete(
+        @Header(APIKeyNames.Authorization) token: String, @Body requestBody: RequestBody
+    ): Call<NoticeBoardDeleteResponse?>
+
+
+    @Headers("Content-Type: application/json")
+    @PUT(APIMethods.isEventDelete)
+    fun isEventDelete(
+        @Header(APIKeyNames.Authorization) token: String, @Body requestBody: RequestBody
+    ): Call<EventDeleteResponse?>
+
 
 }

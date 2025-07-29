@@ -3,9 +3,11 @@ package com.vs.schoolmessenger.Parent.Noticeboard
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.os.Build
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -29,6 +31,7 @@ class NoticeBoard : BaseActivity<NoticeRevampBinding>(), View.OnClickListener,
     lateinit var mAdapter: NoticeBoardAdapter
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
         setUpGradientParent()

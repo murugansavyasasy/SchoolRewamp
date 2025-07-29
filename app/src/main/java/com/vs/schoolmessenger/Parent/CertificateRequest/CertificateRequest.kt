@@ -55,8 +55,7 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
         binding.toolbarLayout.lblRightSideBar.text = "Request"
         isChildDetails = SharedPreference.getChildDetails(this)
         binding.toolbarLayout.lblStudentName.text = isChildDetails?.name ?: ""
-        binding.toolbarLayout.lblStudentSection.text =
-            isChildDetails?.standard_name + " - " + isChildDetails?.section_name
+        binding.toolbarLayout.lblStudentSection.text = isChildDetails?.standard_name + " - " + isChildDetails?.section_name
 
         isAccessToken = isChildDetails?.access_token
         appViewModel = ViewModelProvider(this)[App::class.java]
@@ -87,15 +86,12 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
             }
         }
 
-
-
         appViewModel!!.isSendCertificateRequest?.observe(this) { response ->
             Constant.hideLoading(this)
             if (response != null) {
                 Constant.showTopAlertPopup(response!!.message, this)
             }
         }
-
     }
 
     private fun loadCertificates(certificateTypes: List<String>) {
@@ -110,7 +106,6 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
                 isSelectedCertificateName = certificateTypes[position]
                 Log.d("isSelectedCertificateName", isSelectedCertificateName!!)
             }
-
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
     }
@@ -176,7 +171,6 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
                 binding.rytRequestTap.visibility = View.VISIBLE
                 binding.recyclerView.visibility = View.GONE
                 binding.lnrNoRecords.visibility = View.GONE
-
             }
 
             R.id.ivradio -> {
