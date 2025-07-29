@@ -1,12 +1,14 @@
 package com.vs.schoolmessenger.School.AbsenteesMarking
 
 import android.content.Context
+import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Build
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import androidx.annotation.RequiresApi

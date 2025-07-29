@@ -196,8 +196,8 @@ class AwsUploadingPreSigned {
                 }
 
                 override fun onError(error: Exception?) {
-                    Log.e("UploadError", error.toString())
-                    uploadCallback.onUploadError(error?.message)
+                    Log.e("UploadError", error!!.message.toString())
+                    uploadCallback.onUploadError(error.message)
                 }
             })
     }

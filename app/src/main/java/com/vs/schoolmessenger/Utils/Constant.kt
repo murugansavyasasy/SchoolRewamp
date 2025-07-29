@@ -1180,121 +1180,88 @@ object Constant {
         context: Context,
         files: List<FileItem>,
         outputDir: String,
-        format: Bitmap.CompressFormat = Bitmap.CompressFormat.JPEG, // Safe default
-        quality: Int = 80,
-        maxWidth: Int = 1280,
-        maxHeight: Int = 1280,
+        format: Bitmap.CompressFormat,
+        quality: Int,
+        maxWidth: Int,
+        maxHeight: Int,
         onEachProcessed: (original: FileItem, outputPath: String?, success: Boolean) -> Unit,
         onComplete: () -> Unit
     ) {
         Thread {
-            val outputFolder = File(outputDir)
-            if (!outputFolder.exists()) {
-                val created = outputFolder.mkdirs()
-                Log.d("Compressor", "📁 Output folder created: $created at $outputDir")
-            }
+            val newList = mutableListOf<FileItem>()
 
-            if (!outputFolder.canWrite()) {
-                Log.e("Compressor", "❌ Cannot write to output folder: $outputDir")
-                onComplete()
-                return@Thread
-            }
+            for (fileItem in files.toList()) {
+                try {
+                    val uri = Uri.parse(fileItem.path)
+                    val mimeType = context.contentResolver.getType(uri)
 
-            for (fileItem in files) {
-                if (fileItem.type == FileType.IMAGE) {
-                    try {
-                        val uri = Uri.parse(fileItem.path)
+                    val isImage = mimeType?.startsWith("image/") == true ||
+                            fileItem.path.endsWith(".jpg", true) ||
+                            fileItem.path.endsWith(".jpeg", true) ||
+                            fileItem.path.endsWith(".png", true)
 
-                        val bitmap: Bitmap? = try {
-                            when {
-                                fileItem.path.startsWith("content://") -> {
-                                    context.contentResolver.openInputStream(uri)
-                                        ?.use { inputStream ->
-                                            BitmapFactory.decodeStream(inputStream)
-                                        }
-                                }
+                    if (!isImage) {
+                        onEachProcessed(fileItem, fileItem.path, true)
+                        continue
+                    }
 
-                                fileItem.path.startsWith("file://") -> {
-                                    val cleanPath = uri.path // strips "file://"
-                                    BitmapFactory.decodeFile(cleanPath)
-                                }
+                    val inputStream = context.contentResolver.openInputStream(uri)
+                    val bitmap = inputStream?.use { BitmapFactory.decodeStream(it) }
 
-                                else -> {
-                                    BitmapFactory.decodeFile(fileItem.path)
-                                }
-                            }
-                        } catch (e: Exception) {
-                            Log.e("Compressor", "❌ Error decoding: ${fileItem.path}", e)
-                            null
-                        }
+                    if (bitmap != null) {
+                        val scaledBitmap = resizeBitmap(bitmap, maxWidth, maxHeight)
 
-                        if (bitmap == null) {
-                            Log.e("Compressor", "❌ Bitmap is null for: ${fileItem.path}")
-                            onEachProcessed(fileItem, null, false)
-                            continue
-                        }
-
-                        val scaledBitmap = scaleBitmap(bitmap, maxWidth, maxHeight)
-
-                        // Select safe compression format and extension
-                        val (safeFormat, extension) = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && format != Bitmap.CompressFormat.JPEG) {
-                            Pair(
-                                format, when (format) {
-                                    Bitmap.CompressFormat.PNG -> "png"
-                                    Bitmap.CompressFormat.WEBP -> "webp"
-                                    else -> "jpg"
-                                }
-                            )
-                        } else {
-                            Pair(Bitmap.CompressFormat.JPEG, "jpg")
-                        }
-
-                        val outputFile = File(
-                            outputFolder,
-                            "SchoolChimes_${System.currentTimeMillis()}.$extension"
+                        val compressedFile = File(
+                            outputDir,
+                            "IMG_${System.currentTimeMillis()}.jpg"
                         )
-                        Log.d(
-                            "Compressor",
-                            "Writing file: ${outputFile.absolutePath}, Format=$safeFormat"
-                        )
-
-                        val success = try {
-                            FileOutputStream(outputFile).use { out ->
-                                val result = scaledBitmap.compress(safeFormat, quality, out)
-                                out.flush()
-                                result
-                            }
-                        } catch (e: Exception) {
-                            Log.e("Compressor", "❌ Failed to write: ${outputFile.absolutePath}", e)
-                            false
+                        FileOutputStream(compressedFile).use { out ->
+                            scaledBitmap.compress(format, quality, out)
+                            out.flush()
                         }
 
-                        if (success) {
-                            Log.d(
-                                "Compressor",
-                                "✅ Compressed: ${outputFile.absolutePath} (${outputFile.length() / 1024} KB)"
-                            )
-                            onEachProcessed(fileItem, outputFile.absolutePath, true)
-                        } else {
-                            Log.e("Compressor", "❌ Compress failed for: ${fileItem.path}")
-                            onEachProcessed(fileItem, null, false)
-                        }
-
-                    } catch (e: Exception) {
-                        Log.e("Compressor", "❌ Exception compressing ${fileItem.path}", e)
+                        onEachProcessed(fileItem, compressedFile.absolutePath, true)
+                        newList.add(fileItem)
+                    } else {
+                        Log.e("Compressor", "❌ Failed to decode: ${fileItem.path}")
                         onEachProcessed(fileItem, null, false)
                     }
-                } else {
-                    // Non-image, pass original path
-                    onEachProcessed(fileItem, fileItem.path, true)
+                } catch (e: Exception) {
+                    Log.e("Compressor", "❌ Exception compressing ${fileItem.path}", e)
+                    onEachProcessed(fileItem, null, false)
                 }
             }
 
-            onComplete()
+            Handler(Looper.getMainLooper()).post {
+                onComplete()
+            }
         }.start()
     }
 
-    private fun scaleBitmap(bitmap: Bitmap, maxWidth: Int, maxHeight: Int): Bitmap {
+    private fun resizeBitmap(bitmap: Bitmap, maxWidth: Int, maxHeight: Int): Bitmap {
+        val width = bitmap.width
+        val height = bitmap.height
+
+        if (width <= maxWidth && height <= maxHeight) return bitmap
+
+        val ratio = width.toFloat() / height
+        val targetWidth: Int
+        val targetHeight: Int
+
+        if (maxWidth / ratio <= maxHeight) {
+            targetWidth = maxWidth
+            targetHeight = (maxWidth / ratio).toInt()
+        } else {
+            targetHeight = maxHeight
+            targetWidth = (maxHeight * ratio).toInt()
+        }
+
+        return Bitmap.createScaledBitmap(bitmap, targetWidth, targetHeight, true)
+    }
+
+
+
+    fun scaleBitmap(bitmap: Bitmap, maxWidth: Int, maxHeight: Int): Bitmap {
         val width = bitmap.width
         val height = bitmap.height
 
