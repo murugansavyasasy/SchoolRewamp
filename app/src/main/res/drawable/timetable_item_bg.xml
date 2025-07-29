@@ -3,12 +3,16 @@
     android:shape="rectangle">
 
     <!-- Background color -->
-    <solid android:color="#f2f2f7" /> <!-- Light gray (or any color you like) -->
+    <solid android:color="#f2f2f7" /> <!-- Light gray -->
 
-    <!-- Rounded corners -->
-    <corners android:radius="30dp" />
+    <!-- Rounded corners: Only top-left and top-right -->
+    <corners
+        android:topLeftRadius="30dp"
+        android:topRightRadius="30dp"
+        android:bottomLeftRadius="0dp"
+        android:bottomRightRadius="0dp" />
 
-    <!-- Optional: border -->
+    <!-- Optional border (same as background to appear borderless) -->
     <stroke
         android:width="5dp"
         android:color="#f2f2f7" />

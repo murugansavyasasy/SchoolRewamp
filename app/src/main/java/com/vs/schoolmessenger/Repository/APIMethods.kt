@@ -34,6 +34,7 @@ object APIMethods {
     const val isDetailedPendingReport = "fee/api/fee-report/detailed-pending-report"
     const val isDetailedWisePendingReport = "fee/api/fee-report/detailed-class-wise-pending-report"
     const val isNoticeBoardReport = "admin/api/notice-board/get-notice"
+    const val isNoticeBoardStaffReport = "admin/api/notice-board/report"
     const val isSendText = "comm/api/text-message/send-text"
     const val isSendHomeWork = "comm/api/homework/send-homework"
     const val isAssignmentSend = "comm/api/assignment/send-assignment"
@@ -65,6 +66,7 @@ object APIMethods {
     const val punch_history = "staff-attd/api/geometric/geometric-punch-history"
     const val student_report = "admin/api/get-student-report"
     const val IsGetEventReport = "admin/api/school-event/get-event"
+    const val IsGetEventSchoolReport = "admin/api/school-event/report"
     const val send_absentee_sms = "stud-attd/api/attendance/send-absentees-sms-with-session-type"
     const val get_student_attendance_report_for_scchool =
         "stud-attd/api/attendance/student-attendance-report"
@@ -112,6 +114,8 @@ object APIMethods {
     const val progress_card = "/exam/api/exam/get-progress-card"
     const val isleaverequestupdate = "comm/api/leave-req/update"
     const val isleaverequestdelete = "comm/api/leave-req/delete"
+    const val isEventDelete = "admin/api/school-event/delete"
+    const val isnoticeboarddelete = "admin/api/notice-board/delete"
 
 }
 

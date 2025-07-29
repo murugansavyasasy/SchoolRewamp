@@ -1,58 +1,51 @@
-package com.vs.schoolmessenger.Parent.Noticeboard.Adapter
+package com.vs.schoolmessenger.School.NoticeBoard
 
 import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.DatePickerDialog
-import android.app.PendingIntent
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import android.text.TextUtils
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnTouchListener
 import android.view.ViewGroup
-import android.webkit.WebResourceError
-import android.webkit.WebResourceRequest
-import android.webkit.WebViewClient
 import android.widget.Filter
+import android.widget.Filter.FilterResults
 import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.PopupMenu
 import android.widget.ProgressBar
-import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.imageview.ShapeableImageView
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
 import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
-import com.vs.schoolmessenger.Parent.Noticeboard.Notice
-import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardClickListener
+import com.vs.schoolmessenger.Parent.Noticeboard.Adapter.FilePathAdapter
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.NoticeBoard.Model.NoticeStaffData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 import me.relex.circleindicator.CircleIndicator2
 import java.util.Calendar
 
-class NoticeBoardAdapter(
-    private var itemList: List<Notice>?,
+class SchoolNoticeBoardAdapter (
+    private var itemList: List<NoticeStaffData>?,
     private var listener: NoticeBoardClickListener,
     private var context: Context,
     private var isLoading: Boolean
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
-    private var fullList: List<Notice> = itemList ?: listOf()
-    private var filteredList: List<Notice> = itemList ?: listOf()
+    private var fullList: List<NoticeStaffData> = itemList ?: listOf()
+    private var filteredList: List<NoticeStaffData> = itemList ?: listOf()
 
     init {
         fullList = itemList ?: listOf()
@@ -70,7 +63,7 @@ class NoticeBoardAdapter(
         } else {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.notice_board_rewamp_card, parent, false)
-            DataViewHolder(view, context)
+            DataViewHolder(view, context, listener)
         }
     }
 
@@ -111,7 +104,7 @@ class NoticeBoardAdapter(
             }
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                filteredList = results?.values as? List<Notice> ?: listOf()
+                filteredList = results?.values as? List<NoticeStaffData> ?: listOf()
                 listener.onSearchResultEmpty(filteredList.isEmpty())
                 notifyDataSetChanged()
             }
@@ -119,7 +112,24 @@ class NoticeBoardAdapter(
         }
     }
 
-    class DataViewHolder(itemView: View, private val context: Context) :
+    fun removeItemAt(position: Int) {
+        if (position in filteredList.indices) {
+            val removedNotice = filteredList[position]
+            filteredList = filteredList.toMutableList().apply {
+                removeAt(position)
+            }
+            fullList = fullList.filterNot { it.id == removedNotice.id }
+            notifyItemRemoved(position)
+
+            // Optional: show "No Data Found" if empty
+            if (filteredList.isEmpty()) {
+                listener.onSearchResultEmpty(true)
+            }
+        }
+    }
+
+
+    class DataViewHolder(itemView: View, private val context: Context, private val listener: NoticeBoardClickListener) :
         RecyclerView.ViewHolder(itemView) {
         //        private var isTextExpanded = false
 //        private val LblHWSubjectName: TextView = itemView.findViewById(R.id.LblHWSubjectName)
@@ -143,9 +153,10 @@ class NoticeBoardAdapter(
 
         private val total_numbers: TextView = itemView.findViewById(R.id.total_numbers)
         private val remaindertag: TextView = itemView.findViewById(R.id.remaindertag)
+        private val options: ImageView = itemView.findViewById(R.id.options)
 
         @SuppressLint("ClickableViewAccessibility")
-        fun bind(noticeData: Notice, position: Int, adapter: NoticeBoardAdapter) {
+        fun bind(noticeData: NoticeStaffData, position: Int, adapter: SchoolNoticeBoardAdapter) {
 
 //            LblHWSubjectName.visibility = View.GONE
 //            imgNewImage.visibility = View.GONE
@@ -160,6 +171,29 @@ class NoticeBoardAdapter(
             lblTimeImage.text = time
             video_player.visibility = View.GONE
             loadingBar.visibility = View.GONE
+            options.visibility = View.VISIBLE
+
+
+            options.setOnClickListener {
+                val popup = PopupMenu(context, options)
+                popup.menuInflater.inflate(R.menu.notice_options_menu, popup.menu)
+                popup.setOnMenuItemClickListener { menuItem ->
+                    when (menuItem.itemId) {
+                        R.id.menu_edit -> {
+//                            listener.onEditNotice(noticeData)
+                            true
+                        }
+                        R.id.menu_delete -> {
+                            listener.onDeleteNotice(noticeData.id, noticeData.id, adapterPosition)
+                            true
+                        }
+
+                        else -> false
+                    }
+                }
+                popup.show()
+            }
+
 
 
             remaindertag.setOnClickListener {
@@ -297,6 +331,8 @@ class NoticeBoardAdapter(
         }
 
 
+
+
         fun scheduleNotification(context: Context, triggerTime: Long) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
@@ -314,6 +350,8 @@ class NoticeBoardAdapter(
                 }
             }
         }
+
+
 
 
 //        private fun isSeeMoreExpanded(tvSeeMore: TextView, lblContent: TextView) {

@@ -39,12 +39,12 @@
                 android:layout_weight="1" />
 
             <ImageView
-                android:id="@+id/going91001"
+                android:id="@+id/options"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="10dp"
-                android:src="@drawable/ic_notification"
+                android:src="@drawable/ic_more_vert"
                 android:visibility="gone" />
 
         </LinearLayout>

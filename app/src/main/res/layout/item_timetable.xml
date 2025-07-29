@@ -3,25 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="16dp"
-    android:layout_marginTop="8dp"
-    android:layout_marginBottom="8dp"
+    android:layout_marginHorizontal="@dimen/sixteen"
+    android:layout_marginTop="@dimen/eight"
+    android:layout_marginBottom="@dimen/eight"
     android:backgroundTint="@android:color/white"
-    android:elevation="2dp"
+    android:elevation="@dimen/two"
     android:padding="0dp"
-    android:radius="16dp"
-    app:cardCornerRadius="15dp">
+    android:radius="@dimen/sixteen"
+    app:cardCornerRadius="@dimen/fifteen">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="@dimen/hundred_thirty"
         android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="60dp"
+            android:layout_width="@dimen/sixty"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="@dimen/twenty"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -31,35 +31,35 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-medium"
                 android:gravity="center"
-                android:text="09:30\nAM"
+                android:text="09:30 am"
                 android:textColor="@color/black"
-                android:textSize="14sp"
+                android:textSize="@dimen/fourteen_sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/end_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="@dimen/twele"
                 android:fontFamily="sans-serif-medium"
                 android:gravity="center"
-                android:text="10:30\nAM"
+                android:text="10:30 am"
                 android:textColor="@color/black"
-                android:textSize="14sp"
+                android:textSize="@dimen/fourteen_sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginStart="@dimen/twele"
+            android:layout_marginEnd="@dimen/sixteen"
             android:gravity="center_vertical">
 
             <View
                 android:id="@+id/yellow_line"
-                android:layout_width="4dp"
-                android:layout_height="300dp"
+                android:layout_width="@dimen/four"
+                android:layout_height="@dimen/two_hundred"
                 android:background="@color/yellow" />
         </LinearLayout>
 
@@ -75,25 +75,25 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-medium"
-                android:text="MUSIC"
+                android:text="music"
                 android:textColor="@color/black"
-                android:textSize="16sp"
+                android:textSize="@dimen/sixteen"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/name_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/five"
                 android:fontFamily="sans-serif"
-                android:text="SATHISHKUMAR G"
+                android:text="sathishkumar_g"
                 android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:textSize="@dimen/fourteen_sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/eight"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -102,9 +102,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-medium"
-                    android:text="Duration – 1h"
+                    android:text="duration 1"
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="@dimen/fourteen_sp" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

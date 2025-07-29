@@ -50,6 +50,8 @@ import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionModel.DailyCollectionReportResponse
+import com.vs.schoolmessenger.School.Event.Model.EventDeleteResponse
+import com.vs.schoolmessenger.School.Event.Model.SchoolEventResponse
 import com.vs.schoolmessenger.School.Event.Response.EventSendResponse
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportModel.FeePendingReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
@@ -70,6 +72,8 @@ import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistor
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffAttendanceReportResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffLocationResponse
+import com.vs.schoolmessenger.School.NoticeBoard.Model.NoticeBoardStaffResponse
+import com.vs.schoolmessenger.School.NoticeBoard.Response.NoticeBoardDeleteResponse
 import com.vs.schoolmessenger.School.NoticeBoard.Response.NoticeBoardSendResponse
 import com.vs.schoolmessenger.School.SchoolStrength.Model.SchoolStrengthResponse
 import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
@@ -135,9 +139,13 @@ class App(application: Application) : AndroidViewModel(application) {
 
 
     var isNoticeBoardReport: LiveData<NoticeBoardResponse?>? = null
+    var isNoticeBoardStaffReport: LiveData<NoticeBoardStaffResponse?>? = null
         private set
 
     var IsGetEventReport: LiveData<EventResponse?>? = null
+        private set
+
+    var IsGetEventSchoolReport: LiveData<SchoolEventResponse?>? = null
         private set
     var IsGetHolidayReport: LiveData<HolidayResponse?>? = null
         private set
@@ -242,6 +250,8 @@ class App(application: Application) : AndroidViewModel(application) {
     var getviewmarks: LiveData<ExamMarksResponse?>? = null
     var isleaverequestupdate: LiveData<LeaveUpdateResponse?>? = null
     var isleaverequestdelete: LiveData<LeaveRequestDeleteResponse?>? = null
+    var isnoticeboarddelete: LiveData<NoticeBoardDeleteResponse?>? = null
+    var isEventDelete: LiveData<EventDeleteResponse?>? = null
     var getProgressMarks: LiveData<ProgressCardResponse?>? = null
     var isHomeWorkComplete: LiveData<StatusMessageModel?>? = null
 
@@ -263,6 +273,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isGetAssignmentReport = apiSchoolRepositories.isGetAssignmentReportLiveData
         isAssignmentDelete = apiSchoolRepositories.isDeleteAssignmentLiveData
         isNoticeBoardReport = apiSchoolRepositories.isNoticeBoardReportLiveData
+        isNoticeBoardStaffReport = apiSchoolRepositories.isNoticeBoardStaffReportLiveData
         isGetDailyCollectionReport = apiSchoolRepositories.isGetDailyCollectionReportLiveData
         isGetSchoolStrengthReport = apiSchoolRepositories.isGetSchoolStrengthReportLiveData
         isDetailedPendingReport = apiSchoolRepositories.isDetailedPendingReportLiveData
@@ -271,6 +282,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isSendHomeWork = apiSchoolRepositories.isSendHomeWorkLiveData
         isAssignmentSend = apiSchoolRepositories.isSendAssignmentLiveData
         IsGetEventReport = apiSchoolRepositories.IsGetEventReportLiveData
+        IsGetEventSchoolReport = apiSchoolRepositories.IsGetEventSchoolReportLiveData
         IsGetHolidayReport = apiSchoolRepositories.IsGetHolidayReportLiveData
         isVoiceSend = apiSchoolRepositories.isSendVoiceLiveData
         isUpdateStatusArchive = apiSchoolRepositories.isUpdateStatusArchiveLiveData
@@ -338,6 +350,8 @@ class App(application: Application) : AndroidViewModel(application) {
         getProgressMarks = apiParentRepositories.getProgressMarksLiveData
         isHomeWorkComplete = apiParentRepositories.isUpdateCompleteHomeWorkLiveData
         getstudentdetailsforchat = apiParentRepositories.getstudentdetailsforchatLiveData
+        isnoticeboarddelete = apiSchoolRepositories.isnoticeboarddeleteLiveData
+        isEventDelete = apiSchoolRepositories.isEventDeleteLiveData
 
     }
 
@@ -466,9 +480,16 @@ class App(application: Application) : AndroidViewModel(application) {
     fun isNoticeBoardReport(isToken: String, activity: Activity) {
         apiSchoolRepositories.isNoticeBoardReport(isToken, activity)
     }
+    fun isNoticeBoardStaffReport(isToken: String, activity: Activity) {
+        apiSchoolRepositories.isNoticeBoardStaffReport(isToken, activity)
+    }
 
     fun IsGetEventReport(isToken: String, activity: Activity) {
         apiSchoolRepositories.IsGetEventReport(isToken, activity)
+    }
+
+    fun IsGetEventSchoolReport(isToken: String, activity: Activity) {
+        apiSchoolRepositories.IsGetEventSchoolReport(isToken, activity)
     }
 
     fun IsGetHolidayReport(isToken: String, activity: Activity) {
@@ -851,6 +872,16 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun isleaverequestdelete(isToken: String, request: LeaveRequestDelete, activity: Activity) {
         apiParentRepositories.isleaverequestdelete(isToken, request, activity)
+    }
+
+
+    fun isnoticeboarddelete(isToken: String, request: RequestBody, activity: Activity) {
+        apiSchoolRepositories.isnoticeboarddelete(isToken, request, activity)
+    }
+
+
+    fun isEventDelete(isToken: String, request: RequestBody, activity: Activity) {
+        apiSchoolRepositories.isEventDelete(isToken, request, activity)
     }
 
     fun isHomeWorkComplete(isToken: String, jsonObject: JsonObject) {

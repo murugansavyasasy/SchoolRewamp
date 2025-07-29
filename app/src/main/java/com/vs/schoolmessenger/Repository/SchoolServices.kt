@@ -31,6 +31,8 @@ import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.ChatModel.Answer
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.QuestionModelResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.Request.QuestionModelRequest
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
+import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestDelete
+import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestDeleteResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.SendAbsenteeSMSResponse
 import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.StudentAttendanceReportDataResponse
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeStudentsResponse
@@ -40,6 +42,8 @@ import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionModel.DailyCollectionReportResponse
+import com.vs.schoolmessenger.School.Event.Model.EventDeleteResponse
+import com.vs.schoolmessenger.School.Event.Model.SchoolEventResponse
 import com.vs.schoolmessenger.School.Event.Response.EventSendResponse
 import com.vs.schoolmessenger.School.FeePendingReport.FeePendingReportModel.FeePendingReportResponse
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReportApiResponse
@@ -59,6 +63,8 @@ import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.LocationHistor
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.PunchHistoryResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffAttendanceReportResponse
 import com.vs.schoolmessenger.School.MarkYourAttendance.DataClass.StaffLocationResponse
+import com.vs.schoolmessenger.School.NoticeBoard.Model.NoticeBoardStaffResponse
+import com.vs.schoolmessenger.School.NoticeBoard.Response.NoticeBoardDeleteResponse
 import com.vs.schoolmessenger.School.NoticeBoard.Response.NoticeBoardSendResponse
 import com.vs.schoolmessenger.School.SchoolStrength.Model.SchoolStrengthResponse
 import com.vs.schoolmessenger.School.StudentReport.GetStudentReportData
@@ -96,6 +102,7 @@ class SchoolServices {
     var isUpdateStatusCommunication: MutableLiveData<StatusArchiveResponse?>
     var isHomeWorkDetailsData: MutableLiveData<GetHomeworkData?>
     var isNoticeBoardReport: MutableLiveData<NoticeBoardResponse?>
+    var isNoticeBoardStaffReport: MutableLiveData<NoticeBoardStaffResponse?>
     var isGetSchoolStrengthReport: MutableLiveData<SchoolStrengthResponse?>
     var isDetailedPendingReport: MutableLiveData<FeePendingReportResponse?>
 
@@ -114,6 +121,7 @@ class SchoolServices {
     var isStudentReportList: MutableLiveData<GetStudentReportData?>
 
     var IsGetEventReport: MutableLiveData<EventResponse?>
+    var IsGetEventSchoolReport: MutableLiveData<SchoolEventResponse?>
 
     var IsGetHolidayReport: MutableLiveData<HolidayResponse?>
     var isSendAbsenteeSMS: MutableLiveData<SendAbsenteeSMSResponse?>
@@ -142,6 +150,8 @@ class SchoolServices {
     var sendactivatecoupon: MutableLiveData<ActivateCouponResponse?>
     var getstaffquestions: MutableLiveData<QuestionResponse?>
     var sendanswer: MutableLiveData<AnswerModelResponse?>
+    var isnoticeboarddelete: MutableLiveData<NoticeBoardDeleteResponse?>
+    var isEventDelete: MutableLiveData<EventDeleteResponse?>
 
 
     init {
@@ -186,6 +196,7 @@ class SchoolServices {
         isStaffWiseAttendanceReportList = MutableLiveData()
         isStudentReportList = MutableLiveData()
         IsGetEventReport = MutableLiveData()
+        IsGetEventSchoolReport = MutableLiveData()
         IsGetHolidayReport = MutableLiveData()
         isSendAbsenteeSMS = MutableLiveData()
         isStudentAttendanceReportForSchool = MutableLiveData()
@@ -209,6 +220,9 @@ class SchoolServices {
         sendactivatecoupon = MutableLiveData()
         getstaffquestions = MutableLiveData()
         sendanswer = MutableLiveData()
+        isnoticeboarddelete = MutableLiveData()
+        isEventDelete = MutableLiveData()
+        isNoticeBoardStaffReport = MutableLiveData()
     }
 
 
@@ -762,6 +776,43 @@ class SchoolServices {
         get() = isNoticeBoardReport
 
 
+    fun isNoticeBoardStaffReport(
+        isToken: String, activity: Activity
+    ) {
+        RestClient.apiInterfaces.isNoticeBoardStaffReport(isToken)
+            ?.enqueue(object : Callback<NoticeBoardStaffResponse?> {
+                override fun onResponse(
+                    call: Call<NoticeBoardStaffResponse?>,
+                    response: Response<NoticeBoardStaffResponse?>
+                ) {
+                    Log.d(
+                        "isGetCountryList", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isNoticeBoardStaffReport.postValue(response.body())
+                            } else {
+                                isNoticeBoardStaffReport.postValue(response.body())
+                            }
+                        }
+                    } else {
+                        isNoticeBoardStaffReport.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<NoticeBoardStaffResponse?>, t: Throwable) {
+                    isNoticeBoardStaffReport.postValue(null)
+                    Log.d("t.printStackTrace()", t.printStackTrace().toString())
+                }
+            })
+    }
+
+    val isNoticeBoardStaffReportLiveData: LiveData<NoticeBoardStaffResponse?>
+        get() = isNoticeBoardStaffReport
+
+
     fun IsGetEventReport(
         isToken: String, activity: Activity
     ) {
@@ -797,6 +848,44 @@ class SchoolServices {
 
     val IsGetEventReportLiveData: LiveData<EventResponse?>
         get() = IsGetEventReport
+
+
+
+ fun IsGetEventSchoolReport(
+        isToken: String, activity: Activity
+    ) {
+        RestClient.apiInterfaces.IsGetEventSchoolReport(isToken)
+            ?.enqueue(object : Callback<SchoolEventResponse?> {
+                override fun onResponse(
+                    call: Call<SchoolEventResponse?>,
+                    response: Response<SchoolEventResponse?>
+                ) {
+                    Log.d(
+                        "isGetCountryList", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                IsGetEventSchoolReport.postValue(response.body())
+                            } else {
+                                IsGetEventSchoolReport.postValue(response.body())
+                            }
+                        }
+                    } else {
+                        IsGetEventSchoolReport.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<SchoolEventResponse?>, t: Throwable) {
+                    IsGetEventSchoolReport.postValue(null)
+                    Log.d("t.printStackTrace()", t.printStackTrace().toString())
+                }
+            })
+    }
+
+    val IsGetEventSchoolReportLiveData: LiveData<SchoolEventResponse?>
+        get() = IsGetEventSchoolReport
 
     fun IsGetHolidayReport(
         isToken: String, activity: Activity
@@ -2454,6 +2543,87 @@ class SchoolServices {
 
     val sendanswerLiveData: LiveData<AnswerModelResponse?>
         get() = sendanswer
+
+
+
+    fun isnoticeboarddelete(
+        isToken: String, request: RequestBody, activity: Activity
+    ) {
+        RestClient.apiInterfaces.isnoticeboarddelete(isToken, request)
+            ?.enqueue(object : Callback<NoticeBoardDeleteResponse?> {
+                override fun onResponse(
+                    call: Call<NoticeBoardDeleteResponse?>, response: Response<NoticeBoardDeleteResponse?>
+                ) {
+                    Log.d(
+                        "isGetCountryList", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isnoticeboarddelete.postValue(response.body())
+                            } else {
+                                isnoticeboarddelete.postValue(response.body())
+                            }
+                        }
+                    } else {
+                        isnoticeboarddelete.postValue(null)
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<NoticeBoardDeleteResponse?>,
+                    t: Throwable
+                ) {
+                    isnoticeboarddelete.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isnoticeboarddeleteLiveData: LiveData<NoticeBoardDeleteResponse?>
+        get() = isnoticeboarddelete
+
+
+    fun isEventDelete(
+        isToken: String, request: RequestBody, activity: Activity
+    ) {
+        RestClient.apiInterfaces.isEventDelete(isToken, request)
+            ?.enqueue(object : Callback<EventDeleteResponse?> {
+                override fun onResponse(
+                    call: Call<EventDeleteResponse?>, response: Response<EventDeleteResponse?>
+                ) {
+                    Log.d(
+                        "isGetCountryList", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isEventDelete.postValue(response.body())
+                            } else {
+                                isEventDelete.postValue(response.body())
+                            }
+                        }
+                    } else {
+                        isEventDelete.postValue(null)
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<EventDeleteResponse?>,
+                    t: Throwable
+                ) {
+                    isEventDelete.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isEventDeleteLiveData: LiveData<EventDeleteResponse?>
+        get() = isEventDelete
+
+
 
 
 }

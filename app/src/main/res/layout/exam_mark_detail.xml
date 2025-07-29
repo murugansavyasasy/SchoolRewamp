@@ -34,7 +34,7 @@
 
             <TextView
                 android:id="@+id/lblStudentName"
-                style="@style/CustomTextStylePoppinsMedium"
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
@@ -46,7 +46,7 @@
 
             <TextView
                 android:id="@+id/lblStudentSection"
-                style="@style/CustomTextStylePoppinsMedium"
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblStudentName"

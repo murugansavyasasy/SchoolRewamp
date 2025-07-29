@@ -410,10 +410,7 @@
             android:name=".School.SchoolNeeds.SchoolNeeds"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
-        <activity
-            android:name=".Parent.ExamMarks.ExamProgressActivity"
-            android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize" />
+
         <activity
             android:name=".School.ImportantInfo.ImportantInfo"
             android:theme="@style/AppTheme"
