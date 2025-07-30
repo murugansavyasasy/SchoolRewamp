@@ -25,6 +25,8 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.MediaController
 import android.widget.RelativeLayout
 import android.widget.Toast
@@ -34,16 +36,16 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.vs.schoolmessenger.AlbumImage.AlbumSelectActivity
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
+import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
 import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolList
-import com.vs.schoolmessenger.Parent.Noticeboard.Adapter.NoticeBoardAdapter
-import com.vs.schoolmessenger.Parent.Noticeboard.Notice
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Event.CreateEvent
@@ -97,6 +99,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
 
     lateinit var noticeboardadapter: SchoolNoticeBoardAdapter
 
+    private var userDetails: UserDetails? = null
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -108,7 +111,14 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
 
 
 
+        userDetails = SharedPreference.getUserDetails(this)
+        userDetails?.let {
+            setupSchoolSpinner(it.staff_details)
+        }
+
+
         binding.toolbarLayout.imgBack.setOnClickListener(this)
+        binding.toolbarLayout.imgSearchToolBar.setOnClickListener(this)
         binding.btnNext.setOnClickListener(this)
         binding.rytStartDate.setOnClickListener(this)
         binding.rytStart.setOnClickListener(this)
@@ -304,6 +314,36 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
     }
 
 
+
+    private fun setupSchoolSpinner(staffList: List<StaffDetails>) {
+        val schoolNames = staffList.map { it.school_name }
+
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, schoolNames)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.schoollistfilter.adapter = adapter
+
+        binding.schoollistfilter.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                val selectedStaff = staffList[position]
+                isAccessToken = selectedStaff.access_token
+                isStaffDetails = selectedStaff
+                Log.d("SpinnerSelection", "Selected school: ${selectedStaff.school_name}, Token: $isAccessToken")
+
+                isGetNoticeBoardList()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
+
+        if (staffList.isNotEmpty()) {
+            isAccessToken = staffList[0].access_token
+            isStaffDetails = staffList[0]
+            Log.d("DefaultSelection", "Default token: $isAccessToken")
+        }
+    }
+
+
+
     private fun isloadhomeworkData(newData: List<NoticeStaffData>?) {
         noticeboardadapter =
             SchoolNoticeBoardAdapter(newData, this, this, Constant.isShimmerViewDisable)
@@ -490,6 +530,9 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                 binding.line2.setBackgroundResource(R.color.white)
                 binding.rcyNoticeBoard.visibility = View.GONE
                 binding.rytSearch323.visibility = View.GONE
+                binding.schoollistfilter.visibility = View.GONE
+                binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+
 
             }
 
@@ -500,9 +543,18 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                 binding.line2.setBackgroundResource(R.color.iconBlue)
                 binding.line1.setBackgroundResource(R.color.white)
                 binding.rcyNoticeBoard.visibility = View.VISIBLE
-                binding.rytSearch323.visibility = View.VISIBLE
+                binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
+                binding.schoollistfilter.visibility = View.VISIBLE
                 isGetNoticeBoardList()
             }
+
+
+            R.id.imgSearchToolBar -> if (binding.rytSearch323.isVisible) {
+                binding.rytSearch323.visibility = View.GONE
+            } else {
+                binding.rytSearch323.visibility = View.VISIBLE
+            }
+
 
             R.id.txtStartDate, R.id.rytStartDate, R.id.txtStartDate, R.id.lnrStartCalendar -> {
                 selectedDateField = 1
@@ -517,6 +569,8 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                     binding.lblDay.text = day
 //                    binding.lblDate.text = Date
                 }
+
+
             }
 
             R.id.rytEndDate, R.id.lnrEndCalendar, R.id.txtEndDate -> {

@@ -315,6 +315,7 @@ class Splash : BaseActivity<SplashBinding>(), View.OnClickListener,
         authViewModel!!.isValidateUser(jsonObject, this)
     }
 
+
     private fun isVersionCheck() {
         val jsonObject = JsonObject()
         jsonObject.addProperty(APIKeyNames.Req_device_type, Constant.isDeviceType)

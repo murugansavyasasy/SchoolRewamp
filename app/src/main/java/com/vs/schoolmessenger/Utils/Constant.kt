@@ -1095,6 +1095,17 @@ object Constant {
 
     }
 
+    fun CustomisedconvertDateTimeFormat(input: String): String {
+        return try {
+            val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("MMM dd", Locale.getDefault())
+            val date = inputFormat.parse(input)
+            outputFormat.format(date!!)
+        } catch (e: Exception) {
+            input
+        }
+    }
+
 
     fun convertDateTimeFormat(input: String): String {
         return try {

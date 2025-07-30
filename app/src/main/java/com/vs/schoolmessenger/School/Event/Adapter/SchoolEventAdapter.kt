@@ -70,6 +70,9 @@ class SchoolEventAdapter (
     }
 
 
+
+
+
     override fun getItemCount(): Int {
         return if (isLoading) {
             3
@@ -99,7 +102,7 @@ class SchoolEventAdapter (
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
                 filteredList = results?.values as? List<SchoolEventItem> ?: listOf()
-                listener.onSearchResultEmpty("ONGOING", filteredList.isEmpty())
+                listener.onSearchResultEmpty("COMPLETED", filteredList.isEmpty())
                 notifyDataSetChanged()
             }
         }

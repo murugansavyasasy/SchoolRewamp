@@ -49,7 +49,6 @@
                 android:visibility="gone"
                 android:textColor="@color/light_gray"
                 android:textSize="@dimen/twele_sp">
-
             </TextView>
 
         </LinearLayout>
