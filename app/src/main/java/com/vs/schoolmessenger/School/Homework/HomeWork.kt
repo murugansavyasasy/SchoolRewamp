@@ -178,7 +178,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
                     if (it > 0) {
                         binding.rytStandardDropDown.visibility = View.VISIBLE
                         binding.rytSectionDropDown.visibility = View.VISIBLE
-                        isSectionId = isGetStandard!!.get(0).sections.get(0).id
+                        isSectionId = isGetStandard!![0].sections[0].id
                         if (isGetStandard!!.get(0).sections.size > 0) {
                             isLoadStandard(isGetStandard)
                             isSection = isGetStandard!!.get(0).sections
@@ -989,9 +989,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         }
     }
 
-
     private fun videoUploading() {
-
         val iterator = isVideoSelectedArrayList.iterator()
         while (iterator.hasNext()) {
             val fileItem = iterator.next()
@@ -1004,8 +1002,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
                 iterator.remove()
             }
         }
-
-
         if (isVideoSelectedArrayList.isNotEmpty()) {
             for (i in isVideoSelectedArrayList.indices) {
                 VimeoVideoUpload.uploadVideo(
