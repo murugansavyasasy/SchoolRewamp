@@ -109,27 +109,6 @@ object VimeoVideoUpload {
                             uploadLink, iframe, link
                         )
                     }
-
-//                    val uriId = jsonResponse.getString("uri")
-//                    val videoId = uriId.split("/").last()
-//                    Log.d("videoId", videoId)
-//                    val token = Constant.isVimeoToken
-//                    Log.d("token", token)
-//                    VimeoThumbnailUploader.uploadThumbnailToVimeo(
-//                        activity, videoId, videoFilePath, token
-//                    ) { success, thumbnailUrl ->
-//                        if (success) {
-//                            Log.d("Thumbnail", "Done! URL: $thumbnailUrl")
-//
-////                    withContext(Dispatchers.Main) {
-//                            listener.onUploadURLGenerated(
-//                                uploadLink, iframe, link, "isThumbnailUrl"
-//                            )
-////                    }
-//                        } else {
-//                            Log.e("Thumbnail", "Upload failed or URL not found")
-//                        }
-//                    }
                 } else {
                     withContext(Dispatchers.Main) {
                         listener.onFailure("HTTP error code: $responseCode")
@@ -210,23 +189,44 @@ object VimeoVideoUpload {
                 inputStream?.skip(offset)
                 val outputStream = conn.outputStream
 
-                val buffer = ByteArray(1024 * 1024)
+                val buffer = ByteArray(8 * 1024) // 8 KB buffer
                 var bytesRead: Int
-                var totalUploaded = offset
-                var lastPercent = -1
+                var totalUploaded = 0L
+                var lastPercent = 0
 
-                while (inputStream?.read(buffer).also { bytesRead = it ?: -1 } != -1) {
-                    outputStream.write(buffer, 0, bytesRead)
-                    totalUploaded += bytesRead
 
-                    val percent = ((totalUploaded * 100) / videoLength).toInt()
-                    if (percent != lastPercent && percent in 1..100) {
-                        lastPercent = percent
-                        withContext(Dispatchers.Main) {
-                            listener.onProgressUpdate(percent)
+                inputStream.use { input ->
+                    outputStream.use { output ->
+                        while (true) {
+                            bytesRead = input!!.read(buffer)
+                            if (bytesRead == -1) break
+
+                            output.write(buffer, 0, bytesRead)
+                            totalUploaded += bytesRead
+
+                            val percent = ((totalUploaded * 100) / videoLength).toInt()
+                            if (percent != lastPercent && percent in 1..100) {
+                                lastPercent = percent
+                                // Optionally update UI here if needed
+                                // withContext(Dispatchers.Main) { listener.onProgressUpdate(percent) }
+                            }
                         }
+                        output.flush() // Make sure data is fully written
                     }
                 }
+
+//                while (inputStream?.read(buffer).also { bytesRead = it ?: -1 } != -1) {
+//                    outputStream.write(buffer, 0, bytesRead)
+//                    totalUploaded += bytesRead
+//
+//                    val percent = ((totalUploaded * 100) / videoLength).toInt()
+//                    if (percent != lastPercent && percent in 1..100) {
+//                        lastPercent = percent
+////                        withContext(Dispatchers.Main) {
+////                            listener.onProgressUpdate(percent)
+////                        }
+//                    }
+//                }
 
                 outputStream.flush()
                 outputStream.close()
@@ -260,7 +260,7 @@ object VimeoVideoUpload {
         )
 
         fun onFailure(errorMessage: String?)
-        fun onProgressUpdate(percent: Int)
+//        fun onProgressUpdate(percent: Int)
     }
 
     private interface VimeoUploadURLListener {

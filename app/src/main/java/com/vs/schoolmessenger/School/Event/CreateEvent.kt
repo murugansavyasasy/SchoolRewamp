@@ -14,7 +14,9 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.provider.Settings
+import android.text.Editable
 import android.text.InputFilter
+import android.text.TextWatcher
 import android.util.Log
 import android.view.Gravity
 import android.view.View
@@ -29,6 +31,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -115,9 +118,12 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.btnNext.setOnClickListener(this)
         binding.rytStartDate.setOnClickListener(this)
+        binding.rytSearch323.setOnClickListener(this)
+
         binding.txtStartTime.setOnClickListener(this)
         binding.lnrTabOneName.setOnClickListener(this)
         binding.lnrTabTwoName.setOnClickListener(this)
+        binding.toolbarLayout.imgSearchToolBar.setOnClickListener(this)
         Constant.editTextCounter(this, binding.txtDesc, 500, binding.lbTextCount)
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
@@ -265,7 +271,10 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
 
 
         appViewModel?.IsGetEventSchoolReport?.observe(this) { response ->
+            Constant.hideLoading(this)
+            binding.whiteOverlay.visibility = View.GONE
             if (response?.status == true && !response.data.isNullOrEmpty()) {
+
                 val data = response.data[0]
 
                 allOngoingEvents = data.on_going
@@ -292,6 +301,26 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
                 hideAllSections()
             }
         }
+
+        binding.txtSearch.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                Log.d("FILTERING", "Filtering for: $s")
+                if (::schooleventAdapter.isInitialized) {
+                    schooleventAdapter.filter.filter(s)
+                }
+                if (::eventupcomingadapter.isInitialized) {
+                    eventupcomingadapter.filter.filter(s)
+                }
+                if (::eventcompletedadapter.isInitialized) {
+                    eventcompletedadapter.filter.filter(s)
+                }
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+        })
 
     }
 
@@ -323,6 +352,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
 
 
     private fun loadeventdata() {
+        Constant.showLoading(this)
         schooleventAdapter = SchoolEventAdapter(null, this, this, Constant.isShimmerViewDisable)
         binding.rcyongoingevent.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
@@ -531,6 +561,8 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
                 binding.line2.setBackgroundResource(R.color.white)
                 binding.scrollContainer.visibility = View.GONE
                 binding.rytRecyclewview.visibility = View.VISIBLE
+                binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+                binding.rytSearch323.visibility = View.GONE
 
             }
 
@@ -542,6 +574,8 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
                 binding.line1.setBackgroundResource(R.color.white)
                 binding.scrollContainer.visibility = View.VISIBLE
                 binding.rytRecyclewview.visibility = View.GONE
+                binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
+                binding.whiteOverlay.visibility = View.VISIBLE
                 loadeventdata()
             }
             R.id.imgBack -> {
@@ -572,6 +606,12 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
 
             R.id.btnNext -> {
                 RedirectToRecepientActivity()
+            }
+
+            R.id.imgSearchToolBar -> if (binding.rytSearch323.isVisible) {
+                binding.rytSearch323.visibility = View.GONE
+            } else {
+                binding.rytSearch323.visibility = View.VISIBLE
             }
         }
     }

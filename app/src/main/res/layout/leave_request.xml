@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tabLayoutStatus"
         android:layout_marginTop="10dp"
-        android:visibility="gone">
+        >
 
 
         <androidx.recyclerview.widget.RecyclerView
@@ -86,7 +86,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbarLayout"
-        android:visibility="visible"
+        android:visibility="gone"
 
         >
 

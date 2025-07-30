@@ -13,7 +13,7 @@ import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYearRes
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
 import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentResponse
-import com.vs.schoolmessenger.Parent.Attendance.ChildAttendanceResponse
+import com.vs.schoolmessenger.Parent.Attendance.AttendanceReport.ChildAttendanceResponse
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesListResponse
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesTypesResponse
 import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
@@ -128,6 +128,9 @@ class App(application: Application) : AndroidViewModel(application) {
         private set
 
     var isAssignmentDelete: LiveData<LPDeleteResponse?>? = null
+        private set
+
+    var isEditHomeWork: LiveData<StatusMessageModel?>? = null
         private set
 
 
@@ -272,6 +275,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isGetHomeWorkReport = apiSchoolRepositories.isGetHomeWorkReportLiveData
         isGetAssignmentReport = apiSchoolRepositories.isGetAssignmentReportLiveData
         isAssignmentDelete = apiSchoolRepositories.isDeleteAssignmentLiveData
+        isEditHomeWork = apiSchoolRepositories.isUpdateHomeworkLiveData
         isNoticeBoardReport = apiSchoolRepositories.isNoticeBoardReportLiveData
         isNoticeBoardStaffReport = apiSchoolRepositories.isNoticeBoardStaffReportLiveData
         isGetDailyCollectionReport = apiSchoolRepositories.isGetDailyCollectionReportLiveData
@@ -886,6 +890,10 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun isHomeWorkComplete(isToken: String, jsonObject: JsonObject) {
         apiParentRepositories.isHomeWorkComplete(isToken,jsonObject)
+    }
+
+    fun isHomeWorkUpdate(isToken: String, jsonObject: JsonObject,activity: Activity) {
+        apiSchoolRepositories.isEditHomeWork(isToken,jsonObject,activity)
     }
 
 

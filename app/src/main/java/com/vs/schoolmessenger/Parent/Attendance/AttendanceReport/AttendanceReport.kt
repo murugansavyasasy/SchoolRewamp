@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.Parent.Attendance
+package com.vs.schoolmessenger.Parent.Attendance.AttendanceReport
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -12,7 +12,8 @@ import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.AttendanceReportParentBinding
 
-class AttendanceReport : BaseActivity<AttendanceReportParentBinding>(), View.OnClickListener,AttendanceReportClickListener {
+class AttendanceReport : BaseActivity<AttendanceReportParentBinding>(), View.OnClickListener,
+    AttendanceReportClickListener {
 
     override fun getViewBinding(): AttendanceReportParentBinding {
         return AttendanceReportParentBinding.inflate(layoutInflater)

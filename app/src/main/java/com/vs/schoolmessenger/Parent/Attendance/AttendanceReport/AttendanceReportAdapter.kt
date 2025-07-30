@@ -1,4 +1,4 @@
-package com.vs.schoolmessenger.Parent.Attendance
+package com.vs.schoolmessenger.Parent.Attendance.AttendanceReport
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -7,19 +7,12 @@ import android.view.View
 import java.text.SimpleDateFormat
 import android.view.ViewGroup
 import android.widget.Filter
-import android.widget.Filter.FilterResults
 import android.widget.Filterable
 import android.widget.LinearLayout
-import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import java.util.Locale
 import java.text.ParseException
-import com.facebook.shimmer.ShimmerFrameLayout
-import com.vs.schoolmessenger.Parent.Communication.UnifiedVoiceAdapter.ShimmerViewHolder
-import com.vs.schoolmessenger.Parent.Noticeboard.Adapter.NoticeBoardAdapter
-import com.vs.schoolmessenger.Parent.Noticeboard.Notice
-import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardClickListener
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil

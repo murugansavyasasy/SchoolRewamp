@@ -588,6 +588,11 @@
     <string name="no_data">no_data</string>
     <string name="monday">Monday</string>
     <string name="no_timetable_available">No timetable available</string>
+    <string name="this_week_status">This week status</string>
+    <string name="attendance">Attendance</string>
+    <string name="leave_taken">Leave Taken</string>
+    <string name="ongoing_days">Ongoing Days</string>
+    <string name="leave_history">Leave History</string>
 
 
 </resources>

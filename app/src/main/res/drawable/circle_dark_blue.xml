@@ -10,4 +10,9 @@
         android:pathData="M45,23.75c0,11.736 -9.514,21.25 -21.25,21.25S2.5,35.486 2.5,23.75s9.514,-21.25 21.25,-21.25 21.25,9.514 21.25,21.25"
         android:fillColor="#005cc6"/>
   </group>
+  <path
+      android:name="circle_stroke"
+      android:pathData="M23.75,2.5A21.25,21.25 0 1,1 2.5,23.75A21.25,21.25 0 0,1 23.75,2.5Z"
+      android:fillColor="@android:color/transparent"
+      android:strokeWidth="0"  />
 </vector>

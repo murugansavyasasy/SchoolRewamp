@@ -1,5 +1,6 @@
 package com.vs.schoolmessenger.AWS
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.net.Uri
@@ -202,6 +203,7 @@ class AwsUploadingPreSigned {
             })
     }
 
+    @SuppressLint("Range")
     fun getFileName(context: Context, uri: Uri): String {
         var result: String? = null
         if (uri.scheme == "content") {

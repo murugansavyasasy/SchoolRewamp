@@ -22,6 +22,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.PopupMenu
 import android.widget.ProgressBar
+import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -34,9 +35,11 @@ import com.vs.schoolmessenger.School.NoticeBoard.Model.NoticeStaffData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 import me.relex.circleindicator.CircleIndicator2
+import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Locale
 
-class SchoolNoticeBoardAdapter (
+class SchoolNoticeBoardAdapter(
     private var itemList: List<NoticeStaffData>?,
     private var listener: NoticeBoardClickListener,
     private var context: Context,
@@ -129,23 +132,21 @@ class SchoolNoticeBoardAdapter (
     }
 
 
-    class DataViewHolder(itemView: View, private val context: Context, private val listener: NoticeBoardClickListener) :
-        RecyclerView.ViewHolder(itemView) {
-        //        private var isTextExpanded = false
-//        private val LblHWSubjectName: TextView = itemView.findViewById(R.id.LblHWSubjectName)
+    class DataViewHolder(
+        itemView: View, private val context: Context, private val listener: NoticeBoardClickListener
+    ) : RecyclerView.ViewHolder(itemView) {
+
         private val lblTitleImage: TextView = itemView.findViewById(R.id.lblTitleImage)
         private val lblContentImage: TextView = itemView.findViewById(R.id.lblContentImage)
         private val lblDateImage: TextView = itemView.findViewById(R.id.lblDateImage)
         private val lblTimeImage: TextView = itemView.findViewById(R.id.lblTimeImage)
 
-        //        private val rlaSelectText: RelativeLayout = itemView.findViewById(R.id.rlaSelectText)
         private val rytList: LinearLayout = itemView.findViewById(R.id.rytList)
+        private val rytList2: RelativeLayout = itemView.findViewById(R.id.rytList2)
 
-        //        private val tvSeeMoreImage: TextView = itemView.findViewById(R.id.tvSeeMoreImage)
         private val rcyImgPDF: RecyclerView = itemView.findViewById(R.id.rcyImgPDF)
 
-        //        private val imgNewImage: ImageView = itemView.findViewById(R.id.imgNewImage)
-        private val webView: android.webkit.WebView = itemView.findViewById(R.id.webView)
+        //        private val webView: android.webkit.WebView = itemView.findViewById(R.id.webView)
         private val loadingBar: ProgressBar = itemView.findViewById(R.id.loadingBar)
         private val indicator: CircleIndicator2 = itemView.findViewById(R.id.indicator)
 
@@ -157,32 +158,87 @@ class SchoolNoticeBoardAdapter (
 
         @SuppressLint("ClickableViewAccessibility")
         fun bind(noticeData: NoticeStaffData, position: Int, adapter: SchoolNoticeBoardAdapter) {
-
-//            LblHWSubjectName.visibility = View.GONE
-//            imgNewImage.visibility = View.GONE
-//            rlaSelectText.visibility = View.GONE
             lblTitleImage.text = noticeData.title
             lblContentImage.text = noticeData.description
             val dateTime = noticeData.created_on
             val parts = dateTime.split(" ")
             val date = parts.getOrNull(0) ?: ""
             val time = parts.getOrNull(1) + " " + (parts.getOrNull(2) ?: "")
-            lblDateImage.text = Constant.convertDateTimeFormat(date)
+
+            val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+            val parsedDate = try {
+                inputFormat.parse(date)
+            } catch (e: Exception) {
+                null
+            }
+
+            val calendar = Calendar.getInstance()
+            val today = calendar.time
+
+            calendar.add(Calendar.DAY_OF_YEAR, -1)
+            val yesterday = calendar.time
+
+            val outputText = when {
+                parsedDate != null -> {
+                    val sdf = SimpleDateFormat("yyyyMMdd", Locale.getDefault())
+                    val parsedStr = sdf.format(parsedDate)
+                    val todayStr = sdf.format(today)
+                    val yesterdayStr = sdf.format(yesterday)
+                    when (parsedStr) {
+                        todayStr -> "Today"
+                        yesterdayStr -> "Yesterday"
+                        else -> Constant.CustomisedconvertDateTimeFormat(date)
+                    }
+                }
+                else -> Constant.CustomisedconvertDateTimeFormat(date)
+            }
+
+            lblDateImage.text = outputText
+
             lblTimeImage.text = time
             video_player.visibility = View.GONE
             loadingBar.visibility = View.GONE
             options.visibility = View.VISIBLE
 
+            if (noticeData.can_edit != true && noticeData.can_delete != true) {
+
+                options.visibility = View.GONE
+            }
 
             options.setOnClickListener {
+                if (noticeData.can_edit != true && noticeData.can_delete != true) {
+                    return@setOnClickListener
+                }
                 val popup = PopupMenu(context, options)
                 popup.menuInflater.inflate(R.menu.notice_options_menu, popup.menu)
+                popup.menu.findItem(R.id.menu_edit).isVisible = noticeData.can_edit == true
+                popup.menu.findItem(R.id.menu_delete).isVisible = noticeData.can_delete == true
+
+                try {
+                    val fields = popup.javaClass.declaredFields
+                    for (field in fields) {
+                        if (field.name == "mPopup") {
+                            field.isAccessible = true
+                            val menuPopupHelper = field.get(popup)
+                            val classPopupHelper = Class.forName(menuPopupHelper.javaClass.name)
+                            val setForceIcons =
+                                classPopupHelper.getMethod("setForceShowIcon", Boolean::class.java)
+                            setForceIcons.invoke(menuPopupHelper, true)
+                            break
+                        }
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+
                 popup.setOnMenuItemClickListener { menuItem ->
                     when (menuItem.itemId) {
                         R.id.menu_edit -> {
-//                            listener.onEditNotice(noticeData)
+                            // Uncomment
+                            // listener.onEditNotice(noticeData)
                             true
                         }
+
                         R.id.menu_delete -> {
                             listener.onDeleteNotice(noticeData.id, noticeData.id, adapterPosition)
                             true
@@ -191,10 +247,50 @@ class SchoolNoticeBoardAdapter (
                         else -> false
                     }
                 }
+
                 popup.show()
             }
 
 
+            val hasIframe = !noticeData.iframe.isNullOrEmpty()
+            val hasFiles = !noticeData.file_path.isNullOrEmpty()
+
+
+            video_player.visibility = if (hasIframe) View.VISIBLE else View.GONE
+            rcyImgPDF.visibility = if (hasIframe) View.GONE else View.VISIBLE
+            rytList2.visibility = if (hasFiles) View.VISIBLE else View.INVISIBLE
+            total_numbers.visibility = View.GONE
+
+            if (hasIframe) {
+                video_player.setOnClickListener {
+                    val commonList = noticeData.file_path?.map {
+                        CommonFileData(type = it.type, path = it.url)
+                    }?.toMutableList() ?: mutableListOf()
+
+                    Constant.commonFileList = commonList
+                    Constant.selectedFileIndex = position
+
+                    val intent = Intent(context, FilesViewActivity::class.java)
+                    intent.putExtra(Constant.subjectName, noticeData.title)
+                    context.startActivity(intent)
+                }
+            }
+
+            if (hasFiles) {
+                val fileList = noticeData.file_path!!
+                val totalFiles = fileList.size
+                val visibleList = if (totalFiles > 2) fileList.subList(0, 2) else fileList
+
+                if (totalFiles > 2) {
+                    total_numbers.text = "+${totalFiles - 2}"
+                    total_numbers.visibility = View.VISIBLE
+                }
+
+                rcyImgPDF.layoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                rcyImgPDF.adapter =
+                    FilePathAdapter(visibleList, fileList, context, Constant.isShimmerViewDisable)
+            }
 
             remaindertag.setOnClickListener {
                 val context = it.context
@@ -231,83 +327,6 @@ class SchoolNoticeBoardAdapter (
             }
 
 
-//                        isSeeMoreVisibility(lblContentImage, tvSeeMoreImage)
-////            tvSeeMoreImage.setOnClickListener {
-////                isSeeMoreExpanded(tvSeeMoreImage, lblContentImage)
-////            }
-
-
-            video_player.setOnTouchListener(object : OnTouchListener {
-                @SuppressLint("ClickableViewAccessibility")
-                override fun onTouch(v: View?, event: MotionEvent): Boolean {
-                    if (event.getAction() == MotionEvent.ACTION_MOVE) {
-                        return false
-                    }
-
-                    if (event.getAction() == MotionEvent.ACTION_UP) {
-                        Constant.commonFileList.isEmpty()
-                        Constant.selectedFileIndex = -1
-                        val commonList = noticeData.file_path?.map {
-                            CommonFileData(
-                                type = it.type,
-                                path = it.url,
-                            )
-                        }?.toMutableList() ?: mutableListOf()
-
-                        Constant.commonFileList = commonList
-
-                        Constant.selectedFileIndex = position
-
-                        val intent = Intent(context, FilesViewActivity::class.java)
-                        intent.putExtra(Constant.subjectName, noticeData.title)
-                        context.startActivity(intent)
-                    }
-
-                    return false
-                }
-            })
-
-            if (noticeData.iframe != "") {
-                video_player.visibility = View.GONE
-                webView.visibility = View.VISIBLE
-                rytList.visibility = View.VISIBLE
-                rcyImgPDF.visibility = View.GONE
-
-                webView.loadUrl(noticeData.file_path[0].url.toString())
-            } else {
-                if (noticeData.file_path.isEmpty()) {
-                    rytList.visibility = View.GONE
-                    rcyImgPDF.visibility = View.GONE
-                } else {
-                    rytList.visibility = View.VISIBLE
-                    rcyImgPDF.visibility = View.VISIBLE
-                }
-
-                if (noticeData.file_path.size > 1) {
-                    indicator.visibility = View.GONE
-                } else {
-                    indicator.visibility = View.GONE
-                }
-
-                val fileList = noticeData.file_path
-                val totalFiles = fileList.size
-
-                if (totalFiles > 2) {
-                    total_numbers.text = "+${totalFiles - 2}"
-                    total_numbers.visibility = View.VISIBLE
-                } else {
-                    total_numbers.visibility = View.GONE
-                }
-
-                val visibleList = if (totalFiles > 2) fileList.subList(0, 2) else fileList
-
-                rcyImgPDF.layoutManager =
-                    LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                rcyImgPDF.adapter = FilePathAdapter(
-                    visibleList, fileList, context, Constant.isShimmerViewDisable
-                )
-                indicator.attachToRecyclerView(rcyImgPDF)
-            }
         }
 
         fun CircleIndicator2.attachToRecyclerView(recyclerView: RecyclerView) {
@@ -330,9 +349,6 @@ class SchoolNoticeBoardAdapter (
             })
         }
 
-
-
-
         fun scheduleNotification(context: Context, triggerTime: Long) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
@@ -351,32 +367,6 @@ class SchoolNoticeBoardAdapter (
             }
         }
 
-
-
-
-//        private fun isSeeMoreExpanded(tvSeeMore: TextView, lblContent: TextView) {
-//            if (isTextExpanded) {
-//                isTextExpanded = false
-//                lblContent.maxLines = 3
-//                lblContent.ellipsize = TextUtils.TruncateAt.END
-//                tvSeeMore.text = itemView.context.getString(R.string.SeeMore)
-//            } else {
-//                isTextExpanded = true
-//                lblContent.maxLines = Integer.MAX_VALUE
-//                lblContent.ellipsize = null
-//                tvSeeMore.text = itemView.context.getString(R.string.SeeLess)
-//            }
-//        }
-
-        private fun isSeeMoreVisibility(lblContent: TextView, tvSeeMore: TextView) {
-            lblContent.post {
-                if (lblContent.lineCount > 3) {
-                    tvSeeMore.visibility = View.VISIBLE
-                    lblContent.maxLines = 3
-                    lblContent.ellipsize = TextUtils.TruncateAt.END
-                }
-            }
-        }
     }
 
     class ShimmerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

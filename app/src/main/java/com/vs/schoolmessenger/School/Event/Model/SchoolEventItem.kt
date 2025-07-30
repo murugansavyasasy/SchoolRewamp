@@ -13,5 +13,7 @@ data class SchoolEventItem (
     val iframe: String,
     val file_size: String,
     val thumbnail: String,
+    val can_edit: Boolean,
+    val can_delete: Boolean,
     val file_path: List<FilePath>
 )
