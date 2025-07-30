@@ -78,6 +78,7 @@ class SchoolEventUpcomingAdapter (
 
 
 
+
     override fun getItemCount(): Int {
         return if (isLoading) {
             3
@@ -114,12 +115,6 @@ class SchoolEventUpcomingAdapter (
         }
     }
 
-
-    fun updateList(newList: List<SchoolEventItem>?) {
-        this.itemList = newList
-        notifyDataSetChanged()
-    }
-
     fun removeItemAt(position: Int) {
         if (position in filteredList.indices) {
             val removedNotice = filteredList[position]
@@ -137,7 +132,10 @@ class SchoolEventUpcomingAdapter (
 
 
 
-
+    fun updateList(newList: List<SchoolEventItem>?) {
+        this.itemList = newList
+        notifyDataSetChanged()
+    }
 
 
 

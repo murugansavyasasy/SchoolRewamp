@@ -591,12 +591,24 @@
     </RelativeLayout>
 
 
+    <Spinner
+        android:id="@+id/schoollistfilter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rytSearch323"
+        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="10dp"
+        android:spinnerMode="dropdown"
+        android:visibility="gone"
+        android:background="@drawable/spinner_bg"
+        android:padding="12dp" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcyNoticeBoard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rytSearch323"
-        android:layout_marginTop="5dp"
+        android:layout_below="@id/schoollistfilter"
+        android:layout_marginTop="10dp"
         android:clipToPadding="false"
         android:visibility="gone"
         android:fadeScrollbars="false"

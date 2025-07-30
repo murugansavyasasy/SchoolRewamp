@@ -35,7 +35,9 @@ import com.vs.schoolmessenger.School.NoticeBoard.Model.NoticeStaffData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 import me.relex.circleindicator.CircleIndicator2
+import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Locale
 
 class SchoolNoticeBoardAdapter(
     private var itemList: List<NoticeStaffData>?,
@@ -162,7 +164,37 @@ class SchoolNoticeBoardAdapter(
             val parts = dateTime.split(" ")
             val date = parts.getOrNull(0) ?: ""
             val time = parts.getOrNull(1) + " " + (parts.getOrNull(2) ?: "")
-            lblDateImage.text = Constant.convertDateTimeFormat(date)
+
+            val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+            val parsedDate = try {
+                inputFormat.parse(date)
+            } catch (e: Exception) {
+                null
+            }
+
+            val calendar = Calendar.getInstance()
+            val today = calendar.time
+
+            calendar.add(Calendar.DAY_OF_YEAR, -1)
+            val yesterday = calendar.time
+
+            val outputText = when {
+                parsedDate != null -> {
+                    val sdf = SimpleDateFormat("yyyyMMdd", Locale.getDefault())
+                    val parsedStr = sdf.format(parsedDate)
+                    val todayStr = sdf.format(today)
+                    val yesterdayStr = sdf.format(yesterday)
+                    when (parsedStr) {
+                        todayStr -> "Today"
+                        yesterdayStr -> "Yesterday"
+                        else -> Constant.CustomisedconvertDateTimeFormat(date)
+                    }
+                }
+                else -> Constant.CustomisedconvertDateTimeFormat(date)
+            }
+
+            lblDateImage.text = outputText
+
             lblTimeImage.text = time
             video_player.visibility = View.GONE
             loadingBar.visibility = View.GONE
