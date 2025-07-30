@@ -231,6 +231,18 @@
             android:padding="@dimen/ten" />
 
         <TextView
+            android:id="@+id/tvSelectedFiles"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_toStartOf="@+id/btnDone"
+            android:text="Selected Files : 0"
+            android:layout_marginStart="@dimen/twenty_five"
+            android:layout_below="@+id/tvSelectionCount"
+            android:gravity="start"
+            android:padding="@dimen/ten" />
+
+        <TextView
             android:id="@+id/btnDone"
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="@dimen/fifty"

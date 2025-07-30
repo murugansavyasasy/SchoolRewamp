@@ -236,6 +236,10 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String, @Body requestBody: JsonObject
     ): Call<LPDeleteResponse?>
 
+    @PUT(APIMethods.isHomeWorkUpdate)
+    fun isHomeWorkUpdate(
+        @Header(APIKeyNames.Authorization) token: String, @Body requestBody: JsonObject
+    ): Call<StatusMessageModel?>
 
     @POST(APIMethods.isSendText)
     fun isSendText(

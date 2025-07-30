@@ -86,6 +86,7 @@ class HomeWorkReportAdapter(
         private val indicator: CircleIndicator2 = itemView.findViewById(R.id.indicator)
         private val tvSeeMoreImage: TextView = itemView.findViewById(R.id.tvSeeMoreImage)
         private val LblHWSubjectName: TextView = itemView.findViewById(R.id.LblHWSubjectName)
+        private val lblEdit: TextView = itemView.findViewById(R.id.lblEdit)
         private val rlaSelectText: RelativeLayout = itemView.findViewById(R.id.rlaSelectText)
 
         private var isExpanded = false
@@ -98,6 +99,7 @@ class HomeWorkReportAdapter(
             listener: HomeWorkReportClickListener,
             adapterContext: Context
         ) {
+            lblEdit.text="Edit"
             lblTimeImage.visibility=View.GONE
             rlaImageReport.visibility = View.VISIBLE
             LblHWSubjectName.text = data.subject_name
