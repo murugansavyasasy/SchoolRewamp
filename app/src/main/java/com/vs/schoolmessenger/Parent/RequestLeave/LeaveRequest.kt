@@ -90,7 +90,7 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
 
 
         binding.toolbarLayout.lblParentToolBar.text = Constant.isParentMenuName
-        binding.toolbarLayout.lnrParent.visibility = View.VISIBLE
+        binding.toolbarLayout.lnrParent.visibility = View.GONE
         isAccessToken = isChildDetails?.access_token
 
         binding.toolbarLayout.lblStudentName.text = isChildDetails!!.name
@@ -99,7 +99,10 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
 
         binding.toolbarLayout.lblLeftSideBar.text = resources.getText(R.string.History)
         binding.toolbarLayout.lblRightSideBar.text = "Leave Request"
-        binding.rlaCreateLeaveRequest.visibility = View.VISIBLE
+        binding.rlaCreateLeaveRequest.visibility = View.GONE
+        binding.rlaHistory.visibility = View.VISIBLE
+        isGetLeaveRequestList()
+
 
 
         appViewModel?.getleaverequest?.observe(this) { response ->
@@ -186,9 +189,9 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
             binding.tabLayoutStatus.visibility = View.GONE
         }
 
-        binding.toolbarLayout.lblLeftSideBar.setOnClickListener {
-            if (currentTab == TabType.History) return@setOnClickListener
-            currentTab = TabType.History
+//        binding.toolbarLayout.lblLeftSideBar.setOnClickListener {
+//            if (currentTab == TabType.History) return@setOnClickListener
+//            currentTab = TabType.History
 
             binding.rlaHistory.visibility = View.VISIBLE
             binding.tabLayoutStatus.visibility = View.VISIBLE
@@ -236,9 +239,10 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
                 override fun onTabUnselected(tab: TabLayout.Tab?) {}
                 override fun onTabReselected(tab: TabLayout.Tab?) {}
             })
+        isGetLeaveRequestList()
 
-            isGetLeaveRequestList()
-        }
+//        }
+
 
 
         Constant.editTextCounter(this, binding.txtDesc, 500, binding.lbTextCount)
