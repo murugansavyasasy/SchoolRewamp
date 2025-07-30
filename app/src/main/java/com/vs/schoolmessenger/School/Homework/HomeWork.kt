@@ -20,16 +20,11 @@ import android.text.InputFilter
 import android.text.TextWatcher
 import android.util.Log
 import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.webkit.WebChromeClient
-import android.webkit.WebResourceError
-import android.webkit.WebResourceRequest
-import android.webkit.WebSettings
-import android.webkit.WebViewClient
 import android.widget.AdapterView
-import android.widget.MediaController
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -42,6 +37,10 @@ import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
+import com.vs.schoolmessenger.AWS.AwsUploadingPreSigned
+import com.vs.schoolmessenger.AWS.UploadCallback
 import com.vs.schoolmessenger.AlbumImage.AlbumSelectActivity
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
@@ -54,15 +53,25 @@ import com.vs.schoolmessenger.CommonScreens.SelectRecipient.SectionList.Section
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.Standard
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardDropDownListAdapter
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.Repository.RestClient
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReport
+import com.vs.schoolmessenger.Utils.AwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
+import com.vs.schoolmessenger.Utils.Constant.M_ATTACHMENTS
+import com.vs.schoolmessenger.Utils.Constant.M_HOMEWORK
+import com.vs.schoolmessenger.Utils.Constant.M_SCHOOL_CLASS_EVENTS
+import com.vs.schoolmessenger.Utils.Constant.SELECTED_SCHOOL_MENU
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
 import com.vs.schoolmessenger.Utils.OnDateSelectedListener
+import com.vs.schoolmessenger.Utils.ProgressDialogHelper
 import com.vs.schoolmessenger.Utils.SectionDropDownListAdapter
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.HomeWorkBinding
+import com.vs.schoolmessenger.util.VimeoVideoUpload
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -70,20 +79,16 @@ import java.util.Date
 import java.util.Locale
 
 class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageClickListener,
-    OnDateSelectedListener, HomeWorkReportClickListener {
+    OnDateSelectedListener, HomeWorkReportClickListener, VimeoVideoUpload.UploadCompletionListener {
 
     override fun getViewBinding(): HomeWorkBinding {
         return HomeWorkBinding.inflate(layoutInflater)
     }
-
     private lateinit var albumResultLauncher: ActivityResultLauncher<Intent>
-
     companion object {
         private const val PICK_DOCUMENT_REQUEST = 1003
         private const val MAX_FILES = 10
-
     }
-
     private var cameraPermissionDeniedCount = 0
     private val CAMERA_IMAGE_REQUEST = 1001
     var isFirstLoad = false
@@ -103,9 +108,13 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
     var mHomeWorkReportAdapter: HomeWorkReportAdapter? = null
     private var fullHomeworkList: List<HomeWorkReport> = listOf()
     var isSectionId = -1
-
     var isAcademicServerLoad = false
     var isSelectedDate = ""
+    val isVideoSelectedArrayList = mutableListOf<FileItem>()
+    var isTotalSelectedItem = 0
+    var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
+    var isHomeWorkId = ""
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
@@ -126,6 +135,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
         binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
+        isAwsUploadingPreSigned = AwsUploadingPreSigned()
         saveDrawableToCache(R.drawable.add_image)?.let {
             Constant.selectedFiles.add(
                 FileItem(
@@ -133,7 +143,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
                 )
             )
         }
-
+        binding.btnChooseRecipient.text = getString(R.string.TOSTANDARDORSECTION)
         binding.rcyImages.visibility = View.VISIBLE
         mAdapter = ImagePickingAdapter(this, Constant.selectedFiles, this)
         binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
@@ -168,7 +178,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
                     if (it > 0) {
                         binding.rytStandardDropDown.visibility = View.VISIBLE
                         binding.rytSectionDropDown.visibility = View.VISIBLE
-                        isSectionId = isGetStandard!!.get(0).sections.get(0).id
+                        isSectionId = isGetStandard!![0].sections[0].id
                         if (isGetStandard!!.get(0).sections.size > 0) {
                             isLoadStandard(isGetStandard)
                             isSection = isGetStandard!!.get(0).sections
@@ -178,6 +188,14 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
                         binding.rytSectionDropDown.visibility = View.GONE
                     }
                 }
+            }
+        }
+
+        appViewModel!!.isEditHomeWork?.observe(this) { response ->
+            Constant.hideLoading(this@HomeWork)
+            if (response != null) {
+                Log.d("Response", response.status.toString())
+                Constant.showTopAlertPopup(response.message, this)
             }
         }
 
@@ -246,29 +264,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
                         }
 
                         Constant.selectedFiles.add(FileItem(uri.toString(), type))
-
-//                        if (type.toString() == Constant.VIDEO) {
-////                            binding.thumbnailView.visibility = View.VISIBLE
-//                            binding.rcyImages.visibility = View.GONE
-
-                            // Extract and show video thumbnail
-//                            val bitmap = Constant.getVideoThumbnail(this, uri!!)
-//                            binding.thumbnailView.setImageBitmap(bitmap)
-//                            binding.thumbnailView.visibility = View.VISIBLE
-//                            binding.imgDelete.visibility = View.VISIBLE
-//                            binding.imgPlay.visibility = View.VISIBLE
-//                            binding.videoView.setVideoURI(uri)
-//                            binding.videoView.setMediaController(MediaController(this))
-//                            binding.videoView.requestFocus()
-//                        } else {
-//                            binding.videoView.visibility = View.GONE
-//                            binding.imgDelete.visibility = View.GONE
-//                            binding.thumbnailView.visibility = View.GONE
-//                            binding.rcyImages.visibility = View.VISIBLE
-//                            mAdapter?.notifyDataSetChanged()
-//                        }
-
-                        Log.d("SelectedFile", "URI: $uri, Type: $type")
                     }
 
                     if ((selectedUris?.size ?: 0) > remaining) {
@@ -278,31 +273,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
                     }
                 }
             }
-
-//        binding.imgDelete.setOnClickListener {
-//            binding.videoView.visibility = View.GONE
-//            binding.webView.visibility = View.GONE
-//            binding.imgDelete.visibility = View.GONE
-//            binding.imgPlay.visibility = View.GONE
-//            binding.rcyImages.visibility = View.VISIBLE
-//            binding.thumbnailView.visibility = View.GONE
-//            Constant.selectedFiles.clear()
-//            saveDrawableToCache(R.drawable.add_image)?.let {
-//                Constant.selectedFiles.add(
-//                    FileItem(
-//                        it, FileType.IMAGE
-//                    )
-//                )
-//            }
-//            mAdapter!!.notifyDataSetChanged()
-//        }
-
-//        binding.imgPlay.setOnClickListener {
-//            binding.thumbnailView.visibility = View.GONE
-//            binding.imgPlay.visibility = View.GONE
-//            binding.videoView.visibility = View.VISIBLE
-//            binding.videoView.start()
-//        }
 
         binding.edtSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -491,30 +461,29 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
             }
 
             R.id.btnCreate -> {
-                binding.btnCreate.isEnabled = false
-                binding.btnHistory.isEnabled = true
+                binding.btnChooseRecipient.text = getString(R.string.TOSTANDARDORSECTION)
                 isBackRoundChange(binding.btnCreate)
                 binding.rlaHomeWorkReport.visibility = View.GONE
                 binding.rlaHomework.visibility = View.VISIBLE
-                //Now once it is tab is swapped the academic year is already assigned so fetchHomeWorkReportData() will not be call
-                //So we are handling it by make it isAcademicServerLoad as true
                 isAcademicServerLoad = true
             }
 
             R.id.btnHistory -> {
-                binding.btnHistory.isEnabled = false
-                binding.btnCreate.isEnabled = true
+                binding.btnChooseRecipient.text = "Update HomeWork"
                 isBackRoundChange(binding.btnHistory)
                 binding.rlaHomeWorkReport.visibility = View.VISIBLE
                 binding.rlaHomework.visibility = View.GONE
-                //At initial swap we are avoiding the fetchHomeWorkReportData because Academic Year dropdown is doing fetchHomeWorkReportData
                 if (isAcademicServerLoad) {
                     fetchHomeWorkReportData()
                 }
             }
 
             R.id.btnChooseRecipient -> {
-                isRedirectToSectionStudents()
+                if (binding.btnChooseRecipient.text.toString().equals("Update HomeWork")) {
+                    showSendConfirmationDialog()
+                } else {
+                    isRedirectToSectionStudents()
+                }
             }
         }
     }
@@ -566,24 +535,12 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         }
 
         val sectionDetails = SectionDetails(title, description)
-//        Constant.selectedFiles.removeAt(0)
         val intent = Intent(this, RecipientActivity::class.java)
         intent.putExtra(Constant.section_data, sectionDetails)
         startActivity(intent)
     }
 
     private fun openAlbumSelectActivity(isFileType: String) {
-
-//        if (Constant.selectedFiles.size > 1) {
-//            val secondType = Constant.selectedFiles[1].type.toString()
-//            if ((secondType == Constant.IMAGE && (isFileType == Constant.DOCUMENT || isFileType == Constant.VOICE)) || (secondType == Constant.DOCUMENT && (isFileType == Constant.IMAGE || isFileType == Constant.VOICE)) || (secondType == Constant.VOICE && (isFileType == Constant.IMAGE || isFileType == Constant.DOCUMENT))) {
-////                Constant.selectedFiles.clear()
-//                saveDrawableToCache(R.drawable.add_image)?.let {
-//                    Constant.selectedFiles.add(FileItem(it, FileType.IMAGE))
-//                }
-//                mAdapter?.notifyDataSetChanged()
-//            }
-//        }
 
         Log.d("FileComing", isFileType)
         val sdkInt = Build.VERSION.SDK_INT
@@ -620,6 +577,8 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
 
         rlaGallery.setOnClickListener {
             Constant.isFileLimit = 10
+            Log.d("Constant.isFileLimit", Constant.isFileLimit.toString())
+
             openAlbumSelectActivity(Constant.IMAGE)
             dialog.dismiss()
         }
@@ -631,10 +590,20 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         }
 
         rlaVideoPick.setOnClickListener {
-            Constant.isFileLimit = 10
-            openAlbumSelectActivity(Constant.VIDEO)
-            dialog.dismiss()
+            val selectedVideoCount = Constant.selectedFiles.count { it.type == FileType.VIDEO }
+            if (selectedVideoCount >= 2) {
+                Toast.makeText(this, "Only 2 videos are allowed", Toast.LENGTH_SHORT).show()
+            } else {
+                if (Constant.selectedFiles.size == 1 || selectedVideoCount == 0) {
+                    Constant.isFileLimit = 2
+                } else if (selectedVideoCount == 1) {
+                    Constant.isFileLimit = 1
+                }
+                openAlbumSelectActivity(Constant.VIDEO)
+                dialog.dismiss()
+            }
         }
+
 
         rlaDocument.setOnClickListener {
             Constant.isFileLimit = 10
@@ -643,19 +612,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         }
 
         rlaCamera.setOnClickListener {
-//            if (Constant.selectedFiles.size > 1) {
-//                if (Constant.selectedFiles[1].type.toString() != Constant.IMAGE) {
-//                    Constant.selectedFiles.clear()
-//                    saveDrawableToCache(R.drawable.add_image)?.let {
-//                        Constant.selectedFiles.add(
-//                            FileItem(
-//                                it, FileType.IMAGE
-//                            )
-//                        )
-//                    }
-//                    mAdapter!!.notifyDataSetChanged()
-//                }
-//            }
             checkCameraPermissionAndOpenCamera()
             dialog.dismiss()
         }
@@ -855,14 +811,9 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
     }
 
     override fun onClickListener(data: HomeWorkReport) {
+        isHomeWorkId = data.id
         Constant.isAwsUploadedFiles.clear()
         Constant.selectedFiles.clear()
-//        binding.webView.visibility = View.GONE
-//        binding.thumbnailView.visibility = View.GONE
-//        binding.rcyImages.visibility = View.GONE
-//        binding.thumbnailView.visibility = View.GONE
-//        binding.imgDelete.visibility = View.GONE
-
         saveDrawableToCache(R.drawable.add_image)?.let {
             Constant.selectedFiles.add(
                 FileItem(
@@ -888,18 +839,10 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
             Constant.selectedFiles.addAll(mappedList)
         }
         if (Constant.selectedFiles.size > 1) {
-//            if (Constant.selectedFiles[1].type.toString() == Constant.VIDEO) {
-//                binding.thumbnailView.visibility = View.GONE
-//                binding.webView.visibility = View.VISIBLE
-//                binding.rcyImages.visibility = View.GONE
-//                binding.imgDelete.visibility = View.VISIBLE
-//                loadVideo(binding.webView, Constant.selectedFiles.get(1).path.toString())
-//            } else {
                 binding.rcyImages.visibility = View.VISIBLE
                 mAdapter = ImagePickingAdapter(this, Constant.selectedFiles, this)
                 binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
                 binding.rcyImages.adapter = mAdapter
-         //   }
         } else {
             binding.rcyImages.visibility = View.VISIBLE
             mAdapter = ImagePickingAdapter(this, Constant.selectedFiles, this)
@@ -908,41 +851,236 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         }
     }
 
-    @SuppressLint("SetJavaScriptEnabled")
-    fun loadVideo(webView: android.webkit.WebView, url: String) {
-//        binding.loadingBar.visibility = View.VISIBLE
-        webView.settings.javaScriptEnabled = true
-        webView.settings.domStorageEnabled = true
-        webView.settings.useWideViewPort = true
-        webView.settings.loadWithOverviewMode = true
-        webView.settings.allowFileAccess = true
-        webView.settings.allowContentAccess = true
+    // Edit Update code
+    fun isUploadFilesInServer(isFileType: String?) {
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            webView.settings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
+        if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS || SELECTED_SCHOOL_MENU == M_ASSIGNMENT) {
+            Constant.selectedFiles.removeAt(0) // Remove '+' placeholder
         }
-
-        webView.webChromeClient = WebChromeClient()
-        webView.webViewClient = object : WebViewClient() {
-            override fun onPageStarted(
-                view: android.webkit.WebView?, url: String?, favicon: Bitmap?
-            ) {
-               // binding.loadingBar.visibility = View.VISIBLE
-            }
-
-            override fun onPageFinished(view: android.webkit.WebView?, url: String?) {
-             //   binding.loadingBar.visibility = View.GONE
-            }
-
-            override fun onReceivedError(
-                view: android.webkit.WebView?,
-                request: WebResourceRequest?,
-                error: WebResourceError?
-            ) {
-              //  binding.loadingBar.visibility = View.GONE
-                Log.e("WebViewError", "Error loading: ${error?.description}")
+        ProgressDialogHelper.updateProgress(50)
+        isTotalSelectedItem = Constant.selectedFiles.size
+        isVideoSelectedArrayList.clear()
+        Constant.isAwsUploadedFiles.clear()
+        val iterator = Constant.selectedFiles.iterator()
+        while (iterator.hasNext()) {
+            val file = iterator.next()
+            if (file.type == FileType.VIDEO) {
+                isVideoSelectedArrayList.add(file)
+                iterator.remove()
             }
         }
-        webView.loadUrl(url)
+        when {
+            Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(isFileType)
+            isVideoSelectedArrayList.isNotEmpty() -> videoUploading()
+        }
+        ProgressDialogHelper.updateProgress(80)
+    }
+
+
+    private fun isFileUploadInAws(
+        isFileType: String?
+    ) {
+        Constant.isAwsUploadedFiles.clear()
+        val iterator = Constant.selectedFiles.iterator()
+        while (iterator.hasNext()) {
+            val fileItem = iterator.next()
+            if (fileItem.path.contains("amazonaws.")) {
+                Constant.isAwsUploadedFiles.add(
+                    AwsUploadedFiles(
+                        isFileUrl = fileItem.path, isFileType = fileItem.type.name
+                    )
+                )
+                iterator.remove()
+            }
+        }
+
+        val isCountryId = SharedPreference.getCountryId(this)
+        if (Constant.selectedFiles.isEmpty()) {
+            if (isVideoSelectedArrayList.isEmpty()) {
+                ProgressDialogHelper.dismiss()
+                isUpdateHomeWork()
+            } else {
+                videoUploading()
+            }
+        } else {
+            val outputDir =
+                File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "CompressedOutput")
+            outputDir.mkdirs()
+            val newSelectedFiles = mutableListOf<FileItem>()
+            Constant.compressImageFilesOnly(
+                context = this,
+                files = Constant.selectedFiles,
+                outputDir = outputDir.absolutePath,
+                format = Bitmap.CompressFormat.JPEG,
+                quality = 80,
+                maxWidth = 1280,
+                maxHeight = 1280,
+                onEachProcessed = { original, outputPath, success ->
+                    if (success && outputPath != null) {
+                        val compressedFile = File(outputPath)
+                        val originalSizeKB = try {
+                            if (original.path.startsWith("content://")) {
+                                contentResolver.openFileDescriptor(
+                                    Uri.parse(original.path), "r"
+                                )?.statSize ?: 0
+                            } else {
+                                File(original.path).length()
+                            }
+                        } catch (e: Exception) {
+                            0L
+                        }
+
+                        Log.d(
+                            "Compressor",
+                            "Compressed: $outputPath (${compressedFile.length() / 1024}KB), Original: ${originalSizeKB / 1024}KB"
+                        )
+
+                        newSelectedFiles.add(FileItem(path = outputPath, type = original.type))
+                    } else {
+                        Log.e("Compressor", "Failed: ${original.path}")
+                    }
+                },
+                onComplete = {
+                    Constant.selectedFiles.clear()
+                    Constant.selectedFiles.addAll(newSelectedFiles)
+                    val isAwsUploadingFile = ArrayList<String>()
+
+                    val isSelectedFileCount = Constant.selectedFiles.size
+                    for (i in Constant.selectedFiles.indices) {
+                        isAwsUploadingPreSigned?.getPreSignedUrl(
+                            Constant.selectedFiles[i].path,
+                            isStaffDetails!!.school_id,
+                            isFileType!!,
+                            this,
+                            isCountryId!!,
+                            true,
+                            false,
+                            object : UploadCallback {
+
+                                override fun onUploadSuccess(
+                                    response: String?, isFileUploaded: String?
+                                ) {
+                                    isAwsUploadingFile.add(isFileUploaded!!)
+                                    Constant.isAwsUploadedFiles.add(
+                                        AwsUploadedFiles(
+                                            isFileUrl = isFileUploaded,
+                                            isFileType = Constant.selectedFiles[i].type.name
+                                        )
+                                    )
+
+                                    if (isTotalSelectedItem == Constant.isAwsUploadedFiles.size) {
+                                        ProgressDialogHelper.dismiss()
+                                        isUpdateHomeWork()
+                                    } else {
+                                        if (isAwsUploadingFile.size == isSelectedFileCount) {
+                                            videoUploading()
+                                        }
+                                    }
+                                }
+
+                                override fun onUploadError(error: String?) {
+                                    Log.d("isUploadIssue", error.toString())
+                                }
+                            })
+                    }
+
+                    Log.d("Compressor", "All files compressed and uploaded.")
+                })
+        }
+    }
+
+    private fun videoUploading() {
+        val iterator = isVideoSelectedArrayList.iterator()
+        while (iterator.hasNext()) {
+            val fileItem = iterator.next()
+            if (fileItem.path.contains("player.vimeo.com")) {
+                Constant.isAwsUploadedFiles.add(
+                    AwsUploadedFiles(
+                        isFileUrl = fileItem.path, isFileType = fileItem.type.name
+                    )
+                )
+                iterator.remove()
+            }
+        }
+        if (isVideoSelectedArrayList.isNotEmpty()) {
+            for (i in isVideoSelectedArrayList.indices) {
+                VimeoVideoUpload.uploadVideo(
+                    this, "quiz", "quiz", isVideoSelectedArrayList[i].path, this
+                )
+            }
+        } else {
+            ProgressDialogHelper.dismiss()
+            isUpdateHomeWork()
+        }
+    }
+
+    override fun onUploadComplete(
+        success: Boolean, iframe: String?, link: String?
+    ) {
+        runOnUiThread {
+            Log.d("link", link.toString())
+            Constant.isAwsUploadedFiles.add(
+                AwsUploadedFiles(
+                    isFileUrl = link.toString(), isFileType = Constant.VIDEO
+                )
+            )
+
+            if (Constant.isAwsUploadedFiles.size == isTotalSelectedItem) {
+                ProgressDialogHelper.dismiss()
+                isUpdateHomeWork()
+            }
+        }
+    }
+
+
+    override fun onFailure(errorMessage: String?) {
+        runOnUiThread {
+            Log.e("VimeoUploadError", errorMessage ?: "Unknown error")
+        }
+    }
+
+    fun isUpdateHomeWork() {
+        RestClient.changeApiBaseUrl(SharedPreference.getBaseUrl(this).toString())
+        val jsonObject = JsonObject()
+        val filePathArray = JsonArray()
+        jsonObject.addProperty(APIKeyNames.id, isHomeWorkId)
+        jsonObject.addProperty(APIKeyNames.title, binding.edtTitle.text.toString())
+        jsonObject.addProperty(APIKeyNames.description, binding.edtDescription.text.toString())
+        jsonObject.addProperty(APIKeyNames.iframe, "")
+        jsonObject.addProperty(APIKeyNames.file_size, "")
+        jsonObject.addProperty(APIKeyNames.thumbnail, "")
+        for (i in Constant.isAwsUploadedFiles.indices) {
+            val isSelectedObject = JsonObject()
+            isSelectedObject.addProperty(APIKeyNames.url, Constant.isAwsUploadedFiles[i].isFileUrl)
+            isSelectedObject.addProperty(
+                APIKeyNames.type, Constant.isAwsUploadedFiles[i].isFileType
+            )
+            filePathArray.add(isSelectedObject)
+        }
+        jsonObject.add(APIKeyNames.file_path, filePathArray)
+        appViewModel?.isHomeWorkUpdate(isAccessToken!!, jsonObject, this)
+    }
+
+    fun showSendConfirmationDialog() {
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.alert_popup, null)
+        val alertDialog = AlertDialog.Builder(this).setView(dialogView).create()
+        alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        alertDialog.show()
+
+        val okButton = dialogView.findViewById<TextView>(R.id.btnOk)
+        val btnCancel = dialogView.findViewById<TextView>(R.id.btnCancel)
+        val alertMessage = dialogView.findViewById<TextView>(R.id.alertMessage)
+        val lblSelectTarget = dialogView.findViewById<TextView>(R.id.lblSelectTarget)
+
+        alertMessage.text = "Are you sure want to update this homework?"
+        lblSelectTarget.visibility = View.GONE
+
+        okButton.setOnClickListener {
+            alertDialog.dismiss()
+            ProgressDialogHelper.show(this)
+            ProgressDialogHelper.updateProgress(10)
+            isUploadFilesInServer("file")
+        }
+        btnCancel.setOnClickListener { alertDialog.dismiss() }
     }
 }

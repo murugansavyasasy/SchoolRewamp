@@ -83,7 +83,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
     private var lastPosition: Int = 0
     var mediaPlayer: MediaPlayer? = null
     private val REQUEST_PERMISSIONS = 100
-    var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
     var isFileExtensionFromContentUri: FileExtensionFromContentUri? = null
     private var isPrepared = false
     var mAdapter: VoiceHistoryAdapter? = null
@@ -172,7 +171,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         }
         mediaRecorder = MediaRecorder()
 
-        isAwsUploadingPreSigned = AwsUploadingPreSigned()
         isFileExtensionFromContentUri = FileExtensionFromContentUri()
 
         if (isUserDetails!!.staff_details.size > 1) {
@@ -871,7 +869,8 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
             R.id.rlaSendVoice -> {
 
                 if (Constant.isVoiceType == 3) {
-                    if (Constant.isAwsUploadedFiles.isNotEmpty()) {
+//                    if (Constant.isAwsUploadedFiles.isNotEmpty()) {
+                    if (Constant.selectedFiles.isNotEmpty()) {
                         if (binding.edtTitle.text.toString().isNotBlank()) {
                             if (isScheduleCall) {
                                 if (selectedDates.isNotEmpty()) {
@@ -1363,12 +1362,11 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
         } finally {
             mediaPlayer.release()
         }
-
-
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun setHistoryData(data: VoiceHistoryDetails) {
+        Constant.selectedFiles.clear()
         binding.rlaRecordVoice.visibility = View.VISIBLE
         if (Constant.isCommunicationType == 1) {
             binding.llEmergencyContainer.visibility = View.VISIBLE
@@ -1392,9 +1390,13 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
         Log.d("RecordingFilePath", "Recording stopped. File Path: $audioFilePath")
 
-        Constant.isAwsUploadedFiles.add(
-            AwsUploadedFiles(isFileUrl = data.url, isFileType = FileType.AUDIO.toString())
+//        Constant.isAwsUploadedFiles.add(
+//            AwsUploadedFiles(isFileUrl = data.url, isFileType = FileType.AUDIO.toString())
+//        )
+        Constant.selectedFiles.add(
+            FileItem(path = data.url, type = FileType.AUDIO)
         )
+
 
         binding.rlaSeekBarAndTitle.visibility = View.VISIBLE
         binding.rlaTitle.visibility = View.VISIBLE

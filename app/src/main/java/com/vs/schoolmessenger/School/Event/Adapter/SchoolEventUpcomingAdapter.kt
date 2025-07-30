@@ -114,6 +114,12 @@ class SchoolEventUpcomingAdapter (
         }
     }
 
+
+    fun updateList(newList: List<SchoolEventItem>?) {
+        this.itemList = newList
+        notifyDataSetChanged()
+    }
+
     fun removeItemAt(position: Int) {
         if (position in filteredList.indices) {
             val removedNotice = filteredList[position]
@@ -131,10 +137,7 @@ class SchoolEventUpcomingAdapter (
 
 
 
-    fun updateList(newList: List<SchoolEventItem>?) {
-        this.itemList = newList
-        notifyDataSetChanged()
-    }
+
 
 
 
@@ -173,18 +176,42 @@ class SchoolEventUpcomingAdapter (
 
             video_player.visibility = View.GONE
             loadingBar.visibility = View.GONE
-            options.visibility = View.VISIBLE
 
 
             options.setOnClickListener {
+                if (data.can_edit != true && data.can_delete != true) {
+                    return@setOnClickListener
+                }
                 val popup = PopupMenu(context, options)
                 popup.menuInflater.inflate(R.menu.notice_options_menu, popup.menu)
+                popup.menu.findItem(R.id.menu_edit).isVisible = data.can_edit == true
+                popup.menu.findItem(R.id.menu_delete).isVisible = data.can_delete == true
+
+                try {
+                    val fields = popup.javaClass.declaredFields
+                    for (field in fields) {
+                        if (field.name == "mPopup") {
+                            field.isAccessible = true
+                            val menuPopupHelper = field.get(popup)
+                            val classPopupHelper = Class.forName(menuPopupHelper.javaClass.name)
+                            val setForceIcons =
+                                classPopupHelper.getMethod("setForceShowIcon", Boolean::class.java)
+                            setForceIcons.invoke(menuPopupHelper, true)
+                            break
+                        }
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+
                 popup.setOnMenuItemClickListener { menuItem ->
                     when (menuItem.itemId) {
                         R.id.menu_edit -> {
-//                            listener.onEditNotice(noticeData)
+                            // Uncomment
+                            // listener.onEditNotice(noticeData)
                             true
                         }
+
                         R.id.menu_delete -> {
                             listener.onDeleteEvent(data.id, data.id, adapterPosition)
                             true
@@ -193,6 +220,7 @@ class SchoolEventUpcomingAdapter (
                         else -> false
                     }
                 }
+
                 popup.show()
             }
 

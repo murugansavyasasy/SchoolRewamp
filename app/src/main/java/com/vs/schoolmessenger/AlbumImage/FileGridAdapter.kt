@@ -18,12 +18,16 @@ class FileGridAdapter(
     private val onItemClicked: (Uri) -> Unit
 ) : RecyclerView.Adapter<FileGridAdapter.FileViewHolder>() {
 
-
     private val selected = mutableListOf<Uri>()
     private val items = mutableListOf<Uri>()
+    private val videoSizeCache = mutableMapOf<Uri, Long>()
+    private val nonSelectableUris = mutableSetOf<Uri>()
 
     fun submitList(list: List<Uri>) {
         items.clear()
+        selected.clear()
+        nonSelectableUris.clear()
+        videoSizeCache.clear()
         items.addAll(list)
         notifyDataSetChanged()
     }
@@ -50,6 +54,8 @@ class FileGridAdapter(
         val mimeType = context.contentResolver.getType(uri)
         val filePath = uri.toString()
 
+        var isDisabled = false
+
         when {
             mimeType?.startsWith("image/") == true -> {
                 Glide.with(context).load(uri).into(binding.imageView)
@@ -58,6 +64,15 @@ class FileGridAdapter(
             mimeType?.startsWith("video/") == true -> {
                 Glide.with(context).load(uri).into(binding.imageView)
                 binding.videoIcon.visibility = View.VISIBLE
+
+                // Check size and disable if too large
+                val size = videoSizeCache.getOrPut(uri) { getFileSize(context, uri) }
+                val maxSizeInBytes = 500L * 1024 * 1024 // 500 MB
+
+                if (size > maxSizeInBytes) {
+                    isDisabled = true
+                    nonSelectableUris.add(uri)
+                }
             }
 
             mimeType?.startsWith("audio/") == true -> {
@@ -98,11 +113,26 @@ class FileGridAdapter(
 
         binding.progressBar.visibility = View.GONE
         binding.checkIcon.visibility = if (selected.contains(uri)) View.VISIBLE else View.GONE
-        binding.imageView.alpha =
-            if (selected.contains(uri)) 0.5f else 1.0f
+
+        // Set alpha for visual feedback
+        binding.imageView.alpha = when {
+            isDisabled -> 0.3f
+            selected.contains(uri) -> 0.5f
+            else -> 1.0f
+        }
 
         binding.root.setOnClickListener {
+            if (nonSelectableUris.contains(uri)) {
+                Toast.makeText(
+                    context,
+                    "Cannot select videos larger than 500 MB",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            }
+
             onItemClicked(uri)
+
             if (selected.contains(uri)) {
                 selected.remove(uri)
             } else {
@@ -112,8 +142,19 @@ class FileGridAdapter(
                 }
                 selected.add(uri)
             }
-            notifyItemChanged(position)  // This will re-bind the item and apply visibility + alpha changes
+
+            notifyItemChanged(position)
             onSelectionChanged(selected)
+        }
+    }
+
+    private fun getFileSize(context: Context, uri: Uri): Long {
+        return try {
+            context.contentResolver.openAssetFileDescriptor(uri, "r")?.use {
+                it.length
+            } ?: 0L
+        } catch (e: Exception) {
+            0L
         }
     }
 
@@ -132,7 +173,6 @@ class FileGridAdapter(
     }
 
     fun getSelectedItems(): List<Uri> = selected.toList()
-
 
     override fun getItemCount(): Int = items.size
 }
