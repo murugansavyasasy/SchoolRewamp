@@ -17,7 +17,9 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.provider.Settings
+import android.text.Editable
 import android.text.InputFilter
+import android.text.TextWatcher
 import android.util.Log
 import android.view.Gravity
 import android.view.View
@@ -287,6 +289,16 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         manager.createNotificationChannel(channel)
 
 
+        binding.txtSearch.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (::noticeboardadapter.isInitialized) {
+                    noticeboardadapter.filter.filter(s)
+                }
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun afterTextChanged(s: Editable?) {}
+        })
 
 
     }
@@ -477,6 +489,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                 binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.black))
                 binding.line2.setBackgroundResource(R.color.white)
                 binding.rcyNoticeBoard.visibility = View.GONE
+                binding.rytSearch323.visibility = View.GONE
 
             }
 
@@ -487,6 +500,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                 binding.line2.setBackgroundResource(R.color.iconBlue)
                 binding.line1.setBackgroundResource(R.color.white)
                 binding.rcyNoticeBoard.visibility = View.VISIBLE
+                binding.rytSearch323.visibility = View.VISIBLE
                 isGetNoticeBoardList()
             }
 
