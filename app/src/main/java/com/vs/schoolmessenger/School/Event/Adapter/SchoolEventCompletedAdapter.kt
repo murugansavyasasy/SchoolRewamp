@@ -68,7 +68,7 @@ class SchoolEventCompletedAdapter (
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
-            filteredList?.get(position)?.let {
+            filteredList[position].let {              // ✅ cleaned up
                 holder.bind(it, position, listener, this)
             }
         } else if (holder is ShimmerViewHolder) {
@@ -77,19 +77,22 @@ class SchoolEventCompletedAdapter (
     }
 
 
+
     override fun getItemCount(): Int {
         return if (isLoading) {
             3
         } else {
-            filteredList?.size ?: 0
+            filteredList.size
         }
     }
+
 
 
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
-                val query = constraint?.toString()?.lowercase()?.trim() ?: ""
+                val query = constraint?.toString()?.lowercase()?.trim().orEmpty()
+
                 val result = if (query.isEmpty()) {
                     fullList
                 } else {
@@ -99,9 +102,8 @@ class SchoolEventCompletedAdapter (
                                 it.venue.lowercase().contains(query)
                     }
                 }
-                val filterResults = FilterResults()
-                filterResults.values = result
-                return filterResults
+
+                return FilterResults().apply { values = result }
             }
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
@@ -112,10 +114,14 @@ class SchoolEventCompletedAdapter (
         }
     }
 
+
     fun updateList(newList: List<SchoolEventItem>?) {
         this.itemList = newList
+        fullList = newList ?: listOf()
+        filteredList = fullList
         notifyDataSetChanged()
     }
+
 
 
     class DataViewHolder(itemView: View, private val context: Context) :

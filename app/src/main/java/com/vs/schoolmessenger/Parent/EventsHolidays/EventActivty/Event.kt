@@ -85,6 +85,7 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
 
 
         appViewModel?.IsGetEventReport?.observe(this) { response ->
+            Constant.hideLoading(this)
             if (response?.status == true && !response.data.isNullOrEmpty()) {
                 val data = response.data[0]
 
@@ -171,21 +172,22 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
 
 
     private fun loadeventdata() {
-        mAdapter = EventAdapter(null, this, this, Constant.isShimmerViewShow)
+        Constant.showLoading(this)
+        mAdapter = EventAdapter(null, this, this, Constant.isShimmerViewDisable)
         binding.rcyongoingevent.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.rcyongoingevent.isNestedScrollingEnabled = false
         binding.rcyongoingevent.adapter = mAdapter
 
 
-        categoryadapter = EventCategoryAdapter(null, this, this, Constant.isShimmerViewShow)
+        categoryadapter = EventCategoryAdapter(null, this, this, Constant.isShimmerViewDisable)
         binding.rcycategoryEvent.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.rcycategoryEvent.isNestedScrollingEnabled = false
         binding.rcycategoryEvent.adapter = categoryadapter
 
 
-        eventupcomingadapter = EventUpcomingAdapter(null, this, this, Constant.isShimmerViewShow)
+        eventupcomingadapter = EventUpcomingAdapter(null, this, this, Constant.isShimmerViewDisable)
         binding.rcyupcomingevent.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.rcyupcomingevent.isNestedScrollingEnabled = false
@@ -193,7 +195,7 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
 
 
         eventcompletedadapter =
-            EventCompletedAdapter(null, this, this, Constant.isShimmerViewShow)
+            EventCompletedAdapter(null, this, this, Constant.isShimmerViewDisable)
         binding.rcycompletedevent.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.rcycompletedevent.isNestedScrollingEnabled = false

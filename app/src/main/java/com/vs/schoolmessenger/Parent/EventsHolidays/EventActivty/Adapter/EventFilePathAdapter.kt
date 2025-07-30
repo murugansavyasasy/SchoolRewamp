@@ -106,27 +106,27 @@ class EventFilePathAdapter(
                 }
 
                 Constant.PDF -> {
-                    DefaultImage.setBackgroundResource(R.drawable.hw_pdf_img)
+                    DefaultImage.setImageResource(R.drawable.hw_pdf_img)
                     openDocumentInWebView(data.url)
                 }
 
                 Constant.DOC, Constant.DOCX -> {
-                    DefaultImage.setBackgroundResource(R.drawable.microsoft_word_img)
+                    DefaultImage.setImageResource(R.drawable.microsoft_word_img)
                     openDocumentInWebView(data.url)
                 }
 
                 Constant.TXT -> {
-                    DefaultImage.setBackgroundResource(R.drawable.txt_file_img)
+                    DefaultImage.setImageResource(R.drawable.txt_file_img)
                     openDocumentInWebView(data.url)
                 }
 
                 Constant.PPT, Constant.PPTX -> {
-                    DefaultImage.setBackgroundResource(R.drawable.ppt_icon)
+                    DefaultImage.setImageResource(R.drawable.ppt_icon)
                     openDocumentInWebView(data.url)
                 }
 
                 Constant.EXCEL -> {
-                    DefaultImage.setBackgroundResource(R.drawable.excel_icon)
+                    DefaultImage.setImageResource(R.drawable.excel_icon)
                     openDocumentInWebView(data.url)
                 }
             }

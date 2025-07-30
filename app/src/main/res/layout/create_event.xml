@@ -57,7 +57,7 @@
 
             <TextView
                 android:gravity="center"
-                android:text="Report"
+                android:text="Reports"
                 style="@style/CustomTextStylePoppinsBold"
                 android:id="@+id/tabTwoName"
                 android:layout_width="match_parent"
@@ -69,7 +69,7 @@
                 android:layout_height="@dimen/three"
                 android:layout_below="@+id/groupheading"
                 android:layout_marginTop="@dimen/five"
-                android:background="@color/gray_color">
+                android:background="@color/white">
             </View>
         </LinearLayout>
 
@@ -542,13 +542,42 @@
         </RelativeLayout>
     </ScrollView>
 
+    <RelativeLayout
+        android:id="@+id/rytSearch323"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/thirty_five"
+        android:layout_margin="@dimen/ten"
+        android:layout_below="@+id/toolbarLayout1"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/rect_grey"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/imgSearch"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/ten"
+            android:src="@drawable/ic_search" />
+
+        <EditText
+            android:id="@+id/txtSearch"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@id/imgSearch"
+            android:background="@android:color/transparent"
+            android:hint="@string/lblSearch"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp" />
+    </RelativeLayout>
 
     <ScrollView
         android:id="@+id/scroll_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"
-        android:layout_below="@id/toolbarLayout1"
+        android:layout_below="@id/rytSearch323"
         android:fillViewport="true">
 
         <RelativeLayout
@@ -566,9 +595,6 @@
                 android:text="Ongoing Events"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
-
-
-
 
             <RelativeLayout
                 android:id="@+id/rytSearch1"

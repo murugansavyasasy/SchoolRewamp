@@ -12,6 +12,8 @@ class NoticeStaffData (
     val visible_to: String,
     val intended_for: String,
     val is_management: Boolean,
+    val can_edit: Boolean,
+    val can_delete: Boolean,
     val iframe: String,
     val file_path: List<FilePath>
 )
