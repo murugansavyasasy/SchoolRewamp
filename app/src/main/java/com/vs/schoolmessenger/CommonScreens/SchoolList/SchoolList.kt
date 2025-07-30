@@ -710,17 +710,17 @@ class SchoolList : BaseActivity<SchoolListActivityBinding>(), SchoolListClickLis
         }
     }
 
-    override fun onProgressUpdate(percent: Int) {
-        runOnUiThread {
-            Log.d("isPercentage", percent.toString())
-            ProgressDialogHelper.show(this@SchoolList)
-            ProgressDialogHelper.updateProgress(percent)
-            if (percent == 100) {
-                ProgressDialogHelper.dismiss()
-                Constant.showLoading(this)
-            }
-        }
-    }
+//    override fun onProgressUpdate(percent: Int) {
+//        runOnUiThread {
+//            Log.d("isPercentage", percent.toString())
+//            ProgressDialogHelper.show(this@SchoolList)
+//            ProgressDialogHelper.updateProgress(percent)
+//            if (percent == 100) {
+//                ProgressDialogHelper.dismiss()
+//                Constant.showLoading(this)
+//            }
+//        }
+//    }
 
     fun extractVimeoUrlFromIframe(iframeHtml: String): String? {
         val regex = Regex("""<iframe[^>]+src="([^"]+)"""")

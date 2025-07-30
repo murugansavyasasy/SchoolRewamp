@@ -176,7 +176,6 @@ class SchoolEventUpcomingAdapter (
 
             video_player.visibility = View.GONE
             loadingBar.visibility = View.GONE
-            options.visibility = View.VISIBLE
 
 
             options.setOnClickListener {

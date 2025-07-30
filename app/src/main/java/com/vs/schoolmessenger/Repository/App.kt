@@ -130,6 +130,9 @@ class App(application: Application) : AndroidViewModel(application) {
     var isAssignmentDelete: LiveData<LPDeleteResponse?>? = null
         private set
 
+    var isEditHomeWork: LiveData<StatusMessageModel?>? = null
+        private set
+
 
     var isGetDailyCollectionReport: LiveData<DailyCollectionReportResponse?>? = null
         private set
@@ -272,6 +275,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isGetHomeWorkReport = apiSchoolRepositories.isGetHomeWorkReportLiveData
         isGetAssignmentReport = apiSchoolRepositories.isGetAssignmentReportLiveData
         isAssignmentDelete = apiSchoolRepositories.isDeleteAssignmentLiveData
+        isEditHomeWork = apiSchoolRepositories.isUpdateHomeworkLiveData
         isNoticeBoardReport = apiSchoolRepositories.isNoticeBoardReportLiveData
         isNoticeBoardStaffReport = apiSchoolRepositories.isNoticeBoardStaffReportLiveData
         isGetDailyCollectionReport = apiSchoolRepositories.isGetDailyCollectionReportLiveData
@@ -886,6 +890,10 @@ class App(application: Application) : AndroidViewModel(application) {
 
     fun isHomeWorkComplete(isToken: String, jsonObject: JsonObject) {
         apiParentRepositories.isHomeWorkComplete(isToken,jsonObject)
+    }
+
+    fun isHomeWorkUpdate(isToken: String, jsonObject: JsonObject,activity: Activity) {
+        apiSchoolRepositories.isEditHomeWork(isToken,jsonObject,activity)
     }
 
 

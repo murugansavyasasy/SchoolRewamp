@@ -45,8 +45,11 @@ class AlbumSelectActivity : AppCompatActivity() {
         fileType = intent.getStringExtra(Constant.isFileType) ?: Constant.IMAGE
         setupPermissionLauncher()
         setupDocumentPicker()
+
         binding.toolbarLayout.tvSelectionCount.text =
-            "Selected Files : 0 / ${Constant.isFileLimit}"
+            "Select the files : 0 / ${Constant.isFileLimit}"
+        binding.toolbarLayout.tvSelectedFiles.text =
+            "Selected Files : ${Constant.selectedFiles.size - 1}"
 
         adapter = FileGridAdapter(Constant.isFileLimit, onSelectionChanged = { selectedUris ->
             binding.toolbarLayout.tvSelectionCount.text =

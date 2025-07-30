@@ -96,6 +96,7 @@ class SchoolServices {
     var isSendText: MutableLiveData<TextSendResponse?>
     var isSendHomeWork: MutableLiveData<HomeWorkSendResponse?>
     var isSendAssignment: MutableLiveData<HomeWorkSendResponse?>
+    var isUpdateHomeWork: MutableLiveData<StatusMessageModel?>
     var isSendVoice: MutableLiveData<TextSendResponse?>
     var isUpdateStatusArchive: MutableLiveData<StatusArchiveResponse?>
     var isAcademicYear: MutableLiveData<AcademicYearResponse?>
@@ -176,6 +177,7 @@ class SchoolServices {
         isSendText = MutableLiveData()
         isSendHomeWork = MutableLiveData()
         isSendAssignment = MutableLiveData()
+        isUpdateHomeWork = MutableLiveData()
         isSendVoice = MutableLiveData()
         isUpdateStatusArchive = MutableLiveData()
         isAcademicYear = MutableLiveData()
@@ -737,6 +739,43 @@ class SchoolServices {
 
     val isDeleteAssignmentLiveData: LiveData<LPDeleteResponse?>
         get() = isAssignmentDelete
+
+    fun isEditHomeWork(
+        isToken: String, jsonObject: JsonObject,activity: Activity
+    ) {
+
+        RestClient.apiInterfaces.isHomeWorkUpdate(isToken, jsonObject)
+            ?.enqueue(object : Callback<StatusMessageModel?> {
+                override fun onResponse(
+                    call: Call<StatusMessageModel?>,
+                    response: Response<StatusMessageModel?>
+                ) {
+                    Log.d(
+                        "isGetCountryList", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isUpdateHomeWork.postValue(response.body())
+                            } else {
+                                isUpdateHomeWork.postValue(response.body())
+                            }
+                        }
+                    } else {
+                        isUpdateHomeWork.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<StatusMessageModel?>, t: Throwable) {
+                    isUpdateHomeWork.postValue(null)
+                    Log.d("t.printStackTrace()", t.printStackTrace().toString())
+                }
+            })
+    }
+
+    val isUpdateHomeworkLiveData: LiveData<StatusMessageModel?>
+        get() = isUpdateHomeWork
 
 
     fun isNoticeBoardReport(

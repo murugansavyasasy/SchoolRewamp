@@ -117,7 +117,7 @@ object APIKeyNames {
     const val day_id = "day_id"
 
     const val staff_id = "staff_id"
-    const val thumbnail_url = "thumbnail_url"
+    const val thumbnail = "thumbnail"
     const val Bearer = "Bearer "
     const val download = "download"
     const val quality = "quality"

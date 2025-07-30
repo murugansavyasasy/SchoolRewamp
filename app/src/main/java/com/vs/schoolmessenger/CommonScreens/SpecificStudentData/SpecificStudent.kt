@@ -555,19 +555,19 @@ class SpecificStudent : BaseActivity<SpecificStudentBinding>(), SpecificStudentS
         }
     }
 
-    override fun onProgressUpdate(percent: Int) {
-        runOnUiThread {
-            Log.d("isPercentage", percent.toString())
-//            binding.circularProgressView.setProgress(percent)
-            ProgressDialogHelper.show(this@SpecificStudent)
-            ProgressDialogHelper.updateProgress(percent)
-            if (percent == 100) {
-                ProgressDialogHelper.dismiss()
-//                binding.circularProgressView.visibility = View.GONE
-                Constant.showLoading(this)
-            }
-        }
-    }
+//    override fun onProgressUpdate(percent: Int) {
+//        runOnUiThread {
+//            Log.d("isPercentage", percent.toString())
+////            binding.circularProgressView.setProgress(percent)
+//            ProgressDialogHelper.show(this@SpecificStudent)
+//            ProgressDialogHelper.updateProgress(percent)
+//            if (percent == 100) {
+//                ProgressDialogHelper.dismiss()
+////                binding.circularProgressView.visibility = View.GONE
+//                Constant.showLoading(this)
+//            }
+//        }
+//    }
 
     override fun onResume() {
         super.onResume()
