@@ -35,6 +35,8 @@ class CalendarFragment : Fragment() {
     private val binding get() = _binding!!
     private val calendar = Calendar.getInstance()
     private var holidayList: List<Holiday> = emptyList()
+    var onDateSelected: ((String) -> Unit)? = null
+
 
     companion object {
         private const val ARG_HOLIDAY_LIST = "holiday_list"

@@ -387,7 +387,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         json.put("id", id)
         val requestBody = json.toString().toRequestBody("application/json".toMediaTypeOrNull())
 
-        appViewModel?.isEventDelete(isAccessToken!!, requestBody, this)
+//        appViewModel?.isEventDelete(isAccessToken!!, requestBody, this)
 
         appViewModel!!.isEventDelete?.observe(this) { response ->
             if (response != null) {

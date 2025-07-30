@@ -880,7 +880,7 @@ class App(application: Application) : AndroidViewModel(application) {
     }
 
 
-    fun isEventDelete(isToken: String, request: RequestBody, activity: Activity) {
+    fun isEventDelFete(isToken: String, request: RequestBody, activity: Activity) {
         apiSchoolRepositories.isEventDelete(isToken, request, activity)
     }
 

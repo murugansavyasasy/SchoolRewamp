@@ -32,7 +32,7 @@
                 android:id="@+id/tvName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="saranraj_shanmugam"
+                android:text="SARANRAJ SHANMUGAM"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/fourteen_sp"
                 android:textStyle="bold" />
@@ -41,8 +41,8 @@
                 android:id="@+id/tvClass"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/four"
-                android:text="I-b"
+                android:layout_marginTop="@dimen/seven"
+                android:text="I - B"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/fourteen_sp"
                 android:textStyle="bold" />
@@ -55,16 +55,13 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingHorizontal="@dimen/twenty"
-        android:paddingTop="@dimen/ten"
-        android:paddingBottom="@dimen/eight">
+        android:paddingHorizontal="@dimen/twenty">
 
         <!-- Left: Timetable Title -->
         <TextView
             android:id="@+id/tvTimetableTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
             android:layout_weight="1"
             android:text="Timetable"
             android:textColor="@android:color/white"

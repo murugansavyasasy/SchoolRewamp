@@ -38,7 +38,7 @@
 
         <ImageView
             android:id="@+id/imgNoData"
-            android:layout_width="@dimen/four_hundred"
+            android:layout_width="@dimen/three_hundred"
             android:layout_height="@dimen/three_hundred"
             android:contentDescription="@string/no_data"
             android:src="@drawable/no_data_available" />

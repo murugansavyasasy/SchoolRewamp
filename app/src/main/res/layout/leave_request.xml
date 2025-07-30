@@ -17,16 +17,14 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/toolbarLayout"
         android:layout_marginTop="@dimen/ten"
-        android:visibility="gone"
         android:background="@color/white"
-        app:tabIndicatorColor="@color/skydark_blue"
-        app:tabSelectedTextColor="@color/skydark_blue"
+        android:visibility="gone"
         app:tabBackground="@color/grey_mild"
-        app:tabTextColor="@color/black"
+        app:tabGravity="fill"
+        app:tabIndicatorColor="@color/skydark_blue"
         app:tabMode="fixed"
-        app:tabGravity="fill"/>
-
-
+        app:tabSelectedTextColor="@color/skydark_blue"
+        app:tabTextColor="@color/black" />
 
 
     <RelativeLayout
@@ -44,8 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/ten"
-            android:layout_marginEnd="@dimen/ten">
-        </androidx.recyclerview.widget.RecyclerView>
+            android:layout_marginEnd="@dimen/ten"></androidx.recyclerview.widget.RecyclerView>
 
         <LinearLayout
             android:id="@+id/lytList"
@@ -108,8 +105,8 @@
                 android:padding="@dimen/ten">
 
                 <TextView
-                    style="@style/CustomTextStylePoppinsBold"
                     android:id="@+id/lblHeaderTitle"
+                    style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/ten"
@@ -321,8 +318,8 @@
                     </TextView>
 
                     <TextView
-                        style="@style/CustomTextStylePoppinsBold"
                         android:id="@+id/lblEventDesc"
+                        style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/lblTotalDays"
@@ -341,15 +338,16 @@
                         android:layout_marginStart="@dimen/ten"
                         android:layout_marginTop="@dimen/fifteen"
                         android:layout_marginEnd="@dimen/ten"
-                        android:gravity="start"
-                        android:padding="@dimen/ten"
                         android:background="@drawable/bg_stroke_rect_black"
+                        android:gravity="start"
                         android:hint="Reason"
+                        android:padding="@dimen/ten"
                         android:textColor="@color/black"
                         android:textSize="@dimen/thirteen_sp" />
 
                     <TextView
                         android:id="@+id/lbTextCount"
+                        style="@style/CustomTextStylePoppinsBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/txtDesc"
@@ -358,7 +356,6 @@
                         android:layout_marginEnd="@dimen/ten"
                         android:text="@string/_0_of_500"
                         android:textColor="@color/black"
-                        style="@style/CustomTextStylePoppinsBold"
                         android:textSize="@dimen/thirteen_sp" />
 
 
@@ -394,63 +391,75 @@
                         android:fontFamily="@font/poppins_bold"
                         android:gravity="center"
                         android:text="@string/submit"
-                        android:visibility="visible"
                         android:textColor="@color/white"
                         android:textSize="@dimen/thirteen_sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:visibility="visible" />
+
 
                     <LinearLayout
                         android:id="@+id/linear_layout9"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_alignParentBottom="true"
-                        android:orientation="horizontal"
-                        android:gravity="center"
-                        android:visibility="gone"
                         android:layout_below="@+id/lbTextCount"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:orientation="horizontal"
                         android:paddingTop="8dp"
-                        android:paddingBottom="8dp">
+                        android:paddingBottom="8dp"
+                        android:visibility="gone">
 
                         <TextView
                             android:id="@+id/btncancel"
+                            style="@style/CustomTextStylePoppinsMedium"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Cancel"
-                            android:textSize="13sp"
-                            android:textColor="@color/white"
+                            android:layout_marginEnd="12dp"
+                            android:background="@drawable/bg_red_radious__all_side_same"
                             android:padding="10dp"
                             android:paddingStart="@dimen/eighteen_sp"
                             android:paddingEnd="@dimen/eighteen_sp"
-                            android:layout_marginEnd="12dp"
-                            android:background="@drawable/bg_red_radious__all_side_same"
-                            style="@style/CustomTextStylePoppinsMedium" />
+                            android:text="Cancel"
+                            android:textColor="@color/white"
+                            android:textSize="13sp" />
 
                         <TextView
                             android:id="@+id/btnupdate"
+                            style="@style/CustomTextStylePoppinsMedium"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Update"
-                            android:textSize="13sp"
-                            android:textColor="@color/white"
+                            android:layout_marginStart="30dp"
+                            android:background="@drawable/bg_green_radious"
                             android:padding="10dp"
                             android:paddingStart="@dimen/eighteen_sp"
                             android:paddingEnd="@dimen/eighteen_sp"
-                            android:layout_marginStart="30dp"
-                            android:background="@drawable/bg_green_radious"
-                            style="@style/CustomTextStylePoppinsMedium" />
+                            android:text="Update"
+                            android:textColor="@color/white"
+                            android:textSize="13sp" />
 
                     </LinearLayout>
-
-
-
-
 
                 </RelativeLayout>
             </RelativeLayout>
 
+
         </androidx.cardview.widget.CardView>
 
     </ScrollView>
+
+    <ImageView
+        android:id="@+id/imgAddLeave"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="16dp"
+        android:background="@drawable/bg_blue_backround"
+        android:contentDescription="Add Leave"
+        android:elevation="6dp"
+        android:padding="10dp"
+        android:src="@drawable/ic_plus" />
+
 
 </RelativeLayout>

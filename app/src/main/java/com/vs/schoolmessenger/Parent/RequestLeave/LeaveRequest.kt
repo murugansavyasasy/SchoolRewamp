@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Build
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -42,6 +43,7 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
     private val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
 
     private var currentTab = TabType.LeaveRequest
+
 
     private enum class TabType {
         LeaveRequest, History
@@ -169,6 +171,12 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
             val intent = Intent(this, LeaveRequest::class.java)
             startActivity(intent)
             finish()
+        }
+
+        val addLeaveButton: ImageView = findViewById(R.id.imgAddLeave)
+        addLeaveButton.setOnClickListener {
+            val intent = Intent(this, NewLeaveRequest::class.java)
+            startActivity(intent)
         }
 
 
