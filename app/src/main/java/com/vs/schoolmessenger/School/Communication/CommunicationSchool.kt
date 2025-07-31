@@ -1000,7 +1000,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
 
             R.id.lnrScheduleCall -> {
                 val dateAdapter = DateAdapter(this) { updatedList -> }
-
                 selectedDatesAdapter = SelectedDatesAdapter(
                     context = this,
                     selectedDates = selectedDates.toMutableList(),
@@ -1009,7 +1008,6 @@ class CommunicationSchool : BaseActivity<CommunicationSchoolBinding>(), View.OnC
                     selectedDates.remove(removedDate)
                     dateAdapter.removeSelectedDate(removedDate)
                 }
-
                 binding.gridViewScheduleCall.adapter = selectedDatesAdapter
 
                 val datePickerPopup = CustomDatePicker(

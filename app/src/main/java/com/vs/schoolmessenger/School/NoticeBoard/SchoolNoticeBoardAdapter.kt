@@ -123,8 +123,6 @@ class SchoolNoticeBoardAdapter(
             }
             fullList = fullList.filterNot { it.id == removedNotice.id }
             notifyItemRemoved(position)
-
-            // Optional: show "No Data Found" if empty
             if (filteredList.isEmpty()) {
                 listener.onSearchResultEmpty(true)
             }
@@ -209,6 +207,7 @@ class SchoolNoticeBoardAdapter(
                 if (noticeData.can_edit != true && noticeData.can_delete != true) {
                     return@setOnClickListener
                 }
+
                 val popup = PopupMenu(context, options)
                 popup.menuInflater.inflate(R.menu.notice_options_menu, popup.menu)
                 popup.menu.findItem(R.id.menu_edit).isVisible = noticeData.can_edit == true
