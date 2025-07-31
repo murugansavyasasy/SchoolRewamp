@@ -141,12 +141,12 @@
                         android:fontFamily="@font/poppins_bold"
                         android:inputType="textCapSentences"
                         android:paddingTop="4dp"
-                        android:textStyle="bold"
                         android:paddingBottom="4dp"
                         android:text="Trip to Cannes"
                         android:textColor="#000000"
                         android:textColorHint="#888888"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -228,66 +228,64 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-<!--                &lt;!&ndash; This title tells user what they're selecting &ndash;&gt;-->
-<!--                <TextView-->
-<!--                    android:id="@+id/tvCalendarTitle"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="Selecting From Date"-->
-<!--                    android:textSize="16sp"-->
-<!--                    android:textStyle="bold"-->
-<!--                    android:layout_marginTop="@dimen/ten"-->
-<!--                    android:textColor="@color/black"-->
-<!--                    android:layout_gravity="center_horizontal"-->
-<!--                    android:layout_marginBottom="8dp" />-->
-<!--                <CalendarView-->
-<!--                    android:id="@+id/calendarView"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="300dp"-->
-<!--                    android:layout_marginTop="@dimen/fifteen"-->
-<!--                    android:background="@drawable/bg_top_rounded_container"-->
-<!--                    android:layout_marginStart="@dimen/twenty_five"-->
-<!--                    android:layout_marginEnd="@dimen/twenty_five" />-->
+                <!--                &lt;!&ndash; This title tells user what they're selecting &ndash;&gt;-->
+                <!--                <TextView-->
+                <!--                    android:id="@+id/tvCalendarTitle"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:text="Selecting From Date"-->
+                <!--                    android:textSize="16sp"-->
+                <!--                    android:textStyle="bold"-->
+                <!--                    android:layout_marginTop="@dimen/ten"-->
+                <!--                    android:textColor="@color/black"-->
+                <!--                    android:layout_gravity="center_horizontal"-->
+                <!--                    android:layout_marginBottom="8dp" />-->
+                <!--                <CalendarView-->
+                <!--                    android:id="@+id/calendarView"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="300dp"-->
+                <!--                    android:layout_marginTop="@dimen/fifteen"-->
+                <!--                    android:background="@drawable/bg_top_rounded_container"-->
+                <!--                    android:layout_marginStart="@dimen/twenty_five"-->
+                <!--                    android:layout_marginEnd="@dimen/twenty_five" />-->
 
-<!--                <androidx.fragment.app.FragmentContainerView-->
-<!--                    android:id="@+id/calendarFragmentContainer"-->
-<!--                    android:name="com.vs.schoolmessenger.Parent.RequestLeave.CalendarFragment"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginTop="@dimen/fifteen"-->
-<!--                    android:layout_marginStart="@dimen/twenty_five"-->
-<!--                    android:layout_marginEnd="@dimen/twenty_five"-->
-<!--                    android:visibility="gone"-->
-<!--                    />-->
+                <!--                <androidx.fragment.app.FragmentContainerView-->
+                <!--                    android:id="@+id/calendarFragmentContainer"-->
+                <!--                    android:name="com.vs.schoolmessenger.Parent.RequestLeave.CalendarFragment"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_marginTop="@dimen/fifteen"-->
+                <!--                    android:layout_marginStart="@dimen/twenty_five"-->
+                <!--                    android:layout_marginEnd="@dimen/twenty_five"-->
+                <!--                    android:visibility="gone"-->
+                <!--                    />-->
 
                 <CalendarView
                     android:id="@+id/calendarView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                   />
+                    android:layout_height="wrap_content" />
 
-<!--                <com.vs.schoolmessenger.Parent.RequestLeave.CustomCalendarView-->
-<!--                    android:id="@+id/customCalendar"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginTop="16dp" />-->
-
-
+                <!--                <com.vs.schoolmessenger.Parent.RequestLeave.CustomCalendarView-->
+                <!--                    android:id="@+id/customCalendar"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_marginTop="16dp" />-->
 
 
                 <!--                <Button-->
-<!--                    android:id="@+id/btnConfirmDate"-->
-<!--                    android:layout_width="400dp"-->
-<!--                    android:layout_height="30dp"-->
-<!--                    android:background="@color/orange"-->
-<!--                    android:text="Confirm"-->
-<!--                    android:layout_marginTop="@dimen/fifteen"-->
-<!--                    android:textColor="#FFFFFF"-->
-<!--                    android:textSize="16sp"-->
-<!--                    android:layout_gravity="center_horizontal"-->
-<!--                    android:fontFamily="@font/poppins_bold" />-->
+                <!--                    android:id="@+id/btnConfirmDate"-->
+                <!--                    android:layout_width="400dp"-->
+                <!--                    android:layout_height="30dp"-->
+                <!--                    android:background="@color/orange"-->
+                <!--                    android:text="Confirm"-->
+                <!--                    android:layout_marginTop="@dimen/fifteen"-->
+                <!--                    android:textColor="#FFFFFF"-->
+                <!--                    android:textSize="16sp"-->
+                <!--                    android:layout_gravity="center_horizontal"-->
+                <!--                    android:fontFamily="@font/poppins_bold" />-->
 
             </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"

@@ -466,6 +466,4 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
             appViewModel?.isleaverequestupdate(isAccessToken!!, updatedRequest, this)
         }
     }
-
-
 }
