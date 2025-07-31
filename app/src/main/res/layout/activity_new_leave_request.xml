@@ -1,274 +1,327 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5"
-    android:orientation="vertical"
-    android:padding="@dimen/sixteen">
-
-    <!-- Header -->
-    <LinearLayout
+    >
+    <RelativeLayout
+        android:id="@+id/rytHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/five"
-        android:layout_marginBottom="@dimen/ten"
-        android:gravity="center_vertical"
-        android:orientation="vertical">
+        android:background="@drawable/bg_header_rounded"
+        android:paddingBottom="@dimen/fifty"
+        >
+        <RelativeLayout
+            android:id="@+id/rytHeaderDetail"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/imgBack"
+                android:layout_width="@dimen/thirty_five"
+                android:layout_height="@dimen/thirty_five"
+                android:layout_centerVertical="true"
+                android:src="@drawable/left_arrow">
 
-        <ImageView
-            android:id="@+id/back"
-            android:layout_width="@dimen/thirty_five"
-            android:layout_height="@dimen/thirty_five"
-            android:layout_marginEnd="@dimen/sixteen"
-            android:contentDescription="Back"
-            android:src="@drawable/left_arrow" />
+            </ImageView>
 
+            <LinearLayout
+                android:id="@+id/lytTitleAndName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/imgBack"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/lblStudentName"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Santhosh N"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/fifteen_sp">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/lblStudentSection"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="I-B"
+                    android:visibility="visible"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/twele_sp">
+
+                </TextView>
+
+            </LinearLayout>
+
+        </RelativeLayout>
         <TextView
-            android:layout_width="match_parent"
+            android:id="@+id/lblParentToolBar"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/five"
-            android:layout_marginTop="@dimen/fifteen"
-            android:text="New Leave"
-            android:textColor="#000000"
-            android:textSize="@dimen/thirty_five"
-            android:textStyle="bold" />
-    </LinearLayout>
+            android:text="Leave Request"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginStart="@dimen/twenty"
+            android:layout_below="@+id/rytHeaderDetail"
+            android:textColor="@color/white"
+            android:textSize="@dimen/twenty">
 
-    <LinearLayout
+        </TextView>
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_below="@+id/rytHeader"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/ten"
-        android:layout_marginBottom="@dimen/twenty"
-        android:background="@drawable/bg_top_rounded_container"
-        android:orientation="vertical"
-        android:padding="@dimen/five">
-
-        <!-- Leave Type -->
+        android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/ten"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="@dimen/twenty_five">
-
-            <LinearLayout
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginEnd="12dp"
-                android:background="@drawable/rounded_background"
-                android:gravity="center">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/casual" />
-
-            </LinearLayout>
+            android:background="@drawable/bg_top_rounded_container"
+            android:orientation="vertical"
+            android:padding="@dimen/ten">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginTop="@dimen/ten"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/fifteen">
 
-                <TextView
+                <LinearLayout
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="12dp"
+                    android:background="@drawable/rounded_background"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/grid_view" />
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Type"
-                    android:textColor="#888888"
-                    android:textSize="@dimen/fourteen_sp" />
+                    android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_bold"
-                    android:text="Casual"
-                    android:textColor="#000000"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Type"
+                        android:textColor="#888888"
+                        android:textSize="@dimen/fourteen_sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_bold"
+                        android:text="Casual"
+                        android:textColor="#000000"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="@dimen/ten"
-            android:background="#D1D1D6" />
-        <!-- Reason -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="@dimen/twenty_five">
-
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/ten"
+                android:background="#D1D1D6" />
+            <!-- Reason -->
             <LinearLayout
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginEnd="12dp"
-                android:background="@drawable/rounded_background"
-                android:gravity="center">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/fifteen">
 
-                <ImageView
-                    android:layout_width="@dimen/twenty"
-                    android:layout_height="@dimen/twenty"
-                    android:background="@drawable/pen"
-                    android:scaleType="centerInside" />
+                <LinearLayout
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="12dp"
+                    android:background="@drawable/rounded_background"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="@dimen/twenty"
+                        android:layout_height="@dimen/twenty"
+                        android:background="@drawable/marker_border"
+                        android:scaleType="centerInside" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Cause"
+                        android:textColor="#888888"
+                        android:textSize="@dimen/fourteen_sp" />
+
+                    <EditText
+                        android:id="@+id/etLeaveReason"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:fontFamily="@font/poppins_bold"
+                        android:inputType="textCapSentences"
+                        android:paddingTop="4dp"
+                        android:textStyle="bold"
+                        android:paddingBottom="4dp"
+                        android:text="Trip to Cannes"
+                        android:textColor="#000000"
+                        android:textColorHint="#888888"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
             </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/ten"
+                android:background="#D1D1D6" />
+            <!-- From Date -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/fifteen">
+
+                <LinearLayout
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="12dp"
+                    android:background="@drawable/rounded_background"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="@dimen/twenty"
+                        android:layout_height="@dimen/twenty"
+                        android:background="@drawable/from_icon"
+                        android:scaleType="centerInside" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="From"
+                        android:textColor="#888888"
+                        android:textSize="@dimen/fourteen_sp" />
+
+                    <TextView
+                        android:id="@+id/tvFromDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_bold"
+                        android:text="Mon, 21 Dec 2020"
+                        android:textColor="#000000"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/ten"
+                android:background="#D1D1D6" />
+            <!--            <CalendarView-->
+
+            <FrameLayout
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginBottom="@dimen/ten"
+                android:id="@+id/calendarFragmentContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/ten"
+                android:background="#D1D1D6" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/twenty">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Cause"
-                    android:textColor="#888888"
-                    android:textSize="@dimen/fourteen_sp" />
+                <LinearLayout
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="12dp"
+                    android:background="@drawable/rounded_background"
+                    android:gravity="center">
 
-                <TextView
-                    android:layout_width="match_parent"
+                    <ImageView
+                        android:layout_width="@dimen/twenty"
+                        android:layout_height="@dimen/twenty"
+                        android:background="@drawable/from_to_icom"
+                        android:scaleType="centerInside" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_bold"
-                    android:text="Trip to Cannes"
-                    android:textColor="#000000"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="To"
+                        android:textColor="#888888"
+                        android:textSize="@dimen/fourteen_sp" />
+
+                    <TextView
+                        android:id="@+id/tvToDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_bold"
+                        android:text="0"
+                        android:textColor="#000000"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
+        <!-- Submit Button -->
+        <Button
 
-        <View
+            android:id="@+id/btnApplyLeave"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="@dimen/ten"
-            android:background="#D1D1D6" />
-        <!-- From Date -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="@dimen/twenty_five">
-
-            <LinearLayout
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginEnd="12dp"
-                android:background="@drawable/rounded_background"
-                android:gravity="center">
-
-                <ImageView
-                    android:layout_width="@dimen/twenty"
-                    android:layout_height="@dimen/twenty"
-                    android:background="@drawable/arrow_up_round"
-                    android:scaleType="centerInside" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="From"
-                    android:textColor="#888888"
-                    android:textSize="@dimen/fourteen_sp" />
-
-                <TextView
-                    android:id="@+id/tvFromDate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_bold"
-                    android:text="Mon, 21 Dec 2020"
-                    android:textColor="#000000"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="@dimen/ten"
-            android:background="#D1D1D6" />
-
-        <!--            <CalendarView-->
-        <!--                android:id="@+id/calendarView"-->
-        <!--                android:layout_width="match_parent"-->
-        <!--                android:layout_height="wrap_content" />-->
-
-        <!-- To Date -->
-
-        <!--        <com.google.android.material.datepicker.MaterialCalendarView-->
-        <!--            android:id="@+id/calendarView"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginTop="16dp" />-->
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/ten"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="@dimen/twenty_five">
-
-            <LinearLayout
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginEnd="12dp"
-                android:background="@drawable/rounded_background"
-                android:gravity="center">
-
-                <ImageView
-                    android:layout_width="@dimen/twenty"
-                    android:layout_height="@dimen/twenty"
-                    android:background="@drawable/arrow_down_round"
-                    android:scaleType="centerInside" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="To"
-                    android:textColor="#888888"
-                    android:textSize="@dimen/fourteen_sp" />
-
-                <TextView
-                    android:id="@+id/tvToDate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_bold"
-                    android:text="Fri, 08 Jan 2021"
-                    android:textColor="#000000"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-        </LinearLayout>
+            android:layout_height="56dp"
+            android:layout_marginTop="@dimen/twenty"
+            android:background="@drawable/bg_blue_backround"
+            android:fontFamily="@font/poppins_bold"
+            android:text="Apply for Leave"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
     </LinearLayout>
+    </ScrollView>
 
-    <!-- Submit Button -->
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_marginTop="@dimen/fifteen"
-        android:background="@drawable/bg_blue_backround"
-        android:fontFamily="@font/poppins_bold"
-        android:text="Apply for Leave"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp" />
 
-</LinearLayout>
 
+
+</RelativeLayout>

@@ -35,16 +35,16 @@ class AttendanceReport : BaseActivity<AttendanceReportParentBinding>(), View.OnC
         // Toolbar setup
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.toolbarLayout.lblParentToolBar.text = getString(R.string.AttendanceReport)
-        binding.toolbarLayout.lblParentToolBar.setTextColor(ContextCompat.getColor(this, R.color.white))
+//        binding.toolbarLayout.lblParentToolBar.setTextColor(ContextCompat.getColor(this, R.color.white))
 
         binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
 
 
         isChildDetails = SharedPreference.getChildDetails(this)
         binding.toolbarLayout.lblStudentName.text = isChildDetails?.name ?: ""
-        binding.toolbarLayout.lblStudentName.setTextColor(ContextCompat.getColor(this, R.color.white))
+//        binding.toolbarLayout.lblStudentName.setTextColor(ContextCompat.getColor(this, R.color.white))
         binding.toolbarLayout.lblStudentSection.text = isChildDetails?.standard_name+ " - " +isChildDetails?.section_name
-        binding.toolbarLayout.lblStudentSection.setTextColor(ContextCompat.getColor(this, R.color.white))
+//        binding.toolbarLayout.lblStudentSection.setTextColor(ContextCompat.getColor(this, R.color.white))
 
         isAccessToken = isChildDetails?.access_token
         appViewModel = ViewModelProvider(this)[App::class.java]

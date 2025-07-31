@@ -1,18 +1,21 @@
 package com.vs.schoolmessenger.Parent.RequestLeave
 
 import android.os.Bundle
+
+import android.widget.Toast
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
-import com.vs.schoolmessenger.School.Communication.Adapter.DateAdapter
-import com.vs.schoolmessenger.School.Communication.Adapter.SelectedDatesAdapter
-import com.vs.schoolmessenger.Utils.CustomDatePicker
+import com.vs.schoolmessenger.Parent.EventsHolidays.CalendarFragment
+import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.databinding.ActivityNewLeaveRequestBinding
 import java.text.SimpleDateFormat
 import java.util.*
 
 class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>() {
 
-    private val selectedDates = mutableListOf<String>()
-    private lateinit var selectedDatesAdapter: SelectedDatesAdapter
+    private var isSelectingFromDate = true
+    private val dateFormat = SimpleDateFormat("EEE, dd MMM yyyy", Locale.getDefault())
+    private var fromDate: Date = Calendar.getInstance().time
+    private var toDate: Date = Calendar.getInstance().time
 
     override fun getViewBinding(): ActivityNewLeaveRequestBinding {
         return ActivityNewLeaveRequestBinding.inflate(layoutInflater)
@@ -20,154 +23,87 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityNewLeaveRequestBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         setupToolbarBlue()
 
-        // Back button
-        binding.back.setOnClickListener {
-            onBackPressedDispatcher.onBackPressed()
-        }
+        loadCalendarFragment()
 
-        // Set current date as default in tvFromDate
-        binding.tvFromDate.text = getCurrentFormattedDate()
 
-        // From Date Selection
-        binding.tvFromDate.setOnClickListener {
-            openDatePicker { firstDate ->
-                binding.tvFromDate.text = firstDate
+        val today = Calendar.getInstance().time
+        fromDate = today
+        toDate = today
+
+        binding.tvFromDate.text = dateFormat.format(fromDate)
+        binding.tvToDate.text = dateFormat.format(toDate)
+
+//        binding.back.setOnClickListener {
+//            onBackPressedDispatcher.onBackPressed()
+//        }
+//
+//        binding.customCalendar.onDateSelected = { selectedDate ->
+//            if (isSelectingFromDate) {
+//                fromDate = selectedDate
+//                binding.tvFromDate.text = dateFormat.format(fromDate)
+//                isSelectingFromDate = false
+//            } else {
+//                toDate = selectedDate
+//                binding.tvToDate.text = dateFormat.format(toDate)
+//                isSelectingFromDate = true
+//                updateLeaveDurationButton()
+//            }
+//        }
+
+//        binding.calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
+//            val calendar = Calendar.getInstance()
+//            calendar.set(year, month, dayOfMonth)
+//            val selected = calendar.time
+//
+//            if (isSelectingFromDate) {
+//                fromDate = selected
+//                binding.tvFromDate.text = dateFormat.format(fromDate)
+////                binding.tvCalendarTitle.text = "Select To Date"
+//                isSelectingFromDate = false
+//            } else {
+//                toDate = selected
+//                binding.tvToDate.text = dateFormat.format(toDate)
+////                binding.tvCalendarTitle.text = "Select From Date"
+//                isSelectingFromDate = true
+//                updateLeaveDurationButton()
+//            }
+//        }
+
+        binding.btnApplyLeave.setOnClickListener {
+            if (fromDate.after(toDate)) {
+                Toast.makeText(this, "From Date should be before To Date", Toast.LENGTH_SHORT)
+                    .show()
+                return@setOnClickListener
             }
-        }
 
-        // To Date Selection
-        binding.tvToDate.setOnClickListener {
-            openDatePicker { firstDate ->
-                binding.tvToDate.text = firstDate
-            }
+            val days = calculateDaysBetween(fromDate, toDate)
+            Toast.makeText(this, "Leave request for $days day(s) submitted!", Toast.LENGTH_SHORT)
+                .show()
         }
     }
 
-
-    private fun openDatePicker(onFirstDateSelected: (String) -> Unit) {
-        val dateAdapter = DateAdapter(this) {}
-
-        selectedDatesAdapter = SelectedDatesAdapter(
-            context = this,
-            selectedDates = selectedDates.toMutableList(),
-            dateAdapter = dateAdapter
-        ) { removedDate ->
-            selectedDates.remove(removedDate)
-            dateAdapter.removeSelectedDate(removedDate)
-        }
-
-        val datePickerPopup = CustomDatePicker(
-            context = this,
-            preSelectedDates = selectedDates.toList(),
-            dateAdapter = dateAdapter
-        ) { newSelectedDates ->
-            selectedDates.clear()
-            selectedDates.addAll(newSelectedDates)
-
-            // Format and show the first selected date
-            val formattedDate = newSelectedDates.firstOrNull()?.let {
-                convertToDisplayFormat(it)
-            } ?: "Select Date"
-
-            onFirstDateSelected(formattedDate)
-            selectedDatesAdapter.submitSelectedDates(selectedDates.toList())
-        }
-
-        datePickerPopup.show(window.decorView.rootView)
+    private fun calculateDaysBetween(start: Date, end: Date): Int {
+        val diffMillis = end.time - start.time
+        return ((diffMillis / (1000 * 60 * 60 * 24)) + 1).toInt()
     }
 
-    private fun convertToDisplayFormat(inputDate: String): String {
-        return try {
-            val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-            val outputFormat = SimpleDateFormat("EEE, dd MMM yyyy", Locale.getDefault())
-            val date = inputFormat.parse(inputDate)
-            outputFormat.format(date!!)
-        } catch (e: Exception) {
-            inputDate
+    private fun updateLeaveDurationButton() {
+        val days = calculateDaysBetween(fromDate, toDate)
+        if (days > 0) {
+            binding.btnApplyLeave.text = "Apply for ($days day${if (days > 1) "s" else ""}) leave"
+        } else {
+            binding.btnApplyLeave.text = "Invalid date range"
         }
     }
 
-    private fun getCurrentFormattedDate(): String {
-        val currentDate = Date()
-        val outputFormat = SimpleDateFormat("EEE, dd MMM yyyy", Locale.getDefault())
-        return outputFormat.format(currentDate)
+    private fun loadCalendarFragment() {
+        val fragment = CalendarFragment()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.calendarFragmentContainer, fragment)
+            .commit()
     }
-
 }
-
-
-//package com.vs.schoolmessenger.Parent.RequestLeave
-//
-//import android.os.Bundle
-//import com.vs.schoolmessenger.Auth.Base.BaseActivity
-//import com.vs.schoolmessenger.databinding.ActivityNewLeaveRequestBinding
-//
-//class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>() {
-//
-//    override fun getViewBinding(): ActivityNewLeaveRequestBinding {
-//        return ActivityNewLeaveRequestBinding.inflate(layoutInflater)
-//    }
-//
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        setupToolbarBlue()
-//
-//        binding.tvFromDate.setOnClickListener {
-//            val dialog = LeaveCalendarDialogFragment { selectedDate ->
-//                binding.tvFromDate.text = selectedDate
-//            }
-//            dialog.show(supportFragmentManager, "fromDatePicker")
-//        }
-//
-//        binding.tvToDate.setOnClickListener {
-//            val dialog = LeaveCalendarDialogFragment { selectedDate ->
-//                binding.tvToDate.text = selectedDate
-//            }
-//            dialog.show(supportFragmentManager, "toDatePicker")
-//        }
-//
-//        binding.back.setOnClickListener {
-//            onBackPressedDispatcher.onBackPressed()
-//        }
-//
-//
-//    }
-//}
-
-//package com.vs.schoolmessenger.Parent.RequestLeave
-//
-//import android.os.Bundle
-//import com.vs.schoolmessenger.Auth.Base.BaseActivity
-//import com.vs.schoolmessenger.databinding.ActivityNewLeaveRequestBinding
-//
-//class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>() {
-//
-//    override fun getViewBinding(): ActivityNewLeaveRequestBinding {
-//        return ActivityNewLeaveRequestBinding.inflate(layoutInflater)
-//    }
-//
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        setupToolbarBlue()
-//
-//        binding.tvFromDate.setOnClickListener {
-//            val dialog = LeaveCalendarDialogFragment { selectedDate ->
-//                binding.tvFromDate.text = selectedDate
-//            }
-//            dialog.show(supportFragmentManager, "fromDatePicker")
-//        }
-//
-//        binding.tvToDate.setOnClickListener {
-//            val dialog = LeaveCalendarDialogFragment { selectedDate ->
-//                binding.tvToDate.text = selectedDate
-//            }
-//            dialog.show(supportFragmentManager, "toDatePicker")
-//        }
-//
-//        binding.back.setOnClickListener {
-//            onBackPressedDispatcher.onBackPressed()
-//        }
-//    }
-//}
