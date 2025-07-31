@@ -1180,6 +1180,32 @@ object Constant {
         }
     }
 
+//Return the suffix of the Day like 11 means th,1 means st,2 means nd,3 means rd etc
+    fun getDaySuffix(day: Int): String {
+        return if (day in 11..13) "th" else when (day % 10) {
+            1 -> "st"
+            2 -> "nd"
+            3 -> "rd"
+            else -> "th"
+        }
+    }
+
+    //Get the current date details
+    fun getCurrentDateDetails(): Map<String, String> {
+        val calendar = Calendar.getInstance()
+
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+        val dayOfWeek = SimpleDateFormat("EEEE", Locale.getDefault()).format(calendar.time)
+        val monthYear = SimpleDateFormat("MMMM yyyy", Locale.getDefault()).format(calendar.time)
+
+        return mapOf(
+            "day" to day.toString(),
+            "weekday" to dayOfWeek,
+            "monthYear" to monthYear
+        )
+    }
+
+
 
     fun getVideoSizeInMB(videoPath: String): Long {
         val file = File(videoPath)
