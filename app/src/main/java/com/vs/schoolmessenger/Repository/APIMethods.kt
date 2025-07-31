@@ -27,6 +27,7 @@ object APIMethods {
     const val isGetTextHistory = "comm/api/text-message/get-text-history"
     const val isGetHomeWorkReport = "comm/api/homework/report"
     const val isHomeWorkUpdate = "comm/api/homework/update"
+    const val isHomeWorkDelete = "comm/api/homework/delete"
     const val isGetAssignmentReport = "comm/api/assignment/report"
     const val isAssignmentSubmittedList = "comm/api/assignment/submissions-list"
     const val isAssignmentDelete = "comm/api/assignment/delete"

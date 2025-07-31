@@ -7,33 +7,33 @@
     android:fitsSystemWindows="true">
 
 
+
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/questionText"
-        android:text="How are you doing tokieodhasndjsandjnaskjdnkjsandjknsjkdnkjndkjnsakjdnkjnadkjnakjsdnkjansdday ?"
+        android:text="Im doing well"
         android:textColor="@color/black"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:padding="10dp"
-        android:background="@drawable/circle_background"/>
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/answerText"
-        android:text="Im doing wadkjnajkdnjkandkjnakjdnkjndkjnkjdnjkndjnkjdnkjndkjsndkjnskjadnkjsndkjnskjdnkjsndkjsndkjnkjdnkjsdell"
-        android:textColor="@color/black"
-        android:layout_below="@+id/questionText"
         android:layout_marginEnd="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginStart="10dp"
         android:padding="10dp"
         android:background="@drawable/circle_answer_background"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/answerText"
+        android:text="How are you doing ?"
+        android:textColor="@color/black"
+        android:layout_below="@+id/questionText"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:padding="10dp"
+        android:background="@drawable/circle_background"/>
 
 
 

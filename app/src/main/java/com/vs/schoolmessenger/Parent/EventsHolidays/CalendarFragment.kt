@@ -158,7 +158,11 @@ class CalendarFragment : Fragment() {
             val isSunday = isSunday(dateStr)  // returns true if it's a Sunday
             Log.d("DayCheck", "Is Sunday? $isSunday")
             val isHoliday = holidayList.any { it.date == dateStr }
-            dates.add(CustomDateItem(i, isSelectable = false, isHoliday = isHoliday,isSunday = isSunday))
+            dates.add(
+                CustomDateItem(
+                    i, isSelectable = false, isHoliday = isHoliday, isSunday = isSunday
+                )
+            )
         }
 
         (binding.dateRecyclerView.adapter as? CustomDateAdapter)?.submitDates(dates)
@@ -178,8 +182,7 @@ class CalendarFragment : Fragment() {
 
             val icon =
                 AppCompatResources.getDrawable(requireContext(), R.drawable.ic_holiday_dot_circle)
-            val iconSize =
-                resources.getDimensionPixelSize(R.dimen.holiday_dot_size)
+            val iconSize = resources.getDimensionPixelSize(R.dimen.holiday_dot_size)
             icon?.setBounds(0, 0, iconSize, iconSize)
 
             val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())

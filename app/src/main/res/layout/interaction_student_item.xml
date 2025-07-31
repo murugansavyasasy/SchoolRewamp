@@ -5,6 +5,7 @@
     android:id="@+id/relative_layout"
     android:padding="10dp"
     android:layout_marginTop="5dp"
+    android:background="@color/AthensGray"
     android:layout_height="wrap_content">
 
     <com.google.android.material.imageview.ShapeableImageView
@@ -34,6 +35,7 @@
         android:layout_height="wrap_content"
         android:text="Yesterday"
         android:textColor="@color/Emerald1"
+        android:visibility="gone"
         style="@style/CustomTextStylePoppinsBold"
         android:layout_marginStart="10dp"
         android:layout_alignParentEnd="true" />
@@ -59,6 +61,7 @@
         android:text="1"
         android:textColor="@color/white"
         android:scaleType="centerCrop"
+        android:visibility="gone"
         android:gravity="center"
         android:layout_below="@+id/yesterdayheader"
         android:layout_marginEnd="10dp"

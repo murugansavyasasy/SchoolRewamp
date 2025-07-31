@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.School.NoticeBoard
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
 import android.app.NotificationChannel
@@ -21,14 +22,18 @@ import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
 import android.util.Log
+import android.util.TypedValue
 import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.FrameLayout
 import android.widget.MediaController
 import android.widget.RelativeLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -46,6 +51,7 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
 import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolList
+import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Event.CreateEvent
@@ -271,8 +277,12 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
 
         binding.txtTitle.filters = arrayOf(InputFilter.LengthFilter(Constant.isTitleLength))
         binding.txtDesc.filters = arrayOf(InputFilter.LengthFilter(Constant.isDescriptionLength))
-        Constant.editTextCounter(this, binding.txtDesc, Constant.isDescriptionLength, binding.lbTextCount)
-        Constant.editTextCounter(this, binding.txtTitle, Constant.isTitleLength, binding.lbtitleTextCount)
+        Constant.editTextCounter(
+            this, binding.txtDesc, Constant.isDescriptionLength, binding.lbTextCount
+        )
+        Constant.editTextCounter(
+            this, binding.txtTitle, Constant.isTitleLength, binding.lbtitleTextCount
+        )
 
 
 
@@ -291,9 +301,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         }
 
         val channel = NotificationChannel(
-            "reminder_channel",
-            "Reminders",
-            NotificationManager.IMPORTANCE_HIGH
+            "reminder_channel", "Reminders", NotificationManager.IMPORTANCE_HIGH
         )
         val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         manager.createNotificationChannel(channel)
@@ -314,7 +322,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
     }
 
 
-
     private fun setupSchoolSpinner(staffList: List<StaffDetails>) {
         val schoolNames = staffList.map { it.school_name }
 
@@ -322,18 +329,24 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.schoollistfilter.adapter = adapter
 
-        binding.schoollistfilter.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                val selectedStaff = staffList[position]
-                isAccessToken = selectedStaff.access_token
-                isStaffDetails = selectedStaff
-                Log.d("SpinnerSelection", "Selected school: ${selectedStaff.school_name}, Token: $isAccessToken")
+        binding.schoollistfilter.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>, view: View?, position: Int, id: Long
+                ) {
+                    val selectedStaff = staffList[position]
+                    isAccessToken = selectedStaff.access_token
+                    isStaffDetails = selectedStaff
+                    Log.d(
+                        "SpinnerSelection",
+                        "Selected school: ${selectedStaff.school_name}, Token: $isAccessToken"
+                    )
 
-                isGetNoticeBoardList()
+                    isGetNoticeBoardList()
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {}
             }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {}
-        }
 
         if (staffList.isNotEmpty()) {
             isAccessToken = staffList[0].access_token
@@ -341,7 +354,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
             Log.d("DefaultSelection", "Default token: $isAccessToken")
         }
     }
-
 
 
     private fun isloadhomeworkData(newData: List<NoticeStaffData>?) {
@@ -364,34 +376,90 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         }
     }
 
+    fun showConfirmationDialog(
+        title: String, message: String, activity: Activity, onConfirm: () -> Unit
+    ) {
+        val inflater = LayoutInflater.from(activity)
+        val view = inflater.inflate(R.layout.success_popup, null)
 
+        val messageText = view.findViewById<TextView>(R.id.alertMessage)
+        val titleText = view.findViewById<TextView>(R.id.alertTitle)
+        val okButton = view.findViewById<TextView>(R.id.btnOk)
+        val cancelButton = view.findViewById<TextView>(R.id.btnCancel)
 
-    override fun onDeleteNotice(type: String?, id: String?, position: Int) {
-        val json = JSONObject()
-        json.put("id", id)
-        val requestBody = json.toString().toRequestBody("application/json".toMediaTypeOrNull())
+        titleText.text = title
+        messageText.text = message
 
-        appViewModel?.isnoticeboarddelete(isAccessToken!!, requestBody, this)
+        val rootView = activity.findViewById<ViewGroup>(android.R.id.content)
 
-        appViewModel!!.isnoticeboarddelete?.observe(this) { response ->
-            if (response != null) {
-                if (response.status) {
-                    Constant.hideLoading(this@CreateNoticeBoard)
+        val dimView = View(activity).apply {
+            setBackgroundColor(Color.parseColor("#80000000"))
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
+            )
+            isClickable = true
+        }
 
-                    noticeboardadapter.removeItemAt(position)
+        val marginInPx = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP, 20f, activity.resources.displayMetrics
+        ).toInt()
 
-                } else {
-                    Constant.showDataValidation(
-                        resources.getString(R.string.fail),
-                        response.message,
-                        this
-                    )
-                }
-            }
+        val popupLayoutParams = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT
+        ).apply {
+            gravity = Gravity.CENTER
+            setMargins(marginInPx, 0, marginInPx, 0)
+        }
+
+        rootView.addView(dimView)
+        rootView.addView(view, popupLayoutParams)
+
+        val closePopup = {
+            rootView.removeView(view)
+            rootView.removeView(dimView)
+        }
+        okButton.text = "Confirm"
+        cancelButton.visibility = View.VISIBLE
+        cancelButton.text = "Cancel"
+        okButton.setOnClickListener {
+            closePopup()
+            onConfirm()
+        }
+
+        cancelButton.setOnClickListener {
+            closePopup()
         }
     }
 
 
+    override fun onDeleteNotice(type: String?, id: String?, position: Int) {
+        showConfirmationDialog(
+            title = "Delete Confirmation",
+            message = "Are you sure you want to delete this notice?",
+            activity = this
+        ) {
+            val json = JSONObject()
+            json.put("id", id)
+            val requestBody = json.toString().toRequestBody("application/json".toMediaTypeOrNull())
+
+            appViewModel?.isnoticeboarddelete(isAccessToken!!, requestBody, this)
+
+            appViewModel!!.isnoticeboarddelete?.observe(this) { response ->
+                if (response != null) {
+                    if (response.status) {
+                        Constant.hideLoading(this@CreateNoticeBoard)
+                        noticeboardadapter.removeItemAt(position)
+                    } else {
+                        showConfirmationDialog(
+                            resources.getString(R.string.fail), response.message, this
+                        ) {
+
+                        }
+                    }
+                }
+            }
+        }
+    }
 
 
     private fun isGetNoticeBoardList() {
@@ -407,24 +475,20 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
 
     private fun checkCameraPermissionAndOpenCamera() {
         if (ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.CAMERA
+                this, Manifest.permission.CAMERA
             ) == PackageManager.PERMISSION_GRANTED
         ) {
             openCameraIntent()
         } else {
             // Show rationale if user has denied permission before
             if (cameraPermissionDeniedCount >= 2 && !ActivityCompat.shouldShowRequestPermissionRationale(
-                    this,
-                    Manifest.permission.CAMERA
+                    this, Manifest.permission.CAMERA
                 )
             ) {
                 showCameraPermissionSettingsDialog()
             } else {
                 ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(Manifest.permission.CAMERA),
-                    CAMERA_PERMISSION_REQUEST_CODE
+                    this, arrayOf(Manifest.permission.CAMERA), CAMERA_PERMISSION_REQUEST_CODE
                 )
             }
         }
@@ -441,8 +505,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
             } else {
                 cameraPermissionDeniedCount++
                 if (!ActivityCompat.shouldShowRequestPermissionRationale(
-                        this,
-                        Manifest.permission.CAMERA
+                        this, Manifest.permission.CAMERA
                     )
                 ) {
                     showCameraPermissionSettingsDialog()
@@ -454,20 +517,16 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
     }
 
     private fun showCameraPermissionSettingsDialog() {
-        AlertDialog.Builder(this)
-            .setTitle("Permission Required")
+        AlertDialog.Builder(this).setTitle("Permission Required")
             .setMessage("Camera permission is permanently denied. Please enable it from app settings.")
-            .setCancelable(false)
-            .setPositiveButton("Go to Settings") { _, _ ->
+            .setCancelable(false).setPositiveButton("Go to Settings") { _, _ ->
                 val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
                     data = Uri.parse("package:$packageName")
                 }
                 startActivity(intent)
-            }
-            .setNegativeButton("Cancel") { dialog, _ ->
+            }.setNegativeButton("Cancel") { dialog, _ ->
                 dialog.dismiss()
-            }
-            .show()
+            }.show()
     }
 
     private fun openAlbumSelectActivity(isFileType: String) {

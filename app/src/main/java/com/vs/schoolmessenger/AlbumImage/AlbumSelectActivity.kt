@@ -47,9 +47,9 @@ class AlbumSelectActivity : AppCompatActivity() {
         setupDocumentPicker()
 
         binding.toolbarLayout.tvSelectionCount.text =
-            "Select the files : 0 / ${Constant.isFileLimit}"
+            "Selected Files : 0 / ${Constant.isFileLimit}"
         binding.toolbarLayout.tvSelectedFiles.text =
-            "Selected Files : ${Constant.selectedFiles.size - 1}"
+            "Total Selected Files : ${Constant.selectedFiles.size - 1}"
 
         adapter = FileGridAdapter(Constant.isFileLimit, onSelectionChanged = { selectedUris ->
             binding.toolbarLayout.tvSelectionCount.text =
