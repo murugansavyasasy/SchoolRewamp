@@ -593,6 +593,7 @@
     <string name="leave_taken">Leave Taken</string>
     <string name="ongoing_days">Ongoing Days</string>
     <string name="leave_history">Leave History</string>
+    <string name="ask_leave">Ask Leave</string>
 
 
 </resources>

@@ -4,6 +4,8 @@ import android.os.Bundle
 
 import android.widget.Toast
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
+import com.vs.schoolmessenger.Parent.EventsHolidays.CalendarFragment
+import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.databinding.ActivityNewLeaveRequestBinding
 import java.text.SimpleDateFormat
 import java.util.*
@@ -25,6 +27,9 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>() {
         setContentView(binding.root)
         setupToolbarBlue()
 
+        loadCalendarFragment()
+
+
         val today = Calendar.getInstance().time
         fromDate = today
         toDate = today
@@ -32,9 +37,9 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>() {
         binding.tvFromDate.text = dateFormat.format(fromDate)
         binding.tvToDate.text = dateFormat.format(toDate)
 
-        binding.back.setOnClickListener {
-            onBackPressedDispatcher.onBackPressed()
-        }
+//        binding.back.setOnClickListener {
+//            onBackPressedDispatcher.onBackPressed()
+//        }
 //
 //        binding.customCalendar.onDateSelected = { selectedDate ->
 //            if (isSelectingFromDate) {
@@ -49,24 +54,24 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>() {
 //            }
 //        }
 
-        binding.calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
-            val calendar = Calendar.getInstance()
-            calendar.set(year, month, dayOfMonth)
-            val selected = calendar.time
-
-            if (isSelectingFromDate) {
-                fromDate = selected
-                binding.tvFromDate.text = dateFormat.format(fromDate)
-//                binding.tvCalendarTitle.text = "Select To Date"
-                isSelectingFromDate = false
-            } else {
-                toDate = selected
-                binding.tvToDate.text = dateFormat.format(toDate)
-//                binding.tvCalendarTitle.text = "Select From Date"
-                isSelectingFromDate = true
-                updateLeaveDurationButton()
-            }
-        }
+//        binding.calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
+//            val calendar = Calendar.getInstance()
+//            calendar.set(year, month, dayOfMonth)
+//            val selected = calendar.time
+//
+//            if (isSelectingFromDate) {
+//                fromDate = selected
+//                binding.tvFromDate.text = dateFormat.format(fromDate)
+////                binding.tvCalendarTitle.text = "Select To Date"
+//                isSelectingFromDate = false
+//            } else {
+//                toDate = selected
+//                binding.tvToDate.text = dateFormat.format(toDate)
+////                binding.tvCalendarTitle.text = "Select From Date"
+//                isSelectingFromDate = true
+//                updateLeaveDurationButton()
+//            }
+//        }
 
         binding.btnApplyLeave.setOnClickListener {
             if (fromDate.after(toDate)) {
@@ -93,5 +98,12 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>() {
         } else {
             binding.btnApplyLeave.text = "Invalid date range"
         }
+    }
+
+    private fun loadCalendarFragment() {
+        val fragment = CalendarFragment()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.calendarFragmentContainer, fragment)
+            .commit()
     }
 }

@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.School.Event
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
@@ -18,12 +19,17 @@ import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
 import android.util.Log
+import android.util.TypedValue
 import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.MediaController
 import android.widget.RelativeLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -272,7 +278,6 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
 
         appViewModel?.IsGetEventSchoolReport?.observe(this) { response ->
             Constant.hideLoading(this)
-            binding.whiteOverlay.visibility = View.GONE
             if (response?.status == true && !response.data.isNullOrEmpty()) {
 
                 val data = response.data[0]
@@ -280,17 +285,24 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
                 allOngoingEvents = data.on_going
                 allUpcomingEvents = data.up_coming
                 allCompletedEvents = data.completed
+
+                binding.dotindicator.visibility =
+                    if (!allOngoingEvents.isNullOrEmpty()) View.VISIBLE else View.GONE
+
                 updateVisibility(
                     allOngoingEvents,
                     binding.rcyongoingevent,
-                    binding.headerview,
-                    binding.dotindicator
+                    binding.headerview
                 )
                 updateVisibility(
-                    allUpcomingEvents, binding.rcyupcomingevent, binding.upcomingeventHeaderview
+                    allUpcomingEvents,
+                    binding.rcyupcomingevent,
+                    binding.upcomingeventHeaderview
                 )
                 updateVisibility(
-                    allCompletedEvents, binding.rcycompletedevent, binding.completedeventHeaderview
+                    allCompletedEvents,
+                    binding.rcycompletedevent,
+                    binding.completedeventHeaderview
                 )
 
                 isloadeventData(allOngoingEvents)
@@ -301,6 +313,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
                 hideAllSections()
             }
         }
+
 
         binding.txtSearch.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -326,7 +339,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
 
 
     private fun <T> updateVisibility(
-        dataList: List<T>?, recyclerView: RecyclerView, vararg headers: View
+        dataList: List<T>?, recyclerView: RecyclerView, vararg headers: View,
     ) {
         if (!dataList.isNullOrEmpty()) {
             recyclerView.visibility = View.VISIBLE
@@ -340,7 +353,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
 
     private fun hideAllSections() {
         updateVisibility(
-            emptyList<Any>(), binding.rcyongoingevent, binding.headerview, binding.dotindicator
+            emptyList<Any>(), binding.rcyongoingevent, binding.headerview
         )
         updateVisibility(
             emptyList<Any>(), binding.rcyupcomingevent, binding.upcomingeventHeaderview
@@ -359,7 +372,8 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         binding.rcyongoingevent.isNestedScrollingEnabled = false
         binding.rcyongoingevent.adapter = mAdapter
 
-        eventupcomingadapter = SchoolEventUpcomingAdapter(null, this, this, Constant.isShimmerViewDisable)
+        eventupcomingadapter =
+            SchoolEventUpcomingAdapter(null, this, this, Constant.isShimmerViewDisable)
         binding.rcyupcomingevent.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.rcyupcomingevent.isNestedScrollingEnabled = false
@@ -398,7 +412,6 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
     }
 
 
-
     override fun onSearchResultEmpty(adapterTag: String, isEmpty: Boolean) {
         when (adapterTag) {
             "ONGOING" -> binding.rcyongoingevent.visibility =
@@ -412,30 +425,96 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         }
     }
 
-    override fun onDeleteEvent(type: String?, id: String?, position: Int)  {
-        val json = JSONObject()
-        json.put("id", id)
-        val requestBody = json.toString().toRequestBody("application/json".toMediaTypeOrNull())
+    fun showConfirmationDialog(
+        title: String,
+        message: String,
+        activity: Activity,
+        onConfirm: () -> Unit
+    ) {
+        val inflater = LayoutInflater.from(activity)
+        val view = inflater.inflate(R.layout.success_popup, null)
 
-//        appViewModel?.isEventDelete(isAccessToken!!, requestBody, this)
+        val messageText = view.findViewById<TextView>(R.id.alertMessage)
+        val titleText = view.findViewById<TextView>(R.id.alertTitle)
+        val okButton = view.findViewById<TextView>(R.id.btnOk)
+        val cancelButton = view.findViewById<TextView>(R.id.btnCancel)
 
-        appViewModel!!.isEventDelete?.observe(this) { response ->
-            if (response != null) {
-                if (response.status) {
-                    Constant.hideLoading(this@CreateEvent)
+        titleText.text = title
+        messageText.text = message
 
-                    eventupcomingadapter.removeItemAt(position)
+        val rootView = activity.findViewById<ViewGroup>(android.R.id.content)
 
-                } else {
-                    Constant.showDataValidation(
-                        resources.getString(R.string.fail),
-                        response.message,
-                        this
-                    )
+        val dimView = View(activity).apply {
+            setBackgroundColor(Color.parseColor("#80000000"))
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
+            )
+            isClickable = true
+        }
+
+        val marginInPx = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP, 20f, activity.resources.displayMetrics
+        ).toInt()
+
+        val popupLayoutParams = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT
+        ).apply {
+            gravity = Gravity.CENTER
+            setMargins(marginInPx, 0, marginInPx, 0)
+        }
+
+        rootView.addView(dimView)
+        rootView.addView(view, popupLayoutParams)
+
+        val closePopup = {
+            rootView.removeView(view)
+            rootView.removeView(dimView)
+        }
+
+        okButton.text = "Confirm"
+        cancelButton.visibility = View.VISIBLE
+        cancelButton.text = "Cancel"
+
+        okButton.setOnClickListener {
+            closePopup()
+            onConfirm()
+        }
+
+        cancelButton.setOnClickListener {
+            closePopup()
+        }
+    }
+
+
+    override fun onDeleteEvent(type: String?, id: String?, position: Int) {
+        showConfirmationDialog(
+            title = "Delete Event",
+            message = "Are you sure you want to delete this event?",
+            activity = this
+        ) {
+            val json = JSONObject()
+            json.put("id", id)
+            val requestBody = json.toString().toRequestBody("application/json".toMediaTypeOrNull())
+
+//            appViewModel?.isEventDelete(isAccessToken!!, requestBody, this)
+
+            appViewModel!!.isEventDelete?.observe(this) { response ->
+                if (response != null) {
+                    if (response.status) {
+                        Constant.hideLoading(this@CreateEvent)
+                        eventupcomingadapter.removeItemAt(position)
+                    } else {
+                        showConfirmationDialog(
+                            resources.getString(R.string.fail),
+                            response.message,
+                            this
+                        ) {}
+                    }
                 }
             }
         }
     }
+
 
 
     private fun checkCameraPermissionAndOpenCamera() {
@@ -502,6 +581,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
             }
             .show()
     }
+
     private fun openAlbumSelectActivity(isFileType: String) {
 
         if (Constant.selectedFiles.size > 1) {
@@ -573,18 +653,23 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
                 binding.line2.setBackgroundResource(R.color.iconBlue)
                 binding.line1.setBackgroundResource(R.color.white)
                 binding.scrollContainer.visibility = View.VISIBLE
+                binding.headerview.visibility = View.GONE
+                binding.upcomingeventHeaderview.visibility = View.GONE
+                binding.completedeventHeaderview.visibility = View.GONE
+                binding.rytRecyclewview.visibility = View.GONE
+                binding.dotindicator.visibility = View.GONE
                 binding.rytRecyclewview.visibility = View.GONE
                 binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
-                binding.whiteOverlay.visibility = View.VISIBLE
                 loadeventdata()
             }
+
             R.id.imgBack -> {
                 Constant.selectedFiles.clear()
                 Constant.isAwsUploadedFiles.clear()
                 onBackPressed()
             }
 
-            R.id.rytStartDate-> {
+            R.id.rytStartDate -> {
 
                 selectedDateField = 1
                 Constant.showDatePicker(this, false) { selectedDate ->
@@ -615,9 +700,6 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
             }
         }
     }
-
-
-
 
 
     override fun onDateSelected(date: String) {

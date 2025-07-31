@@ -49,6 +49,9 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
     private lateinit var adapter: FileViewerAdapter
     private var currentPosition = 0
 
+    var isFilesList: MutableList<CommonFileData> = mutableListOf()
+
+
     override fun getViewBinding(): HomeworkViewImageDocumentBinding =
         HomeworkViewImageDocumentBinding.inflate(layoutInflater)
 
@@ -65,7 +68,7 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
         binding.imgMoreOptions.setOnClickListener(this)
         binding.lnrNext.setOnClickListener(this)
         binding.lnrPrevious.setOnClickListener(this)
-
+        isFilesList.clear()
         if (Constant.commonFileList.isNotEmpty()) {
             val first = Constant.commonFileList[0]
             if (first.type != FileType.VIDEO.toString()
@@ -82,9 +85,23 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
             }
         }
 
-        adapter = FileViewerAdapter(this, Constant.commonFileList)
+        for (i in Constant.commonFileList.indices) {
+            if (Constant.commonFileList[i].path.contains("amazonaws.") || Constant.commonFileList[i].path.contains(
+                    "player.vimeo.com"
+                ) || Constant.commonFileList[i].type == Constant.IMAGE || Constant.commonFileList[i].type == Constant.VIDEO
+            ) {
+                isFilesList.add(
+                    CommonFileData(
+                        type = Constant.commonFileList[i].type,
+                        path = Constant.commonFileList[i].path
+                    )
+                )
+            }
+        }
 
-        val onlyImages = Constant.commonFileList.all { it.type == FileType.IMAGE.toString() }
+        adapter = FileViewerAdapter(this, isFilesList)
+
+        val onlyImages = isFilesList.all { it.type == FileType.IMAGE.toString() }
 
         val layoutManager = if (onlyImages) {
             LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
@@ -99,14 +116,14 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
 
         binding.rcyFile.setOnTouchListener { _, _ -> !onlyImages }
 
-        if (!onlyImages && Constant.commonFileList.size > 1) {
+        if (!onlyImages && isFilesList.size > 1) {
             binding.lnrNext.visibility = View.VISIBLE
             binding.lnrPrevious.visibility = View.VISIBLE
         } else {
             binding.lnrNext.visibility = View.GONE
             binding.lnrPrevious.visibility = View.GONE
         }
-        if (onlyImages && Constant.commonFileList.size > 1) {
+        if (onlyImages && isFilesList.size > 1) {
             binding.indicator.attachToRecyclerView(binding.rcyFile)
         }
 
@@ -114,6 +131,7 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
         scrollToPosition(currentPosition)
         updateNavButtons()
     }
+
 
     fun CircleIndicator2.attachToRecyclerView(recyclerView: RecyclerView) {
         val adapter = recyclerView.adapter ?: return
@@ -141,22 +159,23 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
     private fun scrollToPosition(position: Int) {
         binding.rcyFile.scrollToPosition(position)
         adapter.notifyItemChanged(position)
-        val currentUrl = Constant.commonFileList.getOrNull(position)?.path ?: "Unknown"
+        val currentUrl = isFilesList.getOrNull(position)?.path ?: "Unknown"
         Log.d("CurrentURL", "Currently displayed file: $currentUrl")
     }
 
     private fun updateNavButtons() {
         binding.lnrPrevious.visibility = if (currentPosition > 0) View.VISIBLE else View.GONE
         binding.lnrNext.visibility =
-            if (currentPosition < Constant.commonFileList.size - 1) View.VISIBLE else View.GONE
+            if (currentPosition < isFilesList.size - 1) View.VISIBLE else View.GONE
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.imgBack -> onBackPressed()
-            R.id.imgMoreOptions -> showFileOptions(Constant.commonFileList[currentPosition].path)
-            R.id.lnrNext -> if (currentPosition < Constant.commonFileList.size - 1) {
+            R.id.imgMoreOptions -> showFileOptions(isFilesList[currentPosition].path)
+
+            R.id.lnrNext -> if (currentPosition < isFilesList.size - 1) {
                 currentPosition++
                 scrollToPosition(currentPosition)
                 updateNavButtons()
@@ -328,8 +347,6 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
             }
         }
     }
-
-
     private fun shareFileFromUrl(url: String) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
@@ -429,12 +446,10 @@ class FilesViewActivity : BaseActivity<HomeworkViewImageDocumentBinding>(),
                 .create(VimeoApiService::class.java)
         }
     }
-
     fun extractVimeoVideoId(url: String): String? {
         val regex = Regex("vimeo.com/video/(\\d+)")
         return regex.find(url)?.groupValues?.get(1)
     }
-
     private fun fetchAndShareVimeoVideoFromUrl(vimeoUrl: String) {
         val videoId = extractVimeoVideoId(vimeoUrl)
         if (videoId.isNullOrEmpty()) {

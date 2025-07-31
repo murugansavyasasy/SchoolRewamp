@@ -25,6 +25,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.AdapterView
+import android.widget.LinearLayout
+import android.widget.PopupWindow
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -36,7 +38,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.AWS.AwsUploadingPreSigned
@@ -84,11 +86,14 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
     override fun getViewBinding(): HomeWorkBinding {
         return HomeWorkBinding.inflate(layoutInflater)
     }
+
     private lateinit var albumResultLauncher: ActivityResultLauncher<Intent>
+
     companion object {
         private const val PICK_DOCUMENT_REQUEST = 1003
         private const val MAX_FILES = 10
     }
+
     private var cameraPermissionDeniedCount = 0
     private val CAMERA_IMAGE_REQUEST = 1001
     var isFirstLoad = false
@@ -114,6 +119,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
     var isTotalSelectedItem = 0
     var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
     var isHomeWorkId = ""
+    var isHomeWorkPosition = 0
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -125,8 +131,8 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         appViewModel!!.init()
 
         binding.toolbarLayout.imgBack.setOnClickListener(this)
-        binding.btnCreate.setOnClickListener(this)
-        binding.btnHistory.setOnClickListener(this)
+        binding.lnrTabOneName.setOnClickListener(this)
+        binding.lnrTabTwoName.setOnClickListener(this)
         binding.AcademicYear.setOnClickListener(this)
         binding.btnChooseRecipient.setOnClickListener(this)
         binding.Calendar.setOnClickListener(this)
@@ -170,6 +176,19 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
             this, binding.edtTitle, Constant.isTitleLength, binding.lblTitleTextCount
         )
 
+        appViewModel!!.isDeleteHomeWork?.observe(this) { response ->
+            if (response != null) {
+                if (response.status) {
+                    Constant.hideLoading(this@HomeWork)
+                    mHomeWorkReportAdapter!!.removeItemAt(isHomeWorkPosition)
+                } else {
+                    Constant.showDataValidation(
+                        resources.getString(R.string.fail), response.message, this
+                    )
+                }
+            }
+        }
+
 
         appViewModel!!.isStandardSectionList?.observe(this) { response ->
             if (response != null) {
@@ -205,14 +224,12 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
                 if (response.status) {
                     binding.rcyHomeWorkReport.visibility = View.VISIBLE
                     binding.lytNoDataFound.visibility = View.GONE
-                    binding.search.visibility = View.VISIBLE
                     binding.line1.visibility = View.VISIBLE
                     binding.line2.visibility = View.VISIBLE
                     val isHomeWorkReport = response.data
                     isHomeWorkReportData = isHomeWorkReport
                     loadHomeWorkReportData(isHomeWorkReportData!!)
                 } else {
-                    binding.search.visibility = View.GONE
                     binding.line1.visibility = View.GONE
                     binding.line2.visibility = View.GONE
                     binding.rcyHomeWorkReport.visibility = View.GONE
@@ -220,6 +237,10 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
                     binding.noDataFound.text = response.message
                 }
             }
+        }
+
+        binding.toolbarLayout.imgSearchToolBar.setOnClickListener {
+            binding.search.visibility = View.VISIBLE
         }
 
         albumResultLauncher =
@@ -371,7 +392,10 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
             }
         }
 
-        mHomeWorkReportAdapter = HomeWorkReportAdapter(filteredList, this, this, false)
+        mHomeWorkReportAdapter = HomeWorkReportAdapter(filteredList, this, false)
+        binding.rcyHomeWorkReport.layoutManager =
+            GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
+        binding.rcyHomeWorkReport.setHasFixedSize(true)
         binding.rcyHomeWorkReport.adapter = mHomeWorkReportAdapter
 
         if (filteredList.isEmpty()) {
@@ -460,18 +484,32 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
 
             }
 
-            R.id.btnCreate -> {
+            R.id.lnrTabOneName -> {
+
+                binding.line3.setBackgroundResource(R.color.iconBlue)
+                binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
+                binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.black))
+                binding.line4.setBackgroundResource(R.color.white)
+
+                binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
                 binding.btnChooseRecipient.text = getString(R.string.TOSTANDARDORSECTION)
-                isBackRoundChange(binding.btnCreate)
+//                isBackRoundChange(binding.lnrTabOneName)
                 binding.rlaHomeWorkReport.visibility = View.GONE
                 binding.rlaHomework.visibility = View.VISIBLE
                 isAcademicServerLoad = true
             }
 
-            R.id.btnHistory -> {
+            R.id.lnrTabTwoName -> {
+
+                binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.black))
+                binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
+                binding.line4.setBackgroundResource(R.color.iconBlue)
+                binding.line3.setBackgroundResource(R.color.white)
+
                 binding.btnChooseRecipient.text = "Update HomeWork"
-                isBackRoundChange(binding.btnHistory)
+//                isBackRoundChange(binding.lnrTabTwoName)
                 binding.rlaHomeWorkReport.visibility = View.VISIBLE
+                binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
                 binding.rlaHomework.visibility = View.GONE
                 if (isAcademicServerLoad) {
                     fetchHomeWorkReportData()
@@ -480,7 +518,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
 
             R.id.btnChooseRecipient -> {
                 if (binding.btnChooseRecipient.text.toString().equals("Update HomeWork")) {
-                    showSendConfirmationDialog()
+                    showSendConfirmationDialog(true)
                 } else {
                     isRedirectToSectionStudents()
                 }
@@ -490,8 +528,11 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
 
     private fun fetchHomeWorkReportData() {
         binding.rcyHomeWorkReport.visibility = View.VISIBLE
-        mHomeWorkReportAdapter = HomeWorkReportAdapter(null, this, this, Constant.isShimmerViewShow)
-        binding.rcyHomeWorkReport.layoutManager = LinearLayoutManager(this)
+        mHomeWorkReportAdapter =
+            HomeWorkReportAdapter(emptyList(), this, Constant.isShimmerViewShow)
+        binding.rcyHomeWorkReport.layoutManager =
+            GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
+        binding.rcyHomeWorkReport.setHasFixedSize(true)
         binding.rcyHomeWorkReport.isNestedScrollingEnabled = false
         binding.rcyHomeWorkReport.adapter = mHomeWorkReportAdapter
         appViewModel?.isGetHomeWorkReport(
@@ -502,11 +543,14 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
     private fun loadHomeWorkReportData(isHomeWorkReportDetails: List<HomeWorkReport>) {
         binding.rcyHomeWorkReport.visibility = View.VISIBLE
         mHomeWorkReportAdapter = HomeWorkReportAdapter(
-            isHomeWorkReportDetails, this, this, Constant.isShimmerViewDisable
+            isHomeWorkReportDetails, this, Constant.isShimmerViewDisable
         )
-        binding.rcyHomeWorkReport.layoutManager = LinearLayoutManager(this)
+        binding.rcyHomeWorkReport.layoutManager =
+            GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
+        binding.rcyHomeWorkReport.setHasFixedSize(true)
         binding.rcyHomeWorkReport.isNestedScrollingEnabled = false
         binding.rcyHomeWorkReport.adapter = mHomeWorkReportAdapter
+
     }
 
 
@@ -791,64 +835,10 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         fetchHomeWorkReportData()
     }
 
-    private fun isBackRoundChange(isClickingId: TextView) {
-        binding.lytNoDataFound.visibility = View.GONE
-        if (isClickingId == binding.btnCreate) {
-            binding.btnHistory.background = null
-            binding.btnHistory.setTextColor(ContextCompat.getColor(this, R.color.dark_blue))
-        }
-
-        if (isClickingId == binding.btnHistory) {
-            binding.btnCreate.background = null
-            binding.btnCreate.setTextColor(ContextCompat.getColor(this, R.color.dark_blue))
-        }
-
-
-        isClickingId.background = ContextCompat.getDrawable(this, R.drawable.bg_light_blue)
-        isClickingId.setTextColor(ContextCompat.getColor(this, R.color.dark_blue))
-        isClickingId.background = ContextCompat.getDrawable(this, R.drawable.white_bg_radius)
-        isClickingId.setTextColor(ContextCompat.getColor(this, R.color.black))
-    }
-
-    override fun onClickListener(data: HomeWorkReport) {
+    override fun onClickListener(data: HomeWorkReport, anchorView: View, isPosition: Int) {
         isHomeWorkId = data.id
-        Constant.isAwsUploadedFiles.clear()
-        Constant.selectedFiles.clear()
-        saveDrawableToCache(R.drawable.add_image)?.let {
-            Constant.selectedFiles.add(
-                FileItem(
-                    it, FileType.IMAGE
-                )
-            )
-        }
-        isBackRoundChange(binding.btnCreate)
-        binding.rlaHomeWorkReport.visibility = View.GONE
-        binding.rlaHomework.visibility = View.VISIBLE
-        binding.edtTitle.setText(data.title)
-        binding.edtDescription.setText(data.description)
-
-        if (data.file_path.isNotEmpty()) {
-            val mappedList = data.file_path.map { filePath ->
-                val fileType = try {
-                    FileType.valueOf(filePath.type.uppercase())
-                } catch (e: IllegalArgumentException) {
-                    FileType.OTHER
-                }
-                FileItem(path = filePath.url, type = fileType)
-            }
-            Constant.selectedFiles.addAll(mappedList)
-        }
-        if (Constant.selectedFiles.size > 1) {
-                binding.rcyImages.visibility = View.VISIBLE
-                mAdapter = ImagePickingAdapter(this, Constant.selectedFiles, this)
-                binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
-                binding.rcyImages.adapter = mAdapter
-        } else {
-            binding.rcyImages.visibility = View.VISIBLE
-            mAdapter = ImagePickingAdapter(this, Constant.selectedFiles, this)
-            binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
-            binding.rcyImages.adapter = mAdapter
-        }
+        isHomeWorkPosition = isPosition
+        showEditDeletePopup(data, anchorView)
     }
 
     // Edit Update code
@@ -1061,7 +1051,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         appViewModel?.isHomeWorkUpdate(isAccessToken!!, jsonObject, this)
     }
 
-    fun showSendConfirmationDialog() {
+    fun showSendConfirmationDialog(isHomeWorkUpdate: Boolean) {
         val dialogView = LayoutInflater.from(this).inflate(R.layout.alert_popup, null)
         val alertDialog = AlertDialog.Builder(this).setView(dialogView).create()
         alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -1071,16 +1061,99 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
         val btnCancel = dialogView.findViewById<TextView>(R.id.btnCancel)
         val alertMessage = dialogView.findViewById<TextView>(R.id.alertMessage)
         val lblSelectTarget = dialogView.findViewById<TextView>(R.id.lblSelectTarget)
+        if (isHomeWorkUpdate) {
+            alertMessage.text = "Are you sure want to update this homework?"
+        } else {
+            alertMessage.text = "Are you sure want to delete?"
+        }
 
-        alertMessage.text = "Are you sure want to update this homework?"
         lblSelectTarget.visibility = View.GONE
 
         okButton.setOnClickListener {
             alertDialog.dismiss()
-            ProgressDialogHelper.show(this)
-            ProgressDialogHelper.updateProgress(10)
-            isUploadFilesInServer("file")
+            if (isHomeWorkUpdate) {
+                ProgressDialogHelper.show(this)
+                ProgressDialogHelper.updateProgress(10)
+                isUploadFilesInServer("file")
+            } else {
+                val jsonObject = JsonObject()
+                jsonObject.addProperty(APIKeyNames.id, isHomeWorkId)
+                appViewModel?.isHomeWorkDelete(isAccessToken!!, jsonObject, this)
+            }
         }
         btnCancel.setOnClickListener { alertDialog.dismiss() }
     }
+
+    fun showEditDeletePopup(data: HomeWorkReport, anchor: View) {
+        val popupView = LayoutInflater.from(this).inflate(R.layout.popup_edit_delete, null)
+        val popupWindow = PopupWindow(
+            popupView,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            true
+        )
+        popupWindow.elevation = 10f
+
+        val layoutEdit = popupView.findViewById<LinearLayout>(R.id.layout_edit)
+        val layoutDelete = popupView.findViewById<LinearLayout>(R.id.layout_delete)
+
+        layoutEdit.setOnClickListener {
+            isEditProcess(data)
+            popupWindow.dismiss()
+        }
+
+        layoutDelete.setOnClickListener {
+            showSendConfirmationDialog(false)
+            popupWindow.dismiss()
+        }
+        popupWindow.showAsDropDown(anchor, 0, 10)
+    }
+
+    fun isEditProcess(data: HomeWorkReport) {
+
+        Constant.isAwsUploadedFiles.clear()
+        Constant.selectedFiles.clear()
+        saveDrawableToCache(R.drawable.add_image)?.let {
+            Constant.selectedFiles.add(
+                FileItem(
+                    it, FileType.IMAGE
+                )
+            )
+        }
+        binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+        binding.line3.setBackgroundResource(R.color.iconBlue)
+        binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
+        binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.black))
+        binding.line4.setBackgroundResource(R.color.white)
+
+        binding.rlaHomeWorkReport.visibility = View.GONE
+        binding.rlaHomework.visibility = View.VISIBLE
+        binding.edtTitle.setText(data.title)
+        binding.edtDescription.setText(data.description)
+
+        if (data.file_path.isNotEmpty()) {
+            val mappedList = data.file_path.map { filePath ->
+                val fileType = try {
+                    FileType.valueOf(filePath.type.uppercase())
+                } catch (e: IllegalArgumentException) {
+                    FileType.OTHER
+                }
+                FileItem(path = filePath.url, type = fileType)
+            }
+            Constant.selectedFiles.addAll(mappedList)
+        }
+        if (Constant.selectedFiles.size > 1) {
+            binding.rcyImages.visibility = View.VISIBLE
+            mAdapter = ImagePickingAdapter(this, Constant.selectedFiles, this)
+            binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
+            binding.rcyImages.adapter = mAdapter
+        } else {
+            binding.rcyImages.visibility = View.VISIBLE
+            mAdapter = ImagePickingAdapter(this, Constant.selectedFiles, this)
+            binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
+            binding.rcyImages.adapter = mAdapter
+        }
+    }
+
+
 }

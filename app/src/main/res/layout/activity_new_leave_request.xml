@@ -1,52 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5"
-    android:padding="@dimen/sixteen">
-
-    <LinearLayout
+    >
+    <RelativeLayout
+        android:id="@+id/rytHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <!-- Header -->
-        <LinearLayout
+        android:background="@drawable/bg_header_rounded"
+        android:paddingBottom="@dimen/fifty"
+        >
+        <RelativeLayout
+            android:id="@+id/rytHeaderDetail"
+            android:layout_marginTop="@dimen/ten"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/five"
-            android:layout_marginBottom="@dimen/ten"
-            android:gravity="center_vertical"
-            android:orientation="vertical">
-
+            android:layout_height="wrap_content">
             <ImageView
-                android:id="@+id/back"
+                android:id="@+id/imgBack"
                 android:layout_width="@dimen/thirty_five"
                 android:layout_height="@dimen/thirty_five"
-                android:layout_marginEnd="@dimen/sixteen"
-                android:contentDescription="Back"
-                android:src="@drawable/left_arrow" />
+                android:layout_centerVertical="true"
+                android:src="@drawable/left_arrow">
 
-            <TextView
+            </ImageView>
+
+            <LinearLayout
+                android:id="@+id/lytTitleAndName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/five"
-                android:layout_marginTop="@dimen/ten"
-                android:text="New Leave"
-                android:textColor="#000000"
-                android:textSize="@dimen/thirty_five"
-                android:textStyle="bold" />
-        </LinearLayout>
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/imgBack"
+                android:orientation="vertical">
 
+                <TextView
+                    android:id="@+id/lblStudentName"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Santhosh N"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/fifteen_sp">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/lblStudentSection"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="I-B"
+                    android:visibility="visible"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/twele_sp">
+
+                </TextView>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+        <TextView
+            android:id="@+id/lblParentToolBar"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Leave Request"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginStart="@dimen/twenty"
+            android:layout_below="@+id/rytHeaderDetail"
+            android:textColor="@color/white"
+            android:textSize="@dimen/twenty">
+
+        </TextView>
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_below="@+id/rytHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_top_rounded_container"
             android:orientation="vertical"
-            android:padding="@dimen/five">
-
-            <!-- Leave Type -->
+            android:padding="@dimen/ten">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -141,12 +179,12 @@
                         android:fontFamily="@font/poppins_bold"
                         android:inputType="textCapSentences"
                         android:paddingTop="4dp"
+                        android:textStyle="bold"
                         android:paddingBottom="4dp"
                         android:text="Trip to Cannes"
                         android:textColor="#000000"
                         android:textColorHint="#888888"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:textSize="16sp" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -208,83 +246,15 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="@dimen/ten"
                 android:background="#D1D1D6" />
-
             <!--            <CalendarView-->
-            <!--                android:id="@+id/calendarView"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content" />-->
 
-            <!-- To Date -->
-
-            <!--        <com.google.android.material.datepicker.MaterialCalendarView-->
-            <!--            android:id="@+id/calendarView"-->
-            <!--            android:layout_width="match_parent"-->
-            <!--            android:layout_height="wrap_content"-->
-            <!--            android:layout_marginTop="16dp" />-->
-
-            <LinearLayout
-                android:id="@+id/calendarLayout"
+            <FrameLayout
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginBottom="@dimen/ten"
+                android:id="@+id/calendarFragmentContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <!--                &lt;!&ndash; This title tells user what they're selecting &ndash;&gt;-->
-                <!--                <TextView-->
-                <!--                    android:id="@+id/tvCalendarTitle"-->
-                <!--                    android:layout_width="wrap_content"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:text="Selecting From Date"-->
-                <!--                    android:textSize="16sp"-->
-                <!--                    android:textStyle="bold"-->
-                <!--                    android:layout_marginTop="@dimen/ten"-->
-                <!--                    android:textColor="@color/black"-->
-                <!--                    android:layout_gravity="center_horizontal"-->
-                <!--                    android:layout_marginBottom="8dp" />-->
-                <!--                <CalendarView-->
-                <!--                    android:id="@+id/calendarView"-->
-                <!--                    android:layout_width="match_parent"-->
-                <!--                    android:layout_height="300dp"-->
-                <!--                    android:layout_marginTop="@dimen/fifteen"-->
-                <!--                    android:background="@drawable/bg_top_rounded_container"-->
-                <!--                    android:layout_marginStart="@dimen/twenty_five"-->
-                <!--                    android:layout_marginEnd="@dimen/twenty_five" />-->
-
-                <!--                <androidx.fragment.app.FragmentContainerView-->
-                <!--                    android:id="@+id/calendarFragmentContainer"-->
-                <!--                    android:name="com.vs.schoolmessenger.Parent.RequestLeave.CalendarFragment"-->
-                <!--                    android:layout_width="match_parent"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:layout_marginTop="@dimen/fifteen"-->
-                <!--                    android:layout_marginStart="@dimen/twenty_five"-->
-                <!--                    android:layout_marginEnd="@dimen/twenty_five"-->
-                <!--                    android:visibility="gone"-->
-                <!--                    />-->
-
-                <CalendarView
-                    android:id="@+id/calendarView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <!--                <com.vs.schoolmessenger.Parent.RequestLeave.CustomCalendarView-->
-                <!--                    android:id="@+id/customCalendar"-->
-                <!--                    android:layout_width="match_parent"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:layout_marginTop="16dp" />-->
-
-
-                <!--                <Button-->
-                <!--                    android:id="@+id/btnConfirmDate"-->
-                <!--                    android:layout_width="400dp"-->
-                <!--                    android:layout_height="30dp"-->
-                <!--                    android:background="@color/orange"-->
-                <!--                    android:text="Confirm"-->
-                <!--                    android:layout_marginTop="@dimen/fifteen"-->
-                <!--                    android:textColor="#FFFFFF"-->
-                <!--                    android:textSize="16sp"-->
-                <!--                    android:layout_gravity="center_horizontal"-->
-                <!--                    android:fontFamily="@font/poppins_bold" />-->
-
-            </LinearLayout>
+                />
 
             <View
                 android:layout_width="match_parent"
@@ -336,9 +306,9 @@
                         android:textStyle="bold" />
                 </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
         <!-- Submit Button -->
         <Button
+
             android:id="@+id/btnApplyLeave"
             android:layout_width="match_parent"
             android:layout_height="56dp"
@@ -349,4 +319,9 @@
             android:textColor="#FFFFFF"
             android:textSize="16sp" />
     </LinearLayout>
-</LinearLayout>
+    </ScrollView>
+
+
+
+
+</RelativeLayout>

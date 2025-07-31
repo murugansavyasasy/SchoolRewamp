@@ -241,6 +241,12 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String, @Body requestBody: JsonObject
     ): Call<StatusMessageModel?>
 
+    @PUT(APIMethods.isHomeWorkDelete)
+    fun isHomeWorkDelete(
+        @Header(APIKeyNames.Authorization) token: String, @Body requestBody: JsonObject
+    ): Call<StatusMessageModel?>
+
+
     @POST(APIMethods.isSendText)
     fun isSendText(
         @Header(APIKeyNames.Authorization) token: String, @Body jsonObject: JsonObject

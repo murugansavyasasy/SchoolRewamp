@@ -2,15 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white"
+    android:background="@color/AthensGray"
     android:fitsSystemWindows="true">
 
     <RelativeLayout
         android:id="@+id/rytHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/gradient_theme_parent"
+        android:background="@color/AthensGray"
         android:paddingVertical="@dimen/fifteen">
 
         <ImageView
@@ -18,31 +17,26 @@
             android:layout_width="@dimen/thirty_five"
             android:layout_height="@dimen/thirty_five"
             android:layout_centerVertical="true"
-            android:src="@drawable/left_arrow">
+            android:src="@drawable/left_arrow" />
 
-        </ImageView>
-
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/profileImage"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/profile_student"
-            android:scaleType="centerCrop"
-            android:layout_marginTop="3dp"
-            app:shapeAppearanceOverlay="@style/CircleImageShape"
-            android:layout_toEndOf="@+id/imgBack"/>
-
-
-
+        <TextView
+            android:id="@+id/lblParentToolBar"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/rlaStudentName"
+            android:layout_toEndOf="@+id/imgBack"
+            android:text=""
+            android:textColor="@color/black"
+            android:textSize="@dimen/fifteen_sp" />
 
         <LinearLayout
             android:id="@+id/rlaStudentName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/ten"
-            android:layout_toEndOf="@+id/profileImage"
-            android:layout_marginTop="5dp"
-            android:layout_marginStart="5dp"
+            android:layout_toEndOf="@+id/imgBack"
             android:orientation="vertical">
 
             <TextView
@@ -50,27 +44,21 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="SARAN"
+                android:text=""
                 android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp">
-
-            </TextView>
+                android:textSize="@dimen/thirteen_sp" />
 
             <TextView
                 android:id="@+id/lblStudentSection"
                 style="@style/CustomTextStylePoppinsMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/lblStudentName"
-                android:text="ENGLISH"
+                android:text=""
                 android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp">
-
-            </TextView>
-
+                android:textSize="@dimen/thirteen_sp" />
         </LinearLayout>
-
     </RelativeLayout>
+
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -87,7 +75,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/white"
+        android:background="@color/AthensGray"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="10dp">

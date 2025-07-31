@@ -1,8 +1,11 @@
 package com.vs.schoolmessenger.School.InteractionWithStudent
 
 import android.content.Intent
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
@@ -35,18 +38,15 @@ class InteractionWithStudent : BaseActivity<IntrectionWithStudentBinding>(), Vie
     override fun setupViews() {
         super.setupViews()
         setupToolbar()
-        binding.toolbarLayout.imgBack.setOnClickListener { onBackPressed() }
+        binding.imgBack.setOnClickListener { onBackPressed() }
         isStaffDetails = SharedPreference.getStaffDetails(this)
-        binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
-        binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
-        binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel?.init()
         val staffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = staffDetails?.access_token
 
         fetchStudentData()
-
+        binding.rytSearch.setOnClickListener(this)
         appViewModel?.getstudentdetailsforchat?.observe(this) { response ->
             Log.d("response++", response.toString())
             if (response == null) {
@@ -59,6 +59,20 @@ class InteractionWithStudent : BaseActivity<IntrectionWithStudentBinding>(), Vie
                 showErrorUI(response.message ?: "No data available")
             }
         }
+
+        binding.txtVideoMenu.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (::mAdapter.isInitialized) {
+                    mAdapter.filter.filter(s)
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+        })
+
 
     }
 
@@ -93,6 +107,11 @@ class InteractionWithStudent : BaseActivity<IntrectionWithStudentBinding>(), Vie
 
     override fun onClick(p0: View?) {
         when (p0?.id) {
+            R.id.rytSearch -> if (binding.rytsearch.isVisible) {
+                binding.rytsearch.visibility = View.GONE
+            } else {
+                binding.rytsearch.visibility = View.VISIBLE
+            }
 
         }
     }

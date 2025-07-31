@@ -54,7 +54,8 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
-        setUpGradientParent()
+//        setUpGradientParent()
+        setupToolbarBlue()
         appViewModel = ViewModelProvider(this).get(App::class.java)
         appViewModel?.init()
 
@@ -91,7 +92,7 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
         binding.lblTotalDays.text = "No of Days - $totalLeaveDays"
 
 
-        binding.toolbarLayout.lblParentToolBar.text = Constant.isParentMenuName
+        binding.toolbarLayout.lblParentToolBar.text = getString(R.string.leave_history)
         binding.toolbarLayout.lnrParent.visibility = View.GONE
         isAccessToken = isChildDetails?.access_token
 

@@ -2,6 +2,8 @@ package com.vs.schoolmessenger.Parent.Attendance.AttendanceReport
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import androidx.compose.ui.graphics.Color
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
@@ -27,17 +29,22 @@ class AttendanceReport : BaseActivity<AttendanceReportParentBinding>(), View.OnC
 
     override fun setupViews() {
         super.setupViews()
-        setUpGradientParent()
+//        setUpGradientParent()
+        setupToolbarBlue()
 
         // Toolbar setup
         binding.toolbarLayout.imgBack.setOnClickListener(this)
-        binding.toolbarLayout.lblParentToolBar.text = Constant.isParentMenuName
+        binding.toolbarLayout.lblParentToolBar.text = getString(R.string.AttendanceReport)
+//        binding.toolbarLayout.lblParentToolBar.setTextColor(ContextCompat.getColor(this, R.color.white))
+
         binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
 
 
         isChildDetails = SharedPreference.getChildDetails(this)
         binding.toolbarLayout.lblStudentName.text = isChildDetails?.name ?: ""
+//        binding.toolbarLayout.lblStudentName.setTextColor(ContextCompat.getColor(this, R.color.white))
         binding.toolbarLayout.lblStudentSection.text = isChildDetails?.standard_name+ " - " +isChildDetails?.section_name
+//        binding.toolbarLayout.lblStudentSection.setTextColor(ContextCompat.getColor(this, R.color.white))
 
         isAccessToken = isChildDetails?.access_token
         appViewModel = ViewModelProvider(this)[App::class.java]

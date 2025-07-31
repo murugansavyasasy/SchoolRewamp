@@ -101,29 +101,56 @@
                     android:layout_width="wrap_content"
                     android:orientation="horizontal"
                     android:layout_height="wrap_content">
-                    <TextView
+                    <LinearLayout
                         android:layout_width="wrap_content"
-                        android:text="27"
-                        style="@style/CustomTextStylePoppinsBold"
-                        android:textSize="@dimen/fourty_five_sp"
-                        android:textColor="@color/light_purple1"
                         android:layout_height="wrap_content">
-                    </TextView>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:id="@+id/lblDate"
+                                android:layout_width="wrap_content"
+                                android:text="00"
+                                style="@style/CustomTextStylePoppinsBold"
+                                android:textSize="@dimen/fourty_sp"
+                                android:textColor="@color/light_purple1"
+                                android:layout_height="wrap_content">
+                            </TextView>
+                        </LinearLayout>
+                        <TextView
+                            android:id="@+id/lblDateSuffix"
+                            android:layout_width="wrap_content"
+                            android:text="th"
+                            android:layout_marginStart="@dimen/two"
+                            android:layout_marginTop="@dimen/five"
+                            android:gravity="top"
+                            android:maxLength="2"
+                            style="@style/CustomTextStylePoppinsBold"
+                            android:textSize="@dimen/twele_sp"
+                            android:textColor="@color/light_purple1"
+                            android:layout_height="wrap_content">
+                        </TextView>
+
+                    </LinearLayout>
                     <LinearLayout
                         android:layout_marginStart="@dimen/five"
                         android:layout_width="match_parent"
                         android:orientation="vertical"
                         android:layout_height="wrap_content">
                         <TextView
+                            android:id="@+id/lblDay"
                             android:layout_width="match_parent"
                             android:text="Wednesday"
+                            android:textSize="@dimen/fifteen"
                             style="@style/CustomTextStylePoppinsBold"
                             android:layout_height="wrap_content">
                         </TextView>
                         <TextView
+                            android:id="@+id/lblMonthYear"
+                            android:gravity="center"
                             android:layout_width="match_parent"
                             android:text="August 2025"
-                            android:textSize="@dimen/eleven_sp"
+                            android:textSize="@dimen/twele_sp"
                             android:textColor="@color/light_gray"
                             style="@style/CustomTextStylePoppinsMedium"
                             android:layout_height="wrap_content">
@@ -153,6 +180,8 @@
         <ScrollView
             android:layout_below="@+id/cardCalendarDetails"
             android:layout_width="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="16dp"
             android:layout_height="match_parent">
             <LinearLayout
                 android:paddingBottom="@dimen/thirty"
@@ -194,7 +223,7 @@
                                     android:layout_height="match_parent"
                                     android:indeterminate="false"
                                     android:max="100"
-                                    android:progress="50"
+                                    android:progress="100"
                                     android:progressDrawable="@drawable/progress_circle_drawable"
                                     android:rotation="270" />
 
@@ -301,7 +330,7 @@
                                 >
 
                                 <ProgressBar
-                                    android:id="@+id/ongoingDaysBar"
+                                    android:id="@+id/ongoingDaysProgressBar"
                                     style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Horizontal"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
@@ -342,10 +371,11 @@
                     android:id="@+id/cardMenuDetails"
                     android:elevation="6dp"
                     android:layout_marginTop="@dimen/ten"
+                    android:layout_marginBottom="@dimen/ten"
                     android:layout_height="wrap_content">
                     <LinearLayout
+                        android:padding="@dimen/two"
                         android:orientation="vertical"
-                        android:padding="@dimen/twenty"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                         <LinearLayout
@@ -357,7 +387,7 @@
                             android:layout_height="wrap_content">
                             <LinearLayout
                                 android:id="@+id/lnrLeaveRequest"
-                                android:padding="@dimen/ten"
+                                android:padding="@dimen/twenty"
                                 android:orientation="vertical"
                                 android:layout_weight="1"
                                 android:gravity="center"
@@ -366,13 +396,13 @@
                                 <ImageView
                                     android:padding="@dimen/ten"
                                     android:src="@drawable/attendance_marking"
-                                    android:layout_width="@dimen/sixty"
-                                    android:layout_height="@dimen/sixty">
+                                    android:layout_width="@dimen/fifty"
+                                    android:layout_height="@dimen/fifty">
                                 </ImageView>
 
                                 <TextView
                                     android:layout_width="match_parent"
-                                    android:text="@string/Leave_Request"
+                                    android:text="@string/ask_leave"
                                     style="@style/CustomTextStylePoppinsMedium"
                                     android:gravity="center"
                                     android:layout_height="wrap_content">
@@ -386,7 +416,7 @@
 
                             <LinearLayout
                                 android:id="@+id/lnrLeaveHistory"
-                                android:padding="@dimen/ten"
+                                android:padding="@dimen/twenty"
                                 android:layout_width="0dp"
                                 android:layout_weight="1"
                                 android:orientation="vertical"
@@ -395,8 +425,8 @@
                                 <ImageView
                                     android:src="@drawable/leave_request_icon_school"
                                     android:padding="@dimen/ten"
-                                    android:layout_width="@dimen/sixty"
-                                    android:layout_height="@dimen/sixty">
+                                    android:layout_width="@dimen/fifty"
+                                    android:layout_height="@dimen/fifty">
                                 </ImageView>
 
                                 <TextView
@@ -414,7 +444,7 @@
                                 android:background="@color/very_light_grey" />
                             <LinearLayout
                                 android:id="@+id/lnrAttendanceReport"
-                                android:padding="@dimen/ten"
+                                android:padding="@dimen/twenty"
                                 android:layout_width="0dp"
                                 android:layout_weight="1"
                                 android:orientation="vertical"
@@ -423,8 +453,8 @@
                                 <ImageView
                                     android:src="@drawable/absentees_report"
                                     android:padding="@dimen/ten"
-                                    android:layout_width="@dimen/sixty"
-                                    android:layout_height="@dimen/sixty">
+                                    android:layout_width="@dimen/fifty"
+                                    android:layout_height="@dimen/fifty">
                                 </ImageView>
 
                                 <TextView
@@ -440,7 +470,7 @@
                         </LinearLayout>
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="2dp"
+                            android:layout_height="1dp"
                             android:background="@color/very_light_grey" />
                         <LinearLayout
                             android:orientation="horizontal"
@@ -448,8 +478,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
                             <LinearLayout
+
                                 android:id="@+id/lnrHoliday"
-                                android:padding="@dimen/ten"
+                                android:padding="@dimen/twenty"
                                 android:orientation="vertical"
                                 android:layout_weight="1"
                                 android:layout_width="0dp"
@@ -458,8 +489,8 @@
                                 <ImageView
                                     android:src="@drawable/attendance_report_icon"
                                     android:padding="@dimen/ten"
-                                    android:layout_width="@dimen/sixty"
-                                    android:layout_height="@dimen/sixty">
+                                    android:layout_width="@dimen/fifty"
+                                    android:layout_height="@dimen/fifty">
                                 </ImageView>
 
                                 <TextView
