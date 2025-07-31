@@ -455,7 +455,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_margin="16dp"
-        android:background="@drawable/bg_blue_backround"
+        android:background="#6467D2"
         android:contentDescription="Add Leave"
         android:elevation="6dp"
         android:padding="10dp"
