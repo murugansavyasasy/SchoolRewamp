@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.CommonScreens
 
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +11,8 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
+import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.vs.schoolmessenger.R
@@ -61,7 +64,7 @@ class ImagePickingAdapter(
             FileType.EXCEL -> R.drawable.excel_icon
             FileType.TXT -> R.drawable.txt_icon
             FileType.IMAGE -> R.drawable.image_placeholder
-            FileType.VIDEO -> R.drawable.video_icon
+            FileType.VIDEO -> R.drawable.black
             FileType.AUDIO -> R.drawable.voice
             else -> R.drawable.address_icon
         }
@@ -82,18 +85,63 @@ class ImagePickingAdapter(
 
         holder.itemView.setOnClickListener {
             if (pos != 0) {
-                Constant.commonFileList = Constant.selectedFiles.map {
-                    CommonFileData(type = it.type.toString(), path = it.path)
-                }.toMutableList()
-                Constant.selectedFileIndex = pos - 1
-                val intent = Intent(context, FilesViewActivity::class.java)
-                intent.putExtra(Constant.subjectName, "Your Files")
-                context.startActivity(intent)
+                if (!item.path.contains("amazonaws.")) {
+                    if (item.type.toString() == Constant.IMAGE || item.type.toString() == Constant.VIDEO) {
+                        Constant.commonFileList = Constant.selectedFiles.map {
+                            CommonFileData(type = it.type.toString(), path = it.path)
+                        }.toMutableList()
+                        Constant.selectedFileIndex = pos - 1
+                        val intent = Intent(context, FilesViewActivity::class.java)
+                        intent.putExtra(Constant.subjectName, "Your Files")
+                        context.startActivity(intent)
+                    } else {
+
+                        val uri = if (item.path.startsWith("content://")) {
+                            Uri.parse(item.path)
+                        } else {
+                            FileProvider.getUriForFile(
+                                context,
+                                "${context.packageName}.fileprovider",
+                                File(item.path)
+                            )
+                        }
+
+                        val mimeType = getMimeTypeFromUri(uri)
+                        val openIntent = Intent(Intent.ACTION_VIEW).apply {
+                            setDataAndType(uri, mimeType)
+                            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                        }
+                        val activities = context.packageManager.queryIntentActivities(openIntent, PackageManager.MATCH_DEFAULT_ONLY)
+                        if (activities.isNotEmpty()) {
+                            context.startActivity(Intent.createChooser(openIntent, "Open with"))
+                        } else {
+                            Toast.makeText(
+                                context,
+                                "Please download an app to view this file.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                } else {
+                    Constant.commonFileList = Constant.selectedFiles.map {
+                        CommonFileData(type = it.type.toString(), path = it.path)
+                    }.toMutableList()
+                    Constant.selectedFileIndex = pos - 1
+                    val intent = Intent(context, FilesViewActivity::class.java)
+                    intent.putExtra(Constant.subjectName, "Your Files")
+                    context.startActivity(intent)
+                }
             } else {
                 listener.onImageClick(pos)
             }
         }
     }
+
+    private fun getMimeTypeFromUri(uri: Uri): String {
+        val contentResolver = context.contentResolver
+        return contentResolver.getType(uri) ?: "*/*"
+    }
+
 
     override fun getItemCount() = items.size
 }

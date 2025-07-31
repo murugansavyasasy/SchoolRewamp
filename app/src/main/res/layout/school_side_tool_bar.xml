@@ -35,7 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/fifteen_sp">
 
             </TextView>
@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:text=""
                 android:visibility="gone"
-                android:textColor="@color/light_gray"
+                android:textColor="@color/white"
                 android:textSize="@dimen/twele_sp">
             </TextView>
 
@@ -66,7 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/thirteen_sp">
 
             </TextView>
@@ -77,7 +77,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lblStudentName"
                 android:text=""
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/thirteen_sp">
 
             </TextView>
@@ -103,7 +103,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="10dp"
             android:padding="@dimen/five"
-            android:src="@drawable/search_icon"
+            android:src="@drawable/search_icon_white"
             android:visibility="gone" />
 
     </RelativeLayout>
@@ -176,7 +176,6 @@
             android:textStyle="bold">
 
         </TextView>
-
     </LinearLayout>
 
 
@@ -224,10 +223,10 @@
             android:layout_height="wrap_content"
             style="@style/CustomTextStylePoppinsBold"
             android:layout_toStartOf="@+id/btnDone"
+            android:textColor="@color/white"
             android:text=""
             android:layout_marginStart="@dimen/twenty_five"
-            android:gravity="start"
-            android:padding="@dimen/ten" />
+            android:gravity="start" />
 
         <TextView
             android:id="@+id/tvSelectedFiles"
@@ -235,11 +234,12 @@
             android:layout_height="wrap_content"
             style="@style/CustomTextStylePoppinsBold"
             android:layout_toStartOf="@+id/btnDone"
+            android:textColor="@color/white"
             android:text="Selected Files : 0"
+            android:layout_marginTop="@dimen/five"
             android:layout_marginStart="@dimen/twenty_five"
             android:layout_below="@+id/tvSelectionCount"
-            android:gravity="start"
-            android:padding="@dimen/ten" />
+            android:gravity="start" />
 
         <TextView
             android:id="@+id/btnDone"
@@ -249,6 +249,7 @@
             android:layout_marginEnd="@dimen/ten"
             android:background="@drawable/btn_green"
             android:gravity="center"
+            android:layout_marginTop="@dimen/five"
             android:padding="@dimen/five"
             android:visibility="gone"
             android:text="@string/done"
