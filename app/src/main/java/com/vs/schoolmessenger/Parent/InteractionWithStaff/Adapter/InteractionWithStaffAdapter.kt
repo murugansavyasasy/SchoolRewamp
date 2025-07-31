@@ -92,12 +92,21 @@ class InteractionWithStaffAdapter(
         private val nameheader: TextView = itemView.findViewById(R.id.nameheader)
         private val subjectheader: TextView = itemView.findViewById(R.id.subjectheader)
         private val unreadcount: TextView = itemView.findViewById(R.id.unreadcount)
+        private val yesterdayheader: TextView = itemView.findViewById(R.id.yesterdayheader)
         private val relative_layout: RelativeLayout = itemView.findViewById(R.id.relative_layout)
         @SuppressLint("ClickableViewAccessibility")
         fun bind(staff: Staff, position: Int, adapter: InteractionWithStaffAdapter) {
             nameheader.text = staff.name
             subjectheader.text = staff.subject_name
             unreadcount.text = staff.unread_count
+
+            if (staff.unread_count > "0") {
+                unreadcount.visibility = View.VISIBLE
+                yesterdayheader.visibility = View.GONE
+            } else {
+                unreadcount.visibility = View.GONE
+                yesterdayheader.visibility = View.GONE
+            }
 
             relative_layout.setOnClickListener {
                 if (staff.is_assigned == true) {

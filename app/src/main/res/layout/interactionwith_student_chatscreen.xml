@@ -94,34 +94,95 @@
 
         <ImageView
             android:id="@+id/btnAdd"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
-            android:contentDescription="Attchment"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="10dp"
+            android:contentDescription="Attachment"
             android:src="@drawable/ic_plus" />
 
-        <EditText
-            android:id="@+id/edtMessage"
+        <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/bg_message_input"
-            android:gravity="center_vertical"
-            android:hint="Type your message here..."
-            android:inputType="textMultiLine"
-            android:maxLines="4"
-            android:paddingHorizontal="12dp"
-            android:textColor="@color/black"
-            android:textSize="14sp" />
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/reply_linearlayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="5dp"
+                android:visibility="gone"
+                android:background="@drawable/bg_message_input">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="5dp">
+
+                    <TextView
+                        android:id="@+id/txtReplyingTo"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Replying to John"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        style="@style/CustomTextStylePoppinsBold"
+
+                        android:paddingBottom="4dp" />
+
+                    <ImageView
+                        android:id="@+id/imgCloseReply"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/close_red_color"
+                        android:layout_marginEnd="8dp"
+                        android:contentDescription="Close reply" />
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/txtquestion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Hi How are you"
+                    android:textColor="@color/black"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:textSize="12sp"
+                    android:layout_marginBottom="5dp"
+                    android:paddingBottom="4dp" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/edtMessage"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/bg_message_input"
+                android:gravity="center_vertical"
+                android:hint="Type your message here..."
+                android:inputType="textMultiLine"
+                android:maxLines="4"
+                android:paddingHorizontal="12dp"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/btnSend"
             android:layout_width="24dp"
             android:layout_height="24dp"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="10dp"
             android:layout_marginStart="10dp"
             android:contentDescription="@string/send_message"
             android:src="@drawable/sent_message" />
     </LinearLayout>
+
 
 
     <LinearLayout

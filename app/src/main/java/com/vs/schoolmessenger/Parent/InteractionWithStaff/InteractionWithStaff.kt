@@ -7,6 +7,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import androidx.annotation.RequiresApi
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
@@ -44,22 +45,22 @@ class InteractionWithStaff : BaseActivity<IntectionWithStaffBinding>(), View.OnC
     override fun setupViews() {
         super.setupViews()
         setUpGradientParent()
-        binding.toolbarLayout.imgBack.setOnClickListener(this)
-        binding.toolbarLayout.lblParentToolBar.text = Constant.isParentMenuName
-        binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
+        binding.imgBack.setOnClickListener(this)
+
         isChildDetails = SharedPreference.getChildDetails(this)
-        binding.toolbarLayout.lblStudentName.text = isChildDetails?.name ?: ""
-        binding.toolbarLayout.lblStudentSection.text =
+        binding.lblStudentName.text = isChildDetails?.name
+        binding.lblStudentSection.text =
             isChildDetails?.standard_name + " - " + isChildDetails?.section_name
 
         isAccessToken = isChildDetails?.access_token
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel?.init()
+        binding.rytSearch.setOnClickListener(this)
 
         fetchstaffdata()
 
-        binding.toolbarLayout.txtVideoMenu.addTextChangedListener(object : TextWatcher {
+        binding.txtVideoMenu.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (::interactionWithStaffAdapter.isInitialized) {
@@ -119,14 +120,22 @@ class InteractionWithStaff : BaseActivity<IntectionWithStaffBinding>(), View.OnC
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.imgBack -> onBackPressed()
+
+            R.id.rytSearch -> if (binding.rytsearch.isVisible) {
+                binding.rytsearch.visibility = View.GONE
+            } else {
+                binding.rytsearch.visibility = View.VISIBLE
+            }
         }
+
+
     }
 
     override fun onSearchResultEmpty(isEmpty: Boolean) {
         if (isEmpty) {
             binding.nomessage.visibility = View.VISIBLE
             binding.txtNoData.visibility = View.VISIBLE
-            binding.txtNoData.text = getString(R.string.no_matching_notices_found)
+            binding.txtNoData.text = ("No matching list found")
             binding.rcystaffdata.visibility = View.GONE
         } else {
             binding.nomessage.visibility = View.GONE

@@ -17,6 +17,9 @@ import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.StaffchatScreenBinding
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class InteractionwithStaffChatScreen : BaseActivity<StaffchatScreenBinding>(),
     View.OnClickListener {
@@ -69,6 +72,7 @@ class InteractionwithStaffChatScreen : BaseActivity<StaffchatScreenBinding>(),
         appViewModel!!.sendquestion?.observe(this) { response ->
             if (response != null) {
                 if (response.status) {
+                    binding.edtMessage.text.clear()
                     fetchChatData()
                 } else {
                     Constant.showDataValidation(
@@ -96,10 +100,19 @@ class InteractionwithStaffChatScreen : BaseActivity<StaffchatScreenBinding>(),
 
 
     private fun isLoadChatData(data: List<AnswerData>) {
-
         if (data.isNullOrEmpty()) {
             showErrorUI("No staff data available")
             return
+        }
+
+        val inputFormat = SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.getDefault())
+
+        val sortedData = data.sortedBy {
+            try {
+                inputFormat.parse(it.asked_on)
+            } catch (e: Exception) {
+                Date(0)
+            }
         }
 
         binding.nomessage.visibility = View.GONE
@@ -108,10 +121,13 @@ class InteractionwithStaffChatScreen : BaseActivity<StaffchatScreenBinding>(),
         binding.rcystaffchatdata.layoutManager = LinearLayoutManager(this)
 
         interactionWithStaffChatAdapter =
-            InteractionWithStaffChatAdapter(data ?: listOf(), this, false)
+            InteractionWithStaffChatAdapter(sortedData, this, false)
         binding.rcystaffchatdata.adapter = interactionWithStaffChatAdapter
 
+        binding.rcystaffchatdata.scrollToPosition(sortedData.size - 1)
     }
+
+
 
     private fun showErrorUI(message: String) {
         binding.nomessage.visibility = View.VISIBLE
@@ -123,8 +139,6 @@ class InteractionwithStaffChatScreen : BaseActivity<StaffchatScreenBinding>(),
     private fun isMessageSend() {
 
         var question = binding.edtMessage.text.toString()
-
-
         if (question.isEmpty()) {
             binding.edtMessage.error = getString(R.string.This_field_required)
             return

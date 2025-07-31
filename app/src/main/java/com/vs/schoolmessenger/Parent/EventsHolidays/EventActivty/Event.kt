@@ -56,6 +56,12 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
 
         binding.imgBack.setOnClickListener(this)
         binding.rytSearch.setOnClickListener(this)
+        binding.headerview.visibility = View.GONE
+        binding.categoryHeaderview.visibility = View.GONE
+        binding.upcomingeventHeaderview.visibility = View.GONE
+        binding.completedeventHeaderview.visibility = View.GONE
+        binding.dotindicator.visibility = View.GONE
+        binding.rcycategoryEvent.visibility = View.GONE
         binding.lblStudentName.text = isChildDetails?.name
         binding.lblStudentSection.text =
             "${isChildDetails?.standard_name} - ${isChildDetails?.section_name}"
@@ -92,6 +98,9 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
                 allOngoingEvents = data.on_going
                 allUpcomingEvents = data.up_coming
                 allCompletedEvents = data.completed
+                binding.dotindicator.visibility =
+                    if (!allOngoingEvents.isNullOrEmpty()) View.VISIBLE else View.GONE
+
 
                 val CategoryList = data.categories
 

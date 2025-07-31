@@ -12,65 +12,64 @@
 
 
     <LinearLayout
-        android:layout_marginTop="@dimen/ten"
-        android:layout_marginStart="@dimen/ten"
-        android:layout_marginEnd="@dimen/ten"
-        android:layout_below="@+id/toolbarLayout"
         android:id="@+id/toolbarLayout1"
-        android:weightSum="1"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbarLayout"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
         <LinearLayout
             android:id="@+id/lnrTabOneName"
-            android:layout_weight="0.5"
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:orientation="vertical">
 
             <TextView
-                android:gravity="center"
-                android:text="Create"
                 android:id="@+id/tabOneName"
-                android:textColor="@color/iconBlue"
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </TextView>
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Create"
+                android:textColor="@color/iconBlue"></TextView>
+
             <View
                 android:id="@+id/line1"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/three"
                 android:layout_below="@+id/groupheading"
                 android:layout_marginTop="@dimen/five"
-                android:background="@color/iconBlue">
-            </View>
+                android:background="@color/iconBlue"></View>
         </LinearLayout>
 
 
         <LinearLayout
             android:id="@+id/lnrTabTwoName"
-            android:layout_weight="0.5"
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:orientation="vertical">
 
             <TextView
-                android:gravity="center"
-                android:text="Reports"
-                style="@style/CustomTextStylePoppinsBold"
                 android:id="@+id/tabTwoName"
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </TextView>
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Reports"></TextView>
+
             <View
                 android:id="@+id/line2"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/three"
                 android:layout_below="@+id/groupheading"
                 android:layout_marginTop="@dimen/five"
-                android:background="@color/white">
-            </View>
+                android:background="@color/white"></View>
         </LinearLayout>
 
     </LinearLayout>
@@ -376,11 +375,11 @@
 
                         <RelativeLayout
                             android:id="@+id/rytStartTime"
-                            android:layout_toEndOf="@id/rytStartDate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true">
+                            android:layout_centerVertical="true"
+                            android:layout_toEndOf="@id/rytStartDate">
 
                             <ImageView
                                 android:id="@+id/imgTimeDown"
@@ -526,8 +525,8 @@
                             android:layout_below="@id/rytRecyclewview"
                             android:layout_marginStart="@dimen/twenty_five"
                             android:layout_marginTop="@dimen/fifty"
-                            android:layout_marginBottom="@dimen/thirty"
                             android:layout_marginEnd="@dimen/twenty_five"
+                            android:layout_marginBottom="@dimen/thirty"
                             android:background="@drawable/rect_btn_orange"
                             android:gravity="center"
                             android:padding="@dimen/ten"
@@ -546,8 +545,8 @@
         android:id="@+id/rytSearch323"
         android:layout_width="match_parent"
         android:layout_height="@dimen/thirty_five"
-        android:layout_margin="@dimen/ten"
         android:layout_below="@+id/toolbarLayout1"
+        android:layout_margin="@dimen/ten"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:background="@drawable/rect_grey"
@@ -576,9 +575,9 @@
         android:id="@+id/scroll_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
         android:layout_below="@id/rytSearch323"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        android:visibility="gone">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -597,15 +596,14 @@
                 android:textSize="18sp" />
 
 
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcyongoingevent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/headerview"
+                android:layout_marginTop="5dp"
                 android:clipToPadding="false"
                 android:fadeScrollbars="false"
-                android:layout_marginTop="5dp"
-                android:layout_below="@+id/headerview"
                 android:paddingHorizontal="10dp"
                 android:scrollbars="none" />
 
@@ -618,9 +616,6 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
                 android:src="@drawable/dotindicator" />
-
-
-
 
 
             <TextView
@@ -640,13 +635,12 @@
                 android:id="@+id/rcyupcomingevent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/upcomingevent_headerview"
+                android:layout_marginTop="5dp"
                 android:clipToPadding="false"
                 android:fadeScrollbars="false"
-                android:layout_marginTop="5dp"
-                android:layout_below="@+id/upcomingevent_headerview"
                 android:paddingHorizontal="10dp"
                 android:scrollbars="none" />
-
 
 
             <TextView
@@ -666,26 +660,16 @@
                 android:id="@+id/rcycompletedevent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/completedevent_headerview"
+                android:layout_marginTop="5dp"
                 android:clipToPadding="false"
                 android:fadeScrollbars="false"
-                android:layout_marginTop="5dp"
-                android:layout_below="@+id/completedevent_headerview"
                 android:paddingHorizontal="10dp"
                 android:scrollbars="none" />
 
 
         </RelativeLayout>
     </ScrollView>
-
-
-
-    <View
-        android:id="@+id/whiteOverlay"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/white"
-        android:visibility="gone" />
-
 
 
 </RelativeLayout>
