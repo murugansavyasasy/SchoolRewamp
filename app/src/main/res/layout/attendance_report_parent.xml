@@ -6,14 +6,116 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <include
-        android:id="@+id/toolbarLayout"
-        layout="@layout/parent_side_tool_bar" />
+
+    <RelativeLayout
+        android:id="@+id/rytHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_header_rounded"
+        android:paddingBottom="@dimen/thirty"
+        >
+        <RelativeLayout
+            android:id="@+id/rytHeaderDetail"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/imgBack"
+                android:layout_width="@dimen/thirty_five"
+                android:layout_height="@dimen/thirty_five"
+                android:layout_centerVertical="true"
+                android:src="@drawable/left_arrow">
+
+            </ImageView>
+
+            <LinearLayout
+                android:id="@+id/lytTitleAndName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/imgBack"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/lblStudentName"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/fifteen_sp">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/lblStudentSection"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:visibility="visible"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/twele_sp">
+
+                </TextView>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+        <TextView
+            android:id="@+id/lblParentToolBar"
+            style="@style/CustomTextStylePoppinsBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginStart="@dimen/twenty"
+            android:layout_below="@+id/rytHeaderDetail"
+            android:textColor="@color/white"
+            android:textSize="@dimen/twenty">
+
+        </TextView>
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rytSearch"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/thirty_five"
+        android:layout_below="@id/rytHeader"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
+        android:background="@drawable/rect_grey"
+        android:visibility="gone">
+
+
+
+        <ImageView
+            android:id="@+id/imgSearch"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/ten"
+            android:src="@drawable/ic_search" />
+
+        <EditText
+            android:id="@+id/txtVideoMenu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@id/imgSearch"
+            android:background="@android:color/transparent"
+            android:hint="@string/lblSearch"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp" />
+    </RelativeLayout>
 
 
     <androidx.recyclerview.widget.RecyclerView
+
         android:id="@+id/rcyAttendanceReport"
-        android:layout_below="@+id/toolbarLayout"
+        android:layout_below="@+id/rytSearch"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginEnd="@dimen/ten"
         android:layout_marginTop="@dimen/ten"
@@ -27,7 +129,7 @@
         android:id="@+id/lytList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbarLayout"
+        android:layout_below="@+id/rytHeader"
         android:orientation="vertical"
         android:visibility="gone">
 

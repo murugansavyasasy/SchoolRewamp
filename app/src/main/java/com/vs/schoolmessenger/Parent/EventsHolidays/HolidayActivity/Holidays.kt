@@ -1,9 +1,11 @@
 package com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity
 
 
+import android.graphics.PorterDuff
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Parent.EventsHolidays.CalendarFragment
@@ -37,12 +39,12 @@ class Holidays : BaseActivity<HolidayParentBinding>(), View.OnClickListener{
         val isChildDetails = SharedPreference.getChildDetails(this)
         isAccessToken = isChildDetails?.access_token
 
-        binding.toolbarLayout.imgBack.setOnClickListener(this)
-        binding.toolbarLayout.lblParentToolBar.text = getString(R.string.HoliDay)
-        binding.toolbarLayout.lnrParent.visibility = View.GONE
+        binding.imgBack.setOnClickListener(this)
+        binding.lblParentToolBar.text = getString(R.string.HoliDay)
+        binding.imgBack.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_IN)
 
-        binding.toolbarLayout.lblStudentName.text = isChildDetails?.name
-        binding.toolbarLayout.lblStudentSection.text = isChildDetails?.standard_name + " - " + isChildDetails?.section_name
+        binding.lblStudentName.text = isChildDetails?.name
+        binding.lblStudentSection.text = isChildDetails?.standard_name + " - " + isChildDetails?.section_name
         loadHolidayData()
         loadCalendarFragment()
 
