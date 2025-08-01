@@ -2,8 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/menu_reply"
-        android:title="Private Reply" />
+        android:title="Answer" />
     <item
         android:id="@+id/menu_reply_all"
-        android:title="Public Reply" />
+        android:title="Update Answer" />
 </menu>

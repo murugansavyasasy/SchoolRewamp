@@ -98,6 +98,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
             android:layout_gravity="bottom"
+            android:visibility="gone"
             android:layout_marginBottom="10dp"
             android:contentDescription="Attachment"
             android:src="@drawable/ic_plus" />
@@ -106,6 +107,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_marginEnd="10dp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -156,6 +158,45 @@
                     android:textSize="12sp"
                     android:layout_marginBottom="5dp"
                     android:paddingBottom="4dp" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:weightSum="2"
+                    android:layout_marginBottom="5dp">
+
+
+                <TextView
+                    android:id="@+id/replytext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Reply"
+                    android:gravity="center"
+                    android:textColor="@color/iconBlue"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+                    android:layout_marginBottom="5dp"
+                    android:paddingBottom="4dp" />
+
+
+                    <TextView
+                        android:id="@+id/replyalltext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Reply All"
+                        android:textColor="@color/iconBlue"
+                        android:layout_weight="1"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:textSize="15sp"
+                        android:gravity="center"
+                        android:layout_marginBottom="5dp"
+                        android:paddingBottom="4dp" />
+
+                </LinearLayout>
             </LinearLayout>
 
             <EditText
@@ -164,23 +205,14 @@
                 android:layout_height="40dp"
                 android:background="@drawable/bg_message_input"
                 android:gravity="center_vertical"
+                android:visibility="gone"
                 android:hint="Type your message here..."
                 android:inputType="textMultiLine"
-                android:maxLines="4"
                 android:paddingHorizontal="12dp"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/btnSend"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="10dp"
-            android:layout_marginStart="10dp"
-            android:contentDescription="@string/send_message"
-            android:src="@drawable/sent_message" />
     </LinearLayout>
 
 
