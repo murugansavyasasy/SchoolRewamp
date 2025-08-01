@@ -28,7 +28,6 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
     private var isStaffDetails: StaffDetails? = null
     private var isAccessToken: String? = null
     private var appViewModel: App? = null
-    private var replyType: String = "1"
     private var type: Boolean = false
     private lateinit var interactionWithQuestionAdapter: InteractionWithQuestionAdapter
 
@@ -50,7 +49,8 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
         val staffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = staffDetails?.access_token
         fetchQuestionData()
-        binding.btnSend.setOnClickListener(this)
+        binding.replytext.setOnClickListener(this)
+        binding.replyalltext.setOnClickListener(this)
         binding.imgCloseReply.setOnClickListener(this)
 
         appViewModel?.getstaffquestions?.observe(this) { response ->
@@ -130,24 +130,7 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
         binding.rcystaffQuestionchatdata.visibility = View.GONE
     }
 
-    private fun isMessageSend() {
-        if (type == false) {
-            AlertDialog.Builder(this).setTitle("Message")
-                .setMessage("Your message will be visible to all. Do you want to continue?")
-                .setPositiveButton("Confirm") { dialog, _ ->
-                    dialog.dismiss()
-                    sendAnswerToApi()
-                }.setNegativeButton("Cancel") { dialog, _ ->
-                    dialog.dismiss()
-                }.setCancelable(true).show()
-            return
-        }
-
-        sendAnswerToApi()
-    }
-
-
-    private fun sendAnswerToApi() {
+    private fun isMessageSend(replyType: String) {
         val question = binding.edtMessage.text.toString()
         if (question.isEmpty()) {
             binding.edtMessage.error = getString(R.string.This_field_required)
@@ -160,22 +143,26 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
             question_id = QuestionDataSending?.id ?: "",
             answer = question,
             reply_type = replyType,
-            is_change_answer = false,
+            is_change_answer = type,
             file_path = fileList
         )
 
         appViewModel?.sendanswer(isAccessToken!!, request)
-
-        replyType = "1"
         binding.replyLinearlayout.visibility = View.GONE
+        binding.btnAdd.visibility = View.GONE
+        binding.edtMessage.visibility = View.GONE
         binding.edtMessage.text?.clear()
     }
 
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.btnSend -> {
-                isMessageSend()
+            R.id.replytext -> {
+                isMessageSend("2")
+            }
+
+            R.id.replyalltext -> {
+                isMessageSend("1")
             }
 
             R.id.imgBack -> {
@@ -184,27 +171,29 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
 
             R.id.imgCloseReply -> {
                 binding.replyLinearlayout.visibility = View.GONE
-                replyType = "0"
+                binding.btnAdd.visibility = View.GONE
+                binding.edtMessage.visibility = View.GONE
             }
         }
     }
 
-    override fun onReplyClick(chat: QuestionData, position: Int, replyType: String, type: Boolean) {
+    override fun onAnswerClick(chat: QuestionData, position: Int) {
         binding.replyLinearlayout.visibility = View.VISIBLE
         binding.txtReplyingTo.text = "Replying To ${chat.student_name}"
+        binding.btnAdd.visibility = View.VISIBLE
+        binding.edtMessage.visibility = View.VISIBLE
         binding.txtquestion.text = chat.question
-        this.replyType = replyType
         this.type = type
     }
 
 
-    override fun onReplyAllClick(
-        chat: QuestionData, position: Int, replyType: String, type: Boolean
+    override fun onUpdateAnswerClick(
+        chat: QuestionData, position: Int, type: Boolean
     ) {
         binding.replyLinearlayout.visibility = View.VISIBLE
-        binding.txtReplyingTo.text = "Replying To All"
+        binding.btnAdd.visibility = View.VISIBLE
+        binding.edtMessage.visibility = View.VISIBLE
         binding.txtquestion.text = chat.question
-        this.replyType = replyType
         this.type = type
     }
 

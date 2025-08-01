@@ -309,6 +309,7 @@
                                 android:text="@string/leave_taken"
                                 style="@style/CustomTextStylePoppinsMedium"
                                 android:gravity="center"
+                                android:textSize="@dimen/twele_sp"
                                 android:layout_marginTop="@dimen/ten"
                                 android:layout_height="wrap_content">
 
@@ -356,6 +357,7 @@
                                 android:text="@string/ongoing_days"
                                 style="@style/CustomTextStylePoppinsMedium"
                                 android:gravity="center"
+                                android:textSize="@dimen/twele_sp"
                                 android:layout_marginTop="@dimen/ten"
                                 android:layout_height="wrap_content">
 
@@ -405,6 +407,7 @@
                                     android:text="@string/ask_leave"
                                     style="@style/CustomTextStylePoppinsMedium"
                                     android:gravity="center"
+                                    android:textSize="@dimen/twele_sp"
                                     android:layout_height="wrap_content">
 
                                 </TextView>
@@ -422,18 +425,19 @@
                                 android:orientation="vertical"
                                 android:gravity="center"
                                 android:layout_height="wrap_content">
+
                                 <ImageView
-                                    android:src="@drawable/leave_request_icon_school"
-                                    android:padding="@dimen/ten"
                                     android:layout_width="@dimen/fifty"
-                                    android:layout_height="@dimen/fifty">
-                                </ImageView>
+                                    android:layout_height="@dimen/fifty"
+                                    android:padding="@dimen/ten"
+                                    android:src="@drawable/leave_request_icon_school"></ImageView>
 
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:text="@string/leave_history"
                                     style="@style/CustomTextStylePoppinsMedium"
                                     android:gravity="center"
+                                    android:textSize="@dimen/twele_sp"
                                     android:layout_height="wrap_content">
 
                                 </TextView>
@@ -462,6 +466,7 @@
                                     android:text="@string/attendance_report"
                                     style="@style/CustomTextStylePoppinsMedium"
                                     android:gravity="center"
+                                    android:textSize="@dimen/twele_sp"
                                     android:layout_height="wrap_content">
 
                                 </TextView>
@@ -498,6 +503,7 @@
                                     android:text="@string/HoliDay"
                                     style="@style/CustomTextStylePoppinsMedium"
                                     android:gravity="center"
+                                    android:textSize="@dimen/twele_sp"
                                     android:layout_height="wrap_content">
 
                                 </TextView>
