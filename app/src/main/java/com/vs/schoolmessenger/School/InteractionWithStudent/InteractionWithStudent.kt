@@ -45,6 +45,9 @@ class InteractionWithStudent : BaseActivity<IntrectionWithStudentBinding>(), Vie
         val staffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = staffDetails?.access_token
 
+        binding.lblStudentName.text = staffDetails!!.name
+        binding.lblStudentSection.text = staffDetails!!.school_name
+
         fetchStudentData()
         binding.rytSearch.setOnClickListener(this)
         appViewModel?.getstudentdetailsforchat?.observe(this) { response ->
@@ -120,7 +123,7 @@ class InteractionWithStudent : BaseActivity<IntrectionWithStudentBinding>(), Vie
         if (isEmpty) {
             binding.nomessage.visibility = View.VISIBLE
             binding.txtNoData.visibility = View.VISIBLE
-            binding.txtNoData.text = getString(R.string.no_matching_notices_found)
+            binding.txtNoData.text = ("No matching data found")
             binding.rcystudentdata.visibility = View.GONE
         } else {
             binding.nomessage.visibility = View.GONE

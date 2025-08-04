@@ -5,6 +5,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.PopupMenu
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -54,8 +56,8 @@ class InteractionWithQuestionAdapter(
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val questionText: TextView = itemView.findViewById(R.id.questionText)
         private val answerText: TextView = itemView.findViewById(R.id.answerText)
-        private val more_options: TextView = itemView.findViewById(R.id.more_options)
-        private val linear_layout: TextView = itemView.findViewById(R.id.linear_layout)
+        private val more_options: ImageView = itemView.findViewById(R.id.more_options)
+        private val linear_layout: LinearLayout = itemView.findViewById(R.id.linear_layout)
 
 
 
