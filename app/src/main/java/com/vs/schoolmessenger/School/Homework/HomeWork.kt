@@ -392,7 +392,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
             }
         }
 
-        mHomeWorkReportAdapter = HomeWorkReportAdapter(filteredList, this, false)
+        mHomeWorkReportAdapter = HomeWorkReportAdapter(this,filteredList, this, false)
         binding.rcyHomeWorkReport.layoutManager =
             GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
         binding.rcyHomeWorkReport.setHasFixedSize(true)
@@ -486,6 +486,26 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
 
             R.id.lnrTabOneName -> {
 
+
+                binding.edtTitle.setText("")
+                binding.edtDescription.setText("")
+                Constant.selectedFiles.clear()
+                Constant.isAwsUploadedFiles.clear()
+
+                saveDrawableToCache(R.drawable.add_image)?.let {
+                    Constant.selectedFiles.add(
+                        FileItem(
+                            it, FileType.IMAGE
+                        )
+                    )
+                }
+
+                binding.rcyImages.visibility = View.VISIBLE
+                mAdapter = ImagePickingAdapter(this, Constant.selectedFiles!!, this)
+                binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
+                binding.rcyImages.adapter = mAdapter
+
+
                 binding.line3.setBackgroundResource(R.color.iconBlue)
                 binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
                 binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.black))
@@ -517,7 +537,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
             }
 
             R.id.btnChooseRecipient -> {
-                if (binding.btnChooseRecipient.text.toString().equals("Update HomeWork")) {
+                if (binding.btnChooseRecipient.text.toString() == "Update HomeWork") {
                     showSendConfirmationDialog(true)
                 } else {
                     isRedirectToSectionStudents()
@@ -529,7 +549,7 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
     private fun fetchHomeWorkReportData() {
         binding.rcyHomeWorkReport.visibility = View.VISIBLE
         mHomeWorkReportAdapter =
-            HomeWorkReportAdapter(emptyList(), this, Constant.isShimmerViewShow)
+            HomeWorkReportAdapter(this,emptyList(), this, Constant.isShimmerViewShow)
         binding.rcyHomeWorkReport.layoutManager =
             GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
         binding.rcyHomeWorkReport.setHasFixedSize(true)
@@ -543,16 +563,14 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
     private fun loadHomeWorkReportData(isHomeWorkReportDetails: List<HomeWorkReport>) {
         binding.rcyHomeWorkReport.visibility = View.VISIBLE
         mHomeWorkReportAdapter = HomeWorkReportAdapter(
-            isHomeWorkReportDetails, this, Constant.isShimmerViewDisable
+            this,isHomeWorkReportDetails, this, Constant.isShimmerViewDisable
         )
         binding.rcyHomeWorkReport.layoutManager =
             GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
         binding.rcyHomeWorkReport.setHasFixedSize(true)
         binding.rcyHomeWorkReport.isNestedScrollingEnabled = false
         binding.rcyHomeWorkReport.adapter = mHomeWorkReportAdapter
-
     }
-
 
     private fun isGetStandardSection() {
         appViewModel!!.isGetStandardSection(isAccessToken!!.toString(), isAcademicYearId, this)

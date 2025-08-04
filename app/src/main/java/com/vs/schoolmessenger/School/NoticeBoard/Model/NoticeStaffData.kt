@@ -2,7 +2,7 @@ package com.vs.schoolmessenger.School.NoticeBoard.Model
 
 import com.vs.schoolmessenger.Parent.Noticeboard.FilePath
 
-class NoticeStaffData (
+data class NoticeStaffData (
     val id: String,
     val title: String,
     val description: String,

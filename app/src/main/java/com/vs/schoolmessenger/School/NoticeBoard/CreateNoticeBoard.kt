@@ -2,7 +2,6 @@ package com.vs.schoolmessenger.School.NoticeBoard
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
 import android.app.NotificationChannel
@@ -10,6 +9,7 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
@@ -22,7 +22,6 @@ import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
 import android.util.Log
-import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -30,8 +29,8 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.FrameLayout
-import android.widget.MediaController
+import android.widget.LinearLayout
+import android.widget.PopupWindow
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -44,6 +43,10 @@ import androidx.core.content.FileProvider
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
+import com.vs.schoolmessenger.AWS.AwsUploadingPreSigned
+import com.vs.schoolmessenger.AWS.UploadCallback
 import com.vs.schoolmessenger.AlbumImage.AlbumSelectActivity
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
@@ -51,21 +54,28 @@ import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
 import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolList
-import com.vs.schoolmessenger.Dashboard.School.SchoolDashboard
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.Repository.RestClient
 import com.vs.schoolmessenger.School.Event.CreateEvent
 import com.vs.schoolmessenger.School.NoticeBoard.Model.NoticeBoardDetails
 import com.vs.schoolmessenger.School.NoticeBoard.Model.NoticeStaffData
+import com.vs.schoolmessenger.Utils.AwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
+import com.vs.schoolmessenger.Utils.Constant.M_ATTACHMENTS
+import com.vs.schoolmessenger.Utils.Constant.M_HOMEWORK
+import com.vs.schoolmessenger.Utils.Constant.M_NOTICEBOARD
+import com.vs.schoolmessenger.Utils.Constant.M_SCHOOL_CLASS_EVENTS
+import com.vs.schoolmessenger.Utils.Constant.SELECTED_SCHOOL_MENU
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
 import com.vs.schoolmessenger.Utils.OnDateSelectedListener
+import com.vs.schoolmessenger.Utils.ProgressDialogHelper
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.CreateNoticeBoardBinding
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody.Companion.toRequestBody
-import org.json.JSONObject
+import com.vs.schoolmessenger.util.VimeoVideoUpload
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -73,7 +83,8 @@ import java.util.Date
 import java.util.Locale
 
 class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClickListener,
-    OnDateSelectedListener, NoticeBoardClickListener, View.OnClickListener {
+    OnDateSelectedListener, NoticeBoardClickListener, View.OnClickListener,
+    VimeoVideoUpload.UploadCompletionListener {
 
 
     override fun getViewBinding(): CreateNoticeBoardBinding {
@@ -101,11 +112,13 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
     private var selectedDateField: Int = 0
     private var txtStartDate: String? = null
     private var txtEndDate: String? = null
-
-
     lateinit var noticeboardadapter: SchoolNoticeBoardAdapter
-
     private var userDetails: UserDetails? = null
+    val isVideoSelectedArrayList = mutableListOf<FileItem>()
+    var isTotalSelectedItem = 0
+    var isNoticeBoardId = ""
+    var isNoticeBoardPosition = 0
+    var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -115,14 +128,12 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
 
-
-
         userDetails = SharedPreference.getUserDetails(this)
         userDetails?.let {
             setupSchoolSpinner(it.staff_details)
         }
 
-
+        isAwsUploadingPreSigned = AwsUploadingPreSigned()
         binding.toolbarLayout.imgBack.setOnClickListener(this)
         binding.toolbarLayout.imgSearchToolBar.setOnClickListener(this)
         binding.btnNext.setOnClickListener(this)
@@ -137,14 +148,9 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         binding.lnrTabOneName.setOnClickListener(this)
         binding.lnrTabTwoName.setOnClickListener(this)
         isStaffDetails = SharedPreference.getStaffDetails(this)
-//        binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
-//        binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
-
+        binding.btnNext.text = getString(R.string.NEXT)
         val (dayOnly, dayOfWeek, fullDate, slashDate, customFormat) = Constant.getCurrentDateInfo()
-//        binding.lblDate.text = dayOnly
         binding.lblDay.text = dayOnly
-
-//        binding.lblEndDate.text = dayOnly
         binding.lblEndDay.text = dayOnly
 
         txtStartDate = fullDate
@@ -216,27 +222,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
 
                         Constant.selectedFiles.add(FileItem(uri.toString(), type))
 
-                        if (type.toString() == Constant.VIDEO) {
-                            binding.thumbnailView.visibility = View.VISIBLE
-                            binding.rcyImages.visibility = View.GONE
-
-                            // Extract and show video thumbnail
-                            val bitmap = Constant.getVideoThumbnail(this, uri!!)
-                            binding.thumbnailView.setImageBitmap(bitmap)
-                            binding.thumbnailView.visibility = View.VISIBLE
-                            binding.imgDelete.visibility = View.VISIBLE
-                            binding.imgPlay.visibility = View.VISIBLE
-                            binding.videoView.setVideoURI(uri)
-                            binding.videoView.setMediaController(MediaController(this))
-                            binding.videoView.requestFocus()
-                        } else {
-                            binding.videoView.visibility = View.GONE
-                            binding.imgDelete.visibility = View.GONE
-                            binding.thumbnailView.visibility = View.GONE
-                            binding.rcyImages.visibility = View.VISIBLE
-                            mAdapter?.notifyDataSetChanged()
-                        }
-
                         Log.d("SelectedFile", "URI: $uri, Type: $type")
                     }
 
@@ -250,28 +235,25 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                 }
             }
 
-        binding.imgDelete.setOnClickListener {
-            binding.videoView.visibility = View.GONE
-            binding.imgDelete.visibility = View.GONE
-            binding.imgPlay.visibility = View.GONE
-            binding.rcyImages.visibility = View.VISIBLE
-            binding.thumbnailView.visibility = View.GONE
-            Constant.selectedFiles.clear()
-            saveDrawableToCache(R.drawable.add_image)?.let {
-                Constant.selectedFiles.add(
-                    FileItem(
-                        it, FileType.IMAGE
-                    )
-                )
+        appViewModel!!.isEditNoticeBoard?.observe(this) { response ->
+            Constant.hideLoading(this@CreateNoticeBoard)
+            if (response != null) {
+                Log.d("Response", response.status.toString())
+                Constant.showTopAlertPopup(response.message, this)
             }
-            mAdapter!!.notifyDataSetChanged()
         }
 
-        binding.imgPlay.setOnClickListener {
-            binding.thumbnailView.visibility = View.GONE
-            binding.imgPlay.visibility = View.GONE
-            binding.videoView.visibility = View.VISIBLE
-            binding.videoView.start()
+        appViewModel!!.isnoticeboarddelete?.observe(this) { response ->
+            if (response != null) {
+                if (response.status) {
+                    Constant.hideLoading(this@CreateNoticeBoard)
+                    noticeboardadapter!!.removeItemAt(isNoticeBoardPosition)
+                } else {
+                    Constant.showDataValidation(
+                        resources.getString(R.string.fail), response.message, this
+                    )
+                }
+            }
         }
 
 
@@ -354,113 +336,11 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
             Log.d("DefaultSelection", "Default token: $isAccessToken")
         }
     }
-
-
     private fun isloadhomeworkData(newData: List<NoticeStaffData>?) {
         noticeboardadapter =
             SchoolNoticeBoardAdapter(newData, this, this, Constant.isShimmerViewDisable)
         binding.rcyNoticeBoard.adapter = noticeboardadapter
     }
-
-
-    override fun onSearchResultEmpty(isEmpty: Boolean) {
-        if (isEmpty) {
-            binding.nomessage.visibility = View.VISIBLE
-            binding.txtNoData.visibility = View.VISIBLE
-            binding.txtNoData.text = getString(R.string.no_matching_notices_found)
-            binding.rcyNoticeBoard.visibility = View.GONE
-        } else {
-            binding.nomessage.visibility = View.GONE
-            binding.txtNoData.visibility = View.GONE
-            binding.rcyNoticeBoard.visibility = View.VISIBLE
-        }
-    }
-
-    fun showConfirmationDialog(
-        title: String, message: String, activity: Activity, onConfirm: () -> Unit
-    ) {
-        val inflater = LayoutInflater.from(activity)
-        val view = inflater.inflate(R.layout.success_popup, null)
-
-        val messageText = view.findViewById<TextView>(R.id.alertMessage)
-        val titleText = view.findViewById<TextView>(R.id.alertTitle)
-        val okButton = view.findViewById<TextView>(R.id.btnOk)
-        val cancelButton = view.findViewById<TextView>(R.id.btnCancel)
-
-        titleText.text = title
-        messageText.text = message
-
-        val rootView = activity.findViewById<ViewGroup>(android.R.id.content)
-
-        val dimView = View(activity).apply {
-            setBackgroundColor(Color.parseColor("#80000000"))
-            layoutParams = ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
-            )
-            isClickable = true
-        }
-
-        val marginInPx = TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_DIP, 20f, activity.resources.displayMetrics
-        ).toInt()
-
-        val popupLayoutParams = FrameLayout.LayoutParams(
-            FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT
-        ).apply {
-            gravity = Gravity.CENTER
-            setMargins(marginInPx, 0, marginInPx, 0)
-        }
-
-        rootView.addView(dimView)
-        rootView.addView(view, popupLayoutParams)
-
-        val closePopup = {
-            rootView.removeView(view)
-            rootView.removeView(dimView)
-        }
-        okButton.text = "Confirm"
-        cancelButton.visibility = View.VISIBLE
-        cancelButton.text = "Cancel"
-        okButton.setOnClickListener {
-            closePopup()
-            onConfirm()
-        }
-
-        cancelButton.setOnClickListener {
-            closePopup()
-        }
-    }
-
-
-    override fun onDeleteNotice(type: String?, id: String?, position: Int) {
-        showConfirmationDialog(
-            title = "Delete Confirmation",
-            message = "Are you sure you want to delete this notice?",
-            activity = this
-        ) {
-            val json = JSONObject()
-            json.put("id", id)
-            val requestBody = json.toString().toRequestBody("application/json".toMediaTypeOrNull())
-
-            appViewModel?.isnoticeboarddelete(isAccessToken!!, requestBody, this)
-
-            appViewModel!!.isnoticeboarddelete?.observe(this) { response ->
-                if (response != null) {
-                    if (response.status) {
-                        Constant.hideLoading(this@CreateNoticeBoard)
-                        noticeboardadapter.removeItemAt(position)
-                    } else {
-                        showConfirmationDialog(
-                            resources.getString(R.string.fail), response.message, this
-                        ) {
-
-                        }
-                    }
-                }
-            }
-        }
-    }
-
 
     private fun isGetNoticeBoardList() {
         noticeboardadapter = SchoolNoticeBoardAdapter(null, this, this, Constant.isShimmerViewShow)
@@ -531,16 +411,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
 
     private fun openAlbumSelectActivity(isFileType: String) {
 
-        if (Constant.selectedFiles.size > 1) {
-            val secondType = Constant.selectedFiles[1].type.toString()
-            if ((secondType == Constant.IMAGE && (isFileType == Constant.DOCUMENT || isFileType == Constant.VOICE)) || (secondType == Constant.DOCUMENT && (isFileType == Constant.IMAGE || isFileType == Constant.VOICE)) || (secondType == Constant.VOICE && (isFileType == Constant.IMAGE || isFileType == Constant.DOCUMENT))) {
-                Constant.selectedFiles.clear()
-                saveDrawableToCache(R.drawable.add_image)?.let {
-                    Constant.selectedFiles.add(FileItem(it, FileType.IMAGE))
-                }
-                mAdapter?.notifyDataSetChanged()
-            }
-        }
         Log.d("FileComing", isFileType)
         val sdkInt = Build.VERSION.SDK_INT
         if (isFileType == Constant.DOCUMENT && sdkInt < Build.VERSION_CODES.R) {
@@ -582,6 +452,27 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
             }
 
             R.id.lnrTabOneName -> {
+
+                binding.txtDesc.setText("")
+                binding.txtTitle.setText("")
+                Constant.selectedFiles.clear()
+                Constant.isAwsUploadedFiles.clear()
+
+                saveDrawableToCache(R.drawable.add_image)?.let {
+                    Constant.selectedFiles.add(
+                        FileItem(
+                            it, FileType.IMAGE
+                        )
+                    )
+                }
+
+                binding.rcyImages.visibility = View.VISIBLE
+                mAdapter = ImagePickingAdapter(this, Constant.selectedFiles!!, this)
+                binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
+                binding.rcyImages.adapter = mAdapter
+
+
+                binding.btnNext.text = getString(R.string.NEXT)
                 binding.noticeboardCreate.visibility = View.VISIBLE
                 binding.line1.setBackgroundResource(R.color.iconBlue)
                 binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
@@ -591,11 +482,10 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                 binding.rytSearch323.visibility = View.GONE
                 binding.schoollistfilter.visibility = View.GONE
                 binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
-
-
             }
 
             R.id.lnrTabTwoName -> {
+                binding.btnNext.text = "Update NoticeBoard"
                 binding.noticeboardCreate.visibility = View.GONE
                 binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.black))
                 binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
@@ -628,8 +518,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
                     binding.lblDay.text = day
 //                    binding.lblDate.text = Date
                 }
-
-
             }
 
             R.id.rytEndDate, R.id.lnrEndCalendar, R.id.txtEndDate -> {
@@ -649,7 +537,12 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
 
 
             R.id.btnNext -> {
-                isRedirectToSchoolList()
+
+                if (binding.btnNext.text.toString() == "Update NoticeBoard") {
+                    showSendConfirmationDialog(true)
+                } else {
+                    isRedirectToSchoolList()
+                }
             }
         }
     }
@@ -675,6 +568,8 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
 
         rlaGallery.setOnClickListener {
             Constant.isFileLimit = 10
+            Log.d("Constant.isFileLimit", Constant.isFileLimit.toString())
+
             openAlbumSelectActivity(Constant.IMAGE)
             dialog.dismiss()
         }
@@ -686,10 +581,20 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         }
 
         rlaVideoPick.setOnClickListener {
-            Constant.isFileLimit = 1
-            openAlbumSelectActivity(Constant.VIDEO)
-            dialog.dismiss()
+            val selectedVideoCount = Constant.selectedFiles.count { it.type == FileType.VIDEO }
+            if (selectedVideoCount >= 2) {
+                Toast.makeText(this, "Only 2 videos are allowed", Toast.LENGTH_SHORT).show()
+            } else {
+                if (Constant.selectedFiles.size == 1 || selectedVideoCount == 0) {
+                    Constant.isFileLimit = 2
+                } else if (selectedVideoCount == 1) {
+                    Constant.isFileLimit = 1
+                }
+                openAlbumSelectActivity(Constant.VIDEO)
+                dialog.dismiss()
+            }
         }
+
 
         rlaDocument.setOnClickListener {
             Constant.isFileLimit = 10
@@ -698,19 +603,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         }
 
         rlaCamera.setOnClickListener {
-            if (Constant.selectedFiles.size > 1) {
-                if (Constant.selectedFiles[1].type.toString() != Constant.IMAGE) {
-                    Constant.selectedFiles.clear()
-                    saveDrawableToCache(R.drawable.add_image)?.let {
-                        Constant.selectedFiles.add(
-                            FileItem(
-                                it, FileType.IMAGE
-                            )
-                        )
-                    }
-                    mAdapter!!.notifyDataSetChanged()
-                }
-            }
             checkCameraPermissionAndOpenCamera()
             dialog.dismiss()
         }
@@ -887,24 +779,6 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         }
     }
 
-    override fun onClickListener(data: CreateNoticeBoard) {
-        Constant.isAwsUploadedFiles.clear()
-        Constant.selectedFiles.clear()
-        saveDrawableToCache(R.drawable.add_image)?.let {
-            Constant.selectedFiles.add(
-                FileItem(
-                    it, FileType.IMAGE
-                )
-            )
-        }
-
-        binding.rcyImages.visibility = View.VISIBLE
-        mAdapter = ImagePickingAdapter(this, Constant.selectedFiles, this)
-        binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
-        binding.rcyImages.adapter = mAdapter
-    }
-
-
     private fun isRedirectToSchoolList() {
         val title = binding.txtTitle.text.toString().trim()
         val description = binding.txtDesc.text.toString().trim()
@@ -927,6 +801,342 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         val intent = Intent(this, SchoolList::class.java)
         intent.putExtra(Constant.notice_data, noticeboardDetails)
         startActivity(intent)
+    }
+
+    fun showEditDeletePopup(data: NoticeStaffData, anchor: View) {
+        val popupView = LayoutInflater.from(this).inflate(R.layout.popup_edit_delete, null)
+        val popupWindow = PopupWindow(
+            popupView,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            true
+        )
+        popupWindow.elevation = 10f
+
+        val layoutEdit = popupView.findViewById<LinearLayout>(R.id.layout_edit)
+        val layoutDelete = popupView.findViewById<LinearLayout>(R.id.layout_delete)
+
+        layoutEdit.setOnClickListener {
+            isEditProcess(data)
+            popupWindow.dismiss()
+        }
+
+        layoutDelete.setOnClickListener {
+            showSendConfirmationDialog(false)
+            popupWindow.dismiss()
+        }
+        popupWindow.showAsDropDown(anchor, 0, 10)
+    }
+
+    fun showSendConfirmationDialog(isNoticeBoardUpdate: Boolean) {
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.alert_popup, null)
+        val alertDialog = AlertDialog.Builder(this).setView(dialogView).create()
+        alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        alertDialog.show()
+
+        val okButton = dialogView.findViewById<TextView>(R.id.btnOk)
+        val btnCancel = dialogView.findViewById<TextView>(R.id.btnCancel)
+        val alertMessage = dialogView.findViewById<TextView>(R.id.alertMessage)
+        val lblSelectTarget = dialogView.findViewById<TextView>(R.id.lblSelectTarget)
+        if (isNoticeBoardUpdate) {
+            alertMessage.text = "Are you sure want to update this noticeboard?"
+        } else {
+            alertMessage.text = "Are you sure want to delete?"
+        }
+
+        lblSelectTarget.visibility = View.GONE
+
+        okButton.setOnClickListener {
+            alertDialog.dismiss()
+            if (isNoticeBoardUpdate) {
+                ProgressDialogHelper.show(this)
+                ProgressDialogHelper.updateProgress(10)
+                isUploadFilesInServer("file")
+            } else {
+                val jsonObject = JsonObject()
+                jsonObject.addProperty(APIKeyNames.id, isNoticeBoardId)
+                appViewModel?.isnoticeboarddelete(isAccessToken!!, jsonObject, this)
+            }
+        }
+        btnCancel.setOnClickListener { alertDialog.dismiss() }
+    }
+
+
+    // Edit Update code
+    fun isUploadFilesInServer(isFileType: String?) {
+
+        if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS || SELECTED_SCHOOL_MENU == M_ASSIGNMENT || SELECTED_SCHOOL_MENU == M_NOTICEBOARD) {
+            Constant.selectedFiles.removeAt(0) // Remove '+' placeholder
+        }
+        ProgressDialogHelper.updateProgress(50)
+        isTotalSelectedItem = Constant.selectedFiles.size
+        isVideoSelectedArrayList.clear()
+        Constant.isAwsUploadedFiles.clear()
+        val iterator = Constant.selectedFiles.iterator()
+        while (iterator.hasNext()) {
+            val file = iterator.next()
+            if (file.type == FileType.VIDEO) {
+                isVideoSelectedArrayList.add(file)
+                iterator.remove()
+            }
+        }
+
+        when {
+            Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(isFileType)
+            isVideoSelectedArrayList.isNotEmpty() -> videoUploading()
+        }
+        ProgressDialogHelper.updateProgress(80)
+    }
+
+
+    private fun isFileUploadInAws(
+        isFileType: String?
+    ) {
+        Constant.isAwsUploadedFiles.clear()
+        val iterator = Constant.selectedFiles.iterator()
+        while (iterator.hasNext()) {
+            val fileItem = iterator.next()
+            if (fileItem.path.contains("amazonaws.")) {
+                Constant.isAwsUploadedFiles.add(
+                    AwsUploadedFiles(
+                        isFileUrl = fileItem.path, isFileType = fileItem.type.name
+                    )
+                )
+                iterator.remove()
+            }
+        }
+
+        val isCountryId = SharedPreference.getCountryId(this)
+        if (Constant.selectedFiles.isEmpty()) {
+            if (isVideoSelectedArrayList.isEmpty()) {
+                ProgressDialogHelper.dismiss()
+                isUpdateNoticeBoard()
+            } else {
+                videoUploading()
+            }
+        } else {
+            val outputDir =
+                File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "CompressedOutput")
+            outputDir.mkdirs()
+            val newSelectedFiles = mutableListOf<FileItem>()
+            Constant.compressImageFilesOnly(
+                context = this,
+                files = Constant.selectedFiles,
+                outputDir = outputDir.absolutePath,
+                format = Bitmap.CompressFormat.JPEG,
+                quality = 80,
+                maxWidth = 1280,
+                maxHeight = 1280,
+                onEachProcessed = { original, outputPath, success ->
+                    if (success && outputPath != null) {
+                        val compressedFile = File(outputPath)
+                        val originalSizeKB = try {
+                            if (original.path.startsWith("content://")) {
+                                contentResolver.openFileDescriptor(
+                                    Uri.parse(original.path), "r"
+                                )?.statSize ?: 0
+                            } else {
+                                File(original.path).length()
+                            }
+                        } catch (e: Exception) {
+                            0L
+                        }
+
+                        Log.d(
+                            "Compressor",
+                            "Compressed: $outputPath (${compressedFile.length() / 1024}KB), Original: ${originalSizeKB / 1024}KB"
+                        )
+
+                        newSelectedFiles.add(FileItem(path = outputPath, type = original.type))
+                    } else {
+                        Log.e("Compressor", "Failed: ${original.path}")
+                    }
+                },
+                onComplete = {
+                    Constant.selectedFiles.clear()
+                    Constant.selectedFiles.addAll(newSelectedFiles)
+                    val isAwsUploadingFile = ArrayList<String>()
+
+                    val isSelectedFileCount = Constant.selectedFiles.size
+                    for (i in Constant.selectedFiles.indices) {
+                        isAwsUploadingPreSigned?.getPreSignedUrl(
+                            Constant.selectedFiles[i].path,
+                            isStaffDetails!!.school_id,
+                            isFileType!!,
+                            this,
+                            isCountryId!!,
+                            true,
+                            false,
+                            object : UploadCallback {
+
+                                override fun onUploadSuccess(
+                                    response: String?, isFileUploaded: String?
+                                ) {
+                                    isAwsUploadingFile.add(isFileUploaded!!)
+                                    Constant.isAwsUploadedFiles.add(
+                                        AwsUploadedFiles(
+                                            isFileUrl = isFileUploaded,
+                                            isFileType = Constant.selectedFiles[i].type.name
+                                        )
+                                    )
+
+                                    if (isTotalSelectedItem == Constant.isAwsUploadedFiles.size) {
+                                        ProgressDialogHelper.dismiss()
+                                        isUpdateNoticeBoard()
+                                    } else {
+                                        if (isAwsUploadingFile.size == isSelectedFileCount) {
+                                            videoUploading()
+                                        }
+                                    }
+                                }
+
+                                override fun onUploadError(error: String?) {
+                                    Log.d("isUploadIssue", error.toString())
+                                }
+                            })
+                    }
+
+                    Log.d("Compressor", "All files compressed and uploaded.")
+                })
+        }
+    }
+
+    private fun videoUploading() {
+        val iterator = isVideoSelectedArrayList.iterator()
+        while (iterator.hasNext()) {
+            val fileItem = iterator.next()
+            if (fileItem.path.contains("player.vimeo.com")) {
+                Constant.isAwsUploadedFiles.add(
+                    AwsUploadedFiles(
+                        isFileUrl = fileItem.path, isFileType = fileItem.type.name
+                    )
+                )
+                iterator.remove()
+            }
+        }
+        Log.d("isVideoSelectedArrayList", isVideoSelectedArrayList.size.toString())
+        if (isVideoSelectedArrayList.isNotEmpty()) {
+            for (i in isVideoSelectedArrayList.indices) {
+                VimeoVideoUpload.uploadVideo(
+                    this, "quiz", "quiz", isVideoSelectedArrayList[i].path, this
+                )
+            }
+        } else {
+            ProgressDialogHelper.dismiss()
+            isUpdateNoticeBoard()
+        }
+    }
+
+    override fun onUploadComplete(
+        success: Boolean, iframe: String?, link: String?
+    ) {
+        runOnUiThread {
+            Log.d("link", link.toString())
+            Constant.isAwsUploadedFiles.add(
+                AwsUploadedFiles(
+                    isFileUrl = link.toString(), isFileType = Constant.VIDEO
+                )
+            )
+
+            if (Constant.isAwsUploadedFiles.size == isTotalSelectedItem) {
+                ProgressDialogHelper.dismiss()
+                isUpdateNoticeBoard()
+            }
+        }
+    }
+
+
+    override fun onFailure(errorMessage: String?) {
+        runOnUiThread {
+            Log.e("VimeoUploadError", errorMessage ?: "Unknown error")
+        }
+    }
+
+    override fun onClickListener(
+        data: NoticeStaffData,
+        anchorView: View,
+        adapterPosition: Int
+    ) {
+        isNoticeBoardId = data.id
+        isNoticeBoardPosition = adapterPosition
+        showEditDeletePopup(data, anchorView)
+    }
+
+    fun isEditProcess(data: NoticeStaffData) {
+
+        Constant.isAwsUploadedFiles.clear()
+        Constant.selectedFiles.clear()
+        saveDrawableToCache(R.drawable.add_image)?.let {
+            Constant.selectedFiles.add(
+                FileItem(
+                    it, FileType.IMAGE
+                )
+            )
+        }
+        binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+        binding.line1.setBackgroundResource(R.color.iconBlue)
+        binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
+        binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.black))
+        binding.line2.setBackgroundResource(R.color.white)
+
+        binding.noticeboardCreate.visibility = View.VISIBLE
+        binding.rcyNoticeBoard.visibility = View.GONE
+        binding.rytSearch323.visibility = View.GONE
+        binding.schoollistfilter.visibility = View.GONE
+        binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+        binding.txtTitle.setText(data.title)
+        binding.txtDesc.setText(data.description)
+
+        if (data.file_path.isNotEmpty()) {
+            val mappedList = data.file_path.map { filePath ->
+                val fileType = try {
+                    FileType.valueOf(filePath.type.uppercase())
+                } catch (e: IllegalArgumentException) {
+                    FileType.OTHER
+                }
+                FileItem(path = filePath.url, type = fileType)
+            }
+            Constant.selectedFiles.addAll(mappedList)
+        }
+        if (Constant.selectedFiles.size > 1) {
+            binding.rcyImages.visibility = View.VISIBLE
+            mAdapter = ImagePickingAdapter(this, Constant.selectedFiles, this)
+            binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
+            binding.rcyImages.adapter = mAdapter
+        } else {
+            binding.rcyImages.visibility = View.VISIBLE
+            mAdapter = ImagePickingAdapter(this, Constant.selectedFiles, this)
+            binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
+            binding.rcyImages.adapter = mAdapter
+        }
+    }
+
+    fun isUpdateNoticeBoard() {
+
+        RestClient.changeApiBaseUrl(SharedPreference.getBaseUrl(this).toString())
+        val jsonObject = JsonObject()
+        val filePathArray = JsonArray()
+        val txtEndDate = Constant.convertDateFormat(txtEndDate!!)
+        val txtStartDate = Constant.convertDateFormat(txtStartDate!!)
+        jsonObject.addProperty(APIKeyNames.id, isNoticeBoardId)
+        jsonObject.addProperty(APIKeyNames.title, binding.txtTitle.text.toString())
+        jsonObject.addProperty(APIKeyNames.description, binding.txtDesc.text.toString())
+        jsonObject.addProperty(APIKeyNames.iframe, "")
+        jsonObject.addProperty(APIKeyNames.visible_from, txtStartDate)
+        jsonObject.addProperty(APIKeyNames.visible_to, txtEndDate)
+        jsonObject.addProperty(APIKeyNames.file_size, "")
+        jsonObject.addProperty(APIKeyNames.thumbnail, "")
+        for (i in Constant.isAwsUploadedFiles.indices) {
+            val isSelectedObject = JsonObject()
+            isSelectedObject.addProperty(APIKeyNames.url, Constant.isAwsUploadedFiles[i].isFileUrl)
+            isSelectedObject.addProperty(
+                APIKeyNames.type, Constant.isAwsUploadedFiles[i].isFileType
+            )
+            filePathArray.add(isSelectedObject)
+        }
+        jsonObject.add(APIKeyNames.file_path, filePathArray)
+        appViewModel?.isNoticeBoardUpdate(isAccessToken!!, jsonObject, this)
+
     }
 
 }

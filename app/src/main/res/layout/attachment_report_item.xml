@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <ImageView
+        android:id="@+id/imgDate"
+        android:layout_width="@dimen/thirty"
+        android:layout_height="@dimen/thirty"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/fifteen"
+        android:src="@drawable/calendar"></ImageView>
+
+    <TextView
+        android:id="@+id/lblDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/fifteen"
+        android:layout_toEndOf="@+id/imgDate"
+        android:text="s;ifvlhvbiWS">
+
+    </TextView>
+
+    <ImageView
+        android:id="@+id/imgEditAndDelete"
+        android:layout_width="@dimen/thirty"
+        android:layout_height="@dimen/thirty"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/fifteen"
+        android:layout_marginEnd="@dimen/twenty_five"
+        android:src="@drawable/ic_more_vert"></ImageView>
+
+    <TextView
+        android:id="@+id/lblTitle"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imgDate"
+        android:layout_marginStart="@dimen/ten"
+        android:text="skdvbsidgcaosduchgisaudchbsaiyvcig"
+        android:textColor="@color/black"
+        android:textSize="@dimen/thirteen_sp">
+
+    </TextView>
+
+
+    <TextView
+        android:id="@+id/lblDescription"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lblTitle"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginTop="@dimen/ten"
+        android:text="skdvbsidgcaosduchgisaudchbsaiyvcig"
+        android:textColor="@color/black"
+        android:textSize="@dimen/thirteen_sp">
+
+    </TextView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcyFile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lblDescription">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.4dp"
+        android:layout_below="@+id/rcyFile"
+        android:layout_marginStart="@dimen/fifteen"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_marginEnd="@dimen/fifteen"
+        android:background="@color/black">
+
+    </View>
+
+</RelativeLayout>
