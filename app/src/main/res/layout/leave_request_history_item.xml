@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="4dp"
-    android:layout_marginVertical="@dimen/ten"
-    android:background="@drawable/bg_card"
-    android:elevation="5dp"
-    android:padding="@dimen/ten"
-    app:cardCornerRadius="@dimen/fifteen"
-    app:cardUseCompatPadding="true">
+    android:orientation="vertical"
+    android:paddingBottom="8dp">
 
-    <RelativeLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="4dp"
+        android:background="@drawable/card_outline_border"
+        android:elevation="5dp"
+        android:padding="@dimen/ten"
+        app:cardCornerRadius="@dimen/fifteen"
+        app:cardUseCompatPadding="true">
 
         <RelativeLayout
             android:id="@+id/rytCard"
@@ -23,25 +24,39 @@
             android:elevation="2dp"
             android:padding="@dimen/five">
 
+            <LinearLayout
+                android:id="@+id/lnrDateCircle"
+                android:layout_width="@dimen/fifty"
+                android:layout_height="@dimen/fifty"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="@dimen/five"
+                android:layout_marginEnd="12dp"
+                android:background="@drawable/bg_light_blue_circle"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/textFirstLetter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="A"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/twele_sp" />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/lnrDetails"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/ten"
+                android:layout_marginEnd="@dimen/thirteen"
                 android:layout_toStartOf="@+id/lnrButtons"
+                android:layout_toEndOf="@+id/lnrDateCircle"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/textNoOfDays"
-                    style="@style/CustomTextStylePoppinsMedium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/five"
-                    android:text="3 Days"
-                    android:textColor="@color/grey"
-                    android:textSize="@dimen/thirteen_sp" />
                 <TextView
                     android:id="@+id/textName"
                     style="@style/CustomTextStylePoppinsBold"
@@ -53,14 +68,34 @@
                     android:visibility="gone" />
 
                 <TextView
+                    android:id="@+id/textNoOfDays"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/six"
+                    android:text="3 Days Application"
+                    android:textColor="@color/light_gray"
+                    android:textSize="@dimen/thirteen_sp" />
+
+                <TextView
                     android:id="@+id/textDate"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="match_parent"
+                    style="@style/CustomTextStylePoppinsBold1"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/five"
-                    android:text="Wed, 16 Dec"
-                    android:textColor="@color/black"
+                    android:text="15 - 22 Jun 2023"
                     android:textSize="@dimen/seventeen" />
+
+                <TextView
+                    android:id="@+id/textLeaveType"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="@dimen/one"
+                    android:text="Casual"
+                    android:textColor="#FFC107"
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/textReason"
@@ -68,36 +103,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/lnrDetails"
-                    android:layout_marginTop="7dp"
+                    android:layout_marginTop="@dimen/one"
                     android:layout_marginBottom="@dimen/ten"
                     android:text="Casual"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/fifteen" />
-
-
-                <TextView
-                    android:id="@+id/textFirstLetter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="A"
-                    android:textColor="#000000"
-                    android:textSize="@dimen/twele_sp"
-                    android:visibility="gone" />
-
-
-
-
+                    android:textSize="@dimen/fourteen_sp" />
             </LinearLayout>
-
 
             <LinearLayout
                 android:id="@+id/lnrButtons"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/ten"
                 android:layout_marginEnd="@dimen/five"
-                android:gravity="center"
-                android:orientation="horizontal"
                 android:visibility="visible">
 
                 <RelativeLayout
@@ -166,31 +185,34 @@
                     </LinearLayout>
                 </RelativeLayout>
 
-
-                <TextView
-                    android:id="@+id/btnApprove"
-                    style="@style/CustomTextStylePoppinsMedium"
-                    android:layout_width="@dimen/eighty"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_leave_approved"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="6dp"
-                    android:text="Approve"
-                    android:textAlignment="center"
-                    android:textColor="@color/white"
-                    android:textSize="12sp" />
-
-                <ImageView
-                    android:id="@+id/options"
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:src="@drawable/threedot"
-                    android:visibility="visible" />
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/btnApprove"
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/eight"
+                        android:background="@drawable/bg_leave_approved"
+                        android:paddingHorizontal="@dimen/twenty_five"
+                        android:paddingVertical="6dp"
+                        android:text="Approve"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="12sp" />
+
+                    <ImageView
+                        android:id="@+id/options"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginEnd="4dp"
+                        android:contentDescription="Options"
+                        android:src="@drawable/threedot" />
+                </LinearLayout>
             </LinearLayout>
         </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>
 
-
-    </RelativeLayout>
-
-</androidx.cardview.widget.CardView>
