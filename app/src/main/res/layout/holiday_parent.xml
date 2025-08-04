@@ -62,28 +62,28 @@
             </LinearLayout>
 
         </RelativeLayout>
-        <TextView
-            android:id="@+id/lblParentToolBar"
-            style="@style/CustomTextStylePoppinsBold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:layout_marginTop="@dimen/ten"
-            android:layout_marginStart="@dimen/twenty"
-            android:layout_below="@+id/rytHeaderDetail"
-            android:textColor="@color/white"
-            android:textSize="@dimen/twenty">
-
-        </TextView>
 
     </RelativeLayout>
+    <TextView
+        android:id="@+id/lblParentToolBar"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Holidays"
+        android:layout_marginStart="@dimen/fifteen"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_below="@+id/rytHeader"
+        android:textColor="@color/black"
+        android:textSize="@dimen/twenty">
+
+    </TextView>
 
     <FrameLayout
         android:layout_margin="@dimen/fifteen"
         android:id="@+id/calendarFragmentContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/rytHeader"
+        android:layout_below="@+id/lblParentToolBar"
         />
 
 </RelativeLayout>

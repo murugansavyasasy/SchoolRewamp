@@ -71,9 +71,9 @@
                 style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" Attendance"
+                android:text="Attendance"
+                android:layout_marginStart="@dimen/thirty_five"
                 android:layout_marginTop="@dimen/ten"
-                android:layout_marginStart="@dimen/twenty"
                 android:layout_below="@+id/rytHeaderDetail"
                 android:textColor="@color/white"
                 android:textSize="@dimen/twenty">
@@ -81,6 +81,9 @@
             </TextView>
 
         </RelativeLayout>
+
+
+
         <androidx.cardview.widget.CardView
             android:layout_below="@+id/rytHeader"
             android:layout_width="match_parent"
@@ -380,30 +383,31 @@
                         android:orientation="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
-                        <LinearLayout
 
+
+                        <LinearLayout
                             android:orientation="horizontal"
-                            android:weightSum="3"
-                            android:gravity="center"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
+
                             <LinearLayout
-                                android:id="@+id/lnrLeaveRequest"
-                                android:padding="@dimen/twenty"
                                 android:orientation="vertical"
                                 android:layout_weight="1"
+                                android:id="@+id/lnrLeaveRequest"
+                                android:padding="@dimen/twenty"
                                 android:gravity="center"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content">
                                 <ImageView
-                                    android:padding="@dimen/ten"
+                                    android:id="@+id/imgAskLeave"
                                     android:src="@drawable/attendance_marking"
-                                    android:layout_width="@dimen/fifty"
-                                    android:layout_height="@dimen/fifty">
+                                    android:layout_width="@dimen/thirty"
+                                    android:layout_height="@dimen/thirty">
                                 </ImageView>
 
                                 <TextView
-                                    android:layout_width="match_parent"
+                                    android:layout_marginTop="@dimen/five"
+                                    android:layout_width="wrap_content"
                                     android:text="@string/ask_leave"
                                     style="@style/CustomTextStylePoppinsMedium"
                                     android:gravity="center"
@@ -412,60 +416,65 @@
 
                                 </TextView>
                             </LinearLayout>
+
                             <View
                                 android:layout_width="1dp"
                                 android:layout_height="match_parent"
                                 android:background="@color/very_light_grey" />
 
                             <LinearLayout
+                                android:layout_weight="1"
+                                android:orientation="vertical"
                                 android:id="@+id/lnrLeaveHistory"
                                 android:padding="@dimen/twenty"
                                 android:layout_width="0dp"
-                                android:layout_weight="1"
-                                android:orientation="vertical"
                                 android:gravity="center"
                                 android:layout_height="wrap_content">
 
                                 <ImageView
-                                    android:layout_width="@dimen/fifty"
-                                    android:layout_height="@dimen/fifty"
-                                    android:padding="@dimen/ten"
+                                    android:id="@+id/imgLeaveRequest"
+                                    android:layout_width="@dimen/thirty"
+                                    android:layout_height="@dimen/thirty"
                                     android:src="@drawable/leave_request_icon_school"></ImageView>
 
                                 <TextView
-                                    android:layout_width="match_parent"
-                                    android:text="@string/leave_history"
-                                    style="@style/CustomTextStylePoppinsMedium"
+                                    android:layout_marginTop="@dimen/five"
+                                    android:layout_width="wrap_content"
+                                    android:text="@string/leave_requests"
                                     android:gravity="center"
+                                    style="@style/CustomTextStylePoppinsMedium"
                                     android:textSize="@dimen/twele_sp"
                                     android:layout_height="wrap_content">
 
                                 </TextView>
                             </LinearLayout>
+
                             <View
                                 android:layout_width="1dp"
                                 android:layout_height="match_parent"
                                 android:background="@color/very_light_grey" />
+
                             <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_weight="1"
                                 android:id="@+id/lnrAttendanceReport"
                                 android:padding="@dimen/twenty"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"
-                                android:orientation="vertical"
                                 android:gravity="center"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content">
                                 <ImageView
+                                    android:id="@+id/imgAttendanceReport"
                                     android:src="@drawable/absentees_report"
-                                    android:padding="@dimen/ten"
-                                    android:layout_width="@dimen/fifty"
-                                    android:layout_height="@dimen/fifty">
+                                    android:layout_width="@dimen/thirty"
+                                    android:layout_height="@dimen/thirty">
                                 </ImageView>
 
                                 <TextView
-                                    android:layout_width="match_parent"
+                                    android:layout_marginTop="@dimen/five"
+                                    android:layout_width="wrap_content"
                                     android:text="@string/attendance_report"
-                                    style="@style/CustomTextStylePoppinsMedium"
                                     android:gravity="center"
+                                    style="@style/CustomTextStylePoppinsMedium"
                                     android:textSize="@dimen/twele_sp"
                                     android:layout_height="wrap_content">
 
@@ -493,9 +502,8 @@
                                 android:layout_height="wrap_content">
                                 <ImageView
                                     android:src="@drawable/attendance_report_icon"
-                                    android:padding="@dimen/ten"
-                                    android:layout_width="@dimen/fifty"
-                                    android:layout_height="@dimen/fifty">
+                                    android:layout_width="@dimen/thirty"
+                                    android:layout_height="@dimen/thirty">
                                 </ImageView>
 
                                 <TextView
@@ -503,6 +511,7 @@
                                     android:text="@string/HoliDay"
                                     style="@style/CustomTextStylePoppinsMedium"
                                     android:gravity="center"
+                                    android:layout_marginTop="@dimen/five"
                                     android:textSize="@dimen/twele_sp"
                                     android:layout_height="wrap_content">
 

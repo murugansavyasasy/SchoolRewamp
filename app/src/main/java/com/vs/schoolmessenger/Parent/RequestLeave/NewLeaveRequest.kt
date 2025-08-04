@@ -45,7 +45,7 @@ class NewLeaveRequest : BaseActivity<ActivityNewLeaveRequestBinding>(),
         setupToolbarBlue()
 
         binding.imgBack.setOnClickListener(this)
-        binding.lblParentToolBar.text = getString(R.string.Leave_Request)
+        binding.lblParentToolBar.text = getString(R.string.leave_requests)
         isChildDetails = SharedPreference.getChildDetails(this)
         binding.lblStudentName.text = isChildDetails?.name ?: ""
         binding.lblStudentName.setTextColor(ContextCompat.getColor(this, R.color.white))
