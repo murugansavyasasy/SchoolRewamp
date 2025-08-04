@@ -1,4 +1,5 @@
 package com.vs.schoolmessenger.Parent.Attendance.AttendanceReport
+import android.graphics.PorterDuff
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -33,27 +34,38 @@ class AttendanceReport : BaseActivity<AttendanceReportParentBinding>(), View.OnC
         setupToolbarBlue()
 
         // Toolbar setup
-        binding.toolbarLayout.imgBack.setOnClickListener(this)
-        binding.toolbarLayout.lblParentToolBar.text = getString(R.string.AttendanceReport)
-//        binding.toolbarLayout.lblParentToolBar.setTextColor(ContextCompat.getColor(this, R.color.white))
+        binding.imgBack.setOnClickListener(this)
+        binding.lblParentToolBar.text = getString(R.string.AttendanceReport)
 
-        binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
+        binding.rytSearch.visibility = View.VISIBLE
 
 
         isChildDetails = SharedPreference.getChildDetails(this)
-        binding.toolbarLayout.lblStudentName.text = isChildDetails?.name ?: ""
-//        binding.toolbarLayout.lblStudentName.setTextColor(ContextCompat.getColor(this, R.color.white))
-        binding.toolbarLayout.lblStudentSection.text = isChildDetails?.standard_name+ " - " +isChildDetails?.section_name
-//        binding.toolbarLayout.lblStudentSection.setTextColor(ContextCompat.getColor(this, R.color.white))
+        binding.lblStudentName.text = isChildDetails?.name ?: ""
+        binding.lblStudentName.setTextColor(ContextCompat.getColor(this, R.color.white))
+        binding.lblStudentSection.text = isChildDetails?.standard_name+ " - " +isChildDetails?.section_name
+        binding.lblStudentSection.setTextColor(ContextCompat.getColor(this, R.color.white))
+        binding.imgBack.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_IN)
+        binding.imgSearchBtn.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_IN)
+
+        binding.imgSearchBtn.setOnClickListener{
+            if (binding.rytSearch.visibility == View.VISIBLE) {
+                binding.rytSearch.visibility = View.GONE
+            } else {
+                binding.rytSearch.visibility = View.VISIBLE
+                binding.txtVideoMenu.text.clear()
+            }
+        }
+
+
 
         isAccessToken = isChildDetails?.access_token
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
-
         loadData()
 
 
-        binding.toolbarLayout.txtVideoMenu.addTextChangedListener(object : TextWatcher {
+        binding.txtVideoMenu.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (::mAdapter.isInitialized) {
@@ -72,7 +84,7 @@ class AttendanceReport : BaseActivity<AttendanceReportParentBinding>(), View.OnC
 
                 if (!dataList.isNullOrEmpty()) {
 
-                    binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
+                    binding.rytSearch.visibility = View.VISIBLE
                     binding.rcyAttendanceReport.visibility = View.VISIBLE
                     binding.lytList.visibility = View.GONE
 
@@ -88,13 +100,13 @@ class AttendanceReport : BaseActivity<AttendanceReportParentBinding>(), View.OnC
                 } else {
 
                     binding.rcyAttendanceReport.visibility = View.GONE
-                    binding.toolbarLayout.rytSearch.visibility = View.GONE
+                    binding.rytSearch.visibility = View.GONE
                     binding.lytList.visibility = View.VISIBLE
                 }
             } else {
 
                 binding.rcyAttendanceReport.visibility = View.GONE
-                binding.toolbarLayout.rytSearch.visibility = View.GONE
+                binding.rytSearch.visibility = View.GONE
                 binding.lytList.visibility = View.VISIBLE
             }
         }

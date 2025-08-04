@@ -163,7 +163,7 @@ class DailyCollection : BaseActivity<DailyCollectionBinding>(),
         binding.totalsummary1.layoutManager = LinearLayoutManager(this)
         binding.totalsummary1.adapter = mAdapter
 
-        //Disabling the current tab to avoid clicking that again
+
         if (selectedType=="1"){
             binding.categoryName.isEnabled=false
             binding.className.isEnabled=true

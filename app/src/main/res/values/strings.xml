@@ -594,6 +594,11 @@
     <string name="ongoing_days">Ongoing Days</string>
     <string name="leave_history">Leave History</string>
     <string name="ask_leave">Ask Leave</string>
+    <string name="select_from_date">Select From Date</string>
+    <string name="select_to_date">Select To Date</string>
+    <string name="session">Session</string>
+    <string name="leave_requests">Leave Requests</string>
+    <string name="decline">Decline</string>
 
 
 </resources>

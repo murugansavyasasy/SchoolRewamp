@@ -2,11 +2,13 @@ package com.vs.schoolmessenger.Parent.RequestLeave
 
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.PorterDuff
 import android.os.Build
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
@@ -45,6 +47,7 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
     private var currentTab = TabType.LeaveRequest
 
 
+
     private enum class TabType {
         LeaveRequest, History
     }
@@ -60,7 +63,7 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
         appViewModel?.init()
 
         val isChildDetails = SharedPreference.getChildDetails(this)
-        binding.toolbarLayout.imgBack.setOnClickListener(this)
+        binding.imgBack.setOnClickListener(this)
         binding.rytStartDate.setOnClickListener(this)
         binding.rytStart.setOnClickListener(this)
         binding.rytEnd.setOnClickListener(this)
@@ -72,6 +75,8 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
         binding.btnNext.setOnClickListener(this)
         binding.btnupdate.setOnClickListener(this)
         binding.btncancel.setOnClickListener(this)
+        binding.imgBack.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_IN)
+
         val (dayOnly, dayOfWeek, fullDate, slashDate, customFormat) = Constant.getCurrentDateInfo()
 
         val today = Calendar.getInstance()
@@ -92,16 +97,13 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
         binding.lblTotalDays.text = "No of Days - $totalLeaveDays"
 
 
-        binding.toolbarLayout.lblParentToolBar.text = getString(R.string.leave_history)
-        binding.toolbarLayout.lnrParent.visibility = View.GONE
+        binding.lblParentToolBar.text = getString(R.string.leave_history)
         isAccessToken = isChildDetails?.access_token
 
-        binding.toolbarLayout.lblStudentName.text = isChildDetails!!.name
-        binding.toolbarLayout.lblStudentSection.text =
+        binding.lblStudentName.text = isChildDetails!!.name
+        binding.lblStudentSection.text =
             isChildDetails.standard_name + " - " + isChildDetails.section_name
 
-        binding.toolbarLayout.lblLeftSideBar.text = resources.getText(R.string.History)
-        binding.toolbarLayout.lblRightSideBar.text = "Leave Request"
         binding.rlaCreateLeaveRequest.visibility = View.GONE
         binding.rlaHistory.visibility = View.VISIBLE
         isGetLeaveRequestList()
@@ -185,18 +187,7 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
 
 
 
-        binding.toolbarLayout.lblRightSideBar.setOnClickListener {
 
-            if (currentTab == TabType.LeaveRequest) return@setOnClickListener
-            currentTab = TabType.LeaveRequest
-
-            binding.toolbarLayout.lblRightSideBar.setBackgroundResource(R.drawable.white_radious)
-            binding.toolbarLayout.lblRightSideBar.setTextColor(Color.BLACK)
-            binding.toolbarLayout.lblLeftSideBar.setBackgroundResource(R.drawable.bg_light_green)
-            binding.rlaCreateLeaveRequest.visibility = View.VISIBLE
-            binding.rlaHistory.visibility = View.GONE
-            binding.tabLayoutStatus.visibility = View.GONE
-        }
 
 //        binding.toolbarLayout.lblLeftSideBar.setOnClickListener {
 //            if (currentTab == TabType.History) return@setOnClickListener
@@ -206,9 +197,6 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
             binding.tabLayoutStatus.visibility = View.VISIBLE
             binding.rlaCreateLeaveRequest.visibility = View.GONE
 
-            binding.toolbarLayout.lblLeftSideBar.setBackgroundResource(R.drawable.white_radious)
-            binding.toolbarLayout.lblLeftSideBar.setTextColor(Color.BLACK)
-            binding.toolbarLayout.lblRightSideBar.setBackgroundResource(R.drawable.bg_light_green)
 
             binding.tabLayoutStatus.removeAllTabs()
 
@@ -398,16 +386,12 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
         val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
         val displayFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         val backendFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-        binding.toolbarLayout.lblRightSideBar.setBackgroundResource(R.drawable.white_radious)
-        binding.toolbarLayout.lblRightSideBar.setTextColor(Color.BLACK)
-        binding.toolbarLayout.lblLeftSideBar.setBackgroundResource(R.drawable.bg_light_green)
         binding.rlaCreateLeaveRequest.visibility = View.VISIBLE
         binding.rlaHistory.visibility = View.GONE
         binding.txtDesc.setText(data.reason)
         binding.btnNext.visibility = View.GONE
         binding.linearLayout9.visibility = View.VISIBLE
         binding.tabLayoutStatus.visibility = View.GONE
-        binding.toolbarLayout.lnrParent.visibility = View.GONE
         binding.lblHeaderTitle.setText("Edit Leave Request")
 
         try {

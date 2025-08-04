@@ -1,210 +1,218 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginHorizontal="4dp"
-    android:layout_marginVertical="@dimen/ten"
-    android:elevation="5dp"
-    app:cardUseCompatPadding="true"
-    android:padding="@dimen/ten">
+    android:orientation="vertical"
+    android:paddingBottom="8dp">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-
-    <RelativeLayout
-        android:id="@+id/rytCard"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:elevation="2dp"
-        android:padding="@dimen/five">
+        android:layout_marginHorizontal="4dp"
+        android:background="@drawable/card_outline_border"
+        android:elevation="5dp"
+        android:padding="@dimen/ten"
+        app:cardCornerRadius="@dimen/fifteen"
+        app:cardUseCompatPadding="true">
 
-        <LinearLayout
-            android:id="@+id/lnrDateCircle"
-            android:layout_width="@dimen/fifty"
-            android:layout_height="@dimen/fifty"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="@dimen/five"
-            android:layout_marginEnd="12dp"
-            android:background="@drawable/bg_light_blue_circle"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/textFirstLetter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="A"
-                android:textColor="#000000"
-                android:textSize="@dimen/twele_sp" />
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/lnrDetails"
+        <RelativeLayout
+            android:id="@+id/rytCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_toStartOf="@+id/lnrButtons"
-            android:layout_toEndOf="@+id/lnrDateCircle"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:layout_marginBottom="8dp"
+            android:elevation="2dp"
+            android:padding="@dimen/five">
 
-            <TextView
-                android:id="@+id/textName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Alex Smith"
-                android:textColor="#000"
-                android:textSize="@dimen/thirteen_sp"
-                style="@style/CustomTextStylePoppinsBold" />
-
-            <TextView
-                android:id="@+id/textDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/five"
-                android:text="15 - 22 Jun 2023"
-                style="@style/CustomTextStylePoppinsMedium"
-                android:textColor="@color/grey"
-                android:textSize="@dimen/thirteen_sp" />
-
-            <TextView
-                android:id="@+id/textNoOfDays"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/five"
-                android:text="3 Days"
-                style="@style/CustomTextStylePoppinsMedium"
-
-                android:textColor="@color/grey"
-                android:textSize="@dimen/thirteen_sp" />
-
-
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/lnrButtons"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:gravity="center"
-            android:visibility="visible"
-            android:layout_marginEnd="@dimen/five"
-            android:orientation="horizontal">
-
-            <RelativeLayout
-                android:id="@+id/relbuttons"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <LinearLayout
+                android:id="@+id/lnrDateCircle"
+                android:layout_width="@dimen/fifty"
+                android:layout_height="@dimen/fifty"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="@dimen/five"
+                android:layout_marginEnd="12dp"
+                android:background="@drawable/bg_light_blue_circle"
                 android:gravity="center"
-                android:background="@drawable/rect_shadow_white_2"
-                android:visibility="gone"
-                android:layout_marginEnd="@dimen/five"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/textFirstLetter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="A"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/twele_sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lnrDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginEnd="@dimen/thirteen"
+                android:layout_toStartOf="@+id/lnrButtons"
+                android:layout_toEndOf="@+id/lnrDateCircle"
+                android:layout_weight="1"
                 android:orientation="vertical">
 
-                <LinearLayout
-                    android:id="@+id/deletebutton"
-                    android:layout_width="@dimen/eighty"
+                <TextView
+                    android:id="@+id/textName"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="10dp"
-                    android:gravity="center_vertical"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true">
+                    android:text="Alex Smith"
+                    android:textColor="#000"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:visibility="gone" />
 
-                    <ImageView
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:src="@drawable/del_icon"
-                        android:layout_marginEnd="6dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Delete"
-                        android:textAlignment="center"
-                        android:textColor="@color/black"
-                        style="@style/CustomTextStylePoppinsMedium"
-                        android:textSize="15sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/editbutton"
-                    android:layout_width="@dimen/eighty"
+                <TextView
+                    android:id="@+id/textNoOfDays"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_below="@id/deletebutton"
-                    android:layout_alignStart="@id/deletebutton"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginStart="10dp"
-                    android:gravity="center_vertical">
+                    android:layout_marginTop="@dimen/six"
+                    android:text="3 Days Application"
+                    android:textColor="@color/light_gray"
+                    android:textSize="@dimen/thirteen_sp" />
 
-                    <ImageView
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:src="@drawable/edit_icon"
-                        android:layout_marginEnd="6dp" />
+                <TextView
+                    android:id="@+id/textDate"
+                    style="@style/CustomTextStylePoppinsBold1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/five"
+                    android:text="15 - 22 Jun 2023"
+                    android:textSize="@dimen/seventeen" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Edit"
-                        android:textAlignment="center"
-                        android:textColor="@color/black"
-                        style="@style/CustomTextStylePoppinsMedium"
-                        android:textSize="15sp" />
-                </LinearLayout>
-            </RelativeLayout>
+                <TextView
+                    android:id="@+id/textLeaveType"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="@dimen/one"
+                    android:text="Casual"
+                    android:textColor="#FFC107"
+                    android:textSize="14sp" />
 
+                <TextView
+                    android:id="@+id/textReason"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lnrDetails"
+                    android:layout_marginTop="@dimen/one"
+                    android:layout_marginBottom="@dimen/ten"
+                    android:text="Casual"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/fourteen_sp" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/btnApprove"
-                android:layout_width="@dimen/eighty"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_leave_approved"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="6dp"
-                android:text="Approve"
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                android:textSize="12sp"
-                style="@style/CustomTextStylePoppinsMedium"/>
-
-            <ImageView
-                android:id="@+id/options"
+            <LinearLayout
+                android:id="@+id/lnrButtons"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:visibility="visible"
-                android:src="@drawable/threedot" />
-        </LinearLayout>
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_marginEnd="@dimen/five"
+                android:visibility="visible">
 
+                <RelativeLayout
+                    android:id="@+id/relbuttons"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/five"
+                    android:background="@drawable/rect_shadow_white_2"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
-        <TextView
-            android:layout_below="@+id/lnrDetails"
-            android:layout_marginBottom="@dimen/ten"
-            android:id="@+id/textReason"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Casual"
-            android:layout_marginTop="7dp"
-            android:layout_marginStart="@dimen/eighty"
-            style="@style/CustomTextStylePoppinsMedium"
-            android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp" />
+                    <LinearLayout
+                        android:id="@+id/deletebutton"
+                        android:layout_width="@dimen/eighty"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-    </RelativeLayout>
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_marginEnd="6dp"
+                            android:src="@drawable/del_icon" />
 
+                        <TextView
+                            style="@style/CustomTextStylePoppinsMedium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Delete"
+                            android:textAlignment="center"
+                            android:textColor="@color/black"
+                            android:textSize="15sp" />
+                    </LinearLayout>
 
-    </RelativeLayout>
+                    <LinearLayout
+                        android:id="@+id/editbutton"
+                        android:layout_width="@dimen/eighty"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/deletebutton"
+                        android:layout_alignStart="@id/deletebutton"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="10dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-</androidx.cardview.widget.CardView>
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_marginEnd="6dp"
+                            android:src="@drawable/edit_icon" />
+
+                        <TextView
+                            style="@style/CustomTextStylePoppinsMedium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Edit"
+                            android:textAlignment="center"
+                            android:textColor="@color/black"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/btnApprove"
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/eight"
+                        android:background="@drawable/bg_leave_approved"
+                        android:paddingHorizontal="@dimen/twenty_five"
+                        android:paddingVertical="6dp"
+                        android:text="Approve"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="12sp" />
+
+                    <ImageView
+                        android:id="@+id/options"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginEnd="4dp"
+                        android:contentDescription="Options"
+                        android:src="@drawable/threedot" />
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>
+

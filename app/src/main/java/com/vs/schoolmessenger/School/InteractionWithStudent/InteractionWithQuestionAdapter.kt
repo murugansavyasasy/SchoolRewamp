@@ -2,17 +2,15 @@ package com.vs.schoolmessenger.School.InteractionWithStudent
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.view.GestureDetector
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.PopupMenu
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.Event.Listener.SchoolEventClickListener
 import com.vs.schoolmessenger.School.InteractionWithStudent.Listener.ReplyClickListener
 import com.vs.schoolmessenger.School.InteractionWithStudent.Model.QuestionData
 import com.vs.schoolmessenger.Utils.ShimmerUtil
@@ -58,6 +56,10 @@ class InteractionWithQuestionAdapter(
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val questionText: TextView = itemView.findViewById(R.id.questionText)
         private val answerText: TextView = itemView.findViewById(R.id.answerText)
+        private val more_options: ImageView = itemView.findViewById(R.id.more_options)
+        private val linear_layout: LinearLayout = itemView.findViewById(R.id.linear_layout)
+
+
 
 
         @SuppressLint("ClickableViewAccessibility")
@@ -70,38 +72,45 @@ class InteractionWithQuestionAdapter(
             val popupHandler = View.OnClickListener {
                 showPopup(it, chat, listener,position)
             }
-
             questionText.setOnClickListener(popupHandler)
             questionText.setOnLongClickListener {
                 popupHandler.onClick(it)
                 true
             }
+            more_options.setOnClickListener (popupHandler)
+            linear_layout.setOnClickListener (popupHandler)
         }
 
 
 
 
-        private fun showPopup(view: View, chat: QuestionData, listener: ReplyClickListener,position: Int) {
+        private fun showPopup(view: View, chat: QuestionData, listener: ReplyClickListener, position: Int) {
             val popup = PopupMenu(view.context, view)
             popup.menuInflater.inflate(R.menu.question_popup_menu, popup.menu)
+
+            if (chat.answer == "Not answered yet") {
+                popup.menu.findItem(R.id.menu_reply_all)?.isVisible = false
+            } else {
+                popup.menu.findItem(R.id.menu_reply)?.isVisible = false
+            }
+
             popup.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     R.id.menu_reply -> {
-                        listener.onReplyClick(chat,position,"2",true)
+                        listener.onAnswerClick(chat, position)
                         true
                     }
 
                     R.id.menu_reply_all -> {
-                        listener.onReplyAllClick(chat,position,"1",true)
+                        listener.onUpdateAnswerClick(chat, position, true)
                         true
                     }
 
                     else -> false
                 }
             }
+
             popup.show()
-
-
         }
     }
 
