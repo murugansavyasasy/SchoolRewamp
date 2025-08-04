@@ -1190,20 +1190,22 @@ object Constant {
         }
     }
 
-    //Get the current date details
     fun getCurrentDateDetails(): Map<String, String> {
         val calendar = Calendar.getInstance()
 
         val day = calendar.get(Calendar.DAY_OF_MONTH)
+        val formattedDay = if (day < 10) "0$day" else day.toString()
+
         val dayOfWeek = SimpleDateFormat("EEEE", Locale.getDefault()).format(calendar.time)
         val monthYear = SimpleDateFormat("MMMM yyyy", Locale.getDefault()).format(calendar.time)
 
         return mapOf(
-            "day" to day.toString(),
+            "day" to formattedDay,
             "weekday" to dayOfWeek,
             "monthYear" to monthYear
         )
     }
+
 
 
 

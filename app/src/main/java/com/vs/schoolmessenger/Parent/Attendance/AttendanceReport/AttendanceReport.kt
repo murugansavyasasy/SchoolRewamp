@@ -36,7 +36,6 @@ class AttendanceReport : BaseActivity<AttendanceReportParentBinding>(), View.OnC
         // Toolbar setup
         binding.imgBack.setOnClickListener(this)
         binding.lblParentToolBar.text = getString(R.string.AttendanceReport)
-        binding.lblParentToolBar.setTextColor(ContextCompat.getColor(this, R.color.white))
 
         binding.rytSearch.visibility = View.VISIBLE
 
@@ -47,6 +46,18 @@ class AttendanceReport : BaseActivity<AttendanceReportParentBinding>(), View.OnC
         binding.lblStudentSection.text = isChildDetails?.standard_name+ " - " +isChildDetails?.section_name
         binding.lblStudentSection.setTextColor(ContextCompat.getColor(this, R.color.white))
         binding.imgBack.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_IN)
+        binding.imgSearchBtn.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_IN)
+
+        binding.imgSearchBtn.setOnClickListener{
+            if (binding.rytSearch.visibility == View.VISIBLE) {
+                binding.rytSearch.visibility = View.GONE
+            } else {
+                binding.rytSearch.visibility = View.VISIBLE
+                binding.txtVideoMenu.text.clear()
+            }
+        }
+
+
 
         isAccessToken = isChildDetails?.access_token
         appViewModel = ViewModelProvider(this)[App::class.java]
