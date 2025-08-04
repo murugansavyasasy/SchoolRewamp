@@ -62,7 +62,7 @@
                     style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Alex Smith"
+                    android:text="Alex Smith ahbsabc  sacbcsb"
                     android:textColor="#000"
                     android:textSize="@dimen/thirteen_sp"
                     android:visibility="gone" />

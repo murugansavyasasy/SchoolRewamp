@@ -38,7 +38,8 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
 
     private var isAccessToken: String? = null
     private var appViewModel: App? = null
-    lateinit var mAdapter: LeaveRequestAdapter
+    lateinit var mAdapter: MonthWiseLeaveHistoryAdapter
+
     private var fromDateMillis: Long = 0L
     private var toDateMillis: Long = 0L
     private var totalLeaveDays: Int = 0
@@ -179,11 +180,11 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
             finish()
         }
 
-        val addLeaveButton: ImageView = findViewById(R.id.imgAddLeave)
-        addLeaveButton.setOnClickListener {
-            val intent = Intent(this, NewLeaveRequest::class.java)
-            startActivity(intent)
-        }
+//        val addLeaveButton: ImageView = findViewById(R.id.imgAddLeave)
+//        addLeaveButton.setOnClickListener {
+//            val intent = Intent(this, NewLeaveRequest::class.java)
+//            startActivity(intent)
+//        }
 
 
 
@@ -348,16 +349,16 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
     }
 
 
-    private fun isloadleaverequestData(newData: List<LeaveData>?) {
-        mAdapter = LeaveRequestAdapter(
-            newData, this, this, Constant.isShimmerViewDisable
+    private fun isloadleaverequestData(newData: List<MonthWiseLeaveData>?) {
+        mAdapter = MonthWiseLeaveHistoryAdapter(
+            newData,this,this, Constant.isShimmerViewDisable
         )
         binding.rcyLeaveRequestHistory.adapter = mAdapter
     }
 
     private fun isGetLeaveRequestList() {
-        mAdapter = LeaveRequestAdapter(
-            null, this, this, Constant.isShimmerViewDisable
+        mAdapter = MonthWiseLeaveHistoryAdapter(
+            null,this,this, Constant.isShimmerViewDisable
         )
         binding.rcyLeaveRequestHistory.layoutManager = LinearLayoutManager(this)
         binding.rcyLeaveRequestHistory.isNestedScrollingEnabled = false
@@ -383,72 +384,94 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
 
 
     override fun onItemEditClick(data: LeaveData) {
-        val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-        val displayFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        val backendFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-        binding.rlaCreateLeaveRequest.visibility = View.VISIBLE
-        binding.rlaHistory.visibility = View.GONE
-        binding.txtDesc.setText(data.reason)
-        binding.btnNext.visibility = View.GONE
-        binding.linearLayout9.visibility = View.VISIBLE
-        binding.tabLayoutStatus.visibility = View.GONE
-        binding.lblHeaderTitle.setText("Edit Leave Request")
 
-        try {
-            val parsedFromDate = inputFormat.parse(data.leave_from)
-            parsedFromDate?.let {
-                val formattedFrom = displayFormat.format(it)
-                binding.txtStartDate.text = Constant.covertDateFormate(formattedFrom)
-                fromDateMillis = it.time
-                val dayOnly = getDayAndDate(formattedFrom, displayFormat)
-                binding.lblDay.text = dayOnly
-            }
+        val intent = Intent(this@LeaveRequest,NewLeaveRequest::class.java);
+            intent.putExtra("isReason",data.reason )
+            intent.putExtra("isId", data.id)
+            intent.putExtra("isLeaveTo", data.leave_from)
+            intent.putExtra("isLeaveFrom", data.leave_from)
+            intent.putExtra("isFromSession", data.from_session)
+            intent.putExtra("isToSession", data.to_session)
+            intent.putExtra("isRequestEdit", true)
+            startActivity(intent);
 
-            val parsedToDate = inputFormat.parse(data.leave_to)
-            parsedToDate?.let {
-                val formattedTo = displayFormat.format(it)
-                binding.txtEndDate.text = Constant.covertDateFormate(formattedTo)
-                toDateMillis = it.time
-                val dayOnly = getDayAndDate(formattedTo, displayFormat)
-                binding.lblEndDay.text = dayOnly
-            }
 
-            totalLeaveDays = if (fromDateMillis <= toDateMillis) {
-                (((toDateMillis - fromDateMillis) / (1000 * 60 * 60 * 24)) + 1).toInt()
-            } else {
-                1
-            }
-            binding.lblTotalDays.text = "No of Days - $totalLeaveDays"
-
-        } catch (e: Exception) {
-            Log.e("EditClickDateError", "Date parsing failed: ${e.localizedMessage}")
-        }
-
-        binding.btnupdate.setOnClickListener {
-            val updatedReason = binding.txtDesc.text.toString().trim()
-            val updatedStartDate = binding.txtStartDate.text.toString()
-            val updatedEndDate = binding.txtEndDate.text.toString()
-
-            var leaveFromFormatted = data.leave_from
-            var leaveToFormatted = data.leave_to
-
-            try {
-                val fromDate = displayFormat.parse(updatedStartDate)
-                val toDate = displayFormat.parse(updatedEndDate)
-                if (fromDate != null) leaveFromFormatted = backendFormat.format(fromDate)
-                if (toDate != null) leaveToFormatted = backendFormat.format(toDate)
-            } catch (e: Exception) {
-                Log.e("UpdateClickDateError", "Parsing updated dates failed: ${e.localizedMessage}")
-            }
-
-            val updatedRequest = LeaveRequestUpdate(
-                id = data.id,
-                leave_from = leaveFromFormatted,
-                leave_to = leaveToFormatted,
-                reason = updatedReason
-            )
-
-            appViewModel?.isleaverequestupdate(isAccessToken!!, updatedRequest, this)
-        }
+//        val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+//        val displayFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+//        val backendFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+//        binding.rlaCreateLeaveRequest.visibility = View.VISIBLE
+//        binding.rlaHistory.visibility = View.GONE
+//        binding.txtDesc.setText(data.reason)
+//        binding.btnNext.visibility = View.GONE
+//        binding.linearLayout9.visibility = View.VISIBLE
+//        binding.tabLayoutStatus.visibility = View.GONE
+//        binding.lblHeaderTitle.setText("Edit Leave Request")
+//
+//        try {
+//            val parsedFromDate = inputFormat.parse(data.leave_from)
+//            parsedFromDate?.let {
+//                val formattedFrom = displayFormat.format(it)
+//                binding.txtStartDate.text = Constant.covertDateFormate(formattedFrom)
+//                fromDateMillis = it.time
+//                val dayOnly = getDayAndDate(formattedFrom, displayFormat)
+//                binding.lblDay.text = dayOnly
+//            }
+//
+//            val parsedToDate = inputFormat.parse(data.leave_to)
+//            parsedToDate?.let {
+//                val formattedTo = displayFormat.format(it)
+//                binding.txtEndDate.text = Constant.covertDateFormate(formattedTo)
+//                toDateMillis = it.time
+//                val dayOnly = getDayAndDate(formattedTo, displayFormat)
+//                binding.lblEndDay.text = dayOnly
+//            }
+//
+//            totalLeaveDays = if (fromDateMillis <= toDateMillis) {
+//                (((toDateMillis - fromDateMillis) / (1000 * 60 * 60 * 24)) + 1).toInt()
+//            } else {
+//                1
+//            }
+//            binding.lblTotalDays.text = "No of Days - $totalLeaveDays"
+//
+//        } catch (e: Exception) {
+//            Log.e("EditClickDateError", "Date parsing failed: ${e.localizedMessage}")
+//        }
+//
+//        binding.btnupdate.setOnClickListener {
+//
+//            val intent = Intent(this@LeaveRequest,NewLeaveRequest::class.java);
+//            intent.putExtra("isReason",data.reason )
+//            intent.putExtra("isId", data.id)
+//            intent.putExtra("isLeaveTo", data.leave_from)
+//            intent.putExtra("isLeaveFrom", data.leave_from)
+//            intent.putExtra("isFromSession", data.from_session)
+//            intent.putExtra("isToSession", data.to_session)
+//            startActivity(intent);
+//
+//            val updatedReason = binding.txtDesc.text.toString().trim()
+//            val updatedStartDate = binding.txtStartDate.text.toString()
+//            val updatedEndDate = binding.txtEndDate.text.toString()
+//
+//            var leaveFromFormatted = data.leave_from
+//            var leaveToFormatted = data.leave_from
+//
+//            try {
+//                val fromDate = displayFormat.parse(updatedStartDate)
+//                val toDate = displayFormat.parse(updatedEndDate)
+//                if (fromDate != null) leaveFromFormatted = backendFormat.format(fromDate)
+//                if (toDate != null) leaveToFormatted = backendFormat.format(toDate)
+//            } catch (e: Exception) {
+//                Log.e("UpdateClickDateError", "Parsing updated dates failed: ${e.localizedMessage}")
+//            }
+//
+//            val updatedRequest = LeaveRequestUpdate(
+//                id = data.id,
+//                leave_from = leaveFromFormatted,
+//                leave_to = leaveToFormatted,
+//                reason = updatedReason
+//            )
+//
+//            appViewModel?.isleaverequestupdate(isAccessToken!!, updatedRequest, this)
+//        }
     }
 }
