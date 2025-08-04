@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
-import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkDetails
+import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
@@ -23,6 +23,7 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
     }
     private var isAccessToken: String? = null
     var isHomeworkId = ""
+    var isHomeWorkDate: String? = ""
     private var appViewModel: App? = null
 
 
@@ -31,42 +32,59 @@ class ChildHomeWork : BaseActivity<ChildHomeworkActivityBinding>(), View.OnClick
         setupToolbarBlue()
         binding.imgBack.setOnClickListener(this)
         binding.lblClickComplete.setOnClickListener(this)
-        val data = intent.getParcelableExtra<GetHomeworkDetails>("isHomeWorkData")
-        val isHomeWorkDate = intent.getStringExtra("isHomeWorkDate")
+        val data = intent.getParcelableExtra<FilePreview>("isPreViewData")
         appViewModel = ViewModelProvider(this)[App::class.java].apply { init() }
         val childDetails = SharedPreference.getChildDetails(this)
         isAccessToken = childDetails?.access_token
-        isHomeworkId = data!!.id
+
         binding.lbltitle.text = data!!.title
         binding.lblDescription.text = data.description
-        binding.lblSubjectName.text = data.subject_name
-        for (i in data.file_path.indices) {
-            Log.d("isComingFilePath", data.file_path[i].url)
-        }
-        if (!data.is_completed) {
-            binding.lblClickComplete.visibility = View.VISIBLE
-            binding.thumbContainer.visibility = View.VISIBLE
-        } else {
+
+        if (data.isMenuType == Constant.M_HOMEWORK) {
+            isHomeworkId = data.id
+            isHomeWorkDate = intent.getStringExtra("isHomeWorkDate")
+            if (data.subjectName != "") {
+                binding.lblSubjectName.visibility = View.VISIBLE
+                binding.lblSubjectName.text = data.subjectName
+            }
+            if (!data.isCompleted) {
+                binding.lblClickComplete.visibility = View.VISIBLE
+                binding.lblClickComplete.text = "Click \"here\" when you're done "
+                binding.thumbContainer.visibility = View.VISIBLE
+            } else {
+                binding.lblClickComplete.visibility = View.GONE
+                binding.thumbContainer.visibility = View.GONE
+            }
+            if (isHomeWorkDate != "") {
+                binding.lblPostedDate.visibility = View.VISIBLE
+                binding.lblPostedDate.text =
+                    "Posted on : " + Constant.formatDateSmart(isHomeWorkDate.toString())
+            }
+            if (data.sentBy != "") {
+                binding.lblPostedBy.visibility = View.VISIBLE
+                binding.lblPostedBy.text = "Posted by : " + data.sentBy
+            }
+        } else if (data.isMenuType == Constant.M_NOTICEBOARD || data.isMenuType == Constant.M_PARENT_CLASS_EVENTS || data.isMenuType == Constant.M_SCHOOL_CLASS_EVENTS) {
+            binding.lblSubjectName.visibility = View.GONE
             binding.lblClickComplete.visibility = View.GONE
-            binding.thumbContainer.visibility = View.GONE
+            binding.lblPostedDate.visibility = View.GONE
+            binding.lblPostedBy.visibility = View.GONE
         }
-        binding.lblClickComplete.text = "Click \"here\" when you're done "
-        binding.lblPostedDate.text =
-            "Posted on : " + Constant.formatDateSmart(isHomeWorkDate.toString())
-        binding.lblPostedBy.text = "Posted by : " + data.sent_by
-        val adapter = HomeWorkChildAdapter(this, data.file_path, data.subject_name)
+
+        for (i in data.fileList.indices) {
+            Log.d("isComingFilePath", data.fileList[i].url)
+        }
+
+        val adapter = HomeWorkChildAdapter(this, data.fileList, data.subjectName!!)
         binding.rcChildHW.layoutManager =
             GridLayoutManager(this, 3, RecyclerView.VERTICAL, false)
         binding.rcChildHW.adapter = adapter
-
 
         appViewModel?.isHomeWorkComplete?.observe(this) { response ->
             if (response!!.status) {
                 isSuccessFullCompleteHomework()
             }
         }
-
-
 
         if (adapter.itemCount == 0) {
             val params = binding.lblPostedBy.layoutParams as ConstraintLayout.LayoutParams

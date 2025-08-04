@@ -23,6 +23,7 @@ import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequest
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestUpdate
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveUpdateResponse
 import com.vs.schoolmessenger.Parent.Timetable.TimeTableResponse
+import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentReportResponse
 import com.vs.schoolmessenger.School.InteractionWithStudent.Response.InteractionWithStudentResponse
 import retrofit2.Call
 import retrofit2.Callback

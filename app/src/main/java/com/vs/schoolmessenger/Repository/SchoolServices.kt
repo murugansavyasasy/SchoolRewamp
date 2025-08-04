@@ -38,6 +38,7 @@ import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.Stud
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeStudentsResponse
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteesResponse
 import com.vs.schoolmessenger.School.Assignment.DataClass.AssignmentResponse
+import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentReportResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
@@ -97,6 +98,7 @@ class SchoolServices {
     var isSendHomeWork: MutableLiveData<HomeWorkSendResponse?>
     var isSendAssignment: MutableLiveData<HomeWorkSendResponse?>
     var isUpdateHomeWork: MutableLiveData<StatusMessageModel?>
+    var isUpdateNoticeBoard: MutableLiveData<StatusMessageModel?>
     var isDeleteHomeWork: MutableLiveData<StatusMessageModel?>
     var isSendVoice: MutableLiveData<TextSendResponse?>
     var isUpdateStatusArchive: MutableLiveData<StatusArchiveResponse?>
@@ -154,6 +156,7 @@ class SchoolServices {
     var sendanswer: MutableLiveData<AnswerModelResponse?>
     var isnoticeboarddelete: MutableLiveData<NoticeBoardDeleteResponse?>
     var isEventDelete: MutableLiveData<EventDeleteResponse?>
+    var isAttachmentResponse: MutableLiveData<AttachmentReportResponse?>
 
 
     init {
@@ -190,6 +193,7 @@ class SchoolServices {
         isGetSchoolStrengthReport = MutableLiveData()
         isPunchAttendance = MutableLiveData()
         isAddLocation = MutableLiveData()
+        isUpdateNoticeBoard = MutableLiveData()
         isRemoveLocation = MutableLiveData()
         isUpdateLocation = MutableLiveData()
         isLocationHistory = MutableLiveData()
@@ -227,6 +231,7 @@ class SchoolServices {
         isnoticeboarddelete = MutableLiveData()
         isEventDelete = MutableLiveData()
         isNoticeBoardStaffReport = MutableLiveData()
+        isAttachmentResponse = MutableLiveData()
     }
 
 
@@ -778,6 +783,44 @@ class SchoolServices {
 
     val isUpdateHomeworkLiveData: LiveData<StatusMessageModel?>
         get() = isUpdateHomeWork
+
+    fun isEditNoticeBoard(
+        isToken: String, jsonObject: JsonObject,activity: Activity
+    ) {
+
+        RestClient.apiInterfaces.isNoticeBoardUpdate(isToken, jsonObject)
+            ?.enqueue(object : Callback<StatusMessageModel?> {
+                override fun onResponse(
+                    call: Call<StatusMessageModel?>,
+                    response: Response<StatusMessageModel?>
+                ) {
+                    Log.d(
+                        "isGetCountryList", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isUpdateNoticeBoard.postValue(response.body())
+                            } else {
+                                isUpdateNoticeBoard.postValue(response.body())
+                            }
+                        }
+                    } else {
+                        isUpdateNoticeBoard.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<StatusMessageModel?>, t: Throwable) {
+                    isUpdateNoticeBoard.postValue(null)
+                    Log.d("t.printStackTrace()", t.printStackTrace().toString())
+                }
+            })
+    }
+
+    val isUpdateNoticeBoardLiveData: LiveData<StatusMessageModel?>
+        get() = isUpdateNoticeBoard
+
 
     fun isHomeWorkDelete(
         isToken: String, jsonObject: JsonObject,activity: Activity
@@ -2627,7 +2670,7 @@ class SchoolServices {
 
 
     fun isnoticeboarddelete(
-        isToken: String, request: RequestBody, activity: Activity
+        isToken: String, request: JsonObject, activity: Activity
     ) {
         RestClient.apiInterfaces.isnoticeboarddelete(isToken, request)
             ?.enqueue(object : Callback<NoticeBoardDeleteResponse?> {
@@ -2703,6 +2746,46 @@ class SchoolServices {
     val isEventDeleteLiveData: LiveData<EventDeleteResponse?>
         get() = isEventDelete
 
+    fun getAttachmentReportList(
+        isToken: String,
+        activity: Activity
+    ) {
+        RestClient.apiInterfaces.attachmentReportList(isToken)
+            ?.enqueue(object : Callback<AttachmentReportResponse?> {
+                override fun onResponse(
+                    call: Call<AttachmentReportResponse?>,
+                    response: Response<AttachmentReportResponse?>
+                ) {
+                    Log.d(
+                        "GetChildAttendanceReportData Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                isAttachmentResponse.postValue(response.body())
+                            } else {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                isAttachmentResponse.postValue(response.body())
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<AttachmentReportResponse?>,
+                    t: Throwable
+                ) {
+                    isAttachmentResponse.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isAttachmentResponseLiveData: LiveData<AttachmentReportResponse?>
+        get() = isAttachmentResponse
 
 
 

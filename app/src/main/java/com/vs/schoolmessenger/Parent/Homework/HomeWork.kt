@@ -15,6 +15,7 @@ import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.CalendarAdapter
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.ChildHomeWork
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.HomeworkParentAdapter
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.CalendarDate
+import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetDateWiseHomeworkData
 import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetHomeworkDetails
 import com.vs.schoolmessenger.R
@@ -181,8 +182,21 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
             }
         }
 
+        val isHomeWorkData = FilePreview(
+            id = data.id,
+            title = data.title,
+            description = data.description,
+            subjectName = data.subject_name,
+            sentBy = data.sent_by,
+            thumbnail = data.thumbnail,
+            isUnread = data.is_unread,
+            isCompleted = data.is_completed,
+            isMenuType = Constant.M_HOMEWORK,
+            fileList = data.file_path,
+        )
+
         val intent = Intent(this@HomeWork, ChildHomeWork::class.java)
-        intent.putExtra("isHomeWorkData", data)
+        intent.putExtra("isPreViewData", isHomeWorkData)
         intent.putExtra("isHomeWorkDate", isHomeWorkDate)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         startActivity(intent)

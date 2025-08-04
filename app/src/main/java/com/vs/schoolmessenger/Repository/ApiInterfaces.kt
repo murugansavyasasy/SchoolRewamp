@@ -56,6 +56,7 @@ import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.Stud
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeStudentsResponse
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteesResponse
 import com.vs.schoolmessenger.School.Assignment.DataClass.AssignmentResponse
+import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentReportResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
@@ -240,6 +241,12 @@ interface ApiInterfaces {
     fun isHomeWorkUpdate(
         @Header(APIKeyNames.Authorization) token: String, @Body requestBody: JsonObject
     ): Call<StatusMessageModel?>
+
+    @PUT(APIMethods.isNoticeBoardUpdate)
+    fun isNoticeBoardUpdate(
+        @Header(APIKeyNames.Authorization) token: String, @Body requestBody: JsonObject
+    ): Call<StatusMessageModel?>
+
 
     @PUT(APIMethods.isHomeWorkDelete)
     fun isHomeWorkDelete(
@@ -502,6 +509,14 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String
     ): Call<AttachmentResponse?>
 
+    @GET(APIMethods.attachmentReportList)
+    fun attachmentReportList(
+        @Header(APIKeyNames.Authorization) token: String
+    ): Call<AttachmentReportResponse?>
+
+
+
+
     @GET(APIMethods.attachmentListArchive)
     fun attachmentListArchive(
         @Header(APIKeyNames.Authorization) token: String
@@ -691,7 +706,7 @@ interface ApiInterfaces {
     @Headers("Content-Type: application/json")
     @PUT(APIMethods.isnoticeboarddelete)
     fun isnoticeboarddelete(
-        @Header(APIKeyNames.Authorization) token: String, @Body requestBody: RequestBody
+        @Header(APIKeyNames.Authorization) token: String, @Body requestBody: JsonObject
     ): Call<NoticeBoardDeleteResponse?>
 
 

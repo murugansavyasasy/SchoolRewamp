@@ -20,7 +20,8 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.MediaController
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
@@ -29,7 +30,9 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.AlbumImage.AlbumSelectActivity
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
@@ -39,6 +42,8 @@ import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
 import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolList
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentReportData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
@@ -50,7 +55,8 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View.OnClickListener {
+class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View.OnClickListener,
+    OnAttachmentReportClickListener {
 
     override fun getViewBinding(): AttachmentBinding {
         return AttachmentBinding.inflate(layoutInflater)
@@ -64,8 +70,14 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
 
         private const val CAMERA_IMAGE_REQUEST = 1004
     }
+
+    var mAttachmentReportAdapter: AttachmentReportAdapter? = null
+
     private var isUserDetails: UserDetails? = null
     var isMultipleSchool = false
+    private var appViewModel: App? = null
+
+    var isAccessToken = ""
     private var isStaffDetails: StaffDetails? = null
     private var cameraImageFilePath: String? = null
     private val CAMERA_PERMISSION_REQUEST_CODE = 200
@@ -79,6 +91,10 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
         isStaffDetails = SharedPreference.getStaffDetails(this)
 //        binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
 //        binding.toolbarLayout.lblSchoolName.text = isStaffDetails!!.school_name
+        binding.lnrTabOneName.setOnClickListener(this)
+        binding.lnrTabTwoName.setOnClickListener(this)
+        appViewModel = ViewModelProvider(this)[App::class.java]
+        appViewModel!!.init()
         saveDrawableToCache(R.drawable.add_image)?.let {
             Constant.selectedFiles.add(
                 FileItem(
@@ -87,11 +103,23 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
             )
         }
         isUserDetails = SharedPreference.getUserDetails(this)
+
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
         if (isUserDetails!!.staff_details.size > 1) {
             isMultipleSchool = true
         } else {
             isMultipleSchool = false
+        }
+
+
+
+        appViewModel!!.isAttachmentReportResponse?.observe(this) { response ->
+            if (response != null) {
+                if (response.status) {
+                    val isHomeAttachmentReport = response.data
+                    isLoadAttachmentReportList(isHomeAttachmentReport)
+                }
+            }
         }
 
         binding.rcyImages.visibility = View.VISIBLE
@@ -144,27 +172,6 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
                         }
 
                         Constant.selectedFiles.add(FileItem(uri.toString(), type))
-
-                        if (type.toString() == Constant.VIDEO) {
-                            binding.thumbnailView.visibility = View.VISIBLE
-                            binding.rcyImages.visibility = View.GONE
-                            // Extract and show video thumbnail
-                            val bitmap = Constant.getVideoThumbnail(this, uri!!)
-                            binding.thumbnailView.setImageBitmap(bitmap)
-                            binding.thumbnailView.visibility = View.VISIBLE
-                            binding.imgDelete.visibility = View.VISIBLE
-                            binding.imgPlay.visibility = View.VISIBLE
-                            binding.videoView.setVideoURI(uri)
-                            binding.videoView.setMediaController(MediaController(this))
-                            binding.videoView.requestFocus()
-                        } else {
-                            binding.videoView.visibility = View.GONE
-                            binding.imgDelete.visibility = View.GONE
-                            binding.thumbnailView.visibility = View.GONE
-                            binding.rcyImages.visibility = View.VISIBLE
-                            mAdapter?.notifyDataSetChanged()
-                        }
-
                         Log.d("SelectedFile", "URI: $uri, Type: $type")
                     }
 
@@ -193,31 +200,19 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
             Constant.isTitleLength,
             binding.lblTitleTextCount
         )
+    }
 
-        binding.imgDelete.setOnClickListener {
-            binding.videoView.visibility = View.GONE
-            binding.imgDelete.visibility = View.GONE
-            binding.imgPlay.visibility = View.GONE
-            binding.rcyImages.visibility = View.VISIBLE
-            binding.thumbnailView.visibility = View.GONE
-            Constant.selectedFiles.clear()
-
-            saveDrawableToCache(R.drawable.add_image)?.let {
-                Constant.selectedFiles.add(
-                    FileItem(
-                        it, FileType.IMAGE
-                    )
-                )
-            }
-            mAdapter!!.notifyDataSetChanged()
-        }
-
-        binding.imgPlay.setOnClickListener {
-            binding.thumbnailView.visibility = View.GONE
-            binding.imgPlay.visibility = View.GONE
-            binding.videoView.visibility = View.VISIBLE
-            binding.videoView.start()
-        }
+    fun isLoadAttachmentReportList(isHomeAttachmentReport: List<AttachmentReportData>) {
+        mAttachmentReportAdapter =
+            AttachmentReportAdapter(
+                isHomeAttachmentReport,
+                this,
+                this,
+                Constant.isShimmerViewDisable
+            )
+        binding.rcyAttachment.layoutManager = LinearLayoutManager(this)
+        binding.rcyAttachment.isNestedScrollingEnabled = false
+        binding.rcyAttachment.adapter = mAttachmentReportAdapter
     }
 
     private fun checkCameraPermissionAndOpenCamera() {
@@ -244,7 +239,6 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
             }
         }
     }
-
 
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<out String>, grantResults: IntArray
@@ -300,20 +294,7 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
 
     private fun openAlbumSelectActivity(isFileType: String) {
 
-        if (Constant.selectedFiles.size > 1) {
-            val secondType = Constant.selectedFiles[1].type.toString()
-            if (
-                (secondType == Constant.IMAGE && (isFileType == Constant.DOCUMENT || isFileType == Constant.VOICE)) ||
-                (secondType == Constant.DOCUMENT && (isFileType == Constant.IMAGE || isFileType == Constant.VOICE)) ||
-                (secondType == Constant.VOICE && (isFileType == Constant.IMAGE || isFileType == Constant.DOCUMENT))
-            ) {
-                Constant.selectedFiles.clear()
-                saveDrawableToCache(R.drawable.add_image)?.let {
-                    Constant.selectedFiles.add(FileItem(it, FileType.IMAGE))
-                }
-                mAdapter?.notifyDataSetChanged()
-            }
-        }
+        Log.d("FileComing", isFileType)
         val sdkInt = Build.VERSION.SDK_INT
         if (isFileType == Constant.DOCUMENT && sdkInt < Build.VERSION_CODES.R) {
             openSystemDocumentPicker()
@@ -347,47 +328,42 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
         val rlaVideoPick = dialog.findViewById<RelativeLayout>(R.id.rlaVideoPick)
 
         rlaGallery.setOnClickListener {
-//            MAX_FILES = 10
             Constant.isFileLimit = 10
+            Log.d("Constant.isFileLimit", Constant.isFileLimit.toString())
+
             openAlbumSelectActivity(Constant.IMAGE)
             dialog.dismiss()
         }
 
         rlaVoice.setOnClickListener {
-//            MAX_FILES = 10
             Constant.isFileLimit = 10
             openAlbumSelectActivity(Constant.AUDIO)
             dialog.dismiss()
         }
 
         rlaVideoPick.setOnClickListener {
-//            MAX_FILES = 1
-            Constant.isFileLimit = 1
-            openAlbumSelectActivity(Constant.VIDEO)
-            dialog.dismiss()
+            val selectedVideoCount = Constant.selectedFiles.count { it.type == FileType.VIDEO }
+            if (selectedVideoCount >= 2) {
+                Toast.makeText(this, "Only 2 videos are allowed", Toast.LENGTH_SHORT).show()
+            } else {
+                if (Constant.selectedFiles.size == 1 || selectedVideoCount == 0) {
+                    Constant.isFileLimit = 2
+                } else if (selectedVideoCount == 1) {
+                    Constant.isFileLimit = 1
+                }
+                openAlbumSelectActivity(Constant.VIDEO)
+                dialog.dismiss()
+            }
         }
 
+
         rlaDocument.setOnClickListener {
-//            MAX_FILES = 10
             Constant.isFileLimit = 10
             openAlbumSelectActivity(Constant.DOCUMENT)
             dialog.dismiss()
         }
 
         rlaCamera.setOnClickListener {
-            if (Constant.selectedFiles.size > 1) {
-                if (Constant.selectedFiles[1].type.toString() != Constant.IMAGE) {
-                    Constant.selectedFiles.clear()
-                    saveDrawableToCache(R.drawable.add_image)?.let {
-                        Constant.selectedFiles.add(
-                            FileItem(
-                                it, FileType.IMAGE
-                            )
-                        )
-                    }
-                    mAdapter!!.notifyDataSetChanged()
-                }
-            }
             checkCameraPermissionAndOpenCamera()
             dialog.dismiss()
         }
@@ -567,6 +543,99 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
                 Constant.isCommonDescription = binding.edtDescription.text.toString()
                 isGoToRecipient()
             }
+
+            R.id.lnrTabOneName -> {
+
+                binding.edtTitle.setText("")
+                binding.edtDescription.setText("")
+                Constant.selectedFiles.clear()
+                Constant.isAwsUploadedFiles.clear()
+
+                saveDrawableToCache(R.drawable.add_image)?.let {
+                    Constant.selectedFiles.add(
+                        FileItem(
+                            it, FileType.IMAGE
+                        )
+                    )
+                }
+
+                binding.rcyImages.visibility = View.VISIBLE
+                mAdapter = ImagePickingAdapter(this, Constant.selectedFiles!!, this)
+                binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
+                binding.rcyImages.adapter = mAdapter
+
+//                binding.btnNext.text = getString(R.string.NEXT)
+                binding.rytAttachment.visibility = View.VISIBLE
+                binding.line3.setBackgroundResource(R.color.iconBlue)
+                binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
+                binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.black))
+                binding.line4.setBackgroundResource(R.color.white)
+                binding.rytAttachmentReport.visibility = View.GONE
+                binding.schoollistfilter.visibility = View.GONE
+                binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+            }
+
+            R.id.lnrTabTwoName -> {
+//                binding.btnNext.text = "Update NoticeBoard"
+                binding.rytAttachment.visibility = View.GONE
+                binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.black))
+                binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
+                binding.line4.setBackgroundResource(R.color.iconBlue)
+                binding.line3.setBackgroundResource(R.color.white)
+                binding.rytAttachmentReport.visibility = View.VISIBLE
+                binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
+                binding.schoollistfilter.visibility = View.VISIBLE
+                isLoadSchoolList()
+            }
+        }
+    }
+
+    fun isLoadSchoolList() {
+        isUserDetails?.let {
+            setupSchoolSpinner(it.staff_details)
+        }
+    }
+
+    fun isGetAttachmentReport() {
+        mAttachmentReportAdapter =
+            AttachmentReportAdapter(null, this, this, Constant.isShimmerViewShow)
+        binding.rcyAttachment.layoutManager = LinearLayoutManager(this)
+        binding.rcyAttachment.isNestedScrollingEnabled = false
+        binding.rcyAttachment.adapter = mAttachmentReportAdapter
+        appViewModel!!.getAttachmentListReport(
+            isAccessToken!!, this
+        )
+    }
+
+    private fun setupSchoolSpinner(staffList: List<StaffDetails>) {
+        val schoolNames = staffList.map { it.school_name }
+
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, schoolNames)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.schoollistfilter.adapter = adapter
+
+        binding.schoollistfilter.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>, view: View?, position: Int, id: Long
+                ) {
+                    val selectedStaff = staffList[position]
+                    isAccessToken = selectedStaff.access_token
+                    isStaffDetails = selectedStaff
+                    Log.d(
+                        "SpinnerSelection",
+                        "Selected school: ${selectedStaff.school_name}, Token: $isAccessToken"
+                    )
+                    isGetAttachmentReport()
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {}
+            }
+
+        if (staffList.isNotEmpty()) {
+            isAccessToken = staffList[0].access_token
+            isStaffDetails = staffList[0]
+            Log.d("DefaultSelection", "Default token: $isAccessToken")
         }
     }
 
@@ -586,7 +655,7 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
             return
         }
 
-        if (Constant.selectedFiles.size == 0 || Constant.selectedFiles.size == 1) {
+        if (Constant.selectedFiles.isEmpty() || Constant.selectedFiles.size == 1) {
             Constant.showValidationAlertPopup(
                 getString(R.string.alert),
                 getString(R.string.Pick_atlease_one_file),
@@ -596,7 +665,6 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
         }
 
         val isStaffRole = isUserDetails!!.staff_role
-//        Constant.selectedFiles.removeAt(0)
         if (isMultipleSchool) {
             if (isStaffRole ==   Constant.isGroupHeadRole || isStaffRole == Constant.isPrincipalRole || isStaffRole == Constant.isAdminRole
             ) {
@@ -616,5 +684,9 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
             intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
             startActivity(intent)
         }
+    }
+
+    override fun onItemClick(parentData: AttachmentReportData) {
+
     }
 }

@@ -75,7 +75,6 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
     private val itemsCategory = listOf(
         "General", "Class Work", "Research Paper", "Project"
     )
-
     var isAssignmentType = ""
     var isSelectedDate = ""
     private lateinit var albumResultLauncher: ActivityResultLauncher<Intent>
@@ -183,27 +182,6 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
 
                         Constant.selectedFiles.add(FileItem(uri.toString(), type))
 
-                        if (type.toString() == Constant.VIDEO) {
-                            binding.thumbnailView.visibility = View.VISIBLE
-                            binding.rcyImages.visibility = View.GONE
-
-                            // Extract and show video thumbnail
-                            val bitmap = Constant.getVideoThumbnail(this, uri!!)
-                            binding.thumbnailView.setImageBitmap(bitmap)
-                            binding.thumbnailView.visibility = View.VISIBLE
-                            binding.imgDelete.visibility = View.VISIBLE
-                            binding.imgPlay.visibility = View.VISIBLE
-                            binding.videoView.setVideoURI(uri)
-                            binding.videoView.setMediaController(MediaController(this))
-                            binding.videoView.requestFocus()
-                        } else {
-                            binding.videoContainer.visibility = View.GONE
-                            binding.imgDelete.visibility = View.GONE
-                            binding.thumbnailView.visibility = View.GONE
-                            binding.rcyImages.visibility = View.VISIBLE
-                            mAdapter?.notifyDataSetChanged()
-                        }
-
                         Log.d("SelectedFile", "URI: $uri, Type: $type")
                     }
 
@@ -216,41 +194,6 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
                     }
                 }
             }
-
-        binding.imgDelete.setOnClickListener {
-            binding.videoContainer.visibility = View.GONE
-            binding.imgDelete.visibility = View.GONE
-            binding.imgPlay.visibility = View.GONE
-            binding.rcyImages.visibility = View.VISIBLE
-            binding.thumbnailView.visibility = View.GONE
-            Constant.selectedFiles.clear()
-            saveDrawableToCache(R.drawable.add_image)?.let {
-                Constant.selectedFiles.add(
-                    FileItem(
-                        it, FileType.IMAGE
-                    )
-                )
-            }
-            mAdapter!!.notifyDataSetChanged()
-        }
-
-        binding.imgPlay.setOnClickListener {
-            binding.thumbnailView.visibility = View.GONE
-            binding.imgPlay.visibility = View.GONE
-            binding.videoContainer.visibility = View.VISIBLE
-            binding.videoView.start()
-        }
-        binding.videoView.setOnPreparedListener { mp ->
-            // Fill width, and let it scale properly in the fixed height
-            mp.setOnVideoSizeChangedListener { _, _, _ ->
-                val layoutParams = binding.videoView.layoutParams
-                layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT
-                // Height is already 100dp via FrameLayout, no need to reset
-                binding.videoView.layoutParams = layoutParams
-                binding.videoView.start()
-            }
-        }
-
 
 //        binding.edtTitle.filters = arrayOf(InputFilter.LengthFilter(Constant.isTitleLength))
 //        binding.edtDescription.filters = arrayOf(InputFilter.LengthFilter(Constant.isDescriptionLength))
@@ -467,16 +410,6 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
 
     private fun openAlbumSelectActivity(isFileType: String) {
 
-        if (Constant.selectedFiles.size > 1) {
-            val secondType = Constant.selectedFiles[1].type.toString()
-            if ((secondType == Constant.IMAGE && (isFileType == Constant.DOCUMENT || isFileType == Constant.VOICE)) || (secondType == Constant.DOCUMENT && (isFileType == Constant.IMAGE || isFileType == Constant.VOICE)) || (secondType == Constant.VOICE && (isFileType == Constant.IMAGE || isFileType == Constant.DOCUMENT))) {
-                Constant.selectedFiles.clear()
-                saveDrawableToCache(R.drawable.add_image)?.let {
-                    Constant.selectedFiles.add(FileItem(it, FileType.IMAGE))
-                }
-                mAdapter?.notifyDataSetChanged()
-            }
-        }
         Log.d("FileComing", isFileType)
         val sdkInt = Build.VERSION.SDK_INT
         if (isFileType == Constant.DOCUMENT && sdkInt < Build.VERSION_CODES.R) {
@@ -530,6 +463,8 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
 
         rlaGallery.setOnClickListener {
             Constant.isFileLimit = 10
+            Log.d("Constant.isFileLimit", Constant.isFileLimit.toString())
+
             openAlbumSelectActivity(Constant.IMAGE)
             dialog.dismiss()
         }
@@ -541,30 +476,28 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
         }
 
         rlaVideoPick.setOnClickListener {
-            Constant.isFileLimit = 1
-            openAlbumSelectActivity(Constant.VIDEO)
-            dialog.dismiss()
+            val selectedVideoCount = Constant.selectedFiles.count { it.type == FileType.VIDEO }
+            if (selectedVideoCount >= 2) {
+                Toast.makeText(this, "Only 2 videos are allowed", Toast.LENGTH_SHORT).show()
+            } else {
+                if (Constant.selectedFiles.size == 1 || selectedVideoCount == 0) {
+                    Constant.isFileLimit = 2
+                } else if (selectedVideoCount == 1) {
+                    Constant.isFileLimit = 1
+                }
+                openAlbumSelectActivity(Constant.VIDEO)
+                dialog.dismiss()
+            }
         }
+
 
         rlaDocument.setOnClickListener {
             Constant.isFileLimit = 10
             openAlbumSelectActivity(Constant.DOCUMENT)
             dialog.dismiss()
         }
+
         rlaCamera.setOnClickListener {
-            if (Constant.selectedFiles.size > 1) {
-                if (Constant.selectedFiles[1].type.toString() != Constant.IMAGE) {
-                    Constant.selectedFiles.clear()
-                    saveDrawableToCache(R.drawable.add_image)?.let {
-                        Constant.selectedFiles.add(
-                            FileItem(
-                                it, FileType.IMAGE
-                            )
-                        )
-                    }
-                    mAdapter!!.notifyDataSetChanged()
-                }
-            }
             checkCameraPermissionAndOpenCamera()
             dialog.dismiss()
         }
@@ -784,23 +717,4 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
     override fun onNotSubmittedClick(data: AssignmentData) {
 
     }
-
-//    override fun onClickListener(data: CreateNoticeBoard) {
-//        Constant.isAwsUploadedFiles.clear()
-//        Constant.selectedFiles.clear()
-//        saveDrawableToCache(R.drawable.add_image)?.let {
-//            Constant.selectedFiles.add(
-//                FileItem(
-//                    it, FileType.IMAGE
-//                )
-//            )
-//        }
-//
-//        binding.rcyImages.visibility = View.VISIBLE
-//        mAdapter = ImagePickingAdapter(this, Constant.selectedFiles, this)
-//        binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
-//        binding.rcyImages.adapter = mAdapter
-//    }
-
-
 }

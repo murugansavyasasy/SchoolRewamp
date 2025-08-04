@@ -11,14 +11,15 @@ import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.imageview.ShapeableImageView
-import com.vs.schoolmessenger.CommonScreens.CommonFileData
-import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventClickListener
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.RewampModelEvent.EventItem
+import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.ChildHomeWork
+import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
+import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
@@ -127,7 +128,7 @@ class EventAdapter(
         private val video_player: ImageView = itemView.findViewById(R.id.video_player)
         private val loadingBar: ProgressBar = itemView.findViewById(R.id.loadingBar)
         private val rytList: LinearLayout = itemView.findViewById(R.id.rytList)
-//        private val arrow_icon: ImageView = itemView.findViewById(R.id.arrow_icon)
+        private val header: RelativeLayout = itemView.findViewById(R.id.header)
         private val indicator: CircleIndicator2 = itemView.findViewById(R.id.indicator)
 
         @SuppressLint("ClickableViewAccessibility")
@@ -144,23 +145,51 @@ class EventAdapter(
             video_player.visibility = View.GONE
             loadingBar.visibility = View.GONE
 
+            header.setOnClickListener {
+
+                val convertedList = data.file_path.map {
+                    GetFilePathDetails(
+                        type = it.type,
+                        url = it.url,
+                    )
+                }
+
+                val isHomeWorkData = FilePreview(
+                    id = "",
+                    title = data.title,
+                    description = data.description,
+                    subjectName = "",
+                    sentBy = "",
+                    thumbnail = data.thumbnail,
+                    isUnread = true,
+                    isCompleted = true,
+                    isMenuType = Constant.M_PARENT_CLASS_EVENTS,
+                    fileList = convertedList,
+                )
+
+                val intent = Intent(context, ChildHomeWork::class.java)
+                intent.putExtra("isPreViewData", isHomeWorkData)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                context.startActivity(intent)
+            }
+
             if (!data.iframe.isNullOrEmpty()) {
                 video_player.visibility = View.VISIBLE
                 rytList.visibility = View.VISIBLE
                 rcyImgPDF.visibility = View.GONE
 
-                video_player.setOnClickListener {
-                    val commonList = data.file_path?.map {
-                        CommonFileData(type = it.type, path = it.url)
-                    }?.toMutableList() ?: mutableListOf()
-
-                    Constant.commonFileList = commonList
-                    Constant.selectedFileIndex = position
-
-                    val intent = Intent(context, FilesViewActivity::class.java)
-                    intent.putExtra(Constant.subjectName, data.title)
-                    context.startActivity(intent)
-                }
+//                video_player.setOnClickListener {
+//                    val commonList = data.file_path?.map {
+//                        CommonFileData(type = it.type, path = it.url)
+//                    }?.toMutableList() ?: mutableListOf()
+//
+//                    Constant.commonFileList = commonList
+//                    Constant.selectedFileIndex = position
+//
+//                    val intent = Intent(context, FilesViewActivity::class.java)
+//                    intent.putExtra(Constant.subjectName, data.title)
+//                    context.startActivity(intent)
+//                }
             } else {
                 if (data.file_path.isNullOrEmpty()) {
 //                    rytList.visibility = View.GONE
