@@ -2,6 +2,7 @@ package com.vs.schoolmessenger.Parent.RequestLeave
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Color
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
@@ -105,39 +106,67 @@ class LeaveRequestAdapter(
             textDate.text = Constant.convertDateTimeFormat(data.leave_from.toString()) +
                     " - " + Constant.convertDateTimeFormat(data.leave_to.toString())
 
-            textNoOfDays.text = if (data.no_of_days == "1") {
-                "( ${data.no_of_days} Day )"
-            } else {
-                "( ${data.no_of_days} Days )"
-            }
+//            textNoOfDays.text = if (data.no_of_days == "1") {
+//                "( ${data.no_of_days} Day )"
+//            } else {
+//                "( ${data.no_of_days} Days )"
+//            }
+
+            textNoOfDays.text = "${data.no_of_days} ${if (data.no_of_days == "1") "Day" else "Days"} Application"
+
 
             textReason.text = data.reason
+
 
             when (data.status) {
                 Constant.waiting_for_approval -> {
                     btnApprove.visibility = View.VISIBLE
-                    btnApprove.setBackgroundResource(R.drawable.bg_leave_waiting)
                     btnApprove.text = "Waiting"
-                    options.visibility = View.VISIBLE
-                    relbuttons.visibility = View.GONE
+                    btnApprove.setBackgroundColor(Color.parseColor("#fff0b2"))
+                    btnApprove.setTextColor(Color.parseColor("#FFB300"))
                 }
 
                 Constant.approved -> {
                     btnApprove.visibility = View.VISIBLE
-                    btnApprove.setBackgroundResource(R.drawable.bg_leave_approved)
                     btnApprove.text = "Approved"
-                    options.visibility = View.GONE
-                    relbuttons.visibility = View.GONE
+                    btnApprove.setBackgroundColor(Color.parseColor("#c2eecd"))
+                    btnApprove.setTextColor(Color.parseColor("#2E7D32"))
                 }
 
                 Constant.rejected -> {
                     btnApprove.visibility = View.VISIBLE
-                    btnApprove.setBackgroundResource(R.drawable.bg_leave_rejected)
                     btnApprove.text = "Rejected"
-                    options.visibility = View.GONE
-                    relbuttons.visibility = View.GONE
+                    btnApprove.setBackgroundColor(Color.parseColor("#ffebea"))
+                    btnApprove.setTextColor(Color.parseColor("#D32F2F"))
                 }
             }
+
+
+//            when (data.status) {
+//                Constant.waiting_for_approval -> {
+//                    btnApprove.visibility = View.VISIBLE
+//                    btnApprove.setBackgroundResource(R.drawable.bg_leave_waiting)
+//                    btnApprove.text = "Waiting"
+//                    options.visibility = View.VISIBLE
+//                    relbuttons.visibility = View.GONE
+//                }
+//
+//                Constant.approved -> {
+//                    btnApprove.visibility = View.VISIBLE
+//                    btnApprove.setBackgroundResource(R.drawable.bg_leave_approved)
+//                    btnApprove.text = "Approved"
+//                    options.visibility = View.GONE
+//                    relbuttons.visibility = View.GONE
+//                }
+//
+//                Constant.rejected -> {
+//                    btnApprove.visibility = View.VISIBLE
+//                    btnApprove.setBackgroundResource(R.drawable.bg_leave_rejected)
+//                    btnApprove.text = "Rejected"
+//                    options.visibility = View.GONE
+//                    relbuttons.visibility = View.GONE
+//                }
+//            }
 
             options.setOnClickListener {
                 if (relbuttons.visibility == View.VISIBLE) {

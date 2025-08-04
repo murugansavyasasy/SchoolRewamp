@@ -109,7 +109,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/ten"
-            android:layout_marginEnd="@dimen/ten"></androidx.recyclerview.widget.RecyclerView>
+            android:layout_marginEnd="@dimen/ten">
+        </androidx.recyclerview.widget.RecyclerView>
 
         <LinearLayout
             android:id="@+id/lytList"
