@@ -19,10 +19,8 @@ class AttachmentReportAdapter(
     private val context: Context,
     var isLoading: Boolean,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
-
     override fun getItemViewType(position: Int): Int {
         return if (isLoading) TYPE_SHIMMER else TYPE_DATA
     }
@@ -69,9 +67,9 @@ class AttachmentReportAdapter(
             listener: OnAttachmentReportClickListener,
             adapter: AttachmentReportAdapter,
         ) {
-            lblDate.text= item[position].can_delete.toString()
-            lblTitle.text=item[position].title.toString()
-            lblDescription.text=item[position].description.toString()
+            lblDate.text= item[position].created_on
+            lblTitle.text=item[position].title
+            lblDescription.text=item[position].description
 
 //                rcyImgPDF.adapter = AttachmentFilePathAdapter(
 //                    item.file_path, item, object : OnChildItemClickListener {
