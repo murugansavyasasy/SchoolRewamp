@@ -65,6 +65,7 @@ class InteractionWithStudentAdapter(
         return if (isLoading) 20 else filteredList.size
     }
 
+
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {

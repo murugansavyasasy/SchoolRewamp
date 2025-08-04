@@ -9,6 +9,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.JsonObject
@@ -64,8 +65,10 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
         appViewModel!!.init()
         authViewModel = ViewModelProvider(this).get(Auth::class.java)
         authViewModel!!.init()
+
         FirebaseMessaging.getInstance().isAutoInitEnabled = true
         setUpGradientSchool()
+
 
         accessChildView(
             binding,
@@ -115,7 +118,6 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
 
         isGetAcademicYear()
     }
-
     private fun isGetAcademicYear() {
         appViewModel!!.isGetAcademicYear(access_token, this)
 

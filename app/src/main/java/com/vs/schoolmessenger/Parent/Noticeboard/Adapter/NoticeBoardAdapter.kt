@@ -30,11 +30,15 @@ import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.imageview.ShapeableImageView
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
 import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
+import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.ChildHomeWork
+import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
+import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
 import com.vs.schoolmessenger.Parent.Noticeboard.Notice
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardClickListener
 import com.vs.schoolmessenger.R
@@ -141,8 +145,9 @@ class NoticeBoardAdapter(
 
         private val total_numbers: TextView = itemView.findViewById(R.id.total_numbers)
         private val remaindertag: TextView = itemView.findViewById(R.id.remaindertag)
+        private val header: CardView = itemView.findViewById(R.id.header)
 
-        @SuppressLint("ClickableViewAccessibility")
+        @SuppressLint("ClickableViewAccessibility", "SuspiciousIndentation")
         fun bind(noticeData: Notice, position: Int, adapter: NoticeBoardAdapter) {
 
 
@@ -164,20 +169,33 @@ class NoticeBoardAdapter(
             rytList2.visibility = if (hasFiles) View.VISIBLE else View.INVISIBLE
             total_numbers.visibility = View.GONE
 
-            if (hasIframe) {
-                video_player.setOnClickListener {
-                    val commonList = noticeData.file_path?.map {
-                        CommonFileData(type = it.type, path = it.url)
-                    }?.toMutableList() ?: mutableListOf()
+                header.setOnClickListener {
 
-                    Constant.commonFileList = commonList
-                    Constant.selectedFileIndex = position
+                    val convertedList = noticeData.file_path.map {
+                        GetFilePathDetails(
+                            type = it.type,
+                            url = it.url,
+                        )
+                    }
 
-                    val intent = Intent(context, FilesViewActivity::class.java)
-                    intent.putExtra(Constant.subjectName, noticeData.title)
+                    val isHomeWorkData = FilePreview(
+                        id = "",
+                        title = noticeData.title,
+                        description = noticeData.description,
+                        subjectName = "",
+                        sentBy = "",
+                        thumbnail = "",
+                        isUnread = true,
+                        isCompleted = true,
+                        isMenuType = Constant.M_NOTICEBOARD,
+                        fileList = convertedList,
+                    )
+
+                    val intent = Intent(context, ChildHomeWork::class.java)
+                    intent.putExtra("isPreViewData", isHomeWorkData)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     context.startActivity(intent)
                 }
-            }
 
             if (hasFiles) {
                 val fileList = noticeData.file_path!!

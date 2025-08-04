@@ -1,301 +1,412 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
-    android:fitsSystemWindows="true"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    android:background="#F5F7FA">
 
     <RelativeLayout
+        android:id="@+id/headerLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="@dimen/one_eighty"
+        android:background="#1672FA">
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/two_hundred">
+        <ImageView
+            android:layout_width="@dimen/thirty_five"
+            android:id="@+id/imgBurgerMenu"
+            android:src="@drawable/burger_menu"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/twenty_five"
+            android:layout_height="@dimen/thirty_five">
 
-            <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/lblGif"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:alpha="0.8"
-                android:background="@drawable/gradient_theme_school" />
-        </FrameLayout>
+        </ImageView>
 
 
-        <RelativeLayout
-            android:id="@+id/rlaSchoolDetail"
+        <TextView
+            android:id="@+id/username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="@dimen/ten"
-            android:visibility="visible">
+            android:layout_toEndOf="@+id/imgBurgerMenu"
+            android:layout_marginEnd="@dimen/ten"
+            android:layout_toStartOf="@+id/imgNotification"
+            android:layout_marginTop="@dimen/twenty_five"
+            android:text="Madhuri Sharma"
+            android:layout_marginStart="@dimen/ten"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/eighteen_sp"
+            style="@style/CustomTextStylePoppinsBold" />
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/imgSchoolLogo"
-                android:layout_width="@dimen/fifty"
-                android:layout_height="@dimen/fifty"
-                android:layout_centerVertical="true"
-                android:layout_marginTop="@dimen/ten"
-                android:src="@drawable/school_chimes"
-                app:civ_border_color="@android:color/black"
-                app:civ_border_width="0.5dp" />
-
-            <RelativeLayout
-                android:id="@+id/rytSchoolDetails"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/ten"
-                android:layout_marginTop="@dimen/fifteen"
-                android:layout_toStartOf="@+id/changeroll"
-                android:layout_toEndOf="@+id/imgSchoolLogo">
-
-                <TextView
-                    android:id="@+id/lblStaffRole"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/twenty"
-                    android:text=""
-                    android:textSize="@dimen/fourteen_sp" />
-
-                <TextView
-                    android:id="@+id/lblSchoolName"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/ten"
-                    android:layout_below="@+id/lblStaffRole"
-                    android:text=""
-                    android:textSize="@dimen/fourteen_sp" />
-
-                <TextView
-                    android:id="@+id/lblSchoolRegionalName"
-                    style="@style/CustomTextStylePoppinsMedium"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/lblSchoolName"
-                    android:layout_marginEnd="@dimen/ten"
-                    android:text=""
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"
-                    android:visibility="gone">
-
-                </TextView>
-
-                <TextView
-                    android:id="@+id/lblSchoolAddress"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/lblSchoolRegionalName"
-                    android:text=""
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp"
-                    android:visibility="gone" />
-            </RelativeLayout>
-
-
-            <TextView
-                android:id="@+id/changeroll"
-                style="@style/CustomTextStylePoppinsRegular"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="@dimen/twenty"
-                android:text="@string/change_role"
-                android:textColor="@color/navi_blue2"
-                android:textSize="@dimen/fifteen_sp"
-                android:visibility="visible" />
-
-
-            <ImageView
-                android:id="@+id/imgSearchClick"
-                android:layout_width="@dimen/thirty"
-                android:layout_height="@dimen/thirty"
-                android:layout_below="@+id/changeroll"
-                android:layout_marginTop="@dimen/fifteen"
-                android:layout_marginEnd="@dimen/ten"
-                android:layout_toStartOf="@+id/rytImageNotification"
-                android:src="@drawable/search_icon_white"
-                android:visibility="visible">
-            </ImageView>
-
-
-            <FrameLayout
-                android:id="@+id/rytImageNotification"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/changeroll"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="@dimen/fifteen">
-
-                <TextView
-                    android:id="@+id/lblNotificationCount"
-                    android:layout_width="@dimen/twenty_five"
-                    android:layout_height="@dimen/twenty_five"
-                    android:layout_marginStart="@dimen/ten"
-                    android:layout_marginEnd="@dimen/five"
-                    android:background="@drawable/bg_red_small_size"
-                    android:elevation="@dimen/ten"
-                    android:gravity="center"
-                    android:text="5"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/thirteen_sp"
-                    android:textStyle="bold"
-                    android:visibility="gone" />
-
-                <ImageView
-                    android:id="@+id/imgNotification"
-                    android:layout_width="@dimen/thirty"
-                    android:layout_height="@dimen/thirty"
-                    android:src="@drawable/notification_icon_white" />
-
-            </FrameLayout>
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rlaAttendanceReport"
+        <TextView
+            android:id="@+id/lblSchoolName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/rlaSchoolDetail"
-            android:layout_marginStart="@dimen/twenty"
-            android:layout_marginEnd="@dimen/twenty"
+            android:layout_toEndOf="@+id/imgBurgerMenu"
+            android:layout_below="@+id/username"
+            android:layout_marginStart="@dimen/ten"
+            android:layout_toStartOf="@+id/imgNotification"
             android:layout_marginTop="@dimen/ten"
-            android:background="@drawable/rect_white_light_radious"
-            android:elevation="@dimen/ten"
-            android:padding="@dimen/fifteen">
-
-            <TextView
-                android:id="@+id/lblReportAttendance"
-                style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/attendance_report"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp">
-
-            </TextView>
-
-            <TextView
-                android:id="@+id/lblDate"
-                style="@style/CustomTextStylePoppinsRegular"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/lblReportAttendance"
-                android:layout_marginTop="@dimen/five"
-                android:text="01, May 2025"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp">
-
-            </TextView>
-
-            <TextView
-                android:id="@+id/lblViewDetails"
-                style="@style/CustomTextStylePoppinsRegular"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:gravity="center_vertical"
-                android:text="@string/view_details"
-                android:textColor="@color/navi_blue1"
-                android:textSize="@dimen/thirteen_sp">
-
-            </TextView>
-
-        </RelativeLayout>
+            android:text="Madhuri Sharma"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/fifteen_sp" />
 
 
-        <RelativeLayout
-            android:id="@+id/rytSearchParent"
+        <ImageView
+            android:id="@+id/imgNotification"
+            android:layout_width="@dimen/twenty_five"
+            android:layout_height="@dimen/twenty_five"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="@dimen/fourty_five"
+            android:layout_marginEnd="16dp"
+            android:layout_toStartOf="@+id/profileImage"
+            android:scaleType="centerCrop"
+            android:src="@drawable/notification_icon" />
+
+        <ImageView
+            android:id="@+id/profileImage"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/bg_circle_1"
+            android:scaleType="centerCrop"
+            android:src="@drawable/user_sample" />
+
+        <com.vs.schoolmessenger.Utils.DashBoardWaveDesign
+            android:id="@+id/waveView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/rlaAttendanceReport"
-            android:layout_marginTop="-20dp"
-            android:background="@drawable/rounded_top_corners">
-
-            <RelativeLayout
-                android:layout_marginTop="@dimen/twenty"
-                android:layout_width="match_parent"
-                android:id="@+id/rytSearchBar"
-                android:visibility="gone"
-                android:layout_marginStart="@dimen/five"
-                android:layout_marginEnd="@dimen/five"
-                android:layout_height="wrap_content">
-                <RelativeLayout
-                  android:id="@+id/rytSearch"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/thirty_five"
-                    android:layout_marginTop="@dimen/ten"
-                    android:layout_marginStart="@dimen/ten"
-                    android:layout_marginEnd="@dimen/ten"
-                    android:background="@drawable/rect_grey">
-
-                <ImageView
-                    android:id="@+id/imgSearch"
-                    android:layout_width="@dimen/thirty"
-                    android:layout_height="@dimen/thirty"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/ten"
-                    android:src="@drawable/ic_search" />
-
-                <EditText
-                    android:id="@+id/txtSearchMenu"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@id/imgSearch"
-                    android:background="@android:color/transparent"
-                    android:hint="@string/lblSearch"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/thirteen_sp" />
-            </RelativeLayout>
-
-                <ImageView
-                    android:background="@drawable/white_circle_bg"
-                    android:id="@+id/imgSearchCancel"
-                    android:padding="@dimen/five"
-                    android:layout_width="@dimen/twenty_five"
-                    android:layout_height="@dimen/twenty_five"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="@dimen/eight"
-                    android:layout_alignParentTop="true"
-                    android:src="@drawable/del_icon"/>
-
-            </RelativeLayout>
-
-
-            <TextView
-                android:id="@+id/lblCategories"
-                style="@style/CustomTextStylePoppinsBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/rytSearchBar"
-                android:layout_marginStart="@dimen/twenty"
-                android:layout_marginTop="@dimen/thirty_five"
-                android:text="@string/categories"
-                android:textSize="@dimen/fifteen_sp"
-                android:visibility="gone">
-
-            </TextView>
-
-
-        </RelativeLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewMenus"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/rytSearchParent"
-            android:background="@color/white"
-            android:visibility="visible"
-            android:paddingBottom="@dimen/ten"
-            tools:listitem="@layout/menu_item_card" />
+            android:layout_height="150dp"
+            android:layout_alignParentBottom="true" />
     </RelativeLayout>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/autoScrollRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@id/headerLayout"
+        android:orientation="horizontal"
+        tools:listitem="@layout/resent_using_app_item" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:id="@+id/dotsIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/autoScrollRecyclerView"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:orientation="horizontal" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/gridRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/ten"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_below="@id/dotsIndicator"
+        tools:listitem="@layout/dashboard_app_item" />
+</RelativeLayout>
+
+
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+    <!--<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--    xmlns:tools="http://schemas.android.com/tools"-->
+    <!--    android:layout_width="match_parent"-->
+    <!--    android:fitsSystemWindows="true"-->
+    <!--    android:layout_height="match_parent">-->
+
+
+    <!--    <RelativeLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent">-->
+
+    <!--        <FrameLayout-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="@dimen/two_hundred">-->
+
+    <!--            <com.airbnb.lottie.LottieAnimationView-->
+    <!--                android:id="@+id/lblGif"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="match_parent" />-->
+
+    <!--            <View-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="match_parent"-->
+    <!--                android:alpha="0.8"-->
+    <!--                android:background="@drawable/gradient_theme_school" />-->
+    <!--        </FrameLayout>-->
+
+
+    <!--        <RelativeLayout-->
+    <!--            android:id="@+id/rlaSchoolDetail"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:paddingHorizontal="@dimen/ten"-->
+    <!--            android:visibility="visible">-->
+
+    <!--            <de.hdodenhof.circleimageview.CircleImageView-->
+    <!--                android:id="@+id/imgSchoolLogo"-->
+    <!--                android:layout_width="@dimen/fifty"-->
+    <!--                android:layout_height="@dimen/fifty"-->
+    <!--                android:layout_centerVertical="true"-->
+    <!--                android:layout_marginTop="@dimen/ten"-->
+    <!--                android:src="@drawable/school_chimes"-->
+    <!--                app:civ_border_color="@android:color/black"-->
+    <!--                app:civ_border_width="0.5dp" />-->
+
+    <!--            <RelativeLayout-->
+    <!--                android:id="@+id/rytSchoolDetails"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginStart="@dimen/ten"-->
+    <!--                android:layout_marginTop="@dimen/fifteen"-->
+    <!--                android:layout_toStartOf="@+id/changeroll"-->
+    <!--                android:layout_toEndOf="@+id/imgSchoolLogo">-->
+
+    <!--                <TextView-->
+    <!--                    android:id="@+id/lblStaffRole"-->
+    <!--                    style="@style/CustomTextStylePoppinsBold"-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_marginTop="@dimen/twenty"-->
+    <!--                    android:text=""-->
+    <!--                    android:textSize="@dimen/fourteen_sp" />-->
+
+    <!--                <TextView-->
+    <!--                    android:id="@+id/lblSchoolName"-->
+    <!--                    style="@style/CustomTextStylePoppinsBold"-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_marginTop="@dimen/ten"-->
+    <!--                    android:layout_below="@+id/lblStaffRole"-->
+    <!--                    android:text=""-->
+    <!--                    android:textSize="@dimen/fourteen_sp" />-->
+
+    <!--                <TextView-->
+    <!--                    android:id="@+id/lblSchoolRegionalName"-->
+    <!--                    style="@style/CustomTextStylePoppinsMedium"-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_below="@+id/lblSchoolName"-->
+    <!--                    android:layout_marginEnd="@dimen/ten"-->
+    <!--                    android:text=""-->
+    <!--                    android:textColor="@color/black"-->
+    <!--                    android:textSize="@dimen/thirteen_sp"-->
+    <!--                    android:visibility="gone">-->
+
+    <!--                </TextView>-->
+
+    <!--                <TextView-->
+    <!--                    android:id="@+id/lblSchoolAddress"-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_below="@+id/lblSchoolRegionalName"-->
+    <!--                    android:text=""-->
+    <!--                    android:textColor="@color/black"-->
+    <!--                    android:textSize="@dimen/thirteen_sp"-->
+    <!--                    android:visibility="gone" />-->
+    <!--            </RelativeLayout>-->
+
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/changeroll"-->
+    <!--                style="@style/CustomTextStylePoppinsRegular"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_alignParentEnd="true"-->
+    <!--                android:layout_marginTop="@dimen/twenty"-->
+    <!--                android:text="@string/change_role"-->
+    <!--                android:textColor="@color/navi_blue2"-->
+    <!--                android:textSize="@dimen/fifteen_sp"-->
+    <!--                android:visibility="visible" />-->
+
+
+    <!--            <ImageView-->
+    <!--                android:id="@+id/imgSearchClick"-->
+    <!--                android:layout_width="@dimen/thirty"-->
+    <!--                android:layout_height="@dimen/thirty"-->
+    <!--                android:layout_below="@+id/changeroll"-->
+    <!--                android:layout_marginTop="@dimen/fifteen"-->
+    <!--                android:layout_marginEnd="@dimen/ten"-->
+    <!--                android:layout_toStartOf="@+id/rytImageNotification"-->
+    <!--                android:src="@drawable/search_icon_white"-->
+    <!--                android:visibility="visible">-->
+    <!--            </ImageView>-->
+
+
+    <!--            <FrameLayout-->
+    <!--                android:id="@+id/rytImageNotification"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_below="@+id/changeroll"-->
+    <!--                android:layout_alignParentEnd="true"-->
+    <!--                android:layout_marginTop="@dimen/fifteen">-->
+
+    <!--                <TextView-->
+    <!--                    android:id="@+id/lblNotificationCount"-->
+    <!--                    android:layout_width="@dimen/twenty_five"-->
+    <!--                    android:layout_height="@dimen/twenty_five"-->
+    <!--                    android:layout_marginStart="@dimen/ten"-->
+    <!--                    android:layout_marginEnd="@dimen/five"-->
+    <!--                    android:background="@drawable/bg_red_small_size"-->
+    <!--                    android:elevation="@dimen/ten"-->
+    <!--                    android:gravity="center"-->
+    <!--                    android:text="5"-->
+    <!--                    android:textColor="@color/white"-->
+    <!--                    android:textSize="@dimen/thirteen_sp"-->
+    <!--                    android:textStyle="bold"-->
+    <!--                    android:visibility="gone" />-->
+
+    <!--                <ImageView-->
+    <!--                    android:id="@+id/imgNotification"-->
+    <!--                    android:layout_width="@dimen/thirty"-->
+    <!--                    android:layout_height="@dimen/thirty"-->
+    <!--                    android:src="@drawable/notification_icon_white" />-->
+
+    <!--            </FrameLayout>-->
+    <!--        </RelativeLayout>-->
+
+    <!--        <RelativeLayout-->
+    <!--            android:id="@+id/rlaAttendanceReport"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_below="@+id/rlaSchoolDetail"-->
+    <!--            android:layout_marginStart="@dimen/twenty"-->
+    <!--            android:layout_marginEnd="@dimen/twenty"-->
+    <!--            android:layout_marginTop="@dimen/ten"-->
+    <!--            android:background="@drawable/rect_white_light_radious"-->
+    <!--            android:elevation="@dimen/ten"-->
+    <!--            android:padding="@dimen/fifteen">-->
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/lblReportAttendance"-->
+    <!--                style="@style/CustomTextStylePoppinsBold"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:text="@string/attendance_report"-->
+    <!--                android:textColor="@color/black"-->
+    <!--                android:textSize="@dimen/thirteen_sp">-->
+
+    <!--            </TextView>-->
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/lblDate"-->
+    <!--                style="@style/CustomTextStylePoppinsRegular"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_below="@+id/lblReportAttendance"-->
+    <!--                android:layout_marginTop="@dimen/five"-->
+    <!--                android:text="01, May 2025"-->
+    <!--                android:textColor="@color/black"-->
+    <!--                android:textSize="@dimen/thirteen_sp">-->
+
+    <!--            </TextView>-->
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/lblViewDetails"-->
+    <!--                style="@style/CustomTextStylePoppinsRegular"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_alignParentEnd="true"-->
+    <!--                android:layout_centerVertical="true"-->
+    <!--                android:gravity="center_vertical"-->
+    <!--                android:text="@string/view_details"-->
+    <!--                android:textColor="@color/navi_blue1"-->
+    <!--                android:textSize="@dimen/thirteen_sp">-->
+
+    <!--            </TextView>-->
+
+    <!--        </RelativeLayout>-->
+
+
+    <!--        <RelativeLayout-->
+    <!--            android:id="@+id/rytSearchParent"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_below="@+id/rlaAttendanceReport"-->
+    <!--            android:layout_marginTop="-20dp"-->
+    <!--            android:background="@drawable/rounded_top_corners">-->
+
+    <!--            <RelativeLayout-->
+    <!--                android:layout_marginTop="@dimen/twenty"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:id="@+id/rytSearchBar"-->
+    <!--                android:visibility="gone"-->
+    <!--                android:layout_marginStart="@dimen/five"-->
+    <!--                android:layout_marginEnd="@dimen/five"-->
+    <!--                android:layout_height="wrap_content">-->
+    <!--                <RelativeLayout-->
+    <!--                  android:id="@+id/rytSearch"-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="@dimen/thirty_five"-->
+    <!--                    android:layout_marginTop="@dimen/ten"-->
+    <!--                    android:layout_marginStart="@dimen/ten"-->
+    <!--                    android:layout_marginEnd="@dimen/ten"-->
+    <!--                    android:background="@drawable/rect_grey">-->
+
+    <!--                <ImageView-->
+    <!--                    android:id="@+id/imgSearch"-->
+    <!--                    android:layout_width="@dimen/thirty"-->
+    <!--                    android:layout_height="@dimen/thirty"-->
+    <!--                    android:layout_centerVertical="true"-->
+    <!--                    android:layout_marginStart="@dimen/ten"-->
+    <!--                    android:src="@drawable/ic_search" />-->
+
+    <!--                <EditText-->
+    <!--                    android:id="@+id/txtSearchMenu"-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_centerVertical="true"-->
+    <!--                    android:layout_toEndOf="@id/imgSearch"-->
+    <!--                    android:background="@android:color/transparent"-->
+    <!--                    android:hint="@string/lblSearch"-->
+    <!--                    android:textColor="@color/black"-->
+    <!--                    android:textSize="@dimen/thirteen_sp" />-->
+    <!--            </RelativeLayout>-->
+
+    <!--                <ImageView-->
+    <!--                    android:background="@drawable/white_circle_bg"-->
+    <!--                    android:id="@+id/imgSearchCancel"-->
+    <!--                    android:padding="@dimen/five"-->
+    <!--                    android:layout_width="@dimen/twenty_five"-->
+    <!--                    android:layout_height="@dimen/twenty_five"-->
+    <!--                    android:layout_alignParentEnd="true"-->
+    <!--                    android:layout_marginEnd="@dimen/eight"-->
+    <!--                    android:layout_alignParentTop="true"-->
+    <!--                    android:src="@drawable/del_icon"/>-->
+
+    <!--            </RelativeLayout>-->
+
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/lblCategories"-->
+    <!--                style="@style/CustomTextStylePoppinsBold"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_below="@+id/rytSearchBar"-->
+    <!--                android:layout_marginStart="@dimen/twenty"-->
+    <!--                android:layout_marginTop="@dimen/thirty_five"-->
+    <!--                android:text="@string/categories"-->
+    <!--                android:textSize="@dimen/fifteen_sp"-->
+    <!--                android:visibility="gone">-->
+
+    <!--            </TextView>-->
+
+
+    <!--        </RelativeLayout>-->
+
+    <!--        <androidx.recyclerview.widget.RecyclerView-->
+    <!--            android:id="@+id/recyclerViewMenus"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="match_parent"-->
+    <!--            android:layout_below="@id/rytSearchParent"-->
+    <!--            android:background="@color/white"-->
+    <!--            android:visibility="visible"-->
+    <!--            android:paddingBottom="@dimen/ten"-->
+    <!--            tools:listitem="@layout/menu_item_card" />-->
+    <!--    </RelativeLayout>-->
+
+
+    <!--</androidx.constraintlayout.widget.ConstraintLayout>-->

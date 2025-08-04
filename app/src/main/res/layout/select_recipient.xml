@@ -6,8 +6,6 @@
     android:background="@color/mild_grey5">
 
 
-
-
     <RelativeLayout
         android:id="@+id/rlaTitle"
         android:layout_width="match_parent"

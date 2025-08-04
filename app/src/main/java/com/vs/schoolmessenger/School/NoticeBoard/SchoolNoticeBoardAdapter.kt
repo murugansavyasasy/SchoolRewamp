@@ -25,12 +25,17 @@ import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.CommonScreens.CommonFileData
 import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
+import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.ChildHomeWork
+import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
+import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
 import com.vs.schoolmessenger.Parent.Noticeboard.Adapter.FilePathAdapter
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReport
 import com.vs.schoolmessenger.School.NoticeBoard.Model.NoticeStaffData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
@@ -49,6 +54,8 @@ class SchoolNoticeBoardAdapter(
     private val TYPE_DATA = 1
     private var fullList: List<NoticeStaffData> = itemList ?: listOf()
     private var filteredList: List<NoticeStaffData> = itemList ?: listOf()
+    private var originalList: List<NoticeStaffData> = ArrayList(itemList ?: emptyList())
+
 
     init {
         fullList = itemList ?: listOf()
@@ -108,24 +115,28 @@ class SchoolNoticeBoardAdapter(
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
                 filteredList = results?.values as? List<NoticeStaffData> ?: listOf()
-                listener.onSearchResultEmpty(filteredList.isEmpty())
+            //    listener.onSearchResultEmpty(filteredList.isEmpty())
                 notifyDataSetChanged()
             }
 
         }
     }
 
+    fun updateList(newData: List<NoticeStaffData>) {
+        itemList = newData
+        originalList = newData
+        isLoading = false
+        notifyDataSetChanged()
+    }
+
     fun removeItemAt(position: Int) {
         if (position in filteredList.indices) {
-            val removedNotice = filteredList[position]
-            filteredList = filteredList.toMutableList().apply {
-                removeAt(position)
-            }
-            fullList = fullList.filterNot { it.id == removedNotice.id }
+            val mutableList = filteredList.toMutableList()
+            val removedItem = mutableList.removeAt(position)
+            filteredList = mutableList
+            originalList = originalList.filter { it != removedItem }
             notifyItemRemoved(position)
-            if (filteredList.isEmpty()) {
-                listener.onSearchResultEmpty(true)
-            }
+            notifyItemRangeChanged(position, filteredList.size)
         }
     }
 
@@ -153,6 +164,7 @@ class SchoolNoticeBoardAdapter(
         private val total_numbers: TextView = itemView.findViewById(R.id.total_numbers)
         private val remaindertag: TextView = itemView.findViewById(R.id.remaindertag)
         private val options: ImageView = itemView.findViewById(R.id.options)
+        private val header: CardView = itemView.findViewById(R.id.header)
 
         @SuppressLint("ClickableViewAccessibility")
         fun bind(noticeData: NoticeStaffData, position: Int, adapter: SchoolNoticeBoardAdapter) {
@@ -198,58 +210,12 @@ class SchoolNoticeBoardAdapter(
             loadingBar.visibility = View.GONE
             options.visibility = View.VISIBLE
 
-            if (noticeData.can_edit != true && noticeData.can_delete != true) {
-
+            if (!noticeData.can_edit && !noticeData.can_delete) {
                 options.visibility = View.GONE
             }
-
             options.setOnClickListener {
-                if (noticeData.can_edit != true && noticeData.can_delete != true) {
-                    return@setOnClickListener
-                }
-
-                val popup = PopupMenu(context, options)
-                popup.menuInflater.inflate(R.menu.notice_options_menu, popup.menu)
-                popup.menu.findItem(R.id.menu_edit).isVisible = noticeData.can_edit == true
-                popup.menu.findItem(R.id.menu_delete).isVisible = noticeData.can_delete == true
-
-                try {
-                    val fields = popup.javaClass.declaredFields
-                    for (field in fields) {
-                        if (field.name == "mPopup") {
-                            field.isAccessible = true
-                            val menuPopupHelper = field.get(popup)
-                            val classPopupHelper = Class.forName(menuPopupHelper.javaClass.name)
-                            val setForceIcons =
-                                classPopupHelper.getMethod("setForceShowIcon", Boolean::class.java)
-                            setForceIcons.invoke(menuPopupHelper, true)
-                            break
-                        }
-                    }
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-
-                popup.setOnMenuItemClickListener { menuItem ->
-                    when (menuItem.itemId) {
-                        R.id.menu_edit -> {
-                            // Uncomment
-                            // listener.onEditNotice(noticeData)
-                            true
-                        }
-
-                        R.id.menu_delete -> {
-                            listener.onDeleteNotice(noticeData.id, noticeData.id, adapterPosition)
-                            true
-                        }
-
-                        else -> false
-                    }
-                }
-
-                popup.show()
+                listener.onClickListener(noticeData,it, adapterPosition)
             }
-
 
             val hasIframe = !noticeData.iframe.isNullOrEmpty()
             val hasFiles = !noticeData.file_path.isNullOrEmpty()
@@ -260,19 +226,33 @@ class SchoolNoticeBoardAdapter(
             rytList2.visibility = if (hasFiles) View.VISIBLE else View.INVISIBLE
             total_numbers.visibility = View.GONE
 
-            if (hasIframe) {
-                video_player.setOnClickListener {
-                    val commonList = noticeData.file_path?.map {
-                        CommonFileData(type = it.type, path = it.url)
-                    }?.toMutableList() ?: mutableListOf()
+            header.setOnClickListener {
 
-                    Constant.commonFileList = commonList
-                    Constant.selectedFileIndex = position
-
-                    val intent = Intent(context, FilesViewActivity::class.java)
-                    intent.putExtra(Constant.subjectName, noticeData.title)
-                    context.startActivity(intent)
+                val convertedList = noticeData.file_path.map {
+                    GetFilePathDetails(
+                        type = it.type,
+                        url = it.url,
+                    )
                 }
+
+
+                val isHomeWorkData = FilePreview(
+                    id = "",
+                    title = noticeData.title,
+                    description = noticeData.description,
+                    subjectName = "",
+                    sentBy = "",
+                    thumbnail = "",
+                    isUnread = true,
+                    isCompleted = true,
+                    isMenuType = Constant.M_NOTICEBOARD,
+                    fileList = convertedList,
+                )
+
+                val intent = Intent(context, ChildHomeWork::class.java)
+                intent.putExtra("isPreViewData", isHomeWorkData)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                context.startActivity(intent)
             }
 
             if (hasFiles) {
