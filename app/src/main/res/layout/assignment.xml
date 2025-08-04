@@ -433,9 +433,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/lnrParent"
-            android:layout_marginStart="@dimen/fifteen"
+            android:layout_marginStart="5dp"
             android:layout_marginTop="@dimen/twenty"
-            android:layout_marginEnd="@dimen/fifteen"
+            android:layout_marginEnd="5dp"
             android:visibility="gone">
 
             <LinearLayout
@@ -520,7 +520,8 @@
                 android:id="@+id/rcyAssignmentReport"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/line2"></androidx.recyclerview.widget.RecyclerView>
+                android:layout_below="@+id/line2">
+            </androidx.recyclerview.widget.RecyclerView>
 
 
             <LinearLayout

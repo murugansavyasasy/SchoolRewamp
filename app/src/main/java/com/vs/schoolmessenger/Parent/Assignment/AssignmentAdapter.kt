@@ -18,6 +18,7 @@ import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.ImageView
+import android.widget.PopupMenu
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -78,13 +79,16 @@ class AssignmentAdapter(
         private val lblSubmissionDue: TextView = itemView.findViewById(R.id.lblSubmissionDue)
         private val lblSubmitted: TextView = itemView.findViewById(R.id.lblSubmitted)
         private val lblNotSubmitted: TextView = itemView.findViewById(R.id.lblNotSubmitted)
+        private val createddate: TextView = itemView.findViewById(R.id.createddate)
         private val lblSendby: TextView = itemView.findViewById(R.id.lblSendby)
         private val rytList: RelativeLayout = itemView.findViewById(R.id.rytList)
         private val rcyAssignment: RecyclerView = itemView.findViewById(R.id.rcyAssignment)
         private val webView: WebView = itemView.findViewById(R.id.webView)
         private val progressBar: ProgressBar = itemView.findViewById(R.id.loadingBar)
-        private val indicator: CircleIndicator2 = itemView.findViewById(R.id.indicator)
+//        private val indicator: CircleIndicator2 = itemView.findViewById(R.id.indicator)
         private val imgDelete: ImageView = itemView.findViewById(R.id.imgDelete)
+
+        private val options: ImageView = itemView.findViewById(R.id.options)
 
         @SuppressLint("ClickableViewAccessibility", "SetJavaScriptEnabled")
         fun bind(
@@ -96,8 +100,9 @@ class AssignmentAdapter(
             lblTitle.text = data.title
             lblDescription.text = data.description
             lblSubject.text = data.subject
-            lblCategotry.text = data.category
-            lblSubmissionDue.text = data.end_date
+            lblCategotry.text = "Category"+" - "+data.category
+            lblSubmissionDue.text = "Submission Due"+" - "+data.end_date
+            createddate.text = data.created_date
             lblSubmitted.text = "Submitted : ${data.submitted_count}"
             lblNotSubmitted.text = "NotSubmitted : ${data.total_count}"
             lblSendby.text = data.created_date
@@ -126,12 +131,12 @@ class AssignmentAdapter(
                 LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             rcyAssignment.adapter = fileAdapter
 
-            if (data.file_path.size > 1) {
-                indicator.visibility = View.VISIBLE
-                indicator.attachToRecyclerView(rcyAssignment)
-            } else {
-                indicator.visibility = View.GONE
-            }
+//            if (data.file_path.size > 1) {
+//                indicator.visibility = View.VISIBLE
+//                indicator.attachToRecyclerView(rcyAssignment)
+//            } else {
+//                indicator.visibility = View.GONE
+//            }
 
             webView.setBackgroundColor(Color.BLACK)
             webView.setOnTouchListener { _, event ->
@@ -153,24 +158,66 @@ class AssignmentAdapter(
             lblSubmitted.setOnClickListener { listener.onSubmittedClick(data) }
             lblNotSubmitted.setOnClickListener { listener.onNotSubmittedClick(data) }
 
-            imgDelete.setOnClickListener {
-                val pos = adapterPosition
-                if (pos != RecyclerView.NO_POSITION) {
-                    AlertDialog.Builder(context)
-                        .setTitle("Delete Confirmation")
-                        .setMessage("Are you sure you want to delete this assignment?")
-                        .setPositiveButton("Yes") { dialog, _ ->
-                            adapter.itemList.removeAt(pos)
-                            adapter.notifyItemRemoved(pos)
-                            listener.onDeleteClick(data)
-                            dialog.dismiss()
+
+
+            options.setOnClickListener {
+                val popup = PopupMenu(context, options)
+                popup.menuInflater.inflate(R.menu.notice_options_menu, popup.menu)
+
+                try {
+                    val fields = popup.javaClass.declaredFields
+                    for (field in fields) {
+                        if (field.name == "mPopup") {
+                            field.isAccessible = true
+                            val menuPopupHelper = field.get(popup)
+                            val classPopupHelper = Class.forName(menuPopupHelper.javaClass.name)
+                            val setForceIcons =
+                                classPopupHelper.getMethod("setForceShowIcon", Boolean::class.java)
+                            setForceIcons.invoke(menuPopupHelper, true)
+                            break
                         }
-                        .setNegativeButton("No") { dialog, _ ->
-                            dialog.dismiss()
-                        }
-                        .show()
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
+                val pos = adapterPosition
+                popup.setOnMenuItemClickListener {
+
+                    menuItem ->
+                    when (menuItem.itemId) {
+                        R.id.menu_edit -> {
+                            // Uncomment
+                            // listener.onEditNotice(noticeData)
+                            true
+                        }
+                        R.id.menu_delete -> {
+                            val pos = adapterPosition
+                            if (pos != RecyclerView.NO_POSITION) {
+                                AlertDialog.Builder(context)
+                                    .setTitle("Delete Confirmation")
+                                    .setMessage("Are you sure you want to delete this assignment?")
+                                    .setPositiveButton("Yes") { dialog, _ ->
+                                        adapter.itemList.removeAt(pos)
+                                        adapter.notifyItemRemoved(pos)
+                                        listener.onDeleteClick(data)
+                                        dialog.dismiss()
+                                    }
+                                    .setNegativeButton("No") { dialog, _ ->
+                                        dialog.dismiss()
+                                    }
+                                    .show()
+                            }
+                            true
+                        }
+
+                        else -> false
+                    }
+                }
+
+                popup.show()
             }
+
+
         }
 
         private fun loadWebView(url: String) {
