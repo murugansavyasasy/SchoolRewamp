@@ -54,6 +54,10 @@ class InteractionWithQuestionAdapter(
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val questionText: TextView = itemView.findViewById(R.id.questionText)
         private val answerText: TextView = itemView.findViewById(R.id.answerText)
+        private val more_options: TextView = itemView.findViewById(R.id.more_options)
+        private val linear_layout: TextView = itemView.findViewById(R.id.linear_layout)
+
+
 
 
         @SuppressLint("ClickableViewAccessibility")
@@ -66,12 +70,13 @@ class InteractionWithQuestionAdapter(
             val popupHandler = View.OnClickListener {
                 showPopup(it, chat, listener,position)
             }
-
             questionText.setOnClickListener(popupHandler)
             questionText.setOnLongClickListener {
                 popupHandler.onClick(it)
                 true
             }
+            more_options.setOnClickListener (popupHandler)
+            linear_layout.setOnClickListener (popupHandler)
         }
 
 
