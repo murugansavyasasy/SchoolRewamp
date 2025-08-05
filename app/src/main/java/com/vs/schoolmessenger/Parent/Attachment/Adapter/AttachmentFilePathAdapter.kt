@@ -67,6 +67,7 @@ class AttachmentFilePathAdapter (
             // Bind actual data when loading is complete
 
             holder.bind(GetFilePathDetailsData!![position], parentData, position, this)
+
         }
     }
 
@@ -79,6 +80,8 @@ class AttachmentFilePathAdapter (
         private val DefaultImage: ImageView = itemView.findViewById(R.id.ImgPDF)
         private val ImgOrDocumentType:ImageView=itemView.findViewById(R.id.imageOrDocumentType)
         private val WebViewThumbnail:WebView=itemView.findViewById(R.id.WVThumbnaildocument)
+        private val playIcon: ImageView = itemView.findViewById(R.id.playButtonOverlay)
+
 
         private val loadingBar: ProgressBar = itemView.findViewById(R.id.loadingBar)
 
@@ -132,6 +135,19 @@ class AttachmentFilePathAdapter (
                 Constant.EXCEL -> {
                     ImgOrDocumentType.setBackgroundResource(R.drawable.excel_icon)
                     openDocumentInWebView(data.url)
+                }
+                Constant.VIDEO -> {
+                    playIcon.visibility = View.VISIBLE
+                    Glide.with(context)
+                        .load(data.url)
+                        .placeholder(R.drawable.video_icon2)
+                        .into(DefaultImage)
+                    WebViewThumbnail.visibility = View.GONE
+                    DefaultImage.visibility = View.VISIBLE
+                }
+
+                else -> {
+                    playIcon.visibility = View.GONE
                 }
             }
 

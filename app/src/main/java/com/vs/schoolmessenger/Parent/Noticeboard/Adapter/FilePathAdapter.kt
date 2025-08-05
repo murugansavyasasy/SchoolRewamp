@@ -145,6 +145,11 @@ class FilePathAdapter (
                     DefaultImage.setImageResource(R.drawable.excel_icon)
                     openDocumentInWebView(data.url)
                 }
+
+                Constant.VIDEO -> {
+                    DefaultImage.setImageResource(R.drawable.play)
+                    openDocumentInWebView(data.url)
+                }
             }
 
             fileItem.setOnClickListener {

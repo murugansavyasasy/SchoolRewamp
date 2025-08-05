@@ -23,9 +23,6 @@
             android:id="@+id/imagebanner"
             android:src="@drawable/biometric_security"/>
 
-
-
-
     </androidx.cardview.widget.CardView>
 
 
@@ -72,13 +69,5 @@
         android:layout_alignStart="@+id/cardview"
         android:layout_marginTop="10dp"
         android:textSize="16sp"/>
-
-
-
-
-
-
-
-
 
 </RelativeLayout>

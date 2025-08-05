@@ -4,246 +4,454 @@
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/ten"
     android:layout_marginEnd="@dimen/ten"
+    android:padding="@dimen/five"
     android:fitsSystemWindows="true">
 
     <RelativeLayout
         android:id="@+id/rytListItem"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rect_shadow_white">
+        android:layout_height="wrap_content">
 
 
-    <ImageView
-        android:id="@+id/imgNewImage"
-        android:layout_width="@dimen/eighty"
-        android:layout_height="@dimen/eighty"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="-30dp"
-        android:elevation="@dimen/ten"
-        android:src="@drawable/new_icon"
-        android:visibility="gone">
-    </ImageView>
-
-
-    <ImageView
-        android:id="@+id/imgNoticeBoardPin"
-        android:layout_width="@dimen/thirty"
-        android:layout_height="@dimen/thirty"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="@dimen/twenty"
-        android:elevation="10dp"
-        android:src="@drawable/noticeboard_pin"
-        android:visibility="gone">
-
-    </ImageView>
-
-    <ImageView
-        android:id="@+id/imgBgPin"
-        android:layout_width="@dimen/thirteen"
-        android:layout_height="@dimen/thirteen"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/eighteen"
-        android:elevation="10dp"
-        android:src="@drawable/circle_dark_blue"
-        android:visibility="gone">
-    </ImageView>
-
-    <RelativeLayout
-        android:id="@+id/rlaImageReport"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/ten"
-        android:visibility="visible">
-
-        <TextView
-            android:id="@+id/LblHWSubjectName"
-            style="@style/CustomTextStylePoppinsBold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginStart="@dimen/ten"
-            android:text="Annual Day celebrations"
-            android:textColor="@color/black"
-            android:textSize="@dimen/eighteen_sp" />
-
-        <LinearLayout
-            android:id="@+id/lnrDataTime"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/lblEventTimeImage"
-            android:layout_marginTop="@dimen/five"
-            android:layout_marginEnd="@dimen/ten"
-            android:layout_marginBottom="@dimen/two"
-            android:gravity="end|center">
-
-            <TextView
-                android:id="@+id/lblDateImage"
-                style="@style/CustomTextStylePoppinsMedium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/five"
-                android:text="15 Nov 2024"
-                android:textColor="@color/black"
-                android:textSize="@dimen/twele_sp"
-                android:textStyle="normal" />
-
-            <TextView
-                android:id="@+id/lblTimeImage"
-                style="@style/CustomTextStylePoppinsMedium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="99:99 AM"
-                android:textColor="@color/grey"
-                android:textSize="@dimen/twele_sp"
-                android:textStyle="normal" />
-
-        </LinearLayout>
-
-        <RelativeLayout
-            android:id="@+id/rlaSelectText"
-            android:layout_width="@dimen/hundred"
-            android:layout_height="@dimen/fourty"
-            android:layout_below="@+id/lnrDataTime"
+        <ImageView
+            android:id="@+id/imgNewImage"
+            android:layout_width="@dimen/eighty"
+            android:layout_height="@dimen/eighty"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="@dimen/three"
-            android:layout_marginEnd="@dimen/ten"
-            android:layout_marginBottom="@dimen/twenty"
-            android:background="@drawable/rect_blue_and_green_small_radious"
-            android:gravity="center"
-            android:padding="@dimen/five"
+            android:layout_marginTop="-30dp"
+            android:elevation="@dimen/ten"
+            android:src="@drawable/new_icon"
             android:visibility="visible">
+        </ImageView>
 
-            <ImageView
-                android:id="@+id/imgSend"
-                android:layout_width="@dimen/fifteen"
-                android:layout_height="@dimen/fifteen"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="@dimen/five"
-                android:src="@drawable/send_icon_white">
 
-            </ImageView>
-
-            <TextView
-                android:id="@+id/lblEdit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_toEndOf="@+id/imgSend"
-                android:fontFamily="@font/poppins_medium"
-                android:text="Forward"
-                android:textColor="@color/white"
-                android:textSize="@dimen/thirteen_sp"
-                android:textStyle="bold">
-            </TextView>
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rytList"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/one_thirty"
-            android:layout_below="@+id/LblHWSubjectName"
-            android:layout_marginTop="@dimen/five"
+        <ImageView
+            android:id="@+id/imgNoticeBoardPin"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="@dimen/twenty"
+            android:elevation="10dp"
+            android:src="@drawable/noticeboard_pin"
             android:visibility="gone">
 
+        </ImageView>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rcyImgPDF"
+        <ImageView
+            android:id="@+id/imgBgPin"
+            android:layout_width="@dimen/thirteen"
+            android:layout_height="@dimen/thirteen"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/eighteen"
+            android:elevation="10dp"
+            android:src="@drawable/circle_dark_blue"
+            android:visibility="gone">
+        </ImageView>
+
+        <!--    <RelativeLayout-->
+        <!--        android:id="@+id/rlaImageReport"-->
+        <!--        android:layout_width="match_parent"-->
+        <!--        android:layout_height="wrap_content"-->
+        <!--        android:layout_marginTop="@dimen/ten"-->
+        <!--        android:visibility="visible">-->
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/LblHWSubjectName"-->
+        <!--            style="@style/CustomTextStylePoppinsBold"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_centerHorizontal="true"-->
+        <!--            android:layout_marginStart="@dimen/ten"-->
+        <!--            android:visibility="gone"-->
+        <!--            android:text="Annual Day celebrations"-->
+        <!--            android:textColor="@color/black"-->
+        <!--            android:textSize="@dimen/eighteen_sp" />-->
+
+        <!--        <LinearLayout-->
+        <!--            android:id="@+id/lnrDataTime"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_below="@+id/lblEventTimeImage"-->
+        <!--            android:layout_marginTop="@dimen/five"-->
+        <!--            android:layout_marginEnd="@dimen/ten"-->
+        <!--            android:layout_marginBottom="@dimen/two"-->
+        <!--            android:gravity="end|center">-->
+
+        <!--            <TextView-->
+        <!--                android:id="@+id/lblDateImage"-->
+        <!--                style="@style/CustomTextStylePoppinsMedium"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_marginEnd="@dimen/five"-->
+        <!--                android:text="15 Nov 2024"-->
+        <!--                android:textColor="@color/black"-->
+        <!--                android:textSize="@dimen/twele_sp"-->
+        <!--                android:textStyle="normal" />-->
+
+        <!--            <TextView-->
+        <!--                android:id="@+id/lblTimeImage"-->
+        <!--                style="@style/CustomTextStylePoppinsMedium"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:text="99:99 AM"-->
+        <!--                android:textColor="@color/grey"-->
+        <!--                android:textSize="@dimen/twele_sp"-->
+        <!--                android:textStyle="normal" />-->
+
+        <!--        </LinearLayout>-->
+
+        <!--        <RelativeLayout-->
+        <!--            android:id="@+id/rlaSelectText"-->
+        <!--            android:layout_width="@dimen/hundred"-->
+        <!--            android:layout_height="@dimen/fourty"-->
+        <!--            android:layout_below="@+id/lnrDataTime"-->
+        <!--            android:layout_alignParentEnd="true"-->
+        <!--            android:layout_marginTop="@dimen/three"-->
+        <!--            android:layout_marginEnd="@dimen/ten"-->
+        <!--            android:layout_marginBottom="@dimen/twenty"-->
+        <!--            android:background="@drawable/rect_blue_and_green_small_radious"-->
+        <!--            android:gravity="center"-->
+        <!--            android:padding="@dimen/five"-->
+        <!--            android:visibility="gone">-->
+
+        <!--            <ImageView-->
+        <!--                android:id="@+id/imgSend"-->
+        <!--                android:layout_width="@dimen/fifteen"-->
+        <!--                android:layout_height="@dimen/fifteen"-->
+        <!--                android:layout_centerVertical="true"-->
+        <!--                android:layout_marginEnd="@dimen/five"-->
+        <!--                android:src="@drawable/send_icon_white">-->
+
+        <!--            </ImageView>-->
+
+        <!--            <TextView-->
+        <!--                android:id="@+id/lblEdit"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_centerInParent="true"-->
+        <!--                android:layout_toEndOf="@+id/imgSend"-->
+        <!--                android:fontFamily="@font/poppins_medium"-->
+        <!--                android:text="Forward"-->
+        <!--                android:textColor="@color/white"-->
+        <!--                android:textSize="@dimen/thirteen_sp"-->
+        <!--                android:textStyle="bold">-->
+        <!--            </TextView>-->
+        <!--        </RelativeLayout>-->
+
+        <!--        <RelativeLayout-->
+        <!--            android:id="@+id/rytList"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="@dimen/one_thirty"-->
+        <!--            android:layout_below="@+id/LblHWSubjectName"-->
+        <!--            android:layout_marginTop="3dp"-->
+        <!--            android:visibility="visible">-->
+
+
+        <!--            <androidx.recyclerview.widget.RecyclerView-->
+        <!--                android:id="@+id/rcyImgPDF"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="match_parent">-->
+        <!--            </androidx.recyclerview.widget.RecyclerView>-->
+
+        <!--            <android.webkit.WebView-->
+        <!--                android:id="@+id/webView"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="match_parent"-->
+        <!--                android:layout_marginTop="@dimen/ten"-->
+        <!--                android:background="@color/black"-->
+        <!--                android:visibility="gone" />-->
+
+        <!--            <ProgressBar-->
+        <!--                android:id="@+id/loadingBar"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_centerInParent="true"-->
+        <!--                android:indeterminateDrawable="@drawable/progress_bar_white"-->
+        <!--                android:indeterminateOnly="true"-->
+        <!--                android:visibility="gone"></ProgressBar>-->
+
+        <!--        </RelativeLayout>-->
+
+        <!--        <me.relex.circleindicator.CircleIndicator2-->
+        <!--            android:id="@+id/indicator"-->
+        <!--            style="@style/IndicatorStyle"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="@dimen/twenty"-->
+        <!--            android:layout_below="@+id/rytList"-->
+        <!--            android:layout_centerInParent="true"-->
+        <!--            android:elevation="4dp"-->
+        <!--            />-->
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/lblTitleImage"-->
+        <!--            style="@style/CustomTextStylePoppinsBold"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_below="@+id/indicator"-->
+        <!--            android:layout_marginStart="@dimen/ten"-->
+        <!--            android:layout_marginTop="@dimen/five"-->
+        <!--            android:text="Annual Day celebrations"-->
+        <!--            android:textColor="@color/black"-->
+        <!--            android:textSize="@dimen/thirteen_sp" />-->
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/lblContentImage"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_below="@+id/lblTitleImage"-->
+        <!--            android:layout_marginStart="@dimen/ten"-->
+        <!--            android:layout_marginTop="@dimen/ten"-->
+        <!--            android:layout_marginEnd="10dp"-->
+        <!--            android:maxLines="3"-->
+        <!--            style="@style/CustomTextStylePoppinsMedium"-->
+        <!--            android:text="If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress."-->
+        <!--            android:textColor="@color/black"-->
+        <!--            android:textSize="@dimen/thirteen_sp" />-->
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/lblEventTimeImage"-->
+        <!--            style="@style/CustomTextStylePoppinsBold"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_below="@+id/tvView"-->
+        <!--            android:layout_marginStart="@dimen/ten"-->
+        <!--            android:layout_marginTop="@dimen/five"-->
+        <!--            android:layout_marginEnd="10dp"-->
+        <!--            android:text="Event Starts at"-->
+        <!--            android:textColor="@color/black"-->
+        <!--            android:textSize="@dimen/thirteen_sp" />-->
+
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/tvSeeMoreImage"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_below="@+id/lblContentImage"-->
+        <!--            android:layout_marginStart="@dimen/ten"-->
+        <!--            android:text="@string/SeeMore"-->
+        <!--            android:textColor="@android:color/holo_blue_dark"-->
+        <!--           />-->
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/tvView"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_below="@+id/tvSeeMoreImage"-->
+        <!--            android:layout_marginStart="@dimen/ten"-->
+        <!--            android:layout_marginTop="@dimen/five"-->
+        <!--            android:text="@string/View"-->
+        <!--            android:textColor="@android:color/holo_blue_dark" />-->
+
+        <!--    </RelativeLayout>-->
+
+        <RelativeLayout
+            android:id="@+id/rlaImageReport"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:padding="@dimen/eighteen"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:id="@+id/dateRow"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="gone"></androidx.recyclerview.widget.RecyclerView>
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-            <android.webkit.WebView
-                android:id="@+id/webView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/ten"
-                android:background="@color/black"
-                android:visibility="gone" />
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@drawable/calender_icon_color" />
 
-            <ProgressBar
-                android:id="@+id/loadingBar"
+                <TextView
+                    android:id="@+id/lblDateImage"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/five"
+                    android:text="30 July, 2025"
+                    android:textColor="@color/light_gray_"
+                    android:textSize="@dimen/fifteen" />
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/LblHWSubjectName"
+                style="@style/CustomTextStylePoppinsBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:indeterminateDrawable="@drawable/progress_bar_white"
-                android:indeterminateOnly="true"
-                android:visibility="gone"></ProgressBar>
+                android:layout_below="@+id/dateRow"
+                android:layout_marginTop="@dimen/eight"
+                android:text="Attachment testing"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fourteen_sp"
+                android:visibility="gone" />
+
+
+            <TextView
+                android:id="@+id/lblTitleImage"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/dateRow"
+                android:text="Attachments"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sixteen_sp"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/lblContentImage"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lblTitleImage"
+                android:layout_marginTop="@dimen/four"
+                android:maxLines="3"
+                android:text="Send school attachment"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fourteen_sp" />
+
+            <TextView
+                android:id="@+id/tvSeeMoreImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblContentImage"
+                android:layout_marginTop="@dimen/five"
+                android:text="@string/SeeMore"
+                android:textColor="@android:color/holo_blue_dark"
+                android:textSize="@dimen/thirteen_sp"
+                android:visibility="gone" />
+
+            <RelativeLayout
+                android:id="@+id/rytList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvSeeMoreImage"
+                android:layout_marginTop="@dimen/six"
+                android:visibility="visible">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcyImgPDF"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp" />
+
+                <android.webkit.WebView
+                    android:id="@+id/webView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/ten"
+                    android:background="@color/black"
+                    android:visibility="gone" />
+
+                <ProgressBar
+                    android:id="@+id/loadingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:indeterminateDrawable="@drawable/progress_bar_white"
+                    android:indeterminateOnly="true"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+            <me.relex.circleindicator.CircleIndicator2
+                android:id="@+id/indicator"
+                style="@style/IndicatorStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/twenty"
+                android:layout_below="@+id/rytList"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/five"
+                android:elevation="4dp"
+                android:visibility="gone" />
+
+
+            <TextView
+                android:id="@+id/tvView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvSeeMoreImage"
+                android:layout_marginTop="@dimen/four"
+                android:text="@string/View"
+                android:textColor="@android:color/holo_blue_dark"
+                android:textSize="@dimen/thirteen_sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/lblEventTimeImage"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rytList"
+                android:layout_marginTop="@dimen/twenty_five"
+                android:gravity="end"
+                android:text="Posted By : Management Circular"
+                android:textColor="@color/light_gray_"
+                android:textSize="@dimen/twele_sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/lblEventTimeImage"
+                android:layout_marginTop="@dimen/ten"
+                android:background="#D1D1D6" />
+
+            <LinearLayout
+                android:id="@+id/lnrDataTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblEventTimeImage"
+                android:layout_marginTop="@dimen/ten"
+                android:gravity="start"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/lblTimeImage"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="10:00 AM"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/twele_sp"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlaSelectText"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_below="@id/lnrDataTime"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/five"
+                android:background="@drawable/rect_blue_and_green_small_radious"
+                android:gravity="center"
+                android:padding="@dimen/five"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/imgSend"
+                    android:layout_width="@dimen/fifteen"
+                    android:layout_height="@dimen/fifteen"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/five"
+                    android:src="@drawable/send_icon_white" />
+
+                <TextView
+                    android:id="@+id/lblEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_toEndOf="@+id/imgSend"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Forward"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/thirteen_sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
 
         </RelativeLayout>
 
-        <me.relex.circleindicator.CircleIndicator2
-            android:id="@+id/indicator"
-            style="@style/IndicatorStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/twenty"
-            android:layout_below="@+id/rytList"
-            android:layout_centerInParent="true"
-            android:elevation="4dp"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/lblTitleImage"
-            style="@style/CustomTextStylePoppinsBold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/indicator"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/five"
-            android:text="Annual Day celebrations"
-            android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp" />
-
-        <TextView
-            android:id="@+id/lblContentImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/lblTitleImage"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/ten"
-            android:layout_marginEnd="10dp"
-            android:maxLines="3"
-            style="@style/CustomTextStylePoppinsMedium"
-            android:text="If you're working in a collaborative environment, stashing and pulling is often the safest option, as it allows you to integrate your work with the latest changes without losing progress."
-            android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp" />
-
-        <TextView
-            android:id="@+id/lblEventTimeImage"
-            style="@style/CustomTextStylePoppinsBold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvView"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/five"
-            android:layout_marginEnd="10dp"
-            android:text="Event Starts at"
-            android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp"
-            android:visibility="gone" />
-
-
-        <TextView
-            android:id="@+id/tvSeeMoreImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/lblContentImage"
-            android:layout_marginStart="@dimen/ten"
-            android:text="@string/SeeMore"
-            android:textColor="@android:color/holo_blue_dark"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/tvView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvSeeMoreImage"
-            android:layout_marginStart="@dimen/ten"
-            android:layout_marginTop="@dimen/five"
-            android:text="@string/View"
-            android:textColor="@android:color/holo_blue_dark"
-            android:visibility="gone" />
-
-    </RelativeLayout>
     </RelativeLayout>
 
     <TextView
@@ -255,10 +463,10 @@
         android:layout_alignParentEnd="true"
         android:layout_marginTop="@dimen/twenty"
         android:layout_marginEnd="@dimen/twenty"
-        android:visibility="gone"
         android:layout_marginBottom="@dimen/twenty"
         android:text="@string/SeeMore"
         android:textColor="@color/navi_blue2"
-        android:textSize="@dimen/fifteen_sp">
+        android:textSize="@dimen/fifteen_sp"
+        android:visibility="gone">
     </TextView>
 </RelativeLayout>

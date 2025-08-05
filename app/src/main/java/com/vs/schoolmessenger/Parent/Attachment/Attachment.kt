@@ -79,6 +79,13 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
     private fun observeAttachmentResponse() {
         appViewModel?.isAttachmentResponse?.observe(this) { response ->
             if (response?.status == true && !response.data.isNullOrEmpty()) {
+                Log.d("API_LOG", "Fetched ${response.data.size} attachment items")
+
+                response.data.forEach { attachment ->
+                    attachment.file_path.forEach { file ->
+                        Log.d("API_LOG", "Attachment ID: ${attachment.id}, Type: ${file.type}, URL: URL: ${file.url}\")")
+                    }
+                }
                 binding.txtNoData.visibility = View.GONE
                 binding.seeMoreLabel.visibility = View.GONE
                 binding.recycleracademic.visibility = View.VISIBLE
@@ -88,8 +95,14 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
             }
         }
 
+
         appViewModel?.isAttachmentResponseArchive?.observe(this) { response ->
             if (response?.status == true && !response.data.isNullOrEmpty()) {
+                response.data.forEach { attachment ->
+                    attachment.file_path.forEach { file ->
+                        Log.d("API_LOG", "Attachment ID: ${attachment.id}, Type: ${file.type}, URL: URL: ${file.url}\")")
+                    }
+                }
                 appendData(response.data)
             }
         }
@@ -111,6 +124,7 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
 
     private fun fetchInitialData() {
         appViewModel?.getAttachment(isAccessToken.orEmpty(), this)
+        Log.d("API_LOG", "Calling getAttachment with token: $isAccessToken")
     }
 
     private fun fetchMoreData() {
@@ -209,10 +223,12 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
         if (data.is_archive) {
             isAccessToken?.let {
                 appViewModel?.isUpdateStatusArchive(it, jsonObject, this)
+                Log.d("API_LOG", "Calling isUpdateStatusArchive with data: $jsonObject")
             }
         } else {
             isAccessToken?.let {
                 appViewModel?.isUpdateStatusCommunication(it, jsonObject, this)
+                Log.d("API_LOG", "Calling isUpdateStatusCommunication with data: $jsonObject")
             }
         }
     }

@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_parent_backround"
     android:fitsSystemWindows="true">
 
     <include
@@ -15,10 +14,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbarLayout"
-        android:visibility="gone"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginEnd="@dimen/ten"
         android:gravity="center_vertical"
+
         android:orientation="horizontal">
 
         <ImageView
@@ -27,7 +26,8 @@
             android:layout_height="@dimen/thirty"
             android:layout_marginStart="@dimen/fifteen"
             android:layout_marginEnd="@dimen/ten"
-            android:src="@drawable/filter_icon" />
+            android:src="@drawable/filter_icon"
+            android:visibility="gone"/>
 
         <RelativeLayout
             android:id="@+id/rytSearch"
@@ -35,6 +35,7 @@
             android:layout_height="@dimen/thirty_five"
             android:layout_margin="@dimen/ten"
             android:layout_weight="1"
+            android:visibility="gone"
             android:background="@drawable/rect_grey">
 
             <ImageView
@@ -101,7 +102,6 @@
                     android:gravity="center"
                     android:padding="@dimen/five"
                     android:text="Image" />
-
                 <RadioButton
                     android:id="@+id/RdbVideo"
                     android:layout_width="wrap_content"

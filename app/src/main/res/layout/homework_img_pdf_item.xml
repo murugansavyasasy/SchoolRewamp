@@ -2,14 +2,11 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/fileItem"
-    android:layout_width="@dimen/hundred"
-    android:layout_height="@dimen/hundred"
-    android:layout_margin="@dimen/ten"
-    android:layout_marginEnd="@dimen/ten"
-    android:elevation="@dimen/five"
-    android:fitsSystemWindows="true"
-    android:padding="@dimen/five"
-    app:cardCornerRadius="@dimen/fifteen">
+    android:layout_width="@dimen/one_twenty"
+    android:layout_height="@dimen/one_twenty"
+    android:layout_marginTop="@dimen/fifteen"
+    android:layout_marginStart="@dimen/fifteen"
+    android:fitsSystemWindows="true">
 
 
     <WebView
@@ -34,12 +31,19 @@
 
     <ImageView
         android:id="@+id/ImgPDF"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/hundred"
+        android:layout_width="@dimen/one_twenty"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
         android:scaleType="centerCrop">
 
     </ImageView>
 
+    <ImageView
+        android:id="@+id/playButtonOverlay"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_gravity="center"
+        android:visibility="gone" />
     <ImageView
         android:id="@+id/imageOrDocumentType"
         android:layout_width="@dimen/thirty"
