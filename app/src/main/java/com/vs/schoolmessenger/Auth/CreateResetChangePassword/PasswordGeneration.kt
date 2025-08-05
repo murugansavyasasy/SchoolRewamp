@@ -16,14 +16,15 @@ import com.vs.schoolmessenger.Repository.Auth
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.PasswordGenerationBinding
+import com.vs.schoolmessenger.databinding.PasswordGenerationNewBinding
 
-class PasswordGeneration : BaseActivity<PasswordGenerationBinding>(), View.OnClickListener {
+class PasswordGeneration : BaseActivity<PasswordGenerationNewBinding>(), View.OnClickListener {
 
     private var isPasswordVisible = false
     private var isCreatePasswordVisible = false
 
-    override fun getViewBinding(): PasswordGenerationBinding {
-        return PasswordGenerationBinding.inflate(layoutInflater)
+    override fun getViewBinding(): PasswordGenerationNewBinding {
+        return PasswordGenerationNewBinding.inflate(layoutInflater)
     }
 
     var authViewModel: Auth? = null
@@ -31,10 +32,11 @@ class PasswordGeneration : BaseActivity<PasswordGenerationBinding>(), View.OnCli
 
     override fun setupViews() {
         super.setupViews()
-        isToolBarWhiteTheme()
+        isToolBarPrimaryTheme()
         binding.imgHide.setOnClickListener(this)
         binding.imgHide1.setOnClickListener(this)
         binding.btnCreate.setOnClickListener(this)
+        binding.rytBack.setOnClickListener(this)
         authViewModel = ViewModelProvider(this).get(Auth::class.java)
         authViewModel!!.init()
 
@@ -242,6 +244,9 @@ class PasswordGeneration : BaseActivity<PasswordGenerationBinding>(), View.OnCli
 
             R.id.imgHide1 -> {
                 isPasswordViewAndHide1()
+            }
+            R.id.rytBack -> {
+                onBackPressed()
             }
 
             R.id.btnCreate -> {

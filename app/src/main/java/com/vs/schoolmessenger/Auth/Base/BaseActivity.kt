@@ -175,6 +175,16 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         }
     }
 
+    fun isToolBarPrimaryTheme() {
+        if (Build.VERSION.SDK_INT >= 21) {
+            val window = this.window
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+            window.statusBarColor = this.resources.getColor(R.color.PrimaryColor)
+            window.navigationBarColor = this.resources.getColor(R.color.bpWhite)
+        }
+    }
+
     // Method to allow child activities to access specific views
     protected fun <T : ViewBinding> accessChildView(
         binding: T,

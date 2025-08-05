@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/PrimaryColor"
+    android:fitsSystemWindows="true">
+
+<!--    <RelativeLayout-->
+<!--        android:layout_margin="@dimen/ten"-->
+<!--        android:layout_width="@dimen/fifty"-->
+<!--        android:layout_height="@dimen/fifty"-->
+<!--        android:background="@drawable/bg_circle_white"-->
+<!--        android:orientation="vertical">-->
+
+<!--        <ImageView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_centerInParent="true"-->
+<!--            android:src="@drawable/ic_arrow_back_black" />-->
+
+<!--    </RelativeLayout>-->
+
+    <ScrollView
+        android:layout_marginTop="@dimen/eighty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_rect_white_large_top_radius"
+        android:fillViewport="true">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginTop="@dimen/twenty"
+                android:gravity="left"
+                android:text="@string/welcome_back"
+                android:textColor="@color/black"
+                android:textSize="@dimen/twenty_sp"
+                android:textStyle="bold">
+
+            </TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/twenty"
+                android:layout_marginTop="@dimen/ten"
+                android:gravity="left"
+                style="@style/CustomTextStylePoppinsRegular"
+                android:text="@string/seamless_school_communication_anytime_anywhere_effortlessly_connecting_student_teachers_and_parents_at_all_times"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp">
+
+            </TextView>
+
+
+            <ImageView
+                android:id="@+id/image_banner"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/two_hundred"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_login_svg" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <RelativeLayout
+                    android:id="@+id/rytMobileNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/ten">
+
+
+                    <TextView
+                        android:id="@+id/lblMobile"
+                        style="@style/CustomTextStylePoppinsRegular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/lblMobileNumber"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/thirteen_sp" />
+
+                    <RelativeLayout
+                        android:id="@+id/rytMobile"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/fourty_five"
+                        android:layout_below="@+id/lblMobile"
+                        android:layout_marginTop="@dimen/ten"
+                        android:background="@drawable/login_bg_rect_grey">
+
+                        <ImageView
+                            android:id="@+id/imgMobile"
+                            android:layout_width="@dimen/twenty_five"
+                            android:layout_height="@dimen/twenty_five"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/mobile"
+                            android:visibility="gone" />
+
+                        <View
+                            android:id="@+id/vwMobile"
+                            android:layout_width="@dimen/one"
+                            android:layout_height="match_parent"
+                            android:layout_marginVertical="@dimen/ten"
+                            android:layout_marginStart="@dimen/ten"
+                            android:layout_toEndOf="@+id/imgMobile"
+                            android:background="@color/mild_grey1"
+                            android:visibility="gone" />
+
+                        <EditText
+                            android:id="@+id/txtMobileNumber"
+                            android:layout_width="match_parent"
+                            style="@style/CustomTextStylePoppinsRegular"
+                            android:layout_height="match_parent"
+                            android:layout_toEndOf="@+id/vwMobile"
+                            android:hint="@string/_00000_00000"
+                            android:inputType="number"
+                            android:maxLength="10"
+                            android:background="@drawable/edittext_background_selector"
+
+                            android:paddingHorizontal="@dimen/ten"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/light_gray_"
+                            android:textSize="@dimen/thirteen_sp" />
+
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/lblPassword"
+                        style="@style/CustomTextStylePoppinsRegular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/rytMobile"
+                        android:layout_marginTop="@dimen/ten"
+                        android:text="@string/lblPassword"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/thirteen_sp" />
+
+
+                    <RelativeLayout
+                        android:id="@+id/rytPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/fourty_five"
+                        android:layout_below="@+id/lblPassword"
+                        android:layout_marginTop="@dimen/ten"
+                        android:background="@drawable/login_bg_rect_grey">
+
+
+                        <EditText
+                            android:id="@+id/txtPassword"
+                            style="@style/CustomTextStylePoppinsRegular"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/edittext_background_selector"
+                            android:hint="@string/star"
+                            android:inputType="textPassword"
+                            android:paddingHorizontal="@dimen/ten"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/grey"
+                            android:textSize="@dimen/thirteen_sp" />
+
+                        <ImageView
+                            android:id="@+id/imgHide"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="@dimen/ten"
+                            android:src="@drawable/password_hide" />
+
+                    </RelativeLayout>
+
+
+                    <TextView
+                        android:id="@+id/lblForgetPassword"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/rytPassword"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="@dimen/twenty"
+                        android:text="@string/lblForgotPassword"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/fifteen_sp" />
+
+
+                    <TextView
+                        android:id="@+id/btnLoginContinue"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/lblForgetPassword"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/rect_btn_blue"
+                        android:gravity="center"
+                        android:padding="@dimen/fifteen"
+                        android:text="@string/logintext"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/fifteen_sp" />
+
+                    <RelativeLayout
+                        android:id="@+id/rytFingerPrint"
+                        android:visibility="gone"
+                        android:layout_marginTop="@dimen/ten"
+                        android:layout_below="@+id/btnLoginContinue"
+                        android:layout_centerVertical="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/imgFingerPrint"
+                            android:layout_width="@dimen/fourty"
+                            android:layout_height="@dimen/fourty"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/ic_fingerprint"/>
+
+                        <TextView
+                            android:layout_marginStart="@dimen/ten"
+                            android:layout_toEndOf="@+id/imgFingerPrint"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/thirteen_sp"
+                            android:layout_centerVertical="true"
+                            android:textColor="@color/black"
+                            android:text="Use Fingerprint or Mobile Number to login"/>
+
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
