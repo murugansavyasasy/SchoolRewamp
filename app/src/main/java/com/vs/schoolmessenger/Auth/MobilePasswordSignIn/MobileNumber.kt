@@ -15,11 +15,12 @@ import com.vs.schoolmessenger.Repository.Auth
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.MobileNumberBinding
+import com.vs.schoolmessenger.databinding.MobileNumberNewBinding
 
-class MobileNumber : BaseActivity<MobileNumberBinding>(), View.OnClickListener {
+class MobileNumber : BaseActivity<MobileNumberNewBinding>(), View.OnClickListener {
 
-    override fun getViewBinding(): MobileNumberBinding {
-        return MobileNumberBinding.inflate(layoutInflater)
+    override fun getViewBinding(): MobileNumberNewBinding {
+        return MobileNumberNewBinding.inflate(layoutInflater)
     }
 
     var authViewModel: Auth? = null
@@ -28,7 +29,7 @@ class MobileNumber : BaseActivity<MobileNumberBinding>(), View.OnClickListener {
     override fun setupViews() {
         super.setupViews()
 
-        isToolBarWhiteTheme()
+        isToolBarPrimaryTheme()
 
         authViewModel = ViewModelProvider(this)[Auth::class.java]
         authViewModel!!.init()

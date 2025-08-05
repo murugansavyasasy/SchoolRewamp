@@ -134,6 +134,10 @@ class App(application: Application) : AndroidViewModel(application) {
     var isEditHomeWork: LiveData<StatusMessageModel?>? = null
         private set
 
+    var isEditAttachment: LiveData<StatusMessageModel?>? = null
+        private set
+
+
     var isEditNoticeBoard: LiveData<StatusMessageModel?>? = null
         private set
 
@@ -142,8 +146,8 @@ class App(application: Application) : AndroidViewModel(application) {
     var isDeleteHomeWork: LiveData<StatusMessageModel?>? = null
         private set
 
-
-
+    var isDeleteAttachment: LiveData<StatusMessageModel?>? = null
+        private set
 
     var isGetDailyCollectionReport: LiveData<DailyCollectionReportResponse?>? = null
         private set
@@ -218,7 +222,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var isCertificateRequestList: LiveData<CertificatesListResponse?>? = null
     var isTimeTabletList: LiveData<TimeTableResponse?>? = null
 
-    var isAttachmentResponse: LiveData<AttachmentResponse?>? = null
+    var isAttachmentResponse: LiveData<AttachmentReportResponse?>? = null
     var isAttachmentResponseArchive: LiveData<AttachmentResponse?>? = null
 
     var getabsenteescountbydate: LiveData<AbsenteesResponse?>? = null
@@ -288,8 +292,10 @@ class App(application: Application) : AndroidViewModel(application) {
         isGetAssignmentReport = apiSchoolRepositories.isGetAssignmentReportLiveData
         isAssignmentDelete = apiSchoolRepositories.isDeleteAssignmentLiveData
         isEditHomeWork = apiSchoolRepositories.isUpdateHomeworkLiveData
+        isEditAttachment = apiSchoolRepositories.isUpdateAttachmentLiveData
         isEditNoticeBoard = apiSchoolRepositories.isUpdateNoticeBoardLiveData
         isDeleteHomeWork = apiSchoolRepositories.isDeleteHomeworkLiveData
+        isDeleteAttachment = apiSchoolRepositories.isAttachmentLiveData
         isNoticeBoardReport = apiSchoolRepositories.isNoticeBoardReportLiveData
         isNoticeBoardStaffReport = apiSchoolRepositories.isNoticeBoardStaffReportLiveData
         isGetDailyCollectionReport = apiSchoolRepositories.isGetDailyCollectionReportLiveData
@@ -917,18 +923,20 @@ class App(application: Application) : AndroidViewModel(application) {
         apiSchoolRepositories.isEditHomeWork(isToken,jsonObject,activity)
     }
 
+    fun isAttachmentUpdate(isToken: String, jsonObject: JsonObject,activity: Activity) {
+        apiSchoolRepositories.isEditAttachment(isToken,jsonObject,activity)
+    }
+
     fun isNoticeBoardUpdate(isToken: String, jsonObject: JsonObject,activity: Activity) {
         apiSchoolRepositories.isEditNoticeBoard(isToken,jsonObject,activity)
     }
-
-
-
-
     fun isHomeWorkDelete(isToken: String, jsonObject: JsonObject,activity: Activity) {
         apiSchoolRepositories.isHomeWorkDelete(isToken,jsonObject,activity)
     }
 
-
+    fun isAttachmentDelete(isToken: String, jsonObject: JsonObject,activity: Activity) {
+        apiSchoolRepositories.isAttachmentDelete(isToken,jsonObject,activity)
+    }
 
     fun getProgressMarks(
         isToken: String,

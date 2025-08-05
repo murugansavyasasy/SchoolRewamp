@@ -6,6 +6,7 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
@@ -17,12 +18,16 @@ import android.provider.Settings
 import android.text.InputFilter
 import android.util.Log
 import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.LinearLayout
+import android.widget.PopupWindow
 import android.widget.RelativeLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -33,6 +38,10 @@ import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
+import com.vs.schoolmessenger.AWS.AwsUploadingPreSigned
+import com.vs.schoolmessenger.AWS.UploadCallback
 import com.vs.schoolmessenger.AlbumImage.AlbumSelectActivity
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
@@ -42,13 +51,20 @@ import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
 import com.vs.schoolmessenger.CommonScreens.SchoolList.SchoolList
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.Repository.RestClient
 import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentReportData
+import com.vs.schoolmessenger.Utils.AwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.Constant.M_ATTACHMENTS
+import com.vs.schoolmessenger.Utils.Constant.SELECTED_SCHOOL_MENU
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
+import com.vs.schoolmessenger.Utils.ProgressDialogHelper
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.AttachmentBinding
+import com.vs.schoolmessenger.util.VimeoVideoUpload
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -56,7 +72,7 @@ import java.util.Date
 import java.util.Locale
 
 class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View.OnClickListener,
-    OnAttachmentReportClickListener {
+    OnAttachmentReportClickListener, VimeoVideoUpload.UploadCompletionListener {
 
     override fun getViewBinding(): AttachmentBinding {
         return AttachmentBinding.inflate(layoutInflater)
@@ -78,10 +94,16 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
     private var appViewModel: App? = null
 
     var isAccessToken = ""
+    var isAttachmentId = ""
+    var isAttachmentPosition = 0
     private var isStaffDetails: StaffDetails? = null
     private var cameraImageFilePath: String? = null
     private val CAMERA_PERMISSION_REQUEST_CODE = 200
     private var mAdapter: ImagePickingAdapter? = null
+
+    val isVideoSelectedArrayList = mutableListOf<FileItem>()
+    var isTotalSelectedItem = 0
+    var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
 
     override fun setupViews() {
         super.setupViews()
@@ -95,6 +117,7 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
         binding.lnrTabTwoName.setOnClickListener(this)
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
+        isAwsUploadingPreSigned = AwsUploadingPreSigned()
         saveDrawableToCache(R.drawable.add_image)?.let {
             Constant.selectedFiles.add(
                 FileItem(
@@ -111,6 +134,27 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
             isMultipleSchool = false
         }
 
+        appViewModel!!.isDeleteAttachment?.observe(this) { response ->
+            if (response != null) {
+                if (response.status) {
+                    Constant.hideLoading(this@Attachment)
+                    mAttachmentReportAdapter!!.removeItemAt(isAttachmentPosition)
+                } else {
+                    Constant.showDataValidation(
+                        resources.getString(R.string.fail), response.message, this
+                    )
+                }
+            }
+        }
+
+
+        appViewModel!!.isEditAttachment?.observe(this) { response ->
+            Constant.hideLoading(this@Attachment)
+            if (response != null) {
+                Log.d("Response", response.status.toString())
+                Constant.showTopAlertPopup(response.message, this)
+            }
+        }
 
 
         appViewModel!!.isAttachmentReportResponse?.observe(this) { response ->
@@ -538,10 +582,15 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.imgBack -> onBackPressed()
+
             R.id.btnChooseRecipient -> {
-                Constant.isCommonTitle = binding.edtTitle.text.toString()
-                Constant.isCommonDescription = binding.edtDescription.text.toString()
-                isGoToRecipient()
+                if (binding.btnChooseRecipient.text.toString() == "Update Attachment") {
+                    showSendConfirmationDialog(true)
+                } else {
+                    Constant.isCommonTitle = binding.edtTitle.text.toString()
+                    Constant.isCommonDescription = binding.edtDescription.text.toString()
+                    isGoToRecipient()
+                }
             }
 
             R.id.lnrTabOneName -> {
@@ -563,8 +612,7 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
                 mAdapter = ImagePickingAdapter(this, Constant.selectedFiles!!, this)
                 binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
                 binding.rcyImages.adapter = mAdapter
-
-//                binding.btnNext.text = getString(R.string.NEXT)
+                binding.btnChooseRecipient.text = getString(R.string.NEXT)
                 binding.rytAttachment.visibility = View.VISIBLE
                 binding.line3.setBackgroundResource(R.color.iconBlue)
                 binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
@@ -576,7 +624,7 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
             }
 
             R.id.lnrTabTwoName -> {
-//                binding.btnNext.text = "Update NoticeBoard"
+                binding.btnChooseRecipient.text = "Update Attachment"
                 binding.rytAttachment.visibility = View.GONE
                 binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.black))
                 binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
@@ -603,7 +651,7 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
         binding.rcyAttachment.isNestedScrollingEnabled = false
         binding.rcyAttachment.adapter = mAttachmentReportAdapter
         appViewModel!!.getAttachmentListReport(
-            isAccessToken!!, this
+            isAccessToken, this
         )
     }
 
@@ -686,7 +734,333 @@ class Attachment : BaseActivity<AttachmentBinding>(), OnImageClickListener, View
         }
     }
 
-    override fun onItemClick(parentData: AttachmentReportData) {
-
+    override fun onItemClick(
+        isAttachmentData: List<AttachmentReportData>,
+        view: View,
+        isPosition: Int
+    ) {
+        isAttachmentId = isAttachmentData[isPosition].id
+        isAttachmentPosition = isPosition
+        showEditDeletePopup(isAttachmentData, view)
     }
+
+    override fun onReadStatusClick(
+        isData: List<AttachmentReportData>,
+        isPosition: Int
+    ) {
+    }
+
+    fun showEditDeletePopup(data: List<AttachmentReportData>, anchor: View) {
+        val popupView = LayoutInflater.from(this).inflate(R.layout.popup_edit_delete, null)
+        val popupWindow = PopupWindow(
+            popupView,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            true
+        )
+        popupWindow.elevation = 10f
+
+        val layoutEdit = popupView.findViewById<LinearLayout>(R.id.layout_edit)
+        val layoutDelete = popupView.findViewById<LinearLayout>(R.id.layout_delete)
+
+        layoutEdit.setOnClickListener {
+            isEditProcess(data)
+            popupWindow.dismiss()
+        }
+
+        layoutDelete.setOnClickListener {
+            showSendConfirmationDialog(false)
+            popupWindow.dismiss()
+        }
+        popupWindow.showAsDropDown(anchor, 0, 10)
+    }
+
+    fun showSendConfirmationDialog(isHomeWorkUpdate: Boolean) {
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.alert_popup, null)
+        val alertDialog = AlertDialog.Builder(this).setView(dialogView).create()
+        alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        alertDialog.show()
+
+        val okButton = dialogView.findViewById<TextView>(R.id.btnOk)
+        val btnCancel = dialogView.findViewById<TextView>(R.id.btnCancel)
+        val alertMessage = dialogView.findViewById<TextView>(R.id.alertMessage)
+        val lblSelectTarget = dialogView.findViewById<TextView>(R.id.lblSelectTarget)
+        if (isHomeWorkUpdate) {
+            alertMessage.text = "Are you sure want to update this attachment?"
+        } else {
+            alertMessage.text = "Are you sure want to delete?"
+        }
+
+        lblSelectTarget.visibility = View.GONE
+
+        okButton.setOnClickListener {
+            alertDialog.dismiss()
+            if (isHomeWorkUpdate) {
+                ProgressDialogHelper.show(this)
+                ProgressDialogHelper.updateProgress(10)
+                isUploadFilesInServer("file")
+            } else {
+                val jsonObject = JsonObject()
+                jsonObject.addProperty(APIKeyNames.id, isAttachmentId)
+                appViewModel?.isAttachmentDelete(isAccessToken!!, jsonObject, this)
+            }
+        }
+        btnCancel.setOnClickListener { alertDialog.dismiss() }
+    }
+
+    fun isUploadFilesInServer(isFileType: String?) {
+
+        if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS) {
+            Constant.selectedFiles.removeAt(0) // Remove '+' placeholder
+        }
+        ProgressDialogHelper.updateProgress(50)
+        isTotalSelectedItem = Constant.selectedFiles.size
+        isVideoSelectedArrayList.clear()
+        Constant.isAwsUploadedFiles.clear()
+        val iterator = Constant.selectedFiles.iterator()
+        while (iterator.hasNext()) {
+            val file = iterator.next()
+            if (file.type == FileType.VIDEO) {
+                isVideoSelectedArrayList.add(file)
+                iterator.remove()
+            }
+        }
+        when {
+            Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(isFileType)
+            isVideoSelectedArrayList.isNotEmpty() -> videoUploading()
+        }
+        ProgressDialogHelper.updateProgress(80)
+    }
+
+    private fun isFileUploadInAws(
+        isFileType: String?
+    ) {
+        Constant.isAwsUploadedFiles.clear()
+        val iterator = Constant.selectedFiles.iterator()
+        while (iterator.hasNext()) {
+            val fileItem = iterator.next()
+            if (fileItem.path.contains("amazonaws.")) {
+                Constant.isAwsUploadedFiles.add(
+                    AwsUploadedFiles(
+                        isFileUrl = fileItem.path, isFileType = fileItem.type.name
+                    )
+                )
+                iterator.remove()
+            }
+        }
+
+        val isCountryId = SharedPreference.getCountryId(this)
+        if (Constant.selectedFiles.isEmpty()) {
+            if (isVideoSelectedArrayList.isEmpty()) {
+                ProgressDialogHelper.dismiss()
+                isUpdateAttachment()
+            } else {
+                videoUploading()
+            }
+        } else {
+            val outputDir =
+                File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "CompressedOutput")
+            outputDir.mkdirs()
+            val newSelectedFiles = mutableListOf<FileItem>()
+            Constant.compressImageFilesOnly(
+                context = this,
+                files = Constant.selectedFiles,
+                outputDir = outputDir.absolutePath,
+                format = Bitmap.CompressFormat.JPEG,
+                quality = 80,
+                maxWidth = 1280,
+                maxHeight = 1280,
+                onEachProcessed = { original, outputPath, success ->
+                    if (success && outputPath != null) {
+                        val compressedFile = File(outputPath)
+                        val originalSizeKB = try {
+                            if (original.path.startsWith("content://")) {
+                                contentResolver.openFileDescriptor(
+                                    Uri.parse(original.path), "r"
+                                )?.statSize ?: 0
+                            } else {
+                                File(original.path).length()
+                            }
+                        } catch (e: Exception) {
+                            0L
+                        }
+
+                        Log.d(
+                            "Compressor",
+                            "Compressed: $outputPath (${compressedFile.length() / 1024}KB), Original: ${originalSizeKB / 1024}KB"
+                        )
+
+                        newSelectedFiles.add(FileItem(path = outputPath, type = original.type))
+                    } else {
+                        Log.e("Compressor", "Failed: ${original.path}")
+                    }
+                },
+                onComplete = {
+                    Constant.selectedFiles.clear()
+                    Constant.selectedFiles.addAll(newSelectedFiles)
+                    val isAwsUploadingFile = ArrayList<String>()
+
+                    val isSelectedFileCount = Constant.selectedFiles.size
+                    for (i in Constant.selectedFiles.indices) {
+                        isAwsUploadingPreSigned?.getPreSignedUrl(
+                            Constant.selectedFiles[i].path,
+                            isStaffDetails!!.school_id,
+                            isFileType!!,
+                            this,
+                            isCountryId!!,
+                            true,
+                            false,
+                            object : UploadCallback {
+
+                                override fun onUploadSuccess(
+                                    response: String?, isFileUploaded: String?
+                                ) {
+                                    isAwsUploadingFile.add(isFileUploaded!!)
+                                    Constant.isAwsUploadedFiles.add(
+                                        AwsUploadedFiles(
+                                            isFileUrl = isFileUploaded,
+                                            isFileType = Constant.selectedFiles[i].type.name
+                                        )
+                                    )
+
+                                    if (isTotalSelectedItem == Constant.isAwsUploadedFiles.size) {
+                                        ProgressDialogHelper.dismiss()
+                                        isUpdateAttachment()
+                                    } else {
+                                        if (isAwsUploadingFile.size == isSelectedFileCount) {
+                                            videoUploading()
+                                        }
+                                    }
+                                }
+
+                                override fun onUploadError(error: String?) {
+                                    Log.d("isUploadIssue", error.toString())
+                                }
+                            })
+                    }
+
+                    Log.d("Compressor", "All files compressed and uploaded.")
+                })
+        }
+    }
+
+    private fun videoUploading() {
+        val iterator = isVideoSelectedArrayList.iterator()
+        while (iterator.hasNext()) {
+            val fileItem = iterator.next()
+            if (fileItem.path.contains("player.vimeo.com")) {
+                Constant.isAwsUploadedFiles.add(
+                    AwsUploadedFiles(
+                        isFileUrl = fileItem.path, isFileType = fileItem.type.name
+                    )
+                )
+                iterator.remove()
+            }
+        }
+        if (isVideoSelectedArrayList.isNotEmpty()) {
+            for (i in isVideoSelectedArrayList.indices) {
+                VimeoVideoUpload.uploadVideo(
+                    this, "quiz", "quiz", isVideoSelectedArrayList[i].path, this
+                )
+            }
+        } else {
+            ProgressDialogHelper.dismiss()
+            isUpdateAttachment()
+        }
+    }
+
+    override fun onUploadComplete(
+        success: Boolean, iframe: String?, link: String?
+    ) {
+        runOnUiThread {
+            Log.d("link", link.toString())
+            Constant.isAwsUploadedFiles.add(
+                AwsUploadedFiles(
+                    isFileUrl = link.toString(), isFileType = Constant.VIDEO
+                )
+            )
+
+            if (Constant.isAwsUploadedFiles.size == isTotalSelectedItem) {
+                ProgressDialogHelper.dismiss()
+                isUpdateAttachment()
+            }
+        }
+    }
+
+
+    override fun onFailure(errorMessage: String?) {
+        runOnUiThread {
+            Log.e("VimeoUploadError", errorMessage ?: "Unknown error")
+        }
+    }
+
+
+    fun isEditProcess(data: List<AttachmentReportData>) {
+
+        Constant.isAwsUploadedFiles.clear()
+        Constant.selectedFiles.clear()
+        saveDrawableToCache(R.drawable.add_image)?.let {
+            Constant.selectedFiles.add(
+                FileItem(
+                    it, FileType.IMAGE
+                )
+            )
+        }
+        binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+        binding.line3.setBackgroundResource(R.color.iconBlue)
+        binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
+        binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.black))
+        binding.line4.setBackgroundResource(R.color.white)
+
+        binding.rytAttachmentReport.visibility = View.GONE
+        binding.rytAttachment.visibility = View.VISIBLE
+        binding.edtTitle.setText(data.get(isAttachmentPosition).title)
+        binding.edtDescription.setText(data.get(isAttachmentPosition).description)
+
+        if (data.get(isAttachmentPosition).file_path.isNotEmpty()) {
+            val mappedList = data.get(isAttachmentPosition).file_path.map { filePath ->
+                val fileType = try {
+                    FileType.valueOf(filePath.type.uppercase())
+                } catch (e: IllegalArgumentException) {
+                    FileType.OTHER
+                }
+                FileItem(path = filePath.url, type = fileType)
+            }
+            Constant.selectedFiles.addAll(mappedList)
+        }
+        if (Constant.selectedFiles.size > 1) {
+            binding.rcyImages.visibility = View.VISIBLE
+            mAdapter = ImagePickingAdapter(this, Constant.selectedFiles, this)
+            binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
+            binding.rcyImages.adapter = mAdapter
+        } else {
+            binding.rcyImages.visibility = View.VISIBLE
+            mAdapter = ImagePickingAdapter(this, Constant.selectedFiles, this)
+            binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
+            binding.rcyImages.adapter = mAdapter
+        }
+    }
+
+    fun isUpdateAttachment() {
+        RestClient.changeApiBaseUrl(SharedPreference.getBaseUrl(this).toString())
+        val jsonObject = JsonObject()
+        val filePathArray = JsonArray()
+        jsonObject.addProperty(APIKeyNames.id, isAttachmentId)
+        jsonObject.addProperty(APIKeyNames.title, binding.edtTitle.text.toString())
+        jsonObject.addProperty(APIKeyNames.description, binding.edtDescription.text.toString())
+        jsonObject.addProperty(APIKeyNames.iframe, "")
+        jsonObject.addProperty(APIKeyNames.file_size, "")
+        jsonObject.addProperty(APIKeyNames.thumbnail, "")
+        for (i in Constant.isAwsUploadedFiles.indices) {
+            val isSelectedObject = JsonObject()
+            isSelectedObject.addProperty(APIKeyNames.url, Constant.isAwsUploadedFiles[i].isFileUrl)
+            isSelectedObject.addProperty(
+                APIKeyNames.type, Constant.isAwsUploadedFiles[i].isFileType
+            )
+            filePathArray.add(isSelectedObject)
+        }
+        jsonObject.add(APIKeyNames.file_path, filePathArray)
+        appViewModel?.isAttachmentUpdate(isAccessToken!!, jsonObject, this)
+    }
+
 }

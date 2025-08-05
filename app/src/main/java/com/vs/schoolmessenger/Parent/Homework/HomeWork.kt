@@ -62,7 +62,6 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
             SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Calendar.getInstance().time)
         isHomeWorkDate = todayDate
         calendarAdapter = CalendarAdapter(dateList, todayDate) {
-            Toast.makeText(this, "Selected: ${it.fullDate}", Toast.LENGTH_SHORT).show()
             isHomeWorkDate = it.fullDate
             val isHomeWorkData = isHomeWorkData?.find { it.date == isHomeWorkDate }
             if (isHomeWorkData != null) {
@@ -201,4 +200,5 @@ class HomeWork : BaseActivity<ParentHomeworkActivityBinding>(), View.OnClickList
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         startActivity(intent)
     }
+
 }
