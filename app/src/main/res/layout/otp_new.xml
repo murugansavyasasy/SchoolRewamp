@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/PrimaryColor"
+    android:fitsSystemWindows="true">
+
+
+    <RelativeLayout
+        android:id="@+id/rytBack"
+        android:layout_margin="@dimen/ten"
+        android:layout_width="@dimen/fifty"
+        android:layout_height="@dimen/fifty"
+        android:background="@drawable/bg_circle_white"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_arrow_back_black" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/eighty"
+        android:background="@drawable/bg_rect_white_large_top_radius"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/image_banner"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/two_hundred"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_otp_svg" />
+
+        <TextView
+            android:id="@+id/lbl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/CustomTextStylePoppinsBold"
+            android:gravity="center"
+            android:text="Set a OTP"
+            android:textColor="@color/black"
+            android:textSize="@dimen/twenty_five_sp"/>
+
+        <TextView
+            android:id="@+id/lblEnter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/CustomTextStylePoppinsRegular"
+            android:layout_margin="@dimen/ten"
+            android:gravity="left"
+            android:text="@string/your_password_has_been_securely_stored_and_encrypted_for_protection_for_security_reasons_it_cannot_be_displayed_in_plain_text"
+            android:textColor="@color/black"
+            android:textSize="@dimen/thirteen_sp">
+
+        </TextView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/rytMobileNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/ten"
+                android:orientation="horizontal"
+                android:weightSum="6">
+
+                <EditText
+                    android:id="@+id/txtOtp1"
+                    android:layout_width="@dimen/zero"
+                    android:layout_height="@dimen/fifty"
+                    android:layout_margin="@dimen/five"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_white_stroke_box"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/fifteen_sp" />
+
+                <EditText
+
+                    android:id="@+id/txtOtp2"
+                    android:layout_width="@dimen/zero"
+                    android:layout_height="@dimen/fifty"
+                    android:layout_margin="@dimen/five"
+                    android:layout_marginStart="@dimen/five"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_white_stroke_box"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/fifteen_sp" />
+
+                <EditText
+                    android:id="@+id/txtOtp3"
+                    android:layout_width="@dimen/zero"
+                    android:layout_height="@dimen/fifty"
+                    android:layout_margin="@dimen/five"
+                    android:layout_marginStart="@dimen/five"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_white_stroke_box"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/fifteen_sp" />
+
+                <EditText
+                    android:id="@+id/txtOtp4"
+                    android:layout_width="@dimen/zero"
+                    android:layout_height="@dimen/fifty"
+                    android:layout_margin="@dimen/five"
+                    android:layout_marginStart="@dimen/five"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_white_stroke_box"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/fifteen_sp" />
+
+                <EditText
+                    android:id="@+id/txtOtp5"
+                    android:layout_width="@dimen/zero"
+                    android:layout_height="@dimen/fifty"
+                    android:layout_margin="@dimen/five"
+                    android:layout_marginStart="@dimen/five"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_white_stroke_box"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/fifteen_sp" />
+
+                <EditText
+                    android:id="@+id/txtOtp6"
+                    android:layout_width="@dimen/zero"
+                    android:layout_height="@dimen/fifty"
+                    android:layout_margin="@dimen/five"
+                    android:layout_marginStart="@dimen/five"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_white_stroke_box"
+                    android:inputType="number"
+                    android:maxLength="1"
+
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/fifteen_sp" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/ten"
+                android:gravity="left">
+
+                <TextView
+                    android:id="@+id/lblDidNot"
+                    android:layout_width="wrap_content"
+                    style="@style/CustomTextStylePoppinsRegular"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lblDidntreceive"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/thirteen_sp" />
+
+                <TextView
+                    android:id="@+id/lblOtpTimer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/fifteen"
+                    style="@style/CustomTextStylePoppinsRegular"
+                    android:layout_toEndOf="@+id/lblDidNot"
+                    android:text="@string/_00_00"
+                    android:textColor="@color/system_pink"
+                    android:textSize="@dimen/fifteen_sp"
+                    android:visibility="visible">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/lblResend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/fifteen"
+                    android:layout_toEndOf="@+id/lblDidNot"
+                    android:text="@string/resend"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/fifteen_sp"
+                    android:visibility="gone" />
+
+
+            </RelativeLayout>
+
+
+            <TextView
+                android:id="@+id/lblContactTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/ten"
+                android:gravity="left"
+                style="@style/CustomTextStylePoppinsRegular"
+                android:text="@string/if_you_don_t_recive_the_otp_please_contact_any_of_the_below_number"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/lblContactUs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/ten"
+                style="@style/CustomTextStylePoppinsBold"
+                android:gravity="center"
+                android:text="@string/contact_us"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen_sp">
+
+            </TextView>
+
+
+            <TextView
+                android:id="@+id/btnNext"
+                android:layout_below="@+id/lblDidNot"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/thirty"
+                android:layout_marginEnd="@dimen/ten"
+                android:layout_marginBottom="@dimen/ten"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rect_btn_blue"
+                android:gravity="center"
+                android:text="@string/NEXT"
+                android:padding="@dimen/fifteen"
+                android:textColor="@color/white"
+                android:textSize="@dimen/fifteen_sp"
+                android:textStyle="bold" />
+
+
+            <com.vs.schoolmessenger.Utils.SpinningProgressBar
+                android:id="@+id/isLoading"
+                android:layout_width="@dimen/thirty"
+                android:layout_height="@dimen/thirty"
+                android:layout_below="@+id/lblDidNot"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/fourty_five"
+                android:layout_marginBottom="@dimen/fifty"
+                android:visibility="gone">
+
+            </com.vs.schoolmessenger.Utils.SpinningProgressBar>
+
+
+        </LinearLayout>
+    </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
