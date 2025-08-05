@@ -373,6 +373,7 @@ class App(application: Application) : AndroidViewModel(application) {
         getexamslist = apiParentRepositories.getexamslistLiveData
         getviewmarks = apiParentRepositories.getviewmarksLiveData
         isleaverequestupdate = apiParentRepositories.isleaverequestupdateLiveData
+        isleaverequestdelete = apiParentRepositories.isleaverequestdeleteLiveData
         getProgressMarks = apiParentRepositories.getProgressMarksLiveData
         isHomeWorkComplete = apiParentRepositories.isUpdateCompleteHomeWorkLiveData
         getstudentdetailsforchat = apiParentRepositories.getstudentdetailsforchatLiveData

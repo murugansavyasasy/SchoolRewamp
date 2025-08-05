@@ -496,48 +496,25 @@
 
             </TextView>
 
-            <LinearLayout
-                android:id="@+id/linear_layout9"
+
+
+
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/btnupdate"
+                android:background="@drawable/background_radius_button"
+                android:fontFamily="@font/poppins_bold"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/lbTextCount"
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="10dp"
+                android:padding="@dimen/ten"
+                android:layout_marginTop="@dimen/fifteen"
                 android:gravity="center"
-                android:orientation="horizontal"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                android:visibility="gone">
+                android:text="Update Leave"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/btncancel"
-                    style="@style/CustomTextStylePoppinsMedium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="12dp"
-                    android:background="@drawable/bg_red_radious__all_side_same"
-                    android:padding="10dp"
-                    android:paddingStart="@dimen/eighteen_sp"
-                    android:paddingEnd="@dimen/eighteen_sp"
-                    android:text="Cancel"
-                    android:textColor="@color/white"
-                    android:textSize="13sp" />
-
-                <TextView
-                    android:id="@+id/btnupdate"
-                    style="@style/CustomTextStylePoppinsMedium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="30dp"
-                    android:background="@drawable/bg_green_radious"
-                    android:padding="10dp"
-                    android:paddingStart="@dimen/eighteen_sp"
-                    android:paddingEnd="@dimen/eighteen_sp"
-                    android:text="Update"
-                    android:textColor="@color/white"
-                    android:textSize="13sp" />
-
-            </LinearLayout>
+            </TextView>
 
 
         </LinearLayout>

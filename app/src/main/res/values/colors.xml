@@ -9,6 +9,10 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
+    <color name="light_green_1">#c2eecd</color>
+    <color name="light_yellow_1">#fff0b2</color>
+    <color name="light_red_1">#ffebea</color>
+    <color name="gray4">#D1D1D6</color>
     <color name="clr_black1">#414040</color>
     <color name="clr_grey_light">#D8D8D8</color>
     <color name="holo_blue_light">#ff33b5e5</color>
