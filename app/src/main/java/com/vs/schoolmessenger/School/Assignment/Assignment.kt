@@ -703,8 +703,12 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
     }
 
     override fun onSubmittedClick(data: AssignmentData) {
-
+        val intent = Intent(this, AssignmentStudentList::class.java)
+        intent.putExtra("assignment_id", data.id)
+        intent.putExtra("type", "SUBMITTED")
+        startActivity(intent)
     }
+
 
     override fun onDeleteClick(data: AssignmentData) {
         val jsonObject = JsonObject()
@@ -715,6 +719,9 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
     }
 
     override fun onNotSubmittedClick(data: AssignmentData) {
-
+        val intent = Intent(this, AssignmentStudentList::class.java)
+        intent.putExtra("assignment_id", data.id)
+        intent.putExtra("type", "NOTSUBMITTED")
+        startActivity(intent)
     }
 }

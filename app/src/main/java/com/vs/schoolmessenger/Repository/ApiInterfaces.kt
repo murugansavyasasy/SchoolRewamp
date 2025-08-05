@@ -56,6 +56,7 @@ import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.Stud
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeStudentsResponse
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteesResponse
 import com.vs.schoolmessenger.School.Assignment.DataClass.AssignmentResponse
+import com.vs.schoolmessenger.School.Assignment.Model.SubmissionResponse
 import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentReportResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
@@ -715,6 +716,15 @@ interface ApiInterfaces {
     fun isEventDelete(
         @Header(APIKeyNames.Authorization) token: String, @Body requestBody: RequestBody
     ): Call<EventDeleteResponse?>
+
+
+
+    @GET(APIMethods.isAssignmentSubmittedList)
+    fun getassignmentlist(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Query(APIKeyNames.id) id: String,
+        @Query(APIKeyNames.type) type: String
+    ): Call<SubmissionResponse?>?
 
 
 }
