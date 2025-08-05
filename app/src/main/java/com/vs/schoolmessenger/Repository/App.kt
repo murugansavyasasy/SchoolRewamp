@@ -146,8 +146,8 @@ class App(application: Application) : AndroidViewModel(application) {
     var isDeleteHomeWork: LiveData<StatusMessageModel?>? = null
         private set
 
-
-
+    var isDeleteAttachment: LiveData<StatusMessageModel?>? = null
+        private set
 
     var isGetDailyCollectionReport: LiveData<DailyCollectionReportResponse?>? = null
         private set
@@ -222,7 +222,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var isCertificateRequestList: LiveData<CertificatesListResponse?>? = null
     var isTimeTabletList: LiveData<TimeTableResponse?>? = null
 
-    var isAttachmentResponse: LiveData<AttachmentResponse?>? = null
+    var isAttachmentResponse: LiveData<AttachmentReportResponse?>? = null
     var isAttachmentResponseArchive: LiveData<AttachmentResponse?>? = null
 
     var getabsenteescountbydate: LiveData<AbsenteesResponse?>? = null
@@ -295,6 +295,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isEditAttachment = apiSchoolRepositories.isUpdateAttachmentLiveData
         isEditNoticeBoard = apiSchoolRepositories.isUpdateNoticeBoardLiveData
         isDeleteHomeWork = apiSchoolRepositories.isDeleteHomeworkLiveData
+        isDeleteAttachment = apiSchoolRepositories.isAttachmentLiveData
         isNoticeBoardReport = apiSchoolRepositories.isNoticeBoardReportLiveData
         isNoticeBoardStaffReport = apiSchoolRepositories.isNoticeBoardStaffReportLiveData
         isGetDailyCollectionReport = apiSchoolRepositories.isGetDailyCollectionReportLiveData
@@ -928,15 +929,13 @@ class App(application: Application) : AndroidViewModel(application) {
     fun isNoticeBoardUpdate(isToken: String, jsonObject: JsonObject,activity: Activity) {
         apiSchoolRepositories.isEditNoticeBoard(isToken,jsonObject,activity)
     }
-
-
-
-
     fun isHomeWorkDelete(isToken: String, jsonObject: JsonObject,activity: Activity) {
         apiSchoolRepositories.isHomeWorkDelete(isToken,jsonObject,activity)
     }
 
-
+    fun isAttachmentDelete(isToken: String, jsonObject: JsonObject,activity: Activity) {
+        apiSchoolRepositories.isAttachmentDelete(isToken,jsonObject,activity)
+    }
 
     fun getProgressMarks(
         isToken: String,

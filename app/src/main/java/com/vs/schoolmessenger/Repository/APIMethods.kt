@@ -29,6 +29,7 @@ object APIMethods {
     const val isHomeWorkUpdate = "comm/api/homework/update"
     const val isAttachmentUpdate = "comm/api/attachment/update"
     const val isHomeWorkDelete = "comm/api/homework/delete"
+    const val isAttachmentDelete = "comm/api/attachment/delete"
     const val isGetAssignmentReport = "comm/api/assignment/report"
     const val isAssignmentSubmittedList = "comm/api/assignment/submissions-list"
     const val isAssignmentDelete = "comm/api/assignment/delete"

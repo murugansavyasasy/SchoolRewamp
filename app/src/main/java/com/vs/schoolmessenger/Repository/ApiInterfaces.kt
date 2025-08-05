@@ -259,6 +259,12 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String, @Body requestBody: JsonObject
     ): Call<StatusMessageModel?>
 
+    @PUT(APIMethods.isAttachmentDelete)
+    fun isAttachmentDelete(
+        @Header(APIKeyNames.Authorization) token: String, @Body requestBody: JsonObject
+    ): Call<StatusMessageModel?>
+
+
 
     @POST(APIMethods.isSendText)
     fun isSendText(
@@ -513,7 +519,7 @@ interface ApiInterfaces {
     @GET(APIMethods.attachmentList)
     fun attachmentList(
         @Header(APIKeyNames.Authorization) token: String
-    ): Call<AttachmentResponse?>
+    ): Call<AttachmentReportResponse?>
 
     @GET(APIMethods.attachmentReportList)
     fun attachmentReportList(

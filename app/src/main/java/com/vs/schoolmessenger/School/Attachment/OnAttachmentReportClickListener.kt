@@ -5,5 +5,6 @@ import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentReportData
 
 
 interface OnAttachmentReportClickListener {
-    fun onItemClick(parentData: List<AttachmentReportData>, view: View, isPosition: Int)
+    fun onItemClick(isData: List<AttachmentReportData>, view: View, isPosition: Int)
+    fun onReadStatusClick(isData: List<AttachmentReportData>,isPosition: Int)
 }

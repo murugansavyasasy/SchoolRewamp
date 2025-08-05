@@ -129,7 +129,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.statusBarColor = Color.TRANSPARENT
         window.navigationBarColor = Color.TRANSPARENT
-        window.setBackgroundDrawableResource(R.drawable.bg_blue_backround)
+        window.setBackgroundDrawableResource(R.drawable.gradient_theme_school)
     }
 
     protected open fun setUpGradientParent() {

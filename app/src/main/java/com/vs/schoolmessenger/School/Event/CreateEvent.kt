@@ -87,9 +87,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
 
     companion object {
         private const val PICK_DOCUMENT_REQUEST = 1003
-        private const val PICK_IMAGE_REQUEST = 1001
         private const val MAX_FILES = 10
-
         internal const val CAMERA_IMAGE_REQUEST = 1004
     }
 

@@ -227,6 +227,7 @@ class AttachmentAdapter(
                         Log.e("WebViewError", "Error loading: ${error?.description}")
                     }
                 }
+
                 webView.loadUrl(item.file_path.firstOrNull()?.url ?: "")
             } else {
                 indicator.visibility = if (item.file_path.size > 1) View.VISIBLE else View.GONE
