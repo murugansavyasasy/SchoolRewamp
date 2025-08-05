@@ -242,6 +242,12 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String, @Body requestBody: JsonObject
     ): Call<StatusMessageModel?>
 
+    @PUT(APIMethods.isAttachmentUpdate)
+    fun isAttachmentUpdate(
+        @Header(APIKeyNames.Authorization) token: String, @Body requestBody: JsonObject
+    ): Call<StatusMessageModel?>
+
+
     @PUT(APIMethods.isNoticeBoardUpdate)
     fun isNoticeBoardUpdate(
         @Header(APIKeyNames.Authorization) token: String, @Body requestBody: JsonObject

@@ -485,8 +485,6 @@ class HomeWork : BaseActivity<HomeWorkBinding>(), View.OnClickListener, OnImageC
             }
 
             R.id.lnrTabOneName -> {
-
-
                 binding.edtTitle.setText("")
                 binding.edtDescription.setText("")
                 Constant.selectedFiles.clear()

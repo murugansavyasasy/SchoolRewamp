@@ -98,6 +98,7 @@ class SchoolServices {
     var isSendHomeWork: MutableLiveData<HomeWorkSendResponse?>
     var isSendAssignment: MutableLiveData<HomeWorkSendResponse?>
     var isUpdateHomeWork: MutableLiveData<StatusMessageModel?>
+    var isUpdateAttachment: MutableLiveData<StatusMessageModel?>
     var isUpdateNoticeBoard: MutableLiveData<StatusMessageModel?>
     var isDeleteHomeWork: MutableLiveData<StatusMessageModel?>
     var isSendVoice: MutableLiveData<TextSendResponse?>
@@ -182,6 +183,7 @@ class SchoolServices {
         isSendHomeWork = MutableLiveData()
         isSendAssignment = MutableLiveData()
         isUpdateHomeWork = MutableLiveData()
+        isUpdateAttachment = MutableLiveData()
         isDeleteHomeWork = MutableLiveData()
         isSendVoice = MutableLiveData()
         isUpdateStatusArchive = MutableLiveData()
@@ -783,6 +785,44 @@ class SchoolServices {
 
     val isUpdateHomeworkLiveData: LiveData<StatusMessageModel?>
         get() = isUpdateHomeWork
+
+    fun isEditAttachment(
+        isToken: String, jsonObject: JsonObject,activity: Activity
+    ) {
+
+        RestClient.apiInterfaces.isAttachmentUpdate(isToken, jsonObject)
+            ?.enqueue(object : Callback<StatusMessageModel?> {
+                override fun onResponse(
+                    call: Call<StatusMessageModel?>,
+                    response: Response<StatusMessageModel?>
+                ) {
+                    Log.d(
+                        "isGetCountryList", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isUpdateAttachment.postValue(response.body())
+                            } else {
+                                isUpdateAttachment.postValue(response.body())
+                            }
+                        }
+                    } else {
+                        isUpdateAttachment.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<StatusMessageModel?>, t: Throwable) {
+                    isUpdateAttachment.postValue(null)
+                    Log.d("t.printStackTrace()", t.printStackTrace().toString())
+                }
+            })
+    }
+
+    val isUpdateAttachmentLiveData: LiveData<StatusMessageModel?>
+        get() = isUpdateAttachment
+
 
     fun isEditNoticeBoard(
         isToken: String, jsonObject: JsonObject,activity: Activity

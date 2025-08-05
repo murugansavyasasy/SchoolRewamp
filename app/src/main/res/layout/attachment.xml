@@ -367,13 +367,13 @@
                 android:id="@+id/rcyAttachment"
                 android:layout_width="match_parent"
                 android:layout_below="@+id/search"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginEnd="@dimen/ten"
                 android:layout_height="wrap_content">
 
             </androidx.recyclerview.widget.RecyclerView>
 
         </RelativeLayout>
-
-
     </RelativeLayout>
 </ScrollView>
 
