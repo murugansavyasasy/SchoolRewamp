@@ -12,6 +12,16 @@
     app:cardUseCompatPadding="true">
 
     <ImageView
+        android:id="@+id/imgBack"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="@dimen/twenty"
+        android:layout_marginStart="@dimen/twenty"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/left_arrow" />
+
+    <ImageView
         android:id="@+id/btn_ok"
         android:layout_width="30dp"
         android:layout_height="30dp"
@@ -45,6 +55,7 @@
                 android:id="@+id/topGreenHeader"
                 android:layout_width="0dp"
                 android:layout_height="130dp"
+                android:alpha="0.8"
                 android:background="@drawable/bg_top_green_rounded"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -398,6 +409,7 @@
                 android:background="@drawable/bg_top_rounded"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:alpha="0.8"
                 app:layout_constraintStart_toStartOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

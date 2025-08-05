@@ -138,6 +138,8 @@ object APIKeyNames {
     const val leave_from ="leave_from"
     const val leave_to ="leave_to"
     const val reason ="reason"
+    const val f_session ="f_session"
+    const val t_session ="t_session"
     const val offset ="offset"
     const val is_class_teacher ="is_class_teacher"
 
