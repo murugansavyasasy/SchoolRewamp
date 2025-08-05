@@ -32,13 +32,14 @@ import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.OtpScreenBinding
 import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.vs.schoolmessenger.Repository.APIKeyNames
+import com.vs.schoolmessenger.databinding.OtpNewBinding
 
-class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
+class OTP : BaseActivity<OtpNewBinding>(), View.OnClickListener {
 
     private val otpTimeout = 30000L
     private val otpInterval = 1000L
-    override fun getViewBinding(): OtpScreenBinding {
-        return OtpScreenBinding.inflate(layoutInflater)
+    override fun getViewBinding(): OtpNewBinding {
+        return OtpNewBinding.inflate(layoutInflater)
     }
 
     var authViewModel: Auth? = null
@@ -50,10 +51,11 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
         super.setupViews()
         // Access a specific view using its ID
 
-        isToolBarWhiteTheme()
+        isToolBarPrimaryTheme()
         binding.lblResend.setOnClickListener(this)
         binding.btnNext.setOnClickListener(this)
         binding.lblContactUs.setOnClickListener(this)
+        binding.rytBack.setOnClickListener(this)
 
         startSmsRetriever()
         authViewModel = ViewModelProvider(this)[Auth::class.java]
@@ -295,6 +297,10 @@ class OTP : BaseActivity<OtpScreenBinding>(), View.OnClickListener {
                 binding.lblResend.visibility = View.GONE
                 startOtpTimer()
                 isForgetPassword()
+            }
+
+            R.id.rytBack ->{
+                onBackPressed()
             }
 
             R.id.btnNext -> {

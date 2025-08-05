@@ -32,7 +32,7 @@ import retrofit2.Response
 class ParentServices {
     var client_auth: RestClient
     var isChildAttendanceReport: MutableLiveData<ChildAttendanceResponse?>
-    var isAttachmentResponse: MutableLiveData<AttachmentResponse?>
+    var isAttachmentResponse: MutableLiveData<AttachmentReportResponse?>
     var isAttachmentResponseArchive: MutableLiveData<AttachmentResponse?>
     var isLeaveRequestApplyResponse: MutableLiveData<LeaveRequestApplyResponse?>
     var isCertificatetypes: MutableLiveData<CertificatesTypesResponse?>
@@ -121,10 +121,10 @@ class ParentServices {
         activity: Activity
     ) {
         RestClient.apiInterfaces.attachmentList(isToken)
-            ?.enqueue(object : Callback<AttachmentResponse?> {
+            ?.enqueue(object : Callback<AttachmentReportResponse?> {
                 override fun onResponse(
-                    call: Call<AttachmentResponse?>,
-                    response: Response<AttachmentResponse?>
+                    call: Call<AttachmentReportResponse?>,
+                    response: Response<AttachmentReportResponse?>
                 ) {
                     Log.d(
                         "GetChildAttendanceReportData Response",
@@ -145,7 +145,7 @@ class ParentServices {
                 }
 
                 override fun onFailure(
-                    call: Call<AttachmentResponse?>,
+                    call: Call<AttachmentReportResponse?>,
                     t: Throwable
                 ) {
                     isAttachmentResponse.postValue(null)
@@ -154,7 +154,7 @@ class ParentServices {
             })
     }
 
-    val isAttachmentResponseLiveData: LiveData<AttachmentResponse?>
+    val isAttachmentResponseLiveData: LiveData<AttachmentReportResponse?>
         get() = isAttachmentResponse
 
 

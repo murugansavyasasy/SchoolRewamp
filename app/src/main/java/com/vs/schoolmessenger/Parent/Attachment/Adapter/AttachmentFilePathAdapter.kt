@@ -106,6 +106,9 @@ class AttachmentFilePathAdapter (
 
 //                    ImgOrDocumentType.setBackgroundResource(R.drawable.default_image_icon)
 //                    WebViewThumbnail.visibility = View.GONE
+
+//                    WebViewThumbnail.visibility = View.GONE
+
                     DefaultImage.visibility = View.VISIBLE
                 }
 
@@ -153,6 +156,39 @@ class AttachmentFilePathAdapter (
             }
 
 
+
+
+//            WebViewThumbnail.setOnTouchListener(object : OnTouchListener {
+//                override fun onTouch(v: View?, event: MotionEvent): Boolean {
+//
+//                    if (event.action == MotionEvent.ACTION_MOVE) {
+//                        return false
+//                    }
+//                    if (event.action == MotionEvent.ACTION_UP) {
+//                        data?.let {
+//                            if (item.is_unread) {
+//                                listener.onChildItemClick(it, item)
+//                            }
+//                        }
+//                        Constant.commonFileList.isEmpty()
+//                        val commonList = adapter.GetFilePathDetailsData?.map {
+//                            CommonFileData(
+//                                type = it.type,
+//                                path = it.url
+//                            )
+//                        }?.toMutableList() ?: mutableListOf()
+//
+//                        Constant.commonFileList = commonList
+//                        Constant.selectedFileIndex = position
+//
+//                        val intent = Intent(context, FilesViewActivity::class.java)
+//                        intent.putExtra(Constant.subjectName, item.title)
+//                        context.startActivity(intent)
+//                    }
+//
+//                    return false
+//                }
+//            })
 
 //            WebViewThumbnail.setOnTouchListener(object : OnTouchListener {
 //                override fun onTouch(v: View?, event: MotionEvent): Boolean {

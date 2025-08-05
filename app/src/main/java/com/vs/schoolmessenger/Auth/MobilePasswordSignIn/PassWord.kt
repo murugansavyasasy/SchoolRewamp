@@ -19,12 +19,13 @@ import com.vs.schoolmessenger.Repository.Auth
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.PassWordBinding
+import com.vs.schoolmessenger.databinding.PassWordNewBinding
 
-class PassWord : BaseActivity<PassWordBinding>(), View.OnClickListener {
+class PassWord : BaseActivity<PassWordNewBinding>(), View.OnClickListener {
 
     private var isPasswordVisible = false
-    override fun getViewBinding(): PassWordBinding {
-        return PassWordBinding.inflate(layoutInflater)
+    override fun getViewBinding(): PassWordNewBinding {
+        return PassWordNewBinding.inflate(layoutInflater)
     }
 
     var authViewModel: Auth? = null
@@ -35,7 +36,8 @@ class PassWord : BaseActivity<PassWordBinding>(), View.OnClickListener {
         binding.imgHide.setOnClickListener(this)
         binding.btnLoginContinue.setOnClickListener(this)
         binding.lblForgetPassword.setOnClickListener(this)
-        isToolBarWhiteTheme()
+        binding.rytBack.setOnClickListener(this)
+        isToolBarPrimaryTheme()
         binding.lblForgetPassword.paintFlags =
             binding.lblForgetPassword.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
@@ -204,6 +206,9 @@ class PassWord : BaseActivity<PassWordBinding>(), View.OnClickListener {
 
             R.id.lblForgetPassword -> {
                 isForgetPassword()
+            }
+            R.id.rytBack ->{
+                onBackPressed()
             }
         }
     }

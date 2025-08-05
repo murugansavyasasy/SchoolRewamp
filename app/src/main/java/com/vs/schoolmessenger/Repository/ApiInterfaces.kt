@@ -243,6 +243,12 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String, @Body requestBody: JsonObject
     ): Call<StatusMessageModel?>
 
+    @PUT(APIMethods.isAttachmentUpdate)
+    fun isAttachmentUpdate(
+        @Header(APIKeyNames.Authorization) token: String, @Body requestBody: JsonObject
+    ): Call<StatusMessageModel?>
+
+
     @PUT(APIMethods.isNoticeBoardUpdate)
     fun isNoticeBoardUpdate(
         @Header(APIKeyNames.Authorization) token: String, @Body requestBody: JsonObject
@@ -253,6 +259,12 @@ interface ApiInterfaces {
     fun isHomeWorkDelete(
         @Header(APIKeyNames.Authorization) token: String, @Body requestBody: JsonObject
     ): Call<StatusMessageModel?>
+
+    @PUT(APIMethods.isAttachmentDelete)
+    fun isAttachmentDelete(
+        @Header(APIKeyNames.Authorization) token: String, @Body requestBody: JsonObject
+    ): Call<StatusMessageModel?>
+
 
 
     @POST(APIMethods.isSendText)
@@ -508,7 +520,7 @@ interface ApiInterfaces {
     @GET(APIMethods.attachmentList)
     fun attachmentList(
         @Header(APIKeyNames.Authorization) token: String
-    ): Call<AttachmentResponse?>
+    ): Call<AttachmentReportResponse?>
 
     @GET(APIMethods.attachmentReportList)
     fun attachmentReportList(

@@ -21,7 +21,7 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
 
     override fun setupViews() {
         super.setupViews()
-
+        setupToolbar()
         authViewModel = ViewModelProvider(this).get(Auth::class.java)
         authViewModel!!.init()
         FirebaseMessaging.getInstance().isAutoInitEnabled = true
@@ -46,7 +46,6 @@ class ParentDashboard : BaseActivity<ChildDashboardBinding>(), View.OnClickListe
                     val token = task.result
                     Log.d("FCM", "Token: $token")
                     isUpdateDeviceToken(token)
-
                 }
             }
 
