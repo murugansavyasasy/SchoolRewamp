@@ -5,6 +5,9 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.JsonObject
+import com.vs.schoolmessenger.Parent.Assignment.Model.AssignmentModelRequest
+import com.vs.schoolmessenger.Parent.Assignment.Model.AssignmentSubmitResponse
+import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentResponse
 import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentResponse
 import com.vs.schoolmessenger.Parent.Attendance.AttendanceReport.ChildAttendanceResponse
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesListResponse
@@ -52,6 +55,8 @@ class ParentServices {
     var getProgressMarks: MutableLiveData<ProgressCardResponse?>
     var isUpdateCompleteHomeWork: MutableLiveData<StatusMessageModel?>
     var isLeaveCategories: MutableLiveData<GetLeaveCategoriesData?>
+    var isAssignmentlist: MutableLiveData<ParentAssignmentResponse?>
+    var isSubmitAssignment: MutableLiveData<AssignmentSubmitResponse?>
 
     init {
         client_auth = RestClient()
@@ -75,6 +80,8 @@ class ParentServices {
         isUpdateCompleteHomeWork = MutableLiveData()
         getstudentdetailsforchat = MutableLiveData()
         isLeaveCategories = MutableLiveData()
+        isAssignmentlist = MutableLiveData()
+        isSubmitAssignment = MutableLiveData()
     }
 
     fun getChildAttendanceReport(
@@ -869,23 +876,24 @@ class ParentServices {
 
 
 
-
     fun getLeaveCategories(
-        isToken: String ) {
+        isToken: String,
+    ) {
         RestClient.apiInterfaces.getleavecategories(isToken)
             ?.enqueue(object : Callback<GetLeaveCategoriesData?> {
                 override fun onResponse(
                     call: Call<GetLeaveCategoriesData?>,
                     response: Response<GetLeaveCategoriesData?>
                 ) {
+
                     if (response.code() == 200) {
                         if (response.body() != null) {
                             val status = response.body()!!.status
                             if (status) {
-                                Log.d("GetLeaveCateorgiesData", response.body().toString())
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
                                 isLeaveCategories.postValue(response.body())
                             } else {
-                                Log.d("GetLeaveCategoriesData", response.body().toString())
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
                                 isLeaveCategories.postValue(response.body())
                             }
                         }
@@ -907,6 +915,82 @@ class ParentServices {
 
     val getLeaveCategoriesLiveData: LiveData<GetLeaveCategoriesData?>
         get() = isLeaveCategories
+
+
+    fun isAssignmentlist(
+        isToken: String
+    ) {
+        RestClient.apiInterfaces.isAssignmentlist(isToken)
+            ?.enqueue(object : Callback<ParentAssignmentResponse?> {
+                override fun onResponse(
+                    call: Call<ParentAssignmentResponse?>,
+                    response: Response<ParentAssignmentResponse?>
+                ) {
+                    Log.d(
+                        "certificate list Response",
+                        response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                isAssignmentlist.postValue(response.body())
+                            } else {
+                                Log.d("GetChildAttendanceReportData", response.body().toString())
+                                isAssignmentlist.postValue(response.body())
+                            }
+                        }
+                    }
+                    else{
+                        isAssignmentlist.postValue(null)
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<ParentAssignmentResponse?>,
+                    t: Throwable
+                ) {
+                    isAssignmentlist.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isAssignmentlistLiveData: LiveData<ParentAssignmentResponse?>
+        get() = isAssignmentlist
+
+
+
+    fun isSubmitAssignment(
+        isToken: String,
+        request: AssignmentModelRequest
+    ) {
+        RestClient.apiInterfaces.isSubmitAssignment(isToken, request)
+            ?.enqueue(object : Callback<AssignmentSubmitResponse?> {
+                override fun onResponse(
+                    call: Call<AssignmentSubmitResponse?>,
+                    response: Response<AssignmentSubmitResponse?>
+                ) {
+                    if (response.code() == 200 && response.body() != null) {
+                        isSubmitAssignment.postValue(response.body())
+                    } else {
+                        isSubmitAssignment.postValue(response.body())
+                    }
+                }
+
+                override fun onFailure(call: Call<AssignmentSubmitResponse?>, t: Throwable) {
+                    isSubmitAssignment.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+
+    val isSubmitAssignmentLiveData: LiveData<AssignmentSubmitResponse?>
+        get() = isSubmitAssignment
+
+
 
 
 }

@@ -125,6 +125,9 @@ object APIMethods {
     const val isleavecategories = "comm/api/leave-req/leave-categories"
 
 
+    const val isAssignmentlist = "comm/api/assignment/list"
+    const val isSubmitAssignment = "comm/api/assignment/submit-assignment"
+
 }
 
 

@@ -45,7 +45,6 @@ class AttachmentAdapter(
 
     private val TYPE_SHIMMER = 0
     private val TYPE_DATA = 1
-
     private var fullList: List<AttachmentData> = attachmentList ?: listOf()
     private var filteredList: List<AttachmentData> = attachmentList ?: listOf()
 

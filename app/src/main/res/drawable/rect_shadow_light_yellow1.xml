@@ -3,7 +3,7 @@
     <!-- Shadow/background layer -->
     <item android:left="2dp" android:top="2dp">
         <shape>
-            <solid android:color="#CCCCCC" /> <!-- Simulated shadow -->
+            <solid android:color="#ffefd9" /> <!-- Simulated shadow -->
             <corners android:radius="8dp" />
         </shape>
     </item>
@@ -11,11 +11,11 @@
     <!-- Actual button layer -->
     <item>
         <shape>
-            <solid android:color="@color/custom_yellow_light_color" />
+            <solid android:color="#ffefd9" />
             <corners android:radius="8dp" />
             <stroke
                 android:width="1dp"
-                android:color="#BBAA33" /> <!-- Slight border for depth -->
+                android:color="#ffefd9" /> <!-- Slight border for depth -->
         </shape>
     </item>
 

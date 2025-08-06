@@ -98,13 +98,13 @@
             </TextView>
 
 
-
             <ImageView
                 android:id="@+id/arrow_icon"
                 android:layout_width="@dimen/thirty"
                 android:layout_height="@dimen/thirty"
                 android:layout_alignParentEnd="true"
                 android:layout_centerInParent="true"
+                android:visibility="gone"
                 android:layout_marginTop="@dimen/fourty"
                 android:layout_marginEnd="10dp"
                 android:src="@drawable/rightarrrow" />
