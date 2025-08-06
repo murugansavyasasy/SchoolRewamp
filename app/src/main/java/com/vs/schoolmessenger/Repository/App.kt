@@ -12,6 +12,9 @@ import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYearResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
+import com.vs.schoolmessenger.Parent.Assignment.Model.AssignmentModelRequest
+import com.vs.schoolmessenger.Parent.Assignment.Model.AssignmentSubmitResponse
+import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentResponse
 import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentResponse
 import com.vs.schoolmessenger.Parent.Attendance.AttendanceReport.ChildAttendanceResponse
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesListResponse
@@ -275,6 +278,8 @@ class App(application: Application) : AndroidViewModel(application) {
     var getProgressMarks: LiveData<ProgressCardResponse?>? = null
     var isHomeWorkComplete: LiveData<StatusMessageModel?>? = null
     var getassignmentlist: LiveData<SubmissionResponse?>? = null
+    var isAssignmentlist: LiveData<ParentAssignmentResponse?>? = null
+    var isSubmitAssignment: LiveData<AssignmentSubmitResponse?>? = null
 
 
     fun init() {
@@ -381,6 +386,8 @@ class App(application: Application) : AndroidViewModel(application) {
         isEventDelete = apiSchoolRepositories.isEventDeleteLiveData
         isAttachmentReportResponse = apiSchoolRepositories.isAttachmentResponseLiveData
         getassignmentlist = apiSchoolRepositories.getassignmentlistLiveData
+        isAssignmentlist = apiParentRepositories.isAssignmentlistLiveData
+        isSubmitAssignment = apiParentRepositories.isSubmitAssignmentLiveData
 
     }
 
@@ -882,6 +889,19 @@ class App(application: Application) : AndroidViewModel(application) {
         apiSchoolRepositories.getassignmentlist(isToken,id,type)
     }
 
+
+    fun isAssignmentlist(
+        isToken: String
+    ) {
+        apiParentRepositories.isAssignmentlist(isToken)
+    }
+
+
+    fun isSubmitAssignment(
+        isToken: String, request: AssignmentModelRequest
+    ) {
+        apiParentRepositories.isSubmitAssignment(isToken,request)
+    }
 }
 
 

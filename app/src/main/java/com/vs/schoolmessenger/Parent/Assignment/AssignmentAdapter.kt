@@ -81,13 +81,15 @@ class AssignmentAdapter(
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
 
-        private val lblTitle: TextView = itemView.findViewById(R.id.lblTitle)
         private val lblDescription: TextView = itemView.findViewById(R.id.lblDescription)
+        private val lblTitle: TextView = itemView.findViewById(R.id.lblTitle)
+        private val lblassigned: TextView = itemView.findViewById(R.id.lblassigned)
+        private val lblCategory: TextView = itemView.findViewById(R.id.lblCategory)
+        //        private val lblSubmissionDue: TextView = itemView.findViewById(R.id.lblSubmissionDue)
         private val lblSubject: TextView = itemView.findViewById(R.id.lblSubject)
-        private val lblCategotry: TextView = itemView.findViewById(R.id.lblCategotry)
-        private val lblSubmissionDue: TextView = itemView.findViewById(R.id.lblSubmissionDue)
         private val lblSubmitted: TextView = itemView.findViewById(R.id.lblSubmitted)
         private val lblNotSubmitted: TextView = itemView.findViewById(R.id.lblNotSubmitted)
+        private val lbldeadline: TextView = itemView.findViewById(R.id.lbldeadline)
         private val createddate: TextView = itemView.findViewById(R.id.createddate)
         private val lblSendby: TextView = itemView.findViewById(R.id.lblSendby)
         private val rytList: LinearLayout = itemView.findViewById(R.id.rytList)
@@ -97,10 +99,11 @@ class AssignmentAdapter(
         private val rytList2: RelativeLayout = itemView.findViewById(R.id.rytList2)
 
         //        private val indicator: CircleIndicator2 = itemView.findViewById(R.id.indicator)
-        private val imgDelete: ImageView = itemView.findViewById(R.id.imgDelete)
+//        private val imgDelete: ImageView = itemView.findViewById(R.id.imgDelete)
         private val options: ImageView = itemView.findViewById(R.id.options)
         private val video_player: ImageView = itemView.findViewById(R.id.video_player)
         private val total_numbers: TextView = itemView.findViewById(R.id.total_numbers)
+        private val progressBarAssignment: ProgressBar = itemView.findViewById(R.id.progressBarAssignment)
         @SuppressLint("ClickableViewAccessibility", "SetJavaScriptEnabled")
         fun bind(
             data: AssignmentData,
@@ -108,15 +111,29 @@ class AssignmentAdapter(
             adapter: AssignmentAdapter,
             listener: AssignmentClickListener
         ) {
-            lblTitle.text = data.title
+
             lblDescription.text = data.description
-            lblSubject.text = data.subject
-            lblCategotry.text = "Category" + " - " + data.category
-            lblSubmissionDue.text = "Submission Due" + " - " + data.end_date
+            lblTitle.text = data.title
+            lblCategory.text = data.category
+            lblassigned.text = "Assigned" + " - " + Constant.convertToReadableDate(data.created_date)
+//            lblSubmissionDue.text = "Submission Due" + " - " + data.end_date
             createddate.text = Constant.convertToReadableDate(data.created_date)
-            lblSubmitted.text = "Submitted : ${data.submitted_count}"
-            lblNotSubmitted.text = "NotSubmitted : ${data.total_count}"
+            lblSubject.text = data.subject
+            lbldeadline.text = "Submission date" +" "+ data.end_date
             lblSendby.text = data.created_date
+
+            lblSubmitted.text ="Submitted"+" - "+ data.submitted_count
+            lblNotSubmitted.text ="Not Submitted"+" - "+ data.total_count
+
+
+            val submittedCount = data.submitted_count ?: 0
+            val totalCount = data.total_count ?: 1
+
+            progressBarAssignment.max = totalCount
+            progressBarAssignment.progress = submittedCount
+
+
+
 
 
             val hasIframe = !data.iframe.isNullOrEmpty()
