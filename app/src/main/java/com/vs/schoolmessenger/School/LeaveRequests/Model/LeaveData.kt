@@ -13,6 +13,7 @@ data class LeaveData(
     val status: String,
     val updated_on: String,
     val from_session: String,
-    val to_session: String
-
+    val to_session: String,
+    val approved_by: String,
+    val leave_type: String,
 )

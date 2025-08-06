@@ -77,8 +77,8 @@ class AttachmentFilePathAdapter (
     ) :
         RecyclerView.ViewHolder(itemView) {
         private val DefaultImage: ImageView = itemView.findViewById(R.id.ImgPDF)
-        private val ImgOrDocumentType:ImageView=itemView.findViewById(R.id.imageOrDocumentType)
-        private val WebViewThumbnail:WebView=itemView.findViewById(R.id.WVThumbnaildocument)
+//        private val ImgOrDocumentType:ImageView=itemView.findViewById(R.id.imageOrDocumentType)
+//        private val WebViewThumbnail:WebView=itemView.findViewById(R.id.WVThumbnaildocument)
 
         private val loadingBar: ProgressBar = itemView.findViewById(R.id.loadingBar)
 
@@ -103,32 +103,37 @@ class AttachmentFilePathAdapter (
                         .load(data.url)
                         .placeholder(R.drawable.image_placeholder)
                         .into(DefaultImage)
-                    WebViewThumbnail.visibility = View.GONE
+
+//                    ImgOrDocumentType.setBackgroundResource(R.drawable.default_image_icon)
+//                    WebViewThumbnail.visibility = View.GONE
+
+//                    WebViewThumbnail.visibility = View.GONE
+
                     DefaultImage.visibility = View.VISIBLE
                 }
 
                 Constant.PDF -> {
-                    ImgOrDocumentType.setBackgroundResource(R.drawable.hw_pdf_img)
+                    DefaultImage.setImageResource(R.drawable.hw_pdf_img)
                     openDocumentInWebView(data.url)
                 }
 
                 Constant.DOC, Constant.DOCX -> {
-                    ImgOrDocumentType.setBackgroundResource(R.drawable.microsoft_word_img)
+                    DefaultImage.setImageResource(R.drawable.microsoft_word_img)
                     openDocumentInWebView(data.url)
                 }
 
                 Constant.TXT -> {
-                    ImgOrDocumentType.setBackgroundResource(R.drawable.txt_file_img)
+                    DefaultImage.setImageResource(R.drawable.txt_file_img)
                     openDocumentInWebView(data.url)
                 }
 
                 Constant.PPT, Constant.PPTX -> {
-                    ImgOrDocumentType.setBackgroundResource(R.drawable.ppt_icon)
+                    DefaultImage.setImageResource(R.drawable.ppt_icon)
                     openDocumentInWebView(data.url)
                 }
 
                 Constant.EXCEL -> {
-                    ImgOrDocumentType.setBackgroundResource(R.drawable.excel_icon)
+                    DefaultImage.setImageResource(R.drawable.excel_icon)
                     openDocumentInWebView(data.url)
                 }
             }
@@ -151,72 +156,106 @@ class AttachmentFilePathAdapter (
             }
 
 
-            WebViewThumbnail.setOnTouchListener(object : OnTouchListener {
-                override fun onTouch(v: View?, event: MotionEvent): Boolean {
 
-                    if (event.action == MotionEvent.ACTION_MOVE) {
-                        return false
-                    }
-                    if (event.action == MotionEvent.ACTION_UP) {
-                        data?.let {
-                            if (item.is_unread) {
-                                listener.onChildItemClick(it, item)
-                            }
-                        }
-                        Constant.commonFileList.isEmpty()
-                        val commonList = adapter.GetFilePathDetailsData?.map {
-                            CommonFileData(
-                                type = it.type,
-                                path = it.url
-                            )
-                        }?.toMutableList() ?: mutableListOf()
 
-                        Constant.commonFileList = commonList
-                        Constant.selectedFileIndex = position
+//            WebViewThumbnail.setOnTouchListener(object : OnTouchListener {
+//                override fun onTouch(v: View?, event: MotionEvent): Boolean {
+//
+//                    if (event.action == MotionEvent.ACTION_MOVE) {
+//                        return false
+//                    }
+//                    if (event.action == MotionEvent.ACTION_UP) {
+//                        data?.let {
+//                            if (item.is_unread) {
+//                                listener.onChildItemClick(it, item)
+//                            }
+//                        }
+//                        Constant.commonFileList.isEmpty()
+//                        val commonList = adapter.GetFilePathDetailsData?.map {
+//                            CommonFileData(
+//                                type = it.type,
+//                                path = it.url
+//                            )
+//                        }?.toMutableList() ?: mutableListOf()
+//
+//                        Constant.commonFileList = commonList
+//                        Constant.selectedFileIndex = position
+//
+//                        val intent = Intent(context, FilesViewActivity::class.java)
+//                        intent.putExtra(Constant.subjectName, item.title)
+//                        context.startActivity(intent)
+//                    }
+//
+//                    return false
+//                }
+//            })
 
-                        val intent = Intent(context, FilesViewActivity::class.java)
-                        intent.putExtra(Constant.subjectName, item.title)
-                        context.startActivity(intent)
-                    }
-
-                    return false
-                }
-            })
+//            WebViewThumbnail.setOnTouchListener(object : OnTouchListener {
+//                override fun onTouch(v: View?, event: MotionEvent): Boolean {
+//
+//                    if (event.action == MotionEvent.ACTION_MOVE) {
+//                        return false
+//                    }
+//                    if (event.action == MotionEvent.ACTION_UP) {
+//                        data?.let {
+//                            if (item.is_unread) {
+//                                listener.onChildItemClick(it, item)
+//                            }
+//                        }
+//                        Constant.commonFileList.isEmpty()
+//                        val commonList = adapter.GetFilePathDetailsData?.map {
+//                            CommonFileData(
+//                                type = it.type,
+//                                path = it.url
+//                            )
+//                        }?.toMutableList() ?: mutableListOf()
+//
+//                        Constant.commonFileList = commonList
+//                        Constant.selectedFileIndex = position
+//
+//                        val intent = Intent(context, FilesViewActivity::class.java)
+//                        intent.putExtra(Constant.subjectName, item.title)
+//                        context.startActivity(intent)
+//                    }
+//
+//                    return false
+//                }
+//            })
         }
 
         private fun openDocumentInWebView(urlPath: String) {
-            loadingBar.visibility = View.VISIBLE
-
-            val googleDocsUrl = "https://docs.google.com/gview?embedded=true&url=$urlPath"
-
-            DefaultImage.visibility = View.GONE
-            WebViewThumbnail.visibility = View.VISIBLE
-            WebViewThumbnail.setOnTouchListener(null)
-            WebViewThumbnail.settings.javaScriptEnabled = true
-            WebViewThumbnail.settings.domStorageEnabled = true
-            WebViewThumbnail.settings.loadWithOverviewMode = true
-            WebViewThumbnail.settings.useWideViewPort = true
-
-            WebViewThumbnail.webViewClient = object : WebViewClient() {
-                override fun onPageStarted(
-                    view: WebView?, url: String?, favicon: android.graphics.Bitmap?
-                ) {
-                    loadingBar.visibility = View.VISIBLE
-                }
-
-                override fun onPageFinished(view: WebView?, url: String?) {
-                    loadingBar.visibility = View.GONE
-                }
-
-                override fun onReceivedError(
-                    view: WebView?, request: WebResourceRequest?, error: WebResourceError?
-                ) {
-                    loadingBar.visibility = View.GONE
-                    Log.e("WebViewError", "Error loading: ${error?.description}")
-                }
-            }
-
-            WebViewThumbnail.loadUrl(googleDocsUrl)
+//            loadingBar.visibility = View.VISIBLE
+//
+//            val googleDocsUrl = "https://docs.google.com/gview?embedded=true&url=$urlPath"
+//
+//            DefaultImage.visibility = View.GONE
+//            WebViewThumbnail.visibility = View.VISIBLE
+//            WebViewThumbnail.setOnTouchListener(null)
+//            WebViewThumbnail.settings.javaScriptEnabled = true
+//            WebViewThumbnail.settings.domStorageEnabled = true
+//            WebViewThumbnail.settings.loadWithOverviewMode = true
+//            WebViewThumbnail.settings.useWideViewPort = true
+//
+//            WebViewThumbnail.webViewClient = object : WebViewClient() {
+//                override fun onPageStarted(
+//                    view: WebView?, url: String?, favicon: android.graphics.Bitmap?
+//                ) {
+//                    loadingBar.visibility = View.VISIBLE
+//                }
+//
+//                override fun onPageFinished(view: WebView?, url: String?) {
+//                    loadingBar.visibility = View.GONE
+//                }
+//
+//                override fun onReceivedError(
+//                    view: WebView?, request: WebResourceRequest?, error: WebResourceError?
+//                ) {
+//                    loadingBar.visibility = View.GONE
+//                    Log.e("WebViewError", "Error loading: ${error?.description}")
+//                }
+//            }
+//
+//            WebViewThumbnail.loadUrl(googleDocsUrl)
         }
 
 

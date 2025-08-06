@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/five"
+    android:fitsSystemWindows="true"
+    tools:ignore="MissingDefaultResource">
+
+    <RelativeLayout
+        android:id="@+id/rlastudentlistrelativelayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/ten"
+        android:layout_marginEnd="@dimen/ten"
+        android:background="@drawable/rect_shadow_white">
+
+        <RelativeLayout
+            android:id="@+id/rlarelativelayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp">
+
+            <TextView
+                android:id="@+id/lblStudentName"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/twenty_five"
+                android:layout_marginTop="@dimen/fifteen"
+                android:layout_marginEnd="@dimen/twenty_five"
+                android:gravity="start"
+                android:text="Sathish"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/sectionlabel"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblStudentName"
+                android:layout_marginStart="@dimen/twenty_five"
+                android:layout_marginTop="@dimen/ten"
+                android:text="I"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp">
+
+            </TextView>
+
+
+            <TextView
+                android:id="@+id/dotsymbol"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblStudentName"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_toEndOf="@+id/sectionlabel"
+                android:text=" - "
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/standardlabel"
+                style="@style/CustomTextStylePoppinsMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblStudentName"
+                android:layout_marginStart="@dimen/ten"
+                android:layout_marginTop="@dimen/ten"
+                android:layout_toEndOf="@+id/dotsymbol"
+                android:text="B"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirteen_sp">
+
+            </TextView>
+
+
+
+            <TextView
+                android:id="@+id/statuslabel"
+                style="@style/CustomTextStylePoppinsBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/sectionlabel"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="@dimen/ten"
+                android:text="SUBMITTED"
+                android:textColor="@color/clr_green"
+                android:textSize="@dimen/thirteen_sp">
+
+            </TextView>
+
+
+
+            <ImageView
+                android:id="@+id/arrow_icon"
+                android:layout_width="@dimen/thirty"
+                android:layout_height="@dimen/thirty"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/fourty"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/rightarrrow" />
+
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+
+
+
+</RelativeLayout>

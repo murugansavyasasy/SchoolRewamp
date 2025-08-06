@@ -586,6 +586,8 @@
     <string name="confirm_submit_attendance"><![CDATA[Confirm & Submit Attendance]]></string>
     <string name="are_you_sure_want_to_submit_the_attendance">Are you sure want to submit the attendance?</string>
     <string name="Are_you_sure_you_want_to_update_this_request">Are you sure you want to update this request?</string>
+    <string name="Are_you_sure_you_want_to_apply_for_leave">Are you sure you want to apply for leave?</string>
+    <string name="are_you_sure_you_want_to_cancel_leave_request">Are you sure you want to cancel the leave request?</string>
     <string name="no_data">no_data</string>
     <string name="monday">Monday</string>
     <string name="no_timetable_available">No timetable available</string>
@@ -599,8 +601,11 @@
     <string name="select_to_date">Select To Date</string>
     <string name="session">Session</string>
     <string name="leave_requests">Leave Requests</string>
+    <string name="edit_leave_request">Edit Leave Request</string>
+    <string name="new_leave">New Leave</string>
     <string name="decline">Decline</string>
     <string name="no_changes_made">No Changes Made</string>
+    <string name="generate_outpass"><u>Generate Outpass</u></string>
 
 
 </resources>

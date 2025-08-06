@@ -18,6 +18,7 @@ import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.PopupMenu
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
@@ -31,6 +32,8 @@ import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Assignment.DataClass.AssignmentData
 import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.CommonScreens.FilesViewActivity
+import com.vs.schoolmessenger.Parent.Noticeboard.Adapter.FilePathAdapter
+import com.vs.schoolmessenger.School.NoticeBoard.SchoolNoticeBoardAdapter
 import me.relex.circleindicator.CircleIndicator2
 
 class AssignmentAdapter(
@@ -59,11 +62,17 @@ class AssignmentAdapter(
         }
     }
 
+
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder) {
-            holder.bind(itemList[position], position, this, listener)
+            itemList?.get(position)?.let {
+                holder.bind(it, position, this,listener)
+            }
+        } else if (holder is SchoolNoticeBoardAdapter.ShimmerViewHolder) {
+            holder.startShimmer()
         }
     }
+
 
     override fun getItemCount(): Int {
         return if (isLoading) 20 else itemList.size
@@ -81,15 +90,17 @@ class AssignmentAdapter(
         private val lblNotSubmitted: TextView = itemView.findViewById(R.id.lblNotSubmitted)
         private val createddate: TextView = itemView.findViewById(R.id.createddate)
         private val lblSendby: TextView = itemView.findViewById(R.id.lblSendby)
-        private val rytList: RelativeLayout = itemView.findViewById(R.id.rytList)
+        private val rytList: LinearLayout = itemView.findViewById(R.id.rytList)
         private val rcyAssignment: RecyclerView = itemView.findViewById(R.id.rcyAssignment)
-        private val webView: WebView = itemView.findViewById(R.id.webView)
+        //        private val webView: WebView = itemView.findViewById(R.id.webView)
         private val progressBar: ProgressBar = itemView.findViewById(R.id.loadingBar)
-//        private val indicator: CircleIndicator2 = itemView.findViewById(R.id.indicator)
+        private val rytList2: RelativeLayout = itemView.findViewById(R.id.rytList2)
+
+        //        private val indicator: CircleIndicator2 = itemView.findViewById(R.id.indicator)
         private val imgDelete: ImageView = itemView.findViewById(R.id.imgDelete)
-
         private val options: ImageView = itemView.findViewById(R.id.options)
-
+        private val video_player: ImageView = itemView.findViewById(R.id.video_player)
+        private val total_numbers: TextView = itemView.findViewById(R.id.total_numbers)
         @SuppressLint("ClickableViewAccessibility", "SetJavaScriptEnabled")
         fun bind(
             data: AssignmentData,
@@ -100,47 +111,51 @@ class AssignmentAdapter(
             lblTitle.text = data.title
             lblDescription.text = data.description
             lblSubject.text = data.subject
-            lblCategotry.text = "Category"+" - "+data.category
-            lblSubmissionDue.text = "Submission Due"+" - "+data.end_date
-            createddate.text = data.created_date
+            lblCategotry.text = "Category" + " - " + data.category
+            lblSubmissionDue.text = "Submission Due" + " - " + data.end_date
+            createddate.text = Constant.convertToReadableDate(data.created_date)
             lblSubmitted.text = "Submitted : ${data.submitted_count}"
             lblNotSubmitted.text = "NotSubmitted : ${data.total_count}"
             lblSendby.text = data.created_date
 
-            if (data.file_path.isNotEmpty()) {
-                rytList.visibility = View.VISIBLE
-                if (data.file_path[0].type != Constant.VIDEO) {
-                    rcyAssignment.visibility = View.VISIBLE
-                    webView.visibility = View.GONE
+
+            val hasIframe = !data.iframe.isNullOrEmpty()
+            val hasFiles = !data.file_path.isNullOrEmpty()
+
+            video_player.visibility = if (hasIframe) View.VISIBLE else View.GONE
+            rcyAssignment.visibility = if (hasIframe) View.GONE else View.VISIBLE
+            rytList2.visibility = if (hasFiles) View.VISIBLE else View.GONE
+            total_numbers.visibility = View.GONE
+
+            if (hasFiles) {
+                val fileList = data.file_path!!
+                val totalFiles = fileList.size
+                val visibleList = if (totalFiles > 3) fileList.subList(0, 3) else fileList
+
+                if (totalFiles > 3) {
+                    total_numbers.text = "+${totalFiles - 3}"
+                    total_numbers.visibility = View.VISIBLE
                 } else {
-                    webView.visibility = View.VISIBLE
-                    rcyAssignment.visibility = View.GONE
-                    loadWebView(data.file_path[0].url ?: "")
+                    total_numbers.visibility = View.GONE
                 }
-            } else {
-                rytList.visibility = View.GONE
+
+                rcyAssignment.layoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+
+                val fileAdapter = ImageSliderAdapter(
+                    subjectName = data.subject ?: "",
+                    fullList = fileList,
+                    visibleList = visibleList,
+                    context = context,
+                    isLoading = Constant.isShimmerViewDisable
+                )
+
+                rcyAssignment.adapter = fileAdapter
             }
+            video_player.isClickable = true
+            video_player.isFocusable = true
 
-            val fileAdapter = ImageSliderAdapter(
-                data.subject ?: "",
-                data.file_path,
-                context,
-                Constant.isShimmerViewDisable
-            )
-            rcyAssignment.layoutManager =
-                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            rcyAssignment.adapter = fileAdapter
-
-//            if (data.file_path.size > 1) {
-//                indicator.visibility = View.VISIBLE
-//                indicator.attachToRecyclerView(rcyAssignment)
-//            } else {
-//                indicator.visibility = View.GONE
-//            }
-
-            webView.setBackgroundColor(Color.BLACK)
-            webView.setOnTouchListener { _, event ->
-                webView.onPause()
+            video_player.setOnTouchListener { _, event ->
                 if (event.action == MotionEvent.ACTION_UP) {
                     Constant.commonFileList.clear()
                     Constant.selectedFileIndex = -1
@@ -151,14 +166,13 @@ class AssignmentAdapter(
                     val intent = Intent(context, FilesViewActivity::class.java)
                     intent.putExtra(Constant.subjectName, data.subject)
                     context.startActivity(intent)
+                    return@setOnTouchListener true
                 }
                 false
             }
 
             lblSubmitted.setOnClickListener { listener.onSubmittedClick(data) }
             lblNotSubmitted.setOnClickListener { listener.onNotSubmittedClick(data) }
-
-
 
             options.setOnClickListener {
                 val popup = PopupMenu(context, options)
@@ -183,29 +197,27 @@ class AssignmentAdapter(
                 val pos = adapterPosition
                 popup.setOnMenuItemClickListener {
 
-                    menuItem ->
+                        menuItem ->
                     when (menuItem.itemId) {
                         R.id.menu_edit -> {
                             // Uncomment
                             // listener.onEditNotice(noticeData)
                             true
                         }
+
                         R.id.menu_delete -> {
                             val pos = adapterPosition
                             if (pos != RecyclerView.NO_POSITION) {
-                                AlertDialog.Builder(context)
-                                    .setTitle("Delete Confirmation")
+                                AlertDialog.Builder(context).setTitle("Delete Confirmation")
                                     .setMessage("Are you sure you want to delete this assignment?")
                                     .setPositiveButton("Yes") { dialog, _ ->
                                         adapter.itemList.removeAt(pos)
                                         adapter.notifyItemRemoved(pos)
                                         listener.onDeleteClick(data)
                                         dialog.dismiss()
-                                    }
-                                    .setNegativeButton("No") { dialog, _ ->
+                                    }.setNegativeButton("No") { dialog, _ ->
                                         dialog.dismiss()
-                                    }
-                                    .show()
+                                    }.show()
                             }
                             true
                         }
@@ -218,43 +230,6 @@ class AssignmentAdapter(
             }
 
 
-        }
-
-        private fun loadWebView(url: String) {
-            progressBar.visibility = View.VISIBLE
-            webView.settings.apply {
-                javaScriptEnabled = true
-                domStorageEnabled = true
-                useWideViewPort = true
-                loadWithOverviewMode = true
-                allowFileAccess = true
-                allowContentAccess = true
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                    mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
-                }
-            }
-
-            webView.webChromeClient = WebChromeClient()
-            webView.webViewClient = object : WebViewClient() {
-                override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-                    progressBar.visibility = View.VISIBLE
-                }
-
-                override fun onPageFinished(view: WebView?, url: String?) {
-                    progressBar.visibility = View.GONE
-                }
-
-                override fun onReceivedError(
-                    view: WebView?,
-                    request: WebResourceRequest?,
-                    error: WebResourceError?
-                ) {
-                    progressBar.visibility = View.GONE
-                    Log.e("WebViewError", "Error: ${error?.description}")
-                }
-            }
-
-            webView.loadUrl(url)
         }
 
         private fun CircleIndicator2.attachToRecyclerView(recyclerView: RecyclerView) {
