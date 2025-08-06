@@ -122,6 +122,8 @@ object APIMethods {
     const val isleaverequestdelete = "comm/api/leave-req/delete"
     const val isEventDelete = "admin/api/school-event/delete"
     const val isnoticeboarddelete = "admin/api/notice-board/delete"
+    const val isleavecategories = "comm/api/leave-req/leave-categories"
+
 
 }
 

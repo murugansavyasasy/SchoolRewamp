@@ -18,6 +18,7 @@ import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.InteractionWithS
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.QuestionModelResponse
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.Request.QuestionModelRequest
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestApplyResponse
+import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.GetLeaveCategoriesData
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestDelete
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestDeleteResponse
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestUpdate
@@ -50,6 +51,7 @@ class ParentServices {
     var isleaverequestdelete: MutableLiveData<LeaveRequestDeleteResponse?>
     var getProgressMarks: MutableLiveData<ProgressCardResponse?>
     var isUpdateCompleteHomeWork: MutableLiveData<StatusMessageModel?>
+    var isLeaveCategories: MutableLiveData<GetLeaveCategoriesData?>
 
     init {
         client_auth = RestClient()
@@ -72,6 +74,7 @@ class ParentServices {
         getProgressMarks = MutableLiveData()
         isUpdateCompleteHomeWork = MutableLiveData()
         getstudentdetailsforchat = MutableLiveData()
+        isLeaveCategories = MutableLiveData()
     }
 
     fun getChildAttendanceReport(
@@ -863,6 +866,47 @@ class ParentServices {
 
     val isUpdateCompleteHomeWorkLiveData: LiveData<StatusMessageModel?>
         get() = isUpdateCompleteHomeWork
+
+
+
+
+    fun getLeaveCategories(
+        isToken: String ) {
+        RestClient.apiInterfaces.getleavecategories(isToken)
+            ?.enqueue(object : Callback<GetLeaveCategoriesData?> {
+                override fun onResponse(
+                    call: Call<GetLeaveCategoriesData?>,
+                    response: Response<GetLeaveCategoriesData?>
+                ) {
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetLeaveCateorgiesData", response.body().toString())
+                                isLeaveCategories.postValue(response.body())
+                            } else {
+                                Log.d("GetLeaveCategoriesData", response.body().toString())
+                                isLeaveCategories.postValue(response.body())
+                            }
+                        }
+                    }
+                    else{
+                        isLeaveCategories.postValue(null)
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<GetLeaveCategoriesData?>,
+                    t: Throwable
+                ) {
+                    isLeaveCategories.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val getLeaveCategoriesLiveData: LiveData<GetLeaveCategoriesData?>
+        get() = isLeaveCategories
 
 
 }

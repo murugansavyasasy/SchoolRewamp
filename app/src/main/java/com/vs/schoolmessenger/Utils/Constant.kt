@@ -58,6 +58,7 @@ import com.vs.schoolmessenger.School.AbsenteesReport.Model.ClassWise
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendingData
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceSendingData
 import com.vs.schoolmessenger.School.InteractionWithStudent.Model.QuestionDataSending
+import com.vs.schoolmessenger.School.LeaveRequests.Model.LeaveData
 import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
@@ -193,6 +194,7 @@ object Constant {
     //MarkAttendanceDetails
 
     var isMarkAttendanceDataSending: MarkAttendanceDataSending? = null
+    var isLeaveData: LeaveData? = null
 
     var StaffDataSending: StaffDataSending? = null
     var QuestionDataSending: QuestionDataSending? = null
@@ -1117,6 +1119,20 @@ object Constant {
             inputDateStr // fallback: return input if format fails
         }
     }
+
+
+    //Convert dd-MM-yyyy hh:mm a to dd MMM yyyy (12-02-2025 10:58 AM to 12 Feb 2025)
+    fun convertToReadableDateformat(inputDate: String): String {
+        return try {
+            val inputFormat = SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.ENGLISH)
+            val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
+            val date = inputFormat.parse(inputDate)
+            outputFormat.format(date!!)
+        } catch (e: Exception) {
+            inputDate
+        }
+    }
+
 
 
     fun getCurrentDateInfo(): List<String> {

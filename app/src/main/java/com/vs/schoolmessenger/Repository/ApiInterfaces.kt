@@ -46,6 +46,7 @@ import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.Qu
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.Request.QuestionModelRequest
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestApplyResponse
+import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.GetLeaveCategoriesData
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestDelete
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestDeleteResponse
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestUpdate
@@ -737,6 +738,11 @@ interface ApiInterfaces {
         @Query(APIKeyNames.id) id: String,
         @Query(APIKeyNames.type) type: String
     ): Call<SubmissionResponse?>?
+
+    @GET(APIMethods.isleavecategories)
+    fun getleavecategories(
+        @Header(APIKeyNames.Authorization) token: String,
+    ): Call<GetLeaveCategoriesData?>?
 
 
 }

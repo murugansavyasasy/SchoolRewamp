@@ -101,6 +101,8 @@ class Attendance : BaseActivity<AttendanceBinding>(){
 
 
     }
+
+
     fun animateProgress(progressBar: ProgressBar, current: Int, max: Int, duration: Long = 1000) {
         val safeMax = if (max <= 0) 1 else max           // Avoid divide by zero
         val safeCurrent = current.coerceIn(0, safeMax)   // Clamp current within valid range

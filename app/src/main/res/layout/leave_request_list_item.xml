@@ -15,7 +15,9 @@
 
 
         <RelativeLayout
+            android:layout_toStartOf="@+id/lnrButtons"
             android:id="@+id/rytCard"
+            android:layout_alignParentStart="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -23,126 +25,124 @@
             android:padding="@dimen/five">
 
             <LinearLayout
-                android:id="@+id/lnrDateCircle"
-                android:layout_width="@dimen/fifty"
-                android:layout_height="@dimen/fifty"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="@dimen/five"
-                android:layout_centerInParent="true"
-                android:layout_marginEnd="12dp"
-                android:background="@drawable/bg_light_blue_circle"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textFirstLetter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="A"
-                    android:textColor="#000000"
-                    android:textSize="@dimen/twele_sp" />
-
-            </LinearLayout>
-
-
-            <LinearLayout
                 android:id="@+id/lnrDetails"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/ten"
-                android:layout_toStartOf="@+id/lnrButtons"
-                android:layout_toEndOf="@+id/lnrDateCircle"
-                android:layout_weight="1"
+                android:layout_marginEnd="@dimen/thirteen"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/textName"
+                    style="@style/CustomTextStylePoppinsBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Alex Smith"
                     android:textColor="#000"
                     android:textSize="@dimen/thirteen_sp"
-                    style="@style/CustomTextStylePoppinsBold" />
+                    android:visibility="gone" />
+
+                <!-- Header Row -->
+
+                    <TextView
+                        android:id="@+id/textNoOfDays"
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginTop="@dimen/six"
+                        android:text="3 Days Application"
+                        android:textColor="@color/light_gray"
+                        android:textSize="@dimen/thirteen_sp" />
+                <!-- Date & Leave Info -->
+                    <TextView
+                        android:id="@+id/textDate"
+                        android:layout_alignParentStart="true"
+                        style="@style/CustomTextStylePoppinsBold1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/five"
+                        android:text="15 - 22 Jun 2023 "
+                        android:textSize="@dimen/seventeen" />
+
+
+
+
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/textLeaveType"
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/one"
+                        android:text="Casual"
+                        android:layout_toStartOf="@+id/lblGetOutPass"
+                        android:layout_alignParentStart="true"
+                        android:textColor="#FFC107"
+                        android:textSize="14sp" />
+                    <TextView
+                        android:id="@+id/lblGetOutPass"
+                        android:visibility="gone"
+                        android:layout_alignParentEnd="true"
+                        android:text="@string/generate_outpass"
+                        android:textColor="@color/iconBlue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                    </TextView>
+                </RelativeLayout>
 
                 <TextView
-                    android:id="@+id/textDate"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/textReason"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/five"
-                    android:text="15 - 22 Jun 2023"
-                    android:textColor="#999"
-                    android:textSize="@dimen/thirteen_sp" />
-
-                <TextView
-                    android:id="@+id/textNoOfDays"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/five"
-                    android:text="3 Days"
-                    android:textColor="#999"
-                    android:textSize="@dimen/thirteen_sp" />
-
-                <!--            <TextView-->
-                <!--                android:id="@+id/textReason"-->
-                <!--                android:layout_width="wrap_content"-->
-                <!--                android:layout_height="wrap_content"-->
-                <!--                android:layout_marginTop="@dimen/five"-->
-                <!--                android:text="Casual"-->
-                <!--                style="@style/CustomTextStylePoppinsMedium"-->
-                <!--                android:textColor="@color/black"-->
-                <!--                android:textSize="@dimen/thirteen_sp" />-->
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/lnrButtons"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="@dimen/five"
-                android:layout_centerInParent="true"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/btnCancel"
-                    android:layout_width="@dimen/eighty"
-                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/one"
                     android:layout_marginBottom="@dimen/ten"
-                    android:background="@drawable/bg_leave_rejected"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="6dp"
-                    android:text="Reject"
-                    android:textAlignment="center"
-                    android:textColor="@color/white"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/btnApprove"
-                    android:layout_width="@dimen/eighty"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_leave_approved"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="6dp"
-                    android:text="Approve"
-                    android:textAlignment="center"
-                    android:textColor="@color/white"
-                    android:textSize="12sp" />
+                    android:text="Reason: Fever"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/fourteen_sp" />
             </LinearLayout>
-
         </RelativeLayout>
-
-        <TextView
-            android:layout_below="@+id/rytCard"
-            android:layout_marginBottom="@dimen/ten"
-            android:id="@+id/textReason"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:id="@+id/lnrButtons"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Casual"
-            android:layout_marginStart="@dimen/eighty"
-            style="@style/CustomTextStylePoppinsMedium"
-            android:textColor="@color/black"
-            android:textSize="@dimen/thirteen_sp" />
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/five"
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/btnCancel"
+                android:layout_width="@dimen/eighty"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/ten"
+                android:background="@drawable/bg_leave_rejected"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="6dp"
+                android:text="Reject"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/btnApprove"
+                android:layout_width="@dimen/eighty"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_leave_approved"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="6dp"
+                android:text="Approve"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+        </LinearLayout>
+
     </RelativeLayout>
 
     <!-- Buttons -->

@@ -36,6 +36,7 @@ import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.Qu
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.Request.QuestionModelRequest
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestApplyResponse
+import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.GetLeaveCategoriesData
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestDelete
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestDeleteResponse
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestUpdate
@@ -275,6 +276,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var getProgressMarks: LiveData<ProgressCardResponse?>? = null
     var isHomeWorkComplete: LiveData<StatusMessageModel?>? = null
     var getassignmentlist: LiveData<SubmissionResponse?>? = null
+    var getLeaveCategories: LiveData<GetLeaveCategoriesData?>? = null
 
 
     fun init() {
@@ -381,6 +383,7 @@ class App(application: Application) : AndroidViewModel(application) {
         isEventDelete = apiSchoolRepositories.isEventDeleteLiveData
         isAttachmentReportResponse = apiSchoolRepositories.isAttachmentResponseLiveData
         getassignmentlist = apiSchoolRepositories.getassignmentlistLiveData
+        getLeaveCategories = apiParentRepositories.getLeaveCategoriesLiveData
 
     }
 
@@ -880,6 +883,10 @@ class App(application: Application) : AndroidViewModel(application) {
         type: String
     ) {
         apiSchoolRepositories.getassignmentlist(isToken,id,type)
+    }
+
+    fun getLeaveCategories(isToken: String) {
+        apiParentRepositories.getLeaveCategories(isToken)
     }
 
 }
