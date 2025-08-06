@@ -132,7 +132,6 @@ class AttachmentReportAdapter(
             }
 
 
-
             lblSeeMore.setOnClickListener {
                 if (isExpanded) {
                     lblDescription.maxLines = 3
