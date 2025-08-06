@@ -27,6 +27,7 @@ object APIMethods {
     const val isGetTextHistory = "comm/api/text-message/get-text-history"
     const val isGetHomeWorkReport = "comm/api/homework/report"
     const val isHomeWorkUpdate = "comm/api/homework/update"
+    const val isEventUpdate = "admin/api/school-event/update"
     const val isAttachmentUpdate = "comm/api/attachment/update"
     const val isHomeWorkDelete = "comm/api/homework/delete"
     const val isAttachmentDelete = "comm/api/attachment/delete"
@@ -122,6 +123,7 @@ object APIMethods {
     const val isleaverequestdelete = "comm/api/leave-req/delete"
     const val isEventDelete = "admin/api/school-event/delete"
     const val isnoticeboarddelete = "admin/api/notice-board/delete"
+    const val isEventCategories = "admin/api/school-event/categories"
 
 }
 

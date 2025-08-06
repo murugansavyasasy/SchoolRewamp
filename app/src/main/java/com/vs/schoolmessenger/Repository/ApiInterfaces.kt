@@ -62,6 +62,7 @@ import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionModel.DailyCollectionReportResponse
+import com.vs.schoolmessenger.School.Event.Model.EventCategoryResponse
 import com.vs.schoolmessenger.School.Event.Model.EventDeleteResponse
 import com.vs.schoolmessenger.School.Event.Model.SchoolEventResponse
 import com.vs.schoolmessenger.School.Event.Response.EventSendResponse
@@ -233,6 +234,12 @@ interface ApiInterfaces {
         @Query(APIKeyNames.academic_year_id) isAcademicYearId: Int,
     ): Call<AssignmentResponse?>
 
+    @GET(APIMethods.isEventCategories)
+    fun isEventCategories(
+        @Header(APIKeyNames.Authorization) token: String,
+    ): Call<EventCategoryResponse?>
+
+
     @PUT(APIMethods.isAssignmentDelete)
     fun isAssignmentDelete(
         @Header(APIKeyNames.Authorization) token: String, @Body requestBody: JsonObject
@@ -242,6 +249,13 @@ interface ApiInterfaces {
     fun isHomeWorkUpdate(
         @Header(APIKeyNames.Authorization) token: String, @Body requestBody: JsonObject
     ): Call<StatusMessageModel?>
+
+    @PUT(APIMethods.isEventUpdate)
+    fun isEventUpdate(
+        @Header(APIKeyNames.Authorization) token: String, @Body requestBody: JsonObject
+    ): Call<StatusMessageModel?>
+
+
 
     @PUT(APIMethods.isAttachmentUpdate)
     fun isAttachmentUpdate(
@@ -726,7 +740,7 @@ interface ApiInterfaces {
     @Headers("Content-Type: application/json")
     @PUT(APIMethods.isEventDelete)
     fun isEventDelete(
-        @Header(APIKeyNames.Authorization) token: String, @Body requestBody: RequestBody
+        @Header(APIKeyNames.Authorization) token: String, @Body requestBody: JsonObject
     ): Call<EventDeleteResponse?>
 
 

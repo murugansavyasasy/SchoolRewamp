@@ -44,6 +44,7 @@ import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
 import com.vs.schoolmessenger.School.DailyCollection.DailyCollectionModel.DailyCollectionReportResponse
+import com.vs.schoolmessenger.School.Event.Model.EventCategoryResponse
 import com.vs.schoolmessenger.School.Event.Model.EventDeleteResponse
 import com.vs.schoolmessenger.School.Event.Model.SchoolEventResponse
 import com.vs.schoolmessenger.School.Event.Response.EventSendResponse
@@ -93,12 +94,14 @@ class SchoolServices {
     var isGetTextHistory: MutableLiveData<TextDetailsResponse?>
     var isGetHomeWorkReport: MutableLiveData<HomeWorkReportApiResponse?>
     var isGetAssignmentReport: MutableLiveData<AssignmentResponse?>
+    var isGetEventCategory: MutableLiveData<EventCategoryResponse?>
     var isAssignmentDelete: MutableLiveData<LPDeleteResponse?>
     var isGetDailyCollectionReport: MutableLiveData<DailyCollectionReportResponse?>
     var isSendText: MutableLiveData<TextSendResponse?>
     var isSendHomeWork: MutableLiveData<HomeWorkSendResponse?>
     var isSendAssignment: MutableLiveData<HomeWorkSendResponse?>
     var isUpdateHomeWork: MutableLiveData<StatusMessageModel?>
+    var isUpdateEvent: MutableLiveData<StatusMessageModel?>
     var isUpdateAttachment: MutableLiveData<StatusMessageModel?>
     var isUpdateNoticeBoard: MutableLiveData<StatusMessageModel?>
     var isDeleteHomeWork: MutableLiveData<StatusMessageModel?>
@@ -179,6 +182,7 @@ class SchoolServices {
         isGetTextHistory = MutableLiveData()
         isGetHomeWorkReport = MutableLiveData()
         isGetAssignmentReport = MutableLiveData()
+        isGetEventCategory = MutableLiveData()
         isAssignmentDelete = MutableLiveData()
         isNoticeBoardReport = MutableLiveData()
         isGetDailyCollectionReport = MutableLiveData()
@@ -186,6 +190,7 @@ class SchoolServices {
         isSendHomeWork = MutableLiveData()
         isSendAssignment = MutableLiveData()
         isUpdateHomeWork = MutableLiveData()
+        isUpdateEvent = MutableLiveData()
         isUpdateAttachment = MutableLiveData()
         isDeleteHomeWork = MutableLiveData()
         isDeleteAttachment = MutableLiveData()
@@ -718,6 +723,42 @@ class SchoolServices {
     val isGetAssignmentReportLiveData: LiveData<AssignmentResponse?>
         get() = isGetAssignmentReport
 
+    fun isEventCategories(
+        isToken: String, activity: Activity
+    ) {
+        RestClient.apiInterfaces.isEventCategories(isToken)
+            ?.enqueue(object : Callback<EventCategoryResponse?> {
+                override fun onResponse(
+                    call: Call<EventCategoryResponse?>,
+                    response: Response<EventCategoryResponse?>
+                ) {
+                    Log.d(
+                        "isGetCountryList", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isGetEventCategory.postValue(response.body())
+                            } else {
+                                isGetEventCategory.postValue(response.body())
+                            }
+                        }
+                    } else {
+                        isGetEventCategory.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<EventCategoryResponse?>, t: Throwable) {
+                    isGetEventCategory.postValue(null)
+                    Log.d("t.printStackTrace()", t.printStackTrace().toString())
+                }
+            })
+    }
+
+    val isGetEventCategoryLiveData: LiveData<EventCategoryResponse?>
+        get() = isGetEventCategory
+
     fun isDeleteAssignment(
         isToken: String, jsonObject: JsonObject, activity: Activity
     ) {
@@ -790,6 +831,44 @@ class SchoolServices {
 
     val isUpdateHomeworkLiveData: LiveData<StatusMessageModel?>
         get() = isUpdateHomeWork
+
+    fun isEditEvent(
+        isToken: String, jsonObject: JsonObject,activity: Activity
+    ) {
+
+        RestClient.apiInterfaces.isEventUpdate(isToken, jsonObject)
+            ?.enqueue(object : Callback<StatusMessageModel?> {
+                override fun onResponse(
+                    call: Call<StatusMessageModel?>,
+                    response: Response<StatusMessageModel?>
+                ) {
+                    Log.d(
+                        "isGetCountryList", response.code().toString() + " - " + response.toString()
+                    )
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                isUpdateEvent.postValue(response.body())
+                            } else {
+                                isUpdateEvent.postValue(response.body())
+                            }
+                        }
+                    } else {
+                        isUpdateEvent.postValue(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<StatusMessageModel?>, t: Throwable) {
+                    isUpdateEvent.postValue(null)
+                    Log.d("t.printStackTrace()", t.printStackTrace().toString())
+                }
+            })
+    }
+
+    val isUpdateEventLiveData: LiveData<StatusMessageModel?>
+        get() = isUpdateEvent
+
 
     fun isEditAttachment(
         isToken: String, jsonObject: JsonObject,activity: Activity
@@ -2790,7 +2869,7 @@ class SchoolServices {
 
 
     fun isEventDelete(
-        isToken: String, request: RequestBody, activity: Activity
+        isToken: String, request: JsonObject, activity: Activity
     ) {
         RestClient.apiInterfaces.isEventDelete(isToken, request)
             ?.enqueue(object : Callback<EventDeleteResponse?> {

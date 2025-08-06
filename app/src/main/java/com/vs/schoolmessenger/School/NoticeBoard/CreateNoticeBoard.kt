@@ -115,10 +115,10 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
     lateinit var noticeboardadapter: SchoolNoticeBoardAdapter
     private var userDetails: UserDetails? = null
     val isVideoSelectedArrayList = mutableListOf<FileItem>()
+    var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
     var isTotalSelectedItem = 0
     var isNoticeBoardId = ""
     var isNoticeBoardPosition = 0
-    var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
 
 
     @RequiresApi(Build.VERSION_CODES.O)

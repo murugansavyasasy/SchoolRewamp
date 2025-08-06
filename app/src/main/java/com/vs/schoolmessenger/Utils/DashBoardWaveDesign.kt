@@ -17,76 +17,53 @@ class DashBoardWaveDesign @JvmOverloads constructor(
 
     private val wavePaint1 = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = Color.WHITE
-        alpha = 90
+        alpha = 60
         style = Paint.Style.FILL
     }
-
     private val wavePaint2 = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = Color.WHITE
-        alpha = 140
+        alpha = 80
         style = Paint.Style.FILL
     }
 
     private val wavePaint3 = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = Color.WHITE
-        alpha = 255
+        alpha = 200
         style = Paint.Style.FILL
-    }
-
-    private var phaseShift1 = 0f
-    private var phaseShift2 = 0f
-    private var phaseShift3 = 0f
-
-    private val waveLength = 800f
-    private val waveHeight1 = 35f
-    private val waveHeight2 = 45f
-    private val waveHeight3 = 55f
-
-
-    private val waveSpeed1 = 0.3f
-    private val waveSpeed2 = 0.2f
-    private val waveSpeed3 = 0.1f
-
-    private val animator = object : Runnable {
-        override fun run() {
-            phaseShift1 += waveSpeed1
-            phaseShift2 += waveSpeed2
-            phaseShift3 += waveSpeed3
-            invalidate()
-            postDelayed(this, 16)
-        }
-    }
-
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
-        post(animator)
-    }
-
-    override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
-        removeCallbacks(animator)
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        drawWave(canvas, wavePaint1, waveHeight1, phaseShift1)
-        drawWave(canvas, wavePaint2, waveHeight2, phaseShift2)
-        drawWave(canvas, wavePaint3, waveHeight3, phaseShift3)
+
+        val totalHeight = height.toFloat()
+        val waveLength = width.toFloat() * 1.99f
+        val waveHeight = 35f
+
+        drawWave(canvas, wavePaint1, waveLength, waveHeight, offsetY = totalHeight - 90, phaseShift = 150f)
+        drawWave(canvas, wavePaint2, waveLength, waveHeight, offsetY = totalHeight - 65, phaseShift = 450f)
+        drawWave(canvas, wavePaint3, waveLength, waveHeight, offsetY = totalHeight - 45, phaseShift = 700f)
     }
 
-    private fun drawWave(canvas: Canvas, paint: Paint, waveHeight: Float, phaseShift: Float) {
+    private fun drawWave(
+        canvas: Canvas,
+        paint: Paint,
+        waveLength: Float,
+        waveHeight: Float,
+        offsetY: Float,
+        phaseShift: Float
+    ) {
         val path = Path()
-        val width = width.toFloat()
-        val height = height.toFloat()
-        val centerY = height - waveHeight
+        val viewWidth = width.toFloat()
+        val viewHeight = height.toFloat()
 
-        path.moveTo(0f, height)
-        for (x in 0..width.toInt()) {
-            val y = (waveHeight * sin((x + phaseShift) * Math.PI * 2 / waveLength)).toFloat()
-            path.lineTo(x.toFloat(), centerY + y)
+        path.moveTo(0f, viewHeight)
+        for (x in 0..viewWidth.toInt()) {
+            val y = (waveHeight * sin((x + phaseShift) * Math.PI * 10 / waveLength)).toFloat()
+            path.lineTo(x.toFloat(), offsetY + y)
         }
-        path.lineTo(width, height)
+        path.lineTo(viewWidth, viewHeight)
         path.close()
+
         canvas.drawPath(path, paint)
     }
 }

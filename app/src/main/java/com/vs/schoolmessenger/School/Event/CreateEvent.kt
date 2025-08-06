@@ -7,6 +7,7 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
@@ -25,9 +26,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.AdapterView
 import android.widget.FrameLayout
-import android.widget.ImageView
-import android.widget.MediaController
+import android.widget.LinearLayout
+import android.widget.PopupWindow
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -42,6 +44,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
+import com.vs.schoolmessenger.AWS.AwsUploadingPreSigned
+import com.vs.schoolmessenger.AWS.UploadCallback
 import com.vs.schoolmessenger.AlbumImage.AlbumSelectActivity
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
@@ -49,21 +55,33 @@ import com.vs.schoolmessenger.CommonScreens.ImagePickingAdapter
 import com.vs.schoolmessenger.CommonScreens.OnImageClickListener
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.RecipientActivity
 import com.vs.schoolmessenger.R
+import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
+import com.vs.schoolmessenger.Repository.RestClient
+import com.vs.schoolmessenger.School.Event.Adapter.EventCategorySpinnerAdapter
 import com.vs.schoolmessenger.School.Event.Adapter.SchoolEventAdapter
 import com.vs.schoolmessenger.School.Event.Adapter.SchoolEventCompletedAdapter
 import com.vs.schoolmessenger.School.Event.Adapter.SchoolEventUpcomingAdapter
 import com.vs.schoolmessenger.School.Event.Listener.SchoolEventClickListener
+import com.vs.schoolmessenger.School.Event.Model.EventCategory
 import com.vs.schoolmessenger.School.Event.Model.EventDetails
 import com.vs.schoolmessenger.School.Event.Model.SchoolEventItem
-import com.vs.schoolmessenger.School.NoticeBoard.SchoolNoticeBoardAdapter
+import com.vs.schoolmessenger.Utils.AwsUploadedFiles
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.Constant.M_ASSIGNMENT
+import com.vs.schoolmessenger.Utils.Constant.M_ATTACHMENTS
+import com.vs.schoolmessenger.Utils.Constant.M_HOMEWORK
+import com.vs.schoolmessenger.Utils.Constant.M_NOTICEBOARD
+import com.vs.schoolmessenger.Utils.Constant.M_SCHOOL_CLASS_EVENTS
+import com.vs.schoolmessenger.Utils.Constant.SELECTED_SCHOOL_MENU
 import com.vs.schoolmessenger.Utils.FileItem
 import com.vs.schoolmessenger.Utils.FileType
 import com.vs.schoolmessenger.Utils.OnDateSelectedListener
+import com.vs.schoolmessenger.Utils.ProgressDialogHelper
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.Utils.TimeSelectedListener
 import com.vs.schoolmessenger.databinding.CreateEventBinding
+import com.vs.schoolmessenger.util.VimeoVideoUpload
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
@@ -75,12 +93,13 @@ import java.util.Locale
 
 class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
     View.OnClickListener, OnDateSelectedListener, EventClickListener, TimeSelectedListener,
-    SchoolEventClickListener {
+    SchoolEventClickListener, VimeoVideoUpload.UploadCompletionListener {
 
     override fun getViewBinding(): CreateEventBinding {
         return CreateEventBinding.inflate(layoutInflater)
     }
 
+    var isTotalSelectedItem = 0
     private var cameraPermissionDeniedCount = 0
 
     private lateinit var albumResultLauncher: ActivityResultLauncher<Intent>
@@ -91,11 +110,13 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         internal const val CAMERA_IMAGE_REQUEST = 1004
     }
 
+    var isEventId = ""
+    var isEventPosition = 0
+    var isSelectedCategory = ""
 
     private var cameraImageFilePath: String? = null
     private val CAMERA_PERMISSION_REQUEST_CODE = 200
     private var mAdapter: ImagePickingAdapter? = null
-
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
 
@@ -103,6 +124,8 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
     private var isStaffDetails: StaffDetails? = null
     private var selectedDateField: Int = 0
 
+    val isVideoSelectedArrayList = mutableListOf<FileItem>()
+    var isAwsUploadingPreSigned: AwsUploadingPreSigned? = null
     lateinit var schooleventAdapter: SchoolEventAdapter
 
     lateinit var eventupcomingadapter: SchoolEventUpcomingAdapter
@@ -123,7 +146,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         binding.btnNext.setOnClickListener(this)
         binding.rytStartDate.setOnClickListener(this)
         binding.rytSearch323.setOnClickListener(this)
-
+        binding.btnNext.text = getString(R.string.NEXT)
         binding.txtStartTime.setOnClickListener(this)
         binding.lnrTabOneName.setOnClickListener(this)
         binding.lnrTabTwoName.setOnClickListener(this)
@@ -131,6 +154,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         Constant.editTextCounter(this, binding.txtDesc, 500, binding.lbTextCount)
         isStaffDetails = SharedPreference.getStaffDetails(this)
         isAccessToken = isStaffDetails!!.access_token
+        isAwsUploadingPreSigned = AwsUploadingPreSigned()
 
         binding.toolbarLayout.lblParentToolBar.text = Constant.isSchoolMenuName
         binding.toolbarLayout.lblSchoolName.visibility = View.VISIBLE
@@ -199,28 +223,6 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
                         }
 
                         Constant.selectedFiles.add(FileItem(uri.toString(), type))
-
-//                        if (type.toString() == Constant.VIDEO) {
-//                            binding.thumbnailView.visibility = View.VISIBLE
-//                            binding.rcyImages.visibility = View.GONE
-//
-//                            // Extract and show video thumbnail
-//                            val bitmap = Constant.getVideoThumbnail(this, uri!!)
-//                            binding.thumbnailView.setImageBitmap(bitmap)
-//                            binding.thumbnailView.visibility = View.VISIBLE
-//                            binding.imgDelete.visibility = View.VISIBLE
-//                            binding.imgPlay.visibility = View.VISIBLE
-//                            binding.videoView.setVideoURI(uri)
-//                            binding.videoView.setMediaController(MediaController(this))
-//                            binding.videoView.requestFocus()
-//                        } else {
-//                            binding.videoView.visibility = View.GONE
-//                            binding.imgDelete.visibility = View.GONE
-//                            binding.thumbnailView.visibility = View.GONE
-//                            binding.rcyImages.visibility = View.VISIBLE
-//                            mAdapter?.notifyDataSetChanged()
-//                        }
-
                         Log.d("SelectedFile", "URI: $uri, Type: $type")
                     }
 
@@ -249,6 +251,13 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
             binding.lbtitleTextCount
         )
 
+        appViewModel!!.isEditEvent?.observe(this) { response ->
+            Constant.hideLoading(this@CreateEvent)
+            if (response != null) {
+                Log.d("Response", response.status.toString())
+                Constant.showTopAlertPopup(response.message, this)
+            }
+        }
 
         appViewModel?.IsGetEventSchoolReport?.observe(this) { response ->
             Constant.hideLoading(this)
@@ -288,6 +297,27 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
             }
         }
 
+        appViewModel!!.isEventDelete?.observe(this) { response ->
+            if (response != null) {
+                if (response.status) {
+                    Constant.hideLoading(this@CreateEvent)
+                    eventupcomingadapter.removeItemAt(isEventPosition)
+                } else {
+                    Constant.showDataValidation(
+                        resources.getString(R.string.fail), response.message, this
+                    )
+                }
+            }
+        }
+
+        appViewModel!!.isGetEventCategory?.observe(this) { response ->
+            if (response != null) {
+                if (response.status) {
+                    isLoadCategory(response.data)
+                }
+            }
+        }
+
 
         binding.txtSearch.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -309,6 +339,30 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
             }
         })
 
+        appViewModel?.isGetEventCategories(
+            isAccessToken!!, this
+        )
+
+    }
+
+    fun isLoadCategory(data: List<EventCategory>) {
+        val adapter = EventCategorySpinnerAdapter(this, data)
+        binding.isCategorySpinner.adapter = adapter
+
+        binding.isCategorySpinner.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    Log.d("isSelectedId", data[position].name)
+                    isSelectedCategory = data[position].name
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {}
+            }
     }
 
 
@@ -490,7 +544,6 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
     }
 
 
-
     private fun checkCameraPermissionAndOpenCamera() {
         if (ContextCompat.checkSelfPermission(
                 this,
@@ -594,6 +647,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         when (v?.id) {
 
             R.id.lnrTabOneName -> {
+                binding.btnNext.text = getString(R.string.NEXT)
                 binding.eventCreate.visibility = View.VISIBLE
                 binding.line1.setBackgroundResource(R.color.iconBlue)
                 binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
@@ -607,6 +661,7 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
             }
 
             R.id.lnrTabTwoName -> {
+                binding.btnNext.text = "Update Event"
                 binding.eventCreate.visibility = View.GONE
                 binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.black))
                 binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
@@ -618,7 +673,6 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
                 binding.completedeventHeaderview.visibility = View.GONE
                 binding.rytRecyclewview.visibility = View.GONE
                 binding.dotindicator.visibility = View.GONE
-                binding.rytRecyclewview.visibility = View.GONE
                 binding.toolbarLayout.imgSearchToolBar.visibility = View.VISIBLE
                 loadeventdata()
             }
@@ -650,7 +704,11 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
             }
 
             R.id.btnNext -> {
-                RedirectToRecepientActivity()
+                if (binding.btnNext.text.toString() == "Update Event") {
+                    showSendConfirmationDialog(true)
+                } else {
+                    RedirectToRecepientActivity()
+                }
             }
 
             R.id.imgSearchToolBar -> if (binding.rytSearch323.isVisible) {
@@ -950,14 +1008,351 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
             return
         }
 
-        val eventDetails = EventDetails(txtLocation, txtTitle, txtDesc, txtStartDate, txtStartTime)
-
-//        if (Constant.selectedFiles.isNotEmpty()) {
-//            Constant.selectedFiles.removeAt(0)
-//        }
+        val eventDetails = EventDetails(
+            txtLocation,
+            txtTitle,
+            txtDesc,
+            txtStartDate,
+            txtStartTime,
+            isSelectedCategory
+        )
 
         val intent = Intent(this, RecipientActivity::class.java)
         intent.putExtra(Constant.event_data, eventDetails)
         startActivity(intent)
     }
+
+    fun showEditDeletePopup(data: SchoolEventItem, anchor: View) {
+        val popupView = LayoutInflater.from(this).inflate(R.layout.popup_edit_delete, null)
+        val popupWindow = PopupWindow(
+            popupView,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            true
+        )
+        popupWindow.elevation = 10f
+
+        val layoutEdit = popupView.findViewById<LinearLayout>(R.id.layout_edit)
+        val layoutDelete = popupView.findViewById<LinearLayout>(R.id.layout_delete)
+
+        layoutEdit.setOnClickListener {
+            isEditProcess(data)
+            popupWindow.dismiss()
+        }
+
+        layoutDelete.setOnClickListener {
+            showSendConfirmationDialog(false)
+            popupWindow.dismiss()
+        }
+        popupWindow.showAsDropDown(anchor, 0, 10)
+    }
+
+    fun showSendConfirmationDialog(isEventUpdate: Boolean) {
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.alert_popup, null)
+        val alertDialog = AlertDialog.Builder(this).setView(dialogView).create()
+        alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        alertDialog.show()
+
+        val okButton = dialogView.findViewById<TextView>(R.id.btnOk)
+        val btnCancel = dialogView.findViewById<TextView>(R.id.btnCancel)
+        val alertMessage = dialogView.findViewById<TextView>(R.id.alertMessage)
+        val lblSelectTarget = dialogView.findViewById<TextView>(R.id.lblSelectTarget)
+        if (isEventUpdate) {
+            alertMessage.text = "Are you sure want to update this event?"
+        } else {
+            alertMessage.text = "Are you sure want to delete?"
+        }
+
+        lblSelectTarget.visibility = View.GONE
+
+        okButton.setOnClickListener {
+            alertDialog.dismiss()
+            if (isEventUpdate) {
+                ProgressDialogHelper.show(this)
+                ProgressDialogHelper.updateProgress(10)
+                isUploadFilesInServer("file")
+            } else {
+                val jsonObject = JsonObject()
+                jsonObject.addProperty(APIKeyNames.id, isEventId)
+                appViewModel?.isEventDelete(isAccessToken!!, jsonObject, this)
+            }
+        }
+        btnCancel.setOnClickListener { alertDialog.dismiss() }
+    }
+
+
+    // Edit Update code
+    fun isUploadFilesInServer(isFileType: String?) {
+
+        if (SELECTED_SCHOOL_MENU == M_ATTACHMENTS || SELECTED_SCHOOL_MENU == M_HOMEWORK || SELECTED_SCHOOL_MENU == M_SCHOOL_CLASS_EVENTS || SELECTED_SCHOOL_MENU == M_ASSIGNMENT || SELECTED_SCHOOL_MENU == M_NOTICEBOARD) {
+            Constant.selectedFiles.removeAt(0) // Remove '+' placeholder
+        }
+        ProgressDialogHelper.updateProgress(50)
+        isTotalSelectedItem = Constant.selectedFiles.size
+        isVideoSelectedArrayList.clear()
+        Constant.isAwsUploadedFiles.clear()
+        val iterator = Constant.selectedFiles.iterator()
+        while (iterator.hasNext()) {
+            val file = iterator.next()
+            if (file.type == FileType.VIDEO) {
+                isVideoSelectedArrayList.add(file)
+                iterator.remove()
+            }
+        }
+
+        when {
+            Constant.selectedFiles.isNotEmpty() -> isFileUploadInAws(isFileType)
+            isVideoSelectedArrayList.isNotEmpty() -> videoUploading()
+        }
+        ProgressDialogHelper.updateProgress(80)
+    }
+
+
+    private fun isFileUploadInAws(
+        isFileType: String?
+    ) {
+        Constant.isAwsUploadedFiles.clear()
+        val iterator = Constant.selectedFiles.iterator()
+        while (iterator.hasNext()) {
+            val fileItem = iterator.next()
+            if (fileItem.path.contains("amazonaws.")) {
+                Constant.isAwsUploadedFiles.add(
+                    AwsUploadedFiles(
+                        isFileUrl = fileItem.path, isFileType = fileItem.type.name
+                    )
+                )
+                iterator.remove()
+            }
+        }
+
+        val isCountryId = SharedPreference.getCountryId(this)
+        if (Constant.selectedFiles.isEmpty()) {
+            if (isVideoSelectedArrayList.isEmpty()) {
+                ProgressDialogHelper.dismiss()
+                isUpdateEvent()
+            } else {
+                videoUploading()
+            }
+        } else {
+            val outputDir =
+                File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "CompressedOutput")
+            outputDir.mkdirs()
+            val newSelectedFiles = mutableListOf<FileItem>()
+            Constant.compressImageFilesOnly(
+                context = this,
+                files = Constant.selectedFiles,
+                outputDir = outputDir.absolutePath,
+                format = Bitmap.CompressFormat.JPEG,
+                quality = 80,
+                maxWidth = 1280,
+                maxHeight = 1280,
+                onEachProcessed = { original, outputPath, success ->
+                    if (success && outputPath != null) {
+                        val compressedFile = File(outputPath)
+                        val originalSizeKB = try {
+                            if (original.path.startsWith("content://")) {
+                                contentResolver.openFileDescriptor(
+                                    Uri.parse(original.path), "r"
+                                )?.statSize ?: 0
+                            } else {
+                                File(original.path).length()
+                            }
+                        } catch (e: Exception) {
+                            0L
+                        }
+
+                        Log.d(
+                            "Compressor",
+                            "Compressed: $outputPath (${compressedFile.length() / 1024}KB), Original: ${originalSizeKB / 1024}KB"
+                        )
+
+                        newSelectedFiles.add(FileItem(path = outputPath, type = original.type))
+                    } else {
+                        Log.e("Compressor", "Failed: ${original.path}")
+                    }
+                },
+                onComplete = {
+                    Constant.selectedFiles.clear()
+                    Constant.selectedFiles.addAll(newSelectedFiles)
+                    val isAwsUploadingFile = ArrayList<String>()
+
+                    val isSelectedFileCount = Constant.selectedFiles.size
+                    for (i in Constant.selectedFiles.indices) {
+                        isAwsUploadingPreSigned?.getPreSignedUrl(
+                            Constant.selectedFiles[i].path,
+                            isStaffDetails!!.school_id,
+                            isFileType!!,
+                            this,
+                            isCountryId!!,
+                            true,
+                            false,
+                            object : UploadCallback {
+
+                                override fun onUploadSuccess(
+                                    response: String?, isFileUploaded: String?
+                                ) {
+                                    isAwsUploadingFile.add(isFileUploaded!!)
+                                    Constant.isAwsUploadedFiles.add(
+                                        AwsUploadedFiles(
+                                            isFileUrl = isFileUploaded,
+                                            isFileType = Constant.selectedFiles[i].type.name
+                                        )
+                                    )
+
+                                    if (isTotalSelectedItem == Constant.isAwsUploadedFiles.size) {
+                                        ProgressDialogHelper.dismiss()
+                                        isUpdateEvent()
+                                    } else {
+                                        if (isAwsUploadingFile.size == isSelectedFileCount) {
+                                            videoUploading()
+                                        }
+                                    }
+                                }
+
+                                override fun onUploadError(error: String?) {
+                                    Log.d("isUploadIssue", error.toString())
+                                }
+                            })
+                    }
+
+                    Log.d("Compressor", "All files compressed and uploaded.")
+                })
+        }
+    }
+
+    private fun videoUploading() {
+        val iterator = isVideoSelectedArrayList.iterator()
+        while (iterator.hasNext()) {
+            val fileItem = iterator.next()
+            if (fileItem.path.contains("player.vimeo.com")) {
+                Constant.isAwsUploadedFiles.add(
+                    AwsUploadedFiles(
+                        isFileUrl = fileItem.path, isFileType = fileItem.type.name
+                    )
+                )
+                iterator.remove()
+            }
+        }
+        Log.d("isVideoSelectedArrayList", isVideoSelectedArrayList.size.toString())
+        if (isVideoSelectedArrayList.isNotEmpty()) {
+            for (i in isVideoSelectedArrayList.indices) {
+                VimeoVideoUpload.uploadVideo(
+                    this, "quiz", "quiz", isVideoSelectedArrayList[i].path, this
+                )
+            }
+        } else {
+            ProgressDialogHelper.dismiss()
+            isUpdateEvent()
+        }
+    }
+
+    override fun onUploadComplete(
+        success: Boolean, iframe: String?, link: String?
+    ) {
+        runOnUiThread {
+            Log.d("link", link.toString())
+            Constant.isAwsUploadedFiles.add(
+                AwsUploadedFiles(
+                    isFileUrl = link.toString(), isFileType = Constant.VIDEO
+                )
+            )
+
+            if (Constant.isAwsUploadedFiles.size == isTotalSelectedItem) {
+                ProgressDialogHelper.dismiss()
+                isUpdateEvent()
+            }
+        }
+    }
+
+
+    override fun onFailure(errorMessage: String?) {
+        runOnUiThread {
+            Log.e("VimeoUploadError", errorMessage ?: "Unknown error")
+        }
+    }
+
+
+    fun isEditProcess(data: SchoolEventItem) {
+        Constant.isAwsUploadedFiles.clear()
+        Constant.selectedFiles.clear()
+        saveDrawableToCache(R.drawable.add_image)?.let {
+            Constant.selectedFiles.add(
+                FileItem(
+                    it, FileType.IMAGE
+                )
+            )
+        }
+        binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+        binding.rytRecyclewview.visibility = View.VISIBLE
+        binding.line1.setBackgroundResource(R.color.iconBlue)
+        binding.tabOneName.setTextColor(ContextCompat.getColor(this, R.color.iconBlue))
+        binding.tabTwoName.setTextColor(ContextCompat.getColor(this, R.color.black))
+        binding.line2.setBackgroundResource(R.color.white)
+
+        binding.eventCreate.visibility = View.VISIBLE
+        binding.scrollContainer.visibility = View.GONE
+        binding.rytSearch323.visibility = View.GONE
+        binding.toolbarLayout.imgSearchToolBar.visibility = View.GONE
+        binding.txtTitle.setText(data.title)
+        binding.txtDesc.setText(data.description)
+        binding.txtLocation.setText(data.venue)
+        isSelectedCategory = data.category
+        binding.txtStartDate.text = Constant.covertDateFormate(data.date)
+        binding.txtStartTime.text = data.time
+
+        if (data.file_path.isNotEmpty()) {
+            val mappedList = data.file_path.map { filePath ->
+                val fileType = try {
+                    FileType.valueOf(filePath.type.uppercase())
+                } catch (e: IllegalArgumentException) {
+                    FileType.OTHER
+                }
+                FileItem(path = filePath.url, type = fileType)
+            }
+            Constant.selectedFiles.addAll(mappedList)
+        }
+        binding.rcyImages.visibility = View.VISIBLE
+        mAdapter = ImagePickingAdapter(this, Constant.selectedFiles, this)
+        binding.rcyImages.layoutManager = GridLayoutManager(this, 3)
+        binding.rcyImages.adapter = mAdapter
+    }
+
+    override fun onEditAndDelete(
+        data: SchoolEventItem, anchorView: View, adapterPosition: Int
+    ) {
+        isEventId = data.id
+        isEventPosition = adapterPosition
+        showEditDeletePopup(data, anchorView)
+    }
+
+    fun isUpdateEvent() {
+        RestClient.changeApiBaseUrl(SharedPreference.getBaseUrl(this).toString())
+        val jsonObject = JsonObject()
+        val filePathArray = JsonArray()
+
+        jsonObject.addProperty(APIKeyNames.id, isEventId)
+        jsonObject.addProperty(APIKeyNames.title, binding.txtTitle.text.toString())
+        jsonObject.addProperty(APIKeyNames.description, binding.txtDesc.text.toString())
+        jsonObject.addProperty(APIKeyNames.iframe, "")
+        jsonObject.addProperty(APIKeyNames.file_size, "")
+        jsonObject.addProperty(APIKeyNames.thumbnail, "")
+        jsonObject.addProperty(
+            "event_date",
+            Constant.convertDateFormat(binding.txtStartDate.text.toString())
+        )
+        jsonObject.addProperty("event_time", binding.txtStartTime.text.toString().trim())
+        jsonObject.addProperty("category", isSelectedCategory)
+        jsonObject.addProperty("venue", binding.txtLocation.text.toString())
+        for (i in Constant.isAwsUploadedFiles.indices) {
+            val isSelectedObject = JsonObject()
+            isSelectedObject.addProperty(APIKeyNames.url, Constant.isAwsUploadedFiles[i].isFileUrl)
+            isSelectedObject.addProperty(
+                APIKeyNames.type, Constant.isAwsUploadedFiles[i].isFileType
+            )
+            filePathArray.add(isSelectedObject)
+        }
+        jsonObject.add(APIKeyNames.file_path, filePathArray)
+        appViewModel?.isEventUpdate(isAccessToken!!, jsonObject, this)
+    }
+
 }

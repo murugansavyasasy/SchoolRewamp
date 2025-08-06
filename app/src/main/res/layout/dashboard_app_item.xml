@@ -3,44 +3,48 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/header"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/five"
     android:layout_marginTop="@dimen/ten"
     android:layout_marginEnd="@dimen/five"
-    android:backgroundTint="@android:color/white"
-    app:cardCornerRadius="5dp">
+    android:layout_margin="8dp"
+    android:backgroundTint="@color/white"
+    android:elevation="@dimen/fifteen"
+    app:cardElevation="@dimen/fifteen"
+    app:cardCornerRadius="@dimen/five">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="@dimen/sixteen">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="@dimen/eight"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/itemIcon"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginEnd="8dp"
+                android:layout_width="@dimen/thirty"
+                android:layout_height="@dimen/thirty"
+                android:layout_marginEnd="@dimen/eight"
+                android:background="@android:color/transparent"
                 android:src="@drawable/user_icon" />
 
             <TextView
                 android:id="@+id/itemTitle"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/zero"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:maxLines="2"
+                android:ellipsize="end"
                 android:text="Your Feed"
-                android:maxLines="1"
                 android:textColor="@color/dark_blue_1"
                 android:textSize="@dimen/thirteen_sp"
-                android:textStyle="bold" />
-
+                style="@style/CustomTextStylePoppinsBold"/>
         </LinearLayout>
 
         <TextView
@@ -49,9 +53,10 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="2"
+            android:textColor="@color/mild_grey6"
             android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-            android:textColor="#888888"
-            android:textSize="@dimen/thirteen_sp" />
+            style="@style/CustomTextStylePoppinsMedium"
+            android:textSize="@dimen/fifteen" />
 
     </LinearLayout>
 

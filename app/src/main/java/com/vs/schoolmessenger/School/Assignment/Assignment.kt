@@ -322,6 +322,7 @@ class Assignment : BaseActivity<AssignmentBinding>(), AssignmentClickListener, V
         )
     }
 
+
     private fun loadAssignmentReportData() {
         binding.rcyAssignmentReport.visibility = View.VISIBLE
         isAssignmentAdapter = AssignmentAdapter(

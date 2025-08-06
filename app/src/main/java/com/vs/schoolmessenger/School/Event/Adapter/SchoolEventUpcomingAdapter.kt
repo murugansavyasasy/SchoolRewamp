@@ -150,6 +150,9 @@ class SchoolEventUpcomingAdapter (
         private val header: RelativeLayout = itemView.findViewById(R.id.header)
         private val options: ImageView = itemView.findViewById(R.id.options)
 
+        private val imgEditAndDelete: ImageView = itemView.findViewById(R.id.imgEditAndDelete)
+
+
 
         @SuppressLint("ClickableViewAccessibility")
         fun bind(
@@ -166,6 +169,16 @@ class SchoolEventUpcomingAdapter (
 
             video_player.visibility = View.GONE
             loadingBar.visibility = View.GONE
+
+            if (data.can_edit && data.can_delete) {
+                imgEditAndDelete.visibility = View.VISIBLE
+            }else{
+                imgEditAndDelete.visibility = View.GONE
+            }
+
+            imgEditAndDelete.setOnClickListener {
+                listener.onEditAndDelete(data, it, adapterPosition)
+            }
 
 
             options.setOnClickListener {
