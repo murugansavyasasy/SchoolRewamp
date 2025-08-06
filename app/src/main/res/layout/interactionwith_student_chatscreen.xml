@@ -131,7 +131,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Replying to John"
+                        android:text="Replying"
                         android:textColor="@color/black"
                         android:textSize="12sp"
                         style="@style/CustomTextStylePoppinsBold"

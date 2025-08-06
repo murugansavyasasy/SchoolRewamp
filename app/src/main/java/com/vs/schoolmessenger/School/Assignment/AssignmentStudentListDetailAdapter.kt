@@ -3,15 +3,19 @@ package com.vs.schoolmessenger.School.Assignment
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+
 import com.vs.schoolmessenger.R
-import com.vs.schoolmessenger.School.Assignment.Model.AssignmentStudentListClickListener
-import com.vs.schoolmessenger.School.Assignment.Model.StudentSubmission
+
 import com.vs.schoolmessenger.School.Assignment.Model.SubmissionDetail
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 
 class AssignmentStudentListDetailAdapter(
@@ -65,12 +69,41 @@ class AssignmentStudentListDetailAdapter(
     ) : RecyclerView.ViewHolder(itemView) {
         private val lblStudentName: TextView = itemView.findViewById(R.id.lblStudentName)
         private val sectionlabel: TextView = itemView.findViewById(R.id.sectionlabel)
+        private val rytList2: RelativeLayout = itemView.findViewById(R.id.rytList2)
+        private val video_player: ImageView = itemView.findViewById(R.id.video_player)
+        private val total_numbers: TextView = itemView.findViewById(R.id.total_numbers)
+        private val rcyAssignment: RecyclerView = itemView.findViewById(R.id.rcyAssignment)
 
         fun bind(
             data: SubmissionDetail, position: Int, adapter: AssignmentStudentListDetailAdapter
         ) {
             lblStudentName.text = data.description
             sectionlabel.text = data.submitted_on
+
+            val hasIframe = !data.iframe.isNullOrEmpty()
+            val hasFiles = !data.file_path.isNullOrEmpty()
+
+            video_player.visibility = if (hasIframe) View.VISIBLE else View.GONE
+            rcyAssignment.visibility = if (hasIframe) View.GONE else View.VISIBLE
+            rytList2.visibility = if (hasFiles) View.VISIBLE else View.GONE
+            total_numbers.visibility = View.GONE
+
+            if (hasFiles) {
+                val fileList = data.file_path!!
+                val totalFiles = fileList.size
+                val visibleList = if (totalFiles > 2) fileList.subList(0, 2) else fileList
+
+                if (totalFiles > 2) {
+                    total_numbers.text = "+${totalFiles - 2}"
+                    total_numbers.visibility = View.VISIBLE
+                }
+
+                rcyAssignment.layoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                rcyAssignment.adapter =
+                    AssignmentFilePathAdapter(visibleList, fileList, context, Constant.isShimmerViewDisable)
+            }
+
         }
     }
 
