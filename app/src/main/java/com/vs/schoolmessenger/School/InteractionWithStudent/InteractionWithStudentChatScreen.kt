@@ -1,6 +1,6 @@
 package com.vs.schoolmessenger.School.InteractionWithStudent
 
-import android.app.AlertDialog
+
 import android.os.Build
 import android.util.Log
 import android.view.View
@@ -32,6 +32,8 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
     private lateinit var interactionWithQuestionAdapter: InteractionWithQuestionAdapter
 
     val QuestionDataSending = Constant.QuestionDataSending
+
+    private var selectedQuestionId: String? = null
 
 
     override fun getViewBinding(): InteractionwithStudentChatscreenBinding {
@@ -137,10 +139,15 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
             return
         }
 
+        if (selectedQuestionId.isNullOrEmpty()) {
+            Constant.showDataValidation("Error", "Invalid question ID", this)
+            return
+        }
+
         val fileList = emptyList<AnswerModelRequestFilePath>()
 
         val request = AnswerModelRequest(
-            question_id = QuestionDataSending?.id ?: "",
+            question_id = selectedQuestionId!!,
             answer = question,
             reply_type = replyType,
             is_change_answer = type,
@@ -152,6 +159,7 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
         binding.btnAdd.visibility = View.GONE
         binding.edtMessage.visibility = View.GONE
         binding.edtMessage.text?.clear()
+        selectedQuestionId = null
     }
 
 
@@ -184,6 +192,8 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
         binding.edtMessage.visibility = View.VISIBLE
         binding.txtquestion.text = chat.question
         this.type = type
+        selectedQuestionId = chat.id
+        Log.d("Selected Question ID", selectedQuestionId.toString())
     }
 
 
@@ -195,6 +205,8 @@ class InteractionWithStudentChatScreen : BaseActivity<InteractionwithStudentChat
         binding.edtMessage.visibility = View.VISIBLE
         binding.txtquestion.text = chat.question
         this.type = type
+        selectedQuestionId = chat.id
+        Log.d("Selected Question ID", selectedQuestionId.toString())
     }
 
 

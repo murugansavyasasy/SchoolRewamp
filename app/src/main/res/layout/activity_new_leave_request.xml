@@ -61,24 +61,24 @@
             </LinearLayout>
 
         </RelativeLayout>
-        <TextView
-            android:id="@+id/lblParentToolBar"
-            style="@style/CustomTextStylePoppinsBold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:layout_marginTop="@dimen/ten"
-            android:layout_marginStart="@dimen/twenty"
-            android:layout_below="@+id/rytHeaderDetail"
-            android:textColor="@color/white"
-            android:textSize="@dimen/twenty">
-
-        </TextView>
 
     </RelativeLayout>
+    <TextView
+        android:layout_marginStart="@dimen/fifteen"
+        android:id="@+id/lblParentToolBar"
+        style="@style/CustomTextStylePoppinsBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/leave_requests"
+        android:layout_marginTop="@dimen/ten"
+        android:layout_below="@+id/rytHeader"
+        android:textColor="@color/black"
+        android:textSize="@dimen/twenty">
+
+    </TextView>
 
     <ScrollView
-        android:layout_below="@+id/rytHeader"
+        android:layout_below="@+id/lblParentToolBar"
         android:layout_width="match_parent"
         android:clipToPadding="false"
         android:layout_height="wrap_content">
@@ -90,7 +90,6 @@
             android:layout_height="wrap_content">
             <LinearLayout
                 android:paddingBottom="@dimen/fifteen"
-                android:layout_marginTop="@dimen/fifteen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_top_rounded_container"
@@ -496,6 +495,51 @@
                 android:layout_height="wrap_content">
 
             </TextView>
+
+            <LinearLayout
+                android:id="@+id/linear_layout9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lbTextCount"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/btncancel"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="12dp"
+                    android:background="@drawable/bg_red_radious__all_side_same"
+                    android:padding="10dp"
+                    android:paddingStart="@dimen/eighteen_sp"
+                    android:paddingEnd="@dimen/eighteen_sp"
+                    android:text="Cancel"
+                    android:textColor="@color/white"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/btnupdate"
+                    style="@style/CustomTextStylePoppinsMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:background="@drawable/bg_green_radious"
+                    android:padding="10dp"
+                    android:paddingStart="@dimen/eighteen_sp"
+                    android:paddingEnd="@dimen/eighteen_sp"
+                    android:text="Update"
+                    android:textColor="@color/white"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+
         </LinearLayout>
 
     </ScrollView>

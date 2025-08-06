@@ -5,12 +5,17 @@
     android:background="@color/mild4"
     android:fitsSystemWindows="true">
 
+    <include
+        android:id="@+id/drawerLayout"
+        layout="@layout/school_home_fragment"
+        />
 
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/customBottomNav" />
+        android:layout_above="@+id/customBottomNav"
+        android:layout_marginBottom="0dp" />
 
     <LinearLayout
         android:id="@+id/customBottomNav"

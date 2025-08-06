@@ -106,8 +106,6 @@ class AttachmentFilePathAdapter (
                         .load(data.url)
                         .placeholder(R.drawable.image_placeholder)
                         .into(DefaultImage)
-
-//                    ImgOrDocumentType.setBackgroundResource(R.drawable.default_image_icon)
                     WebViewThumbnail.visibility = View.GONE
                     DefaultImage.visibility = View.VISIBLE
                 }
@@ -167,7 +165,6 @@ class AttachmentFilePathAdapter (
                     context.startActivity(intent)
                 }
             }
-
 
 
             WebViewThumbnail.setOnTouchListener(object : OnTouchListener {

@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:background="@color/white">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,7 +22,8 @@
             android:layout_marginTop="@dimen/twenty_five"
             android:src="@drawable/arrow_left_white"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"></ImageView>
+            app:layout_constraintTop_toTopOf="parent">
+        </ImageView>
 
         <TextView
             android:id="@+id/lblName"
@@ -48,7 +50,8 @@
             android:textColor="@color/white"
             android:textSize="@dimen/thirteen_sp"
             app:layout_constraintStart_toEndOf="@+id/imgBack"
-            app:layout_constraintTop_toBottomOf="@+id/lblName"></TextView>
+            app:layout_constraintTop_toBottomOf="@+id/lblName">
+        </TextView>
 
         <ImageView
             android:id="@+id/imgSearch"
@@ -84,7 +87,8 @@
         android:textColor="@color/black"
         android:textSize="@dimen/fifteen_sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cltDateSelection"></TextView>
+        app:layout_constraintTop_toBottomOf="@+id/cltDateSelection">
+    </TextView>
 
     <LinearLayout
         android:id="@+id/lytSearch"
@@ -148,7 +152,8 @@
             android:layout_height="@dimen/two_hundred"
             android:src="@drawable/no_data_found"
             app:layout_constraintStart_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"></ImageView>
+            app:layout_constraintTop_toTopOf="parent">
+        </ImageView>
 
 
         <TextView

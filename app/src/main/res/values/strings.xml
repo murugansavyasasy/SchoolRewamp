@@ -585,6 +585,7 @@
     <string name="set_remainder">Set remainder</string>
     <string name="confirm_submit_attendance"><![CDATA[Confirm & Submit Attendance]]></string>
     <string name="are_you_sure_want_to_submit_the_attendance">Are you sure want to submit the attendance?</string>
+    <string name="Are_you_sure_you_want_to_update_this_request">Are you sure you want to update this request?</string>
     <string name="no_data">no_data</string>
     <string name="monday">Monday</string>
     <string name="no_timetable_available">No timetable available</string>
@@ -597,6 +598,13 @@
     <string name="select_from_date">Select From Date</string>
     <string name="select_to_date">Select To Date</string>
     <string name="session">Session</string>
+    <string name="leave_requests">Leave Requests</string>
+    <string name="decline">Decline</string>
+    <string name="no_changes_made">No Changes Made</string>
 
+    <string name="nav_open">Open</string>
+    <string name="nav_close">Close</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 
 </resources>

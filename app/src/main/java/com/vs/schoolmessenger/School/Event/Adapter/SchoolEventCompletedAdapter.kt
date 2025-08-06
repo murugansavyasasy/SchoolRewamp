@@ -12,6 +12,7 @@ import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,6 +23,9 @@ import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Adapter.EventFi
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Adapter.ShimmerViewHolder
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Model.EventClickListener
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.RewampModelEvent.EventItem
+import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.ChildHomeWork
+import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
+import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Event.Listener.SchoolEventClickListener
 import com.vs.schoolmessenger.School.Event.Model.SchoolEventItem
@@ -132,7 +136,7 @@ class SchoolEventCompletedAdapter (
         private val loadingBar: ProgressBar = itemView.findViewById(R.id.loadingBar)
         private val rytList: LinearLayout = itemView.findViewById(R.id.rytList)
         private val arrow_icon: ImageView = itemView.findViewById(R.id.arrow_icon)
-        private val indicator: CircleIndicator2 = itemView.findViewById(R.id.indicator)
+        private val header: RelativeLayout = itemView.findViewById(R.id.header)
 
         @SuppressLint("ClickableViewAccessibility")
         fun bind(
@@ -149,25 +153,40 @@ class SchoolEventCompletedAdapter (
             video_player.visibility = View.GONE
             loadingBar.visibility = View.GONE
 
-            if (!data.iframe.isNullOrEmpty()) {
+
+            header.setOnClickListener {
+                val convertedList = data.file_path.map {
+                    GetFilePathDetails(
+                        type = it.type,
+                        url = it.url,
+                    )
+                }
+                val isHomeWorkData = FilePreview(
+                    id = "",
+                    title = data.title,
+                    description = data.description,
+                    subjectName = "",
+                    sentBy = "",
+                    thumbnail = data.thumbnail,
+                    isUnread = true,
+                    isCompleted = true,
+                    isMenuType = Constant.M_SCHOOL_CLASS_EVENTS,
+                    fileList = convertedList,
+                )
+
+                val intent = Intent(context, ChildHomeWork::class.java)
+                intent.putExtra("isPreViewData", isHomeWorkData)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                context.startActivity(intent)
+            }
+
+            if (data.iframe.isNotEmpty()) {
                 video_player.visibility = View.VISIBLE
                 rytList.visibility = View.VISIBLE
                 rcyImgPDF.visibility = View.GONE
 
-                video_player.setOnClickListener {
-                    val commonList = data.file_path?.map {
-                        CommonFileData(type = it.type, path = it.url)
-                    }?.toMutableList() ?: mutableListOf()
-
-                    Constant.commonFileList = commonList
-                    Constant.selectedFileIndex = position
-
-                    val intent = Intent(context, FilesViewActivity::class.java)
-                    intent.putExtra(Constant.subjectName, data.title)
-                    context.startActivity(intent)
-                }
             } else {
-                if (data.file_path.isNullOrEmpty()) {
+                if (data.file_path.isEmpty()) {
 //                    rytList.visibility = View.GONE
                     arrow_icon.visibility = View.VISIBLE
                     rcyImgPDF.visibility = View.GONE
@@ -195,29 +214,7 @@ class SchoolEventCompletedAdapter (
                         total_numbers.visibility = View.GONE
                     }
                 }
-
-            }
-
-            fun CircleIndicator2.attachToRecyclerView(recyclerView: RecyclerView) {
-                val adapter = recyclerView.adapter ?: return
-                this.createIndicators(adapter.itemCount, 0)
-
-                recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                    override fun onScrolled(rv: RecyclerView, dx: Int, dy: Int) {
-                        super.onScrolled(rv, dx, dy)
-                        val layoutManager = rv.layoutManager as? LinearLayoutManager ?: return
-                        val firstVisible = layoutManager.findFirstVisibleItemPosition()
-                        this@attachToRecyclerView.animatePageSelected(firstVisible)
-                    }
-                })
-
-                adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
-                    override fun onChanged() {
-                        this@attachToRecyclerView.createIndicators(adapter.itemCount, 0)
-                    }
-                })
             }
         }
-
     }
 }

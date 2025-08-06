@@ -74,16 +74,9 @@ class EventFilePathAdapter(
     class DataViewHolder(itemView: View, private val context: Context) :
         RecyclerView.ViewHolder(itemView) {
         private val DefaultImage: ShapeableImageView = itemView.findViewById(R.id.ImgPDF)
-//        private val ImgOrDocumentType: ImageView = itemView.findViewById(R.id.imageOrDocumentType)
-//        private val WebViewThumbnail: WebView = itemView.findViewById(R.id.WVThumbnaildocument)
-//        private val loadingBar: ProgressBar = itemView.findViewById(R.id.loadingBar)
-
-        private val fileItem: RelativeLayout = itemView.findViewById(R.id.fileItem)
 
         @SuppressLint("ClickableViewAccessibility")
         fun bind(
-
-
             data: FilePath?,
             position: Int,
             adapter: EventFilePathAdapter,
@@ -100,8 +93,6 @@ class EventFilePathAdapter(
                         .load(data.url)
                         .placeholder(R.drawable.image_placeholder)
                         .into(DefaultImage)
-//                    ImgOrDocumentType.setBackgroundResource(R.drawable.default_image_icon)
-//                    WebViewThumbnail.visibility = View.GONE
                     DefaultImage.visibility = View.VISIBLE
                 }
 
@@ -130,86 +121,11 @@ class EventFilePathAdapter(
                     openDocumentInWebView(data.url)
                 }
             }
-
-            fileItem.setOnClickListener {
-                Constant.commonFileList.isEmpty()
-                val commonList = adapter.GetFilePathDetailsData?.map {
-                    CommonFileData(
-                        type = it.type,
-                        path = it.url
-                    )
-                }?.toMutableList() ?: mutableListOf()
-
-                Constant.commonFileList = commonList
-
-                Constant.selectedFileIndex = position
-
-                val intent = Intent(context, FilesViewActivity::class.java)
-                context.startActivity(intent)
-            }
-
-
-//            WebViewThumbnail.setOnTouchListener(object : OnTouchListener {
-//                override fun onTouch(v: View?, event: MotionEvent): Boolean {
-//                    if (event.getAction() == MotionEvent.ACTION_MOVE) {
-//                        return false
-//                    }
-//                    if (event.getAction() == MotionEvent.ACTION_UP) {
-//                        Constant.commonFileList.isEmpty()
-//                        val commonList = adapter.GetFilePathDetailsData?.map {
-//                            CommonFileData(
-//                                type = it.type,
-//                                path = it.url
-//                            )
-//                        }?.toMutableList() ?: mutableListOf()
-//
-//                        Constant.commonFileList = commonList
-//
-//                        Constant.selectedFileIndex = position
-//
-//                        val intent = Intent(context, FilesViewActivity::class.java)
-//                        context.startActivity(intent)
-//                    }
-//
-//                    return false
-//                }
-//            })
         }
 
 
         private fun openDocumentInWebView(urlPath: String) {
-//            loadingBar.visibility = View.VISIBLE
-
-            val googleDocsUrl = "https://docs.google.com/gview?embedded=true&url=$urlPath"
-
             DefaultImage.visibility = View.GONE
-//            WebViewThumbnail.visibility = View.VISIBLE
-//            WebViewThumbnail.setOnTouchListener(null)
-//            WebViewThumbnail.settings.javaScriptEnabled = true
-//            WebViewThumbnail.settings.domStorageEnabled = true
-//            WebViewThumbnail.settings.loadWithOverviewMode = true
-//            WebViewThumbnail.settings.useWideViewPort = true
-
-//            WebViewThumbnail.webViewClient = object : WebViewClient() {
-//                override fun onPageStarted(
-//                    view: WebView?, url: String?, favicon: android.graphics.Bitmap?
-//                ) {
-//                    loadingBar.visibility = View.VISIBLE
-//                }
-//
-//                override fun onPageFinished(view: WebView?, url: String?) {
-//                    loadingBar.visibility = View.GONE
-//                }
-//
-//                override fun onReceivedError(
-//                    view: WebView?, request: WebResourceRequest?, error: WebResourceError?
-//                ) {
-//                    loadingBar.visibility = View.GONE
-//                    Log.e("WebViewError", "Error loading: ${error?.description}")
-//                }
-//            }
-//
-//            WebViewThumbnail.loadUrl(googleDocsUrl)
         }
 
 

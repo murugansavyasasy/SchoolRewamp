@@ -46,6 +46,7 @@ import com.vs.schoolmessenger.School.AbsenteesMarking.AbsenteesMarkingModel.Stud
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteeStudentsResponse
 import com.vs.schoolmessenger.School.AbsenteesReport.Model.AbsenteesResponse
 import com.vs.schoolmessenger.School.Assignment.DataClass.AssignmentResponse
+import com.vs.schoolmessenger.School.Attachment.DataClass.AttachmentReportResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextDetailsResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.TextSendResponse
 import com.vs.schoolmessenger.School.Communication.DataClass.VoiceDetails
@@ -132,6 +133,15 @@ class App(application: Application) : AndroidViewModel(application) {
 
     var isEditHomeWork: LiveData<StatusMessageModel?>? = null
         private set
+
+    var isEditAttachment: LiveData<StatusMessageModel?>? = null
+        private set
+
+
+    var isEditNoticeBoard: LiveData<StatusMessageModel?>? = null
+        private set
+
+
 
     var isDeleteHomeWork: LiveData<StatusMessageModel?>? = null
         private set
@@ -260,6 +270,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var isleaverequestdelete: LiveData<LeaveRequestDeleteResponse?>? = null
     var isnoticeboarddelete: LiveData<NoticeBoardDeleteResponse?>? = null
     var isEventDelete: LiveData<EventDeleteResponse?>? = null
+    var isAttachmentReportResponse: LiveData<AttachmentReportResponse?>? = null
     var getProgressMarks: LiveData<ProgressCardResponse?>? = null
     var isHomeWorkComplete: LiveData<StatusMessageModel?>? = null
 
@@ -281,6 +292,8 @@ class App(application: Application) : AndroidViewModel(application) {
         isGetAssignmentReport = apiSchoolRepositories.isGetAssignmentReportLiveData
         isAssignmentDelete = apiSchoolRepositories.isDeleteAssignmentLiveData
         isEditHomeWork = apiSchoolRepositories.isUpdateHomeworkLiveData
+        isEditAttachment = apiSchoolRepositories.isUpdateAttachmentLiveData
+        isEditNoticeBoard = apiSchoolRepositories.isUpdateNoticeBoardLiveData
         isDeleteHomeWork = apiSchoolRepositories.isDeleteHomeworkLiveData
         isNoticeBoardReport = apiSchoolRepositories.isNoticeBoardReportLiveData
         isNoticeBoardStaffReport = apiSchoolRepositories.isNoticeBoardStaffReportLiveData
@@ -362,6 +375,7 @@ class App(application: Application) : AndroidViewModel(application) {
         getstudentdetailsforchat = apiParentRepositories.getstudentdetailsforchatLiveData
         isnoticeboarddelete = apiSchoolRepositories.isnoticeboarddeleteLiveData
         isEventDelete = apiSchoolRepositories.isEventDeleteLiveData
+        isAttachmentReportResponse = apiSchoolRepositories.isAttachmentResponseLiveData
 
     }
 
@@ -718,6 +732,11 @@ class App(application: Application) : AndroidViewModel(application) {
         apiSchoolRepositories.getlpStaffReport(isToken, request_type, activity)
     }
 
+    fun getAttachmentListReport(isToken: String, activity: Activity) {
+        apiSchoolRepositories.getAttachmentReportList(isToken, activity)
+    }
+
+
     fun getlpViewReport(
         isToken: String,
         section_subject_id: String,
@@ -885,7 +904,7 @@ class App(application: Application) : AndroidViewModel(application) {
     }
 
 
-    fun isnoticeboarddelete(isToken: String, request: RequestBody, activity: Activity) {
+    fun isnoticeboarddelete(isToken: String, request: JsonObject, activity: Activity) {
         apiSchoolRepositories.isnoticeboarddelete(isToken, request, activity)
     }
 
@@ -901,6 +920,17 @@ class App(application: Application) : AndroidViewModel(application) {
     fun isHomeWorkUpdate(isToken: String, jsonObject: JsonObject,activity: Activity) {
         apiSchoolRepositories.isEditHomeWork(isToken,jsonObject,activity)
     }
+
+    fun isAttachmentUpdate(isToken: String, jsonObject: JsonObject,activity: Activity) {
+        apiSchoolRepositories.isEditAttachment(isToken,jsonObject,activity)
+    }
+
+    fun isNoticeBoardUpdate(isToken: String, jsonObject: JsonObject,activity: Activity) {
+        apiSchoolRepositories.isEditNoticeBoard(isToken,jsonObject,activity)
+    }
+
+
+
 
     fun isHomeWorkDelete(isToken: String, jsonObject: JsonObject,activity: Activity) {
         apiSchoolRepositories.isHomeWorkDelete(isToken,jsonObject,activity)

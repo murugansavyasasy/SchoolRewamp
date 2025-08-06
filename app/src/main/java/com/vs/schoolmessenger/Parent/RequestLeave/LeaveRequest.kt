@@ -2,11 +2,13 @@ package com.vs.schoolmessenger.Parent.RequestLeave
 
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.PorterDuff
 import android.os.Build
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
@@ -36,13 +38,15 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
 
     private var isAccessToken: String? = null
     private var appViewModel: App? = null
-    lateinit var mAdapter: LeaveRequestAdapter
+    lateinit var mAdapter: MonthWiseLeaveHistoryAdapter
+
     private var fromDateMillis: Long = 0L
     private var toDateMillis: Long = 0L
     private var totalLeaveDays: Int = 0
     private val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
 
     private var currentTab = TabType.LeaveRequest
+
 
 
     private enum class TabType {
@@ -60,7 +64,7 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
         appViewModel?.init()
 
         val isChildDetails = SharedPreference.getChildDetails(this)
-        binding.toolbarLayout.imgBack.setOnClickListener(this)
+        binding.imgBack.setOnClickListener(this)
         binding.rytStartDate.setOnClickListener(this)
         binding.rytStart.setOnClickListener(this)
         binding.rytEnd.setOnClickListener(this)
@@ -72,6 +76,8 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
         binding.btnNext.setOnClickListener(this)
         binding.btnupdate.setOnClickListener(this)
         binding.btncancel.setOnClickListener(this)
+        binding.imgBack.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_IN)
+
         val (dayOnly, dayOfWeek, fullDate, slashDate, customFormat) = Constant.getCurrentDateInfo()
 
         val today = Calendar.getInstance()
@@ -92,16 +98,13 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
         binding.lblTotalDays.text = "No of Days - $totalLeaveDays"
 
 
-        binding.toolbarLayout.lblParentToolBar.text = getString(R.string.leave_history)
-        binding.toolbarLayout.lnrParent.visibility = View.GONE
+        binding.lblParentToolBar.text = getString(R.string.leave_history)
         isAccessToken = isChildDetails?.access_token
 
-        binding.toolbarLayout.lblStudentName.text = isChildDetails!!.name
-        binding.toolbarLayout.lblStudentSection.text =
+        binding.lblStudentName.text = isChildDetails!!.name
+        binding.lblStudentSection.text =
             isChildDetails.standard_name + " - " + isChildDetails.section_name
 
-        binding.toolbarLayout.lblLeftSideBar.text = resources.getText(R.string.History)
-        binding.toolbarLayout.lblRightSideBar.text = "Leave Request"
         binding.rlaCreateLeaveRequest.visibility = View.GONE
         binding.rlaHistory.visibility = View.VISIBLE
         isGetLeaveRequestList()
@@ -177,26 +180,15 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
             finish()
         }
 
-        val addLeaveButton: ImageView = findViewById(R.id.imgAddLeave)
-        addLeaveButton.setOnClickListener {
-            val intent = Intent(this, NewLeaveRequest::class.java)
-            startActivity(intent)
-        }
+//        val addLeaveButton: ImageView = findViewById(R.id.imgAddLeave)
+//        addLeaveButton.setOnClickListener {
+//            val intent = Intent(this, NewLeaveRequest::class.java)
+//            startActivity(intent)
+//        }
 
 
 
-        binding.toolbarLayout.lblRightSideBar.setOnClickListener {
 
-            if (currentTab == TabType.LeaveRequest) return@setOnClickListener
-            currentTab = TabType.LeaveRequest
-
-            binding.toolbarLayout.lblRightSideBar.setBackgroundResource(R.drawable.white_radious)
-            binding.toolbarLayout.lblRightSideBar.setTextColor(Color.BLACK)
-            binding.toolbarLayout.lblLeftSideBar.setBackgroundResource(R.drawable.bg_light_green)
-            binding.rlaCreateLeaveRequest.visibility = View.VISIBLE
-            binding.rlaHistory.visibility = View.GONE
-            binding.tabLayoutStatus.visibility = View.GONE
-        }
 
 //        binding.toolbarLayout.lblLeftSideBar.setOnClickListener {
 //            if (currentTab == TabType.History) return@setOnClickListener
@@ -206,9 +198,6 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
             binding.tabLayoutStatus.visibility = View.VISIBLE
             binding.rlaCreateLeaveRequest.visibility = View.GONE
 
-            binding.toolbarLayout.lblLeftSideBar.setBackgroundResource(R.drawable.white_radious)
-            binding.toolbarLayout.lblLeftSideBar.setTextColor(Color.BLACK)
-            binding.toolbarLayout.lblRightSideBar.setBackgroundResource(R.drawable.bg_light_green)
 
             binding.tabLayoutStatus.removeAllTabs()
 
@@ -360,16 +349,16 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
     }
 
 
-    private fun isloadleaverequestData(newData: List<LeaveData>?) {
-        mAdapter = LeaveRequestAdapter(
-            newData, this, this, Constant.isShimmerViewDisable
+    private fun isloadleaverequestData(newData: List<MonthWiseLeaveData>?) {
+        mAdapter = MonthWiseLeaveHistoryAdapter(
+            newData,this,this, Constant.isShimmerViewDisable
         )
         binding.rcyLeaveRequestHistory.adapter = mAdapter
     }
 
     private fun isGetLeaveRequestList() {
-        mAdapter = LeaveRequestAdapter(
-            null, this, this, Constant.isShimmerViewDisable
+        mAdapter = MonthWiseLeaveHistoryAdapter(
+            null,this,this, Constant.isShimmerViewDisable
         )
         binding.rcyLeaveRequestHistory.layoutManager = LinearLayoutManager(this)
         binding.rcyLeaveRequestHistory.isNestedScrollingEnabled = false
@@ -395,76 +384,94 @@ class LeaveRequest : BaseActivity<LeaveRequestBinding>(), View.OnClickListener,
 
 
     override fun onItemEditClick(data: LeaveData) {
-        val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-        val displayFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        val backendFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-        binding.toolbarLayout.lblRightSideBar.setBackgroundResource(R.drawable.white_radious)
-        binding.toolbarLayout.lblRightSideBar.setTextColor(Color.BLACK)
-        binding.toolbarLayout.lblLeftSideBar.setBackgroundResource(R.drawable.bg_light_green)
-        binding.rlaCreateLeaveRequest.visibility = View.VISIBLE
-        binding.rlaHistory.visibility = View.GONE
-        binding.txtDesc.setText(data.reason)
-        binding.btnNext.visibility = View.GONE
-        binding.linearLayout9.visibility = View.VISIBLE
-        binding.tabLayoutStatus.visibility = View.GONE
-        binding.toolbarLayout.lnrParent.visibility = View.GONE
-        binding.lblHeaderTitle.setText("Edit Leave Request")
 
-        try {
-            val parsedFromDate = inputFormat.parse(data.leave_from)
-            parsedFromDate?.let {
-                val formattedFrom = displayFormat.format(it)
-                binding.txtStartDate.text = Constant.covertDateFormate(formattedFrom)
-                fromDateMillis = it.time
-                val dayOnly = getDayAndDate(formattedFrom, displayFormat)
-                binding.lblDay.text = dayOnly
-            }
+        val intent = Intent(this@LeaveRequest,NewLeaveRequest::class.java);
+            intent.putExtra("isReason",data.reason )
+            intent.putExtra("isId", data.id)
+            intent.putExtra("isLeaveTo", data.leave_from)
+            intent.putExtra("isLeaveFrom", data.leave_from)
+            intent.putExtra("isFromSession", data.from_session)
+            intent.putExtra("isToSession", data.to_session)
+            intent.putExtra("isRequestEdit", true)
+            startActivity(intent);
 
-            val parsedToDate = inputFormat.parse(data.leave_to)
-            parsedToDate?.let {
-                val formattedTo = displayFormat.format(it)
-                binding.txtEndDate.text = Constant.covertDateFormate(formattedTo)
-                toDateMillis = it.time
-                val dayOnly = getDayAndDate(formattedTo, displayFormat)
-                binding.lblEndDay.text = dayOnly
-            }
 
-            totalLeaveDays = if (fromDateMillis <= toDateMillis) {
-                (((toDateMillis - fromDateMillis) / (1000 * 60 * 60 * 24)) + 1).toInt()
-            } else {
-                1
-            }
-            binding.lblTotalDays.text = "No of Days - $totalLeaveDays"
-
-        } catch (e: Exception) {
-            Log.e("EditClickDateError", "Date parsing failed: ${e.localizedMessage}")
-        }
-
-        binding.btnupdate.setOnClickListener {
-            val updatedReason = binding.txtDesc.text.toString().trim()
-            val updatedStartDate = binding.txtStartDate.text.toString()
-            val updatedEndDate = binding.txtEndDate.text.toString()
-
-            var leaveFromFormatted = data.leave_from
-            var leaveToFormatted = data.leave_to
-
-            try {
-                val fromDate = displayFormat.parse(updatedStartDate)
-                val toDate = displayFormat.parse(updatedEndDate)
-                if (fromDate != null) leaveFromFormatted = backendFormat.format(fromDate)
-                if (toDate != null) leaveToFormatted = backendFormat.format(toDate)
-            } catch (e: Exception) {
-                Log.e("UpdateClickDateError", "Parsing updated dates failed: ${e.localizedMessage}")
-            }
-
-            val updatedRequest = LeaveRequestUpdate(
-                id = data.id,
-                leave_from = leaveFromFormatted,
-                leave_to = leaveToFormatted,
-                reason = updatedReason
-            )
-
-            appViewModel?.isleaverequestupdate(isAccessToken!!, updatedRequest, this)
-        }
+//        val inputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+//        val displayFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+//        val backendFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+//        binding.rlaCreateLeaveRequest.visibility = View.VISIBLE
+//        binding.rlaHistory.visibility = View.GONE
+//        binding.txtDesc.setText(data.reason)
+//        binding.btnNext.visibility = View.GONE
+//        binding.linearLayout9.visibility = View.VISIBLE
+//        binding.tabLayoutStatus.visibility = View.GONE
+//        binding.lblHeaderTitle.setText("Edit Leave Request")
+//
+//        try {
+//            val parsedFromDate = inputFormat.parse(data.leave_from)
+//            parsedFromDate?.let {
+//                val formattedFrom = displayFormat.format(it)
+//                binding.txtStartDate.text = Constant.covertDateFormate(formattedFrom)
+//                fromDateMillis = it.time
+//                val dayOnly = getDayAndDate(formattedFrom, displayFormat)
+//                binding.lblDay.text = dayOnly
+//            }
+//
+//            val parsedToDate = inputFormat.parse(data.leave_to)
+//            parsedToDate?.let {
+//                val formattedTo = displayFormat.format(it)
+//                binding.txtEndDate.text = Constant.covertDateFormate(formattedTo)
+//                toDateMillis = it.time
+//                val dayOnly = getDayAndDate(formattedTo, displayFormat)
+//                binding.lblEndDay.text = dayOnly
+//            }
+//
+//            totalLeaveDays = if (fromDateMillis <= toDateMillis) {
+//                (((toDateMillis - fromDateMillis) / (1000 * 60 * 60 * 24)) + 1).toInt()
+//            } else {
+//                1
+//            }
+//            binding.lblTotalDays.text = "No of Days - $totalLeaveDays"
+//
+//        } catch (e: Exception) {
+//            Log.e("EditClickDateError", "Date parsing failed: ${e.localizedMessage}")
+//        }
+//
+//        binding.btnupdate.setOnClickListener {
+//
+//            val intent = Intent(this@LeaveRequest,NewLeaveRequest::class.java);
+//            intent.putExtra("isReason",data.reason )
+//            intent.putExtra("isId", data.id)
+//            intent.putExtra("isLeaveTo", data.leave_from)
+//            intent.putExtra("isLeaveFrom", data.leave_from)
+//            intent.putExtra("isFromSession", data.from_session)
+//            intent.putExtra("isToSession", data.to_session)
+//            startActivity(intent);
+//
+//            val updatedReason = binding.txtDesc.text.toString().trim()
+//            val updatedStartDate = binding.txtStartDate.text.toString()
+//            val updatedEndDate = binding.txtEndDate.text.toString()
+//
+//            var leaveFromFormatted = data.leave_from
+//            var leaveToFormatted = data.leave_from
+//
+//            try {
+//                val fromDate = displayFormat.parse(updatedStartDate)
+//                val toDate = displayFormat.parse(updatedEndDate)
+//                if (fromDate != null) leaveFromFormatted = backendFormat.format(fromDate)
+//                if (toDate != null) leaveToFormatted = backendFormat.format(toDate)
+//            } catch (e: Exception) {
+//                Log.e("UpdateClickDateError", "Parsing updated dates failed: ${e.localizedMessage}")
+//            }
+//
+//            val updatedRequest = LeaveRequestUpdate(
+//                id = data.id,
+//                leave_from = leaveFromFormatted,
+//                leave_to = leaveToFormatted,
+//                reason = updatedReason
+//            )
+//
+//            appViewModel?.isleaverequestupdate(isAccessToken!!, updatedRequest, this)
+//        }
     }
 }

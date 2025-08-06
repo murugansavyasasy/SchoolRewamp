@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.StaffDetails
+import com.vs.schoolmessenger.Parent.RequestLeave.MonthWiseLeaveData
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.LeaveRequests.Listener.SchoolLRClickListener
@@ -31,6 +32,7 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
     private var isAccessToken: String? = null
     private var isStaffDetails: StaffDetails? = null
     private var leaveRequestList: List<LeaveData>? = null
+    private var leaveRequestMonthWiseList: List<MonthWiseLeaveData>? = null
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
@@ -67,7 +69,7 @@ class LeaveRequests : BaseActivity<LeaveRequestsBinding>(),
                 binding.toolbarLayout.rytSearch.visibility = View.VISIBLE
                 binding.nomessage.visibility = View.GONE
                 binding.txtNoData.visibility = View.GONE
-                leaveRequestList =  response.data
+//                leaveRequestList =  response.data
                 val waitingList = leaveRequestList!!.filter { it.status == Constant.waiting_for_approval}
                 if(waitingList.isNotEmpty()) {
                     binding.rcyleaverequest.visibility = View.VISIBLE

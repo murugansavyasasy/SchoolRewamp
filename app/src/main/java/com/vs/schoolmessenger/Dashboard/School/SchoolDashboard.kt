@@ -2,18 +2,31 @@ package com.vs.schoolmessenger.Dashboard.School
 
 import android.Manifest
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.navigation.NavigationView
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
+import com.vs.schoolmessenger.Dashboard.Fragments.HelpFragment
+import com.vs.schoolmessenger.Dashboard.Fragments.ProfileFragment
+import com.vs.schoolmessenger.Dashboard.Fragments.SchoolHomeFragment
+import com.vs.schoolmessenger.Dashboard.Fragments.SettingsFragment
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
@@ -32,22 +45,54 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
         val context = ChangeLanguage.setLocale(newBase, savedLanguage)
         super.attachBaseContext(context)
     }
+
     private lateinit var contactPermissionLauncher: ActivityResultLauncher<String>
-
-
 
     var authViewModel: Auth? = null
     private var appViewModel: App? = null
     var userDetails: UserDetails? = null
     var access_token = ""
 
-
     override fun getViewBinding(): SchoolDashboardBinding {
         return SchoolDashboardBinding.inflate(layoutInflater)
+
+
     }
 
     override fun setupViews() {
         super.setupViews()
+
+//        val menuIcon = binding.drawerLayout.menuIcon
+//        val drawerLayout = binding.drawerLayout.drawerLayout
+//        val navigationView = binding.drawerLayout.navigationView
+
+
+//        menuIcon.setOnClickListener {
+//            Log.d("menuIcon", "Menu icon clicked. Opening navigation drawer.")
+//            drawerLayout.openDrawer(GravityCompat.START)
+//        }
+
+
+
+//        navigationView.setNavigationItemSelectedListener { menuItem ->
+//            when (menuItem.itemId) {
+//                R.id.nav_home -> {
+//                    startActivity(Intent(this, SchoolHomeFragment::class.java))
+//                }
+//                R.id.nav_profile -> {
+//                    startActivity(Intent(this, ProfileFragment::class.java))
+//                }
+//                R.id.nav_settings -> {
+//                    startActivity(Intent(this, SettingsFragment::class.java))
+//                }
+//                R.id.nav_logout -> {
+//                    startActivity(Intent(this, HelpFragment::class.java))
+//                }
+//            }
+//            drawerLayout.closeDrawer(GravityCompat.START)
+//            true
+//        }
+
         // Access a specific view using its ID
 
 //        if (Build.VERSION.SDK_INT >= 21) {
@@ -57,6 +102,7 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
 //            window.statusBarColor = this.resources.getColor(R.color.primary_light)
 //            window.navigationBarColor = this.resources.getColor(R.color.primary_light)
 //        }
+
         userDetails = SharedPreference.getUserDetails(this)
         access_token = userDetails!!.staff_details[0].access_token
 
@@ -64,8 +110,10 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
         appViewModel!!.init()
         authViewModel = ViewModelProvider(this).get(Auth::class.java)
         authViewModel!!.init()
+
         FirebaseMessaging.getInstance().isAutoInitEnabled = true
         setUpGradientSchool()
+
 
         accessChildView(
             binding,
@@ -115,11 +163,12 @@ class SchoolDashboard : BaseActivity<SchoolDashboardBinding>(), View.OnClickList
 
         isGetAcademicYear()
     }
-
     private fun isGetAcademicYear() {
         appViewModel!!.isGetAcademicYear(access_token, this)
 
     }
+
+
 
     private fun requestContactPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS)

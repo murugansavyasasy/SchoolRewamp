@@ -266,7 +266,5 @@
                 android:textStyle="normal" />
 
         </LinearLayout>
-
     </LinearLayout>
-
 </androidx.cardview.widget.CardView>

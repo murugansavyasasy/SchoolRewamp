@@ -1,17 +1,24 @@
 package com.vs.schoolmessenger.School.Homework
 
+import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.vs.schoolmessenger.Parent.Homework.HomeWorkAdapter.ChildHomeWork
+import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.FilePreview
+import com.vs.schoolmessenger.Parent.Homework.HomeWorkModelClass.GetFilePathDetails
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.School.Homework.HomeWorkReportModel.HomeWorkReport
+import com.vs.schoolmessenger.Utils.Constant
 import com.vs.schoolmessenger.Utils.ShimmerUtil
 import com.vs.schoolmessenger.databinding.HomeworkParentItemBinding
 import java.util.Locale
 
 
 class HomeWorkReportAdapter(
+    private var context: Context,
     private var isHomeWorkData: List<HomeWorkReport>,
     private val listener: HomeWorkReportClickListener,
     private var isLoading: Boolean,
@@ -41,7 +48,7 @@ class HomeWorkReportAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DataViewHolder && !isLoading && position < isHomeWorkData.size) {
             val item = isHomeWorkData[position]
-            holder.bind(item, listener)
+            holder.bind(item, listener,context)
         }
     }
 
@@ -56,10 +63,6 @@ class HomeWorkReportAdapter(
         notifyDataSetChanged()
     }
 
-    fun updateLoading(isLoadingNow: Boolean) {
-        isLoading = isLoadingNow
-        notifyDataSetChanged()
-    }
 
     fun filter(query: String) {
         val lowerCaseQuery = query.lowercase(Locale.getDefault())
@@ -89,7 +92,7 @@ class HomeWorkReportAdapter(
     class DataViewHolder(private val binding: HomeworkParentItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: HomeWorkReport, listener: HomeWorkReportClickListener) {
+        fun bind(item: HomeWorkReport, listener: HomeWorkReportClickListener, context: Context) {
             binding.lblSubject.text = item.subject_name
             binding.lblTitle.text = item.title
             binding.redDot.visibility = View.GONE
@@ -100,6 +103,37 @@ class HomeWorkReportAdapter(
             binding.imgEditAndDelete.setOnClickListener {
                 listener.onClickListener(item, it, adapterPosition)
             }
+
+
+            binding.cardRoot.setOnClickListener {
+
+                val convertedList = item.file_path.map {
+                    GetFilePathDetails(
+                        type = it.type,
+                        url = it.url,
+                    )
+                }
+
+
+                val isHomeWorkData = FilePreview(
+                    id = "",
+                    title = item.title,
+                    description = item.description,
+                    subjectName = item.subject_name,
+                    sentBy = "",
+                    thumbnail = "",
+                    isUnread = true,
+                    isCompleted = true,
+                    isMenuType = Constant.M_HOMEWORK,
+                    fileList = convertedList,
+                )
+
+                val intent = Intent(context, ChildHomeWork::class.java)
+                intent.putExtra("isPreViewData", isHomeWorkData)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                context.startActivity(intent)
+            }
+
         }
     }
 
