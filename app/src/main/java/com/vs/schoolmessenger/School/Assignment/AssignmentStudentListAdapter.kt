@@ -3,9 +3,11 @@ package com.vs.schoolmessenger.School.Assignment
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -70,6 +72,7 @@ class AssignmentStudentListAdapter(
         private val standardlabel: TextView = itemView.findViewById(R.id.standardlabel)
         private val statuslabel: TextView = itemView.findViewById(R.id.statuslabel)
         private val rlarelativelayout: RelativeLayout = itemView.findViewById(R.id.rlarelativelayout)
+        private val arrow_icon: ImageView = itemView.findViewById(R.id.arrow_icon)
 
         fun bind(data: StudentSubmission, position: Int, adapter: AssignmentStudentListAdapter) {
             lblStudentName.text = data.student_name
@@ -77,10 +80,21 @@ class AssignmentStudentListAdapter(
             standardlabel.text = data.section
             statuslabel.text = data.submit_status
 
+            if(data.submit_status == "SUBMITTED") {
+                arrow_icon.visibility = View.VISIBLE
+            } else {
+                arrow_icon.visibility = View.GONE
+            }
+
             rlarelativelayout.setOnClickListener {
-                val intent = Intent(context, AssignmentStudentListDetail::class.java)
-                intent.putParcelableArrayListExtra("submission_list", ArrayList(data.submissions_details))
-                context.startActivity(intent)
+                if(data.submit_status == "SUBMITTED") {
+                    val intent = Intent(context, AssignmentStudentListDetail::class.java)
+                    intent.putParcelableArrayListExtra("submission_list", ArrayList(data.submissions_details))
+                    context.startActivity(intent)
+                } else {
+                    Log.d("Assignement Student List Adapter","No Redirection Available")
+                }
+
             }
 
         }

@@ -606,6 +606,7 @@
     <string name="decline">Decline</string>
     <string name="no_changes_made">No Changes Made</string>
     <string name="generate_outpass"><u>Generate Outpass</u></string>
+    <string name="enter_reason">Enter Reason</string>
 
 
 </resources>

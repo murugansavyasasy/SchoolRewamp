@@ -12,6 +12,9 @@ import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYearResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
+import com.vs.schoolmessenger.Parent.Assignment.Model.AssignmentModelRequest
+import com.vs.schoolmessenger.Parent.Assignment.Model.AssignmentSubmitResponse
+import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentResponse
 import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentResponse
 import com.vs.schoolmessenger.Parent.Attendance.AttendanceReport.ChildAttendanceResponse
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesListResponse
@@ -36,6 +39,7 @@ import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.Qu
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.Request.QuestionModelRequest
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestApplyResponse
+import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.GetLeaveCategoriesData
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestDelete
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestDeleteResponse
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestUpdate
@@ -283,6 +287,10 @@ class App(application: Application) : AndroidViewModel(application) {
     var getProgressMarks: LiveData<ProgressCardResponse?>? = null
     var isHomeWorkComplete: LiveData<StatusMessageModel?>? = null
     var getassignmentlist: LiveData<SubmissionResponse?>? = null
+    var getLeaveCategories: LiveData<GetLeaveCategoriesData?>? = null
+    var isAssignmentlist: LiveData<ParentAssignmentResponse?>? = null
+    var isSubmitAssignment: LiveData<AssignmentSubmitResponse?>? = null
+
 
 
     fun init() {
@@ -391,6 +399,10 @@ class App(application: Application) : AndroidViewModel(application) {
         isEventDelete = apiSchoolRepositories.isEventDeleteLiveData
         isAttachmentReportResponse = apiSchoolRepositories.isAttachmentResponseLiveData
         getassignmentlist = apiSchoolRepositories.getassignmentlistLiveData
+
+        getLeaveCategories = apiParentRepositories.getLeaveCategoriesLiveData
+        isAssignmentlist = apiParentRepositories.isAssignmentlistLiveData
+        isSubmitAssignment = apiParentRepositories.isSubmitAssignmentLiveData
 
     }
 
@@ -904,6 +916,24 @@ class App(application: Application) : AndroidViewModel(application) {
         apiSchoolRepositories.getassignmentlist(isToken,id,type)
     }
 
+
+    fun getLeaveCategories(isToken: String) {
+        apiParentRepositories.getLeaveCategories(isToken)
+    }
+
+
+    fun isAssignmentlist(
+        isToken: String
+    ) {
+        apiParentRepositories.isAssignmentlist(isToken)
+    }
+
+
+    fun isSubmitAssignment(
+        isToken: String, request: AssignmentModelRequest
+    ) {
+        apiParentRepositories.isSubmitAssignment(isToken,request)
+    }
 }
 
 

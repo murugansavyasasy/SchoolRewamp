@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:paddingHorizontal="@dimen/fifteen">
 
     <TextView
         android:id="@+id/textViewItem"
@@ -10,9 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/five"
-        android:padding="@dimen/fifteen"
+        android:paddingVertical="@dimen/fifteen"
         android:text=""
-        android:layout_toStartOf="@+id/imageTick"
         android:textColor="@android:color/black"
         android:textSize="@dimen/thirteen_sp" />
 
@@ -20,15 +19,14 @@
         android:id="@+id/imageTick"
         android:layout_width="@dimen/twenty"
         android:layout_height="@dimen/twenty"
-        android:layout_margin="@dimen/fifteen"
         android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
         android:src="@drawable/ic_check_mark"
         android:visibility="gone" />
 
     <View
-        android:layout_below="@+id/textViewItem"
+        android:layout_below="@id/textViewItem"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:background="@color/grey_mild"/>
-
 </RelativeLayout>

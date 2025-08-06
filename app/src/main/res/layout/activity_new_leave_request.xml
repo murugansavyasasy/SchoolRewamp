@@ -131,13 +131,12 @@
                             android:textColor="#888888"
                             android:textSize="@dimen/fourteen_sp" />
 
-                        <TextView
+                        <Spinner
+                            android:id="@+id/isLeaveCategories"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            style="@style/CustomTextStylePoppinsBold"
-                            android:text="Casual"
-                            android:textColor="#000000"
-                            android:textSize="@dimen/thirteen_sp"
+                            android:background="@null"
+                            android:spinnerMode="dropdown"
                             />
                     </LinearLayout>
                 </LinearLayout>
@@ -189,7 +188,8 @@
                             android:inputType="textCapSentences"
                             android:paddingTop="4dp"
                             android:paddingBottom="4dp"
-                            android:text="Trip to Cannes"
+                            android:text=""
+                            android:hint="@string/enter_reason"
                             style="@style/CustomTextStylePoppinsBold"
                             android:textColorHint="#888888"
                             android:textSize="@dimen/thirteen_sp" />
@@ -256,9 +256,9 @@
                                 android:layout_height="wrap_content"
                                 style="@style/CustomTextStylePoppinsBold"
                                 android:text="@string/select_date"
-                                android:drawablePadding="@dimen/three"
+                                android:drawablePadding="@dimen/five"
                                 android:textSize="@dimen/thirteen_sp"
-                                android:drawableEnd="@drawable/down_arrow" />
+                                android:drawableEnd="@drawable/down_arrow_3" />
                         </LinearLayout>
 
                         <!-- Divider -->
@@ -286,7 +286,9 @@
                                 android:id="@+id/isFromSession"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="@drawable/custom_spinner_background" />
+                                android:background="@null"
+                                android:spinnerMode="dropdown"
+                                 />
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
@@ -427,8 +429,8 @@
                                 android:id="@+id/tvToDate"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:drawableEnd="@drawable/down_arrow"
-                                android:drawablePadding="@dimen/three"
+                                android:drawableEnd="@drawable/down_arrow_3"
+                                android:drawablePadding="@dimen/five"
                                 android:text="@string/select_date"
                                 android:textSize="@dimen/thirteen_sp"
                                 style="@style/CustomTextStylePoppinsBold" />
@@ -459,7 +461,9 @@
                                 android:id="@+id/isToSession"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="@drawable/custom_spinner_background" />
+                                android:background="@null"
+                                android:spinnerMode="dropdown"
+                                 />
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>

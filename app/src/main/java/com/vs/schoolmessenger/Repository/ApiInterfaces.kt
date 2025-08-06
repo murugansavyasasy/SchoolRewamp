@@ -17,6 +17,9 @@ import com.vs.schoolmessenger.CommonScreens.MenuDetails.DashboardResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.AcademicYearResponse
 import com.vs.schoolmessenger.CommonScreens.RecipientDataClasses.NameAndIdsResponse
 import com.vs.schoolmessenger.CommonScreens.SelectRecipient.StandardList.StandardResponse
+import com.vs.schoolmessenger.Parent.Assignment.Model.AssignmentModelRequest
+import com.vs.schoolmessenger.Parent.Assignment.Model.AssignmentSubmitResponse
+import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentResponse
 import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentResponse
 import com.vs.schoolmessenger.Parent.Attendance.AttendanceReport.ChildAttendanceResponse
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesListResponse
@@ -46,6 +49,7 @@ import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.Qu
 import com.vs.schoolmessenger.Parent.InteractionWithStaff.Model.QuestionModel.Request.QuestionModelRequest
 import com.vs.schoolmessenger.Parent.Noticeboard.NoticeBoardResponse
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestApplyResponse
+import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.GetLeaveCategoriesData
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestDelete
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestDeleteResponse
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequestModel.LeaveRequestUpdate
@@ -280,7 +284,6 @@ interface ApiInterfaces {
     ): Call<StatusMessageModel?>
 
 
-
     @POST(APIMethods.isSendText)
     fun isSendText(
         @Header(APIKeyNames.Authorization) token: String, @Body jsonObject: JsonObject
@@ -335,8 +338,7 @@ interface ApiInterfaces {
     @Headers("Content-Type: application/json")
     @PUT(APIMethods.isHomeWorkComplete)
     fun isHomeWorkComplete(
-        @Header(APIKeyNames.Authorization) token: String,
-        @Body jsonObject: JsonObject
+        @Header(APIKeyNames.Authorization) token: String, @Body jsonObject: JsonObject
     ): Call<StatusMessageModel?>
 
     @GET(APIMethods.homework_list_archive)
@@ -542,8 +544,6 @@ interface ApiInterfaces {
     ): Call<AttachmentReportResponse?>
 
 
-
-
     @GET(APIMethods.attachmentListArchive)
     fun attachmentListArchive(
         @Header(APIKeyNames.Authorization) token: String
@@ -744,7 +744,6 @@ interface ApiInterfaces {
     ): Call<EventDeleteResponse?>
 
 
-
     @GET(APIMethods.isAssignmentSubmittedList)
     fun getassignmentlist(
         @Header(APIKeyNames.Authorization) token: String,
@@ -752,5 +751,22 @@ interface ApiInterfaces {
         @Query(APIKeyNames.type) type: String
     ): Call<SubmissionResponse?>?
 
+    @GET(APIMethods.isleavecategories)
+    fun getleavecategories(
+        @Header(APIKeyNames.Authorization) token: String,
+    ): Call<GetLeaveCategoriesData?>?
+
+
+    @GET(APIMethods.isAssignmentlist)
+    fun isAssignmentlist(
+        @Header(APIKeyNames.Authorization) token: String
+    ): Call<ParentAssignmentResponse?>
+
+
+    @POST(APIMethods.isSubmitAssignment)
+    fun isSubmitAssignment(
+        @Header(APIKeyNames.Authorization) token: String,
+        @Body request: AssignmentModelRequest,
+    ): Call<AssignmentSubmitResponse?>?
 
 }

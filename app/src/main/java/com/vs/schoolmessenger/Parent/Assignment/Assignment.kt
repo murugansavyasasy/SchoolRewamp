@@ -34,17 +34,6 @@ class Assignment : BaseActivity<AssignmentParentBinding>(), View.OnClickListener
 
     private fun loadData() {
 
-//
-//        mAdapter = AssignmentAdapter(null, this, this, Constant.isShimmerViewShow)
-//        binding.rcyAssignment.layoutManager = LinearLayoutManager(this)
-//        binding.rcyAssignment.adapter = mAdapter
-//
-//        Constant.executeAfterDelay {
-//            // Once data is loaded, stop shimmer and pass the actual data
-//            mAdapter =
-//                AssignmentAdapter(isAssignmentData, this, this, Constant.isShimmerViewDisable)
-//            // Set GridLayoutManager (2 columns in this case)
-//            binding.rcyAssignment.adapter = mAdapter
-//        }
+
     }
 }
