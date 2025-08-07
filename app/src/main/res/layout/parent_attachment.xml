@@ -15,7 +15,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbarLayout"
-        android:visibility="gone"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginEnd="@dimen/ten"
         android:gravity="center_vertical"
@@ -54,7 +53,12 @@
                 android:background="@android:color/transparent"
                 android:hint="@string/lblSearch"
                 android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp" />
+                android:textSize="@dimen/thirteen_sp"
+                android:singleLine="true"
+                android:inputType="text"
+                android:imeOptions="actionSearch" />
+
+
 
         </RelativeLayout>
 
@@ -155,20 +159,21 @@
             android:layout_marginTop="@dimen/twenty"
             android:src="@drawable/nomessages"
             android:textColor="@color/black"
+            android:visibility="gone"
             android:textSize="@dimen/fifteen_sp"
-            android:visibility="gone" />
+            />
 
         <TextView
             android:id="@+id/txtNoData"
             style="@style/CustomTextStylePoppinsBold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/twenty"
             android:gravity="center"
             android:text="@string/no_list_found"
             android:textColor="@color/black"
+            android:visibility="gone"
             android:textSize="@dimen/fifteen_sp"
-            android:visibility="gone" />
+             />
 
 
     </LinearLayout>

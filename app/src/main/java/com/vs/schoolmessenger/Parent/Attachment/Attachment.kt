@@ -9,6 +9,9 @@ import com.google.gson.JsonObject
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Parent.Attachment.Adapter.AttachmentAdapter
 import com.vs.schoolmessenger.R
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
+import android.content.Context
 import com.vs.schoolmessenger.Repository.APIKeyNames
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.School.Attachment.AttachmentReportAdapter
@@ -48,13 +51,30 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
         binding.txtSearchMenu.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (::mAdapter.isInitialized) {
-                    mAdapter.filter.filter(s)
-                }
+                mAttachmentReportAdapter?.filter?.filter(s)
             }
-
             override fun afterTextChanged(s: Editable?) {}
         })
+
+        binding.txtSearchMenu.setOnEditorActionListener { v, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                // Trigger search
+                val query = binding.txtSearchMenu.text.toString()
+                mAttachmentReportAdapter?.filter?.filter(query)
+
+                // Hide keyboard
+                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.txtSearchMenu.windowToken, 0)
+
+                binding.txtSearchMenu.clearFocus()
+                true
+            } else {
+                false
+            }
+        }
+
+
+
 
         appViewModel?.isAttachmentResponse?.observe(this) { response ->
             if (response?.status == true && !response.data.isNullOrEmpty()) {
@@ -68,17 +88,19 @@ class Attachment : BaseActivity<ParentAttachmentBinding>(), View.OnClickListener
         isGetAttachment()
     }
     fun isLoadData(data: List<AttachmentReportData>) {
-        mAttachmentReportAdapter =
-            AttachmentReportAdapter(
-                data,
-                this,
-                this,
-                Constant.isShimmerViewDisable
-            )
+        mAttachmentReportAdapter = AttachmentReportAdapter(
+            data,
+            this,
+            this,
+            Constant.isShimmerViewDisable,
+            binding.nomessage,
+            binding.txtNoData
+        )
         binding.recycleracademic.layoutManager = LinearLayoutManager(this)
         binding.recycleracademic.isNestedScrollingEnabled = false
         binding.recycleracademic.adapter = mAttachmentReportAdapter
     }
+
 
     private fun isGetAttachment() {
 

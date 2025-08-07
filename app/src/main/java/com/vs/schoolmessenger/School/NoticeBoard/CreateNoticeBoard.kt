@@ -288,21 +288,7 @@ class CreateNoticeBoard : BaseActivity<CreateNoticeBoardBinding>(), OnImageClick
         val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         manager.createNotificationChannel(channel)
 
-
-        binding.txtSearch.addTextChangedListener(object : TextWatcher {
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (::noticeboardadapter.isInitialized) {
-                    noticeboardadapter.filter.filter(s)
-                }
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun afterTextChanged(s: Editable?) {}
-        })
-
-
     }
-
 
     private fun setupSchoolSpinner(staffList: List<StaffDetails>) {
         val schoolNames = staffList.map { it.school_name }

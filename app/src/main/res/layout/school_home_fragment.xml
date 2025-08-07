@@ -3,15 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#F5F7FA">
+    android:layout_height="match_parent">
 
 
     <RelativeLayout
         android:id="@+id/headerLayout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/one_eighty"
-        android:background="#4085ef">
+        android:background="@color/PrimaryColor">
 
         <ImageView
             android:layout_width="@dimen/thirty_five"

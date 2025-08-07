@@ -71,20 +71,27 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
 
         binding.txtVideoMenu.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (::mAdapter.isInitialized) {
-                    mAdapter.filter.filter(s)
-                }
-                if (::eventcompletedadapter.isInitialized) {
-                    eventcompletedadapter.filter.filter(s)
-                }
-                if (::eventupcomingadapter.isInitialized) {
-                    eventupcomingadapter.filter.filter(s)
-                }
+                if (::mAdapter.isInitialized) mAdapter.filter.filter(s)
+                if (::eventcompletedadapter.isInitialized) eventcompletedadapter.filter.filter(s)
+                if (::eventupcomingadapter.isInitialized) eventupcomingadapter.filter.filter(s)
+
+                binding.root.postDelayed({
+                    val isAllEmpty = mAdapter.itemCount == 0 &&
+                            eventupcomingadapter.itemCount == 0 &&
+                            eventcompletedadapter.itemCount == 0
+
+                    binding.lytNoDataFound.visibility = if (isAllEmpty) View.VISIBLE else View.GONE
+
+                    binding.rcyongoingevent.visibility = if (mAdapter.itemCount > 0) View.VISIBLE else View.GONE
+                    binding.rcyupcomingevent.visibility = if (eventupcomingadapter.itemCount > 0) View.VISIBLE else View.GONE
+                    binding.rcycompletedevent.visibility = if (eventcompletedadapter.itemCount > 0) View.VISIBLE else View.GONE
+                }, 100)
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun afterTextChanged(s: Editable?) {}
         })
+
 
 
 
@@ -252,16 +259,18 @@ class Event : BaseActivity<EventRewampBinding>(), View.OnClickListener, EventCli
 
     override fun onSearchResultEmpty(adapterTag: String, isEmpty: Boolean) {
         when (adapterTag) {
-            "ONGOING" -> binding.rcyongoingevent.visibility =
-                if (isEmpty) View.GONE else View.VISIBLE
-
-            "COMPLETED" -> binding.rcycompletedevent.visibility =
-                if (isEmpty) View.GONE else View.VISIBLE
-
-            "UPCOMING" -> binding.rcyupcomingevent.visibility =
-                if (isEmpty) View.GONE else View.VISIBLE
+            "ONGOING" -> binding.rcyongoingevent.visibility = if (isEmpty) View.GONE else View.VISIBLE
+            "COMPLETED" -> binding.rcycompletedevent.visibility = if (isEmpty) View.GONE else View.VISIBLE
+            "UPCOMING" -> binding.rcyupcomingevent.visibility = if (isEmpty) View.GONE else View.VISIBLE
         }
+
+        val isAllEmpty = mAdapter.itemCount == 0 &&
+                eventupcomingadapter.itemCount == 0 &&
+                eventcompletedadapter.itemCount == 0
+
+        binding.lytNoDataFound.visibility = if (isAllEmpty) View.VISIBLE else View.GONE
     }
+
 
     override fun onCategoryClicked(data: Category) {
         selectedCategory = data

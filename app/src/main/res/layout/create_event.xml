@@ -553,6 +553,31 @@
             android:textSize="@dimen/thirteen_sp" />
     </RelativeLayout>
 
+    <ImageView
+        android:id="@+id/noDataImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:src="@drawable/nomessages"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/noDataText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No data found"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:layout_below="@id/noDataImage"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/rytSearch323" />
+
     <ScrollView
         android:id="@+id/scroll_container"
         android:layout_width="match_parent"
