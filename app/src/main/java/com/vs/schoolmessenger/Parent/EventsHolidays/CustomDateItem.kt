@@ -4,8 +4,10 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-data class CustomDateItem (
+data class CustomDateItem(
     val day: Int?,
+    val month: Int,
+    val year: Int,
     val isSelectable: Boolean,
     val isHoliday: Boolean = false,
     val isSunday: Boolean = false,
@@ -13,9 +15,10 @@ data class CustomDateItem (
     fun getFormattedDate(): String? {
         if (day == null) return null
         val calendar = Calendar.getInstance()
+        calendar.set(Calendar.YEAR, year)
+        calendar.set(Calendar.MONTH, month - 1)
         calendar.set(Calendar.DAY_OF_MONTH, day)
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         return dateFormat.format(calendar.time)
     }
 }
-

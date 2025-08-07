@@ -341,7 +341,7 @@ class SchoolNoticeBoardAdapter(
                         "Please allow exact alarm permission to schedule reminders",
                         Toast.LENGTH_LONG
                     ).show()
-                    return // prevent crash
+                    return
                 }
             }
         }

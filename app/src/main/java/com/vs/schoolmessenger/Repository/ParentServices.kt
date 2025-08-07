@@ -277,6 +277,7 @@ class ParentServices {
                 }
 
                 override fun onFailure(
+                    
                     call: Call<CertificatesTypesResponse?>,
                     t: Throwable
                 ) {
@@ -944,8 +945,7 @@ class ParentServices {
                                 isAssignmentlist.postValue(response.body())
                             }
                         }
-                    }
-                    else{
+                    } else {
                         isAssignmentlist.postValue(null)
                     }
                 }
