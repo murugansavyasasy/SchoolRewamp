@@ -15,44 +15,65 @@
 
 
         <LinearLayout
-            android:id="@+id/lnrParent"
+            android:id="@+id/toolbarLayout1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/toolbarLayout"
-            android:layout_centerHorizontal="true"
-            android:layout_marginHorizontal="@dimen/ten"
-            android:layout_marginStart="@dimen/fifteen"
-            android:layout_marginTop="@dimen/fifteen"
-            android:layout_marginEnd="@dimen/fifteen"
-            android:background="@drawable/bg_light_blue"
-            android:padding="@dimen/one">
+            android:layout_marginStart="@dimen/ten"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginEnd="@dimen/ten"
+            android:orientation="horizontal"
+            android:weightSum="1">
 
-            <TextView
-                android:id="@+id/btnCreate"
-                style="@style/CustomTextStylePoppinsBold"
+            <LinearLayout
+                android:id="@+id/lnrTabOneName"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/white_bg_radius"
-                android:fontFamily="@font/poppins_medium"
-                android:gravity="center"
-                android:padding="@dimen/eight"
-                android:text="@string/Assignment"
-                android:textColor="@color/black"
-                android:textSize="@dimen/thirteen_sp" />
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/btnHistory"
-                style="@style/CustomTextStylePoppinsBold"
+                <TextView
+                    android:id="@+id/tabOneName"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Create"
+                    android:textColor="@color/iconBlue"></TextView>
+
+                <View
+                    android:id="@+id/line1"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/three"
+                    android:layout_below="@+id/groupheading"
+                    android:layout_marginTop="@dimen/five"
+                    android:background="@color/iconBlue"></View>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/lnrTabTwoName"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:fontFamily="@font/poppins_medium"
-                android:gravity="center"
-                android:padding="@dimen/eight"
-                android:text="@string/Reports"
-                android:textColor="@color/dark_blue"
-                android:textSize="@dimen/thirteen_sp" />
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tabTwoName"
+                    style="@style/CustomTextStylePoppinsBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Reports"></TextView>
+
+                <View
+                    android:id="@+id/line3"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/three"
+                    android:layout_below="@+id/groupheading"
+                    android:layout_marginTop="@dimen/five"
+                    android:background="@color/white"></View>
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -60,7 +81,7 @@
             android:id="@+id/rytCreateAssignment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/lnrParent"
+            android:layout_below="@+id/toolbarLayout1"
             android:layout_marginTop="@dimen/ten"
             android:visibility="visible">
 
@@ -345,7 +366,7 @@
             android:id="@+id/rlaAssignmentReport"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lnrParent"
+            android:layout_below="@+id/toolbarLayout1"
             android:layout_marginStart="5dp"
             android:layout_marginTop="@dimen/twenty"
             android:layout_marginEnd="5dp"

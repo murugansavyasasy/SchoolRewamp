@@ -477,7 +477,7 @@ class SchoolHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
             Constant.M_HOMEWORK -> {
 
-                if (userDetails!!.staff_role.equals(Constant.isStaffRole)) {
+                if (userDetails!!.staff_role == Constant.isStaffRole) {
                     HomeWork::class.java
                 } else {
                     if (userDetails!!.staff_details.size > 1) {
