@@ -875,6 +875,8 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         dialog.show()
     }
 
+
+
 //    fun validateTimeWithAmPmLegacy(fromTime: String, toTime: String): String {
 //        val timeFormat = SimpleDateFormat(Constant.hh_mm_a) // 12-hour format with AM/PM
 //        val fromDate = timeFormat.parse(fromTime)

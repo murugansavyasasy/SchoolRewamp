@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:fitsSystemWindows="true">
 
@@ -9,63 +10,77 @@
         android:id="@+id/toolbarLayout"
         layout="@layout/school_side_tool_bar" />
 
-    <LinearLayout
-        android:layout_below="@+id/toolbarLayout"
-        android:id="@+id/tabContainer"
+<!--    <LinearLayout-->
+<!--        android:layout_below="@+id/toolbarLayout"-->
+<!--        android:id="@+id/tabContainer"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="@dimen/ten"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:gravity="center"-->
+<!--        android:layout_marginBottom="16dp">-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/tabWaiting"-->
+<!--            android:layout_weight="1"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Waiting"-->
+<!--            android:background="@drawable/bg_leave_waiting"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textAlignment="center"-->
+<!--            android:paddingVertical="6dp"-->
+<!--            android:paddingHorizontal="12dp"-->
+<!--            android:layout_marginStart="8dp"-->
+<!--            android:layout_marginEnd="8dp"/>-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/tabApproved"-->
+<!--            android:layout_weight="1"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Approved"-->
+<!--            android:background="@drawable/bg_leave_grey"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textAlignment="center"-->
+<!--            android:paddingVertical="6dp"-->
+<!--            android:paddingHorizontal="12dp"-->
+<!--            android:layout_marginStart="8dp"-->
+<!--            android:layout_marginEnd="8dp"/>-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/tabCancelled"-->
+<!--            android:layout_weight="1"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Rejected"-->
+<!--            android:textAlignment="center"-->
+<!--            android:background="@drawable/bg_leave_grey"-->
+<!--            android:paddingVertical="6dp"-->
+<!--            android:layout_marginEnd="8dp"-->
+<!--            android:paddingHorizontal="12dp"-->
+<!--            android:textColor="@color/black"/>-->
+<!--    </LinearLayout>-->
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayoutStatus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/toolbarLayout"
         android:layout_marginTop="@dimen/ten"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_marginBottom="16dp">
-
-        <TextView
-            android:id="@+id/tabWaiting"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Waiting"
-            android:background="@drawable/bg_leave_waiting"
-            android:textColor="@color/black"
-            android:textAlignment="center"
-            android:paddingVertical="6dp"
-            android:paddingHorizontal="12dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"/>
-
-        <TextView
-            android:id="@+id/tabApproved"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Approved"
-            android:background="@drawable/bg_leave_grey"
-            android:textColor="@color/black"
-            android:textAlignment="center"
-            android:paddingVertical="6dp"
-            android:paddingHorizontal="12dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"/>
-
-        <TextView
-            android:id="@+id/tabCancelled"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Rejected"
-            android:textAlignment="center"
-            android:background="@drawable/bg_leave_grey"
-            android:paddingVertical="6dp"
-            android:layout_marginEnd="8dp"
-            android:paddingHorizontal="12dp"
-            android:textColor="@color/black"/>
-    </LinearLayout>
+        android:background="@color/white"
+        android:visibility="gone"
+        app:tabBackground="@color/grey_mild"
+        app:tabGravity="fill"
+        app:tabIndicatorColor="@color/skydark_blue"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/skydark_blue"
+        app:tabTextColor="@color/black" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcyleaverequest"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tabContainer"
+        android:layout_below="@+id/tabLayoutStatus"
         android:layout_marginStart="@dimen/ten"
         android:layout_marginEnd="@dimen/ten">
 

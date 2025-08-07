@@ -10,6 +10,7 @@ import com.vs.schoolmessenger.Parent.Assignment.Model.AssignmentSubmitResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentResponse
 import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentResponse
 import com.vs.schoolmessenger.Parent.Attendance.AttendanceReport.ChildAttendanceResponse
+import com.vs.schoolmessenger.Parent.Attendance.Model.getStudentStats
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesListResponse
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesTypesResponse
 import com.vs.schoolmessenger.Parent.ExamMarks.ExamMarkModel.ExamResponse
@@ -57,6 +58,7 @@ class ParentServices {
     var isLeaveCategories: MutableLiveData<GetLeaveCategoriesData?>
     var isAssignmentlist: MutableLiveData<ParentAssignmentResponse?>
     var isSubmitAssignment: MutableLiveData<AssignmentSubmitResponse?>
+    var isStudentStats: MutableLiveData<getStudentStats?>
 
     init {
         client_auth = RestClient()
@@ -82,6 +84,7 @@ class ParentServices {
         isLeaveCategories = MutableLiveData()
         isAssignmentlist = MutableLiveData()
         isSubmitAssignment = MutableLiveData()
+        isStudentStats = MutableLiveData()
     }
 
     fun getChildAttendanceReport(
@@ -989,6 +992,48 @@ class ParentServices {
 
     val isSubmitAssignmentLiveData: LiveData<AssignmentSubmitResponse?>
         get() = isSubmitAssignment
+
+
+    fun isStudentStats(
+        isToken: String,
+    ) {
+        RestClient.apiInterfaces.getStudentStats(isToken)
+            ?.enqueue(object : Callback<getStudentStats?> {
+                override fun onResponse(
+                    call: Call<getStudentStats?>,
+                    response: Response<getStudentStats?>
+                ) {
+
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            val status = response.body()!!.status
+                            if (status) {
+                                Log.d("GetStudentStatsData", response.body().toString())
+                                isStudentStats.postValue(response.body())
+                            } else {
+                                Log.d("GetStudentStatsData", response.body().toString())
+                                isStudentStats.postValue(response.body())
+                            }
+                        }
+                    }
+                    else{
+                        isStudentStats.postValue(null)
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<getStudentStats?>,
+                    t: Throwable
+                ) {
+                    isStudentStats.postValue(null)
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    val isStudentStatsLiveData: LiveData<getStudentStats?>
+        get() = isStudentStats
+
 
 
 
