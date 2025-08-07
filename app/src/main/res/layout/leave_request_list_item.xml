@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginHorizontal="4dp"
+    android:background="@drawable/card_outline_border"
     android:layout_marginVertical="@dimen/ten"
-    android:elevation="5dp"
-    app:cardUseCompatPadding="true"
     android:padding="@dimen/ten">
 
     <RelativeLayout
@@ -22,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:elevation="2dp"
-            android:padding="@dimen/five">
+            >
 
             <LinearLayout
                 android:id="@+id/lnrDetails"
@@ -32,17 +31,40 @@
                 android:layout_marginEnd="@dimen/thirteen"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/textName"
-                    style="@style/CustomTextStylePoppinsBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Alex Smith"
-                    android:textColor="#000"
-                    android:textSize="@dimen/thirteen_sp"
-                    android:visibility="gone" />
 
                 <!-- Header Row -->
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/textName"
+                        android:layout_alignParentStart="true"
+                        style="@style/CustomTextStylePoppinsMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/six"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/thirteen_sp" />
+
+                    <TextView
+                        android:visibility="gone"
+                        android:id="@+id/btnStatus"
+                        android:layout_alignParentEnd="true"
+                        style="@style/CustomTextStylePoppinsBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_leave_approved"
+                        android:paddingHorizontal="@dimen/twenty_five"
+                        android:paddingVertical="6dp"
+                        android:text="Approve"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="12sp" />
+                </RelativeLayout>
+
+
 
                     <TextView
                         android:id="@+id/textNoOfDays"
@@ -67,12 +89,6 @@
 
 
 
-
-
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
                     <TextView
                         android:id="@+id/textLeaveType"
                         style="@style/CustomTextStylePoppinsMedium"
@@ -80,21 +96,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/one"
                         android:text="Casual"
-                        android:layout_toStartOf="@+id/lblGetOutPass"
-                        android:layout_alignParentStart="true"
                         android:textColor="#FFC107"
                         android:textSize="14sp" />
-                    <TextView
-                        android:id="@+id/lblGetOutPass"
-                        android:visibility="gone"
-                        android:layout_alignParentEnd="true"
-                        android:text="@string/generate_outpass"
-                        android:textColor="@color/iconBlue"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
 
-                    </TextView>
-                </RelativeLayout>
 
                 <TextView
                     android:id="@+id/textReason"
@@ -146,4 +150,4 @@
     </RelativeLayout>
 
     <!-- Buttons -->
-</androidx.cardview.widget.CardView>
+</LinearLayout>

@@ -342,7 +342,6 @@ class CreateEvent : BaseActivity<CreateEventBinding>(), OnImageClickListener,
         appViewModel?.isGetEventCategories(
             isAccessToken!!, this
         )
-
     }
 
     fun isLoadCategory(data: List<EventCategory>) {

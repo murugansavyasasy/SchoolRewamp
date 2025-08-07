@@ -19,7 +19,6 @@
             android:layout_marginStart="@dimen/ten"
             android:layout_marginTop="@dimen/twenty_five"
             android:layout_height="@dimen/thirty_five">
-
         </ImageView>
 
 
