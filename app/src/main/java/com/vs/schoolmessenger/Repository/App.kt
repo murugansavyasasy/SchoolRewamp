@@ -17,6 +17,7 @@ import com.vs.schoolmessenger.Parent.Assignment.Model.AssignmentSubmitResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentResponse
 import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentResponse
 import com.vs.schoolmessenger.Parent.Attendance.AttendanceReport.ChildAttendanceResponse
+import com.vs.schoolmessenger.Parent.Attendance.Model.getStudentStats
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesListResponse
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesTypesResponse
 import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
@@ -290,6 +291,7 @@ class App(application: Application) : AndroidViewModel(application) {
     var getLeaveCategories: LiveData<GetLeaveCategoriesData?>? = null
     var isAssignmentlist: LiveData<ParentAssignmentResponse?>? = null
     var isSubmitAssignment: LiveData<AssignmentSubmitResponse?>? = null
+    var isStudentStats: LiveData<getStudentStats?>? = null
 
 
 
@@ -403,6 +405,7 @@ class App(application: Application) : AndroidViewModel(application) {
         getLeaveCategories = apiParentRepositories.getLeaveCategoriesLiveData
         isAssignmentlist = apiParentRepositories.isAssignmentlistLiveData
         isSubmitAssignment = apiParentRepositories.isSubmitAssignmentLiveData
+        isStudentStats = apiParentRepositories.isStudentStatsLiveData
 
     }
 
@@ -933,6 +936,10 @@ class App(application: Application) : AndroidViewModel(application) {
         isToken: String, request: AssignmentModelRequest
     ) {
         apiParentRepositories.isSubmitAssignment(isToken,request)
+    }
+
+    fun isStudentStats(isToken: String) {
+        apiParentRepositories.isStudentStats(isToken)
     }
 }
 

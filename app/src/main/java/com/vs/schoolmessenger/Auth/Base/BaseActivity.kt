@@ -41,6 +41,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -209,31 +210,31 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
         if (Constant.isParentChoose) {
             isBottomMenu.setBackgroundResource(R.drawable.gradient_theme_parent)
-            loadFragment(ParentHomeFragment())
+            loadFragment(this,ParentHomeFragment())
         } else {
-            loadFragment(SchoolHomeFragment())
+            loadFragment(this,SchoolHomeFragment())
             isBottomMenu.setBackgroundResource(R.drawable.gradient_theme_school)
         }
         updateNavBar(icon_home)
 
         nav_home.setOnClickListener {
             if (Constant.isParentChoose) {
-                loadFragment(ParentHomeFragment())
+                loadFragment(this,ParentHomeFragment())
             } else {
-                loadFragment(SchoolHomeFragment())
+                loadFragment(this,SchoolHomeFragment())
             }
             updateNavBar(icon_home)
         }
         nav_help.setOnClickListener {
-            loadFragment(HelpFragment())
+            loadFragment(this,HelpFragment())
             updateNavBar(icon_help)
         }
         nav_settings.setOnClickListener {
-            loadFragment(SettingsFragment())
+            loadFragment(this,SettingsFragment())
             updateNavBar(icon_settings)
         }
         nav_profile.setOnClickListener {
-            loadFragment(ProfileFragment())
+            loadFragment(this,ProfileFragment())
             updateNavBar(icon_profile)
         }
 
@@ -513,7 +514,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         window.attributes = layoutParams
     }
 
-    private fun updateNavBar(selectedItemId: Int) {
+     fun updateNavBar(selectedItemId: Int) {
 //        // Reset all icons
         findViewById<ImageView>(R.id.icon_home).setColorFilter(
             ContextCompat.getColor(
@@ -690,18 +691,22 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         colorAnimation.start() // Start the animation
     }
 
-
-    private fun loadFragment(fragment: Fragment) {
-        val currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
-        // Check if the current fragment is of the same class
-        if (currentFragment != null && currentFragment::class == fragment::class) {
-            return // Already loaded, do nothing
+    companion object {
+        @JvmStatic
+        fun loadFragment(activity: FragmentActivity, fragment: Fragment) {
+            val currentFragment = activity.supportFragmentManager.findFragmentById(R.id.fragment_container)
+            if (currentFragment != null && currentFragment::class == fragment::class) {
+                return
+            }
+            activity.supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .commit()
         }
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, fragment)
-            .commit()
-
     }
+
+
+
+
 
     fun showTimePickerDialog(context: Context, listener: TimeSelectedListener) {
         // Get current time
@@ -874,6 +879,8 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
         dialog.show()
     }
+
+
 
 //    fun validateTimeWithAmPmLegacy(fromTime: String, toTime: String): String {
 //        val timeFormat = SimpleDateFormat(Constant.hh_mm_a) // 12-hour format with AM/PM

@@ -22,6 +22,7 @@ import com.vs.schoolmessenger.Parent.Assignment.Model.AssignmentSubmitResponse
 import com.vs.schoolmessenger.Parent.Assignment.Model.ParentAssignmentResponse
 import com.vs.schoolmessenger.Parent.Attachment.Model.AttachmentResponse
 import com.vs.schoolmessenger.Parent.Attendance.AttendanceReport.ChildAttendanceResponse
+import com.vs.schoolmessenger.Parent.Attendance.Model.getStudentStats
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesListResponse
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificatesTypesResponse
 import com.vs.schoolmessenger.Parent.Communication.StatusArchiveResponse
@@ -768,5 +769,10 @@ interface ApiInterfaces {
         @Header(APIKeyNames.Authorization) token: String,
         @Body request: AssignmentModelRequest,
     ): Call<AssignmentSubmitResponse?>?
+
+    @GET(APIMethods.isstudentstats)
+    fun getStudentStats(
+        @Header(APIKeyNames.Authorization) token: String,
+    ): Call<getStudentStats?>?
 
 }

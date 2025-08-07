@@ -10,7 +10,7 @@ data class LeaveData(
     val leave_to: String,
     val no_of_days: String,
     val reason: String,
-    val status: String,
+    var status: String,
     val updated_on: String,
     val from_session: String,
     val to_session: String,

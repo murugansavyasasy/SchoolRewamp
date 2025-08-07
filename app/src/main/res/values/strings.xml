@@ -586,6 +586,8 @@
     <string name="confirm_submit_attendance"><![CDATA[Confirm & Submit Attendance]]></string>
     <string name="are_you_sure_want_to_submit_the_attendance">Are you sure want to submit the attendance?</string>
     <string name="Are_you_sure_you_want_to_update_this_request">Are you sure you want to update this request?</string>
+    <string name="Are_you_sure_you_want_to_reject_this_request">Are you sure you want to reject this leave request?</string>
+    <string name="Are_you_sure_you_want_to_approve_this_request">Are you sure you want to approve this leave request?</string>
     <string name="Are_you_sure_you_want_to_apply_for_leave">Are you sure you want to apply for leave?</string>
     <string name="are_you_sure_you_want_to_cancel_leave_request">Are you sure you want to cancel the leave request?</string>
     <string name="no_data">no_data</string>

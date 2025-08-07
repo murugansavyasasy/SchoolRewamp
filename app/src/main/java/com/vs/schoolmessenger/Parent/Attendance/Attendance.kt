@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.vs.schoolmessenger.Auth.Base.BaseActivity
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.Parent.Attendance.AttendanceReport.AttendanceReport
+import com.vs.schoolmessenger.Parent.Attendance.Model.getStudentStats
+import com.vs.schoolmessenger.Parent.Attendance.Model.getStudentStatsData
 import com.vs.schoolmessenger.Parent.Attendance.WeekStatusModel.GetWeekStatusData
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Holidays
 import com.vs.schoolmessenger.Parent.RequestLeave.LeaveRequest
@@ -30,6 +32,7 @@ class Attendance : BaseActivity<AttendanceBinding>(){
 
     private var appViewModel: App? = null
     private var isAccessToken: String? = null
+    private var isStudentStatsData: getStudentStatsData? = null
     private var isChildDetails: ChildDetails? = null
 
     override fun setupViews() {
@@ -55,14 +58,24 @@ class Attendance : BaseActivity<AttendanceBinding>(){
         binding.lblDateSuffix.text =Constant.getDaySuffix(dateDetails["day"]?.toIntOrNull() ?:1)
         binding.lblDay.text = dateDetails["weekday"]
         binding.lblMonthYear.text = dateDetails["monthYear"]
+        loadStudentStats()
 
 
-        binding.lblAttendancePercentage.text = 45.toString()
-        binding.lblLeaveTakenPercentage.text = 3.toString()
-        binding.lblOngoingDaysPercentage.text = 111.toString()
-        animateProgress(binding.attendanceProgressBar,45, 60)
-        animateProgress(binding.leaveTakenProgressBar, 3,5)
-        animateProgress(binding.ongoingDaysProgressBar, 11,60)
+        appViewModel!!.isStudentStats?.observe(this) { response ->
+            Constant.hideLoading(this@Attendance)
+            if (response != null) {
+                if (response.status) {
+                    isStudentStatsData= response.data.firstOrNull()
+                    isLoadStudentStats(isStudentStatsData!!)
+
+
+                } else {
+                    Constant.showDataValidation(
+                        response.status.toString(), response.message, this
+                    )
+                }
+            }
+        }
 
 
         binding.lnrLeaveRequest.setOnClickListener{
@@ -102,6 +115,16 @@ class Attendance : BaseActivity<AttendanceBinding>(){
 
     }
 
+    private fun isLoadStudentStats(data: getStudentStatsData) {
+        binding.lblAttendancePercentage.text = data.attendance_percentage
+        binding.lblLeaveTakenPercentage.text = data.absent_days.toString()
+        binding.lblOngoingDaysPercentage.text = data.completed_working_days.toString()
+        animateProgress(binding.attendanceProgressBar,data.attendance_percentage.toIntOrNull() ?: 0, 100)
+        animateProgress(binding.leaveTakenProgressBar, data.absent_days,20)
+        animateProgress(binding.ongoingDaysProgressBar, data.completed_working_days,data.total_working_days)
+
+    }
+
 
     fun animateProgress(progressBar: ProgressBar, current: Int, max: Int, duration: Long = 1000) {
         val safeMax = if (max <= 0) 1 else max           // Avoid divide by zero
@@ -114,6 +137,10 @@ class Attendance : BaseActivity<AttendanceBinding>(){
         animator.duration = duration
         animator.interpolator = DecelerateInterpolator()
         animator.start()
+    }
+
+    private fun loadStudentStats() {
+        appViewModel!!.isStudentStats(isAccessToken!!)
     }
 
 
