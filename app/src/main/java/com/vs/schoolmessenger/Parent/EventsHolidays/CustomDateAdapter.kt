@@ -11,26 +11,40 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.vs.schoolmessenger.Parent.EventsHolidays.HolidayActivity.Model.Holiday
 import com.vs.schoolmessenger.R
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 import kotlin.collections.contains
 
 class CustomDateAdapter(
     private val context: Context,
     private val onDateClick: (List<String>) -> Unit,
     private var holidays: List<Holiday>,
-    private val isSelectionEnabled: Boolean = true // Optional flag
+    private val isSelectionEnabled: Boolean = true
 ) : RecyclerView.Adapter<CustomDateAdapter.DateViewHolder>() {
 
     private val dates = mutableListOf<CustomDateItem>()
     private val selectedDates = mutableSetOf<String>()
-    private val selectedBackgroundDrawable = ContextCompat.getDrawable(context, R.drawable.rect_round_light_green)
+    private val selectedBackgroundDrawable =
+        ContextCompat.getDrawable(context, R.drawable.rect_round_light_green)
+
+    private val todayCalendar = Calendar.getInstance()
+    private val todayDay = todayCalendar.get(Calendar.DAY_OF_MONTH)
+    private val todayMonth = todayCalendar.get(Calendar.MONTH)
+    private val todayYear = todayCalendar.get(Calendar.YEAR)
 
     fun submitDates(newDates: List<CustomDateItem>) {
         dates.clear()
         dates.addAll(newDates)
         notifyDataSetChanged()
-        Log.d("CustomDateAdapter", "Dates submitted: $dates")
     }
 
+    fun setDates(newDates: List<CustomDateItem>) {
+        dates.clear()
+        dates.addAll(newDates)
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DateViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_date_box, parent, false)
@@ -55,44 +69,39 @@ class CustomDateAdapter(
                 return
             }
 
-
-
+            val dateStr = dateItem.getFormattedDate() // Format: yyyy-MM-dd
             dateBox.text = dateItem.day.toString()
             dateBox.isClickable = isSelectionEnabled && dateItem.isSelectable
+
             dateBox.setBackgroundColor(Color.TRANSPARENT)
 
+            val calendar = Calendar.getInstance()
+            calendar.set(dateItem.year, dateItem.month - 1, dateItem.day)
 
-            dateBox.setTextColor(
-                ContextCompat.getColor(
-                    context,
-                    if (dateItem.isSelectable) R.color.colorPrimary else R.color.grey
-                )
-            )
+            val isToday =
+                dateItem.day == todayDay &&
+                        dateItem.month - 1 == todayMonth &&
+                        dateItem.year == todayYear
 
-
-            val dateStr = dateItem.getFormattedDate()
             if (dateItem.isHoliday) {
                 dateBox.background = ContextCompat.getDrawable(context, R.drawable.ic_holiday_dot)
+                dateBox.setTextColor(ContextCompat.getColor(context, R.color.white))
+            } else if (isToday) {
+                dateBox.background = ContextCompat.getDrawable(context, R.drawable.ic_today_dot)
                 dateBox.setTextColor(ContextCompat.getColor(context, R.color.white))
             } else {
                 dateBox.background = null
                 dateBox.setTextColor(
                     ContextCompat.getColor(
                         context,
-                        if (dateItem.isSelectable) R.color.colorPrimary else R.color.black
+                        if (dateItem.isSunday) R.color.red
+                        else if (dateItem.isSelectable) R.color.colorPrimary
+                        else R.color.grey
                     )
                 )
             }
 
-            if(dateItem.isSunday){
-                dateBox.setTextColor(
-                    ContextCompat.getColor(
-                        context,
-                        R.color.red
-                    )
-                )
-            }
-
+            // Handle selection
             if (isSelectionEnabled && dateItem.isSelectable) {
                 dateBox.setOnClickListener {
                     if (dateStr != null) {
@@ -107,19 +116,15 @@ class CustomDateAdapter(
                     }
                 }
 
-
                 if (selectedDates.contains(dateStr)) {
                     dateBox.background = selectedBackgroundDrawable
-                } else {
-                    dateBox.setBackgroundColor(Color.TRANSPARENT)
                 }
             } else {
                 dateBox.setOnClickListener(null)
             }
         }
     }
-
-
 }
+
 
 
