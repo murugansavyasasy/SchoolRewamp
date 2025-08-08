@@ -101,18 +101,6 @@ class ImageSliderAdapter(
                 }
             }
 
-            fileItem.setOnClickListener {
-                Constant.commonFileList = fullList.map {
-                    CommonFileData(type = it.type, path = it.url)
-                }.toMutableList()
-
-                Constant.selectedFileIndex = fullList.indexOf(data)
-
-                context.startActivity(Intent(context, FilesViewActivity::class.java).apply {
-                    putExtra(Constant.subjectName, subjectName)
-                })
-            }
-
         }
 
         private fun getIconForType(type: String): Int {
