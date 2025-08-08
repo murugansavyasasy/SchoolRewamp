@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.JsonObject
 
@@ -39,23 +40,23 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setupViews() {
         super.setupViews()
-        setUpGradientParent()
+        setupToolbarBlue()
 
         binding.ivradio.setOnClickListener(this)
         binding.ivradio1.setOnClickListener(this)
 
-        binding.toolbarLayout.imgBack.setOnClickListener(this)
-        binding.toolbarLayout.lblLeftSideBar.setOnClickListener(this)
-        binding.toolbarLayout.lblRightSideBar.setOnClickListener(this)
+//        binding.toolbarLayout.imgBack.setOnClickListener(this)
+//        binding.toolbarLayout.lblLeftSideBar.setOnClickListener(this)
+//        binding.toolbarLayout.lblRightSideBar.setOnClickListener(this)
         binding.btnSendCertificateRequest.setOnClickListener(this)
-        binding.toolbarLayout.lblParentToolBar.text = Constant.isParentMenuName
-        binding.toolbarLayout.rytSearch.visibility = View.GONE
-        binding.toolbarLayout.lnrParent.visibility = View.VISIBLE
-        binding.toolbarLayout.lblLeftSideBar.text = "Certificates"
-        binding.toolbarLayout.lblRightSideBar.text = "Request"
+//        binding.toolbarLayout.lblParentToolBar.text = Constant.isParentMenuName
+//        binding.toolbarLayout.rytSearch.visibility = View.GONE
+//        binding.toolbarLayout.lnrParent.visibility = View.VISIBLE
+//        binding.toolbarLayout.lblLeftSideBar.text = "Certificates"
+//        binding.toolbarLayout.lblRightSideBar.text = "Request"
         isChildDetails = SharedPreference.getChildDetails(this)
-        binding.toolbarLayout.lblStudentName.text = isChildDetails?.name ?: ""
-        binding.toolbarLayout.lblStudentSection.text = isChildDetails?.standard_name + " - " + isChildDetails?.section_name
+//        binding.toolbarLayout.lblStudentName.text = isChildDetails?.name ?: ""
+//        binding.toolbarLayout.lblStudentSection.text = isChildDetails?.standard_name + " - " + isChildDetails?.section_name
 
         isAccessToken = isChildDetails?.access_token
         appViewModel = ViewModelProvider(this)[App::class.java]
@@ -92,6 +93,7 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
                 Constant.showTopAlertPopup(response!!.message, this)
             }
         }
+        loadCertificateRequestData()
     }
 
     private fun loadCertificates(certificateTypes: List<String>) {
@@ -120,7 +122,7 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
             }
         }, this, Constant.isShimmerViewDisable)
 
-        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        binding.recyclerView.layoutManager = GridLayoutManager(this,2)
         binding.recyclerView.adapter = adapter
     }
 
@@ -134,17 +136,20 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
         }, this, Constant.isShimmerViewShow)
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = adapter
+
+        loadCertificateRequestData()
+
     }
 
     private fun loadCertificateRequestData() {
-        showShimmer()
+      //  showShimmer()
         appViewModel?.getCertificateRequestList(
             isAccessToken.orEmpty(), activity = this
         )
     }
 
     private fun loadCertificateTypes() {
-        showShimmer()
+      //  showShimmer()
         appViewModel?.getCertificateTypes(
             isAccessToken.orEmpty(), activity = this
         )
@@ -156,18 +161,18 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
         when (v.id) {
 
             R.id.lblLeftSideBar -> {
-                binding.toolbarLayout.lblRightSideBar.setBackgroundResource(R.drawable.bg_light_green)
-                binding.toolbarLayout.lblRightSideBar.setTextColor(Color.BLACK)
-                binding.toolbarLayout.lblLeftSideBar.setBackgroundResource(R.drawable.white_radious)
+//                binding.toolbarLayout.lblRightSideBar.setBackgroundResource(R.drawable.bg_light_green)
+//                binding.toolbarLayout.lblRightSideBar.setTextColor(Color.BLACK)
+//                binding.toolbarLayout.lblLeftSideBar.setBackgroundResource(R.drawable.white_radious)
                 binding.rytRequestTap.visibility = View.GONE
                 binding.recyclerView.visibility = View.VISIBLE
                 loadCertificateRequestData()
             }
 
             R.id.lblRightSideBar -> {
-                binding.toolbarLayout.lblRightSideBar.setBackgroundResource(R.drawable.white_radious)
-                binding.toolbarLayout.lblRightSideBar.setTextColor(Color.BLACK)
-                binding.toolbarLayout.lblLeftSideBar.setBackgroundResource(R.drawable.bg_light_green)
+//                binding.toolbarLayout.lblRightSideBar.setBackgroundResource(R.drawable.white_radious)
+//                binding.toolbarLayout.lblRightSideBar.setTextColor(Color.BLACK)
+//                binding.toolbarLayout.lblLeftSideBar.setBackgroundResource(R.drawable.bg_light_green)
                 binding.rytRequestTap.visibility = View.VISIBLE
                 binding.recyclerView.visibility = View.GONE
                 binding.lnrNoRecords.visibility = View.GONE
@@ -201,7 +206,6 @@ class CertificateRequest : BaseActivity<CertificateRequestParentBinding>(), View
                     Toast.makeText(
                         this, "Please enter the reason", Toast.LENGTH_SHORT
                     ).show()
-
                 }
             }
         }
