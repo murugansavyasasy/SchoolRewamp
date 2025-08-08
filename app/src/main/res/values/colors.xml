@@ -86,6 +86,7 @@
 
     <color name="grey">#ACACBA</color>
     <color name="grey_mild_color">#ededed</color>
+    <color name="grey_mild_color1">#E5E5EA</color>
     <color name="grey_mild">#E3E3E9</color>
     <color name="light_grey4">#E3E3E9</color>
     <color name="neon_green">#0FFF50</color>

@@ -790,7 +790,7 @@ object Constant {
 
 
     fun covertDateFormate(input: String): String {
-        Log.d("Input Date Format", input.toString())
+        Log.d("Input Date Format", input)
         return try {
             val inputFormat = SimpleDateFormat(dd_MM_yyyy, Locale.getDefault())
             val outputFormat = SimpleDateFormat(dd_MMM_yyyy, Locale.getDefault())

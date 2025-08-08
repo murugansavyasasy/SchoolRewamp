@@ -2,13 +2,7 @@ package com.vs.schoolmessenger.Dashboard.Fragments
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.graphics.Paint
-import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -16,9 +10,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.ChildDetails
 import com.vs.schoolmessenger.Auth.MobilePasswordSignIn.UserDetails
 import com.vs.schoolmessenger.CommonScreens.Ads.AdItem
@@ -29,15 +22,14 @@ import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuClickListener
 import com.vs.schoolmessenger.CommonScreens.MenuDetails.MenuDetail
 import com.vs.schoolmessenger.Dashboard.Parent.ChildMenuAdapter
 import com.vs.schoolmessenger.Dashboard.Parent.ExamMark
+import com.vs.schoolmessenger.Dashboard.School.AutoScrollAdapterWithDots
 import com.vs.schoolmessenger.Dashboard.Settings.Notification.Notification
 import com.vs.schoolmessenger.Parent.Assignment.Assignment
 import com.vs.schoolmessenger.Parent.Attachment.Attachment
-import com.vs.schoolmessenger.Parent.Attendance.AttendanceReport.AttendanceReport
 import com.vs.schoolmessenger.Parent.Attendance.Attendance
 import com.vs.schoolmessenger.Parent.CertificateRequest.CertificateRequest
 import com.vs.schoolmessenger.Parent.Communication.CommunicationParent
 import com.vs.schoolmessenger.Parent.Coupon.CouponView.CouponDashboardActivity
-//import com.vs.schoolmessenger.Parent.Coupon.CouponView.CouponDashboard.CouponMainClassActivity
 import com.vs.schoolmessenger.Parent.EventsHolidays.EventActivty.Event
 import com.vs.schoolmessenger.Parent.FeeDetails.FeeDetails
 import com.vs.schoolmessenger.Parent.Homework.HomeWork
@@ -50,6 +42,7 @@ import com.vs.schoolmessenger.Parent.Timetable.TimeTable
 import com.vs.schoolmessenger.R
 import com.vs.schoolmessenger.Repository.App
 import com.vs.schoolmessenger.Utils.Constant
+import com.vs.schoolmessenger.Utils.ScrollItem
 import com.vs.schoolmessenger.Utils.SharedPreference
 import com.vs.schoolmessenger.databinding.ParentHomeFragmentBinding
 import java.text.SimpleDateFormat
@@ -66,12 +59,17 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     var userDetails: UserDetails? = null
     private var appViewModel: App? = null
     var isDashBoardData: List<DashboardData>? = null
+    private lateinit var items: List<ScrollItem>
     var isContactDetails: ContactDetails? = null
     var isMenuDetails: List<MenuDetail>? = null
     var isAdItem: List<AdItem>? = null
     var isAdsDisplayOptions: AdsDisplayOptions? = null
     private lateinit var allMenuItems: List<MenuDetail>
     private val isMenuItems = mutableListOf<MenuDetail>()
+    private lateinit var adapter: AutoScrollAdapterWithDots
+    private lateinit var layoutManager: LinearLayoutManager
+
+    private var currentPosition = 0
 
 
     @SuppressLint("ClickableViewAccessibility", "SetTextI18n")
@@ -81,92 +79,94 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
 
         binding = ParentHomeFragmentBinding.inflate(layoutInflater)
         binding.imgNotification.setOnClickListener(this)
-        binding.imgSearchClick.setOnClickListener(this)
-        binding.lblChangeRoll.setOnClickListener(this)
-        binding.imgSearchCancel.setOnClickListener(this)
+//        binding.imgSearchClick.setOnClickListener(this)
+//        binding.lblChangeRoll.setOnClickListener(this)
+//        binding.imgSearchCancel.setOnClickListener(this)
         childDetails = SharedPreference.getChildDetails(requireActivity())
         userDetails = SharedPreference.getUserDetails(requireActivity())
         val currentDate = Calendar.getInstance().time
         val dateFormat = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
         val formattedDate = dateFormat.format(currentDate)
-        binding.lblDate.text = formattedDate
-        binding.lblStudentName.text = childDetails!!.name
+//        binding.lblDate.text = formattedDate
+//        binding.lblStudentName.text = childDetails!!.name
+        binding.username.text = childDetails!!.name
         binding.lblSchoolName.text = childDetails!!.school_name
-        binding.lblSchoolAddress.text = childDetails!!.student_address
-        binding.lblChangeRoll.paintFlags =
-            binding.lblChangeRoll.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+//        binding.lblSchoolAddress.text = childDetails!!.student_address
+//        binding.lblChangeRoll.paintFlags =
+//            binding.lblChangeRoll.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
         Constant.checkBiometricSupport(requireActivity())
 
         appViewModel = ViewModelProvider(this)[App::class.java]
         appViewModel!!.init()
-//        isDashBoardData()
+        isDashBoardData()
+        setupRecyclerView()
 
-        if (userDetails!!.is_parent && userDetails!!.is_staff) {
-            binding.lblChangeRoll.visibility = View.VISIBLE
-        } else {
-            if (userDetails!!.child_details.size > 1) {
-                binding.lblChangeRoll.visibility = View.VISIBLE
-            } else {
-                binding.lblChangeRoll.visibility = View.GONE
-            }
-        }
+//        if (userDetails!!.is_parent && userDetails!!.is_staff) {
+//            binding.lblChangeRoll.visibility = View.VISIBLE
+//        } else {
+//            if (userDetails!!.child_details.size > 1) {
+//                binding.lblChangeRoll.visibility = View.VISIBLE
+//            } else {
+//                binding.lblChangeRoll.visibility = View.GONE
+//            }
+//        }
 
-        Glide.with(requireActivity())
-            .load(childDetails!!.school_logo_url)
-            .listener(object : RequestListener<Drawable> {
+//        Glide.with(requireActivity())
+//            .load(childDetails!!.school_logo_url)
+//            .listener(object : RequestListener<Drawable> {
+//
+//                override fun onLoadFailed(
+//                    e: GlideException?,
+//                    model: Any?,
+//                    target: com.bumptech.glide.request.target.Target<Drawable?>,
+//                    isFirstResource: Boolean
+//                ): Boolean {
+//                    Handler(Looper.getMainLooper()).post {
+//                        Glide.with(requireActivity())
+//                            .load(R.drawable.school_sample)
+//                            .into(binding.imgSchoolLogo)
+//                    }
+//                    return false
+//                }
+//
+//                override fun onResourceReady(
+//                    resource: Drawable,
+//                    model: Any,
+//                    target: com.bumptech.glide.request.target.Target<Drawable?>?,
+//                    dataSource: com.bumptech.glide.load.DataSource,
+//                    isFirstResource: Boolean
+//                ): Boolean {
+//                    Log.d("Glide", "Image load success")
+//                    return false
+//                }
+//            })
+//            .into(binding.imgSchoolLogo)
+//
+//        binding.lblViewDetails.paintFlags =
+//            binding.lblViewDetails.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
-                override fun onLoadFailed(
-                    e: GlideException?,
-                    model: Any?,
-                    target: com.bumptech.glide.request.target.Target<Drawable?>,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    Handler(Looper.getMainLooper()).post {
-                        Glide.with(requireActivity())
-                            .load(R.drawable.school_sample)
-                            .into(binding.imgSchoolLogo)
-                    }
-                    return false
-                }
 
-                override fun onResourceReady(
-                    resource: Drawable,
-                    model: Any,
-                    target: com.bumptech.glide.request.target.Target<Drawable?>?,
-                    dataSource: com.bumptech.glide.load.DataSource,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    Log.d("Glide", "Image load success")
-                    return false
-                }
-            })
-            .into(binding.imgSchoolLogo)
+//        binding.lblViewDetails.setOnClickListener {
+//            this.startActivity(
+//                Intent(
+//                    requireActivity(), AttendanceReport::class.java
+//                )
+//            )
+//        }
+//
+//        binding.lblGif.playAnimation()
+//        binding.lblGif.setAnimation(R.raw.mathematics)
 
-        binding.lblViewDetails.paintFlags =
-            binding.lblViewDetails.paintFlags or Paint.UNDERLINE_TEXT_FLAG
-
-
-        binding.lblViewDetails.setOnClickListener {
-            this.startActivity(
-                Intent(
-                    requireActivity(), AttendanceReport::class.java
-                )
-            )
-        }
-
-        binding.lblGif.playAnimation()
-        binding.lblGif.setAnimation(R.raw.mathematics)
-
-        binding.txtSearchMenu.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {}
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                filter(s.toString())
-            }
-        })
+//        binding.txtSearchMenu.addTextChangedListener(object : TextWatcher {
+//            override fun afterTextChanged(s: Editable?) {}
+//
+//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+//
+//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+//                filter(s.toString())
+//            }
+//        })
 
         appViewModel!!.isDashBoardData?.observe(requireActivity()) { response ->
             if (response != null) {
@@ -202,12 +202,41 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 isLoadData()
             }
         }
-
         return binding.root
     }
 
+    private fun setupRecyclerView() {
+        items = createSampleData()
+        layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
+        adapter = AutoScrollAdapterWithDots(items) { position ->
+            //   updateDotsIndicator(position)
+        }
+
+
+        binding.autoScrollRecyclerView.layoutManager = layoutManager
+        binding.autoScrollRecyclerView.adapter = adapter
+
+        val snapHelper = PagerSnapHelper()
+        snapHelper.attachToRecyclerView(binding.autoScrollRecyclerView)
+
+        currentPosition = adapter.getMiddlePosition()
+        layoutManager.scrollToPosition(currentPosition)
+    }
+
+
+    private fun createSampleData(): List<ScrollItem> {
+        return listOf(
+            ScrollItem(R.drawable.home_work_icon_school, "Daily Homework"),
+            ScrollItem(R.drawable.fee_pending_reports, "Fee Payment"),
+            ScrollItem(R.drawable.attachment_icon, "Attendance"),
+            ScrollItem(R.drawable.event_icon_school, "School Events"),
+            ScrollItem(R.drawable.fee_details, "Grades"),
+            ScrollItem(R.drawable.message_f_management, "Messages")
+        )
+    }
+
     private fun isLoadData() {
-        val gridLayoutManager = GridLayoutManager(requireContext(), 3)
+        val gridLayoutManager = GridLayoutManager(requireContext(), 2)
         isMenuAdapter = ChildMenuAdapter(
             requireActivity(), this, isMenuDetails, isAdItem, Constant.isShimmerViewDisable
         )
@@ -219,15 +248,15 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 }
             }
         }
-        binding.recyclerViewMenus.layoutManager = gridLayoutManager
-        binding.recyclerViewMenus.adapter = isMenuAdapter
+        binding.gridRecyclerView.layoutManager = gridLayoutManager
+        binding.gridRecyclerView.adapter = isMenuAdapter
     }
 
     private fun isDashBoardData() {
 
         val adapter =
             ChildMenuAdapter(requireActivity(), this, null, null, Constant.isShimmerViewShow)
-        val gridLayoutManager = GridLayoutManager(requireContext(), 3)
+        val gridLayoutManager = GridLayoutManager(requireContext(), 2)
 
         // Adjust span count for special layout
         gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
@@ -239,8 +268,8 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
             }
         }
 
-        binding.recyclerViewMenus.layoutManager = gridLayoutManager
-        binding.recyclerViewMenus.adapter = adapter
+        binding.gridRecyclerView.layoutManager = gridLayoutManager
+        binding.gridRecyclerView.adapter = adapter
 
         Log.d("isToken", childDetails!!.access_token)
         appViewModel!!.isDashBoardData(
@@ -272,27 +301,27 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
                 startActivity(intent)
             }
 
-            R.id.lblChangeRoll -> {
-                requireActivity().onBackPressedDispatcher.onBackPressed()
-            }
+//            R.id.lblChangeRoll -> {
+//                requireActivity().onBackPressedDispatcher.onBackPressed()
+//            }
 
 
-            R.id.imgSearchClick -> {
-                if (isSearchVisible) {
-                    binding.txtSearchMenu.setText("")
-                    isSearchVisible = false
-                    binding.rytSearchBar.visibility = View.GONE
-                } else {
-                    isSearchVisible = true
-                    binding.rytSearchBar.visibility = View.VISIBLE
-                }
-            }
-
-            R.id.imgSearchCancel -> {
-                binding.txtSearchMenu.setText("")
-                isSearchVisible = false
-                binding.rytSearchBar.visibility = View.GONE
-            }
+//            R.id.imgSearchClick -> {
+//                if (isSearchVisible) {
+//                    binding.txtSearchMenu.setText("")
+//                    isSearchVisible = false
+//                    binding.rytSearchBar.visibility = View.GONE
+//                } else {
+//                    isSearchVisible = true
+//                    binding.rytSearchBar.visibility = View.VISIBLE
+//                }
+//            }
+//
+//            R.id.imgSearchCancel -> {
+//                binding.txtSearchMenu.setText("")
+//                isSearchVisible = false
+//                binding.rytSearchBar.visibility = View.GONE
+//            }
         }
     }
 
@@ -305,7 +334,7 @@ class ParentHomeFragment : Fragment(), View.OnClickListener, MenuClickListener {
     override fun onResume() {
         super.onResume()
         Log.d("Loading", "Dashboard Data is Loading")
-        isDashBoardData()
+        // isDashBoardData()
         Log.d("Loading", "Dashboard Data is Refreshed")
 
 

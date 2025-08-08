@@ -30,6 +30,9 @@ class AssignmentStudentList : BaseActivity<AssignmentStudentListReportBinding>()
     lateinit var assignmentstudentlistadapter: AssignmentStudentListAdapter
 
     private var assignmentId: String? = null
+    private var submittedCount: Int = 0
+    private var totalCount: Int = 0
+
     private var type: String? = null
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -44,8 +47,19 @@ class AssignmentStudentList : BaseActivity<AssignmentStudentListReportBinding>()
 
         assignmentId = intent.getStringExtra("assignment_id")
         type = intent.getStringExtra("type")
+        submittedCount = intent.getIntExtra("submitted_count", 0)
+        totalCount = intent.getIntExtra("Total_Count", 0)
+
         Log.d("AssignmentId", "Received ID: $assignmentId")
         Log.d("AssignmentType", "Received Type: $type")
+
+        Log.d("submittedcount", "Received ID: $submittedCount")
+        Log.d("totalcount", "Received Type: $totalCount")
+
+
+
+        binding.submittedvalue.text = submittedCount.toString()
+        binding.pendinglabelvalue.text = totalCount.toString()
 
 
 

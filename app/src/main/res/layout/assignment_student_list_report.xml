@@ -9,13 +9,93 @@
         android:id="@+id/toolbarLayout"
         layout="@layout/school_side_tool_bar" />
 
+    <LinearLayout
+        android:id="@+id/linearlayoutheader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbarLayout"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearfooter"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/submittedvalue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="18sp"
+                android:layout_gravity="center"
+                android:textColor="@color/green"
+                style="@style/CustomTextStylePoppinsBold" />
+
+            <TextView
+                android:id="@+id/submittedlabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Submitted"
+                android:textSize="18sp"
+                android:layout_gravity="center"
+                android:textColor="@color/green"
+                style="@style/CustomTextStylePoppinsBold" />
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="150dp"
+            android:layout_height="0dp"
+            android:id="@+id/viewline"/>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearfooter1"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/pendinglabelvalue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:layout_gravity="center"
+            android:textSize="18sp"
+            android:textColor="@color/red"
+            style="@style/CustomTextStylePoppinsBold" />
+
+
+        <TextView
+            android:id="@+id/pendinglabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pending"
+            android:textSize="18sp"
+            android:textColor="@color/red"
+           android:layout_gravity="center"
+            style="@style/CustomTextStylePoppinsBold" />
+    </LinearLayout>
+
+
+
+    </LinearLayout>
+
+
+
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcystudentlist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbarLayout"
+        android:layout_below="@+id/linearlayoutheader"
         android:layout_marginTop="@dimen/five"
         android:visibility="visible">
 
